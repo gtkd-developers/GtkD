@@ -118,7 +118,7 @@ public class Engine : ObjectG
 	 * Note: this function should never be used when multiple threads are
 	 * using libpeas API as it is not thread-safe.
 	 *
-	 * Return: the existing instance of #PeasEngine.
+	 * Returns: the existing instance of #PeasEngine.
 	 */
 	public static Engine getDefault()
 	{
@@ -173,7 +173,7 @@ public class Engine : ObjectG
 	 *     varArgs = the value of the first property, followed optionally by more
 	 *         name/value pairs, followed by %NULL.
 	 *
-	 * Return: a new instance of #PeasExtension wrapping
+	 * Returns: a new instance of #PeasExtension wrapping
 	 *     the @extension_type instance, or %NULL.
 	 */
 	public PeasExtension* createExtensionValist(PluginInfo info, GType extensionType, string firstProperty, void* varArgs)
@@ -194,7 +194,7 @@ public class Engine : ObjectG
 	 *     nParameters = the length of the @parameters array.
 	 *     parameters = an array of #GParameter.
 	 *
-	 * Return: a new instance of #PeasExtension wrapping
+	 * Returns: a new instance of #PeasExtension wrapping
 	 *     the @extension_type instance, or %NULL.
 	 */
 	public PeasExtension* createExtensionv(PluginInfo info, GType extensionType, GParameter[] parameters)
@@ -244,7 +244,7 @@ public class Engine : ObjectG
 	 * Please note that the returned array is a newly allocated one: you will need
 	 * to free it using g_strfreev().
 	 *
-	 * Return: A newly-allocated
+	 * Returns: A newly-allocated
 	 *     %NULL-terminated array of strings.
 	 */
 	public string[] getLoadedPlugins()
@@ -262,7 +262,7 @@ public class Engine : ObjectG
 	 * Params:
 	 *     pluginName = A plugin name.
 	 *
-	 * Return: the #PeasPluginInfo corresponding with
+	 * Returns: the #PeasPluginInfo corresponding with
 	 *     a given plugin module name.
 	 */
 	public PluginInfo getPluginInfo(string pluginName)
@@ -280,7 +280,7 @@ public class Engine : ObjectG
 	/**
 	 * Returns the list of #PeasPluginInfo known to the engine.
 	 *
-	 * Return: a #GList of
+	 * Returns: a #GList of
 	 *     #PeasPluginInfo. Note that the list belongs to the engine and should
 	 *     not be freed.
 	 */
@@ -304,7 +304,7 @@ public class Engine : ObjectG
 	 * Params:
 	 *     info = A #PeasPluginInfo.
 	 *
-	 * Return: whether the plugin has been successfully loaded.
+	 * Returns: whether the plugin has been successfully loaded.
 	 */
 	public bool loadPlugin(PluginInfo info)
 	{
@@ -336,7 +336,7 @@ public class Engine : ObjectG
 	 *     info = A #PeasPluginInfo.
 	 *     extensionType = The extension #GType.
 	 *
-	 * Return: if @info provides an extension for @extension_type.
+	 * Returns: if @info provides an extension for @extension_type.
 	 */
 	public bool providesExtension(PluginInfo info, GType extensionType)
 	{
@@ -379,7 +379,7 @@ public class Engine : ObjectG
 	 * Params:
 	 *     info = A #PeasPluginInfo.
 	 *
-	 * Return: whether the plugin has been successfully unloaded.
+	 * Returns: whether the plugin has been successfully unloaded.
 	 */
 	public bool unloadPlugin(PluginInfo info)
 	{

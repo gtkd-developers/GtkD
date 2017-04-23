@@ -83,7 +83,7 @@ public class InetSocketAddress : SocketAddress
 	 *     address = a #GInetAddress
 	 *     port = a port number
 	 *
-	 * Return: a new #GInetSocketAddress
+	 * Returns: a new #GInetSocketAddress
 	 *
 	 * Since: 2.22
 	 *
@@ -111,7 +111,7 @@ public class InetSocketAddress : SocketAddress
 	 *     address = the string form of an IP address
 	 *     port = a port number
 	 *
-	 * Return: a new #GInetSocketAddress, or %NULL if @address cannot be
+	 * Returns: a new #GInetSocketAddress, or %NULL if @address cannot be
 	 *     parsed.
 	 *
 	 * Since: 2.40
@@ -133,7 +133,7 @@ public class InetSocketAddress : SocketAddress
 	/**
 	 * Gets @address's #GInetAddress.
 	 *
-	 * Return: the #GInetAddress for @address, which must be
+	 * Returns: the #GInetAddress for @address, which must be
 	 *     g_object_ref()'d if it will be stored
 	 *
 	 * Since: 2.22
@@ -154,7 +154,7 @@ public class InetSocketAddress : SocketAddress
 	 * Gets the `sin6_flowinfo` field from @address,
 	 * which must be an IPv6 address.
 	 *
-	 * Return: the flowinfo field
+	 * Returns: the flowinfo field
 	 *
 	 * Since: 2.32
 	 */
@@ -166,7 +166,7 @@ public class InetSocketAddress : SocketAddress
 	/**
 	 * Gets @address's port.
 	 *
-	 * Return: the port for @address
+	 * Returns: the port for @address
 	 *
 	 * Since: 2.22
 	 */
@@ -179,7 +179,7 @@ public class InetSocketAddress : SocketAddress
 	 * Gets the `sin6_scope_id` field from @address,
 	 * which must be an IPv6 address.
 	 *
-	 * Return: the scope id field
+	 * Returns: the scope id field
 	 *
 	 * Since: 2.32
 	 */

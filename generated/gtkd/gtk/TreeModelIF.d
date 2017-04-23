@@ -292,7 +292,7 @@ public interface TreeModelIF{
 	 * Params:
 	 *     index = the column index
 	 *
-	 * Return: the type of the column
+	 * Returns: the type of the column
 	 */
 	public GType getColumnType(int index);
 
@@ -303,7 +303,7 @@ public interface TreeModelIF{
 	 * The flags supported should not change during the lifetime
 	 * of the @tree_model.
 	 *
-	 * Return: the flags supported by this interface
+	 * Returns: the flags supported by this interface
 	 */
 	public GtkTreeModelFlags getFlags();
 
@@ -315,7 +315,7 @@ public interface TreeModelIF{
 	 * Params:
 	 *     iter = the uninitialized #GtkTreeIter-struct
 	 *
-	 * Return: %TRUE, if @iter was set
+	 * Returns: %TRUE, if @iter was set
 	 */
 	public bool getIterFirst(out TreeIter iter);
 
@@ -327,14 +327,14 @@ public interface TreeModelIF{
 	 *     iter = an uninitialized #GtkTreeIter-struct
 	 *     pathString = a string representation of a #GtkTreePath-struct
 	 *
-	 * Return: %TRUE, if @iter was set
+	 * Returns: %TRUE, if @iter was set
 	 */
 	public bool getIterFromString(out TreeIter iter, string pathString);
 
 	/**
 	 * Returns the number of columns supported by @tree_model.
 	 *
-	 * Return: the number of columns
+	 * Returns: the number of columns
 	 */
 	public int getNColumns();
 
@@ -346,7 +346,7 @@ public interface TreeModelIF{
 	 * Params:
 	 *     iter = the #GtkTreeIter-struct
 	 *
-	 * Return: a newly-created #GtkTreePath-struct
+	 * Returns: a newly-created #GtkTreePath-struct
 	 */
 	public TreePath getPath(TreeIter iter);
 
@@ -360,7 +360,7 @@ public interface TreeModelIF{
 	 * Params:
 	 *     iter = a #GtkTreeIter-struct
 	 *
-	 * Return: a newly-allocated string.
+	 * Returns: a newly-allocated string.
 	 *     Must be freed with g_free().
 	 *
 	 * Since: 2.2
@@ -391,7 +391,7 @@ public interface TreeModelIF{
 	 *     iter = the new #GtkTreeIter-struct to be set to the child
 	 *     parent = the #GtkTreeIter-struct, or %NULL
 	 *
-	 * Return: %TRUE, if @iter has been set to the first child
+	 * Returns: %TRUE, if @iter has been set to the first child
 	 */
 	public bool iterChildren(out TreeIter iter, TreeIter parent);
 
@@ -401,7 +401,7 @@ public interface TreeModelIF{
 	 * Params:
 	 *     iter = the #GtkTreeIter-struct to test for children
 	 *
-	 * Return: %TRUE if @iter has children
+	 * Returns: %TRUE if @iter has children
 	 */
 	public bool iterHasChild(TreeIter iter);
 
@@ -414,7 +414,7 @@ public interface TreeModelIF{
 	 * Params:
 	 *     iter = the #GtkTreeIter-struct, or %NULL
 	 *
-	 * Return: the number of children of @iter
+	 * Returns: the number of children of @iter
 	 */
 	public int iterNChildren(TreeIter iter);
 
@@ -427,7 +427,7 @@ public interface TreeModelIF{
 	 * Params:
 	 *     iter = the #GtkTreeIter-struct
 	 *
-	 * Return: %TRUE if @iter has been changed to the next node
+	 * Returns: %TRUE if @iter has been changed to the next node
 	 */
 	public bool iterNext(TreeIter iter);
 
@@ -445,7 +445,7 @@ public interface TreeModelIF{
 	 *     parent = the #GtkTreeIter-struct to get the child from, or %NULL.
 	 *     n = the index of the desired child
 	 *
-	 * Return: %TRUE, if @parent has an @n-th child
+	 * Returns: %TRUE, if @parent has an @n-th child
 	 */
 	public bool iterNthChild(out TreeIter iter, TreeIter parent, int n);
 
@@ -464,7 +464,7 @@ public interface TreeModelIF{
 	 *     iter = the new #GtkTreeIter-struct to set to the parent
 	 *     child = the #GtkTreeIter-struct
 	 *
-	 * Return: %TRUE, if @iter is set to the parent of @child
+	 * Returns: %TRUE, if @iter is set to the parent of @child
 	 */
 	public bool iterParent(out TreeIter iter, TreeIter child);
 
@@ -477,7 +477,7 @@ public interface TreeModelIF{
 	 * Params:
 	 *     iter = the #GtkTreeIter-struct
 	 *
-	 * Return: %TRUE if @iter has been changed to the previous node
+	 * Returns: %TRUE if @iter has been changed to the previous node
 	 *
 	 * Since: 3.0
 	 */

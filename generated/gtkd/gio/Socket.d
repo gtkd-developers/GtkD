@@ -164,7 +164,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 *     type = the socket type to use.
 	 *     protocol = the id of the protocol to use, or 0 for default.
 	 *
-	 * Return: a #GSocket or %NULL on error.
+	 * Returns: a #GSocket or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Since: 2.22
@@ -209,7 +209,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 * Params:
 	 *     fd = a native socket file descriptor.
 	 *
-	 * Return: a #GSocket or %NULL on error.
+	 * Returns: a #GSocket or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Since: 2.22
@@ -251,7 +251,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 * Params:
 	 *     cancellable = a %GCancellable or %NULL
 	 *
-	 * Return: a new #GSocket, or %NULL on error.
+	 * Returns: a new #GSocket, or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Since: 2.22
@@ -306,7 +306,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 *     address = a #GSocketAddress specifying the local address.
 	 *     allowReuse = whether to allow reusing this address
 	 *
-	 * Return: %TRUE on success, %FALSE on error.
+	 * Returns: %TRUE on success, %FALSE on error.
 	 *
 	 * Since: 2.22
 	 *
@@ -331,7 +331,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 * This is used to check for errors when g_socket_connect() is
 	 * used in non-blocking mode.
 	 *
-	 * Return: %TRUE if no error, %FALSE otherwise, setting @error to the error
+	 * Returns: %TRUE if no error, %FALSE otherwise, setting @error to the error
 	 *
 	 * Since: 2.22
 	 *
@@ -382,7 +382,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 * only works if the client will close its connection after the server
 	 * does.)
 	 *
-	 * Return: %TRUE on success, %FALSE on error
+	 * Returns: %TRUE on success, %FALSE on error
 	 *
 	 * Since: 2.22
 	 *
@@ -424,7 +424,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 * Params:
 	 *     condition = a #GIOCondition mask to check
 	 *
-	 * Return: the @GIOCondition mask of the current state
+	 * Returns: the @GIOCondition mask of the current state
 	 *
 	 * Since: 2.22
 	 */
@@ -456,7 +456,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 *     timeout = the maximum time (in microseconds) to wait, or -1
 	 *     cancellable = a #GCancellable, or %NULL
 	 *
-	 * Return: %TRUE if the condition was met, %FALSE otherwise
+	 * Returns: %TRUE if the condition was met, %FALSE otherwise
 	 *
 	 * Since: 2.32
 	 *
@@ -492,7 +492,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 *     condition = a #GIOCondition mask to wait for
 	 *     cancellable = a #GCancellable, or %NULL
 	 *
-	 * Return: %TRUE if the condition was met, %FALSE otherwise
+	 * Returns: %TRUE if the condition was met, %FALSE otherwise
 	 *
 	 * Since: 2.22
 	 *
@@ -534,7 +534,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 *     address = a #GSocketAddress specifying the remote address.
 	 *     cancellable = a %GCancellable or %NULL
 	 *
-	 * Return: %TRUE if connected, %FALSE on error.
+	 * Returns: %TRUE if connected, %FALSE on error.
 	 *
 	 * Since: 2.22
 	 *
@@ -558,7 +558,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 * Creates a #GSocketConnection subclass of the right type for
 	 * @socket.
 	 *
-	 * Return: a #GSocketConnection
+	 * Returns: a #GSocketConnection
 	 *
 	 * Since: 2.22
 	 */
@@ -600,7 +600,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 *     condition = a #GIOCondition mask to monitor
 	 *     cancellable = a %GCancellable or %NULL
 	 *
-	 * Return: a newly allocated %GSource, free with g_source_unref().
+	 * Returns: a newly allocated %GSource, free with g_source_unref().
 	 *
 	 * Since: 2.22
 	 */
@@ -630,7 +630,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 * g_socket_get_available_bytes() first and then doing a receive of
 	 * exactly the right size.
 	 *
-	 * Return: the number of bytes that can be read from the socket
+	 * Returns: the number of bytes that can be read from the socket
 	 *     without blocking or truncating, or -1 on error.
 	 *
 	 * Since: 2.32
@@ -644,7 +644,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 * Gets the blocking mode of the socket. For details on blocking I/O,
 	 * see g_socket_set_blocking().
 	 *
-	 * Return: %TRUE if blocking I/O is used, %FALSE otherwise.
+	 * Returns: %TRUE if blocking I/O is used, %FALSE otherwise.
 	 *
 	 * Since: 2.22
 	 */
@@ -658,7 +658,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 * it is possible to send packets to broadcast
 	 * addresses.
 	 *
-	 * Return: the broadcast setting on @socket
+	 * Returns: the broadcast setting on @socket
 	 *
 	 * Since: 2.32
 	 */
@@ -681,7 +681,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 * g_unix_connection_send_credentials() /
 	 * g_unix_connection_receive_credentials() functions.
 	 *
-	 * Return: %NULL if @error is set, otherwise a #GCredentials object
+	 * Returns: %NULL if @error is set, otherwise a #GCredentials object
 	 *     that must be freed with g_object_unref().
 	 *
 	 * Since: 2.26
@@ -710,7 +710,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	/**
 	 * Gets the socket family of the socket.
 	 *
-	 * Return: a #GSocketFamily
+	 * Returns: a #GSocketFamily
 	 *
 	 * Since: 2.22
 	 */
@@ -726,7 +726,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 * doing platform specific or otherwise unusual operations
 	 * on the socket.
 	 *
-	 * Return: the file descriptor of the socket.
+	 * Returns: the file descriptor of the socket.
 	 *
 	 * Since: 2.22
 	 */
@@ -739,7 +739,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 * Gets the keepalive mode of the socket. For details on this,
 	 * see g_socket_set_keepalive().
 	 *
-	 * Return: %TRUE if keepalive is active, %FALSE otherwise.
+	 * Returns: %TRUE if keepalive is active, %FALSE otherwise.
 	 *
 	 * Since: 2.22
 	 */
@@ -752,7 +752,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 * Gets the listen backlog setting of the socket. For details on this,
 	 * see g_socket_set_listen_backlog().
 	 *
-	 * Return: the maximum number of pending connections.
+	 * Returns: the maximum number of pending connections.
 	 *
 	 * Since: 2.22
 	 */
@@ -766,7 +766,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 * useful if the socket has been bound to a local address,
 	 * either explicitly or implicitly when connecting.
 	 *
-	 * Return: a #GSocketAddress or %NULL on error.
+	 * Returns: a #GSocketAddress or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Since: 2.22
@@ -797,7 +797,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 * default), outgoing multicast packets will be looped back to
 	 * multicast listeners on the same host.
 	 *
-	 * Return: the multicast loopback setting on @socket
+	 * Returns: the multicast loopback setting on @socket
 	 *
 	 * Since: 2.32
 	 */
@@ -810,7 +810,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 * Gets the multicast time-to-live setting on @socket; see
 	 * g_socket_set_multicast_ttl() for more details.
 	 *
-	 * Return: the multicast time-to-live setting on @socket
+	 * Returns: the multicast time-to-live setting on @socket
 	 *
 	 * Since: 2.32
 	 */
@@ -839,7 +839,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 *     optname = the "name" of the option (eg, `SO_BROADCAST`)
 	 *     value = return location for the option value
 	 *
-	 * Return: success or failure. On failure, @error will be set, and
+	 * Returns: success or failure. On failure, @error will be set, and
 	 *     the system error value (`errno` or WSAGetLastError()) will still
 	 *     be set to the result of the getsockopt() call.
 	 *
@@ -865,7 +865,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 * Gets the socket protocol id the socket was created with.
 	 * In case the protocol is unknown, -1 is returned.
 	 *
-	 * Return: a protocol id, or -1 if unknown
+	 * Returns: a protocol id, or -1 if unknown
 	 *
 	 * Since: 2.22
 	 */
@@ -878,7 +878,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 * Try to get the remove address of a connected socket. This is only
 	 * useful for connection oriented sockets that have been connected.
 	 *
-	 * Return: a #GSocketAddress or %NULL on error.
+	 * Returns: a #GSocketAddress or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Since: 2.22
@@ -907,7 +907,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	/**
 	 * Gets the socket type of the socket.
 	 *
-	 * Return: a #GSocketType
+	 * Returns: a #GSocketType
 	 *
 	 * Since: 2.22
 	 */
@@ -920,7 +920,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 * Gets the timeout setting of the socket. For details on this, see
 	 * g_socket_set_timeout().
 	 *
-	 * Return: the timeout in seconds
+	 * Returns: the timeout in seconds
 	 *
 	 * Since: 2.26
 	 */
@@ -933,7 +933,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 * Gets the unicast time-to-live setting on @socket; see
 	 * g_socket_set_ttl() for more details.
 	 *
-	 * Return: the time-to-live setting on @socket
+	 * Returns: the time-to-live setting on @socket
 	 *
 	 * Since: 2.32
 	 */
@@ -945,7 +945,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	/**
 	 * Checks whether a socket is closed.
 	 *
-	 * Return: %TRUE if socket is closed, %FALSE otherwise
+	 * Returns: %TRUE if socket is closed, %FALSE otherwise
 	 *
 	 * Since: 2.22
 	 */
@@ -963,7 +963,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 * connect, this function will not return %TRUE until after you call
 	 * g_socket_check_connect_result().
 	 *
-	 * Return: %TRUE if socket is connected, %FALSE otherwise.
+	 * Returns: %TRUE if socket is connected, %FALSE otherwise.
 	 *
 	 * Since: 2.22
 	 */
@@ -990,7 +990,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 *     sourceSpecific = %TRUE if source-specific multicast should be used
 	 *     iface = Name of the interface to use, or %NULL
 	 *
-	 * Return: %TRUE on success, %FALSE on error.
+	 * Returns: %TRUE on success, %FALSE on error.
 	 *
 	 * Since: 2.32
 	 *
@@ -1023,7 +1023,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 *     sourceSpecific = %TRUE if source-specific multicast was used
 	 *     iface = Interface used
 	 *
-	 * Return: %TRUE on success, %FALSE on error.
+	 * Returns: %TRUE on success, %FALSE on error.
 	 *
 	 * Since: 2.32
 	 *
@@ -1053,7 +1053,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 * To set the maximum amount of outstanding clients, use
 	 * g_socket_set_listen_backlog().
 	 *
-	 * Return: %TRUE on success, %FALSE on error.
+	 * Returns: %TRUE on success, %FALSE on error.
 	 *
 	 * Since: 2.22
 	 *
@@ -1104,7 +1104,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 *     size = the number of bytes you want to read from the socket
 	 *     cancellable = a %GCancellable or %NULL
 	 *
-	 * Return: Number of bytes read, or 0 if the connection was closed by
+	 * Returns: Number of bytes read, or 0 if the connection was closed by
 	 *     the peer, or -1 on error
 	 *
 	 * Since: 2.22
@@ -1142,7 +1142,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 *     size = the number of bytes you want to read from the socket
 	 *     cancellable = a %GCancellable or %NULL
 	 *
-	 * Return: Number of bytes read, or 0 if the connection was closed by
+	 * Returns: Number of bytes read, or 0 if the connection was closed by
 	 *     the peer, or -1 on error
 	 *
 	 * Since: 2.22
@@ -1239,7 +1239,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 *     flags = a pointer to an int containing #GSocketMsgFlags flags
 	 *     cancellable = a %GCancellable or %NULL
 	 *
-	 * Return: Number of bytes read, or 0 if the connection was closed by
+	 * Returns: Number of bytes read, or 0 if the connection was closed by
 	 *     the peer, or -1 on error
 	 *
 	 * Since: 2.22
@@ -1327,7 +1327,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 *     flags = an int containing #GSocketMsgFlags flags for the overall operation
 	 *     cancellable = a %GCancellable or %NULL
 	 *
-	 * Return: number of messages received, or -1 on error. Note that the number
+	 * Returns: number of messages received, or -1 on error. Note that the number
 	 *     of messages received may be smaller than @num_messages if in non-blocking
 	 *     mode, if the peer closed the connection, or if @num_messages
 	 *     was larger than `UIO_MAXIOV` (1024), in which case the caller may re-try
@@ -1363,7 +1363,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 *     blocking = whether to do blocking or non-blocking I/O
 	 *     cancellable = a %GCancellable or %NULL
 	 *
-	 * Return: Number of bytes read, or 0 if the connection was closed by
+	 * Returns: Number of bytes read, or 0 if the connection was closed by
 	 *     the peer, or -1 on error
 	 *
 	 * Since: 2.26
@@ -1406,7 +1406,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 *     size = the number of bytes to send
 	 *     cancellable = a %GCancellable or %NULL
 	 *
-	 * Return: Number of bytes written (which may be less than @size), or -1
+	 * Returns: Number of bytes written (which may be less than @size), or -1
 	 *     on error
 	 *
 	 * Since: 2.22
@@ -1476,7 +1476,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 *     flags = an int containing #GSocketMsgFlags flags
 	 *     cancellable = a %GCancellable or %NULL
 	 *
-	 * Return: Number of bytes written (which may be less than @size), or -1
+	 * Returns: Number of bytes written (which may be less than @size), or -1
 	 *     on error
 	 *
 	 * Since: 2.22
@@ -1545,7 +1545,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 *     flags = an int containing #GSocketMsgFlags flags
 	 *     cancellable = a %GCancellable or %NULL
 	 *
-	 * Return: number of messages sent, or -1 on error. Note that the number of
+	 * Returns: number of messages sent, or -1 on error. Note that the number of
 	 *     messages sent may be smaller than @num_messages if the socket is
 	 *     non-blocking or if @num_messages was larger than UIO_MAXIOV (1024),
 	 *     in which case the caller may re-try to send the remaining messages.
@@ -1582,7 +1582,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 *     size = the number of bytes to send
 	 *     cancellable = a %GCancellable or %NULL
 	 *
-	 * Return: Number of bytes written (which may be less than @size), or -1
+	 * Returns: Number of bytes written (which may be less than @size), or -1
 	 *     on error
 	 *
 	 * Since: 2.22
@@ -1615,7 +1615,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 *     blocking = whether to do blocking or non-blocking I/O
 	 *     cancellable = a %GCancellable or %NULL
 	 *
-	 * Return: Number of bytes written (which may be less than @size), or -1
+	 * Returns: Number of bytes written (which may be less than @size), or -1
 	 *     on error
 	 *
 	 * Since: 2.26
@@ -1765,7 +1765,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 *     optname = the "name" of the option (eg, `SO_BROADCAST`)
 	 *     value = the value to set the option to
 	 *
-	 * Return: success or failure. On failure, @error will be set, and
+	 * Returns: success or failure. On failure, @error will be set, and
 	 *     the system error value (`errno` or WSAGetLastError()) will still
 	 *     be set to the result of the setsockopt() call.
 	 *
@@ -1853,7 +1853,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 *     shutdownRead = whether to shut down the read side
 	 *     shutdownWrite = whether to shut down the write side
 	 *
-	 * Return: %TRUE on success, %FALSE on error
+	 * Returns: %TRUE on success, %FALSE on error
 	 *
 	 * Since: 2.22
 	 *
@@ -1884,7 +1884,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 * No other types of sockets are currently considered as being capable
 	 * of speaking IPv4.
 	 *
-	 * Return: %TRUE if this socket can be used with IPv4.
+	 * Returns: %TRUE if this socket can be used with IPv4.
 	 *
 	 * Since: 2.22
 	 */

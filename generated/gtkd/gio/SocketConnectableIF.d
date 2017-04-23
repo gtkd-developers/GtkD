@@ -101,7 +101,7 @@ public interface SocketConnectableIF{
 	/**
 	 * Creates a #GSocketAddressEnumerator for @connectable.
 	 *
-	 * Return: a new #GSocketAddressEnumerator.
+	 * Returns: a new #GSocketAddressEnumerator.
 	 *
 	 * Since: 2.22
 	 */
@@ -116,7 +116,7 @@ public interface SocketConnectableIF{
 	 * g_socket_connectable_proxy_enumerate(), this will fall back to
 	 * calling g_socket_connectable_enumerate().
 	 *
-	 * Return: a new #GSocketAddressEnumerator.
+	 * Returns: a new #GSocketAddressEnumerator.
 	 *
 	 * Since: 2.26
 	 */
@@ -131,7 +131,7 @@ public interface SocketConnectableIF{
 	 * If the #GSocketConnectable implementation does not support string formatting,
 	 * the implementation’s type name will be returned as a fallback.
 	 *
-	 * Return: the formatted string
+	 * Returns: the formatted string
 	 *
 	 * Since: 2.48
 	 */

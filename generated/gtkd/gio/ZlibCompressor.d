@@ -85,7 +85,7 @@ public class ZlibCompressor : ObjectG, ConverterIF
 	 *     format = The format to use for the compressed data
 	 *     level = compression level (0-9), -1 for default
 	 *
-	 * Return: a new #GZlibCompressor
+	 * Returns: a new #GZlibCompressor
 	 *
 	 * Since: 2.24
 	 *
@@ -106,7 +106,7 @@ public class ZlibCompressor : ObjectG, ConverterIF
 	/**
 	 * Returns the #GZlibCompressor:file-info property.
 	 *
-	 * Return: a #GFileInfo, or %NULL
+	 * Returns: a #GFileInfo, or %NULL
 	 *
 	 * Since: 2.26
 	 */

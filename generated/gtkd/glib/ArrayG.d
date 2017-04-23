@@ -68,7 +68,7 @@ public class ArrayG
 	 *     data = a pointer to the elements to append to the end of the array
 	 *     len = the number of elements to append
 	 *
-	 * Return: the #GArray
+	 * Returns: the #GArray
 	 */
 	public ArrayG appendVals(void* data, uint len)
 	{
@@ -97,7 +97,7 @@ public class ArrayG
 	 * Params:
 	 *     freeSegment = if %TRUE the actual element data is freed as well
 	 *
-	 * Return: the element data if @free_segment is %FALSE, otherwise
+	 * Returns: the element data if @free_segment is %FALSE, otherwise
 	 *     %NULL. The element data should be freed using g_free().
 	 */
 	public string free(bool freeSegment)
@@ -111,7 +111,7 @@ public class ArrayG
 	/**
 	 * Gets the size of the elements in @array.
 	 *
-	 * Return: Size of each element, in bytes
+	 * Returns: Size of each element, in bytes
 	 *
 	 * Since: 2.22
 	 */
@@ -128,7 +128,7 @@ public class ArrayG
 	 *     data = a pointer to the elements to insert
 	 *     len = the number of elements to insert
 	 *
-	 * Return: the #GArray
+	 * Returns: the #GArray
 	 */
 	public ArrayG insertVals(uint index, void* data, uint len)
 	{
@@ -152,7 +152,7 @@ public class ArrayG
 	 *         to 0 when they are allocated
 	 *     elementSize = the size of each element in bytes
 	 *
-	 * Return: the new #GArray
+	 * Returns: the new #GArray
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -179,7 +179,7 @@ public class ArrayG
 	 *     data = a pointer to the elements to prepend to the start of the array
 	 *     len = the number of elements to prepend
 	 *
-	 * Return: the #GArray
+	 * Returns: the #GArray
 	 */
 	public ArrayG prependVals(void* data, uint len)
 	{
@@ -197,7 +197,7 @@ public class ArrayG
 	 * Atomically increments the reference count of @array by one.
 	 * This function is MT-safe and may be called from any thread.
 	 *
-	 * Return: The passed in #GArray
+	 * Returns: The passed in #GArray
 	 *
 	 * Since: 2.22
 	 */
@@ -220,7 +220,7 @@ public class ArrayG
 	 * Params:
 	 *     index = the index of the element to remove
 	 *
-	 * Return: the #GArray
+	 * Returns: the #GArray
 	 */
 	public ArrayG removeIndex(uint index)
 	{
@@ -243,7 +243,7 @@ public class ArrayG
 	 * Params:
 	 *     index = the index of the element to remove
 	 *
-	 * Return: the #GArray
+	 * Returns: the #GArray
 	 */
 	public ArrayG removeIndexFast(uint index)
 	{
@@ -265,7 +265,7 @@ public class ArrayG
 	 *     index = the index of the first element to remove
 	 *     length = the number of elements to remove
 	 *
-	 * Return: the #GArray
+	 * Returns: the #GArray
 	 *
 	 * Since: 2.4
 	 */
@@ -309,7 +309,7 @@ public class ArrayG
 	 * Params:
 	 *     length = the new size of the #GArray
 	 *
-	 * Return: the #GArray
+	 * Returns: the #GArray
 	 */
 	public ArrayG setSize(uint length)
 	{
@@ -337,7 +337,7 @@ public class ArrayG
 	 *     elementSize = size of each element in the array
 	 *     reservedSize = number of elements preallocated
 	 *
-	 * Return: the new #GArray
+	 * Returns: the new #GArray
 	 */
 	public static ArrayG sizedNew(bool zeroTerminated, bool clear, uint elementSize, uint reservedSize)
 	{

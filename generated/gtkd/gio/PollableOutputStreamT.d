@@ -58,7 +58,7 @@ public template PollableOutputStreamT(TStruct)
 	 * For any given stream, the value returned by this method is constant;
 	 * a stream cannot switch from pollable to non-pollable or vice versa.
 	 *
-	 * Return: %TRUE if @stream is pollable, %FALSE if not.
+	 * Returns: %TRUE if @stream is pollable, %FALSE if not.
 	 *
 	 * Since: 2.28
 	 */
@@ -80,7 +80,7 @@ public template PollableOutputStreamT(TStruct)
 	 * Params:
 	 *     cancellable = a #GCancellable, or %NULL
 	 *
-	 * Return: a new #GSource
+	 * Returns: a new #GSource
 	 *
 	 * Since: 2.28
 	 */
@@ -106,7 +106,7 @@ public template PollableOutputStreamT(TStruct)
 	 * g_pollable_output_stream_write_nonblocking(), which will return a
 	 * %G_IO_ERROR_WOULD_BLOCK error rather than blocking.
 	 *
-	 * Return: %TRUE if @stream is writable, %FALSE if not. If an error
+	 * Returns: %TRUE if @stream is writable, %FALSE if not. If an error
 	 *     has occurred on @stream, this will result in
 	 *     g_pollable_output_stream_is_writable() returning %TRUE, and the
 	 *     next attempt to write will return the error.
@@ -137,7 +137,7 @@ public template PollableOutputStreamT(TStruct)
 	 *     count = the number of bytes you want to write
 	 *     cancellable = a #GCancellable, or %NULL
 	 *
-	 * Return: the number of bytes written, or -1 on error (including
+	 * Returns: the number of bytes written, or -1 on error (including
 	 *     %G_IO_ERROR_WOULD_BLOCK).
 	 *
 	 * Throws: GException on failure.

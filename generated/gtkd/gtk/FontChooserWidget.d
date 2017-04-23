@@ -98,7 +98,7 @@ public class FontChooserWidget : Box, FontChooserIF
 	/**
 	 * Creates a new #GtkFontChooserWidget.
 	 *
-	 * Return: a new #GtkFontChooserWidget
+	 * Returns: a new #GtkFontChooserWidget
 	 *
 	 * Since: 3.2
 	 *

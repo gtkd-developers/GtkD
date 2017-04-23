@@ -92,7 +92,7 @@ public class RecentChooserWidget : Box, RecentChooserIF
 	 * Creates a new #GtkRecentChooserWidget object.  This is an embeddable widget
 	 * used to access the recently used resources list.
 	 *
-	 * Return: a new #GtkRecentChooserWidget
+	 * Returns: a new #GtkRecentChooserWidget
 	 *
 	 * Since: 2.10
 	 *
@@ -119,7 +119,7 @@ public class RecentChooserWidget : Box, RecentChooserIF
 	 * Params:
 	 *     manager = a #GtkRecentManager
 	 *
-	 * Return: a new #GtkRecentChooserWidget
+	 * Returns: a new #GtkRecentChooserWidget
 	 *
 	 * Since: 2.10
 	 *

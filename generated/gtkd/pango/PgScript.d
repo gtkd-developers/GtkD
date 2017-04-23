@@ -46,7 +46,7 @@ public struct PgScript
 	 * Params:
 	 *     ch = a Unicode character
 	 *
-	 * Return: the #PangoScript for the character.
+	 * Returns: the #PangoScript for the character.
 	 *
 	 * Since: 1.4
 	 */
@@ -90,7 +90,7 @@ public struct PgScript
 	 * Params:
 	 *     script = a #PangoScript
 	 *
-	 * Return: a #PangoLanguage that is representative
+	 * Returns: a #PangoLanguage that is representative
 	 *     of the script, or %NULL if no such language exists.
 	 *
 	 * Since: 1.4

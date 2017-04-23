@@ -105,7 +105,7 @@ public class ScaleButton : Button, OrientableIF
 	 *         array of icon names, or %NULL if you want to set the list
 	 *         later with gtk_scale_button_set_icons()
 	 *
-	 * Return: a new #GtkScaleButton
+	 * Returns: a new #GtkScaleButton
 	 *
 	 * Since: 2.12
 	 *
@@ -127,7 +127,7 @@ public class ScaleButton : Button, OrientableIF
 	 * Gets the #GtkAdjustment associated with the #GtkScaleButton’s scale.
 	 * See gtk_range_get_adjustment() for details.
 	 *
-	 * Return: the adjustment associated with the scale
+	 * Returns: the adjustment associated with the scale
 	 *
 	 * Since: 2.12
 	 */
@@ -146,7 +146,7 @@ public class ScaleButton : Button, OrientableIF
 	/**
 	 * Retrieves the minus button of the #GtkScaleButton.
 	 *
-	 * Return: the minus button of the #GtkScaleButton as a #GtkButton
+	 * Returns: the minus button of the #GtkScaleButton as a #GtkButton
 	 *
 	 * Since: 2.14
 	 */
@@ -165,7 +165,7 @@ public class ScaleButton : Button, OrientableIF
 	/**
 	 * Retrieves the plus button of the #GtkScaleButton.
 	 *
-	 * Return: the plus button of the #GtkScaleButton as a #GtkButton
+	 * Returns: the plus button of the #GtkScaleButton as a #GtkButton
 	 *
 	 * Since: 2.14
 	 */
@@ -184,7 +184,7 @@ public class ScaleButton : Button, OrientableIF
 	/**
 	 * Retrieves the popup of the #GtkScaleButton.
 	 *
-	 * Return: the popup of the #GtkScaleButton
+	 * Returns: the popup of the #GtkScaleButton
 	 *
 	 * Since: 2.14
 	 */
@@ -203,7 +203,7 @@ public class ScaleButton : Button, OrientableIF
 	/**
 	 * Gets the current value of the scale button.
 	 *
-	 * Return: current value of the scale button
+	 * Returns: current value of the scale button
 	 *
 	 * Since: 2.12
 	 */

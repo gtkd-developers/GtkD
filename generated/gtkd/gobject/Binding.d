@@ -153,7 +153,7 @@ public class Binding : ObjectG
 	/**
 	 * Retrieves the flags passed when constructing the #GBinding.
 	 *
-	 * Return: the #GBindingFlags used by the #GBinding
+	 * Returns: the #GBindingFlags used by the #GBinding
 	 *
 	 * Since: 2.26
 	 */
@@ -165,7 +165,7 @@ public class Binding : ObjectG
 	/**
 	 * Retrieves the #GObject instance used as the source of the binding.
 	 *
-	 * Return: the source #GObject
+	 * Returns: the source #GObject
 	 *
 	 * Since: 2.26
 	 */
@@ -185,7 +185,7 @@ public class Binding : ObjectG
 	 * Retrieves the name of the property of #GBinding:source used as the source
 	 * of the binding.
 	 *
-	 * Return: the name of the source property
+	 * Returns: the name of the source property
 	 *
 	 * Since: 2.26
 	 */
@@ -197,7 +197,7 @@ public class Binding : ObjectG
 	/**
 	 * Retrieves the #GObject instance used as the target of the binding.
 	 *
-	 * Return: the target #GObject
+	 * Returns: the target #GObject
 	 *
 	 * Since: 2.26
 	 */
@@ -217,7 +217,7 @@ public class Binding : ObjectG
 	 * Retrieves the name of the property of #GBinding:target used as the target
 	 * of the binding.
 	 *
-	 * Return: the name of the target property
+	 * Returns: the name of the target property
 	 *
 	 * Since: 2.26
 	 */

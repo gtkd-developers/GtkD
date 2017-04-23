@@ -74,7 +74,7 @@ public struct Enums
 	 *     enumClass = a #GEnumClass
 	 *     value = the value to look up
 	 *
-	 * Return: the #GEnumValue for @value, or %NULL
+	 * Returns: the #GEnumValue for @value, or %NULL
 	 *     if @value is not a member of the enumeration
 	 */
 	public static GEnumValue* getValue(GEnumClass* enumClass, int value)
@@ -89,7 +89,7 @@ public struct Enums
 	 *     enumClass = a #GEnumClass
 	 *     name = the name to look up
 	 *
-	 * Return: the #GEnumValue with name @name,
+	 * Returns: the #GEnumValue with name @name,
 	 *     or %NULL if the enumeration doesn't have a member
 	 *     with that name
 	 */
@@ -105,7 +105,7 @@ public struct Enums
 	 *     enumClass = a #GEnumClass
 	 *     nick = the nickname to look up
 	 *
-	 * Return: the #GEnumValue with nickname @nick,
+	 * Returns: the #GEnumValue with nickname @nick,
 	 *     or %NULL if the enumeration doesn't have a member
 	 *     with that nickname
 	 */
@@ -128,7 +128,7 @@ public struct Enums
 	 *         members being 0. GObject keeps a reference to the data, so it cannot
 	 *         be stack-allocated.
 	 *
-	 * Return: The new type identifier.
+	 * Returns: The new type identifier.
 	 */
 	public static GType registerStatic(string name, GEnumValue* constStaticValues)
 	{

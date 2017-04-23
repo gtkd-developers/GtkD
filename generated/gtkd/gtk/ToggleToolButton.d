@@ -98,7 +98,7 @@ public class ToggleToolButton : ToolButton
 	/**
 	 * Returns a new #GtkToggleToolButton
 	 *
-	 * Return: a newly created #GtkToggleToolButton
+	 * Returns: a newly created #GtkToggleToolButton
 	 *
 	 * Since: 2.4
 	 *
@@ -128,7 +128,7 @@ public class ToggleToolButton : ToolButton
 	 * Params:
 	 *     stockId = the name of the stock item
 	 *
-	 * Return: A new #GtkToggleToolButton
+	 * Returns: A new #GtkToggleToolButton
 	 *
 	 * Since: 2.4
 	 *
@@ -150,7 +150,7 @@ public class ToggleToolButton : ToolButton
 	 * Queries a #GtkToggleToolButton and returns its current state.
 	 * Returns %TRUE if the toggle button is pressed in and %FALSE if it is raised.
 	 *
-	 * Return: %TRUE if the toggle tool button is pressed in, %FALSE if not
+	 * Returns: %TRUE if the toggle tool button is pressed in, %FALSE if not
 	 *
 	 * Since: 2.4
 	 */

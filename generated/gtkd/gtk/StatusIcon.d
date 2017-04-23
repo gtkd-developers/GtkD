@@ -169,7 +169,7 @@ public class StatusIcon : ObjectG
 	 *
 	 * Deprecated: Use notifications
 	 *
-	 * Return: a new #GtkStatusIcon
+	 * Returns: a new #GtkStatusIcon
 	 *
 	 * Since: 2.10
 	 *
@@ -196,7 +196,7 @@ public class StatusIcon : ObjectG
 	 * Params:
 	 *     icon = a #GIcon
 	 *
-	 * Return: a new #GtkStatusIcon
+	 * Returns: a new #GtkStatusIcon
 	 *
 	 * Since: 2.14
 	 *
@@ -225,7 +225,7 @@ public class StatusIcon : ObjectG
 	 * Params:
 	 *     pixbuf = a #GdkPixbuf
 	 *
-	 * Return: a new #GtkStatusIcon
+	 * Returns: a new #GtkStatusIcon
 	 *
 	 * Since: 2.10
 	 *
@@ -295,7 +295,7 @@ public class StatusIcon : ObjectG
 	 *         or %NULL. A panel at the top or bottom of the screen is
 	 *         horizontal, a panel at the left or right is vertical.
 	 *
-	 * Return: %TRUE if the location information has
+	 * Returns: %TRUE if the location information has
 	 *     been filled in
 	 *
 	 * Since: 2.10
@@ -322,7 +322,7 @@ public class StatusIcon : ObjectG
 	 *
 	 * Deprecated: Use notifications
 	 *
-	 * Return: the displayed icon, or %NULL if the image is empty
+	 * Returns: the displayed icon, or %NULL if the image is empty
 	 *
 	 * Since: 2.14
 	 */
@@ -344,7 +344,7 @@ public class StatusIcon : ObjectG
 	 *
 	 * Deprecated: Use notifications
 	 *
-	 * Return: current value of has-tooltip on @status_icon.
+	 * Returns: current value of has-tooltip on @status_icon.
 	 *
 	 * Since: 2.16
 	 */
@@ -362,7 +362,7 @@ public class StatusIcon : ObjectG
 	 *
 	 * Deprecated: Use notifications
 	 *
-	 * Return: name of the displayed icon, or %NULL if the image is empty.
+	 * Returns: name of the displayed icon, or %NULL if the image is empty.
 	 *
 	 * Since: 2.10
 	 */
@@ -380,7 +380,7 @@ public class StatusIcon : ObjectG
 	 *
 	 * Deprecated: Use notifications
 	 *
-	 * Return: the displayed pixbuf,
+	 * Returns: the displayed pixbuf,
 	 *     or %NULL if the image is empty.
 	 *
 	 * Since: 2.10
@@ -402,7 +402,7 @@ public class StatusIcon : ObjectG
 	 *
 	 * Deprecated: Use notifications
 	 *
-	 * Return: a #GdkScreen.
+	 * Returns: a #GdkScreen.
 	 *
 	 * Since: 2.12
 	 */
@@ -430,7 +430,7 @@ public class StatusIcon : ObjectG
 	 *
 	 * Deprecated: Use notifications
 	 *
-	 * Return: the size that is available for the image
+	 * Returns: the size that is available for the image
 	 *
 	 * Since: 2.10
 	 */
@@ -448,7 +448,7 @@ public class StatusIcon : ObjectG
 	 *
 	 * Deprecated: Use gtk_status_icon_get_icon_name() instead.
 	 *
-	 * Return: stock id of the displayed stock icon,
+	 * Returns: stock id of the displayed stock icon,
 	 *     or %NULL if the image is empty.
 	 *
 	 * Since: 2.10
@@ -465,7 +465,7 @@ public class StatusIcon : ObjectG
 	 *
 	 * Deprecated: Use notifications
 	 *
-	 * Return: the image representation being used
+	 * Returns: the image representation being used
 	 *
 	 * Since: 2.10
 	 */
@@ -479,7 +479,7 @@ public class StatusIcon : ObjectG
 	 *
 	 * Deprecated: Use notifications
 	 *
-	 * Return: the title of the status icon
+	 * Returns: the title of the status icon
 	 *
 	 * Since: 2.18
 	 */
@@ -493,7 +493,7 @@ public class StatusIcon : ObjectG
 	 *
 	 * Deprecated: Use notifications
 	 *
-	 * Return: the tooltip text, or %NULL. You should free the
+	 * Returns: the tooltip text, or %NULL. You should free the
 	 *     returned string with g_free() when done.
 	 *
 	 * Since: 2.16
@@ -511,7 +511,7 @@ public class StatusIcon : ObjectG
 	 *
 	 * Deprecated: Use notifications
 	 *
-	 * Return: the tooltip text, or %NULL. You should free the
+	 * Returns: the tooltip text, or %NULL. You should free the
 	 *     returned string with g_free() when done.
 	 *
 	 * Since: 2.16
@@ -532,7 +532,7 @@ public class StatusIcon : ObjectG
 	 *
 	 * Deprecated: Use notifications
 	 *
-	 * Return: %TRUE if the status icon is visible
+	 * Returns: %TRUE if the status icon is visible
 	 *
 	 * Since: 2.10
 	 */
@@ -555,7 +555,7 @@ public class StatusIcon : ObjectG
 	 *
 	 * Deprecated: Use notifications
 	 *
-	 * Return: An 32 bit unsigned integer identifier for the
+	 * Returns: An 32 bit unsigned integer identifier for the
 	 *     underlying X11 Window
 	 *
 	 * Since: 2.14
@@ -571,7 +571,7 @@ public class StatusIcon : ObjectG
 	 *
 	 * Deprecated: Use notifications
 	 *
-	 * Return: %TRUE if the status icon is embedded in
+	 * Returns: %TRUE if the status icon is embedded in
 	 *     a notification area.
 	 *
 	 * Since: 2.10
@@ -885,7 +885,7 @@ public class StatusIcon : ObjectG
 	 *     event = the #GdkEventButton which triggered
 	 *         this signal
 	 *
-	 * Return: %TRUE to stop other handlers from being invoked
+	 * Returns: %TRUE to stop other handlers from being invoked
 	 *     for the event. %FALSE to propagate the event further.
 	 *
 	 * Since: 2.14
@@ -950,7 +950,7 @@ public class StatusIcon : ObjectG
 	 *     event = the #GdkEventButton which triggered
 	 *         this signal
 	 *
-	 * Return: %TRUE to stop other handlers from being invoked
+	 * Returns: %TRUE to stop other handlers from being invoked
 	 *     for the event. %FALSE to propagate the event further.
 	 *
 	 * Since: 2.14
@@ -1015,7 +1015,7 @@ public class StatusIcon : ObjectG
 	 *     event = the #GdkEventButton which triggered
 	 *         this signal
 	 *
-	 * Return: %TRUE to stop other handlers from being invoked
+	 * Returns: %TRUE to stop other handlers from being invoked
 	 *     for the event. %FALSE to propagate the event further.
 	 *
 	 * Since: 2.14
@@ -1080,7 +1080,7 @@ public class StatusIcon : ObjectG
 	 *     event = the #GdkEventButton which triggered
 	 *         this signal
 	 *
-	 * Return: %TRUE to stop other handlers from being invoked
+	 * Returns: %TRUE to stop other handlers from being invoked
 	 *     for the event. %FALSE to propagate the event further.
 	 *
 	 * Since: 2.14
@@ -1227,7 +1227,7 @@ public class StatusIcon : ObjectG
 	 *     keyboardMode = %TRUE if the tooltip was trigged using the keyboard
 	 *     tooltip = a #GtkTooltip
 	 *
-	 * Return: %TRUE if @tooltip should be shown right now, %FALSE otherwise.
+	 * Returns: %TRUE if @tooltip should be shown right now, %FALSE otherwise.
 	 *
 	 * Since: 2.16
 	 */
@@ -1291,7 +1291,7 @@ public class StatusIcon : ObjectG
 	 *     event = the #GdkEventScroll which triggered
 	 *         this signal
 	 *
-	 * Return: %TRUE to stop other handlers from being invoked for the event.
+	 * Returns: %TRUE to stop other handlers from being invoked for the event.
 	 *     %FALSE to propagate the event further.
 	 *
 	 * Since: 2.16
@@ -1356,7 +1356,7 @@ public class StatusIcon : ObjectG
 	 *     event = the #GdkEventScroll which triggered
 	 *         this signal
 	 *
-	 * Return: %TRUE to stop other handlers from being invoked for the event.
+	 * Returns: %TRUE to stop other handlers from being invoked for the event.
 	 *     %FALSE to propagate the event further.
 	 *
 	 * Since: 2.16
@@ -1417,7 +1417,7 @@ public class StatusIcon : ObjectG
 	 * Params:
 	 *     size = the new size
 	 *
-	 * Return: %TRUE if the icon was updated for the new
+	 * Returns: %TRUE if the icon was updated for the new
 	 *     size. Otherwise, GTK+ will scale the icon as necessary.
 	 *
 	 * Since: 2.10

@@ -303,7 +303,7 @@ public class Label : Misc
 	 * Gets the angle of rotation for the label. See
 	 * gtk_label_set_angle().
 	 *
-	 * Return: the angle of rotation for the label
+	 * Returns: the angle of rotation for the label
 	 *
 	 * Since: 2.6
 	 */
@@ -320,7 +320,7 @@ public class Label : Misc
 	 * effective attributes for the label, use
 	 * pango_layout_get_attribute (gtk_label_get_layout (label)).
 	 *
-	 * Return: the attribute list, or %NULL
+	 * Returns: the attribute list, or %NULL
 	 *     if none was set.
 	 */
 	public PgAttributeList getAttributes()
@@ -344,7 +344,7 @@ public class Label : Misc
 	 * This function is intended for use in a #GtkLabel::activate-link handler
 	 * or for use in a #GtkWidget::query-tooltip handler.
 	 *
-	 * Return: the currently active URI. The string is owned by GTK+ and must
+	 * Returns: the currently active URI. The string is owned by GTK+ and must
 	 *     not be freed or modified.
 	 *
 	 * Since: 2.18
@@ -357,7 +357,7 @@ public class Label : Misc
 	/**
 	 * Returns the ellipsizing position of the label. See gtk_label_set_ellipsize().
 	 *
-	 * Return: #PangoEllipsizeMode
+	 * Returns: #PangoEllipsizeMode
 	 *
 	 * Since: 2.6
 	 */
@@ -369,7 +369,7 @@ public class Label : Misc
 	/**
 	 * Returns the justification of the label. See gtk_label_set_justify().
 	 *
-	 * Return: #GtkJustification
+	 * Returns: #GtkJustification
 	 */
 	public GtkJustification getJustify()
 	{
@@ -381,7 +381,7 @@ public class Label : Misc
 	 * underlines indicating mnemonics and Pango markup. (See
 	 * gtk_label_get_text()).
 	 *
-	 * Return: the text of the label widget. This string is
+	 * Returns: the text of the label widget. This string is
 	 *     owned by the widget and must not be modified or freed.
 	 */
 	public string getLabel()
@@ -397,7 +397,7 @@ public class Label : Misc
 	 * freed by the caller. The @label is free to recreate its layout at
 	 * any time, so it should be considered read-only.
 	 *
-	 * Return: the #PangoLayout for this label
+	 * Returns: the #PangoLayout for this label
 	 */
 	public PgLayout getLayout()
 	{
@@ -435,7 +435,7 @@ public class Label : Misc
 	 * Returns whether lines in the label are automatically wrapped.
 	 * See gtk_label_set_line_wrap().
 	 *
-	 * Return: %TRUE if the lines of the label are automatically wrapped.
+	 * Returns: %TRUE if the lines of the label are automatically wrapped.
 	 */
 	public bool getLineWrap()
 	{
@@ -445,7 +445,7 @@ public class Label : Misc
 	/**
 	 * Returns line wrap mode used by the label. See gtk_label_set_line_wrap_mode().
 	 *
-	 * Return: %TRUE if the lines of the label are automatically wrapped.
+	 * Returns: %TRUE if the lines of the label are automatically wrapped.
 	 *
 	 * Since: 2.10
 	 */
@@ -458,7 +458,7 @@ public class Label : Misc
 	 * Gets the number of lines to which an ellipsized, wrapping
 	 * label should be limited. See gtk_label_set_lines().
 	 *
-	 * Return: The number of lines
+	 * Returns: The number of lines
 	 *
 	 * Since: 3.10
 	 */
@@ -471,7 +471,7 @@ public class Label : Misc
 	 * Retrieves the desired maximum width of @label, in characters. See
 	 * gtk_label_set_width_chars().
 	 *
-	 * Return: the maximum width of the label in characters.
+	 * Returns: the maximum width of the label in characters.
 	 *
 	 * Since: 2.6
 	 */
@@ -485,7 +485,7 @@ public class Label : Misc
 	 * returns the keyval used for the mnemonic accelerator. If there is no
 	 * mnemonic set up it returns #GDK_KEY_VoidSymbol.
 	 *
-	 * Return: GDK keyval usable for accelerators, or #GDK_KEY_VoidSymbol
+	 * Returns: GDK keyval usable for accelerators, or #GDK_KEY_VoidSymbol
 	 */
 	public uint getMnemonicKeyval()
 	{
@@ -496,7 +496,7 @@ public class Label : Misc
 	 * Retrieves the target of the mnemonic (keyboard shortcut) of this
 	 * label. See gtk_label_set_mnemonic_widget().
 	 *
-	 * Return: the target of the label’s mnemonic,
+	 * Returns: the target of the label’s mnemonic,
 	 *     or %NULL if none has been set and the default algorithm will be used.
 	 */
 	public Widget getMnemonicWidget()
@@ -514,7 +514,7 @@ public class Label : Misc
 	/**
 	 * Gets the value set by gtk_label_set_selectable().
 	 *
-	 * Return: %TRUE if the user can copy text from the label
+	 * Returns: %TRUE if the user can copy text from the label
 	 */
 	public bool getSelectable()
 	{
@@ -529,7 +529,7 @@ public class Label : Misc
 	 *     start = return location for start of selection, as a character offset
 	 *     end = return location for end of selection, as a character offset
 	 *
-	 * Return: %TRUE if selection is non-empty
+	 * Returns: %TRUE if selection is non-empty
 	 */
 	public bool getSelectionBounds(out int start, out int end)
 	{
@@ -539,7 +539,7 @@ public class Label : Misc
 	/**
 	 * Returns whether the label is in single line mode.
 	 *
-	 * Return: %TRUE when the label is in single line mode.
+	 * Returns: %TRUE when the label is in single line mode.
 	 *
 	 * Since: 2.6
 	 */
@@ -553,7 +553,7 @@ public class Label : Misc
 	 * screen. This does not include any embedded underlines
 	 * indicating mnemonics or Pango markup. (See gtk_label_get_label())
 	 *
-	 * Return: the text in the label widget. This is the internal
+	 * Returns: the text in the label widget. This is the internal
 	 *     string used by the label, and must not be modified.
 	 */
 	public string getText()
@@ -565,7 +565,7 @@ public class Label : Misc
 	 * Returns whether the label is currently keeping track
 	 * of clicked links.
 	 *
-	 * Return: %TRUE if clicked links are remembered
+	 * Returns: %TRUE if clicked links are remembered
 	 *
 	 * Since: 2.18
 	 */
@@ -579,7 +579,7 @@ public class Label : Misc
 	 * the [Pango text markup language][PangoMarkupFormat].
 	 * See gtk_label_set_use_markup ().
 	 *
-	 * Return: %TRUE if the label’s text will be parsed for markup.
+	 * Returns: %TRUE if the label’s text will be parsed for markup.
 	 */
 	public bool getUseMarkup()
 	{
@@ -590,7 +590,7 @@ public class Label : Misc
 	 * Returns whether an embedded underline in the label indicates a
 	 * mnemonic. See gtk_label_set_use_underline().
 	 *
-	 * Return: %TRUE whether an embedded underline in the label indicates
+	 * Returns: %TRUE whether an embedded underline in the label indicates
 	 *     the mnemonic accelerator keys.
 	 */
 	public bool getUseUnderline()
@@ -602,7 +602,7 @@ public class Label : Misc
 	 * Retrieves the desired width of @label, in characters. See
 	 * gtk_label_set_width_chars().
 	 *
-	 * Return: the width of the label in characters.
+	 * Returns: the width of the label in characters.
 	 *
 	 * Since: 2.6
 	 */
@@ -614,7 +614,7 @@ public class Label : Misc
 	/**
 	 * Gets the #GtkLabel:xalign property for @label.
 	 *
-	 * Return: the xalign property
+	 * Returns: the xalign property
 	 *
 	 * Since: 3.16
 	 */
@@ -626,7 +626,7 @@ public class Label : Misc
 	/**
 	 * Gets the #GtkLabel:yalign property for @label.
 	 *
-	 * Return: the yalign property
+	 * Returns: the yalign property
 	 *
 	 * Since: 3.16
 	 */
@@ -1116,7 +1116,7 @@ public class Label : Misc
 	 * Params:
 	 *     uri = the URI that is activated
 	 *
-	 * Return: %TRUE if the link has been activated
+	 * Returns: %TRUE if the link has been activated
 	 *
 	 * Since: 2.18
 	 */

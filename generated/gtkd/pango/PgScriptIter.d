@@ -101,7 +101,7 @@ public class PgScriptIter
 	 * is already at the end, it is left unchanged and %FALSE
 	 * is returned.
 	 *
-	 * Return: %TRUE if @iter was successfully advanced.
+	 * Returns: %TRUE if @iter was successfully advanced.
 	 *
 	 * Since: 1.4
 	 */
@@ -120,7 +120,7 @@ public class PgScriptIter
 	 *     text = a UTF-8 string
 	 *     length = length of @text, or -1 if @text is nul-terminated.
 	 *
-	 * Return: the new script iterator, initialized
+	 * Returns: the new script iterator, initialized
 	 *     to point at the first range in the text, which should be
 	 *     freed with pango_script_iter_free(). If the string is
 	 *     empty, it will point at an empty range.

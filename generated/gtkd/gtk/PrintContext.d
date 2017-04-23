@@ -146,7 +146,7 @@ public class PrintContext : ObjectG
 	 * Creates a new #PangoContext that can be used with the
 	 * #GtkPrintContext.
 	 *
-	 * Return: a new Pango context for @context
+	 * Returns: a new Pango context for @context
 	 *
 	 * Since: 2.10
 	 */
@@ -166,7 +166,7 @@ public class PrintContext : ObjectG
 	 * Creates a new #PangoLayout that is suitable for use
 	 * with the #GtkPrintContext.
 	 *
-	 * Return: a new Pango layout for @context
+	 * Returns: a new Pango layout for @context
 	 *
 	 * Since: 2.10
 	 */
@@ -186,7 +186,7 @@ public class PrintContext : ObjectG
 	 * Obtains the cairo context that is associated with the
 	 * #GtkPrintContext.
 	 *
-	 * Return: the cairo context of @context
+	 * Returns: the cairo context of @context
 	 *
 	 * Since: 2.10
 	 */
@@ -206,7 +206,7 @@ public class PrintContext : ObjectG
 	 * Obtains the horizontal resolution of the #GtkPrintContext,
 	 * in dots per inch.
 	 *
-	 * Return: the horizontal resolution of @context
+	 * Returns: the horizontal resolution of @context
 	 *
 	 * Since: 2.10
 	 */
@@ -219,7 +219,7 @@ public class PrintContext : ObjectG
 	 * Obtains the vertical resolution of the #GtkPrintContext,
 	 * in dots per inch.
 	 *
-	 * Return: the vertical resolution of @context
+	 * Returns: the vertical resolution of @context
 	 *
 	 * Since: 2.10
 	 */
@@ -237,7 +237,7 @@ public class PrintContext : ObjectG
 	 *     left = left hardware printer margin
 	 *     right = right hardware printer margin
 	 *
-	 * Return: %TRUE if the hard margins were retrieved
+	 * Returns: %TRUE if the hard margins were retrieved
 	 *
 	 * Since: 2.20
 	 */
@@ -249,7 +249,7 @@ public class PrintContext : ObjectG
 	/**
 	 * Obtains the height of the #GtkPrintContext, in pixels.
 	 *
-	 * Return: the height of @context
+	 * Returns: the height of @context
 	 *
 	 * Since: 2.10
 	 */
@@ -262,7 +262,7 @@ public class PrintContext : ObjectG
 	 * Obtains the #GtkPageSetup that determines the page
 	 * dimensions of the #GtkPrintContext.
 	 *
-	 * Return: the page setup of @context
+	 * Returns: the page setup of @context
 	 *
 	 * Since: 2.10
 	 */
@@ -282,7 +282,7 @@ public class PrintContext : ObjectG
 	 * Returns a #PangoFontMap that is suitable for use
 	 * with the #GtkPrintContext.
 	 *
-	 * Return: the font map of @context
+	 * Returns: the font map of @context
 	 *
 	 * Since: 2.10
 	 */
@@ -301,7 +301,7 @@ public class PrintContext : ObjectG
 	/**
 	 * Obtains the width of the #GtkPrintContext, in pixels.
 	 *
-	 * Return: the width of @context
+	 * Returns: the width of @context
 	 *
 	 * Since: 2.10
 	 */

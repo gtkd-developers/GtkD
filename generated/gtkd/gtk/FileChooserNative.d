@@ -229,7 +229,7 @@ public class FileChooserNative : NativeDialog, FileChooserIF
 	 *     acceptLabel = text to go in the accept button, or %NULL for the default
 	 *     cancelLabel = text to go in the cancel button, or %NULL for the default
 	 *
-	 * Return: a new #GtkFileChooserNative
+	 * Returns: a new #GtkFileChooserNative
 	 *
 	 * Since: 3.20
 	 *
@@ -250,7 +250,7 @@ public class FileChooserNative : NativeDialog, FileChooserIF
 	/**
 	 * Retrieves the custom label text for the accept button.
 	 *
-	 * Return: The custom label, or %NULL for the default. This string
+	 * Returns: The custom label, or %NULL for the default. This string
 	 *     is owned by GTK+ and should not be modified or freed
 	 *
 	 * Since: 3.20
@@ -263,7 +263,7 @@ public class FileChooserNative : NativeDialog, FileChooserIF
 	/**
 	 * Retrieves the custom label text for the cancel button.
 	 *
-	 * Return: The custom label, or %NULL for the default. This string
+	 * Returns: The custom label, or %NULL for the default. This string
 	 *     is owned by GTK+ and should not be modified or freed
 	 *
 	 * Since: 3.20

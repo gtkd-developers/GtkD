@@ -89,7 +89,7 @@ public class MappedFile
 	 *         filename encoding
 	 *     writable = whether the mapping should be writable
 	 *
-	 * Return: a newly allocated #GMappedFile which must be unref'd
+	 * Returns: a newly allocated #GMappedFile which must be unref'd
 	 *     with g_mapped_file_unref(), or %NULL if the mapping failed.
 	 *
 	 * Since: 2.8
@@ -133,7 +133,7 @@ public class MappedFile
 	 *     fd = The file descriptor of the file to load
 	 *     writable = whether the mapping should be writable
 	 *
-	 * Return: a newly allocated #GMappedFile which must be unref'd
+	 * Returns: a newly allocated #GMappedFile which must be unref'd
 	 *     with g_mapped_file_unref(), or %NULL if the mapping failed.
 	 *
 	 * Since: 2.32
@@ -178,7 +178,7 @@ public class MappedFile
 	 * The mapped contents of the file must not be modified after creating this
 	 * bytes object, because a #GBytes should be immutable.
 	 *
-	 * Return: A newly allocated #GBytes referencing data
+	 * Returns: A newly allocated #GBytes referencing data
 	 *     from @file
 	 *
 	 * Since: 2.34
@@ -203,7 +203,7 @@ public class MappedFile
 	 *
 	 * If the file is empty then %NULL is returned.
 	 *
-	 * Return: the contents of @file, or %NULL.
+	 * Returns: the contents of @file, or %NULL.
 	 *
 	 * Since: 2.8
 	 */
@@ -218,7 +218,7 @@ public class MappedFile
 	/**
 	 * Returns the length of the contents of a #GMappedFile.
 	 *
-	 * Return: the length of the contents of @file.
+	 * Returns: the length of the contents of @file.
 	 *
 	 * Since: 2.8
 	 */
@@ -231,7 +231,7 @@ public class MappedFile
 	 * Increments the reference count of @file by one.  It is safe to call
 	 * this function from any thread.
 	 *
-	 * Return: the passed in #GMappedFile.
+	 * Returns: the passed in #GMappedFile.
 	 *
 	 * Since: 2.22
 	 */

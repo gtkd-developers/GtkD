@@ -160,7 +160,7 @@ public class Paned : Container, OrientableIF
 	 * Params:
 	 *     orientation = the paned’s orientation.
 	 *
-	 * Return: a new #GtkPaned.
+	 * Returns: a new #GtkPaned.
 	 *
 	 * Since: 3.0
 	 *
@@ -207,7 +207,7 @@ public class Paned : Container, OrientableIF
 	/**
 	 * Obtains the first child of the paned widget.
 	 *
-	 * Return: first child, or %NULL if it is not set.
+	 * Returns: first child, or %NULL if it is not set.
 	 *
 	 * Since: 2.4
 	 */
@@ -226,7 +226,7 @@ public class Paned : Container, OrientableIF
 	/**
 	 * Obtains the second child of the paned widget.
 	 *
-	 * Return: second child, or %NULL if it is not set.
+	 * Returns: second child, or %NULL if it is not set.
 	 *
 	 * Since: 2.4
 	 */
@@ -248,7 +248,7 @@ public class Paned : Container, OrientableIF
 	 * enables the callback to distinguish between the window
 	 * of the paned, a child and the handle.
 	 *
-	 * Return: the paned’s handle window.
+	 * Returns: the paned’s handle window.
 	 *
 	 * Since: 2.20
 	 */
@@ -267,7 +267,7 @@ public class Paned : Container, OrientableIF
 	/**
 	 * Obtains the position of the divider between the two panes.
 	 *
-	 * Return: position of the divider
+	 * Returns: position of the divider
 	 */
 	public int getPosition()
 	{
@@ -277,7 +277,7 @@ public class Paned : Container, OrientableIF
 	/**
 	 * Gets the #GtkPaned:wide-handle property.
 	 *
-	 * Return: %TRUE if the paned should have a wide handle
+	 * Returns: %TRUE if the paned should have a wide handle
 	 *
 	 * Since: 3.16
 	 */

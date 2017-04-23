@@ -148,7 +148,7 @@ public class CheckButton : ToggleButton
 	/**
 	 * Creates a new #GtkCheckButton.
 	 *
-	 * Return: a #GtkWidget.
+	 * Returns: a #GtkWidget.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

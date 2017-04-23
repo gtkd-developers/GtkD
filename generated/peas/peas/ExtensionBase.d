@@ -77,7 +77,7 @@ public class ExtensionBase : ObjectG
 	 * Get the path of the directory where the plugin should look for
 	 * its data files.
 	 *
-	 * Return: A newly allocated string with the path of the
+	 * Returns: A newly allocated string with the path of the
 	 *     directory where the plugin should look for its data files
 	 */
 	public string getDataDir()
@@ -91,7 +91,7 @@ public class ExtensionBase : ObjectG
 	/**
 	 * Get information relative to @extbase.
 	 *
-	 * Return: the #PeasPluginInfo relative
+	 * Returns: the #PeasPluginInfo relative
 	 *     to the #PeasExtensionBase.
 	 */
 	public PluginInfo getPluginInfo()

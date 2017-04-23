@@ -89,7 +89,7 @@ public class GestureLongPress : GestureSingle
 	 * Params:
 	 *     widget = a #GtkWidget
 	 *
-	 * Return: a newly created #GtkGestureLongPress
+	 * Returns: a newly created #GtkGestureLongPress
 	 *
 	 * Since: 3.14
 	 *

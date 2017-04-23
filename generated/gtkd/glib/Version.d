@@ -54,7 +54,7 @@ public struct Version
 	 *     requiredMinor = the required minor version
 	 *     requiredMicro = the required micro version
 	 *
-	 * Return: %NULL if the GLib library is compatible with the
+	 * Returns: %NULL if the GLib library is compatible with the
 	 *     given version, or a string describing the version mismatch.
 	 *     The returned string is owned by GLib and must not be modified
 	 *     or freed.

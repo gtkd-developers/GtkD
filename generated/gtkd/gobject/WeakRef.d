@@ -112,7 +112,7 @@ public class WeakRef
 	 * The caller should release the resulting reference in the usual way,
 	 * by using g_object_unref().
 	 *
-	 * Return: the object pointed to
+	 * Returns: the object pointed to
 	 *     by @weak_ref, or %NULL if it was empty
 	 *
 	 * Since: 2.32

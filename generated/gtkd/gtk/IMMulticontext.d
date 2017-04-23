@@ -76,7 +76,7 @@ public class IMMulticontext : IMContext
 	/**
 	 * Creates a new #GtkIMMulticontext.
 	 *
-	 * Return: a new #GtkIMMulticontext.
+	 * Returns: a new #GtkIMMulticontext.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -113,7 +113,7 @@ public class IMMulticontext : IMContext
 	/**
 	 * Gets the id of the currently active slave of the @context.
 	 *
-	 * Return: the id of the currently active slave
+	 * Returns: the id of the currently active slave
 	 *
 	 * Since: 2.16
 	 */

@@ -83,7 +83,7 @@ public class TracerFactory : PluginFeature
 	 *
 	 * Free-function: gst_plugin_feature_list_free
 	 *
-	 * Return: the list of all
+	 * Returns: the list of all
 	 *     registered #GstTracerFactory.
 	 *
 	 * Since: 1.8

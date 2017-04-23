@@ -77,7 +77,7 @@ public class PgAttributeFontDesc : PgAttribute
 	 * Params:
 	 *     desc = the font description
 	 *
-	 * Return: the newly allocated #PangoAttribute,
+	 * Returns: the newly allocated #PangoAttribute,
 	 *     which should be freed with pango_attribute_destroy().
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.

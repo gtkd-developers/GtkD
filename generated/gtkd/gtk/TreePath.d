@@ -120,7 +120,7 @@ public class TreePath
 	 * Params:
 	 *     path = The string representation of a path
 	 *
-	 * Return: A newly-created #GtkTreePath-struct, or %NULL
+	 * Returns: A newly-created #GtkTreePath-struct, or %NULL
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -159,7 +159,7 @@ public class TreePath
 	 * Params:
 	 *     b = a #GtkTreePath-struct to compare with
 	 *
-	 * Return: the relative positions of @a and @b
+	 * Returns: the relative positions of @a and @b
 	 */
 	public int compare(TreePath b)
 	{
@@ -169,7 +169,7 @@ public class TreePath
 	/**
 	 * Creates a new #GtkTreePath-struct as a copy of @path.
 	 *
-	 * Return: a new #GtkTreePath-struct
+	 * Returns: a new #GtkTreePath-struct
 	 */
 	public TreePath copy()
 	{
@@ -202,7 +202,7 @@ public class TreePath
 	/**
 	 * Returns the current depth of @path.
 	 *
-	 * Return: The depth of @path
+	 * Returns: The depth of @path
 	 */
 	public int getDepth()
 	{
@@ -216,7 +216,7 @@ public class TreePath
 	 * It also returns the number of elements in the array.
 	 * The array should not be freed.
 	 *
-	 * Return: The current
+	 * Returns: The current
 	 *     indices, or %NULL
 	 *
 	 * Since: 3.0
@@ -236,7 +236,7 @@ public class TreePath
 	 * Params:
 	 *     descendant = another #GtkTreePath-struct
 	 *
-	 * Return: %TRUE if @descendant is contained inside @path
+	 * Returns: %TRUE if @descendant is contained inside @path
 	 */
 	public bool isAncestor(TreePath descendant)
 	{
@@ -249,7 +249,7 @@ public class TreePath
 	 * Params:
 	 *     ancestor = another #GtkTreePath-struct
 	 *
-	 * Return: %TRUE if @ancestor contains @path somewhere below it
+	 * Returns: %TRUE if @ancestor contains @path somewhere below it
 	 */
 	public bool isDescendant(TreePath ancestor)
 	{
@@ -281,7 +281,7 @@ public class TreePath
 	 * Moves the @path to point to the previous node at the
 	 * current depth, if it exists.
 	 *
-	 * Return: %TRUE if @path has a previous node, and
+	 * Returns: %TRUE if @path has a previous node, and
 	 *     the move was made
 	 */
 	public bool prev()
@@ -296,7 +296,7 @@ public class TreePath
 	 * For example, “4:10:0:3” would be an acceptable
 	 * return value for this string.
 	 *
-	 * Return: A newly-allocated string.
+	 * Returns: A newly-allocated string.
 	 *     Must be freed with g_free().
 	 */
 	public override string toString()
@@ -310,7 +310,7 @@ public class TreePath
 	/**
 	 * Moves the @path to point to its parent node, if it has a parent.
 	 *
-	 * Return: %TRUE if @path has a parent, and the move was made
+	 * Returns: %TRUE if @path has a parent, and the move was made
 	 */
 	public bool up()
 	{

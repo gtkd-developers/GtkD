@@ -164,7 +164,7 @@ public class Buffer
 	 *
 	 * MT safe.
 	 *
-	 * Return: the new #GstBuffer.
+	 * Returns: the new #GstBuffer.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -197,7 +197,7 @@ public class Buffer
 	 *     size = the size in bytes of the new buffer's data.
 	 *     params = optional parameters
 	 *
-	 * Return: a new #GstBuffer, or %NULL if
+	 * Returns: a new #GstBuffer, or %NULL if
 	 *     the memory couldn't be allocated.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -224,7 +224,7 @@ public class Buffer
 	 *     data = data to wrap
 	 *     size = allocated size of @data
 	 *
-	 * Return: a new #GstBuffer
+	 * Returns: a new #GstBuffer
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -259,7 +259,7 @@ public class Buffer
 	 *     userData = user_data
 	 *     notify = called with @user_data when the memory is freed
 	 *
-	 * Return: a new #GstBuffer
+	 * Returns: a new #GstBuffer
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -282,7 +282,7 @@ public class Buffer
 	 *     info = a #GstMetaInfo
 	 *     params = params for @info
 	 *
-	 * Return: the metadata for the api in @info on @buffer.
+	 * Returns: the metadata for the api in @info on @buffer.
 	 */
 	public GstMeta* addMeta(GstMetaInfo* info, void* params)
 	{
@@ -296,7 +296,7 @@ public class Buffer
 	 * Params:
 	 *     doref = a #GstBuffer to ref
 	 *
-	 * Return: The #GstParentBufferMeta that was added to the buffer
+	 * Returns: The #GstParentBufferMeta that was added to the buffer
 	 *
 	 * Since: 1.6
 	 */
@@ -313,7 +313,7 @@ public class Buffer
 	 *         information relating to the sample contained in @buffer. This
 	 *         function takes ownership of @info.
 	 *
-	 * Return: a pointer to the added #GstProtectionMeta if successful; %NULL if
+	 * Returns: a pointer to the added #GstProtectionMeta if successful; %NULL if
 	 *     unsuccessful.
 	 *
 	 * Since: 1.6
@@ -337,7 +337,7 @@ public class Buffer
 	 * Params:
 	 *     buf2 = the second source #GstBuffer to append.
 	 *
-	 * Return: the new #GstBuffer that contains the memory
+	 * Returns: the new #GstBuffer that contains the memory
 	 *     of the two source buffers.
 	 */
 	public Buffer append(Buffer buf2)
@@ -377,7 +377,7 @@ public class Buffer
 	 *     offset = the offset in @buf2
 	 *     size = the size or -1 of @buf2
 	 *
-	 * Return: the new #GstBuffer that contains the memory
+	 * Returns: the new #GstBuffer that contains the memory
 	 *     of the two source buffers.
 	 */
 	public Buffer appendRegion(Buffer buf2, ptrdiff_t offset, ptrdiff_t size)
@@ -396,7 +396,7 @@ public class Buffer
 	 * Create a copy of the given buffer. This will make a newly allocated
 	 * copy of the data the source buffer contains.
 	 *
-	 * Return: a new copy of @buf.
+	 * Returns: a new copy of @buf.
 	 *
 	 * Since: 1.6
 	 */
@@ -426,7 +426,7 @@ public class Buffer
 	 *     offset = offset to copy from
 	 *     size = total size to copy. If -1, all data is copied.
 	 *
-	 * Return: %TRUE if the copying succeeded, %FALSE otherwise.
+	 * Returns: %TRUE if the copying succeeded, %FALSE otherwise.
 	 */
 	public bool copyInto(Buffer src, GstBufferCopyFlags flags, size_t offset, size_t size)
 	{
@@ -452,7 +452,7 @@ public class Buffer
 	 *     size = the size of the new #GstBuffer sub-buffer, in bytes. If -1, all
 	 *         data is copied.
 	 *
-	 * Return: the new #GstBuffer or %NULL if the arguments were
+	 * Returns: the new #GstBuffer or %NULL if the arguments were
 	 *     invalid.
 	 */
 	public Buffer copyRegion(GstBufferCopyFlags flags, size_t offset, size_t size)
@@ -475,7 +475,7 @@ public class Buffer
 	 *     dest = the destination address
 	 *     size = the size to extract
 	 *
-	 * Return: The amount of bytes extracted. This value can be lower than @size
+	 * Returns: The amount of bytes extracted. This value can be lower than @size
 	 *     when @buffer did not contain enough data.
 	 */
 	public size_t extract(size_t offset, void* dest, size_t size)
@@ -514,7 +514,7 @@ public class Buffer
 	 *     src = the source address
 	 *     size = the size to fill
 	 *
-	 * Return: The amount of bytes copied. This value can be lower than @size
+	 * Returns: The amount of bytes copied. This value can be lower than @size
 	 *     when @buffer did not contain enough data.
 	 */
 	public size_t fill(size_t offset, ubyte[] src)
@@ -541,7 +541,7 @@ public class Buffer
 	 *     length = pointer to length
 	 *     skip = pointer to skip
 	 *
-	 * Return: %TRUE when @size bytes starting from @offset could be found in
+	 * Returns: %TRUE when @size bytes starting from @offset could be found in
 	 *     @buffer and @idx, @length and @skip will be filled.
 	 */
 	public bool findMemory(size_t offset, size_t size, out uint idx, out uint length, out size_t skip)
@@ -560,7 +560,7 @@ public class Buffer
 	 *     func = a #GstBufferForeachMetaFunc to call
 	 *     userData = user data passed to @func
 	 *
-	 * Return: %FALSE when @func returned %FALSE for one of the metadata.
+	 * Returns: %FALSE when @func returned %FALSE for one of the metadata.
 	 */
 	public bool foreachMeta(GstBufferForeachMetaFunc func, void* userData)
 	{
@@ -571,7 +571,7 @@ public class Buffer
 	 * Get all the memory block in @buffer. The memory blocks will be merged
 	 * into one large #GstMemory.
 	 *
-	 * Return: a #GstMemory that contains the merged memory.
+	 * Returns: a #GstMemory that contains the merged memory.
 	 *     Use gst_memory_unref () after usage.
 	 */
 	public Memory getAllMemory()
@@ -589,7 +589,7 @@ public class Buffer
 	/**
 	 * Get the #GstBufferFlags flags set on this buffer.
 	 *
-	 * Return: the flags set on this buffer.
+	 * Returns: the flags set on this buffer.
 	 *
 	 * Since: 1.10
 	 */
@@ -604,7 +604,7 @@ public class Buffer
 	 * Params:
 	 *     idx = an index
 	 *
-	 * Return: a #GstMemory that contains the data of the
+	 * Returns: a #GstMemory that contains the data of the
 	 *     memory block at @idx. Use gst_memory_unref () after usage.
 	 */
 	public Memory getMemory(uint idx)
@@ -629,7 +629,7 @@ public class Buffer
 	 *     idx = an index
 	 *     length = a length
 	 *
-	 * Return: a #GstMemory that contains the merged data of @length
+	 * Returns: a #GstMemory that contains the merged data of @length
 	 *     blocks starting at @idx. Use gst_memory_unref () after usage.
 	 */
 	public Memory getMemoryRange(uint idx, int length)
@@ -654,7 +654,7 @@ public class Buffer
 	 * Params:
 	 *     api = the #GType of an API
 	 *
-	 * Return: the metadata for @api on
+	 * Returns: the metadata for @api on
 	 *     @buffer.
 	 */
 	public GstMeta* getMeta(GType api)
@@ -665,7 +665,7 @@ public class Buffer
 	/**
 	 * Get the total size of the memory blocks in @buffer.
 	 *
-	 * Return: total size of the memory blocks in @buffer.
+	 * Returns: total size of the memory blocks in @buffer.
 	 */
 	public size_t getSize()
 	{
@@ -685,7 +685,7 @@ public class Buffer
 	 *     offset = a pointer to the offset
 	 *     maxsize = a pointer to the maxsize
 	 *
-	 * Return: total size of the memory blocks in @buffer.
+	 * Returns: total size of the memory blocks in @buffer.
 	 */
 	public size_t getSizes(out size_t offset, out size_t maxsize)
 	{
@@ -708,7 +708,7 @@ public class Buffer
 	 *     offset = a pointer to the offset
 	 *     maxsize = a pointer to the maxsize
 	 *
-	 * Return: total size of @length memory blocks starting at @idx in @buffer.
+	 * Returns: total size of @length memory blocks starting at @idx in @buffer.
 	 */
 	public size_t getSizesRange(uint idx, int length, out size_t offset, out size_t maxsize)
 	{
@@ -744,7 +744,7 @@ public class Buffer
 	 * Note that this function does not check if @buffer is writable, use
 	 * gst_buffer_is_writable() to check that if needed.
 	 *
-	 * Return: %TRUE if all memory blocks in @buffer are writable
+	 * Returns: %TRUE if all memory blocks in @buffer are writable
 	 *
 	 * Since: 1.4
 	 */
@@ -765,7 +765,7 @@ public class Buffer
 	 *     idx = an index
 	 *     length = a length should not be 0
 	 *
-	 * Return: %TRUE if the memory range is writable
+	 * Returns: %TRUE if the memory range is writable
 	 *
 	 * Since: 1.4
 	 */
@@ -783,7 +783,7 @@ public class Buffer
 	 * Params:
 	 *     state = an opaque state pointer
 	 *
-	 * Return: The next #GstMeta or %NULL
+	 * Returns: The next #GstMeta or %NULL
 	 *     when there are no more items.
 	 */
 	public GstMeta* iterateMeta(void** state)
@@ -802,7 +802,7 @@ public class Buffer
 	 *     state = an opaque state pointer
 	 *     metaApiType = only return #GstMeta of this type
 	 *
-	 * Return: The next #GstMeta of type
+	 * Returns: The next #GstMeta of type
 	 *     @meta_api_type or %NULL when there are no more items.
 	 *
 	 * Since: 1.12
@@ -831,7 +831,7 @@ public class Buffer
 	 *     info = info about the mapping
 	 *     flags = flags for the mapping
 	 *
-	 * Return: %TRUE if the map succeeded and @info contains valid data.
+	 * Returns: %TRUE if the map succeeded and @info contains valid data.
 	 */
 	public bool map(out GstMapInfo info, GstMapFlags flags)
 	{
@@ -859,7 +859,7 @@ public class Buffer
 	 *     info = info about the mapping
 	 *     flags = flags for the mapping
 	 *
-	 * Return: %TRUE if the map succeeded and @info contains valid
+	 * Returns: %TRUE if the map succeeded and @info contains valid
 	 *     data.
 	 */
 	public bool mapRange(uint idx, int length, out GstMapInfo info, GstMapFlags flags)
@@ -875,7 +875,7 @@ public class Buffer
 	 *     mem = the memory to compare
 	 *     size = the size to compare
 	 *
-	 * Return: 0 if the memory is equal.
+	 * Returns: 0 if the memory is equal.
 	 */
 	public int memcmp(size_t offset, ubyte[] mem)
 	{
@@ -890,7 +890,7 @@ public class Buffer
 	 *     val = the value to set
 	 *     size = the size to set
 	 *
-	 * Return: The amount of bytes filled. This value can be lower than @size
+	 * Returns: The amount of bytes filled. This value can be lower than @size
 	 *     when @buffer did not contain enough data.
 	 */
 	public size_t memset(size_t offset, ubyte val, size_t size)
@@ -902,7 +902,7 @@ public class Buffer
 	 * Get the amount of memory blocks that this buffer has. This amount is never
 	 * larger than what gst_buffer_get_max_memory() returns.
 	 *
-	 * Return: the number of memory blocks this buffer is made of.
+	 * Returns: the number of memory blocks this buffer is made of.
 	 */
 	public uint nMemory()
 	{
@@ -917,7 +917,7 @@ public class Buffer
 	 * Params:
 	 *     idx = an index
 	 *
-	 * Return: the #GstMemory at @idx.
+	 * Returns: the #GstMemory at @idx.
 	 */
 	public Memory peekMemory(uint idx)
 	{
@@ -985,7 +985,7 @@ public class Buffer
 	 * Params:
 	 *     meta = a #GstMeta
 	 *
-	 * Return: %TRUE if the metadata existed and was removed, %FALSE if no such
+	 * Returns: %TRUE if the metadata existed and was removed, %FALSE if no such
 	 *     metadata was on @buffer.
 	 */
 	public bool removeMeta(GstMeta* meta)
@@ -1056,7 +1056,7 @@ public class Buffer
 	 *     offset = the offset adjustment
 	 *     size = the new size or -1 to just adjust the offset
 	 *
-	 * Return: %TRUE if resizing succeeded, %FALSE otherwise.
+	 * Returns: %TRUE if resizing succeeded, %FALSE otherwise.
 	 */
 	public bool resizeRange(uint idx, int length, ptrdiff_t offset, ptrdiff_t size)
 	{
@@ -1069,7 +1069,7 @@ public class Buffer
 	 * Params:
 	 *     flags = the #GstBufferFlags to set.
 	 *
-	 * Return: %TRUE if @flags were successfully set on buffer.
+	 * Returns: %TRUE if @flags were successfully set on buffer.
 	 *
 	 * Since: 1.10
 	 */
@@ -1106,7 +1106,7 @@ public class Buffer
 	 * Params:
 	 *     flags = the #GstBufferFlags to clear
 	 *
-	 * Return: true if @flags is successfully cleared from buffer.
+	 * Returns: true if @flags is successfully cleared from buffer.
 	 *
 	 * Since: 1.10
 	 */
@@ -1122,7 +1122,7 @@ public class Buffer
 	 * When more memory blocks are added, existing memory blocks will be merged
 	 * together to make room for the new block.
 	 *
-	 * Return: the maximum amount of memory blocks that a buffer can hold.
+	 * Returns: the maximum amount of memory blocks that a buffer can hold.
 	 *
 	 * Since: 1.2
 	 */

@@ -90,7 +90,7 @@ public class ControlBinding : ObjectGst
 	 *     nValues = the number of values
 	 *     values = array to put control-values in
 	 *
-	 * Return: %TRUE if the given array could be filled, %FALSE otherwise
+	 * Returns: %TRUE if the given array could be filled, %FALSE otherwise
 	 */
 	public bool getGValueArray(GstClockTime timestamp, GstClockTime interval, Value[] values)
 	{
@@ -109,7 +109,7 @@ public class ControlBinding : ObjectGst
 	 * Params:
 	 *     timestamp = the time the control-change should be read from
 	 *
-	 * Return: the GValue of the property at the given time,
+	 * Returns: the GValue of the property at the given time,
 	 *     or %NULL if the property isn't controlled.
 	 */
 	public Value getValue(GstClockTime timestamp)
@@ -142,7 +142,7 @@ public class ControlBinding : ObjectGst
 	 *     nValues = the number of values
 	 *     values = array to put control-values in
 	 *
-	 * Return: %TRUE if the given array could be filled, %FALSE otherwise
+	 * Returns: %TRUE if the given array could be filled, %FALSE otherwise
 	 */
 	public bool getValueArray(GstClockTime timestamp, GstClockTime interval, void*[] values)
 	{
@@ -152,7 +152,7 @@ public class ControlBinding : ObjectGst
 	/**
 	 * Check if the control binding is disabled.
 	 *
-	 * Return: %TRUE if the binding is inactive
+	 * Returns: %TRUE if the binding is inactive
 	 */
 	public bool isDisabled()
 	{
@@ -184,7 +184,7 @@ public class ControlBinding : ObjectGst
 	 *     timestamp = the time that should be processed
 	 *     lastSync = the last time this was called
 	 *
-	 * Return: %TRUE if the controller value could be applied to the object
+	 * Returns: %TRUE if the controller value could be applied to the object
 	 *     property, %FALSE otherwise
 	 */
 	public bool syncValues(ObjectGst object, GstClockTime timestamp, GstClockTime lastSync)

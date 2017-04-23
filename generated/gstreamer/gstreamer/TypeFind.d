@@ -86,7 +86,7 @@ public class TypeFind
 	/**
 	 * Get the length of the data stream.
 	 *
-	 * Return: The length of the data stream, or 0 if it is not available.
+	 * Returns: The length of the data stream, or 0 if it is not available.
 	 */
 	public ulong getLength()
 	{
@@ -127,7 +127,7 @@ public class TypeFind
 	 *     dataNotify = a #GDestroyNotify that will be called on @data when the plugin
 	 *         is unloaded.
 	 *
-	 * Return: %TRUE on success, %FALSE otherwise
+	 * Returns: %TRUE on success, %FALSE otherwise
 	 */
 	public static bool register(Plugin plugin, string name, uint rank, GstTypeFindFunction func, string extensions, Caps possibleCaps, void* data, GDestroyNotify dataNotify)
 	{

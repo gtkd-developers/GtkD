@@ -94,7 +94,7 @@ public class PaperSize
 	 * Params:
 	 *     name = a paper size name, or %NULL
 	 *
-	 * Return: a new #GtkPaperSize, use gtk_paper_size_free()
+	 * Returns: a new #GtkPaperSize, use gtk_paper_size_free()
 	 *     to free it
 	 *
 	 * Since: 2.10
@@ -124,7 +124,7 @@ public class PaperSize
 	 *     height = the paper height, in units of @unit
 	 *     unit = the unit for @width and @height. not %GTK_UNIT_NONE.
 	 *
-	 * Return: a new #GtkPaperSize object, use gtk_paper_size_free()
+	 * Returns: a new #GtkPaperSize object, use gtk_paper_size_free()
 	 *     to free it
 	 *
 	 * Since: 2.10
@@ -150,7 +150,7 @@ public class PaperSize
 	 * Params:
 	 *     variant = an a{sv} #GVariant
 	 *
-	 * Return: a new #GtkPaperSize object
+	 * Returns: a new #GtkPaperSize object
 	 *
 	 * Since: 3.22
 	 *
@@ -181,7 +181,7 @@ public class PaperSize
 	 *     width = the paper width, in points
 	 *     height = the paper height in points
 	 *
-	 * Return: a new #GtkPaperSize, use gtk_paper_size_free()
+	 * Returns: a new #GtkPaperSize, use gtk_paper_size_free()
 	 *     to free it
 	 *
 	 * Since: 3.16
@@ -209,7 +209,7 @@ public class PaperSize
 	 *     groupName = the name ofthe group in the key file to read,
 	 *         or %NULL to read the first group
 	 *
-	 * Return: a new #GtkPaperSize object with the restored
+	 * Returns: a new #GtkPaperSize object with the restored
 	 *     paper size, or %NULL if an error occurred
 	 *
 	 * Since: 2.12
@@ -250,7 +250,7 @@ public class PaperSize
 	 *     width = the paper width, in points
 	 *     height = the paper height in points
 	 *
-	 * Return: a new #GtkPaperSize, use gtk_paper_size_free()
+	 * Returns: a new #GtkPaperSize, use gtk_paper_size_free()
 	 *     to free it
 	 *
 	 * Since: 2.10
@@ -272,7 +272,7 @@ public class PaperSize
 	/**
 	 * Copies an existing #GtkPaperSize.
 	 *
-	 * Return: a copy of @other
+	 * Returns: a copy of @other
 	 *
 	 * Since: 2.10
 	 */
@@ -304,7 +304,7 @@ public class PaperSize
 	 * Params:
 	 *     unit = the unit for the return value, not %GTK_UNIT_NONE
 	 *
-	 * Return: the default bottom margin
+	 * Returns: the default bottom margin
 	 *
 	 * Since: 2.10
 	 */
@@ -319,7 +319,7 @@ public class PaperSize
 	 * Params:
 	 *     unit = the unit for the return value, not %GTK_UNIT_NONE
 	 *
-	 * Return: the default left margin
+	 * Returns: the default left margin
 	 *
 	 * Since: 2.10
 	 */
@@ -334,7 +334,7 @@ public class PaperSize
 	 * Params:
 	 *     unit = the unit for the return value, not %GTK_UNIT_NONE
 	 *
-	 * Return: the default right margin
+	 * Returns: the default right margin
 	 *
 	 * Since: 2.10
 	 */
@@ -349,7 +349,7 @@ public class PaperSize
 	 * Params:
 	 *     unit = the unit for the return value, not %GTK_UNIT_NONE
 	 *
-	 * Return: the default top margin
+	 * Returns: the default top margin
 	 *
 	 * Since: 2.10
 	 */
@@ -361,7 +361,7 @@ public class PaperSize
 	/**
 	 * Gets the human-readable name of the #GtkPaperSize.
 	 *
-	 * Return: the human-readable name of @size
+	 * Returns: the human-readable name of @size
 	 *
 	 * Since: 2.10
 	 */
@@ -377,7 +377,7 @@ public class PaperSize
 	 * Params:
 	 *     unit = the unit for the return value, not %GTK_UNIT_NONE
 	 *
-	 * Return: the paper height
+	 * Returns: the paper height
 	 *
 	 * Since: 2.10
 	 */
@@ -389,7 +389,7 @@ public class PaperSize
 	/**
 	 * Gets the name of the #GtkPaperSize.
 	 *
-	 * Return: the name of @size
+	 * Returns: the name of @size
 	 *
 	 * Since: 2.10
 	 */
@@ -402,7 +402,7 @@ public class PaperSize
 	 * Gets the PPD name of the #GtkPaperSize, which
 	 * may be %NULL.
 	 *
-	 * Return: the PPD name of @size
+	 * Returns: the PPD name of @size
 	 *
 	 * Since: 2.10
 	 */
@@ -418,7 +418,7 @@ public class PaperSize
 	 * Params:
 	 *     unit = the unit for the return value, not %GTK_UNIT_NONE
 	 *
-	 * Return: the paper width
+	 * Returns: the paper width
 	 *
 	 * Since: 2.10
 	 */
@@ -430,7 +430,7 @@ public class PaperSize
 	/**
 	 * Returns %TRUE if @size is not a standard paper size.
 	 *
-	 * Return: whether @size is a custom paper size.
+	 * Returns: whether @size is a custom paper size.
 	 */
 	public bool isCustom()
 	{
@@ -443,7 +443,7 @@ public class PaperSize
 	 * Params:
 	 *     size2 = another #GtkPaperSize object
 	 *
-	 * Return: %TRUE, if @size1 and @size2
+	 * Returns: %TRUE, if @size1 and @size2
 	 *     represent the same paper size
 	 *
 	 * Since: 2.10
@@ -456,7 +456,7 @@ public class PaperSize
 	/**
 	 * Returns %TRUE if @size is an IPP standard paper size.
 	 *
-	 * Return: whether @size is not an IPP custom paper size.
+	 * Returns: whether @size is not an IPP custom paper size.
 	 */
 	public bool isIpp()
 	{
@@ -481,7 +481,7 @@ public class PaperSize
 	/**
 	 * Serialize a paper size to an a{sv} variant.
 	 *
-	 * Return: a new, floating, #GVariant
+	 * Returns: a new, floating, #GVariant
 	 *
 	 * Since: 3.22
 	 */
@@ -515,7 +515,7 @@ public class PaperSize
 	 * Returns the name of the default paper size, which
 	 * depends on the current locale.
 	 *
-	 * Return: the name of the default paper size. The string
+	 * Returns: the name of the default paper size. The string
 	 *     is owned by GTK+ and should not be modified.
 	 *
 	 * Since: 2.10
@@ -532,7 +532,7 @@ public class PaperSize
 	 *     includeCustom = whether to include custom paper sizes
 	 *         as defined in the page setup dialog
 	 *
-	 * Return: a newly allocated list of newly
+	 * Returns: a newly allocated list of newly
 	 *     allocated #GtkPaperSize objects
 	 *
 	 * Since: 2.12

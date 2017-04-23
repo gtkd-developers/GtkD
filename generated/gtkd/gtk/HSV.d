@@ -85,7 +85,7 @@ public class HSV : Widget
 	/**
 	 * Creates a new HSV color selector.
 	 *
-	 * Return: A newly-created HSV color selector.
+	 * Returns: A newly-created HSV color selector.
 	 *
 	 * Since: 2.14
 	 *
@@ -160,7 +160,7 @@ public class HSV : Widget
 	 * adjusting the value with the mouse. This function queries whether
 	 * the HSV color selector is being adjusted or not.
 	 *
-	 * Return: %TRUE if clients can ignore changes to the color value,
+	 * Returns: %TRUE if clients can ignore changes to the color value,
 	 *     since they may be transitory, or %FALSE if they should consider
 	 *     the color value status to be final.
 	 *

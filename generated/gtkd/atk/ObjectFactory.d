@@ -83,7 +83,7 @@ public class ObjectFactory : ObjectG
 	 * Params:
 	 *     obj = a #GObject
 	 *
-	 * Return: an #AtkObject that implements an accessibility
+	 * Returns: an #AtkObject that implements an accessibility
 	 *     interface on behalf of @obj
 	 */
 	public ObjectAtk createAccessible(ObjectG obj)
@@ -101,7 +101,7 @@ public class ObjectFactory : ObjectG
 	/**
 	 * Gets the GType of the accessible which is created by the factory.
 	 *
-	 * Return: the type of the accessible which is created by the @factory.
+	 * Returns: the type of the accessible which is created by the @factory.
 	 *     The value G_TYPE_INVALID is returned if no type if found.
 	 */
 	public GType getAccessibleType()

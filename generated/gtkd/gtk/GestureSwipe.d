@@ -92,7 +92,7 @@ public class GestureSwipe : GestureSingle
 	 * Params:
 	 *     widget = a #GtkWidget
 	 *
-	 * Return: a newly created #GtkGestureSwipe
+	 * Returns: a newly created #GtkGestureSwipe
 	 *
 	 * Since: 3.14
 	 *
@@ -119,7 +119,7 @@ public class GestureSwipe : GestureSingle
 	 *     velocityX = return value for the velocity in the X axis, in pixels/sec
 	 *     velocityY = return value for the velocity in the Y axis, in pixels/sec
 	 *
-	 * Return: whether velocity could be calculated
+	 * Returns: whether velocity could be calculated
 	 *
 	 * Since: 3.14
 	 */

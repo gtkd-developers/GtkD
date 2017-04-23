@@ -70,7 +70,7 @@ public class SequenceIter
 	 * Params:
 	 *     b = a #GSequenceIter
 	 *
-	 * Return: a negative number if @a comes before @b, 0 if they are
+	 * Returns: a negative number if @a comes before @b, 0 if they are
 	 *     equal, and a positive number if @a comes after @b
 	 *
 	 * Since: 2.14
@@ -83,7 +83,7 @@ public class SequenceIter
 	/**
 	 * Returns the position of @iter
 	 *
-	 * Return: the position of @iter
+	 * Returns: the position of @iter
 	 *
 	 * Since: 2.14
 	 */
@@ -95,7 +95,7 @@ public class SequenceIter
 	/**
 	 * Returns the #GSequence that @iter points into.
 	 *
-	 * Return: the #GSequence that @iter points into
+	 * Returns: the #GSequence that @iter points into
 	 *
 	 * Since: 2.14
 	 */
@@ -114,7 +114,7 @@ public class SequenceIter
 	/**
 	 * Returns whether @iter is the begin iterator
 	 *
-	 * Return: whether @iter is the begin iterator
+	 * Returns: whether @iter is the begin iterator
 	 *
 	 * Since: 2.14
 	 */
@@ -126,7 +126,7 @@ public class SequenceIter
 	/**
 	 * Returns whether @iter is the end iterator
 	 *
-	 * Return: Whether @iter is the end iterator
+	 * Returns: Whether @iter is the end iterator
 	 *
 	 * Since: 2.14
 	 */
@@ -145,7 +145,7 @@ public class SequenceIter
 	 *     delta = A positive or negative number indicating how many positions away
 	 *         from @iter the returned #GSequenceIter will be
 	 *
-	 * Return: a #GSequenceIter which is @delta positions away from @iter
+	 * Returns: a #GSequenceIter which is @delta positions away from @iter
 	 *
 	 * Since: 2.14
 	 */
@@ -165,7 +165,7 @@ public class SequenceIter
 	 * Returns an iterator pointing to the next position after @iter.
 	 * If @iter is the end iterator, the end iterator is returned.
 	 *
-	 * Return: a #GSequenceIter pointing to the next position after @iter
+	 * Returns: a #GSequenceIter pointing to the next position after @iter
 	 *
 	 * Since: 2.14
 	 */
@@ -185,7 +185,7 @@ public class SequenceIter
 	 * Returns an iterator pointing to the previous position before @iter.
 	 * If @iter is the begin iterator, the begin iterator is returned.
 	 *
-	 * Return: a #GSequenceIter pointing to the previous position
+	 * Returns: a #GSequenceIter pointing to the previous position
 	 *     before @iter
 	 *
 	 * Since: 2.14

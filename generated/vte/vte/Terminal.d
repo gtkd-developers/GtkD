@@ -97,7 +97,7 @@ public class Terminal : Widget, ScrollableIF
 	/**
 	 * Creates a new terminal widget.
 	 *
-	 * Return: a new #VteTerminal object
+	 * Returns: a new #VteTerminal object
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -143,7 +143,7 @@ public class Terminal : Widget, ScrollableIF
 	 *     matchFlags = the #GRegexMatchFlags to use when matching the regexes
 	 *     matches = a location to store the matches
 	 *
-	 * Return: %FALSE
+	 * Returns: %FALSE
 	 *
 	 * Since: 0.44
 	 */
@@ -171,7 +171,7 @@ public class Terminal : Widget, ScrollableIF
 	 *     matchFlags = PCRE2 match flags, or 0
 	 *     matches = a location to store the matches
 	 *
-	 * Return: %TRUE iff any of the regexes produced a match
+	 * Returns: %TRUE iff any of the regexes produced a match
 	 *
 	 * Since: 0.46
 	 */
@@ -229,7 +229,7 @@ public class Terminal : Widget, ScrollableIF
 	 * Checks whether or not the terminal will attempt to draw bold text by
 	 * repainting text with a one-pixel offset.
 	 *
-	 * Return: %TRUE if bolding is enabled, %FALSE if not
+	 * Returns: %TRUE if bolding is enabled, %FALSE if not
 	 */
 	public bool getAllowBold()
 	{
@@ -240,7 +240,7 @@ public class Terminal : Widget, ScrollableIF
 	 * Checks whether or not the terminal will beep when the child outputs the
 	 * "bl" sequence.
 	 *
-	 * Return: %TRUE if audible bell is enabled, %FALSE if not
+	 * Returns: %TRUE if audible bell is enabled, %FALSE if not
 	 */
 	public bool getAudibleBell()
 	{
@@ -248,7 +248,7 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * Return: the height of a character cell
+	 * Returns: the height of a character cell
 	 */
 	public glong getCharHeight()
 	{
@@ -256,7 +256,7 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * Return: the width of a character cell
+	 * Returns: the width of a character cell
 	 */
 	public glong getCharWidth()
 	{
@@ -267,7 +267,7 @@ public class Terminal : Widget, ScrollableIF
 	 * Returns whether ambiguous-width characters are narrow or wide when using
 	 * the UTF-8 encoding (vte_terminal_set_encoding()).
 	 *
-	 * Return: 1 if ambiguous-width characters are narrow, or 2 if they are wide
+	 * Returns: 1 if ambiguous-width characters are narrow, or 2 if they are wide
 	 */
 	public int getCjkAmbiguousWidth()
 	{
@@ -275,7 +275,7 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * Return: the number of columns
+	 * Returns: the number of columns
 	 */
 	public glong getColumnCount()
 	{
@@ -283,7 +283,7 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * Return: the URI of the current directory of the
+	 * Returns: the URI of the current directory of the
 	 *     process running in the terminal, or %NULL
 	 */
 	public string getCurrentDirectoryUri()
@@ -292,7 +292,7 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * Return: the URI of the current file the
+	 * Returns: the URI of the current file the
 	 *     process running in the terminal is operating on, or %NULL if
 	 *     not set
 	 */
@@ -304,7 +304,7 @@ public class Terminal : Widget, ScrollableIF
 	/**
 	 * Returns the currently set cursor blink mode.
 	 *
-	 * Return: cursor blink mode.
+	 * Returns: cursor blink mode.
 	 */
 	public VteCursorBlinkMode getCursorBlinkMode()
 	{
@@ -327,7 +327,7 @@ public class Terminal : Widget, ScrollableIF
 	/**
 	 * Returns the currently set cursor shape.
 	 *
-	 * Return: cursor shape.
+	 * Returns: cursor shape.
 	 */
 	public VteCursorShape getCursorShape()
 	{
@@ -338,7 +338,7 @@ public class Terminal : Widget, ScrollableIF
 	 * Determines the name of the encoding in which the terminal expects data to be
 	 * encoded.
 	 *
-	 * Return: the current encoding for the terminal
+	 * Returns: the current encoding for the terminal
 	 */
 	public string getEncoding()
 	{
@@ -351,7 +351,7 @@ public class Terminal : Widget, ScrollableIF
 	 * into account, this is not reflected in the return value, the unscaled
 	 * font is returned.
 	 *
-	 * Return: a #PangoFontDescription describing the font the
+	 * Returns: a #PangoFontDescription describing the font the
 	 *     terminal uses to render text at the default font scale of 1.0.
 	 */
 	public PgFontDescription getFont()
@@ -367,7 +367,7 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * Return: the terminal's font scale
+	 * Returns: the terminal's font scale
 	 */
 	public double getFontScale()
 	{
@@ -398,7 +398,7 @@ public class Terminal : Widget, ScrollableIF
 	 * is different from determining if the terminal is the owner of any
 	 * #GtkClipboard items.
 	 *
-	 * Return: %TRUE if part of the text in the terminal is selected.
+	 * Returns: %TRUE if part of the text in the terminal is selected.
 	 */
 	public bool getHasSelection()
 	{
@@ -406,7 +406,7 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * Return: the icon title
+	 * Returns: the icon title
 	 */
 	public string getIconTitle()
 	{
@@ -427,7 +427,7 @@ public class Terminal : Widget, ScrollableIF
 	 * a key and shown when the user moves the mouse.  This setting can be changed
 	 * using vte_terminal_set_mouse_autohide().
 	 *
-	 * Return: %TRUE if autohiding is enabled, %FALSE if not
+	 * Returns: %TRUE if autohiding is enabled, %FALSE if not
 	 */
 	public bool getMouseAutohide()
 	{
@@ -437,7 +437,7 @@ public class Terminal : Widget, ScrollableIF
 	/**
 	 * Returns the #VtePty of @terminal.
 	 *
-	 * Return: a #VtePty, or %NULL
+	 * Returns: a #VtePty, or %NULL
 	 */
 	public Pty getPty()
 	{
@@ -454,7 +454,7 @@ public class Terminal : Widget, ScrollableIF
 	/**
 	 * Checks whether or not the terminal will rewrap its contents upon resize.
 	 *
-	 * Return: %TRUE if rewrapping is enabled, %FALSE if not
+	 * Returns: %TRUE if rewrapping is enabled, %FALSE if not
 	 */
 	public bool getRewrapOnResize()
 	{
@@ -462,7 +462,7 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * Return: the number of rows
+	 * Returns: the number of rows
 	 */
 	public glong getRowCount()
 	{
@@ -481,7 +481,7 @@ public class Terminal : Widget, ScrollableIF
 	 *     userData = user data to be passed to the callback
 	 *     attributes = location for storing text attributes
 	 *
-	 * Return: a newly allocated text string, or %NULL.
+	 * Returns: a newly allocated text string, or %NULL.
 	 */
 	public string getText(VteSelectionFunc isSelected, void* userData, out ArrayG attributes)
 	{
@@ -509,7 +509,7 @@ public class Terminal : Widget, ScrollableIF
 	 *     userData = user data to be passed to the callback
 	 *     attributes = location for storing text attributes
 	 *
-	 * Return: a newly allocated text string, or %NULL.
+	 * Returns: a newly allocated text string, or %NULL.
 	 */
 	public string getTextIncludeTrailingSpaces(VteSelectionFunc isSelected, void* userData, out ArrayG attributes)
 	{
@@ -541,7 +541,7 @@ public class Terminal : Widget, ScrollableIF
 	 *     userData = user data to be passed to the callback
 	 *     attributes = location for storing text attributes
 	 *
-	 * Return: a newly allocated text string, or %NULL.
+	 * Returns: a newly allocated text string, or %NULL.
 	 */
 	public string getTextRange(glong startRow, glong startCol, glong endRow, glong endCol, VteSelectionFunc isSelected, void* userData, out ArrayG attributes)
 	{
@@ -556,7 +556,7 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * Return: the window title
+	 * Returns: the window title
 	 */
 	public string getWindowTitle()
 	{
@@ -570,7 +570,7 @@ public class Terminal : Widget, ScrollableIF
 	 *
 	 * If %NULL, a built-in set is used.
 	 *
-	 * Return: a string, or %NULL
+	 * Returns: a string, or %NULL
 	 *
 	 * Since: 0.40
 	 */
@@ -590,7 +590,7 @@ public class Terminal : Widget, ScrollableIF
 	 *     gregex = a #GRegex
 	 *     gflags = the #GRegexMatchFlags to use when matching the regex
 	 *
-	 * Return: an integer associated with this expression, or -1 if @gregex could not be
+	 * Returns: an integer associated with this expression, or -1 if @gregex could not be
 	 *     transformed into a #VteRegex or @gflags were incompatible
 	 */
 	public int matchAddGregex(Regex gregex, GRegexMatchFlags gflags)
@@ -607,7 +607,7 @@ public class Terminal : Widget, ScrollableIF
 	 *     regex = a #VteRegex
 	 *     flags = PCRE2 match flags, or 0
 	 *
-	 * Return: an integer associated with this expression
+	 * Returns: an integer associated with this expression
 	 *
 	 * Since: 0.46
 	 */
@@ -633,7 +633,7 @@ public class Terminal : Widget, ScrollableIF
 	 *     row = the text row
 	 *     tag = a location to store the tag, or %NULL
 	 *
-	 * Return: a newly allocated string which matches one of the previously
+	 * Returns: a newly allocated string which matches one of the previously
 	 *     set regular expressions
 	 */
 	public string matchCheck(glong column, glong row, out int tag)
@@ -658,7 +658,7 @@ public class Terminal : Widget, ScrollableIF
 	 *     event = a #GdkEvent
 	 *     tag = a location to store the tag, or %NULL
 	 *
-	 * Return: a newly allocated string which matches one of the previously
+	 * Returns: a newly allocated string which matches one of the previously
 	 *     set regular expressions
 	 */
 	public string matchCheckEvent(Event event, out int tag)
@@ -766,7 +766,7 @@ public class Terminal : Widget, ScrollableIF
 	 *     flags = flags from #VtePtyFlags
 	 *     cancellable = a #GCancellable, or %NULL
 	 *
-	 * Return: a new #VtePty
+	 * Returns: a new #VtePty
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -808,7 +808,7 @@ public class Terminal : Widget, ScrollableIF
 	 * Searches the next string matching the search regex set with
 	 * vte_terminal_search_set_regex().
 	 *
-	 * Return: %TRUE if a match was found
+	 * Returns: %TRUE if a match was found
 	 */
 	public bool searchFindNext()
 	{
@@ -819,7 +819,7 @@ public class Terminal : Widget, ScrollableIF
 	 * Searches the previous string matching the search regex set with
 	 * vte_terminal_search_set_regex().
 	 *
-	 * Return: %TRUE if a match was found
+	 * Returns: %TRUE if a match was found
 	 */
 	public bool searchFindPrevious()
 	{
@@ -831,7 +831,7 @@ public class Terminal : Widget, ScrollableIF
 	 *
 	 * Deprecated: use vte_terminal_search_get_regex() instead.
 	 *
-	 * Return: %NULL
+	 * Returns: %NULL
 	 */
 	public Regex searchGetGregex()
 	{
@@ -846,7 +846,7 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * Return: the search #VteRegex regex set in @terminal, or %NULL
+	 * Returns: the search #VteRegex regex set in @terminal, or %NULL
 	 *
 	 * Since: 0.46
 	 */
@@ -863,7 +863,7 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * Return: whether searching will wrap around
+	 * Returns: whether searching will wrap around
 	 */
 	public bool searchGetWrapAround()
 	{
@@ -1141,7 +1141,7 @@ public class Terminal : Widget, ScrollableIF
 	 * Params:
 	 *     codeset = a valid #GIConv target, or %NULL to use UTF-8
 	 *
-	 * Return: %TRUE if the encoding could be changed to the specified one,
+	 * Returns: %TRUE if the encoding could be changed to the specified one,
 	 *     or %FALSE with @error set to %G_CONVERT_ERROR_NO_CONVERSION.
 	 *
 	 * Throws: GException on failure.
@@ -1403,7 +1403,7 @@ public class Terminal : Widget, ScrollableIF
 	 *     childPid = a location to store the child PID, or %NULL
 	 *     cancellable = a #GCancellable, or %NULL
 	 *
-	 * Return: %TRUE on success, or %FALSE on error with @error filled in
+	 * Returns: %TRUE on success, or %FALSE on error with @error filled in
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -1469,7 +1469,7 @@ public class Terminal : Widget, ScrollableIF
 	 *     flags = a set of #VteWriteFlags
 	 *     cancellable = a #GCancellable object, or %NULL
 	 *
-	 * Return: %TRUE on success, %FALSE if there was an error
+	 * Returns: %TRUE on success, %FALSE if there was an error
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -3092,7 +3092,7 @@ public class Terminal : Widget, ScrollableIF
 	 * Gets the user's shell, or %NULL. In the latter case, the
 	 * system default (usually "/bin/sh") should be used.
 	 *
-	 * Return: a newly allocated string with the
+	 * Returns: a newly allocated string with the
 	 *     user's shell, or %NULL
 	 */
 	public static string getUserShell()

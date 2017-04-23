@@ -83,7 +83,7 @@ public class VariantBuilder
 	 * Params:
 	 *     type = a container type
 	 *
-	 * Return: a #GVariantBuilder
+	 * Returns: a #GVariantBuilder
 	 *
 	 * Since: 2.24
 	 *
@@ -180,7 +180,7 @@ public class VariantBuilder
 	 * have been added; in this case it is impossible to infer the type of
 	 * the empty array.
 	 *
-	 * Return: a new, floating, #GVariant
+	 * Returns: a new, floating, #GVariant
 	 *
 	 * Since: 2.24
 	 */
@@ -291,7 +291,7 @@ public class VariantBuilder
 	 * Don't call this on stack-allocated #GVariantBuilder instances or bad
 	 * things will happen.
 	 *
-	 * Return: a new reference to @builder
+	 * Returns: a new reference to @builder
 	 *
 	 * Since: 2.24
 	 */

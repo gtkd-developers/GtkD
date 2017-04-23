@@ -88,7 +88,7 @@ public class CellRendererToggle : CellRenderer
 	 * in the model, thus causing the check button to reflect the state of
 	 * the model.
 	 *
-	 * Return: the new cell renderer
+	 * Returns: the new cell renderer
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -108,7 +108,7 @@ public class CellRendererToggle : CellRenderer
 	 * Returns whether the cell renderer is activatable. See
 	 * gtk_cell_renderer_toggle_set_activatable().
 	 *
-	 * Return: %TRUE if the cell renderer is activatable.
+	 * Returns: %TRUE if the cell renderer is activatable.
 	 *
 	 * Since: 2.18
 	 */
@@ -121,7 +121,7 @@ public class CellRendererToggle : CellRenderer
 	 * Returns whether the cell renderer is active. See
 	 * gtk_cell_renderer_toggle_set_active().
 	 *
-	 * Return: %TRUE if the cell renderer is active.
+	 * Returns: %TRUE if the cell renderer is active.
 	 */
 	public bool getActive()
 	{
@@ -131,7 +131,7 @@ public class CellRendererToggle : CellRenderer
 	/**
 	 * Returns whether we’re rendering radio toggles rather than checkboxes.
 	 *
-	 * Return: %TRUE if we’re rendering radio toggles rather than checkboxes
+	 * Returns: %TRUE if we’re rendering radio toggles rather than checkboxes
 	 */
 	public bool getRadio()
 	{

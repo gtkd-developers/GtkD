@@ -265,7 +265,7 @@ public class Action : ObjectG, BuildableIF
 	 *     stockId = the stock icon to display in widgets representing
 	 *         the action, or %NULL
 	 *
-	 * Return: a new #GtkAction
+	 * Returns: a new #GtkAction
 	 *
 	 * Since: 2.4
 	 *
@@ -356,7 +356,7 @@ public class Action : ObjectG, BuildableIF
 	 * Deprecated: Use #GAction and #GtkMenu instead, which have no
 	 * equivalent for getting the accel closure
 	 *
-	 * Return: the accel closure for this action. The
+	 * Returns: the accel closure for this action. The
 	 *     returned closure is owned by GTK+ and must not be unreffed
 	 *     or modified.
 	 *
@@ -380,7 +380,7 @@ public class Action : ObjectG, BuildableIF
 	 * Deprecated: Use #GAction and the accelerator path on an associated
 	 * #GtkMenu instead
 	 *
-	 * Return: the accel path for this action, or %NULL
+	 * Returns: the accel path for this action, or %NULL
 	 *     if none is set. The returned string is owned by GTK+
 	 *     and must not be freed or modified.
 	 *
@@ -398,7 +398,7 @@ public class Action : ObjectG, BuildableIF
 	 * Deprecated: Use g_menu_item_get_attribute_value() on a #GMenuItem
 	 * instead
 	 *
-	 * Return: %TRUE if the menu item proxies will always show their image
+	 * Returns: %TRUE if the menu item proxies will always show their image
 	 *
 	 * Since: 2.20
 	 */
@@ -414,7 +414,7 @@ public class Action : ObjectG, BuildableIF
 	 * g_menu_item_get_attribute_value() to get an icon from a #GMenuItem
 	 * associated with a #GAction
 	 *
-	 * Return: The action’s #GIcon if one is set.
+	 * Returns: The action’s #GIcon if one is set.
 	 *
 	 * Since: 2.16
 	 */
@@ -437,7 +437,7 @@ public class Action : ObjectG, BuildableIF
 	 * g_menu_item_get_attribute_value() to get an icon from a #GMenuItem
 	 * associated with a #GAction
 	 *
-	 * Return: the icon name
+	 * Returns: the icon name
 	 *
 	 * Since: 2.16
 	 */
@@ -452,7 +452,7 @@ public class Action : ObjectG, BuildableIF
 	 * Deprecated: Use #GAction instead, and control and monitor whether
 	 * labels are shown directly
 	 *
-	 * Return: whether @action is important
+	 * Returns: whether @action is important
 	 *
 	 * Since: 2.16
 	 */
@@ -468,7 +468,7 @@ public class Action : ObjectG, BuildableIF
 	 * with g_menu_item_get_attribute_value(). For #GtkActionable widgets, use the
 	 * widget-specific API to get a label
 	 *
-	 * Return: the label text
+	 * Returns: the label text
 	 *
 	 * Since: 2.16
 	 */
@@ -482,7 +482,7 @@ public class Action : ObjectG, BuildableIF
 	 *
 	 * Deprecated: Use g_action_get_name() on a #GAction instead
 	 *
-	 * Return: the name of the action. The string belongs to GTK+ and should not
+	 * Returns: the name of the action. The string belongs to GTK+ and should not
 	 *     be freed.
 	 *
 	 * Since: 2.4
@@ -496,7 +496,7 @@ public class Action : ObjectG, BuildableIF
 	 * Returns the proxy widgets for an action.
 	 * See also gtk_activatable_get_related_action().
 	 *
-	 * Return: a #GSList of proxy widgets. The list is owned by GTK+
+	 * Returns: a #GSList of proxy widgets. The list is owned by GTK+
 	 *     and must not be modified.
 	 *
 	 * Since: 2.4
@@ -521,7 +521,7 @@ public class Action : ObjectG, BuildableIF
 	 * Deprecated: Use g_action_get_enabled() on a #GAction
 	 * instead
 	 *
-	 * Return: %TRUE if the action itself is sensitive.
+	 * Returns: %TRUE if the action itself is sensitive.
 	 *
 	 * Since: 2.4
 	 */
@@ -536,7 +536,7 @@ public class Action : ObjectG, BuildableIF
 	 * Deprecated: Use #GAction instead, which has no equivalent of short
 	 * labels
 	 *
-	 * Return: the short label text.
+	 * Returns: the short label text.
 	 *
 	 * Since: 2.16
 	 */
@@ -551,7 +551,7 @@ public class Action : ObjectG, BuildableIF
 	 * Deprecated: Use #GAction instead, and get tooltips from associated
 	 * #GtkActionable widgets with gtk_widget_get_tooltip_text()
 	 *
-	 * Return: the tooltip text
+	 * Returns: the tooltip text
 	 *
 	 * Since: 2.16
 	 */
@@ -568,7 +568,7 @@ public class Action : ObjectG, BuildableIF
 	 * Deprecated: Use #GAction instead, and control and monitor the state of
 	 * #GtkActionable widgets directly
 	 *
-	 * Return: %TRUE if the action itself is visible.
+	 * Returns: %TRUE if the action itself is visible.
 	 *
 	 * Since: 2.4
 	 */
@@ -583,7 +583,7 @@ public class Action : ObjectG, BuildableIF
 	 * Deprecated: Use #GAction instead, and control and monitor the
 	 * visibility of associated widgets and menu items directly
 	 *
-	 * Return: whether @action is visible when horizontal
+	 * Returns: whether @action is visible when horizontal
 	 *
 	 * Since: 2.16
 	 */
@@ -598,7 +598,7 @@ public class Action : ObjectG, BuildableIF
 	 * Deprecated: Use #GAction instead, and control and monitor the
 	 * visibility of associated widgets and menu items directly
 	 *
-	 * Return: whether @action is visible when horizontal
+	 * Returns: whether @action is visible when horizontal
 	 *
 	 * Since: 2.16
 	 */
@@ -613,7 +613,7 @@ public class Action : ObjectG, BuildableIF
 	 * Deprecated: Use g_action_get_enabled() on a #GAction
 	 * instead
 	 *
-	 * Return: %TRUE if the action and its associated action group
+	 * Returns: %TRUE if the action and its associated action group
 	 *     are both sensitive.
 	 *
 	 * Since: 2.4
@@ -629,7 +629,7 @@ public class Action : ObjectG, BuildableIF
 	 * Deprecated: Use #GAction instead, and control and monitor the state of
 	 * #GtkActionable widgets directly
 	 *
-	 * Return: %TRUE if the action and its associated action group
+	 * Returns: %TRUE if the action and its associated action group
 	 *     are both visible.
 	 *
 	 * Since: 2.4

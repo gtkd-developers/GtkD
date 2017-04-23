@@ -91,7 +91,7 @@ public class MemoryInputStream : InputStream, PollableInputStreamIF, SeekableIF
 	/**
 	 * Creates a new empty #GMemoryInputStream.
 	 *
-	 * Return: a new #GInputStream
+	 * Returns: a new #GInputStream
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -113,7 +113,7 @@ public class MemoryInputStream : InputStream, PollableInputStreamIF, SeekableIF
 	 * Params:
 	 *     bytes = a #GBytes
 	 *
-	 * Return: new #GInputStream read from @bytes
+	 * Returns: new #GInputStream read from @bytes
 	 *
 	 * Since: 2.34
 	 *
@@ -139,7 +139,7 @@ public class MemoryInputStream : InputStream, PollableInputStreamIF, SeekableIF
 	 *     len = length of the data, may be -1 if @data is a nul-terminated string
 	 *     destroy = function that is called to free @data, or %NULL
 	 *
-	 * Return: new #GInputStream read from @data of @len bytes.
+	 * Returns: new #GInputStream read from @data of @len bytes.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

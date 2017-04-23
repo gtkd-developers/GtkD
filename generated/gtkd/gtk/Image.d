@@ -192,7 +192,7 @@ public class Image : Misc
 	/**
 	 * Creates a new empty #GtkImage widget.
 	 *
-	 * Return: a newly created #GtkImage widget.
+	 * Returns: a newly created #GtkImage widget.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -222,7 +222,7 @@ public class Image : Misc
 	 * Params:
 	 *     animation = an animation
 	 *
-	 * Return: a new #GtkImage widget
+	 * Returns: a new #GtkImage widget
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -259,7 +259,7 @@ public class Image : Misc
 	 * Params:
 	 *     filename = a filename
 	 *
-	 * Return: a new #GtkImage
+	 * Returns: a new #GtkImage
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -285,7 +285,7 @@ public class Image : Misc
 	 *     icon = an icon
 	 *     size = a stock icon size (#GtkIconSize)
 	 *
-	 * Return: a new #GtkImage displaying the themed icon
+	 * Returns: a new #GtkImage displaying the themed icon
 	 *
 	 * Since: 2.14
 	 *
@@ -313,7 +313,7 @@ public class Image : Misc
 	 *     iconName = an icon name or %NULL
 	 *     size = a stock icon size (#GtkIconSize)
 	 *
-	 * Return: a new #GtkImage displaying the themed icon
+	 * Returns: a new #GtkImage displaying the themed icon
 	 *
 	 * Since: 2.6
 	 *
@@ -350,7 +350,7 @@ public class Image : Misc
 	 *     iconSet = a #GtkIconSet
 	 *     size = a stock icon size (#GtkIconSize)
 	 *
-	 * Return: a new #GtkImage
+	 * Returns: a new #GtkImage
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -379,7 +379,7 @@ public class Image : Misc
 	 * Params:
 	 *     pixbuf = a #GdkPixbuf, or %NULL
 	 *
-	 * Return: a new #GtkImage
+	 * Returns: a new #GtkImage
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -404,7 +404,7 @@ public class Image : Misc
 	 * Params:
 	 *     surface = a #cairo_surface_t, or %NULL
 	 *
-	 * Return: a new #GtkImage
+	 * Returns: a new #GtkImage
 	 *
 	 * Since: 3.10
 	 *
@@ -439,7 +439,7 @@ public class Image : Misc
 	 * The caller of this function does not own a reference to the
 	 * returned animation.
 	 *
-	 * Return: the displayed animation, or %NULL if
+	 * Returns: the displayed animation, or %NULL if
 	 *     the image is empty
 	 */
 	public PixbufAnimation getAnimation()
@@ -531,7 +531,7 @@ public class Image : Misc
 	 * The caller of this function does not own a reference to the
 	 * returned pixbuf.
 	 *
-	 * Return: the displayed pixbuf, or %NULL if
+	 * Returns: the displayed pixbuf, or %NULL if
 	 *     the image is empty
 	 */
 	public Pixbuf getPixbuf()
@@ -549,7 +549,7 @@ public class Image : Misc
 	/**
 	 * Gets the pixel size used for named icons.
 	 *
-	 * Return: the pixel size used for named icons.
+	 * Returns: the pixel size used for named icons.
 	 *
 	 * Since: 2.6
 	 */
@@ -587,7 +587,7 @@ public class Image : Misc
 	 * to store image data. If the #GtkImage has no image data,
 	 * the return value will be %GTK_IMAGE_EMPTY.
 	 *
-	 * Return: image representation being used
+	 * Returns: image representation being used
 	 */
 	public GtkImageType getStorageType()
 	{

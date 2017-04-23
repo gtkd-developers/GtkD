@@ -114,7 +114,7 @@ public class PgFontMap : ObjectG
 	 * gdk_pango_context_get_for_screen(), and
 	 * gtk_widget_get_pango_context().  Use those instead.
 	 *
-	 * Return: the newly allocated #PangoContext,
+	 * Returns: the newly allocated #PangoContext,
 	 *     which should be freed with g_object_unref().
 	 *
 	 * Since: 1.22
@@ -144,7 +144,7 @@ public class PgFontMap : ObjectG
 	 * This can be used to automatically detect changes to a #PangoFontMap, like
 	 * in #PangoContext.
 	 *
-	 * Return: The current serial number of @fontmap.
+	 * Returns: The current serial number of @fontmap.
 	 *
 	 * Since: 1.32.4
 	 */
@@ -158,7 +158,7 @@ public class PgFontMap : ObjectG
 	 * See the <structfield>render_type</structfield> field of
 	 * #PangoEngineInfo.
 	 *
-	 * Return: the ID string for shape engines for
+	 * Returns: the ID string for shape engines for
 	 *     this fontmap. Owned by Pango, should not be modified
 	 *     or freed.
 	 *
@@ -198,7 +198,7 @@ public class PgFontMap : ObjectG
 	 *     context = the #PangoContext the font will be used with
 	 *     desc = a #PangoFontDescription describing the font to load
 	 *
-	 * Return: the newly allocated #PangoFont
+	 * Returns: the newly allocated #PangoFont
 	 *     loaded, or %NULL if no font matched.
 	 */
 	public PgFont loadFont(PgContext context, PgFontDescription desc)
@@ -222,7 +222,7 @@ public class PgFontMap : ObjectG
 	 *     desc = a #PangoFontDescription describing the font to load
 	 *     language = a #PangoLanguage the fonts will be used for
 	 *
-	 * Return: the newly allocated
+	 * Returns: the newly allocated
 	 *     #PangoFontset loaded, or %NULL if no font matched.
 	 */
 	public PgFontset loadFontset(PgContext context, PgFontDescription desc, PgLanguage language)

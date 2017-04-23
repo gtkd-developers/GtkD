@@ -75,7 +75,7 @@ public class SourceMap : SourceView
 	/**
 	 * Creates a new #GtkSourceMap.
 	 *
-	 * Return: a new #GtkSourceMap.
+	 * Returns: a new #GtkSourceMap.
 	 *
 	 * Since: 3.18
 	 *
@@ -96,7 +96,7 @@ public class SourceMap : SourceView
 	/**
 	 * Gets the #GtkSourceMap:view property, which is the view this widget is mapping.
 	 *
-	 * Return: a #GtkSourceView or %NULL.
+	 * Returns: a #GtkSourceView or %NULL.
 	 *
 	 * Since: 3.18
 	 */

@@ -67,7 +67,7 @@ public class Node
 	 * Params:
 	 *     data = the data to find
 	 *
-	 * Return: the index of the child of @node which contains
+	 * Returns: the index of the child of @node which contains
 	 *     @data, or -1 if the data is not found
 	 */
 	public int childIndex(void* data)
@@ -83,7 +83,7 @@ public class Node
 	 * Params:
 	 *     child = a child of @node
 	 *
-	 * Return: the position of @child with respect to its siblings
+	 * Returns: the position of @child with respect to its siblings
 	 */
 	public int childPosition(Node child)
 	{
@@ -109,7 +109,7 @@ public class Node
 	 * Recursively copies a #GNode (but does not deep-copy the data inside the
 	 * nodes, see g_node_copy_deep() if you need that).
 	 *
-	 * Return: a new #GNode containing the same data pointers
+	 * Returns: a new #GNode containing the same data pointers
 	 */
 	public Node copy()
 	{
@@ -131,7 +131,7 @@ public class Node
 	 *         or %NULL to use the original data.
 	 *     data = data to pass to @copy_func
 	 *
-	 * Return: a new #GNode containing copies of the data in @node.
+	 * Returns: a new #GNode containing copies of the data in @node.
 	 *
 	 * Since: 2.4
 	 */
@@ -153,7 +153,7 @@ public class Node
 	 * If @node is %NULL the depth is 0. The root node has a depth of 1.
 	 * For the children of the root node the depth is 2. And so on.
 	 *
-	 * Return: the depth of the #GNode
+	 * Returns: the depth of the #GNode
 	 */
 	public uint depth()
 	{
@@ -179,7 +179,7 @@ public class Node
 	 *         %G_TRAVERSE_ALL, %G_TRAVERSE_LEAVES and %G_TRAVERSE_NON_LEAVES
 	 *     data = the data to find
 	 *
-	 * Return: the found #GNode, or %NULL if the data is not found
+	 * Returns: the found #GNode, or %NULL if the data is not found
 	 */
 	public Node find(GTraverseType order, GTraverseFlags flags, void* data)
 	{
@@ -201,7 +201,7 @@ public class Node
 	 *         %G_TRAVERSE_ALL, %G_TRAVERSE_LEAVES and %G_TRAVERSE_NON_LEAVES
 	 *     data = the data to find
 	 *
-	 * Return: the found child #GNode, or %NULL if the data is not found
+	 * Returns: the found child #GNode, or %NULL if the data is not found
 	 */
 	public Node findChild(GTraverseFlags flags, void* data)
 	{
@@ -219,7 +219,7 @@ public class Node
 	 * Gets the first sibling of a #GNode.
 	 * This could possibly be the node itself.
 	 *
-	 * Return: the first sibling of @node
+	 * Returns: the first sibling of @node
 	 */
 	public Node firstSibling()
 	{
@@ -236,7 +236,7 @@ public class Node
 	/**
 	 * Gets the root of a tree.
 	 *
-	 * Return: the root of the tree
+	 * Returns: the root of the tree
 	 */
 	public Node getRoot()
 	{
@@ -258,7 +258,7 @@ public class Node
 	 *         If position is -1, @node is inserted as the last child of @parent
 	 *     node = the #GNode to insert
 	 *
-	 * Return: the inserted #GNode
+	 * Returns: the inserted #GNode
 	 */
 	public Node insert(int position, Node node)
 	{
@@ -280,7 +280,7 @@ public class Node
 	 *         If sibling is %NULL, the node is inserted as the first child of @parent.
 	 *     node = the #GNode to insert
 	 *
-	 * Return: the inserted #GNode
+	 * Returns: the inserted #GNode
 	 */
 	public Node insertAfter(Node sibling, Node node)
 	{
@@ -302,7 +302,7 @@ public class Node
 	 *         If sibling is %NULL, the node is inserted as the last child of @parent.
 	 *     node = the #GNode to insert
 	 *
-	 * Return: the inserted #GNode
+	 * Returns: the inserted #GNode
 	 */
 	public Node insertBefore(Node sibling, Node node)
 	{
@@ -324,7 +324,7 @@ public class Node
 	 * Params:
 	 *     descendant = a #GNode
 	 *
-	 * Return: %TRUE if @node is an ancestor of @descendant
+	 * Returns: %TRUE if @node is an ancestor of @descendant
 	 */
 	public bool isAncestor(Node descendant)
 	{
@@ -334,7 +334,7 @@ public class Node
 	/**
 	 * Gets the last child of a #GNode.
 	 *
-	 * Return: the last child of @node, or %NULL if @node has no children
+	 * Returns: the last child of @node, or %NULL if @node has no children
 	 */
 	public Node lastChild()
 	{
@@ -352,7 +352,7 @@ public class Node
 	 * Gets the last sibling of a #GNode.
 	 * This could possibly be the node itself.
 	 *
-	 * Return: the last sibling of @node
+	 * Returns: the last sibling of @node
 	 */
 	public Node lastSibling()
 	{
@@ -373,7 +373,7 @@ public class Node
 	 * If @root is %NULL, 0 is returned. If @root has no children,
 	 * 1 is returned. If @root has children, 2 is returned. And so on.
 	 *
-	 * Return: the maximum height of the tree beneath @root
+	 * Returns: the maximum height of the tree beneath @root
 	 */
 	public uint maxHeight()
 	{
@@ -383,7 +383,7 @@ public class Node
 	/**
 	 * Gets the number of children of a #GNode.
 	 *
-	 * Return: the number of children of @node
+	 * Returns: the number of children of @node
 	 */
 	public uint nChildren()
 	{
@@ -397,7 +397,7 @@ public class Node
 	 *     flags = which types of children are to be counted, one of
 	 *         %G_TRAVERSE_ALL, %G_TRAVERSE_LEAVES and %G_TRAVERSE_NON_LEAVES
 	 *
-	 * Return: the number of nodes in the tree
+	 * Returns: the number of nodes in the tree
 	 */
 	public uint nNodes(GTraverseFlags flags)
 	{
@@ -412,7 +412,7 @@ public class Node
 	 * Params:
 	 *     n = the index of the desired child
 	 *
-	 * Return: the child of @node at index @n
+	 * Returns: the child of @node at index @n
 	 */
 	public Node nthChild(uint n)
 	{
@@ -432,7 +432,7 @@ public class Node
 	 * Params:
 	 *     node = the #GNode to insert
 	 *
-	 * Return: the inserted #GNode
+	 * Returns: the inserted #GNode
 	 */
 	public Node prepend(Node node)
 	{
@@ -492,7 +492,7 @@ public class Node
 	 * Params:
 	 *     data = the data of the new node
 	 *
-	 * Return: a new #GNode
+	 * Returns: a new #GNode
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

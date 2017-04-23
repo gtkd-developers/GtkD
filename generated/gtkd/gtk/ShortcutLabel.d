@@ -82,7 +82,7 @@ public class ShortcutLabel : Box
 	 * Params:
 	 *     accelerator = the initial accelerator
 	 *
-	 * Return: a newly-allocated #GtkShortcutLabel
+	 * Returns: a newly-allocated #GtkShortcutLabel
 	 *
 	 * Since: 3.22
 	 *
@@ -103,7 +103,7 @@ public class ShortcutLabel : Box
 	/**
 	 * Retrieves the current accelerator of @self.
 	 *
-	 * Return: the current accelerator.
+	 * Returns: the current accelerator.
 	 *
 	 * Since: 3.22
 	 */
@@ -115,7 +115,7 @@ public class ShortcutLabel : Box
 	/**
 	 * Retrieves the text that is displayed when no accelerator is set.
 	 *
-	 * Return: the current text displayed when no
+	 * Returns: the current text displayed when no
 	 *     accelerator is set.
 	 *
 	 * Since: 3.22

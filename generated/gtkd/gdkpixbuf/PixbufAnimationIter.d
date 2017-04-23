@@ -98,7 +98,7 @@ public class PixbufAnimationIter : ObjectG
 	 * Params:
 	 *     currentTime = current time
 	 *
-	 * Return: %TRUE if the image may need updating
+	 * Returns: %TRUE if the image may need updating
 	 */
 	public bool advance(TimeVal currentTime)
 	{
@@ -115,7 +115,7 @@ public class PixbufAnimationIter : ObjectG
 	 * image file to avoid updates that are just too quick. The minimum timeout
 	 * for GIF images is currently 20 milliseconds.
 	 *
-	 * Return: delay time in milliseconds (thousandths of a second)
+	 * Returns: delay time in milliseconds (thousandths of a second)
 	 */
 	public int getDelayTime()
 	{
@@ -135,7 +135,7 @@ public class PixbufAnimationIter : ObjectG
 	 * (don't just add a reference), as it may get recycled as you advance
 	 * the iterator.
 	 *
-	 * Return: the pixbuf to be displayed
+	 * Returns: the pixbuf to be displayed
 	 */
 	public Pixbuf getPixbuf()
 	{
@@ -156,7 +156,7 @@ public class PixbufAnimationIter : ObjectG
 	 * you're on the currently loading frame, you need to redraw the screen for
 	 * the updated area.
 	 *
-	 * Return: %TRUE if the frame we're on is partially loaded, or the last frame
+	 * Returns: %TRUE if the frame we're on is partially loaded, or the last frame
 	 */
 	public bool onCurrentlyLoadingFrame()
 	{

@@ -77,7 +77,7 @@ public class SpaceDrawer : ObjectG
 	 * Creates a new #GtkSourceSpaceDrawer object. Useful for storing space drawing
 	 * settings independently of a #GtkSourceView.
 	 *
-	 * Return: a new #GtkSourceSpaceDrawer.
+	 * Returns: a new #GtkSourceSpaceDrawer.
 	 *
 	 * Since: 3.24
 	 *
@@ -119,7 +119,7 @@ public class SpaceDrawer : ObjectG
 	}
 
 	/**
-	 * Return: whether the #GtkSourceSpaceDrawer:matrix property is enabled.
+	 * Returns: whether the #GtkSourceSpaceDrawer:matrix property is enabled.
 	 *
 	 * Since: 3.24
 	 */
@@ -135,7 +135,7 @@ public class SpaceDrawer : ObjectG
 	 * The gtk_source_space_drawer_get_types_for_locations() function may be more
 	 * convenient to use.
 	 *
-	 * Return: the #GtkSourceSpaceDrawer:matrix value as a new floating #GVariant
+	 * Returns: the #GtkSourceSpaceDrawer:matrix value as a new floating #GVariant
 	 *     instance.
 	 *
 	 * Since: 3.24
@@ -165,7 +165,7 @@ public class SpaceDrawer : ObjectG
 	 * Params:
 	 *     locations = one or several #GtkSourceSpaceLocationFlags.
 	 *
-	 * Return: a combination of #GtkSourceSpaceTypeFlags.
+	 * Returns: a combination of #GtkSourceSpaceTypeFlags.
 	 *
 	 * Since: 3.24
 	 */

@@ -128,7 +128,7 @@ public class FileFilter : ObjectG, BuildableIF
 	 * gtk_file_filter_add_pattern (filter, "*");
 	 * ]|
 	 *
-	 * Return: a new #GtkFileFilter
+	 * Returns: a new #GtkFileFilter
 	 *
 	 * Since: 2.4
 	 *
@@ -153,7 +153,7 @@ public class FileFilter : ObjectG, BuildableIF
 	 * Params:
 	 *     variant = an a{sv} #GVariant
 	 *
-	 * Return: a new #GtkFileFilter object
+	 * Returns: a new #GtkFileFilter object
 	 *
 	 * Since: 3.22
 	 *
@@ -243,7 +243,7 @@ public class FileFilter : ObjectG, BuildableIF
 	 *     filterInfo = a #GtkFileFilterInfo containing information
 	 *         about a file.
 	 *
-	 * Return: %TRUE if the file should be displayed
+	 * Returns: %TRUE if the file should be displayed
 	 *
 	 * Since: 2.4
 	 */
@@ -255,7 +255,7 @@ public class FileFilter : ObjectG, BuildableIF
 	/**
 	 * Gets the human-readable name for the filter. See gtk_file_filter_set_name().
 	 *
-	 * Return: The human-readable name of the filter,
+	 * Returns: The human-readable name of the filter,
 	 *     or %NULL. This value is owned by GTK+ and must not
 	 *     be modified or freed.
 	 *
@@ -274,7 +274,7 @@ public class FileFilter : ObjectG, BuildableIF
 	 * is intended principally for use in the implementation of
 	 * #GtkFileChooser.
 	 *
-	 * Return: bitfield of flags indicating needed fields when
+	 * Returns: bitfield of flags indicating needed fields when
 	 *     calling gtk_file_filter_filter()
 	 *
 	 * Since: 2.4
@@ -303,7 +303,7 @@ public class FileFilter : ObjectG, BuildableIF
 	/**
 	 * Serialize a file filter to an a{sv} variant.
 	 *
-	 * Return: a new, floating, #GVariant
+	 * Returns: a new, floating, #GVariant
 	 *
 	 * Since: 3.22
 	 */

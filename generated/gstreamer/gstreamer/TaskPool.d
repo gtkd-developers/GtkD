@@ -82,7 +82,7 @@ public class TaskPool : ObjectGst
 	 * Create a new default task pool. The default task pool will use a regular
 	 * GThreadPool for threads.
 	 *
-	 * Return: a new #GstTaskPool. gst_object_unref() after usage.
+	 * Returns: a new #GstTaskPool. gst_object_unref() after usage.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -147,7 +147,7 @@ public class TaskPool : ObjectGst
 	 *     func = the function to call
 	 *     userData = data to pass to @func
 	 *
-	 * Return: a pointer that should be used
+	 * Returns: a pointer that should be used
 	 *     for the gst_task_pool_join function. This pointer can be %NULL, you
 	 *     must check @error to detect errors.
 	 *

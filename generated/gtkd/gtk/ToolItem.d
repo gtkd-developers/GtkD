@@ -95,7 +95,7 @@ public class ToolItem : Bin, ActivatableIF
 	/**
 	 * Creates a new #GtkToolItem
 	 *
-	 * Return: the new #GtkToolItem
+	 * Returns: the new #GtkToolItem
 	 *
 	 * Since: 2.4
 	 *
@@ -118,7 +118,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * #GtkToolItem should call this function to find out how text should
 	 * be ellipsized.
 	 *
-	 * Return: a #PangoEllipsizeMode indicating how text in @tool_item
+	 * Returns: a #PangoEllipsizeMode indicating how text in @tool_item
 	 *     should be ellipsized.
 	 *
 	 * Since: 2.20
@@ -132,7 +132,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * Returns whether @tool_item is allocated extra space.
 	 * See gtk_tool_item_set_expand().
 	 *
-	 * Return: %TRUE if @tool_item is allocated extra space.
+	 * Returns: %TRUE if @tool_item is allocated extra space.
 	 *
 	 * Since: 2.4
 	 */
@@ -145,7 +145,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * Returns whether @tool_item is the same size as other homogeneous
 	 * items. See gtk_tool_item_set_homogeneous().
 	 *
-	 * Return: %TRUE if the item is the same size as other homogeneous
+	 * Returns: %TRUE if the item is the same size as other homogeneous
 	 *     items.
 	 *
 	 * Since: 2.4
@@ -160,7 +160,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * #GtkToolItem should call this function to find out what size icons
 	 * they should use.
 	 *
-	 * Return: a #GtkIconSize indicating the icon size
+	 * Returns: a #GtkIconSize indicating the icon size
 	 *     used for @tool_item
 	 *
 	 * Since: 2.4
@@ -174,7 +174,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * Returns whether @tool_item is considered important. See
 	 * gtk_tool_item_set_is_important()
 	 *
-	 * Return: %TRUE if @tool_item is considered important.
+	 * Returns: %TRUE if @tool_item is considered important.
 	 *
 	 * Since: 2.4
 	 */
@@ -188,7 +188,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * #GtkToolItem should call this function to find out what size icons
 	 * they should use.
 	 *
-	 * Return: a #GtkOrientation indicating the orientation
+	 * Returns: a #GtkOrientation indicating the orientation
 	 *     used for @tool_item
 	 *
 	 * Since: 2.4
@@ -210,7 +210,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * Params:
 	 *     menuItemId = a string used to identify the menu item
 	 *
-	 * Return: The #GtkMenuItem passed to
+	 * Returns: The #GtkMenuItem passed to
 	 *     gtk_tool_item_set_proxy_menu_item(), if the @menu_item_ids
 	 *     match.
 	 *
@@ -234,7 +234,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * of the #GtkToolItem::toolbar_reconfigured signal to find out the
 	 * relief style of buttons.
 	 *
-	 * Return: a #GtkReliefStyle indicating the relief style used
+	 * Returns: a #GtkReliefStyle indicating the relief style used
 	 *     for @tool_item.
 	 *
 	 * Since: 2.4
@@ -249,7 +249,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * #GtkToolItem should call this function to find out how text should
 	 * be aligned.
 	 *
-	 * Return: a #gfloat indicating the horizontal text alignment
+	 * Returns: a #gfloat indicating the horizontal text alignment
 	 *     used for @tool_item
 	 *
 	 * Since: 2.20
@@ -264,7 +264,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * #GtkToolItem should call this function to find out how text should
 	 * be orientated.
 	 *
-	 * Return: a #GtkOrientation indicating the text orientation
+	 * Returns: a #GtkOrientation indicating the text orientation
 	 *     used for @tool_item
 	 *
 	 * Since: 2.20
@@ -279,7 +279,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * Custom subclasses of #GtkToolItem should call this function
 	 * and use the size group for labels.
 	 *
-	 * Return: a #GtkSizeGroup
+	 * Returns: a #GtkSizeGroup
 	 *
 	 * Since: 2.20
 	 */
@@ -309,7 +309,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * - %GTK_TOOLBAR_BOTH_HORIZ, meaning the tool item should show
 	 * both an icon and a label, arranged horizontally
 	 *
-	 * Return: A #GtkToolbarStyle indicating the toolbar style used
+	 * Returns: A #GtkToolbarStyle indicating the toolbar style used
 	 *     for @tool_item.
 	 *
 	 * Since: 2.4
@@ -323,7 +323,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * Returns whether @tool_item has a drag window. See
 	 * gtk_tool_item_set_use_drag_window().
 	 *
-	 * Return: %TRUE if @tool_item uses a drag window.
+	 * Returns: %TRUE if @tool_item uses a drag window.
 	 *
 	 * Since: 2.4
 	 */
@@ -336,7 +336,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * Returns whether the @tool_item is visible on toolbars that are
 	 * docked horizontally.
 	 *
-	 * Return: %TRUE if @tool_item is visible on toolbars that are
+	 * Returns: %TRUE if @tool_item is visible on toolbars that are
 	 *     docked horizontally.
 	 *
 	 * Since: 2.4
@@ -350,7 +350,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * Returns whether @tool_item is visible when the toolbar is docked vertically.
 	 * See gtk_tool_item_set_visible_vertical().
 	 *
-	 * Return: Whether @tool_item is visible when the toolbar is docked vertically
+	 * Returns: Whether @tool_item is visible when the toolbar is docked vertically
 	 *
 	 * Since: 2.4
 	 */
@@ -380,7 +380,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * gtk_tool_item_set_proxy_menu_item(), ie. the #GtkMenuItem
 	 * that is going to appear in the overflow menu.
 	 *
-	 * Return: The #GtkMenuItem that is going to appear in the
+	 * Returns: The #GtkMenuItem that is going to appear in the
 	 *     overflow menu for @tool_item.
 	 *
 	 * Since: 2.4
@@ -594,7 +594,7 @@ public class ToolItem : Bin, ActivatableIF
 	 * to invalidate the cache and ensure that the toolbar rebuilds its overflow
 	 * menu.
 	 *
-	 * Return: %TRUE if the signal was handled, %FALSE if not
+	 * Returns: %TRUE if the signal was handled, %FALSE if not
 	 */
 	gulong addOnCreateMenuProxy(bool delegate(ToolItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

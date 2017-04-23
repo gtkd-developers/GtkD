@@ -2659,14 +2659,14 @@ struct GActionGroupInterface
 	 * Params:
 	 *     actionGroup = a #GActionGroup
 	 *     actionName = the name of the action to check for
-	 * Return: whether the named action exists
+	 * Returns: whether the named action exists
 	 */
 	extern(C) int function(GActionGroup* actionGroup, const(char)* actionName) hasAction;
 	/**
 	 *
 	 * Params:
 	 *     actionGroup = a #GActionGroup
-	 * Return: a %NULL-terminated array of the names of the
+	 * Returns: a %NULL-terminated array of the names of the
 	 *     actions in the group
 	 */
 	extern(C) char** function(GActionGroup* actionGroup) listActions;
@@ -2675,7 +2675,7 @@ struct GActionGroupInterface
 	 * Params:
 	 *     actionGroup = a #GActionGroup
 	 *     actionName = the name of the action to query
-	 * Return: whether or not the action is currently enabled
+	 * Returns: whether or not the action is currently enabled
 	 */
 	extern(C) int function(GActionGroup* actionGroup, const(char)* actionName) getActionEnabled;
 	/**
@@ -2683,7 +2683,7 @@ struct GActionGroupInterface
 	 * Params:
 	 *     actionGroup = a #GActionGroup
 	 *     actionName = the name of the action to query
-	 * Return: the parameter type
+	 * Returns: the parameter type
 	 */
 	extern(C) GVariantType* function(GActionGroup* actionGroup, const(char)* actionName) getActionParameterType;
 	/**
@@ -2691,7 +2691,7 @@ struct GActionGroupInterface
 	 * Params:
 	 *     actionGroup = a #GActionGroup
 	 *     actionName = the name of the action to query
-	 * Return: the state type, if the action is stateful
+	 * Returns: the state type, if the action is stateful
 	 */
 	extern(C) GVariantType* function(GActionGroup* actionGroup, const(char)* actionName) getActionStateType;
 	/**
@@ -2699,7 +2699,7 @@ struct GActionGroupInterface
 	 * Params:
 	 *     actionGroup = a #GActionGroup
 	 *     actionName = the name of the action to query
-	 * Return: the state range hint
+	 * Returns: the state range hint
 	 */
 	extern(C) GVariant* function(GActionGroup* actionGroup, const(char)* actionName) getActionStateHint;
 	/**
@@ -2707,7 +2707,7 @@ struct GActionGroupInterface
 	 * Params:
 	 *     actionGroup = a #GActionGroup
 	 *     actionName = the name of the action to query
-	 * Return: the current state of the action
+	 * Returns: the current state of the action
 	 */
 	extern(C) GVariant* function(GActionGroup* actionGroup, const(char)* actionName) getActionState;
 	/** */
@@ -2732,7 +2732,7 @@ struct GActionGroupInterface
 	 *     stateType = the state type, or %NULL if stateless
 	 *     stateHint = the state hint, or %NULL if none
 	 *     state = the current state, or %NULL if stateless
-	 * Return: %TRUE if the action exists, else %FALSE
+	 * Returns: %TRUE if the action exists, else %FALSE
 	 */
 	extern(C) int function(GActionGroup* actionGroup, const(char)* actionName, int* enabled, GVariantType** parameterType, GVariantType** stateType, GVariant** stateHint, GVariant** state) queryAction;
 }
@@ -2749,42 +2749,42 @@ struct GActionInterface
 	 *
 	 * Params:
 	 *     action = a #GAction
-	 * Return: the name of the action
+	 * Returns: the name of the action
 	 */
 	extern(C) const(char)* function(GAction* action) getName;
 	/**
 	 *
 	 * Params:
 	 *     action = a #GAction
-	 * Return: the parameter type
+	 * Returns: the parameter type
 	 */
 	extern(C) GVariantType* function(GAction* action) getParameterType;
 	/**
 	 *
 	 * Params:
 	 *     action = a #GAction
-	 * Return: the state type, if the action is stateful
+	 * Returns: the state type, if the action is stateful
 	 */
 	extern(C) GVariantType* function(GAction* action) getStateType;
 	/**
 	 *
 	 * Params:
 	 *     action = a #GAction
-	 * Return: the state range hint
+	 * Returns: the state range hint
 	 */
 	extern(C) GVariant* function(GAction* action) getStateHint;
 	/**
 	 *
 	 * Params:
 	 *     action = a #GAction
-	 * Return: whether the action is enabled
+	 * Returns: whether the action is enabled
 	 */
 	extern(C) int function(GAction* action) getEnabled;
 	/**
 	 *
 	 * Params:
 	 *     action = a #GAction
-	 * Return: the current state of the action
+	 * Returns: the current state of the action
 	 */
 	extern(C) GVariant* function(GAction* action) getState;
 	/** */
@@ -2808,7 +2808,7 @@ struct GActionMapInterface
 	 * Params:
 	 *     actionMap = a #GActionMap
 	 *     actionName = the name of an action
-	 * Return: a #GAction, or %NULL
+	 * Returns: a #GAction, or %NULL
 	 */
 	extern(C) GAction* function(GActionMap* actionMap, const(char)* actionName) lookupAction;
 	/** */
@@ -2832,7 +2832,7 @@ struct GAppInfoIface
 	 *
 	 * Params:
 	 *     appinfo = a #GAppInfo.
-	 * Return: a duplicate of @appinfo.
+	 * Returns: a duplicate of @appinfo.
 	 */
 	extern(C) GAppInfo* function(GAppInfo* appinfo) dup;
 	/**
@@ -2840,28 +2840,28 @@ struct GAppInfoIface
 	 * Params:
 	 *     appinfo1 = the first #GAppInfo.
 	 *     appinfo2 = the second #GAppInfo.
-	 * Return: %TRUE if @appinfo1 is equal to @appinfo2. %FALSE otherwise.
+	 * Returns: %TRUE if @appinfo1 is equal to @appinfo2. %FALSE otherwise.
 	 */
 	extern(C) int function(GAppInfo* appinfo1, GAppInfo* appinfo2) equal;
 	/**
 	 *
 	 * Params:
 	 *     appinfo = a #GAppInfo.
-	 * Return: a string containing the application's ID.
+	 * Returns: a string containing the application's ID.
 	 */
 	extern(C) const(char)* function(GAppInfo* appinfo) getId;
 	/**
 	 *
 	 * Params:
 	 *     appinfo = a #GAppInfo.
-	 * Return: the name of the application for @appinfo.
+	 * Returns: the name of the application for @appinfo.
 	 */
 	extern(C) const(char)* function(GAppInfo* appinfo) getName;
 	/**
 	 *
 	 * Params:
 	 *     appinfo = a #GAppInfo.
-	 * Return: a string containing a description of the
+	 * Returns: a string containing a description of the
 	 *     application @appinfo, or %NULL if none.
 	 */
 	extern(C) const(char)* function(GAppInfo* appinfo) getDescription;
@@ -2871,7 +2871,7 @@ struct GAppInfoIface
 	 *
 	 * Params:
 	 *     appinfo = a #GAppInfo.
-	 * Return: the default #GIcon for @appinfo or %NULL
+	 * Returns: the default #GIcon for @appinfo or %NULL
 	 *     if there is no default icon.
 	 */
 	extern(C) GIcon* function(GAppInfo* appinfo) getIcon;
@@ -2881,7 +2881,7 @@ struct GAppInfoIface
 	 *     appinfo = a #GAppInfo
 	 *     files = a #GList of #GFile objects
 	 *     launchContext = a #GAppLaunchContext or %NULL
-	 * Return: %TRUE on successful launch, %FALSE otherwise.
+	 * Returns: %TRUE on successful launch, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -2890,14 +2890,14 @@ struct GAppInfoIface
 	 *
 	 * Params:
 	 *     appinfo = a #GAppInfo.
-	 * Return: %TRUE if the @appinfo supports URIs.
+	 * Returns: %TRUE if the @appinfo supports URIs.
 	 */
 	extern(C) int function(GAppInfo* appinfo) supportsUris;
 	/**
 	 *
 	 * Params:
 	 *     appinfo = a #GAppInfo.
-	 * Return: %TRUE if the @appinfo supports files.
+	 * Returns: %TRUE if the @appinfo supports files.
 	 */
 	extern(C) int function(GAppInfo* appinfo) supportsFiles;
 	/**
@@ -2906,7 +2906,7 @@ struct GAppInfoIface
 	 *     appinfo = a #GAppInfo
 	 *     uris = a #GList containing URIs to launch.
 	 *     launchContext = a #GAppLaunchContext or %NULL
-	 * Return: %TRUE on successful launch, %FALSE otherwise.
+	 * Returns: %TRUE on successful launch, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -2915,7 +2915,7 @@ struct GAppInfoIface
 	 *
 	 * Params:
 	 *     appinfo = a #GAppInfo.
-	 * Return: %TRUE if the @appinfo should be shown, %FALSE otherwise.
+	 * Returns: %TRUE if the @appinfo should be shown, %FALSE otherwise.
 	 */
 	extern(C) int function(GAppInfo* appinfo) shouldShow;
 	/**
@@ -2923,7 +2923,7 @@ struct GAppInfoIface
 	 * Params:
 	 *     appinfo = a #GAppInfo.
 	 *     contentType = the content type.
-	 * Return: %TRUE on success, %FALSE on error.
+	 * Returns: %TRUE on success, %FALSE on error.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -2934,7 +2934,7 @@ struct GAppInfoIface
 	 *     appinfo = a #GAppInfo.
 	 *     extension = a string containing the file extension
 	 *         (without the dot).
-	 * Return: %TRUE on success, %FALSE on error.
+	 * Returns: %TRUE on success, %FALSE on error.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -2944,7 +2944,7 @@ struct GAppInfoIface
 	 * Params:
 	 *     appinfo = a #GAppInfo.
 	 *     contentType = a string.
-	 * Return: %TRUE on success, %FALSE on error.
+	 * Returns: %TRUE on success, %FALSE on error.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -2953,7 +2953,7 @@ struct GAppInfoIface
 	 *
 	 * Params:
 	 *     appinfo = a #GAppInfo.
-	 * Return: %TRUE if it is possible to remove supported
+	 * Returns: %TRUE if it is possible to remove supported
 	 *     content types from a given @appinfo, %FALSE if not.
 	 */
 	extern(C) int function(GAppInfo* appinfo) canRemoveSupportsType;
@@ -2962,7 +2962,7 @@ struct GAppInfoIface
 	 * Params:
 	 *     appinfo = a #GAppInfo.
 	 *     contentType = a string.
-	 * Return: %TRUE on success, %FALSE on error.
+	 * Returns: %TRUE on success, %FALSE on error.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -2971,14 +2971,14 @@ struct GAppInfoIface
 	 *
 	 * Params:
 	 *     appinfo = a #GAppInfo
-	 * Return: %TRUE if @appinfo can be deleted
+	 * Returns: %TRUE if @appinfo can be deleted
 	 */
 	extern(C) int function(GAppInfo* appinfo) canDelete;
 	/**
 	 *
 	 * Params:
 	 *     appinfo = a #GAppInfo
-	 * Return: %TRUE if @appinfo has been deleted
+	 * Returns: %TRUE if @appinfo has been deleted
 	 */
 	extern(C) int function(GAppInfo* appinfo) doDelete;
 	/** */
@@ -2987,7 +2987,7 @@ struct GAppInfoIface
 	 *
 	 * Params:
 	 *     appinfo = a #GAppInfo.
-	 * Return: the display name of the application for @appinfo, or the name if
+	 * Returns: the display name of the application for @appinfo, or the name if
 	 *     no display name is available.
 	 */
 	extern(C) const(char)* function(GAppInfo* appinfo) getDisplayName;
@@ -2996,7 +2996,7 @@ struct GAppInfoIface
 	 * Params:
 	 *     appinfo = a #GAppInfo.
 	 *     contentType = the content type.
-	 * Return: %TRUE on success, %FALSE on error.
+	 * Returns: %TRUE on success, %FALSE on error.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -3005,7 +3005,7 @@ struct GAppInfoIface
 	 *
 	 * Params:
 	 *     appinfo = a #GAppInfo that can handle files
-	 * Return: a list of content types.
+	 * Returns: a list of content types.
 	 */
 	extern(C) char** function(GAppInfo* appinfo) getSupportedTypes;
 }
@@ -3027,7 +3027,7 @@ struct GAppLaunchContextClass
 	 *     context = a #GAppLaunchContext
 	 *     info = a #GAppInfo
 	 *     files = a #GList of #GFile objects
-	 * Return: a display string for the display.
+	 * Returns: a display string for the display.
 	 */
 	extern(C) char* function(GAppLaunchContext* context, GAppInfo* info, GList* files) getDisplay;
 	/**
@@ -3036,7 +3036,7 @@ struct GAppLaunchContextClass
 	 *     context = a #GAppLaunchContext
 	 *     info = a #GAppInfo
 	 *     files = a #GList of of #GFile objects
-	 * Return: a startup notification ID for the application, or %NULL if
+	 * Returns: a startup notification ID for the application, or %NULL if
 	 *     not supported.
 	 */
 	extern(C) char* function(GAppLaunchContext* context, GAppInfo* info, GList* files) getStartupNotifyId;
@@ -3084,7 +3084,7 @@ struct GApplicationClass
 	 *     application = a #GApplication
 	 *     arguments = array of command line arguments
 	 *     exitStatus = exit status to fill after processing the command line.
-	 * Return: %TRUE if the commandline has been completely handled
+	 * Returns: %TRUE if the commandline has been completely handled
 	 */
 	extern(C) int function(GApplication* application, char*** arguments, int* exitStatus) localCommandLine;
 	/** */
@@ -3131,7 +3131,7 @@ struct GApplicationCommandLineClass
 	 *
 	 * Params:
 	 *     cmdline = a #GApplicationCommandLine
-	 * Return: a #GInputStream for stdin
+	 * Returns: a #GInputStream for stdin
 	 */
 	extern(C) GInputStream* function(GApplicationCommandLine* cmdline) getStdin;
 	void*[11] padding;
@@ -3162,7 +3162,7 @@ struct GAsyncInitableIface
 	 * Params:
 	 *     initable = a #GAsyncInitable.
 	 *     res = a #GAsyncResult.
-	 * Return: %TRUE if successful. If an error has occurred, this function
+	 * Returns: %TRUE if successful. If an error has occurred, this function
 	 *     will return %FALSE and set @error appropriately if present.
 	 *
 	 * Throws: GException on failure.
@@ -3185,14 +3185,14 @@ struct GAsyncResultIface
 	 *
 	 * Params:
 	 *     res = a #GAsyncResult.
-	 * Return: the user data for @res.
+	 * Returns: the user data for @res.
 	 */
 	extern(C) void* function(GAsyncResult* res) getUserData;
 	/**
 	 *
 	 * Params:
 	 *     res = a #GAsyncResult
-	 * Return: a new reference to the source object for the @res,
+	 * Returns: a new reference to the source object for the @res,
 	 *     or %NULL if there is none.
 	 */
 	extern(C) GObject* function(GAsyncResult* res) getSourceObject;
@@ -3201,7 +3201,7 @@ struct GAsyncResultIface
 	 * Params:
 	 *     res = a #GAsyncResult
 	 *     sourceTag = an application-defined tag
-	 * Return: %TRUE if @res has the indicated @source_tag, %FALSE if
+	 * Returns: %TRUE if @res has the indicated @source_tag, %FALSE if
 	 *     not.
 	 */
 	extern(C) int function(GAsyncResult* res, void* sourceTag) isTagged;
@@ -3222,7 +3222,7 @@ struct GBufferedInputStreamClass
 	 *     stream = a #GBufferedInputStream
 	 *     count = the number of bytes that will be read from the stream
 	 *     cancellable = optional #GCancellable object, %NULL to ignore
-	 * Return: the number of bytes read into @stream's buffer, up to @count,
+	 * Returns: the number of bytes read into @stream's buffer, up to @count,
 	 *     or -1 on error.
 	 *
 	 * Throws: GException on failure.
@@ -3235,7 +3235,7 @@ struct GBufferedInputStreamClass
 	 * Params:
 	 *     stream = a #GBufferedInputStream
 	 *     result = a #GAsyncResult
-	 * Return: a #gssize of the read stream, or %-1 on an error.
+	 * Returns: a #gssize of the read stream, or %-1 on an error.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -3333,7 +3333,7 @@ struct GConverterIface
 	 *     flags = a #GConverterFlags controlling the conversion details
 	 *     bytesRead = will be set to the number of bytes read from @inbuf on success
 	 *     bytesWritten = will be set to the number of bytes written to @outbuf on success
-	 * Return: a #GConverterResult, %G_CONVERTER_ERROR on error.
+	 * Returns: a #GConverterResult, %G_CONVERTER_ERROR on error.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -3477,14 +3477,14 @@ struct GDBusInterfaceIface
 	 *
 	 * Params:
 	 *     iface = An exported D-Bus interface.
-	 * Return: A #GDBusInterfaceInfo. Do not free.
+	 * Returns: A #GDBusInterfaceInfo. Do not free.
 	 */
 	extern(C) GDBusInterfaceInfo* function(GDBusInterface* iface) getInfo;
 	/**
 	 *
 	 * Params:
 	 *     iface = An exported D-Bus interface
-	 * Return: A #GDBusObject or %NULL. The returned
+	 * Returns: A #GDBusObject or %NULL. The returned
 	 *     reference belongs to @interface_ and should not be freed.
 	 */
 	extern(C) GDBusObject* function(GDBusInterface* iface) getObject;
@@ -3494,7 +3494,7 @@ struct GDBusInterfaceIface
 	 *
 	 * Params:
 	 *     iface = An exported D-Bus interface.
-	 * Return: A #GDBusObject or %NULL. The returned
+	 * Returns: A #GDBusObject or %NULL. The returned
 	 *     reference should be freed with g_object_unref().
 	 */
 	extern(C) GDBusObject* function(GDBusInterface* iface) dupObject;
@@ -3549,21 +3549,21 @@ struct GDBusInterfaceSkeletonClass
 	 *
 	 * Params:
 	 *     iface = A #GDBusInterfaceSkeleton.
-	 * Return: A #GDBusInterfaceInfo (never %NULL). Do not free.
+	 * Returns: A #GDBusInterfaceInfo (never %NULL). Do not free.
 	 */
 	extern(C) GDBusInterfaceInfo* function(GDBusInterfaceSkeleton* iface) getInfo;
 	/**
 	 *
 	 * Params:
 	 *     iface = A #GDBusInterfaceSkeleton.
-	 * Return: A #GDBusInterfaceVTable (never %NULL).
+	 * Returns: A #GDBusInterfaceVTable (never %NULL).
 	 */
 	extern(C) GDBusInterfaceVTable* function(GDBusInterfaceSkeleton* iface) getVtable;
 	/**
 	 *
 	 * Params:
 	 *     iface = A #GDBusInterfaceSkeleton.
-	 * Return: A #GVariant of type
+	 * Returns: A #GVariant of type
 	 *     ['a{sv}'][G-VARIANT-TYPE-VARDICT:CAPS].
 	 *     Free with g_variant_unref().
 	 */
@@ -3711,14 +3711,14 @@ struct GDBusObjectIface
 	 *
 	 * Params:
 	 *     object = A #GDBusObject.
-	 * Return: A string owned by @object. Do not free.
+	 * Returns: A string owned by @object. Do not free.
 	 */
 	extern(C) const(char)* function(GDBusObject* object) getObjectPath;
 	/**
 	 *
 	 * Params:
 	 *     object = A #GDBusObject.
-	 * Return: A list of #GDBusInterface instances.
+	 * Returns: A list of #GDBusInterface instances.
 	 *     The returned list must be freed by g_list_free() after each element has been freed
 	 *     with g_object_unref().
 	 */
@@ -3728,7 +3728,7 @@ struct GDBusObjectIface
 	 * Params:
 	 *     object = A #GDBusObject.
 	 *     interfaceName = A D-Bus interface name.
-	 * Return: %NULL if not found, otherwise a
+	 * Returns: %NULL if not found, otherwise a
 	 *     #GDBusInterface that must be freed with g_object_unref().
 	 */
 	extern(C) GDBusInterface* function(GDBusObject* object, const(char)* interfaceName) getInterface;
@@ -3781,14 +3781,14 @@ struct GDBusObjectManagerIface
 	 *
 	 * Params:
 	 *     manager = A #GDBusObjectManager.
-	 * Return: A string owned by @manager. Do not free.
+	 * Returns: A string owned by @manager. Do not free.
 	 */
 	extern(C) const(char)* function(GDBusObjectManager* manager) getObjectPath;
 	/**
 	 *
 	 * Params:
 	 *     manager = A #GDBusObjectManager.
-	 * Return: A list of
+	 * Returns: A list of
 	 *     #GDBusObject objects. The returned list should be freed with
 	 *     g_list_free() after each element has been freed with
 	 *     g_object_unref().
@@ -3799,7 +3799,7 @@ struct GDBusObjectManagerIface
 	 * Params:
 	 *     manager = A #GDBusObjectManager.
 	 *     objectPath = Object path to lookup.
-	 * Return: A #GDBusObject or %NULL. Free with
+	 * Returns: A #GDBusObject or %NULL. Free with
 	 *     g_object_unref().
 	 */
 	extern(C) GDBusObject* function(GDBusObjectManager* manager, const(char)* objectPath) getObject;
@@ -3809,7 +3809,7 @@ struct GDBusObjectManagerIface
 	 *     manager = A #GDBusObjectManager.
 	 *     objectPath = Object path to lookup.
 	 *     interfaceName = D-Bus interface name to lookup.
-	 * Return: A #GDBusInterface instance or %NULL. Free
+	 * Returns: A #GDBusInterface instance or %NULL. Free
 	 *     with g_object_unref().
 	 */
 	extern(C) GDBusInterface* function(GDBusObjectManager* manager, const(char)* objectPath, const(char)* interfaceName) getInterface;
@@ -4055,7 +4055,7 @@ struct GDatagramBasedInterface
 	 *     timeout = the maximum time (in microseconds) to wait, 0 to not block, or -1
 	 *         to block indefinitely
 	 *     cancellable = a %GCancellable
-	 * Return: number of messages received, or -1 on error. Note that the number
+	 * Returns: number of messages received, or -1 on error. Note that the number
 	 *     of messages received may be smaller than @num_messages if @timeout is
 	 *     zero or positive, if the peer closed the connection, or if @num_messages
 	 *     was larger than `UIO_MAXIOV` (1024), in which case the caller may re-try
@@ -4074,7 +4074,7 @@ struct GDatagramBasedInterface
 	 *     timeout = the maximum time (in microseconds) to wait, 0 to not block, or -1
 	 *         to block indefinitely
 	 *     cancellable = a %GCancellable
-	 * Return: number of messages sent, or -1 on error. Note that the number of
+	 * Returns: number of messages sent, or -1 on error. Note that the number of
 	 *     messages sent may be smaller than @num_messages if @timeout is zero
 	 *     or positive, or if @num_messages was larger than `UIO_MAXIOV` (1024), in
 	 *     which case the caller may re-try to send the remaining messages.
@@ -4088,7 +4088,7 @@ struct GDatagramBasedInterface
 	 *     datagramBased = a #GDatagramBased
 	 *     condition = a #GIOCondition mask to monitor
 	 *     cancellable = a #GCancellable
-	 * Return: a newly allocated #GSource
+	 * Returns: a newly allocated #GSource
 	 */
 	extern(C) GSource* function(GDatagramBased* datagramBased, GIOCondition condition, GCancellable* cancellable) createSource;
 	/**
@@ -4096,7 +4096,7 @@ struct GDatagramBasedInterface
 	 * Params:
 	 *     datagramBased = a #GDatagramBased
 	 *     condition = a #GIOCondition mask to check
-	 * Return: the #GIOCondition mask of the current state
+	 * Returns: the #GIOCondition mask of the current state
 	 */
 	extern(C) GIOCondition function(GDatagramBased* datagramBased, GIOCondition condition) conditionCheck;
 	/**
@@ -4107,7 +4107,7 @@ struct GDatagramBasedInterface
 	 *     timeout = the maximum time (in microseconds) to wait, 0 to not block, or -1
 	 *         to block indefinitely
 	 *     cancellable = a #GCancellable
-	 * Return: %TRUE if the condition was met, %FALSE otherwise
+	 * Returns: %TRUE if the condition was met, %FALSE otherwise
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -4135,7 +4135,7 @@ struct GDesktopAppInfoLookupIface
 	 * Params:
 	 *     lookup = a #GDesktopAppInfoLookup
 	 *     uriScheme = a string containing a URI scheme.
-	 * Return: #GAppInfo for given @uri_scheme or %NULL on error.
+	 * Returns: #GAppInfo for given @uri_scheme or %NULL on error.
 	 */
 	extern(C) GAppInfo* function(GDesktopAppInfoLookup* lookup, const(char)* uriScheme) getDefaultForUriScheme;
 }
@@ -4161,7 +4161,7 @@ struct GDriveIface
 	 *
 	 * Params:
 	 *     drive = a #GDrive.
-	 * Return: a string containing @drive's name. The returned
+	 * Returns: a string containing @drive's name. The returned
 	 *     string should be freed when no longer needed.
 	 */
 	extern(C) char* function(GDrive* drive) getName;
@@ -4169,7 +4169,7 @@ struct GDriveIface
 	 *
 	 * Params:
 	 *     drive = a #GDrive.
-	 * Return: #GIcon for the @drive.
+	 * Returns: #GIcon for the @drive.
 	 *     Free the returned object with g_object_unref().
 	 */
 	extern(C) GIcon* function(GDrive* drive) getIcon;
@@ -4177,35 +4177,35 @@ struct GDriveIface
 	 *
 	 * Params:
 	 *     drive = a #GDrive.
-	 * Return: %TRUE if the @drive contains volumes, %FALSE otherwise.
+	 * Returns: %TRUE if the @drive contains volumes, %FALSE otherwise.
 	 */
 	extern(C) int function(GDrive* drive) hasVolumes;
 	/**
 	 *
 	 * Params:
 	 *     drive = a #GDrive.
-	 * Return: #GList containing any #GVolume objects on the given @drive.
+	 * Returns: #GList containing any #GVolume objects on the given @drive.
 	 */
 	extern(C) GList* function(GDrive* drive) getVolumes;
 	/**
 	 *
 	 * Params:
 	 *     drive = a #GDrive.
-	 * Return: %TRUE if @drive supports removable media, %FALSE otherwise.
+	 * Returns: %TRUE if @drive supports removable media, %FALSE otherwise.
 	 */
 	extern(C) int function(GDrive* drive) isMediaRemovable;
 	/**
 	 *
 	 * Params:
 	 *     drive = a #GDrive.
-	 * Return: %TRUE if @drive has media, %FALSE otherwise.
+	 * Returns: %TRUE if @drive has media, %FALSE otherwise.
 	 */
 	extern(C) int function(GDrive* drive) hasMedia;
 	/**
 	 *
 	 * Params:
 	 *     drive = a #GDrive.
-	 * Return: %TRUE if the @drive is capabable of automatically detecting
+	 * Returns: %TRUE if the @drive is capabable of automatically detecting
 	 *     media changes, %FALSE otherwise.
 	 */
 	extern(C) int function(GDrive* drive) isMediaCheckAutomatic;
@@ -4213,14 +4213,14 @@ struct GDriveIface
 	 *
 	 * Params:
 	 *     drive = a #GDrive.
-	 * Return: %TRUE if the @drive can be ejected, %FALSE otherwise.
+	 * Returns: %TRUE if the @drive can be ejected, %FALSE otherwise.
 	 */
 	extern(C) int function(GDrive* drive) canEject;
 	/**
 	 *
 	 * Params:
 	 *     drive = a #GDrive.
-	 * Return: %TRUE if the @drive can be polled for media changes,
+	 * Returns: %TRUE if the @drive can be polled for media changes,
 	 *     %FALSE otherwise.
 	 */
 	extern(C) int function(GDrive* drive) canPollForMedia;
@@ -4231,7 +4231,7 @@ struct GDriveIface
 	 * Params:
 	 *     drive = a #GDrive.
 	 *     result = a #GAsyncResult.
-	 * Return: %TRUE if the drive has been ejected successfully,
+	 * Returns: %TRUE if the drive has been ejected successfully,
 	 *     %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
@@ -4244,7 +4244,7 @@ struct GDriveIface
 	 * Params:
 	 *     drive = a #GDrive.
 	 *     result = a #GAsyncResult.
-	 * Return: %TRUE if the drive has been poll_for_mediaed successfully,
+	 * Returns: %TRUE if the drive has been poll_for_mediaed successfully,
 	 *     %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
@@ -4255,7 +4255,7 @@ struct GDriveIface
 	 * Params:
 	 *     drive = a #GDrive
 	 *     kind = the kind of identifier to return
-	 * Return: a newly allocated string containing the
+	 * Returns: a newly allocated string containing the
 	 *     requested identfier, or %NULL if the #GDrive
 	 *     doesn't have this kind of identifier.
 	 */
@@ -4264,7 +4264,7 @@ struct GDriveIface
 	 *
 	 * Params:
 	 *     drive = a #GDrive
-	 * Return: a %NULL-terminated
+	 * Returns: a %NULL-terminated
 	 *     array of strings containing kinds of identifiers. Use g_strfreev()
 	 *     to free.
 	 */
@@ -4273,21 +4273,21 @@ struct GDriveIface
 	 *
 	 * Params:
 	 *     drive = a #GDrive.
-	 * Return: A value from the #GDriveStartStopType enumeration.
+	 * Returns: A value from the #GDriveStartStopType enumeration.
 	 */
 	extern(C) GDriveStartStopType function(GDrive* drive) getStartStopType;
 	/**
 	 *
 	 * Params:
 	 *     drive = a #GDrive.
-	 * Return: %TRUE if the @drive can be started, %FALSE otherwise.
+	 * Returns: %TRUE if the @drive can be started, %FALSE otherwise.
 	 */
 	extern(C) int function(GDrive* drive) canStart;
 	/**
 	 *
 	 * Params:
 	 *     drive = a #GDrive.
-	 * Return: %TRUE if the @drive can be started degraded, %FALSE otherwise.
+	 * Returns: %TRUE if the @drive can be started degraded, %FALSE otherwise.
 	 */
 	extern(C) int function(GDrive* drive) canStartDegraded;
 	/** */
@@ -4297,7 +4297,7 @@ struct GDriveIface
 	 * Params:
 	 *     drive = a #GDrive.
 	 *     result = a #GAsyncResult.
-	 * Return: %TRUE if the drive has been started successfully,
+	 * Returns: %TRUE if the drive has been started successfully,
 	 *     %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
@@ -4307,7 +4307,7 @@ struct GDriveIface
 	 *
 	 * Params:
 	 *     drive = a #GDrive.
-	 * Return: %TRUE if the @drive can be stopped, %FALSE otherwise.
+	 * Returns: %TRUE if the @drive can be stopped, %FALSE otherwise.
 	 */
 	extern(C) int function(GDrive* drive) canStop;
 	/** */
@@ -4317,7 +4317,7 @@ struct GDriveIface
 	 * Params:
 	 *     drive = a #GDrive.
 	 *     result = a #GAsyncResult.
-	 * Return: %TRUE if the drive has been stopped successfully,
+	 * Returns: %TRUE if the drive has been stopped successfully,
 	 *     %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
@@ -4332,7 +4332,7 @@ struct GDriveIface
 	 * Params:
 	 *     drive = a #GDrive.
 	 *     result = a #GAsyncResult.
-	 * Return: %TRUE if the drive was successfully ejected. %FALSE otherwise.
+	 * Returns: %TRUE if the drive was successfully ejected. %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -4341,14 +4341,14 @@ struct GDriveIface
 	 *
 	 * Params:
 	 *     drive = A #GDrive.
-	 * Return: Sorting key for @drive or %NULL if no such key is available.
+	 * Returns: Sorting key for @drive or %NULL if no such key is available.
 	 */
 	extern(C) const(char)* function(GDrive* drive) getSortKey;
 	/**
 	 *
 	 * Params:
 	 *     drive = a #GDrive.
-	 * Return: symbolic #GIcon for the @drive.
+	 * Returns: symbolic #GIcon for the @drive.
 	 *     Free the returned object with g_object_unref().
 	 */
 	extern(C) GIcon* function(GDrive* drive) getSymbolicIcon;
@@ -4356,7 +4356,7 @@ struct GDriveIface
 	 *
 	 * Params:
 	 *     drive = a #GDrive.
-	 * Return: %TRUE if @drive and/or its media is considered removable, %FALSE otherwise.
+	 * Returns: %TRUE if @drive and/or its media is considered removable, %FALSE otherwise.
 	 */
 	extern(C) int function(GDrive* drive) isRemovable;
 }
@@ -4396,7 +4396,7 @@ struct GDtlsConnectionInterface
 	 * Params:
 	 *     conn = a #GDtlsConnection
 	 *     cancellable = a #GCancellable, or %NULL
-	 * Return: success or failure
+	 * Returns: success or failure
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -4408,7 +4408,7 @@ struct GDtlsConnectionInterface
 	 * Params:
 	 *     conn = a #GDtlsConnection
 	 *     result = a #GAsyncResult.
-	 * Return: %TRUE on success, %FALSE on failure, in which
+	 * Returns: %TRUE on success, %FALSE on failure, in which
 	 *     case @error will be set.
 	 *
 	 * Throws: GException on failure.
@@ -4421,7 +4421,7 @@ struct GDtlsConnectionInterface
 	 *     shutdownRead = %TRUE to stop reception of incoming datagrams
 	 *     shutdownWrite = %TRUE to stop sending outgoing datagrams
 	 *     cancellable = a #GCancellable, or %NULL
-	 * Return: %TRUE on success, %FALSE otherwise
+	 * Returns: %TRUE on success, %FALSE otherwise
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -4433,7 +4433,7 @@ struct GDtlsConnectionInterface
 	 * Params:
 	 *     conn = a #GDtlsConnection
 	 *     result = a #GAsyncResult
-	 * Return: %TRUE on success, %FALSE on failure, in which
+	 * Returns: %TRUE on success, %FALSE on failure, in which
 	 *     case @error will be set
 	 *
 	 * Throws: GException on failure.
@@ -4523,7 +4523,7 @@ struct GFileDescriptorBasedIface
 	 *
 	 * Params:
 	 *     fdBased = a #GFileDescriptorBased.
-	 * Return: The file descriptor
+	 * Returns: The file descriptor
 	 */
 	extern(C) int function(GFileDescriptorBased* fdBased) getFd;
 }
@@ -4542,7 +4542,7 @@ struct GFileEnumeratorClass
 	 * Params:
 	 *     enumerator = a #GFileEnumerator.
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
-	 * Return: A #GFileInfo or %NULL on error
+	 * Returns: A #GFileInfo or %NULL on error
 	 *     or end of enumerator.  Free the returned object with
 	 *     g_object_unref() when no longer needed.
 	 *
@@ -4558,7 +4558,7 @@ struct GFileEnumeratorClass
 	 * Params:
 	 *     enumerator = a #GFileEnumerator.
 	 *     result = a #GAsyncResult.
-	 * Return: a #GList of #GFileInfos. You must free the list with
+	 * Returns: a #GList of #GFileInfos. You must free the list with
 	 *     g_list_free() and unref the infos with g_object_unref() when you're
 	 *     done with them.
 	 *
@@ -4572,7 +4572,7 @@ struct GFileEnumeratorClass
 	 * Params:
 	 *     enumerator = a #GFileEnumerator.
 	 *     result = a #GAsyncResult.
-	 * Return: %TRUE if the close operation has finished successfully.
+	 * Returns: %TRUE if the close operation has finished successfully.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -4620,7 +4620,7 @@ struct GFileIOStreamClass
 	 *     stream = a #GFileIOStream.
 	 *     attributes = a file attribute query string.
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
-	 * Return: a #GFileInfo for the @stream, or %NULL on error.
+	 * Returns: a #GFileInfo for the @stream, or %NULL on error.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -4632,7 +4632,7 @@ struct GFileIOStreamClass
 	 * Params:
 	 *     stream = a #GFileIOStream.
 	 *     result = a #GAsyncResult.
-	 * Return: A #GFileInfo for the finished query.
+	 * Returns: A #GFileInfo for the finished query.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -4641,7 +4641,7 @@ struct GFileIOStreamClass
 	 *
 	 * Params:
 	 *     stream = a #GFileIOStream.
-	 * Return: the entity tag for the stream.
+	 * Returns: the entity tag for the stream.
 	 */
 	extern(C) char* function(GFileIOStream* stream) getEtag;
 	/** */
@@ -4675,7 +4675,7 @@ struct GFileIface
 	 *
 	 * Params:
 	 *     file = input #GFile
-	 * Return: a new #GFile that is a duplicate
+	 * Returns: a new #GFile that is a duplicate
 	 *     of the given #GFile.
 	 */
 	extern(C) GFile* function(GFile* file) dup;
@@ -4683,7 +4683,7 @@ struct GFileIface
 	 *
 	 * Params:
 	 *     file = #gconstpointer to a #GFile
-	 * Return: 0 if @file is not a valid #GFile, otherwise an
+	 * Returns: 0 if @file is not a valid #GFile, otherwise an
 	 *     integer that can be used as hash value for the #GFile.
 	 *     This function is intended for easily hashing a #GFile to
 	 *     add to a #GHashTable or similar data structure.
@@ -4694,14 +4694,14 @@ struct GFileIface
 	 * Params:
 	 *     file1 = the first #GFile
 	 *     file2 = the second #GFile
-	 * Return: %TRUE if @file1 and @file2 are equal.
+	 * Returns: %TRUE if @file1 and @file2 are equal.
 	 */
 	extern(C) int function(GFile* file1, GFile* file2) equal;
 	/**
 	 *
 	 * Params:
 	 *     file = input #GFile
-	 * Return: %TRUE if @file is native
+	 * Returns: %TRUE if @file is native
 	 */
 	extern(C) int function(GFile* file) isNative;
 	/**
@@ -4709,7 +4709,7 @@ struct GFileIface
 	 * Params:
 	 *     file = input #GFile
 	 *     uriScheme = a string containing a URI scheme
-	 * Return: %TRUE if #GFile's backend supports the
+	 * Returns: %TRUE if #GFile's backend supports the
 	 *     given URI scheme, %FALSE if URI scheme is %NULL,
 	 *     not supported, or #GFile is invalid.
 	 */
@@ -4718,7 +4718,7 @@ struct GFileIface
 	 *
 	 * Params:
 	 *     file = input #GFile
-	 * Return: a string containing the URI scheme for the given
+	 * Returns: a string containing the URI scheme for the given
 	 *     #GFile. The returned string should be freed with g_free()
 	 *     when no longer needed.
 	 */
@@ -4731,7 +4731,7 @@ struct GFileIface
 	 *
 	 * Params:
 	 *     file = input #GFile
-	 * Return: a string containing the #GFile's URI.
+	 * Returns: a string containing the #GFile's URI.
 	 *     The returned string should be freed with g_free()
 	 *     when no longer needed.
 	 */
@@ -4740,7 +4740,7 @@ struct GFileIface
 	 *
 	 * Params:
 	 *     file = input #GFile
-	 * Return: a string containing the #GFile's parse name.
+	 * Returns: a string containing the #GFile's parse name.
 	 *     The returned string should be freed with g_free()
 	 *     when no longer needed.
 	 */
@@ -4749,7 +4749,7 @@ struct GFileIface
 	 *
 	 * Params:
 	 *     file = input #GFile
-	 * Return: a #GFile structure to the
+	 * Returns: a #GFile structure to the
 	 *     parent of the given #GFile or %NULL if there is no parent. Free
 	 *     the returned object with g_object_unref().
 	 */
@@ -4759,7 +4759,7 @@ struct GFileIface
 	 * Params:
 	 *     prefix = input #GFile
 	 *     file = input #GFile
-	 * Return: %TRUE if the @files's parent, grandparent, etc is @prefix,
+	 * Returns: %TRUE if the @files's parent, grandparent, etc is @prefix,
 	 *     %FALSE otherwise.
 	 */
 	extern(C) int function(GFile* prefix, GFile* file) prefixMatches;
@@ -4770,7 +4770,7 @@ struct GFileIface
 	 * Params:
 	 *     file = input #GFile
 	 *     relativePath = a given relative path string
-	 * Return: #GFile to the resolved path.
+	 * Returns: #GFile to the resolved path.
 	 *     %NULL if @relative_path is %NULL or if @file is invalid.
 	 *     Free the returned object with g_object_unref().
 	 */
@@ -4780,7 +4780,7 @@ struct GFileIface
 	 * Params:
 	 *     file = input #GFile
 	 *     displayName = string to a possible child
-	 * Return: a #GFile to the specified child, or
+	 * Returns: a #GFile to the specified child, or
 	 *     %NULL if the display name couldn't be converted.
 	 *     Free the returned object with g_object_unref().
 	 *
@@ -4795,7 +4795,7 @@ struct GFileIface
 	 *     flags = a set of #GFileQueryInfoFlags
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
-	 * Return: A #GFileEnumerator if successful,
+	 * Returns: A #GFileEnumerator if successful,
 	 *     %NULL on error. Free the returned object with g_object_unref().
 	 *
 	 * Throws: GException on failure.
@@ -4808,7 +4808,7 @@ struct GFileIface
 	 * Params:
 	 *     file = input #GFile
 	 *     res = a #GAsyncResult
-	 * Return: a #GFileEnumerator or %NULL
+	 * Returns: a #GFileEnumerator or %NULL
 	 *     if an error occurred.
 	 *     Free the returned object with g_object_unref().
 	 *
@@ -4823,7 +4823,7 @@ struct GFileIface
 	 *     flags = a set of #GFileQueryInfoFlags
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
-	 * Return: a #GFileInfo for the given @file, or %NULL
+	 * Returns: a #GFileInfo for the given @file, or %NULL
 	 *     on error. Free the returned object with g_object_unref().
 	 *
 	 * Throws: GException on failure.
@@ -4836,7 +4836,7 @@ struct GFileIface
 	 * Params:
 	 *     file = input #GFile
 	 *     res = a #GAsyncResult
-	 * Return: #GFileInfo for given @file
+	 * Returns: #GFileInfo for given @file
 	 *     or %NULL on error. Free the returned object with
 	 *     g_object_unref().
 	 *
@@ -4850,7 +4850,7 @@ struct GFileIface
 	 *     attributes = an attribute query string
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
-	 * Return: a #GFileInfo or %NULL if there was an error.
+	 * Returns: a #GFileInfo or %NULL if there was an error.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Throws: GException on failure.
@@ -4863,7 +4863,7 @@ struct GFileIface
 	 * Params:
 	 *     file = input #GFile
 	 *     res = a #GAsyncResult
-	 * Return: #GFileInfo for given @file
+	 * Returns: #GFileInfo for given @file
 	 *     or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
@@ -4876,7 +4876,7 @@ struct GFileIface
 	 *     file = input #GFile
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
-	 * Return: a #GMount where the @file is located
+	 * Returns: a #GMount where the @file is located
 	 *     or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
@@ -4890,7 +4890,7 @@ struct GFileIface
 	 * Params:
 	 *     file = a #GFile
 	 *     res = a #GAsyncResult
-	 * Return: #GMount for given @file or %NULL on error.
+	 * Returns: #GMount for given @file or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Throws: GException on failure.
@@ -4903,7 +4903,7 @@ struct GFileIface
 	 *     displayName = a string
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
-	 * Return: a #GFile specifying what @file was renamed to,
+	 * Returns: a #GFile specifying what @file was renamed to,
 	 *     or %NULL if there was an error.
 	 *     Free the returned object with g_object_unref().
 	 *
@@ -4917,7 +4917,7 @@ struct GFileIface
 	 * Params:
 	 *     file = input #GFile
 	 *     res = a #GAsyncResult
-	 * Return: a #GFile or %NULL on error.
+	 * Returns: a #GFile or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Throws: GException on failure.
@@ -4929,7 +4929,7 @@ struct GFileIface
 	 *     file = input #GFile
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
-	 * Return: a #GFileAttributeInfoList describing the settable attributes.
+	 * Returns: a #GFileAttributeInfoList describing the settable attributes.
 	 *     When you are done with it, release it with
 	 *     g_file_attribute_info_list_unref()
 	 *
@@ -4946,7 +4946,7 @@ struct GFileIface
 	 *     file = input #GFile
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
-	 * Return: a #GFileAttributeInfoList describing the writable namespaces.
+	 * Returns: a #GFileAttributeInfoList describing the writable namespaces.
 	 *     When you are done with it, release it with
 	 *     g_file_attribute_info_list_unref()
 	 *
@@ -4968,7 +4968,7 @@ struct GFileIface
 	 *     flags = a set of #GFileQueryInfoFlags
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
-	 * Return: %TRUE if the attribute was set, %FALSE otherwise.
+	 * Returns: %TRUE if the attribute was set, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -4981,7 +4981,7 @@ struct GFileIface
 	 *     flags = #GFileQueryInfoFlags
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
-	 * Return: %FALSE if there was any error, %TRUE otherwise.
+	 * Returns: %FALSE if there was any error, %TRUE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -4994,7 +4994,7 @@ struct GFileIface
 	 *     file = input #GFile
 	 *     result = a #GAsyncResult
 	 *     info = a #GFileInfo
-	 * Return: %TRUE if the attributes were set correctly, %FALSE otherwise.
+	 * Returns: %TRUE if the attributes were set correctly, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -5004,7 +5004,7 @@ struct GFileIface
 	 * Params:
 	 *     file = #GFile to read
 	 *     cancellable = a #GCancellable
-	 * Return: #GFileInputStream or %NULL on error.
+	 * Returns: #GFileInputStream or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Throws: GException on failure.
@@ -5017,7 +5017,7 @@ struct GFileIface
 	 * Params:
 	 *     file = input #GFile
 	 *     res = a #GAsyncResult
-	 * Return: a #GFileInputStream or %NULL on error.
+	 * Returns: a #GFileInputStream or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Throws: GException on failure.
@@ -5030,7 +5030,7 @@ struct GFileIface
 	 *     flags = a set of #GFileCreateFlags
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
-	 * Return: a #GFileOutputStream, or %NULL on error.
+	 * Returns: a #GFileOutputStream, or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Throws: GException on failure.
@@ -5043,7 +5043,7 @@ struct GFileIface
 	 * Params:
 	 *     file = input #GFile
 	 *     res = #GAsyncResult
-	 * Return: a valid #GFileOutputStream
+	 * Returns: a valid #GFileOutputStream
 	 *     or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
@@ -5057,7 +5057,7 @@ struct GFileIface
 	 *     flags = a set of #GFileCreateFlags
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
-	 * Return: a #GFileOutputStream for the newly created
+	 * Returns: a #GFileOutputStream for the newly created
 	 *     file, or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
@@ -5071,7 +5071,7 @@ struct GFileIface
 	 * Params:
 	 *     file = input #GFile
 	 *     res = a #GAsyncResult
-	 * Return: a #GFileOutputStream or %NULL on error.
+	 * Returns: a #GFileOutputStream or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Throws: GException on failure.
@@ -5087,7 +5087,7 @@ struct GFileIface
 	 *     flags = a set of #GFileCreateFlags
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
-	 * Return: a #GFileOutputStream or %NULL on error.
+	 * Returns: a #GFileOutputStream or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Throws: GException on failure.
@@ -5100,7 +5100,7 @@ struct GFileIface
 	 * Params:
 	 *     file = input #GFile
 	 *     res = a #GAsyncResult
-	 * Return: a #GFileOutputStream, or %NULL on error.
+	 * Returns: a #GFileOutputStream, or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Throws: GException on failure.
@@ -5112,7 +5112,7 @@ struct GFileIface
 	 *     file = input #GFile
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
-	 * Return: %TRUE if the file was deleted. %FALSE otherwise.
+	 * Returns: %TRUE if the file was deleted. %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -5124,7 +5124,7 @@ struct GFileIface
 	 * Params:
 	 *     file = input #GFile
 	 *     result = a #GAsyncResult
-	 * Return: %TRUE if the file was deleted. %FALSE otherwise.
+	 * Returns: %TRUE if the file was deleted. %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -5135,7 +5135,7 @@ struct GFileIface
 	 *     file = #GFile to send to trash
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
-	 * Return: %TRUE on successful trash, %FALSE otherwise.
+	 * Returns: %TRUE on successful trash, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -5147,7 +5147,7 @@ struct GFileIface
 	 * Params:
 	 *     file = input #GFile
 	 *     result = a #GAsyncResult
-	 * Return: %TRUE on successful trash, %FALSE otherwise.
+	 * Returns: %TRUE on successful trash, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -5158,7 +5158,7 @@ struct GFileIface
 	 *     file = input #GFile
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
-	 * Return: %TRUE on successful creation, %FALSE otherwise.
+	 * Returns: %TRUE on successful creation, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -5170,7 +5170,7 @@ struct GFileIface
 	 * Params:
 	 *     file = input #GFile
 	 *     result = a #GAsyncResult
-	 * Return: %TRUE on successful directory creation, %FALSE otherwise.
+	 * Returns: %TRUE on successful directory creation, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -5183,7 +5183,7 @@ struct GFileIface
 	 *         of the new symlink
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
-	 * Return: %TRUE on the creation of a new symlink, %FALSE otherwise.
+	 * Returns: %TRUE on the creation of a new symlink, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -5203,7 +5203,7 @@ struct GFileIface
 	 *     progressCallback = function to callback with
 	 *         progress information, or %NULL if progress information is not needed
 	 *     progressCallbackData = user data to pass to @progress_callback
-	 * Return: %TRUE on success, %FALSE otherwise.
+	 * Returns: %TRUE on success, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -5215,7 +5215,7 @@ struct GFileIface
 	 * Params:
 	 *     file = input #GFile
 	 *     res = a #GAsyncResult
-	 * Return: a %TRUE on success, %FALSE on error.
+	 * Returns: a %TRUE on success, %FALSE on error.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -5232,7 +5232,7 @@ struct GFileIface
 	 *         function for updates
 	 *     progressCallbackData = gpointer to user data for
 	 *         the callback function
-	 * Return: %TRUE on successful move, %FALSE otherwise.
+	 * Returns: %TRUE on successful move, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -5248,7 +5248,7 @@ struct GFileIface
 	 * Params:
 	 *     file = input #GFile
 	 *     result = a #GAsyncResult
-	 * Return: a #GFile or %NULL on error.
+	 * Returns: a #GFile or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Throws: GException on failure.
@@ -5261,7 +5261,7 @@ struct GFileIface
 	 * Params:
 	 *     file = input #GFile
 	 *     result = a #GAsyncResult
-	 * Return: %TRUE if the operation finished successfully.
+	 * Returns: %TRUE if the operation finished successfully.
 	 *     %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
@@ -5274,7 +5274,7 @@ struct GFileIface
 	 * Params:
 	 *     file = input #GFile
 	 *     result = a #GAsyncResult
-	 * Return: %TRUE if the @file was ejected successfully.
+	 * Returns: %TRUE if the @file was ejected successfully.
 	 *     %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
@@ -5287,7 +5287,7 @@ struct GFileIface
 	 * Params:
 	 *     location = input #GFile
 	 *     result = a #GAsyncResult
-	 * Return: %TRUE if successful. If an error has occurred,
+	 * Returns: %TRUE if successful. If an error has occurred,
 	 *     this function will return %FALSE and set @error
 	 *     appropriately if present.
 	 *
@@ -5301,7 +5301,7 @@ struct GFileIface
 	 *     flags = a set of #GFileMonitorFlags
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
-	 * Return: a #GFileMonitor for the given @file,
+	 * Returns: a #GFileMonitor for the given @file,
 	 *     or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
@@ -5315,7 +5315,7 @@ struct GFileIface
 	 *     flags = a set of #GFileMonitorFlags
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
-	 * Return: a #GFileMonitor for the given @file,
+	 * Returns: a #GFileMonitor for the given @file,
 	 *     or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
@@ -5327,7 +5327,7 @@ struct GFileIface
 	 * Params:
 	 *     file = #GFile to open
 	 *     cancellable = a #GCancellable
-	 * Return: #GFileIOStream or %NULL on error.
+	 * Returns: #GFileIOStream or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Throws: GException on failure.
@@ -5340,7 +5340,7 @@ struct GFileIface
 	 * Params:
 	 *     file = input #GFile
 	 *     res = a #GAsyncResult
-	 * Return: a #GFileIOStream or %NULL on error.
+	 * Returns: a #GFileIOStream or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Throws: GException on failure.
@@ -5353,7 +5353,7 @@ struct GFileIface
 	 *     flags = a set of #GFileCreateFlags
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
-	 * Return: a #GFileIOStream for the newly created
+	 * Returns: a #GFileIOStream for the newly created
 	 *     file, or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
@@ -5367,7 +5367,7 @@ struct GFileIface
 	 * Params:
 	 *     file = input #GFile
 	 *     res = a #GAsyncResult
-	 * Return: a #GFileIOStream or %NULL on error.
+	 * Returns: a #GFileIOStream or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Throws: GException on failure.
@@ -5383,7 +5383,7 @@ struct GFileIface
 	 *     flags = a set of #GFileCreateFlags
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
-	 * Return: a #GFileIOStream or %NULL on error.
+	 * Returns: a #GFileIOStream or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Throws: GException on failure.
@@ -5396,7 +5396,7 @@ struct GFileIface
 	 * Params:
 	 *     file = input #GFile
 	 *     res = a #GAsyncResult
-	 * Return: a #GFileIOStream, or %NULL on error.
+	 * Returns: a #GFileIOStream, or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Throws: GException on failure.
@@ -5409,7 +5409,7 @@ struct GFileIface
 	 * Params:
 	 *     file = input #GFile
 	 *     result = a #GAsyncResult
-	 * Return: %TRUE if the operation finished successfully. %FALSE
+	 * Returns: %TRUE if the operation finished successfully. %FALSE
 	 *     otherwise.
 	 *
 	 * Throws: GException on failure.
@@ -5422,7 +5422,7 @@ struct GFileIface
 	 * Params:
 	 *     file = input #GFile
 	 *     result = a #GAsyncResult
-	 * Return: %TRUE if the operation finished successfully.
+	 * Returns: %TRUE if the operation finished successfully.
 	 *     %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
@@ -5439,7 +5439,7 @@ struct GFileIface
 	 * Params:
 	 *     file = input #GFile
 	 *     result = a #GAsyncResult
-	 * Return: %TRUE if the operation finished successfully.
+	 * Returns: %TRUE if the operation finished successfully.
 	 *     %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
@@ -5452,7 +5452,7 @@ struct GFileIface
 	 * Params:
 	 *     file = input #GFile
 	 *     result = a #GAsyncResult
-	 * Return: %TRUE if the @file was ejected successfully.
+	 * Returns: %TRUE if the @file was ejected successfully.
 	 *     %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
@@ -5465,7 +5465,7 @@ struct GFileIface
 	 * Params:
 	 *     file = input #GFile
 	 *     result = a #GAsyncResult
-	 * Return: %TRUE if the operation finished successfully. %FALSE
+	 * Returns: %TRUE if the operation finished successfully. %FALSE
 	 *     otherwise.
 	 *
 	 * Throws: GException on failure.
@@ -5482,7 +5482,7 @@ struct GFileIface
 	 *     diskUsage = the number of bytes of disk space used
 	 *     numDirs = the number of directories encountered
 	 *     numFiles = the number of non-directories encountered
-	 * Return: %TRUE if successful, with the out parameters set.
+	 * Returns: %TRUE if successful, with the out parameters set.
 	 *     %FALSE otherwise, with @error set.
 	 *
 	 * Throws: GException on failure.
@@ -5498,7 +5498,7 @@ struct GFileIface
 	 *     diskUsage = the number of bytes of disk space used
 	 *     numDirs = the number of directories encountered
 	 *     numFiles = the number of non-directories encountered
-	 * Return: %TRUE if successful, with the out parameters set.
+	 * Returns: %TRUE if successful, with the out parameters set.
 	 *     %FALSE otherwise, with @error set.
 	 *
 	 * Throws: GException on failure.
@@ -5531,7 +5531,7 @@ struct GFileInputStreamClass
 	 *     stream = a #GFileInputStream.
 	 *     attributes = a file attribute query string.
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
-	 * Return: a #GFileInfo, or %NULL on error.
+	 * Returns: a #GFileInfo, or %NULL on error.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -5543,7 +5543,7 @@ struct GFileInputStreamClass
 	 * Params:
 	 *     stream = a #GFileInputStream.
 	 *     result = a #GAsyncResult.
-	 * Return: #GFileInfo.
+	 * Returns: #GFileInfo.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -5577,7 +5577,7 @@ struct GFileMonitorClass
 	 *
 	 * Params:
 	 *     monitor = a #GFileMonitor.
-	 * Return: always %TRUE
+	 * Returns: always %TRUE
 	 */
 	extern(C) int function(GFileMonitor* monitor) cancel;
 	/** */
@@ -5619,7 +5619,7 @@ struct GFileOutputStreamClass
 	 *     stream = a #GFileOutputStream.
 	 *     attributes = a file attribute query string.
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
-	 * Return: a #GFileInfo for the @stream, or %NULL on error.
+	 * Returns: a #GFileInfo for the @stream, or %NULL on error.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -5631,7 +5631,7 @@ struct GFileOutputStreamClass
 	 * Params:
 	 *     stream = a #GFileOutputStream.
 	 *     result = a #GAsyncResult.
-	 * Return: A #GFileInfo for the finished query.
+	 * Returns: A #GFileInfo for the finished query.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -5640,7 +5640,7 @@ struct GFileOutputStreamClass
 	 *
 	 * Params:
 	 *     stream = a #GFileOutputStream.
-	 * Return: the entity tag for the stream.
+	 * Returns: the entity tag for the stream.
 	 */
 	extern(C) char* function(GFileOutputStream* stream) getEtag;
 	/** */
@@ -5733,7 +5733,7 @@ struct GIOStreamClass
 	 *
 	 * Params:
 	 *     stream = a #GIOStream
-	 * Return: a #GInputStream, owned by the #GIOStream.
+	 * Returns: a #GInputStream, owned by the #GIOStream.
 	 *     Do not free.
 	 */
 	extern(C) GInputStream* function(GIOStream* stream) getInputStream;
@@ -5741,7 +5741,7 @@ struct GIOStreamClass
 	 *
 	 * Params:
 	 *     stream = a #GIOStream
-	 * Return: a #GOutputStream, owned by the #GIOStream.
+	 * Returns: a #GOutputStream, owned by the #GIOStream.
 	 *     Do not free.
 	 */
 	extern(C) GOutputStream* function(GIOStream* stream) getOutputStream;
@@ -5754,7 +5754,7 @@ struct GIOStreamClass
 	 * Params:
 	 *     stream = a #GIOStream
 	 *     result = a #GAsyncResult
-	 * Return: %TRUE if stream was successfully closed, %FALSE otherwise.
+	 * Returns: %TRUE if stream was successfully closed, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -5800,7 +5800,7 @@ struct GIconIface
 	 *
 	 * Params:
 	 *     icon = #gconstpointer to an icon object.
-	 * Return: a #guint containing a hash for the @icon, suitable for
+	 * Returns: a #guint containing a hash for the @icon, suitable for
 	 *     use in a #GHashTable or similar data structure.
 	 */
 	extern(C) uint function(GIcon* icon) hash;
@@ -5809,14 +5809,14 @@ struct GIconIface
 	 * Params:
 	 *     icon1 = pointer to the first #GIcon.
 	 *     icon2 = pointer to the second #GIcon.
-	 * Return: %TRUE if @icon1 is equal to @icon2. %FALSE otherwise.
+	 * Returns: %TRUE if @icon1 is equal to @icon2. %FALSE otherwise.
 	 */
 	extern(C) int function(GIcon* icon1, GIcon* icon2) equal;
 	/**
 	 *
 	 * Params:
 	 *     icon = a #GIcon.
-	 * Return: An allocated NUL-terminated UTF8 string or
+	 * Returns: An allocated NUL-terminated UTF8 string or
 	 *     %NULL if @icon can't be serialized. Use g_free() to free.
 	 */
 	extern(C) int function(GIcon* icon, GPtrArray* tokens, int* outVersion) toTokens;
@@ -5826,7 +5826,7 @@ struct GIconIface
 	 *
 	 * Params:
 	 *     icon = a #GIcon
-	 * Return: a #GVariant, or %NULL when serialization fails.
+	 * Returns: a #GVariant, or %NULL when serialization fails.
 	 */
 	extern(C) GVariant* function(GIcon* icon) serialize;
 }
@@ -5844,7 +5844,7 @@ struct GInetAddressClass
 	 *
 	 * Params:
 	 *     address = a #GInetAddress
-	 * Return: a representation of @address as a string, which should be
+	 * Returns: a representation of @address as a string, which should be
 	 *     freed after use.
 	 */
 	extern(C) char* function(GInetAddress* address) toString;
@@ -5852,7 +5852,7 @@ struct GInetAddressClass
 	 *
 	 * Params:
 	 *     address = a #GInetAddress
-	 * Return: a pointer to an internal array of the bytes in @address,
+	 * Returns: a pointer to an internal array of the bytes in @address,
 	 *     which should not be modified, stored, or freed. The size of this
 	 *     array can be gotten with g_inet_address_get_native_size().
 	 */
@@ -5906,7 +5906,7 @@ struct GInitableIface
 	 * Params:
 	 *     initable = a #GInitable.
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
-	 * Return: %TRUE if successful. If an error has occurred, this function will
+	 * Returns: %TRUE if successful. If an error has occurred, this function will
 	 *     return %FALSE and set @error appropriately if present.
 	 *
 	 * Throws: GException on failure.
@@ -5992,7 +5992,7 @@ struct GInputStreamClass
 	 *     stream = a #GInputStream.
 	 *     count = the number of bytes that will be skipped from the stream
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
-	 * Return: Number of bytes skipped, or -1 on error
+	 * Returns: Number of bytes skipped, or -1 on error
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -6006,7 +6006,7 @@ struct GInputStreamClass
 	 * Params:
 	 *     stream = a #GInputStream.
 	 *     result = a #GAsyncResult.
-	 * Return: number of bytes read in, or -1 on error, or 0 on end of file.
+	 * Returns: number of bytes read in, or -1 on error, or 0 on end of file.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -6018,7 +6018,7 @@ struct GInputStreamClass
 	 * Params:
 	 *     stream = a #GInputStream.
 	 *     result = a #GAsyncResult.
-	 * Return: the size of the bytes skipped, or %-1 on error.
+	 * Returns: the size of the bytes skipped, or %-1 on error.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -6030,7 +6030,7 @@ struct GInputStreamClass
 	 * Params:
 	 *     stream = a #GInputStream.
 	 *     result = a #GAsyncResult.
-	 * Return: %TRUE if the stream was closed successfully.
+	 * Returns: %TRUE if the stream was closed successfully.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -6086,14 +6086,14 @@ struct GListModelInterface
 	 *
 	 * Params:
 	 *     list = a #GListModel
-	 * Return: the #GType of the items contained in @list.
+	 * Returns: the #GType of the items contained in @list.
 	 */
 	extern(C) GType function(GListModel* list) getItemType;
 	/**
 	 *
 	 * Params:
 	 *     list = a #GListModel
-	 * Return: the number of items in @list.
+	 * Returns: the number of items in @list.
 	 */
 	extern(C) uint function(GListModel* list) getNItems;
 	/** */
@@ -6127,7 +6127,7 @@ struct GLoadableIconIface
 	 *         icon, %NULL to ignore.
 	 *     cancellable = optional #GCancellable object, %NULL to
 	 *         ignore.
-	 * Return: a #GInputStream to read the icon from.
+	 * Returns: a #GInputStream to read the icon from.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -6141,7 +6141,7 @@ struct GLoadableIconIface
 	 *     res = a #GAsyncResult.
 	 *     type = a location to store the type of the loaded
 	 *         icon, %NULL to ignore.
-	 * Return: a #GInputStream to read the icon from.
+	 * Returns: a #GInputStream to read the icon from.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -6211,7 +6211,7 @@ struct GMenuAttributeIterClass
 	 *     iter = a #GMenuAttributeIter
 	 *     outName = the type of the attribute
 	 *     value = the attribute value
-	 * Return: %TRUE on success, or %FALSE if there is no additional
+	 * Returns: %TRUE on success, or %FALSE if there is no additional
 	 *     attribute
 	 */
 	extern(C) int function(GMenuAttributeIter* iter, char** outName, GVariant** value) getNext;
@@ -6236,7 +6236,7 @@ struct GMenuLinkIterClass
 	 *     iter = a #GMenuLinkIter
 	 *     outLink = the name of the link
 	 *     value = the linked #GMenuModel
-	 * Return: %TRUE on success, or %FALSE if there is no additional link
+	 * Returns: %TRUE on success, or %FALSE if there is no additional link
 	 */
 	extern(C) int function(GMenuLinkIter* iter, char** outLink, GMenuModel** value) getNext;
 }
@@ -6256,7 +6256,7 @@ struct GMenuModelClass
 	 *
 	 * Params:
 	 *     model = a #GMenuModel
-	 * Return: %TRUE if the model is mutable (ie: "items-changed" may be
+	 * Returns: %TRUE if the model is mutable (ie: "items-changed" may be
 	 *     emitted).
 	 */
 	extern(C) int function(GMenuModel* model) isMutable;
@@ -6264,7 +6264,7 @@ struct GMenuModelClass
 	 *
 	 * Params:
 	 *     model = a #GMenuModel
-	 * Return: the number of items
+	 * Returns: the number of items
 	 */
 	extern(C) int function(GMenuModel* model) getNItems;
 	/** */
@@ -6274,7 +6274,7 @@ struct GMenuModelClass
 	 * Params:
 	 *     model = a #GMenuModel
 	 *     itemIndex = the index of the item
-	 * Return: a new #GMenuAttributeIter
+	 * Returns: a new #GMenuAttributeIter
 	 */
 	extern(C) GMenuAttributeIter* function(GMenuModel* model, int itemIndex) iterateItemAttributes;
 	/**
@@ -6285,7 +6285,7 @@ struct GMenuModelClass
 	 *     attribute = the attribute to query
 	 *     expectedType = the expected type of the attribute, or
 	 *         %NULL
-	 * Return: the value of the attribute
+	 * Returns: the value of the attribute
 	 */
 	extern(C) GVariant* function(GMenuModel* model, int itemIndex, const(char)* attribute, GVariantType* expectedType) getItemAttributeValue;
 	/** */
@@ -6295,7 +6295,7 @@ struct GMenuModelClass
 	 * Params:
 	 *     model = a #GMenuModel
 	 *     itemIndex = the index of the item
-	 * Return: a new #GMenuLinkIter
+	 * Returns: a new #GMenuLinkIter
 	 */
 	extern(C) GMenuLinkIter* function(GMenuModel* model, int itemIndex) iterateItemLinks;
 	/**
@@ -6304,7 +6304,7 @@ struct GMenuModelClass
 	 *     model = a #GMenuModel
 	 *     itemIndex = the index of the item
 	 *     link = the link to query
-	 * Return: the linked #GMenuModel, or %NULL
+	 * Returns: the linked #GMenuModel, or %NULL
 	 */
 	extern(C) GMenuModel* function(GMenuModel* model, int itemIndex, const(char)* link) getItemLink;
 }
@@ -6330,7 +6330,7 @@ struct GMountIface
 	 *
 	 * Params:
 	 *     mount = a #GMount.
-	 * Return: a #GFile.
+	 * Returns: a #GFile.
 	 *     The returned object should be unreffed with
 	 *     g_object_unref() when no longer needed.
 	 */
@@ -6339,7 +6339,7 @@ struct GMountIface
 	 *
 	 * Params:
 	 *     mount = a #GMount.
-	 * Return: the name for the given @mount.
+	 * Returns: the name for the given @mount.
 	 *     The returned string should be freed with g_free()
 	 *     when no longer needed.
 	 */
@@ -6348,7 +6348,7 @@ struct GMountIface
 	 *
 	 * Params:
 	 *     mount = a #GMount.
-	 * Return: a #GIcon.
+	 * Returns: a #GIcon.
 	 *     The returned object should be unreffed with
 	 *     g_object_unref() when no longer needed.
 	 */
@@ -6357,7 +6357,7 @@ struct GMountIface
 	 *
 	 * Params:
 	 *     mount = a #GMount.
-	 * Return: the UUID for @mount or %NULL if no UUID can be computed.
+	 * Returns: the UUID for @mount or %NULL if no UUID can be computed.
 	 *     The returned string should be freed with g_free()
 	 *     when no longer needed.
 	 */
@@ -6366,7 +6366,7 @@ struct GMountIface
 	 *
 	 * Params:
 	 *     mount = a #GMount.
-	 * Return: a #GVolume or %NULL if @mount is not associated with a volume.
+	 * Returns: a #GVolume or %NULL if @mount is not associated with a volume.
 	 *     The returned object should be unreffed with
 	 *     g_object_unref() when no longer needed.
 	 */
@@ -6375,7 +6375,7 @@ struct GMountIface
 	 *
 	 * Params:
 	 *     mount = a #GMount.
-	 * Return: a #GDrive or %NULL if @mount is not associated with a volume or a drive.
+	 * Returns: a #GDrive or %NULL if @mount is not associated with a volume or a drive.
 	 *     The returned object should be unreffed with
 	 *     g_object_unref() when no longer needed.
 	 */
@@ -6384,14 +6384,14 @@ struct GMountIface
 	 *
 	 * Params:
 	 *     mount = a #GMount.
-	 * Return: %TRUE if the @mount can be unmounted.
+	 * Returns: %TRUE if the @mount can be unmounted.
 	 */
 	extern(C) int function(GMount* mount) canUnmount;
 	/**
 	 *
 	 * Params:
 	 *     mount = a #GMount.
-	 * Return: %TRUE if the @mount can be ejected.
+	 * Returns: %TRUE if the @mount can be ejected.
 	 */
 	extern(C) int function(GMount* mount) canEject;
 	/** */
@@ -6401,7 +6401,7 @@ struct GMountIface
 	 * Params:
 	 *     mount = a #GMount.
 	 *     result = a #GAsyncResult.
-	 * Return: %TRUE if the mount was successfully unmounted. %FALSE otherwise.
+	 * Returns: %TRUE if the mount was successfully unmounted. %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -6413,7 +6413,7 @@ struct GMountIface
 	 * Params:
 	 *     mount = a #GMount.
 	 *     result = a #GAsyncResult.
-	 * Return: %TRUE if the mount was successfully ejected. %FALSE otherwise.
+	 * Returns: %TRUE if the mount was successfully ejected. %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -6425,7 +6425,7 @@ struct GMountIface
 	 * Params:
 	 *     mount = a #GMount.
 	 *     result = a #GAsyncResult.
-	 * Return: %TRUE if the mount was successfully remounted. %FALSE otherwise.
+	 * Returns: %TRUE if the mount was successfully remounted. %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -6437,7 +6437,7 @@ struct GMountIface
 	 * Params:
 	 *     mount = a #GMount
 	 *     result = a #GAsyncResult
-	 * Return: a %NULL-terminated array of content types or %NULL on error.
+	 * Returns: a %NULL-terminated array of content types or %NULL on error.
 	 *     Caller should free this array with g_strfreev() when done with it.
 	 *
 	 * Throws: GException on failure.
@@ -6450,7 +6450,7 @@ struct GMountIface
 	 *     forceRescan = Whether to force a rescan of the content.
 	 *         Otherwise a cached result will be used if available
 	 *     cancellable = optional #GCancellable object, %NULL to ignore
-	 * Return: a %NULL-terminated array of content types or %NULL on error.
+	 * Returns: a %NULL-terminated array of content types or %NULL on error.
 	 *     Caller should free this array with g_strfreev() when done with it.
 	 *
 	 * Throws: GException on failure.
@@ -6465,7 +6465,7 @@ struct GMountIface
 	 * Params:
 	 *     mount = a #GMount.
 	 *     result = a #GAsyncResult.
-	 * Return: %TRUE if the mount was successfully unmounted. %FALSE otherwise.
+	 * Returns: %TRUE if the mount was successfully unmounted. %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -6477,7 +6477,7 @@ struct GMountIface
 	 * Params:
 	 *     mount = a #GMount.
 	 *     result = a #GAsyncResult.
-	 * Return: %TRUE if the mount was successfully ejected. %FALSE otherwise.
+	 * Returns: %TRUE if the mount was successfully ejected. %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -6486,7 +6486,7 @@ struct GMountIface
 	 *
 	 * Params:
 	 *     mount = a #GMount.
-	 * Return: a #GFile.
+	 * Returns: a #GFile.
 	 *     The returned object should be unreffed with
 	 *     g_object_unref() when no longer needed.
 	 */
@@ -6495,14 +6495,14 @@ struct GMountIface
 	 *
 	 * Params:
 	 *     mount = A #GMount.
-	 * Return: Sorting key for @mount or %NULL if no such key is available.
+	 * Returns: Sorting key for @mount or %NULL if no such key is available.
 	 */
 	extern(C) const(char)* function(GMount* mount) getSortKey;
 	/**
 	 *
 	 * Params:
 	 *     mount = a #GMount.
-	 * Return: a #GIcon.
+	 * Returns: a #GIcon.
 	 *     The returned object should be unreffed with
 	 *     g_object_unref() when no longer needed.
 	 */
@@ -6603,7 +6603,7 @@ struct GNetworkMonitorInterface
 	 *     monitor = a #GNetworkMonitor
 	 *     connectable = a #GSocketConnectable
 	 *     cancellable = a #GCancellable, or %NULL
-	 * Return: %TRUE if @connectable is reachable, %FALSE if not.
+	 * Returns: %TRUE if @connectable is reachable, %FALSE if not.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -6615,7 +6615,7 @@ struct GNetworkMonitorInterface
 	 * Params:
 	 *     monitor = a #GNetworkMonitor
 	 *     result = a #GAsyncResult
-	 * Return: %TRUE if network is reachable, %FALSE if not.
+	 * Returns: %TRUE if network is reachable, %FALSE if not.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -6694,7 +6694,7 @@ struct GOutputStreamClass
 	 *     buffer = the buffer containing the data to write.
 	 *     count = the number of bytes to write
 	 *     cancellable = optional cancellable object
-	 * Return: Number of bytes written, or -1 on error
+	 * Returns: Number of bytes written, or -1 on error
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -6706,7 +6706,7 @@ struct GOutputStreamClass
 	 *     source = a #GInputStream.
 	 *     flags = a set of #GOutputStreamSpliceFlags.
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
-	 * Return: a #gssize containing the size of the data spliced, or
+	 * Returns: a #gssize containing the size of the data spliced, or
 	 *     -1 if an error occurred. Note that if the number of bytes
 	 *     spliced is greater than %G_MAXSSIZE, then that will be
 	 *     returned, and there is no way to determine the actual number
@@ -6720,7 +6720,7 @@ struct GOutputStreamClass
 	 * Params:
 	 *     stream = a #GOutputStream.
 	 *     cancellable = optional cancellable object
-	 * Return: %TRUE on success, %FALSE on error
+	 * Returns: %TRUE on success, %FALSE on error
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -6734,7 +6734,7 @@ struct GOutputStreamClass
 	 * Params:
 	 *     stream = a #GOutputStream.
 	 *     result = a #GAsyncResult.
-	 * Return: a #gssize containing the number of bytes written to the stream.
+	 * Returns: a #gssize containing the number of bytes written to the stream.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -6746,7 +6746,7 @@ struct GOutputStreamClass
 	 * Params:
 	 *     stream = a #GOutputStream.
 	 *     result = a #GAsyncResult.
-	 * Return: a #gssize of the number of bytes spliced. Note that if the
+	 * Returns: a #gssize of the number of bytes spliced. Note that if the
 	 *     number of bytes spliced is greater than %G_MAXSSIZE, then that
 	 *     will be returned, and there is no way to determine the actual
 	 *     number of bytes spliced.
@@ -6761,7 +6761,7 @@ struct GOutputStreamClass
 	 * Params:
 	 *     stream = a #GOutputStream.
 	 *     result = a GAsyncResult.
-	 * Return: %TRUE if flush operation succeeded, %FALSE otherwise.
+	 * Returns: %TRUE if flush operation succeeded, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -6773,7 +6773,7 @@ struct GOutputStreamClass
 	 * Params:
 	 *     stream = a #GOutputStream.
 	 *     result = a #GAsyncResult.
-	 * Return: %TRUE if stream was successfully closed, %FALSE otherwise.
+	 * Returns: %TRUE if stream was successfully closed, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -6832,7 +6832,7 @@ struct GPermissionClass
 	 * Params:
 	 *     permission = a #GPermission instance
 	 *     cancellable = a #GCancellable, or %NULL
-	 * Return: %TRUE if the permission was successfully acquired
+	 * Returns: %TRUE if the permission was successfully acquired
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -6844,7 +6844,7 @@ struct GPermissionClass
 	 * Params:
 	 *     permission = a #GPermission instance
 	 *     result = the #GAsyncResult given to the #GAsyncReadyCallback
-	 * Return: %TRUE if the permission was successfully acquired
+	 * Returns: %TRUE if the permission was successfully acquired
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -6854,7 +6854,7 @@ struct GPermissionClass
 	 * Params:
 	 *     permission = a #GPermission instance
 	 *     cancellable = a #GCancellable, or %NULL
-	 * Return: %TRUE if the permission was successfully released
+	 * Returns: %TRUE if the permission was successfully released
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -6866,7 +6866,7 @@ struct GPermissionClass
 	 * Params:
 	 *     permission = a #GPermission instance
 	 *     result = the #GAsyncResult given to the #GAsyncReadyCallback
-	 * Return: %TRUE if the permission was successfully released
+	 * Returns: %TRUE if the permission was successfully released
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -6902,14 +6902,14 @@ struct GPollableInputStreamInterface
 	 *
 	 * Params:
 	 *     stream = a #GPollableInputStream.
-	 * Return: %TRUE if @stream is pollable, %FALSE if not.
+	 * Returns: %TRUE if @stream is pollable, %FALSE if not.
 	 */
 	extern(C) int function(GPollableInputStream* stream) canPoll;
 	/**
 	 *
 	 * Params:
 	 *     stream = a #GPollableInputStream.
-	 * Return: %TRUE if @stream is readable, %FALSE if not. If an error
+	 * Returns: %TRUE if @stream is readable, %FALSE if not. If an error
 	 *     has occurred on @stream, this will result in
 	 *     g_pollable_input_stream_is_readable() returning %TRUE, and the
 	 *     next attempt to read will return the error.
@@ -6920,7 +6920,7 @@ struct GPollableInputStreamInterface
 	 * Params:
 	 *     stream = a #GPollableInputStream.
 	 *     cancellable = a #GCancellable, or %NULL
-	 * Return: a new #GSource
+	 * Returns: a new #GSource
 	 */
 	extern(C) GSource* function(GPollableInputStream* stream, GCancellable* cancellable) createSource;
 	/**
@@ -6930,7 +6930,7 @@ struct GPollableInputStreamInterface
 	 *     buffer = a buffer to
 	 *         read data into (which should be at least @count bytes long).
 	 *     count = the number of bytes you want to read
-	 * Return: the number of bytes read, or -1 on error (including
+	 * Returns: the number of bytes read, or -1 on error (including
 	 *     %G_IO_ERROR_WOULD_BLOCK).
 	 *
 	 * Throws: GException on failure.
@@ -6964,14 +6964,14 @@ struct GPollableOutputStreamInterface
 	 *
 	 * Params:
 	 *     stream = a #GPollableOutputStream.
-	 * Return: %TRUE if @stream is pollable, %FALSE if not.
+	 * Returns: %TRUE if @stream is pollable, %FALSE if not.
 	 */
 	extern(C) int function(GPollableOutputStream* stream) canPoll;
 	/**
 	 *
 	 * Params:
 	 *     stream = a #GPollableOutputStream.
-	 * Return: %TRUE if @stream is writable, %FALSE if not. If an error
+	 * Returns: %TRUE if @stream is writable, %FALSE if not. If an error
 	 *     has occurred on @stream, this will result in
 	 *     g_pollable_output_stream_is_writable() returning %TRUE, and the
 	 *     next attempt to write will return the error.
@@ -6982,7 +6982,7 @@ struct GPollableOutputStreamInterface
 	 * Params:
 	 *     stream = a #GPollableOutputStream.
 	 *     cancellable = a #GCancellable, or %NULL
-	 * Return: a new #GSource
+	 * Returns: a new #GSource
 	 */
 	extern(C) GSource* function(GPollableOutputStream* stream, GCancellable* cancellable) createSource;
 	/**
@@ -6992,7 +6992,7 @@ struct GPollableOutputStreamInterface
 	 *     buffer = a buffer to write
 	 *         data from
 	 *     count = the number of bytes you want to write
-	 * Return: the number of bytes written, or -1 on error (including
+	 * Returns: the number of bytes written, or -1 on error (including
 	 *     %G_IO_ERROR_WOULD_BLOCK).
 	 *
 	 * Throws: GException on failure.
@@ -7067,7 +7067,7 @@ struct GProxyInterface
 	 *     connection = a #GIOStream
 	 *     proxyAddress = a #GProxyAddress
 	 *     cancellable = a #GCancellable
-	 * Return: a #GIOStream that will replace @connection. This might
+	 * Returns: a #GIOStream that will replace @connection. This might
 	 *     be the same as @connection, in which case a reference
 	 *     will be added.
 	 *
@@ -7081,7 +7081,7 @@ struct GProxyInterface
 	 * Params:
 	 *     proxy = a #GProxy
 	 *     result = a #GAsyncResult
-	 * Return: a #GIOStream.
+	 * Returns: a #GIOStream.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -7090,7 +7090,7 @@ struct GProxyInterface
 	 *
 	 * Params:
 	 *     proxy = a #GProxy
-	 * Return: %TRUE if hostname resolution is supported.
+	 * Returns: %TRUE if hostname resolution is supported.
 	 */
 	extern(C) int function(GProxy* proxy) supportsHostname;
 }
@@ -7110,7 +7110,7 @@ struct GProxyResolverInterface
 	 *
 	 * Params:
 	 *     resolver = a #GProxyResolver
-	 * Return: %TRUE if @resolver is supported.
+	 * Returns: %TRUE if @resolver is supported.
 	 */
 	extern(C) int function(GProxyResolver* resolver) isSupported;
 	/**
@@ -7119,7 +7119,7 @@ struct GProxyResolverInterface
 	 *     resolver = a #GProxyResolver
 	 *     uri = a URI representing the destination to connect to
 	 *     cancellable = a #GCancellable, or %NULL
-	 * Return: A
+	 * Returns: A
 	 *     NULL-terminated array of proxy URIs. Must be freed
 	 *     with g_strfreev().
 	 *
@@ -7133,7 +7133,7 @@ struct GProxyResolverInterface
 	 * Params:
 	 *     resolver = a #GProxyResolver
 	 *     result = the result passed to your #GAsyncReadyCallback
-	 * Return: A
+	 * Returns: A
 	 *     NULL-terminated array of proxy URIs. Must be freed
 	 *     with g_strfreev().
 	 *
@@ -7175,7 +7175,7 @@ struct GResolverClass
 	 *     resolver = a #GResolver
 	 *     hostname = the hostname to look up
 	 *     cancellable = a #GCancellable, or %NULL
-	 * Return: a non-empty #GList
+	 * Returns: a non-empty #GList
 	 *     of #GInetAddress, or %NULL on error. You
 	 *     must unref each of the addresses and free the list when you are
 	 *     done with it. (You can use g_resolver_free_addresses() to do this.)
@@ -7190,7 +7190,7 @@ struct GResolverClass
 	 * Params:
 	 *     resolver = a #GResolver
 	 *     result = the result passed to your #GAsyncReadyCallback
-	 * Return: a #GList
+	 * Returns: a #GList
 	 *     of #GInetAddress, or %NULL on error. See g_resolver_lookup_by_name()
 	 *     for more details.
 	 *
@@ -7203,7 +7203,7 @@ struct GResolverClass
 	 *     resolver = a #GResolver
 	 *     address = the address to reverse-resolve
 	 *     cancellable = a #GCancellable, or %NULL
-	 * Return: a hostname (either ASCII-only, or in ASCII-encoded
+	 * Returns: a hostname (either ASCII-only, or in ASCII-encoded
 	 *     form), or %NULL on error.
 	 *
 	 * Throws: GException on failure.
@@ -7216,7 +7216,7 @@ struct GResolverClass
 	 * Params:
 	 *     resolver = a #GResolver
 	 *     result = the result passed to your #GAsyncReadyCallback
-	 * Return: a hostname (either ASCII-only, or in ASCII-encoded
+	 * Returns: a hostname (either ASCII-only, or in ASCII-encoded
 	 *     form), or %NULL on error.
 	 *
 	 * Throws: GException on failure.
@@ -7231,7 +7231,7 @@ struct GResolverClass
 	 * Params:
 	 *     resolver = a #GResolver
 	 *     result = the result passed to your #GAsyncReadyCallback
-	 * Return: a non-empty #GList of
+	 * Returns: a non-empty #GList of
 	 *     #GSrvTarget, or %NULL on error. See g_resolver_lookup_service() for more
 	 *     details.
 	 *
@@ -7245,7 +7245,7 @@ struct GResolverClass
 	 *     rrname = the DNS name to lookup the record for
 	 *     recordType = the type of DNS record to lookup
 	 *     cancellable = a #GCancellable, or %NULL
-	 * Return: a non-empty #GList of
+	 * Returns: a non-empty #GList of
 	 *     #GVariant, or %NULL on error. You must free each of the records and the list
 	 *     when you are done with it. (You can use g_list_free_full() with
 	 *     g_variant_unref() to do this.)
@@ -7260,7 +7260,7 @@ struct GResolverClass
 	 * Params:
 	 *     resolver = a #GResolver
 	 *     result = the result passed to your #GAsyncReadyCallback
-	 * Return: a non-empty #GList of
+	 * Returns: a non-empty #GList of
 	 *     #GVariant, or %NULL on error. You must free each of the records and the list
 	 *     when you are done with it. (You can use g_list_free_full() with
 	 *     g_variant_unref() to do this.)
@@ -7295,14 +7295,14 @@ struct GSeekableIface
 	 *
 	 * Params:
 	 *     seekable = a #GSeekable.
-	 * Return: the offset from the beginning of the buffer.
+	 * Returns: the offset from the beginning of the buffer.
 	 */
 	extern(C) long function(GSeekable* seekable) tell;
 	/**
 	 *
 	 * Params:
 	 *     seekable = a #GSeekable.
-	 * Return: %TRUE if @seekable can be seeked. %FALSE otherwise.
+	 * Returns: %TRUE if @seekable can be seeked. %FALSE otherwise.
 	 */
 	extern(C) int function(GSeekable* seekable) canSeek;
 	/**
@@ -7312,7 +7312,7 @@ struct GSeekableIface
 	 *     offset = a #goffset.
 	 *     type = a #GSeekType.
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
-	 * Return: %TRUE if successful. If an error
+	 * Returns: %TRUE if successful. If an error
 	 *     has occurred, this function will return %FALSE and set @error
 	 *     appropriately if present.
 	 *
@@ -7323,7 +7323,7 @@ struct GSeekableIface
 	 *
 	 * Params:
 	 *     seekable = a #GSeekable.
-	 * Return: %TRUE if the stream can be truncated, %FALSE otherwise.
+	 * Returns: %TRUE if the stream can be truncated, %FALSE otherwise.
 	 */
 	extern(C) int function(GSeekable* seekable) canTruncate;
 	/**
@@ -7332,7 +7332,7 @@ struct GSeekableIface
 	 *     seekable = a #GSeekable.
 	 *     offset = a #goffset.
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
-	 * Return: %TRUE if successful. If an error
+	 * Returns: %TRUE if successful. If an error
 	 *     has occurred, this function will return %FALSE and set @error
 	 *     appropriately if present.
 	 *
@@ -7471,14 +7471,14 @@ struct GSocketAddressClass
 	 *
 	 * Params:
 	 *     address = a #GSocketAddress
-	 * Return: the socket family type of @address
+	 * Returns: the socket family type of @address
 	 */
 	extern(C) GSocketFamily function(GSocketAddress* address) getFamily;
 	/**
 	 *
 	 * Params:
 	 *     address = a #GSocketAddress
-	 * Return: the size of the native struct sockaddr that
+	 * Returns: the size of the native struct sockaddr that
 	 *     @address represents
 	 */
 	extern(C) ptrdiff_t function(GSocketAddress* address) getNativeSize;
@@ -7490,7 +7490,7 @@ struct GSocketAddressClass
 	 *         struct sockaddr
 	 *     destlen = the size of @dest. Must be at least as large as
 	 *         g_socket_address_get_native_size()
-	 * Return: %TRUE if @dest was filled in, %FALSE on error
+	 * Returns: %TRUE if @dest was filled in, %FALSE on error
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -7510,7 +7510,7 @@ struct GSocketAddressEnumeratorClass
 	 * Params:
 	 *     enumerator = a #GSocketAddressEnumerator
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
-	 * Return: a #GSocketAddress (owned by the caller), or %NULL on
+	 * Returns: a #GSocketAddress (owned by the caller), or %NULL on
 	 *     error (in which case *@error will be set) or if there are no
 	 *     more addresses.
 	 *
@@ -7524,7 +7524,7 @@ struct GSocketAddressEnumeratorClass
 	 * Params:
 	 *     enumerator = a #GSocketAddressEnumerator
 	 *     result = a #GAsyncResult
-	 * Return: a #GSocketAddress (owned by the caller), or %NULL on
+	 * Returns: a #GSocketAddress (owned by the caller), or %NULL on
 	 *     error (in which case *@error will be set) or if there are no
 	 *     more addresses.
 	 *
@@ -7597,21 +7597,21 @@ struct GSocketConnectableIface
 	 *
 	 * Params:
 	 *     connectable = a #GSocketConnectable
-	 * Return: a new #GSocketAddressEnumerator.
+	 * Returns: a new #GSocketAddressEnumerator.
 	 */
 	extern(C) GSocketAddressEnumerator* function(GSocketConnectable* connectable) enumerate;
 	/**
 	 *
 	 * Params:
 	 *     connectable = a #GSocketConnectable
-	 * Return: a new #GSocketAddressEnumerator.
+	 * Returns: a new #GSocketAddressEnumerator.
 	 */
 	extern(C) GSocketAddressEnumerator* function(GSocketConnectable* connectable) proxyEnumerate;
 	/**
 	 *
 	 * Params:
 	 *     connectable = a #GSocketConnectable
-	 * Return: the formatted string
+	 * Returns: the formatted string
 	 */
 	extern(C) char* function(GSocketConnectable* connectable) toString;
 }
@@ -7657,14 +7657,14 @@ struct GSocketControlMessageClass
 	 *
 	 * Params:
 	 *     message = a #GSocketControlMessage
-	 * Return: The number of bytes required.
+	 * Returns: The number of bytes required.
 	 */
 	extern(C) size_t function(GSocketControlMessage* message) getSize;
 	/**
 	 *
 	 * Params:
 	 *     message = a #GSocketControlMessage
-	 * Return: an integer describing the level
+	 * Returns: an integer describing the level
 	 */
 	extern(C) int function(GSocketControlMessage* message) getLevel;
 	/** */
@@ -7842,7 +7842,7 @@ struct GTlsBackendInterface
 	 *
 	 * Params:
 	 *     backend = the #GTlsBackend
-	 * Return: whether or not TLS is supported
+	 * Returns: whether or not TLS is supported
 	 */
 	extern(C) int function(GTlsBackend* backend) supportsTls;
 	/** */
@@ -7857,7 +7857,7 @@ struct GTlsBackendInterface
 	 *
 	 * Params:
 	 *     backend = the #GTlsBackend
-	 * Return: the default database, which should be
+	 * Returns: the default database, which should be
 	 *     unreffed when done.
 	 */
 	extern(C) GTlsDatabase* function(GTlsBackend* backend) getDefaultDatabase;
@@ -7865,7 +7865,7 @@ struct GTlsBackendInterface
 	 *
 	 * Params:
 	 *     backend = the #GTlsBackend
-	 * Return: whether DTLS is supported
+	 * Returns: whether DTLS is supported
 	 */
 	extern(C) int function(GTlsBackend* backend) supportsDtls;
 	/** */
@@ -7889,7 +7889,7 @@ struct GTlsCertificateClass
 	 *     cert = a #GTlsCertificate
 	 *     identity = the expected peer identity
 	 *     trustedCa = the certificate of a trusted authority
-	 * Return: the appropriate #GTlsCertificateFlags
+	 * Returns: the appropriate #GTlsCertificateFlags
 	 */
 	extern(C) GTlsCertificateFlags function(GTlsCertificate* cert, GSocketConnectable* identity, GTlsCertificate* trustedCa) verify;
 	void*[8] padding;
@@ -7930,7 +7930,7 @@ struct GTlsConnectionClass
 	 * Params:
 	 *     conn = a #GTlsConnection
 	 *     cancellable = a #GCancellable, or %NULL
-	 * Return: success or failure
+	 * Returns: success or failure
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -7942,7 +7942,7 @@ struct GTlsConnectionClass
 	 * Params:
 	 *     conn = a #GTlsConnection
 	 *     result = a #GAsyncResult.
-	 * Return: %TRUE on success, %FALSE on failure, in which
+	 * Returns: %TRUE on success, %FALSE on failure, in which
 	 *     case @error will be set.
 	 *
 	 * Throws: GException on failure.
@@ -7979,7 +7979,7 @@ struct GTlsDatabaseClass
 	 *     interaction = used to interact with the user if necessary
 	 *     flags = additional verify flags
 	 *     cancellable = a #GCancellable, or %NULL
-	 * Return: the appropriate #GTlsCertificateFlags which represents the
+	 * Returns: the appropriate #GTlsCertificateFlags which represents the
 	 *     result of verification.
 	 *
 	 * Throws: GException on failure.
@@ -7992,7 +7992,7 @@ struct GTlsDatabaseClass
 	 * Params:
 	 *     self = a #GTlsDatabase
 	 *     result = a #GAsyncResult.
-	 * Return: the appropriate #GTlsCertificateFlags which represents the
+	 * Returns: the appropriate #GTlsCertificateFlags which represents the
 	 *     result of verification.
 	 *
 	 * Throws: GException on failure.
@@ -8003,7 +8003,7 @@ struct GTlsDatabaseClass
 	 * Params:
 	 *     self = a #GTlsDatabase
 	 *     certificate = certificate for which to create a handle.
-	 * Return: a newly allocated string containing the
+	 * Returns: a newly allocated string containing the
 	 *     handle.
 	 */
 	extern(C) char* function(GTlsDatabase* self, GTlsCertificate* certificate) createCertificateHandle;
@@ -8015,7 +8015,7 @@ struct GTlsDatabaseClass
 	 *     interaction = used to interact with the user if necessary
 	 *     flags = Flags which affect the lookup.
 	 *     cancellable = a #GCancellable, or %NULL
-	 * Return: a newly allocated
+	 * Returns: a newly allocated
 	 *     #GTlsCertificate, or %NULL. Use g_object_unref() to release the certificate.
 	 *
 	 * Throws: GException on failure.
@@ -8028,7 +8028,7 @@ struct GTlsDatabaseClass
 	 * Params:
 	 *     self = a #GTlsDatabase
 	 *     result = a #GAsyncResult.
-	 * Return: a newly allocated #GTlsCertificate object.
+	 * Returns: a newly allocated #GTlsCertificate object.
 	 *     Use g_object_unref() to release the certificate.
 	 *
 	 * Throws: GException on failure.
@@ -8042,7 +8042,7 @@ struct GTlsDatabaseClass
 	 *     interaction = used to interact with the user if necessary
 	 *     flags = flags which affect the lookup operation
 	 *     cancellable = a #GCancellable, or %NULL
-	 * Return: a newly allocated issuer #GTlsCertificate,
+	 * Returns: a newly allocated issuer #GTlsCertificate,
 	 *     or %NULL. Use g_object_unref() to release the certificate.
 	 *
 	 * Throws: GException on failure.
@@ -8055,7 +8055,7 @@ struct GTlsDatabaseClass
 	 * Params:
 	 *     self = a #GTlsDatabase
 	 *     result = a #GAsyncResult.
-	 * Return: a newly allocated issuer #GTlsCertificate,
+	 * Returns: a newly allocated issuer #GTlsCertificate,
 	 *     or %NULL. Use g_object_unref() to release the certificate.
 	 *
 	 * Throws: GException on failure.
@@ -8069,7 +8069,7 @@ struct GTlsDatabaseClass
 	 *     interaction = used to interact with the user if necessary
 	 *     flags = Flags which affect the lookup operation.
 	 *     cancellable = a #GCancellable, or %NULL
-	 * Return: a newly allocated list of #GTlsCertificate
+	 * Returns: a newly allocated list of #GTlsCertificate
 	 *     objects. Use g_object_unref() on each certificate, and g_list_free() on the release the list.
 	 *
 	 * Throws: GException on failure.
@@ -8082,7 +8082,7 @@ struct GTlsDatabaseClass
 	 * Params:
 	 *     self = a #GTlsDatabase
 	 *     result = a #GAsyncResult.
-	 * Return: a newly allocated list of #GTlsCertificate
+	 * Returns: a newly allocated list of #GTlsCertificate
 	 *     objects. Use g_object_unref() on each certificate, and g_list_free() on the release the list.
 	 *
 	 * Throws: GException on failure.
@@ -8140,7 +8140,7 @@ struct GTlsInteractionClass
 	 *     interaction = a #GTlsInteraction object
 	 *     password = a #GTlsPassword object
 	 *     cancellable = an optional #GCancellable cancellation object
-	 * Return: The status of the ask password interaction.
+	 * Returns: The status of the ask password interaction.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -8152,7 +8152,7 @@ struct GTlsInteractionClass
 	 * Params:
 	 *     interaction = a #GTlsInteraction object
 	 *     result = the result passed to the callback
-	 * Return: The status of the ask password interaction.
+	 * Returns: The status of the ask password interaction.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -8164,7 +8164,7 @@ struct GTlsInteractionClass
 	 *     connection = a #GTlsConnection object
 	 *     flags = flags providing more information about the request
 	 *     cancellable = an optional #GCancellable cancellation object
-	 * Return: The status of the request certificate interaction.
+	 * Returns: The status of the request certificate interaction.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -8176,7 +8176,7 @@ struct GTlsInteractionClass
 	 * Params:
 	 *     interaction = a #GTlsInteraction object
 	 *     result = the result passed to the callback
-	 * Return: The status of the request certificate interaction.
+	 * Returns: The status of the request certificate interaction.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -8203,7 +8203,7 @@ struct GTlsPasswordClass
 	 * Params:
 	 *     password = a #GTlsPassword object
 	 *     length = location to place the length of the password.
-	 * Return: The password value (owned by the password object).
+	 * Returns: The password value (owned by the password object).
 	 */
 	extern(C) char* function(GTlsPassword* password, size_t* length) getValue;
 	/** */
@@ -8388,7 +8388,7 @@ struct GVfsClass
 	 *
 	 * Params:
 	 *     vfs = a #GVfs.
-	 * Return: %TRUE if construction of the @vfs was successful
+	 * Returns: %TRUE if construction of the @vfs was successful
 	 *     and it is now active.
 	 */
 	extern(C) int function(GVfs* vfs) isActive;
@@ -8397,7 +8397,7 @@ struct GVfsClass
 	 * Params:
 	 *     vfs = a #GVfs.
 	 *     path = a string containing a VFS path.
-	 * Return: a #GFile.
+	 * Returns: a #GFile.
 	 *     Free the returned object with g_object_unref().
 	 */
 	extern(C) GFile* function(GVfs* vfs, const(char)* path) getFileForPath;
@@ -8406,7 +8406,7 @@ struct GVfsClass
 	 * Params:
 	 *     vfs = a#GVfs.
 	 *     uri = a string containing a URI
-	 * Return: a #GFile.
+	 * Returns: a #GFile.
 	 *     Free the returned object with g_object_unref().
 	 */
 	extern(C) GFile* function(GVfs* vfs, const(char)* uri) getFileForUri;
@@ -8414,7 +8414,7 @@ struct GVfsClass
 	 *
 	 * Params:
 	 *     vfs = a #GVfs.
-	 * Return: a %NULL-terminated array of strings.
+	 * Returns: a %NULL-terminated array of strings.
 	 *     The returned array belongs to GIO and must
 	 *     not be freed or modified.
 	 */
@@ -8424,7 +8424,7 @@ struct GVfsClass
 	 * Params:
 	 *     vfs = a #GVfs.
 	 *     parseName = a string to be parsed by the VFS module.
-	 * Return: a #GFile for the given @parse_name.
+	 * Returns: a #GFile for the given @parse_name.
 	 *     Free the returned object with g_object_unref().
 	 */
 	extern(C) GFile* function(GVfs* vfs, const(char)* parseName) parseName;
@@ -8473,7 +8473,7 @@ struct GVolumeIface
 	 *
 	 * Params:
 	 *     volume = a #GVolume
-	 * Return: the name for the given @volume. The returned string should
+	 * Returns: the name for the given @volume. The returned string should
 	 *     be freed with g_free() when no longer needed.
 	 */
 	extern(C) char* function(GVolume* volume) getName;
@@ -8481,7 +8481,7 @@ struct GVolumeIface
 	 *
 	 * Params:
 	 *     volume = a #GVolume
-	 * Return: a #GIcon.
+	 * Returns: a #GIcon.
 	 *     The returned object should be unreffed with g_object_unref()
 	 *     when no longer needed.
 	 */
@@ -8490,7 +8490,7 @@ struct GVolumeIface
 	 *
 	 * Params:
 	 *     volume = a #GVolume
-	 * Return: the UUID for @volume or %NULL if no UUID can be computed.
+	 * Returns: the UUID for @volume or %NULL if no UUID can be computed.
 	 *     The returned string should be freed with g_free()
 	 *     when no longer needed.
 	 */
@@ -8499,7 +8499,7 @@ struct GVolumeIface
 	 *
 	 * Params:
 	 *     volume = a #GVolume
-	 * Return: a #GDrive or %NULL if @volume is not
+	 * Returns: a #GDrive or %NULL if @volume is not
 	 *     associated with a drive. The returned object should be unreffed
 	 *     with g_object_unref() when no longer needed.
 	 */
@@ -8508,7 +8508,7 @@ struct GVolumeIface
 	 *
 	 * Params:
 	 *     volume = a #GVolume
-	 * Return: a #GMount or %NULL if @volume isn't mounted.
+	 * Returns: a #GMount or %NULL if @volume isn't mounted.
 	 *     The returned object should be unreffed with g_object_unref()
 	 *     when no longer needed.
 	 */
@@ -8517,14 +8517,14 @@ struct GVolumeIface
 	 *
 	 * Params:
 	 *     volume = a #GVolume
-	 * Return: %TRUE if the @volume can be mounted. %FALSE otherwise
+	 * Returns: %TRUE if the @volume can be mounted. %FALSE otherwise
 	 */
 	extern(C) int function(GVolume* volume) canMount;
 	/**
 	 *
 	 * Params:
 	 *     volume = a #GVolume
-	 * Return: %TRUE if the @volume can be ejected. %FALSE otherwise
+	 * Returns: %TRUE if the @volume can be ejected. %FALSE otherwise
 	 */
 	extern(C) int function(GVolume* volume) canEject;
 	/** */
@@ -8534,7 +8534,7 @@ struct GVolumeIface
 	 * Params:
 	 *     volume = a #GVolume
 	 *     result = a #GAsyncResult
-	 * Return: %TRUE, %FALSE if operation failed
+	 * Returns: %TRUE, %FALSE if operation failed
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -8546,7 +8546,7 @@ struct GVolumeIface
 	 * Params:
 	 *     volume = pointer to a #GVolume
 	 *     result = a #GAsyncResult
-	 * Return: %TRUE, %FALSE if operation failed
+	 * Returns: %TRUE, %FALSE if operation failed
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -8556,7 +8556,7 @@ struct GVolumeIface
 	 * Params:
 	 *     volume = a #GVolume
 	 *     kind = the kind of identifier to return
-	 * Return: a newly allocated string containing the
+	 * Returns: a newly allocated string containing the
 	 *     requested identfier, or %NULL if the #GVolume
 	 *     doesn't have this kind of identifier
 	 */
@@ -8565,7 +8565,7 @@ struct GVolumeIface
 	 *
 	 * Params:
 	 *     volume = a #GVolume
-	 * Return: a %NULL-terminated array
+	 * Returns: a %NULL-terminated array
 	 *     of strings containing kinds of identifiers. Use g_strfreev() to free.
 	 */
 	extern(C) char** function(GVolume* volume) enumerateIdentifiers;
@@ -8573,14 +8573,14 @@ struct GVolumeIface
 	 *
 	 * Params:
 	 *     volume = a #GVolume
-	 * Return: %TRUE if the volume should be automatically mounted
+	 * Returns: %TRUE if the volume should be automatically mounted
 	 */
 	extern(C) int function(GVolume* volume) shouldAutomount;
 	/**
 	 *
 	 * Params:
 	 *     volume = a #GVolume
-	 * Return: the activation root of @volume
+	 * Returns: the activation root of @volume
 	 *     or %NULL. Use g_object_unref() to free.
 	 */
 	extern(C) GFile* function(GVolume* volume) getActivationRoot;
@@ -8591,7 +8591,7 @@ struct GVolumeIface
 	 * Params:
 	 *     volume = a #GVolume
 	 *     result = a #GAsyncResult
-	 * Return: %TRUE if the volume was successfully ejected. %FALSE otherwise
+	 * Returns: %TRUE if the volume was successfully ejected. %FALSE otherwise
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -8600,14 +8600,14 @@ struct GVolumeIface
 	 *
 	 * Params:
 	 *     volume = a #GVolume
-	 * Return: Sorting key for @volume or %NULL if no such key is available
+	 * Returns: Sorting key for @volume or %NULL if no such key is available
 	 */
 	extern(C) const(char)* function(GVolume* volume) getSortKey;
 	/**
 	 *
 	 * Params:
 	 *     volume = a #GVolume
-	 * Return: a #GIcon.
+	 * Returns: a #GIcon.
 	 *     The returned object should be unreffed with g_object_unref()
 	 *     when no longer needed.
 	 */
@@ -8649,21 +8649,21 @@ struct GVolumeMonitorClass
 	 *
 	 * Params:
 	 *     volumeMonitor = a #GVolumeMonitor.
-	 * Return: a #GList of connected #GDrive objects.
+	 * Returns: a #GList of connected #GDrive objects.
 	 */
 	extern(C) GList* function(GVolumeMonitor* volumeMonitor) getConnectedDrives;
 	/**
 	 *
 	 * Params:
 	 *     volumeMonitor = a #GVolumeMonitor.
-	 * Return: a #GList of #GVolume objects.
+	 * Returns: a #GList of #GVolume objects.
 	 */
 	extern(C) GList* function(GVolumeMonitor* volumeMonitor) getVolumes;
 	/**
 	 *
 	 * Params:
 	 *     volumeMonitor = a #GVolumeMonitor.
-	 * Return: a #GList of #GMount objects.
+	 * Returns: a #GList of #GMount objects.
 	 */
 	extern(C) GList* function(GVolumeMonitor* volumeMonitor) getMounts;
 	/**
@@ -8671,7 +8671,7 @@ struct GVolumeMonitorClass
 	 * Params:
 	 *     volumeMonitor = a #GVolumeMonitor.
 	 *     uuid = the UUID to look for
-	 * Return: a #GVolume or %NULL if no such volume is available.
+	 * Returns: a #GVolume or %NULL if no such volume is available.
 	 *     Free the returned object with g_object_unref().
 	 */
 	extern(C) GVolume* function(GVolumeMonitor* volumeMonitor, const(char)* uuid) getVolumeForUuid;
@@ -8680,7 +8680,7 @@ struct GVolumeMonitorClass
 	 * Params:
 	 *     volumeMonitor = a #GVolumeMonitor.
 	 *     uuid = the UUID to look for
-	 * Return: a #GMount or %NULL if no such mount is available.
+	 * Returns: a #GMount or %NULL if no such mount is available.
 	 *     Free the returned object with g_object_unref().
 	 */
 	extern(C) GMount* function(GVolumeMonitor* volumeMonitor, const(char)* uuid) getMountForUuid;
@@ -8804,7 +8804,7 @@ public alias extern(C) void function(GDBusConnection* connection, const(char)* n
  *     cancellable = the #GCancellable
  *     userData = data passed in by the user.
  *
- * Return: it should return %FALSE if the source should be removed.
+ * Returns: it should return %FALSE if the source should be removed.
  *
  * Since: 2.28
  */
@@ -8822,7 +8822,7 @@ public alias extern(C) int function(GCancellable* cancellable, void* userData) G
  *     error = Return location for error.
  *     userData = The @user_data #gpointer passed to g_dbus_connection_register_object().
  *
- * Return: A #GVariant with the value for @property_name or %NULL if
+ * Returns: A #GVariant with the value for @property_name or %NULL if
  *     @error is set. If the returned #GVariant is floating, it is
  *     consumed - otherwise its reference count is decreased by one.
  *
@@ -8860,7 +8860,7 @@ public alias extern(C) void function(GDBusConnection* connection, const(char)* s
  *     error = Return location for error.
  *     userData = The @user_data #gpointer passed to g_dbus_connection_register_object().
  *
- * Return: %TRUE if the property was set to @value, %FALSE if @error is set.
+ * Returns: %TRUE if the property was set to @value, %FALSE if @error is set.
  *
  * Since: 2.26
  */
@@ -8934,7 +8934,7 @@ public alias extern(C) int function(GDBusConnection* connection, const(char)* se
  *         a message to be sent to the other peer.
  *     userData = User data passed when adding the filter.
  *
- * Return: A #GDBusMessage that will be freed with
+ * Returns: A #GDBusMessage that will be freed with
  *     g_object_unref() or %NULL to drop the message. Passive filter
  *     functions can simply return the passed @message object.
  *
@@ -8957,7 +8957,7 @@ public alias extern(C) GDBusMessage* function(GDBusConnection* connection, GDBus
  *     interfaceName = The interface name of the remote object or %NULL if a #GDBusObjectProxy #GType is requested.
  *     userData = User data.
  *
- * Return: A #GType to use for the remote object. The returned type
+ * Returns: A #GType to use for the remote object. The returned type
  *     must be a #GDBusProxy or #GDBusObjectProxy -derived
  *     type.
  *
@@ -8996,7 +8996,7 @@ public alias extern(C) void function(GDBusConnection* connection, const(char)* s
  *     outUserData = Return location for user data to pass to functions in the returned #GDBusInterfaceVTable (never %NULL).
  *     userData = The @user_data #gpointer passed to g_dbus_connection_register_subtree().
  *
- * Return: A #GDBusInterfaceVTable or %NULL if you don't want to handle the methods.
+ * Returns: A #GDBusInterfaceVTable or %NULL if you don't want to handle the methods.
  *
  * Since: 2.26
  */
@@ -9021,7 +9021,7 @@ public alias extern(C) GDBusInterfaceVTable* function(GDBusConnection* connectio
  *     objectPath = The object path that was registered with g_dbus_connection_register_subtree().
  *     userData = The @user_data #gpointer passed to g_dbus_connection_register_subtree().
  *
- * Return: A newly allocated array of strings for node names that are children of @object_path.
+ * Returns: A newly allocated array of strings for node names that are children of @object_path.
  *
  * Since: 2.26
  */
@@ -9054,7 +9054,7 @@ public alias extern(C) char** function(GDBusConnection* connection, const(char)*
  *     node = A node that is a child of @object_path (relative to @object_path) or %NULL for the root of the subtree.
  *     userData = The @user_data #gpointer passed to g_dbus_connection_register_subtree().
  *
- * Return: A %NULL-terminated array of pointers to #GDBusInterfaceInfo, or %NULL.
+ * Returns: A %NULL-terminated array of pointers to #GDBusInterfaceInfo, or %NULL.
  *
  * Since: 2.26
  */
@@ -9069,7 +9069,7 @@ public alias extern(C) GDBusInterfaceInfo** function(GDBusConnection* connection
  *     condition = the current condition at the source fired
  *     userData = data passed in by the user
  *
- * Return: %G_SOURCE_REMOVE if the source should be removed,
+ * Returns: %G_SOURCE_REMOVE if the source should be removed,
  *     %G_SOURCE_CONTINUE otherwise
  *
  * Since: 2.48
@@ -9151,7 +9151,7 @@ public alias extern(C) void function(long currentNumBytes, long totalNumBytes, v
  *     fileSize = the size of the data currently read.
  *     callbackData = data passed to the callback.
  *
- * Return: %TRUE if more data should be read back. %FALSE otherwise.
+ * Returns: %TRUE if more data should be read back. %FALSE otherwise.
  */
 public alias extern(C) int function(const(char)* fileContents, long fileSize, void* callbackData) GFileReadMoreCallback;
 
@@ -9166,7 +9166,7 @@ public alias extern(C) int function(const(char)* fileContents, long fileSize, vo
  *     cancellable = optional #GCancellable object, %NULL to ignore.
  *     userData = the data to pass to callback function
  *
- * Return: %TRUE if this function should be called again to
+ * Returns: %TRUE if this function should be called again to
  *     complete the job, %FALSE if the job is complete (or cancelled)
  */
 public alias extern(C) int function(GIOSchedulerJob* job, GCancellable* cancellable, void* userData) GIOSchedulerJobFunc;
@@ -9180,7 +9180,7 @@ public alias extern(C) int function(GIOSchedulerJob* job, GCancellable* cancella
  *     pollableStream = the #GPollableInputStream or #GPollableOutputStream
  *     userData = data passed in by the user.
  *
- * Return: it should return %FALSE if the source should be removed.
+ * Returns: it should return %FALSE if the source should be removed.
  *
  * Since: 2.28
  */
@@ -9196,7 +9196,7 @@ public alias extern(C) int function(GObject* pollableStream, void* userData) GPo
  *     data = memory block to reallocate
  *     size = size to reallocate @data to
  *
- * Return: a pointer to the reallocated memory
+ * Returns: a pointer to the reallocated memory
  */
 public alias extern(C) void* function(void* data, size_t size) GReallocFunc;
 
@@ -9210,7 +9210,7 @@ public alias extern(C) void* function(void* data, size_t size) GReallocFunc;
  *     variant = the #GVariant
  *     userData = user data that was specified when the binding was created
  *
- * Return: %TRUE if the conversion succeeded, %FALSE in case of an error
+ * Returns: %TRUE if the conversion succeeded, %FALSE in case of an error
  */
 public alias extern(C) int function(GValue* value, GVariant* variant, void* userData) GSettingsBindGetMapping;
 
@@ -9223,7 +9223,7 @@ public alias extern(C) int function(GValue* value, GVariant* variant, void* user
  *     expectedType = the #GVariantType to create
  *     userData = user data that was specified when the binding was created
  *
- * Return: a new #GVariant holding the data from @value,
+ * Returns: a new #GVariant holding the data from @value,
  *     or %NULL in case of an error
  */
 public alias extern(C) GVariant* function(GValue* value, GVariantType* expectedType, void* userData) GSettingsBindSetMapping;
@@ -9246,7 +9246,7 @@ public alias extern(C) GVariant* function(GValue* value, GVariantType* expectedT
  *     userData = the user data that was passed to
  *         g_settings_get_mapped()
  *
- * Return: %TRUE if the conversion succeeded, %FALSE in case of an error
+ * Returns: %TRUE if the conversion succeeded, %FALSE in case of an error
  */
 public alias extern(C) int function(GVariant* value, void** result, void* userData) GSettingsGetMapping;
 
@@ -9270,7 +9270,7 @@ public alias extern(C) void function(GSimpleAsyncResult* res, GObject* object, G
  *     condition = the current condition at the source fired.
  *     userData = data passed in by the user.
  *
- * Return: it should return %FALSE if the source should be removed.
+ * Returns: it should return %FALSE if the source should be removed.
  *
  * Since: 2.22
  */
@@ -9317,7 +9317,7 @@ public alias extern(C) void function(GTask* task, void* sourceObject, void* task
  *         be an URI or a parse name as returned by g_file_get_parse_name()
  *     userData = user data passed to the function
  *
- * Return: a #GFile for @identifier.
+ * Returns: a #GFile for @identifier.
  *
  * Since: 2.50
  */

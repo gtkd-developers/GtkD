@@ -50,7 +50,7 @@ public struct DBusError
 	 * Params:
 	 *     error = A #GError.
 	 *
-	 * Return: A D-Bus error name (never %NULL). Free with g_free().
+	 * Returns: A D-Bus error name (never %NULL). Free with g_free().
 	 *
 	 * Since: 2.26
 	 */
@@ -73,7 +73,7 @@ public struct DBusError
 	 * Params:
 	 *     error = a #GError
 	 *
-	 * Return: an allocated string or %NULL if the D-Bus error name
+	 * Returns: an allocated string or %NULL if the D-Bus error name
 	 *     could not be found. Free with g_free().
 	 *
 	 * Since: 2.26
@@ -93,7 +93,7 @@ public struct DBusError
 	 * Params:
 	 *     error = A #GError.
 	 *
-	 * Return: %TRUE if @error represents an error from a remote peer,
+	 * Returns: %TRUE if @error represents an error from a remote peer,
 	 *     %FALSE otherwise.
 	 *
 	 * Since: 2.26
@@ -135,7 +135,7 @@ public struct DBusError
 	 *     dbusErrorName = D-Bus error name.
 	 *     dbusErrorMessage = D-Bus error message.
 	 *
-	 * Return: An allocated #GError. Free with g_error_free().
+	 * Returns: An allocated #GError. Free with g_error_free().
 	 *
 	 * Since: 2.26
 	 */
@@ -169,7 +169,7 @@ public struct DBusError
 	 *     errorCode = An error code.
 	 *     dbusErrorName = A D-Bus error name.
 	 *
-	 * Return: %TRUE if the association was created, %FALSE if it already
+	 * Returns: %TRUE if the association was created, %FALSE if it already
 	 *     exists.
 	 *
 	 * Since: 2.26
@@ -206,7 +206,7 @@ public struct DBusError
 	 * Params:
 	 *     error = A #GError.
 	 *
-	 * Return: %TRUE if information was stripped, %FALSE otherwise.
+	 * Returns: %TRUE if information was stripped, %FALSE otherwise.
 	 *
 	 * Since: 2.26
 	 */
@@ -223,7 +223,7 @@ public struct DBusError
 	 *     errorCode = An error code.
 	 *     dbusErrorName = A D-Bus error name.
 	 *
-	 * Return: %TRUE if the association was destroyed, %FALSE if it wasn't found.
+	 * Returns: %TRUE if the association was destroyed, %FALSE if it wasn't found.
 	 *
 	 * Since: 2.26
 	 */

@@ -175,7 +175,7 @@ public class ModelButton : Button
 	/**
 	 * Creates a new GtkModelButton.
 	 *
-	 * Return: the newly created #GtkModelButton widget
+	 * Returns: the newly created #GtkModelButton widget
 	 *
 	 * Since: 3.16
 	 *

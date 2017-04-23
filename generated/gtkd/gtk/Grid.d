@@ -99,7 +99,7 @@ public class Grid : Container, OrientableIF
 	/**
 	 * Creates a new grid widget.
 	 *
-	 * Return: the new #GtkGrid
+	 * Returns: the new #GtkGrid
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -161,7 +161,7 @@ public class Grid : Container, OrientableIF
 	/**
 	 * Returns which row defines the global baseline of @grid.
 	 *
-	 * Return: the row index defining the global baseline
+	 * Returns: the row index defining the global baseline
 	 *
 	 * Since: 3.10
 	 */
@@ -178,7 +178,7 @@ public class Grid : Container, OrientableIF
 	 *     left = the left edge of the cell
 	 *     top = the top edge of the cell
 	 *
-	 * Return: the child at the given position, or %NULL
+	 * Returns: the child at the given position, or %NULL
 	 *
 	 * Since: 3.2
 	 */
@@ -197,7 +197,7 @@ public class Grid : Container, OrientableIF
 	/**
 	 * Returns whether all columns of @grid have the same width.
 	 *
-	 * Return: whether all columns of @grid have the same width.
+	 * Returns: whether all columns of @grid have the same width.
 	 */
 	public bool getColumnHomogeneous()
 	{
@@ -207,7 +207,7 @@ public class Grid : Container, OrientableIF
 	/**
 	 * Returns the amount of space between the columns of @grid.
 	 *
-	 * Return: the column spacing of @grid
+	 * Returns: the column spacing of @grid
 	 */
 	public uint getColumnSpacing()
 	{
@@ -222,7 +222,7 @@ public class Grid : Container, OrientableIF
 	 * Params:
 	 *     row = a row index
 	 *
-	 * Return: the baseline position of @row
+	 * Returns: the baseline position of @row
 	 *
 	 * Since: 3.10
 	 */
@@ -234,7 +234,7 @@ public class Grid : Container, OrientableIF
 	/**
 	 * Returns whether all rows of @grid have the same height.
 	 *
-	 * Return: whether all rows of @grid have the same height.
+	 * Returns: whether all rows of @grid have the same height.
 	 */
 	public bool getRowHomogeneous()
 	{
@@ -244,7 +244,7 @@ public class Grid : Container, OrientableIF
 	/**
 	 * Returns the amount of space between the rows of @grid.
 	 *
-	 * Return: the row spacing of @grid
+	 * Returns: the row spacing of @grid
 	 */
 	public uint getRowSpacing()
 	{

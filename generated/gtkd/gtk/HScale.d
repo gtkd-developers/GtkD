@@ -90,7 +90,7 @@ public class HScale : Scale
 	 *     adjustment = the #GtkAdjustment which sets the range of
 	 *         the scale.
 	 *
-	 * Return: a new #GtkHScale.
+	 * Returns: a new #GtkHScale.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -123,7 +123,7 @@ public class HScale : Scale
 	 *     max = maximum value
 	 *     step = step increment (tick size) used with keyboard shortcuts
 	 *
-	 * Return: a new #GtkHScale
+	 * Returns: a new #GtkHScale
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

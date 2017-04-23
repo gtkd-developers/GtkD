@@ -134,7 +134,7 @@ public class ListG
 	 * g_list_append(), g_list_prepend(), g_list_insert() and
 	 * g_list_insert_sorted() and so is rarely used on its own.
 	 *
-	 * Return: a pointer to the newly-allocated #GList element
+	 * Returns: a pointer to the newly-allocated #GList element
 	 */
 	public static ListG alloc()
 	{
@@ -175,7 +175,7 @@ public class ListG
 	 * Params:
 	 *     data = the data for the new element
 	 *
-	 * Return: either @list or the new start of the #GList if @list was %NULL
+	 * Returns: either @list or the new start of the #GList if @list was %NULL
 	 */
 	public ListG append(void* data)
 	{
@@ -205,7 +205,7 @@ public class ListG
 	 *     list2 = the #GList to add to the end of the first #GList,
 	 *         this must point  to the top of the list
 	 *
-	 * Return: the start of the new #GList, which equals @list1 if not %NULL
+	 * Returns: the start of the new #GList, which equals @list1 if not %NULL
 	 */
 	public ListG concat(ListG list2)
 	{
@@ -227,7 +227,7 @@ public class ListG
 	 * the actual data is not. See g_list_copy_deep() if you need
 	 * to copy the data as well.
 	 *
-	 * Return: the start of the new list that holds the same data as @list
+	 * Returns: the start of the new list that holds the same data as @list
 	 */
 	public ListG copy()
 	{
@@ -266,7 +266,7 @@ public class ListG
 	 *     func = a copy function used to copy every element in the list
 	 *     userData = user data passed to the copy function @func, or %NULL
 	 *
-	 * Return: the start of the new list that holds a full copy of @list,
+	 * Returns: the start of the new list that holds a full copy of @list,
 	 *     use g_list_free_full() to free it
 	 *
 	 * Since: 2.34
@@ -291,7 +291,7 @@ public class ListG
 	 * Params:
 	 *     link = node to delete from @list
 	 *
-	 * Return: the (possibly changed) start of the #GList
+	 * Returns: the (possibly changed) start of the #GList
 	 */
 	public ListG deleteLink(ListG link)
 	{
@@ -311,7 +311,7 @@ public class ListG
 	 * Params:
 	 *     data = the element data to find
 	 *
-	 * Return: the found #GList element, or %NULL if it is not found
+	 * Returns: the found #GList element, or %NULL if it is not found
 	 */
 	public ListG find(void* data)
 	{
@@ -338,7 +338,7 @@ public class ListG
 	 *     func = the function to call for each element.
 	 *         It should return 0 when the desired element is found
 	 *
-	 * Return: the found #GList element, or %NULL if it is not found
+	 * Returns: the found #GList element, or %NULL if it is not found
 	 */
 	public ListG findCustom(void* data, GCompareFunc func)
 	{
@@ -355,7 +355,7 @@ public class ListG
 	/**
 	 * Gets the first element in a #GList.
 	 *
-	 * Return: the first element in the #GList,
+	 * Returns: the first element in the #GList,
 	 *     or %NULL if the #GList has no elements
 	 */
 	public ListG first()
@@ -427,7 +427,7 @@ public class ListG
 	 * Params:
 	 *     data = the data to find
 	 *
-	 * Return: the index of the element containing the data,
+	 * Returns: the index of the element containing the data,
 	 *     or -1 if the data is not found
 	 */
 	public int index(void* data)
@@ -444,7 +444,7 @@ public class ListG
 	 *         negative, or is larger than the number of elements in the
 	 *         list, the new element is added on to the end of the list.
 	 *
-	 * Return: the (possibly changed) start of the #GList
+	 * Returns: the (possibly changed) start of the #GList
 	 */
 	public ListG insert(void* data, int position)
 	{
@@ -466,7 +466,7 @@ public class ListG
 	 *         is inserted or %NULL to insert at the end of the list
 	 *     data = the data for the new element
 	 *
-	 * Return: the (possibly changed) start of the #GList
+	 * Returns: the (possibly changed) start of the #GList
 	 */
 	public ListG insertBefore(ListG sibling, void* data)
 	{
@@ -495,7 +495,7 @@ public class ListG
 	 *         return a number > 0 if the first parameter comes after the
 	 *         second parameter in the sort order.
 	 *
-	 * Return: the (possibly changed) start of the #GList
+	 * Returns: the (possibly changed) start of the #GList
 	 */
 	public ListG insertSorted(void* data, GCompareFunc func)
 	{
@@ -525,7 +525,7 @@ public class ListG
 	 *         second parameter in the sort order.
 	 *     userData = user data to pass to comparison function
 	 *
-	 * Return: the (possibly changed) start of the #GList
+	 * Returns: the (possibly changed) start of the #GList
 	 *
 	 * Since: 2.10
 	 */
@@ -544,7 +544,7 @@ public class ListG
 	/**
 	 * Gets the last element in a #GList.
 	 *
-	 * Return: the last element in the #GList,
+	 * Returns: the last element in the #GList,
 	 *     or %NULL if the #GList has no elements
 	 */
 	public ListG last()
@@ -567,7 +567,7 @@ public class ListG
 	 * of items. To check whether the list is non-empty, it is faster to check
 	 * @list against %NULL.
 	 *
-	 * Return: the number of elements in the #GList
+	 * Returns: the number of elements in the #GList
 	 */
 	public uint length()
 	{
@@ -584,7 +584,7 @@ public class ListG
 	 * Params:
 	 *     n = the position of the element, counting from 0
 	 *
-	 * Return: the element, or %NULL if the position is off
+	 * Returns: the element, or %NULL if the position is off
 	 *     the end of the #GList
 	 */
 	public ListG nth(uint n)
@@ -609,7 +609,7 @@ public class ListG
 	 * Params:
 	 *     n = the position of the element
 	 *
-	 * Return: the element's data, or %NULL if the position
+	 * Returns: the element's data, or %NULL if the position
 	 *     is off the end of the #GList
 	 */
 	public void* nthData(uint n)
@@ -623,7 +623,7 @@ public class ListG
 	 * Params:
 	 *     n = the position of the element, counting from 0
 	 *
-	 * Return: the element, or %NULL if the position is
+	 * Returns: the element, or %NULL if the position is
 	 *     off the end of the #GList
 	 */
 	public ListG nthPrev(uint n)
@@ -645,7 +645,7 @@ public class ListG
 	 * Params:
 	 *     llink = an element in the #GList
 	 *
-	 * Return: the position of the element in the #GList,
+	 * Returns: the position of the element in the #GList,
 	 *     or -1 if the element is not found
 	 */
 	public int position(ListG llink)
@@ -673,7 +673,7 @@ public class ListG
 	 * Params:
 	 *     data = the data for the new element
 	 *
-	 * Return: a pointer to the newly prepended element, which is the new
+	 * Returns: a pointer to the newly prepended element, which is the new
 	 *     start of the #GList
 	 */
 	public ListG prepend(void* data)
@@ -696,7 +696,7 @@ public class ListG
 	 * Params:
 	 *     data = the data of the element to remove
 	 *
-	 * Return: the (possibly changed) start of the #GList
+	 * Returns: the (possibly changed) start of the #GList
 	 */
 	public ListG remove(void* data)
 	{
@@ -719,7 +719,7 @@ public class ListG
 	 * Params:
 	 *     data = data to remove
 	 *
-	 * Return: the (possibly changed) start of the #GList
+	 * Returns: the (possibly changed) start of the #GList
 	 */
 	public ListG removeAll(void* data)
 	{
@@ -750,7 +750,7 @@ public class ListG
 	 * Params:
 	 *     llink = an element in the #GList
 	 *
-	 * Return: the (possibly changed) start of the #GList
+	 * Returns: the (possibly changed) start of the #GList
 	 */
 	public ListG removeLink(ListG llink)
 	{
@@ -768,7 +768,7 @@ public class ListG
 	 * Reverses a #GList.
 	 * It simply switches the next and prev pointers of each element.
 	 *
-	 * Return: the start of the reversed #GList
+	 * Returns: the start of the reversed #GList
 	 */
 	public ListG reverse()
 	{
@@ -793,7 +793,7 @@ public class ListG
 	 *         first element comes before the second, or a positive value if
 	 *         the first element comes after the second.
 	 *
-	 * Return: the (possibly changed) start of the #GList
+	 * Returns: the (possibly changed) start of the #GList
 	 */
 	public ListG sort(GCompareFunc compareFunc)
 	{
@@ -815,7 +815,7 @@ public class ListG
 	 *     compareFunc = comparison function
 	 *     userData = user data to pass to comparison function
 	 *
-	 * Return: the (possibly changed) start of the #GList
+	 * Returns: the (possibly changed) start of the #GList
 	 */
 	public ListG sortWithData(GCompareDataFunc compareFunc, void* userData)
 	{

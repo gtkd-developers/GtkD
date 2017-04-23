@@ -93,7 +93,7 @@ public class CharsetConverter : ObjectG, ConverterIF, InitableIF
 	 *     toCharset = destination charset
 	 *     fromCharset = source charset
 	 *
-	 * Return: a new #GCharsetConverter or %NULL on error.
+	 * Returns: a new #GCharsetConverter or %NULL on error.
 	 *
 	 * Since: 2.24
 	 *
@@ -122,7 +122,7 @@ public class CharsetConverter : ObjectG, ConverterIF, InitableIF
 	/**
 	 * Gets the number of fallbacks that @converter has applied so far.
 	 *
-	 * Return: the number of fallbacks that @converter has applied
+	 * Returns: the number of fallbacks that @converter has applied
 	 *
 	 * Since: 2.24
 	 */
@@ -134,7 +134,7 @@ public class CharsetConverter : ObjectG, ConverterIF, InitableIF
 	/**
 	 * Gets the #GCharsetConverter:use-fallback property.
 	 *
-	 * Return: %TRUE if fallbacks are used by @converter
+	 * Returns: %TRUE if fallbacks are used by @converter
 	 *
 	 * Since: 2.24
 	 */

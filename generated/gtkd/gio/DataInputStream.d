@@ -86,7 +86,7 @@ public class DataInputStream : BufferedInputStream
 	 * Params:
 	 *     baseStream = a #GInputStream.
 	 *
-	 * Return: a new #GDataInputStream.
+	 * Returns: a new #GDataInputStream.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -105,7 +105,7 @@ public class DataInputStream : BufferedInputStream
 	/**
 	 * Gets the byte order for the data input stream.
 	 *
-	 * Return: the @stream's current #GDataStreamByteOrder.
+	 * Returns: the @stream's current #GDataStreamByteOrder.
 	 */
 	public GDataStreamByteOrder getByteOrder()
 	{
@@ -115,7 +115,7 @@ public class DataInputStream : BufferedInputStream
 	/**
 	 * Gets the current newline type for the @stream.
 	 *
-	 * Return: #GDataStreamNewlineType for the given @stream.
+	 * Returns: #GDataStreamNewlineType for the given @stream.
 	 */
 	public GDataStreamNewlineType getNewlineType()
 	{
@@ -131,7 +131,7 @@ public class DataInputStream : BufferedInputStream
 	 * Params:
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Return: a signed 16-bit/2-byte value read from @stream or %0 if
+	 * Returns: a signed 16-bit/2-byte value read from @stream or %0 if
 	 *     an error occurred.
 	 *
 	 * Throws: GException on failure.
@@ -163,7 +163,7 @@ public class DataInputStream : BufferedInputStream
 	 * Params:
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Return: a signed 32-bit/4-byte value read from the @stream or %0 if
+	 * Returns: a signed 32-bit/4-byte value read from the @stream or %0 if
 	 *     an error occurred.
 	 *
 	 * Throws: GException on failure.
@@ -195,7 +195,7 @@ public class DataInputStream : BufferedInputStream
 	 * Params:
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Return: a signed 64-bit/8-byte value read from @stream or %0 if
+	 * Returns: a signed 64-bit/8-byte value read from @stream or %0 if
 	 *     an error occurred.
 	 *
 	 * Throws: GException on failure.
@@ -227,7 +227,7 @@ public class DataInputStream : BufferedInputStream
 	 *     length = a #gsize to get the length of the data read in.
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Return: a NUL terminated byte array with the line that was read in
+	 * Returns: a NUL terminated byte array with the line that was read in
 	 *     (without the newlines).  Set @length to a #gsize to get the length
 	 *     of the read line.  On an error, it will return %NULL and @error
 	 *     will be set. If there's no content to read, it will still return
@@ -281,7 +281,7 @@ public class DataInputStream : BufferedInputStream
 	 *     result = the #GAsyncResult that was provided to the callback.
 	 *     length = a #gsize to get the length of the data read in.
 	 *
-	 * Return: a NUL-terminated byte array with the line that was read in
+	 * Returns: a NUL-terminated byte array with the line that was read in
 	 *     (without the newlines).  Set @length to a #gsize to get the length
 	 *     of the read line.  On an error, it will return %NULL and @error
 	 *     will be set. If there's no content to read, it will still return
@@ -314,7 +314,7 @@ public class DataInputStream : BufferedInputStream
 	 *     result = the #GAsyncResult that was provided to the callback.
 	 *     length = a #gsize to get the length of the data read in.
 	 *
-	 * Return: a string with the line that
+	 * Returns: a string with the line that
 	 *     was read in (without the newlines).  Set @length to a #gsize to
 	 *     get the length of the read line.  On an error, it will return
 	 *     %NULL and @error will be set. For UTF-8 conversion errors, the set
@@ -351,7 +351,7 @@ public class DataInputStream : BufferedInputStream
 	 *     length = a #gsize to get the length of the data read in.
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Return: a NUL terminated UTF-8 string
+	 * Returns: a NUL terminated UTF-8 string
 	 *     with the line that was read in (without the newlines).  Set
 	 *     @length to a #gsize to get the length of the read line.  On an
 	 *     error, it will return %NULL and @error will be set.  For UTF-8
@@ -387,7 +387,7 @@ public class DataInputStream : BufferedInputStream
 	 * Params:
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Return: an unsigned 16-bit/2-byte value read from the @stream or %0 if
+	 * Returns: an unsigned 16-bit/2-byte value read from the @stream or %0 if
 	 *     an error occurred.
 	 *
 	 * Throws: GException on failure.
@@ -419,7 +419,7 @@ public class DataInputStream : BufferedInputStream
 	 * Params:
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Return: an unsigned 32-bit/4-byte value read from the @stream or %0 if
+	 * Returns: an unsigned 32-bit/4-byte value read from the @stream or %0 if
 	 *     an error occurred.
 	 *
 	 * Throws: GException on failure.
@@ -451,7 +451,7 @@ public class DataInputStream : BufferedInputStream
 	 * Params:
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Return: an unsigned 64-bit/8-byte read from @stream or %0 if
+	 * Returns: an unsigned 64-bit/8-byte read from @stream or %0 if
 	 *     an error occurred.
 	 *
 	 * Throws: GException on failure.
@@ -488,7 +488,7 @@ public class DataInputStream : BufferedInputStream
 	 *     length = a #gsize to get the length of the data read in.
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Return: a string with the data that was read
+	 * Returns: a string with the data that was read
 	 *     before encountering any of the stop characters. Set @length to
 	 *     a #gsize to get the length of the string. This function will
 	 *     return %NULL on an error.
@@ -549,7 +549,7 @@ public class DataInputStream : BufferedInputStream
 	 *     result = the #GAsyncResult that was provided to the callback.
 	 *     length = a #gsize to get the length of the data read in.
 	 *
-	 * Return: a string with the data that was read
+	 * Returns: a string with the data that was read
 	 *     before encountering any of the stop characters. Set @length to
 	 *     a #gsize to get the length of the string. This function will
 	 *     return %NULL on an error.
@@ -592,7 +592,7 @@ public class DataInputStream : BufferedInputStream
 	 *     length = a #gsize to get the length of the data read in
 	 *     cancellable = optional #GCancellable object, %NULL to ignore
 	 *
-	 * Return: a string with the data that was read
+	 * Returns: a string with the data that was read
 	 *     before encountering any of the stop characters. Set @length to
 	 *     a #gsize to get the length of the string. This function will
 	 *     return %NULL on an error
@@ -660,7 +660,7 @@ public class DataInputStream : BufferedInputStream
 	 *     result = the #GAsyncResult that was provided to the callback
 	 *     length = a #gsize to get the length of the data read in
 	 *
-	 * Return: a string with the data that was read
+	 * Returns: a string with the data that was read
 	 *     before encountering any of the stop characters. Set @length to
 	 *     a #gsize to get the length of the string. This function will
 	 *     return %NULL on an error.

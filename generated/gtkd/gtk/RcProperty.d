@@ -49,7 +49,7 @@ public struct RcProperty
 	 *     gstring = the #GString to be parsed
 	 *     propertyValue = a #GValue which must hold boxed values.
 	 *
-	 * Return: %TRUE if @gstring could be parsed and @property_value
+	 * Returns: %TRUE if @gstring could be parsed and @property_value
 	 *     has been set to the resulting #GtkBorder.
 	 */
 	public static bool parseBorder(ParamSpec pspec, StringG gstring, Value propertyValue)
@@ -70,7 +70,7 @@ public struct RcProperty
 	 *     gstring = the #GString to be parsed
 	 *     propertyValue = a #GValue which must hold #GdkColor values.
 	 *
-	 * Return: %TRUE if @gstring could be parsed and @property_value
+	 * Returns: %TRUE if @gstring could be parsed and @property_value
 	 *     has been set to the resulting #GdkColor.
 	 */
 	public static bool parseColor(ParamSpec pspec, StringG gstring, Value propertyValue)
@@ -92,7 +92,7 @@ public struct RcProperty
 	 *     gstring = the #GString to be parsed
 	 *     propertyValue = a #GValue which must hold enum values.
 	 *
-	 * Return: %TRUE if @gstring could be parsed and @property_value
+	 * Returns: %TRUE if @gstring could be parsed and @property_value
 	 *     has been set to the resulting #GEnumValue.
 	 */
 	public static bool parseEnum(ParamSpec pspec, StringG gstring, Value propertyValue)
@@ -113,7 +113,7 @@ public struct RcProperty
 	 *     gstring = the #GString to be parsed
 	 *     propertyValue = a #GValue which must hold flags values.
 	 *
-	 * Return: %TRUE if @gstring could be parsed and @property_value
+	 * Returns: %TRUE if @gstring could be parsed and @property_value
 	 *     has been set to the resulting flags value.
 	 */
 	public static bool parseFlags(ParamSpec pspec, StringG gstring, Value propertyValue)
@@ -132,7 +132,7 @@ public struct RcProperty
 	 *     gstring = the #GString to be parsed
 	 *     propertyValue = a #GValue which must hold boxed values.
 	 *
-	 * Return: %TRUE if @gstring could be parsed and @property_value
+	 * Returns: %TRUE if @gstring could be parsed and @property_value
 	 *     has been set to the resulting #GtkRequisition.
 	 */
 	public static bool parseRequisition(ParamSpec pspec, StringG gstring, Value propertyValue)

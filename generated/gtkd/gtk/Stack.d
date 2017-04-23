@@ -93,7 +93,7 @@ public class Stack : Container
 	/**
 	 * Creates a new #GtkStack container.
 	 *
-	 * Return: a new #GtkStack
+	 * Returns: a new #GtkStack
 	 *
 	 * Since: 3.10
 	 *
@@ -152,7 +152,7 @@ public class Stack : Container
 	 * Params:
 	 *     name = the name of the child to find
 	 *
-	 * Return: the requested child of the #GtkStack
+	 * Returns: the requested child of the #GtkStack
 	 *
 	 * Since: 3.12
 	 */
@@ -172,7 +172,7 @@ public class Stack : Container
 	 * Gets whether @stack is horizontally homogeneous.
 	 * See gtk_stack_set_hhomogeneous().
 	 *
-	 * Return: whether @stack is horizontally homogeneous.
+	 * Returns: whether @stack is horizontally homogeneous.
 	 *
 	 * Since: 3.16
 	 */
@@ -185,7 +185,7 @@ public class Stack : Container
 	 * Gets whether @stack is homogeneous.
 	 * See gtk_stack_set_homogeneous().
 	 *
-	 * Return: whether @stack is homogeneous.
+	 * Returns: whether @stack is homogeneous.
 	 *
 	 * Since: 3.10
 	 */
@@ -198,7 +198,7 @@ public class Stack : Container
 	 * Returns wether the #GtkStack is set up to interpolate between
 	 * the sizes of children on page switch.
 	 *
-	 * Return: %TRUE if child sizes are interpolated
+	 * Returns: %TRUE if child sizes are interpolated
 	 *
 	 * Since: 3.18
 	 */
@@ -211,7 +211,7 @@ public class Stack : Container
 	 * Returns the amount of time (in milliseconds) that
 	 * transitions between pages in @stack will take.
 	 *
-	 * Return: the transition duration
+	 * Returns: the transition duration
 	 *
 	 * Since: 3.10
 	 */
@@ -224,7 +224,7 @@ public class Stack : Container
 	 * Returns whether the @stack is currently in a transition from one page to
 	 * another.
 	 *
-	 * Return: %TRUE if the transition is currently running, %FALSE otherwise.
+	 * Returns: %TRUE if the transition is currently running, %FALSE otherwise.
 	 *
 	 * Since: 3.12
 	 */
@@ -237,7 +237,7 @@ public class Stack : Container
 	 * Gets the type of animation that will be used
 	 * for transitions between pages in @stack.
 	 *
-	 * Return: the current transition type of @stack
+	 * Returns: the current transition type of @stack
 	 *
 	 * Since: 3.10
 	 */
@@ -250,7 +250,7 @@ public class Stack : Container
 	 * Gets whether @stack is vertically homogeneous.
 	 * See gtk_stack_set_vhomogeneous().
 	 *
-	 * Return: whether @stack is vertically homogeneous.
+	 * Returns: whether @stack is vertically homogeneous.
 	 *
 	 * Since: 3.16
 	 */
@@ -263,7 +263,7 @@ public class Stack : Container
 	 * Gets the currently visible child of @stack, or %NULL if
 	 * there are no visible children.
 	 *
-	 * Return: the visible child of the #GtkStack
+	 * Returns: the visible child of the #GtkStack
 	 *
 	 * Since: 3.10
 	 */
@@ -283,7 +283,7 @@ public class Stack : Container
 	 * Returns the name of the currently visible child of @stack, or
 	 * %NULL if there is no visible child.
 	 *
-	 * Return: the name of the visible child of the #GtkStack
+	 * Returns: the name of the visible child of the #GtkStack
 	 *
 	 * Since: 3.10
 	 */

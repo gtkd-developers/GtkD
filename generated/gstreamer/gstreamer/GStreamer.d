@@ -97,7 +97,7 @@ public struct GStreamer
 	 *     argc = pointer to application's argc
 	 *     argv = pointer to application's argv
 	 *
-	 * Return: %TRUE if GStreamer could be initialized.
+	 * Returns: %TRUE if GStreamer could be initialized.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -132,7 +132,7 @@ public struct GStreamer
 	 * threading system as one of the very first things in your program
 	 * (see the example at the beginning of this section).
 	 *
-	 * Return: a pointer to GStreamer's option group.
+	 * Returns: a pointer to GStreamer's option group.
 	 */
 	public static OptionGroup initGetOptionGroup()
 	{
@@ -150,7 +150,7 @@ public struct GStreamer
 	 * Use this function to check if GStreamer has been initialized with gst_init()
 	 * or gst_init_check().
 	 *
-	 * Return: %TRUE if initialization has been done, %FALSE otherwise.
+	 * Returns: %TRUE if initialization has been done, %FALSE otherwise.
 	 */
 	public static bool isInitialized()
 	{
@@ -166,7 +166,7 @@ public struct GStreamer
 	 * gst_segtrap_set_enabled() function. This is typically done if the application
 	 * wants to install its own handler without GStreamer interfering.
 	 *
-	 * Return: %TRUE if GStreamer is allowed to install a custom SIGSEGV handler.
+	 * Returns: %TRUE if GStreamer is allowed to install a custom SIGSEGV handler.
 	 */
 	public static bool segtrapIsEnabled()
 	{
@@ -203,7 +203,7 @@ public struct GStreamer
 	 *
 	 * Note that this function may block for a significant amount of time.
 	 *
-	 * Return: %TRUE if the registry has been updated successfully (does not
+	 * Returns: %TRUE if the registry has been updated successfully (does not
 	 *     imply that there were changes), otherwise %FALSE.
 	 */
 	public static bool updateRegistry()
@@ -229,7 +229,7 @@ public struct GStreamer
 	 * This function returns a string that is useful for describing this version
 	 * of GStreamer to the outside world: user agent strings, logging, ...
 	 *
-	 * Return: a newly allocated string describing this version
+	 * Returns: a newly allocated string describing this version
 	 *     of GStreamer.
 	 */
 	public static string versionString()

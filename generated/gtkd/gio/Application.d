@@ -285,7 +285,7 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 *     applicationId = the application id
 	 *     flags = the application flags
 	 *
-	 * Return: a new #GApplication instance
+	 * Returns: a new #GApplication instance
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -310,7 +310,7 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 *
 	 * If there is no default application then %NULL is returned.
 	 *
-	 * Return: the default application for this process, or %NULL
+	 * Returns: the default application for this process, or %NULL
 	 *
 	 * Since: 2.32
 	 */
@@ -352,7 +352,7 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 * Params:
 	 *     applicationId = a potential application identifier
 	 *
-	 * Return: %TRUE if @application_id is valid
+	 * Returns: %TRUE if @application_id is valid
 	 */
 	public static bool idIsValid(string applicationId)
 	{
@@ -531,7 +531,7 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	/**
 	 * Gets the unique identifier for @application.
 	 *
-	 * Return: the identifier for @application, owned by @application
+	 * Returns: the identifier for @application, owned by @application
 	 *
 	 * Since: 2.28
 	 */
@@ -555,7 +555,7 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 * This function must not be called before the application has been
 	 * registered.  See g_application_get_is_registered().
 	 *
-	 * Return: a #GDBusConnection, or %NULL
+	 * Returns: a #GDBusConnection, or %NULL
 	 *
 	 * Since: 2.34
 	 */
@@ -587,7 +587,7 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 * This function must not be called before the application has been
 	 * registered.  See g_application_get_is_registered().
 	 *
-	 * Return: the object path, or %NULL
+	 * Returns: the object path, or %NULL
 	 *
 	 * Since: 2.34
 	 */
@@ -601,7 +601,7 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 *
 	 * See #GApplicationFlags.
 	 *
-	 * Return: the flags for @application
+	 * Returns: the flags for @application
 	 *
 	 * Since: 2.28
 	 */
@@ -616,7 +616,7 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 * This is the amount of time (in milliseconds) after the last call to
 	 * g_application_release() before the application stops running.
 	 *
-	 * Return: the timeout, in milliseconds
+	 * Returns: the timeout, in milliseconds
 	 *
 	 * Since: 2.28
 	 */
@@ -629,7 +629,7 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 * Gets the application's current busy state, as set through
 	 * g_application_mark_busy() or g_application_bind_busy_property().
 	 *
-	 * Return: %TRUE if @application is currenty marked as busy
+	 * Returns: %TRUE if @application is currenty marked as busy
 	 *
 	 * Since: 2.44
 	 */
@@ -644,7 +644,7 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 * An application is registered if g_application_register() has been
 	 * successfully called.
 	 *
-	 * Return: %TRUE if @application is registered
+	 * Returns: %TRUE if @application is registered
 	 *
 	 * Since: 2.28
 	 */
@@ -665,7 +665,7 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 * g_application_register() has been called.  See
 	 * g_application_get_is_registered().
 	 *
-	 * Return: %TRUE if @application is remote
+	 * Returns: %TRUE if @application is remote
 	 *
 	 * Since: 2.28
 	 */
@@ -679,7 +679,7 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 *
 	 * See g_application_set_resource_base_path() for more information.
 	 *
-	 * Return: the base resource path, if one is set
+	 * Returns: the base resource path, if one is set
 	 *
 	 * Since: 2.42
 	 */
@@ -808,7 +808,7 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 * Params:
 	 *     cancellable = a #GCancellable, or %NULL
 	 *
-	 * Return: %TRUE if registration succeeded
+	 * Returns: %TRUE if registration succeeded
 	 *
 	 * Since: 2.28
 	 *
@@ -922,7 +922,7 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 *     argc = the argc from main() (or 0 if @argv is %NULL)
 	 *     argv = the argv from main(), or %NULL
 	 *
-	 * Return: the exit status
+	 * Returns: the exit status
 	 *
 	 * Since: 2.28
 	 */
@@ -1252,7 +1252,7 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 *     commandLine = a #GApplicationCommandLine representing the
 	 *         passed commandline
 	 *
-	 * Return: An integer that is set as the exit status for the calling
+	 * Returns: An integer that is set as the exit status for the calling
 	 *     process. See g_application_command_line_set_exit_status().
 	 */
 	gulong addOnCommandLine(int delegate(ApplicationCommandLine, Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -1350,7 +1350,7 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 * Params:
 	 *     options = the options dictionary
 	 *
-	 * Return: an exit code. If you have handled your options and want
+	 * Returns: an exit code. If you have handled your options and want
 	 *     to exit the process, return a non-negative option, 0 for success,
 	 *     and a positive value for failure. To continue, return -1 to let
 	 *     the default option processing continue.

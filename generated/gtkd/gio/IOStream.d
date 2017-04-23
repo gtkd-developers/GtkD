@@ -128,7 +128,7 @@ public class IOStream : ObjectG
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *
-	 * Return: %TRUE on success, %FALSE otherwise.
+	 * Returns: %TRUE on success, %FALSE otherwise.
 	 *
 	 * Since: 2.28
 	 *
@@ -196,7 +196,7 @@ public class IOStream : ObjectG
 	 * Params:
 	 *     cancellable = optional #GCancellable object, %NULL to ignore
 	 *
-	 * Return: %TRUE on success, %FALSE on failure
+	 * Returns: %TRUE on success, %FALSE on failure
 	 *
 	 * Since: 2.22
 	 *
@@ -247,7 +247,7 @@ public class IOStream : ObjectG
 	 * Params:
 	 *     result = a #GAsyncResult
 	 *
-	 * Return: %TRUE if stream was successfully closed, %FALSE otherwise.
+	 * Returns: %TRUE if stream was successfully closed, %FALSE otherwise.
 	 *
 	 * Since: 2.22
 	 *
@@ -271,7 +271,7 @@ public class IOStream : ObjectG
 	 * Gets the input stream for this object. This is used
 	 * for reading.
 	 *
-	 * Return: a #GInputStream, owned by the #GIOStream.
+	 * Returns: a #GInputStream, owned by the #GIOStream.
 	 *     Do not free.
 	 *
 	 * Since: 2.22
@@ -292,7 +292,7 @@ public class IOStream : ObjectG
 	 * Gets the output stream for this object. This is used for
 	 * writing.
 	 *
-	 * Return: a #GOutputStream, owned by the #GIOStream.
+	 * Returns: a #GOutputStream, owned by the #GIOStream.
 	 *     Do not free.
 	 *
 	 * Since: 2.22
@@ -312,7 +312,7 @@ public class IOStream : ObjectG
 	/**
 	 * Checks if a stream has pending actions.
 	 *
-	 * Return: %TRUE if @stream has pending actions.
+	 * Returns: %TRUE if @stream has pending actions.
 	 *
 	 * Since: 2.22
 	 */
@@ -324,7 +324,7 @@ public class IOStream : ObjectG
 	/**
 	 * Checks if a stream is closed.
 	 *
-	 * Return: %TRUE if the stream is closed.
+	 * Returns: %TRUE if the stream is closed.
 	 *
 	 * Since: 2.22
 	 */
@@ -338,7 +338,7 @@ public class IOStream : ObjectG
 	 * already set or @stream is closed, it will return %FALSE and set
 	 * @error.
 	 *
-	 * Return: %TRUE if pending was previously unset and is now set.
+	 * Returns: %TRUE if pending was previously unset and is now set.
 	 *
 	 * Since: 2.22
 	 *

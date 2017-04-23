@@ -84,7 +84,7 @@ public class Registry : ObjectG
 	 * Params:
 	 *     type = a #GType with which to look up the associated #AtkObjectFactory
 	 *
-	 * Return: an #AtkObjectFactory appropriate for creating
+	 * Returns: an #AtkObjectFactory appropriate for creating
 	 *     #AtkObjects appropriate for @type.
 	 */
 	public ObjectFactory getFactory(GType type)
@@ -107,7 +107,7 @@ public class Registry : ObjectG
 	 *     type = a #GType with which to look up the associated #AtkObjectFactory
 	 *         subclass
 	 *
-	 * Return: a #GType associated with type @type
+	 * Returns: a #GType associated with type @type
 	 */
 	public GType getFactoryType(GType type)
 	{
@@ -139,7 +139,7 @@ public class Registry : ObjectG
 	 * to associate an #AtkObjectFactory subclass with the GType of objects
 	 * for whom accessibility information will be provided.
 	 *
-	 * Return: a default implementation of the
+	 * Returns: a default implementation of the
 	 *     #AtkObjectFactory/type registry
 	 */
 	public static Registry getDefaultRegistry()

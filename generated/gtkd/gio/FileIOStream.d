@@ -107,7 +107,7 @@ public class FileIOStream : IOStream, SeekableIF
 	 * This must be called after the stream has been written
 	 * and closed, as the etag can change while writing.
 	 *
-	 * Return: the entity tag for the stream.
+	 * Returns: the entity tag for the stream.
 	 *
 	 * Since: 2.22
 	 */
@@ -142,7 +142,7 @@ public class FileIOStream : IOStream, SeekableIF
 	 *     attributes = a file attribute query string.
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Return: a #GFileInfo for the @stream, or %NULL on error.
+	 * Returns: a #GFileInfo for the @stream, or %NULL on error.
 	 *
 	 * Since: 2.22
 	 *
@@ -196,7 +196,7 @@ public class FileIOStream : IOStream, SeekableIF
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *
-	 * Return: A #GFileInfo for the finished query.
+	 * Returns: A #GFileInfo for the finished query.
 	 *
 	 * Since: 2.22
 	 *

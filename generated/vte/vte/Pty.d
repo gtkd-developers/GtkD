@@ -92,7 +92,7 @@ public class Pty : ObjectG, InitableIF
 	 *     fd = a file descriptor to the PTY
 	 *     cancellable = a #GCancellable, or %NULL
 	 *
-	 * Return: a new #VtePty for @fd, or %NULL on error with @error filled in
+	 * Returns: a new #VtePty for @fd, or %NULL on error with @error filled in
 	 *
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -138,7 +138,7 @@ public class Pty : ObjectG, InitableIF
 	 *     flags = flags from #VtePtyFlags
 	 *     cancellable = a #GCancellable, or %NULL
 	 *
-	 * Return: a new #VtePty, or %NULL on error with @error filled in
+	 * Returns: a new #VtePty, or %NULL on error with @error filled in
 	 *
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -179,7 +179,7 @@ public class Pty : ObjectG, InitableIF
 	}
 
 	/**
-	 * Return: the file descriptor of the PTY master in @pty. The
+	 * Returns: the file descriptor of the PTY master in @pty. The
 	 *     file descriptor belongs to @pty and must not be closed
 	 */
 	public int getFd()
@@ -196,7 +196,7 @@ public class Pty : ObjectG, InitableIF
 	 *     rows = a location to store the number of rows, or %NULL
 	 *     columns = a location to store the number of columns, or %NULL
 	 *
-	 * Return: %TRUE on success, %FALSE on failure with @error filled in
+	 * Returns: %TRUE on success, %FALSE on failure with @error filled in
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -224,7 +224,7 @@ public class Pty : ObjectG, InitableIF
 	 *     rows = the desired number of rows
 	 *     columns = the desired number of columns
 	 *
-	 * Return: %TRUE on success, %FALSE on failure with @error filled in
+	 * Returns: %TRUE on success, %FALSE on failure with @error filled in
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -250,7 +250,7 @@ public class Pty : ObjectG, InitableIF
 	 * Params:
 	 *     utf8 = whether or not the pty is in UTF-8 mode
 	 *
-	 * Return: %TRUE on success, %FALSE on failure with @error filled in
+	 * Returns: %TRUE on success, %FALSE on failure with @error filled in
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -309,7 +309,7 @@ public class Pty : ObjectG, InitableIF
 	 * Params:
 	 *     result = a #GAsyncResult
 	 *     childPid = a location to store the child PID, or %NULL
-	 * Return: %TRUE on success, or %FALSE on error with @error filled in
+	 * Returns: %TRUE on success, or %FALSE on error with @error filled in
 	 *
 	 * Since: 0.48
 	 *

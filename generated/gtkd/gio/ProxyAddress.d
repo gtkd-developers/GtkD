@@ -97,7 +97,7 @@ public class ProxyAddress : InetSocketAddress
 	 *     password = The password to authenticate to the proxy server
 	 *         (or %NULL).
 	 *
-	 * Return: a new #GProxyAddress
+	 * Returns: a new #GProxyAddress
 	 *
 	 * Since: 2.26
 	 *
@@ -120,7 +120,7 @@ public class ProxyAddress : InetSocketAddress
 	 * that will be connected to via the proxy, not the name of the proxy
 	 * itself.
 	 *
-	 * Return: the @proxy's destination hostname
+	 * Returns: the @proxy's destination hostname
 	 *
 	 * Since: 2.26
 	 */
@@ -134,7 +134,7 @@ public class ProxyAddress : InetSocketAddress
 	 * destination host that will be connected to via the proxy, not the
 	 * port number of the proxy itself.
 	 *
-	 * Return: the @proxy's destination port
+	 * Returns: the @proxy's destination port
 	 *
 	 * Since: 2.26
 	 */
@@ -147,7 +147,7 @@ public class ProxyAddress : InetSocketAddress
 	 * Gets the protocol that is being spoken to the destination
 	 * server; eg, "http" or "ftp".
 	 *
-	 * Return: the @proxy's destination protocol
+	 * Returns: the @proxy's destination protocol
 	 *
 	 * Since: 2.34
 	 */
@@ -159,7 +159,7 @@ public class ProxyAddress : InetSocketAddress
 	/**
 	 * Gets @proxy's password.
 	 *
-	 * Return: the @proxy's password
+	 * Returns: the @proxy's password
 	 *
 	 * Since: 2.26
 	 */
@@ -171,7 +171,7 @@ public class ProxyAddress : InetSocketAddress
 	/**
 	 * Gets @proxy's protocol. eg, "socks" or "http"
 	 *
-	 * Return: the @proxy's protocol
+	 * Returns: the @proxy's protocol
 	 *
 	 * Since: 2.26
 	 */
@@ -183,7 +183,7 @@ public class ProxyAddress : InetSocketAddress
 	/**
 	 * Gets the proxy URI that @proxy was constructed from.
 	 *
-	 * Return: the @proxy's URI, or %NULL if unknown
+	 * Returns: the @proxy's URI, or %NULL if unknown
 	 *
 	 * Since: 2.34
 	 */
@@ -195,7 +195,7 @@ public class ProxyAddress : InetSocketAddress
 	/**
 	 * Gets @proxy's username.
 	 *
-	 * Return: the @proxy's username
+	 * Returns: the @proxy's username
 	 *
 	 * Since: 2.26
 	 */

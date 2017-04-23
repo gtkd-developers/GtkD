@@ -94,7 +94,7 @@ public class NumerableIcon : EmblemedIcon
 	 * Params:
 	 *     baseIcon = a #GIcon to overlay on
 	 *
-	 * Return: a new #GIcon
+	 * Returns: a new #GIcon
 	 *
 	 * Since: 3.0
 	 *
@@ -121,7 +121,7 @@ public class NumerableIcon : EmblemedIcon
 	 *     baseIcon = a #GIcon to overlay on
 	 *     context = a #GtkStyleContext
 	 *
-	 * Return: a new #GIcon
+	 * Returns: a new #GIcon
 	 *
 	 * Since: 3.0
 	 *
@@ -144,7 +144,7 @@ public class NumerableIcon : EmblemedIcon
 	 * %NULL if there’s none. The caller of this function does not own
 	 * a reference to the returned #GIcon.
 	 *
-	 * Return: a #GIcon, or %NULL
+	 * Returns: a #GIcon, or %NULL
 	 *
 	 * Since: 3.0
 	 */
@@ -164,7 +164,7 @@ public class NumerableIcon : EmblemedIcon
 	 * Returns the icon name used as the base background image,
 	 * or %NULL if there’s none.
 	 *
-	 * Return: an icon name, or %NULL
+	 * Returns: an icon name, or %NULL
 	 *
 	 * Since: 3.0
 	 */
@@ -176,7 +176,7 @@ public class NumerableIcon : EmblemedIcon
 	/**
 	 * Returns the value currently displayed by @self.
 	 *
-	 * Return: the currently displayed value
+	 * Returns: the currently displayed value
 	 *
 	 * Since: 3.0
 	 */
@@ -188,7 +188,7 @@ public class NumerableIcon : EmblemedIcon
 	/**
 	 * Returns the currently displayed label of the icon, or %NULL.
 	 *
-	 * Return: the currently displayed label
+	 * Returns: the currently displayed label
 	 *
 	 * Since: 3.0
 	 */
@@ -201,7 +201,7 @@ public class NumerableIcon : EmblemedIcon
 	 * Returns the #GtkStyleContext used by the icon for theming,
 	 * or %NULL if there’s none.
 	 *
-	 * Return: a #GtkStyleContext, or %NULL.
+	 * Returns: a #GtkStyleContext, or %NULL.
 	 *     This object is internal to GTK+ and should not be unreffed.
 	 *     Use g_object_ref() if you want to keep it around
 	 *

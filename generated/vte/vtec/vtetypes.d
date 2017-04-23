@@ -279,7 +279,7 @@ struct VteTerminalClassPrivate;
  *     row = row in which the cell is.
  *     data = user data.
  *
- * Return: %TRUE if cell has to be selected; %FALSE if otherwise.
+ * Returns: %TRUE if cell has to be selected; %FALSE if otherwise.
  */
 public alias extern(C) int function(VteTerminal* terminal, glong column, glong row, void* data) VteSelectionFunc;
 

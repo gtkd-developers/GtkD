@@ -51,7 +51,7 @@ public template DBusInterfaceT(TStruct)
 	/**
 	 * Gets the #GDBusObject that @interface_ belongs to, if any.
 	 *
-	 * Return: A #GDBusObject or %NULL. The returned
+	 * Returns: A #GDBusObject or %NULL. The returned
 	 *     reference should be freed with g_object_unref().
 	 *
 	 * Since: 2.32
@@ -72,7 +72,7 @@ public template DBusInterfaceT(TStruct)
 	 * Gets D-Bus introspection information for the D-Bus interface
 	 * implemented by @interface_.
 	 *
-	 * Return: A #GDBusInterfaceInfo. Do not free.
+	 * Returns: A #GDBusInterfaceInfo. Do not free.
 	 *
 	 * Since: 2.30
 	 */
@@ -95,7 +95,7 @@ public template DBusInterfaceT(TStruct)
 	 * the returned object is being used from other threads. See
 	 * g_dbus_interface_dup_object() for a thread-safe alternative.
 	 *
-	 * Return: A #GDBusObject or %NULL. The returned
+	 * Returns: A #GDBusObject or %NULL. The returned
 	 *     reference belongs to @interface_ and should not be freed.
 	 *
 	 * Since: 2.30

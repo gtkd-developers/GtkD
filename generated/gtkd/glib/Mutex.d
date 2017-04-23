@@ -176,7 +176,7 @@ public class Mutex
 	 * already been locked by the same thread results in undefined behaviour
 	 * (including but not limited to deadlocks or arbitrary return values).
 	 *
-	 * Return: %TRUE if @mutex could be locked
+	 * Returns: %TRUE if @mutex could be locked
 	 */
 	public bool trylock()
 	{

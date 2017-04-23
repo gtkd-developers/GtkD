@@ -599,7 +599,7 @@ public class Task : ObjectG, AsyncResultIF
 	 *     callback = a #GAsyncReadyCallback.
 	 *     callbackData = user data passed to @callback.
 	 *
-	 * Return: a #GTask.
+	 * Returns: a #GTask.
 	 *
 	 * Since: 2.36
 	 *
@@ -627,7 +627,7 @@ public class Task : ObjectG, AsyncResultIF
 	 *     sourceObject = the source object
 	 *         expected to be associated with the task
 	 *
-	 * Return: %TRUE if @result and @source_object are valid, %FALSE
+	 * Returns: %TRUE if @result and @source_object are valid, %FALSE
 	 *     if not
 	 *
 	 * Since: 2.36
@@ -684,7 +684,7 @@ public class Task : ObjectG, AsyncResultIF
 	/**
 	 * Gets @task's #GCancellable
 	 *
-	 * Return: @task's #GCancellable
+	 * Returns: @task's #GCancellable
 	 *
 	 * Since: 2.36
 	 */
@@ -716,7 +716,7 @@ public class Task : ObjectG, AsyncResultIF
 	 * the task’s callback is invoked, and will return %FALSE if called from inside
 	 * the callback.
 	 *
-	 * Return: %TRUE if the task has completed, %FALSE otherwise.
+	 * Returns: %TRUE if the task has completed, %FALSE otherwise.
 	 *
 	 * Since: 2.44
 	 */
@@ -734,7 +734,7 @@ public class Task : ObjectG, AsyncResultIF
 	 * This will always return a non-%NULL value, even if the task's
 	 * context is the default #GMainContext.
 	 *
-	 * Return: @task's #GMainContext
+	 * Returns: @task's #GMainContext
 	 *
 	 * Since: 2.36
 	 */
@@ -753,7 +753,7 @@ public class Task : ObjectG, AsyncResultIF
 	/**
 	 * Gets @task's priority
 	 *
-	 * Return: @task's priority
+	 * Returns: @task's priority
 	 *
 	 * Since: 2.36
 	 */
@@ -777,7 +777,7 @@ public class Task : ObjectG, AsyncResultIF
 	 * Gets the source object from @task. Like
 	 * g_async_result_get_source_object(), but does not ref the object.
 	 *
-	 * Return: @task's source object, or %NULL
+	 * Returns: @task's source object, or %NULL
 	 *
 	 * Since: 2.36
 	 */
@@ -796,7 +796,7 @@ public class Task : ObjectG, AsyncResultIF
 	/**
 	 * Gets @task's source tag. See g_task_set_source_tag().
 	 *
-	 * Return: @task's source tag
+	 * Returns: @task's source tag
 	 *
 	 * Since: 2.36
 	 */
@@ -808,7 +808,7 @@ public class Task : ObjectG, AsyncResultIF
 	/**
 	 * Gets @task's `task_data`.
 	 *
-	 * Return: @task's `task_data`.
+	 * Returns: @task's `task_data`.
 	 *
 	 * Since: 2.36
 	 */
@@ -820,7 +820,7 @@ public class Task : ObjectG, AsyncResultIF
 	/**
 	 * Tests if @task resulted in an error.
 	 *
-	 * Return: %TRUE if the task resulted in an error, %FALSE otherwise.
+	 * Returns: %TRUE if the task resulted in an error, %FALSE otherwise.
 	 *
 	 * Since: 2.36
 	 */
@@ -838,7 +838,7 @@ public class Task : ObjectG, AsyncResultIF
 	 * Since this method transfers ownership of the return value (or
 	 * error) to the caller, you may only call it once.
 	 *
-	 * Return: the task result, or %FALSE on error
+	 * Returns: the task result, or %FALSE on error
 	 *
 	 * Since: 2.36
 	 *
@@ -867,7 +867,7 @@ public class Task : ObjectG, AsyncResultIF
 	 * Since this method transfers ownership of the return value (or
 	 * error) to the caller, you may only call it once.
 	 *
-	 * Return: the task result, or -1 on error
+	 * Returns: the task result, or -1 on error
 	 *
 	 * Since: 2.36
 	 *
@@ -897,7 +897,7 @@ public class Task : ObjectG, AsyncResultIF
 	 * Since this method transfers ownership of the return value (or
 	 * error) to the caller, you may only call it once.
 	 *
-	 * Return: the task result, or %NULL on error
+	 * Returns: the task result, or %NULL on error
 	 *
 	 * Since: 2.36
 	 *
@@ -961,7 +961,7 @@ public class Task : ObjectG, AsyncResultIF
 	 * g_task_return_pointer() for more discussion of exactly what this
 	 * means).
 	 *
-	 * Return: %TRUE if @task has been cancelled, %FALSE if not
+	 * Returns: %TRUE if @task has been cancelled, %FALSE if not
 	 *
 	 * Since: 2.36
 	 */
@@ -1149,7 +1149,7 @@ public class Task : ObjectG, AsyncResultIF
 	 *     returnOnCancel = whether the task returns automatically when
 	 *         it is cancelled.
 	 *
-	 * Return: %TRUE if @task's return-on-cancel flag was changed to
+	 * Returns: %TRUE if @task's return-on-cancel flag was changed to
 	 *     match @return_on_cancel. %FALSE if @task has already been
 	 *     cancelled.
 	 *

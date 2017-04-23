@@ -71,7 +71,7 @@ public class ToplevelAccessible : ObjectAtk
 	}
 
 	/**
-	 * Return: List of
+	 * Returns: List of
 	 *     children.
 	 */
 	public ListG getChildren()

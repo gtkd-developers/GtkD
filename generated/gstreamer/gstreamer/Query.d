@@ -299,7 +299,7 @@ public class Query
 	 *     caps = the negotiated caps
 	 *     needPool = return a pool
 	 *
-	 * Return: a new #GstQuery
+	 * Returns: a new #GstQuery
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -324,7 +324,7 @@ public class Query
 	 * Params:
 	 *     format = the default #GstFormat for the new query
 	 *
-	 * Return: a new #GstQuery
+	 * Returns: a new #GstQuery
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -365,7 +365,7 @@ public class Query
 	 * Params:
 	 *     filter = a filter
 	 *
-	 * Return: a new #GstQuery
+	 * Returns: a new #GstQuery
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -389,7 +389,7 @@ public class Query
 	 * Params:
 	 *     contextType = Context type to query
 	 *
-	 * Return: a new #GstQuery
+	 * Returns: a new #GstQuery
 	 *
 	 * Since: 1.2
 	 *
@@ -419,7 +419,7 @@ public class Query
 	 *     value = the value to convert
 	 *     destFormat = the target #GstFormat
 	 *
-	 * Return: a #GstQuery
+	 * Returns: a #GstQuery
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -445,7 +445,7 @@ public class Query
 	 *     type = the query type
 	 *     structure = a structure for the query
 	 *
-	 * Return: a new #GstQuery
+	 * Returns: a new #GstQuery
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -507,7 +507,7 @@ public class Query
 	 *     start = start position of the range
 	 *     stop = stop position of the range
 	 *
-	 * Return: a #gboolean indicating if the range was added or not.
+	 * Returns: a #gboolean indicating if the range was added or not.
 	 */
 	public bool addBufferingRange(long start, long stop)
 	{
@@ -534,7 +534,7 @@ public class Query
 	 *     api = the metadata API
 	 *     index = the index
 	 *
-	 * Return: %TRUE when @api is in the list of metadata.
+	 * Returns: %TRUE when @api is in the list of metadata.
 	 */
 	public bool findAllocationMeta(GType api, out uint index)
 	{
@@ -545,7 +545,7 @@ public class Query
 	 * Retrieve the number of values currently stored in the
 	 * meta API array of the query's structure.
 	 *
-	 * Return: the metadata API array size as a #guint.
+	 * Returns: the metadata API array size as a #guint.
 	 */
 	public uint getNAllocationMetas()
 	{
@@ -561,7 +561,7 @@ public class Query
 	 * should be generic and allow mapping to system memory, all following
 	 * allocators should be ordered by preference with the preferred one first.
 	 *
-	 * Return: the allocator array size as a #guint.
+	 * Returns: the allocator array size as a #guint.
 	 */
 	public uint getNAllocationParams()
 	{
@@ -572,7 +572,7 @@ public class Query
 	 * Retrieve the number of values currently stored in the
 	 * pool array of the query's structure.
 	 *
-	 * Return: the pool array size as a #guint.
+	 * Returns: the pool array size as a #guint.
 	 */
 	public uint getNAllocationPools()
 	{
@@ -583,7 +583,7 @@ public class Query
 	 * Retrieve the number of values currently stored in the
 	 * buffered-ranges array of the query's structure.
 	 *
-	 * Return: the range array size as a #guint.
+	 * Returns: the range array size as a #guint.
 	 */
 	public uint getNBufferingRanges()
 	{
@@ -594,7 +594,7 @@ public class Query
 	 * Retrieve the number of values currently stored in the
 	 * scheduling mode array of the query's structure.
 	 *
-	 * Return: the scheduling mode array size as a #guint.
+	 * Returns: the scheduling mode array size as a #guint.
 	 */
 	public uint getNSchedulingModes()
 	{
@@ -604,7 +604,7 @@ public class Query
 	/**
 	 * Get the structure of a query.
 	 *
-	 * Return: the #GstStructure of the query. The structure is
+	 * Returns: the #GstStructure of the query. The structure is
 	 *     still owned by the query and will therefore be freed when the query
 	 *     is unreffed.
 	 */
@@ -632,7 +632,7 @@ public class Query
 	 * Params:
 	 *     mode = the scheduling mode
 	 *
-	 * Return: %TRUE when @mode is in the list of scheduling modes.
+	 * Returns: %TRUE when @mode is in the list of scheduling modes.
 	 */
 	public bool hasSchedulingMode(GstPadMode mode)
 	{
@@ -647,7 +647,7 @@ public class Query
 	 *     mode = the scheduling mode
 	 *     flags = #GstSchedulingFlags
 	 *
-	 * Return: %TRUE when @mode is in the list of scheduling modes
+	 * Returns: %TRUE when @mode is in the list of scheduling modes
 	 *     and @flags are compatible with query flags.
 	 */
 	public bool hasSchedulingModeWithFlags(GstPadMode mode, GstSchedulingFlags flags)
@@ -815,7 +815,7 @@ public class Query
 	 * Params:
 	 *     contextType = the context type, or %NULL
 	 *
-	 * Return: a #gboolean indicating if the parsing succeeded.
+	 * Returns: a #gboolean indicating if the parsing succeeded.
 	 *
 	 * Since: 1.2
 	 */
@@ -898,7 +898,7 @@ public class Query
 	 *     index = position in the metadata API array to read
 	 *     params = API specific parameters
 	 *
-	 * Return: a #GType of the metadata API at @index.
+	 * Returns: a #GType of the metadata API at @index.
 	 */
 	public GType parseNthAllocationMeta(uint index, out Structure params)
 	{
@@ -961,7 +961,7 @@ public class Query
 	 *     start = the start position to set, or %NULL
 	 *     stop = the stop position to set, or %NULL
 	 *
-	 * Return: a #gboolean indicating if the parsing succeeded.
+	 * Returns: a #gboolean indicating if the parsing succeeded.
 	 */
 	public bool parseNthBufferingRange(uint index, out long start, out long stop)
 	{
@@ -989,7 +989,7 @@ public class Query
 	 * Params:
 	 *     index = position in the scheduling modes array to read
 	 *
-	 * Return: a #GstPadMode of the scheduling mode at @index.
+	 * Returns: a #GstPadMode of the scheduling mode at @index.
 	 */
 	public GstPadMode parseNthSchedulingMode(uint index)
 	{
@@ -1424,7 +1424,7 @@ public class Query
 	 * Get the structure of a query. This method should be called with a writable
 	 * @query so that the returned structure is guaranteed to be writable.
 	 *
-	 * Return: the #GstStructure of the query. The structure is
+	 * Returns: the #GstStructure of the query. The structure is
 	 *     still owned by the query and will therefore be freed when the query
 	 *     is unreffed.
 	 */
@@ -1446,7 +1446,7 @@ public class Query
 	 * Params:
 	 *     type = a #GstQueryType
 	 *
-	 * Return: a #GstQueryTypeFlags.
+	 * Returns: a #GstQueryTypeFlags.
 	 */
 	public static GstQueryTypeFlags typeGetFlags(GstQueryType type)
 	{
@@ -1459,7 +1459,7 @@ public class Query
 	 * Params:
 	 *     type = the query type
 	 *
-	 * Return: a reference to the static name of the query.
+	 * Returns: a reference to the static name of the query.
 	 */
 	public static string typeGetName(GstQueryType type)
 	{
@@ -1472,7 +1472,7 @@ public class Query
 	 * Params:
 	 *     type = the query type
 	 *
-	 * Return: the quark associated with the query type
+	 * Returns: the quark associated with the query type
 	 */
 	public static GQuark typeToQuark(GstQueryType type)
 	{

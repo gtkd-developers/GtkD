@@ -117,7 +117,7 @@ public class CapsFeatures
 	 *
 	 * Free-function: gst_caps_features_free
 	 *
-	 * Return: a new, empty #GstCapsFeatures
+	 * Returns: a new, empty #GstCapsFeatures
 	 *
 	 * Since: 1.2
 	 *
@@ -144,7 +144,7 @@ public class CapsFeatures
 	 *     feature1 = name of first feature to set
 	 *     varargs = variable argument list
 	 *
-	 * Return: a new, empty #GstCapsFeatures
+	 * Returns: a new, empty #GstCapsFeatures
 	 *
 	 * Since: 1.2
 	 *
@@ -171,7 +171,7 @@ public class CapsFeatures
 	 *     feature1 = name of first feature to set
 	 *     varargs = variable argument list
 	 *
-	 * Return: a new, empty #GstCapsFeatures
+	 * Returns: a new, empty #GstCapsFeatures
 	 *
 	 * Since: 1.2
 	 *
@@ -221,7 +221,7 @@ public class CapsFeatures
 	 * Params:
 	 *     feature = a feature
 	 *
-	 * Return: %TRUE if @features contains @feature.
+	 * Returns: %TRUE if @features contains @feature.
 	 *
 	 * Since: 1.2
 	 */
@@ -236,7 +236,7 @@ public class CapsFeatures
 	 * Params:
 	 *     feature = a feature
 	 *
-	 * Return: %TRUE if @features contains @feature.
+	 * Returns: %TRUE if @features contains @feature.
 	 *
 	 * Since: 1.2
 	 */
@@ -250,7 +250,7 @@ public class CapsFeatures
 	 *
 	 * Free-function: gst_caps_features_free
 	 *
-	 * Return: a new #GstCapsFeatures.
+	 * Returns: a new #GstCapsFeatures.
 	 *
 	 * Since: 1.2
 	 */
@@ -283,7 +283,7 @@ public class CapsFeatures
 	 * Params:
 	 *     i = index of the feature
 	 *
-	 * Return: The @i-th feature of @features.
+	 * Returns: The @i-th feature of @features.
 	 *
 	 * Since: 1.2
 	 */
@@ -298,7 +298,7 @@ public class CapsFeatures
 	 * Params:
 	 *     i = index of the feature
 	 *
-	 * Return: The @i-th feature of @features.
+	 * Returns: The @i-th feature of @features.
 	 *
 	 * Since: 1.2
 	 */
@@ -310,7 +310,7 @@ public class CapsFeatures
 	/**
 	 * Returns the number of features in @features.
 	 *
-	 * Return: The number of features in @features.
+	 * Returns: The number of features in @features.
 	 *
 	 * Since: 1.2
 	 */
@@ -322,7 +322,7 @@ public class CapsFeatures
 	/**
 	 * Check if @features is %GST_CAPS_FEATURES_ANY.
 	 *
-	 * Return: %TRUE if @features is %GST_CAPS_FEATURES_ANY.
+	 * Returns: %TRUE if @features is %GST_CAPS_FEATURES_ANY.
 	 *
 	 * Since: 1.2
 	 */
@@ -337,7 +337,7 @@ public class CapsFeatures
 	 * Params:
 	 *     features2 = a #GstCapsFeatures.
 	 *
-	 * Return: %TRUE if @features1 and @features2 are equal.
+	 * Returns: %TRUE if @features1 and @features2 are equal.
 	 *
 	 * Since: 1.2
 	 */
@@ -381,7 +381,7 @@ public class CapsFeatures
 	 * Params:
 	 *     refcount = a pointer to the parent's refcount
 	 *
-	 * Return: %TRUE if the parent refcount could be set.
+	 * Returns: %TRUE if the parent refcount could be set.
 	 *
 	 * Since: 1.2
 	 */
@@ -401,7 +401,7 @@ public class CapsFeatures
 	 *
 	 * Free-function: g_free
 	 *
-	 * Return: a pointer to string allocated by g_malloc().
+	 * Returns: a pointer to string allocated by g_malloc().
 	 *     g_free() after usage.
 	 *
 	 * Since: 1.2
@@ -422,7 +422,7 @@ public class CapsFeatures
 	 * Params:
 	 *     features = a string representation of a #GstCapsFeatures.
 	 *
-	 * Return: a new #GstCapsFeatures or
+	 * Returns: a new #GstCapsFeatures or
 	 *     %NULL when the string could not be parsed. Free with
 	 *     gst_caps_features_free() after use.
 	 *

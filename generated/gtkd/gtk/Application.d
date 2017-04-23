@@ -220,7 +220,7 @@ public class Application : GioApplication
 	 *     applicationId = The application ID.
 	 *     flags = the application flags
 	 *
-	 * Return: a new #GtkApplication instance
+	 * Returns: a new #GtkApplication instance
 	 *
 	 * Since: 3.0
 	 *
@@ -306,7 +306,7 @@ public class Application : GioApplication
 	 *     detailedActionName = a detailed action name, specifying an action
 	 *         and target to obtain accelerators for
 	 *
-	 * Return: accelerators for @detailed_action_name, as
+	 * Returns: accelerators for @detailed_action_name, as
 	 *     a %NULL-terminated array. Free with g_strfreev() when no longer needed
 	 *
 	 * Since: 3.12
@@ -339,7 +339,7 @@ public class Application : GioApplication
 	 * Params:
 	 *     accel = an accelerator that can be parsed by gtk_accelerator_parse()
 	 *
-	 * Return: a %NULL-terminated array of actions for @accel
+	 * Returns: a %NULL-terminated array of actions for @accel
 	 *
 	 * Since: 3.14
 	 */
@@ -359,7 +359,7 @@ public class Application : GioApplication
 	 * if another application has it — this is just the most
 	 * recently-focused window within this application.
 	 *
-	 * Return: the active window
+	 * Returns: the active window
 	 *
 	 * Since: 3.6
 	 */
@@ -379,7 +379,7 @@ public class Application : GioApplication
 	 * Returns the menu model that has been set with
 	 * gtk_application_set_app_menu().
 	 *
-	 * Return: the application menu of @application
+	 * Returns: the application menu of @application
 	 *     or %NULL if no application menu has been set.
 	 *
 	 * Since: 3.4
@@ -404,7 +404,7 @@ public class Application : GioApplication
 	 * Params:
 	 *     id = the id of the menu to look up
 	 *
-	 * Return: Gets the menu with the
+	 * Returns: Gets the menu with the
 	 *     given id from the automatically loaded resources
 	 *
 	 * Since: 3.14
@@ -425,7 +425,7 @@ public class Application : GioApplication
 	 * Returns the menu model that has been set with
 	 * gtk_application_set_menubar().
 	 *
-	 * Return: the menubar for windows of @application
+	 * Returns: the menubar for windows of @application
 	 *
 	 * Since: 3.4
 	 */
@@ -450,7 +450,7 @@ public class Application : GioApplication
 	 * Params:
 	 *     id = an identifier number
 	 *
-	 * Return: the window with ID @id, or
+	 * Returns: the window with ID @id, or
 	 *     %NULL if there is no window with this ID
 	 *
 	 * Since: 3.6
@@ -478,7 +478,7 @@ public class Application : GioApplication
 	 * only remain valid until the next focus change or window creation or
 	 * deletion.
 	 *
-	 * Return: a #GList of #GtkWindow
+	 * Returns: a #GList of #GtkWindow
 	 *
 	 * Since: 3.0
 	 */
@@ -523,7 +523,7 @@ public class Application : GioApplication
 	 *     reason = a short, human-readable string that explains
 	 *         why these operations are inhibited
 	 *
-	 * Return: A non-zero cookie that is used to uniquely identify this
+	 * Returns: A non-zero cookie that is used to uniquely identify this
 	 *     request. It should be used as an argument to gtk_application_uninhibit()
 	 *     in order to remove the request. If the platform does not support
 	 *     inhibiting or the request failed for some reason, 0 is returned.
@@ -542,7 +542,7 @@ public class Application : GioApplication
 	 * Params:
 	 *     flags = what types of actions should be queried
 	 *
-	 * Return: %TRUE if any of the actions specified in @flags are inhibited
+	 * Returns: %TRUE if any of the actions specified in @flags are inhibited
 	 *
 	 * Since: 3.4
 	 */
@@ -555,7 +555,7 @@ public class Application : GioApplication
 	 * Lists the detailed action names which have associated accelerators.
 	 * See gtk_application_set_accels_for_action().
 	 *
-	 * Return: a %NULL-terminated array of strings,
+	 * Returns: a %NULL-terminated array of strings,
 	 *     free with g_strfreev() when done
 	 *
 	 * Since: 3.12
@@ -604,7 +604,7 @@ public class Application : GioApplication
 	 * gtk_application_set_app_menu() anyway, then this menu will be
 	 * replaced with your own.
 	 *
-	 * Return: %TRUE if you should set an app menu
+	 * Returns: %TRUE if you should set an app menu
 	 *
 	 * Since: 3.14
 	 */

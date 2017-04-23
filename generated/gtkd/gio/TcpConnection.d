@@ -78,7 +78,7 @@ public class TcpConnection : SocketConnection
 	 * Checks if graceful disconnects are used. See
 	 * g_tcp_connection_set_graceful_disconnect().
 	 *
-	 * Return: %TRUE if graceful disconnect is used on close, %FALSE otherwise
+	 * Returns: %TRUE if graceful disconnect is used on close, %FALSE otherwise
 	 *
 	 * Since: 2.22
 	 */

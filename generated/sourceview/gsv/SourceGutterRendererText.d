@@ -75,7 +75,7 @@ public class SourceGutterRendererText : SourceGutterRenderer
 	/**
 	 * Create a new #GtkSourceGutterRendererText.
 	 *
-	 * Return: A #GtkSourceGutterRenderer
+	 * Returns: A #GtkSourceGutterRenderer
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

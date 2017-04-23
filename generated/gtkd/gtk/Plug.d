@@ -103,7 +103,7 @@ public class Plug : Window
 	 * Params:
 	 *     socketId = the window ID of the socket, or 0.
 	 *
-	 * Return: the new #GtkPlug widget.
+	 * Returns: the new #GtkPlug widget.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -126,7 +126,7 @@ public class Plug : Window
 	 *     display = the #GdkDisplay on which @socket_id is displayed
 	 *     socketId = the XID of the socket’s window.
 	 *
-	 * Return: the new #GtkPlug widget.
+	 * Returns: the new #GtkPlug widget.
 	 *
 	 * Since: 2.2
 	 *
@@ -176,7 +176,7 @@ public class Plug : Window
 	/**
 	 * Determines whether the plug is embedded in a socket.
 	 *
-	 * Return: %TRUE if the plug is embedded in a socket
+	 * Returns: %TRUE if the plug is embedded in a socket
 	 *
 	 * Since: 2.14
 	 */
@@ -190,7 +190,7 @@ public class Plug : Window
 	 * be used to embed this window inside another window, for
 	 * instance with gtk_socket_add_id().
 	 *
-	 * Return: the window ID for the plug
+	 * Returns: the window ID for the plug
 	 */
 	public ulong getId()
 	{
@@ -200,7 +200,7 @@ public class Plug : Window
 	/**
 	 * Retrieves the socket the plug is embedded in.
 	 *
-	 * Return: the window of the socket, or %NULL
+	 * Returns: the window of the socket, or %NULL
 	 *
 	 * Since: 2.14
 	 */

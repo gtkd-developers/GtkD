@@ -225,7 +225,7 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 	/**
 	 * Creates a new #GtkMenuItem.
 	 *
-	 * Return: the newly created #GtkMenuItem
+	 * Returns: the newly created #GtkMenuItem
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -262,7 +262,7 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 	 *
 	 * See gtk_menu_item_set_accel_path() for details.
 	 *
-	 * Return: the accelerator path corresponding to
+	 * Returns: the accelerator path corresponding to
 	 *     this menu item’s functionality, or %NULL if not set
 	 *
 	 * Since: 2.14
@@ -275,7 +275,7 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 	/**
 	 * Sets @text on the @menu_item label
 	 *
-	 * Return: The text in the @menu_item label. This is the internal
+	 * Returns: The text in the @menu_item label. This is the internal
 	 *     string used by the label, and must not be modified.
 	 *
 	 * Since: 2.16
@@ -290,7 +290,7 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 	 * the submenu indicator, regardless if it has a submenu
 	 * or not.
 	 *
-	 * Return: %TRUE if @menu_item always reserves space for the
+	 * Returns: %TRUE if @menu_item always reserves space for the
 	 *     submenu indicator
 	 *
 	 * Since: 3.0
@@ -306,7 +306,7 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 	 *
 	 * Deprecated: See gtk_menu_item_set_right_justified()
 	 *
-	 * Return: %TRUE if the menu item will appear at the
+	 * Returns: %TRUE if the menu item will appear at the
 	 *     far right if added to a menu bar.
 	 */
 	public bool getRightJustified()
@@ -318,7 +318,7 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 	 * Gets the submenu underneath this menu item, if any.
 	 * See gtk_menu_item_set_submenu().
 	 *
-	 * Return: submenu for this menu item, or %NULL if none
+	 * Returns: submenu for this menu item, or %NULL if none
 	 */
 	public Widget getSubmenu()
 	{
@@ -336,7 +336,7 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 	 * Checks if an underline in the text indicates the next character
 	 * should be used for the mnemonic accelerator key.
 	 *
-	 * Return: %TRUE if an embedded underline in the label
+	 * Returns: %TRUE if an embedded underline in the label
 	 *     indicates the mnemonic accelerator key.
 	 *
 	 * Since: 2.16

@@ -92,7 +92,7 @@ public class ThemedIcon : ObjectG, IconIF
 	 *     len = the length of the @iconnames array, or -1 if @iconnames is
 	 *         %NULL-terminated
 	 *
-	 * Return: a new #GThemedIcon
+	 * Returns: a new #GThemedIcon
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -128,7 +128,7 @@ public class ThemedIcon : ObjectG, IconIF
 	 * Params:
 	 *     iconname = a string containing an icon name
 	 *
-	 * Return: a new #GThemedIcon.
+	 * Returns: a new #GThemedIcon.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -161,7 +161,7 @@ public class ThemedIcon : ObjectG, IconIF
 	/**
 	 * Gets the names of icons from within @icon.
 	 *
-	 * Return: a list of icon names.
+	 * Returns: a list of icon names.
 	 */
 	public string[] getNames()
 	{

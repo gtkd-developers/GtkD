@@ -117,7 +117,7 @@ public class TlsInteraction : ObjectG
 	 *     password = a #GTlsPassword object
 	 *     cancellable = an optional #GCancellable cancellation object
 	 *
-	 * Return: The status of the ask password interaction.
+	 * Returns: The status of the ask password interaction.
 	 *
 	 * Since: 2.30
 	 *
@@ -181,7 +181,7 @@ public class TlsInteraction : ObjectG
 	 * Params:
 	 *     result = the result passed to the callback
 	 *
-	 * Return: The status of the ask password interaction.
+	 * Returns: The status of the ask password interaction.
 	 *
 	 * Since: 2.30
 	 *
@@ -226,7 +226,7 @@ public class TlsInteraction : ObjectG
 	 *     password = a #GTlsPassword object
 	 *     cancellable = an optional #GCancellable cancellation object
 	 *
-	 * Return: The status of the ask password interaction.
+	 * Returns: The status of the ask password interaction.
 	 *
 	 * Since: 2.30
 	 *
@@ -273,7 +273,7 @@ public class TlsInteraction : ObjectG
 	 *     flags = flags providing more information about the request
 	 *     cancellable = an optional #GCancellable cancellation object
 	 *
-	 * Return: The status of the certificate request interaction.
+	 * Returns: The status of the certificate request interaction.
 	 *
 	 * Since: 2.40
 	 *
@@ -316,7 +316,7 @@ public class TlsInteraction : ObjectG
 	 *     flags = flags providing more information about the request
 	 *     cancellable = an optional #GCancellable cancellation object
 	 *
-	 * Return: The status of the request certificate interaction.
+	 * Returns: The status of the request certificate interaction.
 	 *
 	 * Since: 2.40
 	 *
@@ -375,7 +375,7 @@ public class TlsInteraction : ObjectG
 	 * Params:
 	 *     result = the result passed to the callback
 	 *
-	 * Return: The status of the request certificate interaction.
+	 * Returns: The status of the request certificate interaction.
 	 *
 	 * Since: 2.40
 	 *

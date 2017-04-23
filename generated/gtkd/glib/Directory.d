@@ -85,7 +85,7 @@ public class Directory
 	 * On Windows, as is true of all GLib functions which operate on
 	 * filenames, the returned name is in UTF-8.
 	 *
-	 * Return: The entry's name or %NULL if there are no
+	 * Returns: The entry's name or %NULL if there are no
 	 *     more entries. The return value is owned by GLib and
 	 *     must not be modified or freed.
 	 */
@@ -120,7 +120,7 @@ public class Directory
 	 *     tmpl = Template for directory name,
 	 *         as in g_mkdtemp(), basename only, or %NULL for a default template
 	 *
-	 * Return: The actual name used. This string
+	 * Returns: The actual name used. This string
 	 *     should be freed with g_free() when not needed any longer and is
 	 *     is in the GLib file name encoding. In case of errors, %NULL is
 	 *     returned and @error will be set.
@@ -154,7 +154,7 @@ public class Directory
 	 *         in the on-disk encoding. On Windows in UTF-8
 	 *     flags = Currently must be set to 0. Reserved for future use.
 	 *
-	 * Return: a newly allocated #GDir on success, %NULL on failure.
+	 * Returns: a newly allocated #GDir on success, %NULL on failure.
 	 *     If non-%NULL, you must free the result with g_dir_close()
 	 *     when you are finished with it.
 	 *

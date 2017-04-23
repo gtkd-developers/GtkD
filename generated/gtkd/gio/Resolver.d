@@ -124,7 +124,7 @@ public class Resolver : ObjectG
 	 * with it. #GResolver may use its reference count as a hint about how
 	 * many threads it should allocate for concurrent DNS resolutions.
 	 *
-	 * Return: the default #GResolver.
+	 * Returns: the default #GResolver.
 	 *
 	 * Since: 2.22
 	 */
@@ -155,7 +155,7 @@ public class Resolver : ObjectG
 	 *     address = the address to reverse-resolve
 	 *     cancellable = a #GCancellable, or %NULL
 	 *
-	 * Return: a hostname (either ASCII-only, or in ASCII-encoded
+	 * Returns: a hostname (either ASCII-only, or in ASCII-encoded
 	 *     form), or %NULL on error.
 	 *
 	 * Since: 2.22
@@ -206,7 +206,7 @@ public class Resolver : ObjectG
 	 * Params:
 	 *     result = the result passed to your #GAsyncReadyCallback
 	 *
-	 * Return: a hostname (either ASCII-only, or in ASCII-encoded
+	 * Returns: a hostname (either ASCII-only, or in ASCII-encoded
 	 *     form), or %NULL on error.
 	 *
 	 * Since: 2.22
@@ -257,7 +257,7 @@ public class Resolver : ObjectG
 	 *     hostname = the hostname to look up
 	 *     cancellable = a #GCancellable, or %NULL
 	 *
-	 * Return: a non-empty #GList
+	 * Returns: a non-empty #GList
 	 *     of #GInetAddress, or %NULL on error. You
 	 *     must unref each of the addresses and free the list when you are
 	 *     done with it. (You can use g_resolver_free_addresses() to do this.)
@@ -315,7 +315,7 @@ public class Resolver : ObjectG
 	 * Params:
 	 *     result = the result passed to your #GAsyncReadyCallback
 	 *
-	 * Return: a #GList
+	 * Returns: a #GList
 	 *     of #GInetAddress, or %NULL on error. See g_resolver_lookup_by_name()
 	 *     for more details.
 	 *
@@ -359,7 +359,7 @@ public class Resolver : ObjectG
 	 *     recordType = the type of DNS record to lookup
 	 *     cancellable = a #GCancellable, or %NULL
 	 *
-	 * Return: a non-empty #GList of
+	 * Returns: a non-empty #GList of
 	 *     #GVariant, or %NULL on error. You must free each of the records and the list
 	 *     when you are done with it. (You can use g_list_free_full() with
 	 *     g_variant_unref() to do this.)
@@ -420,7 +420,7 @@ public class Resolver : ObjectG
 	 * Params:
 	 *     result = the result passed to your #GAsyncReadyCallback
 	 *
-	 * Return: a non-empty #GList of
+	 * Returns: a non-empty #GList of
 	 *     #GVariant, or %NULL on error. You must free each of the records and the list
 	 *     when you are done with it. (You can use g_list_free_full() with
 	 *     g_variant_unref() to do this.)
@@ -477,7 +477,7 @@ public class Resolver : ObjectG
 	 *     domain = the DNS domain to look up the service in
 	 *     cancellable = a #GCancellable, or %NULL
 	 *
-	 * Return: a non-empty #GList of
+	 * Returns: a non-empty #GList of
 	 *     #GSrvTarget, or %NULL on error. You must free each of the targets and the
 	 *     list when you are done with it. (You can use g_resolver_free_targets() to do
 	 *     this.)
@@ -538,7 +538,7 @@ public class Resolver : ObjectG
 	 * Params:
 	 *     result = the result passed to your #GAsyncReadyCallback
 	 *
-	 * Return: a non-empty #GList of
+	 * Returns: a non-empty #GList of
 	 *     #GSrvTarget, or %NULL on error. See g_resolver_lookup_service() for more
 	 *     details.
 	 *

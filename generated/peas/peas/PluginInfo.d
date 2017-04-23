@@ -76,7 +76,7 @@ public class PluginInfo
 	 *
 	 * The relevant key in the plugin info file is "Authors".
 	 *
-	 * Return: the plugin's author list.
+	 * Returns: the plugin's author list.
 	 */
 	public string[] getAuthors()
 	{
@@ -88,7 +88,7 @@ public class PluginInfo
 	 *
 	 * The relevant key in the plugin info file is "Copyright".
 	 *
-	 * Return: the plugin's copyright information.
+	 * Returns: the plugin's copyright information.
 	 */
 	public string getCopyright()
 	{
@@ -103,7 +103,7 @@ public class PluginInfo
 	 * value provided by the #PeasEngine, depending on where the plugin file was
 	 * found.
 	 *
-	 * Return: the plugin's data dir.
+	 * Returns: the plugin's data dir.
 	 */
 	public string getDataDir()
 	{
@@ -120,7 +120,7 @@ public class PluginInfo
 	 *
 	 * The relevant key in the plugin info file is "Depends".
 	 *
-	 * Return: the plugin's dependencies.
+	 * Returns: the plugin's dependencies.
 	 */
 	public string[] getDependencies()
 	{
@@ -135,7 +135,7 @@ public class PluginInfo
 	 *
 	 * The relevant key in the plugin info file is "Description".
 	 *
-	 * Return: the plugin's description.
+	 * Returns: the plugin's description.
 	 */
 	public string getDescription()
 	{
@@ -155,7 +155,7 @@ public class PluginInfo
 	 * Params:
 	 *     key = The key to lookup.
 	 *
-	 * Return: the external data, or %NULL if the external data could not be found.
+	 * Returns: the external data, or %NULL if the external data could not be found.
 	 *
 	 * Since: 1.6
 	 */
@@ -175,7 +175,7 @@ public class PluginInfo
 	 * keys exist for platform-specific help files. Those are "Help-GNOME",
 	 * "Help-Windows" and "Help-MacOS-X".
 	 *
-	 * Return: the plugin's help URI.
+	 * Returns: the plugin's help URI.
 	 */
 	public string getHelpUri()
 	{
@@ -190,7 +190,7 @@ public class PluginInfo
 	 *
 	 * The relevant key in the plugin info file is "Icon".
 	 *
-	 * Return: the plugin's icon name.
+	 * Returns: the plugin's icon name.
 	 */
 	public string getIconName()
 	{
@@ -204,7 +204,7 @@ public class PluginInfo
 	 * is not a value from the #GKeyFile, but rather a value provided by the
 	 * #PeasEngine.
 	 *
-	 * Return: the module directory.
+	 * Returns: the module directory.
 	 */
 	public string getModuleDir()
 	{
@@ -220,7 +220,7 @@ public class PluginInfo
 	 *
 	 * The relevant key in the plugin info file is "Module".
 	 *
-	 * Return: the module name.
+	 * Returns: the module name.
 	 */
 	public string getModuleName()
 	{
@@ -234,7 +234,7 @@ public class PluginInfo
 	 *
 	 * The relevant key in the plugin info file is "Name".
 	 *
-	 * Return: the plugin's name.
+	 * Returns: the plugin's name.
 	 */
 	public string getName()
 	{
@@ -249,7 +249,7 @@ public class PluginInfo
 	 * Params:
 	 *     schemaId = The schema id.
 	 *
-	 * Return: a new #GSettings, or %NULL.
+	 * Returns: a new #GSettings, or %NULL.
 	 *
 	 * Since: 1.4
 	 */
@@ -270,7 +270,7 @@ public class PluginInfo
 	 *
 	 * The relevant key in the plugin info file is "Version".
 	 *
-	 * Return: the plugin's version.
+	 * Returns: the plugin's version.
 	 */
 	public string getVersion()
 	{
@@ -282,7 +282,7 @@ public class PluginInfo
 	 *
 	 * The relevant key in the plugin info file is "Website".
 	 *
-	 * Return: the plugin's associated website.
+	 * Returns: the plugin's associated website.
 	 */
 	public string getWebsite()
 	{
@@ -295,7 +295,7 @@ public class PluginInfo
 	 * Params:
 	 *     moduleName = The name of the plugin to check.
 	 *
-	 * Return: whether the plugin depends on the plugin @module_name.
+	 * Returns: whether the plugin depends on the plugin @module_name.
 	 */
 	public bool hasDependency(string moduleName)
 	{
@@ -309,7 +309,7 @@ public class PluginInfo
 	 * load it, or when there has been an error when trying to load it previously.
 	 * If not available then @error will be set.
 	 *
-	 * Return: %TRUE if the plugin is available.
+	 * Returns: %TRUE if the plugin is available.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -338,7 +338,7 @@ public class PluginInfo
 	 *
 	 * The relevant key in the plugin info file is "Builtin".
 	 *
-	 * Return: %TRUE if the plugin is a builtin plugin, %FALSE
+	 * Returns: %TRUE if the plugin is a builtin plugin, %FALSE
 	 *     if not.
 	 */
 	public bool isBuiltin()
@@ -356,7 +356,7 @@ public class PluginInfo
 	 *
 	 * The relevant key in the plugin info file is "Hidden".
 	 *
-	 * Return: %TRUE if the plugin is a hidden plugin, %FALSE
+	 * Returns: %TRUE if the plugin is a hidden plugin, %FALSE
 	 *     if not.
 	 */
 	public bool isHidden()
@@ -367,7 +367,7 @@ public class PluginInfo
 	/**
 	 * Check if the plugin is loaded.
 	 *
-	 * Return: %TRUE if the plugin is loaded.
+	 * Returns: %TRUE if the plugin is loaded.
 	 */
 	public bool isLoaded()
 	{

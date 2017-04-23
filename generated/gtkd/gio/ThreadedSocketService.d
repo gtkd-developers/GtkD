@@ -100,7 +100,7 @@ public class ThreadedSocketService : SocketService
 	 *     maxThreads = the maximal number of threads to execute concurrently
 	 *         handling incoming clients, -1 means no limit
 	 *
-	 * Return: a new #GSocketService.
+	 * Returns: a new #GSocketService.
 	 *
 	 * Since: 2.22
 	 *
@@ -154,7 +154,7 @@ public class ThreadedSocketService : SocketService
 	 *     connection = a new #GSocketConnection object.
 	 *     sourceObject = the source_object passed to g_socket_listener_add_address().
 	 *
-	 * Return: %TRUE to stop further signal handlers from being called
+	 * Returns: %TRUE to stop further signal handlers from being called
 	 */
 	gulong addOnRun(bool delegate(SocketConnection, ObjectG, ThreadedSocketService) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

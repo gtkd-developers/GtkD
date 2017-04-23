@@ -61,7 +61,7 @@ public template PrintOperationPreviewT(TStruct)
 	 * Params:
 	 *     pageNr = a page number
 	 *
-	 * Return: %TRUE if the page has been selected for printing
+	 * Returns: %TRUE if the page has been selected for printing
 	 *
 	 * Since: 2.10
 	 */

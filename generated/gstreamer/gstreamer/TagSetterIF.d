@@ -120,7 +120,7 @@ public interface TagSetterIF{
 	 *
 	 * This function is not thread-safe.
 	 *
-	 * Return: a current snapshot of the
+	 * Returns: a current snapshot of the
 	 *     taglist used in the setter or %NULL if none is used.
 	 */
 	public TagList getTagList();
@@ -129,7 +129,7 @@ public interface TagSetterIF{
 	 * Queries the mode by which tags inside the setter are overwritten by tags
 	 * from events
 	 *
-	 * Return: the merge mode used inside the element.
+	 * Returns: the merge mode used inside the element.
 	 */
 	public GstTagMergeMode getTagMergeMode();
 

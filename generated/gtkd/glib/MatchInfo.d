@@ -86,7 +86,7 @@ public class MatchInfo
 	 * Params:
 	 *     stringToExpand = the string to expand
 	 *
-	 * Return: the expanded string, or %NULL if an error occurred
+	 * Returns: the expanded string, or %NULL if an error occurred
 	 *
 	 * Since: 2.14
 	 *
@@ -128,7 +128,7 @@ public class MatchInfo
 	 * Params:
 	 *     matchNum = number of the sub expression
 	 *
-	 * Return: The matched substring, or %NULL if an error
+	 * Returns: The matched substring, or %NULL if an error
 	 *     occurred. You have to free the string yourself
 	 *
 	 * Since: 2.14
@@ -159,7 +159,7 @@ public class MatchInfo
 	 * The strings are fetched from the string passed to the match function,
 	 * so you cannot call this function after freeing the string.
 	 *
-	 * Return: a %NULL-terminated array of gchar *
+	 * Returns: a %NULL-terminated array of gchar *
 	 *     pointers.  It must be freed using g_strfreev(). If the previous
 	 *     match failed %NULL is returned
 	 *
@@ -186,7 +186,7 @@ public class MatchInfo
 	 * Params:
 	 *     name = name of the subexpression
 	 *
-	 * Return: The matched substring, or %NULL if an error
+	 * Returns: The matched substring, or %NULL if an error
 	 *     occurred. You have to free the string yourself
 	 *
 	 * Since: 2.14
@@ -213,7 +213,7 @@ public class MatchInfo
 	 *     endPos = pointer to location where to store
 	 *         the end position, or %NULL
 	 *
-	 * Return: %TRUE if the position was fetched, %FALSE otherwise.
+	 * Returns: %TRUE if the position was fetched, %FALSE otherwise.
 	 *     If the position cannot be fetched, @start_pos and @end_pos
 	 *     are left unchanged.
 	 *
@@ -246,7 +246,7 @@ public class MatchInfo
 	 *     endPos = pointer to location where to store
 	 *         the end position, or %NULL
 	 *
-	 * Return: %TRUE if the position was fetched, %FALSE otherwise. If
+	 * Returns: %TRUE if the position was fetched, %FALSE otherwise. If
 	 *     the position cannot be fetched, @start_pos and @end_pos are left
 	 *     unchanged
 	 *
@@ -278,7 +278,7 @@ public class MatchInfo
 	 * count is not that of the number of capturing parentheses but that of
 	 * the number of matched substrings.
 	 *
-	 * Return: Number of matched substrings, or -1 if an error occurred
+	 * Returns: Number of matched substrings, or -1 if an error occurred
 	 *
 	 * Since: 2.14
 	 */
@@ -292,7 +292,7 @@ public class MatchInfo
 	 * and must not be freed. Use g_regex_ref() if you need to keep it
 	 * after you free @match_info object.
 	 *
-	 * Return: #GRegex object used in @match_info
+	 * Returns: #GRegex object used in @match_info
 	 *
 	 * Since: 2.14
 	 */
@@ -313,7 +313,7 @@ public class MatchInfo
 	 * string passed to g_regex_match() or g_regex_replace() so
 	 * you may not free it before calling this function.
 	 *
-	 * Return: the string searched with @match_info
+	 * Returns: the string searched with @match_info
 	 *
 	 * Since: 2.14
 	 */
@@ -357,7 +357,7 @@ public class MatchInfo
 	 *
 	 * See pcrepartial(3) for more information on partial matching.
 	 *
-	 * Return: %TRUE if the match was partial, %FALSE otherwise
+	 * Returns: %TRUE if the match was partial, %FALSE otherwise
 	 *
 	 * Since: 2.14
 	 */
@@ -369,7 +369,7 @@ public class MatchInfo
 	/**
 	 * Returns whether the previous match operation succeeded.
 	 *
-	 * Return: %TRUE if the previous match operation succeeded,
+	 * Returns: %TRUE if the previous match operation succeeded,
 	 *     %FALSE otherwise
 	 *
 	 * Since: 2.14
@@ -387,7 +387,7 @@ public class MatchInfo
 	 * The match is done on the string passed to the match function, so you
 	 * cannot free it before calling this function.
 	 *
-	 * Return: %TRUE is the string matched, %FALSE otherwise
+	 * Returns: %TRUE is the string matched, %FALSE otherwise
 	 *
 	 * Since: 2.14
 	 *
@@ -410,7 +410,7 @@ public class MatchInfo
 	/**
 	 * Increases reference count of @match_info by 1.
 	 *
-	 * Return: @match_info
+	 * Returns: @match_info
 	 *
 	 * Since: 2.30
 	 */

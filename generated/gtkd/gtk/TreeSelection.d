@@ -156,7 +156,7 @@ public class TreeSelection : ObjectG
 	/**
 	 * Returns the number of rows that have been selected in @tree.
 	 *
-	 * Return: The number of rows selected.
+	 * Returns: The number of rows selected.
 	 *
 	 * Since: 2.2
 	 */
@@ -169,7 +169,7 @@ public class TreeSelection : ObjectG
 	 * Gets the selection mode for @selection. See
 	 * gtk_tree_selection_set_mode().
 	 *
-	 * Return: the current selection mode
+	 * Returns: the current selection mode
 	 */
 	public GtkSelectionMode getMode()
 	{
@@ -179,7 +179,7 @@ public class TreeSelection : ObjectG
 	/**
 	 * Returns the current selection function.
 	 *
-	 * Return: The function.
+	 * Returns: The function.
 	 *
 	 * Since: 2.14
 	 */
@@ -199,7 +199,7 @@ public class TreeSelection : ObjectG
 	 *     model = A pointer to set to the #GtkTreeModel, or NULL.
 	 *     iter = The #GtkTreeIter, or NULL.
 	 *
-	 * Return: TRUE, if there is a selected node.
+	 * Returns: TRUE, if there is a selected node.
 	 */
 	public bool getSelected(out TreeModelIF model, out TreeIter iter)
 	{
@@ -217,7 +217,7 @@ public class TreeSelection : ObjectG
 	/**
 	 * Returns the tree view associated with @selection.
 	 *
-	 * Return: A #GtkTreeView
+	 * Returns: A #GtkTreeView
 	 */
 	public TreeView getTreeView()
 	{
@@ -234,7 +234,7 @@ public class TreeSelection : ObjectG
 	/**
 	 * Returns the user data for the selection function.
 	 *
-	 * Return: The user data.
+	 * Returns: The user data.
 	 */
 	public void* getUserData()
 	{
@@ -247,7 +247,7 @@ public class TreeSelection : ObjectG
 	 * Params:
 	 *     iter = A valid #GtkTreeIter
 	 *
-	 * Return: %TRUE, if @iter is selected
+	 * Returns: %TRUE, if @iter is selected
 	 */
 	public bool iterIsSelected(TreeIter iter)
 	{
@@ -261,7 +261,7 @@ public class TreeSelection : ObjectG
 	 * Params:
 	 *     path = A #GtkTreePath to check selection on.
 	 *
-	 * Return: %TRUE if @path is selected.
+	 * Returns: %TRUE if @path is selected.
 	 */
 	public bool pathIsSelected(TreePath path)
 	{

@@ -101,7 +101,7 @@ public class DeviceProviderClass
 	 * Params:
 	 *     key = the key to get
 	 *
-	 * Return: the metadata for @key.
+	 * Returns: the metadata for @key.
 	 *
 	 * Since: 1.4
 	 */

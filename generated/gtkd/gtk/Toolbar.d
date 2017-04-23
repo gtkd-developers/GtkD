@@ -122,7 +122,7 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	/**
 	 * Creates a new toolbar.
 	 *
-	 * Return: the newly-created toolbar.
+	 * Returns: the newly-created toolbar.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -150,7 +150,7 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	 *     x = x coordinate of a point on the toolbar
 	 *     y = y coordinate of a point on the toolbar
 	 *
-	 * Return: The position corresponding to the point (@x, @y) on the toolbar.
+	 * Returns: The position corresponding to the point (@x, @y) on the toolbar.
 	 *
 	 * Since: 2.4
 	 */
@@ -166,7 +166,7 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	 * Params:
 	 *     item = a #GtkToolItem that is a child of @toolbar
 	 *
-	 * Return: the position of item on the toolbar.
+	 * Returns: the position of item on the toolbar.
 	 *
 	 * Since: 2.4
 	 */
@@ -178,7 +178,7 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	/**
 	 * Returns the number of items on the toolbar.
 	 *
-	 * Return: the number of items on the toolbar
+	 * Returns: the number of items on the toolbar
 	 *
 	 * Since: 2.4
 	 */
@@ -194,7 +194,7 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	 * Params:
 	 *     n = A position on the toolbar
 	 *
-	 * Return: The @n'th #GtkToolItem on @toolbar,
+	 * Returns: The @n'th #GtkToolItem on @toolbar,
 	 *     or %NULL if there isn’t an @n'th item.
 	 *
 	 * Since: 2.4
@@ -215,7 +215,7 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	 * Returns whether the toolbar has an overflow menu.
 	 * See gtk_toolbar_set_show_arrow().
 	 *
-	 * Return: %TRUE if the toolbar has an overflow menu.
+	 * Returns: %TRUE if the toolbar has an overflow menu.
 	 *
 	 * Since: 2.4
 	 */
@@ -228,7 +228,7 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	 * Retrieves whether the toolbar has text, icons, or both . See
 	 * gtk_toolbar_set_style().
 	 *
-	 * Return: the current style of @toolbar
+	 * Returns: the current style of @toolbar
 	 */
 	public GtkToolbarStyle getToolbarStyle()
 	{
@@ -353,7 +353,7 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	 * Params:
 	 *     focusHome = %TRUE if the first item should be focused
 	 *
-	 * Return: %TRUE if the signal was handled, %FALSE if not
+	 * Returns: %TRUE if the signal was handled, %FALSE if not
 	 */
 	gulong addOnFocusHomeOrEnd(bool delegate(bool, Toolbar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -474,7 +474,7 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	 *     y = the y coordinate of the point where the menu should appear
 	 *     button = the mouse button the user pressed, or -1
 	 *
-	 * Return: return %TRUE if the signal was handled, %FALSE if not
+	 * Returns: return %TRUE if the signal was handled, %FALSE if not
 	 */
 	gulong addOnPopupContextMenu(bool delegate(int, int, int, Toolbar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

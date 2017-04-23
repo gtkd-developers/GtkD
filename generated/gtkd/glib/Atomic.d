@@ -47,7 +47,7 @@ public struct Atomic
 	 *     atomic = a pointer to a #gint or #guint
 	 *     val = the value to add
 	 *
-	 * Return: the value of @atomic before the add, signed
+	 * Returns: the value of @atomic before the add, signed
 	 *
 	 * Since: 2.4
 	 */
@@ -69,7 +69,7 @@ public struct Atomic
 	 *     atomic = a pointer to a #gint or #guint
 	 *     val = the value to 'and'
 	 *
-	 * Return: the value of @atomic before the operation, unsigned
+	 * Returns: the value of @atomic before the operation, unsigned
 	 *
 	 * Since: 2.30
 	 */
@@ -94,7 +94,7 @@ public struct Atomic
 	 *     oldval = the value to compare with
 	 *     newval = the value to conditionally replace with
 	 *
-	 * Return: %TRUE if the exchange took place
+	 * Returns: %TRUE if the exchange took place
 	 *
 	 * Since: 2.4
 	 */
@@ -114,7 +114,7 @@ public struct Atomic
 	 * Params:
 	 *     atomic = a pointer to a #gint or #guint
 	 *
-	 * Return: %TRUE if the resultant value is zero
+	 * Returns: %TRUE if the resultant value is zero
 	 *
 	 * Since: 2.4
 	 */
@@ -134,7 +134,7 @@ public struct Atomic
 	 *     atomic = a pointer to a #gint
 	 *     val = the value to add
 	 *
-	 * Return: the value of @atomic before the add, signed
+	 * Returns: the value of @atomic before the add, signed
 	 *
 	 * Since: 2.4
 	 */
@@ -152,7 +152,7 @@ public struct Atomic
 	 * Params:
 	 *     atomic = a pointer to a #gint or #guint
 	 *
-	 * Return: the value of the integer
+	 * Returns: the value of the integer
 	 *
 	 * Since: 2.4
 	 */
@@ -191,7 +191,7 @@ public struct Atomic
 	 *     atomic = a pointer to a #gint or #guint
 	 *     val = the value to 'or'
 	 *
-	 * Return: the value of @atomic before the operation, unsigned
+	 * Returns: the value of @atomic before the operation, unsigned
 	 *
 	 * Since: 2.30
 	 */
@@ -230,7 +230,7 @@ public struct Atomic
 	 *     atomic = a pointer to a #gint or #guint
 	 *     val = the value to 'xor'
 	 *
-	 * Return: the value of @atomic before the operation, unsigned
+	 * Returns: the value of @atomic before the operation, unsigned
 	 *
 	 * Since: 2.30
 	 */
@@ -251,7 +251,7 @@ public struct Atomic
 	 *     atomic = a pointer to a #gpointer-sized value
 	 *     val = the value to add
 	 *
-	 * Return: the value of @atomic before the add, signed
+	 * Returns: the value of @atomic before the add, signed
 	 *
 	 * Since: 2.30
 	 */
@@ -273,7 +273,7 @@ public struct Atomic
 	 *     atomic = a pointer to a #gpointer-sized value
 	 *     val = the value to 'and'
 	 *
-	 * Return: the value of @atomic before the operation, unsigned
+	 * Returns: the value of @atomic before the operation, unsigned
 	 *
 	 * Since: 2.30
 	 */
@@ -298,7 +298,7 @@ public struct Atomic
 	 *     oldval = the value to compare with
 	 *     newval = the value to conditionally replace with
 	 *
-	 * Return: %TRUE if the exchange took place
+	 * Returns: %TRUE if the exchange took place
 	 *
 	 * Since: 2.4
 	 */
@@ -316,7 +316,7 @@ public struct Atomic
 	 * Params:
 	 *     atomic = a pointer to a #gpointer-sized value
 	 *
-	 * Return: the value of the pointer
+	 * Returns: the value of the pointer
 	 *
 	 * Since: 2.4
 	 */
@@ -338,7 +338,7 @@ public struct Atomic
 	 *     atomic = a pointer to a #gpointer-sized value
 	 *     val = the value to 'or'
 	 *
-	 * Return: the value of @atomic before the operation, unsigned
+	 * Returns: the value of @atomic before the operation, unsigned
 	 *
 	 * Since: 2.30
 	 */
@@ -377,7 +377,7 @@ public struct Atomic
 	 *     atomic = a pointer to a #gpointer-sized value
 	 *     val = the value to 'xor'
 	 *
-	 * Return: the value of @atomic before the operation, unsigned
+	 * Returns: the value of @atomic before the operation, unsigned
 	 *
 	 * Since: 2.30
 	 */

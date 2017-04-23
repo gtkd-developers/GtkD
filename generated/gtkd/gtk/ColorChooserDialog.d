@@ -89,7 +89,7 @@ public class ColorChooserDialog : Dialog, ColorChooserIF
 	 *     title = Title of the dialog, or %NULL
 	 *     parent = Transient parent of the dialog, or %NULL
 	 *
-	 * Return: a new #GtkColorChooserDialog
+	 * Returns: a new #GtkColorChooserDialog
 	 *
 	 * Since: 3.4
 	 *

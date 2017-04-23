@@ -76,7 +76,7 @@ public class SourceStyleSchemeManager : ObjectG
 	 * Creates a new style manager. If you do not need more than one style
 	 * manager then use gtk_source_style_scheme_manager_get_default() instead.
 	 *
-	 * Return: a new #GtkSourceStyleSchemeManager.
+	 * Returns: a new #GtkSourceStyleSchemeManager.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -95,7 +95,7 @@ public class SourceStyleSchemeManager : ObjectG
 	/**
 	 * Returns the default #GtkSourceStyleSchemeManager instance.
 	 *
-	 * Return: a #GtkSourceStyleSchemeManager. Return value
+	 * Returns: a #GtkSourceStyleSchemeManager. Return value
 	 *     is owned by GtkSourceView library and must not be unref'ed.
 	 */
 	public static SourceStyleSchemeManager getDefault()
@@ -139,7 +139,7 @@ public class SourceStyleSchemeManager : ObjectG
 	 * Params:
 	 *     schemeId = style scheme id to find.
 	 *
-	 * Return: a #GtkSourceStyleScheme object. Returned value is owned by
+	 * Returns: a #GtkSourceStyleScheme object. Returned value is owned by
 	 *     @manager and must not be unref'ed.
 	 */
 	public SourceStyleScheme getScheme(string schemeId)
@@ -157,7 +157,7 @@ public class SourceStyleSchemeManager : ObjectG
 	/**
 	 * Returns the ids of the available style schemes.
 	 *
-	 * Return: a %NULL-terminated array of strings containing the ids of the available
+	 * Returns: a %NULL-terminated array of strings containing the ids of the available
 	 *     style schemes or %NULL if no style scheme is available.
 	 *     The array is sorted alphabetically according to the scheme name.
 	 *     The array is owned by the @manager and must not be modified.
@@ -171,7 +171,7 @@ public class SourceStyleSchemeManager : ObjectG
 	 * Returns the current search path for the @manager.
 	 * See gtk_source_style_scheme_manager_set_search_path() for details.
 	 *
-	 * Return: a %NULL-terminated array
+	 * Returns: a %NULL-terminated array
 	 *     of string containing the search path.
 	 *     The array is owned by the @manager and must not be modified.
 	 */

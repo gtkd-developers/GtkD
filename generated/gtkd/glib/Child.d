@@ -60,7 +60,7 @@ public struct Child
 	 *     funct = function to call
 	 *     data = data to pass to @function
 	 *
-	 * Return: the ID (greater than 0) of the event source.
+	 * Returns: the ID (greater than 0) of the event source.
 	 *
 	 * Since: 2.4
 	 */
@@ -102,7 +102,7 @@ public struct Child
 	 *     data = data to pass to @function
 	 *     notify = function to call when the idle is removed, or %NULL
 	 *
-	 * Return: the ID (greater than 0) of the event source.
+	 * Returns: the ID (greater than 0) of the event source.
 	 *
 	 * Since: 2.4
 	 */
@@ -139,7 +139,7 @@ public struct Child
 	 *     pid = process to watch. On POSIX the positive pid of a child process. On
 	 *         Windows a handle for a process (which doesn't have to be a child).
 	 *
-	 * Return: the newly-created child watch source
+	 * Returns: the newly-created child watch source
 	 *
 	 * Since: 2.4
 	 */

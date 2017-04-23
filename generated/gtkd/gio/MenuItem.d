@@ -94,7 +94,7 @@ public class MenuItem : ObjectG
 	 *     label = the section label, or %NULL
 	 *     detailedAction = the detailed action string, or %NULL
 	 *
-	 * Return: a new #GMenuItem
+	 * Returns: a new #GMenuItem
 	 *
 	 * Since: 2.32
 	 *
@@ -123,7 +123,7 @@ public class MenuItem : ObjectG
 	 *     model = a #GMenuModel
 	 *     itemIndex = the index of an item in @model
 	 *
-	 * Return: a new #GMenuItem.
+	 * Returns: a new #GMenuItem.
 	 *
 	 * Since: 2.34
 	 *
@@ -152,7 +152,7 @@ public class MenuItem : ObjectG
 	 *     attribute = the attribute name to query
 	 *     expectedType = the expected type of the attribute
 	 *
-	 * Return: the attribute value, or %NULL
+	 * Returns: the attribute value, or %NULL
 	 *
 	 * Since: 2.34
 	 */
@@ -174,7 +174,7 @@ public class MenuItem : ObjectG
 	 * Params:
 	 *     link = the link name to query
 	 *
-	 * Return: the link, or %NULL
+	 * Returns: the link, or %NULL
 	 *
 	 * Since: 2.34
 	 */

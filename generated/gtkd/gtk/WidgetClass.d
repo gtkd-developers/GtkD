@@ -123,7 +123,7 @@ public class WidgetClass
 	 * Params:
 	 *     propertyName = the name of the style property to find
 	 *
-	 * Return: the #GParamSpec of the style property or
+	 * Returns: the #GParamSpec of the style property or
 	 *     %NULL if @class has no style property with that name.
 	 *
 	 * Since: 2.2
@@ -144,7 +144,7 @@ public class WidgetClass
 	 * Gets the name used by this class for matching in CSS code. See
 	 * gtk_widget_class_set_css_name() for details.
 	 *
-	 * Return: the CSS name of the given class
+	 * Returns: the CSS name of the given class
 	 *
 	 * Since: 3.20
 	 */
@@ -180,7 +180,7 @@ public class WidgetClass
 	/**
 	 * Returns all style properties of a widget class.
 	 *
-	 * Return: a
+	 * Returns: a
 	 *     newly allocated array of #GParamSpec*. The array must be
 	 *     freed with g_free().
 	 *

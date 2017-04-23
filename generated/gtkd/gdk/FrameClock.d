@@ -135,7 +135,7 @@ public class FrameClock : ObjectG
 	/**
 	 * Gets the frame timings for the current frame.
 	 *
-	 * Return: the #GdkFrameTimings for the frame currently
+	 * Returns: the #GdkFrameTimings for the frame currently
 	 *     being processed, or even no frame is being processed, for the
 	 *     previous frame. Before any frames have been procesed, returns
 	 *     %NULL.
@@ -158,7 +158,7 @@ public class FrameClock : ObjectG
 	 * A #GdkFrameClock maintains a 64-bit counter that increments for
 	 * each frame drawn.
 	 *
-	 * Return: inside frame processing, the value of the frame counter
+	 * Returns: inside frame processing, the value of the frame counter
 	 *     for the current frame. Outside of frame processing, the frame
 	 *     counter for the last frame.
 	 *
@@ -177,7 +177,7 @@ public class FrameClock : ObjectG
 	 * the actual previous frame time, or if that’s too old, an updated
 	 * time.
 	 *
-	 * Return: a timestamp in microseconds, in the timescale of
+	 * Returns: a timestamp in microseconds, in the timescale of
 	 *     of g_get_monotonic_time().
 	 *
 	 * Since: 3.8
@@ -195,7 +195,7 @@ public class FrameClock : ObjectG
 	 * gdk_frame_clock_get_history_start() and
 	 * gdk_frame_clock_get_frame_counter(), inclusive.
 	 *
-	 * Return: the frame counter value for the oldest frame
+	 * Returns: the frame counter value for the oldest frame
 	 *     that is available in the internal frame history of the
 	 *     #GdkFrameClock.
 	 *
@@ -238,7 +238,7 @@ public class FrameClock : ObjectG
 	 *     frameCounter = the frame counter value identifying the frame to
 	 *         be received.
 	 *
-	 * Return: the #GdkFrameTimings object for the specified
+	 * Returns: the #GdkFrameTimings object for the specified
 	 *     frame, or %NULL if it is not available. See
 	 *     gdk_frame_clock_get_history_start().
 	 *

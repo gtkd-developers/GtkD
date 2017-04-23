@@ -93,7 +93,7 @@ public class CellRendererPixbuf : CellRenderer
 	 * in the model, thus rendering a different image in each row of the
 	 * #GtkTreeView.
 	 *
-	 * Return: the new cell renderer
+	 * Returns: the new cell renderer
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

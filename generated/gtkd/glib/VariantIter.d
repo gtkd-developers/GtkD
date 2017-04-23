@@ -74,7 +74,7 @@ public class VariantIter
 	 * A reference is taken to the container that @iter is iterating over
 	 * and will be releated only when g_variant_iter_free() is called.
 	 *
-	 * Return: a new heap-allocated #GVariantIter
+	 * Returns: a new heap-allocated #GVariantIter
 	 *
 	 * Since: 2.24
 	 */
@@ -113,7 +113,7 @@ public class VariantIter
 	 * Params:
 	 *     value = a container #GVariant
 	 *
-	 * Return: the number of items in @value
+	 * Returns: the number of items in @value
 	 *
 	 * Since: 2.24
 	 */
@@ -129,7 +129,7 @@ public class VariantIter
 	 *
 	 * This function might be useful for preallocation of arrays.
 	 *
-	 * Return: the number of children in the container
+	 * Returns: the number of children in the container
 	 *
 	 * Since: 2.24
 	 */
@@ -167,7 +167,7 @@ public class VariantIter
 	 * }
 	 * ]|
 	 *
-	 * Return: a #GVariant, or %NULL
+	 * Returns: a #GVariant, or %NULL
 	 *
 	 * Since: 2.24
 	 */

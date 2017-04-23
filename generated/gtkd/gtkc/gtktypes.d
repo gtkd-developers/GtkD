@@ -4089,14 +4089,14 @@ struct GtkActionClass
 	 *
 	 * Params:
 	 *     action = the action object
-	 * Return: a menu item connected to the action.
+	 * Returns: a menu item connected to the action.
 	 */
 	extern(C) GtkWidget* function(GtkAction* action) createMenuItem;
 	/**
 	 *
 	 * Params:
 	 *     action = the action object
-	 * Return: a toolbar item connected to the action.
+	 * Returns: a toolbar item connected to the action.
 	 */
 	extern(C) GtkWidget* function(GtkAction* action) createToolItem;
 	/** */
@@ -4107,7 +4107,7 @@ struct GtkActionClass
 	 *
 	 * Params:
 	 *     action = a #GtkAction
-	 * Return: the menu item provided by the
+	 * Returns: the menu item provided by the
 	 *     action, or %NULL.
 	 */
 	extern(C) GtkWidget* function(GtkAction* action) createMenu;
@@ -4175,7 +4175,7 @@ struct GtkActionGroupClass
 	 * Params:
 	 *     actionGroup = the action group
 	 *     actionName = the name of the action
-	 * Return: the action, or %NULL if no action by that name exists
+	 * Returns: the action, or %NULL if no action by that name exists
 	 */
 	extern(C) GtkAction* function(GtkActionGroup* actionGroup, const(char)* actionName) getAction;
 	/** */
@@ -4204,7 +4204,7 @@ struct GtkActionableInterface
 	 *
 	 * Params:
 	 *     actionable = a #GtkActionable widget
-	 * Return: the action name, or %NULL if none is set
+	 * Returns: the action name, or %NULL if none is set
 	 */
 	extern(C) const(char)* function(GtkActionable* actionable) getActionName;
 	/** */
@@ -4213,7 +4213,7 @@ struct GtkActionableInterface
 	 *
 	 * Params:
 	 *     actionable = a #GtkActionable widget
-	 * Return: the current target value
+	 * Returns: the current target value
 	 */
 	extern(C) GVariant* function(GtkActionable* actionable) getActionTargetValue;
 	/** */
@@ -4697,7 +4697,7 @@ struct GtkBuildableIface
 	 *
 	 * Params:
 	 *     buildable = a #GtkBuildable
-	 * Return: the name set with gtk_buildable_set_name()
+	 * Returns: the name set with gtk_buildable_set_name()
 	 */
 	extern(C) const(char)* function(GtkBuildable* buildable) getName;
 	/** */
@@ -4710,7 +4710,7 @@ struct GtkBuildableIface
 	 *     buildable = A #GtkBuildable
 	 *     builder = #GtkBuilder used to construct this object
 	 *     name = name of child to construct
-	 * Return: the constructed child
+	 * Returns: the constructed child
 	 */
 	extern(C) GObject* function(GtkBuildable* buildable, GtkBuilder* builder, const(char)* name) constructChild;
 	/**
@@ -4723,7 +4723,7 @@ struct GtkBuildableIface
 	 *     parser = a #GMarkupParser to fill in
 	 *     data = return location for user data that will be passed in
 	 *         to parser functions
-	 * Return: %TRUE if a object has a custom implementation, %FALSE
+	 * Returns: %TRUE if a object has a custom implementation, %FALSE
 	 *     if it doesn't.
 	 */
 	extern(C) int function(GtkBuildable* buildable, GtkBuilder* builder, GObject* child, const(char)* tagname, GMarkupParser* parser, void** data) customTagStart;
@@ -4739,7 +4739,7 @@ struct GtkBuildableIface
 	 *     buildable = a #GtkBuildable
 	 *     builder = a #GtkBuilder
 	 *     childname = name of child
-	 * Return: the internal child of the buildable object
+	 * Returns: the internal child of the buildable object
 	 */
 	extern(C) GObject* function(GtkBuildable* buildable, GtkBuilder* builder, const(char)* childname) getInternalChild;
 }
@@ -4758,7 +4758,7 @@ struct GtkBuilderClass
 	 * Params:
 	 *     builder = a #GtkBuilder
 	 *     typeName = type name to lookup
-	 * Return: the #GType found for @type_name or #G_TYPE_INVALID
+	 * Returns: the #GType found for @type_name or #G_TYPE_INVALID
 	 *     if no type was found
 	 */
 	extern(C) GType function(GtkBuilder* builder, const(char)* typeName) getTypeFromName;
@@ -4977,7 +4977,7 @@ struct GtkCellAreaClass
 	 *     event = the #GdkEvent to handle
 	 *     cellArea = the @widget relative coordinates for @area
 	 *     flags = the #GtkCellRendererState for @area in this row.
-	 * Return: %TRUE if the event was handled by @area.
+	 * Returns: %TRUE if the event was handled by @area.
 	 */
 	extern(C) int function(GtkCellArea* area, GtkCellAreaContext* context, GtkWidget* widget, GdkEvent* event, GdkRectangle* cellArea, GtkCellRendererState flags) event;
 	/** */
@@ -4988,7 +4988,7 @@ struct GtkCellAreaClass
 	 *
 	 * Params:
 	 *     area = a #GtkCellArea
-	 * Return: a newly created #GtkCellAreaContext which can be used with @area.
+	 * Returns: a newly created #GtkCellAreaContext which can be used with @area.
 	 */
 	extern(C) GtkCellAreaContext* function(GtkCellArea* area) createContext;
 	/**
@@ -4996,14 +4996,14 @@ struct GtkCellAreaClass
 	 * Params:
 	 *     area = a #GtkCellArea
 	 *     context = the #GtkCellAreaContext to copy
-	 * Return: a newly created #GtkCellAreaContext copy of @context.
+	 * Returns: a newly created #GtkCellAreaContext copy of @context.
 	 */
 	extern(C) GtkCellAreaContext* function(GtkCellArea* area, GtkCellAreaContext* context) copyContext;
 	/**
 	 *
 	 * Params:
 	 *     area = a #GtkCellArea
-	 * Return: The #GtkSizeRequestMode preferred by @area.
+	 * Returns: The #GtkSizeRequestMode preferred by @area.
 	 */
 	extern(C) GtkSizeRequestMode function(GtkCellArea* area) getRequestMode;
 	/** */
@@ -5023,14 +5023,14 @@ struct GtkCellAreaClass
 	 * Params:
 	 *     area = a #GtkCellArea
 	 *     direction = the #GtkDirectionType
-	 * Return: %TRUE if focus remains inside @area as a result of this call.
+	 * Returns: %TRUE if focus remains inside @area as a result of this call.
 	 */
 	extern(C) int function(GtkCellArea* area, GtkDirectionType direction) focus;
 	/**
 	 *
 	 * Params:
 	 *     area = a #GtkCellArea
-	 * Return: whether @area can do anything when activated.
+	 * Returns: whether @area can do anything when activated.
 	 */
 	extern(C) int function(GtkCellArea* area) isActivatable;
 	/**
@@ -5043,7 +5043,7 @@ struct GtkCellAreaClass
 	 *     flags = the #GtkCellRendererState flags for @area for this row of data.
 	 *     editOnly = if %TRUE then only cell renderers that are %GTK_CELL_RENDERER_MODE_EDITABLE
 	 *         will be activated.
-	 * Return: Whether @area was successfully activated.
+	 * Returns: Whether @area was successfully activated.
 	 */
 	extern(C) int function(GtkCellArea* area, GtkCellAreaContext* context, GtkWidget* widget, GdkRectangle* cellArea, GtkCellRendererState flags, int editOnly) activate;
 	/** */
@@ -5135,7 +5135,7 @@ struct GtkCellLayoutIface
 	 *
 	 * Params:
 	 *     cellLayout = a #GtkCellLayout
-	 * Return: a list of cell renderers. The list, but not the renderers has
+	 * Returns: a list of cell renderers. The list, but not the renderers has
 	 *     been newly allocated and should be freed with g_list_free()
 	 *     when no longer needed.
 	 */
@@ -5144,7 +5144,7 @@ struct GtkCellLayoutIface
 	 *
 	 * Params:
 	 *     cellLayout = a #GtkCellLayout
-	 * Return: the cell area used by @cell_layout,
+	 * Returns: the cell area used by @cell_layout,
 	 *     or %NULL in case no cell area is used.
 	 */
 	extern(C) GtkCellArea* function(GtkCellLayout* cellLayout) getArea;
@@ -5190,7 +5190,7 @@ struct GtkCellRendererClass
 	 *
 	 * Params:
 	 *     cell = a #GtkCellRenderer    instance
-	 * Return: The #GtkSizeRequestMode preferred by this renderer.
+	 * Returns: The #GtkSizeRequestMode preferred by this renderer.
 	 */
 	extern(C) GtkSizeRequestMode function(GtkCellRenderer* cell) getRequestMode;
 	/** */
@@ -5218,7 +5218,7 @@ struct GtkCellRendererClass
 	 *     backgroundArea = background area as passed to gtk_cell_renderer_render()
 	 *     cellArea = cell area as passed to gtk_cell_renderer_render()
 	 *     flags = render flags
-	 * Return: %TRUE if the event was consumed/handled
+	 * Returns: %TRUE if the event was consumed/handled
 	 */
 	extern(C) int function(GtkCellRenderer* cell, GdkEvent* event, GtkWidget* widget, const(char)* path, GdkRectangle* backgroundArea, GdkRectangle* cellArea, GtkCellRendererState flags) activate;
 	/**
@@ -5232,7 +5232,7 @@ struct GtkCellRendererClass
 	 *     backgroundArea = background area as passed to gtk_cell_renderer_render()
 	 *     cellArea = cell area as passed to gtk_cell_renderer_render()
 	 *     flags = render flags
-	 * Return: A new #GtkCellEditable, or %NULL
+	 * Returns: A new #GtkCellEditable, or %NULL
 	 */
 	extern(C) GtkCellEditable* function(GtkCellRenderer* cell, GdkEvent* event, GtkWidget* widget, const(char)* path, GdkRectangle* backgroundArea, GdkRectangle* cellArea, GtkCellRendererState flags) startEditing;
 	/** */
@@ -5745,7 +5745,7 @@ struct GtkContainerClass
 	 *
 	 * Params:
 	 *     container = a #GtkContainer
-	 * Return: a #GType.
+	 * Returns: a #GType.
 	 */
 	extern(C) GType function(GtkContainer* container) childType;
 	/** */
@@ -5759,7 +5759,7 @@ struct GtkContainerClass
 	 * Params:
 	 *     container = a #GtkContainer
 	 *     child = a child of @container
-	 * Return: A newly created #GtkWidgetPath
+	 * Returns: A newly created #GtkWidgetPath
 	 */
 	extern(C) GtkWidgetPath* function(GtkContainer* container, GtkWidget* child) getPathForChild;
 	import std.bitmanip: bitfields;
@@ -5878,7 +5878,7 @@ struct GtkEditableInterface
 	 *     editable = a #GtkEditable
 	 *     startPos = start of text
 	 *     endPos = end of text
-	 * Return: a pointer to the contents of the widget as a
+	 * Returns: a pointer to the contents of the widget as a
 	 *     string. This string is allocated by the #GtkEditable
 	 *     implementation and should be freed by the caller.
 	 */
@@ -5891,7 +5891,7 @@ struct GtkEditableInterface
 	 *     editable = a #GtkEditable
 	 *     startPos = location to store the starting position, or %NULL
 	 *     endPos = location to store the end position, or %NULL
-	 * Return: %TRUE if an area is selected, %FALSE otherwise
+	 * Returns: %TRUE if an area is selected, %FALSE otherwise
 	 */
 	extern(C) int function(GtkEditable* editable, int* startPos, int* endPos) getSelectionBounds;
 	/** */
@@ -5900,7 +5900,7 @@ struct GtkEditableInterface
 	 *
 	 * Params:
 	 *     editable = a #GtkEditable
-	 * Return: the cursor position
+	 * Returns: the cursor position
 	 */
 	extern(C) int function(GtkEditable* editable) getPosition;
 }
@@ -5943,7 +5943,7 @@ struct GtkEntryBufferClass
 	 *
 	 * Params:
 	 *     buffer = a #GtkEntryBuffer
-	 * Return: The number of characters in the buffer.
+	 * Returns: The number of characters in the buffer.
 	 */
 	extern(C) uint function(GtkEntryBuffer* buffer) getLength;
 	/**
@@ -5953,7 +5953,7 @@ struct GtkEntryBufferClass
 	 *     position = the position at which to insert text.
 	 *     chars = the text to insert into the buffer.
 	 *     nChars = the length of the text in characters, or -1
-	 * Return: The number of characters actually inserted.
+	 * Returns: The number of characters actually inserted.
 	 */
 	extern(C) uint function(GtkEntryBuffer* buffer, uint position, const(char)* chars, uint nChars) insertText;
 	/**
@@ -5962,7 +5962,7 @@ struct GtkEntryBufferClass
 	 *     buffer = a #GtkEntryBuffer
 	 *     position = position at which to delete text
 	 *     nChars = number of characters to delete
-	 * Return: The number of characters deleted.
+	 * Returns: The number of characters deleted.
 	 */
 	extern(C) uint function(GtkEntryBuffer* buffer, uint position, uint nChars) deleteText;
 	/** */
@@ -6404,7 +6404,7 @@ struct GtkFontChooserIface
 	 *
 	 * Params:
 	 *     fontchooser = a #GtkFontChooser
-	 * Return: A #PangoFontFamily representing the
+	 * Returns: A #PangoFontFamily representing the
 	 *     selected font family, or %NULL. The returned object is owned by @fontchooser
 	 *     and must not be modified or freed.
 	 */
@@ -6413,7 +6413,7 @@ struct GtkFontChooserIface
 	 *
 	 * Params:
 	 *     fontchooser = a #GtkFontChooser
-	 * Return: A #PangoFontFace representing the
+	 * Returns: A #PangoFontFace representing the
 	 *     selected font group details, or %NULL. The returned object is owned by
 	 *     @fontchooser and must not be modified or freed.
 	 */
@@ -6422,7 +6422,7 @@ struct GtkFontChooserIface
 	 *
 	 * Params:
 	 *     fontchooser = a #GtkFontChooser
-	 * Return: A n integer representing the selected font size,
+	 * Returns: A n integer representing the selected font size,
 	 *     or -1 if no font size is selected.
 	 */
 	extern(C) int function(GtkFontChooser* fontchooser) getFontSize;
@@ -6436,7 +6436,7 @@ struct GtkFontChooserIface
 	 *
 	 * Params:
 	 *     fontchooser = a #GtkFontChooser
-	 * Return: a #PangoFontMap, or %NULL
+	 * Returns: a #PangoFontMap, or %NULL
 	 */
 	extern(C) PangoFontMap* function(GtkFontChooser* fontchooser) getFontMap;
 	void*[10] padding;
@@ -6805,7 +6805,7 @@ struct GtkIMContextClass
 	 *     offset = offset from cursor position in chars;
 	 *         a negative value means start before the cursor.
 	 *     nChars = number of characters to delete.
-	 * Return: %TRUE if the signal was handled.
+	 * Returns: %TRUE if the signal was handled.
 	 */
 	extern(C) int function(GtkIMContext* context, int offset, int nChars) deleteSurrounding;
 	/** */
@@ -6817,7 +6817,7 @@ struct GtkIMContextClass
 	 * Params:
 	 *     context = a #GtkIMContext
 	 *     event = the key event
-	 * Return: %TRUE if the input method handled the key event.
+	 * Returns: %TRUE if the input method handled the key event.
 	 */
 	extern(C) int function(GtkIMContext* context, GdkEventKey* event) filterKeypress;
 	/** */
@@ -6842,7 +6842,7 @@ struct GtkIMContextClass
 	 *         stored in this location with g_free().
 	 *     cursorIndex = location to store byte index of the insertion
 	 *         cursor within @text.
-	 * Return: %TRUE if surrounding text was provided; in this case
+	 * Returns: %TRUE if surrounding text was provided; in this case
 	 *     you must free the result stored in *text.
 	 */
 	extern(C) int function(GtkIMContext* context, char** text, int* cursorIndex) getSurrounding;
@@ -7563,7 +7563,7 @@ struct GtkMenuItemClass
 	 *
 	 * Params:
 	 *     menuItem = a #GtkMenuItem
-	 * Return: The text in the @menu_item label. This is the internal
+	 * Returns: The text in the @menu_item label. This is the internal
 	 *     string used by the label, and must not be modified.
 	 */
 	extern(C) const(char)* function(GtkMenuItem* menuItem) getLabel;
@@ -8142,7 +8142,7 @@ struct GtkPrintOperationPreviewIface
 	 * Params:
 	 *     preview = a #GtkPrintOperationPreview
 	 *     pageNr = a page number
-	 * Return: %TRUE if the page has been selected for printing
+	 * Returns: %TRUE if the page has been selected for printing
 	 */
 	extern(C) int function(GtkPrintOperationPreview* preview, int pageNr) isSelected;
 	/** */
@@ -8554,7 +8554,7 @@ struct GtkRecentChooserIface
 	 * Params:
 	 *     chooser = a #GtkRecentChooser
 	 *     uri = a URI
-	 * Return: %TRUE if the URI was found.
+	 * Returns: %TRUE if the URI was found.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -8563,7 +8563,7 @@ struct GtkRecentChooserIface
 	 *
 	 * Params:
 	 *     chooser = a #GtkRecentChooser
-	 * Return: a newly allocated string holding a URI.
+	 * Returns: a newly allocated string holding a URI.
 	 */
 	extern(C) char* function(GtkRecentChooser* chooser) getCurrentUri;
 	/**
@@ -8571,7 +8571,7 @@ struct GtkRecentChooserIface
 	 * Params:
 	 *     chooser = a #GtkRecentChooser
 	 *     uri = a URI
-	 * Return: %TRUE if @uri was found.
+	 * Returns: %TRUE if @uri was found.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -8586,7 +8586,7 @@ struct GtkRecentChooserIface
 	 *
 	 * Params:
 	 *     chooser = a #GtkRecentChooser
-	 * Return: A newly allocated
+	 * Returns: A newly allocated
 	 *     list of #GtkRecentInfo objects.  You should
 	 *     use gtk_recent_info_unref() on every item of the list, and then free
 	 *     the list itself using g_list_free().
@@ -8602,7 +8602,7 @@ struct GtkRecentChooserIface
 	 *
 	 * Params:
 	 *     chooser = a #GtkRecentChooser
-	 * Return: A singly linked list
+	 * Returns: A singly linked list
 	 *     of #GtkRecentFilter objects.  You
 	 *     should just free the returned list using g_slist_free().
 	 */
@@ -8918,7 +8918,7 @@ struct GtkScrollableInterface
 	 * Params:
 	 *     scrollable = a #GtkScrollable
 	 *     border = return location for the results
-	 * Return: %TRUE if @border has been set
+	 * Returns: %TRUE if @border has been set
 	 */
 	extern(C) int function(GtkScrollable* scrollable, GtkBorder* border) getBorder;
 }
@@ -9529,7 +9529,7 @@ struct GtkStyleClass
 	 *         don’t scale.
 	 *     widget = the widget
 	 *     detail = a style detail
-	 * Return: a newly-created #GdkPixbuf
+	 * Returns: a newly-created #GdkPixbuf
 	 *     containing the rendered icon
 	 */
 	extern(C) GdkPixbuf* function(GtkStyle* style, GtkIconSource* source, GtkTextDirection direction, GtkStateType state, GtkIconSize size, GtkWidget* widget, const(char)* detail) renderIcon;
@@ -9651,7 +9651,7 @@ struct GtkStyleProviderIface
 	 * Params:
 	 *     provider = a #GtkStyleProvider
 	 *     path = #GtkWidgetPath to query
-	 * Return: a #GtkStyleProperties containing the
+	 * Returns: a #GtkStyleProperties containing the
 	 *     style settings affecting @path
 	 */
 	extern(C) GtkStyleProperties* function(GtkStyleProvider* provider, GtkWidgetPath* path) getStyle;
@@ -9663,7 +9663,7 @@ struct GtkStyleProviderIface
 	 *     state = state to query the style property for
 	 *     pspec = The #GParamSpec to query
 	 *     value = return location for the property value
-	 * Return: %TRUE if the property was found and has a value, %FALSE otherwise
+	 * Returns: %TRUE if the property was found and has a value, %FALSE otherwise
 	 */
 	extern(C) int function(GtkStyleProvider* provider, GtkWidgetPath* path, GtkStateFlags state, GParamSpec* pspec, GValue* value) getStyleProperty;
 	/**
@@ -9671,7 +9671,7 @@ struct GtkStyleProviderIface
 	 * Params:
 	 *     provider = a #GtkStyleProvider
 	 *     path = #GtkWidgetPath to query
-	 * Return: The icon factory to use for @path, or %NULL
+	 * Returns: The icon factory to use for @path, or %NULL
 	 */
 	extern(C) GtkIconFactory* function(GtkStyleProvider* provider, GtkWidgetPath* path) getIconFactory;
 }
@@ -10096,7 +10096,7 @@ struct GtkTextTagClass
 	 *     eventObject = object that received the event, such as a widget
 	 *     event = the event
 	 *     iter = location where the event was received
-	 * Return: result of signal emission (whether the event was handled)
+	 * Returns: result of signal emission (whether the event was handled)
 	 */
 	extern(C) int function(GtkTextTag* tag, GObject* eventObject, GdkEvent* event, GtkTextIter* iter) event;
 	/** */
@@ -10501,21 +10501,21 @@ struct GtkToolShellIface
 	 *
 	 * Params:
 	 *     shell = a #GtkToolShell
-	 * Return: the current orientation of @shell
+	 * Returns: the current orientation of @shell
 	 */
 	extern(C) GtkOrientation function(GtkToolShell* shell) getOrientation;
 	/**
 	 *
 	 * Params:
 	 *     shell = a #GtkToolShell
-	 * Return: the current style of @shell
+	 * Returns: the current style of @shell
 	 */
 	extern(C) GtkToolbarStyle function(GtkToolShell* shell) getStyle;
 	/**
 	 *
 	 * Params:
 	 *     shell = a #GtkToolShell
-	 * Return: The relief style of buttons on @shell.
+	 * Returns: The relief style of buttons on @shell.
 	 */
 	extern(C) GtkReliefStyle function(GtkToolShell* shell) getReliefStyle;
 	/** */
@@ -10524,28 +10524,28 @@ struct GtkToolShellIface
 	 *
 	 * Params:
 	 *     shell = a #GtkToolShell
-	 * Return: the current text orientation of @shell
+	 * Returns: the current text orientation of @shell
 	 */
 	extern(C) GtkOrientation function(GtkToolShell* shell) getTextOrientation;
 	/**
 	 *
 	 * Params:
 	 *     shell = a #GtkToolShell
-	 * Return: the current text alignment of @shell
+	 * Returns: the current text alignment of @shell
 	 */
 	extern(C) float function(GtkToolShell* shell) getTextAlignment;
 	/**
 	 *
 	 * Params:
 	 *     shell = a #GtkToolShell
-	 * Return: the current ellipsize mode of @shell
+	 * Returns: the current ellipsize mode of @shell
 	 */
 	extern(C) PangoEllipsizeMode function(GtkToolShell* shell) getEllipsizeMode;
 	/**
 	 *
 	 * Params:
 	 *     shell = a #GtkToolShell
-	 * Return: the current text size group of @shell
+	 * Returns: the current text size group of @shell
 	 */
 	extern(C) GtkSizeGroup* function(GtkToolShell* shell) getTextSizeGroup;
 }
@@ -10603,7 +10603,7 @@ struct GtkTreeDragDestIface
 	 *     dragDest = a #GtkTreeDragDest
 	 *     dest = row to drop in front of
 	 *     selectionData = data to drop
-	 * Return: whether a new row was created before position @dest
+	 * Returns: whether a new row was created before position @dest
 	 */
 	extern(C) int function(GtkTreeDragDest* dragDest, GtkTreePath* dest, GtkSelectionData* selectionData) dragDataReceived;
 	/**
@@ -10612,7 +10612,7 @@ struct GtkTreeDragDestIface
 	 *     dragDest = a #GtkTreeDragDest
 	 *     destPath = destination row
 	 *     selectionData = the data being dragged
-	 * Return: %TRUE if a drop is possible before @dest_path
+	 * Returns: %TRUE if a drop is possible before @dest_path
 	 */
 	extern(C) int function(GtkTreeDragDest* dragDest, GtkTreePath* destPath, GtkSelectionData* selectionData) rowDropPossible;
 }
@@ -10627,7 +10627,7 @@ struct GtkTreeDragSourceIface
 	 * Params:
 	 *     dragSource = a #GtkTreeDragSource
 	 *     path = row on which user is initiating a drag
-	 * Return: %TRUE if the row can be dragged
+	 * Returns: %TRUE if the row can be dragged
 	 */
 	extern(C) int function(GtkTreeDragSource* dragSource, GtkTreePath* path) rowDraggable;
 	/**
@@ -10637,7 +10637,7 @@ struct GtkTreeDragSourceIface
 	 *     path = row that was dragged
 	 *     selectionData = a #GtkSelectionData to fill with data
 	 *         from the dragged row
-	 * Return: %TRUE if data of the required type was provided
+	 * Returns: %TRUE if data of the required type was provided
 	 */
 	extern(C) int function(GtkTreeDragSource* dragSource, GtkTreePath* path, GtkSelectionData* selectionData) dragDataGet;
 	/**
@@ -10645,7 +10645,7 @@ struct GtkTreeDragSourceIface
 	 * Params:
 	 *     dragSource = a #GtkTreeDragSource
 	 *     path = row that was being dragged
-	 * Return: %TRUE if the row was successfully deleted
+	 * Returns: %TRUE if the row was successfully deleted
 	 */
 	extern(C) int function(GtkTreeDragSource* dragSource, GtkTreePath* path) dragDataDelete;
 }
@@ -10714,14 +10714,14 @@ struct GtkTreeModelIface
 	 *
 	 * Params:
 	 *     treeModel = a #GtkTreeModel
-	 * Return: the flags supported by this interface
+	 * Returns: the flags supported by this interface
 	 */
 	extern(C) GtkTreeModelFlags function(GtkTreeModel* treeModel) getFlags;
 	/**
 	 *
 	 * Params:
 	 *     treeModel = a #GtkTreeModel
-	 * Return: the number of columns
+	 * Returns: the number of columns
 	 */
 	extern(C) int function(GtkTreeModel* treeModel) getNColumns;
 	/**
@@ -10729,7 +10729,7 @@ struct GtkTreeModelIface
 	 * Params:
 	 *     treeModel = a #GtkTreeModel
 	 *     index = the column index
-	 * Return: the type of the column
+	 * Returns: the type of the column
 	 */
 	extern(C) GType function(GtkTreeModel* treeModel, int index) getColumnType;
 	/**
@@ -10738,7 +10738,7 @@ struct GtkTreeModelIface
 	 *     treeModel = a #GtkTreeModel
 	 *     iter = the uninitialized #GtkTreeIter-struct
 	 *     path = the #GtkTreePath-struct
-	 * Return: %TRUE, if @iter was set
+	 * Returns: %TRUE, if @iter was set
 	 */
 	extern(C) int function(GtkTreeModel* treeModel, GtkTreeIter* iter, GtkTreePath* path) getIter;
 	/**
@@ -10746,7 +10746,7 @@ struct GtkTreeModelIface
 	 * Params:
 	 *     treeModel = a #GtkTreeModel
 	 *     iter = the #GtkTreeIter-struct
-	 * Return: a newly-created #GtkTreePath-struct
+	 * Returns: a newly-created #GtkTreePath-struct
 	 */
 	extern(C) GtkTreePath* function(GtkTreeModel* treeModel, GtkTreeIter* iter) getPath;
 	/** */
@@ -10756,7 +10756,7 @@ struct GtkTreeModelIface
 	 * Params:
 	 *     treeModel = a #GtkTreeModel
 	 *     iter = the #GtkTreeIter-struct
-	 * Return: %TRUE if @iter has been changed to the next node
+	 * Returns: %TRUE if @iter has been changed to the next node
 	 */
 	extern(C) int function(GtkTreeModel* treeModel, GtkTreeIter* iter) iterNext;
 	/**
@@ -10764,7 +10764,7 @@ struct GtkTreeModelIface
 	 * Params:
 	 *     treeModel = a #GtkTreeModel
 	 *     iter = the #GtkTreeIter-struct
-	 * Return: %TRUE if @iter has been changed to the previous node
+	 * Returns: %TRUE if @iter has been changed to the previous node
 	 */
 	extern(C) int function(GtkTreeModel* treeModel, GtkTreeIter* iter) iterPrevious;
 	/**
@@ -10773,7 +10773,7 @@ struct GtkTreeModelIface
 	 *     treeModel = a #GtkTreeModel
 	 *     iter = the new #GtkTreeIter-struct to be set to the child
 	 *     parent = the #GtkTreeIter-struct, or %NULL
-	 * Return: %TRUE, if @iter has been set to the first child
+	 * Returns: %TRUE, if @iter has been set to the first child
 	 */
 	extern(C) int function(GtkTreeModel* treeModel, GtkTreeIter* iter, GtkTreeIter* parent) iterChildren;
 	/**
@@ -10781,7 +10781,7 @@ struct GtkTreeModelIface
 	 * Params:
 	 *     treeModel = a #GtkTreeModel
 	 *     iter = the #GtkTreeIter-struct to test for children
-	 * Return: %TRUE if @iter has children
+	 * Returns: %TRUE if @iter has children
 	 */
 	extern(C) int function(GtkTreeModel* treeModel, GtkTreeIter* iter) iterHasChild;
 	/**
@@ -10789,7 +10789,7 @@ struct GtkTreeModelIface
 	 * Params:
 	 *     treeModel = a #GtkTreeModel
 	 *     iter = the #GtkTreeIter-struct, or %NULL
-	 * Return: the number of children of @iter
+	 * Returns: the number of children of @iter
 	 */
 	extern(C) int function(GtkTreeModel* treeModel, GtkTreeIter* iter) iterNChildren;
 	/**
@@ -10799,7 +10799,7 @@ struct GtkTreeModelIface
 	 *     iter = the #GtkTreeIter-struct to set to the nth child
 	 *     parent = the #GtkTreeIter-struct to get the child from, or %NULL.
 	 *     n = the index of the desired child
-	 * Return: %TRUE, if @parent has an @n-th child
+	 * Returns: %TRUE, if @parent has an @n-th child
 	 */
 	extern(C) int function(GtkTreeModel* treeModel, GtkTreeIter* iter, GtkTreeIter* parent, int n) iterNthChild;
 	/**
@@ -10808,7 +10808,7 @@ struct GtkTreeModelIface
 	 *     treeModel = a #GtkTreeModel
 	 *     iter = the new #GtkTreeIter-struct to set to the parent
 	 *     child = the #GtkTreeIter-struct
-	 * Return: %TRUE, if @iter is set to the parent of @child
+	 * Returns: %TRUE, if @iter is set to the parent of @child
 	 */
 	extern(C) int function(GtkTreeModel* treeModel, GtkTreeIter* iter, GtkTreeIter* child) iterParent;
 	/** */
@@ -10881,7 +10881,7 @@ struct GtkTreeSortableIface
 	 *     sortable = A #GtkTreeSortable
 	 *     sortColumnId = The sort column id to be filled in
 	 *     order = The #GtkSortType to be filled in
-	 * Return: %TRUE if the sort column is not one of the special sort
+	 * Returns: %TRUE if the sort column is not one of the special sort
 	 *     column ids.
 	 */
 	extern(C) int function(GtkTreeSortable* sortable, int* sortColumnId, GtkSortType* order) getSortColumnId;
@@ -10895,7 +10895,7 @@ struct GtkTreeSortableIface
 	 *
 	 * Params:
 	 *     sortable = A #GtkTreeSortable
-	 * Return: %TRUE, if the model has a default sort function
+	 * Returns: %TRUE, if the model has a default sort function
 	 */
 	extern(C) int function(GtkTreeSortable* sortable) hasDefaultSortFunc;
 }
@@ -11042,7 +11042,7 @@ struct GtkUIManagerClass
 	 * Params:
 	 *     manager = a #GtkUIManager
 	 *     path = a path
-	 * Return: the widget found by following the path,
+	 * Returns: the widget found by following the path,
 	 *     or %NULL if no widget was found
 	 */
 	extern(C) GtkWidget* function(GtkUIManager* manager, const(char)* path) getWidget;
@@ -11051,7 +11051,7 @@ struct GtkUIManagerClass
 	 * Params:
 	 *     manager = a #GtkUIManager
 	 *     path = a path
-	 * Return: the action whose proxy widget is found by following the path,
+	 * Returns: the action whose proxy widget is found by following the path,
 	 *     or %NULL if no widget was found.
 	 */
 	extern(C) GtkAction* function(GtkUIManager* manager, const(char)* path) getAction;
@@ -11247,7 +11247,7 @@ struct GtkWidgetClass
 	 *
 	 * Params:
 	 *     widget = a #GtkWidget instance
-	 * Return: The #GtkSizeRequestMode preferred by @widget.
+	 * Returns: The #GtkSizeRequestMode preferred by @widget.
 	 */
 	extern(C) GtkSizeRequestMode function(GtkWidget* widget) getRequestMode;
 	/** */
@@ -11263,7 +11263,7 @@ struct GtkWidgetClass
 	 * Params:
 	 *     widget = a #GtkWidget
 	 *     groupCycling = %TRUE if there are other widgets with the same mnemonic
-	 * Return: %TRUE if the signal has been handled
+	 * Returns: %TRUE if the signal has been handled
 	 */
 	extern(C) int function(GtkWidget* widget, int groupCycling) mnemonicActivate;
 	/** */
@@ -11277,7 +11277,7 @@ struct GtkWidgetClass
 	 * Params:
 	 *     widget = a #GtkWidget
 	 *     direction = direction of focus movement
-	 * Return: %TRUE if stopping keyboard navigation is fine, %FALSE
+	 * Returns: %TRUE if stopping keyboard navigation is fine, %FALSE
 	 *     if the emitting widget should try to handle the keyboard
 	 *     navigation attempt in its parent container(s).
 	 */
@@ -11287,7 +11287,7 @@ struct GtkWidgetClass
 	 * Params:
 	 *     widget = a #GtkWidget
 	 *     event = a #GdkEvent
-	 * Return: return from the event signal emission (%TRUE if
+	 * Returns: return from the event signal emission (%TRUE if
 	 *     the event was handled)
 	 */
 	extern(C) int function(GtkWidget* widget, GdkEvent* event) event;
@@ -11371,7 +11371,7 @@ struct GtkWidgetClass
 	 *
 	 * Params:
 	 *     widget = a #GtkWidget
-	 * Return: the #AtkObject associated with @widget
+	 * Returns: the #AtkObject associated with @widget
 	 */
 	extern(C) AtkObject* function(GtkWidget* widget) getAccessible;
 	/** */
@@ -11381,7 +11381,7 @@ struct GtkWidgetClass
 	 * Params:
 	 *     widget = a #GtkWidget
 	 *     signalId = the ID of a signal installed on @widget
-	 * Return: %TRUE if the accelerator can be activated.
+	 * Returns: %TRUE if the accelerator can be activated.
 	 */
 	extern(C) int function(GtkWidget* widget, uint signalId) canActivateAccel;
 	/** */
@@ -11506,7 +11506,7 @@ public alias extern(C) void function(void* data, const(char)* accelPath, uint ac
  *     currentPage = The page number used to calculate the next page.
  *     data = user data.
  *
- * Return: The next page number.
+ * Returns: The next page number.
  */
 public alias extern(C) int function(int currentPage, void* data) GtkAssistantPageFunc;
 
@@ -11543,7 +11543,7 @@ public alias extern(C) void function(GtkBuilder* builder, GObject* object, const
  *     day = the day of @month for which details are needed.
  *     userData = the data passed with gtk_calendar_set_detail_func().
  *
- * Return: Newly allocated string with Pango markup
+ * Returns: Newly allocated string with Pango markup
  *     with details for the specified day or %NULL.
  *
  * Since: 2.14
@@ -11573,7 +11573,7 @@ public alias extern(C) void function(GtkWidget* widget, void* data) GtkCallback;
  *         background area provided to gtk_cell_area_foreach_alloc().
  *     data = user-supplied data
  *
- * Return: %TRUE to stop iterating over cells.
+ * Returns: %TRUE to stop iterating over cells.
  */
 public alias extern(C) int function(GtkCellRenderer* renderer, GdkRectangle* cellArea, GdkRectangle* cellBackground, void* data) GtkCellAllocCallback;
 
@@ -11585,7 +11585,7 @@ public alias extern(C) int function(GtkCellRenderer* renderer, GdkRectangle* cel
  *     renderer = the cell renderer to operate on
  *     data = user-supplied data
  *
- * Return: %TRUE to stop iterating over cells.
+ * Returns: %TRUE to stop iterating over cells.
  */
 public alias extern(C) int function(GtkCellRenderer* renderer, void* data) GtkCellCallback;
 
@@ -11747,7 +11747,7 @@ public alias extern(C) void function(GdkScreen* screen, GdkColor* colors, int nC
  *     iter = a #GtkTreeIter indicating the row to match
  *     userData = user data given to gtk_entry_completion_set_match_func()
  *
- * Return: %TRUE if @iter should be displayed as a possible completion
+ * Returns: %TRUE if @iter should be displayed as a possible completion
  *     for @key
  */
 public alias extern(C) int function(GtkEntryCompletion* completion, const(char)* key, GtkTreeIter* iter, void* userData) GtkEntryCompletionMatchFunc;
@@ -11761,7 +11761,7 @@ public alias extern(C) int function(GtkEntryCompletion* completion, const(char)*
  *         to the @needed flags passed to gtk_file_filter_add_custom()
  *     data = user data passed to gtk_file_filter_add_custom()
  *
- * Return: %TRUE if the file should be displayed
+ * Returns: %TRUE if the file should be displayed
  */
 public alias extern(C) int function(GtkFileFilterInfo* filterInfo, void* data) GtkFileFilterFunc;
 
@@ -11773,7 +11773,7 @@ public alias extern(C) int function(GtkFileFilterInfo* filterInfo, void* data) G
  *     item = the item from the model for which to create a widget for
  *     userData = user data from gtk_flow_box_bind_model()
  *
- * Return: a #GtkWidget that represents @item
+ * Returns: a #GtkWidget that represents @item
  *
  * Since: 3.18
  */
@@ -11788,7 +11788,7 @@ public alias extern(C) GtkWidget* function(void* item, void* userData) GtkFlowBo
  *     child = a #GtkFlowBoxChild that may be filtered
  *     userData = user data
  *
- * Return: %TRUE if the row should be visible, %FALSE otherwise
+ * Returns: %TRUE if the row should be visible, %FALSE otherwise
  *
  * Since: 3.12
  */
@@ -11816,7 +11816,7 @@ public alias extern(C) void function(GtkFlowBox* box, GtkFlowBoxChild* child, vo
  *     child2 = the second child
  *     userData = user data
  *
- * Return: < 0 if @child1 should be before @child2, 0 if
+ * Returns: < 0 if @child1 should be before @child2, 0 if
  *     the are equal, and > 0 otherwise
  *
  * Since: 3.12
@@ -11832,7 +11832,7 @@ public alias extern(C) int function(GtkFlowBoxChild* child1, GtkFlowBoxChild* ch
  *     face = a #PangoFontFace belonging to @family
  *     data = user data passed to gtk_font_chooser_set_filter_func()
  *
- * Return: %TRUE if the font should be displayed
+ * Returns: %TRUE if the font should be displayed
  */
 public alias extern(C) int function(PangoFontFamily* family, PangoFontFace* face, void* data) GtkFontFilterFunc;
 
@@ -11856,7 +11856,7 @@ public alias extern(C) void function(GtkIconView* iconView, GtkTreePath* path, v
  *     event = the key event
  *     funcData = data supplied to gtk_key_snooper_install()
  *
- * Return: %TRUE to stop further processing of @event, %FALSE to continue.
+ * Returns: %TRUE to stop further processing of @event, %FALSE to continue.
  */
 public alias extern(C) int function(GtkWidget* grabWidget, GdkEventKey* event, void* funcData) GtkKeySnoopFunc;
 
@@ -11873,7 +11873,7 @@ public alias extern(C) int function(GtkWidget* grabWidget, GdkEventKey* event, v
  *     item = the item from the model for which to create a widget for
  *     userData = user data
  *
- * Return: a #GtkWidget that represents @item
+ * Returns: a #GtkWidget that represents @item
  *
  * Since: 3.16
  */
@@ -11887,7 +11887,7 @@ public alias extern(C) GtkWidget* function(void* item, void* userData) GtkListBo
  *     row = the row that may be filtered
  *     userData = user data
  *
- * Return: %TRUE if the row should be visible, %FALSE otherwise
+ * Returns: %TRUE if the row should be visible, %FALSE otherwise
  *
  * Since: 3.10
  */
@@ -11914,7 +11914,7 @@ public alias extern(C) void function(GtkListBox* box, GtkListBoxRow* row, void* 
  *     row2 = the second row
  *     userData = user data
  *
- * Return: < 0 if @row1 should be before @row2, 0 if they are
+ * Returns: < 0 if @row1 should be before @row2, 0 if they are
  *     equal and > 0 otherwise
  *
  * Since: 3.10
@@ -12026,7 +12026,7 @@ public alias extern(C) int function(GParamSpec* pspec, GString* rcString, GValue
  *         to the @needed flags passed to gtk_recent_filter_add_custom()
  *     userData = user data passed to gtk_recent_filter_add_custom()
  *
- * Return: %TRUE if the file should be displayed
+ * Returns: %TRUE if the file should be displayed
  */
 public alias extern(C) int function(GtkRecentFilterInfo* filterInfo, void* userData) GtkRecentFilterFunc;
 
@@ -12049,7 +12049,7 @@ public alias extern(C) int function(const(char)* str, GValue* value, GError** er
  *     createTags = %TRUE if deserializing may create tags
  *     userData = user data that was specified when registering the format
  *
- * Return: %TRUE on success, %FALSE otherwise
+ * Returns: %TRUE on success, %FALSE otherwise
  *
  * Throws: GException on failure.
  */
@@ -12067,7 +12067,7 @@ public alias extern(C) int function(GtkTextBuffer* registerBuffer, GtkTextBuffer
  *     length = Return location for the length of the serialized data
  *     userData = user data that was specified when registering the format
  *
- * Return: a newly-allocated array of guint8 which contains
+ * Returns: a newly-allocated array of guint8 which contains
  *     the serialized data, or %NULL if an error occurred
  */
 public alias extern(C) ubyte* function(GtkTextBuffer* registerBuffer, GtkTextBuffer* contentBuffer, GtkTextIter* start, GtkTextIter* end, size_t* length, void* userData) GtkTextBufferSerializeFunc;
@@ -12086,7 +12086,7 @@ public alias extern(C) void function(GtkTextTag* tag, void* data) GtkTextTagTabl
  *     frameClock = the frame clock for the widget (same as calling gtk_widget_get_frame_clock())
  *     userData = user data passed to gtk_widget_add_tick_callback().
  *
- * Return: %G_SOURCE_CONTINUE if the tick callback should continue to be called,
+ * Returns: %G_SOURCE_CONTINUE if the tick callback should continue to be called,
  *     %G_SOURCE_REMOVE if the tick callback should be removed.
  *
  * Since: 3.8
@@ -12103,7 +12103,7 @@ public alias extern(C) int function(GtkWidget* widget, GdkFrameClock* frameClock
  *     funcData = user data passed in when registering the
  *         function
  *
- * Return: the translated message
+ * Returns: the translated message
  */
 public alias extern(C) char* function(const(char)* path, void* funcData) GtkTranslateFunc;
 
@@ -12146,7 +12146,7 @@ public alias extern(C) void function(GtkTreeView* treeView, GtkTreePath* path, i
  *     userData = Data passed when the compare func is assigned e.g. by
  *         gtk_tree_sortable_set_sort_func()
  *
- * Return: a negative integer, zero or a positive integer depending on whether
+ * Returns: a negative integer, zero or a positive integer depending on whether
  *     @a sorts before, with or after @b
  */
 public alias extern(C) int function(GtkTreeModel* model, GtkTreeIter* a, GtkTreeIter* b, void* userData) GtkTreeIterCompareFunc;
@@ -12178,7 +12178,7 @@ public alias extern(C) void function(GtkTreeModel* model, GtkTreeIter* iter, GVa
  *         is determined
  *     data = user data given to gtk_tree_model_filter_set_visible_func()
  *
- * Return: Whether the row indicated by @iter is visible.
+ * Returns: Whether the row indicated by @iter is visible.
  */
 public alias extern(C) int function(GtkTreeModel* model, GtkTreeIter* iter, void* data) GtkTreeModelFilterVisibleFunc;
 
@@ -12192,7 +12192,7 @@ public alias extern(C) int function(GtkTreeModel* model, GtkTreeIter* iter, void
  *     iter = the current #GtkTreeIter
  *     data = The user data passed to gtk_tree_model_foreach()
  *
- * Return: %TRUE to stop iterating, %FALSE to continue
+ * Returns: %TRUE to stop iterating, %FALSE to continue
  */
 public alias extern(C) int function(GtkTreeModel* model, GtkTreePath* path, GtkTreeIter* iter, void* data) GtkTreeModelForeachFunc;
 
@@ -12221,7 +12221,7 @@ public alias extern(C) void function(GtkTreeModel* model, GtkTreePath* path, Gtk
  *     pathCurrentlySelected = %TRUE, if the path is currently selected
  *     data = user data
  *
- * Return: %TRUE, if the selection state of the row can be toggled
+ * Returns: %TRUE, if the selection state of the row can be toggled
  */
 public alias extern(C) int function(GtkTreeSelection* selection, GtkTreeModel* model, GtkTreePath* path, int pathCurrentlySelected, void* data) GtkTreeSelectionFunc;
 
@@ -12242,7 +12242,7 @@ public alias extern(C) int function(GtkTreeSelection* selection, GtkTreeModel* m
  *     nextColumn = A #GtkTreeViewColumn on the other side of @column
  *     data = user data
  *
- * Return: %TRUE, if @column can be dropped in this spot
+ * Returns: %TRUE, if @column can be dropped in this spot
  */
 public alias extern(C) int function(GtkTreeView* treeView, GtkTreeViewColumn* column, GtkTreeViewColumn* prevColumn, GtkTreeViewColumn* nextColumn, void* data) GtkTreeViewColumnDropFunc;
 
@@ -12267,7 +12267,7 @@ public alias extern(C) void function(GtkTreeView* treeView, GtkTreePath* path, v
  *     iter = a #GtkTreeIter pointing at a row in @model
  *     data = user data
  *
- * Return: %TRUE if the row is a separator
+ * Returns: %TRUE if the row is a separator
  */
 public alias extern(C) int function(GtkTreeModel* model, GtkTreeIter* iter, void* data) GtkTreeViewRowSeparatorFunc;
 
@@ -12285,7 +12285,7 @@ public alias extern(C) int function(GtkTreeModel* model, GtkTreeIter* iter, void
  *         with @key.
  *     searchData = user data from gtk_tree_view_set_search_equal_func()
  *
- * Return: %FALSE if the row matches, %TRUE otherwise.
+ * Returns: %FALSE if the row matches, %TRUE otherwise.
  */
 public alias extern(C) int function(GtkTreeModel* model, int column, const(char)* key, GtkTreeIter* iter, void* searchData) GtkTreeViewSearchEqualFunc;
 

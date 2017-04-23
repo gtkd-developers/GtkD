@@ -118,7 +118,7 @@ public class BufferPool : ObjectGst
 	/**
 	 * Creates a new #GstBufferPool instance.
 	 *
-	 * Return: a new #GstBufferPool instance
+	 * Returns: a new #GstBufferPool instance
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -157,7 +157,7 @@ public class BufferPool : ObjectGst
 	 *     allocator = a #GstAllocator, or %NULL
 	 *     params = #GstAllocationParams, or %NULL
 	 *
-	 * Return: %TRUE, if the values are set.
+	 * Returns: %TRUE, if the values are set.
 	 */
 	public static bool configGetAllocator(Structure config, ref Allocator allocator, out AllocationParams params)
 	{
@@ -180,7 +180,7 @@ public class BufferPool : ObjectGst
 	 *     config = a #GstBufferPool configuration
 	 *     index = position in the option array to read
 	 *
-	 * Return: a #gchar of the option at @index.
+	 * Returns: a #gchar of the option at @index.
 	 */
 	public static string configGetOption(Structure config, uint index)
 	{
@@ -197,7 +197,7 @@ public class BufferPool : ObjectGst
 	 *     minBuffers = the minimum amount of buffers to allocate.
 	 *     maxBuffers = the maximum amount of buffers to allocate or 0 for unlimited.
 	 *
-	 * Return: %TRUE if all parameters could be fetched.
+	 * Returns: %TRUE if all parameters could be fetched.
 	 */
 	public static bool configGetParams(Structure config, out Caps caps, out uint size, out uint minBuffers, out uint maxBuffers)
 	{
@@ -217,7 +217,7 @@ public class BufferPool : ObjectGst
 	 *     config = a #GstBufferPool configuration
 	 *     option = an option
 	 *
-	 * Return: %TRUE if the options array contains @option.
+	 * Returns: %TRUE if the options array contains @option.
 	 */
 	public static bool configHasOption(Structure config, string option)
 	{
@@ -231,7 +231,7 @@ public class BufferPool : ObjectGst
 	 * Params:
 	 *     config = a #GstBufferPool configuration
 	 *
-	 * Return: the options array size as a #guint.
+	 * Returns: the options array size as a #guint.
 	 */
 	public static uint configNOptions(Structure config)
 	{
@@ -294,7 +294,7 @@ public class BufferPool : ObjectGst
 	 *     minBuffers = the expected minimum amount of buffers to allocate.
 	 *     maxBuffers = the expect maximum amount of buffers to allocate or 0 for unlimited.
 	 *
-	 * Return: %TRUE, if the parameters are valid in this context.
+	 * Returns: %TRUE, if the parameters are valid in this context.
 	 *
 	 * Since: 1.4
 	 */
@@ -314,7 +314,7 @@ public class BufferPool : ObjectGst
 	 *     buffer = a location for a #GstBuffer
 	 *     params = parameters.
 	 *
-	 * Return: a #GstFlowReturn such as %GST_FLOW_FLUSHING when the pool is
+	 * Returns: a #GstFlowReturn such as %GST_FLOW_FLUSHING when the pool is
 	 *     inactive.
 	 */
 	public GstFlowReturn acquireBuffer(out Buffer buffer, GstBufferPoolAcquireParams* params)
@@ -333,7 +333,7 @@ public class BufferPool : ObjectGst
 	 * can either be modified and used for the gst_buffer_pool_set_config() call
 	 * or it must be freed after usage.
 	 *
-	 * Return: a copy of the current configuration of @pool. use
+	 * Returns: a copy of the current configuration of @pool. use
 	 *     gst_structure_free() after usage or gst_buffer_pool_set_config().
 	 */
 	public Structure getConfig()
@@ -353,7 +353,7 @@ public class BufferPool : ObjectGst
 	 * @pool. An option would typically be enabled with
 	 * gst_buffer_pool_config_add_option().
 	 *
-	 * Return: a %NULL terminated array
+	 * Returns: a %NULL terminated array
 	 *     of strings.
 	 */
 	public string[] getOptions()
@@ -367,7 +367,7 @@ public class BufferPool : ObjectGst
 	 * Params:
 	 *     option = an option
 	 *
-	 * Return: %TRUE if the buffer pool contains @option.
+	 * Returns: %TRUE if the buffer pool contains @option.
 	 */
 	public bool hasOption(string option)
 	{
@@ -378,7 +378,7 @@ public class BufferPool : ObjectGst
 	 * Check if @pool is active. A pool can be activated with the
 	 * gst_buffer_pool_set_active() call.
 	 *
-	 * Return: %TRUE when the pool is active.
+	 * Returns: %TRUE when the pool is active.
 	 */
 	public bool isActive()
 	{
@@ -414,7 +414,7 @@ public class BufferPool : ObjectGst
 	 * Params:
 	 *     active = the new active state
 	 *
-	 * Return: %FALSE when the pool was not configured or when preallocation of the
+	 * Returns: %FALSE when the pool was not configured or when preallocation of the
 	 *     buffers failed.
 	 */
 	public bool setActive(bool active)
@@ -443,7 +443,7 @@ public class BufferPool : ObjectGst
 	 * Params:
 	 *     config = a #GstStructure
 	 *
-	 * Return: %TRUE when the configuration could be set.
+	 * Returns: %TRUE when the configuration could be set.
 	 */
 	public bool setConfig(Structure config)
 	{

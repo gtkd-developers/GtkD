@@ -104,7 +104,7 @@ public class IconInfo : ObjectG
 	 *     iconTheme = a #GtkIconTheme
 	 *     pixbuf = the pixbuf to wrap in a #GtkIconInfo
 	 *
-	 * Return: a #GtkIconInfo
+	 * Returns: a #GtkIconInfo
 	 *
 	 * Since: 2.14
 	 *
@@ -127,7 +127,7 @@ public class IconInfo : ObjectG
 	 *
 	 * Deprecated: Use g_object_ref()
 	 *
-	 * Return: the new GtkIconInfo
+	 * Returns: the new GtkIconInfo
 	 *
 	 * Since: 2.4
 	 */
@@ -166,7 +166,7 @@ public class IconInfo : ObjectG
 	 *     nPoints = location to store the number of points in @points,
 	 *         or %NULL
 	 *
-	 * Return: %FALSE
+	 * Returns: %FALSE
 	 *
 	 * Since: 2.4
 	 */
@@ -189,7 +189,7 @@ public class IconInfo : ObjectG
 	 * scale 2 for a base size of 32 will be 64 pixels tall and have
 	 * a base scale of 2.
 	 *
-	 * Return: the base scale
+	 * Returns: the base scale
 	 *
 	 * Since: 3.10
 	 */
@@ -211,7 +211,7 @@ public class IconInfo : ObjectG
 	 * Note that for scaled icons the base size does
 	 * not include the base scale.
 	 *
-	 * Return: the base size, or 0, if no base
+	 * Returns: the base size, or 0, if no base
 	 *     size is known for the icon.
 	 *
 	 * Since: 2.4
@@ -229,7 +229,7 @@ public class IconInfo : ObjectG
 	 * Deprecated: This function is deprecated, use
 	 * gtk_icon_theme_add_resource_path() instead of builtin icons.
 	 *
-	 * Return: the built-in image pixbuf, or %NULL.
+	 * Returns: the built-in image pixbuf, or %NULL.
 	 *     No extra reference is added to the returned pixbuf, so if
 	 *     you want to keep it around, you must use g_object_ref().
 	 *     The returned image must not be modified.
@@ -253,7 +253,7 @@ public class IconInfo : ObjectG
 	 *
 	 * Deprecated: Display names are deprecated
 	 *
-	 * Return: %NULL
+	 * Returns: %NULL
 	 *
 	 * Since: 2.4
 	 */
@@ -272,7 +272,7 @@ public class IconInfo : ObjectG
 	 *         rectangle coordinates; coordinates are only stored
 	 *         when this function returns %TRUE.
 	 *
-	 * Return: %FALSE
+	 * Returns: %FALSE
 	 *
 	 * Since: 2.4
 	 */
@@ -287,7 +287,7 @@ public class IconInfo : ObjectG
 	 * filename if a builtin icon is returned; in this case, you should
 	 * use gtk_icon_info_get_builtin_pixbuf().
 	 *
-	 * Return: the filename for the icon, or %NULL
+	 * Returns: the filename for the icon, or %NULL
 	 *     if gtk_icon_info_get_builtin_pixbuf() should be used instead.
 	 *     The return value is owned by GTK+ and should not be modified
 	 *     or freed.
@@ -304,7 +304,7 @@ public class IconInfo : ObjectG
 	 * the file name and not the file contents for determining this.
 	 * This behaviour may change in the future.
 	 *
-	 * Return: %TRUE if the icon is symbolic, %FALSE otherwise
+	 * Returns: %TRUE if the icon is symbolic, %FALSE otherwise
 	 *
 	 * Since: 3.12
 	 */
@@ -326,7 +326,7 @@ public class IconInfo : ObjectG
 	 * the #GtkIconInfo. If this flag has been specified, the pixbuf
 	 * returned by this function will be scaled to the exact size.
 	 *
-	 * Return: the rendered icon; this may be a newly
+	 * Returns: the rendered icon; this may be a newly
 	 *     created icon or a new reference to an internal icon, so you must
 	 *     not modify the icon. Use g_object_unref() to release your reference
 	 *     to the icon.
@@ -380,7 +380,7 @@ public class IconInfo : ObjectG
 	 * Params:
 	 *     res = a #GAsyncResult
 	 *
-	 * Return: the rendered icon; this may be a newly
+	 * Returns: the rendered icon; this may be a newly
 	 *     created icon or a new reference to an internal icon, so you must
 	 *     not modify the icon. Use g_object_unref() to release your reference
 	 *     to the icon.
@@ -424,7 +424,7 @@ public class IconInfo : ObjectG
 	 * Params:
 	 *     forWindow = #GdkWindow to optimize drawing for, or %NULL
 	 *
-	 * Return: the rendered icon; this may be a newly
+	 * Returns: the rendered icon; this may be a newly
 	 *     created icon or a new reference to an internal icon, so you must
 	 *     not modify the icon. Use cairo_surface_destroy() to release your
 	 *     reference to the icon.
@@ -482,7 +482,7 @@ public class IconInfo : ObjectG
 	 *         loaded icon was a symbolic one and whether the @fg color was
 	 *         applied to it.
 	 *
-	 * Return: a #GdkPixbuf representing the loaded icon
+	 * Returns: a #GdkPixbuf representing the loaded icon
 	 *
 	 * Since: 3.0
 	 *
@@ -547,7 +547,7 @@ public class IconInfo : ObjectG
 	 *         loaded icon was a symbolic one and whether the @fg color was
 	 *         applied to it.
 	 *
-	 * Return: the rendered icon; this may be a newly
+	 * Returns: the rendered icon; this may be a newly
 	 *     created icon or a new reference to an internal icon, so you must
 	 *     not modify the icon. Use g_object_unref() to release your reference
 	 *     to the icon.
@@ -596,7 +596,7 @@ public class IconInfo : ObjectG
 	 *         loaded icon was a symbolic one and whether the @fg color was
 	 *         applied to it.
 	 *
-	 * Return: a #GdkPixbuf representing the loaded icon
+	 * Returns: a #GdkPixbuf representing the loaded icon
 	 *
 	 * Since: 3.0
 	 *
@@ -655,7 +655,7 @@ public class IconInfo : ObjectG
 	 *         loaded icon was a symbolic one and whether the @fg color was
 	 *         applied to it.
 	 *
-	 * Return: the rendered icon; this may be a newly
+	 * Returns: the rendered icon; this may be a newly
 	 *     created icon or a new reference to an internal icon, so you must
 	 *     not modify the icon. Use g_object_unref() to release your reference
 	 *     to the icon.
@@ -704,7 +704,7 @@ public class IconInfo : ObjectG
 	 *         loaded icon was a symbolic one and whether the @fg color was
 	 *         applied to it.
 	 *
-	 * Return: a #GdkPixbuf representing the loaded icon
+	 * Returns: a #GdkPixbuf representing the loaded icon
 	 *
 	 * Since: 3.0
 	 *

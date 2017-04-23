@@ -89,7 +89,7 @@ public class UnixCredentialsMessage : SocketControlMessage
 	/**
 	 * Creates a new #GUnixCredentialsMessage with credentials matching the current processes.
 	 *
-	 * Return: a new #GUnixCredentialsMessage
+	 * Returns: a new #GUnixCredentialsMessage
 	 *
 	 * Since: 2.26
 	 *
@@ -113,7 +113,7 @@ public class UnixCredentialsMessage : SocketControlMessage
 	 * Params:
 	 *     credentials = A #GCredentials object.
 	 *
-	 * Return: a new #GUnixCredentialsMessage
+	 * Returns: a new #GUnixCredentialsMessage
 	 *
 	 * Since: 2.26
 	 *
@@ -134,7 +134,7 @@ public class UnixCredentialsMessage : SocketControlMessage
 	/**
 	 * Checks if passing #GCredentials on a #GSocket is supported on this platform.
 	 *
-	 * Return: %TRUE if supported, %FALSE otherwise
+	 * Returns: %TRUE if supported, %FALSE otherwise
 	 *
 	 * Since: 2.26
 	 */
@@ -146,7 +146,7 @@ public class UnixCredentialsMessage : SocketControlMessage
 	/**
 	 * Gets the credentials stored in @message.
 	 *
-	 * Return: A #GCredentials instance. Do not free, it is owned by @message.
+	 * Returns: A #GCredentials instance. Do not free, it is owned by @message.
 	 *
 	 * Since: 2.26
 	 */

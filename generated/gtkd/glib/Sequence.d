@@ -68,7 +68,7 @@ public class Sequence
 	 * Params:
 	 *     data = the data for the new item
 	 *
-	 * Return: an iterator pointing to the new item
+	 * Returns: an iterator pointing to the new item
 	 *
 	 * Since: 2.14
 	 */
@@ -114,7 +114,7 @@ public class Sequence
 	/**
 	 * Returns the begin iterator for @seq.
 	 *
-	 * Return: the begin iterator for @seq.
+	 * Returns: the begin iterator for @seq.
 	 *
 	 * Since: 2.14
 	 */
@@ -133,7 +133,7 @@ public class Sequence
 	/**
 	 * Returns the end iterator for @seg
 	 *
-	 * Return: the end iterator for @seq
+	 * Returns: the end iterator for @seq
 	 *
 	 * Since: 2.14
 	 */
@@ -156,7 +156,7 @@ public class Sequence
 	 * Params:
 	 *     pos = a position in @seq, or -1 for the end
 	 *
-	 * Return: The #GSequenceIter at position @pos
+	 * Returns: The #GSequenceIter at position @pos
 	 *
 	 * Since: 2.14
 	 */
@@ -177,7 +177,7 @@ public class Sequence
 	 * height of the tree. It is thus more efficient to use g_sequence_is_empty()
 	 * when comparing the length to zero.
 	 *
-	 * Return: the length of @seq
+	 * Returns: the length of @seq
 	 *
 	 * Since: 2.14
 	 */
@@ -201,7 +201,7 @@ public class Sequence
 	 *     cmpFunc = the function used to compare items in the sequence
 	 *     cmpData = user data passed to @cmp_func.
 	 *
-	 * Return: a #GSequenceIter pointing to the new item.
+	 * Returns: a #GSequenceIter pointing to the new item.
 	 *
 	 * Since: 2.14
 	 */
@@ -237,7 +237,7 @@ public class Sequence
 	 *     iterCmp = the function used to compare iterators in the sequence
 	 *     cmpData = user data passed to @cmp_func
 	 *
-	 * Return: a #GSequenceIter pointing to the new item
+	 * Returns: a #GSequenceIter pointing to the new item
 	 *
 	 * Since: 2.14
 	 */
@@ -260,7 +260,7 @@ public class Sequence
 	 * g_sequence_get_length() being equal to zero. However this function is
 	 * implemented in O(1) running time.
 	 *
-	 * Return: %TRUE if the sequence is empty, otherwise %FALSE.
+	 * Returns: %TRUE if the sequence is empty, otherwise %FALSE.
 	 *
 	 * Since: 2.48
 	 */
@@ -292,7 +292,7 @@ public class Sequence
 	 *     cmpFunc = the function used to compare items in the sequence
 	 *     cmpData = user data passed to @cmp_func
 	 *
-	 * Return: an #GSequenceIter pointing to the position of the
+	 * Returns: an #GSequenceIter pointing to the position of the
 	 *     first item found equal to @data according to @cmp_func and
 	 *     @cmp_data, or %NULL if no such item exists
 	 *
@@ -330,7 +330,7 @@ public class Sequence
 	 *     iterCmp = the function used to compare iterators in the sequence
 	 *     cmpData = user data passed to @iter_cmp
 	 *
-	 * Return: an #GSequenceIter pointing to the position of
+	 * Returns: an #GSequenceIter pointing to the position of
 	 *     the first item found equal to @data according to @cmp_func
 	 *     and @cmp_data, or %NULL if no such item exists
 	 *
@@ -354,7 +354,7 @@ public class Sequence
 	 * Params:
 	 *     data = the data for the new item
 	 *
-	 * Return: an iterator pointing to the new item
+	 * Returns: an iterator pointing to the new item
 	 *
 	 * Since: 2.14
 	 */
@@ -393,7 +393,7 @@ public class Sequence
 	 *     cmpFunc = the function used to compare items in the sequence
 	 *     cmpData = user data passed to @cmp_func
 	 *
-	 * Return: an #GSequenceIter pointing to the position where @data
+	 * Returns: an #GSequenceIter pointing to the position where @data
 	 *     would have been inserted according to @cmp_func and @cmp_data
 	 *
 	 * Since: 2.14
@@ -433,7 +433,7 @@ public class Sequence
 	 *     iterCmp = the function used to compare iterators in the sequence
 	 *     cmpData = user data passed to @iter_cmp
 	 *
-	 * Return: a #GSequenceIter pointing to the position in @seq
+	 * Returns: a #GSequenceIter pointing to the position in @seq
 	 *     where @data would have been inserted according to @iter_cmp
 	 *     and @cmp_data
 	 *
@@ -513,7 +513,7 @@ public class Sequence
 	 * Params:
 	 *     iter = a #GSequenceIter
 	 *
-	 * Return: the data that @iter points to
+	 * Returns: the data that @iter points to
 	 *
 	 * Since: 2.14
 	 */
@@ -529,7 +529,7 @@ public class Sequence
 	 *     iter = a #GSequenceIter
 	 *     data = the data for the new item
 	 *
-	 * Return: an iterator pointing to the new item
+	 * Returns: an iterator pointing to the new item
 	 *
 	 * Since: 2.14
 	 */
@@ -593,7 +593,7 @@ public class Sequence
 	 * Params:
 	 *     dataDestroy = a #GDestroyNotify function, or %NULL
 	 *
-	 * Return: a new #GSequence
+	 * Returns: a new #GSequence
 	 *
 	 * Since: 2.14
 	 *
@@ -623,7 +623,7 @@ public class Sequence
 	 *     begin = a #GSequenceIter
 	 *     end = a #GSequenceIter
 	 *
-	 * Return: a #GSequenceIter pointing somewhere in the
+	 * Returns: a #GSequenceIter pointing somewhere in the
 	 *     (@begin, @end) range
 	 *
 	 * Since: 2.14

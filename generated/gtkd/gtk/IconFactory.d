@@ -165,7 +165,7 @@ public class IconFactory : ObjectG, BuildableIF
 	 *
 	 * Deprecated: Use #GtkIconTheme instead.
 	 *
-	 * Return: a new #GtkIconFactory
+	 * Returns: a new #GtkIconFactory
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -193,7 +193,7 @@ public class IconFactory : ObjectG, BuildableIF
 	 * Params:
 	 *     stockId = an icon name
 	 *
-	 * Return: a #GtkIconSet, or %NULL
+	 * Returns: a #GtkIconSet, or %NULL
 	 */
 	public static IconSet lookupDefault(string stockId)
 	{
@@ -257,7 +257,7 @@ public class IconFactory : ObjectG, BuildableIF
 	 * Params:
 	 *     stockId = an icon name
 	 *
-	 * Return: icon set of @stock_id.
+	 * Returns: icon set of @stock_id.
 	 */
 	public IconSet lookup(string stockId)
 	{

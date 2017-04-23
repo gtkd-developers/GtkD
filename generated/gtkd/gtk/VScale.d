@@ -89,7 +89,7 @@ public class VScale : Scale
 	 * Params:
 	 *     adjustment = the #GtkAdjustment which sets the range of the scale.
 	 *
-	 * Return: a new #GtkVScale.
+	 * Returns: a new #GtkVScale.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -122,7 +122,7 @@ public class VScale : Scale
 	 *     max = maximum value
 	 *     step = step increment (tick size) used with keyboard shortcuts
 	 *
-	 * Return: a new #GtkVScale
+	 * Returns: a new #GtkVScale
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

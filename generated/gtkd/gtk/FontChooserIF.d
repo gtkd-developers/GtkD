@@ -63,7 +63,7 @@ public interface FontChooserIF{
 	 * Use pango_font_description_equal() if you want to compare two
 	 * font descriptions.
 	 *
-	 * Return: A string with the name
+	 * Returns: A string with the name
 	 *     of the current font, or %NULL if  no font is selected. You must
 	 *     free this string with g_free().
 	 *
@@ -83,7 +83,7 @@ public interface FontChooserIF{
 	 * Use pango_font_description_equal() if you want to compare two
 	 * font descriptions.
 	 *
-	 * Return: A #PangoFontDescription for the
+	 * Returns: A #PangoFontDescription for the
 	 *     current font, or %NULL if  no font is selected.
 	 *
 	 * Since: 3.2
@@ -96,7 +96,7 @@ public interface FontChooserIF{
 	 *
 	 * If the selected font is not installed, returns %NULL.
 	 *
-	 * Return: A #PangoFontFace representing the
+	 * Returns: A #PangoFontFace representing the
 	 *     selected font group details, or %NULL. The returned object is owned by
 	 *     @fontchooser and must not be modified or freed.
 	 *
@@ -110,7 +110,7 @@ public interface FontChooserIF{
 	 *
 	 * If the selected font is not installed, returns %NULL.
 	 *
-	 * Return: A #PangoFontFamily representing the
+	 * Returns: A #PangoFontFamily representing the
 	 *     selected font family, or %NULL. The returned object is owned by @fontchooser
 	 *     and must not be modified or freed.
 	 *
@@ -122,7 +122,7 @@ public interface FontChooserIF{
 	 * Gets the custom font map of this font chooser widget,
 	 * or %NULL if it does not have one.
 	 *
-	 * Return: a #PangoFontMap, or %NULL
+	 * Returns: a #PangoFontMap, or %NULL
 	 *
 	 * Since: 3.18
 	 */
@@ -131,7 +131,7 @@ public interface FontChooserIF{
 	/**
 	 * The selected font size.
 	 *
-	 * Return: A n integer representing the selected font size,
+	 * Returns: A n integer representing the selected font size,
 	 *     or -1 if no font size is selected.
 	 *
 	 * Since: 3.2
@@ -141,7 +141,7 @@ public interface FontChooserIF{
 	/**
 	 * Gets the text displayed in the preview area.
 	 *
-	 * Return: the text displayed in the
+	 * Returns: the text displayed in the
 	 *     preview area
 	 *
 	 * Since: 3.2
@@ -151,7 +151,7 @@ public interface FontChooserIF{
 	/**
 	 * Returns whether the preview entry is shown or not.
 	 *
-	 * Return: %TRUE if the preview entry is shown
+	 * Returns: %TRUE if the preview entry is shown
 	 *     or %FALSE if it is hidden.
 	 *
 	 * Since: 3.2

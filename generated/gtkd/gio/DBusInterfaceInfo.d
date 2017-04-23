@@ -136,7 +136,7 @@ public class DBusInterfaceInfo
 	 * Params:
 	 *     name = A D-Bus method name (typically in CamelCase)
 	 *
-	 * Return: A #GDBusMethodInfo or %NULL if not found. Do not free, it is owned by @info.
+	 * Returns: A #GDBusMethodInfo or %NULL if not found. Do not free, it is owned by @info.
 	 *
 	 * Since: 2.26
 	 */
@@ -161,7 +161,7 @@ public class DBusInterfaceInfo
 	 * Params:
 	 *     name = A D-Bus property name (typically in CamelCase).
 	 *
-	 * Return: A #GDBusPropertyInfo or %NULL if not found. Do not free, it is owned by @info.
+	 * Returns: A #GDBusPropertyInfo or %NULL if not found. Do not free, it is owned by @info.
 	 *
 	 * Since: 2.26
 	 */
@@ -186,7 +186,7 @@ public class DBusInterfaceInfo
 	 * Params:
 	 *     name = A D-Bus signal name (typically in CamelCase)
 	 *
-	 * Return: A #GDBusSignalInfo or %NULL if not found. Do not free, it is owned by @info.
+	 * Returns: A #GDBusSignalInfo or %NULL if not found. Do not free, it is owned by @info.
 	 *
 	 * Since: 2.26
 	 */
@@ -206,7 +206,7 @@ public class DBusInterfaceInfo
 	 * If @info is statically allocated does nothing. Otherwise increases
 	 * the reference count.
 	 *
-	 * Return: The same @info.
+	 * Returns: The same @info.
 	 *
 	 * Since: 2.26
 	 */

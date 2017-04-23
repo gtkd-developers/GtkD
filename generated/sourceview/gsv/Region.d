@@ -78,7 +78,7 @@ public class Region : ObjectG
 	 *
 	 * Params:
 	 *     buffer = a #GtkTextBuffer.
-	 * Return: a new #GtkSourceRegion object for @buffer.
+	 * Returns: a new #GtkSourceRegion object for @buffer.
 	 *
 	 * Since: 3.22
 	 *
@@ -132,7 +132,7 @@ public class Region : ObjectG
 	 *     end = iterator to initialize with the end of @region,
 	 *         or %NULL.
 	 *
-	 * Return: %TRUE if @start and @end have been set successfully (if non-%NULL),
+	 * Returns: %TRUE if @start and @end have been set successfully (if non-%NULL),
 	 *     or %FALSE if the @region is empty.
 	 *
 	 * Since: 3.22
@@ -151,7 +151,7 @@ public class Region : ObjectG
 	}
 
 	/**
-	 * Return: the #GtkTextBuffer.
+	 * Returns: the #GtkTextBuffer.
 	 *
 	 * Since: 3.22
 	 */
@@ -192,7 +192,7 @@ public class Region : ObjectG
 	 * Params:
 	 *     region2 = a #GtkSourceRegion, or %NULL.
 	 *
-	 * Return: the intersection as a #GtkSourceRegion
+	 * Returns: the intersection as a #GtkSourceRegion
 	 *     object.
 	 *
 	 * Since: 3.22
@@ -217,7 +217,7 @@ public class Region : ObjectG
 	 *     Start = the start of the subregion.
 	 *     End = the end of the subregion.
 	 *
-	 * Return: the intersection as a new
+	 * Returns: the intersection as a new
 	 *     #GtkSourceRegion.
 	 *
 	 * Since: 3.22
@@ -237,7 +237,7 @@ public class Region : ObjectG
 	/**
 	 * Returns whether the @region is empty. A %NULL @region is considered empty.
 	 *
-	 * Return: whether the @region is empty.
+	 * Returns: whether the @region is empty.
 	 *
 	 * Since: 3.22
 	 */
@@ -281,7 +281,7 @@ public class Region : ObjectG
 	 * The returned string contains the character offsets of the subregions. It
 	 * doesn't include a newline character at the end of the string.
 	 *
-	 * Return: a string represention of @region. Free
+	 * Returns: a string represention of @region. Free
 	 *     with g_free() when no longer needed.
 	 *
 	 * Since: 3.22

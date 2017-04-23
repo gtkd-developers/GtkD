@@ -76,7 +76,7 @@ public class SettingsSchemaKey
 	 * Note that this is the default value according to the schema.  System
 	 * administrator defaults and lockdown are not visible via this API.
 	 *
-	 * Return: the default value for the key
+	 * Returns: the default value for the key
 	 *
 	 * Since: 2.40
 	 */
@@ -108,7 +108,7 @@ public class SettingsSchemaKey
 	 * function has to parse all of the source XML files in the schema
 	 * directory.
 	 *
-	 * Return: the description for @key, or %NULL
+	 * Returns: the description for @key, or %NULL
 	 *
 	 * Since: 2.34
 	 */
@@ -120,7 +120,7 @@ public class SettingsSchemaKey
 	/**
 	 * Gets the name of @key.
 	 *
-	 * Return: the name of @key.
+	 * Returns: the name of @key.
 	 *
 	 * Since: 2.44
 	 */
@@ -167,7 +167,7 @@ public class SettingsSchemaKey
 	 * You should free the returned value with g_variant_unref() when it is
 	 * no longer needed.
 	 *
-	 * Return: a #GVariant describing the range
+	 * Returns: a #GVariant describing the range
 	 *
 	 * Since: 2.40
 	 */
@@ -198,7 +198,7 @@ public class SettingsSchemaKey
 	 * function has to parse all of the source XML files in the schema
 	 * directory.
 	 *
-	 * Return: the summary for @key, or %NULL
+	 * Returns: the summary for @key, or %NULL
 	 *
 	 * Since: 2.34
 	 */
@@ -210,7 +210,7 @@ public class SettingsSchemaKey
 	/**
 	 * Gets the #GVariantType of @key.
 	 *
-	 * Return: the type of @key
+	 * Returns: the type of @key
 	 *
 	 * Since: 2.40
 	 */
@@ -236,7 +236,7 @@ public class SettingsSchemaKey
 	 * Params:
 	 *     value = the value to check
 	 *
-	 * Return: %TRUE if @value is valid for @key
+	 * Returns: %TRUE if @value is valid for @key
 	 *
 	 * Since: 2.40
 	 */
@@ -248,7 +248,7 @@ public class SettingsSchemaKey
 	/**
 	 * Increase the reference count of @key, returning a new reference.
 	 *
-	 * Return: a new reference to @key
+	 * Returns: a new reference to @key
 	 *
 	 * Since: 2.40
 	 */

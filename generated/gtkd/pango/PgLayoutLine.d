@@ -161,7 +161,7 @@ public class PgLayoutLine
 	/**
 	 * Increase the reference count of a #PangoLayoutLine by one.
 	 *
-	 * Return: the line passed in.
+	 * Returns: the line passed in.
 	 *
 	 * Since: 1.10
 	 */
@@ -209,7 +209,7 @@ public class PgLayoutLine
 	 *         be zero, or the number of characters in the
 	 *         grapheme. 0 represents the leading edge of the grapheme.
 	 *
-	 * Return: %FALSE if @x_pos was outside the line, %TRUE if inside
+	 * Returns: %FALSE if @x_pos was outside the line, %TRUE if inside
 	 */
 	public bool xToIndex(int xPos, out int index, out int trailing)
 	{

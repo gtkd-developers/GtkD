@@ -103,7 +103,7 @@ public class SearchBar : Bin
 	 * which widget is going to be your text entry using
 	 * gtk_search_bar_connect_entry().
 	 *
-	 * Return: a new #GtkSearchBar
+	 * Returns: a new #GtkSearchBar
 	 *
 	 * Since: 3.10
 	 *
@@ -140,7 +140,7 @@ public class SearchBar : Bin
 	/**
 	 * Returns whether the search mode is on or off.
 	 *
-	 * Return: whether search mode is toggled on
+	 * Returns: whether search mode is toggled on
 	 *
 	 * Since: 3.10
 	 */
@@ -152,7 +152,7 @@ public class SearchBar : Bin
 	/**
 	 * Returns whether the close button is shown.
 	 *
-	 * Return: whether the close button is shown
+	 * Returns: whether the close button is shown
 	 *
 	 * Since: 3.10
 	 */
@@ -195,7 +195,7 @@ public class SearchBar : Bin
 	 * Params:
 	 *     event = a #GdkEvent containing key press events
 	 *
-	 * Return: %GDK_EVENT_STOP if the key press event resulted
+	 * Returns: %GDK_EVENT_STOP if the key press event resulted
 	 *     in text being entered in the search entry (and revealing
 	 *     the search bar if necessary), %GDK_EVENT_PROPAGATE otherwise.
 	 *

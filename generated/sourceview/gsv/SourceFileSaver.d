@@ -90,7 +90,7 @@ public class SourceFileSaver : ObjectG
 	 *     buffer = the #GtkSourceBuffer to save.
 	 *     file = the #GtkSourceFile.
 	 *
-	 * Return: a new #GtkSourceFileSaver object.
+	 * Returns: a new #GtkSourceFileSaver object.
 	 *
 	 * Since: 3.14
 	 *
@@ -122,7 +122,7 @@ public class SourceFileSaver : ObjectG
 	 *     file = the #GtkSourceFile.
 	 *     targetLocation = the #GFile where to save the buffer to.
 	 *
-	 * Return: a new #GtkSourceFileSaver object.
+	 * Returns: a new #GtkSourceFileSaver object.
 	 *
 	 * Since: 3.14
 	 *
@@ -141,7 +141,7 @@ public class SourceFileSaver : ObjectG
 	}
 
 	/**
-	 * Return: the #GtkSourceBuffer to save.
+	 * Returns: the #GtkSourceBuffer to save.
 	 *
 	 * Since: 3.14
 	 */
@@ -158,7 +158,7 @@ public class SourceFileSaver : ObjectG
 	}
 
 	/**
-	 * Return: the compression type.
+	 * Returns: the compression type.
 	 *
 	 * Since: 3.14
 	 */
@@ -168,7 +168,7 @@ public class SourceFileSaver : ObjectG
 	}
 
 	/**
-	 * Return: the encoding.
+	 * Returns: the encoding.
 	 *
 	 * Since: 3.14
 	 */
@@ -185,7 +185,7 @@ public class SourceFileSaver : ObjectG
 	}
 
 	/**
-	 * Return: the #GtkSourceFile.
+	 * Returns: the #GtkSourceFile.
 	 *
 	 * Since: 3.14
 	 */
@@ -202,7 +202,7 @@ public class SourceFileSaver : ObjectG
 	}
 
 	/**
-	 * Return: the flags.
+	 * Returns: the flags.
 	 *
 	 * Since: 3.14
 	 */
@@ -212,7 +212,7 @@ public class SourceFileSaver : ObjectG
 	}
 
 	/**
-	 * Return: the #GFile where to save the buffer to.
+	 * Returns: the #GFile where to save the buffer to.
 	 *
 	 * Since: 3.14
 	 */
@@ -229,7 +229,7 @@ public class SourceFileSaver : ObjectG
 	}
 
 	/**
-	 * Return: the newline type.
+	 * Returns: the newline type.
 	 *
 	 * Since: 3.14
 	 */
@@ -276,7 +276,7 @@ public class SourceFileSaver : ObjectG
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *
-	 * Return: whether the file was saved successfully.
+	 * Returns: whether the file was saved successfully.
 	 *
 	 * Since: 3.14
 	 *

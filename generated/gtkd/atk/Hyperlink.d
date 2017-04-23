@@ -88,7 +88,7 @@ public class Hyperlink : ObjectG, ActionIF
 	/**
 	 * Gets the index with the hypertext document at which this link ends.
 	 *
-	 * Return: the index with the hypertext document at which this link ends
+	 * Returns: the index with the hypertext document at which this link ends
 	 */
 	public int getEndIndex()
 	{
@@ -98,7 +98,7 @@ public class Hyperlink : ObjectG, ActionIF
 	/**
 	 * Gets the number of anchors associated with this hyperlink.
 	 *
-	 * Return: the number of anchors associated with this hyperlink
+	 * Returns: the number of anchors associated with this hyperlink
 	 */
 	public int getNAnchors()
 	{
@@ -116,7 +116,7 @@ public class Hyperlink : ObjectG, ActionIF
 	 * Params:
 	 *     i = a (zero-index) integer specifying the desired anchor
 	 *
-	 * Return: an #AtkObject associated with this hyperlinks
+	 * Returns: an #AtkObject associated with this hyperlinks
 	 *     i-th anchor
 	 */
 	public ObjectAtk getObject(int i)
@@ -134,7 +134,7 @@ public class Hyperlink : ObjectG, ActionIF
 	/**
 	 * Gets the index with the hypertext document at which this link begins.
 	 *
-	 * Return: the index with the hypertext document at which this link begins
+	 * Returns: the index with the hypertext document at which this link begins
 	 */
 	public int getStartIndex()
 	{
@@ -150,7 +150,7 @@ public class Hyperlink : ObjectG, ActionIF
 	 * Params:
 	 *     i = a (zero-index) integer specifying the desired anchor
 	 *
-	 * Return: a string specifying the URI
+	 * Returns: a string specifying the URI
 	 */
 	public string getUri(int i)
 	{
@@ -166,7 +166,7 @@ public class Hyperlink : ObjectG, ActionIF
 	 * %FALSE, but an inline &lt;src&gt; HTML element will return
 	 * %TRUE.
 	 *
-	 * Return: whether or not this link displays its content inline.
+	 * Returns: whether or not this link displays its content inline.
 	 */
 	public bool isInline()
 	{
@@ -179,7 +179,7 @@ public class Hyperlink : ObjectG, ActionIF
 	 * Deprecated: Please use ATK_STATE_FOCUSABLE for all links,
 	 * and ATK_STATE_FOCUSED for focused links.
 	 *
-	 * Return: True if the AtkHyperlink is selected, False otherwise
+	 * Returns: True if the AtkHyperlink is selected, False otherwise
 	 *
 	 * Since: 1.4
 	 */
@@ -193,7 +193,7 @@ public class Hyperlink : ObjectG, ActionIF
 	 * this method returns %TRUE if the link is still valid (with
 	 * respect to the document it references) and %FALSE otherwise.
 	 *
-	 * Return: whether or not this link is still valid
+	 * Returns: whether or not this link is still valid
 	 */
 	public bool isValid()
 	{

@@ -63,7 +63,7 @@ public template SourceCompletionProposalT(TStruct)
 	 * Params:
 	 *     other = a #GtkSourceCompletionProposal.
 	 *
-	 * Return: %TRUE if @proposal and @object are the same proposal
+	 * Returns: %TRUE if @proposal and @object are the same proposal
 	 */
 	public bool equal(SourceCompletionProposalIF other)
 	{
@@ -73,7 +73,7 @@ public template SourceCompletionProposalT(TStruct)
 	/**
 	 * Gets the #GIcon for the icon of @proposal.
 	 *
-	 * Return: A #GIcon with the icon of @proposal.
+	 * Returns: A #GIcon with the icon of @proposal.
 	 *
 	 * Since: 3.18
 	 */
@@ -92,7 +92,7 @@ public template SourceCompletionProposalT(TStruct)
 	/**
 	 * Gets the #GdkPixbuf for the icon of @proposal.
 	 *
-	 * Return: A #GdkPixbuf with the icon of @proposal.
+	 * Returns: A #GdkPixbuf with the icon of @proposal.
 	 */
 	public Pixbuf getIcon()
 	{
@@ -109,7 +109,7 @@ public template SourceCompletionProposalT(TStruct)
 	/**
 	 * Gets the icon name of @proposal.
 	 *
-	 * Return: The icon name of @proposal.
+	 * Returns: The icon name of @proposal.
 	 *
 	 * Since: 3.18
 	 */
@@ -123,7 +123,7 @@ public template SourceCompletionProposalT(TStruct)
 	 * used to present the user with extra, detailed information about the
 	 * selected proposal. The returned string must be freed with g_free().
 	 *
-	 * Return: a newly-allocated string containing
+	 * Returns: a newly-allocated string containing
 	 *     extra information of @proposal or %NULL if no extra information is associated
 	 *     to @proposal.
 	 */
@@ -141,7 +141,7 @@ public template SourceCompletionProposalT(TStruct)
 	 * to implement gtk_source_completion_proposal_get_markup(). The returned string
 	 * must be freed with g_free().
 	 *
-	 * Return: a new string containing the label of @proposal.
+	 * Returns: a new string containing the label of @proposal.
 	 */
 	public string getLabel()
 	{
@@ -157,7 +157,7 @@ public template SourceCompletionProposalT(TStruct)
 	 * gtk_source_completion_proposal_get_label() if implemented. The returned string
 	 * must be freed with g_free().
 	 *
-	 * Return: a new string containing the label of @proposal with markup.
+	 * Returns: a new string containing the label of @proposal with markup.
 	 */
 	public string getMarkup()
 	{
@@ -175,7 +175,7 @@ public template SourceCompletionProposalT(TStruct)
 	 * gtk_source_completion_provider_activate_proposal(). The returned string must
 	 * be freed with g_free().
 	 *
-	 * Return: a new string containing the text of @proposal.
+	 * Returns: a new string containing the text of @proposal.
 	 */
 	public string getText()
 	{
@@ -190,7 +190,7 @@ public template SourceCompletionProposalT(TStruct)
 	 * gtk_source_completion_proposal_equal()) to match proposals in the completion
 	 * model. By default, it uses a direct hash (g_direct_hash()).
 	 *
-	 * Return: The hash value of @proposal.
+	 * Returns: The hash value of @proposal.
 	 */
 	public uint hash()
 	{

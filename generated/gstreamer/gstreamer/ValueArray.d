@@ -97,7 +97,7 @@ public class ValueArray
 	 * Params:
 	 *     value = a #GValue of type #GST_TYPE_ARRAY
 	 *
-	 * Return: the number of values
+	 * Returns: the number of values
 	 */
 	public static uint getSize(Value value)
 	{
@@ -112,7 +112,7 @@ public class ValueArray
 	 *     value = a #GValue of type #GST_TYPE_ARRAY
 	 *     index = index of value to get from the array
 	 *
-	 * Return: the value at the given index
+	 * Returns: the value at the given index
 	 */
 	public static Value getValue(Value value, uint index)
 	{

@@ -144,7 +144,7 @@ public class TypeClass
 	 * You can only call this function after you have registered a private
 	 * data area for @g_class using g_type_class_add_private().
 	 *
-	 * Return: the offset, in bytes
+	 * Returns: the offset, in bytes
 	 *
 	 * Since: 2.38
 	 */
@@ -169,7 +169,7 @@ public class TypeClass
 	 * This function is essentially equivalent to:
 	 * g_type_class_peek (g_type_parent (G_TYPE_FROM_CLASS (g_class)))
 	 *
-	 * Return: the parent class
+	 * Returns: the parent class
 	 *     of @g_class
 	 */
 	public TypeClass peekParent()
@@ -222,7 +222,7 @@ public class TypeClass
 	 * Params:
 	 *     type = type ID of a classed type
 	 *
-	 * Return: the #GTypeClass
+	 * Returns: the #GTypeClass
 	 *     structure for the given type ID or %NULL if the class does not
 	 *     currently exist
 	 */
@@ -245,7 +245,7 @@ public class TypeClass
 	 * Params:
 	 *     type = type ID of a classed type
 	 *
-	 * Return: the #GTypeClass
+	 * Returns: the #GTypeClass
 	 *     structure for the given type ID or %NULL if the class does not
 	 *     currently exist or is dynamically loaded
 	 *
@@ -271,7 +271,7 @@ public class TypeClass
 	 * Params:
 	 *     type = type ID of a classed type
 	 *
-	 * Return: the #GTypeClass
+	 * Returns: the #GTypeClass
 	 *     structure for the given type ID
 	 */
 	public static TypeClass doref(GType type)

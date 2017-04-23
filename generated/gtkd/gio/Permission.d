@@ -109,7 +109,7 @@ public class Permission : ObjectG
 	 * Params:
 	 *     cancellable = a #GCancellable, or %NULL
 	 *
-	 * Return: %TRUE if the permission was successfully acquired
+	 * Returns: %TRUE if the permission was successfully acquired
 	 *
 	 * Since: 2.26
 	 *
@@ -157,7 +157,7 @@ public class Permission : ObjectG
 	 * Params:
 	 *     result = the #GAsyncResult given to the #GAsyncReadyCallback
 	 *
-	 * Return: %TRUE if the permission was successfully acquired
+	 * Returns: %TRUE if the permission was successfully acquired
 	 *
 	 * Since: 2.26
 	 *
@@ -182,7 +182,7 @@ public class Permission : ObjectG
 	 * the caller currently has permission to perform the action that
 	 * @permission represents the permission to perform.
 	 *
-	 * Return: the value of the 'allowed' property
+	 * Returns: the value of the 'allowed' property
 	 *
 	 * Since: 2.26
 	 */
@@ -196,7 +196,7 @@ public class Permission : ObjectG
 	 * if it is generally possible to acquire the permission by calling
 	 * g_permission_acquire().
 	 *
-	 * Return: the value of the 'can-acquire' property
+	 * Returns: the value of the 'can-acquire' property
 	 *
 	 * Since: 2.26
 	 */
@@ -210,7 +210,7 @@ public class Permission : ObjectG
 	 * if it is generally possible to release the permission by calling
 	 * g_permission_release().
 	 *
-	 * Return: the value of the 'can-release' property
+	 * Returns: the value of the 'can-release' property
 	 *
 	 * Since: 2.26
 	 */
@@ -258,7 +258,7 @@ public class Permission : ObjectG
 	 * Params:
 	 *     cancellable = a #GCancellable, or %NULL
 	 *
-	 * Return: %TRUE if the permission was successfully released
+	 * Returns: %TRUE if the permission was successfully released
 	 *
 	 * Since: 2.26
 	 *
@@ -306,7 +306,7 @@ public class Permission : ObjectG
 	 * Params:
 	 *     result = the #GAsyncResult given to the #GAsyncReadyCallback
 	 *
-	 * Return: %TRUE if the permission was successfully released
+	 * Returns: %TRUE if the permission was successfully released
 	 *
 	 * Since: 2.26
 	 *

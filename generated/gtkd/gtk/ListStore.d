@@ -300,7 +300,7 @@ public class ListStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	 *     nColumns = number of columns in the list store
 	 *     types = an array of #GType types for the columns, from first to last
 	 *
-	 * Return: a new #GtkListStore
+	 * Returns: a new #GtkListStore
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -438,7 +438,7 @@ public class ListStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	 * Params:
 	 *     iter = A #GtkTreeIter.
 	 *
-	 * Return: %TRUE if the iter is valid, %FALSE if the iter is invalid.
+	 * Returns: %TRUE if the iter is valid, %FALSE if the iter is invalid.
 	 *
 	 * Since: 2.2
 	 */
@@ -504,7 +504,7 @@ public class ListStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	 * Params:
 	 *     iter = A valid #GtkTreeIter
 	 *
-	 * Return: %TRUE if @iter is valid, %FALSE if not.
+	 * Returns: %TRUE if @iter is valid, %FALSE if not.
 	 */
 	public bool remove(TreeIter iter)
 	{

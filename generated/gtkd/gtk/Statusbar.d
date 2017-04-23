@@ -129,7 +129,7 @@ public class Statusbar : Box
 	/**
 	 * Creates a new #GtkStatusbar ready for messages.
 	 *
-	 * Return: the new #GtkStatusbar
+	 * Returns: the new #GtkStatusbar
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -154,7 +154,7 @@ public class Statusbar : Box
 	 *     contextDescription = textual description of what context
 	 *         the new message is being used in
 	 *
-	 * Return: an integer id
+	 * Returns: an integer id
 	 */
 	public uint getContextId(string contextDescription)
 	{
@@ -185,7 +185,7 @@ public class Statusbar : Box
 	 *         gtk_statusbar_get_context_id()
 	 *     text = the message to add to the statusbar
 	 *
-	 * Return: a message id that can be used with
+	 * Returns: a message id that can be used with
 	 *     gtk_statusbar_remove().
 	 */
 	public uint push(uint contextId, string text)

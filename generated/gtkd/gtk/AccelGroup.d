@@ -95,7 +95,7 @@ public class AccelGroup : ObjectG
 	/**
 	 * Creates a new #GtkAccelGroup.
 	 *
-	 * Return: a new #GtkAccelGroup object
+	 * Returns: a new #GtkAccelGroup object
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -118,7 +118,7 @@ public class AccelGroup : ObjectG
 	 * Params:
 	 *     closure = a #GClosure
 	 *
-	 * Return: the #GtkAccelGroup to which @closure
+	 * Returns: the #GtkAccelGroup to which @closure
 	 *     is connected, or %NULL
 	 */
 	public static AccelGroup fromAccelClosure(Closure closure)
@@ -144,7 +144,7 @@ public class AccelGroup : ObjectG
 	 *     accelKey = accelerator keyval from a key event
 	 *     accelMods = keyboard state mask from a key event
 	 *
-	 * Return: %TRUE if an accelerator was activated and handled
+	 * Returns: %TRUE if an accelerator was activated and handled
 	 *     this keypress
 	 */
 	public bool activate(GQuark accelQuark, ObjectG acceleratable, uint accelKey, GdkModifierType accelMods)
@@ -207,7 +207,7 @@ public class AccelGroup : ObjectG
 	 *     closure = the closure to remove from this accelerator
 	 *         group, or %NULL to remove all closures
 	 *
-	 * Return: %TRUE if the closure was found and got disconnected
+	 * Returns: %TRUE if the closure was found and got disconnected
 	 */
 	public bool disconnect(Closure closure)
 	{
@@ -222,7 +222,7 @@ public class AccelGroup : ObjectG
 	 *     accelKey = key value of the accelerator
 	 *     accelMods = modifier combination of the accelerator
 	 *
-	 * Return: %TRUE if there was an accelerator which could be
+	 * Returns: %TRUE if there was an accelerator which could be
 	 *     removed, %FALSE otherwise
 	 */
 	public bool disconnectKey(uint accelKey, GdkModifierType accelMods)
@@ -239,7 +239,7 @@ public class AccelGroup : ObjectG
 	 *         of @accel_group with
 	 *     data = data to pass to @find_func
 	 *
-	 * Return: the key of the first entry passing
+	 * Returns: the key of the first entry passing
 	 *     @find_func. The key is owned by GTK+ and must not be freed.
 	 */
 	public GtkAccelKey* find(GtkAccelGroupFindFunc findFunc, void* data)
@@ -251,7 +251,7 @@ public class AccelGroup : ObjectG
 	 * Locks are added and removed using gtk_accel_group_lock() and
 	 * gtk_accel_group_unlock().
 	 *
-	 * Return: %TRUE if there are 1 or more locks on the @accel_group,
+	 * Returns: %TRUE if there are 1 or more locks on the @accel_group,
 	 *     %FALSE otherwise.
 	 *
 	 * Since: 2.14
@@ -265,7 +265,7 @@ public class AccelGroup : ObjectG
 	 * Gets a #GdkModifierType representing the mask for this
 	 * @accel_group. For example, #GDK_CONTROL_MASK, #GDK_SHIFT_MASK, etc.
 	 *
-	 * Return: the modifier mask for this accel group.
+	 * Returns: the modifier mask for this accel group.
 	 *
 	 * Since: 2.14
 	 */
@@ -298,7 +298,7 @@ public class AccelGroup : ObjectG
 	 *     accelKey = key value of the accelerator
 	 *     accelMods = modifier combination of the accelerator
 	 *
-	 * Return: an array of
+	 * Returns: an array of
 	 *     @n_entries #GtkAccelGroupEntry elements, or %NULL. The array
 	 *     is owned by GTK+ and must not be freed.
 	 */
@@ -354,7 +354,7 @@ public class AccelGroup : ObjectG
 	 *     keyval = the accelerator keyval
 	 *     modifier = the modifier combination of the accelerator
 	 *
-	 * Return: %TRUE if the accelerator was activated
+	 * Returns: %TRUE if the accelerator was activated
 	 */
 	gulong addOnAccelActivate(bool delegate(ObjectG, uint, GdkModifierType, AccelGroup) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -452,7 +452,7 @@ public class AccelGroup : ObjectG
 	 *     accelKey = accelerator keyval from a key event
 	 *     accelMods = keyboard state mask from a key event
 	 *
-	 * Return: %TRUE if an accelerator was activated and handled
+	 * Returns: %TRUE if an accelerator was activated and handled
 	 *     this keypress
 	 */
 	public static bool accelGroupsActivate(ObjectG object, uint accelKey, GdkModifierType accelMods)
@@ -466,7 +466,7 @@ public class AccelGroup : ObjectG
 	 * Params:
 	 *     object = a #GObject, usually a #GtkWindow
 	 *
-	 * Return: a list of
+	 * Returns: a list of
 	 *     all accel groups which are attached to @object
 	 */
 	public static ListSG accelGroupsFromObject(ObjectG object)
@@ -487,7 +487,7 @@ public class AccelGroup : ObjectG
 	 * The modifier mask determines which modifiers are considered significant
 	 * for keyboard accelerators. See gtk_accelerator_set_default_mod_mask().
 	 *
-	 * Return: the default accelerator modifier mask
+	 * Returns: the default accelerator modifier mask
 	 */
 	public static GdkModifierType acceleratorGetDefaultModMask()
 	{
@@ -502,7 +502,7 @@ public class AccelGroup : ObjectG
 	 *     acceleratorKey = accelerator keyval
 	 *     acceleratorMods = accelerator modifier mask
 	 *
-	 * Return: a newly-allocated string representing the accelerator.
+	 * Returns: a newly-allocated string representing the accelerator.
 	 *
 	 * Since: 2.6
 	 */
@@ -529,7 +529,7 @@ public class AccelGroup : ObjectG
 	 *     keycode = accelerator keycode
 	 *     acceleratorMods = accelerator modifier mask
 	 *
-	 * Return: a newly-allocated string representing the accelerator.
+	 * Returns: a newly-allocated string representing the accelerator.
 	 *
 	 * Since: 3.4
 	 */
@@ -553,7 +553,7 @@ public class AccelGroup : ObjectG
 	 *     acceleratorKey = accelerator keyval
 	 *     acceleratorMods = accelerator modifier mask
 	 *
-	 * Return: a newly-allocated accelerator name
+	 * Returns: a newly-allocated accelerator name
 	 */
 	public static string acceleratorName(uint acceleratorKey, GdkModifierType acceleratorMods)
 	{
@@ -576,7 +576,7 @@ public class AccelGroup : ObjectG
 	 *     keycode = accelerator keycode
 	 *     acceleratorMods = accelerator modifier mask
 	 *
-	 * Return: a newly allocated accelerator name.
+	 * Returns: a newly allocated accelerator name.
 	 *
 	 * Since: 3.4
 	 */
@@ -681,7 +681,7 @@ public class AccelGroup : ObjectG
 	 *     keyval = a GDK keyval
 	 *     modifiers = modifier mask
 	 *
-	 * Return: %TRUE if the accelerator is valid
+	 * Returns: %TRUE if the accelerator is valid
 	 */
 	public static bool acceleratorValid(uint keyval, GdkModifierType modifiers)
 	{

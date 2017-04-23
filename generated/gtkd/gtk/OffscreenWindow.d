@@ -96,7 +96,7 @@ public class OffscreenWindow : Window
 	 * Creates a toplevel container widget that is used to retrieve
 	 * snapshots of widgets without showing them on the screen.
 	 *
-	 * Return: A pointer to a #GtkWidget
+	 * Returns: A pointer to a #GtkWidget
 	 *
 	 * Since: 2.20
 	 *
@@ -120,7 +120,7 @@ public class OffscreenWindow : Window
 	 * and the application should unreference it once it is no longer
 	 * needed.
 	 *
-	 * Return: A #GdkPixbuf pointer, or %NULL.
+	 * Returns: A #GdkPixbuf pointer, or %NULL.
 	 *
 	 * Since: 2.20
 	 */
@@ -141,7 +141,7 @@ public class OffscreenWindow : Window
 	 * a #cairo_surface_t.  If you need to keep this around over window
 	 * resizes then you should add a reference to it.
 	 *
-	 * Return: A #cairo_surface_t pointer to the offscreen
+	 * Returns: A #cairo_surface_t pointer to the offscreen
 	 *     surface, or %NULL.
 	 *
 	 * Since: 2.20

@@ -141,7 +141,7 @@ public class GLContext : ObjectG
 	/**
 	 * Retrieves the current #GdkGLContext.
 	 *
-	 * Return: the current #GdkGLContext, or %NULL
+	 * Returns: the current #GdkGLContext, or %NULL
 	 *
 	 * Since: 3.16
 	 */
@@ -160,7 +160,7 @@ public class GLContext : ObjectG
 	/**
 	 * Retrieves the value set using gdk_gl_context_set_debug_enabled().
 	 *
-	 * Return: %TRUE if debugging is enabled
+	 * Returns: %TRUE if debugging is enabled
 	 *
 	 * Since: 3.16
 	 */
@@ -172,7 +172,7 @@ public class GLContext : ObjectG
 	/**
 	 * Retrieves the #GdkDisplay the @context is created for
 	 *
-	 * Return: a #GdkDisplay or %NULL
+	 * Returns: a #GdkDisplay or %NULL
 	 *
 	 * Since: 3.16
 	 */
@@ -191,7 +191,7 @@ public class GLContext : ObjectG
 	/**
 	 * Retrieves the value set using gdk_gl_context_set_forward_compatible().
 	 *
-	 * Return: %TRUE if the context should be forward compatible
+	 * Returns: %TRUE if the context should be forward compatible
 	 *
 	 * Since: 3.16
 	 */
@@ -218,7 +218,7 @@ public class GLContext : ObjectG
 	/**
 	 * Retrieves the #GdkGLContext that this @context share data with.
 	 *
-	 * Return: a #GdkGLContext or %NULL
+	 * Returns: a #GdkGLContext or %NULL
 	 *
 	 * Since: 3.16
 	 */
@@ -237,7 +237,7 @@ public class GLContext : ObjectG
 	/**
 	 * Checks whether the @context is using an OpenGL or OpenGL ES profile.
 	 *
-	 * Return: %TRUE if the #GdkGLContext is using an OpenGL ES profile
+	 * Returns: %TRUE if the #GdkGLContext is using an OpenGL ES profile
 	 *
 	 * Since: 3.22
 	 */
@@ -265,7 +265,7 @@ public class GLContext : ObjectG
 	/**
 	 * Retrieves the #GdkWindow used by the @context.
 	 *
-	 * Return: a #GdkWindow or %NULL
+	 * Returns: a #GdkWindow or %NULL
 	 *
 	 * Since: 3.16
 	 */
@@ -299,7 +299,7 @@ public class GLContext : ObjectG
 	 * of OpenGL API to use, or whether to do extension discovery, or what
 	 * kind of shader programs to load.
 	 *
-	 * Return: %TRUE if the GL context is in legacy mode
+	 * Returns: %TRUE if the GL context is in legacy mode
 	 *
 	 * Since: 3.20
 	 */
@@ -323,7 +323,7 @@ public class GLContext : ObjectG
 	 *
 	 * It is safe to call this function on a realized #GdkGLContext.
 	 *
-	 * Return: %TRUE if the context is realized
+	 * Returns: %TRUE if the context is realized
 	 *
 	 * Since: 3.16
 	 *

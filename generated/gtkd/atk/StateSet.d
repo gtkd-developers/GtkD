@@ -77,7 +77,7 @@ public class StateSet : ObjectG
 	/**
 	 * Creates a new empty state set.
 	 *
-	 * Return: a new #AtkStateSet
+	 * Returns: a new #AtkStateSet
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -105,7 +105,7 @@ public class StateSet : ObjectG
 	 * Params:
 	 *     type = an #AtkStateType
 	 *
-	 * Return: %TRUE if  the state for @type is not already in @set.
+	 * Returns: %TRUE if  the state for @type is not already in @set.
 	 */
 	public bool addState(AtkStateType type)
 	{
@@ -136,7 +136,7 @@ public class StateSet : ObjectG
 	 * Params:
 	 *     compareSet = another #AtkStateSet
 	 *
-	 * Return: a new #AtkStateSet which is the intersection of
+	 * Returns: a new #AtkStateSet which is the intersection of
 	 *     the two sets.
 	 */
 	public StateSet andSets(StateSet compareSet)
@@ -165,7 +165,7 @@ public class StateSet : ObjectG
 	 * Params:
 	 *     type = an #AtkStateType
 	 *
-	 * Return: %TRUE if @type is the state type is in @set.
+	 * Returns: %TRUE if @type is the state type is in @set.
 	 */
 	public bool containsState(AtkStateType type)
 	{
@@ -180,7 +180,7 @@ public class StateSet : ObjectG
 	 *     types = an array of #AtkStateType
 	 *     nTypes = The number of elements in the array
 	 *
-	 * Return: %TRUE if all the states for @type are in @set.
+	 * Returns: %TRUE if all the states for @type are in @set.
 	 */
 	public bool containsStates(AtkStateType[] types)
 	{
@@ -190,7 +190,7 @@ public class StateSet : ObjectG
 	/**
 	 * Checks whether the state set is empty, i.e. has no states set.
 	 *
-	 * Return: %TRUE if @set has no states set, otherwise %FALSE
+	 * Returns: %TRUE if @set has no states set, otherwise %FALSE
 	 */
 	public bool isEmpty()
 	{
@@ -203,7 +203,7 @@ public class StateSet : ObjectG
 	 * Params:
 	 *     compareSet = another #AtkStateSet
 	 *
-	 * Return: a new #AtkStateSet which is
+	 * Returns: a new #AtkStateSet which is
 	 *     the union of the two sets, returning %NULL is empty.
 	 */
 	public StateSet orSets(StateSet compareSet)
@@ -229,7 +229,7 @@ public class StateSet : ObjectG
 	 * Params:
 	 *     type = an #AtkType
 	 *
-	 * Return: %TRUE if @type was the state type is in @set.
+	 * Returns: %TRUE if @type was the state type is in @set.
 	 */
 	public bool removeState(AtkStateType type)
 	{
@@ -244,7 +244,7 @@ public class StateSet : ObjectG
 	 * Params:
 	 *     compareSet = another #AtkStateSet
 	 *
-	 * Return: a new #AtkStateSet which contains the states
+	 * Returns: a new #AtkStateSet which contains the states
 	 *     which are in exactly one of the two sets.
 	 */
 	public StateSet xorSets(StateSet compareSet)

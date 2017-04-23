@@ -131,7 +131,7 @@ public class Caps
 	 * The #GstCaps is guaranteed to be writable.
 	 * Caller is responsible for unreffing the returned caps.
 	 *
-	 * Return: the new #GstCaps
+	 * Returns: the new #GstCaps
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -155,7 +155,7 @@ public class Caps
 	 * Params:
 	 *     mediaType = the media type of the structure
 	 *
-	 * Return: the new #GstCaps
+	 * Returns: the new #GstCaps
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -180,7 +180,7 @@ public class Caps
 	 *     structure = the first structure to add
 	 *     varArgs = additional structures to add
 	 *
-	 * Return: the new #GstCaps
+	 * Returns: the new #GstCaps
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -243,7 +243,7 @@ public class Caps
 	 * Params:
 	 *     caps2 = a #GstCaps to intersect
 	 *
-	 * Return: %TRUE if intersection would be not empty
+	 * Returns: %TRUE if intersection would be not empty
 	 */
 	public bool canIntersect(Caps caps2)
 	{
@@ -257,7 +257,7 @@ public class Caps
 	 * Params:
 	 *     nth = the nth structure to copy
 	 *
-	 * Return: the new #GstCaps
+	 * Returns: the new #GstCaps
 	 */
 	public Caps copyNth(uint nth)
 	{
@@ -299,7 +299,7 @@ public class Caps
 	 * on it so you must not use @caps afterwards unless you keep an additional
 	 * reference to it with gst_caps_ref().
 	 *
-	 * Return: the fixated caps
+	 * Returns: the fixated caps
 	 */
 	public Caps fixate()
 	{
@@ -322,7 +322,7 @@ public class Caps
 	 *     func = a function to call for each field
 	 *     userData = private data
 	 *
-	 * Return: %TRUE if the supplied function returns %TRUE for each call,
+	 * Returns: %TRUE if the supplied function returns %TRUE for each call,
 	 *     %FALSE otherwise.
 	 *
 	 * Since: 1.6
@@ -351,7 +351,7 @@ public class Caps
 	 * Params:
 	 *     index = the index of the structure
 	 *
-	 * Return: a pointer to the #GstCapsFeatures corresponding
+	 * Returns: a pointer to the #GstCapsFeatures corresponding
 	 *     to @index
 	 *
 	 * Since: 1.2
@@ -371,7 +371,7 @@ public class Caps
 	/**
 	 * Gets the number of structures contained in @caps.
 	 *
-	 * Return: the number of structures that @caps contains
+	 * Returns: the number of structures that @caps contains
 	 */
 	public uint getSize()
 	{
@@ -397,7 +397,7 @@ public class Caps
 	 * Params:
 	 *     index = the index of the structure
 	 *
-	 * Return: a pointer to the #GstStructure corresponding
+	 * Returns: a pointer to the #GstStructure corresponding
 	 *     to @index
 	 */
 	public Structure getStructure(uint index)
@@ -419,7 +419,7 @@ public class Caps
 	 * Params:
 	 *     caps2 = a #GstCaps to intersect
 	 *
-	 * Return: the new #GstCaps
+	 * Returns: the new #GstCaps
 	 */
 	public Caps intersect(Caps caps2)
 	{
@@ -442,7 +442,7 @@ public class Caps
 	 *     caps2 = a #GstCaps to intersect
 	 *     mode = The intersection algorithm/mode to use
 	 *
-	 * Return: the new #GstCaps
+	 * Returns: the new #GstCaps
 	 */
 	public Caps intersectFull(Caps caps2, GstCapsIntersectMode mode)
 	{
@@ -464,7 +464,7 @@ public class Caps
 	 * Params:
 	 *     caps2 = the #GstCaps to test
 	 *
-	 * Return: %TRUE if @caps1 is a subset of @caps2.
+	 * Returns: %TRUE if @caps1 is a subset of @caps2.
 	 */
 	public bool isAlwaysCompatible(Caps caps2)
 	{
@@ -474,7 +474,7 @@ public class Caps
 	/**
 	 * Determines if @caps represents any media format.
 	 *
-	 * Return: %TRUE if @caps represents any format.
+	 * Returns: %TRUE if @caps represents any format.
 	 */
 	public bool isAny()
 	{
@@ -484,7 +484,7 @@ public class Caps
 	/**
 	 * Determines if @caps represents no media formats.
 	 *
-	 * Return: %TRUE if @caps represents no formats.
+	 * Returns: %TRUE if @caps represents no formats.
 	 */
 	public bool isEmpty()
 	{
@@ -497,7 +497,7 @@ public class Caps
 	 * Params:
 	 *     caps2 = another #GstCaps
 	 *
-	 * Return: %TRUE if both caps are equal.
+	 * Returns: %TRUE if both caps are equal.
 	 */
 	public bool isEqual(Caps caps2)
 	{
@@ -511,7 +511,7 @@ public class Caps
 	 * Params:
 	 *     caps2 = the #GstCaps to test
 	 *
-	 * Return: %TRUE if the arguments represent the same format
+	 * Returns: %TRUE if the arguments represent the same format
 	 */
 	public bool isEqualFixed(Caps caps2)
 	{
@@ -523,7 +523,7 @@ public class Caps
 	 * one structure, and each field in the structure describes a fixed type.
 	 * Examples of non-fixed types are GST_TYPE_INT_RANGE and GST_TYPE_LIST.
 	 *
-	 * Return: %TRUE if @caps is fixed
+	 * Returns: %TRUE if @caps is fixed
 	 */
 	public bool isFixed()
 	{
@@ -536,7 +536,7 @@ public class Caps
 	 * Params:
 	 *     caps2 = another #GstCaps
 	 *
-	 * Return: %TRUE if both caps are strictly equal.
+	 * Returns: %TRUE if both caps are strictly equal.
 	 */
 	public bool isStrictlyEqual(Caps caps2)
 	{
@@ -549,7 +549,7 @@ public class Caps
 	 * Params:
 	 *     superset = a potentially greater #GstCaps
 	 *
-	 * Return: %TRUE if @subset is a subset of @superset
+	 * Returns: %TRUE if @subset is a subset of @superset
 	 */
 	public bool isSubset(Caps superset)
 	{
@@ -563,7 +563,7 @@ public class Caps
 	 * Params:
 	 *     structure = a potential #GstStructure subset of @caps
 	 *
-	 * Return: %TRUE if @structure is a subset of @caps
+	 * Returns: %TRUE if @structure is a subset of @caps
 	 */
 	public bool isSubsetStructure(Structure structure)
 	{
@@ -578,7 +578,7 @@ public class Caps
 	 *     structure = a potential #GstStructure subset of @caps
 	 *     features = a #GstCapsFeatures for @structure
 	 *
-	 * Return: %TRUE if @structure is a subset of @caps
+	 * Returns: %TRUE if @structure is a subset of @caps
 	 *
 	 * Since: 1.2
 	 */
@@ -596,7 +596,7 @@ public class Caps
 	 *     func = a function to call for each field
 	 *     userData = private data
 	 *
-	 * Return: %TRUE if the supplied function returns %TRUE for each call,
+	 * Returns: %TRUE if the supplied function returns %TRUE for each call,
 	 *     %FALSE otherwise.
 	 *
 	 * Since: 1.6
@@ -615,7 +615,7 @@ public class Caps
 	 * Params:
 	 *     caps2 = the #GstCaps to merge in
 	 *
-	 * Return: the merged caps.
+	 * Returns: the merged caps.
 	 */
 	public Caps merge(Caps caps2)
 	{
@@ -635,7 +635,7 @@ public class Caps
 	 * Params:
 	 *     structure = the #GstStructure to merge
 	 *
-	 * Return: the merged caps.
+	 * Returns: the merged caps.
 	 */
 	public Caps mergeStructure(Structure structure)
 	{
@@ -656,7 +656,7 @@ public class Caps
 	 *     structure = the #GstStructure to merge
 	 *     features = the #GstCapsFeatures to merge
 	 *
-	 * Return: the merged caps.
+	 * Returns: the merged caps.
 	 *
 	 * Since: 1.2
 	 */
@@ -681,7 +681,7 @@ public class Caps
 	 * on it so you must not use @caps afterwards unless you keep an additional
 	 * reference to it with gst_caps_ref().
 	 *
-	 * Return: the normalized #GstCaps
+	 * Returns: the normalized #GstCaps
 	 */
 	public Caps normalize()
 	{
@@ -760,7 +760,7 @@ public class Caps
 	 *
 	 * This method does not preserve the original order of @caps.
 	 *
-	 * Return: The simplified caps.
+	 * Returns: The simplified caps.
 	 */
 	public Caps simplify()
 	{
@@ -781,7 +781,7 @@ public class Caps
 	 * Params:
 	 *     index = Index of the structure to retrieve
 	 *
-	 * Return: a pointer to the #GstStructure corresponding
+	 * Returns: a pointer to the #GstStructure corresponding
 	 *     to @index.
 	 */
 	public Structure stealStructure(uint index)
@@ -804,7 +804,7 @@ public class Caps
 	 * Params:
 	 *     subtrahend = #GstCaps to subtract
 	 *
-	 * Return: the resulting caps
+	 * Returns: the resulting caps
 	 */
 	public Caps subtract(Caps subtrahend)
 	{
@@ -831,7 +831,7 @@ public class Caps
 	 * The current implementation of serialization will lead to unexpected results
 	 * when there are nested #GstCaps / #GstStructure deeper than one level.
 	 *
-	 * Return: a newly allocated string representing @caps.
+	 * Returns: a newly allocated string representing @caps.
 	 */
 	public override string toString()
 	{
@@ -849,7 +849,7 @@ public class Caps
 	 * on it if necessary, so you must not use @caps afterwards unless you keep an
 	 * additional reference to it with gst_caps_ref().
 	 *
-	 * Return: truncated caps
+	 * Returns: truncated caps
 	 */
 	public Caps truncate()
 	{
@@ -872,7 +872,7 @@ public class Caps
 	 * Params:
 	 *     str = a string to convert to #GstCaps
 	 *
-	 * Return: a newly allocated #GstCaps
+	 * Returns: a newly allocated #GstCaps
 	 */
 	public static Caps fromString(string str)
 	{

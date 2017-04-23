@@ -264,7 +264,7 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 *     userData = user data passed to @callback.
 	 *     sourceTag = the asynchronous function.
 	 *
-	 * Return: a #GSimpleAsyncResult.
+	 * Returns: a #GSimpleAsyncResult.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -291,7 +291,7 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 *     userData = user data passed to @callback.
 	 *     error = a #GError
 	 *
-	 * Return: a #GSimpleAsyncResult.
+	 * Returns: a #GSimpleAsyncResult.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -328,7 +328,7 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 *     source = the #GObject passed to the _finish function.
 	 *     sourceTag = the asynchronous function.
 	 *
-	 * Return: #TRUE if all checks passed or #FALSE if any failed.
+	 * Returns: #TRUE if all checks passed or #FALSE if any failed.
 	 *
 	 * Since: 2.20
 	 */
@@ -374,7 +374,7 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 *
 	 * Deprecated: Use #GTask and g_task_propagate_boolean() instead.
 	 *
-	 * Return: %TRUE if the operation's result was %TRUE, %FALSE
+	 * Returns: %TRUE if the operation's result was %TRUE, %FALSE
 	 *     if the operation's result was %FALSE.
 	 */
 	public bool getOpResGboolean()
@@ -387,7 +387,7 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 *
 	 * Deprecated: Use #GTask and g_task_propagate_pointer() instead.
 	 *
-	 * Return: a pointer from the result.
+	 * Returns: a pointer from the result.
 	 */
 	public void* getOpResGpointer()
 	{
@@ -399,7 +399,7 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 *
 	 * Deprecated: Use #GTask and g_task_propagate_int() instead.
 	 *
-	 * Return: a gssize returned from the asynchronous function.
+	 * Returns: a gssize returned from the asynchronous function.
 	 */
 	public ptrdiff_t getOpResGssize()
 	{
@@ -411,7 +411,7 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 *
 	 * Deprecated: Use #GTask and g_task_get_source_tag() instead.
 	 *
-	 * Return: a #gpointer to the source object for the #GSimpleAsyncResult.
+	 * Returns: a #gpointer to the source object for the #GSimpleAsyncResult.
 	 */
 	public void* getSourceTag()
 	{
@@ -428,7 +428,7 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 *
 	 * Deprecated: Use #GTask instead.
 	 *
-	 * Return: %TRUE if the error was propagated to @dest. %FALSE otherwise.
+	 * Returns: %TRUE if the error was propagated to @dest. %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */

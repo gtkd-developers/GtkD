@@ -98,7 +98,7 @@ public class IconSet
 	 *
 	 * Deprecated: Use #GtkIconTheme instead.
 	 *
-	 * Return: a new #GtkIconSet
+	 * Returns: a new #GtkIconSet
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -126,7 +126,7 @@ public class IconSet
 	 * Params:
 	 *     pixbuf = a #GdkPixbuf
 	 *
-	 * Return: a new #GtkIconSet
+	 * Returns: a new #GtkIconSet
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -184,7 +184,7 @@ public class IconSet
 	 *
 	 * Deprecated: Use #GtkIconTheme instead.
 	 *
-	 * Return: a new #GtkIconSet identical to the first.
+	 * Returns: a new #GtkIconSet identical to the first.
 	 */
 	public IconSet copy()
 	{
@@ -224,7 +224,7 @@ public class IconSet
 	 *
 	 * Deprecated: Use #GtkIconTheme instead.
 	 *
-	 * Return: @icon_set.
+	 * Returns: @icon_set.
 	 */
 	public IconSet doref()
 	{
@@ -261,7 +261,7 @@ public class IconSet
 	 *         Note that passing a detail of anything but %NULL
 	 *         will disable caching.
 	 *
-	 * Return: a #GdkPixbuf to be displayed
+	 * Returns: a #GdkPixbuf to be displayed
 	 */
 	public Pixbuf renderIcon(Style style, GtkTextDirection direction, GtkStateType state, GtkIconSize size, Widget widget, string detail)
 	{
@@ -290,7 +290,7 @@ public class IconSet
 	 *     size = icon size (#GtkIconSize). A size of `(GtkIconSize)-1`
 	 *         means render at the size of the source and don’t scale.
 	 *
-	 * Return: a #GdkPixbuf to be displayed
+	 * Returns: a #GdkPixbuf to be displayed
 	 *
 	 * Since: 3.0
 	 */
@@ -323,7 +323,7 @@ public class IconSet
 	 *     scale = the window scale to render for
 	 *     forWindow = #GdkWindow to optimize drawing for, or %NULL
 	 *
-	 * Return: a #cairo_surface_t to be displayed
+	 * Returns: a #cairo_surface_t to be displayed
 	 *
 	 * Since: 3.10
 	 */

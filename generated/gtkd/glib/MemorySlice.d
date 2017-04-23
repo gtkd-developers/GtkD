@@ -68,7 +68,7 @@ public struct MemorySlice
 	 * Params:
 	 *     blockSize = the number of bytes to allocate
 	 *
-	 * Return: a pointer to the allocated memory block, which will be %NULL if and
+	 * Returns: a pointer to the allocated memory block, which will be %NULL if and
 	 *     only if @mem_size is 0
 	 *
 	 * Since: 2.10
@@ -87,7 +87,7 @@ public struct MemorySlice
 	 * Params:
 	 *     blockSize = the number of bytes to allocate
 	 *
-	 * Return: a pointer to the allocated block, which will be %NULL if and only
+	 * Returns: a pointer to the allocated block, which will be %NULL if and only
 	 *     if @mem_size is 0
 	 *
 	 * Since: 2.10
@@ -107,7 +107,7 @@ public struct MemorySlice
 	 *     blockSize = the number of bytes to allocate
 	 *     memBlock = the memory to copy
 	 *
-	 * Return: a pointer to the allocated memory block, which will be %NULL if and
+	 * Returns: a pointer to the allocated memory block, which will be %NULL if and
 	 *     only if @mem_size is 0
 	 *
 	 * Since: 2.14

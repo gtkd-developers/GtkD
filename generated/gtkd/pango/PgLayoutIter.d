@@ -75,7 +75,7 @@ public class PgLayoutIter
 	/**
 	 * Determines whether @iter is on the last line of the layout.
 	 *
-	 * Return: %TRUE if @iter is on the last line.
+	 * Returns: %TRUE if @iter is on the last line.
 	 */
 	public bool atLastLine()
 	{
@@ -85,7 +85,7 @@ public class PgLayoutIter
 	/**
 	 * Copies a #PangoLayoutIter.
 	 *
-	 * Return: the newly allocated #PangoLayoutIter,
+	 * Returns: the newly allocated #PangoLayoutIter,
 	 *     which should be freed with pango_layout_iter_free(),
 	 *     or %NULL if @iter was %NULL.
 	 *
@@ -115,7 +115,7 @@ public class PgLayoutIter
 	 * Gets the Y position of the current line's baseline, in layout
 	 * coordinates (origin at top left of the entire layout).
 	 *
-	 * Return: baseline of current line.
+	 * Returns: baseline of current line.
 	 */
 	public int getBaseline()
 	{
@@ -156,7 +156,7 @@ public class PgLayoutIter
 	 * sequential. Also, the index may be equal to the length of the text
 	 * in the layout, if on the %NULL run (see pango_layout_iter_get_run()).
 	 *
-	 * Return: current byte index.
+	 * Returns: current byte index.
 	 */
 	public int getIndex()
 	{
@@ -166,7 +166,7 @@ public class PgLayoutIter
 	/**
 	 * Gets the layout associated with a #PangoLayoutIter.
 	 *
-	 * Return: the layout associated with @iter.
+	 * Returns: the layout associated with @iter.
 	 *
 	 * Since: 1.20
 	 */
@@ -204,7 +204,7 @@ public class PgLayoutIter
 	 * Use the faster pango_layout_iter_get_line_readonly() if you do not plan
 	 * to modify the contents of the line (glyphs, glyph widths, etc.).
 	 *
-	 * Return: the current line.
+	 * Returns: the current line.
 	 */
 	public PgLayoutLine getLine()
 	{
@@ -242,7 +242,7 @@ public class PgLayoutIter
 	 * but the user is not expected
 	 * to modify the contents of the line (glyphs, glyph widths, etc.).
 	 *
-	 * Return: the current line, that should not be
+	 * Returns: the current line, that should not be
 	 *     modified.
 	 *
 	 * Since: 1.16
@@ -286,7 +286,7 @@ public class PgLayoutIter
 	 * Use the faster pango_layout_iter_get_run_readonly() if you do not plan
 	 * to modify the contents of the run (glyphs, glyph widths, etc.).
 	 *
-	 * Return: the current run.
+	 * Returns: the current run.
 	 */
 	public PangoLayoutRun* getRun()
 	{
@@ -316,7 +316,7 @@ public class PgLayoutIter
 	 * but the user is not expected
 	 * to modify the contents of the run (glyphs, glyph widths, etc.).
 	 *
-	 * Return: the current run, that
+	 * Returns: the current run, that
 	 *     should not be modified.
 	 *
 	 * Since: 1.16
@@ -330,7 +330,7 @@ public class PgLayoutIter
 	 * Moves @iter forward to the next character in visual order. If @iter was already at
 	 * the end of the layout, returns %FALSE.
 	 *
-	 * Return: whether motion was possible.
+	 * Returns: whether motion was possible.
 	 */
 	public bool nextChar()
 	{
@@ -341,7 +341,7 @@ public class PgLayoutIter
 	 * Moves @iter forward to the next cluster in visual order. If @iter
 	 * was already at the end of the layout, returns %FALSE.
 	 *
-	 * Return: whether motion was possible.
+	 * Returns: whether motion was possible.
 	 */
 	public bool nextCluster()
 	{
@@ -352,7 +352,7 @@ public class PgLayoutIter
 	 * Moves @iter forward to the start of the next line. If @iter is
 	 * already on the last line, returns %FALSE.
 	 *
-	 * Return: whether motion was possible.
+	 * Returns: whether motion was possible.
 	 */
 	public bool nextLine()
 	{
@@ -363,7 +363,7 @@ public class PgLayoutIter
 	 * Moves @iter forward to the next run in visual order. If @iter was
 	 * already at the end of the layout, returns %FALSE.
 	 *
-	 * Return: whether motion was possible.
+	 * Returns: whether motion was possible.
 	 */
 	public bool nextRun()
 	{

@@ -68,7 +68,7 @@ public class PixbufFormat
 	/**
 	 * Creates a copy of @format
 	 *
-	 * Return: the newly allocated copy of a #GdkPixbufFormat. Use
+	 * Returns: the newly allocated copy of a #GdkPixbufFormat. Use
 	 *     gdk_pixbuf_format_free() to free the resources when done
 	 *
 	 * Since: 2.22
@@ -99,7 +99,7 @@ public class PixbufFormat
 	/**
 	 * Returns a description of the format.
 	 *
-	 * Return: a description of the format.
+	 * Returns: a description of the format.
 	 *
 	 * Since: 2.2
 	 */
@@ -115,7 +115,7 @@ public class PixbufFormat
 	 * Returns the filename extensions typically used for files in the
 	 * given format.
 	 *
-	 * Return: a %NULL-terminated array of filename extensions which must be
+	 * Returns: a %NULL-terminated array of filename extensions which must be
 	 *     freed with g_strfreev() when it is no longer needed.
 	 *
 	 * Since: 2.2
@@ -134,7 +134,7 @@ public class PixbufFormat
 	 * "GPL", "QPL", "GPL/QPL", or "other" to indicate some other license.  This
 	 * string should be freed with g_free() when it's no longer needed.
 	 *
-	 * Return: a string describing the license of @format.
+	 * Returns: a string describing the license of @format.
 	 *
 	 * Since: 2.6
 	 */
@@ -149,7 +149,7 @@ public class PixbufFormat
 	/**
 	 * Returns the mime types supported by the format.
 	 *
-	 * Return: a %NULL-terminated array of mime types which must be freed with
+	 * Returns: a %NULL-terminated array of mime types which must be freed with
 	 *     g_strfreev() when it is no longer needed.
 	 *
 	 * Since: 2.2
@@ -165,7 +165,7 @@ public class PixbufFormat
 	/**
 	 * Returns the name of the format.
 	 *
-	 * Return: the name of the format.
+	 * Returns: the name of the format.
 	 *
 	 * Since: 2.2
 	 */
@@ -181,7 +181,7 @@ public class PixbufFormat
 	 * Returns whether this image format is disabled. See
 	 * gdk_pixbuf_format_set_disabled().
 	 *
-	 * Return: whether this image format is disabled.
+	 * Returns: whether this image format is disabled.
 	 *
 	 * Since: 2.6
 	 */
@@ -198,7 +198,7 @@ public class PixbufFormat
 	 * Params:
 	 *     optionKey = the name of an option
 	 *
-	 * Return: %TRUE if the specified option is supported
+	 * Returns: %TRUE if the specified option is supported
 	 *
 	 * Since: 2.36
 	 */
@@ -213,7 +213,7 @@ public class PixbufFormat
 	 * rather than loading it at the default size and scaling the
 	 * resulting pixbuf to the desired size.
 	 *
-	 * Return: whether this image format is scalable.
+	 * Returns: whether this image format is scalable.
 	 *
 	 * Since: 2.6
 	 */
@@ -225,7 +225,7 @@ public class PixbufFormat
 	/**
 	 * Returns whether pixbufs can be saved in the given format.
 	 *
-	 * Return: whether pixbufs can be saved in the given format.
+	 * Returns: whether pixbufs can be saved in the given format.
 	 *
 	 * Since: 2.2
 	 */

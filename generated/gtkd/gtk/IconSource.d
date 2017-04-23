@@ -111,7 +111,7 @@ public class IconSource
 	 *
 	 * Deprecated: Use #GtkIconTheme instead.
 	 *
-	 * Return: a new #GtkIconSource
+	 * Returns: a new #GtkIconSource
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -132,7 +132,7 @@ public class IconSource
 	 *
 	 * Deprecated: Use #GtkIconTheme instead.
 	 *
-	 * Return: a new #GtkIconSource
+	 * Returns: a new #GtkIconSource
 	 */
 	public IconSource copy()
 	{
@@ -164,7 +164,7 @@ public class IconSource
 	 *
 	 * Deprecated: Use #GtkIconTheme instead.
 	 *
-	 * Return: text direction this source matches
+	 * Returns: text direction this source matches
 	 */
 	public GtkTextDirection getDirection()
 	{
@@ -176,7 +176,7 @@ public class IconSource
 	 *
 	 * Deprecated: Use #GtkIconTheme instead.
 	 *
-	 * Return: %TRUE if this icon source is a base for any text direction variant
+	 * Returns: %TRUE if this icon source is a base for any text direction variant
 	 */
 	public bool getDirectionWildcarded()
 	{
@@ -190,7 +190,7 @@ public class IconSource
 	 *
 	 * Deprecated: Use #GtkIconTheme instead.
 	 *
-	 * Return: image filename. This string must not
+	 * Returns: image filename. This string must not
 	 *     be modified or freed.
 	 */
 	public string getFilename()
@@ -205,7 +205,7 @@ public class IconSource
 	 *
 	 * Deprecated: Use #GtkIconTheme instead.
 	 *
-	 * Return: icon name. This string must not be modified or freed.
+	 * Returns: icon name. This string must not be modified or freed.
 	 */
 	public string getIconName()
 	{
@@ -223,7 +223,7 @@ public class IconSource
 	 *
 	 * Deprecated: Use #GtkIconTheme instead.
 	 *
-	 * Return: source pixbuf
+	 * Returns: source pixbuf
 	 */
 	public Pixbuf getPixbuf()
 	{
@@ -243,7 +243,7 @@ public class IconSource
 	 *
 	 * Deprecated: Use #GtkIconTheme instead.
 	 *
-	 * Return: icon size (#GtkIconSize) this source matches.
+	 * Returns: icon size (#GtkIconSize) this source matches.
 	 */
 	public GtkIconSize getSize()
 	{
@@ -255,7 +255,7 @@ public class IconSource
 	 *
 	 * Deprecated: Use #GtkIconTheme instead.
 	 *
-	 * Return: %TRUE if this icon source is a base for any icon size variant
+	 * Returns: %TRUE if this icon source is a base for any icon size variant
 	 */
 	public bool getSizeWildcarded()
 	{
@@ -269,7 +269,7 @@ public class IconSource
 	 *
 	 * Deprecated: Use #GtkIconTheme instead.
 	 *
-	 * Return: widget state this source matches
+	 * Returns: widget state this source matches
 	 */
 	public GtkStateType getState()
 	{
@@ -281,7 +281,7 @@ public class IconSource
 	 *
 	 * Deprecated: Use #GtkIconTheme instead.
 	 *
-	 * Return: %TRUE if this icon source is a base for any widget state variant
+	 * Returns: %TRUE if this icon source is a base for any widget state variant
 	 */
 	public bool getStateWildcarded()
 	{

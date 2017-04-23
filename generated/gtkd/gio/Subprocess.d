@@ -149,7 +149,7 @@ public class Subprocess : ObjectG, InitableIF
 	 *     argv = commandline arguments for the subprocess
 	 *     flags = flags that define the behaviour of the subprocess
 	 *
-	 * Return: A newly created #GSubprocess, or %NULL on error (and @error
+	 * Returns: A newly created #GSubprocess, or %NULL on error (and @error
 	 *     will be set)
 	 *
 	 * Since: 2.40
@@ -225,7 +225,7 @@ public class Subprocess : ObjectG, InitableIF
 	 *     stdoutBuf = data read from the subprocess stdout
 	 *     stderrBuf = data read from the subprocess stderr
 	 *
-	 * Return: %TRUE if successful
+	 * Returns: %TRUE if successful
 	 *
 	 * Since: 2.40
 	 *
@@ -395,7 +395,7 @@ public class Subprocess : ObjectG, InitableIF
 	 * It is an error to call this function before g_subprocess_wait() and
 	 * unless g_subprocess_get_if_exited() returned %TRUE.
 	 *
-	 * Return: the exit status
+	 * Returns: the exit status
 	 *
 	 * Since: 2.40
 	 */
@@ -422,7 +422,7 @@ public class Subprocess : ObjectG, InitableIF
 	 * It is an error to call this function before g_subprocess_wait() has
 	 * returned.
 	 *
-	 * Return: %TRUE if the case of a normal exit
+	 * Returns: %TRUE if the case of a normal exit
 	 *
 	 * Since: 2.40
 	 */
@@ -439,7 +439,7 @@ public class Subprocess : ObjectG, InitableIF
 	 * It is an error to call this function before g_subprocess_wait() has
 	 * returned.
 	 *
-	 * Return: %TRUE if the case of termination due to a signal
+	 * Returns: %TRUE if the case of termination due to a signal
 	 *
 	 * Since: 2.40
 	 */
@@ -461,7 +461,7 @@ public class Subprocess : ObjectG, InitableIF
 	 * It is an error to call this function before g_subprocess_wait() has
 	 * returned.
 	 *
-	 * Return: the (meaningless) waitpid() exit status from the kernel
+	 * Returns: the (meaningless) waitpid() exit status from the kernel
 	 *
 	 * Since: 2.40
 	 */
@@ -477,7 +477,7 @@ public class Subprocess : ObjectG, InitableIF
 	 * The process must have been created with
 	 * %G_SUBPROCESS_FLAGS_STDERR_PIPE.
 	 *
-	 * Return: the stderr pipe
+	 * Returns: the stderr pipe
 	 *
 	 * Since: 2.40
 	 */
@@ -500,7 +500,7 @@ public class Subprocess : ObjectG, InitableIF
 	 * The process must have been created with
 	 * %G_SUBPROCESS_FLAGS_STDIN_PIPE.
 	 *
-	 * Return: the stdout pipe
+	 * Returns: the stdout pipe
 	 *
 	 * Since: 2.40
 	 */
@@ -523,7 +523,7 @@ public class Subprocess : ObjectG, InitableIF
 	 * The process must have been created with
 	 * %G_SUBPROCESS_FLAGS_STDOUT_PIPE.
 	 *
-	 * Return: the stdout pipe
+	 * Returns: the stdout pipe
 	 *
 	 * Since: 2.40
 	 */
@@ -547,7 +547,7 @@ public class Subprocess : ObjectG, InitableIF
 	 * It is an error to call this function before g_subprocess_wait() has
 	 * returned.
 	 *
-	 * Return: %TRUE if the process exited cleanly with a exit status of 0
+	 * Returns: %TRUE if the process exited cleanly with a exit status of 0
 	 *
 	 * Since: 2.40
 	 */
@@ -565,7 +565,7 @@ public class Subprocess : ObjectG, InitableIF
 	 * It is an error to call this function before g_subprocess_wait() and
 	 * unless g_subprocess_get_if_signaled() returned %TRUE.
 	 *
-	 * Return: the signal causing termination
+	 * Returns: the signal causing termination
 	 *
 	 * Since: 2.40
 	 */
@@ -609,7 +609,7 @@ public class Subprocess : ObjectG, InitableIF
 	 * Params:
 	 *     cancellable = a #GCancellable
 	 *
-	 * Return: %TRUE on success, %FALSE if @cancellable was cancelled
+	 * Returns: %TRUE on success, %FALSE if @cancellable was cancelled
 	 *
 	 * Since: 2.40
 	 *
@@ -652,7 +652,7 @@ public class Subprocess : ObjectG, InitableIF
 	 * Params:
 	 *     cancellable = a #GCancellable
 	 *
-	 * Return: %TRUE on success, %FALSE if process exited abnormally, or
+	 * Returns: %TRUE on success, %FALSE if process exited abnormally, or
 	 *     @cancellable was cancelled
 	 *
 	 * Since: 2.40
@@ -697,7 +697,7 @@ public class Subprocess : ObjectG, InitableIF
 	 * Params:
 	 *     result = the #GAsyncResult passed to your #GAsyncReadyCallback
 	 *
-	 * Return: %TRUE if successful, or %FALSE with @error set
+	 * Returns: %TRUE if successful, or %FALSE with @error set
 	 *
 	 * Since: 2.40
 	 *
@@ -724,7 +724,7 @@ public class Subprocess : ObjectG, InitableIF
 	 * Params:
 	 *     result = the #GAsyncResult passed to your #GAsyncReadyCallback
 	 *
-	 * Return: %TRUE if successful, or %FALSE with @error set
+	 * Returns: %TRUE if successful, or %FALSE with @error set
 	 *
 	 * Since: 2.40
 	 *

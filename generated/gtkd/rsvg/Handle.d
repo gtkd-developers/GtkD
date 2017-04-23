@@ -88,7 +88,7 @@ public class Handle : ObjectG
 	 * finished, free with g_object_unref(). No more than one image can be loaded
 	 * with one handle.
 	 *
-	 * Return: A new #RsvgHandle
+	 * Returns: A new #RsvgHandle
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -111,7 +111,7 @@ public class Handle : ObjectG
 	 *     data = The SVG data
 	 *     dataLen = The length of @data, in bytes
 	 *
-	 * Return: A #RsvgHandle or %NULL if an error occurs.
+	 * Returns: A #RsvgHandle or %NULL if an error occurs.
 	 *
 	 * Since: 2.14
 	 *
@@ -143,7 +143,7 @@ public class Handle : ObjectG
 	 * Params:
 	 *     fileName = The file name to load. If built with gnome-vfs, can be a URI.
 	 *
-	 * Return: A #RsvgHandle or %NULL if an error occurs.
+	 * Returns: A #RsvgHandle or %NULL if an error occurs.
 	 *
 	 * Since: 2.14
 	 *
@@ -182,7 +182,7 @@ public class Handle : ObjectG
 	 *     flags = flags from #RsvgHandleFlags
 	 *     cancellable = a #GCancellable, or %NULL
 	 *
-	 * Return: a new #RsvgHandle on success, or %NULL with @error filled in
+	 * Returns: a new #RsvgHandle on success, or %NULL with @error filled in
 	 *
 	 * Since: 2.32
 	 *
@@ -222,7 +222,7 @@ public class Handle : ObjectG
 	 *     flags = flags from #RsvgHandleFlags
 	 *     cancellable = a #GCancellable, or %NULL
 	 *
-	 * Return: a new #RsvgHandle on success, or %NULL with @error filled in
+	 * Returns: a new #RsvgHandle on success, or %NULL with @error filled in
 	 *
 	 * Since: 2.32
 	 *
@@ -254,7 +254,7 @@ public class Handle : ObjectG
 	 * Params:
 	 *     flags = flags from #RsvgHandleFlags
 	 *
-	 * Return: a new #RsvgHandle
+	 * Returns: a new #RsvgHandle
 	 *
 	 * Since: 2.36
 	 *
@@ -277,7 +277,7 @@ public class Handle : ObjectG
 	 * return %TRUE if the loader closed successfully.  Note that @handle isn't
 	 * freed until @g_object_unref is called.
 	 *
-	 * Return: %TRUE on success, or %FALSE on error
+	 * Returns: %TRUE on success, or %FALSE on error
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -298,7 +298,7 @@ public class Handle : ObjectG
 	/**
 	 * Gets the base uri for this #RsvgHandle.
 	 *
-	 * Return: the base uri, possibly null
+	 * Returns: the base uri, possibly null
 	 *
 	 * Since: 2.8
 	 */
@@ -344,7 +344,7 @@ public class Handle : ObjectG
 	 * will be returned.  Note that the pixbuf may not be complete until
 	 * @rsvg_handle_close has been called.
 	 *
-	 * Return: the pixbuf loaded by @handle, or %NULL.
+	 * Returns: the pixbuf loaded by @handle, or %NULL.
 	 */
 	public Pixbuf getPixbuf()
 	{
@@ -370,7 +370,7 @@ public class Handle : ObjectG
 	 *         render the whole SVG. For example, if you have a layer called
 	 *         "layer1" that you wish to render, pass "##layer1" as the id.
 	 *
-	 * Return: the pixbuf loaded by @handle, or %NULL.
+	 * Returns: the pixbuf loaded by @handle, or %NULL.
 	 *
 	 * Since: 2.14
 	 */
@@ -409,7 +409,7 @@ public class Handle : ObjectG
 	 * Params:
 	 *     id = an element's id within the SVG
 	 *
-	 * Return: %TRUE if @id exists in the SVG document
+	 * Returns: %TRUE if @id exists in the SVG document
 	 *
 	 * Since: 2.22
 	 */
@@ -430,7 +430,7 @@ public class Handle : ObjectG
 	 *     stream = a #GInputStream
 	 *     cancellable = a #GCancellable, or %NULL
 	 *
-	 * Return: %TRUE if reading @stream succeeded, or %FALSE otherwise
+	 * Returns: %TRUE if reading @stream succeeded, or %FALSE otherwise
 	 *     with @error filled in
 	 *
 	 * Since: 2.32
@@ -457,7 +457,7 @@ public class Handle : ObjectG
 	 * Params:
 	 *     cr = A Cairo renderer
 	 *
-	 * Return: %TRUE if drawing succeeded.
+	 * Returns: %TRUE if drawing succeeded.
 	 *
 	 * Since: 2.14
 	 */
@@ -475,7 +475,7 @@ public class Handle : ObjectG
 	 *         the whole SVG. For example, if you have a layer called "layer1"
 	 *         that you wish to render, pass "##layer1" as the id.
 	 *
-	 * Return: %TRUE if drawing succeeded.
+	 * Returns: %TRUE if drawing succeeded.
 	 *
 	 * Since: 2.14
 	 */
@@ -555,7 +555,7 @@ public class Handle : ObjectG
 	 *     buf = pointer to svg data
 	 *     count = length of the @buf buffer in bytes
 	 *
-	 * Return: %TRUE on success, or %FALSE on error
+	 * Returns: %TRUE on success, or %FALSE on error
 	 *
 	 * Throws: GException on failure.
 	 */

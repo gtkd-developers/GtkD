@@ -77,7 +77,7 @@ public interface TableIF{
 	 * Params:
 	 *     column = a #gint representing a column in @table
 	 *
-	 * Return: a gboolean representing if the column was successfully added to
+	 * Returns: a gboolean representing if the column was successfully added to
 	 *     the selection, or 0 if value does not implement this interface.
 	 */
 	public bool addColumnSelection(int column);
@@ -88,7 +88,7 @@ public interface TableIF{
 	 * Params:
 	 *     row = a #gint representing a row in @table
 	 *
-	 * Return: a gboolean representing if row was successfully added to selection,
+	 * Returns: a gboolean representing if row was successfully added to selection,
 	 *     or 0 if value does not implement this interface.
 	 */
 	public bool addRowSelection(int row);
@@ -96,7 +96,7 @@ public interface TableIF{
 	/**
 	 * Gets the caption for the @table.
 	 *
-	 * Return: a AtkObject* representing the
+	 * Returns: a AtkObject* representing the
 	 *     table caption, or %NULL if value does not implement this interface.
 	 */
 	public ObjectAtk getCaption();
@@ -109,7 +109,7 @@ public interface TableIF{
 	 * Params:
 	 *     index = a #gint representing an index in @table
 	 *
-	 * Return: a gint representing the column at the specified index,
+	 * Returns: a gint representing the column at the specified index,
 	 *     or -1 if the table does not implement this method.
 	 */
 	public int getColumnAtIndex(int index);
@@ -120,7 +120,7 @@ public interface TableIF{
 	 * Params:
 	 *     column = a #gint representing a column in @table
 	 *
-	 * Return: a gchar* representing the column description, or %NULL
+	 * Returns: a gchar* representing the column description, or %NULL
 	 *     if value does not implement this interface.
 	 */
 	public string getColumnDescription(int column);
@@ -133,7 +133,7 @@ public interface TableIF{
 	 *     row = a #gint representing a row in @table
 	 *     column = a #gint representing a column in @table
 	 *
-	 * Return: a gint representing the column extent at specified position, or 0
+	 * Returns: a gint representing the column extent at specified position, or 0
 	 *     if value does not implement this interface.
 	 */
 	public int getColumnExtentAt(int row, int column);
@@ -144,7 +144,7 @@ public interface TableIF{
 	 * Params:
 	 *     column = a #gint representing a column in the table
 	 *
-	 * Return: a AtkObject* representing the
+	 * Returns: a AtkObject* representing the
 	 *     specified column header, or %NULL if value does not implement this
 	 *     interface.
 	 */
@@ -161,7 +161,7 @@ public interface TableIF{
 	 *     row = a #gint representing a row in @table
 	 *     column = a #gint representing a column in @table
 	 *
-	 * Return: a #gint representing the index at specified position.
+	 * Returns: a #gint representing the index at specified position.
 	 *     The value -1 is returned if the object at row,column is not a child
 	 *     of table or table does not implement this interface.
 	 */
@@ -170,7 +170,7 @@ public interface TableIF{
 	/**
 	 * Gets the number of columns in the table.
 	 *
-	 * Return: a gint representing the number of columns, or 0
+	 * Returns: a gint representing the number of columns, or 0
 	 *     if value does not implement this interface.
 	 */
 	public int getNColumns();
@@ -178,7 +178,7 @@ public interface TableIF{
 	/**
 	 * Gets the number of rows in the table.
 	 *
-	 * Return: a gint representing the number of rows, or 0
+	 * Returns: a gint representing the number of rows, or 0
 	 *     if value does not implement this interface.
 	 */
 	public int getNRows();
@@ -191,7 +191,7 @@ public interface TableIF{
 	 * Params:
 	 *     index = a #gint representing an index in @table
 	 *
-	 * Return: a gint representing the row at the specified index,
+	 * Returns: a gint representing the row at the specified index,
 	 *     or -1 if the table does not implement this method.
 	 */
 	public int getRowAtIndex(int index);
@@ -202,7 +202,7 @@ public interface TableIF{
 	 * Params:
 	 *     row = a #gint representing a row in @table
 	 *
-	 * Return: a gchar* representing the row description, or
+	 * Returns: a gchar* representing the row description, or
 	 *     %NULL if value does not implement this interface.
 	 */
 	public string getRowDescription(int row);
@@ -215,7 +215,7 @@ public interface TableIF{
 	 *     row = a #gint representing a row in @table
 	 *     column = a #gint representing a column in @table
 	 *
-	 * Return: a gint representing the row extent at specified position, or 0
+	 * Returns: a gint representing the row extent at specified position, or 0
 	 *     if value does not implement this interface.
 	 */
 	public int getRowExtentAt(int row, int column);
@@ -226,7 +226,7 @@ public interface TableIF{
 	 * Params:
 	 *     row = a #gint representing a row in the table
 	 *
-	 * Return: a AtkObject* representing the
+	 * Returns: a AtkObject* representing the
 	 *     specified row header, or %NULL if value does not implement this
 	 *     interface.
 	 */
@@ -239,7 +239,7 @@ public interface TableIF{
 	 * Params:
 	 *     selected = a #gint** that is to contain the selected columns numbers
 	 *
-	 * Return: a gint representing the number of selected columns,
+	 * Returns: a gint representing the number of selected columns,
 	 *     or %0 if value does not implement this interface.
 	 */
 	public int getSelectedColumns(int** selected);
@@ -251,7 +251,7 @@ public interface TableIF{
 	 * Params:
 	 *     selected = a #gint** that is to contain the selected row numbers
 	 *
-	 * Return: a gint representing the number of selected rows,
+	 * Returns: a gint representing the number of selected rows,
 	 *     or zero if value does not implement this interface.
 	 */
 	public int getSelectedRows(int** selected);
@@ -259,7 +259,7 @@ public interface TableIF{
 	/**
 	 * Gets the summary description of the table.
 	 *
-	 * Return: a AtkObject* representing a summary description
+	 * Returns: a AtkObject* representing a summary description
 	 *     of the table, or zero if value does not implement this interface.
 	 */
 	public ObjectAtk getSummary();
@@ -271,7 +271,7 @@ public interface TableIF{
 	 * Params:
 	 *     column = a #gint representing a column in @table
 	 *
-	 * Return: a gboolean representing if the column is selected, or 0
+	 * Returns: a gboolean representing if the column is selected, or 0
 	 *     if value does not implement this interface.
 	 */
 	public bool isColumnSelected(int column);
@@ -283,7 +283,7 @@ public interface TableIF{
 	 * Params:
 	 *     row = a #gint representing a row in @table
 	 *
-	 * Return: a gboolean representing if the row is selected, or 0
+	 * Returns: a gboolean representing if the row is selected, or 0
 	 *     if value does not implement this interface.
 	 */
 	public bool isRowSelected(int row);
@@ -296,7 +296,7 @@ public interface TableIF{
 	 *     row = a #gint representing a row in @table
 	 *     column = a #gint representing a column in @table
 	 *
-	 * Return: a gboolean representing if the cell is selected, or 0
+	 * Returns: a gboolean representing if the cell is selected, or 0
 	 *     if value does not implement this interface.
 	 */
 	public bool isSelected(int row, int column);
@@ -309,7 +309,7 @@ public interface TableIF{
 	 *     row = a #gint representing a row in @table
 	 *     column = a #gint representing a column in @table
 	 *
-	 * Return: an #AtkObject representing the referred
+	 * Returns: an #AtkObject representing the referred
 	 *     to accessible
 	 */
 	public ObjectAtk refAt(int row, int column);
@@ -320,7 +320,7 @@ public interface TableIF{
 	 * Params:
 	 *     column = a #gint representing a column in @table
 	 *
-	 * Return: a gboolean representing if the column was successfully removed from
+	 * Returns: a gboolean representing if the column was successfully removed from
 	 *     the selection, or 0 if value does not implement this interface.
 	 */
 	public bool removeColumnSelection(int column);
@@ -331,7 +331,7 @@ public interface TableIF{
 	 * Params:
 	 *     row = a #gint representing a row in @table
 	 *
-	 * Return: a gboolean representing if the row was successfully removed from
+	 * Returns: a gboolean representing if the row was successfully removed from
 	 *     the selection, or 0 if value does not implement this interface.
 	 */
 	public bool removeRowSelection(int row);

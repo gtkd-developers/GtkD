@@ -248,7 +248,7 @@ public class MessageDialog : Dialog
 	 *
 	 * Deprecated: Use #GtkDialog for dialogs with images
 	 *
-	 * Return: the dialog’s image
+	 * Returns: the dialog’s image
 	 *
 	 * Since: 2.14
 	 */

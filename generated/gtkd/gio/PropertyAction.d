@@ -146,7 +146,7 @@ public class PropertyAction : ObjectG, ActionIF
 	 *         to wrap
 	 *     propertyName = the name of the property
 	 *
-	 * Return: a new #GPropertyAction
+	 * Returns: a new #GPropertyAction
 	 *
 	 * Since: 2.38
 	 *

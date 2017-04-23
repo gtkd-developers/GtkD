@@ -130,7 +130,7 @@ public class OutputStream : ObjectG
 	 * Params:
 	 *     cancellable = optional cancellable object
 	 *
-	 * Return: %TRUE on success, %FALSE on failure
+	 * Returns: %TRUE on success, %FALSE on failure
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -177,7 +177,7 @@ public class OutputStream : ObjectG
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *
-	 * Return: %TRUE if stream was successfully closed, %FALSE otherwise.
+	 * Returns: %TRUE if stream was successfully closed, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -209,7 +209,7 @@ public class OutputStream : ObjectG
 	 * Params:
 	 *     cancellable = optional cancellable object
 	 *
-	 * Return: %TRUE on success, %FALSE on error
+	 * Returns: %TRUE on success, %FALSE on error
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -253,7 +253,7 @@ public class OutputStream : ObjectG
 	 * Params:
 	 *     result = a GAsyncResult.
 	 *
-	 * Return: %TRUE if flush operation succeeded, %FALSE otherwise.
+	 * Returns: %TRUE if flush operation succeeded, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -274,7 +274,7 @@ public class OutputStream : ObjectG
 	/**
 	 * Checks if an output stream has pending actions.
 	 *
-	 * Return: %TRUE if @stream has pending actions.
+	 * Returns: %TRUE if @stream has pending actions.
 	 */
 	public bool hasPending()
 	{
@@ -284,7 +284,7 @@ public class OutputStream : ObjectG
 	/**
 	 * Checks if an output stream has already been closed.
 	 *
-	 * Return: %TRUE if @stream is closed. %FALSE otherwise.
+	 * Returns: %TRUE if @stream is closed. %FALSE otherwise.
 	 */
 	public bool isClosed()
 	{
@@ -297,7 +297,7 @@ public class OutputStream : ObjectG
 	 * flush (or other i/o operation) is called from within
 	 * the closing operation.
 	 *
-	 * Return: %TRUE if @stream is being closed. %FALSE otherwise.
+	 * Returns: %TRUE if @stream is being closed. %FALSE otherwise.
 	 *
 	 * Since: 2.24
 	 */
@@ -311,7 +311,7 @@ public class OutputStream : ObjectG
 	 * already set or @stream is closed, it will return %FALSE and set
 	 * @error.
 	 *
-	 * Return: %TRUE if pending was previously unset and is now set.
+	 * Returns: %TRUE if pending was previously unset and is now set.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -337,7 +337,7 @@ public class OutputStream : ObjectG
 	 *     flags = a set of #GOutputStreamSpliceFlags.
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Return: a #gssize containing the size of the data spliced, or
+	 * Returns: a #gssize containing the size of the data spliced, or
 	 *     -1 if an error occurred. Note that if the number of bytes
 	 *     spliced is greater than %G_MAXSSIZE, then that will be
 	 *     returned, and there is no way to determine the actual number
@@ -387,7 +387,7 @@ public class OutputStream : ObjectG
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *
-	 * Return: a #gssize of the number of bytes spliced. Note that if the
+	 * Returns: a #gssize of the number of bytes spliced. Note that if the
 	 *     number of bytes spliced is greater than %G_MAXSSIZE, then that
 	 *     will be returned, and there is no way to determine the actual
 	 *     number of bytes spliced.
@@ -430,7 +430,7 @@ public class OutputStream : ObjectG
 	 *     format = the format string. See the printf() documentation
 	 *     args = the parameters to insert into the format string
 	 *
-	 * Return: %TRUE on success, %FALSE if there was an error
+	 * Returns: %TRUE on success, %FALSE if there was an error
 	 *
 	 * Since: 2.40
 	 */
@@ -472,7 +472,7 @@ public class OutputStream : ObjectG
 	 *     count = the number of bytes to write
 	 *     cancellable = optional cancellable object
 	 *
-	 * Return: Number of bytes written, or -1 on error
+	 * Returns: Number of bytes written, or -1 on error
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -518,7 +518,7 @@ public class OutputStream : ObjectG
 	 *         written to the stream
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Return: %TRUE on success, %FALSE if there was an error
+	 * Returns: %TRUE on success, %FALSE if there was an error
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -584,7 +584,7 @@ public class OutputStream : ObjectG
 	 *     result = a #GAsyncResult
 	 *     bytesWritten = location to store the number of bytes that was written to the stream
 	 *
-	 * Return: %TRUE on success, %FALSE if there was an error
+	 * Returns: %TRUE on success, %FALSE if there was an error
 	 *
 	 * Since: 2.44
 	 *
@@ -671,7 +671,7 @@ public class OutputStream : ObjectG
 	 *     bytes = the #GBytes to write
 	 *     cancellable = optional cancellable object
 	 *
-	 * Return: Number of bytes written, or -1 on error
+	 * Returns: Number of bytes written, or -1 on error
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -722,7 +722,7 @@ public class OutputStream : ObjectG
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *
-	 * Return: a #gssize containing the number of bytes written to the stream.
+	 * Returns: a #gssize containing the number of bytes written to the stream.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -746,7 +746,7 @@ public class OutputStream : ObjectG
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *
-	 * Return: a #gssize containing the number of bytes written to the stream.
+	 * Returns: a #gssize containing the number of bytes written to the stream.
 	 *
 	 * Throws: GException on failure.
 	 */

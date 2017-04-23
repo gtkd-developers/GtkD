@@ -147,7 +147,7 @@ public class PadTemplate : ObjectGst
 	 *     presence = the #GstPadPresence of the pad.
 	 *     caps = a #GstCaps set for the template.
 	 *
-	 * Return: a new #GstPadTemplate.
+	 * Returns: a new #GstPadTemplate.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -166,7 +166,7 @@ public class PadTemplate : ObjectGst
 	/**
 	 * Gets the capabilities of the pad template.
 	 *
-	 * Return: the #GstCaps of the pad template.
+	 * Returns: the #GstCaps of the pad template.
 	 *     Unref after usage.
 	 */
 	public Caps getCaps()

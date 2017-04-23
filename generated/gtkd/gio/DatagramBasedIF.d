@@ -132,7 +132,7 @@ public interface DatagramBasedIF{
 	 * Params:
 	 *     condition = a #GIOCondition mask to check
 	 *
-	 * Return: the #GIOCondition mask of the current state
+	 * Returns: the #GIOCondition mask of the current state
 	 *
 	 * Since: 2.48
 	 */
@@ -152,7 +152,7 @@ public interface DatagramBasedIF{
 	 *         to block indefinitely
 	 *     cancellable = a #GCancellable
 	 *
-	 * Return: %TRUE if the condition was met, %FALSE otherwise
+	 * Returns: %TRUE if the condition was met, %FALSE otherwise
 	 *
 	 * Since: 2.48
 	 *
@@ -180,7 +180,7 @@ public interface DatagramBasedIF{
 	 *     condition = a #GIOCondition mask to monitor
 	 *     cancellable = a #GCancellable
 	 *
-	 * Return: a newly allocated #GSource
+	 * Returns: a newly allocated #GSource
 	 *
 	 * Since: 2.48
 	 */
@@ -246,7 +246,7 @@ public interface DatagramBasedIF{
 	 *         to block indefinitely
 	 *     cancellable = a %GCancellable
 	 *
-	 * Return: number of messages received, or -1 on error. Note that the number
+	 * Returns: number of messages received, or -1 on error. Note that the number
 	 *     of messages received may be smaller than @num_messages if @timeout is
 	 *     zero or positive, if the peer closed the connection, or if @num_messages
 	 *     was larger than `UIO_MAXIOV` (1024), in which case the caller may re-try
@@ -309,7 +309,7 @@ public interface DatagramBasedIF{
 	 *         to block indefinitely
 	 *     cancellable = a %GCancellable
 	 *
-	 * Return: number of messages sent, or -1 on error. Note that the number of
+	 * Returns: number of messages sent, or -1 on error. Note that the number of
 	 *     messages sent may be smaller than @num_messages if @timeout is zero
 	 *     or positive, or if @num_messages was larger than `UIO_MAXIOV` (1024), in
 	 *     which case the caller may re-try to send the remaining messages.

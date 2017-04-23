@@ -174,7 +174,7 @@ public class Bus : ObjectGst
 	/**
 	 * Creates a new #GstBus instance.
 	 *
-	 * Return: a new #GstBus instance
+	 * Returns: a new #GstBus instance
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -266,7 +266,7 @@ public class Bus : ObjectGst
 	 *     userData = user data passed to @func.
 	 *     notify = the function to call when the source is removed.
 	 *
-	 * Return: The event source id or 0 if @bus already got an event source.
+	 * Returns: The event source id or 0 if @bus already got an event source.
 	 */
 	public uint addWatchFull(int priority, GstBusFunc func, void* userData, GDestroyNotify notify)
 	{
@@ -281,7 +281,7 @@ public class Bus : ObjectGst
 	 *     message = the #GstMessage received
 	 *     data = user data
 	 *
-	 * Return: %TRUE
+	 * Returns: %TRUE
 	 */
 	public bool asyncSignalFunc(Message message, void* data)
 	{
@@ -293,7 +293,7 @@ public class Bus : ObjectGst
 	 * a message is on the bus. After the GSource is dispatched, the
 	 * message is popped off the bus and unreffed.
 	 *
-	 * Return: a #GSource that can be added to a mainloop.
+	 * Returns: a #GSource that can be added to a mainloop.
 	 */
 	public Source createWatch()
 	{
@@ -353,7 +353,7 @@ public class Bus : ObjectGst
 	 * Check if there are pending messages on the bus that
 	 * should be handled.
 	 *
-	 * Return: %TRUE if there are messages on the bus to be handled, %FALSE
+	 * Returns: %TRUE if there are messages on the bus to be handled, %FALSE
 	 *     otherwise.
 	 *
 	 *     MT safe.
@@ -368,7 +368,7 @@ public class Bus : ObjectGst
 	 * on the bus' message queue. A reference is returned, and needs to be unreffed
 	 * by the caller.
 	 *
-	 * Return: the #GstMessage that is on the
+	 * Returns: the #GstMessage that is on the
 	 *     bus, or %NULL if the bus is empty.
 	 *
 	 *     MT safe.
@@ -426,7 +426,7 @@ public class Bus : ObjectGst
 	 *     timeout = the poll timeout, as a #GstClockTime, or #GST_CLOCK_TIME_NONE to poll
 	 *         indefinitely.
 	 *
-	 * Return: the message that was received,
+	 * Returns: the message that was received,
 	 *     or %NULL if the poll timed out. The message is taken from the
 	 *     bus and needs to be unreffed with gst_message_unref() after
 	 *     usage.
@@ -446,7 +446,7 @@ public class Bus : ObjectGst
 	/**
 	 * Get a message from the bus.
 	 *
-	 * Return: the #GstMessage that is on the
+	 * Returns: the #GstMessage that is on the
 	 *     bus, or %NULL if the bus is empty. The message is taken from
 	 *     the bus and needs to be unreffed with gst_message_unref() after
 	 *     usage.
@@ -475,7 +475,7 @@ public class Bus : ObjectGst
 	 * Params:
 	 *     types = message types to take into account
 	 *
-	 * Return: the next #GstMessage matching
+	 * Returns: the next #GstMessage matching
 	 *     @type that is on the bus, or %NULL if the bus is empty or there
 	 *     is no message matching @type. The message is taken from the bus
 	 *     and needs to be unreffed with gst_message_unref() after usage.
@@ -501,7 +501,7 @@ public class Bus : ObjectGst
 	 * Params:
 	 *     message = the #GstMessage to post
 	 *
-	 * Return: %TRUE if the message could be posted, %FALSE if the bus is flushing.
+	 * Returns: %TRUE if the message could be posted, %FALSE if the bus is flushing.
 	 *
 	 *     MT safe.
 	 */
@@ -523,7 +523,7 @@ public class Bus : ObjectGst
 	/**
 	 * Removes an installed bus watch from @bus.
 	 *
-	 * Return: %TRUE on success or %FALSE if @bus has no event source.
+	 * Returns: %TRUE on success or %FALSE if @bus has no event source.
 	 *
 	 * Since: 1.6
 	 */
@@ -555,7 +555,7 @@ public class Bus : ObjectGst
 	 *     message = the #GstMessage received
 	 *     data = user data
 	 *
-	 * Return: GST_BUS_PASS
+	 * Returns: GST_BUS_PASS
 	 */
 	public GstBusSyncReply syncSignalHandler(Message message, void* data)
 	{
@@ -572,7 +572,7 @@ public class Bus : ObjectGst
 	 * Params:
 	 *     timeout = a timeout
 	 *
-	 * Return: the #GstMessage that is on the
+	 * Returns: the #GstMessage that is on the
 	 *     bus after the specified timeout or %NULL if the bus is empty
 	 *     after the timeout expired.  The message is taken from the bus
 	 *     and needs to be unreffed with gst_message_unref() after usage.
@@ -604,7 +604,7 @@ public class Bus : ObjectGst
 	 *     timeout = a timeout in nanoseconds, or GST_CLOCK_TIME_NONE to wait forever
 	 *     types = message types to take into account, GST_MESSAGE_ANY for any type
 	 *
-	 * Return: a #GstMessage matching the
+	 * Returns: a #GstMessage matching the
 	 *     filter in @types, or %NULL if no matching message was found on
 	 *     the bus until the timeout expired. The message is taken from
 	 *     the bus and needs to be unreffed with gst_message_unref() after

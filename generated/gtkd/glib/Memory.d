@@ -77,7 +77,7 @@ public struct Memory
 	 * Params:
 	 *     nBytes = the number of bytes to allocate
 	 *
-	 * Return: a pointer to the allocated memory
+	 * Returns: a pointer to the allocated memory
 	 */
 	public static void* malloc(size_t nBytes)
 	{
@@ -91,7 +91,7 @@ public struct Memory
 	 * Params:
 	 *     nBytes = the number of bytes to allocate
 	 *
-	 * Return: a pointer to the allocated memory
+	 * Returns: a pointer to the allocated memory
 	 */
 	public static void* malloc0(size_t nBytes)
 	{
@@ -106,7 +106,7 @@ public struct Memory
 	 *     nBlocks = the number of blocks to allocate
 	 *     nBlockBytes = the size of each block in bytes
 	 *
-	 * Return: a pointer to the allocated memory
+	 * Returns: a pointer to the allocated memory
 	 *
 	 * Since: 2.24
 	 */
@@ -123,7 +123,7 @@ public struct Memory
 	 *     nBlocks = the number of blocks to allocate
 	 *     nBlockBytes = the size of each block in bytes
 	 *
-	 * Return: a pointer to the allocated memory
+	 * Returns: a pointer to the allocated memory
 	 *
 	 * Since: 2.24
 	 */
@@ -142,7 +142,7 @@ public struct Memory
 	 * Deprecated: GLib always uses the system malloc, so this function always
 	 * returns %TRUE.
 	 *
-	 * Return: if %TRUE, malloc() and g_malloc() can be mixed.
+	 * Returns: if %TRUE, malloc() and g_malloc() can be mixed.
 	 */
 	public static bool memIsSystemMalloc()
 	{
@@ -185,7 +185,7 @@ public struct Memory
 	 *     mem = the memory to copy.
 	 *     byteSize = the number of bytes to copy.
 	 *
-	 * Return: a pointer to the newly-allocated copy of the memory, or %NULL if @mem
+	 * Returns: a pointer to the newly-allocated copy of the memory, or %NULL if @mem
 	 *     is %NULL.
 	 */
 	public static void* memdup(void* mem, uint byteSize)
@@ -204,7 +204,7 @@ public struct Memory
 	 *     mem = the memory to reallocate
 	 *     nBytes = new size of the memory in bytes
 	 *
-	 * Return: the new address of the allocated memory
+	 * Returns: the new address of the allocated memory
 	 */
 	public static void* realloc(void* mem, size_t nBytes)
 	{
@@ -220,7 +220,7 @@ public struct Memory
 	 *     nBlocks = the number of blocks to allocate
 	 *     nBlockBytes = the size of each block in bytes
 	 *
-	 * Return: the new address of the allocated memory
+	 * Returns: the new address of the allocated memory
 	 *
 	 * Since: 2.24
 	 */
@@ -236,7 +236,7 @@ public struct Memory
 	 * Params:
 	 *     nBytes = number of bytes to allocate.
 	 *
-	 * Return: the allocated memory, or %NULL.
+	 * Returns: the allocated memory, or %NULL.
 	 */
 	public static void* tryMalloc(size_t nBytes)
 	{
@@ -250,7 +250,7 @@ public struct Memory
 	 * Params:
 	 *     nBytes = number of bytes to allocate
 	 *
-	 * Return: the allocated memory, or %NULL
+	 * Returns: the allocated memory, or %NULL
 	 *
 	 * Since: 2.8
 	 */
@@ -267,7 +267,7 @@ public struct Memory
 	 *     nBlocks = the number of blocks to allocate
 	 *     nBlockBytes = the size of each block in bytes
 	 *
-	 * Return: the allocated memory, or %NULL
+	 * Returns: the allocated memory, or %NULL
 	 *
 	 * Since: 2.24
 	 */
@@ -284,7 +284,7 @@ public struct Memory
 	 *     nBlocks = the number of blocks to allocate
 	 *     nBlockBytes = the size of each block in bytes
 	 *
-	 * Return: the allocated memory, or %NULL.
+	 * Returns: the allocated memory, or %NULL.
 	 *
 	 * Since: 2.24
 	 */
@@ -304,7 +304,7 @@ public struct Memory
 	 *     mem = previously-allocated memory, or %NULL.
 	 *     nBytes = number of bytes to allocate.
 	 *
-	 * Return: the allocated memory, or %NULL.
+	 * Returns: the allocated memory, or %NULL.
 	 */
 	public static void* tryRealloc(void* mem, size_t nBytes)
 	{
@@ -320,7 +320,7 @@ public struct Memory
 	 *     nBlocks = the number of blocks to allocate
 	 *     nBlockBytes = the size of each block in bytes
 	 *
-	 * Return: the allocated memory, or %NULL.
+	 * Returns: the allocated memory, or %NULL.
 	 *
 	 * Since: 2.24
 	 */

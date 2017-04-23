@@ -185,7 +185,7 @@ public struct Type
 	 * Params:
 	 *     instanc = a valid #GTypeInstance structure
 	 *
-	 * Return: %TRUE if @instance is valid, %FALSE otherwise
+	 * Returns: %TRUE if @instance is valid, %FALSE otherwise
 	 */
 	public static bool checkInstance(TypeInstance instanc)
 	{
@@ -242,7 +242,7 @@ public struct Type
 	 * Params:
 	 *     type = the parent type
 	 *
-	 * Return: Newly allocated
+	 * Returns: Newly allocated
 	 *     and 0-terminated array of child types, free with g_free()
 	 */
 	public static GType[] children(GType type)
@@ -275,7 +275,7 @@ public struct Type
 	 * Params:
 	 *     type = an instantiatable type to create an instance for
 	 *
-	 * Return: an allocated and initialized instance, subject to further
+	 * Returns: an allocated and initialized instance, subject to further
 	 *     treatment by the fundamental type implementation
 	 */
 	public static TypeInstance createInstance(GType type)
@@ -297,7 +297,7 @@ public struct Type
 	 * Params:
 	 *     gType = an interface type
 	 *
-	 * Return: the default
+	 * Returns: the default
 	 *     vtable for the interface, or %NULL if the type is not currently
 	 *     in use
 	 *
@@ -330,7 +330,7 @@ public struct Type
 	 * Params:
 	 *     gType = an interface type
 	 *
-	 * Return: the default
+	 * Returns: the default
 	 *     vtable for the interface; call g_type_default_interface_unref()
 	 *     when you are done using the interface.
 	 *
@@ -373,7 +373,7 @@ public struct Type
 	 * Params:
 	 *     type = a #GType
 	 *
-	 * Return: the depth of @type
+	 * Returns: the depth of @type
 	 */
 	public static uint depth(GType type)
 	{
@@ -428,7 +428,7 @@ public struct Type
 	 * Params:
 	 *     name = type name to lookup
 	 *
-	 * Return: corresponding type ID or 0
+	 * Returns: corresponding type ID or 0
 	 */
 	public static GType fromName(string name)
 	{
@@ -442,7 +442,7 @@ public struct Type
 	 * Params:
 	 *     typeId = valid type ID
 	 *
-	 * Return: fundamental type ID
+	 * Returns: fundamental type ID
 	 */
 	public static GType fundamental(GType typeId)
 	{
@@ -455,7 +455,7 @@ public struct Type
 	 * The returned type ID represents the highest currently registered
 	 * fundamental type identifier.
 	 *
-	 * Return: the next available fundamental type ID to be registered,
+	 * Returns: the next available fundamental type ID to be registered,
 	 *     or 0 if the type system ran out of fundamental type IDs
 	 */
 	public static GType fundamentalNext()
@@ -469,7 +469,7 @@ public struct Type
 	 * Params:
 	 *     type = #GType to retrieve the plugin for
 	 *
-	 * Return: the corresponding plugin
+	 * Returns: the corresponding plugin
 	 *     if @type is a dynamic type, %NULL otherwise
 	 */
 	public static TypePluginIF getPlugin(GType type)
@@ -496,7 +496,7 @@ public struct Type
 	 *     type = a #GType
 	 *     quark = a #GQuark id to identify the data
 	 *
-	 * Return: the data, or %NULL if no data was found
+	 * Returns: the data, or %NULL if no data was found
 	 */
 	public static void* getQdata(GType type, GQuark quark)
 	{
@@ -510,7 +510,7 @@ public struct Type
 	 * g_type_from_name()) and know if the cache is still valid at a later
 	 * time by comparing the current serial with the one at the type lookup.
 	 *
-	 * Return: An unsigned int, representing the state of type registrations
+	 * Returns: An unsigned int, representing the state of type registrations
 	 *
 	 * Since: 2.36
 	 */
@@ -557,7 +557,7 @@ public struct Type
 	 * Params:
 	 *     type = the type to list interface types for
 	 *
-	 * Return: Newly allocated
+	 * Returns: Newly allocated
 	 *     and 0-terminated array of interface types, free with g_free()
 	 */
 	public static GType[] interfaces(GType type)
@@ -579,7 +579,7 @@ public struct Type
 	 *     isAType = possible anchestor of @type or interface that @type
 	 *         could conform to
 	 *
-	 * Return: %TRUE if @type is a @is_a_type
+	 * Returns: %TRUE if @type is a @is_a_type
 	 */
 	public static bool isA(GType type, GType isAType)
 	{
@@ -596,7 +596,7 @@ public struct Type
 	 * Params:
 	 *     type = type to return name for
 	 *
-	 * Return: static type name or %NULL
+	 * Returns: static type name or %NULL
 	 */
 	public static string name(GType type)
 	{
@@ -628,7 +628,7 @@ public struct Type
 	 *     leafType = descendant of @root_type and the type to be returned
 	 *     rootType = immediate parent of the returned type
 	 *
-	 * Return: immediate child of @root_type and anchestor of @leaf_type
+	 * Returns: immediate child of @root_type and anchestor of @leaf_type
 	 */
 	public static GType nextBase(GType leafType, GType rootType)
 	{
@@ -642,7 +642,7 @@ public struct Type
 	 * Params:
 	 *     type = the derived type
 	 *
-	 * Return: the parent type
+	 * Returns: the parent type
 	 */
 	public static GType parent(GType type)
 	{
@@ -655,7 +655,7 @@ public struct Type
 	 * Params:
 	 *     type = type to return quark of type name for
 	 *
-	 * Return: the type names quark or 0
+	 * Returns: the type names quark or 0
 	 */
 	public static GQuark qname(GType type)
 	{
@@ -693,7 +693,7 @@ public struct Type
 	 *     plugin = #GTypePlugin structure to retrieve the #GTypeInfo from
 	 *     flags = bitwise combination of #GTypeFlags values
 	 *
-	 * Return: the new type identifier or #G_TYPE_INVALID if registration failed
+	 * Returns: the new type identifier or #G_TYPE_INVALID if registration failed
 	 */
 	public static GType registerDynamic(GType parentType, string typeName, TypePluginIF plugin, GTypeFlags flags)
 	{
@@ -716,7 +716,7 @@ public struct Type
 	 *     finfo = #GTypeFundamentalInfo structure for this type
 	 *     flags = bitwise combination of #GTypeFlags values
 	 *
-	 * Return: the predefined type identifier
+	 * Returns: the predefined type identifier
 	 */
 	public static GType registerFundamental(GType typeId, string typeName, GTypeInfo* info, GTypeFundamentalInfo* finfo, GTypeFlags flags)
 	{
@@ -736,7 +736,7 @@ public struct Type
 	 *     info = #GTypeInfo structure for this type
 	 *     flags = bitwise combination of #GTypeFlags values
 	 *
-	 * Return: the new type identifier
+	 * Returns: the new type identifier
 	 */
 	public static GType registerStatic(GType parentType, string typeName, GTypeInfo* info, GTypeFlags flags)
 	{
@@ -758,7 +758,7 @@ public struct Type
 	 *     instanceInit = location of the instance initialization function (see #GTypeInfo)
 	 *     flags = bitwise combination of #GTypeFlags values
 	 *
-	 * Return: the new type identifier
+	 * Returns: the new type identifier
 	 *
 	 * Since: 2.12
 	 */
@@ -824,7 +824,7 @@ public struct Type
 	 * Params:
 	 *     type = a #GType
 	 *
-	 * Return: the number of instances allocated of the given type;
+	 * Returns: the number of instances allocated of the given type;
 	 *     if instance counts are not available, returns 0.
 	 *
 	 * Since: 2.44

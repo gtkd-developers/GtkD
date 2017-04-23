@@ -86,7 +86,7 @@ public class StyleSchemeChooserButton : Button, StyleSchemeChooserIF
 	/**
 	 * Creates a new #GtkSourceStyleSchemeChooserButton.
 	 *
-	 * Return: a new #GtkSourceStyleSchemeChooserButton.
+	 * Returns: a new #GtkSourceStyleSchemeChooserButton.
 	 *
 	 * Since: 3.16
 	 *

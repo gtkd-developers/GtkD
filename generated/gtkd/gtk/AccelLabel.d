@@ -139,7 +139,7 @@ public class AccelLabel : Label
 	 * Params:
 	 *     str = the label string. Must be non-%NULL.
 	 *
-	 * Return: a new #GtkAccelLabel.
+	 * Returns: a new #GtkAccelLabel.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -174,7 +174,7 @@ public class AccelLabel : Label
 	 * Fetches the widget monitored by this accelerator label. See
 	 * gtk_accel_label_set_accel_widget().
 	 *
-	 * Return: the object monitored by the accelerator label, or %NULL.
+	 * Returns: the object monitored by the accelerator label, or %NULL.
 	 */
 	public Widget getAccelWidget()
 	{
@@ -193,7 +193,7 @@ public class AccelLabel : Label
 	 * This is used by menus to align all of the #GtkMenuItem widgets, and shouldn't
 	 * be needed by applications.
 	 *
-	 * Return: the width needed to display the accelerator key(s).
+	 * Returns: the width needed to display the accelerator key(s).
 	 */
 	public uint getAccelWidth()
 	{
@@ -205,7 +205,7 @@ public class AccelLabel : Label
 	 * This should not be needed since the string is automatically updated whenever
 	 * accelerators are added or removed from the associated widget.
 	 *
-	 * Return: always returns %FALSE.
+	 * Returns: always returns %FALSE.
 	 */
 	public bool refetch()
 	{

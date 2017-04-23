@@ -90,7 +90,7 @@ public class SourceMarkAttributes : ObjectG
 	/**
 	 * Creates a new source mark attributes.
 	 *
-	 * Return: a new source mark attributes.
+	 * Returns: a new source mark attributes.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -112,7 +112,7 @@ public class SourceMarkAttributes : ObjectG
 	 * Params:
 	 *     background = a #GdkRGBA.
 	 *
-	 * Return: whether background color for @attributes was set.
+	 * Returns: whether background color for @attributes was set.
 	 */
 	public bool getBackground(out RGBA background)
 	{
@@ -129,7 +129,7 @@ public class SourceMarkAttributes : ObjectG
 	 * Gets a #GIcon to be used as a base for rendered icon. Note that the icon can
 	 * be %NULL if it wasn't set earlier.
 	 *
-	 * Return: An icon. The icon belongs to @attributes and should
+	 * Returns: An icon. The icon belongs to @attributes and should
 	 *     not be unreffed.
 	 */
 	public IconIF getGicon()
@@ -148,7 +148,7 @@ public class SourceMarkAttributes : ObjectG
 	 * Gets a name of an icon to be used as a base for rendered icon. Note that the
 	 * icon name can be %NULL if it wasn't set earlier.
 	 *
-	 * Return: An icon name. The string belongs to @attributes and
+	 * Returns: An icon name. The string belongs to @attributes and
 	 *     should not be freed.
 	 */
 	public string getIconName()
@@ -160,7 +160,7 @@ public class SourceMarkAttributes : ObjectG
 	 * Gets a #GdkPixbuf to be used as a base for rendered icon. Note that the
 	 * pixbuf can be %NULL if it wasn't set earlier.
 	 *
-	 * Return: A pixbuf. The pixbuf belongs to @attributes and
+	 * Returns: A pixbuf. The pixbuf belongs to @attributes and
 	 *     should not be unreffed.
 	 */
 	public Pixbuf getPixbuf()
@@ -181,7 +181,7 @@ public class SourceMarkAttributes : ObjectG
 	 *
 	 * Deprecated: Don't use this function.
 	 *
-	 * Return: Stock id. Returned string is owned by @attributes and
+	 * Returns: Stock id. Returned string is owned by @attributes and
 	 *     shouldn't be freed.
 	 */
 	public string getStockId()
@@ -197,7 +197,7 @@ public class SourceMarkAttributes : ObjectG
 	 * Params:
 	 *     mark = a #GtkSourceMark.
 	 *
-	 * Return: A tooltip. The returned string should be freed by
+	 * Returns: A tooltip. The returned string should be freed by
 	 *     using g_free() when done with it.
 	 */
 	public string getTooltipMarkup(SourceMark mark)
@@ -216,7 +216,7 @@ public class SourceMarkAttributes : ObjectG
 	 * Params:
 	 *     mark = a #GtkSourceMark.
 	 *
-	 * Return: A tooltip. The returned string should be freed by
+	 * Returns: A tooltip. The returned string should be freed by
 	 *     using g_free() when done with it.
 	 */
 	public string getTooltipText(SourceMark mark)
@@ -238,7 +238,7 @@ public class SourceMarkAttributes : ObjectG
 	 *     widget = widget of which style settings may be used.
 	 *     size = size of the rendered icon.
 	 *
-	 * Return: A rendered pixbuf. The pixbuf belongs to @attributes
+	 * Returns: A rendered pixbuf. The pixbuf belongs to @attributes
 	 *     and should not be unreffed.
 	 */
 	public Pixbuf renderIcon(Widget widget, int size)
@@ -343,7 +343,7 @@ public class SourceMarkAttributes : ObjectG
 	 * Params:
 	 *     mark = The #GtkSourceMark.
 	 *
-	 * Return: A tooltip. The string should be freed with
+	 * Returns: A tooltip. The string should be freed with
 	 *     g_free() when done with it.
 	 */
 	gulong addOnQueryTooltipMarkup(string delegate(SourceMark, SourceMarkAttributes) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -402,7 +402,7 @@ public class SourceMarkAttributes : ObjectG
 	 * Params:
 	 *     mark = The #GtkSourceMark.
 	 *
-	 * Return: A tooltip. The string should be freed with
+	 * Returns: A tooltip. The string should be freed with
 	 *     g_free() when done with it.
 	 */
 	gulong addOnQueryTooltipText(string delegate(SourceMark, SourceMarkAttributes) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)

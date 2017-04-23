@@ -103,7 +103,7 @@ public class TextTagTable : ObjectG, BuildableIF
 	 * Creates a new #GtkTextTagTable. The table contains no tags by
 	 * default.
 	 *
-	 * Return: a new #GtkTextTagTable
+	 * Returns: a new #GtkTextTagTable
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -129,7 +129,7 @@ public class TextTagTable : ObjectG, BuildableIF
 	 * Params:
 	 *     tag = a #GtkTextTag
 	 *
-	 * Return: %TRUE on success.
+	 * Returns: %TRUE on success.
 	 */
 	public bool add(TextTag tag)
 	{
@@ -153,7 +153,7 @@ public class TextTagTable : ObjectG, BuildableIF
 	/**
 	 * Returns the size of the table (number of tags)
 	 *
-	 * Return: number of tags in @table
+	 * Returns: number of tags in @table
 	 */
 	public int getSize()
 	{
@@ -166,7 +166,7 @@ public class TextTagTable : ObjectG, BuildableIF
 	 * Params:
 	 *     name = name of a tag
 	 *
-	 * Return: The tag, or %NULL if none by that
+	 * Returns: The tag, or %NULL if none by that
 	 *     name is in the table.
 	 */
 	public TextTag lookup(string name)

@@ -187,7 +187,7 @@ public class AccelMap : ObjectG
 	 *     accelMods = the new accelerator modifiers
 	 *     replace = %TRUE if other accelerators may be deleted upon conflicts
 	 *
-	 * Return: %TRUE if the accelerator could be changed, %FALSE otherwise
+	 * Returns: %TRUE if the accelerator could be changed, %FALSE otherwise
 	 */
 	public static bool changeEntry(string accelPath, uint accelKey, GdkModifierType accelMods, bool replace)
 	{
@@ -235,7 +235,7 @@ public class AccelMap : ObjectG
 	 * map via the ::changed signal; it isn’t a parameter to the
 	 * other accelerator map functions.
 	 *
-	 * Return: the global #GtkAccelMap object
+	 * Returns: the global #GtkAccelMap object
 	 *
 	 * Since: 2.4
 	 */
@@ -323,7 +323,7 @@ public class AccelMap : ObjectG
 	 *     accelPath = a valid accelerator path
 	 *     key = the accelerator key to be filled in (optional)
 	 *
-	 * Return: %TRUE if @accel_path is known, %FALSE otherwise
+	 * Returns: %TRUE if @accel_path is known, %FALSE otherwise
 	 */
 	public static bool lookupEntry(string accelPath, out GtkAccelKey key)
 	{

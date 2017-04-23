@@ -333,7 +333,7 @@ public class ObjectG
 	 *     varArgs = the value of the first property, followed optionally by more
 	 *         name/value pairs, followed by %NULL
 	 *
-	 * Return: a new instance of @object_type
+	 * Returns: a new instance of @object_type
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -360,7 +360,7 @@ public class ObjectG
 	 *     nParameters = the length of the @parameters array
 	 *     parameters = an array of #GParameter
 	 *
-	 * Return: a new instance of
+	 * Returns: a new instance of
 	 *     @object_type
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -395,7 +395,7 @@ public class ObjectG
 	 *         interface, or the default vtable for the interface
 	 *     propertyName = name of a property to lookup.
 	 *
-	 * Return: the #GParamSpec for the property of the
+	 * Returns: the #GParamSpec for the property of the
 	 *     interface with the name @property_name, or %NULL if no
 	 *     such property exists.
 	 *
@@ -452,7 +452,7 @@ public class ObjectG
 	 *     gIface = any interface vtable for the
 	 *         interface, or the default vtable for the interface
 	 *
-	 * Return: a
+	 * Returns: a
 	 *     pointer to an array of pointers to #GParamSpec
 	 *     structures. The paramspecs are owned by GLib, but the
 	 *     array should be freed with g_free() when you are done with
@@ -573,7 +573,7 @@ public class ObjectG
 	 *     targetProperty = the property on @target to bind
 	 *     flags = flags to pass to #GBinding
 	 *
-	 * Return: the #GBinding instance representing the
+	 * Returns: the #GBinding instance representing the
 	 *     binding between the two #GObject instances. The binding is released
 	 *     whenever the #GBinding reference count reaches zero.
 	 *
@@ -630,7 +630,7 @@ public class ObjectG
 	 *     notify = function to be called when disposing the binding, to free the
 	 *         resources used by the transformation functions
 	 *
-	 * Return: the #GBinding instance representing the
+	 * Returns: the #GBinding instance representing the
 	 *     binding between the two #GObject instances. The binding is released
 	 *     whenever the #GBinding reference count reaches zero.
 	 *
@@ -667,7 +667,7 @@ public class ObjectG
 	 *     transformFrom = a #GClosure wrapping the transformation function
 	 *         from the @target to the @source, or %NULL to use the default
 	 *
-	 * Return: the #GBinding instance representing the
+	 * Returns: the #GBinding instance representing the
 	 *     binding between the two #GObject instances. The binding is released
 	 *     whenever the #GBinding reference count reaches zero.
 	 *
@@ -706,7 +706,7 @@ public class ObjectG
 	 *     dupFunc = function to dup the value
 	 *     userData = passed as user_data to @dup_func
 	 *
-	 * Return: the result of calling @dup_func on the value
+	 * Returns: the result of calling @dup_func on the value
 	 *     associated with @key on @object, or %NULL if not set.
 	 *     If @dup_func is %NULL, the value is returned
 	 *     unmodified.
@@ -739,7 +739,7 @@ public class ObjectG
 	 *     dupFunc = function to dup the value
 	 *     userData = passed as user_data to @dup_func
 	 *
-	 * Return: the result of calling @dup_func on the value
+	 * Returns: the result of calling @dup_func on the value
 	 *     associated with @quark on @object, or %NULL if not set.
 	 *     If @dup_func is %NULL, the value is returned
 	 *     unmodified.
@@ -786,7 +786,7 @@ public class ObjectG
 	 * Params:
 	 *     key = name of the key for that association
 	 *
-	 * Return: the data if found, or %NULL if no such data exists.
+	 * Returns: the data if found, or %NULL if no such data exists.
 	 */
 	public void* getData(string key)
 	{
@@ -820,7 +820,7 @@ public class ObjectG
 	 * Params:
 	 *     quark = A #GQuark, naming the user data pointer
 	 *
-	 * Return: The user data pointer set, or %NULL
+	 * Returns: The user data pointer set, or %NULL
 	 */
 	public void* getQdata(GQuark quark)
 	{
@@ -849,7 +849,7 @@ public class ObjectG
 	/**
 	 * Checks whether @object has a [floating][floating-ref] reference.
 	 *
-	 * Return: %TRUE if @object has a floating reference
+	 * Returns: %TRUE if @object has a floating reference
 	 *
 	 * Since: 2.10
 	 */
@@ -931,7 +931,7 @@ public class ObjectG
 	/**
 	 * Increases the reference count of @object.
 	 *
-	 * Return: the same @object
+	 * Returns: the same @object
 	 */
 	public ObjectG doref()
 	{
@@ -955,7 +955,7 @@ public class ObjectG
 	 * count unchanged.  If the object is not floating, then this call
 	 * adds a new normal reference increasing the reference count by one.
 	 *
-	 * Return: @object
+	 * Returns: @object
 	 *
 	 * Since: 2.10
 	 */
@@ -1024,7 +1024,7 @@ public class ObjectG
 	 *     destroy = a destroy notify for the new value
 	 *     oldDestroy = destroy notify for the existing value
 	 *
-	 * Return: %TRUE if the existing value for @key was replaced
+	 * Returns: %TRUE if the existing value for @key was replaced
 	 *     by @newval, %FALSE otherwise.
 	 *
 	 * Since: 2.34
@@ -1056,7 +1056,7 @@ public class ObjectG
 	 *     destroy = a destroy notify for the new value
 	 *     oldDestroy = destroy notify for the existing value
 	 *
-	 * Return: %TRUE if the existing value for @quark was replaced
+	 * Returns: %TRUE if the existing value for @quark was replaced
 	 *     by @newval, %FALSE otherwise.
 	 *
 	 * Since: 2.34
@@ -1179,7 +1179,7 @@ public class ObjectG
 	 * Params:
 	 *     key = name of the key
 	 *
-	 * Return: the data if found, or %NULL if no such data exists.
+	 * Returns: the data if found, or %NULL if no such data exists.
 	 */
 	public void* stealData(string key)
 	{
@@ -1226,7 +1226,7 @@ public class ObjectG
 	 * Params:
 	 *     quark = A #GQuark, naming the user data pointer
 	 *
-	 * Return: The user data pointer set, or %NULL
+	 * Returns: The user data pointer set, or %NULL
 	 */
 	public void* stealQdata(GQuark quark)
 	{

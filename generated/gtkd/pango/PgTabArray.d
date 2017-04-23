@@ -77,7 +77,7 @@ public class PgTabArray
 	 *     initialSize = Initial number of tab stops to allocate, can be 0
 	 *     positionsInPixels = whether positions are in pixel units
 	 *
-	 * Return: the newly allocated #PangoTabArray, which should
+	 * Returns: the newly allocated #PangoTabArray, which should
 	 *     be freed with pango_tab_array_free().
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -97,7 +97,7 @@ public class PgTabArray
 	/**
 	 * Copies a #PangoTabArray
 	 *
-	 * Return: the newly allocated #PangoTabArray, which should
+	 * Returns: the newly allocated #PangoTabArray, which should
 	 *     be freed with pango_tab_array_free().
 	 */
 	public PgTabArray copy()
@@ -124,7 +124,7 @@ public class PgTabArray
 	 * Returns %TRUE if the tab positions are in pixels, %FALSE if they are
 	 * in Pango units.
 	 *
-	 * Return: whether positions are in pixels.
+	 * Returns: whether positions are in pixels.
 	 */
 	public bool getPositionsInPixels()
 	{
@@ -134,7 +134,7 @@ public class PgTabArray
 	/**
 	 * Gets the number of tab stops in @tab_array.
 	 *
-	 * Return: the number of tab stops in the array.
+	 * Returns: the number of tab stops in the array.
 	 */
 	public int getSize()
 	{

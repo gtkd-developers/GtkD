@@ -144,7 +144,7 @@ public class Popover : Bin
 	 * Params:
 	 *     relativeTo = #GtkWidget the popover is related to
 	 *
-	 * Return: a new #GtkPopover
+	 * Returns: a new #GtkPopover
 	 *
 	 * Since: 3.12
 	 *
@@ -178,7 +178,7 @@ public class Popover : Bin
 	 *     relativeTo = #GtkWidget the popover is related to
 	 *     model = a #GMenuModel
 	 *
-	 * Return: the new #GtkPopover
+	 * Returns: the new #GtkPopover
 	 *
 	 * Since: 3.12
 	 *
@@ -238,7 +238,7 @@ public class Popover : Bin
 	 * Returns the constraint for placing this popover.
 	 * See gtk_popover_set_constrain_to().
 	 *
-	 * Return: the constraint for placing this popover.
+	 * Returns: the constraint for placing this popover.
 	 *
 	 * Since: 3.20
 	 */
@@ -251,7 +251,7 @@ public class Popover : Bin
 	 * Gets the widget that should be set as the default while
 	 * the popover is shown.
 	 *
-	 * Return: the default widget,
+	 * Returns: the default widget,
 	 *     or %NULL if there is none
 	 *
 	 * Since: 3.18
@@ -272,7 +272,7 @@ public class Popover : Bin
 	 * Returns whether the popover is modal, see gtk_popover_set_modal to
 	 * see the implications of this.
 	 *
-	 * Return: #TRUE if @popover is modal
+	 * Returns: #TRUE if @popover is modal
 	 *
 	 * Since: 3.12
 	 */
@@ -290,7 +290,7 @@ public class Popover : Bin
 	 * Params:
 	 *     rect = location to store the rectangle
 	 *
-	 * Return: %TRUE if a rectangle to point to was set.
+	 * Returns: %TRUE if a rectangle to point to was set.
 	 */
 	public bool getPointingTo(out GdkRectangle rect)
 	{
@@ -300,7 +300,7 @@ public class Popover : Bin
 	/**
 	 * Returns the preferred position of @popover.
 	 *
-	 * Return: The preferred position.
+	 * Returns: The preferred position.
 	 */
 	public GtkPositionType getPosition()
 	{
@@ -310,7 +310,7 @@ public class Popover : Bin
 	/**
 	 * Returns the widget @popover is currently attached to
 	 *
-	 * Return: a #GtkWidget
+	 * Returns: a #GtkWidget
 	 *
 	 * Since: 3.12
 	 */
@@ -333,7 +333,7 @@ public class Popover : Bin
 	 * using gtk_widget_show() and gtk_widget_hide() while gtk_popover_popup()
 	 * and gtk_popover_popdown() will use transitions.
 	 *
-	 * Return: #TRUE if the show and hide transitions of the given
+	 * Returns: #TRUE if the show and hide transitions of the given
 	 *     popover are enabled, #FALSE otherwise.
 	 *
 	 * Since: 3.16

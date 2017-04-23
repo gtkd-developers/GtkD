@@ -113,7 +113,7 @@ public class SourceView : TextView
 	 * #GtkTextViewClass create_buffer factory method, or use
 	 * gtk_source_view_new_with_buffer().
 	 *
-	 * Return: a new #GtkSourceView.
+	 * Returns: a new #GtkSourceView.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -136,7 +136,7 @@ public class SourceView : TextView
 	 * Params:
 	 *     buffer = a #GtkSourceBuffer.
 	 *
-	 * Return: a new #GtkSourceView.
+	 * Returns: a new #GtkSourceView.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -155,7 +155,7 @@ public class SourceView : TextView
 	/**
 	 * Returns whether auto-indentation of text is enabled.
 	 *
-	 * Return: %TRUE if auto indentation is enabled.
+	 * Returns: %TRUE if auto indentation is enabled.
 	 */
 	public bool getAutoIndent()
 	{
@@ -166,7 +166,7 @@ public class SourceView : TextView
 	 * Returns the #GtkSourceBackgroundPatternType specifying if and how
 	 * the background pattern should be displayed for this @view.
 	 *
-	 * Return: the #GtkSourceBackgroundPatternType.
+	 * Returns: the #GtkSourceBackgroundPatternType.
 	 *
 	 * Since: 3.16
 	 */
@@ -180,7 +180,7 @@ public class SourceView : TextView
 	 * guaranteed to be the same for the lifetime of @view. Each #GtkSourceView
 	 * object has a different #GtkSourceCompletion.
 	 *
-	 * Return: the #GtkSourceCompletion associated with @view.
+	 * Returns: the #GtkSourceCompletion associated with @view.
 	 */
 	public SourceCompletion getCompletion()
 	{
@@ -201,7 +201,7 @@ public class SourceView : TextView
 	 * Deprecated: Use gtk_source_space_drawer_get_types_for_locations()
 	 * instead.
 	 *
-	 * Return: the #GtkSourceDrawSpacesFlags, 0 if no spaces should be drawn.
+	 * Returns: the #GtkSourceDrawSpacesFlags, 0 if no spaces should be drawn.
 	 */
 	public GtkSourceDrawSpacesFlags getDrawSpaces()
 	{
@@ -217,7 +217,7 @@ public class SourceView : TextView
 	 * Params:
 	 *     windowType = the gutter window type.
 	 *
-	 * Return: the #GtkSourceGutter.
+	 * Returns: the #GtkSourceGutter.
 	 *
 	 * Since: 2.8
 	 */
@@ -236,7 +236,7 @@ public class SourceView : TextView
 	/**
 	 * Returns whether the current line is highlighted.
 	 *
-	 * Return: %TRUE if the current line is highlighted.
+	 * Returns: %TRUE if the current line is highlighted.
 	 */
 	public bool getHighlightCurrentLine()
 	{
@@ -247,7 +247,7 @@ public class SourceView : TextView
 	 * Returns whether when the tab key is pressed the current selection
 	 * should get indented instead of replaced with the \t character.
 	 *
-	 * Return: %TRUE if the selection is indented when tab is pressed.
+	 * Returns: %TRUE if the selection is indented when tab is pressed.
 	 */
 	public bool getIndentOnTab()
 	{
@@ -258,7 +258,7 @@ public class SourceView : TextView
 	 * Returns the number of spaces to use for each step of indent.
 	 * See gtk_source_view_set_indent_width() for details.
 	 *
-	 * Return: indent width.
+	 * Returns: indent width.
 	 */
 	public int getIndentWidth()
 	{
@@ -269,7 +269,7 @@ public class SourceView : TextView
 	 * Returns whether when inserting a tabulator character it should
 	 * be replaced by a group of space characters.
 	 *
-	 * Return: %TRUE if spaces are inserted instead of tabs.
+	 * Returns: %TRUE if spaces are inserted instead of tabs.
 	 */
 	public bool getInsertSpacesInsteadOfTabs()
 	{
@@ -283,7 +283,7 @@ public class SourceView : TextView
 	 *     category = the category.
 	 *     priority = place where priority of the category will be stored.
 	 *
-	 * Return: #GtkSourceMarkAttributes for the @category.
+	 * Returns: #GtkSourceMarkAttributes for the @category.
 	 *     The object belongs to @view, so it must not be unreffed.
 	 */
 	public SourceMarkAttributes getMarkAttributes(string category, int* priority)
@@ -301,7 +301,7 @@ public class SourceView : TextView
 	/**
 	 * Gets the position of the right margin in the given @view.
 	 *
-	 * Return: the position of the right margin.
+	 * Returns: the position of the right margin.
 	 */
 	public uint getRightMarginPosition()
 	{
@@ -311,7 +311,7 @@ public class SourceView : TextView
 	/**
 	 * Returns whether line marks are displayed beside the text.
 	 *
-	 * Return: %TRUE if the line marks are displayed.
+	 * Returns: %TRUE if the line marks are displayed.
 	 *
 	 * Since: 2.2
 	 */
@@ -323,7 +323,7 @@ public class SourceView : TextView
 	/**
 	 * Returns whether line numbers are displayed beside the text.
 	 *
-	 * Return: %TRUE if the line numbers are displayed.
+	 * Returns: %TRUE if the line numbers are displayed.
 	 */
 	public bool getShowLineNumbers()
 	{
@@ -333,7 +333,7 @@ public class SourceView : TextView
 	/**
 	 * Returns whether a right margin is displayed.
 	 *
-	 * Return: %TRUE if the right margin is shown.
+	 * Returns: %TRUE if the right margin is shown.
 	 */
 	public bool getShowRightMargin()
 	{
@@ -344,7 +344,7 @@ public class SourceView : TextView
 	 * Returns %TRUE if pressing the Backspace key will try to delete spaces
 	 * up to the previous tab stop.
 	 *
-	 * Return: %TRUE if smart Backspace handling is enabled.
+	 * Returns: %TRUE if smart Backspace handling is enabled.
 	 *
 	 * Since: 3.18
 	 */
@@ -357,7 +357,7 @@ public class SourceView : TextView
 	 * Returns a #GtkSourceSmartHomeEndType end value specifying
 	 * how the cursor will move when HOME and END keys are pressed.
 	 *
-	 * Return: a #GtkSourceSmartHomeEndType value.
+	 * Returns: a #GtkSourceSmartHomeEndType value.
 	 */
 	public GtkSourceSmartHomeEndType getSmartHomeEnd()
 	{
@@ -369,7 +369,7 @@ public class SourceView : TextView
 	 * guaranteed to be the same for the lifetime of @view. Each #GtkSourceView
 	 * object has a different #GtkSourceSpaceDrawer.
 	 *
-	 * Return: the #GtkSourceSpaceDrawer associated with @view.
+	 * Returns: the #GtkSourceSpaceDrawer associated with @view.
 	 *
 	 * Since: 3.24
 	 */
@@ -388,7 +388,7 @@ public class SourceView : TextView
 	/**
 	 * Returns the width of tabulation in characters.
 	 *
-	 * Return: width of tab.
+	 * Returns: width of tab.
 	 */
 	public uint getTabWidth()
 	{
@@ -402,7 +402,7 @@ public class SourceView : TextView
 	 * Params:
 	 *     iter = a position in @view.
 	 *
-	 * Return: the visual column at @iter.
+	 * Returns: the visual column at @iter.
 	 */
 	public uint getVisualColumn(TextIter iter)
 	{

@@ -55,7 +55,7 @@ public struct Utils
 	 *     searchData = element that should be found
 	 *     userData = data to pass to @search_func
 	 *
-	 * Return: The address of the found
+	 * Returns: The address of the found
 	 *     element or %NULL if nothing was found
 	 */
 	public static void* arrayBinarySearch(void* array, uint numElements, size_t elementSize, GCompareDataFunc searchFunc, GstSearchMode mode, void* searchData, void* userData)
@@ -101,7 +101,7 @@ public struct Utils
 	 *     resN = Pointer to #gint to hold the result numerator
 	 *     resD = Pointer to #gint to hold the result denominator
 	 *
-	 * Return: %FALSE on overflow, %TRUE otherwise.
+	 * Returns: %FALSE on overflow, %TRUE otherwise.
 	 */
 	public static bool fractionAdd(int aN, int aD, int bN, int bD, out int resN, out int resD)
 	{
@@ -118,7 +118,7 @@ public struct Utils
 	 *     bN = Numerator of second value
 	 *     bD = Denominator of second value
 	 *
-	 * Return: -1 if a < b; 0 if a = b; 1 if a > b.
+	 * Returns: -1 if a < b; 0 if a = b; 1 if a > b.
 	 */
 	public static int fractionCompare(int aN, int aD, int bN, int bD)
 	{
@@ -137,7 +137,7 @@ public struct Utils
 	 *     resN = Pointer to #gint to hold the result numerator
 	 *     resD = Pointer to #gint to hold the result denominator
 	 *
-	 * Return: %FALSE on overflow, %TRUE otherwise.
+	 * Returns: %FALSE on overflow, %TRUE otherwise.
 	 */
 	public static bool fractionMultiply(int aN, int aD, int bN, int bD, out int resN, out int resD)
 	{
@@ -167,7 +167,7 @@ public struct Utils
 	 * Get a timestamp as GstClockTime to be used for interval measurements.
 	 * The timestamp should not be interpreted in any other way.
 	 *
-	 * Return: the timestamp
+	 * Returns: the timestamp
 	 */
 	public static GstClockTime getTimestamp()
 	{
@@ -182,7 +182,7 @@ public struct Utils
 	 *     a = First value as #gint
 	 *     b = Second value as #gint
 	 *
-	 * Return: Greatest common divisor of @a and @b
+	 * Returns: Greatest common divisor of @a and @b
 	 */
 	public static int greatestCommonDivisor(int a, int b)
 	{
@@ -197,7 +197,7 @@ public struct Utils
 	 *     a = First value as #gint64
 	 *     b = Second value as #gint64
 	 *
-	 * Return: Greatest common divisor of @a and @b
+	 * Returns: Greatest common divisor of @a and @b
 	 */
 	public static long greatestCommonDivisorInt64(long a, long b)
 	{
@@ -210,7 +210,7 @@ public struct Utils
 	 * This function is used to generate a new group-id for the
 	 * stream-start event.
 	 *
-	 * Return: A constantly incrementing unsigned integer, which might
+	 * Returns: A constantly incrementing unsigned integer, which might
 	 *     overflow back to 0 at some point.
 	 */
 	public static uint groupIdNext()
@@ -233,7 +233,7 @@ public struct Utils
 	 *     s1 = A sequence number.
 	 *     s2 = Another sequence number.
 	 *
-	 * Return: A negative number if @s1 is before @s2, 0 if they are equal, or a
+	 * Returns: A negative number if @s1 is before @s2, 0 if they are equal, or a
 	 *     positive number if @s1 is after @s2.
 	 */
 	public static int seqnumCompare(uint s1, uint s2)
@@ -249,7 +249,7 @@ public struct Utils
 	 * on a segment-done message to be the same as that of the last seek event, to
 	 * indicate that event and the message correspond to the same segment.
 	 *
-	 * Return: A constantly incrementing 32-bit unsigned integer, which might
+	 * Returns: A constantly incrementing 32-bit unsigned integer, which might
 	 *     overflow back to 0 at some point. Use gst_util_seqnum_compare() to make sure
 	 *     you handle wraparound correctly.
 	 */
@@ -307,7 +307,7 @@ public struct Utils
 	 *     num = the numerator of the scale ratio
 	 *     denom = the denominator of the scale ratio
 	 *
-	 * Return: @val * @num / @denom.  In the case of an overflow, this
+	 * Returns: @val * @num / @denom.  In the case of an overflow, this
 	 *     function returns G_MAXUINT64.  If the result is not exactly
 	 *     representable as an integer it is truncated.  See also
 	 *     gst_util_uint64_scale_round(), gst_util_uint64_scale_ceil(),
@@ -331,7 +331,7 @@ public struct Utils
 	 *     num = the numerator of the scale ratio
 	 *     denom = the denominator of the scale ratio
 	 *
-	 * Return: @val * @num / @denom.  In the case of an overflow, this
+	 * Returns: @val * @num / @denom.  In the case of an overflow, this
 	 *     function returns G_MAXUINT64.  If the result is not exactly
 	 *     representable as an integer, it is rounded up.  See also
 	 *     gst_util_uint64_scale(), gst_util_uint64_scale_round(),
@@ -353,7 +353,7 @@ public struct Utils
 	 *     num = numerator of the scale factor.
 	 *     denom = denominator of the scale factor.
 	 *
-	 * Return: @val * @num / @denom.  In the case of an overflow, this
+	 * Returns: @val * @num / @denom.  In the case of an overflow, this
 	 *     function returns G_MAXUINT64.  If the result is not exactly
 	 *     representable as an integer, it is truncated.  See also
 	 *     gst_util_uint64_scale_int_round(), gst_util_uint64_scale_int_ceil(),
@@ -375,7 +375,7 @@ public struct Utils
 	 *     num = numerator of the scale factor.
 	 *     denom = denominator of the scale factor.
 	 *
-	 * Return: @val * @num / @denom.  In the case of an overflow, this
+	 * Returns: @val * @num / @denom.  In the case of an overflow, this
 	 *     function returns G_MAXUINT64.  If the result is not exactly
 	 *     representable as an integer, it is rounded up.  See also
 	 *     gst_util_uint64_scale_int(), gst_util_uint64_scale_int_round(),
@@ -397,7 +397,7 @@ public struct Utils
 	 *     num = numerator of the scale factor.
 	 *     denom = denominator of the scale factor.
 	 *
-	 * Return: @val * @num / @denom.  In the case of an overflow, this
+	 * Returns: @val * @num / @denom.  In the case of an overflow, this
 	 *     function returns G_MAXUINT64.  If the result is not exactly
 	 *     representable as an integer, it is rounded to the nearest integer
 	 *     (half-way cases are rounded up).  See also gst_util_uint64_scale_int(),
@@ -421,7 +421,7 @@ public struct Utils
 	 *     num = the numerator of the scale ratio
 	 *     denom = the denominator of the scale ratio
 	 *
-	 * Return: @val * @num / @denom.  In the case of an overflow, this
+	 * Returns: @val * @num / @denom.  In the case of an overflow, this
 	 *     function returns G_MAXUINT64.  If the result is not exactly
 	 *     representable as an integer, it is rounded to the nearest integer
 	 *     (half-way cases are rounded up).  See also gst_util_uint64_scale(),
@@ -461,7 +461,7 @@ public struct Utils
 	 *     xbase = Offset at X-axis
 	 *     rSquared = R-squared
 	 *
-	 * Return: %TRUE if the linear regression was successfully calculated
+	 * Returns: %TRUE if the linear regression was successfully calculated
 	 *
 	 * Since: 1.12
 	 */

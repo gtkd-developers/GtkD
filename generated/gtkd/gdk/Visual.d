@@ -81,7 +81,7 @@ public class Visual : ObjectG
 	 * Deprecated: Visual selection should be done using
 	 * gdk_screen_get_system_visual() and gdk_screen_get_rgba_visual()
 	 *
-	 * Return: best visual
+	 * Returns: best visual
 	 */
 	public static Visual getBest()
 	{
@@ -103,7 +103,7 @@ public class Visual : ObjectG
 	 * Deprecated: Visual selection should be done using
 	 * gdk_screen_get_system_visual() and gdk_screen_get_rgba_visual()
 	 *
-	 * Return: best available depth
+	 * Returns: best available depth
 	 */
 	public static int getBestDepth()
 	{
@@ -116,7 +116,7 @@ public class Visual : ObjectG
 	 * Deprecated: Visual selection should be done using
 	 * gdk_screen_get_system_visual() and gdk_screen_get_rgba_visual()
 	 *
-	 * Return: best visual type
+	 * Returns: best visual type
 	 */
 	public static GdkVisualType getBestType()
 	{
@@ -134,7 +134,7 @@ public class Visual : ObjectG
 	 *     depth = a bit depth
 	 *     visualType = a visual type
 	 *
-	 * Return: best visual with both @depth
+	 * Returns: best visual with both @depth
 	 *     and @visual_type, or %NULL if none
 	 */
 	public static Visual getBestWithBoth(int depth, GdkVisualType visualType)
@@ -161,7 +161,7 @@ public class Visual : ObjectG
 	 * Params:
 	 *     depth = a bit depth
 	 *
-	 * Return: best visual for the given depth
+	 * Returns: best visual for the given depth
 	 */
 	public static Visual getBestWithDepth(int depth)
 	{
@@ -187,7 +187,7 @@ public class Visual : ObjectG
 	 * Params:
 	 *     visualType = a visual type
 	 *
-	 * Return: best visual of the given type
+	 * Returns: best visual of the given type
 	 */
 	public static Visual getBestWithType(GdkVisualType visualType)
 	{
@@ -208,7 +208,7 @@ public class Visual : ObjectG
 	 *
 	 * Deprecated: Use gdk_screen_get_system_visual (gdk_screen_get_default ()).
 	 *
-	 * Return: system visual
+	 * Returns: system visual
 	 */
 	public static Visual getSystem()
 	{
@@ -230,7 +230,7 @@ public class Visual : ObjectG
 	 * Deprecated: Use gdk_visual_get_red_pixel_details() and its variants to
 	 * learn about the pixel layout of TrueColor and DirectColor visuals
 	 *
-	 * Return: The number of significant bits per color value for @visual.
+	 * Returns: The number of significant bits per color value for @visual.
 	 *
 	 * Since: 2.22
 	 */
@@ -267,7 +267,7 @@ public class Visual : ObjectG
 	 *
 	 * Deprecated: This information is not useful
 	 *
-	 * Return: A #GdkByteOrder stating the byte order of @visual.
+	 * Returns: A #GdkByteOrder stating the byte order of @visual.
 	 *
 	 * Since: 2.22
 	 */
@@ -284,7 +284,7 @@ public class Visual : ObjectG
 	 * Deprecated: This information is not useful, since GDK does not
 	 * provide APIs to operate on colormaps.
 	 *
-	 * Return: The size of a colormap that is suitable for @visual.
+	 * Returns: The size of a colormap that is suitable for @visual.
 	 *
 	 * Since: 2.22
 	 */
@@ -296,7 +296,7 @@ public class Visual : ObjectG
 	/**
 	 * Returns the bit depth of this visual.
 	 *
-	 * Return: The bit depth of this visual.
+	 * Returns: The bit depth of this visual.
 	 *
 	 * Since: 2.22
 	 */
@@ -346,7 +346,7 @@ public class Visual : ObjectG
 	/**
 	 * Gets the screen to which this visual belongs
 	 *
-	 * Return: the screen to which this visual belongs.
+	 * Returns: the screen to which this visual belongs.
 	 *
 	 * Since: 2.2
 	 */
@@ -365,7 +365,7 @@ public class Visual : ObjectG
 	/**
 	 * Returns the type of visual this is (PseudoColor, TrueColor, etc).
 	 *
-	 * Return: A #GdkVisualType stating the type of @visual.
+	 * Returns: A #GdkVisualType stating the type of @visual.
 	 *
 	 * Since: 2.22
 	 */
@@ -385,7 +385,7 @@ public class Visual : ObjectG
 	 *
 	 * Deprecated: Use gdk_screen_list_visuals (gdk_screen_get_default ()).
 	 *
-	 * Return: a list of visuals; the list must be freed, but not its contents
+	 * Returns: a list of visuals; the list must be freed, but not its contents
 	 */
 	public static ListG listVisuals()
 	{

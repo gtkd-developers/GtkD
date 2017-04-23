@@ -41,7 +41,7 @@ public struct ErrorGIO
 	 * Params:
 	 *     errNo = Error number as defined in errno.h.
 	 *
-	 * Return: #GIOErrorEnum value for the given errno.h error number.
+	 * Returns: #GIOErrorEnum value for the given errno.h error number.
 	 */
 	public static GIOErrorEnum ioErrorFromErrno(int errNo)
 	{
@@ -51,7 +51,7 @@ public struct ErrorGIO
 	/**
 	 * Gets the GIO Error Quark.
 	 *
-	 * Return: a #GQuark.
+	 * Returns: a #GQuark.
 	 */
 	public static GQuark ioErrorQuark()
 	{

@@ -50,7 +50,7 @@ public struct PgCairo
 	 * Params:
 	 *     context = a #PangoContext, from a pangocairo font map
 	 *
-	 * Return: the font options previously set on the
+	 * Returns: the font options previously set on the
 	 *     context, or %NULL if no options have been set. This value is
 	 *     owned by the context and must not be modified or freed.
 	 *
@@ -74,7 +74,7 @@ public struct PgCairo
 	 * Params:
 	 *     context = a #PangoContext, from a pangocairo font map
 	 *
-	 * Return: the resolution in "dots per inch". A negative value will
+	 * Returns: the resolution in "dots per inch". A negative value will
 	 *     be returned if no resolution has previously been set.
 	 *
 	 * Since: 1.10
@@ -97,7 +97,7 @@ public struct PgCairo
 	 *     context = a #PangoContext, from a pangocairo font map
 	 *     data = Pointer to #gpointer to return user data
 	 *
-	 * Return: the shape rendering callback previously
+	 * Returns: the shape rendering callback previously
 	 *     set on the context, or %NULL if no shape rendering callback have
 	 *     been set.
 	 *
@@ -177,7 +177,7 @@ public struct PgCairo
 	 * Params:
 	 *     cr = a Cairo context
 	 *
-	 * Return: the newly created #PangoContext. Free with
+	 * Returns: the newly created #PangoContext. Free with
 	 *     g_object_unref().
 	 *
 	 * Since: 1.22
@@ -210,7 +210,7 @@ public struct PgCairo
 	 * Params:
 	 *     cr = a Cairo context
 	 *
-	 * Return: the newly created #PangoLayout. Free with
+	 * Returns: the newly created #PangoLayout. Free with
 	 *     g_object_unref().
 	 *
 	 * Since: 1.10

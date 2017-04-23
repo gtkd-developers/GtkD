@@ -96,7 +96,7 @@ public struct DBusNames
 	 *     userData = user data to pass to handlers
 	 *     userDataFreeFunc = function for freeing @user_data or %NULL
 	 *
-	 * Return: an identifier (never 0) that an be used with
+	 * Returns: an identifier (never 0) that an be used with
 	 *     g_bus_unown_name() to stop owning the name.
 	 *
 	 * Since: 2.26
@@ -119,7 +119,7 @@ public struct DBusNames
 	 *     userData = user data to pass to handlers
 	 *     userDataFreeFunc = function for freeing @user_data or %NULL
 	 *
-	 * Return: an identifier (never 0) that an be used with
+	 * Returns: an identifier (never 0) that an be used with
 	 *     g_bus_unown_name() to stop owning the name
 	 *
 	 * Since: 2.26
@@ -142,7 +142,7 @@ public struct DBusNames
 	 *     nameLostClosure = #GClosure to invoke when @name is lost
 	 *         or %NULL
 	 *
-	 * Return: an identifier (never 0) that an be used with
+	 * Returns: an identifier (never 0) that an be used with
 	 *     g_bus_unown_name() to stop owning the name.
 	 *
 	 * Since: 2.26
@@ -167,7 +167,7 @@ public struct DBusNames
 	 *     nameLostClosure = #GClosure to invoke when @name is lost or
 	 *         %NULL
 	 *
-	 * Return: an identifier (never 0) that an be used with
+	 * Returns: an identifier (never 0) that an be used with
 	 *     g_bus_unown_name() to stop owning the name.
 	 *
 	 * Since: 2.26
@@ -243,7 +243,7 @@ public struct DBusNames
 	 *     userData = User data to pass to handlers.
 	 *     userDataFreeFunc = Function for freeing @user_data or %NULL.
 	 *
-	 * Return: An identifier (never 0) that an be used with
+	 * Returns: An identifier (never 0) that an be used with
 	 *     g_bus_unwatch_name() to stop watching the name.
 	 *
 	 * Since: 2.26
@@ -266,7 +266,7 @@ public struct DBusNames
 	 *     userData = User data to pass to handlers.
 	 *     userDataFreeFunc = Function for freeing @user_data or %NULL.
 	 *
-	 * Return: An identifier (never 0) that an be used with
+	 * Returns: An identifier (never 0) that an be used with
 	 *     g_bus_unwatch_name() to stop watching the name.
 	 *
 	 * Since: 2.26
@@ -289,7 +289,7 @@ public struct DBusNames
 	 *     nameVanishedClosure = #GClosure to invoke when @name is known
 	 *         to not exist or %NULL.
 	 *
-	 * Return: An identifier (never 0) that an be used with
+	 * Returns: An identifier (never 0) that an be used with
 	 *     g_bus_unwatch_name() to stop watching the name.
 	 *
 	 * Since: 2.26
@@ -312,7 +312,7 @@ public struct DBusNames
 	 *     nameVanishedClosure = #GClosure to invoke when @name is known
 	 *         to not exist or %NULL.
 	 *
-	 * Return: An identifier (never 0) that an be used with
+	 * Returns: An identifier (never 0) that an be used with
 	 *     g_bus_unwatch_name() to stop watching the name.
 	 *
 	 * Since: 2.26

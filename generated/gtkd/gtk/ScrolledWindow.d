@@ -194,7 +194,7 @@ public class ScrolledWindow : Bin
 	 *     hadjustment = horizontal adjustment
 	 *     vadjustment = vertical adjustment
 	 *
-	 * Return: a new scrolled window
+	 * Returns: a new scrolled window
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -243,7 +243,7 @@ public class ScrolledWindow : Bin
 	 * Return whether button presses are captured during kinetic
 	 * scrolling. See gtk_scrolled_window_set_capture_button_press().
 	 *
-	 * Return: %TRUE if button presses are captured during kinetic scrolling
+	 * Returns: %TRUE if button presses are captured during kinetic scrolling
 	 *
 	 * Since: 3.4
 	 */
@@ -257,7 +257,7 @@ public class ScrolledWindow : Bin
 	 * horizontal scrollbar to the child widget’s horizontal scroll
 	 * functionality.
 	 *
-	 * Return: the horizontal #GtkAdjustment
+	 * Returns: the horizontal #GtkAdjustment
 	 */
 	public Adjustment getHadjustment()
 	{
@@ -274,7 +274,7 @@ public class ScrolledWindow : Bin
 	/**
 	 * Returns the horizontal scrollbar of @scrolled_window.
 	 *
-	 * Return: the horizontal scrollbar of the scrolled window.
+	 * Returns: the horizontal scrollbar of the scrolled window.
 	 *
 	 * Since: 2.8
 	 */
@@ -293,7 +293,7 @@ public class ScrolledWindow : Bin
 	/**
 	 * Returns the specified kinetic scrolling behavior.
 	 *
-	 * Return: the scrolling behavior flags.
+	 * Returns: the scrolling behavior flags.
 	 *
 	 * Since: 3.4
 	 */
@@ -305,7 +305,7 @@ public class ScrolledWindow : Bin
 	/**
 	 * Returns the maximum content height set.
 	 *
-	 * Return: the maximum content height, or -1
+	 * Returns: the maximum content height, or -1
 	 *
 	 * Since: 3.22
 	 */
@@ -317,7 +317,7 @@ public class ScrolledWindow : Bin
 	/**
 	 * Returns the maximum content width set.
 	 *
-	 * Return: the maximum content width, or -1
+	 * Returns: the maximum content width, or -1
 	 *
 	 * Since: 3.22
 	 */
@@ -329,7 +329,7 @@ public class ScrolledWindow : Bin
 	/**
 	 * Gets the minimal content height of @scrolled_window, or -1 if not set.
 	 *
-	 * Return: the minimal content height
+	 * Returns: the minimal content height
 	 *
 	 * Since: 3.0
 	 */
@@ -341,7 +341,7 @@ public class ScrolledWindow : Bin
 	/**
 	 * Gets the minimum content width of @scrolled_window, or -1 if not set.
 	 *
-	 * Return: the minimum content width
+	 * Returns: the minimum content width
 	 *
 	 * Since: 3.0
 	 */
@@ -353,7 +353,7 @@ public class ScrolledWindow : Bin
 	/**
 	 * Returns whether overlay scrolling is enabled for this scrolled window.
 	 *
-	 * Return: %TRUE if overlay scrolling is enabled
+	 * Returns: %TRUE if overlay scrolling is enabled
 	 *
 	 * Since: 3.16
 	 */
@@ -366,7 +366,7 @@ public class ScrolledWindow : Bin
 	 * Gets the placement of the contents with respect to the scrollbars
 	 * for the scrolled window. See gtk_scrolled_window_set_placement().
 	 *
-	 * Return: the current placement value.
+	 * Returns: the current placement value.
 	 *
 	 *     See also gtk_scrolled_window_set_placement() and
 	 *     gtk_scrolled_window_unset_placement().
@@ -395,7 +395,7 @@ public class ScrolledWindow : Bin
 	 * Reports whether the natural height of the child will be calculated and propagated
 	 * through the scrolled windows requested natural height.
 	 *
-	 * Return: whether natural height propagation is enabled.
+	 * Returns: whether natural height propagation is enabled.
 	 *
 	 * Since: 3.22
 	 */
@@ -408,7 +408,7 @@ public class ScrolledWindow : Bin
 	 * Reports whether the natural width of the child will be calculated and propagated
 	 * through the scrolled windows requested natural width.
 	 *
-	 * Return: whether natural width propagation is enabled.
+	 * Returns: whether natural width propagation is enabled.
 	 *
 	 * Since: 3.22
 	 */
@@ -421,7 +421,7 @@ public class ScrolledWindow : Bin
 	 * Gets the shadow type of the scrolled window. See
 	 * gtk_scrolled_window_set_shadow_type().
 	 *
-	 * Return: the current shadow type
+	 * Returns: the current shadow type
 	 */
 	public GtkShadowType getShadowType()
 	{
@@ -432,7 +432,7 @@ public class ScrolledWindow : Bin
 	 * Returns the vertical scrollbar’s adjustment, used to connect the
 	 * vertical scrollbar to the child widget’s vertical scroll functionality.
 	 *
-	 * Return: the vertical #GtkAdjustment
+	 * Returns: the vertical #GtkAdjustment
 	 */
 	public Adjustment getVadjustment()
 	{
@@ -449,7 +449,7 @@ public class ScrolledWindow : Bin
 	/**
 	 * Returns the vertical scrollbar of @scrolled_window.
 	 *
-	 * Return: the vertical scrollbar of the scrolled window.
+	 * Returns: the vertical scrollbar of the scrolled window.
 	 *
 	 * Since: 2.8
 	 */

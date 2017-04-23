@@ -102,7 +102,7 @@ public class AppInfoMonitor : ObjectG
 	 * You must only call g_object_unref() on the return value from under
 	 * the same main context as you created it.
 	 *
-	 * Return: a reference to a #GAppInfoMonitor
+	 * Returns: a reference to a #GAppInfoMonitor
 	 *
 	 * Since: 2.40
 	 */

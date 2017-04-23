@@ -97,7 +97,7 @@ public class StackSwitcher : Box
 	/**
 	 * Create a new #GtkStackSwitcher.
 	 *
-	 * Return: a new #GtkStackSwitcher.
+	 * Returns: a new #GtkStackSwitcher.
 	 *
 	 * Since: 3.10
 	 *
@@ -119,7 +119,7 @@ public class StackSwitcher : Box
 	 * Retrieves the stack.
 	 * See gtk_stack_switcher_set_stack().
 	 *
-	 * Return: the stack, or %NULL if
+	 * Returns: the stack, or %NULL if
 	 *     none has been set explicitly.
 	 *
 	 * Since: 3.10

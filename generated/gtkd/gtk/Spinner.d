@@ -85,7 +85,7 @@ public class Spinner : Widget
 	/**
 	 * Returns a new spinner widget. Not yet started.
 	 *
-	 * Return: a new #GtkSpinner
+	 * Returns: a new #GtkSpinner
 	 *
 	 * Since: 2.20
 	 *

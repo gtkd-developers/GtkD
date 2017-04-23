@@ -98,7 +98,7 @@ public class TextTag : ObjectG
 	 * Params:
 	 *     name = tag name, or %NULL
 	 *
-	 * Return: a new #GtkTextTag
+	 * Returns: a new #GtkTextTag
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -139,7 +139,7 @@ public class TextTag : ObjectG
 	 *     event = the event
 	 *     iter = location where the event was received
 	 *
-	 * Return: result of signal emission (whether the event was handled)
+	 * Returns: result of signal emission (whether the event was handled)
 	 */
 	public bool event(ObjectG eventObject, Event event, TextIter iter)
 	{
@@ -149,7 +149,7 @@ public class TextTag : ObjectG
 	/**
 	 * Get the tag priority.
 	 *
-	 * Return: The tag’s priority.
+	 * Returns: The tag’s priority.
 	 */
 	public int getPriority()
 	{
@@ -212,7 +212,7 @@ public class TextTag : ObjectG
 	 *     event = the event which triggered the signal
 	 *     iter = a #GtkTextIter pointing at the location the event occurred
 	 *
-	 * Return: %TRUE to stop other handlers from being invoked for the
+	 * Returns: %TRUE to stop other handlers from being invoked for the
 	 *     event. %FALSE to propagate the event further.
 	 */
 	gulong addOn(bool delegate(ObjectG, Event, TextIter, TextTag) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)

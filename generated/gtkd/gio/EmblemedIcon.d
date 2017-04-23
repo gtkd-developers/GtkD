@@ -92,7 +92,7 @@ public class EmblemedIcon : ObjectG, IconIF
 	 *     icon = a #GIcon
 	 *     emblem = a #GEmblem, or %NULL
 	 *
-	 * Return: a new #GIcon
+	 * Returns: a new #GIcon
 	 *
 	 * Since: 2.18
 	 *
@@ -136,7 +136,7 @@ public class EmblemedIcon : ObjectG, IconIF
 	/**
 	 * Gets the list of emblems for the @icon.
 	 *
-	 * Return: a #GList of
+	 * Returns: a #GList of
 	 *     #GEmblems that is owned by @emblemed
 	 *
 	 * Since: 2.18
@@ -156,7 +156,7 @@ public class EmblemedIcon : ObjectG, IconIF
 	/**
 	 * Gets the main icon for @emblemed.
 	 *
-	 * Return: a #GIcon that is owned by @emblemed
+	 * Returns: a #GIcon that is owned by @emblemed
 	 *
 	 * Since: 2.18
 	 */

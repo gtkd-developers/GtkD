@@ -143,7 +143,7 @@ public class Registry : ObjectGst
 	 * gst_registry_fork_set_enabled() function, in which case new plugins
 	 * are scanned (and loaded) into the application process.
 	 *
-	 * Return: %TRUE if GStreamer will use the child helper process when
+	 * Returns: %TRUE if GStreamer will use the child helper process when
 	 *     rebuilding the registry.
 	 */
 	public static bool forkIsEnabled()
@@ -169,7 +169,7 @@ public class Registry : ObjectGst
 	 * reference on the registry, as it is alive as long as GStreamer is
 	 * initialized.
 	 *
-	 * Return: the #GstRegistry.
+	 * Returns: the #GstRegistry.
 	 */
 	public static Registry get()
 	{
@@ -190,7 +190,7 @@ public class Registry : ObjectGst
 	 * Params:
 	 *     feature = the feature to add
 	 *
-	 * Return: %TRUE on success.
+	 * Returns: %TRUE on success.
 	 *
 	 *     MT safe.
 	 */
@@ -206,7 +206,7 @@ public class Registry : ObjectGst
 	 * Params:
 	 *     plugin = the plugin to add
 	 *
-	 * Return: %TRUE on success.
+	 * Returns: %TRUE on success.
 	 *
 	 *     MT safe.
 	 */
@@ -226,7 +226,7 @@ public class Registry : ObjectGst
 	 *     minMinor = the minimum minor version number
 	 *     minMicro = the minimum micro version number
 	 *
-	 * Return: %TRUE if the feature could be found and the version is
+	 * Returns: %TRUE if the feature could be found and the version is
 	 *     the same as the required version or newer, and %FALSE otherwise.
 	 */
 	public bool checkFeatureVersion(string featureName, uint minMajor, uint minMinor, uint minMicro)
@@ -245,7 +245,7 @@ public class Registry : ObjectGst
 	 *     first = only return first match
 	 *     userData = user data passed to the filter function
 	 *
-	 * Return: a #GList of
+	 * Returns: a #GList of
 	 *     #GstPluginFeature. Use gst_plugin_feature_list_free() after usage.
 	 *
 	 *     MT safe.
@@ -269,7 +269,7 @@ public class Registry : ObjectGst
 	 *     name = the pluginfeature name to find
 	 *     type = the pluginfeature type to find
 	 *
-	 * Return: the pluginfeature with the
+	 * Returns: the pluginfeature with the
 	 *     given name and type or %NULL if the plugin was not
 	 *     found. gst_object_unref() after usage.
 	 *
@@ -294,7 +294,7 @@ public class Registry : ObjectGst
 	 * Params:
 	 *     name = the plugin name to find
 	 *
-	 * Return: the plugin with the given name
+	 * Returns: the plugin with the given name
 	 *     or %NULL if the plugin was not found. gst_object_unref() after
 	 *     usage.
 	 *
@@ -318,7 +318,7 @@ public class Registry : ObjectGst
 	 * Params:
 	 *     type = a #GType.
 	 *
-	 * Return: a #GList of
+	 * Returns: a #GList of
 	 *     #GstPluginFeature of @type. Use gst_plugin_feature_list_free() after use
 	 *
 	 *     MT safe.
@@ -341,7 +341,7 @@ public class Registry : ObjectGst
 	 * Params:
 	 *     name = a plugin name.
 	 *
-	 * Return: a #GList of
+	 * Returns: a #GList of
 	 *     #GstPluginFeature. Use gst_plugin_feature_list_free() after usage.
 	 */
 	public ListG getFeatureListByPlugin(string name)
@@ -360,7 +360,7 @@ public class Registry : ObjectGst
 	 * Returns the registry's feature list cookie. This changes
 	 * every time a feature is added or removed from the registry.
 	 *
-	 * Return: the feature list cookie.
+	 * Returns: the feature list cookie.
 	 */
 	public uint getFeatureListCookie()
 	{
@@ -371,7 +371,7 @@ public class Registry : ObjectGst
 	 * Get a copy of all plugins registered in the given registry. The refcount
 	 * of each element in the list in incremented.
 	 *
-	 * Return: a #GList of #GstPlugin.
+	 * Returns: a #GList of #GstPlugin.
 	 *     Use gst_plugin_list_free() after usage.
 	 *
 	 *     MT safe.
@@ -395,7 +395,7 @@ public class Registry : ObjectGst
 	 * Params:
 	 *     filename = the name of the file to look up
 	 *
-	 * Return: the #GstPlugin if found, or
+	 * Returns: the #GstPlugin if found, or
 	 *     %NULL if not.  gst_object_unref() after usage.
 	 */
 	public Plugin lookup(string filename)
@@ -416,7 +416,7 @@ public class Registry : ObjectGst
 	 * Params:
 	 *     name = a #GstPluginFeature name
 	 *
-	 * Return: a #GstPluginFeature with its refcount incremented,
+	 * Returns: a #GstPluginFeature with its refcount incremented,
 	 *     use gst_object_unref() after usage.
 	 *
 	 *     MT safe.
@@ -445,7 +445,7 @@ public class Registry : ObjectGst
 	 *     first = only return first match
 	 *     userData = user data passed to the filter function
 	 *
-	 * Return: a #GList of #GstPlugin.
+	 * Returns: a #GList of #GstPlugin.
 	 *     Use gst_plugin_list_free() after usage.
 	 *
 	 *     MT safe.
@@ -495,7 +495,7 @@ public class Registry : ObjectGst
 	 * Params:
 	 *     path = the path to scan
 	 *
-	 * Return: %TRUE if registry changed
+	 * Returns: %TRUE if registry changed
 	 */
 	public bool scanPath(string path)
 	{

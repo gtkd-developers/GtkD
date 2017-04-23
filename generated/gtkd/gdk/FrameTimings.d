@@ -82,7 +82,7 @@ public class FrameTimings
 	 * %TRUE for a frame, you can be certain that no further values
 	 * will become available and be stored in the #GdkFrameTimings.
 	 *
-	 * Return: %TRUE if all information that will be available
+	 * Returns: %TRUE if all information that will be available
 	 *     for the frame has been filled in.
 	 *
 	 * Since: 3.8
@@ -96,7 +96,7 @@ public class FrameTimings
 	 * Gets the frame counter value of the #GdkFrameClock when this
 	 * this frame was drawn.
 	 *
-	 * Return: the frame counter value for this frame
+	 * Returns: the frame counter value for this frame
 	 *
 	 * Since: 3.8
 	 */
@@ -110,7 +110,7 @@ public class FrameTimings
 	 * that is typically used to time animations for the frame. See
 	 * gdk_frame_clock_get_frame_time().
 	 *
-	 * Return: the frame time for the frame, in the timescale
+	 * Returns: the frame time for the frame, in the timescale
 	 *     of g_get_monotonic_time()
 	 */
 	public long getFrameTime()
@@ -129,7 +129,7 @@ public class FrameTimings
 	 * that want exact control over latency. For example, a movie player
 	 * may want this information for Audio/Video synchronization.
 	 *
-	 * Return: The predicted time at which the frame will be presented,
+	 * Returns: The predicted time at which the frame will be presented,
 	 *     in the timescale of g_get_monotonic_time(), or 0 if no predicted
 	 *     presentation time is available.
 	 *
@@ -144,7 +144,7 @@ public class FrameTimings
 	 * Reurns the presentation time. This is the time at which the frame
 	 * became visible to the user.
 	 *
-	 * Return: the time the frame was displayed to the user, in the
+	 * Returns: the time the frame was displayed to the user, in the
 	 *     timescale of g_get_monotonic_time(), or 0 if no presentation
 	 *     time is available. See gdk_frame_timings_get_complete()
 	 *
@@ -160,7 +160,7 @@ public class FrameTimings
 	 * the display that this frame was displayed on. Frame presentation
 	 * usually happens during the “vertical blanking interval”.
 	 *
-	 * Return: the refresh interval of the display, in microseconds,
+	 * Returns: the refresh interval of the display, in microseconds,
 	 *     or 0 if the refresh interval is not available.
 	 *     See gdk_frame_timings_get_complete().
 	 *
@@ -174,7 +174,7 @@ public class FrameTimings
 	/**
 	 * Increases the reference count of @timings.
 	 *
-	 * Return: @timings
+	 * Returns: @timings
 	 *
 	 * Since: 3.8
 	 */

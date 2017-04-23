@@ -101,7 +101,7 @@ public class DeviceProvider : ObjectGst
 	 *     rank = rank of device provider (higher rank means more importance when autoplugging)
 	 *     type = GType of device provider to register
 	 *
-	 * Return: %TRUE, if the registering succeeded, %FALSE on error
+	 * Returns: %TRUE, if the registering succeeded, %FALSE on error
 	 *
 	 * Since: 1.4
 	 */
@@ -151,7 +151,7 @@ public class DeviceProvider : ObjectGst
 	/**
 	 * Gets the #GstBus of this #GstDeviceProvider
 	 *
-	 * Return: a #GstBus
+	 * Returns: a #GstBus
 	 *
 	 * Since: 1.4
 	 */
@@ -171,7 +171,7 @@ public class DeviceProvider : ObjectGst
 	 * Gets a list of devices that this provider understands. This may actually
 	 * probe the hardware if the provider is not currently started.
 	 *
-	 * Return: a #GList of
+	 * Returns: a #GList of
 	 *     #GstDevice
 	 *
 	 * Since: 1.4
@@ -191,7 +191,7 @@ public class DeviceProvider : ObjectGst
 	/**
 	 * Retrieves the factory that was used to create this device provider.
 	 *
-	 * Return: the #GstDeviceProviderFactory used for
+	 * Returns: the #GstDeviceProviderFactory used for
 	 *     creating this device provider. no refcounting is needed.
 	 *
 	 * Since: 1.4
@@ -212,7 +212,7 @@ public class DeviceProvider : ObjectGst
 	 * Get the provider factory names of the #GstDeviceProvider instances that
 	 * are hidden by @provider.
 	 *
-	 * Return: a list of hidden providers factory names or %NULL when
+	 * Returns: a list of hidden providers factory names or %NULL when
 	 *     nothing is hidden by @provider. Free with g_strfreev.
 	 *
 	 * Since: 1.6
@@ -252,7 +252,7 @@ public class DeviceProvider : ObjectGst
 	 * user of the object, gst_device_provider_stop() needs to be called the same
 	 * number of times.
 	 *
-	 * Return: %TRUE if the device providering could be started
+	 * Returns: %TRUE if the device providering could be started
 	 *
 	 * Since: 1.4
 	 */

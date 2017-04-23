@@ -149,7 +149,7 @@ public interface FileIF{
 	 * Params:
 	 *     parseName = a file name or path to be parsed
 	 *
-	 * Return: a new #GFile.
+	 * Returns: a new #GFile.
 	 */
 	public static FileIF parseName(string parseName);
 
@@ -177,7 +177,7 @@ public interface FileIF{
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
 	 *
-	 * Return: a #GFileOutputStream, or %NULL on error.
+	 * Returns: a #GFileOutputStream, or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Throws: GException on failure.
@@ -212,7 +212,7 @@ public interface FileIF{
 	 * Params:
 	 *     res = #GAsyncResult
 	 *
-	 * Return: a valid #GFileOutputStream
+	 * Returns: a valid #GFileOutputStream
 	 *     or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
@@ -267,7 +267,7 @@ public interface FileIF{
 	 *         progress information, or %NULL if progress information is not needed
 	 *     progressCallbackData = user data to pass to @progress_callback
 	 *
-	 * Return: %TRUE on success, %FALSE otherwise.
+	 * Returns: %TRUE on success, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -315,7 +315,7 @@ public interface FileIF{
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
 	 *
-	 * Return: %TRUE if the attributes were copied successfully,
+	 * Returns: %TRUE if the attributes were copied successfully,
 	 *     %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
@@ -328,7 +328,7 @@ public interface FileIF{
 	 * Params:
 	 *     res = a #GAsyncResult
 	 *
-	 * Return: a %TRUE on success, %FALSE on error.
+	 * Returns: a %TRUE on success, %FALSE on error.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -360,7 +360,7 @@ public interface FileIF{
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
 	 *
-	 * Return: a #GFileOutputStream for the newly created
+	 * Returns: a #GFileOutputStream for the newly created
 	 *     file, or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
@@ -397,7 +397,7 @@ public interface FileIF{
 	 * Params:
 	 *     res = a #GAsyncResult
 	 *
-	 * Return: a #GFileOutputStream or %NULL on error.
+	 * Returns: a #GFileOutputStream or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Throws: GException on failure.
@@ -434,7 +434,7 @@ public interface FileIF{
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
 	 *
-	 * Return: a #GFileIOStream for the newly created
+	 * Returns: a #GFileIOStream for the newly created
 	 *     file, or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
@@ -475,7 +475,7 @@ public interface FileIF{
 	 * Params:
 	 *     res = a #GAsyncResult
 	 *
-	 * Return: a #GFileIOStream or %NULL on error.
+	 * Returns: a #GFileIOStream or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Since: 2.22
@@ -496,7 +496,7 @@ public interface FileIF{
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
 	 *
-	 * Return: %TRUE if the file was deleted. %FALSE otherwise.
+	 * Returns: %TRUE if the file was deleted. %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -525,7 +525,7 @@ public interface FileIF{
 	 * Params:
 	 *     result = a #GAsyncResult
 	 *
-	 * Return: %TRUE if the file was deleted. %FALSE otherwise.
+	 * Returns: %TRUE if the file was deleted. %FALSE otherwise.
 	 *
 	 * Since: 2.34
 	 *
@@ -540,7 +540,7 @@ public interface FileIF{
 	 *
 	 * This call does no blocking I/O.
 	 *
-	 * Return: a new #GFile that is a duplicate
+	 * Returns: a new #GFile that is a duplicate
 	 *     of the given #GFile.
 	 */
 	public FileIF dup();
@@ -577,7 +577,7 @@ public interface FileIF{
 	 * Params:
 	 *     result = a #GAsyncResult
 	 *
-	 * Return: %TRUE if the @file was ejected successfully.
+	 * Returns: %TRUE if the @file was ejected successfully.
 	 *     %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
@@ -615,7 +615,7 @@ public interface FileIF{
 	 * Params:
 	 *     result = a #GAsyncResult
 	 *
-	 * Return: %TRUE if the @file was ejected successfully.
+	 * Returns: %TRUE if the @file was ejected successfully.
 	 *     %FALSE otherwise.
 	 *
 	 * Since: 2.22
@@ -655,7 +655,7 @@ public interface FileIF{
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
 	 *
-	 * Return: A #GFileEnumerator if successful,
+	 * Returns: A #GFileEnumerator if successful,
 	 *     %NULL on error. Free the returned object with g_object_unref().
 	 *
 	 * Throws: GException on failure.
@@ -693,7 +693,7 @@ public interface FileIF{
 	 * Params:
 	 *     res = a #GAsyncResult
 	 *
-	 * Return: a #GFileEnumerator or %NULL
+	 * Returns: a #GFileEnumerator or %NULL
 	 *     if an error occurred.
 	 *     Free the returned object with g_object_unref().
 	 *
@@ -713,7 +713,7 @@ public interface FileIF{
 	 * Params:
 	 *     file2 = the second #GFile
 	 *
-	 * Return: %TRUE if @file1 and @file2 are equal.
+	 * Returns: %TRUE if @file1 and @file2 are equal.
 	 */
 	public bool equal(FileIF file2);
 
@@ -732,7 +732,7 @@ public interface FileIF{
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
 	 *
-	 * Return: a #GMount where the @file is located
+	 * Returns: a #GMount where the @file is located
 	 *     or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
@@ -767,7 +767,7 @@ public interface FileIF{
 	 * Params:
 	 *     res = a #GAsyncResult
 	 *
-	 * Return: #GMount for given @file or %NULL on error.
+	 * Returns: #GMount for given @file or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Throws: GException on failure.
@@ -789,7 +789,7 @@ public interface FileIF{
 	 *
 	 * This call does no blocking I/O.
 	 *
-	 * Return: string containing the #GFile's
+	 * Returns: string containing the #GFile's
 	 *     base name, or %NULL if given #GFile is invalid. The returned string
 	 *     should be freed with g_free() when no longer needed.
 	 */
@@ -807,7 +807,7 @@ public interface FileIF{
 	 * Params:
 	 *     name = string containing the child's basename
 	 *
-	 * Return: a #GFile to a child specified by @name.
+	 * Returns: a #GFile to a child specified by @name.
 	 *     Free the returned object with g_object_unref().
 	 */
 	public FileIF getChild(string name);
@@ -825,7 +825,7 @@ public interface FileIF{
 	 * Params:
 	 *     displayName = string to a possible child
 	 *
-	 * Return: a #GFile to the specified child, or
+	 * Returns: a #GFile to the specified child, or
 	 *     %NULL if the display name couldn't be converted.
 	 *     Free the returned object with g_object_unref().
 	 *
@@ -840,7 +840,7 @@ public interface FileIF{
 	 *
 	 * This call does no blocking I/O.
 	 *
-	 * Return: a #GFile structure to the
+	 * Returns: a #GFile structure to the
 	 *     parent of the given #GFile or %NULL if there is no parent. Free
 	 *     the returned object with g_object_unref().
 	 */
@@ -862,7 +862,7 @@ public interface FileIF{
 	 *
 	 * This call does no blocking I/O.
 	 *
-	 * Return: a string containing the #GFile's parse name.
+	 * Returns: a string containing the #GFile's parse name.
 	 *     The returned string should be freed with g_free()
 	 *     when no longer needed.
 	 */
@@ -874,7 +874,7 @@ public interface FileIF{
 	 *
 	 * This call does no blocking I/O.
 	 *
-	 * Return: string containing the #GFile's path,
+	 * Returns: string containing the #GFile's path,
 	 *     or %NULL if no such path exists. The returned string should be freed
 	 *     with g_free() when no longer needed.
 	 */
@@ -888,7 +888,7 @@ public interface FileIF{
 	 * Params:
 	 *     descendant = input #GFile
 	 *
-	 * Return: string with the relative path from
+	 * Returns: string with the relative path from
 	 *     @descendant to @parent, or %NULL if @descendant doesn't have @parent as
 	 *     prefix. The returned string should be freed with g_free() when
 	 *     no longer needed.
@@ -900,7 +900,7 @@ public interface FileIF{
 	 *
 	 * This call does no blocking I/O.
 	 *
-	 * Return: a string containing the #GFile's URI.
+	 * Returns: a string containing the #GFile's URI.
 	 *     The returned string should be freed with g_free()
 	 *     when no longer needed.
 	 */
@@ -916,7 +916,7 @@ public interface FileIF{
 	 *
 	 * This call does no blocking I/O.
 	 *
-	 * Return: a string containing the URI scheme for the given
+	 * Returns: a string containing the URI scheme for the given
 	 *     #GFile. The returned string should be freed with g_free()
 	 *     when no longer needed.
 	 */
@@ -932,7 +932,7 @@ public interface FileIF{
 	 * Params:
 	 *     parent = the parent to check for, or %NULL
 	 *
-	 * Return: %TRUE if @file is an immediate child of @parent (or any parent in
+	 * Returns: %TRUE if @file is an immediate child of @parent (or any parent in
 	 *     the case that @parent is %NULL).
 	 *
 	 * Since: 2.24
@@ -958,7 +958,7 @@ public interface FileIF{
 	 * Params:
 	 *     prefix = input #GFile
 	 *
-	 * Return: %TRUE if the @files's parent, grandparent, etc is @prefix,
+	 * Returns: %TRUE if the @files's parent, grandparent, etc is @prefix,
 	 *     %FALSE otherwise.
 	 */
 	public bool hasPrefix(FileIF prefix);
@@ -971,7 +971,7 @@ public interface FileIF{
 	 * Params:
 	 *     uriScheme = a string containing a URI scheme
 	 *
-	 * Return: %TRUE if #GFile's backend supports the
+	 * Returns: %TRUE if #GFile's backend supports the
 	 *     given URI scheme, %FALSE if URI scheme is %NULL,
 	 *     not supported, or #GFile is invalid.
 	 */
@@ -982,7 +982,7 @@ public interface FileIF{
 	 *
 	 * This call does no blocking I/O.
 	 *
-	 * Return: 0 if @file is not a valid #GFile, otherwise an
+	 * Returns: 0 if @file is not a valid #GFile, otherwise an
 	 *     integer that can be used as hash value for the #GFile.
 	 *     This function is intended for easily hashing a #GFile to
 	 *     add to a #GHashTable or similar data structure.
@@ -1002,7 +1002,7 @@ public interface FileIF{
 	 *
 	 * This call does no blocking I/O.
 	 *
-	 * Return: %TRUE if @file is native
+	 * Returns: %TRUE if @file is native
 	 */
 	public bool isNative();
 
@@ -1024,7 +1024,7 @@ public interface FileIF{
 	 *     etagOut = a location to place the current entity tag for the file,
 	 *         or %NULL if the entity tag is not needed
 	 *
-	 * Return: %TRUE if the @file's contents were successfully loaded.
+	 * Returns: %TRUE if the @file's contents were successfully loaded.
 	 *     %FALSE if there were errors.
 	 *
 	 * Throws: GException on failure.
@@ -1068,7 +1068,7 @@ public interface FileIF{
 	 *     etagOut = a location to place the current entity tag for the file,
 	 *         or %NULL if the entity tag is not needed
 	 *
-	 * Return: %TRUE if the load was successful. If %FALSE and @error is
+	 * Returns: %TRUE if the load was successful. If %FALSE and @error is
 	 *     present, it will be set appropriately.
 	 *
 	 * Throws: GException on failure.
@@ -1112,7 +1112,7 @@ public interface FileIF{
 	 *     etagOut = a location to place the current entity tag for the file,
 	 *         or %NULL if the entity tag is not needed
 	 *
-	 * Return: %TRUE if the load was successful. If %FALSE and @error is
+	 * Returns: %TRUE if the load was successful. If %FALSE and @error is
 	 *     present, it will be set appropriately.
 	 *
 	 * Throws: GException on failure.
@@ -1139,7 +1139,7 @@ public interface FileIF{
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
 	 *
-	 * Return: %TRUE on successful creation, %FALSE otherwise.
+	 * Returns: %TRUE on successful creation, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -1167,7 +1167,7 @@ public interface FileIF{
 	 * Params:
 	 *     result = a #GAsyncResult
 	 *
-	 * Return: %TRUE on successful directory creation, %FALSE otherwise.
+	 * Returns: %TRUE on successful directory creation, %FALSE otherwise.
 	 *
 	 * Since: 2.38
 	 *
@@ -1194,7 +1194,7 @@ public interface FileIF{
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
 	 *
-	 * Return: %TRUE if all directories have been successfully created, %FALSE
+	 * Returns: %TRUE if all directories have been successfully created, %FALSE
 	 *     otherwise.
 	 *
 	 * Since: 2.18
@@ -1217,7 +1217,7 @@ public interface FileIF{
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
 	 *
-	 * Return: %TRUE on the creation of a new symlink, %FALSE otherwise.
+	 * Returns: %TRUE on the creation of a new symlink, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -1252,7 +1252,7 @@ public interface FileIF{
 	 *     numDirs = the number of directories encountered
 	 *     numFiles = the number of non-directories encountered
 	 *
-	 * Return: %TRUE if successful, with the out parameters set.
+	 * Returns: %TRUE if successful, with the out parameters set.
 	 *     %FALSE otherwise, with @error set.
 	 *
 	 * Since: 2.38
@@ -1291,7 +1291,7 @@ public interface FileIF{
 	 *     numDirs = the number of directories encountered
 	 *     numFiles = the number of non-directories encountered
 	 *
-	 * Return: %TRUE if successful, with the out parameters set.
+	 * Returns: %TRUE if successful, with the out parameters set.
 	 *     %FALSE otherwise, with @error set.
 	 *
 	 * Since: 2.38
@@ -1313,7 +1313,7 @@ public interface FileIF{
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
 	 *
-	 * Return: a #GFileMonitor for the given @file,
+	 * Returns: a #GFileMonitor for the given @file,
 	 *     or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
@@ -1342,7 +1342,7 @@ public interface FileIF{
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
 	 *
-	 * Return: a #GFileMonitor for the given @file,
+	 * Returns: a #GFileMonitor for the given @file,
 	 *     or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
@@ -1371,7 +1371,7 @@ public interface FileIF{
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
 	 *
-	 * Return: a #GFileMonitor for the given @file,
+	 * Returns: a #GFileMonitor for the given @file,
 	 *     or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
@@ -1409,7 +1409,7 @@ public interface FileIF{
 	 * Params:
 	 *     result = a #GAsyncResult
 	 *
-	 * Return: %TRUE if successful. If an error has occurred,
+	 * Returns: %TRUE if successful. If an error has occurred,
 	 *     this function will return %FALSE and set @error
 	 *     appropriately if present.
 	 *
@@ -1451,7 +1451,7 @@ public interface FileIF{
 	 * Params:
 	 *     result = a #GAsyncResult
 	 *
-	 * Return: a #GFile or %NULL on error.
+	 * Returns: a #GFile or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Throws: GException on failure.
@@ -1507,7 +1507,7 @@ public interface FileIF{
 	 *     progressCallbackData = gpointer to user data for
 	 *         the callback function
 	 *
-	 * Return: %TRUE on successful move, %FALSE otherwise.
+	 * Returns: %TRUE on successful move, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -1534,7 +1534,7 @@ public interface FileIF{
 	 * Params:
 	 *     cancellable = a #GCancellable
 	 *
-	 * Return: #GFileIOStream or %NULL on error.
+	 * Returns: #GFileIOStream or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Since: 2.22
@@ -1572,7 +1572,7 @@ public interface FileIF{
 	 * Params:
 	 *     res = a #GAsyncResult
 	 *
-	 * Return: a #GFileIOStream or %NULL on error.
+	 * Returns: a #GFileIOStream or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Since: 2.22
@@ -1611,7 +1611,7 @@ public interface FileIF{
 	 * Params:
 	 *     result = a #GAsyncResult
 	 *
-	 * Return: %TRUE if the operation finished successfully. %FALSE
+	 * Returns: %TRUE if the operation finished successfully. %FALSE
 	 *     otherwise.
 	 *
 	 * Since: 2.22
@@ -1631,7 +1631,7 @@ public interface FileIF{
 	 * Params:
 	 *     cancellable = optional #GCancellable object, %NULL to ignore
 	 *
-	 * Return: a #GAppInfo if the handle was found,
+	 * Returns: a #GAppInfo if the handle was found,
 	 *     %NULL if there were errors.
 	 *     When you are done with it, release it with g_object_unref()
 	 *
@@ -1667,7 +1667,7 @@ public interface FileIF{
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
 	 *
-	 * Return: %TRUE if the file exists (and can be detected without error),
+	 * Returns: %TRUE if the file exists (and can be detected without error),
 	 *     %FALSE otherwise (or if cancelled).
 	 */
 	public bool queryExists(Cancellable cancellable);
@@ -1684,7 +1684,7 @@ public interface FileIF{
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
 	 *
-	 * Return: The #GFileType of the file and #G_FILE_TYPE_UNKNOWN
+	 * Returns: The #GFileType of the file and #G_FILE_TYPE_UNKNOWN
 	 *     if the file does not exist
 	 *
 	 * Since: 2.18
@@ -1723,7 +1723,7 @@ public interface FileIF{
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
 	 *
-	 * Return: a #GFileInfo or %NULL if there was an error.
+	 * Returns: a #GFileInfo or %NULL if there was an error.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Throws: GException on failure.
@@ -1761,7 +1761,7 @@ public interface FileIF{
 	 * Params:
 	 *     res = a #GAsyncResult
 	 *
-	 * Return: #GFileInfo for given @file
+	 * Returns: #GFileInfo for given @file
 	 *     or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
@@ -1807,7 +1807,7 @@ public interface FileIF{
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
 	 *
-	 * Return: a #GFileInfo for the given @file, or %NULL
+	 * Returns: a #GFileInfo for the given @file, or %NULL
 	 *     on error. Free the returned object with g_object_unref().
 	 *
 	 * Throws: GException on failure.
@@ -1844,7 +1844,7 @@ public interface FileIF{
 	 * Params:
 	 *     res = a #GAsyncResult
 	 *
-	 * Return: #GFileInfo for given @file
+	 * Returns: #GFileInfo for given @file
 	 *     or %NULL on error. Free the returned object with
 	 *     g_object_unref().
 	 *
@@ -1868,7 +1868,7 @@ public interface FileIF{
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
 	 *
-	 * Return: a #GFileAttributeInfoList describing the settable attributes.
+	 * Returns: a #GFileAttributeInfoList describing the settable attributes.
 	 *     When you are done with it, release it with
 	 *     g_file_attribute_info_list_unref()
 	 *
@@ -1889,7 +1889,7 @@ public interface FileIF{
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
 	 *
-	 * Return: a #GFileAttributeInfoList describing the writable namespaces.
+	 * Returns: a #GFileAttributeInfoList describing the writable namespaces.
 	 *     When you are done with it, release it with
 	 *     g_file_attribute_info_list_unref()
 	 *
@@ -1913,7 +1913,7 @@ public interface FileIF{
 	 * Params:
 	 *     cancellable = a #GCancellable
 	 *
-	 * Return: #GFileInputStream or %NULL on error.
+	 * Returns: #GFileInputStream or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Throws: GException on failure.
@@ -1947,7 +1947,7 @@ public interface FileIF{
 	 * Params:
 	 *     res = a #GAsyncResult
 	 *
-	 * Return: a #GFileInputStream or %NULL on error.
+	 * Returns: a #GFileInputStream or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Throws: GException on failure.
@@ -2005,7 +2005,7 @@ public interface FileIF{
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
 	 *
-	 * Return: a #GFileOutputStream or %NULL on error.
+	 * Returns: a #GFileOutputStream or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Throws: GException on failure.
@@ -2067,7 +2067,7 @@ public interface FileIF{
 	 *         needed, or %NULL
 	 *     cancellable = optional #GCancellable object, %NULL to ignore
 	 *
-	 * Return: %TRUE if successful. If an error has occurred, this function
+	 * Returns: %TRUE if successful. If an error has occurred, this function
 	 *     will return %FALSE and set @error appropriately if present.
 	 *
 	 * Throws: GException on failure.
@@ -2141,7 +2141,7 @@ public interface FileIF{
 	 *         for the document. This should be freed with g_free() when it is no
 	 *         longer needed, or %NULL
 	 *
-	 * Return: %TRUE on success, %FALSE on failure.
+	 * Returns: %TRUE on success, %FALSE on failure.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -2154,7 +2154,7 @@ public interface FileIF{
 	 * Params:
 	 *     res = a #GAsyncResult
 	 *
-	 * Return: a #GFileOutputStream, or %NULL on error.
+	 * Returns: a #GFileOutputStream, or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Throws: GException on failure.
@@ -2181,7 +2181,7 @@ public interface FileIF{
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
 	 *
-	 * Return: a #GFileIOStream or %NULL on error.
+	 * Returns: a #GFileIOStream or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Since: 2.22
@@ -2225,7 +2225,7 @@ public interface FileIF{
 	 * Params:
 	 *     res = a #GAsyncResult
 	 *
-	 * Return: a #GFileIOStream, or %NULL on error.
+	 * Returns: a #GFileIOStream, or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Since: 2.22
@@ -2242,7 +2242,7 @@ public interface FileIF{
 	 * Params:
 	 *     relativePath = a given relative path string
 	 *
-	 * Return: #GFile to the resolved path.
+	 * Returns: #GFile to the resolved path.
 	 *     %NULL if @relative_path is %NULL or if @file is invalid.
 	 *     Free the returned object with g_object_unref().
 	 */
@@ -2267,7 +2267,7 @@ public interface FileIF{
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
 	 *
-	 * Return: %TRUE if the attribute was set, %FALSE otherwise.
+	 * Returns: %TRUE if the attribute was set, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -2289,7 +2289,7 @@ public interface FileIF{
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
 	 *
-	 * Return: %TRUE if the @attribute was successfully set to @value
+	 * Returns: %TRUE if the @attribute was successfully set to @value
 	 *     in the @file, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
@@ -2311,7 +2311,7 @@ public interface FileIF{
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
 	 *
-	 * Return: %TRUE if the @attribute was successfully set to @value
+	 * Returns: %TRUE if the @attribute was successfully set to @value
 	 *     in the @file, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
@@ -2333,7 +2333,7 @@ public interface FileIF{
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
 	 *
-	 * Return: %TRUE if the @attribute was successfully set, %FALSE otherwise.
+	 * Returns: %TRUE if the @attribute was successfully set, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -2354,7 +2354,7 @@ public interface FileIF{
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
 	 *
-	 * Return: %TRUE if the @attribute was successfully set, %FALSE otherwise.
+	 * Returns: %TRUE if the @attribute was successfully set, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -2375,7 +2375,7 @@ public interface FileIF{
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
 	 *
-	 * Return: %TRUE if the @attribute was successfully set to @value
+	 * Returns: %TRUE if the @attribute was successfully set to @value
 	 *     in the @file, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
@@ -2397,7 +2397,7 @@ public interface FileIF{
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
 	 *
-	 * Return: %TRUE if the @attribute was successfully set to @value
+	 * Returns: %TRUE if the @attribute was successfully set to @value
 	 *     in the @file, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
@@ -2432,7 +2432,7 @@ public interface FileIF{
 	 *     result = a #GAsyncResult
 	 *     info = a #GFileInfo
 	 *
-	 * Return: %TRUE if the attributes were set correctly, %FALSE otherwise.
+	 * Returns: %TRUE if the attributes were set correctly, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -2458,7 +2458,7 @@ public interface FileIF{
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
 	 *
-	 * Return: %FALSE if there was any error, %TRUE otherwise.
+	 * Returns: %FALSE if there was any error, %TRUE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -2486,7 +2486,7 @@ public interface FileIF{
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
 	 *
-	 * Return: a #GFile specifying what @file was renamed to,
+	 * Returns: a #GFile specifying what @file was renamed to,
 	 *     or %NULL if there was an error.
 	 *     Free the returned object with g_object_unref().
 	 *
@@ -2522,7 +2522,7 @@ public interface FileIF{
 	 * Params:
 	 *     res = a #GAsyncResult
 	 *
-	 * Return: a #GFile or %NULL on error.
+	 * Returns: a #GFile or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Throws: GException on failure.
@@ -2562,7 +2562,7 @@ public interface FileIF{
 	 * Params:
 	 *     result = a #GAsyncResult
 	 *
-	 * Return: %TRUE if the operation finished successfully. %FALSE
+	 * Returns: %TRUE if the operation finished successfully. %FALSE
 	 *     otherwise.
 	 *
 	 * Since: 2.22
@@ -2605,7 +2605,7 @@ public interface FileIF{
 	 * Params:
 	 *     result = a #GAsyncResult
 	 *
-	 * Return: %TRUE if the operation finished successfully.
+	 * Returns: %TRUE if the operation finished successfully.
 	 *     %FALSE otherwise.
 	 *
 	 * Since: 2.22
@@ -2620,7 +2620,7 @@ public interface FileIF{
 	 * If this returns %FALSE, you cannot perform asynchronous operations on
 	 * @file in a thread that has a thread-default context.
 	 *
-	 * Return: Whether or not @file supports thread-default contexts.
+	 * Returns: Whether or not @file supports thread-default contexts.
 	 *
 	 * Since: 2.22
 	 */
@@ -2640,7 +2640,7 @@ public interface FileIF{
 	 *     cancellable = optional #GCancellable object,
 	 *         %NULL to ignore
 	 *
-	 * Return: %TRUE on successful trash, %FALSE otherwise.
+	 * Returns: %TRUE on successful trash, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -2668,7 +2668,7 @@ public interface FileIF{
 	 * Params:
 	 *     result = a #GAsyncResult
 	 *
-	 * Return: %TRUE on successful trash, %FALSE otherwise.
+	 * Returns: %TRUE on successful trash, %FALSE otherwise.
 	 *
 	 * Since: 2.38
 	 *
@@ -2711,7 +2711,7 @@ public interface FileIF{
 	 * Params:
 	 *     result = a #GAsyncResult
 	 *
-	 * Return: %TRUE if the operation finished successfully.
+	 * Returns: %TRUE if the operation finished successfully.
 	 *     %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
@@ -2753,7 +2753,7 @@ public interface FileIF{
 	 * Params:
 	 *     result = a #GAsyncResult
 	 *
-	 * Return: %TRUE if the operation finished successfully.
+	 * Returns: %TRUE if the operation finished successfully.
 	 *     %FALSE otherwise.
 	 *
 	 * Since: 2.22

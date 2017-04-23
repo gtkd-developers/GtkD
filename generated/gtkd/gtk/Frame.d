@@ -132,7 +132,7 @@ public class Frame : Bin
 	 * Params:
 	 *     label = the text to use as the label of the frame
 	 *
-	 * Return: a new #GtkFrame widget
+	 * Returns: a new #GtkFrame widget
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -154,7 +154,7 @@ public class Frame : Bin
 	 * for the label widget if a non-%NULL argument was passed
 	 * to gtk_frame_new().)
 	 *
-	 * Return: the text in the label, or %NULL if there
+	 * Returns: the text in the label, or %NULL if there
 	 *     was no label widget or the lable widget was not
 	 *     a #GtkLabel. This string is owned by GTK+ and
 	 *     must not be modified or freed.
@@ -183,7 +183,7 @@ public class Frame : Bin
 	 * Retrieves the label widget for the frame. See
 	 * gtk_frame_set_label_widget().
 	 *
-	 * Return: the label widget, or %NULL if
+	 * Returns: the label widget, or %NULL if
 	 *     there is none.
 	 */
 	public Widget getLabelWidget()
@@ -202,7 +202,7 @@ public class Frame : Bin
 	 * Retrieves the shadow type of the frame. See
 	 * gtk_frame_set_shadow_type().
 	 *
-	 * Return: the current shadow type of the frame.
+	 * Returns: the current shadow type of the frame.
 	 */
 	public GtkShadowType getShadowType()
 	{

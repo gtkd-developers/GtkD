@@ -48,7 +48,7 @@ public struct TrashStack
 	 * Params:
 	 *     stackP = a #GTrashStack
 	 *
-	 * Return: the height of the stack
+	 * Returns: the height of the stack
 	 */
 	public static uint height(GTrashStack** stackP)
 	{
@@ -64,7 +64,7 @@ public struct TrashStack
 	 * Params:
 	 *     stackP = a #GTrashStack
 	 *
-	 * Return: the element at the top of the stack
+	 * Returns: the element at the top of the stack
 	 */
 	public static void* peek(GTrashStack** stackP)
 	{
@@ -79,7 +79,7 @@ public struct TrashStack
 	 * Params:
 	 *     stackP = a #GTrashStack
 	 *
-	 * Return: the element at the top of the stack
+	 * Returns: the element at the top of the stack
 	 */
 	public static void* pop(GTrashStack** stackP)
 	{

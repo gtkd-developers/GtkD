@@ -97,7 +97,7 @@ public class Once
 	 *     location = location of a static initializable variable
 	 *         containing 0
 	 *
-	 * Return: %TRUE if the initialization section should be entered,
+	 * Returns: %TRUE if the initialization section should be entered,
 	 *     %FALSE and blocks otherwise
 	 *
 	 * Since: 2.14

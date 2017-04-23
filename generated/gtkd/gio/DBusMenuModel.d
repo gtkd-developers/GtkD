@@ -109,7 +109,7 @@ public class DBusMenuModel : MenuModel
 	 *     busName = the bus name which exports the menu model
 	 *     objectPath = the object path at which the menu model is exported
 	 *
-	 * Return: a #GDBusMenuModel object. Free with
+	 * Returns: a #GDBusMenuModel object. Free with
 	 *     g_object_unref().
 	 *
 	 * Since: 2.32

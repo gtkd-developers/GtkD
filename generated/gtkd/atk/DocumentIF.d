@@ -53,7 +53,7 @@ public interface DocumentIF{
 	 * Params:
 	 *     attributeName = a character string representing the name of the attribute
 	 *         whose value is being queried.
-	 * Return: a string value associated with the named
+	 * Returns: a string value associated with the named
 	 *     attribute for this document, or NULL if a value for
 	 *     #attribute_name has not been specified for this document.
 	 *
@@ -65,7 +65,7 @@ public interface DocumentIF{
 	 * Gets an AtkAttributeSet which describes document-wide
 	 * attributes as name-value pairs.
 	 *
-	 * Return: An AtkAttributeSet containing the explicitly
+	 * Returns: An AtkAttributeSet containing the explicitly
 	 *     set name-value-pair attributes associated with this document
 	 *     as a whole.
 	 *
@@ -74,7 +74,7 @@ public interface DocumentIF{
 	public AtkAttributeSet* getAttributes();
 
 	/**
-	 * Return: current page number inside @document. -1 if not
+	 * Returns: current page number inside @document. -1 if not
 	 *     implemented, not know by the implementor or irrelevant.
 	 *
 	 * Since: 2.12
@@ -90,7 +90,7 @@ public interface DocumentIF{
 	 * the document. Use it directly, or one of its children, as an
 	 * instance of the DOM.
 	 *
-	 * Return: a %gpointer that points to an instance of the DOM.
+	 * Returns: a %gpointer that points to an instance of the DOM.
 	 */
 	public void* getDocument();
 
@@ -100,7 +100,7 @@ public interface DocumentIF{
 	 * Deprecated: Since 2.12. Please use atk_document_get_attributes() to
 	 * ask for the document type if it applies.
 	 *
-	 * Return: a string indicating the document type
+	 * Returns: a string indicating the document type
 	 */
 	public string getDocumentType();
 
@@ -113,14 +113,14 @@ public interface DocumentIF{
 	 *
 	 * Deprecated: Please use atk_object_get_object_locale() instead.
 	 *
-	 * Return: a UTF-8 string indicating the POSIX-style LC_MESSAGES
+	 * Returns: a UTF-8 string indicating the POSIX-style LC_MESSAGES
 	 *     locale of the document content as a whole, or NULL if
 	 *     the document content does not specify a locale.
 	 */
 	public string getLocale();
 
 	/**
-	 * Return: total page count of @document. -1 if not implemented, not
+	 * Returns: total page count of @document. -1 if not implemented, not
 	 *     know by the implementor or irrelevant.
 	 *
 	 * Since: 2.12
@@ -133,7 +133,7 @@ public interface DocumentIF{
 	 *     attributeName = a character string representing the name of the attribute
 	 *         whose value is being set.
 	 *     attributeValue = a string value to be associated with #attribute_name.
-	 * Return: TRUE if #value is successfully associated with #attribute_name
+	 * Returns: TRUE if #value is successfully associated with #attribute_name
 	 *     for this document, FALSE otherwise (e.g. if the document does not
 	 *     allow the attribute to be modified).
 	 *

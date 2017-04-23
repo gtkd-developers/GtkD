@@ -56,7 +56,7 @@ public template ImageT(TStruct)
 	/**
 	 * Get a textual description of this image.
 	 *
-	 * Return: a string representing the image description
+	 * Returns: a string representing the image description
 	 */
 	public string getImageDescription()
 	{
@@ -64,7 +64,7 @@ public template ImageT(TStruct)
 	}
 
 	/**
-	 * Return: a string corresponding to the POSIX
+	 * Returns: a string corresponding to the POSIX
 	 *     LC_MESSAGES locale used by the image description, or %NULL if the
 	 *     image does not specify a locale.
 	 *
@@ -110,7 +110,7 @@ public template ImageT(TStruct)
 	 * Params:
 	 *     description = a string description to set for @image
 	 *
-	 * Return: boolean TRUE, or FALSE if operation could
+	 * Returns: boolean TRUE, or FALSE if operation could
 	 *     not be completed.
 	 */
 	public bool setImageDescription(string description)

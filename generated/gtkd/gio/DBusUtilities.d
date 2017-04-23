@@ -55,7 +55,7 @@ public struct DBusUtilities
 	 *     str = an unescaped string to be included in a D-Bus address
 	 *         as the value in a key-value pair
 	 *
-	 * Return: a copy of @string with all
+	 * Returns: a copy of @string with all
 	 *     non-optionally-escaped bytes escaped
 	 *
 	 * Since: 2.36
@@ -80,7 +80,7 @@ public struct DBusUtilities
 	 *     busType = a #GBusType
 	 *     cancellable = a #GCancellable or %NULL
 	 *
-	 * Return: a valid D-Bus address string for @bus_type or %NULL if
+	 * Returns: a valid D-Bus address string for @bus_type or %NULL if
 	 *     @error is set
 	 *
 	 * Since: 2.26
@@ -135,7 +135,7 @@ public struct DBusUtilities
 	 *     res = A #GAsyncResult obtained from the GAsyncReadyCallback passed to g_dbus_address_get_stream().
 	 *     outGuid = %NULL or return location to store the GUID extracted from @address, if any.
 	 *
-	 * Return: A #GIOStream or %NULL if @error is set.
+	 * Returns: A #GIOStream or %NULL if @error is set.
 	 *
 	 * Since: 2.26
 	 *
@@ -177,7 +177,7 @@ public struct DBusUtilities
 	 *     outGuid = %NULL or return location to store the GUID extracted from @address, if any.
 	 *     cancellable = A #GCancellable or %NULL.
 	 *
-	 * Return: A #GIOStream or %NULL if @error is set.
+	 * Returns: A #GIOStream or %NULL if @error is set.
 	 *
 	 * Since: 2.26
 	 *
@@ -212,7 +212,7 @@ public struct DBusUtilities
 	 * See the D-Bus specification regarding what strings are valid D-Bus
 	 * GUID (for example, D-Bus GUIDs are not RFC-4122 compliant).
 	 *
-	 * Return: A valid D-Bus GUID. Free with g_free().
+	 * Returns: A valid D-Bus GUID. Free with g_free().
 	 *
 	 * Since: 2.26
 	 */
@@ -258,7 +258,7 @@ public struct DBusUtilities
 	 *     gvalue = A #GValue to convert to a #GVariant
 	 *     type = A #GVariantType
 	 *
-	 * Return: A #GVariant (never floating) of #GVariantType @type holding
+	 * Returns: A #GVariant (never floating) of #GVariantType @type holding
 	 *     the data from @gvalue or %NULL in case of failure. Free with
 	 *     g_variant_unref().
 	 *
@@ -311,7 +311,7 @@ public struct DBusUtilities
 	 * Params:
 	 *     str = A string.
 	 *
-	 * Return: %TRUE if @string is a valid D-Bus address, %FALSE otherwise.
+	 * Returns: %TRUE if @string is a valid D-Bus address, %FALSE otherwise.
 	 *
 	 * Since: 2.26
 	 */
@@ -329,7 +329,7 @@ public struct DBusUtilities
 	 * Params:
 	 *     str = The string to check.
 	 *
-	 * Return: %TRUE if @string is a guid, %FALSE otherwise.
+	 * Returns: %TRUE if @string is a guid, %FALSE otherwise.
 	 *
 	 * Since: 2.26
 	 */
@@ -344,7 +344,7 @@ public struct DBusUtilities
 	 * Params:
 	 *     str = The string to check.
 	 *
-	 * Return: %TRUE if valid, %FALSE otherwise.
+	 * Returns: %TRUE if valid, %FALSE otherwise.
 	 *
 	 * Since: 2.26
 	 */
@@ -359,7 +359,7 @@ public struct DBusUtilities
 	 * Params:
 	 *     str = The string to check.
 	 *
-	 * Return: %TRUE if valid, %FALSE otherwise.
+	 * Returns: %TRUE if valid, %FALSE otherwise.
 	 *
 	 * Since: 2.26
 	 */
@@ -374,7 +374,7 @@ public struct DBusUtilities
 	 * Params:
 	 *     str = The string to check.
 	 *
-	 * Return: %TRUE if valid, %FALSE otherwise.
+	 * Returns: %TRUE if valid, %FALSE otherwise.
 	 *
 	 * Since: 2.26
 	 */
@@ -392,7 +392,7 @@ public struct DBusUtilities
 	 * Params:
 	 *     str = A string.
 	 *
-	 * Return: %TRUE if @string is a valid D-Bus address that is
+	 * Returns: %TRUE if @string is a valid D-Bus address that is
 	 *     supported by this library, %FALSE if @error is set.
 	 *
 	 * Since: 2.26
@@ -419,7 +419,7 @@ public struct DBusUtilities
 	 * Params:
 	 *     str = The string to check.
 	 *
-	 * Return: %TRUE if valid, %FALSE otherwise.
+	 * Returns: %TRUE if valid, %FALSE otherwise.
 	 *
 	 * Since: 2.26
 	 */

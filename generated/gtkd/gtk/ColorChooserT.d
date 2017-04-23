@@ -108,7 +108,7 @@ public template ColorChooserT(TStruct)
 	/**
 	 * Returns whether the color chooser shows the alpha channel.
 	 *
-	 * Return: %TRUE if the color chooser uses the alpha channel,
+	 * Returns: %TRUE if the color chooser uses the alpha channel,
 	 *     %FALSE if not
 	 *
 	 * Since: 3.4

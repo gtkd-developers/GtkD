@@ -63,7 +63,7 @@ public template DBusObjectManagerT(TStruct)
 	 *     objectPath = Object path to lookup.
 	 *     interfaceName = D-Bus interface name to lookup.
 	 *
-	 * Return: A #GDBusInterface instance or %NULL. Free
+	 * Returns: A #GDBusInterface instance or %NULL. Free
 	 *     with g_object_unref().
 	 *
 	 * Since: 2.30
@@ -86,7 +86,7 @@ public template DBusObjectManagerT(TStruct)
 	 * Params:
 	 *     objectPath = Object path to lookup.
 	 *
-	 * Return: A #GDBusObject or %NULL. Free with
+	 * Returns: A #GDBusObject or %NULL. Free with
 	 *     g_object_unref().
 	 *
 	 * Since: 2.30
@@ -106,7 +106,7 @@ public template DBusObjectManagerT(TStruct)
 	/**
 	 * Gets the object path that @manager is for.
 	 *
-	 * Return: A string owned by @manager. Do not free.
+	 * Returns: A string owned by @manager. Do not free.
 	 *
 	 * Since: 2.30
 	 */
@@ -118,7 +118,7 @@ public template DBusObjectManagerT(TStruct)
 	/**
 	 * Gets all #GDBusObject objects known to @manager.
 	 *
-	 * Return: A list of
+	 * Returns: A list of
 	 *     #GDBusObject objects. The returned list should be freed with
 	 *     g_list_free() after each element has been freed with
 	 *     g_object_unref().

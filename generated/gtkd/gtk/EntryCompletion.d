@@ -132,7 +132,7 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	/**
 	 * Creates a new #GtkEntryCompletion object.
 	 *
-	 * Return: A newly created #GtkEntryCompletion object
+	 * Returns: A newly created #GtkEntryCompletion object
 	 *
 	 * Since: 2.4
 	 *
@@ -158,7 +158,7 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 * Params:
 	 *     area = the #GtkCellArea used to layout cells
 	 *
-	 * Return: A newly created #GtkEntryCompletion object
+	 * Returns: A newly created #GtkEntryCompletion object
 	 *
 	 * Since: 3.0
 	 *
@@ -197,7 +197,7 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 * Params:
 	 *     key = The text to complete for
 	 *
-	 * Return: The common prefix all rows starting with
+	 * Returns: The common prefix all rows starting with
 	 *     @key or %NULL if no row matches @key.
 	 *
 	 * Since: 3.4
@@ -230,7 +230,7 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 * Get the original text entered by the user that triggered
 	 * the completion or %NULL if there’s no completion ongoing.
 	 *
-	 * Return: the prefix for the current completion
+	 * Returns: the prefix for the current completion
 	 *
 	 * Since: 2.12
 	 */
@@ -242,7 +242,7 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	/**
 	 * Gets the entry @completion has been attached to.
 	 *
-	 * Return: The entry @completion has been attached to
+	 * Returns: The entry @completion has been attached to
 	 *
 	 * Since: 2.4
 	 */
@@ -262,7 +262,7 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 * Returns whether the common prefix of the possible completions should
 	 * be automatically inserted in the entry.
 	 *
-	 * Return: %TRUE if inline completion is turned on
+	 * Returns: %TRUE if inline completion is turned on
 	 *
 	 * Since: 2.6
 	 */
@@ -274,7 +274,7 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	/**
 	 * Returns %TRUE if inline-selection mode is turned on.
 	 *
-	 * Return: %TRUE if inline-selection mode is on
+	 * Returns: %TRUE if inline-selection mode is on
 	 *
 	 * Since: 2.12
 	 */
@@ -286,7 +286,7 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	/**
 	 * Returns the minimum key length as set for @completion.
 	 *
-	 * Return: The currently used minimum key length
+	 * Returns: The currently used minimum key length
 	 *
 	 * Since: 2.4
 	 */
@@ -299,7 +299,7 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 * Returns the model the #GtkEntryCompletion is using as data source.
 	 * Returns %NULL if the model is unset.
 	 *
-	 * Return: A #GtkTreeModel, or %NULL if none
+	 * Returns: A #GtkTreeModel, or %NULL if none
 	 *     is currently being used
 	 *
 	 * Since: 2.4
@@ -319,7 +319,7 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	/**
 	 * Returns whether the completions should be presented in a popup window.
 	 *
-	 * Return: %TRUE if popup completion is turned on
+	 * Returns: %TRUE if popup completion is turned on
 	 *
 	 * Since: 2.6
 	 */
@@ -332,7 +332,7 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 * Returns whether the  completion popup window will be resized to the
 	 * width of the entry.
 	 *
-	 * Return: %TRUE if the popup window will be resized to the width of
+	 * Returns: %TRUE if the popup window will be resized to the width of
 	 *     the entry
 	 *
 	 * Since: 2.8
@@ -346,7 +346,7 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 * Returns whether the completion popup window will appear even if there is
 	 * only a single match.
 	 *
-	 * Return: %TRUE if the popup window will appear regardless of the
+	 * Returns: %TRUE if the popup window will appear regardless of the
 	 *     number of matches
 	 *
 	 * Since: 2.8
@@ -359,7 +359,7 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	/**
 	 * Returns the column in the model of @completion to get strings from.
 	 *
-	 * Return: the column containing the strings
+	 * Returns: the column containing the strings
 	 *
 	 * Since: 2.6
 	 */
@@ -648,7 +648,7 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 *     model = the #GtkTreeModel containing the matches
 	 *     iter = a #GtkTreeIter positioned at the selected match
 	 *
-	 * Return: %TRUE if the signal has been handled
+	 * Returns: %TRUE if the signal has been handled
 	 *
 	 * Since: 2.12
 	 */
@@ -714,7 +714,7 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 * Params:
 	 *     prefix = the common prefix of all possible completions
 	 *
-	 * Return: %TRUE if the signal has been handled
+	 * Returns: %TRUE if the signal has been handled
 	 *
 	 * Since: 2.6
 	 */
@@ -780,7 +780,7 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 *     model = the #GtkTreeModel containing the matches
 	 *     iter = a #GtkTreeIter positioned at the selected match
 	 *
-	 * Return: %TRUE if the signal has been handled
+	 * Returns: %TRUE if the signal has been handled
 	 *
 	 * Since: 2.4
 	 */

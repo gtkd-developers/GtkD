@@ -174,7 +174,7 @@ public class SettingsSchema
 	/**
 	 * Get the ID of @schema.
 	 *
-	 * Return: the ID
+	 * Returns: the ID
 	 */
 	public string getId()
 	{
@@ -190,7 +190,7 @@ public class SettingsSchema
 	 * Params:
 	 *     name = the name of a key
 	 *
-	 * Return: the #GSettingsSchemaKey for @name
+	 * Returns: the #GSettingsSchemaKey for @name
 	 *
 	 * Since: 2.40
 	 */
@@ -217,7 +217,7 @@ public class SettingsSchema
 	 * threfore describe multiple sets of keys at different locations.  For
 	 * relocatable schemas, this function will return %NULL.
 	 *
-	 * Return: the path of the schema, or %NULL
+	 * Returns: the path of the schema, or %NULL
 	 *
 	 * Since: 2.32
 	 */
@@ -232,7 +232,7 @@ public class SettingsSchema
 	 * Params:
 	 *     name = the name of a key
 	 *
-	 * Return: %TRUE if such a key exists
+	 * Returns: %TRUE if such a key exists
 	 *
 	 * Since: 2.40
 	 */
@@ -247,7 +247,7 @@ public class SettingsSchema
 	 * You should free the return value with g_strfreev() when you are done
 	 * with it.
 	 *
-	 * Return: a list of the children on @settings
+	 * Returns: a list of the children on @settings
 	 *
 	 * Since: 2.44
 	 */
@@ -266,7 +266,7 @@ public class SettingsSchema
 	 * (since you should already know what keys are in your schema).  This
 	 * function is intended for introspection reasons.
 	 *
-	 * Return: a list of the keys on
+	 * Returns: a list of the keys on
 	 *     @schema
 	 *
 	 * Since: 2.46
@@ -282,7 +282,7 @@ public class SettingsSchema
 	/**
 	 * Increase the reference count of @schema, returning a new reference.
 	 *
-	 * Return: a new reference to @schema
+	 * Returns: a new reference to @schema
 	 *
 	 * Since: 2.32
 	 */

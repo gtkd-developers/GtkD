@@ -45,7 +45,7 @@ public struct ValueGst
 	 *     value1 = a value to compare
 	 *     value2 = another value to compare
 	 *
-	 * Return: %TRUE if the values can be compared
+	 * Returns: %TRUE if the values can be compared
 	 */
 	public static bool canCompare(Value value1, Value value2)
 	{
@@ -61,7 +61,7 @@ public struct ValueGst
 	 *     value1 = a value to intersect
 	 *     value2 = another value to intersect
 	 *
-	 * Return: %TRUE if the values can intersect
+	 * Returns: %TRUE if the values can intersect
 	 */
 	public static bool canIntersect(Value value1, Value value2)
 	{
@@ -75,7 +75,7 @@ public struct ValueGst
 	 *     minuend = the value to subtract from
 	 *     subtrahend = the value to subtract
 	 *
-	 * Return: %TRUE if a subtraction is possible
+	 * Returns: %TRUE if a subtraction is possible
 	 */
 	public static bool canSubtract(Value minuend, Value subtrahend)
 	{
@@ -95,7 +95,7 @@ public struct ValueGst
 	 *     value1 = a value to union
 	 *     value2 = another value to union
 	 *
-	 * Return: %TRUE if there is a function allowing the two values to
+	 * Returns: %TRUE if there is a function allowing the two values to
 	 *     be unioned.
 	 */
 	public static bool canUnion(Value value1, Value value2)
@@ -114,7 +114,7 @@ public struct ValueGst
 	 *     value1 = a value to compare
 	 *     value2 = another value to compare
 	 *
-	 * Return: comparison result
+	 * Returns: comparison result
 	 */
 	public static int compare(Value value1, Value value2)
 	{
@@ -130,7 +130,7 @@ public struct ValueGst
 	 *         deserialization
 	 *     src = string to deserialize
 	 *
-	 * Return: %TRUE on success
+	 * Returns: %TRUE on success
 	 */
 	public static bool deserialize(out Value dest, string src)
 	{
@@ -153,7 +153,7 @@ public struct ValueGst
 	 *     dest = the #GValue destination
 	 *     src = the #GValue to fixate
 	 *
-	 * Return: %TRUE if @dest contains a fixated version of @src.
+	 * Returns: %TRUE if @dest contains a fixated version of @src.
 	 */
 	public static bool fixate(Value dest, Value src)
 	{
@@ -169,7 +169,7 @@ public struct ValueGst
 	 *     factor1 = a GValue initialized to #GST_TYPE_FRACTION
 	 *     factor2 = a GValue initialized to #GST_TYPE_FRACTION
 	 *
-	 * Return: %FALSE in case of an error (like integer overflow), %TRUE otherwise.
+	 * Returns: %FALSE in case of an error (like integer overflow), %TRUE otherwise.
 	 */
 	public static bool fractionMultiply(Value product, Value factor1, Value factor2)
 	{
@@ -184,7 +184,7 @@ public struct ValueGst
 	 *     minuend = a GValue initialized to #GST_TYPE_FRACTION
 	 *     subtrahend = a GValue initialized to #GST_TYPE_FRACTION
 	 *
-	 * Return: %FALSE in case of an error (like integer overflow), %TRUE otherwise.
+	 * Returns: %FALSE in case of an error (like integer overflow), %TRUE otherwise.
 	 */
 	public static bool fractionSubtract(Value dest, Value minuend, Value subtrahend)
 	{
@@ -197,7 +197,7 @@ public struct ValueGst
 	 * Params:
 	 *     value = a GValue initialized to #GST_TYPE_BITMASK
 	 *
-	 * Return: the bitmask.
+	 * Returns: the bitmask.
 	 */
 	public static ulong getBitmask(Value value)
 	{
@@ -212,7 +212,7 @@ public struct ValueGst
 	 * Params:
 	 *     value = a GValue initialized to GST_TYPE_CAPS
 	 *
-	 * Return: the contents of @value
+	 * Returns: the contents of @value
 	 */
 	public static Caps getCaps(Value value)
 	{
@@ -232,7 +232,7 @@ public struct ValueGst
 	 * Params:
 	 *     value = a GValue initialized to GST_TYPE_CAPS_FEATURES
 	 *
-	 * Return: the contents of @value
+	 * Returns: the contents of @value
 	 */
 	public static CapsFeatures getCapsFeatures(Value value)
 	{
@@ -252,7 +252,7 @@ public struct ValueGst
 	 * Params:
 	 *     value = a GValue initialized to GST_TYPE_DOUBLE_RANGE
 	 *
-	 * Return: the maximum of the range
+	 * Returns: the maximum of the range
 	 */
 	public static double getDoubleRangeMax(Value value)
 	{
@@ -265,7 +265,7 @@ public struct ValueGst
 	 * Params:
 	 *     value = a GValue initialized to GST_TYPE_DOUBLE_RANGE
 	 *
-	 * Return: the minimum of the range
+	 * Returns: the minimum of the range
 	 */
 	public static double getDoubleRangeMin(Value value)
 	{
@@ -278,7 +278,7 @@ public struct ValueGst
 	 * Params:
 	 *     value = a GValue initialized to #GST_TYPE_FLAG_SET
 	 *
-	 * Return: the flags field of the flagset instance.
+	 * Returns: the flags field of the flagset instance.
 	 *
 	 * Since: 1.6
 	 */
@@ -293,7 +293,7 @@ public struct ValueGst
 	 * Params:
 	 *     value = a GValue initialized to #GST_TYPE_FLAG_SET
 	 *
-	 * Return: the mask field of the flagset instance.
+	 * Returns: the mask field of the flagset instance.
 	 *
 	 * Since: 1.6
 	 */
@@ -325,7 +325,7 @@ public struct ValueGst
 	 * Params:
 	 *     value = a GValue initialized to #GST_TYPE_FRACTION
 	 *
-	 * Return: the denominator of the fraction.
+	 * Returns: the denominator of the fraction.
 	 */
 	public static int getFractionDenominator(Value value)
 	{
@@ -338,7 +338,7 @@ public struct ValueGst
 	 * Params:
 	 *     value = a GValue initialized to #GST_TYPE_FRACTION
 	 *
-	 * Return: the numerator of the fraction.
+	 * Returns: the numerator of the fraction.
 	 */
 	public static int getFractionNumerator(Value value)
 	{
@@ -351,7 +351,7 @@ public struct ValueGst
 	 * Params:
 	 *     value = a GValue initialized to GST_TYPE_FRACTION_RANGE
 	 *
-	 * Return: the maximum of the range
+	 * Returns: the maximum of the range
 	 */
 	public static Value getFractionRangeMax(Value value)
 	{
@@ -371,7 +371,7 @@ public struct ValueGst
 	 * Params:
 	 *     value = a GValue initialized to GST_TYPE_FRACTION_RANGE
 	 *
-	 * Return: the minimum of the range
+	 * Returns: the minimum of the range
 	 */
 	public static Value getFractionRangeMin(Value value)
 	{
@@ -391,7 +391,7 @@ public struct ValueGst
 	 * Params:
 	 *     value = a GValue initialized to GST_TYPE_INT64_RANGE
 	 *
-	 * Return: the maximum of the range
+	 * Returns: the maximum of the range
 	 */
 	public static long getInt64RangeMax(Value value)
 	{
@@ -404,7 +404,7 @@ public struct ValueGst
 	 * Params:
 	 *     value = a GValue initialized to GST_TYPE_INT64_RANGE
 	 *
-	 * Return: the minimum of the range
+	 * Returns: the minimum of the range
 	 */
 	public static long getInt64RangeMin(Value value)
 	{
@@ -417,7 +417,7 @@ public struct ValueGst
 	 * Params:
 	 *     value = a GValue initialized to GST_TYPE_INT64_RANGE
 	 *
-	 * Return: the step of the range
+	 * Returns: the step of the range
 	 */
 	public static long getInt64RangeStep(Value value)
 	{
@@ -430,7 +430,7 @@ public struct ValueGst
 	 * Params:
 	 *     value = a GValue initialized to GST_TYPE_INT_RANGE
 	 *
-	 * Return: the maximum of the range
+	 * Returns: the maximum of the range
 	 */
 	public static int getIntRangeMax(Value value)
 	{
@@ -443,7 +443,7 @@ public struct ValueGst
 	 * Params:
 	 *     value = a GValue initialized to GST_TYPE_INT_RANGE
 	 *
-	 * Return: the minimum of the range
+	 * Returns: the minimum of the range
 	 */
 	public static int getIntRangeMin(Value value)
 	{
@@ -456,7 +456,7 @@ public struct ValueGst
 	 * Params:
 	 *     value = a GValue initialized to GST_TYPE_INT_RANGE
 	 *
-	 * Return: the step of the range
+	 * Returns: the step of the range
 	 */
 	public static int getIntRangeStep(Value value)
 	{
@@ -469,7 +469,7 @@ public struct ValueGst
 	 * Params:
 	 *     value = a GValue initialized to GST_TYPE_STRUCTURE
 	 *
-	 * Return: the contents of @value
+	 * Returns: the contents of @value
 	 */
 	public static Structure getStructure(Value value)
 	{
@@ -513,7 +513,7 @@ public struct ValueGst
 	 *     value1 = a value to intersect
 	 *     value2 = another value to intersect
 	 *
-	 * Return: %TRUE if the intersection is non-empty
+	 * Returns: %TRUE if the intersection is non-empty
 	 */
 	public static bool intersect(out Value dest, Value value1, Value value2)
 	{
@@ -535,7 +535,7 @@ public struct ValueGst
 	 * Params:
 	 *     value = the #GValue to check
 	 *
-	 * Return: true if the value is "fixed".
+	 * Returns: true if the value is "fixed".
 	 */
 	public static bool isFixed(Value value)
 	{
@@ -549,7 +549,7 @@ public struct ValueGst
 	 *     value1 = a #GValue
 	 *     value2 = a #GValue
 	 *
-	 * Return: %TRUE is @value1 is a subset of @value2
+	 * Returns: %TRUE is @value1 is a subset of @value2
 	 */
 	public static bool isSubset(Value value1, Value value2)
 	{
@@ -577,7 +577,7 @@ public struct ValueGst
 	 * Params:
 	 *     value = a #GValue to serialize
 	 *
-	 * Return: the serialization for @value
+	 * Returns: the serialization for @value
 	 *     or %NULL if none exists
 	 */
 	public static string serialize(Value value)
@@ -760,7 +760,7 @@ public struct ValueGst
 	 *     minuend = the value to subtract from
 	 *     subtrahend = the value to subtract
 	 *
-	 * Return: %TRUE if the subtraction is not empty
+	 * Returns: %TRUE if the subtraction is not empty
 	 */
 	public static bool subtract(out Value dest, Value minuend, Value subtrahend)
 	{
@@ -781,7 +781,7 @@ public struct ValueGst
 	 *     value1 = a value to union
 	 *     value2 = another value to union
 	 *
-	 * Return: %TRUE if the union succeeded.
+	 * Returns: %TRUE if the union succeeded.
 	 */
 	public static bool unio(out Value dest, Value value1, Value value2)
 	{

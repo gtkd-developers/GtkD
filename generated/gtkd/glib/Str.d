@@ -195,7 +195,7 @@ public struct Str
 	 * Params:
 	 *     c = an ASCII character
 	 *
-	 * Return: If @c is a decimal digit (according to g_ascii_isdigit()),
+	 * Returns: If @c is a decimal digit (according to g_ascii_isdigit()),
 	 *     its numeric value. Otherwise, -1.
 	 */
 	public static int asciiDigitValue(char c)
@@ -219,7 +219,7 @@ public struct Str
 	 *     bufLen = The length of the buffer.
 	 *     d = The #gdouble to convert
 	 *
-	 * Return: The pointer to the buffer with the converted string.
+	 * Returns: The pointer to the buffer with the converted string.
 	 */
 	public static string asciiDtostr(string buffer, int bufLen, double d)
 	{
@@ -247,7 +247,7 @@ public struct Str
 	 *         code to use for converting.
 	 *     d = The #gdouble to convert
 	 *
-	 * Return: The pointer to the buffer with the converted string.
+	 * Returns: The pointer to the buffer with the converted string.
 	 */
 	public static string asciiFormatd(string buffer, int bufLen, string format, double d)
 	{
@@ -278,7 +278,7 @@ public struct Str
 	 *     s1 = string to compare with @s2
 	 *     s2 = string to compare with @s1
 	 *
-	 * Return: 0 if the strings match, a negative value if @s1 < @s2,
+	 * Returns: 0 if the strings match, a negative value if @s1 < @s2,
 	 *     or a positive value if @s1 > @s2.
 	 */
 	public static int asciiStrcasecmp(string s1, string s2)
@@ -293,7 +293,7 @@ public struct Str
 	 *     str = a string
 	 *     len = length of @str in bytes, or -1 if @str is nul-terminated
 	 *
-	 * Return: a newly-allocated string, with all the upper case
+	 * Returns: a newly-allocated string, with all the upper case
 	 *     characters in @str converted to lower case, with semantics that
 	 *     exactly match g_ascii_tolower(). (Note that this is unlike the
 	 *     old g_strdown(), which modified the string in place.)
@@ -323,7 +323,7 @@ public struct Str
 	 *     s2 = string to compare with @s1
 	 *     n = number of characters to compare
 	 *
-	 * Return: 0 if the strings match, a negative value if @s1 < @s2,
+	 * Returns: 0 if the strings match, a negative value if @s1 < @s2,
 	 *     or a positive value if @s1 > @s2.
 	 */
 	public static int asciiStrncasecmp(string s1, string s2, size_t n)
@@ -361,7 +361,7 @@ public struct Str
 	 *     endptr = if non-%NULL, it returns the
 	 *         character after the last character used in the conversion.
 	 *
-	 * Return: the #gdouble value.
+	 * Returns: the #gdouble value.
 	 */
 	public static double asciiStrtod(string nptr, out string endptr)
 	{
@@ -399,7 +399,7 @@ public struct Str
 	 *         character after the last character used in the conversion.
 	 *     base = to be used for the conversion, 2..36 or 0
 	 *
-	 * Return: the #gint64 value or zero on error.
+	 * Returns: the #gint64 value or zero on error.
 	 *
 	 * Since: 2.12
 	 */
@@ -439,7 +439,7 @@ public struct Str
 	 *         character after the last character used in the conversion.
 	 *     base = to be used for the conversion, 2..36 or 0
 	 *
-	 * Return: the #guint64 value or zero on error.
+	 * Returns: the #guint64 value or zero on error.
 	 *
 	 * Since: 2.2
 	 */
@@ -461,7 +461,7 @@ public struct Str
 	 *     str = a string
 	 *     len = length of @str in bytes, or -1 if @str is nul-terminated
 	 *
-	 * Return: a newly allocated string, with all the lower case
+	 * Returns: a newly allocated string, with all the lower case
 	 *     characters in @str converted to upper case, with semantics that
 	 *     exactly match g_ascii_toupper(). (Note that this is unlike the
 	 *     old g_strup(), which modified the string in place.)
@@ -488,7 +488,7 @@ public struct Str
 	 * Params:
 	 *     c = any character
 	 *
-	 * Return: the result of converting @c to lower case. If @c is
+	 * Returns: the result of converting @c to lower case. If @c is
 	 *     not an ASCII upper case letter, @c is returned unchanged.
 	 */
 	public static char asciiTolower(char c)
@@ -510,7 +510,7 @@ public struct Str
 	 * Params:
 	 *     c = any character
 	 *
-	 * Return: the result of converting @c to upper case. If @c is not
+	 * Returns: the result of converting @c to upper case. If @c is not
 	 *     an ASCII lower case letter, @c is returned unchanged.
 	 */
 	public static char asciiToupper(char c)
@@ -527,7 +527,7 @@ public struct Str
 	 * Params:
 	 *     c = an ASCII character.
 	 *
-	 * Return: If @c is a hex digit (according to g_ascii_isxdigit()),
+	 * Returns: If @c is a hex digit (according to g_ascii_isxdigit()),
 	 *     its numeric value. Otherwise, -1.
 	 */
 	public static int asciiXdigitValue(char c)
@@ -543,7 +543,7 @@ public struct Str
 	 *     format = the format string. See the printf() documentation
 	 *     args = the parameters to be inserted into the format string
 	 *
-	 * Return: the maximum space needed to store the formatted string
+	 * Returns: the maximum space needed to store the formatted string
 	 */
 	public static size_t printfStringUpperBound(string format, void* args)
 	{
@@ -560,7 +560,7 @@ public struct Str
 	 *     dest = destination buffer.
 	 *     src = source string.
 	 *
-	 * Return: a pointer to trailing nul byte.
+	 * Returns: a pointer to trailing nul byte.
 	 */
 	public static string stpcpy(string dest, string src)
 	{
@@ -577,7 +577,7 @@ public struct Str
 	 *     str = a nul-terminated string
 	 *     prefix = the nul-terminated prefix to look for
 	 *
-	 * Return: %TRUE if @str begins with @prefix, %FALSE otherwise.
+	 * Returns: %TRUE if @str begins with @prefix, %FALSE otherwise.
 	 *
 	 * Since: 2.2
 	 */
@@ -593,7 +593,7 @@ public struct Str
 	 *     str = a nul-terminated string
 	 *     suffix = the nul-terminated suffix to look for
 	 *
-	 * Return: %TRUE if @str end with @suffix, %FALSE otherwise.
+	 * Returns: %TRUE if @str end with @suffix, %FALSE otherwise.
 	 *
 	 * Since: 2.2
 	 */
@@ -609,7 +609,7 @@ public struct Str
 	 * Params:
 	 *     str = a string
 	 *
-	 * Return: %TRUE if @str is ASCII
+	 * Returns: %TRUE if @str is ASCII
 	 *
 	 * Since: 2.40
 	 */
@@ -647,7 +647,7 @@ public struct Str
 	 *     potentialHit = the text that may be a hit
 	 *     acceptAlternates = %TRUE to accept ASCII alternates
 	 *
-	 * Return: %TRUE if @potential_hit is a hit
+	 * Returns: %TRUE if @potential_hit is a hit
 	 *
 	 * Since: 2.40
 	 */
@@ -680,7 +680,7 @@ public struct Str
 	 *     str = a string, in UTF-8
 	 *     fromLocale = the source locale, if known
 	 *
-	 * Return: a string in plain ASCII
+	 * Returns: a string in plain ASCII
 	 *
 	 * Since: 2.40
 	 */
@@ -716,7 +716,7 @@ public struct Str
 	 *     asciiAlternates = a
 	 *         return location for ASCII alternates
 	 *
-	 * Return: the folded tokens
+	 * Returns: the folded tokens
 	 *
 	 * Since: 2.40
 	 */
@@ -746,7 +746,7 @@ public struct Str
 	 *     validChars = bytes permitted in @string
 	 *     substitutor = replacement character for disallowed bytes
 	 *
-	 * Return: @string
+	 * Returns: @string
 	 */
 	public static string strcanon(string str, string validChars, char substitutor)
 	{
@@ -767,7 +767,7 @@ public struct Str
 	 *     s1 = a string
 	 *     s2 = a string to compare with @s1
 	 *
-	 * Return: 0 if the strings match, a negative value if @s1 < @s2,
+	 * Returns: 0 if the strings match, a negative value if @s1 < @s2,
 	 *     or a positive value if @s1 > @s2.
 	 */
 	public static int strcasecmp(string s1, string s2)
@@ -789,7 +789,7 @@ public struct Str
 	 * Params:
 	 *     str = a string to remove the trailing whitespace from
 	 *
-	 * Return: @string
+	 * Returns: @string
 	 */
 	public static string strchomp(string str)
 	{
@@ -814,7 +814,7 @@ public struct Str
 	 * Params:
 	 *     str = a string to remove the leading whitespace from
 	 *
-	 * Return: @string
+	 * Returns: @string
 	 */
 	public static string strchug(string str)
 	{
@@ -833,7 +833,7 @@ public struct Str
 	 *     str1 = a C string or %NULL
 	 *     str2 = another C string or %NULL
 	 *
-	 * Return: an integer less than, equal to, or greater than zero, if @str1 is <, == or > than @str2.
+	 * Returns: an integer less than, equal to, or greater than zero, if @str1 is <, == or > than @str2.
 	 *
 	 * Since: 2.16
 	 */
@@ -850,7 +850,7 @@ public struct Str
 	 * Params:
 	 *     source = a string to compress
 	 *
-	 * Return: a newly-allocated copy of @source with all escaped
+	 * Returns: a newly-allocated copy of @source with all escaped
 	 *     character compressed
 	 */
 	public static string strcompress(string source)
@@ -877,7 +877,7 @@ public struct Str
 	 *         or %NULL to use the standard delimiters defined in #G_STR_DELIMITERS
 	 *     newDelimiter = the new delimiter character
 	 *
-	 * Return: @string
+	 * Returns: @string
 	 */
 	public static string strdelimit(string str, string delimiters, char newDelimiter)
 	{
@@ -897,7 +897,7 @@ public struct Str
 	 * Params:
 	 *     str = the string to convert.
 	 *
-	 * Return: the string
+	 * Returns: the string
 	 */
 	public static string strdown(string str)
 	{
@@ -915,7 +915,7 @@ public struct Str
 	 * Params:
 	 *     str = the string to duplicate
 	 *
-	 * Return: a newly-allocated copy of @str
+	 * Returns: a newly-allocated copy of @str
 	 */
 	public static string strdup(string str)
 	{
@@ -939,7 +939,7 @@ public struct Str
 	 *         [string precision pitfalls][string-precision]
 	 *     args = the list of parameters to insert into the format string
 	 *
-	 * Return: a newly-allocated string holding the result
+	 * Returns: a newly-allocated string holding the result
 	 */
 	public static string strdupVprintf(string format, void* args)
 	{
@@ -958,7 +958,7 @@ public struct Str
 	 * Params:
 	 *     strArray = a %NULL-terminated array of strings
 	 *
-	 * Return: a new %NULL-terminated array of strings.
+	 * Returns: a new %NULL-terminated array of strings.
 	 */
 	public static string[] strdupv(string[] strArray)
 	{
@@ -979,7 +979,7 @@ public struct Str
 	 *     errnum = the system error number. See the standard C %errno
 	 *         documentation
 	 *
-	 * Return: a UTF-8 string describing the error code. If the error code
+	 * Returns: a UTF-8 string describing the error code. If the error code
 	 *     is unknown, it returns a string like "unknown error (<code>)".
 	 */
 	public static string strerror(int errnum)
@@ -1001,7 +1001,7 @@ public struct Str
 	 *     source = a string to escape
 	 *     exceptions = a string of characters not to escape in @source
 	 *
-	 * Return: a newly-allocated copy of @source with certain
+	 * Returns: a newly-allocated copy of @source with certain
 	 *     characters escaped. See above.
 	 */
 	public static string strescape(string source, string exceptions)
@@ -1040,7 +1040,7 @@ public struct Str
 	 *         strings, or %NULL
 	 *     strArray = a %NULL-terminated array of strings to join
 	 *
-	 * Return: a newly-allocated string containing all of the strings joined
+	 * Returns: a newly-allocated string containing all of the strings joined
 	 *     together, with @separator between them
 	 */
 	public static string strjoinv(string separator, string[] strArray)
@@ -1072,7 +1072,7 @@ public struct Str
 	 *     destSize = length of @dest buffer in bytes (not length of existing string
 	 *         inside @dest)
 	 *
-	 * Return: size of attempted result, which is MIN (dest_size, strlen
+	 * Returns: size of attempted result, which is MIN (dest_size, strlen
 	 *     (original dest)) + strlen (src), so if retval >= dest_size,
 	 *     truncation occurred.
 	 */
@@ -1102,7 +1102,7 @@ public struct Str
 	 *     src = source buffer
 	 *     destSize = length of @dest in bytes
 	 *
-	 * Return: length of @src
+	 * Returns: length of @src
 	 */
 	public static size_t strlcpy(string dest, string src, size_t destSize)
 	{
@@ -1135,7 +1135,7 @@ public struct Str
 	 *     s2 = a string to compare with @s1
 	 *     n = the maximum number of characters to compare
 	 *
-	 * Return: 0 if the strings match, a negative value if @s1 < @s2,
+	 * Returns: 0 if the strings match, a negative value if @s1 < @s2,
 	 *     or a positive value if @s1 > @s2.
 	 */
 	public static int strncasecmp(string s1, string s2, uint n)
@@ -1157,7 +1157,7 @@ public struct Str
 	 *     str = the string to duplicate
 	 *     n = the maximum number of bytes to copy from @str
 	 *
-	 * Return: a newly-allocated buffer containing the first @n bytes
+	 * Returns: a newly-allocated buffer containing the first @n bytes
 	 *     of @str, nul-terminated
 	 */
 	public static string strndup(string str, size_t n)
@@ -1176,7 +1176,7 @@ public struct Str
 	 *     length = the length of the new string
 	 *     fillChar = the byte to fill the string with
 	 *
-	 * Return: a newly-allocated string filled the @fill_char
+	 * Returns: a newly-allocated string filled the @fill_char
 	 */
 	public static string strnfill(size_t length, char fillChar)
 	{
@@ -1197,7 +1197,7 @@ public struct Str
 	 * Params:
 	 *     str = the string to reverse
 	 *
-	 * Return: the same pointer passed in as @string
+	 * Returns: the same pointer passed in as @string
 	 */
 	public static string strreverse(string str)
 	{
@@ -1215,7 +1215,7 @@ public struct Str
 	 *     haystack = a nul-terminated string
 	 *     needle = the nul-terminated string to search for
 	 *
-	 * Return: a pointer to the found occurrence, or
+	 * Returns: a pointer to the found occurrence, or
 	 *     %NULL if not found.
 	 */
 	public static string strrstr(string haystack, string needle)
@@ -1236,7 +1236,7 @@ public struct Str
 	 *     haystackLen = the maximum length of @haystack
 	 *     needle = the nul-terminated string to search for
 	 *
-	 * Return: a pointer to the found occurrence, or
+	 * Returns: a pointer to the found occurrence, or
 	 *     %NULL if not found.
 	 */
 	public static string strrstrLen(string haystack, ptrdiff_t haystackLen, string needle)
@@ -1256,7 +1256,7 @@ public struct Str
 	 * Params:
 	 *     signum = the signal number. See the `signal` documentation
 	 *
-	 * Return: a UTF-8 string describing the signal. If the signal is unknown,
+	 * Returns: a UTF-8 string describing the signal. If the signal is unknown,
 	 *     it returns "unknown signal (<signum>)".
 	 */
 	public static string strsignal(int signum)
@@ -1288,7 +1288,7 @@ public struct Str
 	 *     maxTokens = the maximum number of pieces to split @string into.
 	 *         If this is less than 1, the string is split completely.
 	 *
-	 * Return: a newly-allocated %NULL-terminated array of strings. Use
+	 * Returns: a newly-allocated %NULL-terminated array of strings. Use
 	 *     g_strfreev() to free it.
 	 */
 	public static string[] strsplit(string str, string delimiter, int maxTokens)
@@ -1326,7 +1326,7 @@ public struct Str
 	 *     maxTokens = The maximum number of tokens to split @string into.
 	 *         If this is less than 1, the string is split completely
 	 *
-	 * Return: a newly-allocated %NULL-terminated array of strings. Use
+	 * Returns: a newly-allocated %NULL-terminated array of strings. Use
 	 *     g_strfreev() to free it.
 	 *
 	 * Since: 2.4
@@ -1348,7 +1348,7 @@ public struct Str
 	 *         search through the whole string.
 	 *     needle = the string to search for
 	 *
-	 * Return: a pointer to the found occurrence, or
+	 * Returns: a pointer to the found occurrence, or
 	 *     %NULL if not found.
 	 */
 	public static string strstrLen(string haystack, ptrdiff_t haystackLen, string needle)
@@ -1377,7 +1377,7 @@ public struct Str
 	 *     endptr = if non-%NULL, it returns the
 	 *         character after the last character used in the conversion.
 	 *
-	 * Return: the #gdouble value.
+	 * Returns: the #gdouble value.
 	 */
 	public static double strtod(string nptr, out string endptr)
 	{
@@ -1400,7 +1400,7 @@ public struct Str
 	 * Params:
 	 *     str = the string to convert
 	 *
-	 * Return: the string
+	 * Returns: the string
 	 */
 	public static string strup(string str)
 	{
@@ -1423,7 +1423,7 @@ public struct Str
 	 * Params:
 	 *     strArray = a %NULL-terminated array of strings
 	 *
-	 * Return: length of @str_array.
+	 * Returns: length of @str_array.
 	 *
 	 * Since: 2.6
 	 */
@@ -1439,7 +1439,7 @@ public struct Str
 	 *     strv = a %NULL-terminated array of strings
 	 *     str = a string
 	 *
-	 * Return: %TRUE if @str is an element of @strv, according to g_str_equal().
+	 * Returns: %TRUE if @str is an element of @strv, according to g_str_equal().
 	 *
 	 * Since: 2.44
 	 */
@@ -1461,7 +1461,7 @@ public struct Str
 	 *         [string precision pitfalls][string-precision]
 	 *     args = the list of arguments to insert in the output.
 	 *
-	 * Return: the number of bytes printed.
+	 * Returns: the number of bytes printed.
 	 *
 	 * Since: 2.4
 	 */
@@ -1480,7 +1480,7 @@ public struct Str
 	 *         [string precision pitfalls][string-precision]
 	 *     args = the list of arguments to insert in the output.
 	 *
-	 * Return: the number of bytes printed.
+	 * Returns: the number of bytes printed.
 	 *
 	 * Since: 2.2
 	 */
@@ -1498,7 +1498,7 @@ public struct Str
 	 *         [string precision pitfalls][string-precision]
 	 *     args = the list of arguments to insert in the output.
 	 *
-	 * Return: the number of bytes printed.
+	 * Returns: the number of bytes printed.
 	 *
 	 * Since: 2.2
 	 */
@@ -1534,7 +1534,7 @@ public struct Str
 	 *         string precision pitfalls][string-precision]
 	 *     args = the list of arguments to insert in the output.
 	 *
-	 * Return: the number of bytes which would be produced if the buffer
+	 * Returns: the number of bytes which would be produced if the buffer
 	 *     was large enough.
 	 */
 	public static int vsnprintf(string str, gulong n, string format, void* args)
@@ -1552,7 +1552,7 @@ public struct Str
 	 *         [string precision pitfalls][string-precision]
 	 *     args = the list of arguments to insert in the output.
 	 *
-	 * Return: the number of bytes printed.
+	 * Returns: the number of bytes printed.
 	 *
 	 * Since: 2.2
 	 */

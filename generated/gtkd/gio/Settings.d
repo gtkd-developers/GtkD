@@ -373,7 +373,7 @@ public class Settings : ObjectG
 	 * Params:
 	 *     schemaId = the id of the schema
 	 *
-	 * Return: a new #GSettings object
+	 * Returns: a new #GSettings object
 	 *
 	 * Since: 2.26
 	 *
@@ -421,7 +421,7 @@ public class Settings : ObjectG
 	 *     backend = a #GSettingsBackend
 	 *     path = the path to use
 	 *
-	 * Return: a new #GSettings object
+	 * Returns: a new #GSettings object
 	 *
 	 * Since: 2.32
 	 *
@@ -453,7 +453,7 @@ public class Settings : ObjectG
 	 *     schemaId = the id of the schema
 	 *     backend = the #GSettingsBackend to use
 	 *
-	 * Return: a new #GSettings object
+	 * Returns: a new #GSettings object
 	 *
 	 * Since: 2.26
 	 *
@@ -483,7 +483,7 @@ public class Settings : ObjectG
 	 *     backend = the #GSettingsBackend to use
 	 *     path = the path to use
 	 *
-	 * Return: a new #GSettings object
+	 * Returns: a new #GSettings object
 	 *
 	 * Since: 2.26
 	 *
@@ -520,7 +520,7 @@ public class Settings : ObjectG
 	 *     schemaId = the id of the schema
 	 *     path = the path to use
 	 *
-	 * Return: a new #GSettings object
+	 * Returns: a new #GSettings object
 	 *
 	 * Since: 2.26
 	 *
@@ -543,7 +543,7 @@ public class Settings : ObjectG
 	 *
 	 * Deprecated: Use g_settings_schema_source_list_schemas() instead
 	 *
-	 * Return: a list of relocatable
+	 * Returns: a list of relocatable
 	 *     #GSettings schemas that are available.  The list must not be
 	 *     modified or freed.
 	 *
@@ -562,7 +562,7 @@ public class Settings : ObjectG
 	 * a particular schema, use g_settings_schema_source_lookup() instead
 	 * of your whole loop.
 	 *
-	 * Return: a list of #GSettings
+	 * Returns: a list of #GSettings
 	 *     schemas that are available.  The list must not be modified or
 	 *     freed.
 	 *
@@ -737,7 +737,7 @@ public class Settings : ObjectG
 	 * Params:
 	 *     key = the name of a key in @settings
 	 *
-	 * Return: a new #GAction
+	 * Returns: a new #GAction
 	 *
 	 * Since: 2.32
 	 */
@@ -776,7 +776,7 @@ public class Settings : ObjectG
 	 * Params:
 	 *     key = the key to get the value for
 	 *
-	 * Return: a boolean
+	 * Returns: a boolean
 	 *
 	 * Since: 2.26
 	 */
@@ -796,7 +796,7 @@ public class Settings : ObjectG
 	 * Params:
 	 *     name = the name of the child schema
 	 *
-	 * Return: a 'child' settings object
+	 * Returns: a 'child' settings object
 	 *
 	 * Since: 2.26
 	 */
@@ -838,7 +838,7 @@ public class Settings : ObjectG
 	 * Params:
 	 *     key = the key to get the default value for
 	 *
-	 * Return: the default value
+	 * Returns: the default value
 	 *
 	 * Since: 2.40
 	 */
@@ -865,7 +865,7 @@ public class Settings : ObjectG
 	 * Params:
 	 *     key = the key to get the value for
 	 *
-	 * Return: a double
+	 * Returns: a double
 	 *
 	 * Since: 2.26
 	 */
@@ -891,7 +891,7 @@ public class Settings : ObjectG
 	 * Params:
 	 *     key = the key to get the value for
 	 *
-	 * Return: the enum value
+	 * Returns: the enum value
 	 *
 	 * Since: 2.26
 	 */
@@ -917,7 +917,7 @@ public class Settings : ObjectG
 	 * Params:
 	 *     key = the key to get the value for
 	 *
-	 * Return: the flags value
+	 * Returns: the flags value
 	 *
 	 * Since: 2.26
 	 */
@@ -930,7 +930,7 @@ public class Settings : ObjectG
 	 * Returns whether the #GSettings object has any unapplied
 	 * changes.  This can only be the case if it is in 'delayed-apply' mode.
 	 *
-	 * Return: %TRUE if @settings has unapplied changes
+	 * Returns: %TRUE if @settings has unapplied changes
 	 *
 	 * Since: 2.26
 	 */
@@ -950,7 +950,7 @@ public class Settings : ObjectG
 	 * Params:
 	 *     key = the key to get the value for
 	 *
-	 * Return: an integer
+	 * Returns: an integer
 	 *
 	 * Since: 2.26
 	 */
@@ -970,7 +970,7 @@ public class Settings : ObjectG
 	 * Params:
 	 *     key = the key to get the value for
 	 *
-	 * Return: a 64-bit integer
+	 * Returns: a 64-bit integer
 	 *
 	 * Since: 2.50
 	 */
@@ -1014,7 +1014,7 @@ public class Settings : ObjectG
 	 *         settings database to the value used by the application
 	 *     userData = user data for @mapping
 	 *
-	 * Return: the result, which may be %NULL
+	 * Returns: the result, which may be %NULL
 	 */
 	public void* getMapped(string key, GSettingsGetMapping mapping, void* userData)
 	{
@@ -1054,7 +1054,7 @@ public class Settings : ObjectG
 	 * Params:
 	 *     key = the key to get the value for
 	 *
-	 * Return: a newly-allocated string
+	 * Returns: a newly-allocated string
 	 *
 	 * Since: 2.26
 	 */
@@ -1075,7 +1075,7 @@ public class Settings : ObjectG
 	 * Params:
 	 *     key = the key to get the value for
 	 *
-	 * Return: a
+	 * Returns: a
 	 *     newly-allocated, %NULL-terminated array of strings, the value that
 	 *     is stored at @key in @settings.
 	 *
@@ -1101,7 +1101,7 @@ public class Settings : ObjectG
 	 * Params:
 	 *     key = the key to get the value for
 	 *
-	 * Return: an unsigned integer
+	 * Returns: an unsigned integer
 	 *
 	 * Since: 2.30
 	 */
@@ -1122,7 +1122,7 @@ public class Settings : ObjectG
 	 * Params:
 	 *     key = the key to get the value for
 	 *
-	 * Return: a 64-bit unsigned integer
+	 * Returns: a 64-bit unsigned integer
 	 *
 	 * Since: 2.50
 	 */
@@ -1154,7 +1154,7 @@ public class Settings : ObjectG
 	 * Params:
 	 *     key = the key to get the user value for
 	 *
-	 * Return: the user's value, if set
+	 * Returns: the user's value, if set
 	 *
 	 * Since: 2.40
 	 */
@@ -1179,7 +1179,7 @@ public class Settings : ObjectG
 	 * Params:
 	 *     key = the key to get the value for
 	 *
-	 * Return: a new #GVariant
+	 * Returns: a new #GVariant
 	 *
 	 * Since: 2.26
 	 */
@@ -1201,7 +1201,7 @@ public class Settings : ObjectG
 	 * Params:
 	 *     name = the name of a key
 	 *
-	 * Return: %TRUE if the key @name is writable
+	 * Returns: %TRUE if the key @name is writable
 	 *
 	 * Since: 2.26
 	 */
@@ -1231,7 +1231,7 @@ public class Settings : ObjectG
 	 * You should free the return value with g_strfreev() when you are done
 	 * with it.
 	 *
-	 * Return: a list of the children on @settings
+	 * Returns: a list of the children on @settings
 	 */
 	public string[] listChildren()
 	{
@@ -1251,7 +1251,7 @@ public class Settings : ObjectG
 	 * You should free the return value with g_strfreev() when you are done
 	 * with it.
 	 *
-	 * Return: a list of the keys on @settings
+	 * Returns: a list of the keys on @settings
 	 */
 	public string[] listKeys()
 	{
@@ -1271,7 +1271,7 @@ public class Settings : ObjectG
 	 *     key = the key to check
 	 *     value = the value to check
 	 *
-	 * Return: %TRUE if @value is valid for @key
+	 * Returns: %TRUE if @value is valid for @key
 	 *
 	 * Since: 2.28
 	 */
@@ -1320,7 +1320,7 @@ public class Settings : ObjectG
 	 *     key = the name of the key to set
 	 *     value = the value to set it to
 	 *
-	 * Return: %TRUE if setting the key succeeded,
+	 * Returns: %TRUE if setting the key succeeded,
 	 *     %FALSE if the key was not writable
 	 *
 	 * Since: 2.26
@@ -1342,7 +1342,7 @@ public class Settings : ObjectG
 	 *     key = the name of the key to set
 	 *     value = the value to set it to
 	 *
-	 * Return: %TRUE if setting the key succeeded,
+	 * Returns: %TRUE if setting the key succeeded,
 	 *     %FALSE if the key was not writable
 	 *
 	 * Since: 2.26
@@ -1368,7 +1368,7 @@ public class Settings : ObjectG
 	 *     key = a key, within @settings
 	 *     value = an enumerated value
 	 *
-	 * Return: %TRUE, if the set succeeds
+	 * Returns: %TRUE, if the set succeeds
 	 */
 	public bool setEnum(string key, int value)
 	{
@@ -1392,7 +1392,7 @@ public class Settings : ObjectG
 	 *     key = a key, within @settings
 	 *     value = a flags value
 	 *
-	 * Return: %TRUE, if the set succeeds
+	 * Returns: %TRUE, if the set succeeds
 	 */
 	public bool setFlags(string key, uint value)
 	{
@@ -1411,7 +1411,7 @@ public class Settings : ObjectG
 	 *     key = the name of the key to set
 	 *     value = the value to set it to
 	 *
-	 * Return: %TRUE if setting the key succeeded,
+	 * Returns: %TRUE if setting the key succeeded,
 	 *     %FALSE if the key was not writable
 	 *
 	 * Since: 2.26
@@ -1433,7 +1433,7 @@ public class Settings : ObjectG
 	 *     key = the name of the key to set
 	 *     value = the value to set it to
 	 *
-	 * Return: %TRUE if setting the key succeeded,
+	 * Returns: %TRUE if setting the key succeeded,
 	 *     %FALSE if the key was not writable
 	 *
 	 * Since: 2.50
@@ -1455,7 +1455,7 @@ public class Settings : ObjectG
 	 *     key = the name of the key to set
 	 *     value = the value to set it to
 	 *
-	 * Return: %TRUE if setting the key succeeded,
+	 * Returns: %TRUE if setting the key succeeded,
 	 *     %FALSE if the key was not writable
 	 *
 	 * Since: 2.26
@@ -1478,7 +1478,7 @@ public class Settings : ObjectG
 	 *     key = the name of the key to set
 	 *     value = the value to set it to, or %NULL
 	 *
-	 * Return: %TRUE if setting the key succeeded,
+	 * Returns: %TRUE if setting the key succeeded,
 	 *     %FALSE if the key was not writable
 	 *
 	 * Since: 2.26
@@ -1501,7 +1501,7 @@ public class Settings : ObjectG
 	 *     key = the name of the key to set
 	 *     value = the value to set it to
 	 *
-	 * Return: %TRUE if setting the key succeeded,
+	 * Returns: %TRUE if setting the key succeeded,
 	 *     %FALSE if the key was not writable
 	 *
 	 * Since: 2.30
@@ -1524,7 +1524,7 @@ public class Settings : ObjectG
 	 *     key = the name of the key to set
 	 *     value = the value to set it to
 	 *
-	 * Return: %TRUE if setting the key succeeded,
+	 * Returns: %TRUE if setting the key succeeded,
 	 *     %FALSE if the key was not writable
 	 *
 	 * Since: 2.50
@@ -1547,7 +1547,7 @@ public class Settings : ObjectG
 	 *     key = the name of the key to set
 	 *     value = a #GVariant of the correct type
 	 *
-	 * Return: %TRUE if setting the key succeeded,
+	 * Returns: %TRUE if setting the key succeeded,
 	 *     %FALSE if the key was not writable
 	 *
 	 * Since: 2.26
@@ -1604,7 +1604,7 @@ public class Settings : ObjectG
 	 *     keys = an array of #GQuarks for the changed keys, or %NULL
 	 *     nKeys = the length of the @keys array, or 0
 	 *
-	 * Return: %TRUE to stop other handlers from being invoked for the
+	 * Returns: %TRUE to stop other handlers from being invoked for the
 	 *     event. FALSE to propagate the event further.
 	 */
 	gulong addOnChange(bool delegate(void*, int, Settings) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -1743,7 +1743,7 @@ public class Settings : ObjectG
 	 * Params:
 	 *     key = the quark of the key, or 0
 	 *
-	 * Return: %TRUE to stop other handlers from being invoked for the
+	 * Returns: %TRUE to stop other handlers from being invoked for the
 	 *     event. FALSE to propagate the event further.
 	 */
 	gulong addOnWritableChange(bool delegate(uint, Settings) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)

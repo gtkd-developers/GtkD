@@ -66,7 +66,7 @@ public class HashTableIter
 	/**
 	 * Returns the #GHashTable associated with @iter.
 	 *
-	 * Return: the #GHashTable associated with @iter.
+	 * Returns: the #GHashTable associated with @iter.
 	 *
 	 * Since: 2.16
 	 */
@@ -116,7 +116,7 @@ public class HashTableIter
 	 *     key = a location to store the key
 	 *     value = a location to store the value
 	 *
-	 * Return: %FALSE if the end of the #GHashTable has been reached.
+	 * Returns: %FALSE if the end of the #GHashTable has been reached.
 	 *
 	 * Since: 2.16
 	 */

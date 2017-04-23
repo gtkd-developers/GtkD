@@ -54,7 +54,7 @@ public struct Utils
 	 * Params:
 	 *     text = the text to escape.
 	 *
-	 * Return: the escaped @text.
+	 * Returns: the escaped @text.
 	 *
 	 * Since: 3.10
 	 */
@@ -79,7 +79,7 @@ public struct Utils
 	 * Params:
 	 *     text = the text to unescape.
 	 *
-	 * Return: the unescaped @text.
+	 * Returns: the unescaped @text.
 	 *
 	 * Since: 3.10
 	 */

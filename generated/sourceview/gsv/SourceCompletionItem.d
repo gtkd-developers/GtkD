@@ -124,7 +124,7 @@ public class SourceCompletionItem : ObjectG, SourceCompletionProposalIF
 	 *     stock = The stock icon.
 	 *     info = The item extra information.
 	 *
-	 * Return: a new #GtkSourceCompletionItem.
+	 * Returns: a new #GtkSourceCompletionItem.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -144,7 +144,7 @@ public class SourceCompletionItem : ObjectG, SourceCompletionProposalIF
 	 * Creates a new #GtkSourceCompletionItem. The desired properties need to be set
 	 * afterwards.
 	 *
-	 * Return: a new #GtkSourceCompletionItem.
+	 * Returns: a new #GtkSourceCompletionItem.
 	 *
 	 * Since: 3.24
 	 *

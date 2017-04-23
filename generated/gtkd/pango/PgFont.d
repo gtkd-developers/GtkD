@@ -112,7 +112,7 @@ public class PgFont : ObjectG
 	 * Use pango_font_describe_with_absolute_size() if you want the font
 	 * size in device units.
 	 *
-	 * Return: a newly-allocated #PangoFontDescription object.
+	 * Returns: a newly-allocated #PangoFontDescription object.
 	 */
 	public PgFontDescription describe()
 	{
@@ -131,7 +131,7 @@ public class PgFont : ObjectG
 	 * (in device units). Use pango_font_describe() if you want the font
 	 * size in points.
 	 *
-	 * Return: a newly-allocated #PangoFontDescription object.
+	 * Returns: a newly-allocated #PangoFontDescription object.
 	 *
 	 * Since: 1.14
 	 */
@@ -155,7 +155,7 @@ public class PgFont : ObjectG
 	 *     language = the language tag
 	 *     ch = a Unicode character.
 	 *
-	 * Return: the best matching shaper.
+	 * Returns: the best matching shaper.
 	 */
 	public PgEngineShape findShaper(PgLanguage language, uint ch)
 	{
@@ -175,7 +175,7 @@ public class PgFont : ObjectG
 	 * Params:
 	 *     language = the language tag
 	 *
-	 * Return: a newly-allocated #PangoCoverage
+	 * Returns: a newly-allocated #PangoCoverage
 	 *     object.
 	 */
 	public PgCoverage getCoverage(PgLanguage language)
@@ -201,7 +201,7 @@ public class PgFont : ObjectG
 	 * alive.  In most uses this is not an issue as a #PangoContext holds
 	 * a reference to the font map.
 	 *
-	 * Return: the #PangoFontMap for the
+	 * Returns: the #PangoFontMap for the
 	 *     font, or %NULL if @font is %NULL.
 	 *
 	 * Since: 1.10
@@ -255,7 +255,7 @@ public class PgFont : ObjectG
 	 *     language = language tag used to determine which script to get the metrics
 	 *         for, or %NULL to indicate to get the metrics for the entire font.
 	 *
-	 * Return: a #PangoFontMetrics object. The caller must call pango_font_metrics_unref()
+	 * Returns: a #PangoFontMetrics object. The caller must call pango_font_metrics_unref()
 	 *     when finished using the object.
 	 */
 	public PgFontMetrics getMetrics(PgLanguage language)

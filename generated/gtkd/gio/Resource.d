@@ -210,7 +210,7 @@ public class Resource
 	 * Params:
 	 *     data = A #GBytes
 	 *
-	 * Return: a new #GResource, or %NULL on error
+	 * Returns: a new #GResource, or %NULL on error
 	 *
 	 * Since: 2.32
 	 *
@@ -278,7 +278,7 @@ public class Resource
 	 *     path = A pathname inside the resource
 	 *     lookupFlags = A #GResourceLookupFlags
 	 *
-	 * Return: an array of constant strings
+	 * Returns: an array of constant strings
 	 *
 	 * Since: 2.32
 	 *
@@ -313,7 +313,7 @@ public class Resource
 	 *     flags = a location to place the flags about the file,
 	 *         or %NULL if the length is not needed
 	 *
-	 * Return: %TRUE if the file was found. %FALSE if there were errors
+	 * Returns: %TRUE if the file was found. %FALSE if there were errors
 	 *
 	 * Since: 2.32
 	 *
@@ -353,7 +353,7 @@ public class Resource
 	 *     path = A pathname inside the resource
 	 *     lookupFlags = A #GResourceLookupFlags
 	 *
-	 * Return: #GBytes or %NULL on error.
+	 * Returns: #GBytes or %NULL on error.
 	 *     Free the returned object with g_bytes_unref()
 	 *
 	 * Since: 2.32
@@ -389,7 +389,7 @@ public class Resource
 	 *     path = A pathname inside the resource
 	 *     lookupFlags = A #GResourceLookupFlags
 	 *
-	 * Return: #GInputStream or %NULL on error.
+	 * Returns: #GInputStream or %NULL on error.
 	 *     Free the returned object with g_object_unref()
 	 *
 	 * Since: 2.32
@@ -419,7 +419,7 @@ public class Resource
 	 * Atomically increments the reference count of @resource by one. This
 	 * function is MT-safe and may be called from any thread.
 	 *
-	 * Return: The passed in #GResource
+	 * Returns: The passed in #GResource
 	 *
 	 * Since: 2.32
 	 */
@@ -458,7 +458,7 @@ public class Resource
 	 * Params:
 	 *     filename = the path of a filename to load, in the GLib filename encoding
 	 *
-	 * Return: a new #GResource, or %NULL on error
+	 * Returns: a new #GResource, or %NULL on error
 	 *
 	 * Since: 2.32
 	 *
@@ -495,7 +495,7 @@ public class Resource
 	 *     path = A pathname inside the resource
 	 *     lookupFlags = A #GResourceLookupFlags
 	 *
-	 * Return: an array of constant strings
+	 * Returns: an array of constant strings
 	 *
 	 * Since: 2.32
 	 *
@@ -530,7 +530,7 @@ public class Resource
 	 *     flags = a location to place the flags about the file,
 	 *         or %NULL if the length is not needed
 	 *
-	 * Return: %TRUE if the file was found. %FALSE if there were errors
+	 * Returns: %TRUE if the file was found. %FALSE if there were errors
 	 *
 	 * Since: 2.32
 	 *
@@ -570,7 +570,7 @@ public class Resource
 	 *     path = A pathname inside the resource
 	 *     lookupFlags = A #GResourceLookupFlags
 	 *
-	 * Return: #GBytes or %NULL on error.
+	 * Returns: #GBytes or %NULL on error.
 	 *     Free the returned object with g_bytes_unref()
 	 *
 	 * Since: 2.32
@@ -607,7 +607,7 @@ public class Resource
 	 *     path = A pathname inside the resource
 	 *     lookupFlags = A #GResourceLookupFlags
 	 *
-	 * Return: #GInputStream or %NULL on error.
+	 * Returns: #GInputStream or %NULL on error.
 	 *     Free the returned object with g_object_unref()
 	 *
 	 * Since: 2.32

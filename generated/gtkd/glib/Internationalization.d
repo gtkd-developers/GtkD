@@ -45,7 +45,7 @@ public struct Internationalization
 	 *     msgid = message to translate
 	 *     category = a locale category
 	 *
-	 * Return: the translated string for the given locale category
+	 * Returns: the translated string for the given locale category
 	 *
 	 * Since: 2.26
 	 */
@@ -93,7 +93,7 @@ public struct Internationalization
 	 *         the domain set with textdomain()
 	 *     msgid = message to translate
 	 *
-	 * Return: The translated string
+	 * Returns: The translated string
 	 *
 	 * Since: 2.18
 	 */
@@ -117,7 +117,7 @@ public struct Internationalization
 	 *     msgidPlural = plural form of the message
 	 *     n = the quantity for which translation is needed
 	 *
-	 * Return: The translated string
+	 * Returns: The translated string
 	 *
 	 * Since: 2.18
 	 */
@@ -148,7 +148,7 @@ public struct Internationalization
 	 *         by a \004 character
 	 *     msgidoffset = the offset of the message id in @msgctxid
 	 *
-	 * Return: The translated string
+	 * Returns: The translated string
 	 *
 	 * Since: 2.16
 	 */
@@ -175,7 +175,7 @@ public struct Internationalization
 	 *     context = the message context
 	 *     msgid = the message
 	 *
-	 * Return: The translated string
+	 * Returns: The translated string
 	 *
 	 * Since: 2.18
 	 */
@@ -197,7 +197,7 @@ public struct Internationalization
 	 * `LC_MESSAGES` and `LANG` to find the list of locales specified by the
 	 * user.
 	 *
-	 * Return: a %NULL-terminated array of strings owned by GLib
+	 * Returns: a %NULL-terminated array of strings owned by GLib
 	 *     that must not be modified or freed.
 	 *
 	 * Since: 2.6
@@ -222,7 +222,7 @@ public struct Internationalization
 	 * Params:
 	 *     locale = a locale identifier
 	 *
-	 * Return: a newly
+	 * Returns: a newly
 	 *     allocated array of newly allocated strings with the locale variants. Free with
 	 *     g_strfreev().
 	 *
@@ -243,7 +243,7 @@ public struct Internationalization
 	 *     msgid = a string
 	 *     msgval = another string
 	 *
-	 * Return: @msgval, unless @msgval is identical to @msgid
+	 * Returns: @msgval, unless @msgval is identical to @msgid
 	 *     and contains a '|' character, in which case a pointer to
 	 *     the substring of msgid after the first '|' character is returned.
 	 *

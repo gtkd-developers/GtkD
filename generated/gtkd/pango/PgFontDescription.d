@@ -89,7 +89,7 @@ public class PgFontDescription
 	/**
 	 * Creates a new font description structure with all fields unset.
 	 *
-	 * Return: the newly allocated #PangoFontDescription, which
+	 * Returns: the newly allocated #PangoFontDescription, which
 	 *     should be freed using pango_font_description_free().
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -123,7 +123,7 @@ public class PgFontDescription
 	 *     oldMatch = a #PangoFontDescription, or %NULL
 	 *     newMatch = a #PangoFontDescription
 	 *
-	 * Return: %TRUE if @new_match is a better match
+	 * Returns: %TRUE if @new_match is a better match
 	 */
 	public bool betterMatch(PgFontDescription oldMatch, PgFontDescription newMatch)
 	{
@@ -133,7 +133,7 @@ public class PgFontDescription
 	/**
 	 * Make a copy of a #PangoFontDescription.
 	 *
-	 * Return: the newly allocated
+	 * Returns: the newly allocated
 	 *     #PangoFontDescription, which should be freed with
 	 *     pango_font_description_free(), or %NULL if @desc was
 	 *     %NULL.
@@ -156,7 +156,7 @@ public class PgFontDescription
 	 * be used until @desc is modified or freed. This is meant to be used
 	 * when the copy is only needed temporarily.
 	 *
-	 * Return: the newly allocated
+	 * Returns: the newly allocated
 	 *     #PangoFontDescription, which should be freed with
 	 *     pango_font_description_free(), or %NULL if @desc was
 	 *     %NULL.
@@ -183,7 +183,7 @@ public class PgFontDescription
 	 * Params:
 	 *     desc2 = another #PangoFontDescription
 	 *
-	 * Return: %TRUE if the two font descriptions are identical,
+	 * Returns: %TRUE if the two font descriptions are identical,
 	 *     %FALSE otherwise.
 	 */
 	public bool equal(PgFontDescription desc2)
@@ -203,7 +203,7 @@ public class PgFontDescription
 	 * Gets the family name field of a font description. See
 	 * pango_font_description_set_family().
 	 *
-	 * Return: the family name field for the font
+	 * Returns: the family name field for the font
 	 *     description, or %NULL if not previously set.  This
 	 *     has the same life-time as the font description itself
 	 *     and should not be freed.
@@ -217,7 +217,7 @@ public class PgFontDescription
 	 * Gets the gravity field of a font description. See
 	 * pango_font_description_set_gravity().
 	 *
-	 * Return: the gravity field for the font description. Use
+	 * Returns: the gravity field for the font description. Use
 	 *     pango_font_description_get_set_fields() to find out if
 	 *     the field was explicitly set or not.
 	 *
@@ -231,7 +231,7 @@ public class PgFontDescription
 	/**
 	 * Determines which fields in a font description have been set.
 	 *
-	 * Return: a bitmask with bits set corresponding to the
+	 * Returns: a bitmask with bits set corresponding to the
 	 *     fields in @desc that have been set.
 	 */
 	public PangoFontMask getSetFields()
@@ -243,7 +243,7 @@ public class PgFontDescription
 	 * Gets the size field of a font description.
 	 * See pango_font_description_set_size().
 	 *
-	 * Return: the size field for the font description in points or device units.
+	 * Returns: the size field for the font description in points or device units.
 	 *     You must call pango_font_description_get_size_is_absolute()
 	 *     to find out which is the case. Returns 0 if the size field has not
 	 *     previously been set or it has been set to 0 explicitly.
@@ -259,7 +259,7 @@ public class PgFontDescription
 	 * Determines whether the size of the font is in points (not absolute) or device units (absolute).
 	 * See pango_font_description_set_size() and pango_font_description_set_absolute_size().
 	 *
-	 * Return: whether the size for the font description is in
+	 * Returns: whether the size for the font description is in
 	 *     points or device units.  Use pango_font_description_get_set_fields() to
 	 *     find out if the size field of the font description was explicitly set or not.
 	 *
@@ -274,7 +274,7 @@ public class PgFontDescription
 	 * Gets the stretch field of a font description.
 	 * See pango_font_description_set_stretch().
 	 *
-	 * Return: the stretch field for the font description. Use
+	 * Returns: the stretch field for the font description. Use
 	 *     pango_font_description_get_set_fields() to find out if
 	 *     the field was explicitly set or not.
 	 */
@@ -287,7 +287,7 @@ public class PgFontDescription
 	 * Gets the style field of a #PangoFontDescription. See
 	 * pango_font_description_set_style().
 	 *
-	 * Return: the style field for the font description.
+	 * Returns: the style field for the font description.
 	 *     Use pango_font_description_get_set_fields() to find out if
 	 *     the field was explicitly set or not.
 	 */
@@ -300,7 +300,7 @@ public class PgFontDescription
 	 * Gets the variant field of a #PangoFontDescription. See
 	 * pango_font_description_set_variant().
 	 *
-	 * Return: the variant field for the font description. Use
+	 * Returns: the variant field for the font description. Use
 	 *     pango_font_description_get_set_fields() to find out if
 	 *     the field was explicitly set or not.
 	 */
@@ -313,7 +313,7 @@ public class PgFontDescription
 	 * Gets the weight field of a font description. See
 	 * pango_font_description_set_weight().
 	 *
-	 * Return: the weight field for the font description. Use
+	 * Returns: the weight field for the font description. Use
 	 *     pango_font_description_get_set_fields() to find out if
 	 *     the field was explicitly set or not.
 	 */
@@ -327,7 +327,7 @@ public class PgFontDescription
 	 * to be used, for example, as an argument to g_hash_table_new().
 	 * The hash value is independent of @desc->mask.
 	 *
-	 * Return: the hash value.
+	 * Returns: the hash value.
 	 */
 	public uint hash()
 	{
@@ -517,7 +517,7 @@ public class PgFontDescription
 	 * pango_font_description_to_string(), but with underscores instead of
 	 * characters that are untypical in filenames, and in lower case only.
 	 *
-	 * Return: a new string that must be freed with g_free().
+	 * Returns: a new string that must be freed with g_free().
 	 */
 	public string toFilename()
 	{
@@ -534,7 +534,7 @@ public class PgFontDescription
 	 * string description will only have a terminating comma if the
 	 * last word of the list is a valid style option.
 	 *
-	 * Return: a new string that must be freed with g_free().
+	 * Returns: a new string that must be freed with g_free().
 	 */
 	public override string toString()
 	{
@@ -573,7 +573,7 @@ public class PgFontDescription
 	 * Params:
 	 *     str = string representation of a font description.
 	 *
-	 * Return: a new #PangoFontDescription.
+	 * Returns: a new #PangoFontDescription.
 	 */
 	public static PgFontDescription fromString(string str)
 	{

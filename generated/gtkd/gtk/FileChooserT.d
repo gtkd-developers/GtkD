@@ -223,7 +223,7 @@ public template FileChooserT(TStruct)
 	 * Params:
 	 *     folder = filename of the folder to add
 	 *
-	 * Return: %TRUE if the folder could be added successfully, %FALSE
+	 * Returns: %TRUE if the folder could be added successfully, %FALSE
 	 *     otherwise.  In the latter case, the @error will be set as appropriate.
 	 *
 	 * Since: 2.4
@@ -253,7 +253,7 @@ public template FileChooserT(TStruct)
 	 * Params:
 	 *     uri = URI of the folder to add
 	 *
-	 * Return: %TRUE if the folder could be added successfully, %FALSE
+	 * Returns: %TRUE if the folder could be added successfully, %FALSE
 	 *     otherwise.  In the latter case, the @error will be set as appropriate.
 	 *
 	 * Since: 2.4
@@ -278,7 +278,7 @@ public template FileChooserT(TStruct)
 	 * Gets the type of operation that the file chooser is performing; see
 	 * gtk_file_chooser_set_action().
 	 *
-	 * Return: the action that the file selector is performing
+	 * Returns: the action that the file selector is performing
 	 *
 	 * Since: 2.4
 	 */
@@ -293,7 +293,7 @@ public template FileChooserT(TStruct)
 	 * Params:
 	 *     id = the ID of the choice to get
 	 *
-	 * Return: the ID of the currenly selected option
+	 * Returns: the ID of the currenly selected option
 	 *
 	 * Since: 3.22
 	 */
@@ -306,7 +306,7 @@ public template FileChooserT(TStruct)
 	 * Gets whether file choser will offer to create new folders.
 	 * See gtk_file_chooser_set_create_folders().
 	 *
-	 * Return: %TRUE if the Create Folder button should be displayed.
+	 * Returns: %TRUE if the Create Folder button should be displayed.
 	 *
 	 * Since: 2.18
 	 */
@@ -327,7 +327,7 @@ public template FileChooserT(TStruct)
 	 * currently-selected folder in that mode, use gtk_file_chooser_get_uri() as the
 	 * usual way to get the selection.
 	 *
-	 * Return: the full path of the current
+	 * Returns: the full path of the current
 	 *     folder, or %NULL if the current path cannot be represented as a local
 	 *     filename.  Free with g_free().  This function will also return
 	 *     %NULL if the file chooser was unable to load the last folder that
@@ -348,7 +348,7 @@ public template FileChooserT(TStruct)
 	 * Gets the current folder of @chooser as #GFile.
 	 * See gtk_file_chooser_get_current_folder_uri().
 	 *
-	 * Return: the #GFile for the current folder.
+	 * Returns: the #GFile for the current folder.
 	 *
 	 * Since: 2.14
 	 */
@@ -376,7 +376,7 @@ public template FileChooserT(TStruct)
 	 * currently-selected folder in that mode, use gtk_file_chooser_get_uri() as the
 	 * usual way to get the selection.
 	 *
-	 * Return: the URI for the current folder.
+	 * Returns: the URI for the current folder.
 	 *     Free with g_free().  This function will also return %NULL if the file chooser
 	 *     was unable to load the last folder that was requested from it; for example,
 	 *     as would be for calling gtk_file_chooser_set_current_folder_uri() on a
@@ -402,7 +402,7 @@ public template FileChooserT(TStruct)
 	 * change the extension of the typed filename based on the chosen format, say,
 	 * from “.jpg” to “.png”.
 	 *
-	 * Return: The raw text from the file chooser’s “Name” entry.  Free this with
+	 * Returns: The raw text from the file chooser’s “Name” entry.  Free this with
 	 *     g_free().  Note that this string is not a full pathname or URI; it is
 	 *     whatever the contents of the entry are.  Note also that this string is in
 	 *     UTF-8 encoding, which is not necessarily the system’s encoding for filenames.
@@ -421,7 +421,7 @@ public template FileChooserT(TStruct)
 	 * Queries whether a file chooser is set to confirm for overwriting when the user
 	 * types a file name that already exists.
 	 *
-	 * Return: %TRUE if the file chooser will present a confirmation dialog;
+	 * Returns: %TRUE if the file chooser will present a confirmation dialog;
 	 *     %FALSE otherwise.
 	 *
 	 * Since: 2.8
@@ -435,7 +435,7 @@ public template FileChooserT(TStruct)
 	 * Gets the current preview widget; see
 	 * gtk_file_chooser_set_extra_widget().
 	 *
-	 * Return: the current extra widget, or %NULL
+	 * Returns: the current extra widget, or %NULL
 	 *
 	 * Since: 2.4
 	 */
@@ -459,7 +459,7 @@ public template FileChooserT(TStruct)
 	 * If the file chooser is in folder mode, this function returns the selected
 	 * folder.
 	 *
-	 * Return: a selected #GFile. You own the returned file;
+	 * Returns: a selected #GFile. You own the returned file;
 	 *     use g_object_unref() to release it.
 	 *
 	 * Since: 2.14
@@ -485,7 +485,7 @@ public template FileChooserT(TStruct)
 	 * If the file chooser is in folder mode, this function returns the selected
 	 * folder.
 	 *
-	 * Return: The currently selected filename,
+	 * Returns: The currently selected filename,
 	 *     or %NULL if no file is selected, or the selected file can't
 	 *     be represented with a local filename. Free with g_free().
 	 *
@@ -505,7 +505,7 @@ public template FileChooserT(TStruct)
 	 * folder cannot be represented as local filenames they will be ignored. (See
 	 * gtk_file_chooser_get_uris())
 	 *
-	 * Return: a #GSList
+	 * Returns: a #GSList
 	 *     containing the filenames of all selected files and subfolders in
 	 *     the current folder. Free the returned list with g_slist_free(),
 	 *     and the filenames with g_free().
@@ -528,7 +528,7 @@ public template FileChooserT(TStruct)
 	 * Lists all the selected files and subfolders in the current folder of @chooser
 	 * as #GFile. An internal function, see gtk_file_chooser_get_uris().
 	 *
-	 * Return: a #GSList
+	 * Returns: a #GSList
 	 *     containing a #GFile for each selected file and subfolder in the
 	 *     current folder.  Free the returned list with g_slist_free(), and
 	 *     the files with g_object_unref().
@@ -550,7 +550,7 @@ public template FileChooserT(TStruct)
 	/**
 	 * Gets the current filter; see gtk_file_chooser_set_filter().
 	 *
-	 * Return: the current filter, or %NULL
+	 * Returns: the current filter, or %NULL
 	 *
 	 * Since: 2.4
 	 */
@@ -570,7 +570,7 @@ public template FileChooserT(TStruct)
 	 * Gets whether only local files can be selected in the
 	 * file selector. See gtk_file_chooser_set_local_only()
 	 *
-	 * Return: %TRUE if only local files can be selected.
+	 * Returns: %TRUE if only local files can be selected.
 	 *
 	 * Since: 2.4
 	 */
@@ -583,7 +583,7 @@ public template FileChooserT(TStruct)
 	 * Gets the #GFile that should be previewed in a custom preview
 	 * Internal function, see gtk_file_chooser_get_preview_uri().
 	 *
-	 * Return: the #GFile for the file to preview,
+	 * Returns: the #GFile for the file to preview,
 	 *     or %NULL if no file is selected. Free with g_object_unref().
 	 *
 	 * Since: 2.14
@@ -604,7 +604,7 @@ public template FileChooserT(TStruct)
 	 * Gets the filename that should be previewed in a custom preview
 	 * widget. See gtk_file_chooser_set_preview_widget().
 	 *
-	 * Return: the filename to preview, or %NULL if
+	 * Returns: the filename to preview, or %NULL if
 	 *     no file is selected, or if the selected file cannot be represented
 	 *     as a local filename. Free with g_free()
 	 *
@@ -622,7 +622,7 @@ public template FileChooserT(TStruct)
 	 * Gets the URI that should be previewed in a custom preview
 	 * widget. See gtk_file_chooser_set_preview_widget().
 	 *
-	 * Return: the URI for the file to preview,
+	 * Returns: the URI for the file to preview,
 	 *     or %NULL if no file is selected. Free with g_free().
 	 *
 	 * Since: 2.4
@@ -639,7 +639,7 @@ public template FileChooserT(TStruct)
 	 * Gets the current preview widget; see
 	 * gtk_file_chooser_set_preview_widget().
 	 *
-	 * Return: the current preview widget, or %NULL
+	 * Returns: the current preview widget, or %NULL
 	 *
 	 * Since: 2.4
 	 */
@@ -660,7 +660,7 @@ public template FileChooserT(TStruct)
 	 * should be shown for the current filename. See
 	 * gtk_file_chooser_set_preview_widget_active().
 	 *
-	 * Return: %TRUE if the preview widget is active for the current filename.
+	 * Returns: %TRUE if the preview widget is active for the current filename.
 	 *
 	 * Since: 2.4
 	 */
@@ -673,7 +673,7 @@ public template FileChooserT(TStruct)
 	 * Gets whether multiple files can be selected in the file
 	 * selector. See gtk_file_chooser_set_select_multiple().
 	 *
-	 * Return: %TRUE if multiple files can be selected.
+	 * Returns: %TRUE if multiple files can be selected.
 	 *
 	 * Since: 2.4
 	 */
@@ -686,7 +686,7 @@ public template FileChooserT(TStruct)
 	 * Gets whether hidden files and folders are displayed in the file selector.
 	 * See gtk_file_chooser_set_show_hidden().
 	 *
-	 * Return: %TRUE if hidden files and folders are displayed.
+	 * Returns: %TRUE if hidden files and folders are displayed.
 	 *
 	 * Since: 2.6
 	 */
@@ -703,7 +703,7 @@ public template FileChooserT(TStruct)
 	 * If the file chooser is in folder mode, this function returns the selected
 	 * folder.
 	 *
-	 * Return: The currently selected URI, or %NULL
+	 * Returns: The currently selected URI, or %NULL
 	 *     if no file is selected. If gtk_file_chooser_set_local_only() is set to
 	 *     %TRUE (the default) a local URI will be returned for any FUSE locations.
 	 *     Free with g_free()
@@ -722,7 +722,7 @@ public template FileChooserT(TStruct)
 	 * Lists all the selected files and subfolders in the current folder of
 	 * @chooser. The returned names are full absolute URIs.
 	 *
-	 * Return: a #GSList containing the URIs of all selected
+	 * Returns: a #GSList containing the URIs of all selected
 	 *     files and subfolders in the current folder. Free the returned list
 	 *     with g_slist_free(), and the filenames with g_free().
 	 *
@@ -744,7 +744,7 @@ public template FileChooserT(TStruct)
 	 * Gets whether a stock label should be drawn with the name of the previewed
 	 * file.  See gtk_file_chooser_set_use_preview_label().
 	 *
-	 * Return: %TRUE if the file chooser is set to display a label with the
+	 * Returns: %TRUE if the file chooser is set to display a label with the
 	 *     name of the previewed file, %FALSE otherwise.
 	 */
 	public bool getUsePreviewLabel()
@@ -756,7 +756,7 @@ public template FileChooserT(TStruct)
 	 * Lists the current set of user-selectable filters; see
 	 * gtk_file_chooser_add_filter(), gtk_file_chooser_remove_filter().
 	 *
-	 * Return: a
+	 * Returns: a
 	 *     #GSList containing the current set of user selectable filters. The
 	 *     contents of the list are owned by GTK+, but you must free the list
 	 *     itself with g_slist_free() when you are done with it.
@@ -779,7 +779,7 @@ public template FileChooserT(TStruct)
 	 * Queries the list of shortcut folders in the file chooser, as set by
 	 * gtk_file_chooser_add_shortcut_folder_uri().
 	 *
-	 * Return: A list of
+	 * Returns: A list of
 	 *     folder URIs, or %NULL if there are no shortcut folders.  Free the
 	 *     returned list with g_slist_free(), and the URIs with g_free().
 	 *
@@ -801,7 +801,7 @@ public template FileChooserT(TStruct)
 	 * Queries the list of shortcut folders in the file chooser, as set by
 	 * gtk_file_chooser_add_shortcut_folder().
 	 *
-	 * Return: A list
+	 * Returns: A list
 	 *     of folder filenames, or %NULL if there are no shortcut folders.
 	 *     Free the returned list with g_slist_free(), and the filenames with
 	 *     g_free().
@@ -852,7 +852,7 @@ public template FileChooserT(TStruct)
 	 * Params:
 	 *     folder = filename of the folder to remove
 	 *
-	 * Return: %TRUE if the operation succeeds, %FALSE otherwise.
+	 * Returns: %TRUE if the operation succeeds, %FALSE otherwise.
 	 *     In the latter case, the @error will be set as appropriate.
 	 *
 	 *     See also: gtk_file_chooser_add_shortcut_folder()
@@ -881,7 +881,7 @@ public template FileChooserT(TStruct)
 	 * Params:
 	 *     uri = URI of the folder to remove
 	 *
-	 * Return: %TRUE if the operation succeeds, %FALSE otherwise.
+	 * Returns: %TRUE if the operation succeeds, %FALSE otherwise.
 	 *     In the latter case, the @error will be set as appropriate.
 	 *
 	 *     See also: gtk_file_chooser_add_shortcut_folder_uri()
@@ -921,7 +921,7 @@ public template FileChooserT(TStruct)
 	 * Params:
 	 *     file = the file to select
 	 *
-	 * Return: Not useful.
+	 * Returns: Not useful.
 	 *
 	 * Since: 2.14
 	 *
@@ -949,7 +949,7 @@ public template FileChooserT(TStruct)
 	 * Params:
 	 *     filename = the filename to select
 	 *
-	 * Return: Not useful.
+	 * Returns: Not useful.
 	 *
 	 *     See also: gtk_file_chooser_set_filename()
 	 *
@@ -968,7 +968,7 @@ public template FileChooserT(TStruct)
 	 * Params:
 	 *     uri = the URI to select
 	 *
-	 * Return: Not useful.
+	 * Returns: Not useful.
 	 *
 	 * Since: 2.4
 	 */
@@ -1037,7 +1037,7 @@ public template FileChooserT(TStruct)
 	 * Params:
 	 *     filename = the full path of the new current folder
 	 *
-	 * Return: Not useful.
+	 * Returns: Not useful.
 	 *
 	 * Since: 2.4
 	 */
@@ -1053,7 +1053,7 @@ public template FileChooserT(TStruct)
 	 * Params:
 	 *     file = the #GFile for the new folder
 	 *
-	 * Return: %TRUE if the folder could be changed successfully, %FALSE
+	 * Returns: %TRUE if the folder could be changed successfully, %FALSE
 	 *     otherwise.
 	 *
 	 * Since: 2.14
@@ -1086,7 +1086,7 @@ public template FileChooserT(TStruct)
 	 * Params:
 	 *     uri = the URI for the new current folder
 	 *
-	 * Return: %TRUE if the folder could be changed successfully, %FALSE
+	 * Returns: %TRUE if the folder could be changed successfully, %FALSE
 	 *     otherwise.
 	 *
 	 * Since: 2.4
@@ -1192,7 +1192,7 @@ public template FileChooserT(TStruct)
 	 * Params:
 	 *     file = the #GFile to set as current
 	 *
-	 * Return: Not useful.
+	 * Returns: Not useful.
 	 *
 	 * Since: 2.14
 	 *
@@ -1249,7 +1249,7 @@ public template FileChooserT(TStruct)
 	 * Params:
 	 *     filename = the filename to set as current
 	 *
-	 * Return: Not useful.
+	 * Returns: Not useful.
 	 *
 	 * Since: 2.4
 	 */
@@ -1408,7 +1408,7 @@ public template FileChooserT(TStruct)
 	 * Params:
 	 *     uri = the URI to set as current
 	 *
-	 * Return: Not useful.
+	 * Returns: Not useful.
 	 *
 	 * Since: 2.4
 	 */
@@ -1575,7 +1575,7 @@ public template FileChooserT(TStruct)
 	 * gtk_widget_destroy (chooser);
 	 * ]|
 	 *
-	 * Return: a #GtkFileChooserConfirmation value that indicates which
+	 * Returns: a #GtkFileChooserConfirmation value that indicates which
 	 *     action to take after emitting the signal.
 	 *
 	 * Since: 2.8

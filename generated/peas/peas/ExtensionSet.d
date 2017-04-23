@@ -92,7 +92,7 @@ public class ExtensionSet : ObjectG
 	 *     varArgs = the value of the first property, followed optionally by more
 	 *         name/value pairs, followed by %NULL.
 	 *
-	 * Return: a new instance of #PeasExtensionSet.
+	 * Returns: a new instance of #PeasExtensionSet.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -121,7 +121,7 @@ public class ExtensionSet : ObjectG
 	 *     nParameters = the length of the @parameters array.
 	 *     parameters = an array of #GParameter.
 	 *
-	 * Return: a new instance of #PeasExtensionSet.
+	 * Returns: a new instance of #PeasExtensionSet.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -158,7 +158,7 @@ public class ExtensionSet : ObjectG
 	 * Params:
 	 *     info = a #PeasPluginInfo
 	 *
-	 * Return: a reference to a #PeasExtension or %NULL
+	 * Returns: a reference to a #PeasExtension or %NULL
 	 */
 	public PeasExtension* getExtension(PluginInfo info)
 	{

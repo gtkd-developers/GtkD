@@ -50,7 +50,7 @@ public struct Unicode
 	 *         of #gunichar2  written, or %NULL. The value stored here does not include
 	 *         the trailing 0.
 	 *
-	 * Return: a pointer to a newly allocated UTF-16 string.
+	 * Returns: a pointer to a newly allocated UTF-16 string.
 	 *     This value must be freed with g_free(). If an error occurs,
 	 *     %NULL will be returned and @error set.
 	 *
@@ -84,7 +84,7 @@ public struct Unicode
 	 *         of bytes written or %NULL. The value here stored does not include the
 	 *         trailing 0 byte.
 	 *
-	 * Return: a pointer to a newly allocated UTF-8 string.
+	 * Returns: a pointer to a newly allocated UTF-8 string.
 	 *     This value must be freed with g_free(). If an error occurs,
 	 *     %NULL will be returned and @error set. In that case, @items_read
 	 *     will be set to the position of the first invalid input character.
@@ -117,7 +117,7 @@ public struct Unicode
 	 * Params:
 	 *     c = a Unicode character
 	 *
-	 * Return: the break type of @c
+	 * Returns: the break type of @c
 	 */
 	public static GUnicodeBreakType unicharBreakType(dchar c)
 	{
@@ -130,7 +130,7 @@ public struct Unicode
 	 * Params:
 	 *     uc = a Unicode character
 	 *
-	 * Return: the combining class of the character
+	 * Returns: the combining class of the character
 	 *
 	 * Since: 2.14
 	 */
@@ -162,7 +162,7 @@ public struct Unicode
 	 *     b = a Unicode character
 	 *     ch = return location for the composed character
 	 *
-	 * Return: %TRUE if the characters could be composed
+	 * Returns: %TRUE if the characters could be composed
 	 *
 	 * Since: 2.30
 	 */
@@ -201,7 +201,7 @@ public struct Unicode
 	 *     a = return location for the first component of @ch
 	 *     b = return location for the second component of @ch
 	 *
-	 * Return: %TRUE if the character could be decomposed
+	 * Returns: %TRUE if the character could be decomposed
 	 *
 	 * Since: 2.30
 	 */
@@ -217,7 +217,7 @@ public struct Unicode
 	 * Params:
 	 *     c = a Unicode character
 	 *
-	 * Return: If @c is a decimal digit (according to
+	 * Returns: If @c is a decimal digit (according to
 	 *     g_unichar_isdigit()), its numeric value. Otherwise, -1.
 	 */
 	public static int unicharDigitValue(dchar c)
@@ -252,7 +252,7 @@ public struct Unicode
 	 *     result = location to store decomposed result, or %NULL
 	 *     resultLen = length of @result
 	 *
-	 * Return: the length of the full decomposition.
+	 * Returns: the length of the full decomposition.
 	 *
 	 * Since: 2.30
 	 */
@@ -276,7 +276,7 @@ public struct Unicode
 	 *     ch = a Unicode character
 	 *     mirroredCh = location to store the mirrored character
 	 *
-	 * Return: %TRUE if @ch has a mirrored character, %FALSE otherwise
+	 * Returns: %TRUE if @ch has a mirrored character, %FALSE otherwise
 	 *
 	 * Since: 2.4
 	 */
@@ -297,7 +297,7 @@ public struct Unicode
 	 * Params:
 	 *     ch = a Unicode character
 	 *
-	 * Return: the #GUnicodeScript for the character.
+	 * Returns: the #GUnicodeScript for the character.
 	 *
 	 * Since: 2.14
 	 */
@@ -314,7 +314,7 @@ public struct Unicode
 	 * Params:
 	 *     c = a Unicode character
 	 *
-	 * Return: %TRUE if @c is an alphanumeric character
+	 * Returns: %TRUE if @c is an alphanumeric character
 	 */
 	public static bool unicharIsalnum(dchar c)
 	{
@@ -329,7 +329,7 @@ public struct Unicode
 	 * Params:
 	 *     c = a Unicode character
 	 *
-	 * Return: %TRUE if @c is an alphabetic character
+	 * Returns: %TRUE if @c is an alphabetic character
 	 */
 	public static bool unicharIsalpha(dchar c)
 	{
@@ -344,7 +344,7 @@ public struct Unicode
 	 * Params:
 	 *     c = a Unicode character
 	 *
-	 * Return: %TRUE if @c is a control character
+	 * Returns: %TRUE if @c is a control character
 	 */
 	public static bool unicharIscntrl(dchar c)
 	{
@@ -358,7 +358,7 @@ public struct Unicode
 	 * Params:
 	 *     c = a Unicode character
 	 *
-	 * Return: %TRUE if the character has an assigned value
+	 * Returns: %TRUE if the character has an assigned value
 	 */
 	public static bool unicharIsdefined(dchar c)
 	{
@@ -373,7 +373,7 @@ public struct Unicode
 	 * Params:
 	 *     c = a Unicode character
 	 *
-	 * Return: %TRUE if @c is a digit
+	 * Returns: %TRUE if @c is a digit
 	 */
 	public static bool unicharIsdigit(dchar c)
 	{
@@ -390,7 +390,7 @@ public struct Unicode
 	 * Params:
 	 *     c = a Unicode character
 	 *
-	 * Return: %TRUE if @c is printable unless it's a space
+	 * Returns: %TRUE if @c is printable unless it's a space
 	 */
 	public static bool unicharIsgraph(dchar c)
 	{
@@ -405,7 +405,7 @@ public struct Unicode
 	 * Params:
 	 *     c = a Unicode character
 	 *
-	 * Return: %TRUE if @c is a lowercase letter
+	 * Returns: %TRUE if @c is a lowercase letter
 	 */
 	public static bool unicharIslower(dchar c)
 	{
@@ -426,7 +426,7 @@ public struct Unicode
 	 * Params:
 	 *     c = a Unicode character
 	 *
-	 * Return: %TRUE if @c is a mark character
+	 * Returns: %TRUE if @c is a mark character
 	 *
 	 * Since: 2.14
 	 */
@@ -444,7 +444,7 @@ public struct Unicode
 	 * Params:
 	 *     c = a Unicode character
 	 *
-	 * Return: %TRUE if @c is printable
+	 * Returns: %TRUE if @c is printable
 	 */
 	public static bool unicharIsprint(dchar c)
 	{
@@ -459,7 +459,7 @@ public struct Unicode
 	 * Params:
 	 *     c = a Unicode character
 	 *
-	 * Return: %TRUE if @c is a punctuation or symbol character
+	 * Returns: %TRUE if @c is a punctuation or symbol character
 	 */
 	public static bool unicharIspunct(dchar c)
 	{
@@ -478,7 +478,7 @@ public struct Unicode
 	 * Params:
 	 *     c = a Unicode character
 	 *
-	 * Return: %TRUE if @c is a space character
+	 * Returns: %TRUE if @c is a space character
 	 */
 	public static bool unicharIsspace(dchar c)
 	{
@@ -496,7 +496,7 @@ public struct Unicode
 	 * Params:
 	 *     c = a Unicode character
 	 *
-	 * Return: %TRUE if the character is titlecase
+	 * Returns: %TRUE if the character is titlecase
 	 */
 	public static bool unicharIstitle(dchar c)
 	{
@@ -509,7 +509,7 @@ public struct Unicode
 	 * Params:
 	 *     c = a Unicode character
 	 *
-	 * Return: %TRUE if @c is an uppercase character
+	 * Returns: %TRUE if @c is an uppercase character
 	 */
 	public static bool unicharIsupper(dchar c)
 	{
@@ -523,7 +523,7 @@ public struct Unicode
 	 * Params:
 	 *     c = a Unicode character
 	 *
-	 * Return: %TRUE if the character is wide
+	 * Returns: %TRUE if the character is wide
 	 */
 	public static bool unicharIswide(dchar c)
 	{
@@ -545,7 +545,7 @@ public struct Unicode
 	 * Params:
 	 *     c = a Unicode character
 	 *
-	 * Return: %TRUE if the character is wide in legacy East Asian locales
+	 * Returns: %TRUE if the character is wide in legacy East Asian locales
 	 *
 	 * Since: 2.12
 	 */
@@ -560,7 +560,7 @@ public struct Unicode
 	 * Params:
 	 *     c = a Unicode character.
 	 *
-	 * Return: %TRUE if the character is a hexadecimal digit
+	 * Returns: %TRUE if the character is a hexadecimal digit
 	 */
 	public static bool unicharIsxdigit(dchar c)
 	{
@@ -581,7 +581,7 @@ public struct Unicode
 	 * Params:
 	 *     c = a Unicode character
 	 *
-	 * Return: %TRUE if the character has zero width
+	 * Returns: %TRUE if the character has zero width
 	 *
 	 * Since: 2.14
 	 */
@@ -599,7 +599,7 @@ public struct Unicode
 	 *         least 6 bytes of space. If %NULL, the length will be computed and
 	 *         returned and nothing will be written to @outbuf.
 	 *
-	 * Return: number of bytes written
+	 * Returns: number of bytes written
 	 */
 	public static int unicharToUtf8(dchar c, out char[] outbuf)
 	{
@@ -612,7 +612,7 @@ public struct Unicode
 	 * Params:
 	 *     c = a Unicode character.
 	 *
-	 * Return: the result of converting @c to lower case.
+	 * Returns: the result of converting @c to lower case.
 	 *     If @c is not an upperlower or titlecase character,
 	 *     or has no lowercase equivalent @c is returned unchanged.
 	 */
@@ -627,7 +627,7 @@ public struct Unicode
 	 * Params:
 	 *     c = a Unicode character
 	 *
-	 * Return: the result of converting @c to titlecase.
+	 * Returns: the result of converting @c to titlecase.
 	 *     If @c is not an uppercase or lowercase character,
 	 *     @c is returned unchanged.
 	 */
@@ -642,7 +642,7 @@ public struct Unicode
 	 * Params:
 	 *     c = a Unicode character
 	 *
-	 * Return: the result of converting @c to uppercase.
+	 * Returns: the result of converting @c to uppercase.
 	 *     If @c is not an lowercase or titlecase character,
 	 *     or has no upper case equivalent @c is returned unchanged.
 	 */
@@ -657,7 +657,7 @@ public struct Unicode
 	 * Params:
 	 *     c = a Unicode character
 	 *
-	 * Return: the type of the character.
+	 * Returns: the type of the character.
 	 */
 	public static GUnicodeType unicharType(dchar c)
 	{
@@ -672,7 +672,7 @@ public struct Unicode
 	 * Params:
 	 *     ch = a Unicode character
 	 *
-	 * Return: %TRUE if @ch is a valid Unicode character
+	 * Returns: %TRUE if @ch is a valid Unicode character
 	 */
 	public static bool unicharValidate(dchar ch)
 	{
@@ -686,7 +686,7 @@ public struct Unicode
 	 * Params:
 	 *     c = a Unicode character
 	 *
-	 * Return: If @c is a hex digit (according to
+	 * Returns: If @c is a hex digit (according to
 	 *     g_unichar_isxdigit()), its numeric value. Otherwise, -1.
 	 */
 	public static int unicharXdigitValue(dchar c)
@@ -704,7 +704,7 @@ public struct Unicode
 	 *     ch = a Unicode character.
 	 *     resultLen = location to store the length of the return value.
 	 *
-	 * Return: a newly allocated string of Unicode characters.
+	 * Returns: a newly allocated string of Unicode characters.
 	 *     @result_len is set to the resulting length of the string.
 	 */
 	public static dchar* unicodeCanonicalDecomposition(dchar ch, size_t* resultLen)
@@ -741,7 +741,7 @@ public struct Unicode
 	 * Params:
 	 *     iso15924 = a Unicode script
 	 *
-	 * Return: the Unicode script for @iso15924, or
+	 * Returns: the Unicode script for @iso15924, or
 	 *     of %G_UNICODE_SCRIPT_INVALID_CODE if @iso15924 is zero and
 	 *     %G_UNICODE_SCRIPT_UNKNOWN if @iso15924 is unknown.
 	 *
@@ -766,7 +766,7 @@ public struct Unicode
 	 * Params:
 	 *     script = a Unicode script
 	 *
-	 * Return: the ISO 15924 code for @script, encoded as an integer,
+	 * Returns: the ISO 15924 code for @script, encoded as an integer,
 	 *     of zero if @script is %G_UNICODE_SCRIPT_INVALID_CODE or
 	 *     ISO 15924 code 'Zzzz' (script code for UNKNOWN) if @script is not understood.
 	 *
@@ -793,7 +793,7 @@ public struct Unicode
 	 *         of characters written, or %NULL. The value stored here does not include
 	 *         the trailing 0 character.
 	 *
-	 * Return: a pointer to a newly allocated UCS-4 string.
+	 * Returns: a pointer to a newly allocated UCS-4 string.
 	 *     This value must be freed with g_free(). If an error occurs,
 	 *     %NULL will be returned and @error set.
 	 *
@@ -840,7 +840,7 @@ public struct Unicode
 	 *         of bytes written, or %NULL. The value stored here does not include the
 	 *         trailing 0 byte.
 	 *
-	 * Return: a pointer to a newly allocated UTF-8 string.
+	 * Returns: a pointer to a newly allocated UTF-8 string.
 	 *     This value must be freed with g_free(). If an error occurs,
 	 *     %NULL will be returned and @error set.
 	 *
@@ -878,7 +878,7 @@ public struct Unicode
 	 *     str = a UTF-8 encoded string
 	 *     len = length of @str, in bytes, or -1 if @str is nul-terminated.
 	 *
-	 * Return: a newly allocated string, that is a
+	 * Returns: a newly allocated string, that is a
 	 *     case independent form of @str.
 	 */
 	public static string utf8Casefold(string str, ptrdiff_t len)
@@ -901,7 +901,7 @@ public struct Unicode
 	 *     str1 = a UTF-8 encoded string
 	 *     str2 = a UTF-8 encoded string
 	 *
-	 * Return: < 0 if @str1 compares before @str2,
+	 * Returns: < 0 if @str1 compares before @str2,
 	 *     0 if they compare equal, > 0 if @str1 compares after @str2.
 	 */
 	public static int utf8Collate(string str1, string str2)
@@ -924,7 +924,7 @@ public struct Unicode
 	 *     str = a UTF-8 encoded string.
 	 *     len = length of @str, in bytes, or -1 if @str is nul-terminated.
 	 *
-	 * Return: a newly allocated string. This string should
+	 * Returns: a newly allocated string. This string should
 	 *     be freed with g_free() when you are done with it.
 	 */
 	public static string utf8CollateKey(string str, ptrdiff_t len)
@@ -952,7 +952,7 @@ public struct Unicode
 	 *     str = a UTF-8 encoded string.
 	 *     len = length of @str, in bytes, or -1 if @str is nul-terminated.
 	 *
-	 * Return: a newly allocated string. This string should
+	 * Returns: a newly allocated string. This string should
 	 *     be freed with g_free() when you are done with it.
 	 *
 	 * Since: 2.8
@@ -977,7 +977,7 @@ public struct Unicode
 	 *     end = a pointer to the byte following the end of the string,
 	 *         or %NULL to indicate that the string is nul-terminated
 	 *
-	 * Return: a pointer to the found character or %NULL
+	 * Returns: a pointer to the found character or %NULL
 	 */
 	public static string utf8FindNextChar(string p, string end)
 	{
@@ -1000,7 +1000,7 @@ public struct Unicode
 	 *     str = pointer to the beginning of a UTF-8 encoded string
 	 *     p = pointer to some position within @str
 	 *
-	 * Return: a pointer to the found character or %NULL.
+	 * Returns: a pointer to the found character or %NULL.
 	 */
 	public static string utf8FindPrevChar(string str, string p)
 	{
@@ -1021,7 +1021,7 @@ public struct Unicode
 	 * Params:
 	 *     p = a pointer to Unicode character encoded as UTF-8
 	 *
-	 * Return: the resulting character
+	 * Returns: the resulting character
 	 */
 	public static dchar utf8GetChar(string p)
 	{
@@ -1038,7 +1038,7 @@ public struct Unicode
 	 *     p = a pointer to Unicode character encoded as UTF-8
 	 *     maxLen = the maximum number of bytes to read, or -1 if @p is nul-terminated
 	 *
-	 * Return: the resulting character. If @p points to a partial
+	 * Returns: the resulting character. If @p points to a partial
 	 *     sequence at the end of a string that could begin a valid
 	 *     character (or if @max_len is zero), returns (gunichar)-2;
 	 *     otherwise, if @p does not point to a valid UTF-8 encoded
@@ -1081,7 +1081,7 @@ public struct Unicode
 	 *     len = length of @str, in bytes, or -1 if @str is nul-terminated.
 	 *     mode = the type of normalization to perform.
 	 *
-	 * Return: a newly allocated string, that is the
+	 * Returns: a newly allocated string, that is the
 	 *     normalized form of @str, or %NULL if @str is not
 	 *     valid UTF-8.
 	 */
@@ -1112,7 +1112,7 @@ public struct Unicode
 	 *     str = a UTF-8 encoded string
 	 *     offset = a character offset within @str
 	 *
-	 * Return: the resulting pointer
+	 * Returns: the resulting pointer
 	 */
 	public static string utf8OffsetToPointer(string str, glong offset)
 	{
@@ -1133,7 +1133,7 @@ public struct Unicode
 	 *     str = a UTF-8 encoded string
 	 *     pos = a pointer to a position within @str
 	 *
-	 * Return: the resulting character offset
+	 * Returns: the resulting character offset
 	 */
 	public static glong utf8PointerToOffset(string str, string pos)
 	{
@@ -1151,7 +1151,7 @@ public struct Unicode
 	 * Params:
 	 *     p = a pointer to a position within a UTF-8 encoded string
 	 *
-	 * Return: a pointer to the found character
+	 * Returns: a pointer to the found character
 	 */
 	public static string utf8PrevChar(string p)
 	{
@@ -1171,7 +1171,7 @@ public struct Unicode
 	 *     len = the maximum length of @p
 	 *     c = a Unicode character
 	 *
-	 * Return: %NULL if the string does not contain the character,
+	 * Returns: %NULL if the string does not contain the character,
 	 *     otherwise, a pointer to the start of the leftmost occurrence
 	 *     of the character in the string.
 	 */
@@ -1193,7 +1193,7 @@ public struct Unicode
 	 *     str = a UTF-8 encoded string
 	 *     len = length of @str, in bytes, or -1 if @str is nul-terminated.
 	 *
-	 * Return: a newly allocated string, with all characters
+	 * Returns: a newly allocated string, with all characters
 	 *     converted to lowercase.
 	 */
 	public static string utf8Strdown(string str, ptrdiff_t len)
@@ -1217,7 +1217,7 @@ public struct Unicode
 	 *         may be %NULL. If @max is greater than 0, up to @max
 	 *         bytes are examined
 	 *
-	 * Return: the length of the string in characters
+	 * Returns: the length of the string in characters
 	 */
 	public static glong utf8Strlen(string p, ptrdiff_t max)
 	{
@@ -1235,7 +1235,7 @@ public struct Unicode
 	 *     src = UTF-8 encoded string
 	 *     n = character count
 	 *
-	 * Return: @dest
+	 * Returns: @dest
 	 */
 	public static string utf8Strncpy(string dest, string src, size_t n)
 	{
@@ -1255,7 +1255,7 @@ public struct Unicode
 	 *     len = the maximum length of @p
 	 *     c = a Unicode character
 	 *
-	 * Return: %NULL if the string does not contain the character,
+	 * Returns: %NULL if the string does not contain the character,
 	 *     otherwise, a pointer to the start of the rightmost occurrence
 	 *     of the character in the string.
 	 */
@@ -1287,7 +1287,7 @@ public struct Unicode
 	 *     len = the maximum length of @str to use, in bytes. If @len < 0,
 	 *         then the string is nul-terminated.
 	 *
-	 * Return: a newly-allocated string which is the reverse of @str
+	 * Returns: a newly-allocated string which is the reverse of @str
 	 *
 	 * Since: 2.2
 	 */
@@ -1310,7 +1310,7 @@ public struct Unicode
 	 *     str = a UTF-8 encoded string
 	 *     len = length of @str, in bytes, or -1 if @str is nul-terminated.
 	 *
-	 * Return: a newly allocated string, with all characters
+	 * Returns: a newly allocated string, with all characters
 	 *     converted to uppercase.
 	 */
 	public static string utf8Strup(string str, ptrdiff_t len)
@@ -1330,7 +1330,7 @@ public struct Unicode
 	 *     startPos = a character offset within @str
 	 *     endPos = another character offset within @str
 	 *
-	 * Return: a newly allocated copy of the requested
+	 * Returns: a newly allocated copy of the requested
 	 *     substring. Free with g_free() when no longer needed.
 	 *
 	 * Since: 2.30
@@ -1362,7 +1362,7 @@ public struct Unicode
 	 *         of characters written or %NULL. The value here stored does not include
 	 *         the trailing 0 character.
 	 *
-	 * Return: a pointer to a newly allocated UCS-4 string.
+	 * Returns: a pointer to a newly allocated UCS-4 string.
 	 *     This value must be freed with g_free(). If an error occurs,
 	 *     %NULL will be returned and @error set.
 	 *
@@ -1396,7 +1396,7 @@ public struct Unicode
 	 *     itemsWritten = location to store the
 	 *         number of characters in the result, or %NULL.
 	 *
-	 * Return: a pointer to a newly allocated UCS-4 string.
+	 * Returns: a pointer to a newly allocated UCS-4 string.
 	 *     This value must be freed with g_free().
 	 */
 	public static dchar* utf8ToUcs4Fast(string str, glong len, out glong itemsWritten)
@@ -1420,7 +1420,7 @@ public struct Unicode
 	 *         of #gunichar2 written, or %NULL. The value stored here does not include
 	 *         the trailing 0.
 	 *
-	 * Return: a pointer to a newly allocated UTF-16 string.
+	 * Returns: a pointer to a newly allocated UTF-16 string.
 	 *     This value must be freed with g_free(). If an error occurs,
 	 *     %NULL will be returned and @error set.
 	 *
@@ -1462,7 +1462,7 @@ public struct Unicode
 	 *     maxLen = max bytes to validate, or -1 to go until NUL
 	 *     end = return location for end of valid data
 	 *
-	 * Return: %TRUE if the text was valid UTF-8
+	 * Returns: %TRUE if the text was valid UTF-8
 	 */
 	public static bool utf8Validate(string str, out string end)
 	{
@@ -1491,7 +1491,7 @@ public struct Unicode
 	 *     len = the maximum length of @str to use, in bytes. If @len < 0,
 	 *         then the string is nul-terminated.
 	 *
-	 * Return: a valid UTF-8 string whose content resembles @str
+	 * Returns: a valid UTF-8 string whose content resembles @str
 	 *
 	 * Since: 2.52
 	 */

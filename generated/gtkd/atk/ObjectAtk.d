@@ -102,7 +102,7 @@ public class ObjectAtk : ObjectG
 	 *     relationship = The #AtkRelationType of the relation
 	 *     target = The #AtkObject which is to be the target of the relation.
 	 *
-	 * Return: TRUE if the relationship is added.
+	 * Returns: TRUE if the relationship is added.
 	 */
 	public bool addRelationship(AtkRelationType relationship, ObjectAtk target)
 	{
@@ -118,7 +118,7 @@ public class ObjectAtk : ObjectG
 	 * Params:
 	 *     handler = a function to be called when a property changes its value
 	 *
-	 * Return: a #guint which is the handler id used in
+	 * Returns: a #guint which is the handler id used in
 	 *     atk_object_remove_property_change_handler()
 	 */
 	public uint connectPropertyChangeHandler(AtkPropertyChangeHandler* handler)
@@ -132,7 +132,7 @@ public class ObjectAtk : ObjectG
 	 * as distinct from strongly-typed object data available via other get/set methods.
 	 * Not all objects have explicit "name-value pair" #AtkAttributeSet properties.
 	 *
-	 * Return: an #AtkAttributeSet consisting of all
+	 * Returns: an #AtkAttributeSet consisting of all
 	 *     explicit properties/annotations applied to the object, or an empty
 	 *     set if the object has no name-value pair attributes assigned to
 	 *     it. This #atkattributeset should be freed by a call to
@@ -148,7 +148,7 @@ public class ObjectAtk : ObjectG
 	/**
 	 * Gets the accessible description of the accessible.
 	 *
-	 * Return: a character string representing the accessible description
+	 * Returns: a character string representing the accessible description
 	 *     of the accessible.
 	 */
 	public string getDescription()
@@ -160,7 +160,7 @@ public class ObjectAtk : ObjectG
 	 * Gets the 0-based index of this accessible in its parent; returns -1 if the
 	 * accessible does not have an accessible parent.
 	 *
-	 * Return: an integer which is the index of the accessible in its parent
+	 * Returns: an integer which is the index of the accessible in its parent
 	 */
 	public int getIndexInParent()
 	{
@@ -172,7 +172,7 @@ public class ObjectAtk : ObjectG
 	 *
 	 * Deprecated: Use atk_component_get_layer instead.
 	 *
-	 * Return: an #AtkLayer which is the layer of the accessible
+	 * Returns: an #AtkLayer which is the layer of the accessible
 	 */
 	public AtkLayer getLayer()
 	{
@@ -185,7 +185,7 @@ public class ObjectAtk : ObjectG
 	 *
 	 * Deprecated: Use atk_component_get_mdi_zorder instead.
 	 *
-	 * Return: a gint which is the zorder of the accessible, i.e. the depth at
+	 * Returns: a gint which is the zorder of the accessible, i.e. the depth at
 	 *     which the component is shown in relation to other components in the same
 	 *     container.
 	 */
@@ -197,7 +197,7 @@ public class ObjectAtk : ObjectG
 	/**
 	 * Gets the number of accessible children of the accessible.
 	 *
-	 * Return: an integer representing the number of accessible children
+	 * Returns: an integer representing the number of accessible children
 	 *     of the accessible.
 	 */
 	public int getNAccessibleChildren()
@@ -208,7 +208,7 @@ public class ObjectAtk : ObjectG
 	/**
 	 * Gets the accessible name of the accessible.
 	 *
-	 * Return: a character string representing the accessible name of the object.
+	 * Returns: a character string representing the accessible name of the object.
 	 */
 	public string getName()
 	{
@@ -219,7 +219,7 @@ public class ObjectAtk : ObjectG
 	 * Gets a UTF-8 string indicating the POSIX-style LC_MESSAGES locale
 	 * of @accessible.
 	 *
-	 * Return: a UTF-8 string indicating the POSIX-style LC_MESSAGES
+	 * Returns: a UTF-8 string indicating the POSIX-style LC_MESSAGES
 	 *     locale of @accessible.
 	 *
 	 * Since: 2.8
@@ -239,7 +239,7 @@ public class ObjectAtk : ObjectG
 	 * If you are only interested on the parent assigned with
 	 * atk_object_set_parent(), use atk_object_peek_parent().
 	 *
-	 * Return: an #AtkObject representing the accessible
+	 * Returns: an #AtkObject representing the accessible
 	 *     parent of the accessible
 	 */
 	public ObjectAtk getParent()
@@ -257,7 +257,7 @@ public class ObjectAtk : ObjectG
 	/**
 	 * Gets the role of the accessible.
 	 *
-	 * Return: an #AtkRole which is the role of the accessible
+	 * Returns: an #AtkRole which is the role of the accessible
 	 */
 	public AtkRole getRole()
 	{
@@ -302,7 +302,7 @@ public class ObjectAtk : ObjectG
 	 * to be exposed to accessible tools. See atk_object_get_parent() for
 	 * further reference.
 	 *
-	 * Return: an #AtkObject representing the accessible
+	 * Returns: an #AtkObject representing the accessible
 	 *     parent of the accessible if assigned
 	 */
 	public ObjectAtk peekParent()
@@ -325,7 +325,7 @@ public class ObjectAtk : ObjectG
 	 * Params:
 	 *     i = a gint representing the position of the child, starting from 0
 	 *
-	 * Return: an #AtkObject representing the specified
+	 * Returns: an #AtkObject representing the specified
 	 *     accessible child of the accessible.
 	 */
 	public ObjectAtk refAccessibleChild(int i)
@@ -343,7 +343,7 @@ public class ObjectAtk : ObjectG
 	/**
 	 * Gets the #AtkRelationSet associated with the object.
 	 *
-	 * Return: an #AtkRelationSet representing the relation set
+	 * Returns: an #AtkRelationSet representing the relation set
 	 *     of the object.
 	 */
 	public RelationSet refRelationSet()
@@ -362,7 +362,7 @@ public class ObjectAtk : ObjectG
 	 * Gets a reference to the state set of the accessible; the caller must
 	 * unreference it when it is no longer needed.
 	 *
-	 * Return: a reference to an #AtkStateSet which is the state
+	 * Returns: a reference to an #AtkStateSet which is the state
 	 *     set of the accessible
 	 */
 	public StateSet refStateSet()
@@ -399,7 +399,7 @@ public class ObjectAtk : ObjectG
 	 *     relationship = The #AtkRelationType of the relation
 	 *     target = The #AtkObject which is the target of the relation to be removed.
 	 *
-	 * Return: TRUE if the relationship is removed.
+	 * Returns: TRUE if the relationship is removed.
 	 */
 	public bool removeRelationship(AtkRelationType relationship, ObjectAtk target)
 	{
@@ -821,7 +821,7 @@ public class ObjectAtk : ObjectG
 	 * Params:
 	 *     name = a string which is the (non-localized) name of an ATK role.
 	 *
-	 * Return: the #AtkRole enumerated type corresponding to the specified name,
+	 * Returns: the #AtkRole enumerated type corresponding to the specified name,
 	 *     or #ATK_ROLE_INVALID if no matching role is found.
 	 */
 	public static AtkRole roleForName(string name)
@@ -835,7 +835,7 @@ public class ObjectAtk : ObjectG
 	 * Params:
 	 *     role = The #AtkRole whose localized name is required
 	 *
-	 * Return: the localized string describing the AtkRole
+	 * Returns: the localized string describing the AtkRole
 	 */
 	public static string roleGetLocalizedName(AtkRole role)
 	{
@@ -848,7 +848,7 @@ public class ObjectAtk : ObjectG
 	 * Params:
 	 *     role = The #AtkRole whose name is required
 	 *
-	 * Return: the string describing the AtkRole
+	 * Returns: the string describing the AtkRole
 	 */
 	public static string roleGetName(AtkRole role)
 	{
@@ -866,7 +866,7 @@ public class ObjectAtk : ObjectG
 	 * Params:
 	 *     name = a character string describing the new role.
 	 *
-	 * Return: an #AtkRole for the new role if added
+	 * Returns: an #AtkRole for the new role if added
 	 *     properly. ATK_ROLE_INVALID in case of error.
 	 */
 	public static AtkRole roleRegister(string name)

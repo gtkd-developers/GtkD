@@ -130,7 +130,7 @@ public template ActionMapT(TStruct)
 	 * Params:
 	 *     actionName = the name of an action
 	 *
-	 * Return: a #GAction, or %NULL
+	 * Returns: a #GAction, or %NULL
 	 *
 	 * Since: 2.32
 	 */

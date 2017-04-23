@@ -80,7 +80,7 @@ public class PgAttribute
 	/**
 	 * Make a copy of an attribute.
 	 *
-	 * Return: the newly allocated #PangoAttribute,
+	 * Returns: the newly allocated #PangoAttribute,
 	 *     which should be freed with pango_attribute_destroy().
 	 */
 	public PgAttribute copy()
@@ -111,7 +111,7 @@ public class PgAttribute
 	 * Params:
 	 *     attr2 = another #PangoAttribute
 	 *
-	 * Return: %TRUE if the two attributes have the same value.
+	 * Returns: %TRUE if the two attributes have the same value.
 	 */
 	public bool equal(PgAttribute attr2)
 	{
@@ -143,7 +143,7 @@ public class PgAttribute
 	 *     green = the green value
 	 *     blue = the blue value
 	 *
-	 * Return: the newly allocated #PangoAttribute,
+	 * Returns: the newly allocated #PangoAttribute,
 	 *     which should be freed with pango_attribute_destroy().
 	 */
 	public static PgAttribute backgroundNew(ushort red, ushort green, ushort blue)
@@ -164,7 +164,7 @@ public class PgAttribute
 	 * Params:
 	 *     alpha = the alpha value, between 1 and 65536
 	 *
-	 * Return: the new allocated #PangoAttribute,
+	 * Returns: the new allocated #PangoAttribute,
 	 *     which should be freed with pango_attribute_destroy().
 	 *
 	 * Since: 1.38
@@ -193,7 +193,7 @@ public class PgAttribute
 	 *     enableFallback = %TRUE if we should fall back on other fonts
 	 *         for characters the active font is missing.
 	 *
-	 * Return: the newly allocated #PangoAttribute,
+	 * Returns: the newly allocated #PangoAttribute,
 	 *     which should be freed with pango_attribute_destroy().
 	 *
 	 * Since: 1.4
@@ -216,7 +216,7 @@ public class PgAttribute
 	 * Params:
 	 *     family = the family or comma separated list of families
 	 *
-	 * Return: the newly allocated #PangoAttribute,
+	 * Returns: the newly allocated #PangoAttribute,
 	 *     which should be freed with pango_attribute_destroy().
 	 */
 	public static PgAttribute familyNew(string family)
@@ -239,7 +239,7 @@ public class PgAttribute
 	 *     green = the green value
 	 *     blue = the blue value
 	 *
-	 * Return: the newly allocated #PangoAttribute,
+	 * Returns: the newly allocated #PangoAttribute,
 	 *     which should be freed with pango_attribute_destroy().
 	 */
 	public static PgAttribute foregroundNew(ushort red, ushort green, ushort blue)
@@ -260,7 +260,7 @@ public class PgAttribute
 	 * Params:
 	 *     alpha = the alpha value, between 1 and 65536
 	 *
-	 * Return: the new allocated #PangoAttribute,
+	 * Returns: the new allocated #PangoAttribute,
 	 *     which should be freed with pango_attribute_destroy().
 	 *
 	 * Since: 1.38
@@ -283,7 +283,7 @@ public class PgAttribute
 	 * Params:
 	 *     hint = the gravity hint value.
 	 *
-	 * Return: the newly allocated #PangoAttribute,
+	 * Returns: the newly allocated #PangoAttribute,
 	 *     which should be freed with pango_attribute_destroy().
 	 *
 	 * Since: 1.16
@@ -306,7 +306,7 @@ public class PgAttribute
 	 * Params:
 	 *     gravity = the gravity value; should not be %PANGO_GRAVITY_AUTO.
 	 *
-	 * Return: the newly allocated #PangoAttribute,
+	 * Returns: the newly allocated #PangoAttribute,
 	 *     which should be freed with pango_attribute_destroy().
 	 *
 	 * Since: 1.16
@@ -330,7 +330,7 @@ public class PgAttribute
 	 *     letterSpacing = amount of extra space to add between graphemes
 	 *         of the text, in Pango units.
 	 *
-	 * Return: the newly allocated #PangoAttribute,
+	 * Returns: the newly allocated #PangoAttribute,
 	 *     which should be freed with pango_attribute_destroy().
 	 *
 	 * Since: 1.6
@@ -354,7 +354,7 @@ public class PgAttribute
 	 *     rise = the amount that the text should be displaced vertically,
 	 *         in Pango units. Positive values displace the text upwards.
 	 *
-	 * Return: the newly allocated #PangoAttribute,
+	 * Returns: the newly allocated #PangoAttribute,
 	 *     which should be freed with pango_attribute_destroy().
 	 */
 	public static PgAttribute riseNew(int rise)
@@ -376,7 +376,7 @@ public class PgAttribute
 	 * Params:
 	 *     scaleFactor = factor to scale the font
 	 *
-	 * Return: the newly allocated #PangoAttribute,
+	 * Returns: the newly allocated #PangoAttribute,
 	 *     which should be freed with pango_attribute_destroy().
 	 */
 	public static PgAttribute scaleNew(double scaleFactor)
@@ -397,7 +397,7 @@ public class PgAttribute
 	 * Params:
 	 *     stretch = the stretch
 	 *
-	 * Return: the newly allocated #PangoAttribute,
+	 * Returns: the newly allocated #PangoAttribute,
 	 *     which should be freed with pango_attribute_destroy().
 	 */
 	public static PgAttribute stretchNew(PangoStretch stretch)
@@ -422,7 +422,7 @@ public class PgAttribute
 	 *     green = the green value
 	 *     blue = the blue value
 	 *
-	 * Return: the newly allocated #PangoAttribute,
+	 * Returns: the newly allocated #PangoAttribute,
 	 *     which should be freed with pango_attribute_destroy().
 	 *
 	 * Since: 1.8
@@ -445,7 +445,7 @@ public class PgAttribute
 	 * Params:
 	 *     strikethrough = %TRUE if the text should be struck-through.
 	 *
-	 * Return: the newly allocated #PangoAttribute,
+	 * Returns: the newly allocated #PangoAttribute,
 	 *     which should be freed with pango_attribute_destroy().
 	 */
 	public static PgAttribute strikethroughNew(bool strikethrough)
@@ -466,7 +466,7 @@ public class PgAttribute
 	 * Params:
 	 *     style = the slant style
 	 *
-	 * Return: the newly allocated #PangoAttribute,
+	 * Returns: the newly allocated #PangoAttribute,
 	 *     which should be freed with pango_attribute_destroy().
 	 */
 	public static PgAttribute styleNew(PangoStyle style)
@@ -491,7 +491,7 @@ public class PgAttribute
 	 * Params:
 	 *     type = an attribute type ID to fetch the name for
 	 *
-	 * Return: the type ID name (which may be %NULL), or
+	 * Returns: the type ID name (which may be %NULL), or
 	 *     %NULL if @type is a built-in Pango attribute type or invalid.
 	 *
 	 * Since: 1.22
@@ -508,7 +508,7 @@ public class PgAttribute
 	 * Params:
 	 *     name = an identifier for the type
 	 *
-	 * Return: the new type ID.
+	 * Returns: the new type ID.
 	 */
 	public static PangoAttrType typeRegister(string name)
 	{
@@ -525,7 +525,7 @@ public class PgAttribute
 	 *     green = the green value
 	 *     blue = the blue value
 	 *
-	 * Return: the newly allocated #PangoAttribute,
+	 * Returns: the newly allocated #PangoAttribute,
 	 *     which should be freed with pango_attribute_destroy().
 	 *
 	 * Since: 1.8
@@ -548,7 +548,7 @@ public class PgAttribute
 	 * Params:
 	 *     underline = the underline style.
 	 *
-	 * Return: the newly allocated #PangoAttribute,
+	 * Returns: the newly allocated #PangoAttribute,
 	 *     which should be freed with pango_attribute_destroy().
 	 */
 	public static PgAttribute underlineNew(PangoUnderline underline)
@@ -569,7 +569,7 @@ public class PgAttribute
 	 * Params:
 	 *     variant = the variant
 	 *
-	 * Return: the newly allocated #PangoAttribute,
+	 * Returns: the newly allocated #PangoAttribute,
 	 *     which should be freed with pango_attribute_destroy().
 	 */
 	public static PgAttribute variantNew(PangoVariant variant)
@@ -590,7 +590,7 @@ public class PgAttribute
 	 * Params:
 	 *     weight = the weight
 	 *
-	 * Return: the newly allocated #PangoAttribute,
+	 * Returns: the newly allocated #PangoAttribute,
 	 *     which should be freed with pango_attribute_destroy().
 	 */
 	public static PgAttribute weightNew(PangoWeight weight)
@@ -617,7 +617,7 @@ public class PgAttribute
 	 *     text = address of return location for text with tags stripped, or %NULL
 	 *     accelChar = address of return location for accelerator char, or %NULL
 	 *
-	 * Return: %FALSE if @error is set, otherwise %TRUE
+	 * Returns: %FALSE if @error is set, otherwise %TRUE
 	 *
 	 * Since: 1.31.0
 	 *
@@ -667,7 +667,7 @@ public class PgAttribute
 	 * Params:
 	 *     accelMarker = character that precedes an accelerator, or 0 for none
 	 *
-	 * Return: a #GMarkupParseContext that should be
+	 * Returns: a #GMarkupParseContext that should be
 	 *     destroyed with g_markup_parse_context_free().
 	 *
 	 * Since: 1.31.0
@@ -710,7 +710,7 @@ public class PgAttribute
 	 *     text = address of return location for text with tags stripped, or %NULL
 	 *     accelChar = address of return location for accelerator char, or %NULL
 	 *
-	 * Return: %FALSE if @error is set, otherwise %TRUE
+	 * Returns: %FALSE if @error is set, otherwise %TRUE
 	 *
 	 * Throws: GException on failure.
 	 */

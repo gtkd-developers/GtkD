@@ -95,7 +95,7 @@ public class Bytes
 	 *     data = the data to be used for the bytes
 	 *     size = the size of @data
 	 *
-	 * Return: a new #GBytes
+	 * Returns: a new #GBytes
 	 *
 	 * Since: 2.32
 	 *
@@ -130,7 +130,7 @@ public class Bytes
 	 *     freeFunc = the function to call to release the data
 	 *     userData = data to pass to @free_func
 	 *
-	 * Return: a new #GBytes
+	 * Returns: a new #GBytes
 	 *
 	 * Since: 2.32
 	 *
@@ -156,7 +156,7 @@ public class Bytes
 	 * Params:
 	 *     bytes2 = a pointer to a #GBytes to compare with @bytes1
 	 *
-	 * Return: a negative value if bytes2 is lesser, a positive value if bytes2 is
+	 * Returns: a negative value if bytes2 is lesser, a positive value if bytes2 is
 	 *     greater, and zero if bytes2 is equal to bytes1
 	 *
 	 * Since: 2.32
@@ -176,7 +176,7 @@ public class Bytes
 	 * Params:
 	 *     bytes2 = a pointer to a #GBytes to compare with @bytes1
 	 *
-	 * Return: %TRUE if the two keys match.
+	 * Returns: %TRUE if the two keys match.
 	 *
 	 * Since: 2.32
 	 */
@@ -194,7 +194,7 @@ public class Bytes
 	 * may represent an empty string with @data non-%NULL and @size as 0. %NULL will
 	 * not be returned if @size is non-zero.
 	 *
-	 * Return: a pointer to the byte data, or %NULL
+	 * Returns: a pointer to the byte data, or %NULL
 	 *
 	 * Since: 2.32
 	 */
@@ -212,7 +212,7 @@ public class Bytes
 	 *
 	 * This function will always return the same value for a given #GBytes.
 	 *
-	 * Return: the size
+	 * Returns: the size
 	 *
 	 * Since: 2.32
 	 */
@@ -227,7 +227,7 @@ public class Bytes
 	 * This function can be passed to g_hash_table_new() as the @key_hash_func
 	 * parameter, when using non-%NULL #GBytes pointers as keys in a #GHashTable.
 	 *
-	 * Return: a hash value corresponding to the key.
+	 * Returns: a hash value corresponding to the key.
 	 *
 	 * Since: 2.32
 	 */
@@ -247,7 +247,7 @@ public class Bytes
 	 *     offset = offset which subsection starts at
 	 *     length = length of subsection
 	 *
-	 * Return: a new #GBytes
+	 * Returns: a new #GBytes
 	 *
 	 * Since: 2.32
 	 */
@@ -266,7 +266,7 @@ public class Bytes
 	/**
 	 * Increase the reference count on @bytes.
 	 *
-	 * Return: the #GBytes
+	 * Returns: the #GBytes
 	 *
 	 * Since: 2.32
 	 */
@@ -302,7 +302,7 @@ public class Bytes
 	 * g_bytes_new(), g_bytes_new_take() or g_byte_array_free_to_bytes(). In all
 	 * other cases the data is copied.
 	 *
-	 * Return: a new mutable #GByteArray containing the same byte data
+	 * Returns: a new mutable #GByteArray containing the same byte data
 	 *
 	 * Since: 2.32
 	 */
@@ -327,7 +327,7 @@ public class Bytes
 	 * g_bytes_new_take() or g_byte_array_free_to_bytes(). In all other cases the
 	 * data is copied.
 	 *
-	 * Return: a pointer to the same byte data, which should be
+	 * Returns: a pointer to the same byte data, which should be
 	 *     freed with g_free()
 	 *
 	 * Since: 2.32

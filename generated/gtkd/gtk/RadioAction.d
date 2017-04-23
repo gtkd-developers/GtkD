@@ -118,7 +118,7 @@ public class RadioAction : ToggleAction
 	 *     value = The value which gtk_radio_action_get_current_value() should
 	 *         return if this action is selected.
 	 *
-	 * Return: a new #GtkRadioAction
+	 * Returns: a new #GtkRadioAction
 	 *
 	 * Since: 2.4
 	 *
@@ -140,7 +140,7 @@ public class RadioAction : ToggleAction
 	 * Obtains the value property of the currently active member of
 	 * the group to which @action belongs.
 	 *
-	 * Return: The value of the currently active group member
+	 * Returns: The value of the currently active group member
 	 *
 	 * Since: 2.4
 	 */
@@ -168,7 +168,7 @@ public class RadioAction : ToggleAction
 	 * }
 	 * ]|
 	 *
-	 * Return: the list representing the radio group for this object
+	 * Returns: the list representing the radio group for this object
 	 *
 	 * Since: 2.4
 	 */

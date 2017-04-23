@@ -60,7 +60,7 @@ public template SelectionT(TStruct)
 	 * Params:
 	 *     i = a #gint specifying the child index.
 	 *
-	 * Return: TRUE if success, FALSE otherwise.
+	 * Returns: TRUE if success, FALSE otherwise.
 	 */
 	public bool addSelection(int i)
 	{
@@ -71,7 +71,7 @@ public template SelectionT(TStruct)
 	 * Clears the selection in the object so that no children in the object
 	 * are selected.
 	 *
-	 * Return: TRUE if success, FALSE otherwise.
+	 * Returns: TRUE if success, FALSE otherwise.
 	 */
 	public bool clearSelection()
 	{
@@ -85,7 +85,7 @@ public template SelectionT(TStruct)
 	 * use type checking/interface checking macros or the
 	 * atk_get_accessible_value() convenience method.
 	 *
-	 * Return: a gint representing the number of items selected, or 0
+	 * Returns: a gint representing the number of items selected, or 0
 	 *     if @selection does not implement this interface.
 	 */
 	public int getSelectionCount()
@@ -103,7 +103,7 @@ public template SelectionT(TStruct)
 	 * Params:
 	 *     i = a #gint specifying the child index.
 	 *
-	 * Return: a gboolean representing the specified child is selected, or 0
+	 * Returns: a gboolean representing the specified child is selected, or 0
 	 *     if @selection does not implement this interface.
 	 */
 	public bool isChildSelected(int i)
@@ -123,7 +123,7 @@ public template SelectionT(TStruct)
 	 *     i = a #gint specifying the index in the selection set.  (e.g. the
 	 *         ith selection as opposed to the ith child).
 	 *
-	 * Return: an #AtkObject representing the
+	 * Returns: an #AtkObject representing the
 	 *     selected accessible, or %NULL if @selection does not implement this
 	 *     interface.
 	 */
@@ -146,7 +146,7 @@ public template SelectionT(TStruct)
 	 *     i = a #gint specifying the index in the selection set.  (e.g. the
 	 *         ith selection as opposed to the ith child).
 	 *
-	 * Return: TRUE if success, FALSE otherwise.
+	 * Returns: TRUE if success, FALSE otherwise.
 	 */
 	public bool removeSelection(int i)
 	{
@@ -157,7 +157,7 @@ public template SelectionT(TStruct)
 	 * Causes every child of the object to be selected if the object
 	 * supports multiple selections.
 	 *
-	 * Return: TRUE if success, FALSE otherwise.
+	 * Returns: TRUE if success, FALSE otherwise.
 	 */
 	public bool selectAllSelection()
 	{

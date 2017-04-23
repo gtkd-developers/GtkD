@@ -176,7 +176,7 @@ public class Notebook : Container
 	/**
 	 * Creates a new #GtkNotebook widget with no pages.
 	 *
-	 * Return: the newly created #GtkNotebook
+	 * Returns: the newly created #GtkNotebook
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -200,7 +200,7 @@ public class Notebook : Container
 	 *     tabLabel = the #GtkWidget to be used as the label
 	 *         for the page, or %NULL to use the default label, “page N”
 	 *
-	 * Return: the index (starting from 0) of the appended
+	 * Returns: the index (starting from 0) of the appended
 	 *     page in the notebook, or -1 if function fails
 	 */
 	public int appendPage(Widget child, Widget tabLabel)
@@ -223,7 +223,7 @@ public class Notebook : Container
 	 *         is not a #GtkLabel, @menu_label must be specified if the
 	 *         page-switch menu is to be used.
 	 *
-	 * Return: the index (starting from 0) of the appended
+	 * Returns: the index (starting from 0) of the appended
 	 *     page in the notebook, or -1 if function fails
 	 */
 	public int appendPageMenu(Widget child, Widget tabLabel, Widget menuLabel)
@@ -255,7 +255,7 @@ public class Notebook : Container
 	 * Params:
 	 *     packType = pack type of the action widget to receive
 	 *
-	 * Return: The action widget with the given
+	 * Returns: The action widget with the given
 	 *     @pack_type or %NULL when this action widget has not been set
 	 *
 	 * Since: 2.20
@@ -275,7 +275,7 @@ public class Notebook : Container
 	/**
 	 * Returns the page number of the current page.
 	 *
-	 * Return: the index (starting from 0) of the current
+	 * Returns: the index (starting from 0) of the current
 	 *     page in the notebook. If the notebook has no pages,
 	 *     then -1 will be returned.
 	 */
@@ -287,7 +287,7 @@ public class Notebook : Container
 	/**
 	 * Gets the current group name for @notebook.
 	 *
-	 * Return: the group name, or %NULL if none is set
+	 * Returns: the group name, or %NULL if none is set
 	 *
 	 * Since: 2.24
 	 */
@@ -302,7 +302,7 @@ public class Notebook : Container
 	 * Params:
 	 *     child = a widget contained in a page of @notebook
 	 *
-	 * Return: the menu label, or %NULL if the
+	 * Returns: the menu label, or %NULL if the
 	 *     notebook page does not have a menu label other than the default (the tab
 	 *     label).
 	 */
@@ -325,7 +325,7 @@ public class Notebook : Container
 	 * Params:
 	 *     child = the child widget of a page of the notebook.
 	 *
-	 * Return: the text of the tab label, or %NULL if the widget does
+	 * Returns: the text of the tab label, or %NULL if the widget does
 	 *     not have a menu label other than the default menu label, or the menu label
 	 *     widget is not a #GtkLabel. The string is owned by the widget and must not be
 	 *     freed.
@@ -338,7 +338,7 @@ public class Notebook : Container
 	/**
 	 * Gets the number of pages in a notebook.
 	 *
-	 * Return: the number of pages in the notebook
+	 * Returns: the number of pages in the notebook
 	 *
 	 * Since: 2.2
 	 */
@@ -354,7 +354,7 @@ public class Notebook : Container
 	 *     pageNum = the index of a page in the notebook, or -1
 	 *         to get the last page
 	 *
-	 * Return: the child widget, or %NULL if @page_num
+	 * Returns: the child widget, or %NULL if @page_num
 	 *     is out of bounds
 	 */
 	public Widget getNthPage(int pageNum)
@@ -373,7 +373,7 @@ public class Notebook : Container
 	 * Returns whether the tab label area has arrows for scrolling.
 	 * See gtk_notebook_set_scrollable().
 	 *
-	 * Return: %TRUE if arrows for scrolling are present
+	 * Returns: %TRUE if arrows for scrolling are present
 	 */
 	public bool getScrollable()
 	{
@@ -384,7 +384,7 @@ public class Notebook : Container
 	 * Returns whether a bevel will be drawn around the notebook pages.
 	 * See gtk_notebook_set_show_border().
 	 *
-	 * Return: %TRUE if the bevel is drawn
+	 * Returns: %TRUE if the bevel is drawn
 	 */
 	public bool getShowBorder()
 	{
@@ -395,7 +395,7 @@ public class Notebook : Container
 	 * Returns whether the tabs of the notebook are shown.
 	 * See gtk_notebook_set_show_tabs().
 	 *
-	 * Return: %TRUE if the tabs are shown
+	 * Returns: %TRUE if the tabs are shown
 	 */
 	public bool getShowTabs()
 	{
@@ -408,7 +408,7 @@ public class Notebook : Container
 	 * Params:
 	 *     child = a child #GtkWidget
 	 *
-	 * Return: %TRUE if the tab is detachable.
+	 * Returns: %TRUE if the tab is detachable.
 	 *
 	 * Since: 2.10
 	 */
@@ -422,7 +422,7 @@ public class Notebook : Container
 	 *
 	 * Deprecated: this function returns zero
 	 *
-	 * Return: horizontal width of a tab border
+	 * Returns: horizontal width of a tab border
 	 *
 	 * Since: 2.22
 	 */
@@ -439,7 +439,7 @@ public class Notebook : Container
 	 * Params:
 	 *     child = the page
 	 *
-	 * Return: the tab label
+	 * Returns: the tab label
 	 */
 	public Widget getTabLabel(Widget child)
 	{
@@ -460,7 +460,7 @@ public class Notebook : Container
 	 * Params:
 	 *     child = a widget contained in a page of @notebook
 	 *
-	 * Return: the text of the tab label, or %NULL if the tab label
+	 * Returns: the text of the tab label, or %NULL if the tab label
 	 *     widget is not a #GtkLabel. The string is owned by the widget and must not be
 	 *     freed.
 	 */
@@ -473,7 +473,7 @@ public class Notebook : Container
 	 * Gets the edge at which the tabs for switching pages in the
 	 * notebook are drawn.
 	 *
-	 * Return: the edge at which the tabs are drawn
+	 * Returns: the edge at which the tabs are drawn
 	 */
 	public GtkPositionType getTabPos()
 	{
@@ -486,7 +486,7 @@ public class Notebook : Container
 	 * Params:
 	 *     child = a child #GtkWidget
 	 *
-	 * Return: %TRUE if the tab is reorderable.
+	 * Returns: %TRUE if the tab is reorderable.
 	 *
 	 * Since: 2.10
 	 */
@@ -500,7 +500,7 @@ public class Notebook : Container
 	 *
 	 * Deprecated: this function returns zero
 	 *
-	 * Return: vertical width of a tab border
+	 * Returns: vertical width of a tab border
 	 *
 	 * Since: 2.22
 	 */
@@ -519,7 +519,7 @@ public class Notebook : Container
 	 *     position = the index (starting at 0) at which to insert the page,
 	 *         or -1 to append the page after all other pages
 	 *
-	 * Return: the index (starting from 0) of the inserted
+	 * Returns: the index (starting from 0) of the inserted
 	 *     page in the notebook, or -1 if function fails
 	 */
 	public int insertPage(Widget child, Widget tabLabel, int position)
@@ -544,7 +544,7 @@ public class Notebook : Container
 	 *     position = the index (starting at 0) at which to insert the page,
 	 *         or -1 to append the page after all other pages.
 	 *
-	 * Return: the index (starting from 0) of the inserted
+	 * Returns: the index (starting from 0) of the inserted
 	 *     page in the notebook
 	 */
 	public int insertPageMenu(Widget child, Widget tabLabel, Widget menuLabel, int position)
@@ -568,7 +568,7 @@ public class Notebook : Container
 	 * Params:
 	 *     child = a #GtkWidget
 	 *
-	 * Return: the index of the page containing @child, or
+	 * Returns: the index of the page containing @child, or
 	 *     -1 if @child is not in the notebook
 	 */
 	public int pageNum(Widget child)
@@ -602,7 +602,7 @@ public class Notebook : Container
 	 *     tabLabel = the #GtkWidget to be used as the label
 	 *         for the page, or %NULL to use the default label, “page N”
 	 *
-	 * Return: the index (starting from 0) of the prepended
+	 * Returns: the index (starting from 0) of the prepended
 	 *     page in the notebook, or -1 if function fails
 	 */
 	public int prependPage(Widget child, Widget tabLabel)
@@ -625,7 +625,7 @@ public class Notebook : Container
 	 *         is not a #GtkLabel, @menu_label must be specified if the
 	 *         page-switch menu is to be used.
 	 *
-	 * Return: the index (starting from 0) of the prepended
+	 * Returns: the index (starting from 0) of the prepended
 	 *     page in the notebook, or -1 if function fails
 	 */
 	public int prependPageMenu(Widget child, Widget tabLabel, Widget menuLabel)
@@ -989,7 +989,7 @@ public class Notebook : Container
 	 *     x = the X coordinate where the drop happens
 	 *     y = the Y coordinate where the drop happens
 	 *
-	 * Return: a #GtkNotebook that @page should be
+	 * Returns: a #GtkNotebook that @page should be
 	 *     added to, or %NULL.
 	 *
 	 * Since: 2.12

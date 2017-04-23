@@ -90,7 +90,7 @@ public class CellRendererText : CellRenderer
 	 * value in the model, thus rendering a different string in each row
 	 * of the #GtkTreeView
 	 *
-	 * Return: the new cell renderer
+	 * Returns: the new cell renderer
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

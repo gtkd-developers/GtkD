@@ -65,7 +65,7 @@ public class Module
 	/**
 	 * Closes a module.
 	 *
-	 * Return: %TRUE on success
+	 * Returns: %TRUE on success
 	 */
 	public bool close()
 	{
@@ -86,7 +86,7 @@ public class Module
 	 *
 	 * If @module refers to the application itself, "main" is returned.
 	 *
-	 * Return: the filename of the module
+	 * Returns: the filename of the module
 	 */
 	public string name()
 	{
@@ -101,7 +101,7 @@ public class Module
 	 *     symbolName = the name of the symbol to find
 	 *     symbol = returns the pointer to the symbol value
 	 *
-	 * Return: %TRUE on success
+	 * Returns: %TRUE on success
 	 */
 	public bool symbol(string symbolName, void** symbol)
 	{
@@ -129,7 +129,7 @@ public class Module
 	 *         directories will be used, though that is not recommended
 	 *     moduleName = the name of the module
 	 *
-	 * Return: the complete path of the module, including the standard library
+	 * Returns: the complete path of the module, including the standard library
 	 *     prefix and suffix. This should be freed when no longer needed
 	 */
 	public static string buildPath(string directory, string moduleName)
@@ -143,7 +143,7 @@ public class Module
 	/**
 	 * Gets a string describing the last module error.
 	 *
-	 * Return: a string describing the last module error
+	 * Returns: a string describing the last module error
 	 */
 	public static string error()
 	{
@@ -170,7 +170,7 @@ public class Module
 	 *     flags = the flags used for opening the module. This can be the
 	 *         logical OR of any of the #GModuleFlags
 	 *
-	 * Return: a #GModule on success, or %NULL on failure
+	 * Returns: a #GModule on success, or %NULL on failure
 	 */
 	public static Module open(string fileName, GModuleFlags flags)
 	{
@@ -187,7 +187,7 @@ public class Module
 	/**
 	 * Checks if modules are supported on the current platform.
 	 *
-	 * Return: %TRUE if modules are supported
+	 * Returns: %TRUE if modules are supported
 	 */
 	public static bool supported()
 	{

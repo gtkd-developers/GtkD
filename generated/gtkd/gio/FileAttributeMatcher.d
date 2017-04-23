@@ -92,7 +92,7 @@ public class FileAttributeMatcher
 	 * Params:
 	 *     attributes = an attribute string to match.
 	 *
-	 * Return: a #GFileAttributeMatcher
+	 * Returns: a #GFileAttributeMatcher
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -119,7 +119,7 @@ public class FileAttributeMatcher
 	 * Params:
 	 *     ns = a string containing a file attribute namespace.
 	 *
-	 * Return: %TRUE if the matcher matches all of the entries
+	 * Returns: %TRUE if the matcher matches all of the entries
 	 *     in the given @ns, %FALSE otherwise.
 	 */
 	public bool enumerateNamespace(string ns)
@@ -130,7 +130,7 @@ public class FileAttributeMatcher
 	/**
 	 * Gets the next matched attribute from a #GFileAttributeMatcher.
 	 *
-	 * Return: a string containing the next attribute or %NULL if
+	 * Returns: a string containing the next attribute or %NULL if
 	 *     no more attribute exist.
 	 */
 	public string enumerateNext()
@@ -146,7 +146,7 @@ public class FileAttributeMatcher
 	 * Params:
 	 *     attribute = a file attribute key.
 	 *
-	 * Return: %TRUE if @attribute matches @matcher. %FALSE otherwise.
+	 * Returns: %TRUE if @attribute matches @matcher. %FALSE otherwise.
 	 */
 	public bool matches(string attribute)
 	{
@@ -160,7 +160,7 @@ public class FileAttributeMatcher
 	 * Params:
 	 *     attribute = a file attribute key.
 	 *
-	 * Return: %TRUE if the matcher only matches @attribute. %FALSE otherwise.
+	 * Returns: %TRUE if the matcher only matches @attribute. %FALSE otherwise.
 	 */
 	public bool matchesOnly(string attribute)
 	{
@@ -170,7 +170,7 @@ public class FileAttributeMatcher
 	/**
 	 * References a file attribute matcher.
 	 *
-	 * Return: a #GFileAttributeMatcher.
+	 * Returns: a #GFileAttributeMatcher.
 	 */
 	public FileAttributeMatcher doref()
 	{
@@ -197,7 +197,7 @@ public class FileAttributeMatcher
 	 * Params:
 	 *     subtract = The matcher to subtract
 	 *
-	 * Return: A file attribute matcher matching all attributes of
+	 * Returns: A file attribute matcher matching all attributes of
 	 *     @matcher that are not matched by @subtract
 	 */
 	public FileAttributeMatcher subtract(FileAttributeMatcher subtract)
@@ -218,7 +218,7 @@ public class FileAttributeMatcher
 	 * The output however, might not be identical, as the matcher may
 	 * decide to use a different order or omit needless parts.
 	 *
-	 * Return: a string describing the attributes the matcher matches
+	 * Returns: a string describing the attributes the matcher matches
 	 *     against or %NULL if @matcher was %NULL.
 	 *
 	 * Since: 2.32

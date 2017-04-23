@@ -175,7 +175,7 @@ public class Color
 	 *
 	 * Deprecated: Use #GdkRGBA
 	 *
-	 * Return: a copy of @color
+	 * Returns: a copy of @color
 	 */
 	public Color copy()
 	{
@@ -197,7 +197,7 @@ public class Color
 	 * Params:
 	 *     colorb = another #GdkColor
 	 *
-	 * Return: %TRUE if the two colors compare equal
+	 * Returns: %TRUE if the two colors compare equal
 	 */
 	public bool equal(Color colorb)
 	{
@@ -220,7 +220,7 @@ public class Color
 	 *
 	 * Deprecated: Use #GdkRGBA
 	 *
-	 * Return: The hash function applied to @color
+	 * Returns: The hash function applied to @color
 	 */
 	public uint hash()
 	{
@@ -236,7 +236,7 @@ public class Color
 	 *
 	 * Deprecated: Use #GdkRGBA
 	 *
-	 * Return: a newly-allocated text string
+	 * Returns: a newly-allocated text string
 	 *
 	 * Since: 2.12
 	 */
@@ -266,7 +266,7 @@ public class Color
 	 *     spec = the string specifying the color
 	 *     color = the #GdkColor to fill in
 	 *
-	 * Return: %TRUE if the parsing succeeded
+	 * Returns: %TRUE if the parsing succeeded
 	 */
 	public static bool parse(string spec, out Color color)
 	{

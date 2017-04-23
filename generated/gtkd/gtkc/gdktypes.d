@@ -4054,7 +4054,7 @@ public alias extern(C) void function(GdkEvent* event, void* data) GdkEventFunc;
  *     event = the GDK event to which the X event will be translated.
  *     data = user data set when the filter was installed.
  *
- * Return: a #GdkFilterReturn value.
+ * Returns: a #GdkFilterReturn value.
  */
 public alias extern(C) GdkFilterReturn function(GdkXEvent* xevent, GdkEvent* event, void* data) GdkFilterFunc;
 
@@ -4082,7 +4082,7 @@ public alias extern(C) void function(GdkSeat* seat, GdkWindow* window, void* use
  *     window = a #GdkWindow
  *     userData = user data
  *
- * Return: %TRUE to invalidate @window recursively
+ * Returns: %TRUE to invalidate @window recursively
  */
 public alias extern(C) int function(GdkWindow* window, void* userData) GdkWindowChildFunc;
 

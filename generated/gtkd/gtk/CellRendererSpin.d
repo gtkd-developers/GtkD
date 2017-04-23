@@ -89,7 +89,7 @@ public class CellRendererSpin : CellRendererText
 	/**
 	 * Creates a new #GtkCellRendererSpin.
 	 *
-	 * Return: a new #GtkCellRendererSpin
+	 * Returns: a new #GtkCellRendererSpin
 	 *
 	 * Since: 2.10
 	 *

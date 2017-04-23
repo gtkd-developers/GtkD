@@ -88,7 +88,7 @@ public class SeparatorToolItem : ToolItem
 	/**
 	 * Create a new #GtkSeparatorToolItem
 	 *
-	 * Return: the new #GtkSeparatorToolItem
+	 * Returns: the new #GtkSeparatorToolItem
 	 *
 	 * Since: 2.4
 	 *
@@ -110,7 +110,7 @@ public class SeparatorToolItem : ToolItem
 	 * Returns whether @item is drawn as a line, or just blank.
 	 * See gtk_separator_tool_item_set_draw().
 	 *
-	 * Return: %TRUE if @item is drawn as a line, or just blank.
+	 * Returns: %TRUE if @item is drawn as a line, or just blank.
 	 *
 	 * Since: 2.4
 	 */

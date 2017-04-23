@@ -46,7 +46,7 @@ public struct Hostname
 	 * Params:
 	 *     hostname = a hostname
 	 *
-	 * Return: %TRUE if @hostname contains any ASCII-encoded
+	 * Returns: %TRUE if @hostname contains any ASCII-encoded
 	 *     segments.
 	 *
 	 * Since: 2.22
@@ -63,7 +63,7 @@ public struct Hostname
 	 * Params:
 	 *     hostname = a hostname (or IP address in string form)
 	 *
-	 * Return: %TRUE if @hostname is an IP address
+	 * Returns: %TRUE if @hostname is an IP address
 	 *
 	 * Since: 2.22
 	 */
@@ -84,7 +84,7 @@ public struct Hostname
 	 * Params:
 	 *     hostname = a hostname
 	 *
-	 * Return: %TRUE if @hostname contains any non-ASCII characters
+	 * Returns: %TRUE if @hostname contains any non-ASCII characters
 	 *
 	 * Since: 2.22
 	 */
@@ -101,7 +101,7 @@ public struct Hostname
 	 * Params:
 	 *     hostname = a valid UTF-8 or ASCII hostname
 	 *
-	 * Return: an ASCII hostname, which must be freed, or %NULL if
+	 * Returns: an ASCII hostname, which must be freed, or %NULL if
 	 *     @hostname is in some way invalid.
 	 *
 	 * Since: 2.22
@@ -126,7 +126,7 @@ public struct Hostname
 	 * Params:
 	 *     hostname = a valid UTF-8 or ASCII hostname
 	 *
-	 * Return: a UTF-8 hostname, which must be freed, or %NULL if
+	 * Returns: a UTF-8 hostname, which must be freed, or %NULL if
 	 *     @hostname is in some way invalid.
 	 *
 	 * Since: 2.22

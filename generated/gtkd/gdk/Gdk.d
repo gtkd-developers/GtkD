@@ -56,7 +56,7 @@ public struct Gdk
 	 * sync for you, so you had to gdk_flush() if your last
 	 * call to Xlib was not a blocking round trip.
 	 *
-	 * Return: X error code or 0 on success
+	 * Returns: X error code or 0 on success
 	 */
 	public static int errorTrapPop()
 	{
@@ -128,7 +128,7 @@ public struct Gdk
 	 * Deprecated: Call gdk_display_get_name (gdk_display_get_default ()))
 	 * instead.
 	 *
-	 * Return: the name of the display.
+	 * Returns: the name of the display.
 	 */
 	public static string getDisplay()
 	{
@@ -142,7 +142,7 @@ public struct Gdk
 	 * Gets the display name specified in the command line arguments passed
 	 * to gdk_init() or gdk_parse_args(), if any.
 	 *
-	 * Return: the display name, if specified explicitly,
+	 * Returns: the display name, if specified explicitly,
 	 *     otherwise %NULL this string is owned by GTK+ and must not be
 	 *     modified or freed.
 	 *
@@ -159,7 +159,7 @@ public struct Gdk
 	 * commandline option, the default value is the program name (determined
 	 * with g_get_prgname()) with the first character converted to uppercase.
 	 *
-	 * Return: the program class.
+	 * Returns: the program class.
 	 */
 	public static string getProgramClass()
 	{
@@ -205,7 +205,7 @@ public struct Gdk
 	 *     argc = the number of command line arguments.
 	 *     argv = the array of command line arguments.
 	 *
-	 * Return: %TRUE if initialization succeeded.
+	 * Returns: %TRUE if initialization succeeded.
 	 */
 	public static bool initCheck(ref string[] argv)
 	{
@@ -241,7 +241,7 @@ public struct Gdk
 	 *     time = a timestamp from a #GdkEvent, or %GDK_CURRENT_TIME if no timestamp is
 	 *         available.
 	 *
-	 * Return: %GDK_GRAB_SUCCESS if the grab was successful.
+	 * Returns: %GDK_GRAB_SUCCESS if the grab was successful.
 	 */
 	public static GdkGrabStatus keyboardGrab(Window window, bool ownerEvents, uint time)
 	{
@@ -373,7 +373,7 @@ public struct Gdk
 	 *         comes from a #GdkEventButton struct, though %GDK_CURRENT_TIME can be used if
 	 *         the time isn’t known.
 	 *
-	 * Return: %GDK_GRAB_SUCCESS if the grab was successful.
+	 * Returns: %GDK_GRAB_SUCCESS if the grab was successful.
 	 */
 	public static GdkGrabStatus pointerGrab(Window window, bool ownerEvents, GdkEventMask eventMask, Window confineTo, Cursor cursor, uint time)
 	{
@@ -389,7 +389,7 @@ public struct Gdk
 	 *
 	 * Deprecated: Use gdk_display_device_is_grabbed() instead.
 	 *
-	 * Return: %TRUE if the pointer is currently grabbed by this application.
+	 * Returns: %TRUE if the pointer is currently grabbed by this application.
 	 */
 	public static bool pointerIsGrabbed()
 	{

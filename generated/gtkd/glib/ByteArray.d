@@ -69,7 +69,7 @@ public class ByteArray
 	 *     data = the byte data to be added
 	 *     len = the number of bytes to add
 	 *
-	 * Return: the #GByteArray
+	 * Returns: the #GByteArray
 	 */
 	public ByteArray append(ubyte* data, uint len)
 	{
@@ -92,7 +92,7 @@ public class ByteArray
 	 * Params:
 	 *     freeSegment = if %TRUE the actual byte data is freed as well
 	 *
-	 * Return: the element data if @free_segment is %FALSE, otherwise
+	 * Returns: the element data if @free_segment is %FALSE, otherwise
 	 *     %NULL.  The element data should be freed using g_free().
 	 */
 	public ubyte* free(bool freeSegment)
@@ -110,7 +110,7 @@ public class ByteArray
 	 * This is identical to using g_bytes_new_take() and g_byte_array_free()
 	 * together.
 	 *
-	 * Return: a new immutable #GBytes representing same
+	 * Returns: a new immutable #GBytes representing same
 	 *     byte data that was in the array
 	 *
 	 * Since: 2.32
@@ -130,7 +130,7 @@ public class ByteArray
 	/**
 	 * Creates a new #GByteArray with a reference count of 1.
 	 *
-	 * Return: the new #GByteArray
+	 * Returns: the new #GByteArray
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -154,7 +154,7 @@ public class ByteArray
 	 *     data = byte data for the array
 	 *     len = length of @data
 	 *
-	 * Return: a new #GByteArray
+	 * Returns: a new #GByteArray
 	 *
 	 * Since: 2.32
 	 *
@@ -180,7 +180,7 @@ public class ByteArray
 	 *     data = the byte data to be added
 	 *     len = the number of bytes to add
 	 *
-	 * Return: the #GByteArray
+	 * Returns: the #GByteArray
 	 */
 	public ByteArray prepend(ubyte* data, uint len)
 	{
@@ -198,7 +198,7 @@ public class ByteArray
 	 * Atomically increments the reference count of @array by one.
 	 * This function is thread-safe and may be called from any thread.
 	 *
-	 * Return: The passed in #GByteArray
+	 * Returns: The passed in #GByteArray
 	 *
 	 * Since: 2.22
 	 */
@@ -221,7 +221,7 @@ public class ByteArray
 	 * Params:
 	 *     index = the index of the byte to remove
 	 *
-	 * Return: the #GByteArray
+	 * Returns: the #GByteArray
 	 */
 	public ByteArray removeIndex(uint index)
 	{
@@ -244,7 +244,7 @@ public class ByteArray
 	 * Params:
 	 *     index = the index of the byte to remove
 	 *
-	 * Return: the #GByteArray
+	 * Returns: the #GByteArray
 	 */
 	public ByteArray removeIndexFast(uint index)
 	{
@@ -266,7 +266,7 @@ public class ByteArray
 	 *     index = the index of the first byte to remove
 	 *     length = the number of bytes to remove
 	 *
-	 * Return: the #GByteArray
+	 * Returns: the #GByteArray
 	 *
 	 * Since: 2.4
 	 */
@@ -288,7 +288,7 @@ public class ByteArray
 	 * Params:
 	 *     length = the new size of the #GByteArray
 	 *
-	 * Return: the #GByteArray
+	 * Returns: the #GByteArray
 	 */
 	public ByteArray setSize(uint length)
 	{
@@ -311,7 +311,7 @@ public class ByteArray
 	 * Params:
 	 *     reservedSize = number of bytes preallocated
 	 *
-	 * Return: the new #GByteArray
+	 * Returns: the new #GByteArray
 	 */
 	public static ByteArray sizedNew(uint reservedSize)
 	{

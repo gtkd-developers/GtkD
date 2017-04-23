@@ -174,7 +174,7 @@ public class TextView : Container, ScrollableIF
 	 * for you. Get the buffer with gtk_text_view_get_buffer(). If you want
 	 * to specify your own buffer, consider gtk_text_view_new_with_buffer().
 	 *
-	 * Return: a new #GtkTextView
+	 * Returns: a new #GtkTextView
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -201,7 +201,7 @@ public class TextView : Container, ScrollableIF
 	 * Params:
 	 *     buffer = a #GtkTextBuffer
 	 *
-	 * Return: a new #GtkTextView.
+	 * Returns: a new #GtkTextView.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -265,7 +265,7 @@ public class TextView : Container, ScrollableIF
 	 * Params:
 	 *     iter = a #GtkTextIter
 	 *
-	 * Return: %TRUE if @iter was moved and is not on the end iterator
+	 * Returns: %TRUE if @iter was moved and is not on the end iterator
 	 */
 	public bool backwardDisplayLine(TextIter iter)
 	{
@@ -285,7 +285,7 @@ public class TextView : Container, ScrollableIF
 	 * Params:
 	 *     iter = a #GtkTextIter
 	 *
-	 * Return: %TRUE if @iter was moved and is not on the end iterator
+	 * Returns: %TRUE if @iter was moved and is not on the end iterator
 	 */
 	public bool backwardDisplayLineStart(TextIter iter)
 	{
@@ -324,7 +324,7 @@ public class TextView : Container, ScrollableIF
 	 * Params:
 	 *     iter = a #GtkTextIter
 	 *
-	 * Return: %TRUE if @iter was moved and is not on the end iterator
+	 * Returns: %TRUE if @iter was moved and is not on the end iterator
 	 */
 	public bool forwardDisplayLine(TextIter iter)
 	{
@@ -344,7 +344,7 @@ public class TextView : Container, ScrollableIF
 	 * Params:
 	 *     iter = a #GtkTextIter
 	 *
-	 * Return: %TRUE if @iter was moved and is not on the end iterator
+	 * Returns: %TRUE if @iter was moved and is not on the end iterator
 	 */
 	public bool forwardDisplayLineEnd(TextIter iter)
 	{
@@ -355,7 +355,7 @@ public class TextView : Container, ScrollableIF
 	 * Returns whether pressing the Tab key inserts a tab characters.
 	 * gtk_text_view_set_accepts_tab().
 	 *
-	 * Return: %TRUE if pressing the Tab key inserts a tab character,
+	 * Returns: %TRUE if pressing the Tab key inserts a tab character,
 	 *     %FALSE if pressing the Tab key moves the keyboard focus.
 	 *
 	 * Since: 2.4
@@ -372,7 +372,7 @@ public class TextView : Container, ScrollableIF
 	 * Params:
 	 *     type = window to return size from
 	 *
-	 * Return: width of window
+	 * Returns: width of window
 	 */
 	public int getBorderWindowSize(GtkTextWindowType type)
 	{
@@ -382,7 +382,7 @@ public class TextView : Container, ScrollableIF
 	/**
 	 * Gets the bottom margin for text in the @text_view.
 	 *
-	 * Return: bottom margin in pixels
+	 * Returns: bottom margin in pixels
 	 *
 	 * Since: 3.18
 	 */
@@ -396,7 +396,7 @@ public class TextView : Container, ScrollableIF
 	 * The reference count on the buffer is not incremented; the caller
 	 * of this function won’t own a new reference.
 	 *
-	 * Return: a #GtkTextBuffer
+	 * Returns: a #GtkTextBuffer
 	 */
 	public TextBuffer getBuffer()
 	{
@@ -448,7 +448,7 @@ public class TextView : Container, ScrollableIF
 	/**
 	 * Find out whether the cursor should be displayed.
 	 *
-	 * Return: whether the insertion mark is visible
+	 * Returns: whether the insertion mark is visible
 	 */
 	public bool getCursorVisible()
 	{
@@ -465,7 +465,7 @@ public class TextView : Container, ScrollableIF
 	 * The return value is a copy owned by the caller of this function,
 	 * and should be freed with gtk_text_attributes_unref().
 	 *
-	 * Return: a new #GtkTextAttributes
+	 * Returns: a new #GtkTextAttributes
 	 */
 	public TextAttributes getDefaultAttributes()
 	{
@@ -483,7 +483,7 @@ public class TextView : Container, ScrollableIF
 	 * Returns the default editability of the #GtkTextView. Tags in the
 	 * buffer may override this setting for some ranges of text.
 	 *
-	 * Return: whether text is editable by default
+	 * Returns: whether text is editable by default
 	 */
 	public bool getEditable()
 	{
@@ -495,7 +495,7 @@ public class TextView : Container, ScrollableIF
 	 * Tags in the view’s buffer may override the default.
 	 * The indentation may be negative.
 	 *
-	 * Return: number of pixels of indentation
+	 * Returns: number of pixels of indentation
 	 */
 	public int getIndent()
 	{
@@ -534,7 +534,7 @@ public class TextView : Container, ScrollableIF
 	 *     x = x position, in buffer coordinates
 	 *     y = y position, in buffer coordinates
 	 *
-	 * Return: %TRUE if the position is over text
+	 * Returns: %TRUE if the position is over text
 	 */
 	public bool getIterAtLocation(out TextIter iter, int x, int y)
 	{
@@ -568,7 +568,7 @@ public class TextView : Container, ScrollableIF
 	 *     x = x position, in buffer coordinates
 	 *     y = y position, in buffer coordinates
 	 *
-	 * Return: %TRUE if the position is over text
+	 * Returns: %TRUE if the position is over text
 	 *
 	 * Since: 2.6
 	 */
@@ -602,7 +602,7 @@ public class TextView : Container, ScrollableIF
 	 * Gets the default justification of paragraphs in @text_view.
 	 * Tags in the buffer may override the default.
 	 *
-	 * Return: default justification
+	 * Returns: default justification
 	 */
 	public GtkJustification getJustification()
 	{
@@ -613,7 +613,7 @@ public class TextView : Container, ScrollableIF
 	 * Gets the default left margin size of paragraphs in the @text_view.
 	 * Tags in the buffer may override the default.
 	 *
-	 * Return: left margin in pixels
+	 * Returns: left margin in pixels
 	 */
 	public int getLeftMargin()
 	{
@@ -659,7 +659,7 @@ public class TextView : Container, ScrollableIF
 	/**
 	 * Gets the value of the #GtkTextView:monospace property.
 	 *
-	 * Return: %TRUE if monospace fonts are desired
+	 * Returns: %TRUE if monospace fonts are desired
 	 *
 	 * Since: 3.16
 	 */
@@ -671,7 +671,7 @@ public class TextView : Container, ScrollableIF
 	/**
 	 * Returns whether the #GtkTextView is in overwrite mode or not.
 	 *
-	 * Return: whether @text_view is in overwrite mode or not.
+	 * Returns: whether @text_view is in overwrite mode or not.
 	 *
 	 * Since: 2.4
 	 */
@@ -685,7 +685,7 @@ public class TextView : Container, ScrollableIF
 	 * Adding this function with gtk_text_view_get_pixels_below_lines()
 	 * is equal to the line space between each paragraph.
 	 *
-	 * Return: default number of pixels above paragraphs
+	 * Returns: default number of pixels above paragraphs
 	 */
 	public int getPixelsAboveLines()
 	{
@@ -698,7 +698,7 @@ public class TextView : Container, ScrollableIF
 	 * The line space is the sum of the value returned by this function and the
 	 * value returned by gtk_text_view_get_pixels_above_lines().
 	 *
-	 * Return: default number of blank pixels below paragraphs
+	 * Returns: default number of blank pixels below paragraphs
 	 */
 	public int getPixelsBelowLines()
 	{
@@ -708,7 +708,7 @@ public class TextView : Container, ScrollableIF
 	/**
 	 * Gets the value set by gtk_text_view_set_pixels_inside_wrap().
 	 *
-	 * Return: default number of pixels of blank space between wrapped lines
+	 * Returns: default number of pixels of blank space between wrapped lines
 	 */
 	public int getPixelsInsideWrap()
 	{
@@ -719,7 +719,7 @@ public class TextView : Container, ScrollableIF
 	 * Gets the default right margin for text in @text_view. Tags
 	 * in the buffer may override the default.
 	 *
-	 * Return: right margin in pixels
+	 * Returns: right margin in pixels
 	 */
 	public int getRightMargin()
 	{
@@ -732,7 +732,7 @@ public class TextView : Container, ScrollableIF
 	 * “standard” (8-space) tabs are used. Free the return value
 	 * with pango_tab_array_free().
 	 *
-	 * Return: copy of default tab array, or %NULL if
+	 * Returns: copy of default tab array, or %NULL if
 	 *     “standard" tabs are used; must be freed with pango_tab_array_free().
 	 */
 	public PgTabArray getTabs()
@@ -750,7 +750,7 @@ public class TextView : Container, ScrollableIF
 	/**
 	 * Gets the top margin for text in the @text_view.
 	 *
-	 * Return: top margin in pixels
+	 * Returns: top margin in pixels
 	 *
 	 * Since: 3.18
 	 */
@@ -783,7 +783,7 @@ public class TextView : Container, ScrollableIF
 	 * Params:
 	 *     win = window to get
 	 *
-	 * Return: a #GdkWindow, or %NULL
+	 * Returns: a #GdkWindow, or %NULL
 	 */
 	public Window getWindow(GtkTextWindowType win)
 	{
@@ -806,7 +806,7 @@ public class TextView : Container, ScrollableIF
 	 * Params:
 	 *     window = a window type
 	 *
-	 * Return: the window type.
+	 * Returns: the window type.
 	 */
 	public GtkTextWindowType getWindowType(Window window)
 	{
@@ -816,7 +816,7 @@ public class TextView : Container, ScrollableIF
 	/**
 	 * Gets the line wrapping for the view.
 	 *
-	 * Return: the line wrap setting
+	 * Returns: the line wrap setting
 	 */
 	public GtkWrapMode getWrapMode()
 	{
@@ -854,7 +854,7 @@ public class TextView : Container, ScrollableIF
 	 * Params:
 	 *     event = the key event
 	 *
-	 * Return: %TRUE if the input method handled the key event.
+	 * Returns: %TRUE if the input method handled the key event.
 	 *
 	 * Since: 2.22
 	 */
@@ -883,7 +883,7 @@ public class TextView : Container, ScrollableIF
 	 * Params:
 	 *     mark = a #GtkTextMark
 	 *
-	 * Return: %TRUE if the mark moved (wasn’t already onscreen)
+	 * Returns: %TRUE if the mark moved (wasn’t already onscreen)
 	 */
 	public bool moveMarkOnscreen(TextMark mark)
 	{
@@ -908,7 +908,7 @@ public class TextView : Container, ScrollableIF
 	 *     count = number of characters to move (negative moves left,
 	 *         positive moves right)
 	 *
-	 * Return: %TRUE if @iter moved and is not on the end iterator
+	 * Returns: %TRUE if @iter moved and is not on the end iterator
 	 */
 	public bool moveVisually(TextIter iter, int count)
 	{
@@ -919,7 +919,7 @@ public class TextView : Container, ScrollableIF
 	 * Moves the cursor to the currently visible region of the
 	 * buffer, it it isn’t there already.
 	 *
-	 * Return: %TRUE if the cursor had to be moved.
+	 * Returns: %TRUE if the cursor had to be moved.
 	 */
 	public bool placeCursorOnscreen()
 	{
@@ -991,7 +991,7 @@ public class TextView : Container, ScrollableIF
 	 *     xalign = horizontal alignment of mark within visible area
 	 *     yalign = vertical alignment of mark within visible area
 	 *
-	 * Return: %TRUE if scrolling occurred
+	 * Returns: %TRUE if scrolling occurred
 	 */
 	public bool scrollToIter(TextIter iter, double withinMargin, bool useAlign, double xalign, double yalign)
 	{
@@ -1312,7 +1312,7 @@ public class TextView : Container, ScrollableIF
 	 * Params:
 	 *     iter = a #GtkTextIter
 	 *
-	 * Return: %TRUE if @iter begins a wrapped line
+	 * Returns: %TRUE if @iter begins a wrapped line
 	 */
 	public bool startsDisplayLine(TextIter iter)
 	{
@@ -1612,7 +1612,7 @@ public class TextView : Container, ScrollableIF
 	 *     start = where the selection should start
 	 *     end = where the selection should end
 	 *
-	 * Return: %GDK_EVENT_STOP to stop other handlers from being invoked for the
+	 * Returns: %GDK_EVENT_STOP to stop other handlers from being invoked for the
 	 *     event. %GDK_EVENT_PROPAGATE to propagate the event further.
 	 *
 	 * Since: 3.16

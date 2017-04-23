@@ -149,7 +149,7 @@ public class SizeGroup : ObjectG, BuildableIF
 	 * Params:
 	 *     mode = the mode for the new size group.
 	 *
-	 * Return: a newly created #GtkSizeGroup
+	 * Returns: a newly created #GtkSizeGroup
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -193,7 +193,7 @@ public class SizeGroup : ObjectG, BuildableIF
 	 * as if this property was %TRUE. Use a #GtkStack instead to hide
 	 * widgets while still having their size taken into account.
 	 *
-	 * Return: %TRUE if invisible widgets are ignored.
+	 * Returns: %TRUE if invisible widgets are ignored.
 	 *
 	 * Since: 2.8
 	 */
@@ -205,7 +205,7 @@ public class SizeGroup : ObjectG, BuildableIF
 	/**
 	 * Gets the current mode of the size group. See gtk_size_group_set_mode().
 	 *
-	 * Return: the current mode of the size group.
+	 * Returns: the current mode of the size group.
 	 */
 	public GtkSizeGroupMode getMode()
 	{
@@ -215,7 +215,7 @@ public class SizeGroup : ObjectG, BuildableIF
 	/**
 	 * Returns the list of widgets associated with @size_group.
 	 *
-	 * Return: a #GSList of
+	 * Returns: a #GSList of
 	 *     widgets. The list is owned by GTK+ and should not be modified.
 	 *
 	 * Since: 2.10

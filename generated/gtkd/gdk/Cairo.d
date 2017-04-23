@@ -59,7 +59,7 @@ public  import gtkc.gdktypes;
  * Params:
  *     window = a #GdkWindow
  *
- * Return: A newly created Cairo context. Free with
+ * Returns: A newly created Cairo context. Free with
  *     cairo_destroy() when you are done drawing.
  *
  * Since: 2.8
@@ -121,7 +121,7 @@ public void drawFromGl(Context cr, Window window, int source, int sourceType, in
  *     cr = a cairo context
  *     rect = return location for the clip, or %NULL
  *
- * Return: %TRUE if a clip rectangle exists, %FALSE if all of @cr is
+ * Returns: %TRUE if a clip rectangle exists, %FALSE if all of @cr is
  *     clipped and all drawing can be skipped
  */
 public bool getClipRectangle(Context cr, out GdkRectangle rect)
@@ -167,7 +167,7 @@ public void region(Context cr, Region region)
  * Params:
  *     surface = a cairo surface
  *
- * Return: A #cairo_region_t; must be freed with cairo_region_destroy()
+ * Returns: A #cairo_region_t; must be freed with cairo_region_destroy()
  */
 public Region regionCreateFromSurface(Surface surface)
 {
@@ -262,7 +262,7 @@ public void setSourceWindow(Context cr, Window window, double x, double y)
  *     scale = the scale of the new surface, or 0 to use same as @window
  *     forWindow = The window this will be drawn to, or %NULL
  *
- * Return: a new cairo surface, must be freed with cairo_surface_destroy()
+ * Returns: a new cairo surface, must be freed with cairo_surface_destroy()
  *
  * Since: 3.10
  */
@@ -285,7 +285,7 @@ public Surface surfaceCreateFromPixbuf(Pixbuf pixbuf, int scale, Window forWindo
  * Params:
  *     cr = a Cairo context
  *
- * Return: a #GdkDrawingContext, if any is set
+ * Returns: a #GdkDrawingContext, if any is set
  *
  * Since: 3.22
  */

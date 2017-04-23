@@ -237,7 +237,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 *     width = Width of image in pixels, must be > 0
 	 *     height = Height of image in pixels, must be > 0
 	 *
-	 * Return: A newly-created #GdkPixbuf with a reference count of 1, or
+	 * Returns: A newly-created #GdkPixbuf with a reference count of 1, or
 	 *     %NULL if not enough memory could be allocated for the image buffer.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -268,7 +268,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 *     height = Height of the image in pixels, must be > 0
 	 *     rowstride = Distance in bytes between row starts
 	 *
-	 * Return: A newly-created #GdkPixbuf structure with a reference count of 1.
+	 * Returns: A newly-created #GdkPixbuf structure with a reference count of 1.
 	 *
 	 * Since: 2.32
 	 *
@@ -310,7 +310,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 *         drops to zero, or %NULL if the data should not be freed
 	 *     destroyFnData = Closure data to pass to the destroy notification function
 	 *
-	 * Return: A newly-created #GdkPixbuf structure with a reference count of 1.
+	 * Returns: A newly-created #GdkPixbuf structure with a reference count of 1.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -334,7 +334,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 * Params:
 	 *     filename = Name of file to load, in the GLib file name encoding
 	 *
-	 * Return: A newly-created pixbuf with a reference count of 1, or %NULL if
+	 * Returns: A newly-created pixbuf with a reference count of 1, or %NULL if
 	 *     any of several error conditions occurred:  the file could not be opened,
 	 *     there was no loader for the file's format, there was not enough memory to
 	 *     allocate the image buffer, or the image file contained invalid data.
@@ -381,7 +381,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 *     height = The height the image should have or -1 to not constrain the height
 	 *     preserveAspectRatio = %TRUE to preserve the image's aspect ratio
 	 *
-	 * Return: A newly-created pixbuf with a reference count of 1, or %NULL
+	 * Returns: A newly-created pixbuf with a reference count of 1, or %NULL
 	 *     if any of several error conditions occurred:  the file could not be opened,
 	 *     there was no loader for the file's format, there was not enough memory to
 	 *     allocate the image buffer, or the image file contained invalid data.
@@ -427,7 +427,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 *     width = The width the image should have or -1 to not constrain the width
 	 *     height = The height the image should have or -1 to not constrain the height
 	 *
-	 * Return: A newly-created pixbuf with a reference count of 1, or
+	 * Returns: A newly-created pixbuf with a reference count of 1, or
 	 *     %NULL if any of several error conditions occurred:  the file could not
 	 *     be opened, there was no loader for the file's format, there was not
 	 *     enough memory to allocate the image buffer, or the image file contained
@@ -499,7 +499,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 *     copyPixels = Whether to copy the pixel data, or use direct pointers
 	 *         @data for the resulting pixbuf
 	 *
-	 * Return: A newly-created #GdkPixbuf structure with a reference,
+	 * Returns: A newly-created #GdkPixbuf structure with a reference,
 	 *     count of 1, or %NULL if an error occurred.
 	 *
 	 * Throws: GException on failure.
@@ -539,7 +539,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 *     stream = a #GInputStream to load the pixbuf from
 	 *     cancellable = optional #GCancellable object, %NULL to ignore
 	 *
-	 * Return: A newly-created pixbuf, or %NULL if any of several error
+	 * Returns: A newly-created pixbuf, or %NULL if any of several error
 	 *     conditions occurred: the file could not be opened, the image format is
 	 *     not supported, there was not enough memory to allocate the image buffer,
 	 *     the stream contained invalid data, or the operation was cancelled.
@@ -598,7 +598,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 *     preserveAspectRatio = %TRUE to preserve the image's aspect ratio
 	 *     cancellable = optional #GCancellable object, %NULL to ignore
 	 *
-	 * Return: A newly-created pixbuf, or %NULL if any of several error
+	 * Returns: A newly-created pixbuf, or %NULL if any of several error
 	 *     conditions occurred: the file could not be opened, the image format is
 	 *     not supported, there was not enough memory to allocate the image buffer,
 	 *     the stream contained invalid data, or the operation was cancelled.
@@ -634,7 +634,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 * Params:
 	 *     asyncResult = a #GAsyncResult
 	 *
-	 * Return: a #GdkPixbuf or %NULL on error. Free the returned
+	 * Returns: a #GdkPixbuf or %NULL on error. Free the returned
 	 *     object with g_object_unref().
 	 *
 	 * Since: 2.24
@@ -668,7 +668,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 * Params:
 	 *     data = Pointer to inline XPM data.
 	 *
-	 * Return: A newly-created pixbuf with a reference count of 1.
+	 * Returns: A newly-created pixbuf with a reference count of 1.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -696,7 +696,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 *     copyPixels = whether to copy raw pixel data; run-length encoded
 	 *         pixel data is always copied.
 	 *
-	 * Return: a new #GdkPixbuf.
+	 * Returns: a new #GdkPixbuf.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -729,7 +729,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 *     height = Return location for the height of the
 	 *         image, or %NULL
 	 *
-	 * Return: A #GdkPixbufFormat describing
+	 * Returns: A #GdkPixbufFormat describing
 	 *     the image format of the file or %NULL if the image format wasn't
 	 *     recognized. The return value is owned by #GdkPixbuf and should
 	 *     not be freed.
@@ -781,7 +781,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 *     width = Return location for the width of the image, or %NULL
 	 *     height = Return location for the height of the image, or %NULL
 	 *
-	 * Return: A #GdkPixbufFormat describing the image
+	 * Returns: A #GdkPixbufFormat describing the image
 	 *     format of the file or %NULL if the image format wasn't
 	 *     recognized. The return value is owned by GdkPixbuf and should
 	 *     not be freed.
@@ -813,7 +813,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 * Obtains the available information about the image formats supported
 	 * by GdkPixbuf.
 	 *
-	 * Return: A list of
+	 * Returns: A list of
 	 *     #GdkPixbufFormats describing the supported image formats. The list should
 	 *     be freed when it is no longer needed, but the structures themselves are
 	 *     owned by #GdkPixbuf and should not be freed.
@@ -886,7 +886,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 * Params:
 	 *     asyncResult = a #GAsyncResult
 	 *
-	 * Return: %TRUE if the pixbuf was saved successfully, %FALSE if an error was set.
+	 * Returns: %TRUE if the pixbuf was saved successfully, %FALSE if an error was set.
 	 *
 	 * Since: 2.24
 	 *
@@ -923,7 +923,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 *     g = Green value to substitute.
 	 *     b = Blue value to substitute.
 	 *
-	 * Return: A newly-created pixbuf with a reference count of 1.
+	 * Returns: A newly-created pixbuf with a reference count of 1.
 	 */
 	public Pixbuf addAlpha(bool substituteColor, char r, char g, char b)
 	{
@@ -947,7 +947,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 * appropriate transform will be performed so that the pixbuf
 	 * is oriented correctly.
 	 *
-	 * Return: A newly-created pixbuf, %NULL if
+	 * Returns: A newly-created pixbuf, %NULL if
 	 *     not enough memory could be allocated for it, or a reference to the
 	 *     input pixbuf (with an increased reference count).
 	 *
@@ -1048,7 +1048,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 *     color1 = the color of check at upper left
 	 *     color2 = the color of the other check
 	 *
-	 * Return: the new #GdkPixbuf, or %NULL if not enough memory could be
+	 * Returns: the new #GdkPixbuf, or %NULL if not enough memory could be
 	 *     allocated for it.
 	 */
 	public Pixbuf compositeColorSimple(int destWidth, int destHeight, GdkInterpType interpType, int overallAlpha, int checkSize, uint color1, uint color2)
@@ -1068,7 +1068,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 * @pixbuf. Note that this does not copy the options set on the original #GdkPixbuf,
 	 * use gdk_pixbuf_copy_options() for this.
 	 *
-	 * Return: A newly-created pixbuf with a reference count of 1, or %NULL if
+	 * Returns: A newly-created pixbuf with a reference count of 1, or %NULL if
 	 *     not enough memory could be allocated.
 	 */
 	public Pixbuf copy()
@@ -1114,7 +1114,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 * Params:
 	 *     destPixbuf = the #GdkPixbuf to copy options to
 	 *
-	 * Return: %TRUE on success.
+	 * Returns: %TRUE on success.
 	 *
 	 * Since: 2.36
 	 */
@@ -1144,7 +1144,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 * Params:
 	 *     horizontal = %TRUE to flip horizontally, %FALSE to flip vertically
 	 *
-	 * Return: the new #GdkPixbuf, or %NULL
+	 * Returns: the new #GdkPixbuf, or %NULL
 	 *     if not enough memory could be allocated for it.
 	 *
 	 * Since: 2.6
@@ -1164,7 +1164,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	/**
 	 * Queries the number of bits per color sample in a pixbuf.
 	 *
-	 * Return: Number of bits per color sample.
+	 * Returns: Number of bits per color sample.
 	 */
 	public int getBitsPerSample()
 	{
@@ -1174,7 +1174,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	/**
 	 * Returns the length of the pixel data, in bytes.
 	 *
-	 * Return: The length of the pixel data.
+	 * Returns: The length of the pixel data.
 	 *
 	 * Since: 2.26
 	 */
@@ -1186,7 +1186,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	/**
 	 * Queries the color space of a pixbuf.
 	 *
-	 * Return: Color space.
+	 * Returns: Color space.
 	 */
 	public GdkColorspace getColorspace()
 	{
@@ -1196,7 +1196,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	/**
 	 * Queries whether a pixbuf has an alpha channel (opacity information).
 	 *
-	 * Return: %TRUE if it has an alpha channel, %FALSE otherwise.
+	 * Returns: %TRUE if it has an alpha channel, %FALSE otherwise.
 	 */
 	public bool getHasAlpha()
 	{
@@ -1206,7 +1206,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	/**
 	 * Queries the height of a pixbuf.
 	 *
-	 * Return: Height in pixels.
+	 * Returns: Height in pixels.
 	 */
 	public int getHeight()
 	{
@@ -1216,7 +1216,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	/**
 	 * Queries the number of channels of a pixbuf.
 	 *
-	 * Return: Number of channels.
+	 * Returns: Number of channels.
 	 */
 	public int getNChannels()
 	{
@@ -1241,7 +1241,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 * Params:
 	 *     key = a nul-terminated string.
 	 *
-	 * Return: the value associated with @key. This is a nul-terminated
+	 * Returns: the value associated with @key. This is a nul-terminated
 	 *     string that should not be freed or %NULL if @key was not found.
 	 */
 	public string getOption(string key)
@@ -1256,7 +1256,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 *
 	 * See gdk_pixbuf_get_option() for more details.
 	 *
-	 * Return: a #GHashTable of key/values
+	 * Returns: a #GHashTable of key/values
 	 *
 	 * Since: 2.32
 	 */
@@ -1275,7 +1275,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	/**
 	 * Queries a pointer to the pixel data of a pixbuf.
 	 *
-	 * Return: A pointer to the pixbuf's
+	 * Returns: A pointer to the pixbuf's
 	 *     pixel data.  Please see the section on [image data](image-data)
 	 *     for information about how the pixel data is stored in memory.
 	 *
@@ -1297,7 +1297,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 * Queries the rowstride of a pixbuf, which is the number of bytes between
 	 * the start of a row and the start of the next row.
 	 *
-	 * Return: Distance between row starts.
+	 * Returns: Distance between row starts.
 	 */
 	public int getRowstride()
 	{
@@ -1307,7 +1307,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	/**
 	 * Queries the width of a pixbuf.
 	 *
-	 * Return: Width in pixels.
+	 * Returns: Width in pixels.
 	 */
 	public int getWidth()
 	{
@@ -1330,7 +1330,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 *     width = width of region in @src_pixbuf
 	 *     height = height of region in @src_pixbuf
 	 *
-	 * Return: a new pixbuf
+	 * Returns: a new pixbuf
 	 */
 	public Pixbuf newSubpixbuf(int srcX, int srcY, int width, int height)
 	{
@@ -1345,7 +1345,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	}
 
 	/**
-	 * Return: A new reference to a read-only copy of
+	 * Returns: A new reference to a read-only copy of
 	 *     the pixel data.  Note that for mutable pixbufs, this function will
 	 *     incur a one-time copy of the pixel data for conversion into the
 	 *     returned #GBytes.
@@ -1383,7 +1383,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 * Params:
 	 *     key = a nul-terminated string representing the key to remove.
 	 *
-	 * Return: %TRUE if an option was removed, %FALSE if not.
+	 * Returns: %TRUE if an option was removed, %FALSE if not.
 	 *
 	 * Since: 2.36
 	 */
@@ -1401,7 +1401,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 * Params:
 	 *     angle = the angle to rotate by
 	 *
-	 * Return: the new #GdkPixbuf, or %NULL
+	 * Returns: the new #GdkPixbuf, or %NULL
 	 *     if not enough memory could be allocated for it.
 	 *
 	 * Since: 2.6
@@ -1451,7 +1451,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 *     optionKeys = name of options to set, %NULL-terminated
 	 *     optionValues = values for named options
 	 *
-	 * Return: whether an error was set
+	 * Returns: whether an error was set
 	 *
 	 * Since: 2.4
 	 *
@@ -1484,7 +1484,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 *     optionValues = values for named options
 	 *     cancellable = optional #GCancellable object, %NULL to ignore
 	 *
-	 * Return: %TRUE if the pixbuf was saved successfully, %FALSE if an
+	 * Returns: %TRUE if the pixbuf was saved successfully, %FALSE if an
 	 *     error was set.
 	 *
 	 * Since: 2.36
@@ -1541,7 +1541,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 *     optionKeys = name of options to set, %NULL-terminated
 	 *     optionValues = values for named options
 	 *
-	 * Return: whether an error was set
+	 * Returns: whether an error was set
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -1613,7 +1613,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 *     destHeight = the height of destination image
 	 *     interpType = the interpolation type for the transformation.
 	 *
-	 * Return: the new #GdkPixbuf, or %NULL if not enough memory could be
+	 * Returns: the new #GdkPixbuf, or %NULL if not enough memory could be
 	 *     allocated for it.
 	 */
 	public Pixbuf scaleSimple(int destWidth, int destHeight, GdkInterpType interpType)
@@ -1637,7 +1637,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 *     key = a nul-terminated string.
 	 *     value = a nul-terminated string.
 	 *
-	 * Return: %TRUE on success.
+	 * Returns: %TRUE on success.
 	 *
 	 * Since: 2.2
 	 */

@@ -90,7 +90,7 @@ public class Revealer : Bin
 	/**
 	 * Creates a new #GtkRevealer.
 	 *
-	 * Return: a newly created #GtkRevealer
+	 * Returns: a newly created #GtkRevealer
 	 *
 	 * Since: 3.10
 	 *
@@ -112,7 +112,7 @@ public class Revealer : Bin
 	 * Returns whether the child is fully revealed, in other words whether
 	 * the transition to the revealed state is completed.
 	 *
-	 * Return: %TRUE if the child is fully revealed
+	 * Returns: %TRUE if the child is fully revealed
 	 *
 	 * Since: 3.10
 	 */
@@ -130,7 +130,7 @@ public class Revealer : Bin
 	 * the child is fully revealed (ie the transition is completed),
 	 * use gtk_revealer_get_child_revealed().
 	 *
-	 * Return: %TRUE if the child is revealed.
+	 * Returns: %TRUE if the child is revealed.
 	 *
 	 * Since: 3.10
 	 */
@@ -143,7 +143,7 @@ public class Revealer : Bin
 	 * Returns the amount of time (in milliseconds) that
 	 * transitions will take.
 	 *
-	 * Return: the transition duration
+	 * Returns: the transition duration
 	 *
 	 * Since: 3.10
 	 */
@@ -156,7 +156,7 @@ public class Revealer : Bin
 	 * Gets the type of animation that will be used
 	 * for transitions in @revealer.
 	 *
-	 * Return: the current transition type of @revealer
+	 * Returns: the current transition type of @revealer
 	 *
 	 * Since: 3.10
 	 */

@@ -86,7 +86,7 @@ public class GestureSingle : Gesture
 	 * Returns the button number @gesture listens for, or 0 if @gesture
 	 * reacts to any button press.
 	 *
-	 * Return: The button number, or 0 for any button
+	 * Returns: The button number, or 0 for any button
 	 *
 	 * Since: 3.14
 	 */
@@ -99,7 +99,7 @@ public class GestureSingle : Gesture
 	 * Returns the button number currently interacting with @gesture, or 0 if there
 	 * is none.
 	 *
-	 * Return: The current button number
+	 * Returns: The current button number
 	 *
 	 * Since: 3.14
 	 */
@@ -112,7 +112,7 @@ public class GestureSingle : Gesture
 	 * Returns the event sequence currently interacting with @gesture.
 	 * This is only meaningful if gtk_gesture_is_active() returns %TRUE.
 	 *
-	 * Return: the current sequence
+	 * Returns: the current sequence
 	 *
 	 * Since: 3.14
 	 */
@@ -125,7 +125,7 @@ public class GestureSingle : Gesture
 	 * Gets whether a gesture is exclusive. For more information, see
 	 * gtk_gesture_single_set_exclusive().
 	 *
-	 * Return: Whether the gesture is exclusive
+	 * Returns: Whether the gesture is exclusive
 	 *
 	 * Since: 3.14
 	 */
@@ -137,7 +137,7 @@ public class GestureSingle : Gesture
 	/**
 	 * Returns %TRUE if the gesture is only triggered by touch events.
 	 *
-	 * Return: %TRUE if the gesture only handles touch events
+	 * Returns: %TRUE if the gesture only handles touch events
 	 *
 	 * Since: 3.14
 	 */

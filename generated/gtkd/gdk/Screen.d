@@ -94,7 +94,7 @@ public class Screen : ObjectG
 	 * Gets the default screen for the default display. (See
 	 * gdk_display_get_default ()).
 	 *
-	 * Return: a #GdkScreen, or %NULL if
+	 * Returns: a #GdkScreen, or %NULL if
 	 *     there is no default display.
 	 *
 	 * Since: 2.2
@@ -118,7 +118,7 @@ public class Screen : ObjectG
 	 *
 	 * Deprecated: Use per-monitor information
 	 *
-	 * Return: the height of the default screen in pixels.
+	 * Returns: the height of the default screen in pixels.
 	 */
 	public static int height()
 	{
@@ -131,7 +131,7 @@ public class Screen : ObjectG
 	 *
 	 * Deprecated: Use per-monitor information
 	 *
-	 * Return: the height of the default screen in millimeters,
+	 * Returns: the height of the default screen in millimeters,
 	 *     though it is not always correct.
 	 */
 	public static int heightMm()
@@ -146,7 +146,7 @@ public class Screen : ObjectG
 	 *
 	 * Deprecated: Use per-monitor information
 	 *
-	 * Return: the width of the default screen in pixels.
+	 * Returns: the width of the default screen in pixels.
 	 */
 	public static int width()
 	{
@@ -159,7 +159,7 @@ public class Screen : ObjectG
 	 *
 	 * Deprecated: Use per-monitor information
 	 *
-	 * Return: the width of the default screen in millimeters,
+	 * Returns: the width of the default screen in millimeters,
 	 *     though it is not always correct.
 	 */
 	public static int widthMm()
@@ -183,7 +183,7 @@ public class Screen : ObjectG
 	 * The returned window should be unrefed using g_object_unref() when
 	 * no longer needed.
 	 *
-	 * Return: the currently active window,
+	 * Returns: the currently active window,
 	 *     or %NULL.
 	 *
 	 * Since: 2.10
@@ -203,7 +203,7 @@ public class Screen : ObjectG
 	/**
 	 * Gets the display to which the @screen belongs.
 	 *
-	 * Return: the display to which @screen belongs
+	 * Returns: the display to which @screen belongs
 	 *
 	 * Since: 2.2
 	 */
@@ -222,7 +222,7 @@ public class Screen : ObjectG
 	/**
 	 * Gets any options previously set with gdk_screen_set_font_options().
 	 *
-	 * Return: the current font options, or %NULL if no
+	 * Returns: the current font options, or %NULL if no
 	 *     default font options have been set.
 	 *
 	 * Since: 2.10
@@ -246,7 +246,7 @@ public class Screen : ObjectG
 	 *
 	 * Deprecated: Use per-monitor information instead
 	 *
-	 * Return: the height of @screen in pixels.
+	 * Returns: the height of @screen in pixels.
 	 *
 	 * Since: 2.2
 	 */
@@ -264,7 +264,7 @@ public class Screen : ObjectG
 	 *
 	 * Deprecated: Use per-monitor information instead
 	 *
-	 * Return: the heigth of @screen in millimeters.
+	 * Returns: the heigth of @screen in millimeters.
 	 *
 	 * Since: 2.2
 	 */
@@ -282,7 +282,7 @@ public class Screen : ObjectG
 	 *     x = the x coordinate in the virtual screen.
 	 *     y = the y coordinate in the virtual screen.
 	 *
-	 * Return: the monitor number in which the point (@x,@y) lies, or
+	 * Returns: the monitor number in which the point (@x,@y) lies, or
 	 *     a monitor close to (@x,@y) if the point is not in any monitor.
 	 *
 	 * Since: 2.2
@@ -301,7 +301,7 @@ public class Screen : ObjectG
 	 * Params:
 	 *     window = a #GdkWindow
 	 *
-	 * Return: the monitor number in which most of @window is located,
+	 * Returns: the monitor number in which most of @window is located,
 	 *     or if @window does not intersect any monitors, a monitor,
 	 *     close to @window.
 	 *
@@ -346,7 +346,7 @@ public class Screen : ObjectG
 	 * Params:
 	 *     monitorNum = number of the monitor, between 0 and gdk_screen_get_n_monitors (screen)
 	 *
-	 * Return: the height of the monitor, or -1 if not available
+	 * Returns: the height of the monitor, or -1 if not available
 	 *
 	 * Since: 2.14
 	 */
@@ -365,7 +365,7 @@ public class Screen : ObjectG
 	 * Params:
 	 *     monitorNum = number of the monitor, between 0 and gdk_screen_get_n_monitors (screen)
 	 *
-	 * Return: a newly-allocated string containing the name
+	 * Returns: a newly-allocated string containing the name
 	 *     of the monitor, or %NULL if the name cannot be determined
 	 *
 	 * Since: 2.14
@@ -392,7 +392,7 @@ public class Screen : ObjectG
 	 * Params:
 	 *     monitorNum = number of the monitor, between 0 and gdk_screen_get_n_monitors (screen)
 	 *
-	 * Return: the scale factor
+	 * Returns: the scale factor
 	 *
 	 * Since: 3.10
 	 */
@@ -409,7 +409,7 @@ public class Screen : ObjectG
 	 * Params:
 	 *     monitorNum = number of the monitor, between 0 and gdk_screen_get_n_monitors (screen)
 	 *
-	 * Return: the width of the monitor, or -1 if not available
+	 * Returns: the width of the monitor, or -1 if not available
 	 *
 	 * Since: 2.14
 	 */
@@ -454,7 +454,7 @@ public class Screen : ObjectG
 	 *
 	 * Deprecated: Use gdk_display_get_n_monitors() instead
 	 *
-	 * Return: number of monitors which @screen consists of
+	 * Returns: number of monitors which @screen consists of
 	 *
 	 * Since: 2.2
 	 */
@@ -467,7 +467,7 @@ public class Screen : ObjectG
 	 * Gets the index of @screen among the screens in the display
 	 * to which it belongs. (See gdk_screen_get_display())
 	 *
-	 * Return: the index
+	 * Returns: the index
 	 *
 	 * Since: 2.2
 	 */
@@ -488,7 +488,7 @@ public class Screen : ObjectG
 	 *
 	 * Deprecated: Use gdk_display_get_primary_monitor() instead
 	 *
-	 * Return: An integer index for the primary monitor, or 0 if none is configured.
+	 * Returns: An integer index for the primary monitor, or 0 if none is configured.
 	 *
 	 * Since: 2.20
 	 */
@@ -501,7 +501,7 @@ public class Screen : ObjectG
 	 * Gets the resolution for font handling on the screen; see
 	 * gdk_screen_set_resolution() for full details.
 	 *
-	 * Return: the current resolution, or -1 if no resolution
+	 * Returns: the current resolution, or -1 if no resolution
 	 *     has been set.
 	 *
 	 * Since: 2.10
@@ -526,7 +526,7 @@ public class Screen : ObjectG
 	 * For setting an overall opacity for a top-level window, see
 	 * gdk_window_set_opacity().
 	 *
-	 * Return: a visual to use for windows
+	 * Returns: a visual to use for windows
 	 *     with an alpha channel or %NULL if the capability is not
 	 *     available.
 	 *
@@ -547,7 +547,7 @@ public class Screen : ObjectG
 	/**
 	 * Gets the root window of @screen.
 	 *
-	 * Return: the root window
+	 * Returns: the root window
 	 *
 	 * Since: 2.2
 	 */
@@ -574,7 +574,7 @@ public class Screen : ObjectG
 	 *     name = the name of the setting
 	 *     value = location to store the value of the setting
 	 *
-	 * Return: %TRUE if the setting existed and a value was stored
+	 * Returns: %TRUE if the setting existed and a value was stored
 	 *     in @value, %FALSE otherwise.
 	 *
 	 * Since: 2.2
@@ -589,7 +589,7 @@ public class Screen : ObjectG
 	 * This is the visual for the root window of the display.
 	 * The return value should not be freed.
 	 *
-	 * Return: the system visual
+	 * Returns: the system visual
 	 *
 	 * Since: 2.2
 	 */
@@ -613,7 +613,7 @@ public class Screen : ObjectG
 	 * The returned list should be freed with g_list_free(), but
 	 * its elements need not be freed.
 	 *
-	 * Return: list of toplevel windows, free with g_list_free()
+	 * Returns: list of toplevel windows, free with g_list_free()
 	 *
 	 * Since: 2.2
 	 */
@@ -636,7 +636,7 @@ public class Screen : ObjectG
 	 *
 	 * Deprecated: Use per-monitor information instead
 	 *
-	 * Return: the width of @screen in pixels.
+	 * Returns: the width of @screen in pixels.
 	 *
 	 * Since: 2.2
 	 */
@@ -654,7 +654,7 @@ public class Screen : ObjectG
 	 *
 	 * Deprecated: Use per-monitor information instead
 	 *
-	 * Return: the width of @screen in millimeters.
+	 * Returns: the width of @screen in millimeters.
 	 *
 	 * Since: 2.2
 	 */
@@ -680,7 +680,7 @@ public class Screen : ObjectG
 	 * windows it contains, so it should be freed using g_list_free() and
 	 * its windows unrefed using g_object_unref() when no longer needed.
 	 *
-	 * Return: a
+	 * Returns: a
 	 *     list of #GdkWindows for the current window stack, or %NULL.
 	 *
 	 * Since: 2.10
@@ -705,7 +705,7 @@ public class Screen : ObjectG
 	 * On X11 this function returns whether a compositing manager is
 	 * compositing @screen.
 	 *
-	 * Return: Whether windows with RGBA visuals can reasonably be
+	 * Returns: Whether windows with RGBA visuals can reasonably be
 	 *     expected to have their alpha channels drawn correctly on the screen.
 	 *
 	 * Since: 2.10
@@ -723,7 +723,7 @@ public class Screen : ObjectG
 	 *
 	 * Call g_list_free() on the return value when you’re finished with it.
 	 *
-	 * Return: a list of visuals; the list must be freed, but not its contents
+	 * Returns: a list of visuals; the list must be freed, but not its contents
 	 *
 	 * Since: 2.2
 	 */
@@ -743,7 +743,7 @@ public class Screen : ObjectG
 	 * Determines the name to pass to gdk_display_open() to get
 	 * a #GdkDisplay with this screen as the default screen.
 	 *
-	 * Return: a newly allocated string, free with g_free()
+	 * Returns: a newly allocated string, free with g_free()
 	 *
 	 * Since: 2.2
 	 */

@@ -106,7 +106,7 @@ public class PgLayout : ObjectG
 	 * Params:
 	 *     context = a #PangoContext
 	 *
-	 * Return: the newly allocated #PangoLayout, with a reference
+	 * Returns: the newly allocated #PangoLayout, with a reference
 	 *     count of one, which should be freed with
 	 *     g_object_unref().
 	 *
@@ -140,7 +140,7 @@ public class PgLayout : ObjectG
 	 * tab array, and text from the original layout are all copied by
 	 * value.
 	 *
-	 * Return: the newly allocated #PangoLayout,
+	 * Returns: the newly allocated #PangoLayout,
 	 *     with a reference count of one, which should be freed
 	 *     with g_object_unref().
 	 */
@@ -160,7 +160,7 @@ public class PgLayout : ObjectG
 	 * Gets the alignment for the layout: how partial lines are
 	 * positioned within the horizontal space available.
 	 *
-	 * Return: the alignment.
+	 * Returns: the alignment.
 	 */
 	public PangoAlignment getAlignment()
 	{
@@ -170,7 +170,7 @@ public class PgLayout : ObjectG
 	/**
 	 * Gets the attribute list for the layout, if any.
 	 *
-	 * Return: a #PangoAttrList.
+	 * Returns: a #PangoAttrList.
 	 */
 	public PgAttributeList getAttributes()
 	{
@@ -189,7 +189,7 @@ public class PgLayout : ObjectG
 	 * for the layout according to the contents of the layout.
 	 * See pango_layout_set_auto_dir().
 	 *
-	 * Return: %TRUE if the bidirectional base direction
+	 * Returns: %TRUE if the bidirectional base direction
 	 *     is computed from the layout's contents, %FALSE otherwise.
 	 *
 	 * Since: 1.4
@@ -202,7 +202,7 @@ public class PgLayout : ObjectG
 	/**
 	 * Gets the Y position of baseline of the first line in @layout.
 	 *
-	 * Return: baseline of first line, from top of @layout.
+	 * Returns: baseline of first line, from top of @layout.
 	 *
 	 * Since: 1.22
 	 */
@@ -215,7 +215,7 @@ public class PgLayout : ObjectG
 	 * Returns the number of Unicode characters in the
 	 * the text of @layout.
 	 *
-	 * Return: the number of Unicode characters
+	 * Returns: the number of Unicode characters
 	 *     in the text of @layout
 	 *
 	 * Since: 1.30
@@ -228,7 +228,7 @@ public class PgLayout : ObjectG
 	/**
 	 * Retrieves the #PangoContext used for this layout.
 	 *
-	 * Return: the #PangoContext for the layout.
+	 * Returns: the #PangoContext for the layout.
 	 *     This does not have an additional refcount added, so if you want to
 	 *     keep a copy of this around, you must reference it yourself.
 	 */
@@ -269,7 +269,7 @@ public class PgLayout : ObjectG
 	 * Gets the type of ellipsization being performed for @layout.
 	 * See pango_layout_set_ellipsize()
 	 *
-	 * Return: the current ellipsization mode for @layout.
+	 * Returns: the current ellipsization mode for @layout.
 	 *
 	 *     Use pango_layout_is_ellipsized() to query whether any paragraphs
 	 *     were actually ellipsized.
@@ -308,7 +308,7 @@ public class PgLayout : ObjectG
 	/**
 	 * Gets the font description for the layout, if any.
 	 *
-	 * Return: a pointer to the layout's font
+	 * Returns: a pointer to the layout's font
 	 *     description, or %NULL if the font description from the layout's
 	 *     context is inherited. This value is owned by the layout and must
 	 *     not be modified or freed.
@@ -331,7 +331,7 @@ public class PgLayout : ObjectG
 	 * Gets the height of layout used for ellipsization.  See
 	 * pango_layout_set_height() for details.
 	 *
-	 * Return: the height, in Pango units if positive, or
+	 * Returns: the height, in Pango units if positive, or
 	 *     number of lines if negative.
 	 *
 	 * Since: 1.20
@@ -345,7 +345,7 @@ public class PgLayout : ObjectG
 	 * Gets the paragraph indent width in Pango units. A negative value
 	 * indicates a hanging indentation.
 	 *
-	 * Return: the indent in Pango units.
+	 * Returns: the indent in Pango units.
 	 */
 	public int getIndent()
 	{
@@ -355,7 +355,7 @@ public class PgLayout : ObjectG
 	/**
 	 * Returns an iterator to iterate over the visual extents of the layout.
 	 *
-	 * Return: the new #PangoLayoutIter that should be freed using
+	 * Returns: the new #PangoLayoutIter that should be freed using
 	 *     pango_layout_iter_free().
 	 */
 	public PgLayoutIter getIter()
@@ -374,7 +374,7 @@ public class PgLayout : ObjectG
 	 * Gets whether each complete line should be stretched to fill the entire
 	 * width of the layout.
 	 *
-	 * Return: the justify.
+	 * Returns: the justify.
 	 */
 	public bool getJustify()
 	{
@@ -391,7 +391,7 @@ public class PgLayout : ObjectG
 	 *     line = the index of a line, which must be between 0 and
 	 *         <literal>pango_layout_get_line_count(layout) - 1</literal>, inclusive.
 	 *
-	 * Return: the requested
+	 * Returns: the requested
 	 *     #PangoLayoutLine, or %NULL if the index is out of
 	 *     range. This layout line can be ref'ed and retained,
 	 *     but will become invalid if changes are made to the
@@ -412,7 +412,7 @@ public class PgLayout : ObjectG
 	/**
 	 * Retrieves the count of lines for the @layout.
 	 *
-	 * Return: the line count.
+	 * Returns: the line count.
 	 */
 	public int getLineCount()
 	{
@@ -430,7 +430,7 @@ public class PgLayout : ObjectG
 	 *     line = the index of a line, which must be between 0 and
 	 *         <literal>pango_layout_get_line_count(layout) - 1</literal>, inclusive.
 	 *
-	 * Return: the requested
+	 * Returns: the requested
 	 *     #PangoLayoutLine, or %NULL if the index is out of
 	 *     range. This layout line can be ref'ed and retained,
 	 *     but will become invalid if changes are made to the
@@ -456,7 +456,7 @@ public class PgLayout : ObjectG
 	 * Use the faster pango_layout_get_lines_readonly() if you do not plan
 	 * to modify the contents of the lines (glyphs, glyph widths, etc.).
 	 *
-	 * Return: a #GSList containing
+	 * Returns: a #GSList containing
 	 *     the lines in the layout. This points to internal data of the #PangoLayout
 	 *     and must be used with care. It will become invalid on any change to the layout's
 	 *     text or properties.
@@ -480,7 +480,7 @@ public class PgLayout : ObjectG
 	 * but the user is not expected
 	 * to modify the contents of the lines (glyphs, glyph widths, etc.).
 	 *
-	 * Return: a #GSList containing
+	 * Returns: a #GSList containing
 	 *     the lines in the layout. This points to internal data of the #PangoLayout and
 	 *     must be used with care. It will become invalid on any change to the layout's
 	 *     text or properties.  No changes should be made to the lines.
@@ -535,7 +535,7 @@ public class PgLayout : ObjectG
 	 * need to be attributes corresponding to both the position before
 	 * the first character and the position after the last character.
 	 *
-	 * Return: an array of logical attributes
+	 * Returns: an array of logical attributes
 	 *
 	 * Since: 1.30
 	 */
@@ -596,7 +596,7 @@ public class PgLayout : ObjectG
 	 * is useful for example to decide whether a layout needs redrawing.
 	 * To force the serial to be increased, use pango_layout_context_changed().
 	 *
-	 * Return: The current serial number of @layout.
+	 * Returns: The current serial number of @layout.
 	 *
 	 * Since: 1.32.4
 	 */
@@ -608,7 +608,7 @@ public class PgLayout : ObjectG
 	/**
 	 * Obtains the value set by pango_layout_set_single_paragraph_mode().
 	 *
-	 * Return: %TRUE if the layout does not break paragraphs at
+	 * Returns: %TRUE if the layout does not break paragraphs at
 	 *     paragraph separator characters, %FALSE otherwise.
 	 */
 	public bool getSingleParagraphMode()
@@ -633,7 +633,7 @@ public class PgLayout : ObjectG
 	/**
 	 * Gets the amount of spacing between the lines of the layout.
 	 *
-	 * Return: the spacing in Pango units.
+	 * Returns: the spacing in Pango units.
 	 */
 	public int getSpacing()
 	{
@@ -646,7 +646,7 @@ public class PgLayout : ObjectG
 	 * and %NULL is returned. Default tabs are every 8 spaces.
 	 * The return value should be freed with pango_tab_array_free().
 	 *
-	 * Return: a copy of the tabs for this layout, or
+	 * Returns: a copy of the tabs for this layout, or
 	 *     %NULL.
 	 */
 	public PgTabArray getTabs()
@@ -665,7 +665,7 @@ public class PgLayout : ObjectG
 	 * Gets the text in the layout. The returned text should not
 	 * be freed or modified.
 	 *
-	 * Return: the text in the @layout.
+	 * Returns: the text in the @layout.
 	 */
 	public string getText()
 	{
@@ -682,7 +682,7 @@ public class PgLayout : ObjectG
 	 * used in combination with %PANGO_ATTR_FALLBACK, to check if a
 	 * certain font supports all the characters in the string.
 	 *
-	 * Return: The number of unknown glyphs in @layout.
+	 * Returns: The number of unknown glyphs in @layout.
 	 *
 	 * Since: 1.16
 	 */
@@ -694,7 +694,7 @@ public class PgLayout : ObjectG
 	/**
 	 * Gets the width to which the lines of the #PangoLayout should wrap.
 	 *
-	 * Return: the width in Pango units, or -1 if no width set.
+	 * Returns: the width in Pango units, or -1 if no width set.
 	 */
 	public int getWidth()
 	{
@@ -707,7 +707,7 @@ public class PgLayout : ObjectG
 	 * Use pango_layout_is_wrapped() to query whether any paragraphs
 	 * were actually wrapped.
 	 *
-	 * Return: active wrap mode.
+	 * Returns: active wrap mode.
 	 */
 	public PangoWrapMode getWrap()
 	{
@@ -758,7 +758,7 @@ public class PgLayout : ObjectG
 	 * and there are paragraphs exceeding that width that have to be
 	 * ellipsized.
 	 *
-	 * Return: %TRUE if any paragraphs had to be ellipsized, %FALSE
+	 * Returns: %TRUE if any paragraphs had to be ellipsized, %FALSE
 	 *     otherwise.
 	 *
 	 * Since: 1.16
@@ -776,7 +776,7 @@ public class PgLayout : ObjectG
 	 * and there are paragraphs exceeding the layout width that have
 	 * to be wrapped.
 	 *
-	 * Return: %TRUE if any paragraphs had to be wrapped, %FALSE
+	 * Returns: %TRUE if any paragraphs had to be wrapped, %FALSE
 	 *     otherwise.
 	 *
 	 * Since: 1.16
@@ -1143,7 +1143,7 @@ public class PgLayout : ObjectG
 	 *         be zero, or the number of characters in the
 	 *         grapheme. 0 represents the leading edge of the grapheme.
 	 *
-	 * Return: %TRUE if the coordinates were inside text, %FALSE otherwise.
+	 * Returns: %TRUE if the coordinates were inside text, %FALSE otherwise.
 	 */
 	public bool xyToIndex(int x, int y, out int index, out int trailing)
 	{

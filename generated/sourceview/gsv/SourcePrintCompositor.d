@@ -80,7 +80,7 @@ public class SourcePrintCompositor : ObjectG
 	 * Params:
 	 *     buffer = the #GtkSourceBuffer to print.
 	 *
-	 * Return: a new print compositor object.
+	 * Returns: a new print compositor object.
 	 *
 	 * Since: 2.2
 	 *
@@ -110,7 +110,7 @@ public class SourcePrintCompositor : ObjectG
 	 * Params:
 	 *     view = a #GtkSourceView to get configuration from.
 	 *
-	 * Return: a new print compositor object.
+	 * Returns: a new print compositor object.
 	 *
 	 * Since: 2.2
 	 *
@@ -167,7 +167,7 @@ public class SourcePrintCompositor : ObjectG
 	 * Returns the name of the font used to print the text body. The returned string
 	 * must be freed with g_free().
 	 *
-	 * Return: a new string containing the name of the font used to print the
+	 * Returns: a new string containing the name of the font used to print the
 	 *     text body.
 	 *
 	 * Since: 2.2
@@ -186,7 +186,7 @@ public class SourcePrintCompositor : ObjectG
 	 * Params:
 	 *     unit = the unit for the return value.
 	 *
-	 * Return: the bottom margin.
+	 * Returns: the bottom margin.
 	 *
 	 * Since: 2.2
 	 */
@@ -200,7 +200,7 @@ public class SourcePrintCompositor : ObjectG
 	 * object reference is owned by the compositor object and
 	 * should not be unreferenced.
 	 *
-	 * Return: the #GtkSourceBuffer associated with the compositor.
+	 * Returns: the #GtkSourceBuffer associated with the compositor.
 	 *
 	 * Since: 2.2
 	 */
@@ -220,7 +220,7 @@ public class SourcePrintCompositor : ObjectG
 	 * Returns the name of the font used to print the page footer.
 	 * The returned string must be freed with g_free().
 	 *
-	 * Return: a new string containing the name of the font used to print
+	 * Returns: a new string containing the name of the font used to print
 	 *     the page footer.
 	 *
 	 * Since: 2.2
@@ -237,7 +237,7 @@ public class SourcePrintCompositor : ObjectG
 	 * Returns the name of the font used to print the page header.
 	 * The returned string must be freed with g_free().
 	 *
-	 * Return: a new string containing the name of the font used to print
+	 * Returns: a new string containing the name of the font used to print
 	 *     the page header.
 	 *
 	 * Since: 2.2
@@ -255,7 +255,7 @@ public class SourcePrintCompositor : ObjectG
 	 * buffer rules.  Note that highlighting will happen
 	 * only if the buffer to print has highlighting activated.
 	 *
-	 * Return: %TRUE if the printed output will be highlighted.
+	 * Returns: %TRUE if the printed output will be highlighted.
 	 *
 	 * Since: 2.2
 	 */
@@ -270,7 +270,7 @@ public class SourcePrintCompositor : ObjectG
 	 * Params:
 	 *     unit = the unit for the return value.
 	 *
-	 * Return: the left margin
+	 * Returns: the left margin
 	 *
 	 * Since: 2.2
 	 */
@@ -283,7 +283,7 @@ public class SourcePrintCompositor : ObjectG
 	 * Returns the name of the font used to print line numbers on the left margin.
 	 * The returned string must be freed with g_free().
 	 *
-	 * Return: a new string containing the name of the font used to print
+	 * Returns: a new string containing the name of the font used to print
 	 *     line numbers on the left margin.
 	 *
 	 * Since: 2.2
@@ -300,7 +300,7 @@ public class SourcePrintCompositor : ObjectG
 	 * Returns the number of pages in the document or <code>-1</code> if the
 	 * document has not been completely paginated.
 	 *
-	 * Return: the number of pages in the document or <code>-1</code> if the
+	 * Returns: the number of pages in the document or <code>-1</code> if the
 	 *     document has not been completely paginated.
 	 *
 	 * Since: 2.2
@@ -313,7 +313,7 @@ public class SourcePrintCompositor : ObjectG
 	/**
 	 * Returns the current fraction of the document pagination that has been completed.
 	 *
-	 * Return: a fraction from 0.0 to 1.0 inclusive.
+	 * Returns: a fraction from 0.0 to 1.0 inclusive.
 	 *
 	 * Since: 2.2
 	 */
@@ -328,7 +328,7 @@ public class SourcePrintCompositor : ObjectG
 	 * <emphasis>and</emphasis> some format strings have been specified
 	 * with gtk_source_print_compositor_set_footer_format().
 	 *
-	 * Return: %TRUE if the footer is set to be printed.
+	 * Returns: %TRUE if the footer is set to be printed.
 	 *
 	 * Since: 2.2
 	 */
@@ -343,7 +343,7 @@ public class SourcePrintCompositor : ObjectG
 	 * <emphasis>and</emphasis> some format strings have been specified
 	 * with gtk_source_print_compositor_set_header_format().
 	 *
-	 * Return: %TRUE if the header is set to be printed.
+	 * Returns: %TRUE if the header is set to be printed.
 	 *
 	 * Since: 2.2
 	 */
@@ -357,7 +357,7 @@ public class SourcePrintCompositor : ObjectG
 	 * value is 0, no line numbers will be printed.  The default value is
 	 * 1 (i.e. numbers printed in all lines).
 	 *
-	 * Return: the interval of printed line numbers.
+	 * Returns: the interval of printed line numbers.
 	 *
 	 * Since: 2.2
 	 */
@@ -372,7 +372,7 @@ public class SourcePrintCompositor : ObjectG
 	 * Params:
 	 *     unit = the unit for the return value.
 	 *
-	 * Return: the right margin.
+	 * Returns: the right margin.
 	 *
 	 * Since: 2.2
 	 */
@@ -384,7 +384,7 @@ public class SourcePrintCompositor : ObjectG
 	/**
 	 * Returns the width of tabulation in characters for printed text.
 	 *
-	 * Return: width of tab.
+	 * Returns: width of tab.
 	 *
 	 * Since: 2.2
 	 */
@@ -399,7 +399,7 @@ public class SourcePrintCompositor : ObjectG
 	 * Params:
 	 *     unit = the unit for the return value.
 	 *
-	 * Return: the top margin.
+	 * Returns: the top margin.
 	 *
 	 * Since: 2.2
 	 */
@@ -411,7 +411,7 @@ public class SourcePrintCompositor : ObjectG
 	/**
 	 * Gets the line wrapping mode for the printed text.
 	 *
-	 * Return: the line wrap mode.
+	 * Returns: the line wrap mode.
 	 *
 	 * Since: 2.2
 	 */
@@ -486,7 +486,7 @@ public class SourcePrintCompositor : ObjectG
 	 *     context = the #GtkPrintContext whose parameters (e.g. paper size, print margins, etc.)
 	 *         are used by the the @compositor to paginate the document.
 	 *
-	 * Return: %TRUE if the document has been completely paginated, %FALSE otherwise.
+	 * Returns: %TRUE if the document has been completely paginated, %FALSE otherwise.
 	 *
 	 * Since: 2.2
 	 */

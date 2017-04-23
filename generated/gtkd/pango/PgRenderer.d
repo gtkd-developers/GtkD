@@ -276,7 +276,7 @@ public class PgRenderer : ObjectG
 	 * Params:
 	 *     part = the part to get the alpha for
 	 *
-	 * Return: the alpha for the specified part,
+	 * Returns: the alpha for the specified part,
 	 *     or 0 if it hasn't been set and should be
 	 *     inherited from the environment.
 	 *
@@ -293,7 +293,7 @@ public class PgRenderer : ObjectG
 	 * Params:
 	 *     part = the part to get the color for
 	 *
-	 * Return: the color for the
+	 * Returns: the color for the
 	 *     specified part, or %NULL if it hasn't been set and should be
 	 *     inherited from the environment.
 	 *
@@ -319,7 +319,7 @@ public class PgRenderer : ObjectG
 	 * The returned layout should not be modified while still being
 	 * rendered.
 	 *
-	 * Return: the layout, or %NULL if
+	 * Returns: the layout, or %NULL if
 	 *     no layout is being rendered using @renderer at this time.
 	 *
 	 * Since: 1.20
@@ -344,7 +344,7 @@ public class PgRenderer : ObjectG
 	 * The returned layout line should not be modified while still being
 	 * rendered.
 	 *
-	 * Return: the layout line, or %NULL
+	 * Returns: the layout line, or %NULL
 	 *     if no layout line is being rendered using @renderer at this time.
 	 *
 	 * Since: 1.20
@@ -365,7 +365,7 @@ public class PgRenderer : ObjectG
 	 * Gets the transformation matrix that will be applied when
 	 * rendering. See pango_renderer_set_matrix().
 	 *
-	 * Return: the matrix, or %NULL if no matrix has
+	 * Returns: the matrix, or %NULL if no matrix has
 	 *     been set (which is the same as the identity matrix). The returned
 	 *     matrix is owned by Pango and must not be modified or freed.
 	 *

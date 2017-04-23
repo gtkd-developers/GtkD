@@ -96,7 +96,7 @@ public class Overlay : Bin
 	/**
 	 * Creates a new #GtkOverlay.
 	 *
-	 * Return: a new #GtkOverlay object.
+	 * Returns: a new #GtkOverlay object.
 	 *
 	 * Since: 3.2
 	 *
@@ -140,7 +140,7 @@ public class Overlay : Bin
 	 * Params:
 	 *     widget = an overlay child of #GtkOverlay
 	 *
-	 * Return: whether the widget is a pass through child.
+	 * Returns: whether the widget is a pass through child.
 	 *
 	 * Since: 3.18
 	 */
@@ -232,7 +232,7 @@ public class Overlay : Bin
 	 *     allocation = return
 	 *         location for the allocation
 	 *
-	 * Return: %TRUE if the @allocation has been filled
+	 * Returns: %TRUE if the @allocation has been filled
 	 */
 	gulong addOnGetChildPosition(bool delegate(Widget, GdkRectangle*, Overlay) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

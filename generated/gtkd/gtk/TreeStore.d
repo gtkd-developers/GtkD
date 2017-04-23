@@ -272,7 +272,7 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	 *     nColumns = number of columns in the tree store
 	 *     types = an array of #GType types for the columns, from first to last
 	 *
-	 * Return: a new #GtkTreeStore
+	 * Returns: a new #GtkTreeStore
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -427,7 +427,7 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	 *     iter = A valid #GtkTreeIter
 	 *     descendant = A valid #GtkTreeIter
 	 *
-	 * Return: %TRUE, if @iter is an ancestor of @descendant
+	 * Returns: %TRUE, if @iter is an ancestor of @descendant
 	 */
 	public bool isAncestor(TreeIter iter, TreeIter descendant)
 	{
@@ -441,7 +441,7 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	 * Params:
 	 *     iter = A valid #GtkTreeIter
 	 *
-	 * Return: The depth of @iter
+	 * Returns: The depth of @iter
 	 */
 	public int iterDepth(TreeIter iter)
 	{
@@ -457,7 +457,7 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	 * Params:
 	 *     iter = A #GtkTreeIter.
 	 *
-	 * Return: %TRUE if the iter is valid, %FALSE if the iter is invalid.
+	 * Returns: %TRUE if the iter is valid, %FALSE if the iter is invalid.
 	 *
 	 * Since: 2.2
 	 */
@@ -528,7 +528,7 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	 * Params:
 	 *     iter = A valid #GtkTreeIter
 	 *
-	 * Return: %TRUE if @iter is still valid, %FALSE if not.
+	 * Returns: %TRUE if @iter is still valid, %FALSE if not.
 	 */
 	public bool remove(TreeIter iter)
 	{

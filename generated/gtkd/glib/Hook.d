@@ -67,7 +67,7 @@ public class Hook
 	 * Params:
 	 *     sibling = a #GHook to compare with @new_hook
 	 *
-	 * Return: a value <= 0 if the id of @sibling is >= the id of @new_hook
+	 * Returns: a value <= 0 if the id of @sibling is >= the id of @new_hook
 	 */
 	public int compareIds(Hook sibling)
 	{
@@ -80,7 +80,7 @@ public class Hook
 	 * Params:
 	 *     hookList = a #GHookList
 	 *
-	 * Return: a new #GHook
+	 * Returns: a new #GHook
 	 */
 	public static Hook alloc(HookList hookList)
 	{
@@ -101,7 +101,7 @@ public class Hook
 	 *     hookList = a #GHookList
 	 *     hookId = a hook ID
 	 *
-	 * Return: %TRUE if the #GHook was found in the #GHookList and destroyed
+	 * Returns: %TRUE if the #GHook was found in the #GHookList and destroyed
 	 */
 	public static bool destroy(HookList hookList, gulong hookId)
 	{
@@ -133,7 +133,7 @@ public class Hook
 	 *         %TRUE when the #GHook has been found
 	 *     data = the data to pass to @func
 	 *
-	 * Return: the found #GHook or %NULL if no matching #GHook is found
+	 * Returns: the found #GHook or %NULL if no matching #GHook is found
 	 */
 	public static Hook find(HookList hookList, bool needValids, GHookFindFunc func, void* data)
 	{
@@ -156,7 +156,7 @@ public class Hook
 	 *         should be skipped
 	 *     data = the data to find
 	 *
-	 * Return: the #GHook with the given @data or %NULL if no matching
+	 * Returns: the #GHook with the given @data or %NULL if no matching
 	 *     #GHook is found
 	 */
 	public static Hook findData(HookList hookList, bool needValids, void* data)
@@ -180,7 +180,7 @@ public class Hook
 	 *         should be skipped
 	 *     func = the function to find
 	 *
-	 * Return: the #GHook with the given @func or %NULL if no matching
+	 * Returns: the #GHook with the given @func or %NULL if no matching
 	 *     #GHook is found
 	 */
 	public static Hook findFunc(HookList hookList, bool needValids, void* func)
@@ -205,7 +205,7 @@ public class Hook
 	 *     func = the function to find
 	 *     data = the data to find
 	 *
-	 * Return: the #GHook with the given @func and @data or %NULL if
+	 * Returns: the #GHook with the given @func and @data or %NULL if
 	 *     no matching #GHook is found
 	 */
 	public static Hook findFuncData(HookList hookList, bool needValids, void* func, void* data)
@@ -232,7 +232,7 @@ public class Hook
 	 *         (e.g. in another thread) are considered valid. If set to %FALSE,
 	 *         these are skipped
 	 *
-	 * Return: the first valid #GHook, or %NULL if none are valid
+	 * Returns: the first valid #GHook, or %NULL if none are valid
 	 */
 	public static Hook firstValid(HookList hookList, bool mayBeInCall)
 	{
@@ -266,7 +266,7 @@ public class Hook
 	 *     hookList = a #GHookList
 	 *     hookId = a hook id
 	 *
-	 * Return: the #GHook with the given id, or %NULL if it is not found
+	 * Returns: the #GHook with the given id, or %NULL if it is not found
 	 */
 	public static Hook get(HookList hookList, gulong hookId)
 	{
@@ -319,7 +319,7 @@ public class Hook
 	 *         (e.g. in another thread) are considered valid. If set to %FALSE,
 	 *         these are skipped
 	 *
-	 * Return: the next valid #GHook, or %NULL if none are valid
+	 * Returns: the next valid #GHook, or %NULL if none are valid
 	 */
 	public static Hook nextValid(HookList hookList, Hook hook, bool mayBeInCall)
 	{
@@ -352,7 +352,7 @@ public class Hook
 	 *     hookList = a #GHookList
 	 *     hook = the #GHook to increment the reference count of
 	 *
-	 * Return: the @hook that was passed in (since 2.6)
+	 * Returns: the @hook that was passed in (since 2.6)
 	 */
 	public static Hook doref(HookList hookList, Hook hook)
 	{

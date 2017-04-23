@@ -148,7 +148,7 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 	/**
 	 * Creates a new #GtkCellView widget.
 	 *
-	 * Return: A newly created #GtkCellView widget.
+	 * Returns: A newly created #GtkCellView widget.
 	 *
 	 * Since: 2.6
 	 *
@@ -179,7 +179,7 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 	 *     area = the #GtkCellArea to layout cells
 	 *     context = the #GtkCellAreaContext in which to calculate cell geometry
 	 *
-	 * Return: A newly created #GtkCellView widget.
+	 * Returns: A newly created #GtkCellView widget.
 	 *
 	 * Since: 2.6
 	 *
@@ -204,7 +204,7 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 	 * Params:
 	 *     pixbuf = the image to display in the cell view
 	 *
-	 * Return: A newly created #GtkCellView widget.
+	 * Returns: A newly created #GtkCellView widget.
 	 *
 	 * Since: 2.6
 	 *
@@ -227,7 +227,7 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 	 * displayed row. If no row is currently displayed,
 	 * %NULL is returned.
 	 *
-	 * Return: the currently displayed row or %NULL
+	 * Returns: the currently displayed row or %NULL
 	 *
 	 * Since: 2.6
 	 */
@@ -247,7 +247,7 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 	 * Gets whether @cell_view is configured to draw all of its
 	 * cells in a sensitive state.
 	 *
-	 * Return: whether @cell_view draws all of its
+	 * Returns: whether @cell_view draws all of its
 	 *     cells in a sensitive state
 	 *
 	 * Since: 3.0
@@ -261,7 +261,7 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 	 * Gets whether @cell_view is configured to request space
 	 * to fit the entire #GtkTreeModel.
 	 *
-	 * Return: whether @cell_view requests space to fit
+	 * Returns: whether @cell_view requests space to fit
 	 *     the entire #GtkTreeModel.
 	 *
 	 * Since: 3.0
@@ -275,7 +275,7 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 	 * Returns the model for @cell_view. If no model is used %NULL is
 	 * returned.
 	 *
-	 * Return: a #GtkTreeModel used or %NULL
+	 * Returns: a #GtkTreeModel used or %NULL
 	 *
 	 * Since: 2.16
 	 */
@@ -304,7 +304,7 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 	 *     path = a #GtkTreePath
 	 *     requisition = return location for the size
 	 *
-	 * Return: %TRUE
+	 * Returns: %TRUE
 	 *
 	 * Since: 2.6
 	 */

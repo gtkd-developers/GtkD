@@ -133,7 +133,7 @@ public class TypeFindFactory : PluginFeature
 	 *
 	 * Free-function: gst_plugin_feature_list_free
 	 *
-	 * Return: the list of all
+	 * Returns: the list of all
 	 *     registered #GstTypeFindFactory.
 	 */
 	public static ListG getList()
@@ -163,7 +163,7 @@ public class TypeFindFactory : PluginFeature
 	/**
 	 * Gets the #GstCaps associated with a typefind factory.
 	 *
-	 * Return: the #GstCaps associated with this factory
+	 * Returns: the #GstCaps associated with this factory
 	 */
 	public Caps getCaps()
 	{
@@ -183,7 +183,7 @@ public class TypeFindFactory : PluginFeature
 	 * copy it using g_strdupv().  This function may return %NULL to indicate
 	 * a 0-length list.
 	 *
-	 * Return: a %NULL-terminated array of extensions associated with this factory
+	 * Returns: a %NULL-terminated array of extensions associated with this factory
 	 */
 	public string[] getExtensions()
 	{
@@ -195,7 +195,7 @@ public class TypeFindFactory : PluginFeature
 	 * without typefind functions are a last-effort fallback mechanism to
 	 * e.g. assume a certain media type based on the file extension.
 	 *
-	 * Return: %TRUE if the factory has a typefind functions set, otherwise %FALSE
+	 * Returns: %TRUE if the factory has a typefind functions set, otherwise %FALSE
 	 */
 	public bool hasFunction()
 	{

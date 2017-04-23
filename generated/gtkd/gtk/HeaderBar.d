@@ -88,7 +88,7 @@ public class HeaderBar : Container
 	/**
 	 * Creates a new #GtkHeaderBar widget.
 	 *
-	 * Return: a new #GtkHeaderBar
+	 * Returns: a new #GtkHeaderBar
 	 *
 	 * Since: 3.10
 	 *
@@ -110,7 +110,7 @@ public class HeaderBar : Container
 	 * Retrieves the custom title widget of the header. See
 	 * gtk_header_bar_set_custom_title().
 	 *
-	 * Return: the custom title widget
+	 * Returns: the custom title widget
 	 *     of the header, or %NULL if none has been set explicitly.
 	 *
 	 * Since: 3.10
@@ -131,7 +131,7 @@ public class HeaderBar : Container
 	 * Gets the decoration layout set with
 	 * gtk_header_bar_set_decoration_layout().
 	 *
-	 * Return: the decoration layout
+	 * Returns: the decoration layout
 	 *
 	 * Since: 3.12
 	 */
@@ -144,7 +144,7 @@ public class HeaderBar : Container
 	 * Retrieves whether the header bar reserves space for
 	 * a subtitle, regardless if one is currently set or not.
 	 *
-	 * Return: %TRUE if the header bar reserves space
+	 * Returns: %TRUE if the header bar reserves space
 	 *     for a subtitle
 	 *
 	 * Since: 3.12
@@ -158,7 +158,7 @@ public class HeaderBar : Container
 	 * Returns whether this header bar shows the standard window
 	 * decorations.
 	 *
-	 * Return: %TRUE if the decorations are shown
+	 * Returns: %TRUE if the decorations are shown
 	 *
 	 * Since: 3.10
 	 */
@@ -170,7 +170,7 @@ public class HeaderBar : Container
 	/**
 	 * Retrieves the subtitle of the header. See gtk_header_bar_set_subtitle().
 	 *
-	 * Return: the subtitle of the header, or %NULL if none has
+	 * Returns: the subtitle of the header, or %NULL if none has
 	 *     been set explicitly. The returned string is owned by the widget
 	 *     and must not be modified or freed.
 	 *
@@ -184,7 +184,7 @@ public class HeaderBar : Container
 	/**
 	 * Retrieves the title of the header. See gtk_header_bar_set_title().
 	 *
-	 * Return: the title of the header, or %NULL if none has
+	 * Returns: the title of the header, or %NULL if none has
 	 *     been set explicitly. The returned string is owned by the widget
 	 *     and must not be modified or freed.
 	 *

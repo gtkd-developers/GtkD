@@ -102,7 +102,7 @@ public class HBox : Box
 	 *     homogeneous = %TRUE if all children are to be given equal space allotments.
 	 *     spacing = the number of pixels to place by default between children.
 	 *
-	 * Return: a new #GtkHBox.
+	 * Returns: a new #GtkHBox.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

@@ -42,7 +42,7 @@ public struct IconSize
 	 * Params:
 	 *     name = the name to look up.
 	 *
-	 * Return: the icon size (#GtkIconSize)
+	 * Returns: the icon size (#GtkIconSize)
 	 */
 	public static GtkIconSize fromName(string name)
 	{
@@ -58,7 +58,7 @@ public struct IconSize
 	 * Params:
 	 *     size = a #GtkIconSize.
 	 *
-	 * Return: the name of the given icon size.
+	 * Returns: the name of the given icon size.
 	 */
 	public static string getName(GtkIconSize size)
 	{
@@ -80,7 +80,7 @@ public struct IconSize
 	 *     width = location to store icon width
 	 *     height = location to store icon height
 	 *
-	 * Return: %TRUE if @size was a valid size
+	 * Returns: %TRUE if @size was a valid size
 	 */
 	public static bool lookup(GtkIconSize size, out int width, out int height)
 	{
@@ -108,7 +108,7 @@ public struct IconSize
 	 *     width = location to store icon width
 	 *     height = location to store icon height
 	 *
-	 * Return: %TRUE if @size was a valid size
+	 * Returns: %TRUE if @size was a valid size
 	 *
 	 * Since: 2.2
 	 */
@@ -128,7 +128,7 @@ public struct IconSize
 	 *     width = the icon width
 	 *     height = the icon height
 	 *
-	 * Return: integer value representing the size (#GtkIconSize)
+	 * Returns: integer value representing the size (#GtkIconSize)
 	 */
 	public static GtkIconSize register(string name, int width, int height)
 	{

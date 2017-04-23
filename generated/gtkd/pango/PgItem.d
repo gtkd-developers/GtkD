@@ -70,7 +70,7 @@ public class PgItem
 	/**
 	 * Creates a new #PangoItem structure initialized to default values.
 	 *
-	 * Return: the newly allocated #PangoItem, which should
+	 * Returns: the newly allocated #PangoItem, which should
 	 *     be freed with pango_item_free().
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -90,7 +90,7 @@ public class PgItem
 	/**
 	 * Copy an existing #PangoItem structure.
 	 *
-	 * Return: the newly allocated #PangoItem, which
+	 * Returns: the newly allocated #PangoItem, which
 	 *     should be freed with pango_item_free(), or %NULL if
 	 *     @item was %NULL.
 	 */
@@ -130,7 +130,7 @@ public class PgItem
 	 *     splitIndex = byte index of position to split item, relative to the start of the item
 	 *     splitOffset = number of chars between start of @orig and @split_index
 	 *
-	 * Return: new item representing text before @split_index, which
+	 * Returns: new item representing text before @split_index, which
 	 *     should be freed with pango_item_free().
 	 */
 	public PgItem split(int splitIndex, int splitOffset)

@@ -200,7 +200,7 @@ public class Event
 	 *     maxsize = maximum buffer size
 	 *     async = thread behavior
 	 *
-	 * Return: a new #GstEvent
+	 * Returns: a new #GstEvent
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -224,7 +224,7 @@ public class Event
 	 * Params:
 	 *     caps = a #GstCaps
 	 *
-	 * Return: the new CAPS event.
+	 * Returns: the new CAPS event.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -257,7 +257,7 @@ public class Event
 	 *     structure = the structure for the event. The event will
 	 *         take ownership of the structure.
 	 *
-	 * Return: the new custom event.
+	 * Returns: the new custom event.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -288,7 +288,7 @@ public class Event
 	 * Params:
 	 *     resetTime = if time should be reset
 	 *
-	 * Return: a new flush stop event.
+	 * Returns: a new flush stop event.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -315,7 +315,7 @@ public class Event
 	 *     timestamp = the start time (pts) of the gap
 	 *     duration = the duration of the gap
 	 *
-	 * Return: the new GAP event.
+	 * Returns: the new GAP event.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -342,7 +342,7 @@ public class Event
 	 * Params:
 	 *     latency = the new latency value
 	 *
-	 * Return: a new #GstEvent
+	 * Returns: a new #GstEvent
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -365,7 +365,7 @@ public class Event
 	 *     structure = description of the event. The event will take
 	 *         ownership of the structure.
 	 *
-	 * Return: a new #GstEvent
+	 * Returns: a new #GstEvent
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -421,7 +421,7 @@ public class Event
 	 *         information carried in the event was extracted from. The allowed values
 	 *         of this string will depend upon the protection scheme.
 	 *
-	 * Return: a #GST_EVENT_PROTECTION event, if successful; %NULL
+	 * Returns: a #GST_EVENT_PROTECTION event, if successful; %NULL
 	 *     if unsuccessful.
 	 *
 	 * Since: 1.6
@@ -490,7 +490,7 @@ public class Event
 	 *     diff = The time difference of the last Clock sync
 	 *     timestamp = The timestamp of the buffer
 	 *
-	 * Return: a new QOS event.
+	 * Returns: a new QOS event.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -512,7 +512,7 @@ public class Event
 	 * their buffer pools. This is useful when changing properties on elements
 	 * or changing the topology of the pipeline.
 	 *
-	 * Return: a new #GstEvent
+	 * Returns: a new #GstEvent
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -570,7 +570,7 @@ public class Event
 	 *     stopType = The type and flags for the new stop position
 	 *     stop = The value of the new stop position
 	 *
-	 * Return: a new seek event.
+	 * Returns: a new seek event.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -622,7 +622,7 @@ public class Event
 	 * Params:
 	 *     segment = a #GstSegment
 	 *
-	 * Return: the new SEGMENT event.
+	 * Returns: the new SEGMENT event.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -646,7 +646,7 @@ public class Event
 	 *     format = The format of the position being done
 	 *     position = The position of the segment being done
 	 *
-	 * Return: a new #GstEvent
+	 * Returns: a new #GstEvent
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -676,7 +676,7 @@ public class Event
 	 *     streams = the list of streams to
 	 *         activate
 	 *
-	 * Return: a new select-streams event.
+	 * Returns: a new select-streams event.
 	 *
 	 * Since: 1.10
 	 *
@@ -705,7 +705,7 @@ public class Event
 	 *     name = a name for the event
 	 *     msg = the #GstMessage to be posted
 	 *
-	 * Return: a new #GstEvent
+	 * Returns: a new #GstEvent
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -743,7 +743,7 @@ public class Event
 	 *     flush = flushing steps
 	 *     intermediate = intermediate steps
 	 *
-	 * Return: a new #GstEvent
+	 * Returns: a new #GstEvent
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -772,7 +772,7 @@ public class Event
 	 * Params:
 	 *     collection = Active collection for this data flow
 	 *
-	 * Return: the new STREAM_COLLECTION event.
+	 * Returns: the new STREAM_COLLECTION event.
 	 *
 	 * Since: 1.10
 	 *
@@ -804,7 +804,7 @@ public class Event
 	 * Params:
 	 *     groupId = the group id of the stream group which is ending
 	 *
-	 * Return: the new stream-group-done event.
+	 * Returns: the new stream-group-done event.
 	 *
 	 * Since: 1.10
 	 *
@@ -848,7 +848,7 @@ public class Event
 	 * Params:
 	 *     streamId = Identifier for this stream
 	 *
-	 * Return: the new STREAM_START event.
+	 * Returns: the new STREAM_START event.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -877,7 +877,7 @@ public class Event
 	 *     taglist = metadata list. The event will take ownership
 	 *         of the taglist.
 	 *
-	 * Return: a new #GstEvent
+	 * Returns: a new #GstEvent
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -901,7 +901,7 @@ public class Event
 	 *     toc = #GstToc structure.
 	 *     updated = whether @toc was updated or not.
 	 *
-	 * Return: a new #GstEvent.
+	 * Returns: a new #GstEvent.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -940,7 +940,7 @@ public class Event
 	 * running time, this information will need to be updated
 	 * before usage with this offset.
 	 *
-	 * Return: The event's running time offset
+	 * Returns: The event's running time offset
 	 *
 	 *     MT safe.
 	 *
@@ -965,7 +965,7 @@ public class Event
 	 * two events or messages will never have the same sequence number unless
 	 * that correspondence was made explicitly.
 	 *
-	 * Return: The event's sequence number.
+	 * Returns: The event's sequence number.
 	 *
 	 *     MT safe.
 	 */
@@ -977,7 +977,7 @@ public class Event
 	/**
 	 * Access the structure of the event.
 	 *
-	 * Return: The structure of the event. The structure is still
+	 * Returns: The structure of the event. The structure is still
 	 *     owned by the event, which means that you should not free it and
 	 *     that the pointer becomes invalid when you free the event.
 	 *
@@ -1002,7 +1002,7 @@ public class Event
 	 * Params:
 	 *     name = name to check
 	 *
-	 * Return: %TRUE if @name matches the name of the event structure.
+	 * Returns: %TRUE if @name matches the name of the event structure.
 	 */
 	public bool hasName(string name)
 	{
@@ -1076,7 +1076,7 @@ public class Event
 	 *
 	 * Params:
 	 *     groupId = address of variable where to store the group id
-	 * Return: %TRUE if a group id was set on the event and could be parsed,
+	 * Returns: %TRUE if a group id was set on the event and could be parsed,
 	 *     %FALSE otherwise.
 	 *
 	 * Since: 1.2
@@ -1438,7 +1438,7 @@ public class Event
 	/**
 	 * Get a writable version of the structure.
 	 *
-	 * Return: The structure of the event. The structure
+	 * Returns: The structure of the event. The structure
 	 *     is still owned by the event, which means that you should not free
 	 *     it and that the pointer becomes invalid when you free the event.
 	 *     This function checks if @event is writable and will never return
@@ -1464,7 +1464,7 @@ public class Event
 	 * Params:
 	 *     type = a #GstEventType
 	 *
-	 * Return: a #GstEventTypeFlags.
+	 * Returns: a #GstEventTypeFlags.
 	 */
 	public static GstEventTypeFlags typeGetFlags(GstEventType type)
 	{
@@ -1477,7 +1477,7 @@ public class Event
 	 * Params:
 	 *     type = the event type
 	 *
-	 * Return: a reference to the static name of the event.
+	 * Returns: a reference to the static name of the event.
 	 */
 	public static string typeGetName(GstEventType type)
 	{
@@ -1490,7 +1490,7 @@ public class Event
 	 * Params:
 	 *     type = the event type
 	 *
-	 * Return: the quark associated with the event type
+	 * Returns: the quark associated with the event type
 	 */
 	public static GQuark typeToQuark(GstEventType type)
 	{

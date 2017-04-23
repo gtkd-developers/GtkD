@@ -212,7 +212,7 @@ public class Bin : Element, ChildProxyIF
 	 * Params:
 	 *     name = the name of the new bin
 	 *
-	 * Return: a new #GstBin
+	 * Returns: a new #GstBin
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -246,7 +246,7 @@ public class Bin : Element, ChildProxyIF
 	 * Params:
 	 *     element = the #GstElement to add
 	 *
-	 * Return: %TRUE if the element could be added, %FALSE if
+	 * Returns: %TRUE if the element could be added, %FALSE if
 	 *     the bin does not want to accept the element.
 	 */
 	public bool add(Element element)
@@ -264,7 +264,7 @@ public class Bin : Element, ChildProxyIF
 	 * Params:
 	 *     direction = whether to look for an unlinked source or sink pad
 	 *
-	 * Return: unlinked pad of the given
+	 * Returns: unlinked pad of the given
 	 *     direction, %NULL.
 	 */
 	public Pad findUnlinkedPad(GstPadDirection direction)
@@ -291,7 +291,7 @@ public class Bin : Element, ChildProxyIF
 	 * Params:
 	 *     iface = the #GType of an interface
 	 *
-	 * Return: A #GstElement inside the bin implementing the interface
+	 * Returns: A #GstElement inside the bin implementing the interface
 	 */
 	public Element getByInterface(GType iface)
 	{
@@ -316,7 +316,7 @@ public class Bin : Element, ChildProxyIF
 	 * Params:
 	 *     name = the element name to search for
 	 *
-	 * Return: the #GstElement with the given
+	 * Returns: the #GstElement with the given
 	 *     name, or %NULL
 	 */
 	public Element getByName(string name)
@@ -343,7 +343,7 @@ public class Bin : Element, ChildProxyIF
 	 * Params:
 	 *     name = the element name to search for
 	 *
-	 * Return: the #GstElement with the given
+	 * Returns: the #GstElement with the given
 	 *     name, or %NULL
 	 */
 	public Element getByNameRecurseUp(string name)
@@ -363,7 +363,7 @@ public class Bin : Element, ChildProxyIF
 	 *
 	 * MT safe.
 	 *
-	 * Return: the bin's suppressed #GstElementFlags.
+	 * Returns: the bin's suppressed #GstElementFlags.
 	 *
 	 * Since: 1.10
 	 */
@@ -383,7 +383,7 @@ public class Bin : Element, ChildProxyIF
 	 * Params:
 	 *     iface = the #GType of an interface
 	 *
-	 * Return: a #GstIterator of #GstElement
+	 * Returns: a #GstIterator of #GstElement
 	 *     for all elements in the bin implementing the given interface,
 	 *     or %NULL
 	 */
@@ -404,7 +404,7 @@ public class Bin : Element, ChildProxyIF
 	 *
 	 * MT safe.  Caller owns returned value.
 	 *
-	 * Return: a #GstIterator of #GstElement,
+	 * Returns: a #GstIterator of #GstElement,
 	 *     or %NULL
 	 */
 	public Iterator iterateElements()
@@ -425,7 +425,7 @@ public class Bin : Element, ChildProxyIF
 	 *
 	 * MT safe.  Caller owns returned value.
 	 *
-	 * Return: a #GstIterator of #GstElement,
+	 * Returns: a #GstIterator of #GstElement,
 	 *     or %NULL
 	 */
 	public Iterator iterateRecurse()
@@ -446,7 +446,7 @@ public class Bin : Element, ChildProxyIF
 	 *
 	 * MT safe.  Caller owns returned value.
 	 *
-	 * Return: a #GstIterator of #GstElement,
+	 * Returns: a #GstIterator of #GstElement,
 	 *     or %NULL
 	 */
 	public Iterator iterateSinks()
@@ -471,7 +471,7 @@ public class Bin : Element, ChildProxyIF
 	 *
 	 * MT safe.  Caller owns returned value.
 	 *
-	 * Return: a #GstIterator of #GstElement,
+	 * Returns: a #GstIterator of #GstElement,
 	 *     or %NULL
 	 */
 	public Iterator iterateSorted()
@@ -492,7 +492,7 @@ public class Bin : Element, ChildProxyIF
 	 *
 	 * MT safe.  Caller owns returned value.
 	 *
-	 * Return: a #GstIterator of #GstElement,
+	 * Returns: a #GstIterator of #GstElement,
 	 *     or %NULL
 	 */
 	public Iterator iterateSources()
@@ -517,7 +517,7 @@ public class Bin : Element, ChildProxyIF
 	 * This function simply emits the 'do-latency' signal so any custom latency
 	 * calculations will be performed.
 	 *
-	 * Return: %TRUE if the latency could be queried and reconfigured.
+	 * Returns: %TRUE if the latency could be queried and reconfigured.
 	 */
 	public bool recalculateLatency()
 	{
@@ -540,7 +540,7 @@ public class Bin : Element, ChildProxyIF
 	 * Params:
 	 *     element = the #GstElement to remove
 	 *
-	 * Return: %TRUE if the element could be removed, %FALSE if
+	 * Returns: %TRUE if the element could be removed, %FALSE if
 	 *     the bin does not want to remove the element.
 	 */
 	public bool remove(Element element)
@@ -570,7 +570,7 @@ public class Bin : Element, ChildProxyIF
 	 * Synchronizes the state of every child of @bin with the state
 	 * of @bin. See also gst_element_sync_state_with_parent().
 	 *
-	 * Return: %TRUE if syncing the state was successful for all children,
+	 * Returns: %TRUE if syncing the state was successful for all children,
 	 *     otherwise %FALSE.
 	 *
 	 * Since: 1.6

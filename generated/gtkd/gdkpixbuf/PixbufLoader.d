@@ -131,7 +131,7 @@ public class PixbufLoader : ObjectG
 	/**
 	 * Creates a new pixbuf loader object.
 	 *
-	 * Return: A newly-created pixbuf loader.
+	 * Returns: A newly-created pixbuf loader.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -161,7 +161,7 @@ public class PixbufLoader : ObjectG
 	 * Remember that this does not unref the loader, so if you plan not to
 	 * use it anymore, please g_object_unref() it.
 	 *
-	 * Return: %TRUE if all image data written so far was successfully
+	 * Returns: %TRUE if all image data written so far was successfully
 	 *     passed out via the update_area signal
 	 *
 	 * Throws: GException on failure.
@@ -187,7 +187,7 @@ public class PixbufLoader : ObjectG
 	 * bytes yet (hasn't emitted the "area-prepared" signal) this function will
 	 * return %NULL.
 	 *
-	 * Return: The #GdkPixbufAnimation that the loader is loading, or %NULL if
+	 * Returns: The #GdkPixbufAnimation that the loader is loading, or %NULL if
 	 *     not enough data has been read to determine the information.
 	 */
 	public PixbufAnimation getAnimation()
@@ -206,7 +206,7 @@ public class PixbufLoader : ObjectG
 	 * Obtains the available information about the format of the
 	 * currently loading image file.
 	 *
-	 * Return: A #GdkPixbufFormat or
+	 * Returns: A #GdkPixbufFormat or
 	 *     %NULL. The return value is owned by GdkPixbuf and should not be
 	 *     freed.
 	 *
@@ -237,7 +237,7 @@ public class PixbufLoader : ObjectG
 	 * return the "static image" of the animation
 	 * (see gdk_pixbuf_animation_get_static_image()).
 	 *
-	 * Return: The #GdkPixbuf that the loader is creating, or %NULL if not
+	 * Returns: The #GdkPixbuf that the loader is creating, or %NULL if not
 	 *     enough data has been read to determine how to create the image buffer.
 	 */
 	public Pixbuf getPixbuf()
@@ -284,7 +284,7 @@ public class PixbufLoader : ObjectG
 	 *     buf = Pointer to image data.
 	 *     count = Length of the @buf buffer in bytes.
 	 *
-	 * Return: %TRUE if the write was successful, or %FALSE if the loader
+	 * Returns: %TRUE if the write was successful, or %FALSE if the loader
 	 *     cannot parse the buffer.
 	 *
 	 * Throws: GException on failure.
@@ -316,7 +316,7 @@ public class PixbufLoader : ObjectG
 	 * Params:
 	 *     buffer = The image data as a #GBytes
 	 *
-	 * Return: %TRUE if the write was successful, or %FALSE if the loader
+	 * Returns: %TRUE if the write was successful, or %FALSE if the loader
 	 *     cannot parse the buffer.
 	 *
 	 * Since: 2.30

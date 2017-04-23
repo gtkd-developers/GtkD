@@ -87,7 +87,7 @@ public class TcpWrapperConnection : TcpConnection
 	 *     baseIoStream = the #GIOStream to wrap
 	 *     socket = the #GSocket associated with @base_io_stream
 	 *
-	 * Return: the new #GSocketConnection.
+	 * Returns: the new #GSocketConnection.
 	 *
 	 * Since: 2.28
 	 *
@@ -108,7 +108,7 @@ public class TcpWrapperConnection : TcpConnection
 	/**
 	 * Get's @conn's base #GIOStream
 	 *
-	 * Return: @conn's base #GIOStream
+	 * Returns: @conn's base #GIOStream
 	 */
 	public IOStream getBaseIoStream()
 	{

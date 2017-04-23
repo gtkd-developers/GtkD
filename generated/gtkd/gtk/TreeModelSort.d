@@ -205,7 +205,7 @@ public class TreeModelSort : ObjectG, TreeDragSourceIF, TreeModelIF, TreeSortabl
 	 *     sortIter = An uninitialized #GtkTreeIter.
 	 *     childIter = A valid #GtkTreeIter pointing to a row on the child model
 	 *
-	 * Return: %TRUE, if @sort_iter was set, i.e. if @sort_iter is a
+	 * Returns: %TRUE, if @sort_iter was set, i.e. if @sort_iter is a
 	 *     valid iterator pointer to a visible row in the child model.
 	 */
 	public bool convertChildIterToIter(out TreeIter sortIter, TreeIter childIter)
@@ -228,7 +228,7 @@ public class TreeModelSort : ObjectG, TreeDragSourceIF, TreeModelIF, TreeSortabl
 	 * Params:
 	 *     childPath = A #GtkTreePath to convert
 	 *
-	 * Return: A newly allocated #GtkTreePath, or %NULL
+	 * Returns: A newly allocated #GtkTreePath, or %NULL
 	 */
 	public TreePath convertChildPathToPath(TreePath childPath)
 	{
@@ -268,7 +268,7 @@ public class TreeModelSort : ObjectG, TreeDragSourceIF, TreeModelIF, TreeSortabl
 	 * Params:
 	 *     sortedPath = A #GtkTreePath to convert
 	 *
-	 * Return: A newly allocated #GtkTreePath, or %NULL
+	 * Returns: A newly allocated #GtkTreePath, or %NULL
 	 */
 	public TreePath convertPathToChildPath(TreePath sortedPath)
 	{
@@ -285,7 +285,7 @@ public class TreeModelSort : ObjectG, TreeDragSourceIF, TreeModelIF, TreeSortabl
 	/**
 	 * Returns the model the #GtkTreeModelSort is sorting.
 	 *
-	 * Return: the "child model" being sorted
+	 * Returns: the "child model" being sorted
 	 */
 	public TreeModelIF getModel()
 	{
@@ -308,7 +308,7 @@ public class TreeModelSort : ObjectG, TreeDragSourceIF, TreeModelIF, TreeSortabl
 	 * Params:
 	 *     iter = A #GtkTreeIter.
 	 *
-	 * Return: %TRUE if the iter is valid, %FALSE if the iter is invalid.
+	 * Returns: %TRUE if the iter is valid, %FALSE if the iter is invalid.
 	 *
 	 * Since: 2.2
 	 */
@@ -334,7 +334,7 @@ public class TreeModelSort : ObjectG, TreeDragSourceIF, TreeModelIF, TreeSortabl
 	 * Params:
 	 *     childModel = A #GtkTreeModel
 	 *
-	 * Return: A new #GtkTreeModel.
+	 * Returns: A new #GtkTreeModel.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

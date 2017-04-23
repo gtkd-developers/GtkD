@@ -75,7 +75,7 @@ public class HashTable
 	 * Params:
 	 *     key = a key to insert
 	 *
-	 * Return: %TRUE if the key did not exist yet
+	 * Returns: %TRUE if the key did not exist yet
 	 *
 	 * Since: 2.32
 	 */
@@ -90,7 +90,7 @@ public class HashTable
 	 * Params:
 	 *     key = a key to check
 	 *
-	 * Return: %TRUE if @key is in @hash_table, %FALSE otherwise.
+	 * Returns: %TRUE if @key is in @hash_table, %FALSE otherwise.
 	 *
 	 * Since: 2.32
 	 */
@@ -131,7 +131,7 @@ public class HashTable
 	 *     predicate = function to test the key/value pairs for a certain property
 	 *     userData = user data to pass to the function
 	 *
-	 * Return: The value of the first key/value pair is returned,
+	 * Returns: The value of the first key/value pair is returned,
 	 *     for which @predicate evaluates to %TRUE. If no pair with the
 	 *     requested property is found, %NULL is returned.
 	 *
@@ -176,7 +176,7 @@ public class HashTable
 	 *     func = the function to call for each key/value pair
 	 *     userData = user data to pass to the function
 	 *
-	 * Return: the number of key/value pairs removed
+	 * Returns: the number of key/value pairs removed
 	 */
 	public uint foreachRemove(GHRFunc func, void* userData)
 	{
@@ -196,7 +196,7 @@ public class HashTable
 	 *     func = the function to call for each key/value pair
 	 *     userData = user data to pass to the function
 	 *
-	 * Return: the number of key/value pairs removed.
+	 * Returns: the number of key/value pairs removed.
 	 */
 	public uint foreachSteal(GHRFunc func, void* userData)
 	{
@@ -211,7 +211,7 @@ public class HashTable
 	 * To iterate over the entries in a #GHashTable more efficiently, use a
 	 * #GHashTableIter.
 	 *
-	 * Return: a #GList containing all the keys
+	 * Returns: a #GList containing all the keys
 	 *     inside the hash table. The content of the list is owned by the
 	 *     hash table and should not be modified or freed. Use g_list_free()
 	 *     when done using the list.
@@ -249,7 +249,7 @@ public class HashTable
 	 * appropriate to use g_strfreev() if you call g_hash_table_steal_all()
 	 * first to transfer ownership of the keys.
 	 *
-	 * Return: a
+	 * Returns: a
 	 *     %NULL-terminated array containing each key from the table.
 	 *
 	 * Since: 2.40
@@ -271,7 +271,7 @@ public class HashTable
 	 * To iterate over the entries in a #GHashTable more efficiently, use a
 	 * #GHashTableIter.
 	 *
-	 * Return: a #GList containing all the values
+	 * Returns: a #GList containing all the values
 	 *     inside the hash table. The content of the list is owned by the
 	 *     hash table and should not be modified or freed. Use g_list_free()
 	 *     when done using the list.
@@ -304,7 +304,7 @@ public class HashTable
 	 *     key = a key to insert
 	 *     value = the value to associate with the key
 	 *
-	 * Return: %TRUE if the key did not exist yet
+	 * Returns: %TRUE if the key did not exist yet
 	 */
 	public bool insert(void* key, void* value)
 	{
@@ -320,7 +320,7 @@ public class HashTable
 	 * Params:
 	 *     key = the key to look up
 	 *
-	 * Return: the associated value, or %NULL if the key is not found
+	 * Returns: the associated value, or %NULL if the key is not found
 	 */
 	public void* lookup(void* key)
 	{
@@ -343,7 +343,7 @@ public class HashTable
 	 *     value = return location for the value associated
 	 *         with the key
 	 *
-	 * Return: %TRUE if the key was found in the #GHashTable
+	 * Returns: %TRUE if the key was found in the #GHashTable
 	 */
 	public bool lookupExtended(void* lookupKey, out void* origKey, out void* value)
 	{
@@ -372,7 +372,7 @@ public class HashTable
 	 *     hashFunc = a function to create a hash value from a key
 	 *     keyEqualFunc = a function to check two keys for equality
 	 *
-	 * Return: a new #GHashTable
+	 * Returns: a new #GHashTable
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -411,7 +411,7 @@ public class HashTable
 	 *         value used when removing the entry from the #GHashTable, or %NULL
 	 *         if you don't want to supply such a function.
 	 *
-	 * Return: a new #GHashTable
+	 * Returns: a new #GHashTable
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -431,7 +431,7 @@ public class HashTable
 	 * Atomically increments the reference count of @hash_table by one.
 	 * This function is MT-safe and may be called from any thread.
 	 *
-	 * Return: the passed in #GHashTable
+	 * Returns: the passed in #GHashTable
 	 *
 	 * Since: 2.10
 	 */
@@ -458,7 +458,7 @@ public class HashTable
 	 * Params:
 	 *     key = the key to remove
 	 *
-	 * Return: %TRUE if the key was found and removed from the #GHashTable
+	 * Returns: %TRUE if the key was found and removed from the #GHashTable
 	 */
 	public bool remove(void* key)
 	{
@@ -493,7 +493,7 @@ public class HashTable
 	 *     key = a key to insert
 	 *     value = the value to associate with the key
 	 *
-	 * Return: %TRUE if the key did not exist yet
+	 * Returns: %TRUE if the key did not exist yet
 	 */
 	public bool replace(void* key, void* value)
 	{
@@ -503,7 +503,7 @@ public class HashTable
 	/**
 	 * Returns the number of elements contained in the #GHashTable.
 	 *
-	 * Return: the number of key/value pairs in the #GHashTable.
+	 * Returns: the number of key/value pairs in the #GHashTable.
 	 */
 	public uint size()
 	{
@@ -517,7 +517,7 @@ public class HashTable
 	 * Params:
 	 *     key = the key to remove
 	 *
-	 * Return: %TRUE if the key was found and removed from the #GHashTable
+	 * Returns: %TRUE if the key was found and removed from the #GHashTable
 	 */
 	public bool steal(void* key)
 	{
@@ -561,7 +561,7 @@ public class HashTable
 	 *     v1 = a key
 	 *     v2 = a key to compare with @v1
 	 *
-	 * Return: %TRUE if the two keys match.
+	 * Returns: %TRUE if the two keys match.
 	 */
 	public static bool directEqual(void* v1, void* v2)
 	{
@@ -580,7 +580,7 @@ public class HashTable
 	 * Params:
 	 *     v = a #gpointer key
 	 *
-	 * Return: a hash value corresponding to the key.
+	 * Returns: a hash value corresponding to the key.
 	 */
 	public static uint directHash(void* v)
 	{
@@ -598,7 +598,7 @@ public class HashTable
 	 *     v1 = a pointer to a #gdouble key
 	 *     v2 = a pointer to a #gdouble key to compare with @v1
 	 *
-	 * Return: %TRUE if the two keys match.
+	 * Returns: %TRUE if the two keys match.
 	 *
 	 * Since: 2.22
 	 */
@@ -616,7 +616,7 @@ public class HashTable
 	 * Params:
 	 *     v = a pointer to a #gdouble key
 	 *
-	 * Return: a hash value corresponding to the key.
+	 * Returns: a hash value corresponding to the key.
 	 *
 	 * Since: 2.22
 	 */
@@ -636,7 +636,7 @@ public class HashTable
 	 *     v1 = a pointer to a #gint64 key
 	 *     v2 = a pointer to a #gint64 key to compare with @v1
 	 *
-	 * Return: %TRUE if the two keys match.
+	 * Returns: %TRUE if the two keys match.
 	 *
 	 * Since: 2.22
 	 */
@@ -655,7 +655,7 @@ public class HashTable
 	 * Params:
 	 *     v = a pointer to a #gint64 key
 	 *
-	 * Return: a hash value corresponding to the key.
+	 * Returns: a hash value corresponding to the key.
 	 *
 	 * Since: 2.22
 	 */
@@ -679,7 +679,7 @@ public class HashTable
 	 *     v1 = a pointer to a #gint key
 	 *     v2 = a pointer to a #gint key to compare with @v1
 	 *
-	 * Return: %TRUE if the two keys match.
+	 * Returns: %TRUE if the two keys match.
 	 */
 	public static bool intEqual(void* v1, void* v2)
 	{
@@ -698,7 +698,7 @@ public class HashTable
 	 * Params:
 	 *     v = a pointer to a #gint key
 	 *
-	 * Return: a hash value corresponding to the key.
+	 * Returns: a hash value corresponding to the key.
 	 */
 	public static uint intHash(void* v)
 	{
@@ -719,7 +719,7 @@ public class HashTable
 	 *     v1 = a key
 	 *     v2 = a key to compare with @v1
 	 *
-	 * Return: %TRUE if the two keys match
+	 * Returns: %TRUE if the two keys match
 	 */
 	public static bool strEqual(void* v1, void* v2)
 	{
@@ -745,7 +745,7 @@ public class HashTable
 	 * Params:
 	 *     v = a string key
 	 *
-	 * Return: a hash value corresponding to the key
+	 * Returns: a hash value corresponding to the key
 	 */
 	public static uint strHash(void* v)
 	{

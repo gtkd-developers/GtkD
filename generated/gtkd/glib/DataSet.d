@@ -67,7 +67,7 @@ public struct DataSet
 	 *     datasetLocation = the location identifying the dataset.
 	 *     keyId = the #GQuark id to identify the data element.
 	 *
-	 * Return: the data element corresponding to the #GQuark, or %NULL if
+	 * Returns: the data element corresponding to the #GQuark, or %NULL if
 	 *     it is not found.
 	 */
 	public static void* idGetData(void* datasetLocation, GQuark keyId)
@@ -83,7 +83,7 @@ public struct DataSet
 	 *     datasetLocation = the location identifying the dataset.
 	 *     keyId = the #GQuark ID identifying the data element.
 	 *
-	 * Return: the data previously stored at @key_id, or %NULL if none.
+	 * Returns: the data previously stored at @key_id, or %NULL if none.
 	 */
 	public static void* idRemoveNoNotify(void* datasetLocation, GQuark keyId)
 	{

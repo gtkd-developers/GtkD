@@ -137,7 +137,7 @@ public class BookmarkFile
 	 * Params:
 	 *     uri = a valid URI
 	 *
-	 * Return: a timestamp
+	 * Returns: a timestamp
 	 *
 	 * Since: 2.12
 	 *
@@ -179,7 +179,7 @@ public class BookmarkFile
 	 *     count = return location for the registration count, or %NULL
 	 *     stamp = return location for the last registration time, or %NULL
 	 *
-	 * Return: %TRUE on success.
+	 * Returns: %TRUE on success.
 	 *
 	 * Since: 2.12
 	 *
@@ -212,7 +212,7 @@ public class BookmarkFile
 	 * Params:
 	 *     uri = a valid URI
 	 *
-	 * Return: a newly allocated %NULL-terminated array of strings.
+	 * Returns: a newly allocated %NULL-terminated array of strings.
 	 *     Use g_strfreev() to free it.
 	 *
 	 * Since: 2.12
@@ -244,7 +244,7 @@ public class BookmarkFile
 	 * Params:
 	 *     uri = a valid URI
 	 *
-	 * Return: a newly allocated string or %NULL if the specified
+	 * Returns: a newly allocated string or %NULL if the specified
 	 *     URI cannot be found.
 	 *
 	 * Since: 2.12
@@ -278,7 +278,7 @@ public class BookmarkFile
 	 * Params:
 	 *     uri = a valid URI
 	 *
-	 * Return: a newly allocated %NULL-terminated array of group names.
+	 * Returns: a newly allocated %NULL-terminated array of group names.
 	 *     Use g_strfreev() to free it.
 	 *
 	 * Since: 2.12
@@ -312,7 +312,7 @@ public class BookmarkFile
 	 *     href = return location for the icon's location or %NULL
 	 *     mimeType = return location for the icon's MIME type or %NULL
 	 *
-	 * Return: %TRUE if the icon for the bookmark for the URI was found.
+	 * Returns: %TRUE if the icon for the bookmark for the URI was found.
 	 *     You should free the returned strings.
 	 *
 	 * Since: 2.12
@@ -349,7 +349,7 @@ public class BookmarkFile
 	 * Params:
 	 *     uri = a valid URI
 	 *
-	 * Return: %TRUE if the private flag is set, %FALSE otherwise.
+	 * Returns: %TRUE if the private flag is set, %FALSE otherwise.
 	 *
 	 * Since: 2.12
 	 *
@@ -380,7 +380,7 @@ public class BookmarkFile
 	 * Params:
 	 *     uri = a valid URI
 	 *
-	 * Return: a newly allocated string or %NULL if the specified
+	 * Returns: a newly allocated string or %NULL if the specified
 	 *     URI cannot be found.
 	 *
 	 * Since: 2.12
@@ -411,7 +411,7 @@ public class BookmarkFile
 	 * Params:
 	 *     uri = a valid URI
 	 *
-	 * Return: a timestamp
+	 * Returns: a timestamp
 	 *
 	 * Since: 2.12
 	 *
@@ -434,7 +434,7 @@ public class BookmarkFile
 	/**
 	 * Gets the number of bookmarks inside @bookmark.
 	 *
-	 * Return: the number of bookmarks
+	 * Returns: the number of bookmarks
 	 *
 	 * Since: 2.12
 	 */
@@ -454,7 +454,7 @@ public class BookmarkFile
 	 * Params:
 	 *     uri = a valid URI or %NULL
 	 *
-	 * Return: a newly allocated string or %NULL if the specified
+	 * Returns: a newly allocated string or %NULL if the specified
 	 *     URI cannot be found.
 	 *
 	 * Since: 2.12
@@ -481,7 +481,7 @@ public class BookmarkFile
 	 * The array of returned URIs will be %NULL-terminated, so @length may
 	 * optionally be %NULL.
 	 *
-	 * Return: a newly allocated %NULL-terminated array of strings.
+	 * Returns: a newly allocated %NULL-terminated array of strings.
 	 *     Use g_strfreev() to free it.
 	 *
 	 * Since: 2.12
@@ -505,7 +505,7 @@ public class BookmarkFile
 	 * Params:
 	 *     uri = a valid URI
 	 *
-	 * Return: a timestamp.
+	 * Returns: a timestamp.
 	 *
 	 * Since: 2.12
 	 *
@@ -536,7 +536,7 @@ public class BookmarkFile
 	 *     uri = a valid URI
 	 *     name = the name of the application
 	 *
-	 * Return: %TRUE if the application @name was found
+	 * Returns: %TRUE if the application @name was found
 	 *
 	 * Since: 2.12
 	 *
@@ -567,7 +567,7 @@ public class BookmarkFile
 	 *     uri = a valid URI
 	 *     group = the group name to be searched
 	 *
-	 * Return: %TRUE if @group was found.
+	 * Returns: %TRUE if @group was found.
 	 *
 	 * Since: 2.12
 	 *
@@ -593,7 +593,7 @@ public class BookmarkFile
 	 * Params:
 	 *     uri = a valid URI
 	 *
-	 * Return: %TRUE if @uri is inside @bookmark, %FALSE otherwise
+	 * Returns: %TRUE if @uri is inside @bookmark, %FALSE otherwise
 	 *
 	 * Since: 2.12
 	 */
@@ -611,7 +611,7 @@ public class BookmarkFile
 	 *     data = desktop bookmarks loaded in memory
 	 *     length = the length of @data in bytes
 	 *
-	 * Return: %TRUE if a desktop bookmark could be loaded.
+	 * Returns: %TRUE if a desktop bookmark could be loaded.
 	 *
 	 * Since: 2.12
 	 *
@@ -643,7 +643,7 @@ public class BookmarkFile
 	 *     fullPath = return location for a string
 	 *         containing the full path of the file, or %NULL
 	 *
-	 * Return: %TRUE if a key file could be loaded, %FALSE otherwise
+	 * Returns: %TRUE if a key file could be loaded, %FALSE otherwise
 	 *
 	 * Since: 2.12
 	 *
@@ -675,7 +675,7 @@ public class BookmarkFile
 	 *     filename = the path of a filename to load, in the
 	 *         GLib file name encoding
 	 *
-	 * Return: %TRUE if a desktop bookmark file could be loaded
+	 * Returns: %TRUE if a desktop bookmark file could be loaded
 	 *
 	 * Since: 2.12
 	 *
@@ -707,7 +707,7 @@ public class BookmarkFile
 	 *     oldUri = a valid URI
 	 *     newUri = a valid URI, or %NULL
 	 *
-	 * Return: %TRUE if the URI was successfully changed
+	 * Returns: %TRUE if the URI was successfully changed
 	 *
 	 * Since: 2.12
 	 *
@@ -741,7 +741,7 @@ public class BookmarkFile
 	 *     uri = a valid URI
 	 *     name = the name of the application
 	 *
-	 * Return: %TRUE if the application was successfully removed.
+	 * Returns: %TRUE if the application was successfully removed.
 	 *
 	 * Since: 2.12
 	 *
@@ -774,7 +774,7 @@ public class BookmarkFile
 	 *     uri = a valid URI
 	 *     group = the group name to be removed
 	 *
-	 * Return: %TRUE if @group was successfully removed.
+	 * Returns: %TRUE if @group was successfully removed.
 	 *
 	 * Since: 2.12
 	 *
@@ -800,7 +800,7 @@ public class BookmarkFile
 	 * Params:
 	 *     uri = a valid URI
 	 *
-	 * Return: %TRUE if the bookmark was removed successfully.
+	 * Returns: %TRUE if the bookmark was removed successfully.
 	 *
 	 * Since: 2.12
 	 *
@@ -873,7 +873,7 @@ public class BookmarkFile
 	 *     count = the number of registrations done for this application
 	 *     stamp = the time of the last registration for this application
 	 *
-	 * Return: %TRUE if the application's meta-data was successfully
+	 * Returns: %TRUE if the application's meta-data was successfully
 	 *     changed.
 	 *
 	 * Since: 2.12
@@ -1049,7 +1049,7 @@ public class BookmarkFile
 	 * Params:
 	 *     length = return location for the length of the returned string, or %NULL
 	 *
-	 * Return: a newly allocated string holding
+	 * Returns: a newly allocated string holding
 	 *     the contents of the #GBookmarkFile
 	 *
 	 * Since: 2.12
@@ -1078,7 +1078,7 @@ public class BookmarkFile
 	 * Params:
 	 *     filename = path of the output file
 	 *
-	 * Return: %TRUE if the file was successfully written.
+	 * Returns: %TRUE if the file was successfully written.
 	 *
 	 * Since: 2.12
 	 *
@@ -1111,7 +1111,7 @@ public class BookmarkFile
 	 * or g_bookmark_file_load_from_data_dirs() to read an existing bookmark
 	 * file.
 	 *
-	 * Return: an empty #GBookmarkFile
+	 * Returns: an empty #GBookmarkFile
 	 *
 	 * Since: 2.12
 	 *

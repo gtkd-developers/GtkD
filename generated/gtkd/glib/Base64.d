@@ -71,7 +71,7 @@ public struct Base64
 	 *     text = zero-terminated
 	 *         string with base64 text to decode
 	 *
-	 * Return: The binary data that @text responds. This pointer
+	 * Returns: The binary data that @text responds. This pointer
 	 *     is the same as the input @text.
 	 *
 	 * Since: 2.20
@@ -95,7 +95,7 @@ public struct Base64
 	 * Params:
 	 *     text = zero-terminated string with base64 text to decode
 	 *
-	 * Return: newly allocated buffer containing the binary data
+	 * Returns: newly allocated buffer containing the binary data
 	 *     that @text represents. The returned buffer must
 	 *     be freed with g_free().
 	 *
@@ -118,7 +118,7 @@ public struct Base64
 	 *     data = the binary data to encode
 	 *     len = the length of @data
 	 *
-	 * Return: a newly allocated, zero-terminated Base-64
+	 * Returns: a newly allocated, zero-terminated Base-64
 	 *     encoded string representing @data. The returned string must
 	 *     be freed with g_free().
 	 *
@@ -147,7 +147,7 @@ public struct Base64
 	 *     state = Saved state from g_base64_encode_step()
 	 *     save = Saved state from g_base64_encode_step()
 	 *
-	 * Return: The number of bytes of output that was written
+	 * Returns: The number of bytes of output that was written
 	 *
 	 * Since: 2.12
 	 */
@@ -185,7 +185,7 @@ public struct Base64
 	 *     state = Saved state between steps, initialize to 0
 	 *     save = Saved state between steps, initialize to 0
 	 *
-	 * Return: The number of bytes of output that was written
+	 * Returns: The number of bytes of output that was written
 	 *
 	 * Since: 2.12
 	 */

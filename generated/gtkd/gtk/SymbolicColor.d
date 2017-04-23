@@ -138,7 +138,7 @@ public class SymbolicColor
 	 * Params:
 	 *     color = a #GdkRGBA
 	 *
-	 * Return: a newly created #GtkSymbolicColor
+	 * Returns: a newly created #GtkSymbolicColor
 	 *
 	 * Since: 3.0
 	 *
@@ -168,7 +168,7 @@ public class SymbolicColor
 	 *     color2 = another color to mix
 	 *     factor = mix factor
 	 *
-	 * Return: A newly created #GtkSymbolicColor
+	 * Returns: A newly created #GtkSymbolicColor
 	 *
 	 * Since: 3.0
 	 *
@@ -196,7 +196,7 @@ public class SymbolicColor
 	 * Params:
 	 *     name = color name
 	 *
-	 * Return: a newly created #GtkSymbolicColor
+	 * Returns: a newly created #GtkSymbolicColor
 	 *
 	 * Since: 3.0
 	 *
@@ -228,7 +228,7 @@ public class SymbolicColor
 	 *     themeClass = The theme class to pull color from
 	 *     id = The color id
 	 *
-	 * Return: A newly created #GtkSymbolicColor
+	 * Returns: A newly created #GtkSymbolicColor
 	 *
 	 * Since: 3.4
 	 *
@@ -251,7 +251,7 @@ public class SymbolicColor
 	 *
 	 * Deprecated: #GtkSymbolicColor is deprecated.
 	 *
-	 * Return: the same @color
+	 * Returns: the same @color
 	 *
 	 * Since: 3.0
 	 */
@@ -284,7 +284,7 @@ public class SymbolicColor
 	 *         named colors, or %NULL
 	 *     resolvedColor = return location for the resolved color
 	 *
-	 * Return: %TRUE if the color has been resolved
+	 * Returns: %TRUE if the color has been resolved
 	 *
 	 * Since: 3.0
 	 */
@@ -308,7 +308,7 @@ public class SymbolicColor
 	 *
 	 * Deprecated: #GtkSymbolicColor is deprecated.
 	 *
-	 * Return: a new string representing @color
+	 * Returns: a new string representing @color
 	 */
 	public override string toString()
 	{

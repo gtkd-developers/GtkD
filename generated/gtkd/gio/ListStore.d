@@ -88,7 +88,7 @@ public class ListStore : ObjectG, ListModelIF
 	 * Params:
 	 *     itemType = the #GType of items in the list
 	 *
-	 * Return: a new #GListStore
+	 * Returns: a new #GListStore
 	 *
 	 * Since: 2.44
 	 *
@@ -160,7 +160,7 @@ public class ListStore : ObjectG, ListModelIF
 	 *     compareFunc = pairwise comparison function for sorting
 	 *     userData = user data for @compare_func
 	 *
-	 * Return: the position at which @item was inserted
+	 * Returns: the position at which @item was inserted
 	 *
 	 * Since: 2.44
 	 */

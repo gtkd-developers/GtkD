@@ -122,7 +122,7 @@ public class InputStream : ObjectG
 	 * Params:
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Return: %TRUE on success, %FALSE on failure
+	 * Returns: %TRUE on success, %FALSE on failure
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -169,7 +169,7 @@ public class InputStream : ObjectG
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *
-	 * Return: %TRUE if the stream was closed successfully.
+	 * Returns: %TRUE if the stream was closed successfully.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -190,7 +190,7 @@ public class InputStream : ObjectG
 	/**
 	 * Checks if an input stream has pending actions.
 	 *
-	 * Return: %TRUE if @stream has pending actions.
+	 * Returns: %TRUE if @stream has pending actions.
 	 */
 	public bool hasPending()
 	{
@@ -200,7 +200,7 @@ public class InputStream : ObjectG
 	/**
 	 * Checks if an input stream is closed.
 	 *
-	 * Return: %TRUE if the stream is closed.
+	 * Returns: %TRUE if the stream is closed.
 	 */
 	public bool isClosed()
 	{
@@ -236,7 +236,7 @@ public class InputStream : ObjectG
 	 *     count = the number of bytes that will be read from the stream
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Return: Number of bytes read, or -1 on error, or 0 on end of file.
+	 * Returns: Number of bytes read, or -1 on error, or 0 on end of file.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -282,7 +282,7 @@ public class InputStream : ObjectG
 	 *     bytesRead = location to store the number of bytes that was read from the stream
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Return: %TRUE on success, %FALSE if there was an error
+	 * Returns: %TRUE on success, %FALSE if there was an error
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -343,7 +343,7 @@ public class InputStream : ObjectG
 	 *     result = a #GAsyncResult
 	 *     bytesRead = location to store the number of bytes that was read from the stream
 	 *
-	 * Return: %TRUE on success, %FALSE if there was an error
+	 * Returns: %TRUE on success, %FALSE if there was an error
 	 *
 	 * Since: 2.44
 	 *
@@ -433,7 +433,7 @@ public class InputStream : ObjectG
 	 *         values include 4096 and 8192.
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Return: a new #GBytes, or %NULL on error
+	 * Returns: a new #GBytes, or %NULL on error
 	 *
 	 * Since: 2.34
 	 *
@@ -500,7 +500,7 @@ public class InputStream : ObjectG
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *
-	 * Return: the newly-allocated #GBytes, or %NULL on error
+	 * Returns: the newly-allocated #GBytes, or %NULL on error
 	 *
 	 * Since: 2.34
 	 *
@@ -531,7 +531,7 @@ public class InputStream : ObjectG
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *
-	 * Return: number of bytes read in, or -1 on error, or 0 on end of file.
+	 * Returns: number of bytes read in, or -1 on error, or 0 on end of file.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -554,7 +554,7 @@ public class InputStream : ObjectG
 	 * already set or @stream is closed, it will return %FALSE and set
 	 * @error.
 	 *
-	 * Return: %TRUE if pending was previously unset and is now set.
+	 * Returns: %TRUE if pending was previously unset and is now set.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -592,7 +592,7 @@ public class InputStream : ObjectG
 	 *     count = the number of bytes that will be skipped from the stream
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Return: Number of bytes skipped, or -1 on error
+	 * Returns: Number of bytes skipped, or -1 on error
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -653,7 +653,7 @@ public class InputStream : ObjectG
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *
-	 * Return: the size of the bytes skipped, or %-1 on error.
+	 * Returns: the size of the bytes skipped, or %-1 on error.
 	 *
 	 * Throws: GException on failure.
 	 */

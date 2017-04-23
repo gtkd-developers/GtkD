@@ -86,7 +86,7 @@ public class AppLaunchContext : ObjectG
 	 * Creates a new application launch context. This is not normally used,
 	 * instead you instantiate a subclass of this, such as #GdkAppLaunchContext.
 	 *
-	 * Return: a #GAppLaunchContext.
+	 * Returns: a #GAppLaunchContext.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -111,7 +111,7 @@ public class AppLaunchContext : ObjectG
 	 *     info = a #GAppInfo
 	 *     files = a #GList of #GFile objects
 	 *
-	 * Return: a display string for the display.
+	 * Returns: a display string for the display.
 	 */
 	public string getDisplay(AppInfoIF info, ListG files)
 	{
@@ -127,7 +127,7 @@ public class AppLaunchContext : ObjectG
 	 * This is a %NULL-terminated array of strings, where each string has
 	 * the form `KEY=VALUE`.
 	 *
-	 * Return: the
+	 * Returns: the
 	 *     child's environment
 	 *
 	 * Since: 2.32
@@ -151,7 +151,7 @@ public class AppLaunchContext : ObjectG
 	 *     info = a #GAppInfo
 	 *     files = a #GList of of #GFile objects
 	 *
-	 * Return: a startup notification ID for the application, or %NULL if
+	 * Returns: a startup notification ID for the application, or %NULL if
 	 *     not supported.
 	 */
 	public string getStartupNotifyId(AppInfoIF info, ListG files)

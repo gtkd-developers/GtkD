@@ -188,7 +188,7 @@ public class RWLock
 	 * the read lock was successfully obtained. Otherwise it
 	 * returns %FALSE.
 	 *
-	 * Return: %TRUE if @rw_lock could be locked
+	 * Returns: %TRUE if @rw_lock could be locked
 	 *
 	 * Since: 2.32
 	 */
@@ -227,7 +227,7 @@ public class RWLock
 	 * a read or write lock on @rw_lock, it immediately returns %FALSE.
 	 * Otherwise it locks @rw_lock and returns %TRUE.
 	 *
-	 * Return: %TRUE if @rw_lock could be locked
+	 * Returns: %TRUE if @rw_lock could be locked
 	 *
 	 * Since: 2.32
 	 */

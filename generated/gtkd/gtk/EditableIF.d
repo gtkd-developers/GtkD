@@ -120,7 +120,7 @@ public interface EditableIF{
 	 *     startPos = start of text
 	 *     endPos = end of text
 	 *
-	 * Return: a pointer to the contents of the widget as a
+	 * Returns: a pointer to the contents of the widget as a
 	 *     string. This string is allocated by the #GtkEditable
 	 *     implementation and should be freed by the caller.
 	 */
@@ -130,7 +130,7 @@ public interface EditableIF{
 	 * Retrieves whether @editable is editable. See
 	 * gtk_editable_set_editable().
 	 *
-	 * Return: %TRUE if @editable is editable.
+	 * Returns: %TRUE if @editable is editable.
 	 */
 	public bool getEditable();
 
@@ -140,7 +140,7 @@ public interface EditableIF{
 	 *
 	 * Note that this position is in characters, not in bytes.
 	 *
-	 * Return: the cursor position
+	 * Returns: the cursor position
 	 */
 	public int getPosition();
 
@@ -155,7 +155,7 @@ public interface EditableIF{
 	 *     startPos = location to store the starting position, or %NULL
 	 *     endPos = location to store the end position, or %NULL
 	 *
-	 * Return: %TRUE if an area is selected, %FALSE otherwise
+	 * Returns: %TRUE if an area is selected, %FALSE otherwise
 	 */
 	public bool getSelectionBounds(out int startPos, out int endPos);
 

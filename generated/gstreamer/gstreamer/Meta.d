@@ -57,7 +57,7 @@ public struct Meta
 	 *
 	 * Params:
 	 *     api = an API
-	 * Return: an array of tags as strings.
+	 * Returns: an array of tags as strings.
 	 *
 	 * Since: 1.2
 	 */
@@ -73,7 +73,7 @@ public struct Meta
 	 *     api = an API
 	 *     tag = the tag to check
 	 *
-	 * Return: %TRUE if @api was registered with @tag.
+	 * Returns: %TRUE if @api was registered with @tag.
 	 */
 	public static bool apiTypeHasTag(GType api, GQuark tag)
 	{
@@ -88,7 +88,7 @@ public struct Meta
 	 *     api = an API to register
 	 *     tags = tags for @api
 	 *
-	 * Return: a unique GType for @api.
+	 * Returns: a unique GType for @api.
 	 */
 	public static GType apiTypeRegister(string api, string[] tags)
 	{
@@ -102,7 +102,7 @@ public struct Meta
 	 * Params:
 	 *     impl = the name
 	 *
-	 * Return: a #GstMetaInfo with @impl, or
+	 * Returns: a #GstMetaInfo with @impl, or
 	 *     %NULL when no such metainfo exists.
 	 */
 	public static GstMetaInfo* getInfo(string impl)
@@ -124,7 +124,7 @@ public struct Meta
 	 *     freeFunc = a #GstMetaFreeFunction
 	 *     transformFunc = a #GstMetaTransformFunction
 	 *
-	 * Return: a #GstMetaInfo that can be used to access metadata.
+	 * Returns: a #GstMetaInfo that can be used to access metadata.
 	 */
 	public static GstMetaInfo* register(GType api, string impl, size_t size, GstMetaInitFunction initFunc, GstMetaFreeFunction freeFunc, GstMetaTransformFunction transformFunc)
 	{

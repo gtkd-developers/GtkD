@@ -124,7 +124,7 @@ public class PlacesSidebar : ScrolledWindow
 	 * #GtkPlacesSidebar::open-location signal to be notified
 	 * when the user makes a selection in the sidebar.
 	 *
-	 * Return: a newly created #GtkPlacesSidebar
+	 * Returns: a newly created #GtkPlacesSidebar
 	 *
 	 * Since: 3.10
 	 *
@@ -167,7 +167,7 @@ public class PlacesSidebar : ScrolledWindow
 	/**
 	 * Returns the value previously set with gtk_places_sidebar_set_local_only().
 	 *
-	 * Return: %TRUE if the sidebar will only show local files.
+	 * Returns: %TRUE if the sidebar will only show local files.
 	 *
 	 * Since: 3.12
 	 */
@@ -187,7 +187,7 @@ public class PlacesSidebar : ScrolledWindow
 	 * function to get the location that is being referred to during the callbacks
 	 * for your menu items.
 	 *
-	 * Return: a GFile with the selected location, or
+	 * Returns: a GFile with the selected location, or
 	 *     %NULL if nothing is visually selected.
 	 *
 	 * Since: 3.10
@@ -212,7 +212,7 @@ public class PlacesSidebar : ScrolledWindow
 	 * Params:
 	 *     n = index of the bookmark to query
 	 *
-	 * Return: The bookmark specified by the index @n, or
+	 * Returns: The bookmark specified by the index @n, or
 	 *     %NULL if no such index exist.  Note that the indices start at 0, even though
 	 *     the file chooser starts them with the keyboard shortcut "Alt-1".
 	 *
@@ -233,7 +233,7 @@ public class PlacesSidebar : ScrolledWindow
 	/**
 	 * Gets the open flags.
 	 *
-	 * Return: the #GtkPlacesOpenFlags of @sidebar
+	 * Returns: the #GtkPlacesOpenFlags of @sidebar
 	 *
 	 * Since: 3.10
 	 */
@@ -248,7 +248,7 @@ public class PlacesSidebar : ScrolledWindow
 	 * Deprecated: It is recommended to group this functionality with the drives
 	 * and network location under the new 'Other Location' item
 	 *
-	 * Return: %TRUE if the sidebar will display a “Connect to Server” item.
+	 * Returns: %TRUE if the sidebar will display a “Connect to Server” item.
 	 */
 	public bool getShowConnectToServer()
 	{
@@ -258,7 +258,7 @@ public class PlacesSidebar : ScrolledWindow
 	/**
 	 * Returns the value previously set with gtk_places_sidebar_set_show_desktop()
 	 *
-	 * Return: %TRUE if the sidebar will display a builtin shortcut to the desktop folder.
+	 * Returns: %TRUE if the sidebar will display a builtin shortcut to the desktop folder.
 	 *
 	 * Since: 3.10
 	 */
@@ -270,7 +270,7 @@ public class PlacesSidebar : ScrolledWindow
 	/**
 	 * Returns the value previously set with gtk_places_sidebar_set_show_enter_location()
 	 *
-	 * Return: %TRUE if the sidebar will display an “Enter Location” item.
+	 * Returns: %TRUE if the sidebar will display an “Enter Location” item.
 	 *
 	 * Since: 3.14
 	 */
@@ -282,7 +282,7 @@ public class PlacesSidebar : ScrolledWindow
 	/**
 	 * Returns the value previously set with gtk_places_sidebar_set_show_other_locations()
 	 *
-	 * Return: %TRUE if the sidebar will display an “Other Locations” item.
+	 * Returns: %TRUE if the sidebar will display an “Other Locations” item.
 	 *
 	 * Since: 3.18
 	 */
@@ -294,7 +294,7 @@ public class PlacesSidebar : ScrolledWindow
 	/**
 	 * Returns the value previously set with gtk_places_sidebar_set_show_recent()
 	 *
-	 * Return: %TRUE if the sidebar will display a builtin shortcut for recent files
+	 * Returns: %TRUE if the sidebar will display a builtin shortcut for recent files
 	 *
 	 * Since: 3.18
 	 */
@@ -306,7 +306,7 @@ public class PlacesSidebar : ScrolledWindow
 	/**
 	 * Returns the value previously set with gtk_places_sidebar_set_show_trash()
 	 *
-	 * Return: %TRUE if the sidebar will display a “Trash” item.
+	 * Returns: %TRUE if the sidebar will display a “Trash” item.
 	 *
 	 * Since: 3.18
 	 */
@@ -318,7 +318,7 @@ public class PlacesSidebar : ScrolledWindow
 	/**
 	 * Gets the list of shortcuts.
 	 *
-	 * Return: A #GSList of #GFile of the locations that have been added as
+	 * Returns: A #GSList of #GFile of the locations that have been added as
 	 *     application-specific shortcuts with gtk_places_sidebar_add_shortcut().
 	 *     To free this list, you can use
 	 *     |[<!-- language="C" -->
@@ -571,7 +571,7 @@ public class PlacesSidebar : ScrolledWindow
 	 * Params:
 	 *     actions = Possible drag actions that need to be asked for.
 	 *
-	 * Return: the final drag action that the sidebar should pass to the drag side
+	 * Returns: the final drag action that the sidebar should pass to the drag side
 	 *     of the drag-and-drop operation.
 	 *
 	 * Since: 3.10
@@ -641,7 +641,7 @@ public class PlacesSidebar : ScrolledWindow
 	 *     destFile = #GFile with the tentative location that is being hovered for a drop
 	 *     sourceFileList = List of #GFile that are being dragged
 	 *
-	 * Return: The drag action to use, for example, #GDK_ACTION_COPY
+	 * Returns: The drag action to use, for example, #GDK_ACTION_COPY
 	 *     or #GDK_ACTION_MOVE, or 0 if no action is allowed here (i.e. drops
 	 *     are not allowed in the specified @dest_file).
 	 *

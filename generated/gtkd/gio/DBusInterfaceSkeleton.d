@@ -101,7 +101,7 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 	 *     connection = A #GDBusConnection to export @interface_ on.
 	 *     objectPath = The path to export the interface at.
 	 *
-	 * Return: %TRUE if the interface was exported on @connection, otherwise %FALSE with
+	 * Returns: %TRUE if the interface was exported on @connection, otherwise %FALSE with
 	 *     @error set.
 	 *
 	 * Since: 2.30
@@ -142,7 +142,7 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 	/**
 	 * Gets the first connection that @interface_ is exported on, if any.
 	 *
-	 * Return: A #GDBusConnection or %NULL if @interface_ is
+	 * Returns: A #GDBusConnection or %NULL if @interface_ is
 	 *     not exported anywhere. Do not free, the object belongs to @interface_.
 	 *
 	 * Since: 2.30
@@ -162,7 +162,7 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 	/**
 	 * Gets a list of the connections that @interface_ is exported on.
 	 *
-	 * Return: A list of
+	 * Returns: A list of
 	 *     all the connections that @interface_ is exported on. The returned
 	 *     list should be freed with g_list_free() after each element has
 	 *     been freed with g_object_unref().
@@ -185,7 +185,7 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 	 * Gets the #GDBusInterfaceSkeletonFlags that describes what the behavior
 	 * of @interface_
 	 *
-	 * Return: One or more flags from the #GDBusInterfaceSkeletonFlags enumeration.
+	 * Returns: One or more flags from the #GDBusInterfaceSkeletonFlags enumeration.
 	 *
 	 * Since: 2.30
 	 */
@@ -198,7 +198,7 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 	 * Gets D-Bus introspection information for the D-Bus interface
 	 * implemented by @interface_.
 	 *
-	 * Return: A #GDBusInterfaceInfo (never %NULL). Do not free.
+	 * Returns: A #GDBusInterfaceInfo (never %NULL). Do not free.
 	 *
 	 * Since: 2.30
 	 */
@@ -217,7 +217,7 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 	/**
 	 * Gets the object path that @interface_ is exported on, if any.
 	 *
-	 * Return: A string owned by @interface_ or %NULL if @interface_ is not exported
+	 * Returns: A string owned by @interface_ or %NULL if @interface_ is not exported
 	 *     anywhere. Do not free, the string belongs to @interface_.
 	 *
 	 * Since: 2.30
@@ -230,7 +230,7 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 	/**
 	 * Gets all D-Bus properties for @interface_.
 	 *
-	 * Return: A #GVariant of type
+	 * Returns: A #GVariant of type
 	 *     ['a{sv}'][G-VARIANT-TYPE-VARDICT:CAPS].
 	 *     Free with g_variant_unref().
 	 *
@@ -253,7 +253,7 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 	 * @interface_. The returned function pointers should expect @interface_
 	 * itself to be passed as @user_data.
 	 *
-	 * Return: A #GDBusInterfaceVTable (never %NULL).
+	 * Returns: A #GDBusInterfaceVTable (never %NULL).
 	 *
 	 * Since: 2.30
 	 */
@@ -268,7 +268,7 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 	 * Params:
 	 *     connection = A #GDBusConnection.
 	 *
-	 * Return: %TRUE if @interface_ is exported on @connection, %FALSE otherwise.
+	 * Returns: %TRUE if @interface_ is exported on @connection, %FALSE otherwise.
 	 *
 	 * Since: 2.32
 	 */
@@ -383,7 +383,7 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 	 * Params:
 	 *     invocation = A #GDBusMethodInvocation.
 	 *
-	 * Return: %TRUE if the call is authorized, %FALSE otherwise.
+	 * Returns: %TRUE if the call is authorized, %FALSE otherwise.
 	 *
 	 * Since: 2.30
 	 */

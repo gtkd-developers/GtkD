@@ -54,7 +54,7 @@ public template URIHandlerT(TStruct)
 	 * Gets the list of protocols supported by @handler. This list may not be
 	 * modified.
 	 *
-	 * Return: the
+	 * Returns: the
 	 *     supported protocols.  Returns %NULL if the @handler isn't
 	 *     implemented properly, or the @handler doesn't support any
 	 *     protocols.
@@ -67,7 +67,7 @@ public template URIHandlerT(TStruct)
 	/**
 	 * Gets the currently handled URI.
 	 *
-	 * Return: the URI currently handled by
+	 * Returns: the URI currently handled by
 	 *     the @handler.  Returns %NULL if there are no URI currently
 	 *     handled. The returned string must be freed with g_free() when no
 	 *     longer needed.
@@ -83,7 +83,7 @@ public template URIHandlerT(TStruct)
 	/**
 	 * Gets the type of the given URI handler
 	 *
-	 * Return: the #GstURIType of the URI handler.
+	 * Returns: the #GstURIType of the URI handler.
 	 *     Returns #GST_URI_UNKNOWN if the @handler isn't implemented correctly.
 	 */
 	public GstURIType getUriType()
@@ -97,7 +97,7 @@ public template URIHandlerT(TStruct)
 	 * Params:
 	 *     uri = URI to set
 	 *
-	 * Return: %TRUE if the URI was set successfully, else %FALSE.
+	 * Returns: %TRUE if the URI was set successfully, else %FALSE.
 	 *
 	 * Throws: GException on failure.
 	 */

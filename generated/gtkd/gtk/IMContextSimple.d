@@ -90,7 +90,7 @@ public class IMContextSimple : IMContext
 	/**
 	 * Creates a new #GtkIMContextSimple.
 	 *
-	 * Return: a new #GtkIMContextSimple.
+	 * Returns: a new #GtkIMContextSimple.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

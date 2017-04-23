@@ -194,7 +194,7 @@ public class ApplicationWindow : Window, ActionGroupIF, ActionMapIF
 	 * Params:
 	 *     application = a #GtkApplication
 	 *
-	 * Return: a newly created #GtkApplicationWindow
+	 * Returns: a newly created #GtkApplicationWindow
 	 *
 	 * Since: 3.4
 	 *
@@ -216,7 +216,7 @@ public class ApplicationWindow : Window, ActionGroupIF, ActionMapIF
 	 * Gets the #GtkShortcutsWindow that has been set up with
 	 * a prior call to gtk_application_window_set_help_overlay().
 	 *
-	 * Return: the help overlay associated with @window, or %NULL
+	 * Returns: the help overlay associated with @window, or %NULL
 	 *
 	 * Since: 3.20
 	 */
@@ -236,7 +236,7 @@ public class ApplicationWindow : Window, ActionGroupIF, ActionMapIF
 	 * Returns the unique ID of the window. If the window has not yet been added to
 	 * a #GtkApplication, returns `0`.
 	 *
-	 * Return: the unique ID for @window, or `0` if the window
+	 * Returns: the unique ID for @window, or `0` if the window
 	 *     has not yet been added to a #GtkApplication
 	 *
 	 * Since: 3.6
@@ -250,7 +250,7 @@ public class ApplicationWindow : Window, ActionGroupIF, ActionMapIF
 	 * Returns whether the window will display a menubar for the app menu
 	 * and menubar as needed.
 	 *
-	 * Return: %TRUE if @window will display a menubar when needed
+	 * Returns: %TRUE if @window will display a menubar when needed
 	 *
 	 * Since: 3.4
 	 */

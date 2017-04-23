@@ -62,7 +62,7 @@ public struct Version
 	 *     requiredMinor = the required minor version
 	 *     requiredMicro = the required micro version
 	 *
-	 * Return: %NULL if the GTK+ library is compatible with the
+	 * Returns: %NULL if the GTK+ library is compatible with the
 	 *     given version, or a string describing the version mismatch.
 	 *     The returned string is owned by GTK+ and should not be modified
 	 *     or freed.
@@ -78,7 +78,7 @@ public struct Version
 	 * If `libtool` means nothing to you, don't
 	 * worry about it.
 	 *
-	 * Return: the binary age of the GTK+ library
+	 * Returns: the binary age of the GTK+ library
 	 *
 	 * Since: 3.0
 	 */
@@ -93,7 +93,7 @@ public struct Version
 	 * If `libtool` means nothing to you, don't
 	 * worry about it.
 	 *
-	 * Return: the interface age of the GTK+ library
+	 * Returns: the interface age of the GTK+ library
 	 *
 	 * Since: 3.0
 	 */
@@ -111,7 +111,7 @@ public struct Version
 	 * macro, which represents the major version of the GTK+ headers you
 	 * have included when compiling your code.
 	 *
-	 * Return: the major version number of the GTK+ library
+	 * Returns: the major version number of the GTK+ library
 	 *
 	 * Since: 3.0
 	 */
@@ -129,7 +129,7 @@ public struct Version
 	 * #GTK_MICRO_VERSION macro, which represents the micro version of the
 	 * GTK+ headers you have included when compiling your code.
 	 *
-	 * Return: the micro version number of the GTK+ library
+	 * Returns: the micro version number of the GTK+ library
 	 *
 	 * Since: 3.0
 	 */
@@ -147,7 +147,7 @@ public struct Version
 	 * #GTK_MINOR_VERSION macro, which represents the minor version of the
 	 * GTK+ headers you have included when compiling your code.
 	 *
-	 * Return: the minor version number of the GTK+ library
+	 * Returns: the minor version number of the GTK+ library
 	 *
 	 * Since: 3.0
 	 */

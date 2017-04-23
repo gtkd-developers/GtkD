@@ -63,7 +63,7 @@ public template AppChooserT(TStruct)
 	/**
 	 * Returns the currently selected application.
 	 *
-	 * Return: a #GAppInfo for the currently selected
+	 * Returns: a #GAppInfo for the currently selected
 	 *     application, or %NULL if none is selected. Free with g_object_unref()
 	 *
 	 * Since: 3.0
@@ -83,7 +83,7 @@ public template AppChooserT(TStruct)
 	/**
 	 * Returns the current value of the #GtkAppChooser:content-type property.
 	 *
-	 * Return: the content type of @self. Free with g_free()
+	 * Returns: the content type of @self. Free with g_free()
 	 *
 	 * Since: 3.0
 	 */

@@ -101,7 +101,7 @@ public class TlsCertificate : ObjectG
 	 * Params:
 	 *     file = file containing a PEM-encoded certificate to import
 	 *
-	 * Return: the new certificate, or %NULL on error
+	 * Returns: the new certificate, or %NULL on error
 	 *
 	 * Since: 2.28
 	 *
@@ -149,7 +149,7 @@ public class TlsCertificate : ObjectG
 	 *     keyFile = file containing a PEM-encoded private key
 	 *         to import
 	 *
-	 * Return: the new certificate, or %NULL on error
+	 * Returns: the new certificate, or %NULL on error
 	 *
 	 * Since: 2.28
 	 *
@@ -195,7 +195,7 @@ public class TlsCertificate : ObjectG
 	 *     data = PEM-encoded certificate data
 	 *     length = the length of @data, or -1 if it's 0-terminated.
 	 *
-	 * Return: the new certificate, or %NULL if @data is invalid
+	 * Returns: the new certificate, or %NULL if @data is invalid
 	 *
 	 * Since: 2.28
 	 *
@@ -231,7 +231,7 @@ public class TlsCertificate : ObjectG
 	 * Params:
 	 *     file = file containing PEM-encoded certificates to import
 	 *
-	 * Return: a
+	 * Returns: a
 	 *     #GList containing #GTlsCertificate objects. You must free the list
 	 *     and its contents when you are done with it.
 	 *
@@ -261,7 +261,7 @@ public class TlsCertificate : ObjectG
 	/**
 	 * Gets the #GTlsCertificate representing @cert's issuer, if known
 	 *
-	 * Return: The certificate of @cert's issuer,
+	 * Returns: The certificate of @cert's issuer,
 	 *     or %NULL if @cert is self-signed or signed with an unknown
 	 *     certificate.
 	 *
@@ -289,7 +289,7 @@ public class TlsCertificate : ObjectG
 	 * Params:
 	 *     certTwo = second certificate to compare
 	 *
-	 * Return: whether the same or not
+	 * Returns: whether the same or not
 	 *
 	 * Since: 2.34
 	 */
@@ -323,7 +323,7 @@ public class TlsCertificate : ObjectG
 	 *     identity = the expected peer identity
 	 *     trustedCa = the certificate of a trusted authority
 	 *
-	 * Return: the appropriate #GTlsCertificateFlags
+	 * Returns: the appropriate #GTlsCertificateFlags
 	 *
 	 * Since: 2.28
 	 */

@@ -80,7 +80,7 @@ public class FontSelection : Box
 	 *
 	 * Deprecated: Use #GtkFontChooserWidget instead
 	 *
-	 * Return: a new #GtkFontSelection
+	 * Returns: a new #GtkFontSelection
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -102,7 +102,7 @@ public class FontSelection : Box
 	 *
 	 * Deprecated: Use #GtkFontChooser
 	 *
-	 * Return: A #PangoFontFace representing the
+	 * Returns: A #PangoFontFace representing the
 	 *     selected font group details. The returned object is owned by
 	 *     @fontsel and must not be modified or freed.
 	 *
@@ -126,7 +126,7 @@ public class FontSelection : Box
 	 *
 	 * Deprecated: Use #GtkFontChooser
 	 *
-	 * Return: A #GtkWidget that is part of @fontsel
+	 * Returns: A #GtkWidget that is part of @fontsel
 	 *
 	 * Since: 2.14
 	 */
@@ -147,7 +147,7 @@ public class FontSelection : Box
 	 *
 	 * Deprecated: Use #GtkFontChooser
 	 *
-	 * Return: A #PangoFontFamily representing the
+	 * Returns: A #PangoFontFamily representing the
 	 *     selected font family. Font families are a collection of font
 	 *     faces. The returned object is owned by @fontsel and must not
 	 *     be modified or freed.
@@ -172,7 +172,7 @@ public class FontSelection : Box
 	 *
 	 * Deprecated: Use #GtkFontChooser
 	 *
-	 * Return: A #GtkWidget that is part of @fontsel
+	 * Returns: A #GtkWidget that is part of @fontsel
 	 *
 	 * Since: 2.14
 	 */
@@ -200,7 +200,7 @@ public class FontSelection : Box
 	 *
 	 * Deprecated: Use #GtkFontChooser
 	 *
-	 * Return: A string with the name of the current font, or %NULL if
+	 * Returns: A string with the name of the current font, or %NULL if
 	 *     no font is selected. You must free this string with g_free().
 	 */
 	public string getFontName()
@@ -216,7 +216,7 @@ public class FontSelection : Box
 	 *
 	 * Deprecated: Use #GtkFontChooser
 	 *
-	 * Return: A #GtkWidget that is part of @fontsel
+	 * Returns: A #GtkWidget that is part of @fontsel
 	 *
 	 * Since: 2.14
 	 */
@@ -237,7 +237,7 @@ public class FontSelection : Box
 	 *
 	 * Deprecated: Use #GtkFontChooser
 	 *
-	 * Return: the text displayed in the preview area.
+	 * Returns: the text displayed in the preview area.
 	 *     This string is owned by the widget and should not be
 	 *     modified or freed
 	 */
@@ -251,7 +251,7 @@ public class FontSelection : Box
 	 *
 	 * Deprecated: Use #GtkFontChooser
 	 *
-	 * Return: A n integer representing the selected font size,
+	 * Returns: A n integer representing the selected font size,
 	 *     or -1 if no font size is selected.
 	 *
 	 * Since: 2.14
@@ -267,7 +267,7 @@ public class FontSelection : Box
 	 *
 	 * Deprecated: Use #GtkFontChooser
 	 *
-	 * Return: A #GtkWidget that is part of @fontsel
+	 * Returns: A #GtkWidget that is part of @fontsel
 	 *
 	 * Since: 2.14
 	 */
@@ -288,7 +288,7 @@ public class FontSelection : Box
 	 *
 	 * Deprecated: Use #GtkFontChooser
 	 *
-	 * Return: A #GtkWidget that is part of @fontsel
+	 * Returns: A #GtkWidget that is part of @fontsel
 	 *
 	 * Since: 2.14
 	 */
@@ -316,7 +316,7 @@ public class FontSelection : Box
 	 * Params:
 	 *     fontname = a font name like “Helvetica 12” or “Times Bold 18”
 	 *
-	 * Return: %TRUE if the font could be set successfully; %FALSE if no
+	 * Returns: %TRUE if the font could be set successfully; %FALSE if no
 	 *     such font exists or if the @fontsel doesn’t belong to a particular
 	 *     screen yet.
 	 */

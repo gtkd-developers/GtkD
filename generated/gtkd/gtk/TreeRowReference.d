@@ -85,7 +85,7 @@ public class TreeRowReference
 	 *     model = a #GtkTreeModel
 	 *     path = a valid #GtkTreePath-struct to monitor
 	 *
-	 * Return: a newly allocated #GtkTreeRowReference, or %NULL
+	 * Returns: a newly allocated #GtkTreeRowReference, or %NULL
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -132,7 +132,7 @@ public class TreeRowReference
 	 *     model = a #GtkTreeModel
 	 *     path = a valid #GtkTreePath-struct to monitor
 	 *
-	 * Return: a newly allocated #GtkTreeRowReference, or %NULL
+	 * Returns: a newly allocated #GtkTreeRowReference, or %NULL
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -151,7 +151,7 @@ public class TreeRowReference
 	/**
 	 * Copies a #GtkTreeRowReference.
 	 *
-	 * Return: a copy of @reference
+	 * Returns: a copy of @reference
 	 *
 	 * Since: 2.2
 	 */
@@ -178,7 +178,7 @@ public class TreeRowReference
 	/**
 	 * Returns the model that the row reference is monitoring.
 	 *
-	 * Return: the model
+	 * Returns: the model
 	 *
 	 * Since: 2.8
 	 */
@@ -198,7 +198,7 @@ public class TreeRowReference
 	 * Returns a path that the row reference currently points to,
 	 * or %NULL if the path pointed to is no longer valid.
 	 *
-	 * Return: a current path, or %NULL
+	 * Returns: a current path, or %NULL
 	 */
 	public TreePath getPath()
 	{
@@ -216,7 +216,7 @@ public class TreeRowReference
 	 * Returns %TRUE if the @reference is non-%NULL and refers to
 	 * a current valid path.
 	 *
-	 * Return: %TRUE if @reference points to a valid path
+	 * Returns: %TRUE if @reference points to a valid path
 	 */
 	public bool valid()
 	{

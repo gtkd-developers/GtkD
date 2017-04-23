@@ -98,7 +98,7 @@ public class CellAreaBox : CellArea, OrientableIF
 	/**
 	 * Creates a new #GtkCellAreaBox.
 	 *
-	 * Return: a newly created #GtkCellAreaBox
+	 * Returns: a newly created #GtkCellAreaBox
 	 *
 	 * Since: 3.0
 	 *
@@ -119,7 +119,7 @@ public class CellAreaBox : CellArea, OrientableIF
 	/**
 	 * Gets the spacing added between cell renderers.
 	 *
-	 * Return: the space added between cell renderers in @box.
+	 * Returns: the space added between cell renderers in @box.
 	 *
 	 * Since: 3.0
 	 */

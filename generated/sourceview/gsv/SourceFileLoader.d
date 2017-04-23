@@ -92,7 +92,7 @@ public class SourceFileLoader : ObjectG
 	 *     buffer = the #GtkSourceBuffer to load the contents into.
 	 *     file = the #GtkSourceFile.
 	 *
-	 * Return: a new #GtkSourceFileLoader object.
+	 * Returns: a new #GtkSourceFileLoader object.
 	 *
 	 * Since: 3.14
 	 *
@@ -118,7 +118,7 @@ public class SourceFileLoader : ObjectG
 	 *     file = the #GtkSourceFile.
 	 *     stream = the #GInputStream to load, e.g. stdin.
 	 *
-	 * Return: a new #GtkSourceFileLoader object.
+	 * Returns: a new #GtkSourceFileLoader object.
 	 *
 	 * Since: 3.14
 	 *
@@ -137,7 +137,7 @@ public class SourceFileLoader : ObjectG
 	}
 
 	/**
-	 * Return: the #GtkSourceBuffer to load the contents into.
+	 * Returns: the #GtkSourceBuffer to load the contents into.
 	 *
 	 * Since: 3.14
 	 */
@@ -154,7 +154,7 @@ public class SourceFileLoader : ObjectG
 	}
 
 	/**
-	 * Return: the detected compression type.
+	 * Returns: the detected compression type.
 	 *
 	 * Since: 3.14
 	 */
@@ -164,7 +164,7 @@ public class SourceFileLoader : ObjectG
 	}
 
 	/**
-	 * Return: the detected file encoding.
+	 * Returns: the detected file encoding.
 	 *
 	 * Since: 3.14
 	 */
@@ -181,7 +181,7 @@ public class SourceFileLoader : ObjectG
 	}
 
 	/**
-	 * Return: the #GtkSourceFile.
+	 * Returns: the #GtkSourceFile.
 	 *
 	 * Since: 3.14
 	 */
@@ -198,7 +198,7 @@ public class SourceFileLoader : ObjectG
 	}
 
 	/**
-	 * Return: the #GInputStream to load, or %NULL
+	 * Returns: the #GInputStream to load, or %NULL
 	 *     if a #GFile is used.
 	 *
 	 * Since: 3.14
@@ -216,7 +216,7 @@ public class SourceFileLoader : ObjectG
 	}
 
 	/**
-	 * Return: the #GFile to load, or %NULL
+	 * Returns: the #GFile to load, or %NULL
 	 *     if an input stream is used.
 	 *
 	 * Since: 3.14
@@ -234,7 +234,7 @@ public class SourceFileLoader : ObjectG
 	}
 
 	/**
-	 * Return: the detected newline type.
+	 * Returns: the detected newline type.
 	 *
 	 * Since: 3.14
 	 */
@@ -279,7 +279,7 @@ public class SourceFileLoader : ObjectG
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *
-	 * Return: whether the contents has been loaded successfully.
+	 * Returns: whether the contents has been loaded successfully.
 	 *
 	 * Since: 3.14
 	 *

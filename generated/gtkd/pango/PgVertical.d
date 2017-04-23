@@ -40,7 +40,7 @@ public struct PgVertical
 	 * Params:
 	 *     matrix = a #PangoMatrix
 	 *
-	 * Return: the gravity of @matrix, which will never be
+	 * Returns: the gravity of @matrix, which will never be
 	 *     %PANGO_GRAVITY_AUTO, or %PANGO_GRAVITY_SOUTH if @matrix is %NULL
 	 *
 	 * Since: 1.16
@@ -63,7 +63,7 @@ public struct PgVertical
 	 *     baseGravity = base gravity of the paragraph
 	 *     hint = orientation hint
 	 *
-	 * Return: resolved gravity suitable to use for a run of text
+	 * Returns: resolved gravity suitable to use for a run of text
 	 *     with @script.
 	 *
 	 * Since: 1.16
@@ -94,7 +94,7 @@ public struct PgVertical
 	 *     baseGravity = base gravity of the paragraph
 	 *     hint = orientation hint
 	 *
-	 * Return: resolved gravity suitable to use for a run of text
+	 * Returns: resolved gravity suitable to use for a run of text
 	 *     with @script and @wide.
 	 *
 	 * Since: 1.26
@@ -115,7 +115,7 @@ public struct PgVertical
 	 * Params:
 	 *     gravity = gravity to query
 	 *
-	 * Return: the rotation value corresponding to @gravity.
+	 * Returns: the rotation value corresponding to @gravity.
 	 *
 	 * Since: 1.16
 	 */

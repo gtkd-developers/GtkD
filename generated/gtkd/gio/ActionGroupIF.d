@@ -184,7 +184,7 @@ public interface ActionGroupIF{
 	 * Params:
 	 *     actionName = the name of the action to query
 	 *
-	 * Return: whether or not the action is currently enabled
+	 * Returns: whether or not the action is currently enabled
 	 *
 	 * Since: 2.28
 	 */
@@ -208,7 +208,7 @@ public interface ActionGroupIF{
 	 * Params:
 	 *     actionName = the name of the action to query
 	 *
-	 * Return: the parameter type
+	 * Returns: the parameter type
 	 *
 	 * Since: 2.28
 	 */
@@ -227,7 +227,7 @@ public interface ActionGroupIF{
 	 * Params:
 	 *     actionName = the name of the action to query
 	 *
-	 * Return: the current state of the action
+	 * Returns: the current state of the action
 	 *
 	 * Since: 2.28
 	 */
@@ -256,7 +256,7 @@ public interface ActionGroupIF{
 	 * Params:
 	 *     actionName = the name of the action to query
 	 *
-	 * Return: the state range hint
+	 * Returns: the state range hint
 	 *
 	 * Since: 2.28
 	 */
@@ -283,7 +283,7 @@ public interface ActionGroupIF{
 	 * Params:
 	 *     actionName = the name of the action to query
 	 *
-	 * Return: the state type, if the action is stateful
+	 * Returns: the state type, if the action is stateful
 	 *
 	 * Since: 2.28
 	 */
@@ -295,7 +295,7 @@ public interface ActionGroupIF{
 	 * Params:
 	 *     actionName = the name of the action to check for
 	 *
-	 * Return: whether the named action exists
+	 * Returns: whether the named action exists
 	 *
 	 * Since: 2.28
 	 */
@@ -307,7 +307,7 @@ public interface ActionGroupIF{
 	 * The caller is responsible for freeing the list with g_strfreev() when
 	 * it is no longer required.
 	 *
-	 * Return: a %NULL-terminated array of the names of the
+	 * Returns: a %NULL-terminated array of the names of the
 	 *     actions in the group
 	 *
 	 * Since: 2.28
@@ -351,7 +351,7 @@ public interface ActionGroupIF{
 	 *     stateHint = the state hint, or %NULL if none
 	 *     state = the current state, or %NULL if stateless
 	 *
-	 * Return: %TRUE if the action exists, else %FALSE
+	 * Returns: %TRUE if the action exists, else %FALSE
 	 *
 	 * Since: 2.32
 	 */

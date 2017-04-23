@@ -112,7 +112,7 @@ public class Fixed : Container
 	/**
 	 * Creates a new #GtkFixed.
 	 *
-	 * Return: a new #GtkFixed.
+	 * Returns: a new #GtkFixed.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

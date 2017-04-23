@@ -93,7 +93,7 @@ public class Timer
 	 *         elapsed, in microseconds (that is, the total number
 	 *         of microseconds elapsed, modulo 1000000), or %NULL
 	 *
-	 * Return: seconds elapsed as a floating point value, including any
+	 * Returns: seconds elapsed as a floating point value, including any
 	 *     fractional part.
 	 */
 	public double elapsed(gulong* microseconds)
@@ -135,7 +135,7 @@ public class Timer
 	 * Creates a new timer, and starts timing (i.e. g_timer_start() is
 	 * implicitly called for you).
 	 *
-	 * Return: a new #GTimer.
+	 * Returns: a new #GTimer.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

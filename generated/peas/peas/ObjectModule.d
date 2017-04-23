@@ -86,7 +86,7 @@ public class ObjectModule : TypeModule
 	 *     path = The path.
 	 *     resident = If the module should be resident.
 	 *
-	 * Return: a new #PeasObjectModule.
+	 * Returns: a new #PeasObjectModule.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -108,7 +108,7 @@ public class ObjectModule : TypeModule
 	 * Params:
 	 *     moduleName = The module name.
 	 *
-	 * Return: a new #PeasObjectModule.
+	 * Returns: a new #PeasObjectModule.
 	 *
 	 * Since: 1.18
 	 *
@@ -135,7 +135,7 @@ public class ObjectModule : TypeModule
 	 *     resident = If the module should be resident.
 	 *     localLinkage = Whether to load the module with local linkage.
 	 *
-	 * Return: a new #PeasObjectModule.
+	 * Returns: a new #PeasObjectModule.
 	 *
 	 *     Since 1.14
 	 *
@@ -164,7 +164,7 @@ public class ObjectModule : TypeModule
 	 *     nParameters = The number of paramteters.
 	 *     parameters = The parameters.
 	 *
-	 * Return: The created object, or %NULL.
+	 * Returns: The created object, or %NULL.
 	 */
 	public ObjectG createObject(GType iface, GParameter[] parameters)
 	{
@@ -181,7 +181,7 @@ public class ObjectModule : TypeModule
 	/**
 	 * Gets the library.
 	 *
-	 * Return: the library.
+	 * Returns: the library.
 	 */
 	public Module getLibrary()
 	{
@@ -198,7 +198,7 @@ public class ObjectModule : TypeModule
 	/**
 	 * Gets the module name.
 	 *
-	 * Return: the module name.
+	 * Returns: the module name.
 	 */
 	public string getModuleName()
 	{
@@ -208,7 +208,7 @@ public class ObjectModule : TypeModule
 	/**
 	 * Gets the path.
 	 *
-	 * Return: the path.
+	 * Returns: the path.
 	 */
 	public string getPath()
 	{
@@ -218,7 +218,7 @@ public class ObjectModule : TypeModule
 	/**
 	 * Gets the symbol name used to register extension implementations.
 	 *
-	 * Return: the symbol name.
+	 * Returns: the symbol name.
 	 *
 	 * Since: 1.18
 	 */
@@ -233,7 +233,7 @@ public class ObjectModule : TypeModule
 	 * Params:
 	 *     iface = The #GType of the extension interface.
 	 *
-	 * Return: if the module provides an extension for @interface.
+	 * Returns: if the module provides an extension for @interface.
 	 */
 	public bool providesObject(GType iface)
 	{

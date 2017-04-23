@@ -126,7 +126,7 @@ public template AsyncResultT(TStruct)
 	/**
 	 * Gets the source object from a #GAsyncResult.
 	 *
-	 * Return: a new reference to the source object for the @res,
+	 * Returns: a new reference to the source object for the @res,
 	 *     or %NULL if there is none.
 	 */
 	public ObjectG getSourceObject()
@@ -144,7 +144,7 @@ public template AsyncResultT(TStruct)
 	/**
 	 * Gets the user data from a #GAsyncResult.
 	 *
-	 * Return: the user data for @res.
+	 * Returns: the user data for @res.
 	 */
 	public void* getUserData()
 	{
@@ -158,7 +158,7 @@ public template AsyncResultT(TStruct)
 	 * Params:
 	 *     sourceTag = an application-defined tag
 	 *
-	 * Return: %TRUE if @res has the indicated @source_tag, %FALSE if
+	 * Returns: %TRUE if @res has the indicated @source_tag, %FALSE if
 	 *     not.
 	 *
 	 * Since: 2.34
@@ -180,7 +180,7 @@ public template AsyncResultT(TStruct)
 	 * set by virtual methods should also be extracted by virtual methods,
 	 * to enable subclasses to chain up correctly.
 	 *
-	 * Return: %TRUE if @error is has been filled in with an error from
+	 * Returns: %TRUE if @error is has been filled in with an error from
 	 *     @res, %FALSE if not.
 	 *
 	 * Since: 2.34

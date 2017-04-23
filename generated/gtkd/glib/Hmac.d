@@ -93,7 +93,7 @@ public class Hmac
 	 * g_hmac_get_string() or g_hmac_get_digest(), the copied
 	 * HMAC will be closed as well.
 	 *
-	 * Return: the copy of the passed #GHmac. Use g_hmac_unref()
+	 * Returns: the copy of the passed #GHmac. Use g_hmac_unref()
 	 *     when finished using it.
 	 *
 	 * Since: 2.30
@@ -118,7 +118,7 @@ public class Hmac
 	 *
 	 * The hexadecimal characters will be lower case.
 	 *
-	 * Return: the hexadecimal representation of the HMAC. The
+	 * Returns: the hexadecimal representation of the HMAC. The
 	 *     returned string is owned by the HMAC and should not be modified
 	 *     or freed.
 	 *
@@ -134,7 +134,7 @@ public class Hmac
 	 *
 	 * This function is MT-safe and may be called from any thread.
 	 *
-	 * Return: the passed in #GHmac.
+	 * Returns: the passed in #GHmac.
 	 *
 	 * Since: 2.30
 	 */
@@ -205,7 +205,7 @@ public class Hmac
 	 *     key = the key for the HMAC
 	 *     keyLen = the length of the keys
 	 *
-	 * Return: the newly created #GHmac, or %NULL.
+	 * Returns: the newly created #GHmac, or %NULL.
 	 *     Use g_hmac_unref() to free the memory allocated by it.
 	 *
 	 * Since: 2.30
@@ -238,7 +238,7 @@ public class Hmac
 	 *     data = binary blob to compute the HMAC of
 	 *     length = length of @data
 	 *
-	 * Return: the HMAC of the binary data as a string in hexadecimal.
+	 * Returns: the HMAC of the binary data as a string in hexadecimal.
 	 *     The returned string should be freed with g_free() when done using it.
 	 *
 	 * Since: 2.30
@@ -263,7 +263,7 @@ public class Hmac
 	 *     str = the string to compute the HMAC for
 	 *     length = the length of the string, or -1 if the string is nul-terminated
 	 *
-	 * Return: the HMAC as a hexadecimal string.
+	 * Returns: the HMAC as a hexadecimal string.
 	 *     The returned string should be freed with g_free()
 	 *     when done using it.
 	 *

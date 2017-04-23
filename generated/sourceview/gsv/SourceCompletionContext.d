@@ -96,7 +96,7 @@ public class SourceCompletionContext : ObjectG
 	/**
 	 * Get the context activation.
 	 *
-	 * Return: The context activation.
+	 * Returns: The context activation.
 	 */
 	public GtkSourceCompletionActivation getActivation()
 	{
@@ -110,7 +110,7 @@ public class SourceCompletionContext : ObjectG
 	 * Params:
 	 *     iter = a #GtkTextIter.
 	 *
-	 * Return: %TRUE if @iter is correctly set, %FALSE otherwise.
+	 * Returns: %TRUE if @iter is correctly set, %FALSE otherwise.
 	 */
 	public bool getIter(out TextIter iter)
 	{

@@ -80,7 +80,7 @@ public class PgFontFamily : ObjectG
 	 * fonts for the font backend and can be used in a #PangoFontDescription
 	 * to specify that a face from this family is desired.
 	 *
-	 * Return: the name of the family. This string is owned
+	 * Returns: the name of the family. This string is owned
 	 *     by the family object and must not be modified or freed.
 	 */
 	public string getName()
@@ -102,7 +102,7 @@ public class PgFontFamily : ObjectG
 	 * of pango_font_metrics_get_approximate_char_width() may be affected
 	 * by double-width characters.
 	 *
-	 * Return: %TRUE if the family is monospace.
+	 * Returns: %TRUE if the family is monospace.
 	 *
 	 * Since: 1.4
 	 */

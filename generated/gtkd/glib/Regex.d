@@ -139,7 +139,7 @@ public class Regex
 	 *     compileOptions = compile options for the regular expression, or 0
 	 *     matchOptions = match options for the regular expression, or 0
 	 *
-	 * Return: a #GRegex structure or %NULL if an error occured. Call
+	 * Returns: a #GRegex structure or %NULL if an error occured. Call
 	 *     g_regex_unref() when you are done with it
 	 *
 	 * Since: 2.14
@@ -169,7 +169,7 @@ public class Regex
 	/**
 	 * Returns the number of capturing subpatterns in the pattern.
 	 *
-	 * Return: the number of capturing subpatterns
+	 * Returns: the number of capturing subpatterns
 	 *
 	 * Since: 2.14
 	 */
@@ -185,7 +185,7 @@ public class Regex
 	 * include flags set by option expressions such as `(?i)` found at the
 	 * top-level within the compiled pattern.
 	 *
-	 * Return: flags from #GRegexCompileFlags
+	 * Returns: flags from #GRegexCompileFlags
 	 *
 	 * Since: 2.26
 	 */
@@ -197,7 +197,7 @@ public class Regex
 	/**
 	 * Checks whether the pattern contains explicit CR or LF references.
 	 *
-	 * Return: %TRUE if the pattern contains explicit CR or LF references
+	 * Returns: %TRUE if the pattern contains explicit CR or LF references
 	 *
 	 * Since: 2.34
 	 */
@@ -209,7 +209,7 @@ public class Regex
 	/**
 	 * Returns the match options that @regex was created with.
 	 *
-	 * Return: flags from #GRegexMatchFlags
+	 * Returns: flags from #GRegexMatchFlags
 	 *
 	 * Since: 2.26
 	 */
@@ -223,7 +223,7 @@ public class Regex
 	 * in the pattern, or 0 if the pattern does not contain
 	 * back references.
 	 *
-	 * Return: the number of the highest back reference
+	 * Returns: the number of the highest back reference
 	 *
 	 * Since: 2.14
 	 */
@@ -237,7 +237,7 @@ public class Regex
 	 * pattern. This information is useful when doing multi-segment matching using
 	 * the partial matching facilities.
 	 *
-	 * Return: the number of characters in the longest lookbehind assertion.
+	 * Returns: the number of characters in the longest lookbehind assertion.
 	 *
 	 * Since: 2.38
 	 */
@@ -250,7 +250,7 @@ public class Regex
 	 * Gets the pattern string associated with @regex, i.e. a copy of
 	 * the string passed to g_regex_new().
 	 *
-	 * Return: the pattern of @regex
+	 * Returns: the pattern of @regex
 	 *
 	 * Since: 2.14
 	 */
@@ -265,7 +265,7 @@ public class Regex
 	 * Params:
 	 *     name = name of the subexpression
 	 *
-	 * Return: The number of the subexpression or -1 if @name
+	 * Returns: The number of the subexpression or -1 if @name
 	 *     does not exists
 	 *
 	 * Since: 2.14
@@ -321,7 +321,7 @@ public class Regex
 	 *     matchInfo = pointer to location where to store
 	 *         the #GMatchInfo, or %NULL if you do not need it
 	 *
-	 * Return: %TRUE is the string matched, %FALSE otherwise
+	 * Returns: %TRUE is the string matched, %FALSE otherwise
 	 *
 	 * Since: 2.14
 	 */
@@ -358,7 +358,7 @@ public class Regex
 	 *     matchInfo = pointer to location where to store
 	 *         the #GMatchInfo, or %NULL if you do not need it
 	 *
-	 * Return: %TRUE is the string matched, %FALSE otherwise
+	 * Returns: %TRUE is the string matched, %FALSE otherwise
 	 *
 	 * Since: 2.14
 	 */
@@ -419,7 +419,7 @@ public class Regex
 	 *     matchInfo = pointer to location where to store
 	 *         the #GMatchInfo, or %NULL if you do not need it
 	 *
-	 * Return: %TRUE is the string matched, %FALSE otherwise
+	 * Returns: %TRUE is the string matched, %FALSE otherwise
 	 *
 	 * Since: 2.14
 	 *
@@ -501,7 +501,7 @@ public class Regex
 	 *     matchInfo = pointer to location where to store
 	 *         the #GMatchInfo, or %NULL if you do not need it
 	 *
-	 * Return: %TRUE is the string matched, %FALSE otherwise
+	 * Returns: %TRUE is the string matched, %FALSE otherwise
 	 *
 	 * Since: 2.14
 	 *
@@ -527,7 +527,7 @@ public class Regex
 	/**
 	 * Increases reference count of @regex by 1.
 	 *
-	 * Return: @regex
+	 * Returns: @regex
 	 *
 	 * Since: 2.14
 	 */
@@ -578,7 +578,7 @@ public class Regex
 	 *     replacement = text to replace each match with
 	 *     matchOptions = options for the match
 	 *
-	 * Return: a newly allocated string containing the replacements
+	 * Returns: a newly allocated string containing the replacements
 	 *
 	 * Since: 2.14
 	 *
@@ -654,7 +654,7 @@ public class Regex
 	 *     eval = a function to call for each match
 	 *     userData = user data to pass to the function
 	 *
-	 * Return: a newly allocated string containing the replacements
+	 * Returns: a newly allocated string containing the replacements
 	 *
 	 * Since: 2.14
 	 *
@@ -692,7 +692,7 @@ public class Regex
 	 *     replacement = text to replace each match with
 	 *     matchOptions = options for the match
 	 *
-	 * Return: a newly allocated string containing the replacements
+	 * Returns: a newly allocated string containing the replacements
 	 *
 	 * Since: 2.14
 	 *
@@ -736,7 +736,7 @@ public class Regex
 	 *     str = the string to split with the pattern
 	 *     matchOptions = match time option flags
 	 *
-	 * Return: a %NULL-terminated gchar ** array. Free
+	 * Returns: a %NULL-terminated gchar ** array. Free
 	 *     it using g_strfreev()
 	 *
 	 * Since: 2.14
@@ -780,7 +780,7 @@ public class Regex
 	 *     maxTokens = the maximum number of tokens to split @string into.
 	 *         If this is less than 1, the string is split completely
 	 *
-	 * Return: a %NULL-terminated gchar ** array. Free
+	 * Returns: a %NULL-terminated gchar ** array. Free
 	 *     it using g_strfreev()
 	 *
 	 * Since: 2.14
@@ -829,7 +829,7 @@ public class Regex
 	 *     hasReferences = location to store information about
 	 *         references in @replacement or %NULL
 	 *
-	 * Return: whether @replacement is a valid replacement string
+	 * Returns: whether @replacement is a valid replacement string
 	 *
 	 * Since: 2.14
 	 *
@@ -869,7 +869,7 @@ public class Regex
 	 *     str = the string to escape
 	 *     length = the length of @string
 	 *
-	 * Return: a newly-allocated escaped string
+	 * Returns: a newly-allocated escaped string
 	 *
 	 * Since: 2.30
 	 */
@@ -894,7 +894,7 @@ public class Regex
 	 *     str = the string to escape
 	 *     length = the length of @string, or -1 if @string is nul-terminated
 	 *
-	 * Return: a newly-allocated escaped string
+	 * Returns: a newly-allocated escaped string
 	 *
 	 * Since: 2.14
 	 */
@@ -924,7 +924,7 @@ public class Regex
 	 *     compileOptions = compile options for the regular expression, or 0
 	 *     matchOptions = match options, or 0
 	 *
-	 * Return: %TRUE if the string matched, %FALSE otherwise
+	 * Returns: %TRUE if the string matched, %FALSE otherwise
 	 *
 	 * Since: 2.14
 	 */
@@ -968,7 +968,7 @@ public class Regex
 	 *     compileOptions = compile options for the regular expression, or 0
 	 *     matchOptions = match options, or 0
 	 *
-	 * Return: a %NULL-terminated array of strings. Free
+	 * Returns: a %NULL-terminated array of strings. Free
 	 *     it using g_strfreev()
 	 *
 	 * Since: 2.14

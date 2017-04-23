@@ -128,7 +128,7 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	 * Params:
 	 *     desktopId = the desktop file id
 	 *
-	 * Return: a new #GDesktopAppInfo, or %NULL if no desktop file with that id
+	 * Returns: a new #GDesktopAppInfo, or %NULL if no desktop file with that id
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -150,7 +150,7 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	 * Params:
 	 *     keyFile = an opened #GKeyFile
 	 *
-	 * Return: a new #GDesktopAppInfo or %NULL on error.
+	 * Returns: a new #GDesktopAppInfo or %NULL on error.
 	 *
 	 * Since: 2.18
 	 *
@@ -177,7 +177,7 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	 * Params:
 	 *     iface = the name of the interface
 	 *
-	 * Return: a list of #GDesktopAppInfo
+	 * Returns: a list of #GDesktopAppInfo
 	 *     objects.
 	 *
 	 * Since: 2.42
@@ -207,7 +207,7 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	 * Params:
 	 *     searchString = the search string to use
 	 *
-	 * Return: a
+	 * Returns: a
 	 *     list of strvs.  Free each item with g_strfreev() and free the outer
 	 *     list with g_free().
 	 */
@@ -250,7 +250,7 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	 *     actionName = the name of the action as from
 	 *         g_desktop_app_info_list_actions()
 	 *
-	 * Return: the locale-specific action name
+	 * Returns: the locale-specific action name
 	 *
 	 * Since: 2.38
 	 */
@@ -270,7 +270,7 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	 * Params:
 	 *     key = the key to look up
 	 *
-	 * Return: the boolean value, or %FALSE if the key
+	 * Returns: the boolean value, or %FALSE if the key
 	 *     is not found
 	 *
 	 * Since: 2.36
@@ -283,7 +283,7 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	/**
 	 * Gets the categories from the desktop file.
 	 *
-	 * Return: The unparsed Categories key from the desktop file;
+	 * Returns: The unparsed Categories key from the desktop file;
 	 *     i.e. no attempt is made to split it by ';' or validate it.
 	 */
 	public string getCategories()
@@ -296,7 +296,7 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	 * situations such as the #GDesktopAppInfo returned from
 	 * g_desktop_app_info_new_from_keyfile(), this function will return %NULL.
 	 *
-	 * Return: The full path to the file for @info,
+	 * Returns: The full path to the file for @info,
 	 *     or %NULL if not known.
 	 *
 	 * Since: 2.24
@@ -309,7 +309,7 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	/**
 	 * Gets the generic name from the destkop file.
 	 *
-	 * Return: The value of the GenericName key
+	 * Returns: The value of the GenericName key
 	 */
 	public string getGenericName()
 	{
@@ -320,7 +320,7 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	 * A desktop file is hidden if the Hidden key in it is
 	 * set to True.
 	 *
-	 * Return: %TRUE if hidden, %FALSE otherwise.
+	 * Returns: %TRUE if hidden, %FALSE otherwise.
 	 */
 	public bool getIsHidden()
 	{
@@ -330,7 +330,7 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	/**
 	 * Gets the keywords from the desktop file.
 	 *
-	 * Return: The value of the Keywords key
+	 * Returns: The value of the Keywords key
 	 *
 	 * Since: 2.32
 	 */
@@ -344,7 +344,7 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	 * application info should be shown in menus. See
 	 * #G_KEY_FILE_DESKTOP_KEY_NO_DISPLAY and g_app_info_should_show().
 	 *
-	 * Return: The value of the NoDisplay key
+	 * Returns: The value of the NoDisplay key
 	 *
 	 * Since: 2.30
 	 */
@@ -369,7 +369,7 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	 * Params:
 	 *     desktopEnv = a string specifying a desktop name
 	 *
-	 * Return: %TRUE if the @info should be shown in @desktop_env according to the
+	 * Returns: %TRUE if the @info should be shown in @desktop_env according to the
 	 *     `OnlyShowIn` and `NotShowIn` keys, %FALSE
 	 *     otherwise.
 	 *
@@ -385,7 +385,7 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	 * WM_CLASS property of the main window of the application, if launched
 	 * through @info.
 	 *
-	 * Return: the startup WM class, or %NULL if none is set
+	 * Returns: the startup WM class, or %NULL if none is set
 	 *     in the desktop file.
 	 *
 	 * Since: 2.34
@@ -403,7 +403,7 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	 * Params:
 	 *     key = the key to look up
 	 *
-	 * Return: a newly allocated string, or %NULL if the key
+	 * Returns: a newly allocated string, or %NULL if the key
 	 *     is not found
 	 *
 	 * Since: 2.36
@@ -423,7 +423,7 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	 * Params:
 	 *     key = the key to look up
 	 *
-	 * Return: %TRUE if the @key exists
+	 * Returns: %TRUE if the @key exists
 	 *
 	 * Since: 2.36
 	 */
@@ -487,7 +487,7 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	 *     pidCallback = Callback for child processes
 	 *     pidCallbackData = User data for @callback
 	 *
-	 * Return: %TRUE on successful launch, %FALSE otherwise.
+	 * Returns: %TRUE on successful launch, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -512,7 +512,7 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	 * As per the specification, this is the list of actions that are
 	 * explicitly listed in the "Actions" key of the [Desktop Entry] group.
 	 *
-	 * Return: a list of strings, always non-%NULL
+	 * Returns: a list of strings, always non-%NULL
 	 *
 	 * Since: 2.38
 	 */

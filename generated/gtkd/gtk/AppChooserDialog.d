@@ -99,7 +99,7 @@ public class AppChooserDialog : Dialog, AppChooserIF
 	 *     flags = flags for this dialog
 	 *     file = a #GFile
 	 *
-	 * Return: a newly created #GtkAppChooserDialog
+	 * Returns: a newly created #GtkAppChooserDialog
 	 *
 	 * Since: 3.0
 	 *
@@ -126,7 +126,7 @@ public class AppChooserDialog : Dialog, AppChooserIF
 	 *     flags = flags for this dialog
 	 *     contentType = a content type string
 	 *
-	 * Return: a newly created #GtkAppChooserDialog
+	 * Returns: a newly created #GtkAppChooserDialog
 	 *
 	 * Since: 3.0
 	 *
@@ -147,7 +147,7 @@ public class AppChooserDialog : Dialog, AppChooserIF
 	/**
 	 * Returns the text to display at the top of the dialog.
 	 *
-	 * Return: the text to display at the top of the dialog, or %NULL, in which
+	 * Returns: the text to display at the top of the dialog, or %NULL, in which
 	 *     case a default text is displayed
 	 */
 	public string getHeading()
@@ -158,7 +158,7 @@ public class AppChooserDialog : Dialog, AppChooserIF
 	/**
 	 * Returns the #GtkAppChooserWidget of this dialog.
 	 *
-	 * Return: the #GtkAppChooserWidget of @self
+	 * Returns: the #GtkAppChooserWidget of @self
 	 *
 	 * Since: 3.0
 	 */

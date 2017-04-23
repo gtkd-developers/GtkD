@@ -103,7 +103,7 @@ public class Context
 	 *     contextType = Context type
 	 *     persistent = Persistent context
 	 *
-	 * Return: The new context.
+	 * Returns: The new context.
 	 *
 	 * Since: 1.2
 	 *
@@ -124,7 +124,7 @@ public class Context
 	/**
 	 * Get the type of @context.
 	 *
-	 * Return: The type of the context.
+	 * Returns: The type of the context.
 	 *
 	 * Since: 1.2
 	 */
@@ -136,7 +136,7 @@ public class Context
 	/**
 	 * Access the structure of the context.
 	 *
-	 * Return: The structure of the context. The structure is
+	 * Returns: The structure of the context. The structure is
 	 *     still owned by the context, which means that you should not modify it,
 	 *     free it and that the pointer becomes invalid when you free the context.
 	 *
@@ -160,7 +160,7 @@ public class Context
 	 * Params:
 	 *     contextType = Context type to check.
 	 *
-	 * Return: %TRUE if @context has @context_type.
+	 * Returns: %TRUE if @context has @context_type.
 	 *
 	 * Since: 1.2
 	 */
@@ -172,7 +172,7 @@ public class Context
 	/**
 	 * Check if @context is persistent.
 	 *
-	 * Return: %TRUE if the context is persistent.
+	 * Returns: %TRUE if the context is persistent.
 	 *
 	 * Since: 1.2
 	 */
@@ -184,7 +184,7 @@ public class Context
 	/**
 	 * Get a writable version of the structure.
 	 *
-	 * Return: The structure of the context. The structure is still
+	 * Returns: The structure of the context. The structure is still
 	 *     owned by the context, which means that you should not free it and
 	 *     that the pointer becomes invalid when you free the context.
 	 *     This function checks if @context is writable.

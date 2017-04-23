@@ -90,7 +90,7 @@ public class ControlSource : ObjectGst
 	 *     timestamp = the time for which the value should be returned
 	 *     value = the value
 	 *
-	 * Return: %FALSE if the value couldn't be returned, %TRUE otherwise.
+	 * Returns: %FALSE if the value couldn't be returned, %TRUE otherwise.
 	 */
 	public bool getValue(GstClockTime timestamp, out double value)
 	{
@@ -107,7 +107,7 @@ public class ControlSource : ObjectGst
 	 *     nValues = the number of values to fetch
 	 *     values = array to put control-values in
 	 *
-	 * Return: %TRUE if the given array could be filled, %FALSE otherwise
+	 * Returns: %TRUE if the given array could be filled, %FALSE otherwise
 	 */
 	public bool getValueArray(GstClockTime timestamp, GstClockTime interval, double[] values)
 	{

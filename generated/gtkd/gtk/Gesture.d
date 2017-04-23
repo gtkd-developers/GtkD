@@ -181,7 +181,7 @@ public class Gesture : EventController
 	 * Params:
 	 *     rect = bounding box containing all active touches.
 	 *
-	 * Return: %TRUE if there are active touches, %FALSE otherwise
+	 * Returns: %TRUE if there are active touches, %FALSE otherwise
 	 *
 	 * Since: 3.14
 	 */
@@ -200,7 +200,7 @@ public class Gesture : EventController
 	 *     x = X coordinate for the bounding box center
 	 *     y = Y coordinate for the bounding box center
 	 *
-	 * Return: %FALSE if no active touches are present, %TRUE otherwise
+	 * Returns: %FALSE if no active touches are present, %TRUE otherwise
 	 *
 	 * Since: 3.14
 	 */
@@ -213,7 +213,7 @@ public class Gesture : EventController
 	 * Returns the master #GdkDevice that is currently operating
 	 * on @gesture, or %NULL if the gesture is not being interacted.
 	 *
-	 * Return: a #GdkDevice, or %NULL
+	 * Returns: a #GdkDevice, or %NULL
 	 *
 	 * Since: 3.14
 	 */
@@ -232,7 +232,7 @@ public class Gesture : EventController
 	/**
 	 * Returns all gestures in the group of @gesture
 	 *
-	 * Return: The list
+	 * Returns: The list
 	 *     of #GtkGestures, free with g_list_free()
 	 *
 	 * Since: 3.14
@@ -259,7 +259,7 @@ public class Gesture : EventController
 	 * Params:
 	 *     sequence = a #GdkEventSequence
 	 *
-	 * Return: The last event from @sequence
+	 * Returns: The last event from @sequence
 	 */
 	public Event getLastEvent(GdkEventSequence* sequence)
 	{
@@ -276,7 +276,7 @@ public class Gesture : EventController
 	/**
 	 * Returns the #GdkEventSequence that was last updated on @gesture.
 	 *
-	 * Return: The last updated sequence
+	 * Returns: The last updated sequence
 	 *
 	 * Since: 3.14
 	 */
@@ -296,7 +296,7 @@ public class Gesture : EventController
 	 *     x = return location for X axis of the sequence coordinates
 	 *     y = return location for Y axis of the sequence coordinates
 	 *
-	 * Return: %TRUE if @sequence is currently interpreted
+	 * Returns: %TRUE if @sequence is currently interpreted
 	 *
 	 * Since: 3.14
 	 */
@@ -311,7 +311,7 @@ public class Gesture : EventController
 	 * Params:
 	 *     sequence = a #GdkEventSequence
 	 *
-	 * Return: The sequence state in @gesture
+	 * Returns: The sequence state in @gesture
 	 *
 	 * Since: 3.14
 	 */
@@ -324,7 +324,7 @@ public class Gesture : EventController
 	 * Returns the list of #GdkEventSequences currently being interpreted
 	 * by @gesture.
 	 *
-	 * Return: A list
+	 * Returns: A list
 	 *     of #GdkEventSequences, the list elements are owned by GTK+
 	 *     and must not be freed or modified, the list itself must be deleted
 	 *     through g_list_free()
@@ -348,7 +348,7 @@ public class Gesture : EventController
 	 * handled by @gesture. See gtk_gesture_set_window() for more
 	 * information.
 	 *
-	 * Return: the user defined window, or %NULL if none
+	 * Returns: the user defined window, or %NULL if none
 	 *
 	 * Since: 3.14
 	 */
@@ -394,7 +394,7 @@ public class Gesture : EventController
 	 * Params:
 	 *     sequence = a #GdkEventSequence or %NULL
 	 *
-	 * Return: %TRUE if @gesture is handling @sequence, %FALSE otherwise
+	 * Returns: %TRUE if @gesture is handling @sequence, %FALSE otherwise
 	 *
 	 * Since: 3.14
 	 */
@@ -408,7 +408,7 @@ public class Gesture : EventController
 	 * A gesture is active meanwhile there are touch sequences
 	 * interacting with it.
 	 *
-	 * Return: %TRUE if gesture is active
+	 * Returns: %TRUE if gesture is active
 	 *
 	 * Since: 3.14
 	 */
@@ -423,7 +423,7 @@ public class Gesture : EventController
 	 * Params:
 	 *     other = another #GtkGesture
 	 *
-	 * Return: whether the gestures are grouped
+	 * Returns: whether the gestures are grouped
 	 *
 	 * Since: 3.14
 	 */
@@ -438,7 +438,7 @@ public class Gesture : EventController
 	 * touch sequences as required by @gesture, and #GtkGesture::check
 	 * returned %TRUE for the sequences being currently interpreted.
 	 *
-	 * Return: %TRUE if gesture is recognized
+	 * Returns: %TRUE if gesture is recognized
 	 *
 	 * Since: 3.14
 	 */
@@ -495,7 +495,7 @@ public class Gesture : EventController
 	 *     sequence = a #GdkEventSequence
 	 *     state = the sequence state
 	 *
-	 * Return: %TRUE if @sequence is handled by @gesture,
+	 * Returns: %TRUE if @sequence is handled by @gesture,
 	 *     and the state is changed successfully
 	 *
 	 * Since: 3.14
@@ -513,7 +513,7 @@ public class Gesture : EventController
 	 * Params:
 	 *     state = the sequence state
 	 *
-	 * Return: %TRUE if the state of at least one sequence
+	 * Returns: %TRUE if the state of at least one sequence
 	 *     was changed successfully
 	 *
 	 * Since: 3.14

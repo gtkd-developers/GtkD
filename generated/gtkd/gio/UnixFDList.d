@@ -86,7 +86,7 @@ public class UnixFDList : ObjectG
 	/**
 	 * Creates a new #GUnixFDList containing no file descriptors.
 	 *
-	 * Return: a new #GUnixFDList
+	 * Returns: a new #GUnixFDList
 	 *
 	 * Since: 2.24
 	 *
@@ -118,7 +118,7 @@ public class UnixFDList : ObjectG
 	 *     fds = the initial list of file descriptors
 	 *     nFds = the length of #fds, or -1
 	 *
-	 * Return: a new #GUnixFDList
+	 * Returns: a new #GUnixFDList
 	 *
 	 * Since: 2.24
 	 *
@@ -153,7 +153,7 @@ public class UnixFDList : ObjectG
 	 * Params:
 	 *     fd = a valid open file descriptor
 	 *
-	 * Return: the index of the appended fd in case of success, else -1
+	 * Returns: the index of the appended fd in case of success, else -1
 	 *     (and @error is set)
 	 *
 	 * Since: 2.24
@@ -191,7 +191,7 @@ public class UnixFDList : ObjectG
 	 * Params:
 	 *     index = the index into the list
 	 *
-	 * Return: the file descriptor, or -1 in case of error
+	 * Returns: the file descriptor, or -1 in case of error
 	 *
 	 * Since: 2.24
 	 *
@@ -215,7 +215,7 @@ public class UnixFDList : ObjectG
 	 * Gets the length of @list (ie: the number of file descriptors
 	 * contained within).
 	 *
-	 * Return: the length of @list
+	 * Returns: the length of @list
 	 *
 	 * Since: 2.24
 	 */
@@ -239,7 +239,7 @@ public class UnixFDList : ObjectG
 	 * This function never returns %NULL. In case there are no file
 	 * descriptors contained in @list, an empty array is returned.
 	 *
-	 * Return: an array of file
+	 * Returns: an array of file
 	 *     descriptors
 	 *
 	 * Since: 2.24
@@ -273,7 +273,7 @@ public class UnixFDList : ObjectG
 	 * This function never returns %NULL. In case there are no file
 	 * descriptors contained in @list, an empty array is returned.
 	 *
-	 * Return: an array of file
+	 * Returns: an array of file
 	 *     descriptors
 	 *
 	 * Since: 2.24

@@ -88,7 +88,7 @@ public class PluginManager : Box
 	 * Params:
 	 *     engine = A #PeasEngine, or %NULL.
 	 *
-	 * Return: the new #PeasGtkPluginManager.
+	 * Returns: the new #PeasGtkPluginManager.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -107,7 +107,7 @@ public class PluginManager : Box
 	/**
 	 * Returns the #PeasGtkPluginManagerView of @pm.
 	 *
-	 * Return: the #GtkTreeView of @pm.
+	 * Returns: the #GtkTreeView of @pm.
 	 */
 	public Widget getView()
 	{

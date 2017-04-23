@@ -100,7 +100,7 @@ public class TimeVal
 	 * Use g_date_time_format() or g_strdup_printf() if a different
 	 * variation of ISO 8601 format is required.
 	 *
-	 * Return: a newly allocated string containing an ISO 8601 date
+	 * Returns: a newly allocated string containing an ISO 8601 date
 	 *
 	 * Since: 2.12
 	 */
@@ -125,7 +125,7 @@ public class TimeVal
 	 *     isoDate = an ISO 8601 encoded date string
 	 *     time = a #GTimeVal
 	 *
-	 * Return: %TRUE if the conversion was successful.
+	 * Returns: %TRUE if the conversion was successful.
 	 *
 	 * Since: 2.12
 	 */
@@ -165,7 +165,7 @@ public class TimeVal
 	 * the passage of time as measured by system calls such as poll() but it
 	 * may not always be possible to do this.
 	 *
-	 * Return: the monotonic time, in microseconds
+	 * Returns: the monotonic time, in microseconds
 	 *
 	 * Since: 2.28
 	 */
@@ -185,7 +185,7 @@ public class TimeVal
 	 * wall-clock time.  g_get_monotonic_time() is probably more useful for
 	 * measuring intervals.
 	 *
-	 * Return: the number of microseconds since January 1, 1970 UTC.
+	 * Returns: the number of microseconds since January 1, 1970 UTC.
 	 *
 	 * Since: 2.28
 	 */

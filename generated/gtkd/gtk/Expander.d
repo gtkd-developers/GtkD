@@ -194,7 +194,7 @@ public class Expander : Bin
 	 *
 	 * See gtk_expander_set_expanded().
 	 *
-	 * Return: the current state of the expander
+	 * Returns: the current state of the expander
 	 *
 	 * Since: 2.4
 	 */
@@ -216,7 +216,7 @@ public class Expander : Bin
 	 * be avoided by fetching the label text directly from the label
 	 * widget.
 	 *
-	 * Return: The text of the label widget. This string is owned
+	 * Returns: The text of the label widget. This string is owned
 	 *     by the widget and must not be modified or freed.
 	 *
 	 * Since: 2.4
@@ -230,7 +230,7 @@ public class Expander : Bin
 	 * Returns whether the label widget will fill all available
 	 * horizontal space allocated to @expander.
 	 *
-	 * Return: %TRUE if the label widget will fill all
+	 * Returns: %TRUE if the label widget will fill all
 	 *     available horizontal space
 	 *
 	 * Since: 2.22
@@ -244,7 +244,7 @@ public class Expander : Bin
 	 * Retrieves the label widget for the frame. See
 	 * gtk_expander_set_label_widget().
 	 *
-	 * Return: the label widget,
+	 * Returns: the label widget,
 	 *     or %NULL if there is none
 	 *
 	 * Since: 2.4
@@ -265,7 +265,7 @@ public class Expander : Bin
 	 * Returns whether the expander will resize the toplevel widget
 	 * containing the expander upon resizing and collpasing.
 	 *
-	 * Return: the “resize toplevel” setting.
+	 * Returns: the “resize toplevel” setting.
 	 *
 	 * Since: 3.2
 	 */
@@ -279,7 +279,7 @@ public class Expander : Bin
 	 *
 	 * Deprecated: Use margins on the child instead.
 	 *
-	 * Return: spacing between the expander and child
+	 * Returns: spacing between the expander and child
 	 *
 	 * Since: 2.4
 	 */
@@ -293,7 +293,7 @@ public class Expander : Bin
 	 * the [Pango text markup language][PangoMarkupFormat].
 	 * See gtk_expander_set_use_markup().
 	 *
-	 * Return: %TRUE if the label’s text will be parsed for markup
+	 * Returns: %TRUE if the label’s text will be parsed for markup
 	 *
 	 * Since: 2.4
 	 */
@@ -306,7 +306,7 @@ public class Expander : Bin
 	 * Returns whether an embedded underline in the expander label
 	 * indicates a mnemonic. See gtk_expander_set_use_underline().
 	 *
-	 * Return: %TRUE if an embedded underline in the expander
+	 * Returns: %TRUE if an embedded underline in the expander
 	 *     label indicates the mnemonic accelerator keys
 	 *
 	 * Since: 2.4

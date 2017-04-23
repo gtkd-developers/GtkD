@@ -126,7 +126,7 @@ public struct Main
 	 * // ...computation continued
 	 * ]|
 	 *
-	 * Return: %TRUE if any events are pending, %FALSE otherwise
+	 * Returns: %TRUE if any events are pending, %FALSE otherwise
 	 */
 	public static bool eventsPending()
 	{
@@ -140,7 +140,7 @@ public struct Main
 	 * the current event will be the #GdkEventButton that triggered
 	 * the ::clicked signal.
 	 *
-	 * Return: a copy of the current event, or
+	 * Returns: a copy of the current event, or
 	 *     %NULL if there is no current event. The returned event must be
 	 *     freed with gdk_event_free().
 	 */
@@ -160,7 +160,7 @@ public struct Main
 	 * If there is a current event and it has a device, return that
 	 * device, otherwise return %NULL.
 	 *
-	 * Return: a #GdkDevice, or %NULL
+	 * Returns: a #GdkDevice, or %NULL
 	 */
 	public static Device getCurrentEventDevice()
 	{
@@ -182,7 +182,7 @@ public struct Main
 	 * Params:
 	 *     state = a location to store the state of the current event
 	 *
-	 * Return: %TRUE if there was a current event and it
+	 * Returns: %TRUE if there was a current event and it
 	 *     had a state field
 	 */
 	public static bool getCurrentEventState(out GdkModifierType state)
@@ -194,7 +194,7 @@ public struct Main
 	 * If there is a current event and it has a timestamp,
 	 * return that timestamp, otherwise return %GDK_CURRENT_TIME.
 	 *
-	 * Return: the timestamp from the current event,
+	 * Returns: the timestamp from the current event,
 	 *     or %GDK_CURRENT_TIME.
 	 */
 	public static uint getCurrentEventTime()
@@ -208,7 +208,7 @@ public struct Main
 	 * This function is intended for GTK+ modules that want
 	 * to adjust their debug output based on GTK+ debug flags.
 	 *
-	 * Return: the GTK+ debug flags.
+	 * Returns: the GTK+ debug flags.
 	 */
 	public static uint getDebugFlags()
 	{
@@ -225,7 +225,7 @@ public struct Main
 	 * This function is equivalent to pango_language_get_default().
 	 * See that function for details.
 	 *
-	 * Return: the default language as a #PangoLanguage,
+	 * Returns: the default language as a #PangoLanguage,
 	 *     must not be freed
 	 */
 	public static PgLanguage getDefaultLanguage()
@@ -248,7 +248,7 @@ public struct Main
 	 * Params:
 	 *     event = a #GdkEvent
 	 *
-	 * Return: the widget that originally
+	 * Returns: the widget that originally
 	 *     received @event, or %NULL
 	 */
 	public static Widget getEventWidget(Event event)
@@ -286,7 +286,7 @@ public struct Main
 	 * gtk_widget_set_default_direction (direction);
 	 * ]|
 	 *
-	 * Return: the #GtkTextDirection of the current locale
+	 * Returns: the #GtkTextDirection of the current locale
 	 *
 	 * Since: 3.12
 	 */
@@ -307,7 +307,7 @@ public struct Main
 	 *     openDefaultDisplay = whether to open the default display
 	 *         when parsing the commandline arguments
 	 *
-	 * Return: a #GOptionGroup for the commandline
+	 * Returns: a #GOptionGroup for the commandline
 	 *     arguments recognized by GTK+
 	 *
 	 * Since: 2.6
@@ -327,7 +327,7 @@ public struct Main
 	/**
 	 * Queries the current grab of the default window group.
 	 *
-	 * Return: The widget which currently
+	 * Returns: The widget which currently
 	 *     has the grab or %NULL if no grab is active
 	 */
 	public static Widget grabGetCurrent()
@@ -411,7 +411,7 @@ public struct Main
 	 *         `argv` parameter of main(), or %NULL. Any options
 	 *         understood by GTK+ are stripped before return.
 	 *
-	 * Return: %TRUE if the windowing system has been successfully
+	 * Returns: %TRUE if the windowing system has been successfully
 	 *     initialized, %FALSE otherwise
 	 */
 	public static bool initCheck(ref string[] argv)
@@ -449,7 +449,7 @@ public struct Main
 	 *         the `--help` output for the options in @entries
 	 *         and the @parameter_string with gettext(), or %NULL
 	 *
-	 * Return: %TRUE if the windowing system has been successfully
+	 * Returns: %TRUE if the windowing system has been successfully
 	 *     initialized, %FALSE otherwise
 	 *
 	 * Since: 2.6
@@ -485,7 +485,7 @@ public struct Main
 	 *     snooper = a #GtkKeySnoopFunc
 	 *     funcData = data to pass to @snooper
 	 *
-	 * Return: a unique id for this key snooper for use with
+	 * Returns: a unique id for this key snooper for use with
 	 *     gtk_key_snooper_remove().
 	 */
 	public static uint keySnooperInstall(GtkKeySnoopFunc snooper, void* funcData)
@@ -572,7 +572,7 @@ public struct Main
 	 * look at gtk_main_iteration_do() or check if any events are
 	 * pending with gtk_events_pending() first.
 	 *
-	 * Return: %TRUE if gtk_main_quit() has been called for the
+	 * Returns: %TRUE if gtk_main_quit() has been called for the
 	 *     innermost mainloop
 	 */
 	public static bool iteration()
@@ -588,7 +588,7 @@ public struct Main
 	 * Params:
 	 *     blocking = %TRUE if you want GTK+ to block if no events are pending
 	 *
-	 * Return: %TRUE if gtk_main_quit() has been called for the
+	 * Returns: %TRUE if gtk_main_quit() has been called for the
 	 *     innermost mainloop
 	 */
 	public static bool iterationDo(bool blocking)
@@ -599,7 +599,7 @@ public struct Main
 	/**
 	 * Asks for the current nesting level of the main loop.
 	 *
-	 * Return: the nesting level of the current invocation
+	 * Returns: the nesting level of the current invocation
 	 *     of the main loop
 	 */
 	public static uint level()
@@ -636,7 +636,7 @@ public struct Main
 	 *     argv = a pointer to the array of
 	 *         command line arguments
 	 *
-	 * Return: %TRUE if initialization succeeded, otherwise %FALSE
+	 * Returns: %TRUE if initialization succeeded, otherwise %FALSE
 	 */
 	public static bool parseArgs(ref string[] argv)
 	{

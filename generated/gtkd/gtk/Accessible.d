@@ -99,7 +99,7 @@ public class Accessible : ObjectAtk
 	 * The returned widget does not have a reference added, so
 	 * you do not need to unref it.
 	 *
-	 * Return: pointer to the #GtkWidget
+	 * Returns: pointer to the #GtkWidget
 	 *     corresponding to the #GtkAccessible, or %NULL.
 	 *
 	 * Since: 2.22

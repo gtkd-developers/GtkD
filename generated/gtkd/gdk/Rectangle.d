@@ -39,7 +39,7 @@ public  import gtkc.gdktypes;
  * Params:
  *     rect2 = a #GdkRectangle
  *
- * Return: %TRUE if the rectangles are equal.
+ * Returns: %TRUE if the rectangles are equal.
  *
  * Since: 3.20
  */
@@ -61,7 +61,7 @@ public bool equal(GdkRectangle* rect1, GdkRectangle* rect2)
  *     dest = return location for the
  *         intersection of @src1 and @src2, or %NULL
  *
- * Return: %TRUE if the rectangles intersect.
+ * Returns: %TRUE if the rectangles intersect.
  */
 public bool intersect(GdkRectangle* src1, GdkRectangle* src2, out GdkRectangle dest)
 {

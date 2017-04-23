@@ -91,7 +91,7 @@ public class RcStyle : ObjectG
 	 *
 	 * Deprecated: Use #GtkCssProvider instead.
 	 *
-	 * Return: the newly-created #GtkRcStyle
+	 * Returns: the newly-created #GtkRcStyle
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -114,7 +114,7 @@ public class RcStyle : ObjectG
 	 *
 	 * Deprecated: Use #GtkCssProvider instead.
 	 *
-	 * Return: the resulting #GtkRcStyle
+	 * Returns: the resulting #GtkRcStyle
 	 */
 	public RcStyle copy()
 	{
@@ -152,7 +152,7 @@ public class RcStyle : ObjectG
 	 * Params:
 	 *     moduleFile = name of a theme engine
 	 *
-	 * Return: The filename, if found (must be
+	 * Returns: The filename, if found (must be
 	 *     freed with g_free()), otherwise %NULL.
 	 */
 	public static string findModuleInPath(string moduleFile)
@@ -176,7 +176,7 @@ public class RcStyle : ObjectG
 	 *         warning message, or %NULL
 	 *     pixmapFile = name of the pixmap file to locate.
 	 *
-	 * Return: the filename.
+	 * Returns: the filename.
 	 */
 	public static string findPixmapInPath(Settings settings, ScannerG scanner, string pixmapFile)
 	{
@@ -192,7 +192,7 @@ public class RcStyle : ObjectG
 	 *
 	 * Deprecated: Use #GtkStyleContext instead
 	 *
-	 * Return: A %NULL-terminated array of filenames.  This memory is owned
+	 * Returns: A %NULL-terminated array of filenames.  This memory is owned
 	 *     by GTK+ and must not be freed by the application.  If you want
 	 *     to store this information, you should make a copy.
 	 */
@@ -208,7 +208,7 @@ public class RcStyle : ObjectG
 	 *
 	 * Deprecated: Use #GtkCssProvider instead.
 	 *
-	 * Return: a newly-allocated string containing the
+	 * Returns: a newly-allocated string containing the
 	 *     name of the file listing the IM modules available for loading
 	 */
 	public static string getImModuleFile()
@@ -228,7 +228,7 @@ public class RcStyle : ObjectG
 	 *
 	 * Deprecated: Use #GtkCssProvider instead.
 	 *
-	 * Return: a newly-allocated string containing the
+	 * Returns: a newly-allocated string containing the
 	 *     path in which to look for IM modules.
 	 */
 	public static string getImModulePath()
@@ -246,7 +246,7 @@ public class RcStyle : ObjectG
 	 *
 	 * Deprecated: Use #GtkCssProvider instead.
 	 *
-	 * Return: the directory. (Must be freed with g_free())
+	 * Returns: the directory. (Must be freed with g_free())
 	 */
 	public static string getModuleDir()
 	{
@@ -269,7 +269,7 @@ public class RcStyle : ObjectG
 	 * Params:
 	 *     widget = a #GtkWidget
 	 *
-	 * Return: the resulting style. No refcount is added
+	 * Returns: the resulting style. No refcount is added
 	 *     to the returned style, so if you want to save this style around,
 	 *     you should add a reference yourself.
 	 */
@@ -312,7 +312,7 @@ public class RcStyle : ObjectG
 	 *     type = a type that will be used along with parent types of this type
 	 *         when matching against class styles, or #G_TYPE_NONE
 	 *
-	 * Return: A style created by matching
+	 * Returns: A style created by matching
 	 *     with the supplied paths, or %NULL if nothing matching was
 	 *     specified and the default style should be used. The returned
 	 *     value is owned by GTK+ as part of an internal cache, so you
@@ -338,7 +338,7 @@ public class RcStyle : ObjectG
 	 *
 	 * Deprecated: Use #GtkCssProvider instead.
 	 *
-	 * Return: The directory (must be freed with g_free()).
+	 * Returns: The directory (must be freed with g_free()).
 	 */
 	public static string getThemeDir()
 	{
@@ -376,7 +376,7 @@ public class RcStyle : ObjectG
 	 *     color = a pointer to a #GdkColor in which to store
 	 *         the result
 	 *
-	 * Return: %G_TOKEN_NONE if parsing succeeded, otherwise the token
+	 * Returns: %G_TOKEN_NONE if parsing succeeded, otherwise the token
 	 *     that was expected but not found
 	 */
 	public static uint parseColor(ScannerG scanner, out Color color)
@@ -403,7 +403,7 @@ public class RcStyle : ObjectG
 	 *     color = a pointer to a #GdkColor in which to store
 	 *         the result
 	 *
-	 * Return: %G_TOKEN_NONE if parsing succeeded, otherwise the token
+	 * Returns: %G_TOKEN_NONE if parsing succeeded, otherwise the token
 	 *     that was expected but not found
 	 *
 	 * Since: 2.12
@@ -430,7 +430,7 @@ public class RcStyle : ObjectG
 	 *     priority = A pointer to #GtkPathPriorityType variable in which
 	 *         to store the result.
 	 *
-	 * Return: %G_TOKEN_NONE if parsing succeeded, otherwise the token
+	 * Returns: %G_TOKEN_NONE if parsing succeeded, otherwise the token
 	 *     that was expected but not found.
 	 */
 	public static uint parsePriority(ScannerG scanner, GtkPathPriorityType* priority)
@@ -449,7 +449,7 @@ public class RcStyle : ObjectG
 	 *     state = A pointer to a #GtkStateType variable in which to
 	 *         store the result.
 	 *
-	 * Return: %G_TOKEN_NONE if parsing succeeded, otherwise the token
+	 * Returns: %G_TOKEN_NONE if parsing succeeded, otherwise the token
 	 *     that was expected but not found.
 	 */
 	public static uint parseState(ScannerG scanner, out GtkStateType state)
@@ -477,7 +477,7 @@ public class RcStyle : ObjectG
 	 *
 	 * Deprecated: Use #GtkCssProvider instead.
 	 *
-	 * Return: %TRUE if the files were reread.
+	 * Returns: %TRUE if the files were reread.
 	 */
 	public static bool reparseAll()
 	{
@@ -495,7 +495,7 @@ public class RcStyle : ObjectG
 	 *     settings = a #GtkSettings
 	 *     forceLoad = load whether or not anything changed
 	 *
-	 * Return: %TRUE if the files were reread.
+	 * Returns: %TRUE if the files were reread.
 	 */
 	public static bool reparseAllForSettings(Settings settings, bool forceLoad)
 	{

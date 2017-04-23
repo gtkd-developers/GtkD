@@ -79,7 +79,7 @@ public class EventBox : Bin
 	/**
 	 * Creates a new #GtkEventBox.
 	 *
-	 * Return: a new #GtkEventBox
+	 * Returns: a new #GtkEventBox
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -100,7 +100,7 @@ public class EventBox : Bin
 	 * windows of its child. See gtk_event_box_set_above_child()
 	 * for details.
 	 *
-	 * Return: %TRUE if the event box window is above the
+	 * Returns: %TRUE if the event box window is above the
 	 *     window of its child
 	 *
 	 * Since: 2.4
@@ -114,7 +114,7 @@ public class EventBox : Bin
 	 * Returns whether the event box has a visible window.
 	 * See gtk_event_box_set_visible_window() for details.
 	 *
-	 * Return: %TRUE if the event box window is visible
+	 * Returns: %TRUE if the event box window is visible
 	 *
 	 * Since: 2.4
 	 */

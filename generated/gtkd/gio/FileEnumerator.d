@@ -115,7 +115,7 @@ public class FileEnumerator : ObjectG
 	 * Params:
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Return: #TRUE on success or #FALSE on error.
+	 * Returns: #TRUE on success or #FALSE on error.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -167,7 +167,7 @@ public class FileEnumerator : ObjectG
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *
-	 * Return: %TRUE if the close operation has finished successfully.
+	 * Returns: %TRUE if the close operation has finished successfully.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -201,7 +201,7 @@ public class FileEnumerator : ObjectG
 	 *     info = a #GFileInfo gotten from g_file_enumerator_next_file()
 	 *         or the async equivalents.
 	 *
-	 * Return: a #GFile for the #GFileInfo passed it.
+	 * Returns: a #GFile for the #GFileInfo passed it.
 	 *
 	 * Since: 2.36
 	 */
@@ -220,7 +220,7 @@ public class FileEnumerator : ObjectG
 	/**
 	 * Get the #GFile container which is being enumerated.
 	 *
-	 * Return: the #GFile which is being enumerated.
+	 * Returns: the #GFile which is being enumerated.
 	 *
 	 * Since: 2.18
 	 */
@@ -239,7 +239,7 @@ public class FileEnumerator : ObjectG
 	/**
 	 * Checks if the file enumerator has pending operations.
 	 *
-	 * Return: %TRUE if the @enumerator has pending operations.
+	 * Returns: %TRUE if the @enumerator has pending operations.
 	 */
 	public bool hasPending()
 	{
@@ -249,7 +249,7 @@ public class FileEnumerator : ObjectG
 	/**
 	 * Checks if the file enumerator has been closed.
 	 *
-	 * Return: %TRUE if the @enumerator is closed.
+	 * Returns: %TRUE if the @enumerator is closed.
 	 */
 	public bool isClosed()
 	{
@@ -340,7 +340,7 @@ public class FileEnumerator : ObjectG
 	 * Params:
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Return: A #GFileInfo or %NULL on error
+	 * Returns: A #GFileInfo or %NULL on error
 	 *     or end of enumerator.  Free the returned object with
 	 *     g_object_unref() when no longer needed.
 	 *
@@ -404,7 +404,7 @@ public class FileEnumerator : ObjectG
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *
-	 * Return: a #GList of #GFileInfos. You must free the list with
+	 * Returns: a #GList of #GFileInfos. You must free the list with
 	 *     g_list_free() and unref the infos with g_object_unref() when you're
 	 *     done with them.
 	 *

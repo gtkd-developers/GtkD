@@ -93,7 +93,7 @@ public class Device : ObjectGst
 	 *     name = name of new element, or %NULL to automatically
 	 *         create a unique name.
 	 *
-	 * Return: a new #GstElement configured to use this device
+	 * Returns: a new #GstElement configured to use this device
 	 *
 	 * Since: 1.4
 	 */
@@ -112,7 +112,7 @@ public class Device : ObjectGst
 	/**
 	 * Getter for the #GstCaps that this device supports.
 	 *
-	 * Return: The #GstCaps supported by this device. Unref with
+	 * Returns: The #GstCaps supported by this device. Unref with
 	 *     gst_caps_unref() when done.
 	 *
 	 * Since: 1.4
@@ -134,7 +134,7 @@ public class Device : ObjectGst
 	 * classes that represent this device. They are a subset of the
 	 * classes of the #GstDeviceProvider that produced this device.
 	 *
-	 * Return: The device class. Free with g_free() after use.
+	 * Returns: The device class. Free with g_free() after use.
 	 *
 	 * Since: 1.4
 	 */
@@ -149,7 +149,7 @@ public class Device : ObjectGst
 	/**
 	 * Gets the user-friendly name of the device.
 	 *
-	 * Return: The device name. Free with g_free() after use.
+	 * Returns: The device name. Free with g_free() after use.
 	 *
 	 * Since: 1.4
 	 */
@@ -164,7 +164,7 @@ public class Device : ObjectGst
 	/**
 	 * Gets the extra properties of a device.
 	 *
-	 * Return: The extra properties or %NULL when there are none.
+	 * Returns: The extra properties or %NULL when there are none.
 	 *     Free with gst_structure_free() after use.
 	 *
 	 * Since: 1.6
@@ -188,7 +188,7 @@ public class Device : ObjectGst
 	 *     classes = a "/"-separated list of device classes to match, only match if
 	 *         all classes are matched
 	 *
-	 * Return: %TRUE if @device matches.
+	 * Returns: %TRUE if @device matches.
 	 *
 	 * Since: 1.4
 	 */
@@ -204,7 +204,7 @@ public class Device : ObjectGst
 	 *     classes = a %NULL terminated array of classes
 	 *         to match, only match if all classes are matched
 	 *
-	 * Return: %TRUE if @device matches.
+	 * Returns: %TRUE if @device matches.
 	 *
 	 * Since: 1.4
 	 */
@@ -224,7 +224,7 @@ public class Device : ObjectGst
 	 * Params:
 	 *     element = a #GstElement
 	 *
-	 * Return: %TRUE if the element could be reconfigured to use this device,
+	 * Returns: %TRUE if the element could be reconfigured to use this device,
 	 *     %FALSE otherwise.
 	 *
 	 * Since: 1.4

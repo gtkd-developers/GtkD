@@ -54,7 +54,7 @@ public struct FileUtils
 	 *         (UTF-8 on Windows)
 	 *     mode = as in access()
 	 *
-	 * Return: zero if the pathname refers to an existing file system
+	 * Returns: zero if the pathname refers to an existing file system
 	 *     object that has all the tested permissions, or -1 otherwise
 	 *     or on error.
 	 *
@@ -75,7 +75,7 @@ public struct FileUtils
 	 *     path = a pathname in the GLib file name encoding
 	 *         (UTF-8 on Windows)
 	 *
-	 * Return: 0 on success, -1 if an error occurred.
+	 * Returns: 0 on success, -1 if an error occurred.
 	 *
 	 * Since: 2.8
 	 */
@@ -96,7 +96,7 @@ public struct FileUtils
 	 * Params:
 	 *     fd = A file descriptor
 	 *
-	 * Return: %TRUE on success, %FALSE if there was an error.
+	 * Returns: %TRUE on success, %FALSE if there was an error.
 	 *
 	 * Since: 2.36
 	 *
@@ -129,7 +129,7 @@ public struct FileUtils
 	 * Params:
 	 *     errNo = an "errno" value
 	 *
-	 * Return: #GFileError corresponding to the given @errno
+	 * Returns: #GFileError corresponding to the given @errno
 	 */
 	public static GFileError fileErrorFromErrno(int errNo)
 	{
@@ -160,7 +160,7 @@ public struct FileUtils
 	 *         the returned string
 	 *     length = location to store length in bytes of the contents, or %NULL
 	 *
-	 * Return: %TRUE on success, %FALSE if an error occurred
+	 * Returns: %TRUE on success, %FALSE if an error occurred
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -206,7 +206,7 @@ public struct FileUtils
 	 *     nameUsed = location to store actual name used,
 	 *         or %NULL
 	 *
-	 * Return: A file handle (as from open()) to the file opened for
+	 * Returns: A file handle (as from open()) to the file opened for
 	 *     reading and writing. The file is opened in binary mode on platforms
 	 *     where there is a difference. The file handle should be closed with
 	 *     close(). In case of errors, -1 is returned and @error will be set.
@@ -238,7 +238,7 @@ public struct FileUtils
 	 * Params:
 	 *     filename = the symbolic link
 	 *
-	 * Return: A newly-allocated string with the contents of
+	 * Returns: A newly-allocated string with the contents of
 	 *     the symbolic link, or %NULL if an error occurred.
 	 *
 	 * Since: 2.4
@@ -293,7 +293,7 @@ public struct FileUtils
 	 *     contents = string to write to the file
 	 *     length = length of @contents, or -1 if @contents is a nul-terminated string
 	 *
-	 * Return: %TRUE on success, %FALSE if an error occurred
+	 * Returns: %TRUE on success, %FALSE if an error occurred
 	 *
 	 * Since: 2.8
 	 *
@@ -361,7 +361,7 @@ public struct FileUtils
 	 *         GLib file name encoding
 	 *     test = bitfield of #GFileTest flags
 	 *
-	 * Return: whether a test was %TRUE
+	 * Returns: whether a test was %TRUE
 	 */
 	public static bool fileTest(string filename, GFileTest test)
 	{
@@ -376,7 +376,7 @@ public struct FileUtils
 	 *     pathname = a pathname in the GLib file name encoding
 	 *     mode = permissions to use for newly created directories
 	 *
-	 * Return: 0 if the directory already exists, or was successfully
+	 * Returns: 0 if the directory already exists, or was successfully
 	 *     created. Returns -1 if an error occurred, with errno set.
 	 *
 	 * Since: 2.8
@@ -406,7 +406,7 @@ public struct FileUtils
 	 * Params:
 	 *     tmpl = template directory name
 	 *
-	 * Return: A pointer to @tmpl, which has been
+	 * Returns: A pointer to @tmpl, which has been
 	 *     modified to hold the directory name.  In case of errors, %NULL is
 	 *     returned and %errno will be set.
 	 *
@@ -441,7 +441,7 @@ public struct FileUtils
 	 *     tmpl = template directory name
 	 *     mode = permissions to create the temporary directory with
 	 *
-	 * Return: A pointer to @tmpl, which has been
+	 * Returns: A pointer to @tmpl, which has been
 	 *     modified to hold the directory name. In case of errors, %NULL is
 	 *     returned, and %errno will be set.
 	 *
@@ -470,7 +470,7 @@ public struct FileUtils
 	 * Params:
 	 *     tmpl = template filename
 	 *
-	 * Return: A file handle (as from open()) to the file
+	 * Returns: A file handle (as from open()) to the file
 	 *     opened for reading and writing. The file is opened in binary
 	 *     mode on platforms where there is a difference. The file handle
 	 *     should be closed with close(). In case of errors, -1 is
@@ -500,7 +500,7 @@ public struct FileUtils
 	 *         and O_CREAT, which are passed automatically
 	 *     mode = permissions to create the temporary file with
 	 *
-	 * Return: A file handle (as from open()) to the file
+	 * Returns: A file handle (as from open()) to the file
 	 *     opened for reading and writing. The file handle should be
 	 *     closed with close(). In case of errors, -1 is returned
 	 *     and %errno will be set.
@@ -523,7 +523,7 @@ public struct FileUtils
 	 *     filename = a pathname in the GLib file name encoding
 	 *         (UTF-8 on Windows)
 	 *
-	 * Return: 0 if the directory was successfully removed, -1 if an error
+	 * Returns: 0 if the directory was successfully removed, -1 if an error
 	 *     occurred
 	 *
 	 * Since: 2.6
@@ -547,7 +547,7 @@ public struct FileUtils
 	 *     filename = a pathname in the GLib file name encoding
 	 *         (UTF-8 on Windows)
 	 *
-	 * Return: 0 if the name was successfully deleted, -1 if an error
+	 * Returns: 0 if the name was successfully deleted, -1 if an error
 	 *     occurred
 	 *
 	 * Since: 2.6

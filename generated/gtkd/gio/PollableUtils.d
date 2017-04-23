@@ -47,7 +47,7 @@ public  import gtkc.giotypes;
  * Params:
  *     pollableStream = the stream associated with the new source
  *
- * Return: the new #GSource.
+ * Returns: the new #GSource.
  *
  * Since: 2.28
  */
@@ -75,7 +75,7 @@ public Source pollableSourceNew(ObjectG pollableStream)
  *     childSource = optional child source to attach
  *     cancellable = optional #GCancellable to attach
  *
- * Return: the new #GSource.
+ * Returns: the new #GSource.
  *
  * Since: 2.34
  */
@@ -110,7 +110,7 @@ public Source pollableSourceNewFull(ObjectG pollableStream, Source childSource, 
  *     blocking = whether to do blocking I/O
  *     cancellable = optional #GCancellable object, %NULL to ignore.
  *
- * Return: the number of bytes read, or -1 on error.
+ * Returns: the number of bytes read, or -1 on error.
  *
  * Since: 2.34
  *
@@ -150,7 +150,7 @@ public ptrdiff_t pollableStreamRead(InputStream stream, ubyte[] buffer, bool blo
  *     blocking = whether to do blocking I/O
  *     cancellable = optional #GCancellable object, %NULL to ignore.
  *
- * Return: the number of bytes written, or -1 on error.
+ * Returns: the number of bytes written, or -1 on error.
  *
  * Since: 2.34
  *
@@ -200,7 +200,7 @@ public ptrdiff_t pollableStreamWrite(OutputStream stream, ubyte[] buffer, bool b
  *         written to the stream
  *     cancellable = optional #GCancellable object, %NULL to ignore.
  *
- * Return: %TRUE on success, %FALSE if there was an error
+ * Returns: %TRUE on success, %FALSE if there was an error
  *
  * Since: 2.34
  *

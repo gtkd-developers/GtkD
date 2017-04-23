@@ -100,7 +100,7 @@ public class StringChunk
 	 * Params:
 	 *     str = the string to add
 	 *
-	 * Return: a pointer to the copy of @string within
+	 * Returns: a pointer to the copy of @string within
 	 *     the #GStringChunk
 	 */
 	public string insert(string str)
@@ -129,7 +129,7 @@ public class StringChunk
 	 * Params:
 	 *     str = the string to add
 	 *
-	 * Return: a pointer to the new or existing copy of @string
+	 * Returns: a pointer to the new or existing copy of @string
 	 *     within the #GStringChunk
 	 */
 	public string insertConst(string str)
@@ -156,7 +156,7 @@ public class StringChunk
 	 *     len = number of bytes of @string to insert, or -1 to insert a
 	 *         nul-terminated string
 	 *
-	 * Return: a pointer to the copy of @string within the #GStringChunk
+	 * Returns: a pointer to the copy of @string within the #GStringChunk
 	 *
 	 * Since: 2.4
 	 */
@@ -177,7 +177,7 @@ public class StringChunk
 	 *         is larger than this default size, a larger block of
 	 *         memory will be allocated for it.
 	 *
-	 * Return: a new #GStringChunk
+	 * Returns: a new #GStringChunk
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

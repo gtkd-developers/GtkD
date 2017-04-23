@@ -82,7 +82,7 @@ public class TlsPassword : ObjectG
 	 *     flags = the password flags
 	 *     description = description of what the password is for
 	 *
-	 * Return: The newly allocated password object
+	 * Returns: The newly allocated password object
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -101,7 +101,7 @@ public class TlsPassword : ObjectG
 	/**
 	 * Get a description string about what the password will be used for.
 	 *
-	 * Return: The description of the password.
+	 * Returns: The description of the password.
 	 *
 	 * Since: 2.30
 	 */
@@ -113,7 +113,7 @@ public class TlsPassword : ObjectG
 	/**
 	 * Get flags about the password.
 	 *
-	 * Return: The flags about the password.
+	 * Returns: The flags about the password.
 	 *
 	 * Since: 2.30
 	 */
@@ -129,7 +129,7 @@ public class TlsPassword : ObjectG
 	 * for @length in contexts where you know the password will have a
 	 * certain fixed length.)
 	 *
-	 * Return: The password value (owned by the password object).
+	 * Returns: The password value (owned by the password object).
 	 *
 	 * Since: 2.30
 	 */
@@ -147,7 +147,7 @@ public class TlsPassword : ObjectG
 	 * representation of the password flags returned from
 	 * g_tls_password_get_flags().
 	 *
-	 * Return: The warning.
+	 * Returns: The warning.
 	 *
 	 * Since: 2.30
 	 */

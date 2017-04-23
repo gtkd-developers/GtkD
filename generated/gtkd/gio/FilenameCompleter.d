@@ -80,7 +80,7 @@ public class FilenameCompleter : ObjectG
 	/**
 	 * Creates a new filename completer.
 	 *
-	 * Return: a #GFilenameCompleter.
+	 * Returns: a #GFilenameCompleter.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -102,7 +102,7 @@ public class FilenameCompleter : ObjectG
 	 * Params:
 	 *     initialText = text to be completed.
 	 *
-	 * Return: a completed string, or %NULL if no completion exists.
+	 * Returns: a completed string, or %NULL if no completion exists.
 	 *     This string is not owned by GIO, so remember to g_free() it
 	 *     when finished.
 	 */
@@ -120,7 +120,7 @@ public class FilenameCompleter : ObjectG
 	 * Params:
 	 *     initialText = text to be completed.
 	 *
-	 * Return: array of strings with possible completions for @initial_text.
+	 * Returns: array of strings with possible completions for @initial_text.
 	 *     This array must be freed by g_strfreev() when finished.
 	 */
 	public string[] getCompletions(string initialText)

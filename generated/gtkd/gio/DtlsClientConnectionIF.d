@@ -59,7 +59,7 @@ public interface DtlsClientConnectionIF{
 	 * Each item in the list is a #GByteArray which contains the complete
 	 * subject DN of the certificate authority.
 	 *
-	 * Return: the list of
+	 * Returns: the list of
 	 *     CA DNs. You should unref each element with g_byte_array_unref() and then
 	 *     the free the list with g_list_free().
 	 *
@@ -70,7 +70,7 @@ public interface DtlsClientConnectionIF{
 	/**
 	 * Gets @conn's expected server identity
 	 *
-	 * Return: a #GSocketConnectable describing the
+	 * Returns: a #GSocketConnectable describing the
 	 *     expected server identity, or %NULL if the expected identity is not
 	 *     known.
 	 *
@@ -81,7 +81,7 @@ public interface DtlsClientConnectionIF{
 	/**
 	 * Gets @conn's validation flags
 	 *
-	 * Return: the validation flags
+	 * Returns: the validation flags
 	 *
 	 * Since: 2.48
 	 */

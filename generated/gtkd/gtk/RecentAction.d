@@ -144,7 +144,7 @@ public class RecentAction : Action, RecentChooserIF
 	 *     stockId = the stock icon to display in widgets representing
 	 *         the action, or %NULL
 	 *
-	 * Return: the newly created #GtkRecentAction.
+	 * Returns: the newly created #GtkRecentAction.
 	 *
 	 * Since: 2.12
 	 *
@@ -177,7 +177,7 @@ public class RecentAction : Action, RecentChooserIF
 	 *     manager = a #GtkRecentManager, or %NULL for using the default
 	 *         #GtkRecentManager
 	 *
-	 * Return: the newly created #GtkRecentAction
+	 * Returns: the newly created #GtkRecentAction
 	 *
 	 * Since: 2.12
 	 *
@@ -198,7 +198,7 @@ public class RecentAction : Action, RecentChooserIF
 	/**
 	 * Returns the value set by gtk_recent_chooser_menu_set_show_numbers().
 	 *
-	 * Return: %TRUE if numbers should be shown.
+	 * Returns: %TRUE if numbers should be shown.
 	 *
 	 * Since: 2.12
 	 */

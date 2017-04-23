@@ -84,7 +84,7 @@ public class MountOperation : GioMountOperation
 	 * Params:
 	 *     parent = transient parent of the window, or %NULL
 	 *
-	 * Return: a new #GtkMountOperation
+	 * Returns: a new #GtkMountOperation
 	 *
 	 * Since: 2.14
 	 *
@@ -105,7 +105,7 @@ public class MountOperation : GioMountOperation
 	/**
 	 * Gets the transient parent used by the #GtkMountOperation
 	 *
-	 * Return: the transient parent for windows shown by @op
+	 * Returns: the transient parent for windows shown by @op
 	 *
 	 * Since: 2.14
 	 */
@@ -125,7 +125,7 @@ public class MountOperation : GioMountOperation
 	 * Gets the screen on which windows of the #GtkMountOperation
 	 * will be shown.
 	 *
-	 * Return: the screen on which windows of @op are shown
+	 * Returns: the screen on which windows of @op are shown
 	 *
 	 * Since: 2.14
 	 */
@@ -145,7 +145,7 @@ public class MountOperation : GioMountOperation
 	 * Returns whether the #GtkMountOperation is currently displaying
 	 * a window.
 	 *
-	 * Return: %TRUE if @op is currently displaying a window
+	 * Returns: %TRUE if @op is currently displaying a window
 	 *
 	 * Since: 2.14
 	 */
@@ -196,7 +196,7 @@ public class MountOperation : GioMountOperation
 	 *     uri = the uri to show
 	 *     timestamp = a timestamp to prevent focus stealing
 	 *
-	 * Return: %TRUE on success, %FALSE on error
+	 * Returns: %TRUE on success, %FALSE on error
 	 *
 	 * Since: 2.14
 	 *

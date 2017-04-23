@@ -99,7 +99,7 @@ public class GhostPad : ProxyPad
 	 *     name = the name of the new pad, or %NULL to assign a default name
 	 *     target = the pad to ghost.
 	 *
-	 * Return: a new #GstPad, or %NULL in
+	 * Returns: a new #GstPad, or %NULL in
 	 *     case of an error.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -127,7 +127,7 @@ public class GhostPad : ProxyPad
 	 *     target = the pad to ghost.
 	 *     templ = the #GstPadTemplate to use on the ghostpad.
 	 *
-	 * Return: a new #GstPad, or %NULL in
+	 * Returns: a new #GstPad, or %NULL in
 	 *     case of an error.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -155,7 +155,7 @@ public class GhostPad : ProxyPad
 	 *     name = the name of the new pad, or %NULL to assign a default name.
 	 *     dir = the direction of the ghostpad
 	 *
-	 * Return: a new #GstPad, or %NULL in
+	 * Returns: a new #GstPad, or %NULL in
 	 *     case of an error.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -180,7 +180,7 @@ public class GhostPad : ProxyPad
 	 *     name = the name of the new pad, or %NULL to assign a default name
 	 *     templ = the #GstPadTemplate to create the ghostpad from.
 	 *
-	 * Return: a new #GstPad, or %NULL in
+	 * Returns: a new #GstPad, or %NULL in
 	 *     case of an error.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -206,7 +206,7 @@ public class GhostPad : ProxyPad
 	 *     mode = the requested activation mode
 	 *     active = whether the pad should be active or not.
 	 *
-	 * Return: %TRUE if the operation was successful.
+	 * Returns: %TRUE if the operation was successful.
 	 */
 	public static bool activateModeDefault(Pad pad, ObjectGst parent, GstPadMode mode, bool active)
 	{
@@ -223,7 +223,7 @@ public class GhostPad : ProxyPad
 	 *     mode = the requested activation mode
 	 *     active = whether the pad should be active or not.
 	 *
-	 * Return: %TRUE if the operation was successful.
+	 * Returns: %TRUE if the operation was successful.
 	 */
 	public static bool internalActivateModeDefault(Pad pad, ObjectGst parent, GstPadMode mode, bool active)
 	{
@@ -238,7 +238,7 @@ public class GhostPad : ProxyPad
 	 * function. Call this function directly after a call to g_object_new
 	 * (GST_TYPE_GHOST_PAD, "direction", @dir, ..., NULL).
 	 *
-	 * Return: %TRUE if the construction succeeds, %FALSE otherwise.
+	 * Returns: %TRUE if the construction succeeds, %FALSE otherwise.
 	 */
 	public bool construct()
 	{
@@ -248,7 +248,7 @@ public class GhostPad : ProxyPad
 	/**
 	 * Get the target pad of @gpad. Unref target pad after usage.
 	 *
-	 * Return: the target #GstPad, can be
+	 * Returns: the target #GstPad, can be
 	 *     %NULL if the ghostpad has no target set. Unref target pad after
 	 *     usage.
 	 */
@@ -272,7 +272,7 @@ public class GhostPad : ProxyPad
 	 * Params:
 	 *     newtarget = the new pad target
 	 *
-	 * Return: %TRUE if the new target could be set. This function
+	 * Returns: %TRUE if the new target could be set. This function
 	 *     can return %FALSE when the internal pads could not be linked.
 	 */
 	public bool setTarget(Pad newtarget)

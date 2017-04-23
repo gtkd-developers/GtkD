@@ -97,7 +97,7 @@ public class GesturePan : GestureDrag
 	 *     widget = a #GtkWidget
 	 *     orientation = expected orientation
 	 *
-	 * Return: a newly created #GtkGesturePan
+	 * Returns: a newly created #GtkGesturePan
 	 *
 	 * Since: 3.14
 	 *
@@ -118,7 +118,7 @@ public class GesturePan : GestureDrag
 	/**
 	 * Returns the orientation of the pan gestures that this @gesture expects.
 	 *
-	 * Return: the expected orientation for pan gestures
+	 * Returns: the expected orientation for pan gestures
 	 *
 	 * Since: 3.14
 	 */

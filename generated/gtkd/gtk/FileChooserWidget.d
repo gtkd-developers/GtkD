@@ -97,7 +97,7 @@ public class FileChooserWidget : Box, FileChooserIF
 	 * Params:
 	 *     action = Open or save mode for the widget
 	 *
-	 * Return: a new #GtkFileChooserWidget
+	 * Returns: a new #GtkFileChooserWidget
 	 *
 	 * Since: 2.4
 	 *

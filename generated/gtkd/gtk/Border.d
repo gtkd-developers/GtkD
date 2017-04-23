@@ -83,7 +83,7 @@ public class Border
 	/**
 	 * Allocates a new #GtkBorder-struct and initializes its elements to zero.
 	 *
-	 * Return: a newly allocated #GtkBorder-struct.
+	 * Returns: a newly allocated #GtkBorder-struct.
 	 *     Free with gtk_border_free()
 	 *
 	 * Since: 2.14
@@ -105,7 +105,7 @@ public class Border
 	/**
 	 * Copies a #GtkBorder-struct.
 	 *
-	 * Return: a copy of @border_.
+	 * Returns: a copy of @border_.
 	 */
 	public Border copy()
 	{

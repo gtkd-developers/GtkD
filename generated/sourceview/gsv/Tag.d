@@ -82,7 +82,7 @@ public class Tag : TextTag
 	 * Params:
 	 *     name = tag name, or %NULL.
 	 *
-	 * Return: a new #GtkSourceTag.
+	 * Returns: a new #GtkSourceTag.
 	 *
 	 * Since: 3.20
 	 *

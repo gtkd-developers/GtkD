@@ -105,7 +105,7 @@ public class SocketControlMessage : ObjectG
 	 *     size = the size of the data in bytes
 	 *     data = pointer to the message data
 	 *
-	 * Return: the deserialized message or %NULL
+	 * Returns: the deserialized message or %NULL
 	 *
 	 * Since: 2.22
 	 */
@@ -125,7 +125,7 @@ public class SocketControlMessage : ObjectG
 	 * Returns the "level" (i.e. the originating protocol) of the control message.
 	 * This is often SOL_SOCKET.
 	 *
-	 * Return: an integer describing the level
+	 * Returns: an integer describing the level
 	 *
 	 * Since: 2.22
 	 */
@@ -138,7 +138,7 @@ public class SocketControlMessage : ObjectG
 	 * Returns the protocol specific type of the control message.
 	 * For instance, for UNIX fd passing this would be SCM_RIGHTS.
 	 *
-	 * Return: an integer describing the type of control message
+	 * Returns: an integer describing the type of control message
 	 *
 	 * Since: 2.22
 	 */
@@ -151,7 +151,7 @@ public class SocketControlMessage : ObjectG
 	 * Returns the space required for the control message, not including
 	 * headers or alignment.
 	 *
-	 * Return: The number of bytes required.
+	 * Returns: The number of bytes required.
 	 *
 	 * Since: 2.22
 	 */

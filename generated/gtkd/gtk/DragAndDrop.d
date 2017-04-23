@@ -86,7 +86,7 @@ public struct DragAndDrop
 	 * Params:
 	 *     context = a (destination side) drag context
 	 *
-	 * Return: if the drag is occurring
+	 * Returns: if the drag is occurring
 	 *     within a single application, a pointer to the source widget.
 	 *     Otherwise, %NULL.
 	 */

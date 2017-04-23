@@ -41,7 +41,7 @@ public struct PgVersion
 	 * A version number can be encoded into an integer using
 	 * PANGO_VERSION_ENCODE().
 	 *
-	 * Return: The encoded version of Pango library
+	 * Returns: The encoded version of Pango library
 	 *     available at run time.
 	 *
 	 * Since: 1.16
@@ -73,7 +73,7 @@ public struct PgVersion
 	 *     requiredMinor = the required minor version.
 	 *     requiredMicro = the required major version.
 	 *
-	 * Return: %NULL if the Pango library is compatible
+	 * Returns: %NULL if the Pango library is compatible
 	 *     with the given version, or a string describing the version
 	 *     mismatch.  The returned string is owned by Pango and should not
 	 *     be modified or freed.
@@ -90,7 +90,7 @@ public struct PgVersion
 	 * it returns the version of Pango available at run-time, as opposed to
 	 * the version available at compile-time.
 	 *
-	 * Return: A string containing the version of Pango library
+	 * Returns: A string containing the version of Pango library
 	 *     available at run time.
 	 *     The returned string is owned by Pango and should not be modified
 	 *     or freed.

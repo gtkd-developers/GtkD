@@ -92,7 +92,7 @@ public class ThreadPool
 	/**
 	 * Returns the maximal number of threads for @pool.
 	 *
-	 * Return: the maximal number of threads
+	 * Returns: the maximal number of threads
 	 */
 	public int getMaxThreads()
 	{
@@ -102,7 +102,7 @@ public class ThreadPool
 	/**
 	 * Returns the number of threads currently running in @pool.
 	 *
-	 * Return: the number of threads currently running
+	 * Returns: the number of threads currently running
 	 */
 	public uint getNumThreads()
 	{
@@ -116,7 +116,7 @@ public class ThreadPool
 	 * Params:
 	 *     data = an unprocessed item in the pool
 	 *
-	 * Return: %TRUE if the item was found and moved
+	 * Returns: %TRUE if the item was found and moved
 	 *
 	 * Since: 2.46
 	 */
@@ -144,7 +144,7 @@ public class ThreadPool
 	 * Params:
 	 *     data = a new task for @pool
 	 *
-	 * Return: %TRUE on success, %FALSE if an error occurred
+	 * Returns: %TRUE on success, %FALSE if an error occurred
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -188,7 +188,7 @@ public class ThreadPool
 	 *     maxThreads = a new maximal number of threads for @pool,
 	 *         or -1 for unlimited
 	 *
-	 * Return: %TRUE on success, %FALSE if an error occurred
+	 * Returns: %TRUE on success, %FALSE if an error occurred
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -236,7 +236,7 @@ public class ThreadPool
 	/**
 	 * Returns the number of tasks still unprocessed in @pool.
 	 *
-	 * Return: the number of unprocessed tasks
+	 * Returns: the number of unprocessed tasks
 	 */
 	public uint unprocessed()
 	{
@@ -251,7 +251,7 @@ public class ThreadPool
 	 * If this function returns 0, threads waiting in the thread
 	 * pool for new work are not stopped.
 	 *
-	 * Return: the maximum @interval (milliseconds) to wait
+	 * Returns: the maximum @interval (milliseconds) to wait
 	 *     for new tasks in the thread pool before stopping the
 	 *     thread
 	 *
@@ -265,7 +265,7 @@ public class ThreadPool
 	/**
 	 * Returns the maximal allowed number of unused threads.
 	 *
-	 * Return: the maximal number of unused threads
+	 * Returns: the maximal number of unused threads
 	 */
 	public static int getMaxUnusedThreads()
 	{
@@ -275,7 +275,7 @@ public class ThreadPool
 	/**
 	 * Returns the number of currently unused threads.
 	 *
-	 * Return: the number of currently unused threads
+	 * Returns: the number of currently unused threads
 	 */
 	public static uint getNumUnusedThreads()
 	{
@@ -319,7 +319,7 @@ public class ThreadPool
 	 *         in  the new thread pool, -1 means no limit
 	 *     exclusive = should this thread pool be exclusive?
 	 *
-	 * Return: the new #GThreadPool
+	 * Returns: the new #GThreadPool
 	 *
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.

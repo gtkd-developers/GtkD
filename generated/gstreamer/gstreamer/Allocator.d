@@ -92,7 +92,7 @@ public class Allocator : ObjectGst
 	 * Params:
 	 *     name = the name of the allocator
 	 *
-	 * Return: a #GstAllocator or %NULL when
+	 * Returns: a #GstAllocator or %NULL when
 	 *     the allocator with @name was not registered. Use gst_object_unref()
 	 *     to release the allocator after usage.
 	 */
@@ -142,7 +142,7 @@ public class Allocator : ObjectGst
 	 *     size = size of the visible memory area
 	 *     params = optional parameters
 	 *
-	 * Return: a new #GstMemory.
+	 * Returns: a new #GstMemory.
 	 */
 	public Memory alloc(size_t size, AllocationParams params)
 	{

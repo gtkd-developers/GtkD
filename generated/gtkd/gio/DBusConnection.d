@@ -215,7 +215,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 *     observer = a #GDBusAuthObserver or %NULL
 	 *     cancellable = a #GCancellable or %NULL
 	 *
-	 * Return: a #GDBusConnection or %NULL if @error is set. Free with
+	 * Returns: a #GDBusConnection or %NULL if @error is set. Free with
 	 *     g_object_unref().
 	 *
 	 * Since: 2.26
@@ -266,7 +266,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 *     observer = a #GDBusAuthObserver or %NULL
 	 *     cancellable = a #GCancellable or %NULL
 	 *
-	 * Return: a #GDBusConnection or %NULL if @error is set. Free with g_object_unref().
+	 * Returns: a #GDBusConnection or %NULL if @error is set. Free with g_object_unref().
 	 *
 	 * Since: 2.26
 	 *
@@ -403,7 +403,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 *     userDataFreeFunc = function to free @user_data with when filter
 	 *         is removed or %NULL
 	 *
-	 * Return: a filter identifier that can be used with
+	 * Returns: a filter identifier that can be used with
 	 *     g_dbus_connection_remove_filter()
 	 *
 	 * Since: 2.26
@@ -489,7 +489,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 * Params:
 	 *     res = a #GAsyncResult obtained from the #GAsyncReadyCallback passed to g_dbus_connection_call()
 	 *
-	 * Return: %NULL if @error is set. Otherwise a #GVariant tuple with
+	 * Returns: %NULL if @error is set. Otherwise a #GVariant tuple with
 	 *     return values. Free with g_variant_unref().
 	 *
 	 * Since: 2.26
@@ -567,7 +567,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 *         timeout or %G_MAXINT for no timeout
 	 *     cancellable = a #GCancellable or %NULL
 	 *
-	 * Return: %NULL if @error is set. Otherwise a #GVariant tuple with
+	 * Returns: %NULL if @error is set. Otherwise a #GVariant tuple with
 	 *     return values. Free with g_variant_unref().
 	 *
 	 * Since: 2.26
@@ -632,7 +632,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 *     res = a #GAsyncResult obtained from the #GAsyncReadyCallback passed to
 	 *         g_dbus_connection_call_with_unix_fd_list()
 	 *
-	 * Return: %NULL if @error is set. Otherwise a #GVariant tuple with
+	 * Returns: %NULL if @error is set. Otherwise a #GVariant tuple with
 	 *     return values. Free with g_variant_unref().
 	 *
 	 * Since: 2.30
@@ -682,7 +682,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 *     outFdList = return location for a #GUnixFDList or %NULL
 	 *     cancellable = a #GCancellable or %NULL
 	 *
-	 * Return: %NULL if @error is set. Otherwise a #GVariant tuple with
+	 * Returns: %NULL if @error is set. Otherwise a #GVariant tuple with
 	 *     return values. Free with g_variant_unref().
 	 *
 	 * Since: 2.30
@@ -757,7 +757,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 *     res = a #GAsyncResult obtained from the #GAsyncReadyCallback passed
 	 *         to g_dbus_connection_close()
 	 *
-	 * Return: %TRUE if the operation succeeded, %FALSE if @error is set
+	 * Returns: %TRUE if the operation succeeded, %FALSE if @error is set
 	 *
 	 * Since: 2.26
 	 *
@@ -786,7 +786,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 * Params:
 	 *     cancellable = a #GCancellable or %NULL
 	 *
-	 * Return: %TRUE if the operation succeeded, %FALSE if @error is set
+	 * Returns: %TRUE if the operation succeeded, %FALSE if @error is set
 	 *
 	 * Since: 2.26
 	 *
@@ -822,7 +822,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 *     parameters = a #GVariant tuple with parameters for the signal
 	 *         or %NULL if not passing parameters
 	 *
-	 * Return: %TRUE unless @error is set
+	 * Returns: %TRUE unless @error is set
 	 *
 	 * Since: 2.26
 	 *
@@ -869,7 +869,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 *     objectPath = a D-Bus object path
 	 *     actionGroup = a #GActionGroup
 	 *
-	 * Return: the ID of the export (never zero), or 0 in case of failure
+	 * Returns: the ID of the export (never zero), or 0 in case of failure
 	 *
 	 * Since: 2.32
 	 *
@@ -907,7 +907,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 *     objectPath = a D-Bus object path
 	 *     menu = a #GMenuModel
 	 *
-	 * Return: the ID of the export (never zero), or 0 in case of failure
+	 * Returns: the ID of the export (never zero), or 0 in case of failure
 	 *
 	 * Since: 2.32
 	 *
@@ -963,7 +963,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 *     res = a #GAsyncResult obtained from the #GAsyncReadyCallback passed
 	 *         to g_dbus_connection_flush()
 	 *
-	 * Return: %TRUE if the operation succeeded, %FALSE if @error is set
+	 * Returns: %TRUE if the operation succeeded, %FALSE if @error is set
 	 *
 	 * Since: 2.26
 	 *
@@ -992,7 +992,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 * Params:
 	 *     cancellable = a #GCancellable or %NULL
 	 *
-	 * Return: %TRUE if the operation succeeded, %FALSE if @error is set
+	 * Returns: %TRUE if the operation succeeded, %FALSE if @error is set
 	 *
 	 * Since: 2.26
 	 *
@@ -1015,7 +1015,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	/**
 	 * Gets the capabilities negotiated with the remote peer
 	 *
-	 * Return: zero or more flags from the #GDBusCapabilityFlags enumeration
+	 * Returns: zero or more flags from the #GDBusCapabilityFlags enumeration
 	 *
 	 * Since: 2.26
 	 */
@@ -1029,7 +1029,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 * closed by the remote peer. See
 	 * #GDBusConnection:exit-on-close for more details.
 	 *
-	 * Return: whether the process is terminated when @connection is
+	 * Returns: whether the process is terminated when @connection is
 	 *     closed by the remote peer
 	 *
 	 * Since: 2.26
@@ -1043,7 +1043,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 * The GUID of the peer performing the role of server when
 	 * authenticating. See #GDBusConnection:guid for more details.
 	 *
-	 * Return: The GUID. Do not free this string, it is owned by
+	 * Returns: The GUID. Do not free this string, it is owned by
 	 *     @connection.
 	 *
 	 * Since: 2.26
@@ -1060,7 +1060,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 * high-level API such as g_dbus_connection_emit_signal(),
 	 * g_dbus_connection_call() or g_dbus_proxy_call().
 	 *
-	 * Return: the last used serial or zero when no message has been sent
+	 * Returns: the last used serial or zero when no message has been sent
 	 *     within the current thread
 	 *
 	 * Since: 2.34
@@ -1081,7 +1081,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 * each application is a client. So this method will always return
 	 * %NULL for message bus clients.
 	 *
-	 * Return: a #GCredentials or %NULL if not
+	 * Returns: a #GCredentials or %NULL if not
 	 *     available. Do not free this object, it is owned by @connection.
 	 *
 	 * Since: 2.26
@@ -1105,7 +1105,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 * stream from a worker thread, so it is not safe to interact with
 	 * the stream directly.
 	 *
-	 * Return: the stream used for IO
+	 * Returns: the stream used for IO
 	 *
 	 * Since: 2.26
 	 */
@@ -1126,7 +1126,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 * bus. This can also be used to figure out if @connection is a
 	 * message bus connection.
 	 *
-	 * Return: the unique name or %NULL if @connection is not a message
+	 * Returns: the unique name or %NULL if @connection is not a message
 	 *     bus connection. Do not free this string, it is owned by
 	 *     @connection.
 	 *
@@ -1140,7 +1140,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	/**
 	 * Gets whether @connection is closed.
 	 *
-	 * Return: %TRUE if the connection is closed, %FALSE otherwise
+	 * Returns: %TRUE if the connection is closed, %FALSE otherwise
 	 *
 	 * Since: 2.26
 	 */
@@ -1196,7 +1196,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 *     userData = data to pass to functions in @vtable
 	 *     userDataFreeFunc = function to call when the object path is unregistered
 	 *
-	 * Return: 0 if @error is set, otherwise a registration id (never 0)
+	 * Returns: 0 if @error is set, otherwise a registration id (never 0)
 	 *     that can be used with g_dbus_connection_unregister_object()
 	 *
 	 * Since: 2.26
@@ -1228,7 +1228,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 *     getPropertyClosure = #GClosure for getting a property.
 	 *     setPropertyClosure = #GClosure for setting a property.
 	 *
-	 * Return: 0 if @error is set, otherwise a registration id (never 0)
+	 * Returns: 0 if @error is set, otherwise a registration id (never 0)
 	 *     that can be used with g_dbus_connection_unregister_object() .
 	 *
 	 * Since: 2.46
@@ -1293,7 +1293,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 *     userData = data to pass to functions in @vtable
 	 *     userDataFreeFunc = function to call when the subtree is unregistered
 	 *
-	 * Return: 0 if @error is set, otherwise a subtree registration id (never 0)
+	 * Returns: 0 if @error is set, otherwise a subtree registration id (never 0)
 	 *     that can be used with g_dbus_connection_unregister_subtree() .
 	 *
 	 * Since: 2.26
@@ -1361,7 +1361,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 *     outSerial = return location for serial number assigned
 	 *         to @message when sending it or %NULL
 	 *
-	 * Return: %TRUE if the message was well-formed and queued for
+	 * Returns: %TRUE if the message was well-formed and queued for
 	 *     transmission, %FALSE if @error is set
 	 *
 	 * Since: 2.26
@@ -1446,7 +1446,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 *     res = a #GAsyncResult obtained from the #GAsyncReadyCallback passed to
 	 *         g_dbus_connection_send_message_with_reply()
 	 *
-	 * Return: a locked #GDBusMessage or %NULL if @error is set
+	 * Returns: a locked #GDBusMessage or %NULL if @error is set
 	 *
 	 * Since: 2.26
 	 *
@@ -1510,7 +1510,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 *         assigned to @message when sending it or %NULL
 	 *     cancellable = a #GCancellable or %NULL
 	 *
-	 * Return: a locked #GDBusMessage that is the reply
+	 * Returns: a locked #GDBusMessage that is the reply
 	 *     to @message or %NULL if @error is set
 	 *
 	 * Since: 2.26
@@ -1605,7 +1605,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 *     userDataFreeFunc = function to free @user_data with when
 	 *         subscription is removed or %NULL
 	 *
-	 * Return: a subscription identifier that can be used with g_dbus_connection_signal_unsubscribe()
+	 * Returns: a subscription identifier that can be used with g_dbus_connection_signal_unsubscribe()
 	 *
 	 * Since: 2.26
 	 */
@@ -1684,7 +1684,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 *     registrationId = a registration id obtained from
 	 *         g_dbus_connection_register_object()
 	 *
-	 * Return: %TRUE if the object was unregistered, %FALSE otherwise
+	 * Returns: %TRUE if the object was unregistered, %FALSE otherwise
 	 *
 	 * Since: 2.26
 	 */
@@ -1700,7 +1700,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 *     registrationId = a subtree registration id obtained from
 	 *         g_dbus_connection_register_subtree()
 	 *
-	 * Return: %TRUE if the subtree was unregistered, %FALSE otherwise
+	 * Returns: %TRUE if the subtree was unregistered, %FALSE otherwise
 	 *
 	 * Since: 2.26
 	 */
@@ -1821,7 +1821,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 *     res = a #GAsyncResult obtained from the #GAsyncReadyCallback passed
 	 *         to g_bus_get()
 	 *
-	 * Return: a #GDBusConnection or %NULL if @error is set.
+	 * Returns: a #GDBusConnection or %NULL if @error is set.
 	 *     Free with g_object_unref().
 	 *
 	 * Since: 2.26
@@ -1869,7 +1869,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 *     busType = a #GBusType
 	 *     cancellable = a #GCancellable or %NULL
 	 *
-	 * Return: a #GDBusConnection or %NULL if @error is set.
+	 * Returns: a #GDBusConnection or %NULL if @error is set.
 	 *     Free with g_object_unref().
 	 *
 	 * Since: 2.26

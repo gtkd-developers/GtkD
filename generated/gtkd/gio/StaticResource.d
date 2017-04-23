@@ -83,7 +83,7 @@ public class StaticResource
 	 * [glib-compile-resources][glib-compile-resources]
 	 * and is not typically used by other code.
 	 *
-	 * Return: a #GResource
+	 * Returns: a #GResource
 	 *
 	 * Since: 2.32
 	 */

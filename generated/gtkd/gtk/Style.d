@@ -109,7 +109,7 @@ public class Style : ObjectG
 	 *
 	 * Deprecated: Use #GtkStyleContext
 	 *
-	 * Return: a new #GtkStyle.
+	 * Returns: a new #GtkStyle.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -151,7 +151,7 @@ public class Style : ObjectG
 	 * Params:
 	 *     window = a #GdkWindow.
 	 *
-	 * Return: Either @style, or a newly-created #GtkStyle.
+	 * Returns: Either @style, or a newly-created #GtkStyle.
 	 *     If the style is newly created, the style parameter
 	 *     will be unref'ed, and the new style will have
 	 *     a reference count belonging to the caller.
@@ -173,7 +173,7 @@ public class Style : ObjectG
 	 *
 	 * Deprecated: Use #GtkStyleContext instead
 	 *
-	 * Return: a copy of @style
+	 * Returns: a copy of @style
 	 */
 	public Style copy()
 	{
@@ -240,7 +240,7 @@ public class Style : ObjectG
 	/**
 	 * Returns whether @style has an associated #GtkStyleContext.
 	 *
-	 * Return: %TRUE if @style has a #GtkStyleContext
+	 * Returns: %TRUE if @style has a #GtkStyleContext
 	 *
 	 * Since: 3.0
 	 */
@@ -262,7 +262,7 @@ public class Style : ObjectG
 	 *     colorName = the name of the logical color to look up
 	 *     color = the #GdkColor to fill in
 	 *
-	 * Return: %TRUE if the mapping was found.
+	 * Returns: %TRUE if the mapping was found.
 	 *
 	 * Since: 2.10
 	 */
@@ -287,7 +287,7 @@ public class Style : ObjectG
 	 * Params:
 	 *     stockId = an icon name
 	 *
-	 * Return: icon set of @stock_id
+	 * Returns: icon set of @stock_id
 	 */
 	public IconSet lookupIconSet(string stockId)
 	{
@@ -318,7 +318,7 @@ public class Style : ObjectG
 	 *     widget = the widget
 	 *     detail = a style detail
 	 *
-	 * Return: a newly-created #GdkPixbuf
+	 * Returns: a newly-created #GdkPixbuf
 	 *     containing the rendered icon
 	 */
 	public Pixbuf renderIcon(IconSource source, GtkTextDirection direction, GtkStateType state, GtkIconSize size, Widget widget, string detail)

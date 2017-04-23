@@ -54,7 +54,7 @@ public  import gdkpixbuf.Pixbuf;
  *     width = Width in pixels of region to get
  *     height = Height in pixels of region to get
  *
- * Return: A newly-created pixbuf with a
+ * Returns: A newly-created pixbuf with a
  *     reference count of 1, or %NULL on error
  */
 public Pixbuf getFromSurface(Surface surface, int srcX, int srcY, int width, int height)
@@ -104,7 +104,7 @@ public Pixbuf getFromSurface(Surface surface, int srcX, int srcY, int width, int
  *     width = Width in pixels of region to get
  *     height = Height in pixels of region to get
  *
- * Return: A newly-created pixbuf with a
+ * Returns: A newly-created pixbuf with a
  *     reference count of 1, or %NULL on error
  */
 public Pixbuf getFromWindow(Window window, int srcX, int srcY, int width, int height)

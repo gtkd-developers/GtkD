@@ -111,7 +111,7 @@ public class AppChooserButton : ComboBox, AppChooserIF
 	 * Params:
 	 *     contentType = the content type to show applications for
 	 *
-	 * Return: a newly created #GtkAppChooserButton
+	 * Returns: a newly created #GtkAppChooserButton
 	 *
 	 * Since: 3.0
 	 *
@@ -163,7 +163,7 @@ public class AppChooserButton : ComboBox, AppChooserIF
 	/**
 	 * Returns the text to display at the top of the dialog.
 	 *
-	 * Return: the text to display at the top of the dialog,
+	 * Returns: the text to display at the top of the dialog,
 	 *     or %NULL, in which case a default text is displayed
 	 */
 	public string getHeading()
@@ -175,7 +175,7 @@ public class AppChooserButton : ComboBox, AppChooserIF
 	 * Returns the current value of the #GtkAppChooserButton:show-default-item
 	 * property.
 	 *
-	 * Return: the value of #GtkAppChooserButton:show-default-item
+	 * Returns: the value of #GtkAppChooserButton:show-default-item
 	 *
 	 * Since: 3.2
 	 */
@@ -188,7 +188,7 @@ public class AppChooserButton : ComboBox, AppChooserIF
 	 * Returns the current value of the #GtkAppChooserButton:show-dialog-item
 	 * property.
 	 *
-	 * Return: the value of #GtkAppChooserButton:show-dialog-item
+	 * Returns: the value of #GtkAppChooserButton:show-dialog-item
 	 *
 	 * Since: 3.0
 	 */

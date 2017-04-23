@@ -106,7 +106,7 @@ public class SocketConnection : IOStream
 	 *     type = a #GSocketType
 	 *     protocolId = a protocol id
 	 *
-	 * Return: a #GType
+	 * Returns: a #GType
 	 *
 	 * Since: 2.22
 	 */
@@ -141,7 +141,7 @@ public class SocketConnection : IOStream
 	 *     address = a #GSocketAddress specifying the remote address.
 	 *     cancellable = a %GCancellable or %NULL
 	 *
-	 * Return: %TRUE if the connection succeeded, %FALSE on error
+	 * Returns: %TRUE if the connection succeeded, %FALSE on error
 	 *
 	 * Since: 2.32
 	 *
@@ -188,7 +188,7 @@ public class SocketConnection : IOStream
 	 * Params:
 	 *     result = the #GAsyncResult
 	 *
-	 * Return: %TRUE if the connection succeeded, %FALSE on error
+	 * Returns: %TRUE if the connection succeeded, %FALSE on error
 	 *
 	 * Since: 2.32
 	 *
@@ -211,7 +211,7 @@ public class SocketConnection : IOStream
 	/**
 	 * Try to get the local address of a socket connection.
 	 *
-	 * Return: a #GSocketAddress or %NULL on error.
+	 * Returns: a #GSocketAddress or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Since: 2.22
@@ -247,7 +247,7 @@ public class SocketConnection : IOStream
 	 * applications to print e.g. "Connecting to example.com
 	 * (10.42.77.3)...".
 	 *
-	 * Return: a #GSocketAddress or %NULL on error.
+	 * Returns: a #GSocketAddress or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Since: 2.22
@@ -278,7 +278,7 @@ public class SocketConnection : IOStream
 	 * This can be useful if you want to do something unusual on it
 	 * not supported by the #GSocketConnection APIs.
 	 *
-	 * Return: a #GSocket or %NULL on error.
+	 * Returns: a #GSocket or %NULL on error.
 	 *
 	 * Since: 2.22
 	 */
@@ -298,7 +298,7 @@ public class SocketConnection : IOStream
 	 * Checks if @connection is connected. This is equivalent to calling
 	 * g_socket_is_connected() on @connection's underlying #GSocket.
 	 *
-	 * Return: whether @connection is connected
+	 * Returns: whether @connection is connected
 	 *
 	 * Since: 2.32
 	 */

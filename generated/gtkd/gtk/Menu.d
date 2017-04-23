@@ -205,7 +205,7 @@ public class Menu : MenuShell
 	/**
 	 * Creates a new #GtkMenu
 	 *
-	 * Return: a new #GtkMenu
+	 * Returns: a new #GtkMenu
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -236,7 +236,7 @@ public class Menu : MenuShell
 	 * Params:
 	 *     model = a #GMenuModel
 	 *
-	 * Return: a new #GtkMenu
+	 * Returns: a new #GtkMenu
 	 *
 	 * Since: 3.4
 	 *
@@ -261,7 +261,7 @@ public class Menu : MenuShell
 	 * Params:
 	 *     widget = a #GtkWidget
 	 *
-	 * Return: the list
+	 * Returns: the list
 	 *     of menus attached to his widget.
 	 *
 	 * Since: 2.6
@@ -335,7 +335,7 @@ public class Menu : MenuShell
 	 * Gets the #GtkAccelGroup which holds global accelerators for the
 	 * menu. See gtk_menu_set_accel_group().
 	 *
-	 * Return: the #GtkAccelGroup associated with the menu
+	 * Returns: the #GtkAccelGroup associated with the menu
 	 */
 	public AccelGroup getAccelGroup()
 	{
@@ -352,7 +352,7 @@ public class Menu : MenuShell
 	/**
 	 * Retrieves the accelerator path set on the menu.
 	 *
-	 * Return: the accelerator path set on the menu.
+	 * Returns: the accelerator path set on the menu.
 	 *
 	 * Since: 2.14
 	 */
@@ -365,7 +365,7 @@ public class Menu : MenuShell
 	 * Returns the selected menu item from the menu.  This is used by the
 	 * #GtkComboBox.
 	 *
-	 * Return: the #GtkMenuItem that was last selected
+	 * Returns: the #GtkMenuItem that was last selected
 	 *     in the menu.  If a selection has not yet been made, the
 	 *     first menu item is selected.
 	 */
@@ -384,7 +384,7 @@ public class Menu : MenuShell
 	/**
 	 * Returns the #GtkWidget that the menu is attached to.
 	 *
-	 * Return: the #GtkWidget that the menu is attached to
+	 * Returns: the #GtkWidget that the menu is attached to
 	 */
 	public Widget getAttachWidget()
 	{
@@ -401,7 +401,7 @@ public class Menu : MenuShell
 	/**
 	 * Retrieves the number of the monitor on which to show the menu.
 	 *
-	 * Return: the number of the monitor on which the menu should
+	 * Returns: the number of the monitor on which the menu should
 	 *     be popped up or -1, if no monitor has been set
 	 *
 	 * Since: 2.14
@@ -415,7 +415,7 @@ public class Menu : MenuShell
 	 * Returns whether the menu reserves space for toggles and
 	 * icons, regardless of their actual presence.
 	 *
-	 * Return: Whether the menu reserves toggle space
+	 * Returns: Whether the menu reserves toggle space
 	 *
 	 * Since: 2.18
 	 */
@@ -428,7 +428,7 @@ public class Menu : MenuShell
 	 * Returns whether the menu is torn off.
 	 * See gtk_menu_set_tearoff_state().
 	 *
-	 * Return: %TRUE if the menu is currently torn off.
+	 * Returns: %TRUE if the menu is currently torn off.
 	 */
 	public bool getTearoffState()
 	{
@@ -438,7 +438,7 @@ public class Menu : MenuShell
 	/**
 	 * Returns the title of the menu. See gtk_menu_set_title().
 	 *
-	 * Return: the title of the menu, or %NULL if the menu
+	 * Returns: the title of the menu, or %NULL if the menu
 	 *     has no title set on it. This string is owned by GTK+
 	 *     and should not be modified or freed.
 	 */

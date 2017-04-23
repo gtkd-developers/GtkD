@@ -211,7 +211,7 @@ public class MenuModel : ObjectG
 	 *     expectedType = the expected type of the attribute, or
 	 *         %NULL
 	 *
-	 * Return: the value of the attribute
+	 * Returns: the value of the attribute
 	 *
 	 * Since: 2.32
 	 */
@@ -238,7 +238,7 @@ public class MenuModel : ObjectG
 	 *     itemIndex = the index of the item
 	 *     link = the link to query
 	 *
-	 * Return: the linked #GMenuModel, or %NULL
+	 * Returns: the linked #GMenuModel, or %NULL
 	 *
 	 * Since: 2.32
 	 */
@@ -257,7 +257,7 @@ public class MenuModel : ObjectG
 	/**
 	 * Query the number of items in @model.
 	 *
-	 * Return: the number of items
+	 * Returns: the number of items
 	 *
 	 * Since: 2.32
 	 */
@@ -272,7 +272,7 @@ public class MenuModel : ObjectG
 	 * An immutable #GMenuModel will never emit the #GMenuModel::items-changed
 	 * signal. Consumers of the model may make optimisations accordingly.
 	 *
-	 * Return: %TRUE if the model is mutable (ie: "items-changed" may be
+	 * Returns: %TRUE if the model is mutable (ie: "items-changed" may be
 	 *     emitted).
 	 *
 	 * Since: 2.32
@@ -320,7 +320,7 @@ public class MenuModel : ObjectG
 	 * Params:
 	 *     itemIndex = the index of the item
 	 *
-	 * Return: a new #GMenuAttributeIter
+	 * Returns: a new #GMenuAttributeIter
 	 *
 	 * Since: 2.32
 	 */
@@ -345,7 +345,7 @@ public class MenuModel : ObjectG
 	 * Params:
 	 *     itemIndex = the index of the item
 	 *
-	 * Return: a new #GMenuLinkIter
+	 * Returns: a new #GMenuLinkIter
 	 *
 	 * Since: 2.32
 	 */

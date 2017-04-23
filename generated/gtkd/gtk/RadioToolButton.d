@@ -94,7 +94,7 @@ public class RadioToolButton : ToggleToolButton
 	 *     group = An
 	 *         existing radio button group, or %NULL if you are creating a new group
 	 *
-	 * Return: The new #GtkRadioToolButton
+	 * Returns: The new #GtkRadioToolButton
 	 *
 	 * Since: 2.4
 	 *
@@ -124,7 +124,7 @@ public class RadioToolButton : ToggleToolButton
 	 *         group, or %NULL if you are creating a new group
 	 *     stockId = the name of a stock item
 	 *
-	 * Return: The new #GtkRadioToolButton
+	 * Returns: The new #GtkRadioToolButton
 	 *
 	 * Since: 2.4
 	 *
@@ -148,7 +148,7 @@ public class RadioToolButton : ToggleToolButton
 	 * Params:
 	 *     group = An existing #GtkRadioToolButton, or %NULL
 	 *
-	 * Return: The new #GtkRadioToolButton
+	 * Returns: The new #GtkRadioToolButton
 	 *
 	 * Since: 2.4
 	 *
@@ -177,7 +177,7 @@ public class RadioToolButton : ToggleToolButton
 	 *     group = An existing #GtkRadioToolButton.
 	 *     stockId = the name of a stock item
 	 *
-	 * Return: A new #GtkRadioToolButton
+	 * Returns: A new #GtkRadioToolButton
 	 *
 	 * Since: 2.4
 	 *
@@ -198,7 +198,7 @@ public class RadioToolButton : ToggleToolButton
 	/**
 	 * Returns the radio button group @button belongs to.
 	 *
-	 * Return: The group @button belongs to.
+	 * Returns: The group @button belongs to.
 	 *
 	 * Since: 2.4
 	 */

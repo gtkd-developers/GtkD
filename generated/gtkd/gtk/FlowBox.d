@@ -126,7 +126,7 @@ public class FlowBox : Container, OrientableIF
 	/**
 	 * Creates a GtkFlowBox.
 	 *
-	 * Return: a new #GtkFlowBox container
+	 * Returns: a new #GtkFlowBox container
 	 *
 	 * Since: 3.12
 	 *
@@ -178,7 +178,7 @@ public class FlowBox : Container, OrientableIF
 	/**
 	 * Returns whether children activate on single clicks.
 	 *
-	 * Return: %TRUE if children are activated on single click,
+	 * Returns: %TRUE if children are activated on single click,
 	 *     %FALSE otherwise
 	 *
 	 * Since: 3.12
@@ -194,7 +194,7 @@ public class FlowBox : Container, OrientableIF
 	 * Params:
 	 *     idx = the position of the child
 	 *
-	 * Return: the child widget, which will
+	 * Returns: the child widget, which will
 	 *     always be a #GtkFlowBoxChild or %NULL in case no child widget
 	 *     with the given index exists.
 	 *
@@ -219,7 +219,7 @@ public class FlowBox : Container, OrientableIF
 	 *     x = the x coordinate of the child
 	 *     y = the y coordinate of the child
 	 *
-	 * Return: the child widget, which will
+	 * Returns: the child widget, which will
 	 *     always be a #GtkFlowBoxChild or %NULL in case no child widget
 	 *     exists for the given x and y coordinates.
 	 *
@@ -240,7 +240,7 @@ public class FlowBox : Container, OrientableIF
 	/**
 	 * Gets the horizontal spacing.
 	 *
-	 * Return: the horizontal spacing
+	 * Returns: the horizontal spacing
 	 *
 	 * Since: 3.12
 	 */
@@ -253,7 +253,7 @@ public class FlowBox : Container, OrientableIF
 	 * Returns whether the box is homogeneous (all children are the
 	 * same size). See gtk_box_set_homogeneous().
 	 *
-	 * Return: %TRUE if the box is homogeneous.
+	 * Returns: %TRUE if the box is homogeneous.
 	 *
 	 * Since: 3.12
 	 */
@@ -265,7 +265,7 @@ public class FlowBox : Container, OrientableIF
 	/**
 	 * Gets the maximum number of children per line.
 	 *
-	 * Return: the maximum number of children per line
+	 * Returns: the maximum number of children per line
 	 *
 	 * Since: 3.12
 	 */
@@ -277,7 +277,7 @@ public class FlowBox : Container, OrientableIF
 	/**
 	 * Gets the minimum number of children per line.
 	 *
-	 * Return: the minimum number of children per line
+	 * Returns: the minimum number of children per line
 	 *
 	 * Since: 3.12
 	 */
@@ -289,7 +289,7 @@ public class FlowBox : Container, OrientableIF
 	/**
 	 * Gets the vertical spacing.
 	 *
-	 * Return: the vertical spacing
+	 * Returns: the vertical spacing
 	 *
 	 * Since: 3.12
 	 */
@@ -301,7 +301,7 @@ public class FlowBox : Container, OrientableIF
 	/**
 	 * Creates a list of all selected children.
 	 *
-	 * Return: A #GList containing the #GtkWidget for each selected child.
+	 * Returns: A #GList containing the #GtkWidget for each selected child.
 	 *     Free with g_list_free() when done.
 	 *
 	 * Since: 3.12
@@ -321,7 +321,7 @@ public class FlowBox : Container, OrientableIF
 	/**
 	 * Gets the selection mode of @box.
 	 *
-	 * Return: the #GtkSelectionMode
+	 * Returns: the #GtkSelectionMode
 	 *
 	 * Since: 3.12
 	 */
@@ -805,7 +805,7 @@ public class FlowBox : Container, OrientableIF
 	 *     step = the granularity fo the move, as a #GtkMovementStep
 	 *     count = the number of @step units to move
 	 *
-	 * Return: %TRUE to stop other handlers from being invoked for the event.
+	 * Returns: %TRUE to stop other handlers from being invoked for the event.
 	 *     %FALSE to propagate the event further.
 	 */
 	gulong addOnMoveCursor(bool delegate(GtkMovementStep, int, FlowBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)

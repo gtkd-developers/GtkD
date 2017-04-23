@@ -92,7 +92,7 @@ public class PluginManagerView : TreeView
 	 * Params:
 	 *     engine = A #PeasEngine, or %NULL.
 	 *
-	 * Return: the new #PeasGtkPluginManagerView.
+	 * Returns: the new #PeasGtkPluginManagerView.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -111,7 +111,7 @@ public class PluginManagerView : TreeView
 	/**
 	 * Returns the currently selected plugin, or %NULL if a plugin is not selected.
 	 *
-	 * Return: the selected plugin.
+	 * Returns: the selected plugin.
 	 */
 	public PluginInfo getSelectedPlugin()
 	{
@@ -130,7 +130,7 @@ public class PluginManagerView : TreeView
 	 *
 	 * Deprecated: Use hidden plugins instead.
 	 *
-	 * Return: if builtin plugins should be shown.
+	 * Returns: if builtin plugins should be shown.
 	 */
 	public bool getShowBuiltin()
 	{

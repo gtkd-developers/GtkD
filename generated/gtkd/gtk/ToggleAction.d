@@ -112,7 +112,7 @@ public class ToggleAction : Action
 	 *     stockId = The stock icon to display in widgets representing
 	 *         the action, or %NULL
 	 *
-	 * Return: a new #GtkToggleAction
+	 * Returns: a new #GtkToggleAction
 	 *
 	 * Since: 2.4
 	 *
@@ -133,7 +133,7 @@ public class ToggleAction : Action
 	/**
 	 * Returns the checked state of the toggle action.
 	 *
-	 * Return: the checked state of the toggle action
+	 * Returns: the checked state of the toggle action
 	 *
 	 * Since: 2.4
 	 */
@@ -145,7 +145,7 @@ public class ToggleAction : Action
 	/**
 	 * Returns whether the action should have proxies like a radio action.
 	 *
-	 * Return: whether the action should have proxies like a radio action.
+	 * Returns: whether the action should have proxies like a radio action.
 	 *
 	 * Since: 2.4
 	 */

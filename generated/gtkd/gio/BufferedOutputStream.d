@@ -98,7 +98,7 @@ public class BufferedOutputStream : FilterOutputStream, SeekableIF
 	 * Params:
 	 *     baseStream = a #GOutputStream.
 	 *
-	 * Return: a #GOutputStream for the given @base_stream.
+	 * Returns: a #GOutputStream for the given @base_stream.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -121,7 +121,7 @@ public class BufferedOutputStream : FilterOutputStream, SeekableIF
 	 *     baseStream = a #GOutputStream.
 	 *     size = a #gsize.
 	 *
-	 * Return: a #GOutputStream with an internal buffer set to @size.
+	 * Returns: a #GOutputStream with an internal buffer set to @size.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -140,7 +140,7 @@ public class BufferedOutputStream : FilterOutputStream, SeekableIF
 	/**
 	 * Checks if the buffer automatically grows as data is added.
 	 *
-	 * Return: %TRUE if the @stream's buffer automatically grows,
+	 * Returns: %TRUE if the @stream's buffer automatically grows,
 	 *     %FALSE otherwise.
 	 */
 	public bool getAutoGrow()
@@ -151,7 +151,7 @@ public class BufferedOutputStream : FilterOutputStream, SeekableIF
 	/**
 	 * Gets the size of the buffer in the @stream.
 	 *
-	 * Return: the current size of the buffer.
+	 * Returns: the current size of the buffer.
 	 */
 	public size_t getBufferSize()
 	{

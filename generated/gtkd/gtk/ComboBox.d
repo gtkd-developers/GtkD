@@ -239,7 +239,7 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 	 * `gtk_tree_path_get_indices (path)[0]`, where
 	 * `path` is the #GtkTreePath of the active item.
 	 *
-	 * Return: An integer which is the index of the currently active item,
+	 * Returns: An integer which is the index of the currently active item,
 	 *     or -1 if there’s no active item.
 	 *
 	 * Since: 2.4
@@ -262,7 +262,7 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 	 * no row is active, or if the active row has a %NULL ID value, then %NULL
 	 * is returned.
 	 *
-	 * Return: the ID of the active row, or %NULL
+	 * Returns: the ID of the active row, or %NULL
 	 *
 	 * Since: 3.0
 	 */
@@ -277,7 +277,7 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 	 * Params:
 	 *     iter = The uninitialized #GtkTreeIter
 	 *
-	 * Return: %TRUE, if @iter was set
+	 * Returns: %TRUE, if @iter was set
 	 *
 	 * Since: 2.4
 	 */
@@ -295,7 +295,7 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 	/**
 	 * Gets the current value of the :add-tearoffs property.
 	 *
-	 * Return: the current value of the :add-tearoffs property.
+	 * Returns: the current value of the :add-tearoffs property.
 	 */
 	public bool getAddTearoffs()
 	{
@@ -306,7 +306,7 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 	 * Returns whether the combo box sets the dropdown button
 	 * sensitive or not when there are no items in the model.
 	 *
-	 * Return: %GTK_SENSITIVITY_ON if the dropdown button
+	 * Returns: %GTK_SENSITIVITY_ON if the dropdown button
 	 *     is sensitive when the model is empty, %GTK_SENSITIVITY_OFF
 	 *     if the button is always insensitive or
 	 *     %GTK_SENSITIVITY_AUTO if it is only sensitive as long as
@@ -322,7 +322,7 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 	/**
 	 * Returns the column with column span information for @combo_box.
 	 *
-	 * Return: the column span column.
+	 * Returns: the column span column.
 	 *
 	 * Since: 2.6
 	 */
@@ -335,7 +335,7 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 	 * Returns the column which @combo_box is using to get the strings
 	 * from to display in the internal entry.
 	 *
-	 * Return: A column in the data source model of @combo_box.
+	 * Returns: A column in the data source model of @combo_box.
 	 *
 	 * Since: 2.24
 	 */
@@ -350,7 +350,7 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 	 *
 	 * Deprecated: Use gtk_widget_get_focus_on_click() instead
 	 *
-	 * Return: %TRUE if the combo box grabs focus when it is
+	 * Returns: %TRUE if the combo box grabs focus when it is
 	 *     clicked with the mouse.
 	 *
 	 * Since: 2.6
@@ -363,7 +363,7 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 	/**
 	 * Returns whether the combo box has an entry.
 	 *
-	 * Return: whether there is an entry in @combo_box.
+	 * Returns: whether there is an entry in @combo_box.
 	 *
 	 * Since: 2.24
 	 */
@@ -376,7 +376,7 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 	 * Returns the column which @combo_box is using to get string IDs
 	 * for values from.
 	 *
-	 * Return: A column in the data source model of @combo_box.
+	 * Returns: A column in the data source model of @combo_box.
 	 *
 	 * Since: 3.0
 	 */
@@ -388,7 +388,7 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 	/**
 	 * Returns the #GtkTreeModel which is acting as data source for @combo_box.
 	 *
-	 * Return: A #GtkTreeModel which was passed
+	 * Returns: A #GtkTreeModel which was passed
 	 *     during construction.
 	 *
 	 * Since: 2.4
@@ -411,7 +411,7 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 	 * This function is mostly intended for use by accessibility technologies;
 	 * applications should have little use for it.
 	 *
-	 * Return: the accessible object corresponding
+	 * Returns: the accessible object corresponding
 	 *     to the combo box’s popup.
 	 *
 	 * Since: 2.6
@@ -432,7 +432,7 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 	 * Gets whether the popup uses a fixed width matching
 	 * the allocated width of the combo box.
 	 *
-	 * Return: %TRUE if the popup uses a fixed width
+	 * Returns: %TRUE if the popup uses a fixed width
 	 *
 	 * Since: 3.0
 	 */
@@ -444,7 +444,7 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 	/**
 	 * Returns the current row separator function.
 	 *
-	 * Return: the current row separator function.
+	 * Returns: the current row separator function.
 	 *
 	 * Since: 2.6
 	 */
@@ -456,7 +456,7 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 	/**
 	 * Returns the column with row span information for @combo_box.
 	 *
-	 * Return: the row span column.
+	 * Returns: the row span column.
 	 *
 	 * Since: 2.6
 	 */
@@ -469,7 +469,7 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 	 * Gets the current title of the menu in tearoff mode. See
 	 * gtk_combo_box_set_add_tearoffs().
 	 *
-	 * Return: the menu’s title in tearoff mode. This is an internal copy of the
+	 * Returns: the menu’s title in tearoff mode. This is an internal copy of the
 	 *     string which must not be freed.
 	 *
 	 * Since: 2.10
@@ -484,7 +484,7 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 	 * for the popup menu. If the wrap width is larger than 1, the combo box
 	 * is in table mode.
 	 *
-	 * Return: the wrap width.
+	 * Returns: the wrap width.
 	 *
 	 * Since: 2.6
 	 */
@@ -561,7 +561,7 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 	 * Params:
 	 *     activeId = the ID of the row to select, or %NULL
 	 *
-	 * Return: %TRUE if a row with a matching ID was found.  If a %NULL
+	 * Returns: %TRUE if a row with a matching ID was found.  If a %NULL
 	 *     @active_id was given to unset the active row, the function
 	 *     always returns %TRUE.
 	 *
@@ -897,7 +897,7 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 	 * Params:
 	 *     path = the GtkTreePath string from the combo box's current model to format text for
 	 *
-	 * Return: a newly allocated string representing @path
+	 * Returns: a newly allocated string representing @path
 	 *     for the current GtkComboBox model.
 	 *
 	 * Since: 3.4

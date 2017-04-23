@@ -88,7 +88,7 @@ public template ChildProxyT(TStruct)
 	 * Params:
 	 *     index = the child's position in the child list
 	 *
-	 * Return: the child object or %NULL if
+	 * Returns: the child object or %NULL if
 	 *     not found (index too high). Unref after usage.
 	 *
 	 *     MT safe.
@@ -115,7 +115,7 @@ public template ChildProxyT(TStruct)
 	 * Params:
 	 *     name = the child's name
 	 *
-	 * Return: the child object or %NULL if
+	 * Returns: the child object or %NULL if
 	 *     not found. Unref after usage.
 	 *
 	 *     MT safe.
@@ -135,7 +135,7 @@ public template ChildProxyT(TStruct)
 	/**
 	 * Gets the number of child objects this parent contains.
 	 *
-	 * Return: the number of child objects
+	 * Returns: the number of child objects
 	 *
 	 *     MT safe.
 	 */
@@ -185,7 +185,7 @@ public template ChildProxyT(TStruct)
 	 *     pspec = pointer to take the #GParamSpec
 	 *         describing the property
 	 *
-	 * Return: %TRUE if @target and @pspec could be found. %FALSE otherwise. In that
+	 * Returns: %TRUE if @target and @pspec could be found. %FALSE otherwise. In that
 	 *     case the values for @pspec and @target are not modified. Unref @target after
 	 *     usage. For plain GObjects @target is the same as @object.
 	 */

@@ -164,7 +164,7 @@ public class MenuButton : ToggleButton
 	 * arrow as the only child. You can replace the child widget
 	 * with another #GtkWidget should you wish to.
 	 *
-	 * Return: The newly created #GtkMenuButton widget
+	 * Returns: The newly created #GtkMenuButton widget
 	 *
 	 * Since: 3.6
 	 *
@@ -185,7 +185,7 @@ public class MenuButton : ToggleButton
 	/**
 	 * Returns the parent #GtkWidget to use to line up with menu.
 	 *
-	 * Return: a #GtkWidget value or %NULL
+	 * Returns: a #GtkWidget value or %NULL
 	 *
 	 * Since: 3.6
 	 */
@@ -204,7 +204,7 @@ public class MenuButton : ToggleButton
 	/**
 	 * Returns the direction the popup will be pointing at when popped up.
 	 *
-	 * Return: a #GtkArrowType value
+	 * Returns: a #GtkArrowType value
 	 *
 	 * Since: 3.6
 	 */
@@ -216,7 +216,7 @@ public class MenuButton : ToggleButton
 	/**
 	 * Returns the #GMenuModel used to generate the popup.
 	 *
-	 * Return: a #GMenuModel or %NULL
+	 * Returns: a #GMenuModel or %NULL
 	 *
 	 * Since: 3.6
 	 */
@@ -237,7 +237,7 @@ public class MenuButton : ToggleButton
 	 * If the button is not using a #GtkPopover, this function
 	 * returns %NULL.
 	 *
-	 * Return: a #GtkPopover or %NULL
+	 * Returns: a #GtkPopover or %NULL
 	 *
 	 * Since: 3.12
 	 */
@@ -258,7 +258,7 @@ public class MenuButton : ToggleButton
 	 * If the button does not use a #GtkMenu, this function
 	 * returns %NULL.
 	 *
-	 * Return: a #GtkMenu or %NULL
+	 * Returns: a #GtkMenu or %NULL
 	 *
 	 * Since: 3.6
 	 */
@@ -278,7 +278,7 @@ public class MenuButton : ToggleButton
 	 * Returns whether a #GtkPopover or a #GtkMenu will be constructed
 	 * from the menu model.
 	 *
-	 * Return: %TRUE if using a #GtkPopover
+	 * Returns: %TRUE if using a #GtkPopover
 	 *
 	 * Since: 3.12
 	 */

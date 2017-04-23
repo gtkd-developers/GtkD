@@ -82,7 +82,7 @@ public class SimpleXML
 	 *     userDataDnotify = user data destroy notifier called when
 	 *         the parse context is freed
 	 *
-	 * Return: a new #GMarkupParseContext
+	 * Returns: a new #GMarkupParseContext
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -105,7 +105,7 @@ public class SimpleXML
 	 * This function reports an error if the document isn't complete,
 	 * for example if elements are still open.
 	 *
-	 * Return: %TRUE on success, %FALSE if an error was set
+	 * Returns: %TRUE on success, %FALSE if an error was set
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -141,7 +141,7 @@ public class SimpleXML
 	 * give the element_name as passed to those functions. For the parent
 	 * elements, see g_markup_parse_context_get_element_stack().
 	 *
-	 * Return: the name of the currently open element, or %NULL
+	 * Returns: the name of the currently open element, or %NULL
 	 *
 	 * Since: 2.2
 	 */
@@ -163,7 +163,7 @@ public class SimpleXML
 	 * would merely return the name of the element that is being
 	 * processed.
 	 *
-	 * Return: the element stack, which must not be modified
+	 * Returns: the element stack, which must not be modified
 	 *
 	 * Since: 2.16
 	 */
@@ -201,7 +201,7 @@ public class SimpleXML
 	 * g_markup_parse_context_new() or to the most recent call
 	 * of g_markup_parse_context_push().
 	 *
-	 * Return: the provided user_data. The returned data belongs to
+	 * Returns: the provided user_data. The returned data belongs to
 	 *     the markup context and will be freed when
 	 *     g_markup_parse_context_free() is called.
 	 *
@@ -228,7 +228,7 @@ public class SimpleXML
 	 *     text = chunk of text to parse
 	 *     textLen = length of @text in bytes
 	 *
-	 * Return: %FALSE if an error occurred, %TRUE on success
+	 * Returns: %FALSE if an error occurred, %TRUE on success
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -261,7 +261,7 @@ public class SimpleXML
 	 * be used by the subparsers themselves to implement a higher-level
 	 * interface.
 	 *
-	 * Return: the user data passed to g_markup_parse_context_push()
+	 * Returns: the user data passed to g_markup_parse_context_push()
 	 *
 	 * Since: 2.18
 	 */
@@ -400,7 +400,7 @@ public class SimpleXML
 	/**
 	 * Increases the reference count of @context.
 	 *
-	 * Return: the same @context
+	 * Returns: the same @context
 	 *
 	 * Since: 2.36
 	 */
@@ -453,7 +453,7 @@ public class SimpleXML
 	 *     text = some valid UTF-8 text
 	 *     length = length of @text in bytes, or -1 if the text is nul-terminated
 	 *
-	 * Return: a newly allocated string with the escaped text
+	 * Returns: a newly allocated string with the escaped text
 	 */
 	public static string markupEscapeText(string text, ptrdiff_t length)
 	{
@@ -472,7 +472,7 @@ public class SimpleXML
 	 *     format = printf() style format string
 	 *     args = variable argument list, similar to vprintf()
 	 *
-	 * Return: newly allocated result from formatting
+	 * Returns: newly allocated result from formatting
 	 *     operation. Free with g_free().
 	 *
 	 * Since: 2.4

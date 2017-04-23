@@ -48,7 +48,7 @@ public  import gtkc.glibtypes;
  *     outbuf = converted output bytes
  *     outbytesLeft = inout parameter, bytes available to fill in @outbuf
  *
- * Return: count of non-reversible conversions, or -1 on error
+ * Returns: count of non-reversible conversions, or -1 on error
  */
 public size_t iconv(GIConv converter, ref string inbuf, ref string outbuf)
 {
@@ -75,7 +75,7 @@ public size_t iconv(GIConv converter, ref string inbuf, ref string outbuf)
  * GLib provides g_convert() and g_locale_to_utf8() which are likely
  * more convenient than the raw iconv wrappers.
  *
- * Return: -1 on error, 0 on success
+ * Returns: -1 on error, 0 on success
  */
 public int close(GIConv converter)
 {
@@ -94,7 +94,7 @@ public int close(GIConv converter)
  *     toCodeset = destination codeset
  *     fromCodeset = source codeset
  *
- * Return: a "conversion descriptor", or (GIConv)-1 if
+ * Returns: a "conversion descriptor", or (GIConv)-1 if
  *     opening the converter failed.
  */
 public GIConv open(string toCodeset, string fromCodeset)

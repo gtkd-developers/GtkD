@@ -90,7 +90,7 @@ public class HScrollbar : Scrollbar
 	 * Params:
 	 *     adjustment = the #GtkAdjustment to use, or %NULL to create a new adjustment
 	 *
-	 * Return: the new #GtkHScrollbar
+	 * Returns: the new #GtkHScrollbar
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

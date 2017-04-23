@@ -81,7 +81,7 @@ public class GObjectAccessible : ObjectAtk
 	 * Params:
 	 *     obj = a #GObject
 	 *
-	 * Return: a #AtkObject which is the accessible object for
+	 * Returns: a #AtkObject which is the accessible object for
 	 *     the @obj
 	 */
 	public static ObjectAtk forObject(ObjectG obj)
@@ -99,7 +99,7 @@ public class GObjectAccessible : ObjectAtk
 	/**
 	 * Gets the GObject for which @obj is the accessible object.
 	 *
-	 * Return: a #GObject which is the object for which @obj is
+	 * Returns: a #GObject which is the object for which @obj is
 	 *     the accessible object
 	 */
 	public ObjectG getObject()

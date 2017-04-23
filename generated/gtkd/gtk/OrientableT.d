@@ -50,7 +50,7 @@ public template OrientableT(TStruct)
 	/**
 	 * Retrieves the orientation of the @orientable.
 	 *
-	 * Return: the orientation of the @orientable.
+	 * Returns: the orientation of the @orientable.
 	 *
 	 * Since: 2.16
 	 */

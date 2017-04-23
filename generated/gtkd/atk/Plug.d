@@ -102,7 +102,7 @@ public class Plug : ObjectAtk, ComponentIF
 	 * loaded) and pass the value to the process implementing the
 	 * #AtkSocket, so it could embed the plug.
 	 *
-	 * Return: the unique ID for the plug
+	 * Returns: the unique ID for the plug
 	 *
 	 * Since: 1.30
 	 */

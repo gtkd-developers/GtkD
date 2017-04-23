@@ -70,7 +70,7 @@ public class IOExtensionPoint
 	 * Params:
 	 *     name = the name of the extension to get
 	 *
-	 * Return: the #GIOExtension for @extension_point that has the
+	 * Returns: the #GIOExtension for @extension_point that has the
 	 *     given name, or %NULL if there is no extension with that name
 	 */
 	public IOExtension getExtensionByName(string name)
@@ -89,7 +89,7 @@ public class IOExtensionPoint
 	 * Gets a list of all extensions that implement this extension point.
 	 * The list is sorted by priority, beginning with the highest priority.
 	 *
-	 * Return: a #GList of
+	 * Returns: a #GList of
 	 *     #GIOExtensions. The list is owned by GIO and should not be
 	 *     modified.
 	 */
@@ -108,7 +108,7 @@ public class IOExtensionPoint
 	/**
 	 * Gets the required type for @extension_point.
 	 *
-	 * Return: the #GType that all implementations must have,
+	 * Returns: the #GType that all implementations must have,
 	 *     or #G_TYPE_INVALID if the extension point has no required type
 	 */
 	public GType getRequiredType()
@@ -141,7 +141,7 @@ public class IOExtensionPoint
 	 *     extensionName = the name for the extension
 	 *     priority = the priority for the extension
 	 *
-	 * Return: a #GIOExtension object for #GType
+	 * Returns: a #GIOExtension object for #GType
 	 */
 	public static IOExtension implement(string extensionPointName, GType type, string extensionName, int priority)
 	{
@@ -161,7 +161,7 @@ public class IOExtensionPoint
 	 * Params:
 	 *     name = the name of the extension point
 	 *
-	 * Return: the #GIOExtensionPoint, or %NULL if there
+	 * Returns: the #GIOExtensionPoint, or %NULL if there
 	 *     is no registered extension point with the given name.
 	 */
 	public static IOExtensionPoint lookup(string name)
@@ -182,7 +182,7 @@ public class IOExtensionPoint
 	 * Params:
 	 *     name = The name of the extension point
 	 *
-	 * Return: the new #GIOExtensionPoint. This object is
+	 * Returns: the new #GIOExtensionPoint. This object is
 	 *     owned by GIO and should not be freed.
 	 */
 	public static IOExtensionPoint register(string name)

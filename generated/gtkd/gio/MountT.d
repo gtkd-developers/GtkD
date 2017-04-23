@@ -78,7 +78,7 @@ public template MountT(TStruct)
 	/**
 	 * Checks if @mount can be eject.
 	 *
-	 * Return: %TRUE if the @mount can be ejected.
+	 * Returns: %TRUE if the @mount can be ejected.
 	 */
 	public bool canEject()
 	{
@@ -88,7 +88,7 @@ public template MountT(TStruct)
 	/**
 	 * Checks if @mount can be mounted.
 	 *
-	 * Return: %TRUE if the @mount can be unmounted.
+	 * Returns: %TRUE if the @mount can be unmounted.
 	 */
 	public bool canUnmount()
 	{
@@ -122,7 +122,7 @@ public template MountT(TStruct)
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *
-	 * Return: %TRUE if the mount was successfully ejected. %FALSE otherwise.
+	 * Returns: %TRUE if the mount was successfully ejected. %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -167,7 +167,7 @@ public template MountT(TStruct)
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *
-	 * Return: %TRUE if the mount was successfully ejected. %FALSE otherwise.
+	 * Returns: %TRUE if the mount was successfully ejected. %FALSE otherwise.
 	 *
 	 * Since: 2.22
 	 *
@@ -192,7 +192,7 @@ public template MountT(TStruct)
 	 * @mount is a path that reflects the main entry point for the user (e.g.
 	 * the home directory, or the root of the volume).
 	 *
-	 * Return: a #GFile.
+	 * Returns: a #GFile.
 	 *     The returned object should be unreffed with
 	 *     g_object_unref() when no longer needed.
 	 */
@@ -214,7 +214,7 @@ public template MountT(TStruct)
 	 * This is a convenience method for getting the #GVolume and then
 	 * using that object to get the #GDrive.
 	 *
-	 * Return: a #GDrive or %NULL if @mount is not associated with a volume or a drive.
+	 * Returns: a #GDrive or %NULL if @mount is not associated with a volume or a drive.
 	 *     The returned object should be unreffed with
 	 *     g_object_unref() when no longer needed.
 	 */
@@ -233,7 +233,7 @@ public template MountT(TStruct)
 	/**
 	 * Gets the icon for @mount.
 	 *
-	 * Return: a #GIcon.
+	 * Returns: a #GIcon.
 	 *     The returned object should be unreffed with
 	 *     g_object_unref() when no longer needed.
 	 */
@@ -252,7 +252,7 @@ public template MountT(TStruct)
 	/**
 	 * Gets the name of @mount.
 	 *
-	 * Return: the name for the given @mount.
+	 * Returns: the name for the given @mount.
 	 *     The returned string should be freed with g_free()
 	 *     when no longer needed.
 	 */
@@ -267,7 +267,7 @@ public template MountT(TStruct)
 	/**
 	 * Gets the root directory on @mount.
 	 *
-	 * Return: a #GFile.
+	 * Returns: a #GFile.
 	 *     The returned object should be unreffed with
 	 *     g_object_unref() when no longer needed.
 	 */
@@ -286,7 +286,7 @@ public template MountT(TStruct)
 	/**
 	 * Gets the sort key for @mount, if any.
 	 *
-	 * Return: Sorting key for @mount or %NULL if no such key is available.
+	 * Returns: Sorting key for @mount or %NULL if no such key is available.
 	 *
 	 * Since: 2.32
 	 */
@@ -298,7 +298,7 @@ public template MountT(TStruct)
 	/**
 	 * Gets the symbolic icon for @mount.
 	 *
-	 * Return: a #GIcon.
+	 * Returns: a #GIcon.
 	 *     The returned object should be unreffed with
 	 *     g_object_unref() when no longer needed.
 	 *
@@ -322,7 +322,7 @@ public template MountT(TStruct)
 	 * considered an opaque string. Returns %NULL if there is no UUID
 	 * available.
 	 *
-	 * Return: the UUID for @mount or %NULL if no UUID can be computed.
+	 * Returns: the UUID for @mount or %NULL if no UUID can be computed.
 	 *     The returned string should be freed with g_free()
 	 *     when no longer needed.
 	 */
@@ -337,7 +337,7 @@ public template MountT(TStruct)
 	/**
 	 * Gets the volume for the @mount.
 	 *
-	 * Return: a #GVolume or %NULL if @mount is not associated with a volume.
+	 * Returns: a #GVolume or %NULL if @mount is not associated with a volume.
 	 *     The returned object should be unreffed with
 	 *     g_object_unref() when no longer needed.
 	 */
@@ -390,7 +390,7 @@ public template MountT(TStruct)
 	 * Params:
 	 *     result = a #GAsyncResult
 	 *
-	 * Return: a %NULL-terminated array of content types or %NULL on error.
+	 * Returns: a %NULL-terminated array of content types or %NULL on error.
 	 *     Caller should free this array with g_strfreev() when done with it.
 	 *
 	 * Since: 2.18
@@ -428,7 +428,7 @@ public template MountT(TStruct)
 	 *         Otherwise a cached result will be used if available
 	 *     cancellable = optional #GCancellable object, %NULL to ignore
 	 *
-	 * Return: a %NULL-terminated array of content types or %NULL on error.
+	 * Returns: a %NULL-terminated array of content types or %NULL on error.
 	 *     Caller should free this array with g_strfreev() when done with it.
 	 *
 	 * Since: 2.18
@@ -475,7 +475,7 @@ public template MountT(TStruct)
 	 * manage shadow mounts (and shadows the underlying mount) if the
 	 * activation root on a #GVolume is set.
 	 *
-	 * Return: %TRUE if @mount is shadowed.
+	 * Returns: %TRUE if @mount is shadowed.
 	 *
 	 * Since: 2.20
 	 */
@@ -515,7 +515,7 @@ public template MountT(TStruct)
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *
-	 * Return: %TRUE if the mount was successfully remounted. %FALSE otherwise.
+	 * Returns: %TRUE if the mount was successfully remounted. %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -573,7 +573,7 @@ public template MountT(TStruct)
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *
-	 * Return: %TRUE if the mount was successfully unmounted. %FALSE otherwise.
+	 * Returns: %TRUE if the mount was successfully unmounted. %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -618,7 +618,7 @@ public template MountT(TStruct)
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *
-	 * Return: %TRUE if the mount was successfully unmounted. %FALSE otherwise.
+	 * Returns: %TRUE if the mount was successfully unmounted. %FALSE otherwise.
 	 *
 	 * Since: 2.22
 	 *

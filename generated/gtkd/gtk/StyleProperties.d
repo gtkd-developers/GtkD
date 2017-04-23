@@ -101,7 +101,7 @@ public class StyleProperties : ObjectG, StyleProviderIF
 	 *
 	 * Deprecated: #GtkStyleProperties are deprecated.
 	 *
-	 * Return: a new #GtkStyleProperties
+	 * Returns: a new #GtkStyleProperties
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -130,7 +130,7 @@ public class StyleProperties : ObjectG, StyleProviderIF
 	 *     parseFunc = return location for the parse function
 	 *     pspec = return location for the #GParamSpec
 	 *
-	 * Return: %TRUE if the property is registered, %FALSE otherwise
+	 * Returns: %TRUE if the property is registered, %FALSE otherwise
 	 *
 	 * Since: 3.0
 	 */
@@ -185,7 +185,7 @@ public class StyleProperties : ObjectG, StyleProviderIF
 	 *     state = state to retrieve the property value for
 	 *     value = return location for the style property value.
 	 *
-	 * Return: %TRUE if the property exists in @props, %FALSE otherwise
+	 * Returns: %TRUE if the property exists in @props, %FALSE otherwise
 	 *
 	 * Since: 3.0
 	 */
@@ -225,7 +225,7 @@ public class StyleProperties : ObjectG, StyleProviderIF
 	 * Params:
 	 *     name = color name to lookup
 	 *
-	 * Return: The mapped color
+	 * Returns: The mapped color
 	 *
 	 * Since: 3.0
 	 */

@@ -96,7 +96,7 @@ public class NetworkService : ObjectG, SocketConnectableIF
 	 *     protocol = the networking protocol to use for @service (eg, "tcp")
 	 *     domain = the DNS domain to look up the service in
 	 *
-	 * Return: a new #GNetworkService
+	 * Returns: a new #GNetworkService
 	 *
 	 * Since: 2.22
 	 *
@@ -118,7 +118,7 @@ public class NetworkService : ObjectG, SocketConnectableIF
 	 * Gets the domain that @srv serves. This might be either UTF-8 or
 	 * ASCII-encoded, depending on what @srv was created with.
 	 *
-	 * Return: @srv's domain name
+	 * Returns: @srv's domain name
 	 *
 	 * Since: 2.22
 	 */
@@ -130,7 +130,7 @@ public class NetworkService : ObjectG, SocketConnectableIF
 	/**
 	 * Gets @srv's protocol name (eg, "tcp").
 	 *
-	 * Return: @srv's protocol name
+	 * Returns: @srv's protocol name
 	 *
 	 * Since: 2.22
 	 */
@@ -143,7 +143,7 @@ public class NetworkService : ObjectG, SocketConnectableIF
 	 * Get's the URI scheme used to resolve proxies. By default, the service name
 	 * is used as scheme.
 	 *
-	 * Return: @srv's scheme name
+	 * Returns: @srv's scheme name
 	 *
 	 * Since: 2.26
 	 */
@@ -155,7 +155,7 @@ public class NetworkService : ObjectG, SocketConnectableIF
 	/**
 	 * Gets @srv's service name (eg, "ldap").
 	 *
-	 * Return: @srv's service name
+	 * Returns: @srv's service name
 	 *
 	 * Since: 2.22
 	 */

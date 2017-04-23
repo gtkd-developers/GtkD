@@ -107,7 +107,7 @@ public class ToolItemGroup : Container, ToolShellIF
 	 * Params:
 	 *     label = the label of the new group
 	 *
-	 * Return: a new #GtkToolItemGroup.
+	 * Returns: a new #GtkToolItemGroup.
 	 *
 	 * Since: 2.20
 	 *
@@ -128,7 +128,7 @@ public class ToolItemGroup : Container, ToolShellIF
 	/**
 	 * Gets whether @group is collapsed or expanded.
 	 *
-	 * Return: %TRUE if @group is collapsed, %FALSE if it is expanded
+	 * Returns: %TRUE if @group is collapsed, %FALSE if it is expanded
 	 *
 	 * Since: 2.20
 	 */
@@ -144,7 +144,7 @@ public class ToolItemGroup : Container, ToolShellIF
 	 *     x = the x position
 	 *     y = the y position
 	 *
-	 * Return: the #GtkToolItem at position (x, y)
+	 * Returns: the #GtkToolItem at position (x, y)
 	 *
 	 * Since: 2.20
 	 */
@@ -163,7 +163,7 @@ public class ToolItemGroup : Container, ToolShellIF
 	/**
 	 * Gets the ellipsization mode of @group.
 	 *
-	 * Return: the #PangoEllipsizeMode of @group
+	 * Returns: the #PangoEllipsizeMode of @group
 	 *
 	 * Since: 2.20
 	 */
@@ -175,7 +175,7 @@ public class ToolItemGroup : Container, ToolShellIF
 	/**
 	 * Gets the relief mode of the header button of @group.
 	 *
-	 * Return: the #GtkReliefStyle
+	 * Returns: the #GtkReliefStyle
 	 *
 	 * Since: 2.20
 	 */
@@ -190,7 +190,7 @@ public class ToolItemGroup : Container, ToolShellIF
 	 * Params:
 	 *     item = a #GtkToolItem
 	 *
-	 * Return: the index of @item in @group or -1 if @item is no child of @group
+	 * Returns: the index of @item in @group or -1 if @item is no child of @group
 	 *
 	 * Since: 2.20
 	 */
@@ -202,7 +202,7 @@ public class ToolItemGroup : Container, ToolShellIF
 	/**
 	 * Gets the label of @group.
 	 *
-	 * Return: the label of @group. The label is an internal string of @group
+	 * Returns: the label of @group. The label is an internal string of @group
 	 *     and must not be modified. Note that %NULL is returned if a custom
 	 *     label has been set with gtk_tool_item_group_set_label_widget()
 	 *
@@ -217,7 +217,7 @@ public class ToolItemGroup : Container, ToolShellIF
 	 * Gets the label widget of @group.
 	 * See gtk_tool_item_group_set_label_widget().
 	 *
-	 * Return: the label widget of @group
+	 * Returns: the label widget of @group
 	 *
 	 * Since: 2.20
 	 */
@@ -236,7 +236,7 @@ public class ToolItemGroup : Container, ToolShellIF
 	/**
 	 * Gets the number of tool items in @group.
 	 *
-	 * Return: the number of tool items in @group
+	 * Returns: the number of tool items in @group
 	 *
 	 * Since: 2.20
 	 */
@@ -251,7 +251,7 @@ public class ToolItemGroup : Container, ToolShellIF
 	 * Params:
 	 *     index = the index
 	 *
-	 * Return: the #GtkToolItem at index
+	 * Returns: the #GtkToolItem at index
 	 *
 	 * Since: 2.20
 	 */

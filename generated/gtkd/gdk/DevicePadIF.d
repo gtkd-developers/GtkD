@@ -63,7 +63,7 @@ public interface DevicePadIF{
 	 *     feature = the feature type to get the group from
 	 *     featureIdx = the index of the feature to get the group from
 	 *
-	 * Return: The group number of the queried pad feature.
+	 * Returns: The group number of the queried pad feature.
 	 *
 	 * Since: 3.22
 	 */
@@ -75,7 +75,7 @@ public interface DevicePadIF{
 	 * Params:
 	 *     groupIdx = group to get the number of available modes from
 	 *
-	 * Return: The number of modes available in @group.
+	 * Returns: The number of modes available in @group.
 	 *
 	 * Since: 3.22
 	 */
@@ -87,7 +87,7 @@ public interface DevicePadIF{
 	 * Params:
 	 *     feature = a pad feature
 	 *
-	 * Return: The amount of elements of type @feature that this pad has.
+	 * Returns: The amount of elements of type @feature that this pad has.
 	 *
 	 * Since: 3.22
 	 */
@@ -99,7 +99,7 @@ public interface DevicePadIF{
 	 * buttons/strip/rings that is affected collectively by a same
 	 * current mode.
 	 *
-	 * Return: The number of button/ring/strip groups in the pad.
+	 * Returns: The number of button/ring/strip groups in the pad.
 	 *
 	 * Since: 3.22
 	 */

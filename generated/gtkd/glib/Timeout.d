@@ -243,7 +243,7 @@ public class Timeout
 	 *     funct = function to call
 	 *     data = data to pass to @function
 	 *
-	 * Return: the ID (greater than 0) of the event source.
+	 * Returns: the ID (greater than 0) of the event source.
 	 */
 	public static uint add(uint interval, GSourceFunc funct, void* data)
 	{
@@ -285,7 +285,7 @@ public class Timeout
 	 *     data = data to pass to @function
 	 *     notify = function to call when the timeout is removed, or %NULL
 	 *
-	 * Return: the ID (greater than 0) of the event source.
+	 * Returns: the ID (greater than 0) of the event source.
 	 */
 	public static uint addFull(int priority, uint interval, GSourceFunc funct, void* data, GDestroyNotify notify)
 	{
@@ -318,7 +318,7 @@ public class Timeout
 	 *     funct = function to call
 	 *     data = data to pass to @function
 	 *
-	 * Return: the ID (greater than 0) of the event source.
+	 * Returns: the ID (greater than 0) of the event source.
 	 *
 	 * Since: 2.14
 	 */
@@ -373,7 +373,7 @@ public class Timeout
 	 *     data = data to pass to @function
 	 *     notify = function to call when the timeout is removed, or %NULL
 	 *
-	 * Return: the ID (greater than 0) of the event source.
+	 * Returns: the ID (greater than 0) of the event source.
 	 *
 	 * Since: 2.14
 	 */
@@ -395,7 +395,7 @@ public class Timeout
 	 * Params:
 	 *     interval = the timeout interval in milliseconds.
 	 *
-	 * Return: the newly-created timeout source
+	 * Returns: the newly-created timeout source
 	 */
 	public static Source sourceNew(uint interval)
 	{
@@ -425,7 +425,7 @@ public class Timeout
 	 * Params:
 	 *     interval = the timeout interval in seconds
 	 *
-	 * Return: the newly-created timeout source
+	 * Returns: the newly-created timeout source
 	 *
 	 * Since: 2.14
 	 */

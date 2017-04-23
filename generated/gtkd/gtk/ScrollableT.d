@@ -79,7 +79,7 @@ public template ScrollableT(TStruct)
 	 * Params:
 	 *     border = return location for the results
 	 *
-	 * Return: %TRUE if @border has been set
+	 * Returns: %TRUE if @border has been set
 	 *
 	 * Since: 3.16
 	 */
@@ -97,7 +97,7 @@ public template ScrollableT(TStruct)
 	/**
 	 * Retrieves the #GtkAdjustment used for horizontal scrolling.
 	 *
-	 * Return: horizontal #GtkAdjustment.
+	 * Returns: horizontal #GtkAdjustment.
 	 *
 	 * Since: 3.0
 	 */
@@ -116,7 +116,7 @@ public template ScrollableT(TStruct)
 	/**
 	 * Gets the horizontal #GtkScrollablePolicy.
 	 *
-	 * Return: The horizontal #GtkScrollablePolicy.
+	 * Returns: The horizontal #GtkScrollablePolicy.
 	 *
 	 * Since: 3.0
 	 */
@@ -128,7 +128,7 @@ public template ScrollableT(TStruct)
 	/**
 	 * Retrieves the #GtkAdjustment used for vertical scrolling.
 	 *
-	 * Return: vertical #GtkAdjustment.
+	 * Returns: vertical #GtkAdjustment.
 	 *
 	 * Since: 3.0
 	 */
@@ -147,7 +147,7 @@ public template ScrollableT(TStruct)
 	/**
 	 * Gets the vertical #GtkScrollablePolicy.
 	 *
-	 * Return: The vertical #GtkScrollablePolicy.
+	 * Returns: The vertical #GtkScrollablePolicy.
 	 *
 	 * Since: 3.0
 	 */

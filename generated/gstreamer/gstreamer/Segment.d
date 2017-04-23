@@ -118,7 +118,7 @@ public class Segment
 	 *
 	 * Free-function: gst_segment_free
 	 *
-	 * Return: a new #GstSegment, free with gst_segment_free().
+	 * Returns: a new #GstSegment, free with gst_segment_free().
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -156,7 +156,7 @@ public class Segment
 	 *     clipStart = the clipped start position in the segment
 	 *     clipStop = the clipped stop position in the segment
 	 *
-	 * Return: %TRUE if the given @start and @stop times fall partially or
+	 * Returns: %TRUE if the given @start and @stop times fall partially or
 	 *     completely in @segment, %FALSE if the values are completely outside
 	 *     of the segment.
 	 */
@@ -170,7 +170,7 @@ public class Segment
 	 *
 	 * Free-function: gst_segment_free
 	 *
-	 * Return: a new #GstSegment, free with gst_segment_free().
+	 * Returns: a new #GstSegment, free with gst_segment_free().
 	 */
 	public Segment copy()
 	{
@@ -234,7 +234,7 @@ public class Segment
 	 *     stop = the seek stop value
 	 *     update = boolean holding whether position was updated.
 	 *
-	 * Return: %TRUE if the seek could be performed.
+	 * Returns: %TRUE if the seek could be performed.
 	 */
 	public bool doSeek(double rate, GstFormat format, GstSeekFlags flags, GstSeekType startType, ulong start, GstSeekType stopType, ulong stop, ref bool update)
 	{
@@ -277,7 +277,7 @@ public class Segment
 	 * Params:
 	 *     s1 = a #GstSegment structure.
 	 *
-	 * Return: %TRUE if the segments are equal, %FALSE otherwise.
+	 * Returns: %TRUE if the segments are equal, %FALSE otherwise.
 	 *
 	 * Since: 1.6
 	 */
@@ -294,7 +294,7 @@ public class Segment
 	 *     format = the format of the segment.
 	 *     offset = the offset to apply in the segment
 	 *
-	 * Return: %TRUE if the segment could be updated successfully. If %FALSE is
+	 * Returns: %TRUE if the segment could be updated successfully. If %FALSE is
 	 *     returned, @offset is not in @segment.
 	 *
 	 * Since: 1.2.3
@@ -312,7 +312,7 @@ public class Segment
 	 *     format = the format of the segment.
 	 *     runningTime = the running_time in the segment
 	 *
-	 * Return: the position in the segment for @running_time. This function returns
+	 * Returns: the position in the segment for @running_time. This function returns
 	 *     -1 when @running_time is -1 or when it is not inside @segment.
 	 *
 	 * Since: 1.8
@@ -344,7 +344,7 @@ public class Segment
 	 *     runningTime = the running-time
 	 *     position = the resulting position in the segment
 	 *
-	 * Return: a 1 or -1 on success, 0 on failure.
+	 * Returns: a 1 or -1 on success, 0 on failure.
 	 *
 	 * Since: 1.8
 	 */
@@ -361,7 +361,7 @@ public class Segment
 	 *     format = the format of the segment.
 	 *     streamTime = the stream_time in the segment
 	 *
-	 * Return: the position in the segment for @stream_time. This function returns
+	 * Returns: the position in the segment for @stream_time. This function returns
 	 *     -1 when @stream_time is -1 or when it is not inside @segment.
 	 *
 	 * Since: 1.8
@@ -393,7 +393,7 @@ public class Segment
 	 *     streamTime = the stream-time
 	 *     position = the resulting position in the segment
 	 *
-	 * Return: a 1 or -1 on success, 0 on failure.
+	 * Returns: a 1 or -1 on success, 0 on failure.
 	 *
 	 * Since: 1.8
 	 */
@@ -410,7 +410,7 @@ public class Segment
 	 *     format = the format of the segment.
 	 *     runningTime = the running_time in the segment
 	 *
-	 * Return: %TRUE if the segment could be updated successfully. If %FALSE is
+	 * Returns: %TRUE if the segment could be updated successfully. If %FALSE is
 	 *     returned, @running_time is -1 or not in @segment.
 	 */
 	public bool setRunningTime(GstFormat format, ulong runningTime)
@@ -426,7 +426,7 @@ public class Segment
 	 *     format = the format of the segment.
 	 *     runningTime = the running_time in the segment
 	 *
-	 * Return: the position in the segment for @running_time. This function returns
+	 * Returns: the position in the segment for @running_time. This function returns
 	 *     -1 when @running_time is -1 or when it is not inside @segment.
 	 *
 	 *     Deprecated. Use gst_segment_position_from_running_time() instead.
@@ -451,7 +451,7 @@ public class Segment
 	 *     format = the format of the segment.
 	 *     position = the position in the segment
 	 *
-	 * Return: the position as the total running time or -1 when an invalid position
+	 * Returns: the position as the total running time or -1 when an invalid position
 	 *     was given.
 	 */
 	public ulong toRunningTime(GstFormat format, ulong position)
@@ -481,7 +481,7 @@ public class Segment
 	 *     position = the position in the segment
 	 *     runningTime = result running-time
 	 *
-	 * Return: a 1 or -1 on success, 0 on failure.
+	 * Returns: a 1 or -1 on success, 0 on failure.
 	 *
 	 * Since: 1.6
 	 */
@@ -506,7 +506,7 @@ public class Segment
 	 *     format = the format of the segment.
 	 *     position = the position in the segment
 	 *
-	 * Return: the position in stream_time or -1 when an invalid position
+	 * Returns: the position in stream_time or -1 when an invalid position
 	 *     was given.
 	 *
 	 * Since: 1.8
@@ -538,7 +538,7 @@ public class Segment
 	 *     position = the position in the segment
 	 *     streamTime = result stream-time
 	 *
-	 * Return: a 1 or -1 on success, 0 on failure.
+	 * Returns: a 1 or -1 on success, 0 on failure.
 	 *
 	 * Since: 1.8
 	 */

@@ -92,7 +92,7 @@ public class Separator : Widget, OrientableIF
 	 * Params:
 	 *     orientation = the separator’s orientation.
 	 *
-	 * Return: a new #GtkSeparator.
+	 * Returns: a new #GtkSeparator.
 	 *
 	 * Since: 3.0
 	 *

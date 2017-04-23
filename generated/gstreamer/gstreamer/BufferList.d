@@ -81,7 +81,7 @@ public class BufferList
 	 *
 	 * Free-function: gst_buffer_list_unref
 	 *
-	 * Return: the new #GstBufferList. gst_buffer_list_unref()
+	 * Returns: the new #GstBufferList. gst_buffer_list_unref()
 	 *     after usage.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -108,7 +108,7 @@ public class BufferList
 	 * Params:
 	 *     size = an initial reserved size
 	 *
-	 * Return: the new #GstBufferList. gst_buffer_list_unref()
+	 * Returns: the new #GstBufferList. gst_buffer_list_unref()
 	 *     after usage.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -129,7 +129,7 @@ public class BufferList
 	 * Create a copy of the given buffer list. This will make a newly allocated
 	 * copy of the buffer that the source buffer list contains.
 	 *
-	 * Return: a new copy of @list.
+	 * Returns: a new copy of @list.
 	 *
 	 * Since: 1.6
 	 */
@@ -156,7 +156,7 @@ public class BufferList
 	 *     func = a #GstBufferListFunc to call
 	 *     userData = user data passed to @func
 	 *
-	 * Return: %TRUE when @func returned %TRUE for each buffer in @list or when
+	 * Returns: %TRUE when @func returned %TRUE for each buffer in @list or when
 	 *     @list is empty.
 	 */
 	public bool foreac(GstBufferListFunc func, void* userData)
@@ -170,7 +170,7 @@ public class BufferList
 	 * Params:
 	 *     idx = the index
 	 *
-	 * Return: the buffer at @idx in @group
+	 * Returns: the buffer at @idx in @group
 	 *     or %NULL when there is no buffer. The buffer remains valid as
 	 *     long as @list is valid and buffer is not removed from the list.
 	 */
@@ -204,7 +204,7 @@ public class BufferList
 	/**
 	 * Returns the number of buffers in @list.
 	 *
-	 * Return: the number of buffers in the buffer list
+	 * Returns: the number of buffers in the buffer list
 	 */
 	public uint length()
 	{

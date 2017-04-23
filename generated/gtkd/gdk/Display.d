@@ -105,7 +105,7 @@ public class Display : ObjectG
 	 * function for:
 	 * `gdk_display_manager_get_default_display (gdk_display_manager_get ())`.
 	 *
-	 * Return: a #GdkDisplay, or %NULL if
+	 * Returns: a #GdkDisplay, or %NULL if
 	 *     there is no default display.
 	 *
 	 * Since: 2.2
@@ -128,7 +128,7 @@ public class Display : ObjectG
 	 * Params:
 	 *     displayName = the name of the display to open
 	 *
-	 * Return: a #GdkDisplay, or %NULL if the
+	 * Returns: a #GdkDisplay, or %NULL if the
 	 *     display could not be opened
 	 *
 	 * Since: 2.2
@@ -155,7 +155,7 @@ public class Display : ObjectG
 	 * Deprecated: This symbol was never meant to be used outside
 	 * of GTK+
 	 *
-	 * Return: the default display, if it
+	 * Returns: the default display, if it
 	 *     could be opened, otherwise %NULL.
 	 */
 	public static Display openDefaultLibgtkOnly()
@@ -197,7 +197,7 @@ public class Display : ObjectG
 	 * Params:
 	 *     device = a #GdkDevice
 	 *
-	 * Return: %TRUE if there is a grab in effect for @device.
+	 * Returns: %TRUE if there is a grab in effect for @device.
 	 */
 	public bool deviceIsGrabbed(Device device)
 	{
@@ -226,7 +226,7 @@ public class Display : ObjectG
 	 * Returns a #GdkAppLaunchContext suitable for launching
 	 * applications on the given display.
 	 *
-	 * Return: a new #GdkAppLaunchContext for @display.
+	 * Returns: a new #GdkAppLaunchContext for @display.
 	 *     Free with g_object_unref() when done
 	 *
 	 * Since: 3.0
@@ -246,7 +246,7 @@ public class Display : ObjectG
 	/**
 	 * Returns the default size to use for cursors on @display.
 	 *
-	 * Return: the default cursor size.
+	 * Returns: the default cursor size.
 	 *
 	 * Since: 2.4
 	 */
@@ -260,7 +260,7 @@ public class Display : ObjectG
 	 * on @display. This window is implicitly created by GDK.
 	 * See gdk_window_set_group().
 	 *
-	 * Return: The default group leader window
+	 * Returns: The default group leader window
 	 *     for @display
 	 *
 	 * Since: 2.4
@@ -280,7 +280,7 @@ public class Display : ObjectG
 	/**
 	 * Get the default #GdkScreen for @display.
 	 *
-	 * Return: the default #GdkScreen object for @display
+	 * Returns: the default #GdkScreen object for @display
 	 *
 	 * Since: 2.2
 	 */
@@ -299,7 +299,7 @@ public class Display : ObjectG
 	/**
 	 * Returns the default #GdkSeat for this display.
 	 *
-	 * Return: the default seat.
+	 * Returns: the default seat.
 	 *
 	 * Since: 3.20
 	 */
@@ -320,7 +320,7 @@ public class Display : ObjectG
 	 *
 	 * Deprecated: Use gdk_display_get_default_seat() and #GdkSeat operations.
 	 *
-	 * Return: A #GdkDeviceManager, or
+	 * Returns: A #GdkDeviceManager, or
 	 *     %NULL. This memory is owned by GDK and must not be freed
 	 *     or unreferenced.
 	 *
@@ -342,7 +342,7 @@ public class Display : ObjectG
 	 * Gets the next #GdkEvent to be processed for @display, fetching events from the
 	 * windowing system if necessary.
 	 *
-	 * Return: the next #GdkEvent to be processed, or %NULL
+	 * Returns: the next #GdkEvent to be processed, or %NULL
 	 *     if no events are pending. The returned #GdkEvent should be freed
 	 *     with gdk_event_free().
 	 *
@@ -380,7 +380,7 @@ public class Display : ObjectG
 	 * Params:
 	 *     monitorNum = number of the monitor
 	 *
-	 * Return: the #GdkMonitor, or %NULL if
+	 * Returns: the #GdkMonitor, or %NULL if
 	 *     @monitor_num is not a valid monitor number
 	 *
 	 * Since: 3.22
@@ -405,7 +405,7 @@ public class Display : ObjectG
 	 *     x = the x coordinate of the point
 	 *     y = the y coordinate of the point
 	 *
-	 * Return: the monitor containing the point
+	 * Returns: the monitor containing the point
 	 *
 	 * Since: 3.22
 	 */
@@ -429,7 +429,7 @@ public class Display : ObjectG
 	 * Params:
 	 *     window = a #GdkWindow
 	 *
-	 * Return: the monitor with the largest overlap with @window
+	 * Returns: the monitor with the largest overlap with @window
 	 *
 	 * Since: 3.22
 	 */
@@ -451,7 +451,7 @@ public class Display : ObjectG
 	 * The returned number is valid until the next emission of the
 	 * #GdkDisplay::monitor-added or #GdkDisplay::monitor-removed signal.
 	 *
-	 * Return: the number of monitors
+	 * Returns: the number of monitors
 	 *
 	 * Since: 3.22
 	 */
@@ -465,7 +465,7 @@ public class Display : ObjectG
 	 *
 	 * Deprecated: The number of screens is always 1.
 	 *
-	 * Return: number of screens.
+	 * Returns: number of screens.
 	 *
 	 * Since: 2.2
 	 */
@@ -477,7 +477,7 @@ public class Display : ObjectG
 	/**
 	 * Gets the name of the display.
 	 *
-	 * Return: a string representing the display name. This string is owned
+	 * Returns: a string representing the display name. This string is owned
 	 *     by GDK and should not be modified or freed.
 	 *
 	 * Since: 2.2
@@ -519,7 +519,7 @@ public class Display : ObjectG
 	 * manager to place the windows, specialized desktop applications
 	 * such as panels should place themselves on the primary monitor.
 	 *
-	 * Return: the primary monitor, or %NULL if no primary
+	 * Returns: the primary monitor, or %NULL if no primary
 	 *     monitor is configured by the user
 	 *
 	 * Since: 3.22
@@ -544,7 +544,7 @@ public class Display : ObjectG
 	 * Params:
 	 *     screenNum = the screen number
 	 *
-	 * Return: the #GdkScreen object
+	 * Returns: the #GdkScreen object
 	 *
 	 * Since: 2.2
 	 */
@@ -574,7 +574,7 @@ public class Display : ObjectG
 	 *     winY = return location for y coordinate of the pointer location relative
 	 *         &    to the window origin, or %NULL
 	 *
-	 * Return: the window under the mouse
+	 * Returns: the window under the mouse
 	 *     pointer, or %NULL
 	 *
 	 * Since: 2.2
@@ -595,7 +595,7 @@ public class Display : ObjectG
 	 * Returns whether the display has events that are waiting
 	 * to be processed.
 	 *
-	 * Return: %TRUE if there are events ready to be processed.
+	 * Returns: %TRUE if there are events ready to be processed.
 	 *
 	 * Since: 3.0
 	 */
@@ -607,7 +607,7 @@ public class Display : ObjectG
 	/**
 	 * Finds out if the display has been closed.
 	 *
-	 * Return: %TRUE if the display is closed.
+	 * Returns: %TRUE if the display is closed.
 	 *
 	 * Since: 2.22
 	 */
@@ -638,7 +638,7 @@ public class Display : ObjectG
 	 *
 	 * Deprecated: Use gdk_device_manager_list_devices() instead.
 	 *
-	 * Return: a list of #GdkDevice
+	 * Returns: a list of #GdkDevice
 	 *
 	 * Since: 2.2
 	 */
@@ -657,7 +657,7 @@ public class Display : ObjectG
 	/**
 	 * Returns the list of seats known to @display.
 	 *
-	 * Return: the
+	 * Returns: the
 	 *     list of seats known to the #GdkDisplay
 	 *
 	 * Since: 3.20
@@ -700,7 +700,7 @@ public class Display : ObjectG
 	 * not get more events from the windowing system.  It only checks the events
 	 * that have already been moved to the GDK event queue.)
 	 *
-	 * Return: a copy of the first #GdkEvent on the event
+	 * Returns: a copy of the first #GdkEvent on the event
 	 *     queue, or %NULL if no events are in the queue. The returned
 	 *     #GdkEvent should be freed with gdk_event_free().
 	 *
@@ -723,7 +723,7 @@ public class Display : ObjectG
 	 *
 	 * Deprecated: Use gdk_display_device_is_grabbed() instead.
 	 *
-	 * Return: %TRUE if an active X pointer grab is in effect
+	 * Returns: %TRUE if an active X pointer grab is in effect
 	 *
 	 * Since: 2.2
 	 */
@@ -770,7 +770,7 @@ public class Display : ObjectG
 	 *     selection = the #GdkAtom naming the selection for which
 	 *         ownership change notification is requested
 	 *
-	 * Return: whether #GdkEventOwnerChange events will
+	 * Returns: whether #GdkEventOwnerChange events will
 	 *     be sent.
 	 *
 	 * Since: 2.6
@@ -840,7 +840,7 @@ public class Display : ObjectG
 	 * application has quit. On X11 this checks if a clipboard daemon is
 	 * running.
 	 *
-	 * Return: %TRUE if the display supports clipboard persistance.
+	 * Returns: %TRUE if the display supports clipboard persistance.
 	 *
 	 * Since: 2.6
 	 */
@@ -859,7 +859,7 @@ public class Display : ObjectG
 	 * Deprecated: Compositing is an outdated technology that
 	 * only ever worked on X11.
 	 *
-	 * Return: %TRUE if windows may be composited.
+	 * Returns: %TRUE if windows may be composited.
 	 *
 	 * Since: 2.12
 	 */
@@ -873,7 +873,7 @@ public class Display : ObjectG
 	 * on @display. Otherwise, cursors are restricted to bilevel
 	 * alpha (i.e. a mask).
 	 *
-	 * Return: whether cursors can have alpha channels.
+	 * Returns: whether cursors can have alpha channels.
 	 *
 	 * Since: 2.4
 	 */
@@ -887,7 +887,7 @@ public class Display : ObjectG
 	 * on @display. Otherwise, cursors have only a forground
 	 * and a background color.
 	 *
-	 * Return: whether cursors can have multiple colors.
+	 * Returns: whether cursors can have multiple colors.
 	 *
 	 * Since: 2.4
 	 */
@@ -900,7 +900,7 @@ public class Display : ObjectG
 	 * Returns %TRUE if gdk_window_input_shape_combine_mask() can
 	 * be used to modify the input shape of windows on @display.
 	 *
-	 * Return: %TRUE if windows with modified input shape are supported
+	 * Returns: %TRUE if windows with modified input shape are supported
 	 *
 	 * Since: 2.10
 	 */
@@ -913,7 +913,7 @@ public class Display : ObjectG
 	 * Returns whether #GdkEventOwnerChange events will be
 	 * sent when the owner of a selection changes.
 	 *
-	 * Return: whether #GdkEventOwnerChange events will
+	 * Returns: whether #GdkEventOwnerChange events will
 	 *     be sent.
 	 *
 	 * Since: 2.6
@@ -927,7 +927,7 @@ public class Display : ObjectG
 	 * Returns %TRUE if gdk_window_shape_combine_mask() can
 	 * be used to create shaped windows on @display.
 	 *
-	 * Return: %TRUE if shaped windows are supported
+	 * Returns: %TRUE if shaped windows are supported
 	 *
 	 * Since: 2.10
 	 */

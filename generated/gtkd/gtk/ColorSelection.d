@@ -80,7 +80,7 @@ public class ColorSelection : Box
 	/**
 	 * Creates a new GtkColorSelection.
 	 *
-	 * Return: a new #GtkColorSelection
+	 * Returns: a new #GtkColorSelection
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -106,7 +106,7 @@ public class ColorSelection : Box
 	 *         allocated array of #GdkColor
 	 *     nColors = return location for length of array
 	 *
-	 * Return: %TRUE if a palette was successfully parsed
+	 * Returns: %TRUE if a palette was successfully parsed
 	 */
 	public static bool paletteFromString(string str, out Color[] colors)
 	{
@@ -131,7 +131,7 @@ public class ColorSelection : Box
 	 *     colors = an array of colors
 	 *     nColors = length of the array
 	 *
-	 * Return: allocated string encoding the palette
+	 * Returns: allocated string encoding the palette
 	 */
 	public static string paletteToString(Color[] colors)
 	{
@@ -158,7 +158,7 @@ public class ColorSelection : Box
 	 * Params:
 	 *     func = a function to call when the custom palette needs saving
 	 *
-	 * Return: the previous change palette hook (that was replaced)
+	 * Returns: the previous change palette hook (that was replaced)
 	 *
 	 * Since: 2.2
 	 */
@@ -170,7 +170,7 @@ public class ColorSelection : Box
 	/**
 	 * Returns the current alpha value.
 	 *
-	 * Return: an integer between 0 and 65535
+	 * Returns: an integer between 0 and 65535
 	 */
 	public ushort getCurrentAlpha()
 	{
@@ -214,7 +214,7 @@ public class ColorSelection : Box
 	/**
 	 * Determines whether the colorsel has an opacity control.
 	 *
-	 * Return: %TRUE if the @colorsel has an opacity control,
+	 * Returns: %TRUE if the @colorsel has an opacity control,
 	 *     %FALSE if it does't
 	 */
 	public bool getHasOpacityControl()
@@ -225,7 +225,7 @@ public class ColorSelection : Box
 	/**
 	 * Determines whether the color selector has a color palette.
 	 *
-	 * Return: %TRUE if the selector has a palette, %FALSE if it hasn't
+	 * Returns: %TRUE if the selector has a palette, %FALSE if it hasn't
 	 */
 	public bool getHasPalette()
 	{
@@ -235,7 +235,7 @@ public class ColorSelection : Box
 	/**
 	 * Returns the previous alpha value.
 	 *
-	 * Return: an integer between 0 and 65535
+	 * Returns: an integer between 0 and 65535
 	 */
 	public ushort getPreviousAlpha()
 	{
@@ -279,7 +279,7 @@ public class ColorSelection : Box
 	/**
 	 * Gets the current state of the @colorsel.
 	 *
-	 * Return: %TRUE if the user is currently dragging
+	 * Returns: %TRUE if the user is currently dragging
 	 *     a color around, and %FALSE if the selection has stopped
 	 */
 	public bool isAdjusting()

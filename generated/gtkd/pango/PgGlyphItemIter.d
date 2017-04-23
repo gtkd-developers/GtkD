@@ -109,7 +109,7 @@ public class PgGlyphItemIter
 	/**
 	 * Make a shallow copy of an existing #PangoGlyphItemIter structure.
 	 *
-	 * Return: the newly allocated #PangoGlyphItemIter, which should
+	 * Returns: the newly allocated #PangoGlyphItemIter, which should
 	 *     be freed with pango_glyph_item_iter_free(), or %NULL
 	 *     if @orig was %NULL.
 	 *
@@ -146,7 +146,7 @@ public class PgGlyphItemIter
 	 *     glyphItem = the glyph item to iterate over
 	 *     text = text corresponding to the glyph item
 	 *
-	 * Return: %FALSE if there are no clusters in the glyph item
+	 * Returns: %FALSE if there are no clusters in the glyph item
 	 *
 	 * Since: 1.22
 	 */
@@ -164,7 +164,7 @@ public class PgGlyphItemIter
 	 *     glyphItem = the glyph item to iterate over
 	 *     text = text corresponding to the glyph item
 	 *
-	 * Return: %FALSE if there are no clusters in the glyph item
+	 * Returns: %FALSE if there are no clusters in the glyph item
 	 *
 	 * Since: 1.22
 	 */
@@ -177,7 +177,7 @@ public class PgGlyphItemIter
 	 * Advances the iterator to the next cluster in the glyph item.
 	 * See #PangoGlyphItemIter for details of cluster orders.
 	 *
-	 * Return: %TRUE if the iterator was advanced, %FALSE if we were already on the
+	 * Returns: %TRUE if the iterator was advanced, %FALSE if we were already on the
 	 *     last cluster.
 	 *
 	 * Since: 1.22
@@ -191,7 +191,7 @@ public class PgGlyphItemIter
 	 * Moves the iterator to the preceding cluster in the glyph item.
 	 * See #PangoGlyphItemIter for details of cluster orders.
 	 *
-	 * Return: %TRUE if the iterator was moved, %FALSE if we were already on the
+	 * Returns: %TRUE if the iterator was moved, %FALSE if we were already on the
 	 *     first cluster.
 	 *
 	 * Since: 1.22

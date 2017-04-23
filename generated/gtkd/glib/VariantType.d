@@ -244,7 +244,7 @@ public class VariantType
 	 * Params:
 	 *     typeString = a valid GVariant type string
 	 *
-	 * Return: a new #GVariantType
+	 * Returns: a new #GVariantType
 	 *
 	 * Since: 2.24
 	 *
@@ -271,7 +271,7 @@ public class VariantType
 	 * Params:
 	 *     element = a #GVariantType
 	 *
-	 * Return: a new array #GVariantType
+	 * Returns: a new array #GVariantType
 	 *
 	 *     Since 2.24
 	 *
@@ -299,7 +299,7 @@ public class VariantType
 	 *     key = a basic #GVariantType
 	 *     value = a #GVariantType
 	 *
-	 * Return: a new dictionary entry #GVariantType
+	 * Returns: a new dictionary entry #GVariantType
 	 *
 	 *     Since 2.24
 	 *
@@ -329,7 +329,7 @@ public class VariantType
 	 *     items = an array of #GVariantTypes, one for each item
 	 *     length = the length of @items, or -1
 	 *
-	 * Return: a new tuple #GVariantType
+	 * Returns: a new tuple #GVariantType
 	 *
 	 *     Since 2.24
 	 *
@@ -357,7 +357,7 @@ public class VariantType
 	 * Makes a copy of a #GVariantType.  It is appropriate to call
 	 * g_variant_type_free() on the return value.  @type may not be %NULL.
 	 *
-	 * Return: a new #GVariantType
+	 * Returns: a new #GVariantType
 	 *
 	 *     Since 2.24
 	 */
@@ -378,7 +378,7 @@ public class VariantType
 	 * @type.  The returned string is nul-terminated.  It is appropriate to
 	 * call g_free() on the return value.
 	 *
-	 * Return: the corresponding type string
+	 * Returns: the corresponding type string
 	 *
 	 *     Since 2.24
 	 */
@@ -395,7 +395,7 @@ public class VariantType
 	 *
 	 * This function may only be used with array or maybe types.
 	 *
-	 * Return: the element type of @type
+	 * Returns: the element type of @type
 	 *
 	 *     Since 2.24
 	 */
@@ -426,7 +426,7 @@ public class VariantType
 	 * Params:
 	 *     type2 = a #GVariantType
 	 *
-	 * Return: %TRUE if @type1 and @type2 are exactly equal
+	 * Returns: %TRUE if @type1 and @type2 are exactly equal
 	 *
 	 *     Since 2.24
 	 */
@@ -451,7 +451,7 @@ public class VariantType
 	 * This call, together with g_variant_type_next() provides an iterator
 	 * interface over tuple and dictionary entry types.
 	 *
-	 * Return: the first item type of @type, or %NULL
+	 * Returns: the first item type of @type, or %NULL
 	 *
 	 *     Since 2.24
 	 */
@@ -486,7 +486,7 @@ public class VariantType
 	 * @type.  This function must be used to determine the valid extent of
 	 * the memory region returned by g_variant_type_peek_string().
 	 *
-	 * Return: the length of the corresponding type string
+	 * Returns: the length of the corresponding type string
 	 *
 	 *     Since 2.24
 	 */
@@ -502,7 +502,7 @@ public class VariantType
 	 * #GHashTable without function pointer casting.  A valid
 	 * #GVariantType must be provided.
 	 *
-	 * Return: the hash value
+	 * Returns: the hash value
 	 *
 	 *     Since 2.24
 	 */
@@ -519,7 +519,7 @@ public class VariantType
 	 * definite subtype is an array type -- %G_VARIANT_TYPE_ARRAY, for
 	 * example.
 	 *
-	 * Return: %TRUE if @type is an array type
+	 * Returns: %TRUE if @type is an array type
 	 *
 	 *     Since 2.24
 	 */
@@ -539,7 +539,7 @@ public class VariantType
 	 * This function returns %FALSE for all indefinite types except
 	 * %G_VARIANT_TYPE_BASIC.
 	 *
-	 * Return: %TRUE if @type is a basic type
+	 * Returns: %TRUE if @type is a basic type
 	 *
 	 *     Since 2.24
 	 */
@@ -558,7 +558,7 @@ public class VariantType
 	 * definite subtype is a container -- %G_VARIANT_TYPE_ARRAY, for
 	 * example.
 	 *
-	 * Return: %TRUE if @type is a container type
+	 * Returns: %TRUE if @type is a container type
 	 *
 	 *     Since 2.24
 	 */
@@ -579,7 +579,7 @@ public class VariantType
 	 * indefinite type like %G_VARIANT_TYPE_ARRAY, however, will result in
 	 * %FALSE being returned.
 	 *
-	 * Return: %TRUE if @type is definite
+	 * Returns: %TRUE if @type is definite
 	 *
 	 *     Since 2.24
 	 */
@@ -596,7 +596,7 @@ public class VariantType
 	 * definite subtype is a dictionary entry type --
 	 * %G_VARIANT_TYPE_DICT_ENTRY, for example.
 	 *
-	 * Return: %TRUE if @type is a dictionary entry type
+	 * Returns: %TRUE if @type is a dictionary entry type
 	 *
 	 *     Since 2.24
 	 */
@@ -613,7 +613,7 @@ public class VariantType
 	 * definite subtype is a maybe type -- %G_VARIANT_TYPE_MAYBE, for
 	 * example.
 	 *
-	 * Return: %TRUE if @type is a maybe type
+	 * Returns: %TRUE if @type is a maybe type
 	 *
 	 *     Since 2.24
 	 */
@@ -632,7 +632,7 @@ public class VariantType
 	 * Params:
 	 *     supertype = a #GVariantType
 	 *
-	 * Return: %TRUE if @type is a subtype of @supertype
+	 * Returns: %TRUE if @type is a subtype of @supertype
 	 *
 	 *     Since 2.24
 	 */
@@ -650,7 +650,7 @@ public class VariantType
 	 * definite subtype is a tuple type -- %G_VARIANT_TYPE_TUPLE, for
 	 * example.
 	 *
-	 * Return: %TRUE if @type is a tuple type
+	 * Returns: %TRUE if @type is a tuple type
 	 *
 	 *     Since 2.24
 	 */
@@ -662,7 +662,7 @@ public class VariantType
 	/**
 	 * Determines if the given @type is the variant type.
 	 *
-	 * Return: %TRUE if @type is the variant type
+	 * Returns: %TRUE if @type is the variant type
 	 *
 	 *     Since 2.24
 	 */
@@ -678,7 +678,7 @@ public class VariantType
 	 * than the additional restriction, this call is equivalent to
 	 * g_variant_type_first().
 	 *
-	 * Return: the key type of the dictionary entry
+	 * Returns: the key type of the dictionary entry
 	 *
 	 *     Since 2.24
 	 */
@@ -705,7 +705,7 @@ public class VariantType
 	 * In the case of a dictionary entry type, this function will always
 	 * return 2.
 	 *
-	 * Return: the number of items in @type
+	 * Returns: the number of items in @type
 	 *
 	 *     Since 2.24
 	 */
@@ -727,7 +727,7 @@ public class VariantType
 	 *
 	 * For tuples, %NULL is returned when @type is the last item in a tuple.
 	 *
-	 * Return: the next #GVariantType after @type, or %NULL
+	 * Returns: the next #GVariantType after @type, or %NULL
 	 *
 	 *     Since 2.24
 	 */
@@ -750,7 +750,7 @@ public class VariantType
 	 *
 	 * To get a nul-terminated string, see g_variant_type_dup_string().
 	 *
-	 * Return: the corresponding type string (not nul-terminated)
+	 * Returns: the corresponding type string (not nul-terminated)
 	 *
 	 *     Since 2.24
 	 */
@@ -764,7 +764,7 @@ public class VariantType
 	 *
 	 * This function may only be used with a dictionary entry type.
 	 *
-	 * Return: the value type of the dictionary entry
+	 * Returns: the value type of the dictionary entry
 	 *
 	 *     Since 2.24
 	 */
@@ -801,7 +801,7 @@ public class VariantType
 	 * Params:
 	 *     typeString = a pointer to any string
 	 *
-	 * Return: %TRUE if @type_string is exactly one valid type string
+	 * Returns: %TRUE if @type_string is exactly one valid type string
 	 *
 	 *     Since 2.24
 	 */
@@ -830,7 +830,7 @@ public class VariantType
 	 *     limit = the end of @string, or %NULL
 	 *     endptr = location to store the end pointer, or %NULL
 	 *
-	 * Return: %TRUE if a valid type string was found
+	 * Returns: %TRUE if a valid type string was found
 	 *
 	 * Since: 2.24
 	 */

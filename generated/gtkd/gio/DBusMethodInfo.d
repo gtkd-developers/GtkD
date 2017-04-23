@@ -72,7 +72,7 @@ public class DBusMethodInfo
 	 * If @info is statically allocated does nothing. Otherwise increases
 	 * the reference count.
 	 *
-	 * Return: The same @info.
+	 * Returns: The same @info.
 	 *
 	 * Since: 2.26
 	 */

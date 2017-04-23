@@ -474,7 +474,7 @@ public static GType getType()
  * Params:
  *     filename = filename of user interface description file
  *
- * Return: a #GtkBuilder containing the described interface
+ * Returns: a #GtkBuilder containing the described interface
  *
  * Since: 3.10
  *
@@ -531,7 +531,7 @@ public void addCallbackSymbol(string callbackName, GCallback callbackSymbol)
  * Params:
  *     filename = the name of the file to parse
  *
- * Return: A positive value on success, 0 if an error occurred
+ * Returns: A positive value on success, 0 if an error occurred
  *
  * Since: 2.12
  *
@@ -568,7 +568,7 @@ public uint addFromFile(string filename)
  * Params:
  *     resourcePath = the path of the resource file to parse
  *
- * Return: A positive value on success, 0 if an error occurred
+ * Returns: A positive value on success, 0 if an error occurred
  *
  * Since: 3.4
  *
@@ -606,7 +606,7 @@ public uint addFromResource(string resourcePath)
  *     buffer = the string to parse
  *     length = the length of @buffer (may be -1 if @buffer is nul-terminated)
  *
- * Return: A positive value on success, 0 if an error occurred
+ * Returns: A positive value on success, 0 if an error occurred
  *
  * Since: 2.12
  *
@@ -643,7 +643,7 @@ public uint addFromString(string buffer)
  *     filename = the name of the file to parse
  *     objectIds = nul-terminated array of objects to build
  *
- * Return: A positive value on success, 0 if an error occurred
+ * Returns: A positive value on success, 0 if an error occurred
  *
  * Since: 2.14
  *
@@ -680,7 +680,7 @@ public uint addObjectsFromFile(string filename, string[] objectIds)
  *     resourcePath = the path of the resource file to parse
  *     objectIds = nul-terminated array of objects to build
  *
- * Return: A positive value on success, 0 if an error occurred
+ * Returns: A positive value on success, 0 if an error occurred
  *
  * Since: 3.4
  *
@@ -717,7 +717,7 @@ public uint addObjectsFromResource(string resourcePath, string[] objectIds)
  *     length = the length of @buffer (may be -1 if @buffer is nul-terminated)
  *     objectIds = nul-terminated array of objects to build
  *
- * Return: A positive value on success, 0 if an error occurred
+ * Returns: A positive value on success, 0 if an error occurred
  *
  * Since: 2.14
  *
@@ -814,7 +814,7 @@ public void exposeObject(string name, ObjectG object)
  *     buffer = the string to parse
  *     length = the length of @buffer (may be -1 if @buffer is nul-terminated)
  *
- * Return: A positive value on success, 0 if an error occurred
+ * Returns: A positive value on success, 0 if an error occurred
  *
  * Throws: GException on failure.
  */
@@ -842,7 +842,7 @@ public uint extendWithTemplate(Widget widget, GType templateType, string buffer,
  * g_application_get_default(). If you want to use another application
  * for constructing proxies, use gtk_builder_set_application().
  *
- * Return: the application being used by the builder,
+ * Returns: the application being used by the builder,
  *     or %NULL
  *
  * Since: 3.10
@@ -862,7 +862,7 @@ public Application getApplication()
 /**
  * Gets the translation domain of @builder.
  *
- * Return: the translation domain. This string is owned
+ * Returns: the translation domain. This string is owned
  *     by the builder object and must not be modified or freed.
  *
  * Since: 2.12
@@ -880,7 +880,7 @@ public string getTranslationDomain()
  * Params:
  *     typeName = type name to lookup
  *
- * Return: the #GType found for @type_name or #G_TYPE_INVALID
+ * Returns: the #GType found for @type_name or #G_TYPE_INVALID
  *     if no type was found
  *
  * Since: 2.12
@@ -901,7 +901,7 @@ public GType getTypeFromName(string typeName)
  * Params:
  *     callbackName = The name of the callback
  *
- * Return: The callback symbol in @builder for @callback_name, or %NULL
+ * Returns: The callback symbol in @builder for @callback_name, or %NULL
  *
  * Since: 3.10
  */
@@ -958,7 +958,7 @@ public void setTranslationDomain(string domain)
  *     str = the string representation of the value
  *     value = the #GValue to store the result in
  *
- * Return: %TRUE on success
+ * Returns: %TRUE on success
  *
  * Since: 2.12
  *
@@ -995,7 +995,7 @@ public bool valueFromString(ParamSpec pspec, string str, out Value value)
  *     str = the string representation of the value
  *     value = the #GValue to store the result in
  *
- * Return: %TRUE on success
+ * Returns: %TRUE on success
  *
  * Since: 2.12
  *

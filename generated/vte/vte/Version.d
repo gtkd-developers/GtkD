@@ -36,7 +36,7 @@ public struct Version
 	/**
 	 * Gets a list of features vte was compiled with.
 	 *
-	 * Return: a string with features
+	 * Returns: a string with features
 	 *
 	 * Since: 0.40
 	 */
@@ -51,7 +51,7 @@ public struct Version
 	 * the version of the VTE library that the code was compiled
 	 * with.
 	 *
-	 * Return: the major version
+	 * Returns: the major version
 	 *
 	 * Since: 0.40
 	 */
@@ -66,7 +66,7 @@ public struct Version
 	 * the version of the VTE library that the code was compiled
 	 * with.
 	 *
-	 * Return: the micro version
+	 * Returns: the micro version
 	 *
 	 * Since: 0.40
 	 */
@@ -81,7 +81,7 @@ public struct Version
 	 * the version of the VTE library that the code was compiled
 	 * with.
 	 *
-	 * Return: the minor version
+	 * Returns: the minor version
 	 *
 	 * Since: 0.40
 	 */

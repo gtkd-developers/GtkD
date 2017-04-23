@@ -86,7 +86,7 @@ public class GestureZoom : Gesture
 	 * Params:
 	 *     widget = a #GtkWidget
 	 *
-	 * Return: a newly created #GtkGestureZoom
+	 * Returns: a newly created #GtkGestureZoom
 	 *
 	 * Since: 3.14
 	 *
@@ -109,7 +109,7 @@ public class GestureZoom : Gesture
 	 * since the gesture was recognized (hence the starting point is
 	 * considered 1:1). If @gesture is not active, 1 is returned.
 	 *
-	 * Return: the scale delta
+	 * Returns: the scale delta
 	 *
 	 * Since: 3.14
 	 */

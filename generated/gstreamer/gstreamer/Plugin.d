@@ -112,7 +112,7 @@ public class Plugin : ObjectGst
 	 * Params:
 	 *     name = name of plugin to load
 	 *
-	 * Return: a reference to a loaded plugin, or %NULL on error.
+	 * Returns: a reference to a loaded plugin, or %NULL on error.
 	 */
 	public static Plugin loadByName(string name)
 	{
@@ -132,7 +132,7 @@ public class Plugin : ObjectGst
 	 * Params:
 	 *     filename = the plugin filename to load
 	 *
-	 * Return: a reference to the existing loaded GstPlugin, a
+	 * Returns: a reference to the existing loaded GstPlugin, a
 	 *     reference to the newly-loaded GstPlugin, or %NULL if an error occurred.
 	 *
 	 * Throws: GException on failure.
@@ -181,7 +181,7 @@ public class Plugin : ObjectGst
 	 *     p = shipped package plugin belongs to
 	 *     origin = URL to provider of plugin
 	 *
-	 * Return: %TRUE if the plugin was registered correctly, otherwise %FALSE.
+	 * Returns: %TRUE if the plugin was registered correctly, otherwise %FALSE.
 	 */
 	public static bool registerStatic(int majorVersion, int minorVersion, string name, string description, GstPluginInitFunc initFunc, string versio, string license, string source, string p, string origin)
 	{
@@ -217,7 +217,7 @@ public class Plugin : ObjectGst
 	 *     origin = URL to provider of plugin
 	 *     userData = gpointer to user data
 	 *
-	 * Return: %TRUE if the plugin was registered correctly, otherwise %FALSE.
+	 * Returns: %TRUE if the plugin was registered correctly, otherwise %FALSE.
 	 */
 	public static bool registerStaticFull(int majorVersion, int minorVersion, string name, string description, GstPluginInitFullFunc initFullFunc, string versio, string license, string source, string p, string origin, void* userData)
 	{
@@ -290,7 +290,7 @@ public class Plugin : ObjectGst
 	 * Gets the plugin specific data cache. If it is %NULL there is no cached data
 	 * stored. This is the case when the registry is getting rebuilt.
 	 *
-	 * Return: The cached data as a
+	 * Returns: The cached data as a
 	 *     #GstStructure or %NULL.
 	 */
 	public Structure getCacheData()
@@ -308,7 +308,7 @@ public class Plugin : ObjectGst
 	/**
 	 * Get the long descriptive name of the plugin
 	 *
-	 * Return: the long name of the plugin
+	 * Returns: the long name of the plugin
 	 */
 	public string getDescription()
 	{
@@ -318,7 +318,7 @@ public class Plugin : ObjectGst
 	/**
 	 * get the filename of the plugin
 	 *
-	 * Return: the filename of the plugin
+	 * Returns: the filename of the plugin
 	 */
 	public string getFilename()
 	{
@@ -328,7 +328,7 @@ public class Plugin : ObjectGst
 	/**
 	 * get the license of the plugin
 	 *
-	 * Return: the license of the plugin
+	 * Returns: the license of the plugin
 	 */
 	public string getLicense()
 	{
@@ -338,7 +338,7 @@ public class Plugin : ObjectGst
 	/**
 	 * Get the short name of the plugin
 	 *
-	 * Return: the name of the plugin
+	 * Returns: the name of the plugin
 	 */
 	public override string getName()
 	{
@@ -348,7 +348,7 @@ public class Plugin : ObjectGst
 	/**
 	 * get the URL where the plugin comes from
 	 *
-	 * Return: the origin of the plugin
+	 * Returns: the origin of the plugin
 	 */
 	public string getOrigin()
 	{
@@ -358,7 +358,7 @@ public class Plugin : ObjectGst
 	/**
 	 * get the package the plugin belongs to.
 	 *
-	 * Return: the package of the plugin
+	 * Returns: the package of the plugin
 	 */
 	public string getPackage()
 	{
@@ -375,7 +375,7 @@ public class Plugin : ObjectGst
 	 *
 	 * There may be plugins that do not have a valid release date set on them.
 	 *
-	 * Return: the date string of the plugin, or %NULL if not
+	 * Returns: the date string of the plugin, or %NULL if not
 	 *     available.
 	 */
 	public string getReleaseDateString()
@@ -386,7 +386,7 @@ public class Plugin : ObjectGst
 	/**
 	 * get the source module the plugin belongs to.
 	 *
-	 * Return: the source of the plugin
+	 * Returns: the source of the plugin
 	 */
 	public string getSource()
 	{
@@ -396,7 +396,7 @@ public class Plugin : ObjectGst
 	/**
 	 * get the version of the plugin
 	 *
-	 * Return: the version of the plugin
+	 * Returns: the version of the plugin
 	 */
 	public string getVersion()
 	{
@@ -406,7 +406,7 @@ public class Plugin : ObjectGst
 	/**
 	 * queries if the plugin is loaded into memory
 	 *
-	 * Return: %TRUE is loaded, %FALSE otherwise
+	 * Returns: %TRUE is loaded, %FALSE otherwise
 	 */
 	public bool isLoaded()
 	{
@@ -425,7 +425,7 @@ public class Plugin : ObjectGst
 	 * plugin = loaded_plugin;
 	 * ]|
 	 *
-	 * Return: a reference to a loaded plugin, or %NULL on error.
+	 * Returns: a reference to a loaded plugin, or %NULL on error.
 	 */
 	public Plugin load()
 	{
@@ -456,7 +456,7 @@ public class Plugin : ObjectGst
 	/**
 	 * Get the error quark.
 	 *
-	 * Return: The error quark used in GError messages
+	 * Returns: The error quark used in GError messages
 	 */
 	public static GQuark pluginErrorQuark()
 	{

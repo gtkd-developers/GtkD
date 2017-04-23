@@ -91,7 +91,7 @@ public class FontButton : Button, FontChooserIF
 	/**
 	 * Creates a new font picker widget.
 	 *
-	 * Return: a new font picker widget.
+	 * Returns: a new font picker widget.
 	 *
 	 * Since: 2.4
 	 *
@@ -115,7 +115,7 @@ public class FontButton : Button, FontChooserIF
 	 * Params:
 	 *     fontname = Name of font to display in font chooser dialog
 	 *
-	 * Return: a new font picker widget.
+	 * Returns: a new font picker widget.
 	 *
 	 * Since: 2.4
 	 *
@@ -141,7 +141,7 @@ public class FontButton : Button, FontChooserIF
 	 * style, size, weight) just query these properties from the
 	 * #PangoFontDescription object.
 	 *
-	 * Return: an internal copy of the font name which must not be freed.
+	 * Returns: an internal copy of the font name which must not be freed.
 	 *
 	 * Since: 2.4
 	 */
@@ -153,7 +153,7 @@ public class FontButton : Button, FontChooserIF
 	/**
 	 * Returns whether the font size will be shown in the label.
 	 *
-	 * Return: whether the font size will be shown in the label.
+	 * Returns: whether the font size will be shown in the label.
 	 *
 	 * Since: 2.4
 	 */
@@ -165,7 +165,7 @@ public class FontButton : Button, FontChooserIF
 	/**
 	 * Returns whether the name of the font style will be shown in the label.
 	 *
-	 * Return: whether the font style will be shown in the label.
+	 * Returns: whether the font style will be shown in the label.
 	 *
 	 * Since: 2.4
 	 */
@@ -177,7 +177,7 @@ public class FontButton : Button, FontChooserIF
 	/**
 	 * Retrieves the title of the font chooser dialog.
 	 *
-	 * Return: an internal copy of the title string which must not be freed.
+	 * Returns: an internal copy of the title string which must not be freed.
 	 *
 	 * Since: 2.4
 	 */
@@ -189,7 +189,7 @@ public class FontButton : Button, FontChooserIF
 	/**
 	 * Returns whether the selected font is used in the label.
 	 *
-	 * Return: whether the selected font is used in the label.
+	 * Returns: whether the selected font is used in the label.
 	 *
 	 * Since: 2.4
 	 */
@@ -201,7 +201,7 @@ public class FontButton : Button, FontChooserIF
 	/**
 	 * Returns whether the selected size is used in the label.
 	 *
-	 * Return: whether the selected size is used in the label.
+	 * Returns: whether the selected size is used in the label.
 	 *
 	 * Since: 2.4
 	 */
@@ -216,7 +216,7 @@ public class FontButton : Button, FontChooserIF
 	 * Params:
 	 *     fontname = Name of font to display in font chooser dialog
 	 *
-	 * Return: %TRUE
+	 * Returns: %TRUE
 	 *
 	 * Since: 2.4
 	 */

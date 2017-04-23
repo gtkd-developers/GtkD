@@ -127,7 +127,7 @@ public class Pipeline : Bin
 	 * Params:
 	 *     name = name of new pipeline
 	 *
-	 * Return: newly created GstPipeline
+	 * Returns: newly created GstPipeline
 	 *
 	 *     MT safe.
 	 *
@@ -164,7 +164,7 @@ public class Pipeline : Bin
 	 * Check if @pipeline will automatically flush messages when going to
 	 * the NULL state.
 	 *
-	 * Return: whether the pipeline will automatically flush its bus when
+	 * Returns: whether the pipeline will automatically flush its bus when
 	 *     going from READY to NULL state or not.
 	 *
 	 *     MT safe.
@@ -178,7 +178,7 @@ public class Pipeline : Bin
 	 * Gets the #GstBus of @pipeline. The bus allows applications to receive
 	 * #GstMessage packets.
 	 *
-	 * Return: a #GstBus, unref after usage.
+	 * Returns: a #GstBus, unref after usage.
 	 *
 	 *     MT safe.
 	 */
@@ -202,7 +202,7 @@ public class Pipeline : Bin
 	 * Unlike gst_element_get_clock(), this function will always return a
 	 * clock, even if the pipeline is not in the PLAYING state.
 	 *
-	 * Return: a #GstClock, unref after usage.
+	 * Returns: a #GstClock, unref after usage.
 	 */
 	public override Clock getClock()
 	{
@@ -219,7 +219,7 @@ public class Pipeline : Bin
 	/**
 	 * Get the configured delay (see gst_pipeline_set_delay()).
 	 *
-	 * Return: The configured delay.
+	 * Returns: The configured delay.
 	 *
 	 *     MT safe.
 	 */
@@ -232,7 +232,7 @@ public class Pipeline : Bin
 	 * Gets the latency that should be configured on the pipeline. See
 	 * gst_pipeline_set_latency().
 	 *
-	 * Return: Latency to configure on the pipeline or GST_CLOCK_TIME_NONE
+	 * Returns: Latency to configure on the pipeline or GST_CLOCK_TIME_NONE
 	 *
 	 * Since: 1.6
 	 */
@@ -247,7 +247,7 @@ public class Pipeline : Bin
 	 * Unlike gst_element_get_clock(), this function will always return a
 	 * clock, even if the pipeline is not in the PLAYING state.
 	 *
-	 * Return: a #GstClock, unref after usage.
+	 * Returns: a #GstClock, unref after usage.
 	 *
 	 * Since: 1.6
 	 */
@@ -295,7 +295,7 @@ public class Pipeline : Bin
 	 * Params:
 	 *     clock = the clock to set
 	 *
-	 * Return: %TRUE if the clock could be set on the pipeline. %FALSE if
+	 * Returns: %TRUE if the clock could be set on the pipeline. %FALSE if
 	 *     some element did not accept the clock.
 	 *
 	 *     MT safe.

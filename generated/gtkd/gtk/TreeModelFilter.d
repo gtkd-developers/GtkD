@@ -173,7 +173,7 @@ public class TreeModelFilter : ObjectG, TreeDragSourceIF, TreeModelIF
 	 *     filterIter = An uninitialized #GtkTreeIter.
 	 *     childIter = A valid #GtkTreeIter pointing to a row on the child model.
 	 *
-	 * Return: %TRUE, if @filter_iter was set, i.e. if @child_iter is a
+	 * Returns: %TRUE, if @filter_iter was set, i.e. if @child_iter is a
 	 *     valid iterator pointing to a visible row in child model.
 	 *
 	 * Since: 2.4
@@ -199,7 +199,7 @@ public class TreeModelFilter : ObjectG, TreeDragSourceIF, TreeModelIF
 	 * Params:
 	 *     childPath = A #GtkTreePath to convert.
 	 *
-	 * Return: A newly allocated #GtkTreePath, or %NULL.
+	 * Returns: A newly allocated #GtkTreePath, or %NULL.
 	 *
 	 * Since: 2.4
 	 */
@@ -242,7 +242,7 @@ public class TreeModelFilter : ObjectG, TreeDragSourceIF, TreeModelIF
 	 * Params:
 	 *     filterPath = A #GtkTreePath to convert.
 	 *
-	 * Return: A newly allocated #GtkTreePath, or %NULL.
+	 * Returns: A newly allocated #GtkTreePath, or %NULL.
 	 *
 	 * Since: 2.4
 	 */
@@ -261,7 +261,7 @@ public class TreeModelFilter : ObjectG, TreeDragSourceIF, TreeModelIF
 	/**
 	 * Returns a pointer to the child model of @filter.
 	 *
-	 * Return: A pointer to a #GtkTreeModel.
+	 * Returns: A pointer to a #GtkTreeModel.
 	 *
 	 * Since: 2.4
 	 */
@@ -391,7 +391,7 @@ public class TreeModelFilter : ObjectG, TreeDragSourceIF, TreeModelIF
 	 *     childModel = A #GtkTreeModel.
 	 *     root = A #GtkTreePath or %NULL.
 	 *
-	 * Return: A new #GtkTreeModel.
+	 * Returns: A new #GtkTreeModel.
 	 *
 	 * Since: 2.4
 	 *

@@ -139,7 +139,7 @@ public class ObjectGst : ObjectG
 	 *         check through
 	 *     name = the name to search for
 	 *
-	 * Return: %TRUE if a #GstObject named @name does not appear in @list,
+	 * Returns: %TRUE if a #GstObject named @name does not appear in @list,
 	 *     %FALSE if it does.
 	 *
 	 *     MT safe. Grabs and releases the LOCK of each object in the list.
@@ -200,7 +200,7 @@ public class ObjectGst : ObjectG
 	 *         a #GstObject to replace
 	 *     newobj = a new #GstObject
 	 *
-	 * Return: %TRUE if @newobj was different from @oldobj
+	 * Returns: %TRUE if @newobj was different from @oldobj
 	 */
 	public static bool replace(ref ObjectGst oldobj, ObjectGst newobj)
 	{
@@ -222,7 +222,7 @@ public class ObjectGst : ObjectG
 	 * Params:
 	 *     binding = the #GstControlBinding that should be used
 	 *
-	 * Return: %FALSE if the given @binding has not been setup for this object or
+	 * Returns: %FALSE if the given @binding has not been setup for this object or
 	 *     has been setup for a non suitable property, %TRUE otherwise.
 	 */
 	public bool addControlBinding(ControlBinding binding)
@@ -252,7 +252,7 @@ public class ObjectGst : ObjectG
 	 * Params:
 	 *     propertyName = name of the property
 	 *
-	 * Return: the #GstControlBinding for
+	 * Returns: the #GstControlBinding for
 	 *     @property_name or %NULL if the property is not controlled.
 	 */
 	public ControlBinding getControlBinding(string propertyName)
@@ -279,7 +279,7 @@ public class ObjectGst : ObjectG
 	 * The control-rate is not expected to change if the element is in
 	 * %GST_STATE_PAUSED or %GST_STATE_PLAYING.
 	 *
-	 * Return: the control rate in nanoseconds
+	 * Returns: the control rate in nanoseconds
 	 */
 	public GstClockTime getControlRate()
 	{
@@ -301,7 +301,7 @@ public class ObjectGst : ObjectG
 	 *     nValues = the number of values
 	 *     values = array to put control-values in
 	 *
-	 * Return: %TRUE if the given array could be filled, %FALSE otherwise
+	 * Returns: %TRUE if the given array could be filled, %FALSE otherwise
 	 */
 	public bool getGValueArray(string propertyName, GstClockTime timestamp, GstClockTime interval, uint nValues, Value values)
 	{
@@ -316,7 +316,7 @@ public class ObjectGst : ObjectG
 	 *
 	 * Free-function: g_free
 	 *
-	 * Return: the name of @object. g_free()
+	 * Returns: the name of @object. g_free()
 	 *     after usage.
 	 *
 	 *     MT safe. This function grabs and releases @object's LOCK.
@@ -333,7 +333,7 @@ public class ObjectGst : ObjectG
 	 * Returns the parent of @object. This function increases the refcount
 	 * of the parent object so you should gst_object_unref() it after usage.
 	 *
-	 * Return: parent of @object, this can be
+	 * Returns: parent of @object, this can be
 	 *     %NULL if @object has no parent. unref after usage.
 	 *
 	 *     MT safe. Grabs and releases @object's LOCK.
@@ -356,7 +356,7 @@ public class ObjectGst : ObjectG
 	 *
 	 * Free-function: g_free
 	 *
-	 * Return: a string describing the path of @object. You must
+	 * Returns: a string describing the path of @object. You must
 	 *     g_free() the string after usage.
 	 *
 	 *     MT safe. Grabs and releases the #GstObject's LOCK for all objects
@@ -377,7 +377,7 @@ public class ObjectGst : ObjectG
 	 *     propertyName = the name of the property to get
 	 *     timestamp = the time the control-change should be read from
 	 *
-	 * Return: the GValue of the property at the given time,
+	 * Returns: the GValue of the property at the given time,
 	 *     or %NULL if the property isn't controlled.
 	 */
 	public Value getValue(string propertyName, GstClockTime timestamp)
@@ -411,7 +411,7 @@ public class ObjectGst : ObjectG
 	 *     nValues = the number of values
 	 *     values = array to put control-values in
 	 *
-	 * Return: %TRUE if the given array could be filled, %FALSE otherwise
+	 * Returns: %TRUE if the given array could be filled, %FALSE otherwise
 	 */
 	public bool getValueArray(string propertyName, GstClockTime timestamp, GstClockTime interval, uint nValues, void* values)
 	{
@@ -421,7 +421,7 @@ public class ObjectGst : ObjectG
 	/**
 	 * Check if the @object has active controlled properties.
 	 *
-	 * Return: %TRUE if the object has active controlled properties
+	 * Returns: %TRUE if the object has active controlled properties
 	 */
 	public bool hasActiveControlBindings()
 	{
@@ -439,7 +439,7 @@ public class ObjectGst : ObjectG
 	 * Params:
 	 *     ancestor = a #GstObject to check as ancestor
 	 *
-	 * Return: %TRUE if @ancestor is an ancestor of @object.
+	 * Returns: %TRUE if @ancestor is an ancestor of @object.
 	 */
 	public bool hasAncestor(ObjectGst ancestor)
 	{
@@ -453,7 +453,7 @@ public class ObjectGst : ObjectG
 	 * Params:
 	 *     ancestor = a #GstObject to check as ancestor
 	 *
-	 * Return: %TRUE if @ancestor is an ancestor of @object.
+	 * Returns: %TRUE if @ancestor is an ancestor of @object.
 	 *
 	 *     MT safe. Grabs and releases @object's locks.
 	 */
@@ -469,7 +469,7 @@ public class ObjectGst : ObjectG
 	 * Params:
 	 *     parent = a #GstObject to check as parent
 	 *
-	 * Return: %FALSE if either @object or @parent is %NULL. %TRUE if @parent is
+	 * Returns: %FALSE if either @object or @parent is %NULL. %TRUE if @parent is
 	 *     the parent of @object. Otherwise %FALSE.
 	 *
 	 *     MT safe. Grabs and releases @object's locks.
@@ -490,7 +490,7 @@ public class ObjectGst : ObjectG
 	 * constructs like :
 	 * result = gst_object_ref (object->parent);
 	 *
-	 * Return: A pointer to @object
+	 * Returns: A pointer to @object
 	 */
 	public override ObjectGst doref()
 	{
@@ -511,7 +511,7 @@ public class ObjectGst : ObjectG
 	 * Params:
 	 *     binding = the binding
 	 *
-	 * Return: %TRUE if the binding could be removed.
+	 * Returns: %TRUE if the binding could be removed.
 	 */
 	public bool removeControlBinding(ControlBinding binding)
 	{
@@ -572,7 +572,7 @@ public class ObjectGst : ObjectG
 	 * Params:
 	 *     name = new name of object
 	 *
-	 * Return: %TRUE if the name could be set. Since Objects that have
+	 * Returns: %TRUE if the name could be set. Since Objects that have
 	 *     a parent cannot be renamed, this function returns %FALSE in those
 	 *     cases.
 	 *
@@ -590,7 +590,7 @@ public class ObjectGst : ObjectG
 	 * Params:
 	 *     parent = new parent of object
 	 *
-	 * Return: %TRUE if @parent could be set or %FALSE when @object
+	 * Returns: %TRUE if @parent could be set or %FALSE when @object
 	 *     already had a parent or @object and @parent are the same.
 	 *
 	 *     MT safe. Grabs and releases @object's LOCK.
@@ -604,7 +604,7 @@ public class ObjectGst : ObjectG
 	 * Returns a suggestion for timestamps where buffers should be split
 	 * to get best controller results.
 	 *
-	 * Return: Returns the suggested timestamp or %GST_CLOCK_TIME_NONE
+	 * Returns: Returns the suggested timestamp or %GST_CLOCK_TIME_NONE
 	 *     if no control-rate was set.
 	 */
 	public GstClockTime suggestNextSync()
@@ -622,7 +622,7 @@ public class ObjectGst : ObjectG
 	 * Params:
 	 *     timestamp = the time that should be processed
 	 *
-	 * Return: %TRUE if the controller values could be applied to the object
+	 * Returns: %TRUE if the controller values could be applied to the object
 	 *     properties, %FALSE otherwise
 	 */
 	public bool syncValues(GstClockTime timestamp)

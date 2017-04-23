@@ -64,7 +64,7 @@ public template StreamableContentT(TStruct)
 	 * Params:
 	 *     i = a gint representing the position of the mime type starting from 0
 	 *
-	 * Return: a gchar* representing the specified mime type; the caller
+	 * Returns: a gchar* representing the specified mime type; the caller
 	 *     should not free the character string.
 	 */
 	public string getMimeType(int i)
@@ -75,7 +75,7 @@ public template StreamableContentT(TStruct)
 	/**
 	 * Gets the number of mime types supported by this object.
 	 *
-	 * Return: a gint which is the number of mime types supported by the object.
+	 * Returns: a gint which is the number of mime types supported by the object.
 	 */
 	public int getNMimeTypes()
 	{
@@ -88,7 +88,7 @@ public template StreamableContentT(TStruct)
 	 * Params:
 	 *     mimeType = a gchar* representing the mime type
 	 *
-	 * Return: A #GIOChannel which contains the content in the
+	 * Returns: A #GIOChannel which contains the content in the
 	 *     specified mime type.
 	 */
 	public IOChannel getStream(string mimeType)
@@ -117,7 +117,7 @@ public template StreamableContentT(TStruct)
 	 *     mimeType = a gchar* representing the mime type, or NULL to request a URI
 	 *         for the default mime type.
 	 *
-	 * Return: Returns a string representing a URI, or %NULL
+	 * Returns: Returns a string representing a URI, or %NULL
 	 *     if no corresponding URI can be constructed.
 	 *
 	 * Since: 1.12

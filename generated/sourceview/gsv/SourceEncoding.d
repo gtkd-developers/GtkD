@@ -69,7 +69,7 @@ public class SourceEncoding
 	/**
 	 * Used by language bindings.
 	 *
-	 * Return: a copy of @enc.
+	 * Returns: a copy of @enc.
 	 *
 	 * Since: 3.14
 	 */
@@ -99,7 +99,7 @@ public class SourceEncoding
 	 * Gets the character set of the #GtkSourceEncoding, such as "UTF-8" or
 	 * "ISO-8859-1".
 	 *
-	 * Return: the character set of the #GtkSourceEncoding.
+	 * Returns: the character set of the #GtkSourceEncoding.
 	 *
 	 * Since: 3.14
 	 */
@@ -111,7 +111,7 @@ public class SourceEncoding
 	/**
 	 * Gets the name of the #GtkSourceEncoding such as "Unicode" or "Western".
 	 *
-	 * Return: the name of the #GtkSourceEncoding.
+	 * Returns: the name of the #GtkSourceEncoding.
 	 *
 	 * Since: 3.14
 	 */
@@ -121,7 +121,7 @@ public class SourceEncoding
 	}
 
 	/**
-	 * Return: a string representation. Free with g_free() when no longer needed.
+	 * Returns: a string representation. Free with g_free() when no longer needed.
 	 *
 	 * Since: 3.14
 	 */
@@ -136,7 +136,7 @@ public class SourceEncoding
 	/**
 	 * Gets all encodings.
 	 *
-	 * Return: a list of
+	 * Returns: a list of
 	 *     all #GtkSourceEncoding's. Free with g_slist_free().
 	 *
 	 * Since: 3.14
@@ -156,7 +156,7 @@ public class SourceEncoding
 	/**
 	 * Gets the #GtkSourceEncoding for the current locale. See also g_get_charset().
 	 *
-	 * Return: the current locale encoding.
+	 * Returns: the current locale encoding.
 	 *
 	 * Since: 3.14
 	 */
@@ -180,7 +180,7 @@ public class SourceEncoding
 	 * language, country and default encoding). The UTF-8 encoding and the current
 	 * locale encoding are guaranteed to be present in the returned list.
 	 *
-	 * Return: the list of
+	 * Returns: the list of
 	 *     default candidate encodings. Free with g_slist_free().
 	 *
 	 * Since: 3.18
@@ -204,7 +204,7 @@ public class SourceEncoding
 	 * Params:
 	 *     charset = a character set.
 	 *
-	 * Return: the corresponding #GtkSourceEncoding, or %NULL
+	 * Returns: the corresponding #GtkSourceEncoding, or %NULL
 	 *     if not found.
 	 *
 	 * Since: 3.14
@@ -222,7 +222,7 @@ public class SourceEncoding
 	}
 
 	/**
-	 * Return: the UTF-8 encoding.
+	 * Returns: the UTF-8 encoding.
 	 *
 	 * Since: 3.14
 	 */

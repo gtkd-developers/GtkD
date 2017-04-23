@@ -62,7 +62,7 @@ public struct UnixUtils
 	 *     funct = a #GPollFDFunc
 	 *     userData = data to pass to @function
 	 *
-	 * Return: the ID (greater than 0) of the event source
+	 * Returns: the ID (greater than 0) of the event source
 	 *
 	 * Since: 2.36
 	 */
@@ -87,7 +87,7 @@ public struct UnixUtils
 	 *     userData = data to pass to @function
 	 *     notify = function to call when the idle is removed, or %NULL
 	 *
-	 * Return: the ID (greater than 0) of the event source
+	 * Returns: the ID (greater than 0) of the event source
 	 *
 	 * Since: 2.36
 	 */
@@ -106,7 +106,7 @@ public struct UnixUtils
 	 *     fd = a file descriptor
 	 *     condition = IO conditions to watch for on @fd
 	 *
-	 * Return: the newly created #GSource
+	 * Returns: the newly created #GSource
 	 *
 	 * Since: 2.36
 	 */
@@ -136,7 +136,7 @@ public struct UnixUtils
 	 *     fds = Array of two integers
 	 *     flags = Bitfield of file descriptor flags, as for fcntl()
 	 *
-	 * Return: %TRUE on success, %FALSE if not (and errno will be set).
+	 * Returns: %TRUE on success, %FALSE if not (and errno will be set).
 	 *
 	 * Since: 2.30
 	 *
@@ -165,7 +165,7 @@ public struct UnixUtils
 	 *     fd = A file descriptor
 	 *     nonblock = If %TRUE, set the descriptor to be non-blocking
 	 *
-	 * Return: %TRUE if successful
+	 * Returns: %TRUE if successful
 	 *
 	 * Since: 2.30
 	 *
@@ -195,7 +195,7 @@ public struct UnixUtils
 	 *     handler = Callback
 	 *     userData = Data for @handler
 	 *
-	 * Return: An ID (greater than 0) for the event source
+	 * Returns: An ID (greater than 0) for the event source
 	 *
 	 * Since: 2.30
 	 */
@@ -217,7 +217,7 @@ public struct UnixUtils
 	 *     userData = Data for @handler
 	 *     notify = #GDestroyNotify for @handler
 	 *
-	 * Return: An ID (greater than 0) for the event source
+	 * Returns: An ID (greater than 0) for the event source
 	 *
 	 * Since: 2.30
 	 */
@@ -254,7 +254,7 @@ public struct UnixUtils
 	 * Params:
 	 *     signum = A signal number
 	 *
-	 * Return: A newly created #GSource
+	 * Returns: A newly created #GSource
 	 *
 	 * Since: 2.30
 	 */

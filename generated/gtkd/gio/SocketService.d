@@ -112,7 +112,7 @@ public class SocketService : SocketListener
 	 * g_socket_service_start(), unless g_socket_service_stop() has been
 	 * called before.
 	 *
-	 * Return: a new #GSocketService.
+	 * Returns: a new #GSocketService.
 	 *
 	 * Since: 2.22
 	 *
@@ -136,7 +136,7 @@ public class SocketService : SocketListener
 	 * a non-active service will let connecting clients queue
 	 * up until the service is started.
 	 *
-	 * Return: %TRUE if the service is active, %FALSE otherwise
+	 * Returns: %TRUE if the service is active, %FALSE otherwise
 	 *
 	 * Since: 2.22
 	 */
@@ -225,7 +225,7 @@ public class SocketService : SocketListener
 	 *     sourceObject = the source_object passed to
 	 *         g_socket_listener_add_address()
 	 *
-	 * Return: %TRUE to stop other handlers from being called
+	 * Returns: %TRUE to stop other handlers from being called
 	 *
 	 * Since: 2.22
 	 */

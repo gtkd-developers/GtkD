@@ -74,7 +74,7 @@ public class ParseContext
 	 *
 	 * Free-function: gst_parse_context_free
 	 *
-	 * Return: a newly-allocated parse context. Free with
+	 * Returns: a newly-allocated parse context. Free with
 	 *     gst_parse_context_free() when no longer needed.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -104,7 +104,7 @@ public class ParseContext
 	 * or gst_parse_launchv_full(). Will only return results if an error code
 	 * of %GST_PARSE_ERROR_NO_SUCH_ELEMENT was returned.
 	 *
-	 * Return: a
+	 * Returns: a
 	 *     %NULL-terminated array of element factory name strings of missing
 	 *     elements. Free with g_strfreev() when no longer needed.
 	 */

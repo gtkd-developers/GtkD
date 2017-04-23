@@ -87,7 +87,7 @@ public class Thread
 	 *     func = a function to execute in the new thread
 	 *     data = an argument to supply to the new thread
 	 *
-	 * Return: the new #GThread, or %NULL if an error occurred
+	 * Returns: the new #GThread, or %NULL if an error occurred
 	 *
 	 * Since: 2.32
 	 *
@@ -131,7 +131,7 @@ public class Thread
 	 * to be freed. Use g_thread_ref() to obtain an extra reference if you
 	 * want to keep the GThread alive beyond the g_thread_join() call.
 	 *
-	 * Return: the return value of the thread
+	 * Returns: the return value of the thread
 	 */
 	public void* join()
 	{
@@ -141,7 +141,7 @@ public class Thread
 	/**
 	 * Increase the reference count on @thread.
 	 *
-	 * Return: a new reference to @thread
+	 * Returns: a new reference to @thread
 	 *
 	 * Since: 2.32
 	 */
@@ -212,7 +212,7 @@ public class Thread
 	 * (i.e. comparisons) but you must not use GLib functions (such
 	 * as g_thread_join()) on these threads.
 	 *
-	 * Return: the #GThread representing the current thread
+	 * Returns: the #GThread representing the current thread
 	 */
 	public static Thread self()
 	{
@@ -281,7 +281,7 @@ public class Thread
 	 *     address = a pointer to an integer
 	 *     lockBit = a bit value between 0 and 31
 	 *
-	 * Return: %TRUE if the lock was acquired
+	 * Returns: %TRUE if the lock was acquired
 	 *
 	 * Since: 2.24
 	 */
@@ -316,7 +316,7 @@ public class Thread
 	 * used as a parameter to g_thread_pool_new() for CPU bound tasks and
 	 * similar cases.
 	 *
-	 * Return: Number of schedulable threads, always greater than 0
+	 * Returns: Number of schedulable threads, always greater than 0
 	 *
 	 * Since: 2.36
 	 */
@@ -354,7 +354,7 @@ public class Thread
 	 *     address = a pointer to a #gpointer-sized value
 	 *     lockBit = a bit value between 0 and 31
 	 *
-	 * Return: %TRUE if the lock was acquired
+	 * Returns: %TRUE if the lock was acquired
 	 *
 	 * Since: 2.30
 	 */

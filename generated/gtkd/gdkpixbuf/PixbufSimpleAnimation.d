@@ -82,7 +82,7 @@ public class PixbufSimpleAnimation : PixbufAnimation
 	 *     height = the height of the animation
 	 *     rate = the speed of the animation, in frames per second
 	 *
-	 * Return: a newly allocated #GdkPixbufSimpleAnim
+	 * Returns: a newly allocated #GdkPixbufSimpleAnim
 	 *
 	 * Since: 2.8
 	 *
@@ -118,7 +118,7 @@ public class PixbufSimpleAnimation : PixbufAnimation
 	/**
 	 * Gets whether @animation should loop indefinitely when it reaches the end.
 	 *
-	 * Return: %TRUE if the animation loops forever, %FALSE otherwise
+	 * Returns: %TRUE if the animation loops forever, %FALSE otherwise
 	 *
 	 * Since: 2.18
 	 */

@@ -227,7 +227,7 @@ public class Element : ObjectGst
 	 *     uri = URI to create an element for
 	 *     elementname = Name of created element, can be %NULL.
 	 *
-	 * Return: a new element or %NULL if none could be created
+	 * Returns: a new element or %NULL if none could be created
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -261,7 +261,7 @@ public class Element : ObjectGst
 	 *     rank = rank of element (higher rank means more importance when autoplugging)
 	 *     type = GType of element to register
 	 *
-	 * Return: %TRUE, if the registering succeeded, %FALSE on error
+	 * Returns: %TRUE, if the registering succeeded, %FALSE on error
 	 */
 	public static bool register(Plugin plugin, string name, uint rank, GType type)
 	{
@@ -274,7 +274,7 @@ public class Element : ObjectGst
 	 * Params:
 	 *     stateRet = a #GstStateChangeReturn to get the name of.
 	 *
-	 * Return: a string with the name of the state
+	 * Returns: a string with the name of the state
 	 *     result.
 	 */
 	public static string stateChangeReturnGetName(GstStateChangeReturn stateRet)
@@ -288,7 +288,7 @@ public class Element : ObjectGst
 	 * Params:
 	 *     state = a #GstState to get the name of.
 	 *
-	 * Return: a string with the name of the state.
+	 * Returns: a string with the name of the state.
 	 */
 	public static string stateGetName(GstState state)
 	{
@@ -324,7 +324,7 @@ public class Element : ObjectGst
 	 * Params:
 	 *     pad = the #GstPad to add to the element.
 	 *
-	 * Return: %TRUE if the pad could be added. This function can fail when
+	 * Returns: %TRUE if the pad could be added. This function can fail when
 	 *     a pad with the same name already existed or the pad already had another
 	 *     parent.
 	 *
@@ -341,7 +341,7 @@ public class Element : ObjectGst
 	 *     propertyName = name of property to watch for changes, or
 	 *         NULL to watch all properties
 	 *     includeValue = whether to include the new property value in the message
-	 * Return: a watch id, which can be used in connection with
+	 * Returns: a watch id, which can be used in connection with
 	 *     gst_element_remove_property_notify_watch() to remove the watch again.
 	 *
 	 * Since: 1.10
@@ -357,7 +357,7 @@ public class Element : ObjectGst
 	 *     propertyName = name of property to watch for changes, or
 	 *         NULL to watch all properties
 	 *     includeValue = whether to include the new property value in the message
-	 * Return: a watch id, which can be used in connection with
+	 * Returns: a watch id, which can be used in connection with
 	 *     gst_element_remove_property_notify_watch() to remove the watch again.
 	 *
 	 * Since: 1.10
@@ -400,7 +400,7 @@ public class Element : ObjectGst
 	 * Params:
 	 *     transition = the requested transition
 	 *
-	 * Return: the #GstStateChangeReturn of the state transition.
+	 * Returns: the #GstStateChangeReturn of the state transition.
 	 */
 	public GstStateChangeReturn changeState(GstStateChange transition)
 	{
@@ -423,7 +423,7 @@ public class Element : ObjectGst
 	 * Params:
 	 *     ret = The previous state return value
 	 *
-	 * Return: The result of the commit state change.
+	 * Returns: The result of the commit state change.
 	 *
 	 *     MT safe.
 	 */
@@ -448,7 +448,7 @@ public class Element : ObjectGst
 	 * PLAYING. Subtracting the base time from the clock time gives
 	 * the running time of the element.
 	 *
-	 * Return: the base time of the element.
+	 * Returns: the base time of the element.
 	 *
 	 *     MT safe.
 	 */
@@ -461,7 +461,7 @@ public class Element : ObjectGst
 	 * Returns the bus of the element. Note that only a #GstPipeline will provide a
 	 * bus for the application.
 	 *
-	 * Return: the element's #GstBus. unref after usage.
+	 * Returns: the element's #GstBus. unref after usage.
 	 *
 	 *     MT safe.
 	 */
@@ -484,7 +484,7 @@ public class Element : ObjectGst
 	 * Elements in a pipeline will only have their clock set when the
 	 * pipeline is in the PLAYING state.
 	 *
-	 * Return: the #GstClock of the element. unref after usage.
+	 * Returns: the #GstClock of the element. unref after usage.
 	 *
 	 *     MT safe.
 	 */
@@ -513,7 +513,7 @@ public class Element : ObjectGst
 	 *     pad = the #GstPad to find a compatible one for.
 	 *     caps = the #GstCaps to use as a filter.
 	 *
-	 * Return: the #GstPad to which a link
+	 * Returns: the #GstPad to which a link
 	 *     can be made, or %NULL if one cannot be found. gst_object_unref()
 	 *     after usage.
 	 */
@@ -537,7 +537,7 @@ public class Element : ObjectGst
 	 *     compattempl = the #GstPadTemplate to find a compatible
 	 *         template for
 	 *
-	 * Return: a compatible #GstPadTemplate,
+	 * Returns: a compatible #GstPadTemplate,
 	 *     or %NULL if none was found. No unreferencing is necessary.
 	 */
 	public PadTemplate getCompatiblePadTemplate(PadTemplate compattempl)
@@ -560,7 +560,7 @@ public class Element : ObjectGst
 	 * Params:
 	 *     contextType = a name of a context to retrieve
 	 *
-	 * Return: A #GstContext or NULL
+	 * Returns: A #GstContext or NULL
 	 *
 	 * Since: 1.8
 	 */
@@ -582,7 +582,7 @@ public class Element : ObjectGst
 	 * Params:
 	 *     contextType = a name of a context to retrieve
 	 *
-	 * Return: A #GstContext or NULL
+	 * Returns: A #GstContext or NULL
 	 *
 	 * Since: 1.8
 	 */
@@ -603,7 +603,7 @@ public class Element : ObjectGst
 	 *
 	 * MT safe.
 	 *
-	 * Return: List of #GstContext
+	 * Returns: List of #GstContext
 	 *
 	 * Since: 1.8
 	 */
@@ -622,7 +622,7 @@ public class Element : ObjectGst
 	/**
 	 * Retrieves the factory that was used to create this element.
 	 *
-	 * Return: the #GstElementFactory used for creating this
+	 * Returns: the #GstElementFactory used for creating this
 	 *     element. no refcounting is needed.
 	 */
 	public ElementFactory getFactory()
@@ -649,7 +649,7 @@ public class Element : ObjectGst
 	 * Params:
 	 *     name = the name of the request #GstPad to retrieve.
 	 *
-	 * Return: requested #GstPad if found,
+	 * Returns: requested #GstPad if found,
 	 *     otherwise %NULL.  Release after usage.
 	 */
 	public Pad getRequestPad(string name)
@@ -673,7 +673,7 @@ public class Element : ObjectGst
 	 *
 	 * MT safe.
 	 *
-	 * Return: the start time of the element.
+	 * Returns: the start time of the element.
 	 */
 	public GstClockTime getStartTime()
 	{
@@ -710,7 +710,7 @@ public class Element : ObjectGst
 	 *     timeout = a #GstClockTime to specify the timeout for an async
 	 *         state change or %GST_CLOCK_TIME_NONE for infinite timeout.
 	 *
-	 * Return: %GST_STATE_CHANGE_SUCCESS if the element has no more pending state
+	 * Returns: %GST_STATE_CHANGE_SUCCESS if the element has no more pending state
 	 *     and the last state change succeeded, %GST_STATE_CHANGE_ASYNC if the
 	 *     element is still performing a state change or
 	 *     %GST_STATE_CHANGE_FAILURE if the last state change failed.
@@ -729,7 +729,7 @@ public class Element : ObjectGst
 	 * Params:
 	 *     name = the name of the static #GstPad to retrieve.
 	 *
-	 * Return: the requested #GstPad if
+	 * Returns: the requested #GstPad if
 	 *     found, otherwise %NULL.  unref after usage.
 	 *
 	 *     MT safe.
@@ -755,7 +755,7 @@ public class Element : ObjectGst
 	 *
 	 * MT safe.
 	 *
-	 * Return: %TRUE, if the element's state is locked.
+	 * Returns: %TRUE, if the element's state is locked.
 	 */
 	public bool isLockedState()
 	{
@@ -770,7 +770,7 @@ public class Element : ObjectGst
 	 * The order of pads returned by the iterator will be the order in which
 	 * the pads were added to the element.
 	 *
-	 * Return: the #GstIterator of #GstPad.
+	 * Returns: the #GstIterator of #GstPad.
 	 *
 	 *     MT safe.
 	 */
@@ -792,7 +792,7 @@ public class Element : ObjectGst
 	 * The order of pads returned by the iterator will be the order in which
 	 * the pads were added to the element.
 	 *
-	 * Return: the #GstIterator of #GstPad.
+	 * Returns: the #GstIterator of #GstPad.
 	 *
 	 *     MT safe.
 	 */
@@ -814,7 +814,7 @@ public class Element : ObjectGst
 	 * The order of pads returned by the iterator will be the order in which
 	 * the pads were added to the element.
 	 *
-	 * Return: the #GstIterator of #GstPad.
+	 * Returns: the #GstIterator of #GstPad.
 	 *
 	 *     MT safe.
 	 */
@@ -843,7 +843,7 @@ public class Element : ObjectGst
 	 * Params:
 	 *     dest = the #GstElement containing the destination pad.
 	 *
-	 * Return: %TRUE if the elements could be linked, %FALSE otherwise.
+	 * Returns: %TRUE if the elements could be linked, %FALSE otherwise.
 	 */
 	public bool link(Element dest)
 	{
@@ -865,7 +865,7 @@ public class Element : ObjectGst
 	 *     filter = the #GstCaps to filter the link,
 	 *         or %NULL for no filter.
 	 *
-	 * Return: %TRUE if the pads could be linked, %FALSE otherwise.
+	 * Returns: %TRUE if the pads could be linked, %FALSE otherwise.
 	 */
 	public bool linkFiltered(Element dest, Caps filter)
 	{
@@ -885,7 +885,7 @@ public class Element : ObjectGst
 	 *     destpadname = the name of the #GstPad in destination element,
 	 *         or %NULL for any pad.
 	 *
-	 * Return: %TRUE if the pads could be linked, %FALSE otherwise.
+	 * Returns: %TRUE if the pads could be linked, %FALSE otherwise.
 	 */
 	public bool linkPads(string srcpadname, Element dest, string destpadname)
 	{
@@ -907,7 +907,7 @@ public class Element : ObjectGst
 	 *     filter = the #GstCaps to filter the link,
 	 *         or %NULL for no filter.
 	 *
-	 * Return: %TRUE if the pads could be linked, %FALSE otherwise.
+	 * Returns: %TRUE if the pads could be linked, %FALSE otherwise.
 	 */
 	public bool linkPadsFiltered(string srcpadname, Element dest, string destpadname, Caps filter)
 	{
@@ -934,7 +934,7 @@ public class Element : ObjectGst
 	 *         or %NULL for any pad.
 	 *     flags = the #GstPadLinkCheck to be performed when linking pads.
 	 *
-	 * Return: %TRUE if the pads could be linked, %FALSE otherwise.
+	 * Returns: %TRUE if the pads could be linked, %FALSE otherwise.
 	 */
 	public bool linkPadsFull(string srcpadname, Element dest, string destpadname, GstPadLinkCheck flags)
 	{
@@ -1043,7 +1043,7 @@ public class Element : ObjectGst
 	 * Params:
 	 *     message = a #GstMessage to post
 	 *
-	 * Return: %TRUE if the message was successfully posted. The function returns
+	 * Returns: %TRUE if the message was successfully posted. The function returns
 	 *     %FALSE if the element did not have a bus.
 	 *
 	 *     MT safe.
@@ -1058,7 +1058,7 @@ public class Element : ObjectGst
 	 * > An element is only required to provide a clock in the PAUSED
 	 * > state. Some elements can provide a clock in other states.
 	 *
-	 * Return: the GstClock provided by the
+	 * Returns: the GstClock provided by the
 	 *     element or %NULL if no clock could be provided.  Unref after usage.
 	 *
 	 *     MT safe.
@@ -1087,7 +1087,7 @@ public class Element : ObjectGst
 	 * Params:
 	 *     query = the #GstQuery.
 	 *
-	 * Return: %TRUE if the query could be performed.
+	 * Returns: %TRUE if the query could be performed.
 	 *
 	 *     MT safe.
 	 */
@@ -1105,7 +1105,7 @@ public class Element : ObjectGst
 	 *     destFormat = the #GstFormat to convert to.
 	 *     destVal = a pointer to the result.
 	 *
-	 * Return: %TRUE if the query could be performed.
+	 * Returns: %TRUE if the query could be performed.
 	 */
 	public bool queryConvert(GstFormat srcFormat, long srcVal, GstFormat destFormat, out long destVal)
 	{
@@ -1126,7 +1126,7 @@ public class Element : ObjectGst
 	 *     format = the #GstFormat requested
 	 *     duration = A location in which to store the total duration, or %NULL.
 	 *
-	 * Return: %TRUE if the query could be performed.
+	 * Returns: %TRUE if the query could be performed.
 	 */
 	public bool queryDuration(GstFormat format, out long duration)
 	{
@@ -1149,7 +1149,7 @@ public class Element : ObjectGst
 	 *     cur = a location in which to store the current
 	 *         position, or %NULL.
 	 *
-	 * Return: %TRUE if the query could be performed.
+	 * Returns: %TRUE if the query could be performed.
 	 */
 	public bool queryPosition(GstFormat format, out long cur)
 	{
@@ -1195,7 +1195,7 @@ public class Element : ObjectGst
 	 * Params:
 	 *     pad = the #GstPad to remove from the element.
 	 *
-	 * Return: %TRUE if the pad could be removed. Can return %FALSE if the
+	 * Returns: %TRUE if the pad could be removed. Can return %FALSE if the
 	 *     pad does not belong to the provided element.
 	 *
 	 *     MT safe.
@@ -1225,7 +1225,7 @@ public class Element : ObjectGst
 	 *     caps = the caps of the pad we want to
 	 *         request. Can be %NULL.
 	 *
-	 * Return: requested #GstPad if found,
+	 * Returns: requested #GstPad if found,
 	 *     otherwise %NULL.  Release after usage.
 	 */
 	public Pad requestPad(PadTemplate templ, string name, Caps caps)
@@ -1256,7 +1256,7 @@ public class Element : ObjectGst
 	 *     stopType = The type and flags for the new stop position
 	 *     stop = The value of the new stop position
 	 *
-	 * Return: %TRUE if the event was handled. Flushing seeks will trigger a
+	 * Returns: %TRUE if the event was handled. Flushing seeks will trigger a
 	 *     preroll, which will emit %GST_MESSAGE_ASYNC_DONE.
 	 */
 	public bool seek(double rate, GstFormat format, GstSeekFlags flags, GstSeekType startType, long start, GstSeekType stopType, long stop)
@@ -1289,7 +1289,7 @@ public class Element : ObjectGst
 	 *         multiply with #GST_SECOND to convert seconds to nanoseconds or
 	 *         with #GST_MSECOND to convert milliseconds to nanoseconds.
 	 *
-	 * Return: %TRUE if the seek operation succeeded. Flushing seeks will trigger a
+	 * Returns: %TRUE if the seek operation succeeded. Flushing seeks will trigger a
 	 *     preroll, which will emit %GST_MESSAGE_ASYNC_DONE.
 	 */
 	public bool seekSimple(GstFormat format, GstSeekFlags seekFlags, long seekPos)
@@ -1310,7 +1310,7 @@ public class Element : ObjectGst
 	 * Params:
 	 *     event = the #GstEvent to send to the element.
 	 *
-	 * Return: %TRUE if the event was handled. Events that trigger a preroll (such
+	 * Returns: %TRUE if the event was handled. Events that trigger a preroll (such
 	 *     as flushing seeks and steps) will emit %GST_MESSAGE_ASYNC_DONE.
 	 */
 	public bool sendEvent(Event event)
@@ -1353,7 +1353,7 @@ public class Element : ObjectGst
 	 * Params:
 	 *     clock = the #GstClock to set for the element.
 	 *
-	 * Return: %TRUE if the element accepted the clock. An element can refuse a
+	 * Returns: %TRUE if the element accepted the clock. An element can refuse a
 	 *     clock when it, for example, is not able to slave its internal clock to the
 	 *     @clock or when it requires a specific clock to operate.
 	 *
@@ -1386,7 +1386,7 @@ public class Element : ObjectGst
 	 * Params:
 	 *     lockedState = %TRUE to lock the element's state
 	 *
-	 * Return: %TRUE if the state was changed, %FALSE if bad parameters were given
+	 * Returns: %TRUE if the state was changed, %FALSE if bad parameters were given
 	 *     or the elements state-locking needed no change.
 	 */
 	public bool setLockedState(bool lockedState)
@@ -1434,7 +1434,7 @@ public class Element : ObjectGst
 	 * Params:
 	 *     state = the element's new #GstState.
 	 *
-	 * Return: Result of the state change using #GstStateChangeReturn.
+	 * Returns: Result of the state change using #GstStateChangeReturn.
 	 *
 	 *     MT safe.
 	 */
@@ -1447,7 +1447,7 @@ public class Element : ObjectGst
 	 * Tries to change the state of the element to the same as its parent.
 	 * If this function returns %FALSE, the state of element is undefined.
 	 *
-	 * Return: %TRUE, if the element's state could be synced to the parent's state.
+	 * Returns: %TRUE, if the element's state could be synced to the parent's state.
 	 *
 	 *     MT safe.
 	 */

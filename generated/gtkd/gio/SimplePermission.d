@@ -84,7 +84,7 @@ public class SimplePermission : Permission
 	 * Params:
 	 *     allowed = %TRUE if the action is allowed
 	 *
-	 * Return: the #GSimplePermission, as a #GPermission
+	 * Returns: the #GSimplePermission, as a #GPermission
 	 *
 	 * Since: 2.26
 	 *

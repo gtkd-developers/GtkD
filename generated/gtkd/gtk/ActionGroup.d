@@ -140,7 +140,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * Params:
 	 *     name = the name of the action group.
 	 *
-	 * Return: the new #GtkActionGroup
+	 * Returns: the new #GtkActionGroup
 	 *
 	 * Since: 2.4
 	 *
@@ -315,7 +315,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	/**
 	 * Gets the accelerator group.
 	 *
-	 * Return: the accelerator group associated with this action
+	 * Returns: the accelerator group associated with this action
 	 *     group or %NULL if there is none.
 	 *
 	 * Since: 3.6
@@ -338,7 +338,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * Params:
 	 *     actionName = the name of the action
 	 *
-	 * Return: the action, or %NULL if no action by that name exists
+	 * Returns: the action, or %NULL if no action by that name exists
 	 *
 	 * Since: 2.4
 	 */
@@ -357,7 +357,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	/**
 	 * Gets the name of the action group.
 	 *
-	 * Return: the name of the action group.
+	 * Returns: the name of the action group.
 	 *
 	 * Since: 2.4
 	 */
@@ -372,7 +372,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * they are sensitive (see gtk_action_get_sensitive()) and their group
 	 * is sensitive.
 	 *
-	 * Return: %TRUE if the group is sensitive.
+	 * Returns: %TRUE if the group is sensitive.
 	 *
 	 * Since: 2.4
 	 */
@@ -387,7 +387,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * they are visible (see gtk_action_get_visible()) and their group
 	 * is visible.
 	 *
-	 * Return: %TRUE if the group is visible.
+	 * Returns: %TRUE if the group is visible.
 	 *
 	 * Since: 2.4
 	 */
@@ -399,7 +399,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	/**
 	 * Lists the actions in the action group.
 	 *
-	 * Return: an allocated list of the action objects in the action group
+	 * Returns: an allocated list of the action objects in the action group
 	 *
 	 * Since: 2.4
 	 */
@@ -514,7 +514,7 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * Params:
 	 *     str = a string
 	 *
-	 * Return: the translation of @string
+	 * Returns: the translation of @string
 	 *
 	 * Since: 2.6
 	 */

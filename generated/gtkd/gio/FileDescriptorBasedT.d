@@ -48,7 +48,7 @@ public template FileDescriptorBasedT(TStruct)
 	/**
 	 * Gets the underlying file descriptor.
 	 *
-	 * Return: The file descriptor
+	 * Returns: The file descriptor
 	 *
 	 * Since: 2.24
 	 */

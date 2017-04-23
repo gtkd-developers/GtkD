@@ -95,7 +95,7 @@ public class PgGlyphItem
 	 *     text = text that @list applies to
 	 *     list = a #PangoAttrList
 	 *
-	 * Return: a
+	 * Returns: a
 	 *     list of glyph items resulting from splitting @glyph_item. Free
 	 *     the elements using pango_glyph_item_free(), the list using
 	 *     g_slist_free().
@@ -117,7 +117,7 @@ public class PgGlyphItem
 	/**
 	 * Make a deep copy of an existing #PangoGlyphItem structure.
 	 *
-	 * Return: the newly allocated #PangoGlyphItem, which should
+	 * Returns: the newly allocated #PangoGlyphItem, which should
 	 *     be freed with pango_glyph_item_free(), or %NULL
 	 *     if @orig was %NULL.
 	 *
@@ -207,7 +207,7 @@ public class PgGlyphItem
 	 *     text = text to which positions in @orig apply
 	 *     splitIndex = byte index of position to split item, relative to the start of the item
 	 *
-	 * Return: the newly allocated item representing text before
+	 * Returns: the newly allocated item representing text before
 	 *     @split_index, which should be freed
 	 *     with pango_glyph_item_free().
 	 *

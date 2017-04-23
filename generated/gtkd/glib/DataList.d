@@ -72,7 +72,7 @@ public struct DataList
 	 *     datalist = a datalist.
 	 *     key = the string identifying a data element.
 	 *
-	 * Return: the data element, or %NULL if it is not found.
+	 * Returns: the data element, or %NULL if it is not found.
 	 */
 	public static void* getData(GData** datalist, string key)
 	{
@@ -86,7 +86,7 @@ public struct DataList
 	 * Params:
 	 *     datalist = pointer to the location that holds a list
 	 *
-	 * Return: the flags of the datalist
+	 * Returns: the flags of the datalist
 	 *
 	 * Since: 2.8
 	 */
@@ -116,7 +116,7 @@ public struct DataList
 	 *     dupFunc = function to duplicate the old value
 	 *     userData = passed as user_data to @dup_func
 	 *
-	 * Return: the result of calling @dup_func on the value
+	 * Returns: the result of calling @dup_func on the value
 	 *     associated with @key_id in @datalist, or %NULL if not set.
 	 *     If @dup_func is %NULL, the value is returned unmodified.
 	 *
@@ -134,7 +134,7 @@ public struct DataList
 	 *     datalist = a datalist.
 	 *     keyId = the #GQuark identifying a data element.
 	 *
-	 * Return: the data element, or %NULL if it is not found.
+	 * Returns: the data element, or %NULL if it is not found.
 	 */
 	public static void* idGetData(GData** datalist, GQuark keyId)
 	{
@@ -149,7 +149,7 @@ public struct DataList
 	 *     datalist = a datalist.
 	 *     keyId = the #GQuark identifying a data element.
 	 *
-	 * Return: the data previously stored at @key_id, or %NULL if none.
+	 * Returns: the data previously stored at @key_id, or %NULL if none.
 	 */
 	public static void* idRemoveNoNotify(GData** datalist, GQuark keyId)
 	{
@@ -179,7 +179,7 @@ public struct DataList
 	 *     destroy = destroy notify for the new value
 	 *     oldDestroy = destroy notify for the existing value
 	 *
-	 * Return: %TRUE if the existing value for @key_id was replaced
+	 * Returns: %TRUE if the existing value for @key_id was replaced
 	 *     by @newval, %FALSE otherwise.
 	 *
 	 * Since: 2.34

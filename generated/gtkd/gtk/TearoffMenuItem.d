@@ -94,7 +94,7 @@ public class TearoffMenuItem : MenuItem
 	 * Deprecated: #GtkTearoffMenuItem is deprecated and should not be
 	 * used in newly written code.
 	 *
-	 * Return: a new #GtkTearoffMenuItem.
+	 * Returns: a new #GtkTearoffMenuItem.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

@@ -84,7 +84,7 @@ public class Sample
 	 *     segment = a #GstSegment, or %NULL
 	 *     info = a #GstStructure, or %NULL
 	 *
-	 * Return: the new #GstSample. gst_sample_unref()
+	 * Returns: the new #GstSample. gst_sample_unref()
 	 *     after usage.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -104,7 +104,7 @@ public class Sample
 	/**
 	 * Get the buffer associated with @sample
 	 *
-	 * Return: the buffer of @sample or %NULL
+	 * Returns: the buffer of @sample or %NULL
 	 *     when there is no buffer. The buffer remains valid as long as
 	 *     @sample is valid.  If you need to hold on to it for longer than
 	 *     that, take a ref to the buffer with gst_buffer_ref().
@@ -124,7 +124,7 @@ public class Sample
 	/**
 	 * Get the buffer list associated with @sample
 	 *
-	 * Return: the buffer list of @sample or %NULL
+	 * Returns: the buffer list of @sample or %NULL
 	 *     when there is no buffer list. The buffer list remains valid as long as
 	 *     @sample is valid.  If you need to hold on to it for longer than
 	 *     that, take a ref to the buffer list with gst_mini_object_ref ().
@@ -146,7 +146,7 @@ public class Sample
 	/**
 	 * Get the caps associated with @sample
 	 *
-	 * Return: the caps of @sample or %NULL
+	 * Returns: the caps of @sample or %NULL
 	 *     when there is no caps. The caps remain valid as long as @sample is
 	 *     valid.  If you need to hold on to the caps for longer than that,
 	 *     take a ref to the caps with gst_caps_ref().
@@ -166,7 +166,7 @@ public class Sample
 	/**
 	 * Get extra information associated with @sample.
 	 *
-	 * Return: the extra info of @sample.
+	 * Returns: the extra info of @sample.
 	 *     The info remains valid as long as @sample is valid.
 	 */
 	public Structure getInfo()
@@ -184,7 +184,7 @@ public class Sample
 	/**
 	 * Get the segment associated with @sample
 	 *
-	 * Return: the segment of @sample.
+	 * Returns: the segment of @sample.
 	 *     The segment remains valid as long as @sample is valid.
 	 */
 	public Segment getSegment()

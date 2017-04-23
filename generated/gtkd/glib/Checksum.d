@@ -109,7 +109,7 @@ public class Checksum
 	 * Params:
 	 *     checksumType = the desired type of checksum
 	 *
-	 * Return: the newly created #GChecksum, or %NULL.
+	 * Returns: the newly created #GChecksum, or %NULL.
 	 *     Use g_checksum_free() to free the memory allocated by it.
 	 *
 	 * Since: 2.16
@@ -133,7 +133,7 @@ public class Checksum
 	 * g_checksum_get_string() or g_checksum_get_digest(), the copied
 	 * checksum will be closed as well.
 	 *
-	 * Return: the copy of the passed #GChecksum. Use g_checksum_free()
+	 * Returns: the copy of the passed #GChecksum. Use g_checksum_free()
 	 *     when finished using it.
 	 *
 	 * Since: 2.16
@@ -168,7 +168,7 @@ public class Checksum
 	 *
 	 * The hexadecimal characters will be lower case.
 	 *
-	 * Return: the hexadecimal representation of the checksum. The
+	 * Returns: the hexadecimal representation of the checksum. The
 	 *     returned string is owned by the checksum and should not be modified
 	 *     or freed.
 	 *
@@ -211,7 +211,7 @@ public class Checksum
 	 * Params:
 	 *     checksumType = a #GChecksumType
 	 *
-	 * Return: the checksum length, or -1 if @checksum_type is
+	 * Returns: the checksum length, or -1 if @checksum_type is
 	 *     not supported.
 	 *
 	 * Since: 2.16
@@ -232,7 +232,7 @@ public class Checksum
 	 *     checksumType = a #GChecksumType
 	 *     data = binary blob to compute the digest of
 	 *
-	 * Return: the digest of the binary data as a string in hexadecimal.
+	 * Returns: the digest of the binary data as a string in hexadecimal.
 	 *     The returned string should be freed with g_free() when done using it.
 	 *
 	 * Since: 2.34
@@ -257,7 +257,7 @@ public class Checksum
 	 *     data = binary blob to compute the digest of
 	 *     length = length of @data
 	 *
-	 * Return: the digest of the binary data as a string in hexadecimal.
+	 * Returns: the digest of the binary data as a string in hexadecimal.
 	 *     The returned string should be freed with g_free() when done using it.
 	 *
 	 * Since: 2.16
@@ -280,7 +280,7 @@ public class Checksum
 	 *     str = the string to compute the checksum of
 	 *     length = the length of the string, or -1 if the string is null-terminated.
 	 *
-	 * Return: the checksum as a hexadecimal string. The returned string
+	 * Returns: the checksum as a hexadecimal string. The returned string
 	 *     should be freed with g_free() when done using it.
 	 *
 	 * Since: 2.16

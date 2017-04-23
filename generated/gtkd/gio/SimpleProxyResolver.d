@@ -97,7 +97,7 @@ public class SimpleProxyResolver : ObjectG, ProxyResolverIF
 	 *     ignoreHosts = an optional list of hosts/IP addresses
 	 *         to not use a proxy for.
 	 *
-	 * Return: a new #GSimpleProxyResolver
+	 * Returns: a new #GSimpleProxyResolver
 	 *
 	 * Since: 2.36
 	 *

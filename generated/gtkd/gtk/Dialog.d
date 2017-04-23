@@ -298,7 +298,7 @@ public class Dialog : Window
 	 * Widgets should not be packed into this #GtkWindow
 	 * directly, but into the @vbox and @action_area, as described above.
 	 *
-	 * Return: the new dialog as a #GtkWidget
+	 * Returns: the new dialog as a #GtkWidget
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -342,7 +342,7 @@ public class Dialog : Window
 	 *     buttonText = text of button
 	 *     responseId = response ID for the button
 	 *
-	 * Return: the #GtkButton widget that was added
+	 * Returns: the #GtkButton widget that was added
 	 */
 	public Widget addButton(string buttonText, int responseId)
 	{
@@ -361,7 +361,7 @@ public class Dialog : Window
 	 * headerbar is only used by the dialog if the
 	 * #GtkDialog:use-header-bar property is %TRUE.
 	 *
-	 * Return: the header bar
+	 * Returns: the header bar
 	 *
 	 * Since: 3.12
 	 */
@@ -384,7 +384,7 @@ public class Dialog : Window
 	 * Params:
 	 *     widget = a widget in the action area of @dialog
 	 *
-	 * Return: the response id of @widget, or %GTK_RESPONSE_NONE
+	 * Returns: the response id of @widget, or %GTK_RESPONSE_NONE
 	 *     if @widget doesn’t have a response id set.
 	 *
 	 * Since: 2.8
@@ -401,7 +401,7 @@ public class Dialog : Window
 	 * Params:
 	 *     responseId = the response ID used by the @dialog widget
 	 *
-	 * Return: the @widget button that uses the given
+	 * Returns: the @widget button that uses the given
 	 *     @response_id, or %NULL.
 	 *
 	 * Since: 2.20
@@ -476,7 +476,7 @@ public class Dialog : Window
 	 * such as timeouts, IO channel watches, DND drops, etc, will
 	 * be triggered during a gtk_dialog_run() call.
 	 *
-	 * Return: response ID
+	 * Returns: response ID
 	 */
 	public int run()
 	{
@@ -665,7 +665,7 @@ public class Dialog : Window
 	 * Params:
 	 *     screen = a #GdkScreen, or %NULL to use the default screen
 	 *
-	 * Return: Whether the alternative button order should be used
+	 * Returns: Whether the alternative button order should be used
 	 *
 	 * Since: 2.6
 	 */

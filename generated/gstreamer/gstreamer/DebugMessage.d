@@ -37,7 +37,7 @@ public struct DebugMessage
 	 * Gets the string representation of a #GstDebugMessage. This function is used
 	 * in debug handlers to extract the message.
 	 *
-	 * Return: the string representation of a #GstDebugMessage.
+	 * Returns: the string representation of a #GstDebugMessage.
 	 */
 	public static string get(GstDebugMessage* message)
 	{

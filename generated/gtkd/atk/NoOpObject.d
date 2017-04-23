@@ -159,7 +159,7 @@ public class NoOpObject : ObjectAtk, ActionIF, ComponentIF, DocumentIF, Editable
 	 * Params:
 	 *     obj = a #GObject
 	 *
-	 * Return: a default (non-functioning stub) #AtkObject
+	 * Returns: a default (non-functioning stub) #AtkObject
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

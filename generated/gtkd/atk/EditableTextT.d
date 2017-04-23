@@ -124,7 +124,7 @@ public template EditableTextT(TStruct)
 	 *     startOffset = start of range in which to set attributes
 	 *     endOffset = end of range in which to set attributes
 	 *
-	 * Return: %TRUE if attributes successfully set for the specified
+	 * Returns: %TRUE if attributes successfully set for the specified
 	 *     range, otherwise %FALSE
 	 */
 	public bool setRunAttributes(AtkAttributeSet* attribSet, int startOffset, int endOffset)

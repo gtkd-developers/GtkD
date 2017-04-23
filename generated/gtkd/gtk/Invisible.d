@@ -81,7 +81,7 @@ public class Invisible : Widget
 	/**
 	 * Creates a new #GtkInvisible.
 	 *
-	 * Return: a new #GtkInvisible.
+	 * Returns: a new #GtkInvisible.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -104,7 +104,7 @@ public class Invisible : Widget
 	 *     screen = a #GdkScreen which identifies on which
 	 *         the new #GtkInvisible will be created.
 	 *
-	 * Return: a newly created #GtkInvisible object
+	 * Returns: a newly created #GtkInvisible object
 	 *
 	 * Since: 2.2
 	 *
@@ -125,7 +125,7 @@ public class Invisible : Widget
 	/**
 	 * Returns the #GdkScreen object associated with @invisible
 	 *
-	 * Return: the associated #GdkScreen.
+	 * Returns: the associated #GdkScreen.
 	 *
 	 * Since: 2.2
 	 */

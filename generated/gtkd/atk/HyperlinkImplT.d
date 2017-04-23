@@ -72,7 +72,7 @@ public template HyperlinkImplT(TStruct)
 	/**
 	 * Gets the hyperlink associated with this object.
 	 *
-	 * Return: an AtkHyperlink object which points to this
+	 * Returns: an AtkHyperlink object which points to this
 	 *     implementing AtkObject.
 	 *
 	 * Since: 1.12

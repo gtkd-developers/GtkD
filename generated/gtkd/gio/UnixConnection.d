@@ -100,7 +100,7 @@ public class UnixConnection : SocketConnection
 	 * Params:
 	 *     cancellable = A #GCancellable or %NULL.
 	 *
-	 * Return: Received credentials on success (free with
+	 * Returns: Received credentials on success (free with
 	 *     g_object_unref()), %NULL if @error is set.
 	 *
 	 * Since: 2.26
@@ -154,7 +154,7 @@ public class UnixConnection : SocketConnection
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *
-	 * Return: a #GCredentials, or %NULL on error.
+	 * Returns: a #GCredentials, or %NULL on error.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Since: 2.32
@@ -192,7 +192,7 @@ public class UnixConnection : SocketConnection
 	 * Params:
 	 *     cancellable = optional #GCancellable object, %NULL to ignore
 	 *
-	 * Return: a file descriptor on success, -1 on error.
+	 * Returns: a file descriptor on success, -1 on error.
 	 *
 	 * Since: 2.22
 	 *
@@ -228,7 +228,7 @@ public class UnixConnection : SocketConnection
 	 * Params:
 	 *     cancellable = A #GCancellable or %NULL.
 	 *
-	 * Return: %TRUE on success, %FALSE if @error is set.
+	 * Returns: %TRUE on success, %FALSE if @error is set.
 	 *
 	 * Since: 2.26
 	 *
@@ -276,7 +276,7 @@ public class UnixConnection : SocketConnection
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *
-	 * Return: %TRUE if the operation was successful, otherwise %FALSE.
+	 * Returns: %TRUE if the operation was successful, otherwise %FALSE.
 	 *
 	 * Since: 2.32
 	 *
@@ -309,7 +309,7 @@ public class UnixConnection : SocketConnection
 	 *     fd = a file descriptor
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Return: a %TRUE on success, %NULL on error.
+	 * Returns: a %TRUE on success, %NULL on error.
 	 *
 	 * Since: 2.22
 	 *

@@ -56,7 +56,7 @@ public template StyleProviderT(TStruct)
 	 * Params:
 	 *     path = #GtkWidgetPath to query
 	 *
-	 * Return: The icon factory to use for @path, or %NULL
+	 * Returns: The icon factory to use for @path, or %NULL
 	 *
 	 * Since: 3.0
 	 */
@@ -82,7 +82,7 @@ public template StyleProviderT(TStruct)
 	 * Params:
 	 *     path = #GtkWidgetPath to query
 	 *
-	 * Return: a #GtkStyleProperties containing the
+	 * Returns: a #GtkStyleProperties containing the
 	 *     style settings affecting @path
 	 *
 	 * Since: 3.0
@@ -109,7 +109,7 @@ public template StyleProviderT(TStruct)
 	 *     pspec = The #GParamSpec to query
 	 *     value = return location for the property value
 	 *
-	 * Return: %TRUE if the property was found and has a value, %FALSE otherwise
+	 * Returns: %TRUE if the property was found and has a value, %FALSE otherwise
 	 *
 	 * Since: 3.0
 	 */

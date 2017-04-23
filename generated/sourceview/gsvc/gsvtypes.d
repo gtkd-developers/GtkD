@@ -562,49 +562,49 @@ struct GtkSourceCompletionProposalIface
 	 *
 	 * Params:
 	 *     proposal = a #GtkSourceCompletionProposal.
-	 * Return: a new string containing the label of @proposal.
+	 * Returns: a new string containing the label of @proposal.
 	 */
 	extern(C) char* function(GtkSourceCompletionProposal* proposal) getLabel;
 	/**
 	 *
 	 * Params:
 	 *     proposal = a #GtkSourceCompletionProposal.
-	 * Return: a new string containing the label of @proposal with markup.
+	 * Returns: a new string containing the label of @proposal with markup.
 	 */
 	extern(C) char* function(GtkSourceCompletionProposal* proposal) getMarkup;
 	/**
 	 *
 	 * Params:
 	 *     proposal = a #GtkSourceCompletionProposal.
-	 * Return: a new string containing the text of @proposal.
+	 * Returns: a new string containing the text of @proposal.
 	 */
 	extern(C) char* function(GtkSourceCompletionProposal* proposal) getText;
 	/**
 	 *
 	 * Params:
 	 *     proposal = a #GtkSourceCompletionProposal.
-	 * Return: A #GdkPixbuf with the icon of @proposal.
+	 * Returns: A #GdkPixbuf with the icon of @proposal.
 	 */
 	extern(C) GdkPixbuf* function(GtkSourceCompletionProposal* proposal) getIcon;
 	/**
 	 *
 	 * Params:
 	 *     proposal = a #GtkSourceCompletionProposal.
-	 * Return: The icon name of @proposal.
+	 * Returns: The icon name of @proposal.
 	 */
 	extern(C) const(char)* function(GtkSourceCompletionProposal* proposal) getIconName;
 	/**
 	 *
 	 * Params:
 	 *     proposal = a #GtkSourceCompletionProposal.
-	 * Return: A #GIcon with the icon of @proposal.
+	 * Returns: A #GIcon with the icon of @proposal.
 	 */
 	extern(C) GIcon* function(GtkSourceCompletionProposal* proposal) getGicon;
 	/**
 	 *
 	 * Params:
 	 *     proposal = a #GtkSourceCompletionProposal.
-	 * Return: a newly-allocated string containing
+	 * Returns: a newly-allocated string containing
 	 *     extra information of @proposal or %NULL if no extra information is associated
 	 *     to @proposal.
 	 */
@@ -613,7 +613,7 @@ struct GtkSourceCompletionProposalIface
 	 *
 	 * Params:
 	 *     proposal = a #GtkSourceCompletionProposal.
-	 * Return: The hash value of @proposal.
+	 * Returns: The hash value of @proposal.
 	 */
 	extern(C) uint function(GtkSourceCompletionProposal* proposal) hash;
 	/**
@@ -621,7 +621,7 @@ struct GtkSourceCompletionProposalIface
 	 * Params:
 	 *     proposal = a #GtkSourceCompletionProposal.
 	 *     other = a #GtkSourceCompletionProposal.
-	 * Return: %TRUE if @proposal and @object are the same proposal
+	 * Returns: %TRUE if @proposal and @object are the same proposal
 	 */
 	extern(C) int function(GtkSourceCompletionProposal* proposal, GtkSourceCompletionProposal* other) equal;
 	/** */
@@ -643,14 +643,14 @@ struct GtkSourceCompletionProviderIface
 	 *
 	 * Params:
 	 *     provider = a #GtkSourceCompletionProvider.
-	 * Return: a new string containing the name of the provider.
+	 * Returns: a new string containing the name of the provider.
 	 */
 	extern(C) char* function(GtkSourceCompletionProvider* provider) getName;
 	/**
 	 *
 	 * Params:
 	 *     provider = The #GtkSourceCompletionProvider
-	 * Return: The icon to be used for the provider,
+	 * Returns: The icon to be used for the provider,
 	 *     or %NULL if the provider does not have a special icon.
 	 */
 	extern(C) GdkPixbuf* function(GtkSourceCompletionProvider* provider) getIcon;
@@ -658,7 +658,7 @@ struct GtkSourceCompletionProviderIface
 	 *
 	 * Params:
 	 *     provider = The #GtkSourceCompletionProvider
-	 * Return: The icon name to be used for the provider,
+	 * Returns: The icon name to be used for the provider,
 	 *     or %NULL if the provider does not have a special icon.
 	 */
 	extern(C) const(char)* function(GtkSourceCompletionProvider* provider) getIconName;
@@ -666,7 +666,7 @@ struct GtkSourceCompletionProviderIface
 	 *
 	 * Params:
 	 *     provider = The #GtkSourceCompletionProvider
-	 * Return: The icon to be used for the provider,
+	 * Returns: The icon to be used for the provider,
 	 *     or %NULL if the provider does not have a special icon.
 	 */
 	extern(C) GIcon* function(GtkSourceCompletionProvider* provider) getGicon;
@@ -677,14 +677,14 @@ struct GtkSourceCompletionProviderIface
 	 * Params:
 	 *     provider = a #GtkSourceCompletionProvider.
 	 *     context = a #GtkSourceCompletionContext.
-	 * Return: %TRUE if @provider matches the completion context, %FALSE otherwise.
+	 * Returns: %TRUE if @provider matches the completion context, %FALSE otherwise.
 	 */
 	extern(C) int function(GtkSourceCompletionProvider* provider, GtkSourceCompletionContext* context) match;
 	/**
 	 *
 	 * Params:
 	 *     provider = a #GtkSourceCompletionProvider.
-	 * Return: a combination of #GtkSourceCompletionActivation.
+	 * Returns: a combination of #GtkSourceCompletionActivation.
 	 */
 	extern(C) GtkSourceCompletionActivation function(GtkSourceCompletionProvider* provider) getActivation;
 	/**
@@ -692,7 +692,7 @@ struct GtkSourceCompletionProviderIface
 	 * Params:
 	 *     provider = a #GtkSourceCompletionProvider.
 	 *     proposal = a currently selected #GtkSourceCompletionProposal.
-	 * Return: a custom #GtkWidget to show extra
+	 * Returns: a custom #GtkWidget to show extra
 	 *     information about @proposal, or %NULL if the provider does not have a special
 	 *     info widget.
 	 */
@@ -706,7 +706,7 @@ struct GtkSourceCompletionProviderIface
 	 *     context = a #GtkSourceCompletionContext.
 	 *     proposal = a #GtkSourceCompletionProposal.
 	 *     iter = a #GtkTextIter.
-	 * Return: %TRUE if @iter was set for @proposal, %FALSE otherwise.
+	 * Returns: %TRUE if @iter was set for @proposal, %FALSE otherwise.
 	 */
 	extern(C) int function(GtkSourceCompletionProvider* provider, GtkSourceCompletionContext* context, GtkSourceCompletionProposal* proposal, GtkTextIter* iter) getStartIter;
 	/**
@@ -715,7 +715,7 @@ struct GtkSourceCompletionProviderIface
 	 *     provider = a #GtkSourceCompletionProvider.
 	 *     proposal = a #GtkSourceCompletionProposal.
 	 *     iter = a #GtkTextIter.
-	 * Return: %TRUE to indicate that the proposal activation has been handled,
+	 * Returns: %TRUE to indicate that the proposal activation has been handled,
 	 *     %FALSE otherwise.
 	 */
 	extern(C) int function(GtkSourceCompletionProvider* provider, GtkSourceCompletionProposal* proposal, GtkTextIter* iter) activateProposal;
@@ -723,14 +723,14 @@ struct GtkSourceCompletionProviderIface
 	 *
 	 * Params:
 	 *     provider = a #GtkSourceCompletionProvider.
-	 * Return: the interactive delay in milliseconds.
+	 * Returns: the interactive delay in milliseconds.
 	 */
 	extern(C) int function(GtkSourceCompletionProvider* provider) getInteractiveDelay;
 	/**
 	 *
 	 * Params:
 	 *     provider = a #GtkSourceCompletionProvider.
-	 * Return: the provider priority.
+	 * Returns: the provider priority.
 	 */
 	extern(C) int function(GtkSourceCompletionProvider* provider) getPriority;
 }
@@ -831,7 +831,7 @@ struct GtkSourceGutterRendererClass
 	 *     iter = a #GtkTextIter at the start of the line to be activated
 	 *     area = a #GdkRectangle of the cell area to be activated
 	 *     event = the event that triggered the query
-	 * Return: %TRUE if the renderer can be activated, %FALSE otherwise
+	 * Returns: %TRUE if the renderer can be activated, %FALSE otherwise
 	 */
 	extern(C) int function(GtkSourceGutterRenderer* renderer, GtkTextIter* iter, GdkRectangle* area, GdkEvent* event) queryActivatable;
 	/** */
@@ -847,7 +847,7 @@ struct GtkSourceGutterRendererClass
 	 *     x = The x position of the tooltip.
 	 *     y = The y position of the tooltip.
 	 *     tooltip = a #GtkTooltip.
-	 * Return: %TRUE if the tooltip has been set, %FALSE otherwise
+	 * Returns: %TRUE if the tooltip has been set, %FALSE otherwise
 	 */
 	extern(C) int function(GtkSourceGutterRenderer* renderer, GtkTextIter* iter, GdkRectangle* area, int x, int y, GtkTooltip* tooltip) queryTooltip;
 	/** */
@@ -1067,7 +1067,7 @@ struct GtkSourceStyleSchemeChooserInterface
 	 *
 	 * Params:
 	 *     chooser = a #GtkSourceStyleSchemeChooser
-	 * Return: the currently-selected scheme.
+	 * Returns: the currently-selected scheme.
 	 */
 	extern(C) GtkSourceStyleScheme* function(GtkSourceStyleSchemeChooser* chooser) getStyleScheme;
 	/** */
@@ -1137,14 +1137,14 @@ struct GtkSourceUndoManagerIface
 	 *
 	 * Params:
 	 *     manager = a #GtkSourceUndoManager.
-	 * Return: %TRUE if there are undo operations available, %FALSE otherwise
+	 * Returns: %TRUE if there are undo operations available, %FALSE otherwise
 	 */
 	extern(C) int function(GtkSourceUndoManager* manager) canUndo;
 	/**
 	 *
 	 * Params:
 	 *     manager = a #GtkSourceUndoManager.
-	 * Return: %TRUE if there are redo operations available, %FALSE otherwise
+	 * Returns: %TRUE if there are redo operations available, %FALSE otherwise
 	 */
 	extern(C) int function(GtkSourceUndoManager* manager) canRedo;
 	/** */

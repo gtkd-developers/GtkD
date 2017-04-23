@@ -187,7 +187,7 @@ public interface CellLayoutIF{
 	 * if called on a #GtkCellArea or might be %NULL if no #GtkCellArea
 	 * is used by @cell_layout.
 	 *
-	 * Return: the cell area used by @cell_layout,
+	 * Returns: the cell area used by @cell_layout,
 	 *     or %NULL in case no cell area is used.
 	 *
 	 * Since: 3.0
@@ -197,7 +197,7 @@ public interface CellLayoutIF{
 	/**
 	 * Returns the cell renderers which have been added to @cell_layout.
 	 *
-	 * Return: a list of cell renderers. The list, but not the renderers has
+	 * Returns: a list of cell renderers. The list, but not the renderers has
 	 *     been newly allocated and should be freed with g_list_free()
 	 *     when no longer needed.
 	 *

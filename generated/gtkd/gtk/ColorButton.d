@@ -100,7 +100,7 @@ public class ColorButton : Button, ColorChooserIF
 	 * to select a color. The swatch will be updated to reflect the new
 	 * color when the user finishes.
 	 *
-	 * Return: a new color button
+	 * Returns: a new color button
 	 *
 	 * Since: 2.4
 	 *
@@ -126,7 +126,7 @@ public class ColorButton : Button, ColorChooserIF
 	 * Params:
 	 *     color = A #GdkColor to set the current color with
 	 *
-	 * Return: a new color button
+	 * Returns: a new color button
 	 *
 	 * Since: 2.4
 	 *
@@ -150,7 +150,7 @@ public class ColorButton : Button, ColorChooserIF
 	 * Params:
 	 *     rgba = A #GdkRGBA to set the current color with
 	 *
-	 * Return: a new color button
+	 * Returns: a new color button
 	 *
 	 * Since: 3.0
 	 *
@@ -173,7 +173,7 @@ public class ColorButton : Button, ColorChooserIF
 	 *
 	 * Deprecated: Use gtk_color_chooser_get_rgba() instead.
 	 *
-	 * Return: an integer between 0 and 65535
+	 * Returns: an integer between 0 and 65535
 	 *
 	 * Since: 2.4
 	 */
@@ -204,7 +204,7 @@ public class ColorButton : Button, ColorChooserIF
 	/**
 	 * Gets the title of the color selection dialog.
 	 *
-	 * Return: An internal string, do not free the return value
+	 * Returns: An internal string, do not free the return value
 	 *
 	 * Since: 2.4
 	 */

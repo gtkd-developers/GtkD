@@ -95,7 +95,7 @@ public class CssSection
 	 * position and line for sections which failed to parse anything
 	 * successfully.
 	 *
-	 * Return: the line number
+	 * Returns: the line number
 	 *
 	 * Since: 3.2
 	 */
@@ -114,7 +114,7 @@ public class CssSection
 	 * position and line for sections which failed to parse anything
 	 * successfully.
 	 *
-	 * Return: the offset in bytes from the start of the line.
+	 * Returns: the offset in bytes from the start of the line.
 	 *
 	 * Since: 3.2
 	 */
@@ -128,7 +128,7 @@ public class CssSection
 	 * for example because the CSS was loaded via
 	 * @gtk_css_provider_load_from_data(), then %NULL is returned.
 	 *
-	 * Return: the #GFile that @section was parsed from
+	 * Returns: the #GFile that @section was parsed from
 	 *     or %NULL if @section was parsed from other data
 	 *
 	 * Since: 3.2
@@ -154,7 +154,7 @@ public class CssSection
 	 * #GTK_CSS_SECTION_IMPORT if it was loaded with an import rule from
 	 * a different file.
 	 *
-	 * Return: the parent section or %NULL if none
+	 * Returns: the parent section or %NULL if none
 	 *
 	 * Since: 3.2
 	 */
@@ -173,7 +173,7 @@ public class CssSection
 	/**
 	 * Gets the type of information that @section describes.
 	 *
-	 * Return: the type of @section
+	 * Returns: the type of @section
 	 *
 	 * Since: 3.2
 	 */
@@ -187,7 +187,7 @@ public class CssSection
 	 * The line number is 0-indexed, so the first line of the document
 	 * will return 0.
 	 *
-	 * Return: the line number
+	 * Returns: the line number
 	 *
 	 * Since: 3.2
 	 */
@@ -200,7 +200,7 @@ public class CssSection
 	 * Returns the offset in bytes from the start of the current line
 	 * returned via gtk_css_section_get_start_line().
 	 *
-	 * Return: the offset in bytes from the start of the line.
+	 * Returns: the offset in bytes from the start of the line.
 	 *
 	 * Since: 3.2
 	 */
@@ -212,7 +212,7 @@ public class CssSection
 	/**
 	 * Increments the reference count on @section.
 	 *
-	 * Return: @section itself.
+	 * Returns: @section itself.
 	 *
 	 * Since: 3.2
 	 */

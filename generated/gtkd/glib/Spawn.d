@@ -352,7 +352,7 @@ public class Spawn
 	 *     userData = user data for @child_setup
 	 *     childPid = return location for child process reference, or %NULL
 	 *
-	 * Return: %TRUE on success, %FALSE if error is set
+	 * Returns: %TRUE on success, %FALSE if error is set
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -411,7 +411,7 @@ public class Spawn
 	 * Params:
 	 *     exitStatus = An exit code as returned from g_spawn_sync()
 	 *
-	 * Return: %TRUE if child exited successfully, %FALSE otherwise (and
+	 * Returns: %TRUE if child exited successfully, %FALSE otherwise (and
 	 *     @error will be set)
 	 *
 	 * Since: 2.34
@@ -460,7 +460,7 @@ public class Spawn
 	 * Params:
 	 *     commandLine = a command line
 	 *
-	 * Return: %TRUE on success, %FALSE if error is set
+	 * Returns: %TRUE on success, %FALSE if error is set
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -508,7 +508,7 @@ public class Spawn
 	 *     standardError = return location for child errors
 	 *     exitStatus = return location for child exit status, as returned by waitpid()
 	 *
-	 * Return: %TRUE on success, %FALSE if an error was set
+	 * Returns: %TRUE on success, %FALSE if an error was set
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -574,7 +574,7 @@ public class Spawn
 	 *     standardError = return location for child error messages, or %NULL
 	 *     exitStatus = return location for child exit status, as returned by waitpid(), or %NULL
 	 *
-	 * Return: %TRUE on success, %FALSE if an error was set
+	 * Returns: %TRUE on success, %FALSE if an error was set
 	 *
 	 * Throws: GException on failure.
 	 */

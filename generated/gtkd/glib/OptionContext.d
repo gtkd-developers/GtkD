@@ -115,7 +115,7 @@ public class OptionContext
 	/**
 	 * Returns the description. See g_option_context_set_description().
 	 *
-	 * Return: the description
+	 * Returns: the description
 	 *
 	 * Since: 2.12
 	 */
@@ -137,7 +137,7 @@ public class OptionContext
 	 *     mainHelp = if %TRUE, only include the main group
 	 *     group = the #GOptionGroup to create help for, or %NULL
 	 *
-	 * Return: A newly allocated string containing the help text
+	 * Returns: A newly allocated string containing the help text
 	 *
 	 * Since: 2.14
 	 */
@@ -153,7 +153,7 @@ public class OptionContext
 	 * Returns whether automatic `--help` generation
 	 * is turned on for @context. See g_option_context_set_help_enabled().
 	 *
-	 * Return: %TRUE if automatic help generation is turned on.
+	 * Returns: %TRUE if automatic help generation is turned on.
 	 *
 	 * Since: 2.6
 	 */
@@ -166,7 +166,7 @@ public class OptionContext
 	 * Returns whether unknown options are ignored or not. See
 	 * g_option_context_set_ignore_unknown_options().
 	 *
-	 * Return: %TRUE if unknown options are ignored.
+	 * Returns: %TRUE if unknown options are ignored.
 	 *
 	 * Since: 2.6
 	 */
@@ -178,7 +178,7 @@ public class OptionContext
 	/**
 	 * Returns a pointer to the main group of @context.
 	 *
-	 * Return: the main group of @context, or %NULL if
+	 * Returns: the main group of @context, or %NULL if
 	 *     @context doesn't have a main group. Note that group belongs to
 	 *     @context and should not be modified or freed.
 	 *
@@ -201,7 +201,7 @@ public class OptionContext
 	 *
 	 * See g_option_context_set_strict_posix() for more information.
 	 *
-	 * Return: %TRUE if strict POSIX is enabled, %FALSE otherwise.
+	 * Returns: %TRUE if strict POSIX is enabled, %FALSE otherwise.
 	 *
 	 * Since: 2.44
 	 */
@@ -213,7 +213,7 @@ public class OptionContext
 	/**
 	 * Returns the summary. See g_option_context_set_summary().
 	 *
-	 * Return: the summary
+	 * Returns: the summary
 	 *
 	 * Since: 2.12
 	 */
@@ -249,7 +249,7 @@ public class OptionContext
 	 *     argc = a pointer to the number of command line arguments
 	 *     argv = a pointer to the array of command line arguments
 	 *
-	 * Return: %TRUE if the parsing was successful,
+	 * Returns: %TRUE if the parsing was successful,
 	 *     %FALSE if an error occurred
 	 *
 	 * Since: 2.6
@@ -296,7 +296,7 @@ public class OptionContext
 	 *     arguments = a pointer to the
 	 *         command line arguments (which must be in UTF-8 on Windows)
 	 *
-	 * Return: %TRUE if the parsing was successful,
+	 * Returns: %TRUE if the parsing was successful,
 	 *     %FALSE if an error occurred
 	 *
 	 * Since: 2.40
@@ -510,7 +510,7 @@ public class OptionContext
 	 *         the first line of `--help` output, after the usage summary
 	 *         `programname [OPTION...]`
 	 *
-	 * Return: a newly created #GOptionContext, which must be
+	 * Returns: a newly created #GOptionContext, which must be
 	 *     freed with g_option_context_free() after use.
 	 *
 	 * Since: 2.6

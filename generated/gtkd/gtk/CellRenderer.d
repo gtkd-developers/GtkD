@@ -127,7 +127,7 @@ public class CellRenderer : ObjectG
 	 *     cellArea = cell area as passed to gtk_cell_renderer_render()
 	 *     flags = render flags
 	 *
-	 * Return: %TRUE if the event was consumed/handled
+	 * Returns: %TRUE if the event was consumed/handled
 	 */
 	public bool activate(Event event, Widget widget, string path, GdkRectangle* backgroundArea, GdkRectangle* cellArea, GtkCellRendererState flags)
 	{
@@ -282,7 +282,7 @@ public class CellRenderer : ObjectG
 	 * Gets whether the cell renderer prefers a height-for-width layout
 	 * or a width-for-height layout.
 	 *
-	 * Return: The #GtkSizeRequestMode preferred by this renderer.
+	 * Returns: The #GtkSizeRequestMode preferred by this renderer.
 	 *
 	 * Since: 3.0
 	 */
@@ -294,7 +294,7 @@ public class CellRenderer : ObjectG
 	/**
 	 * Returns the cell renderer’s sensitivity.
 	 *
-	 * Return: %TRUE if the cell renderer is sensitive
+	 * Returns: %TRUE if the cell renderer is sensitive
 	 *
 	 * Since: 2.18
 	 */
@@ -336,7 +336,7 @@ public class CellRenderer : ObjectG
 	 *     widget = a #GtkWidget, or %NULL
 	 *     cellState = cell renderer state
 	 *
-	 * Return: the widget state flags applying to @cell
+	 * Returns: the widget state flags applying to @cell
 	 *
 	 * Since: 3.0
 	 */
@@ -348,7 +348,7 @@ public class CellRenderer : ObjectG
 	/**
 	 * Returns the cell renderer’s visibility.
 	 *
-	 * Return: %TRUE if the cell renderer is visible
+	 * Returns: %TRUE if the cell renderer is visible
 	 *
 	 * Since: 2.18
 	 */
@@ -360,7 +360,7 @@ public class CellRenderer : ObjectG
 	/**
 	 * Checks whether the cell renderer can do something when activated.
 	 *
-	 * Return: %TRUE if the cell renderer can do anything when activated
+	 * Returns: %TRUE if the cell renderer can do anything when activated
 	 *
 	 * Since: 3.0
 	 */
@@ -469,7 +469,7 @@ public class CellRenderer : ObjectG
 	 *     cellArea = cell area as passed to gtk_cell_renderer_render()
 	 *     flags = render flags
 	 *
-	 * Return: A new #GtkCellEditable, or %NULL
+	 * Returns: A new #GtkCellEditable, or %NULL
 	 */
 	public CellEditableIF startEditing(Event event, Widget widget, string path, GdkRectangle* backgroundArea, GdkRectangle* cellArea, GtkCellRendererState flags)
 	{

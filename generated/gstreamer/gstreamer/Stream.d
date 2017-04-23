@@ -98,7 +98,7 @@ public class Stream : ObjectGst
 	 *     type = the #GstStreamType of the stream
 	 *     flags = the #GstStreamFlags of the stream
 	 *
-	 * Return: The new #GstStream
+	 * Returns: The new #GstStream
 	 *
 	 * Since: 1.10
 	 *
@@ -119,7 +119,7 @@ public class Stream : ObjectGst
 	/**
 	 * Retrieve the caps for @stream, if any
 	 *
-	 * Return: The #GstCaps for @stream
+	 * Returns: The #GstCaps for @stream
 	 *
 	 * Since: 1.10
 	 */
@@ -138,7 +138,7 @@ public class Stream : ObjectGst
 	/**
 	 * Retrieve the current stream flags for @stream
 	 *
-	 * Return: The #GstStreamFlags for @stream
+	 * Returns: The #GstStreamFlags for @stream
 	 *
 	 * Since: 1.10
 	 */
@@ -150,7 +150,7 @@ public class Stream : ObjectGst
 	/**
 	 * Returns the stream ID of @stream.
 	 *
-	 * Return: the stream ID of @stream. Only valid
+	 * Returns: the stream ID of @stream. Only valid
 	 *     during the lifetime of @stream.
 	 *
 	 * Since: 1.10
@@ -163,7 +163,7 @@ public class Stream : ObjectGst
 	/**
 	 * Retrieve the stream type for @stream
 	 *
-	 * Return: The #GstStreamType for @stream
+	 * Returns: The #GstStreamType for @stream
 	 *
 	 * Since: 1.10
 	 */
@@ -175,7 +175,7 @@ public class Stream : ObjectGst
 	/**
 	 * Retrieve the tags for @stream, if any
 	 *
-	 * Return: The #GstTagList for @stream
+	 * Returns: The #GstTagList for @stream
 	 *
 	 * Since: 1.10
 	 */

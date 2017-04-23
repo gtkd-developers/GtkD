@@ -87,7 +87,7 @@ public class DBusNodeInfo
 	 * Params:
 	 *     xmlData = Valid D-Bus introspection XML.
 	 *
-	 * Return: A #GDBusNodeInfo structure or %NULL if @error is set. Free
+	 * Returns: A #GDBusNodeInfo structure or %NULL if @error is set. Free
 	 *     with g_dbus_node_info_unref().
 	 *
 	 * Since: 2.26
@@ -143,7 +143,7 @@ public class DBusNodeInfo
 	 * Params:
 	 *     name = A D-Bus interface name.
 	 *
-	 * Return: A #GDBusInterfaceInfo or %NULL if not found. Do not free, it is owned by @info.
+	 * Returns: A #GDBusInterfaceInfo or %NULL if not found. Do not free, it is owned by @info.
 	 *
 	 * Since: 2.26
 	 */
@@ -163,7 +163,7 @@ public class DBusNodeInfo
 	 * If @info is statically allocated does nothing. Otherwise increases
 	 * the reference count.
 	 *
-	 * Return: The same @info.
+	 * Returns: The same @info.
 	 *
 	 * Since: 2.26
 	 */

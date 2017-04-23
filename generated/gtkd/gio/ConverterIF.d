@@ -144,7 +144,7 @@ public interface ConverterIF{
 	 *     bytesRead = will be set to the number of bytes read from @inbuf on success
 	 *     bytesWritten = will be set to the number of bytes written to @outbuf on success
 	 *
-	 * Return: a #GConverterResult, %G_CONVERTER_ERROR on error.
+	 * Returns: a #GConverterResult, %G_CONVERTER_ERROR on error.
 	 *
 	 * Since: 2.24
 	 *

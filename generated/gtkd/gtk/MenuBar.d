@@ -105,7 +105,7 @@ public class MenuBar : MenuShell
 	/**
 	 * Creates a new #GtkMenuBar
 	 *
-	 * Return: the new menu bar, as a #GtkWidget
+	 * Returns: the new menu bar, as a #GtkWidget
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -133,7 +133,7 @@ public class MenuBar : MenuShell
 	 * Params:
 	 *     model = a #GMenuModel
 	 *
-	 * Return: a new #GtkMenuBar
+	 * Returns: a new #GtkMenuBar
 	 *
 	 * Since: 3.4
 	 *
@@ -155,7 +155,7 @@ public class MenuBar : MenuShell
 	 * Retrieves the current child pack direction of the menubar.
 	 * See gtk_menu_bar_set_child_pack_direction().
 	 *
-	 * Return: the child pack direction
+	 * Returns: the child pack direction
 	 *
 	 * Since: 2.8
 	 */
@@ -168,7 +168,7 @@ public class MenuBar : MenuShell
 	 * Retrieves the current pack direction of the menubar.
 	 * See gtk_menu_bar_set_pack_direction().
 	 *
-	 * Return: the pack direction
+	 * Returns: the pack direction
 	 *
 	 * Since: 2.8
 	 */

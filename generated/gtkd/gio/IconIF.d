@@ -80,7 +80,7 @@ public interface IconIF{
 	 * Params:
 	 *     value = a #GVariant created with g_icon_serialize()
 	 *
-	 * Return: a #GIcon, or %NULL when deserialization fails.
+	 * Returns: a #GIcon, or %NULL when deserialization fails.
 	 *
 	 * Since: 2.38
 	 */
@@ -92,7 +92,7 @@ public interface IconIF{
 	 * Params:
 	 *     icon = #gconstpointer to an icon object.
 	 *
-	 * Return: a #guint containing a hash for the @icon, suitable for
+	 * Returns: a #guint containing a hash for the @icon, suitable for
 	 *     use in a #GHashTable or similar data structure.
 	 */
 	public static uint hash(void* icon);
@@ -103,7 +103,7 @@ public interface IconIF{
 	 * Params:
 	 *     icon2 = pointer to the second #GIcon.
 	 *
-	 * Return: %TRUE if @icon1 is equal to @icon2. %FALSE otherwise.
+	 * Returns: %TRUE if @icon1 is equal to @icon2. %FALSE otherwise.
 	 */
 	public bool equal(IconIF icon2);
 
@@ -114,7 +114,7 @@ public interface IconIF{
 	 * makes sense to transfer the #GVariant between processes on the same machine,
 	 * (as opposed to over the network), and within the same file system namespace.
 	 *
-	 * Return: a #GVariant, or %NULL when serialization fails.
+	 * Returns: a #GVariant, or %NULL when serialization fails.
 	 *
 	 * Since: 2.38
 	 */
@@ -138,7 +138,7 @@ public interface IconIF{
 	 * - If @icon is a #GThemedIcon with exactly one name, the encoding is
 	 * simply the name (such as `network-server`).
 	 *
-	 * Return: An allocated NUL-terminated UTF8 string or
+	 * Returns: An allocated NUL-terminated UTF8 string or
 	 *     %NULL if @icon can't be serialized. Use g_free() to free.
 	 *
 	 * Since: 2.20

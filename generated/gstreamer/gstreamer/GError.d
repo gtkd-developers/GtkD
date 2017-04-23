@@ -40,7 +40,7 @@ public struct GError
 	 *     domain = the GStreamer error domain this error belongs to.
 	 *     code = the error code belonging to the domain.
 	 *
-	 * Return: a newly allocated string describing
+	 * Returns: a newly allocated string describing
 	 *     the error message (in UTF-8 encoding)
 	 */
 	public static string errorGetMessage(GQuark domain, int code)

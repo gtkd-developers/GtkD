@@ -99,7 +99,7 @@ public class VPaned : Paned
 	 *
 	 * Deprecated: Use gtk_paned_new() with %GTK_ORIENTATION_VERTICAL instead
 	 *
-	 * Return: the new #GtkVPaned
+	 * Returns: the new #GtkVPaned
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

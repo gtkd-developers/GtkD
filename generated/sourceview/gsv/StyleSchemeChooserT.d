@@ -43,7 +43,7 @@ public template StyleSchemeChooserT(TStruct)
 	/**
 	 * Gets the currently-selected scheme.
 	 *
-	 * Return: the currently-selected scheme.
+	 * Returns: the currently-selected scheme.
 	 *
 	 * Since: 3.16
 	 */

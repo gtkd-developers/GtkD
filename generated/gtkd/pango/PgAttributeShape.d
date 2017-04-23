@@ -78,7 +78,7 @@ public class PgAttributeShape : PgAttribute
 	 *     inkRect = ink rectangle to assign to each character
 	 *     logicalRect = logical rectangle to assign to each character
 	 *
-	 * Return: the newly allocated #PangoAttribute,
+	 * Returns: the newly allocated #PangoAttribute,
 	 *     which should be freed with pango_attribute_destroy().
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -110,7 +110,7 @@ public class PgAttributeShape : PgAttribute
 	 *     destroyFunc = function to free @data when the
 	 *         attribute is freed, or %NULL
 	 *
-	 * Return: the newly allocated #PangoAttribute, which should be
+	 * Returns: the newly allocated #PangoAttribute, which should be
 	 *     freed with pango_attribute_destroy().
 	 *
 	 * Since: 1.8

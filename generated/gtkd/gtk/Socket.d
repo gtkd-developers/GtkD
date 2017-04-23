@@ -130,7 +130,7 @@ public class Socket : Container
 	/**
 	 * Create a new empty #GtkSocket.
 	 *
-	 * Return: the new #GtkSocket.
+	 * Returns: the new #GtkSocket.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -176,7 +176,7 @@ public class Socket : Container
 	 * The #GtkSocket must have already be added into a toplevel window
 	 * before you can make this call.
 	 *
-	 * Return: the window ID for the socket
+	 * Returns: the window ID for the socket
 	 */
 	public ulong getId()
 	{
@@ -187,7 +187,7 @@ public class Socket : Container
 	 * Retrieves the window of the plug. Use this to check if the plug has
 	 * been created inside of the socket.
 	 *
-	 * Return: the window of the plug if
+	 * Returns: the window of the plug if
 	 *     available, or %NULL
 	 *
 	 * Since: 2.14
@@ -288,7 +288,7 @@ public class Socket : Container
 	 * The default action is to destroy the #GtkSocket widget, so if you
 	 * want to reuse it you must add a signal handler that returns %TRUE.
 	 *
-	 * Return: %TRUE to stop other handlers from being invoked.
+	 * Returns: %TRUE to stop other handlers from being invoked.
 	 */
 	gulong addOnPlugRemoved(bool delegate(Socket) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

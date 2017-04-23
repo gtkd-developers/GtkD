@@ -115,7 +115,7 @@ public class DBusObjectManagerServer : ObjectG, DBusObjectManagerIF
 	 * Params:
 	 *     objectPath = The object path to export the manager object at.
 	 *
-	 * Return: A #GDBusObjectManagerServer object. Free with g_object_unref().
+	 * Returns: A #GDBusObjectManagerServer object. Free with g_object_unref().
 	 *
 	 * Since: 2.30
 	 *
@@ -174,7 +174,7 @@ public class DBusObjectManagerServer : ObjectG, DBusObjectManagerIF
 	/**
 	 * Gets the #GDBusConnection used by @manager.
 	 *
-	 * Return: A #GDBusConnection object or %NULL if
+	 * Returns: A #GDBusConnection object or %NULL if
 	 *     @manager isn't exported on a connection. The returned object should
 	 *     be freed with g_object_unref().
 	 *
@@ -198,7 +198,7 @@ public class DBusObjectManagerServer : ObjectG, DBusObjectManagerIF
 	 * Params:
 	 *     object = An object.
 	 *
-	 * Return: %TRUE if @object is exported
+	 * Returns: %TRUE if @object is exported
 	 *
 	 * Since: 2.34
 	 */
@@ -229,7 +229,7 @@ public class DBusObjectManagerServer : ObjectG, DBusObjectManagerIF
 	 * Params:
 	 *     objectPath = An object path.
 	 *
-	 * Return: %TRUE if object at @object_path was removed, %FALSE otherwise.
+	 * Returns: %TRUE if object at @object_path was removed, %FALSE otherwise.
 	 *
 	 * Since: 2.30
 	 */

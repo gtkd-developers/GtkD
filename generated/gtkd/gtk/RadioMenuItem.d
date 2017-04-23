@@ -193,7 +193,7 @@ public class RadioMenuItem : CheckMenuItem
 	 *     group = the group to which the
 	 *         radio menu item is to be attached, or %NULL
 	 *
-	 * Return: a new #GtkRadioMenuItem
+	 * Returns: a new #GtkRadioMenuItem
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -215,7 +215,7 @@ public class RadioMenuItem : CheckMenuItem
 	 * Params:
 	 *     group = An existing #GtkRadioMenuItem
 	 *
-	 * Return: The new #GtkRadioMenuItem
+	 * Returns: The new #GtkRadioMenuItem
 	 *
 	 * Since: 2.4
 	 *
@@ -237,7 +237,7 @@ public class RadioMenuItem : CheckMenuItem
 	 * Returns the group to which the radio menu item belongs, as a #GList of
 	 * #GtkRadioMenuItem. The list belongs to GTK+ and should not be freed.
 	 *
-	 * Return: the group
+	 * Returns: the group
 	 *     of @radio_menu_item
 	 */
 	public ListSG getGroup()

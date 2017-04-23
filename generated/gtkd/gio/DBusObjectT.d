@@ -57,7 +57,7 @@ public template DBusObjectT(TStruct)
 	 * Params:
 	 *     interfaceName = A D-Bus interface name.
 	 *
-	 * Return: %NULL if not found, otherwise a
+	 * Returns: %NULL if not found, otherwise a
 	 *     #GDBusInterface that must be freed with g_object_unref().
 	 *
 	 * Since: 2.30
@@ -77,7 +77,7 @@ public template DBusObjectT(TStruct)
 	/**
 	 * Gets the D-Bus interfaces associated with @object.
 	 *
-	 * Return: A list of #GDBusInterface instances.
+	 * Returns: A list of #GDBusInterface instances.
 	 *     The returned list must be freed by g_list_free() after each element has been freed
 	 *     with g_object_unref().
 	 *
@@ -98,7 +98,7 @@ public template DBusObjectT(TStruct)
 	/**
 	 * Gets the object path for @object.
 	 *
-	 * Return: A string owned by @object. Do not free.
+	 * Returns: A string owned by @object. Do not free.
 	 *
 	 * Since: 2.30
 	 */

@@ -93,7 +93,7 @@ public class PgMatrix
 	/**
 	 * Copies a #PangoMatrix.
 	 *
-	 * Return: the newly allocated #PangoMatrix, which
+	 * Returns: the newly allocated #PangoMatrix, which
 	 *     should be freed with pango_matrix_free(), or %NULL if
 	 *     @matrix was %NULL.
 	 *
@@ -127,7 +127,7 @@ public class PgMatrix
 	 * vector that the X coordinate is mapped to.  If the scale in the X
 	 * coordinate is needed as well, use pango_matrix_get_font_scale_factors().
 	 *
-	 * Return: the scale factor of @matrix on the height of the font,
+	 * Returns: the scale factor of @matrix on the height of the font,
 	 *     or 1.0 if @matrix is %NULL.
 	 *
 	 * Since: 1.12
@@ -333,7 +333,7 @@ public class PgMatrix
 	 * Params:
 	 *     d = double floating-point value
 	 *
-	 * Return: the value in Pango units.
+	 * Returns: the value in Pango units.
 	 *
 	 * Since: 1.16
 	 */
@@ -349,7 +349,7 @@ public class PgMatrix
 	 * Params:
 	 *     i = value in Pango units
 	 *
-	 * Return: the double value.
+	 * Returns: the double value.
 	 *
 	 * Since: 1.16
 	 */

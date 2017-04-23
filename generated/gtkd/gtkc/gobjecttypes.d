@@ -1469,7 +1469,7 @@ public alias extern(C) void function(void* gClass) GBaseInitFunc;
  *     toValue = the #GValue in which to store the transformed value
  *     userData = data passed to the transform function
  *
- * Return: %TRUE if the transformation was successful, and %FALSE
+ * Returns: %TRUE if the transformation was successful, and %FALSE
  *     otherwise
  *
  * Since: 2.26
@@ -1483,7 +1483,7 @@ public alias extern(C) int function(GBinding* binding, GValue* fromValue, GValue
  * Params:
  *     boxed = The boxed structure to be copied.
  *
- * Return: The newly created copy of the boxed structure.
+ * Returns: The newly created copy of the boxed structure.
  */
 public alias extern(C) void* function(void* boxed) GBoxedCopyFunc;
 
@@ -1745,7 +1745,7 @@ public alias extern(C) void function(GObject* object, uint propertyId, GValue* v
  *     handlerReturn = A #GValue holding the return value of the signal handler.
  *     data = Callback data that was specified when creating the signal.
  *
- * Return: The accumulator function returns whether the signal emission
+ * Returns: The accumulator function returns whether the signal emission
  *     should be aborted. Returning %FALSE means to abort the
  *     current emission and %TRUE is returned for continuation.
  */
@@ -1766,7 +1766,7 @@ public alias extern(C) int function(GSignalInvocationHint* ihint, GValue* return
  *         the signal was emitted, followed by the parameters of the emission.
  *     data = user data associated with the hook.
  *
- * Return: whether it wants to stay connected. If it returns %FALSE, the signal
+ * Returns: whether it wants to stay connected. If it returns %FALSE, the signal
  *     hook is disconnected (and destroyed).
  */
 public alias extern(C) int function(GSignalInvocationHint* ihint, uint nParamValues, GValue* paramValues, void* data) GSignalEmissionHook;
@@ -1801,7 +1801,7 @@ public alias extern(C) void function(void* data, GObject* object, int isLastRef)
  *     gClass = The #GTypeClass structure which is
  *         unreferenced
  *
- * Return: %TRUE to stop further #GTypeClassCacheFuncs from being
+ * Returns: %TRUE to stop further #GTypeClassCacheFuncs from being
  *     called, %FALSE to continue
  */
 public alias extern(C) int function(void* cacheData, GTypeClass* gClass) GTypeClassCacheFunc;

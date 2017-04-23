@@ -42,7 +42,7 @@ public struct Quark
 	 * Params:
 	 *     str = a static string
 	 *
-	 * Return: a canonical representation for the string
+	 * Returns: a canonical representation for the string
 	 *
 	 * Since: 2.10
 	 */
@@ -59,7 +59,7 @@ public struct Quark
 	 * Params:
 	 *     str = a string
 	 *
-	 * Return: a canonical representation for the string
+	 * Returns: a canonical representation for the string
 	 *
 	 * Since: 2.10
 	 */
@@ -85,7 +85,7 @@ public struct Quark
 	 * Params:
 	 *     str = a string
 	 *
-	 * Return: the #GQuark identifying the string, or 0 if @string is %NULL
+	 * Returns: the #GQuark identifying the string, or 0 if @string is %NULL
 	 */
 	public static GQuark quarkFromStaticString(string str)
 	{
@@ -100,7 +100,7 @@ public struct Quark
 	 * Params:
 	 *     str = a string
 	 *
-	 * Return: the #GQuark identifying the string, or 0 if @string is %NULL
+	 * Returns: the #GQuark identifying the string, or 0 if @string is %NULL
 	 */
 	public static GQuark quarkFromString(string str)
 	{
@@ -113,7 +113,7 @@ public struct Quark
 	 * Params:
 	 *     quark = a #GQuark.
 	 *
-	 * Return: the string associated with the #GQuark
+	 * Returns: the string associated with the #GQuark
 	 */
 	public static string quarkToString(GQuark quark)
 	{
@@ -130,7 +130,7 @@ public struct Quark
 	 * Params:
 	 *     str = a string
 	 *
-	 * Return: the #GQuark associated with the string, or 0 if @string is
+	 * Returns: the #GQuark associated with the string, or 0 if @string is
 	 *     %NULL or there is no #GQuark associated with it
 	 */
 	public static GQuark quarkTryString(string str)

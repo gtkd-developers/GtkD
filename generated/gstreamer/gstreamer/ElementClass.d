@@ -129,7 +129,7 @@ public class ElementClass
 	 * Params:
 	 *     key = the key to get
 	 *
-	 * Return: the metadata for @key.
+	 * Returns: the metadata for @key.
 	 */
 	public string getMetadata(string key)
 	{
@@ -145,7 +145,7 @@ public class ElementClass
 	 * Params:
 	 *     name = the name of the #GstPadTemplate to get.
 	 *
-	 * Return: the #GstPadTemplate with the
+	 * Returns: the #GstPadTemplate with the
 	 *     given name, or %NULL if none was found. No unreferencing is
 	 *     necessary.
 	 */
@@ -168,7 +168,7 @@ public class ElementClass
 	 * > that has subclasses, make sure to pass the g_class parameter of the
 	 * > #GInstanceInitFunc here.
 	 *
-	 * Return: the #GList of
+	 * Returns: the #GList of
 	 *     pad templates.
 	 */
 	public ListG getPadTemplateList()

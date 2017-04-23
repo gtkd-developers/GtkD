@@ -80,7 +80,7 @@ public struct Debug
 	 * Params:
 	 *     colorinfo = the color info
 	 *
-	 * Return: a string containing the color
+	 * Returns: a string containing the color
 	 *     definition
 	 */
 	public static string constructTermColor(uint colorinfo)
@@ -101,7 +101,7 @@ public struct Debug
 	 * Params:
 	 *     colorinfo = the color info
 	 *
-	 * Return: an integer containing the color definition
+	 * Returns: an integer containing the color definition
 	 */
 	public static int constructWinColor(uint colorinfo)
 	{
@@ -113,7 +113,7 @@ public struct Debug
 	 * may change anytime.
 	 * The caller has to free the list after use.
 	 *
-	 * Return: the list of
+	 * Returns: the list of
 	 *     debug categories
 	 */
 	public static ListSG getAllCategories()
@@ -131,7 +131,7 @@ public struct Debug
 	/**
 	 * Changes the coloring mode for debug output.
 	 *
-	 * Return: see @GstDebugColorMode for possible values.
+	 * Returns: see @GstDebugColorMode for possible values.
 	 *
 	 * Since: 1.2
 	 */
@@ -143,7 +143,7 @@ public struct Debug
 	/**
 	 * Returns the default threshold that is used for new categories.
 	 *
-	 * Return: the default threshold level
+	 * Returns: the default threshold level
 	 */
 	public static GstDebugLevel getDefaultThreshold()
 	{
@@ -153,7 +153,7 @@ public struct Debug
 	/**
 	 * Checks if debugging output is activated.
 	 *
-	 * Return: %TRUE, if debugging is activated
+	 * Returns: %TRUE, if debugging is activated
 	 */
 	public static bool isActive()
 	{
@@ -163,7 +163,7 @@ public struct Debug
 	/**
 	 * Checks if the debugging output should be colored.
 	 *
-	 * Return: %TRUE, if the debug output should be colored.
+	 * Returns: %TRUE, if the debug output should be colored.
 	 */
 	public static bool isColored()
 	{
@@ -176,7 +176,7 @@ public struct Debug
 	 * Params:
 	 *     level = the level to get the name for
 	 *
-	 * Return: the name
+	 * Returns: the name
 	 */
 	public static string levelGetName(GstDebugLevel level)
 	{
@@ -245,7 +245,7 @@ public struct Debug
 	 *     func = the log function to remove, or %NULL to
 	 *         remove the default log function
 	 *
-	 * Return: How many instances of the function were removed
+	 * Returns: How many instances of the function were removed
 	 */
 	public static uint removeLogFunction(GstLogFunction func)
 	{
@@ -258,7 +258,7 @@ public struct Debug
 	 * Params:
 	 *     data = user data of the log function to remove
 	 *
-	 * Return: How many instances of the function were removed
+	 * Returns: How many instances of the function were removed
 	 */
 	public static uint removeLogFunctionByData(void* data)
 	{

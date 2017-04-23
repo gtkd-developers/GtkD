@@ -241,7 +241,7 @@ public class Event
 	 * Params:
 	 *     type = a #GdkEventType
 	 *
-	 * Return: a newly-allocated #GdkEvent. The returned #GdkEvent
+	 * Returns: a newly-allocated #GdkEvent. The returned #GdkEvent
 	 *     should be freed with gdk_event_free().
 	 *
 	 * Since: 2.2
@@ -271,7 +271,7 @@ public class Event
 	 *     event2 = second #GdkEvent
 	 *     angle = return location for the relative angle between both events
 	 *
-	 * Return: %TRUE if the angle could be calculated.
+	 * Returns: %TRUE if the angle could be calculated.
 	 *
 	 * Since: 3.0
 	 */
@@ -290,7 +290,7 @@ public class Event
 	 *     x = return location for the X coordinate of the center
 	 *     y = return location for the Y coordinate of the center
 	 *
-	 * Return: %TRUE if the center could be calculated.
+	 * Returns: %TRUE if the center could be calculated.
 	 *
 	 * Since: 3.0
 	 */
@@ -308,7 +308,7 @@ public class Event
 	 *     event2 = second #GdkEvent
 	 *     distance = return location for the distance
 	 *
-	 * Return: %TRUE if the distance could be calculated.
+	 * Returns: %TRUE if the distance could be calculated.
 	 *
 	 * Since: 3.0
 	 */
@@ -321,7 +321,7 @@ public class Event
 	 * Copies a #GdkEvent, copying or incrementing the reference count of the
 	 * resources associated with it (e.g. #GdkWindow’s and strings).
 	 *
-	 * Return: a copy of @event. The returned #GdkEvent should be freed with
+	 * Returns: a copy of @event. The returned #GdkEvent should be freed with
 	 *     gdk_event_free().
 	 */
 	public Event copy()
@@ -355,7 +355,7 @@ public class Event
 	 *     axisUse = the axis use to look for
 	 *     value = location to store the value found
 	 *
-	 * Return: %TRUE if the specified axis was found, otherwise %FALSE
+	 * Returns: %TRUE if the specified axis was found, otherwise %FALSE
 	 */
 	public bool getAxis(GdkAxisUse axisUse, out double value)
 	{
@@ -368,7 +368,7 @@ public class Event
 	 * Params:
 	 *     button = location to store mouse button number
 	 *
-	 * Return: %TRUE if the event delivered a button number
+	 * Returns: %TRUE if the event delivered a button number
 	 *
 	 * Since: 3.2
 	 */
@@ -383,7 +383,7 @@ public class Event
 	 * Params:
 	 *     clickCount = location to store click count
 	 *
-	 * Return: %TRUE if the event delivered a click count
+	 * Returns: %TRUE if the event delivered a click count
 	 *
 	 * Since: 3.2
 	 */
@@ -399,7 +399,7 @@ public class Event
 	 *     xWin = location to put event window x coordinate
 	 *     yWin = location to put event window y coordinate
 	 *
-	 * Return: %TRUE if the event delivered event window coordinates
+	 * Returns: %TRUE if the event delivered event window coordinates
 	 */
 	public bool getCoords(out double xWin, out double yWin)
 	{
@@ -410,7 +410,7 @@ public class Event
 	 * If the event contains a “device” field, this function will return
 	 * it, else it will return %NULL.
 	 *
-	 * Return: a #GdkDevice, or %NULL.
+	 * Returns: a #GdkDevice, or %NULL.
 	 *
 	 * Since: 3.0
 	 */
@@ -436,7 +436,7 @@ public class Event
 	 * the application lifetime, if settings must be stored
 	 * persistently across runs, see gdk_device_tool_get_serial()
 	 *
-	 * Return: The current device tool, or %NULL
+	 * Returns: The current device tool, or %NULL
 	 *
 	 * Since: 3.22
 	 */
@@ -457,7 +457,7 @@ public class Event
 	 * %GDK_TOUCH_END or %GDK_TOUCH_CANCEL, returns the #GdkEventSequence
 	 * to which the event belongs. Otherwise, return %NULL.
 	 *
-	 * Return: the event sequence that the event belongs to
+	 * Returns: the event sequence that the event belongs to
 	 *
 	 * Since: 3.4
 	 */
@@ -469,7 +469,7 @@ public class Event
 	/**
 	 * Retrieves the type of the event.
 	 *
-	 * Return: a #GdkEventType
+	 * Returns: a #GdkEventType
 	 *
 	 * Since: 3.10
 	 */
@@ -486,7 +486,7 @@ public class Event
 	 * Params:
 	 *     keycode = location to store the keycode
 	 *
-	 * Return: %TRUE if the event delivered a hardware keycode
+	 * Returns: %TRUE if the event delivered a hardware keycode
 	 *
 	 * Since: 3.2
 	 */
@@ -501,7 +501,7 @@ public class Event
 	 * Params:
 	 *     keyval = location to store the keyval
 	 *
-	 * Return: %TRUE if the event delivered a key symbol
+	 * Returns: %TRUE if the event delivered a key symbol
 	 *
 	 * Since: 3.2
 	 */
@@ -515,7 +515,7 @@ public class Event
 	 * Returns whether this event is an 'emulated' pointer event (typically
 	 * from a touch event), as opposed to a real one.
 	 *
-	 * Return: %TRUE if this event is emulated
+	 * Returns: %TRUE if this event is emulated
 	 *
 	 * Since: 3.22
 	 */
@@ -531,7 +531,7 @@ public class Event
 	 *     xRoot = location to put root window x coordinate
 	 *     yRoot = location to put root window y coordinate
 	 *
-	 * Return: %TRUE if the event delivered root window coordinates
+	 * Returns: %TRUE if the event delivered root window coordinates
 	 */
 	public bool getRootCoords(out double xRoot, out double yRoot)
 	{
@@ -545,7 +545,7 @@ public class Event
 	 * word of WM_KEY{DOWN,UP} lParam which contains the scancode and
 	 * some extended flags.
 	 *
-	 * Return: The associated keyboard scancode or 0
+	 * Returns: The associated keyboard scancode or 0
 	 *
 	 * Since: 3.22
 	 */
@@ -563,7 +563,7 @@ public class Event
 	 * to which `event->motion.x_root` and
 	 * `event->motion.y_root` are relative.
 	 *
-	 * Return: the screen for the event
+	 * Returns: the screen for the event
 	 *
 	 * Since: 2.2
 	 */
@@ -586,7 +586,7 @@ public class Event
 	 *     deltaX = return location for X delta
 	 *     deltaY = return location for Y delta
 	 *
-	 * Return: %TRUE if the event contains smooth scroll information
+	 * Returns: %TRUE if the event contains smooth scroll information
 	 *
 	 * Since: 3.4
 	 */
@@ -601,7 +601,7 @@ public class Event
 	 * Params:
 	 *     direction = location to store the scroll direction
 	 *
-	 * Return: %TRUE if the event delivered a scroll direction
+	 * Returns: %TRUE if the event delivered a scroll direction
 	 *
 	 * Since: 3.2
 	 */
@@ -613,7 +613,7 @@ public class Event
 	/**
 	 * Returns the #GdkSeat this event was generated for.
 	 *
-	 * Return: The #GdkSeat of this event
+	 * Returns: The #GdkSeat of this event
 	 *
 	 * Since: 3.20
 	 */
@@ -640,7 +640,7 @@ public class Event
 	 * If the event does not contain a device field, this function will
 	 * return %NULL.
 	 *
-	 * Return: a #GdkDevice, or %NULL.
+	 * Returns: a #GdkDevice, or %NULL.
 	 *
 	 * Since: 3.0
 	 */
@@ -665,7 +665,7 @@ public class Event
 	 * Params:
 	 *     state = return location for state
 	 *
-	 * Return: %TRUE if there was a state field in the event
+	 * Returns: %TRUE if there was a state field in the event
 	 */
 	public bool getState(out GdkModifierType state)
 	{
@@ -676,7 +676,7 @@ public class Event
 	 * Returns the time stamp from @event, if there is one; otherwise
 	 * returns #GDK_CURRENT_TIME. If @event is %NULL, returns #GDK_CURRENT_TIME.
 	 *
-	 * Return: time stamp field from @event
+	 * Returns: time stamp field from @event
 	 */
 	public uint getTime()
 	{
@@ -686,7 +686,7 @@ public class Event
 	/**
 	 * Extracts the #GdkWindow associated with an event.
 	 *
-	 * Return: The #GdkWindow associated with the event
+	 * Returns: The #GdkWindow associated with the event
 	 *
 	 * Since: 3.10
 	 */
@@ -711,7 +711,7 @@ public class Event
 	 *
 	 * Stop scroll events always have a a delta of 0/0.
 	 *
-	 * Return: %TRUE if the event is a scroll stop event
+	 * Returns: %TRUE if the event is a scroll stop event
 	 *
 	 * Since: 3.20
 	 */
@@ -800,7 +800,7 @@ public class Event
 	 * This function should always be used instead of simply checking for
 	 * event->button == %GDK_BUTTON_SECONDARY.
 	 *
-	 * Return: %TRUE if the event should trigger a context menu.
+	 * Returns: %TRUE if the event should trigger a context menu.
 	 *
 	 * Since: 3.4
 	 */
@@ -814,7 +814,7 @@ public class Event
 	 * on, fetching events from the windowing system if necessary.
 	 * See gdk_display_get_event().
 	 *
-	 * Return: the next #GdkEvent to be processed, or %NULL
+	 * Returns: the next #GdkEvent to be processed, or %NULL
 	 *     if no events are pending. The returned #GdkEvent should be freed
 	 *     with gdk_event_free().
 	 */
@@ -853,7 +853,7 @@ public class Event
 	 * If there is an event waiting in the event queue of some open
 	 * display, returns a copy of it. See gdk_display_peek_event().
 	 *
-	 * Return: a copy of the first #GdkEvent on some event
+	 * Returns: a copy of the first #GdkEvent on some event
 	 *     queue, or %NULL if no events are in any queues. The returned
 	 *     #GdkEvent should be freed with gdk_event_free().
 	 */
@@ -901,7 +901,7 @@ public class Event
 	/**
 	 * Checks if any events are ready to be processed for any display.
 	 *
-	 * Return: %TRUE if any events are pending.
+	 * Returns: %TRUE if any events are pending.
 	 */
 	public static bool pending()
 	{
@@ -911,7 +911,7 @@ public class Event
 	/**
 	 * Gets whether event debugging output is enabled.
 	 *
-	 * Return: %TRUE if event debugging output is enabled.
+	 * Returns: %TRUE if event debugging output is enabled.
 	 */
 	public static bool getShowEvents()
 	{
@@ -940,7 +940,7 @@ public class Event
 	 *     name = the name of the setting.
 	 *     value = location to store the value of the setting.
 	 *
-	 * Return: %TRUE if the setting existed and a value was stored
+	 * Returns: %TRUE if the setting existed and a value was stored
 	 *     in @value, %FALSE otherwise.
 	 */
 	public static bool settingGet(string name, Value value)

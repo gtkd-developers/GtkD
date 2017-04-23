@@ -144,7 +144,7 @@ public class Value
 	 * g_boxed_free(), e.g. like: g_boxed_free (G_VALUE_TYPE (@value),
 	 * return_value);
 	 *
-	 * Return: boxed contents of @value
+	 * Returns: boxed contents of @value
 	 */
 	public void* dupBoxed()
 	{
@@ -156,7 +156,7 @@ public class Value
 	 * its reference count. If the contents of the #GValue are %NULL, then
 	 * %NULL will be returned.
 	 *
-	 * Return: object content of @value,
+	 * Returns: object content of @value,
 	 *     should be unreferenced when no longer needed.
 	 */
 	public ObjectG dupObject()
@@ -175,7 +175,7 @@ public class Value
 	 * Get the contents of a %G_TYPE_PARAM #GValue, increasing its
 	 * reference count.
 	 *
-	 * Return: #GParamSpec content of @value, should be unreferenced when
+	 * Returns: #GParamSpec content of @value, should be unreferenced when
 	 *     no longer needed.
 	 */
 	public ParamSpec dupParam()
@@ -193,7 +193,7 @@ public class Value
 	/**
 	 * Get a copy the contents of a %G_TYPE_STRING #GValue.
 	 *
-	 * Return: a newly allocated copy of the string content of @value
+	 * Returns: a newly allocated copy of the string content of @value
 	 */
 	public string dupString()
 	{
@@ -206,7 +206,7 @@ public class Value
 	/**
 	 * Get the contents of a variant #GValue, increasing its refcount.
 	 *
-	 * Return: variant contents of @value, should be unrefed using
+	 * Returns: variant contents of @value, should be unrefed using
 	 *     g_variant_unref() when no longer needed
 	 *
 	 * Since: 2.26
@@ -227,7 +227,7 @@ public class Value
 	 * Determines if @value will fit inside the size of a pointer value.
 	 * This is an internal function introduced mainly for C marshallers.
 	 *
-	 * Return: %TRUE if @value will fit inside a pointer value.
+	 * Returns: %TRUE if @value will fit inside a pointer value.
 	 */
 	public bool fitsPointer()
 	{
@@ -237,7 +237,7 @@ public class Value
 	/**
 	 * Get the contents of a %G_TYPE_BOOLEAN #GValue.
 	 *
-	 * Return: boolean contents of @value
+	 * Returns: boolean contents of @value
 	 */
 	public bool getBoolean()
 	{
@@ -247,7 +247,7 @@ public class Value
 	/**
 	 * Get the contents of a %G_TYPE_BOXED derived #GValue.
 	 *
-	 * Return: boxed contents of @value
+	 * Returns: boxed contents of @value
 	 */
 	public void* getBoxed()
 	{
@@ -262,7 +262,7 @@ public class Value
 	 *
 	 * Deprecated: This function's return type is broken, see g_value_get_schar()
 	 *
-	 * Return: character contents of @value
+	 * Returns: character contents of @value
 	 */
 	public char getChar()
 	{
@@ -272,7 +272,7 @@ public class Value
 	/**
 	 * Get the contents of a %G_TYPE_DOUBLE #GValue.
 	 *
-	 * Return: double contents of @value
+	 * Returns: double contents of @value
 	 */
 	public double getDouble()
 	{
@@ -282,7 +282,7 @@ public class Value
 	/**
 	 * Get the contents of a %G_TYPE_ENUM #GValue.
 	 *
-	 * Return: enum contents of @value
+	 * Returns: enum contents of @value
 	 */
 	public int getEnum()
 	{
@@ -292,7 +292,7 @@ public class Value
 	/**
 	 * Get the contents of a %G_TYPE_FLAGS #GValue.
 	 *
-	 * Return: flags contents of @value
+	 * Returns: flags contents of @value
 	 */
 	public uint getFlags()
 	{
@@ -302,7 +302,7 @@ public class Value
 	/**
 	 * Get the contents of a %G_TYPE_FLOAT #GValue.
 	 *
-	 * Return: float contents of @value
+	 * Returns: float contents of @value
 	 */
 	public float getFloat()
 	{
@@ -312,7 +312,7 @@ public class Value
 	/**
 	 * Get the contents of a %G_TYPE_GTYPE #GValue.
 	 *
-	 * Return: the #GType stored in @value
+	 * Returns: the #GType stored in @value
 	 *
 	 * Since: 2.12
 	 */
@@ -324,7 +324,7 @@ public class Value
 	/**
 	 * Get the contents of a %G_TYPE_INT #GValue.
 	 *
-	 * Return: integer contents of @value
+	 * Returns: integer contents of @value
 	 */
 	public int getInt()
 	{
@@ -334,7 +334,7 @@ public class Value
 	/**
 	 * Get the contents of a %G_TYPE_INT64 #GValue.
 	 *
-	 * Return: 64bit integer contents of @value
+	 * Returns: 64bit integer contents of @value
 	 */
 	public long getInt64()
 	{
@@ -344,7 +344,7 @@ public class Value
 	/**
 	 * Get the contents of a %G_TYPE_LONG #GValue.
 	 *
-	 * Return: long integer contents of @value
+	 * Returns: long integer contents of @value
 	 */
 	public glong getLong()
 	{
@@ -354,7 +354,7 @@ public class Value
 	/**
 	 * Get the contents of a %G_TYPE_OBJECT derived #GValue.
 	 *
-	 * Return: object contents of @value
+	 * Returns: object contents of @value
 	 */
 	public ObjectG getObject()
 	{
@@ -371,7 +371,7 @@ public class Value
 	/**
 	 * Get the contents of a %G_TYPE_PARAM #GValue.
 	 *
-	 * Return: #GParamSpec content of @value
+	 * Returns: #GParamSpec content of @value
 	 */
 	public ParamSpec getParam()
 	{
@@ -388,7 +388,7 @@ public class Value
 	/**
 	 * Get the contents of a pointer #GValue.
 	 *
-	 * Return: pointer contents of @value
+	 * Returns: pointer contents of @value
 	 */
 	public void* getPointer()
 	{
@@ -398,7 +398,7 @@ public class Value
 	/**
 	 * Get the contents of a %G_TYPE_CHAR #GValue.
 	 *
-	 * Return: signed 8 bit integer contents of @value
+	 * Returns: signed 8 bit integer contents of @value
 	 *
 	 * Since: 2.32
 	 */
@@ -410,7 +410,7 @@ public class Value
 	/**
 	 * Get the contents of a %G_TYPE_STRING #GValue.
 	 *
-	 * Return: string content of @value
+	 * Returns: string content of @value
 	 */
 	public string getString()
 	{
@@ -420,7 +420,7 @@ public class Value
 	/**
 	 * Get the contents of a %G_TYPE_UCHAR #GValue.
 	 *
-	 * Return: unsigned character contents of @value
+	 * Returns: unsigned character contents of @value
 	 */
 	public char getUchar()
 	{
@@ -430,7 +430,7 @@ public class Value
 	/**
 	 * Get the contents of a %G_TYPE_UINT #GValue.
 	 *
-	 * Return: unsigned integer contents of @value
+	 * Returns: unsigned integer contents of @value
 	 */
 	public uint getUint()
 	{
@@ -440,7 +440,7 @@ public class Value
 	/**
 	 * Get the contents of a %G_TYPE_UINT64 #GValue.
 	 *
-	 * Return: unsigned 64bit integer contents of @value
+	 * Returns: unsigned 64bit integer contents of @value
 	 */
 	public ulong getUint64()
 	{
@@ -450,7 +450,7 @@ public class Value
 	/**
 	 * Get the contents of a %G_TYPE_ULONG #GValue.
 	 *
-	 * Return: unsigned long integer contents of @value
+	 * Returns: unsigned long integer contents of @value
 	 */
 	public gulong getUlong()
 	{
@@ -460,7 +460,7 @@ public class Value
 	/**
 	 * Get the contents of a variant #GValue.
 	 *
-	 * Return: variant contents of @value
+	 * Returns: variant contents of @value
 	 *
 	 * Since: 2.26
 	 */
@@ -482,7 +482,7 @@ public class Value
 	 * Params:
 	 *     gType = Type the #GValue should hold values of.
 	 *
-	 * Return: the #GValue structure that has been passed in
+	 * Returns: the #GValue structure that has been passed in
 	 */
 	public Value init(GType gType)
 	{
@@ -520,7 +520,7 @@ public class Value
 	 * g_value_fits_pointer() returned %TRUE for the passed in value.
 	 * This is an internal function introduced mainly for C marshallers.
 	 *
-	 * Return: the value contents as pointer
+	 * Returns: the value contents as pointer
 	 */
 	public void* peekPointer()
 	{
@@ -531,7 +531,7 @@ public class Value
 	 * Clears the current value in @value and resets it to the default value
 	 * (as if the value had just been initialized).
 	 *
-	 * Return: the #GValue structure that has been passed in
+	 * Returns: the #GValue structure that has been passed in
 	 */
 	public Value reset()
 	{
@@ -983,7 +983,7 @@ public class Value
 	 * Params:
 	 *     destValue = Target value.
 	 *
-	 * Return: Whether a transformation rule was found and could be applied.
+	 * Returns: Whether a transformation rule was found and could be applied.
 	 *     Upon failing transformations, @dest_value is left untouched.
 	 */
 	public bool transform(Value destValue)
@@ -1026,7 +1026,7 @@ public class Value
 	 *     srcType = source type to be copied.
 	 *     destType = destination type for copying.
 	 *
-	 * Return: %TRUE if g_value_copy() is possible with @src_type and @dest_type.
+	 * Returns: %TRUE if g_value_copy() is possible with @src_type and @dest_type.
 	 */
 	public static bool typeCompatible(GType srcType, GType destType)
 	{
@@ -1043,7 +1043,7 @@ public class Value
 	 *     srcType = Source type.
 	 *     destType = Target type.
 	 *
-	 * Return: %TRUE if the transformation is possible, %FALSE otherwise.
+	 * Returns: %TRUE if the transformation is possible, %FALSE otherwise.
 	 */
 	public static bool typeTransformable(GType srcType, GType destType)
 	{
@@ -1066,7 +1066,7 @@ public class Value
 	 *     defaultValue = default value for the property specified
 	 *     flags = flags for the property specified
 	 *
-	 * Return: a newly created parameter specification
+	 * Returns: a newly created parameter specification
 	 */
 	public static ParamSpec paramSpecBoolean(string name, string nick, string blurb, bool defaultValue, GParamFlags flags)
 	{
@@ -1093,7 +1093,7 @@ public class Value
 	 *     boxedType = %G_TYPE_BOXED derived type of this property
 	 *     flags = flags for the property specified
 	 *
-	 * Return: a newly created parameter specification
+	 * Returns: a newly created parameter specification
 	 */
 	public static ParamSpec paramSpecBoxed(string name, string nick, string blurb, GType boxedType, GParamFlags flags)
 	{
@@ -1119,7 +1119,7 @@ public class Value
 	 *     defaultValue = default value for the property specified
 	 *     flags = flags for the property specified
 	 *
-	 * Return: a newly created parameter specification
+	 * Returns: a newly created parameter specification
 	 */
 	public static ParamSpec paramSpecChar(string name, string nick, string blurb, byte minimum, byte maximum, byte defaultValue, GParamFlags flags)
 	{
@@ -1148,7 +1148,7 @@ public class Value
 	 *     defaultValue = default value for the property specified
 	 *     flags = flags for the property specified
 	 *
-	 * Return: a newly created parameter specification
+	 * Returns: a newly created parameter specification
 	 */
 	public static ParamSpec paramSpecDouble(string name, string nick, string blurb, double minimum, double maximum, double defaultValue, GParamFlags flags)
 	{
@@ -1176,7 +1176,7 @@ public class Value
 	 *     defaultValue = default value for the property specified
 	 *     flags = flags for the property specified
 	 *
-	 * Return: a newly created parameter specification
+	 * Returns: a newly created parameter specification
 	 */
 	public static ParamSpec paramSpecEnum(string name, string nick, string blurb, GType enumType, int defaultValue, GParamFlags flags)
 	{
@@ -1204,7 +1204,7 @@ public class Value
 	 *     defaultValue = default value for the property specified
 	 *     flags = flags for the property specified
 	 *
-	 * Return: a newly created parameter specification
+	 * Returns: a newly created parameter specification
 	 */
 	public static ParamSpec paramSpecFlags(string name, string nick, string blurb, GType flagsType, uint defaultValue, GParamFlags flags)
 	{
@@ -1232,7 +1232,7 @@ public class Value
 	 *     defaultValue = default value for the property specified
 	 *     flags = flags for the property specified
 	 *
-	 * Return: a newly created parameter specification
+	 * Returns: a newly created parameter specification
 	 */
 	public static ParamSpec paramSpecFloat(string name, string nick, string blurb, float minimum, float maximum, float defaultValue, GParamFlags flags)
 	{
@@ -1260,7 +1260,7 @@ public class Value
 	 *         of the property (use %G_TYPE_NONE for any type)
 	 *     flags = flags for the property specified
 	 *
-	 * Return: a newly created parameter specification
+	 * Returns: a newly created parameter specification
 	 *
 	 * Since: 2.10
 	 */
@@ -1290,7 +1290,7 @@ public class Value
 	 *     defaultValue = default value for the property specified
 	 *     flags = flags for the property specified
 	 *
-	 * Return: a newly created parameter specification
+	 * Returns: a newly created parameter specification
 	 */
 	public static ParamSpec paramSpecInt(string name, string nick, string blurb, int minimum, int maximum, int defaultValue, GParamFlags flags)
 	{
@@ -1318,7 +1318,7 @@ public class Value
 	 *     defaultValue = default value for the property specified
 	 *     flags = flags for the property specified
 	 *
-	 * Return: a newly created parameter specification
+	 * Returns: a newly created parameter specification
 	 */
 	public static ParamSpec paramSpecInt64(string name, string nick, string blurb, long minimum, long maximum, long defaultValue, GParamFlags flags)
 	{
@@ -1346,7 +1346,7 @@ public class Value
 	 *     defaultValue = default value for the property specified
 	 *     flags = flags for the property specified
 	 *
-	 * Return: a newly created parameter specification
+	 * Returns: a newly created parameter specification
 	 */
 	public static ParamSpec paramSpecLong(string name, string nick, string blurb, glong minimum, glong maximum, glong defaultValue, GParamFlags flags)
 	{
@@ -1373,7 +1373,7 @@ public class Value
 	 *     objectType = %G_TYPE_OBJECT derived type of this property
 	 *     flags = flags for the property specified
 	 *
-	 * Return: a newly created parameter specification
+	 * Returns: a newly created parameter specification
 	 */
 	public static ParamSpec paramSpecObject(string name, string nick, string blurb, GType objectType, GParamFlags flags)
 	{
@@ -1396,7 +1396,7 @@ public class Value
 	 *     name = the name of the property.
 	 *     overridden = The property that is being overridden
 	 *
-	 * Return: the newly created #GParamSpec
+	 * Returns: the newly created #GParamSpec
 	 *
 	 * Since: 2.4
 	 */
@@ -1425,7 +1425,7 @@ public class Value
 	 *     paramType = a #GType derived from %G_TYPE_PARAM
 	 *     flags = flags for the property specified
 	 *
-	 * Return: a newly created parameter specification
+	 * Returns: a newly created parameter specification
 	 */
 	public static ParamSpec paramSpecParam(string name, string nick, string blurb, GType paramType, GParamFlags flags)
 	{
@@ -1452,7 +1452,7 @@ public class Value
 	 *     blurb = description of the property specified
 	 *     flags = flags for the property specified
 	 *
-	 * Return: a newly created parameter specification
+	 * Returns: a newly created parameter specification
 	 */
 	public static ParamSpec paramSpecPointer(string name, string nick, string blurb, GParamFlags flags)
 	{
@@ -1478,7 +1478,7 @@ public class Value
 	 *     defaultValue = default value for the property specified
 	 *     flags = flags for the property specified
 	 *
-	 * Return: a newly created parameter specification
+	 * Returns: a newly created parameter specification
 	 */
 	public static ParamSpec paramSpecString(string name, string nick, string blurb, string defaultValue, GParamFlags flags)
 	{
@@ -1504,7 +1504,7 @@ public class Value
 	 *     defaultValue = default value for the property specified
 	 *     flags = flags for the property specified
 	 *
-	 * Return: a newly created parameter specification
+	 * Returns: a newly created parameter specification
 	 */
 	public static ParamSpec paramSpecUchar(string name, string nick, string blurb, ubyte minimum, ubyte maximum, ubyte defaultValue, GParamFlags flags)
 	{
@@ -1532,7 +1532,7 @@ public class Value
 	 *     defaultValue = default value for the property specified
 	 *     flags = flags for the property specified
 	 *
-	 * Return: a newly created parameter specification
+	 * Returns: a newly created parameter specification
 	 */
 	public static ParamSpec paramSpecUint(string name, string nick, string blurb, uint minimum, uint maximum, uint defaultValue, GParamFlags flags)
 	{
@@ -1561,7 +1561,7 @@ public class Value
 	 *     defaultValue = default value for the property specified
 	 *     flags = flags for the property specified
 	 *
-	 * Return: a newly created parameter specification
+	 * Returns: a newly created parameter specification
 	 */
 	public static ParamSpec paramSpecUint64(string name, string nick, string blurb, ulong minimum, ulong maximum, ulong defaultValue, GParamFlags flags)
 	{
@@ -1590,7 +1590,7 @@ public class Value
 	 *     defaultValue = default value for the property specified
 	 *     flags = flags for the property specified
 	 *
-	 * Return: a newly created parameter specification
+	 * Returns: a newly created parameter specification
 	 */
 	public static ParamSpec paramSpecUlong(string name, string nick, string blurb, gulong minimum, gulong maximum, gulong defaultValue, GParamFlags flags)
 	{
@@ -1618,7 +1618,7 @@ public class Value
 	 *     defaultValue = default value for the property specified
 	 *     flags = flags for the property specified
 	 *
-	 * Return: a newly created parameter specification
+	 * Returns: a newly created parameter specification
 	 */
 	public static ParamSpec paramSpecUnichar(string name, string nick, string blurb, dchar defaultValue, GParamFlags flags)
 	{
@@ -1648,7 +1648,7 @@ public class Value
 	 *         arrays of this property, may be %NULL
 	 *     flags = flags for the property specified
 	 *
-	 * Return: a newly created parameter specification
+	 * Returns: a newly created parameter specification
 	 */
 	public static ParamSpec paramSpecValueArray(string name, string nick, string blurb, ParamSpec elementSpec, GParamFlags flags)
 	{
@@ -1679,7 +1679,7 @@ public class Value
 	 *         use as the default value, or %NULL
 	 *     flags = flags for the property specified
 	 *
-	 * Return: the newly created #GParamSpec
+	 * Returns: the newly created #GParamSpec
 	 *
 	 * Since: 2.26
 	 */
@@ -1704,7 +1704,7 @@ public class Value
 	 * Params:
 	 *     value = #GValue which contents are to be described.
 	 *
-	 * Return: Newly allocated string.
+	 * Returns: Newly allocated string.
 	 */
 	public static string strdupValueContents(Value value)
 	{

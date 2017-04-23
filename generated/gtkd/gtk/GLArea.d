@@ -180,7 +180,7 @@ public class GLArea : Widget
 	/**
 	 * Creates a new #GtkGLArea widget.
 	 *
-	 * Return: the newly created #GtkGLArea
+	 * Returns: the newly created #GtkGLArea
 	 *
 	 * Since: 3.16
 	 *
@@ -217,7 +217,7 @@ public class GLArea : Widget
 	/**
 	 * Returns whether the area is in auto render mode or not.
 	 *
-	 * Return: %TRUE if the @area is auto rendering, %FALSE otherwise
+	 * Returns: %TRUE if the @area is auto rendering, %FALSE otherwise
 	 *
 	 * Since: 3.16
 	 */
@@ -229,7 +229,7 @@ public class GLArea : Widget
 	/**
 	 * Retrieves the #GdkGLContext used by @area.
 	 *
-	 * Return: the #GdkGLContext
+	 * Returns: the #GdkGLContext
 	 *
 	 * Since: 3.16
 	 */
@@ -248,7 +248,7 @@ public class GLArea : Widget
 	/**
 	 * Gets the current error set on the @area.
 	 *
-	 * Return: the #GError or %NULL
+	 * Returns: the #GError or %NULL
 	 *
 	 * Since: 3.16
 	 */
@@ -267,7 +267,7 @@ public class GLArea : Widget
 	/**
 	 * Returns whether the area has an alpha component.
 	 *
-	 * Return: %TRUE if the @area has an alpha component, %FALSE otherwise
+	 * Returns: %TRUE if the @area has an alpha component, %FALSE otherwise
 	 *
 	 * Since: 3.16
 	 */
@@ -279,7 +279,7 @@ public class GLArea : Widget
 	/**
 	 * Returns whether the area has a depth buffer.
 	 *
-	 * Return: %TRUE if the @area has a depth buffer, %FALSE otherwise
+	 * Returns: %TRUE if the @area has a depth buffer, %FALSE otherwise
 	 *
 	 * Since: 3.16
 	 */
@@ -291,7 +291,7 @@ public class GLArea : Widget
 	/**
 	 * Returns whether the area has a stencil buffer.
 	 *
-	 * Return: %TRUE if the @area has a stencil buffer, %FALSE otherwise
+	 * Returns: %TRUE if the @area has a stencil buffer, %FALSE otherwise
 	 *
 	 * Since: 3.16
 	 */
@@ -318,7 +318,7 @@ public class GLArea : Widget
 	/**
 	 * Retrieves the value set by gtk_gl_area_set_use_es().
 	 *
-	 * Return: %TRUE if the #GtkGLArea should create an OpenGL ES context
+	 * Returns: %TRUE if the #GtkGLArea should create an OpenGL ES context
 	 *     and %FALSE otherwise
 	 *
 	 * Since: 3.22
@@ -513,7 +513,7 @@ public class GLArea : Widget
 	 * gtk_gl_area_set_error() to register a more detailed error
 	 * of how the construction failed.
 	 *
-	 * Return: a newly created #GdkGLContext;
+	 * Returns: a newly created #GdkGLContext;
 	 *     the #GtkGLArea widget will take ownership of the returned value.
 	 *
 	 * Since: 3.16
@@ -578,7 +578,7 @@ public class GLArea : Widget
 	 * Params:
 	 *     context = the #GdkGLContext used by @area
 	 *
-	 * Return: %TRUE to stop other handlers from being invoked for the event.
+	 * Returns: %TRUE to stop other handlers from being invoked for the event.
 	 *     %FALSE to propagate the event further.
 	 *
 	 * Since: 3.16

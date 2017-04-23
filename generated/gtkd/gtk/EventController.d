@@ -78,7 +78,7 @@ public class EventController : ObjectG
 	/**
 	 * Gets the propagation phase at which @controller handles events.
 	 *
-	 * Return: the propagation phase
+	 * Returns: the propagation phase
 	 *
 	 * Since: 3.14
 	 */
@@ -90,7 +90,7 @@ public class EventController : ObjectG
 	/**
 	 * Returns the #GtkWidget this controller relates to.
 	 *
-	 * Return: a #GtkWidget
+	 * Returns: a #GtkWidget
 	 *
 	 * Since: 3.14
 	 */
@@ -113,7 +113,7 @@ public class EventController : ObjectG
 	 * Params:
 	 *     event = a #GdkEvent
 	 *
-	 * Return: %TRUE if the event was potentially useful to trigger the
+	 * Returns: %TRUE if the event was potentially useful to trigger the
 	 *     controller action
 	 *
 	 * Since: 3.14

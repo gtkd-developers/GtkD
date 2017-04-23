@@ -63,7 +63,7 @@ public struct Signals
 	 *     handlerReturn = standard #GSignalAccumulator parameter
 	 *     dummy = standard #GSignalAccumulator parameter
 	 *
-	 * Return: standard #GSignalAccumulator result
+	 * Returns: standard #GSignalAccumulator result
 	 *
 	 * Since: 2.28
 	 */
@@ -87,7 +87,7 @@ public struct Signals
 	 *     handlerReturn = standard #GSignalAccumulator parameter
 	 *     dummy = standard #GSignalAccumulator parameter
 	 *
-	 * Return: standard #GSignalAccumulator result
+	 * Returns: standard #GSignalAccumulator result
 	 *
 	 * Since: 2.4
 	 */
@@ -108,7 +108,7 @@ public struct Signals
 	 *     hookData = user data for @hook_func.
 	 *     dataDestroy = a #GDestroyNotify for @hook_data.
 	 *
-	 * Return: the hook id, for later use with g_signal_remove_emission_hook().
+	 * Returns: the hook id, for later use with g_signal_remove_emission_hook().
 	 */
 	public static gulong addEmissionHook(uint signalId, GQuark detail, GSignalEmissionHook hookFunc, void* hookData, GDestroyNotify dataDestroy)
 	{
@@ -148,7 +148,7 @@ public struct Signals
 	 *     after = whether the handler should be called before or after the
 	 *         default handler of the signal.
 	 *
-	 * Return: the handler ID (always greater than 0 for successful connections)
+	 * Returns: the handler ID (always greater than 0 for successful connections)
 	 */
 	public static gulong connectClosure(ObjectG instanc, string detailedSignal, Closure closure, bool after)
 	{
@@ -166,7 +166,7 @@ public struct Signals
 	 *     after = whether the handler should be called before or after the
 	 *         default handler of the signal.
 	 *
-	 * Return: the handler ID (always greater than 0 for successful connections)
+	 * Returns: the handler ID (always greater than 0 for successful connections)
 	 */
 	public static gulong connectClosureById(ObjectG instanc, uint signalId, GQuark detail, Closure closure, bool after)
 	{
@@ -188,7 +188,7 @@ public struct Signals
 	 *     destroyData = a #GClosureNotify for @data.
 	 *     connectFlags = a combination of #GConnectFlags.
 	 *
-	 * Return: the handler ID (always greater than 0 for successful connections)
+	 * Returns: the handler ID (always greater than 0 for successful connections)
 	 */
 	public static gulong connectData(ObjectG instanc, string detailedSignal, GCallback cHandler, void* data, GClosureNotify destroyData, GConnectFlags connectFlags)
 	{
@@ -213,7 +213,7 @@ public struct Signals
 	 *         to @c_handler.
 	 *     connectFlags = a combination of #GConnectFlags.
 	 *
-	 * Return: the handler id.
+	 * Returns: the handler id.
 	 */
 	public static gulong connectObject(TypeInstance instanc, string detailedSignal, GCallback cHandler, ObjectG gobject, GConnectFlags connectFlags)
 	{
@@ -273,7 +273,7 @@ public struct Signals
 	 * Params:
 	 *     instanc = the instance to query
 	 *
-	 * Return: the invocation hint of the innermost signal  emission.
+	 * Returns: the invocation hint of the innermost signal  emission.
 	 */
 	public static GSignalInvocationHint* getInvocationHint(ObjectG instanc)
 	{
@@ -333,7 +333,7 @@ public struct Signals
 	 *     func = The C closure callback of the handler (useless for non-C closures).
 	 *     data = The closure data of the handler's closure.
 	 *
-	 * Return: A valid non-0 signal handler id for a successful match.
+	 * Returns: A valid non-0 signal handler id for a successful match.
 	 */
 	public static gulong handlerFind(ObjectG instanc, GSignalMatchType mask, uint signalId, GQuark detail, Closure closure, void* func, void* data)
 	{
@@ -347,7 +347,7 @@ public struct Signals
 	 *     instanc = The instance where a signal handler is sought.
 	 *     handlerId = the handler ID.
 	 *
-	 * Return: whether @handler_id identifies a handler connected to @instance.
+	 * Returns: whether @handler_id identifies a handler connected to @instance.
 	 */
 	public static bool handlerIsConnected(ObjectG instanc, gulong handlerId)
 	{
@@ -397,7 +397,7 @@ public struct Signals
 	 *     func = The C closure callback of the handlers (useless for non-C closures).
 	 *     data = The closure data of the handlers' closures.
 	 *
-	 * Return: The number of handlers that matched.
+	 * Returns: The number of handlers that matched.
 	 */
 	public static uint handlersBlockMatched(ObjectG instanc, GSignalMatchType mask, uint signalId, GQuark detail, Closure closure, void* func, void* data)
 	{
@@ -437,7 +437,7 @@ public struct Signals
 	 *     func = The C closure callback of the handlers (useless for non-C closures).
 	 *     data = The closure data of the handlers' closures.
 	 *
-	 * Return: The number of handlers that matched.
+	 * Returns: The number of handlers that matched.
 	 */
 	public static uint handlersDisconnectMatched(ObjectG instanc, GSignalMatchType mask, uint signalId, GQuark detail, Closure closure, void* func, void* data)
 	{
@@ -464,7 +464,7 @@ public struct Signals
 	 *     func = The C closure callback of the handlers (useless for non-C closures).
 	 *     data = The closure data of the handlers' closures.
 	 *
-	 * Return: The number of handlers that matched.
+	 * Returns: The number of handlers that matched.
 	 */
 	public static uint handlersUnblockMatched(ObjectG instanc, GSignalMatchType mask, uint signalId, GQuark detail, Closure closure, void* func, void* data)
 	{
@@ -495,7 +495,7 @@ public struct Signals
 	 *     detail = the detail.
 	 *     mayBeBlocked = whether blocked handlers should count as match.
 	 *
-	 * Return: %TRUE if a handler is connected to the signal, %FALSE
+	 * Returns: %TRUE if a handler is connected to the signal, %FALSE
 	 *     otherwise.
 	 */
 	public static bool hasHandlerPending(ObjectG instanc, uint signalId, GQuark detail, bool mayBeBlocked)
@@ -511,7 +511,7 @@ public struct Signals
 	 * Params:
 	 *     itype = Instance or interface type.
 	 *
-	 * Return: Newly allocated array of signal IDs.
+	 * Returns: Newly allocated array of signal IDs.
 	 */
 	public static uint[] listIds(GType itype)
 	{
@@ -535,7 +535,7 @@ public struct Signals
 	 *     name = the signal's name.
 	 *     itype = the type that the signal operates on.
 	 *
-	 * Return: the signal's identifying number, or 0 if no signal was found.
+	 * Returns: the signal's identifying number, or 0 if no signal was found.
 	 */
 	public static uint lookup(string name, GType itype)
 	{
@@ -550,7 +550,7 @@ public struct Signals
 	 * Params:
 	 *     signalId = the signal's identifying number.
 	 *
-	 * Return: the signal name, or %NULL if the signal number was invalid.
+	 * Returns: the signal name, or %NULL if the signal number was invalid.
 	 */
 	public static string name(uint signalId)
 	{
@@ -582,7 +582,7 @@ public struct Signals
 	 *     nParams = the number of parameter types in @args.
 	 *     args = va_list of #GType, one for each parameter.
 	 *
-	 * Return: the signal id
+	 * Returns: the signal id
 	 */
 	public static uint newValist(string signalName, GType itype, GSignalFlags signalFlags, Closure classClosure, GSignalAccumulator accumulator, void* accuData, GSignalCMarshaller cMarshaller, GType returnType, uint nParams, void* args)
 	{
@@ -617,7 +617,7 @@ public struct Signals
 	 *     paramTypes = an array of types, one for
 	 *         each parameter
 	 *
-	 * Return: the signal id
+	 * Returns: the signal id
 	 */
 	public static uint newv(string signalName, GType itype, GSignalFlags signalFlags, Closure classClosure, GSignalAccumulator accumulator, void* accuData, GSignalCMarshaller cMarshaller, GType returnType, GType[] paramTypes)
 	{
@@ -678,7 +678,7 @@ public struct Signals
 	 *     detailP = Location to store the detail quark.
 	 *     forceDetailQuark = %TRUE forces creation of a #GQuark for the detail.
 	 *
-	 * Return: Whether the signal name could successfully be parsed and @signal_id_p and @detail_p contain valid return values.
+	 * Returns: Whether the signal name could successfully be parsed and @signal_id_p and @detail_p contain valid return values.
 	 */
 	public static bool parseName(string detailedSignal, GType itype, out uint signalIdP, out GQuark detailP, bool forceDetailQuark)
 	{
@@ -778,7 +778,7 @@ public struct Signals
 	 *     structOffset = the offset of the member function of @itype's class
 	 *         structure which is to be invoked by the new closure
 	 *
-	 * Return: a new #GCClosure
+	 * Returns: a new #GCClosure
 	 */
 	public static Closure typeCclosureNew(GType itype, uint structOffset)
 	{

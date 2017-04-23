@@ -92,7 +92,7 @@ public class Range : Widget, OrientableIF
 	 * The return value does not have a reference added, so should not
 	 * be unreferenced.
 	 *
-	 * Return: a #GtkAdjustment
+	 * Returns: a #GtkAdjustment
 	 */
 	public Adjustment getAdjustment()
 	{
@@ -109,7 +109,7 @@ public class Range : Widget, OrientableIF
 	/**
 	 * Gets the current position of the fill level indicator.
 	 *
-	 * Return: The current fill level
+	 * Returns: The current fill level
 	 *
 	 * Since: 2.12
 	 */
@@ -121,7 +121,7 @@ public class Range : Widget, OrientableIF
 	/**
 	 * Gets the value set by gtk_range_set_flippable().
 	 *
-	 * Return: %TRUE if the range is flippable
+	 * Returns: %TRUE if the range is flippable
 	 *
 	 * Since: 2.18
 	 */
@@ -133,7 +133,7 @@ public class Range : Widget, OrientableIF
 	/**
 	 * Gets the value set by gtk_range_set_inverted().
 	 *
-	 * Return: %TRUE if the range is inverted
+	 * Returns: %TRUE if the range is inverted
 	 */
 	public bool getInverted()
 	{
@@ -144,7 +144,7 @@ public class Range : Widget, OrientableIF
 	 * Gets the sensitivity policy for the stepper that points to the
 	 * 'lower' end of the GtkRange’s adjustment.
 	 *
-	 * Return: The lower stepper’s sensitivity policy.
+	 * Returns: The lower stepper’s sensitivity policy.
 	 *
 	 * Since: 2.10
 	 */
@@ -161,7 +161,7 @@ public class Range : Widget, OrientableIF
 	 * Deprecated: Use the min-height/min-width CSS properties on the slider
 	 * node.
 	 *
-	 * Return: The minimum size of the range’s slider.
+	 * Returns: The minimum size of the range’s slider.
 	 *
 	 * Since: 2.20
 	 */
@@ -189,7 +189,7 @@ public class Range : Widget, OrientableIF
 	/**
 	 * Gets whether the range is restricted to the fill level.
 	 *
-	 * Return: %TRUE if @range is restricted to the fill level.
+	 * Returns: %TRUE if @range is restricted to the fill level.
 	 *
 	 * Since: 2.12
 	 */
@@ -202,7 +202,7 @@ public class Range : Widget, OrientableIF
 	 * Gets the number of digits to round the value to when
 	 * it changes. See #GtkRange::change-value.
 	 *
-	 * Return: the number of digits to round to
+	 * Returns: the number of digits to round to
 	 *
 	 * Since: 2.24
 	 */
@@ -214,7 +214,7 @@ public class Range : Widget, OrientableIF
 	/**
 	 * Gets whether the range displays the fill level graphically.
 	 *
-	 * Return: %TRUE if @range shows the fill level.
+	 * Returns: %TRUE if @range shows the fill level.
 	 *
 	 * Since: 2.12
 	 */
@@ -247,7 +247,7 @@ public class Range : Widget, OrientableIF
 	 *
 	 * See gtk_range_set_slider_size_fixed().
 	 *
-	 * Return: whether the range’s slider has a fixed size.
+	 * Returns: whether the range’s slider has a fixed size.
 	 *
 	 * Since: 2.20
 	 */
@@ -260,7 +260,7 @@ public class Range : Widget, OrientableIF
 	 * Gets the sensitivity policy for the stepper that points to the
 	 * 'upper' end of the GtkRange’s adjustment.
 	 *
-	 * Return: The upper stepper’s sensitivity policy.
+	 * Returns: The upper stepper’s sensitivity policy.
 	 *
 	 * Since: 2.10
 	 */
@@ -272,7 +272,7 @@ public class Range : Widget, OrientableIF
 	/**
 	 * Gets the current value of the range.
 	 *
-	 * Return: current value of the range.
+	 * Returns: current value of the range.
 	 */
 	public double getValue()
 	{
@@ -604,7 +604,7 @@ public class Range : Widget, OrientableIF
 	 *     scroll = the type of scroll action that was performed
 	 *     value = the new value resulting from the scroll action
 	 *
-	 * Return: %TRUE to prevent other handlers from being invoked for
+	 * Returns: %TRUE to prevent other handlers from being invoked for
 	 *     the signal, %FALSE to propagate the signal further
 	 *
 	 * Since: 2.6

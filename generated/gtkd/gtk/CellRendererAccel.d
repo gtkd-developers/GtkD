@@ -84,7 +84,7 @@ public class CellRendererAccel : CellRendererText
 	/**
 	 * Creates a new #GtkCellRendererAccel.
 	 *
-	 * Return: the new cell renderer
+	 * Returns: the new cell renderer
 	 *
 	 * Since: 2.10
 	 *

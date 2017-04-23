@@ -91,7 +91,7 @@ public class Adjustment : ObjectG
 	 *     pageIncrement = the page increment
 	 *     pageSize = the page size
 	 *
-	 * Return: a new #GtkAdjustment
+	 * Returns: a new #GtkAdjustment
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -164,7 +164,7 @@ public class Adjustment : ObjectG
 	/**
 	 * Retrieves the minimum value of the adjustment.
 	 *
-	 * Return: The current minimum value of the adjustment
+	 * Returns: The current minimum value of the adjustment
 	 *
 	 * Since: 2.14
 	 */
@@ -176,7 +176,7 @@ public class Adjustment : ObjectG
 	/**
 	 * Gets the smaller of step increment and page increment.
 	 *
-	 * Return: the minimum increment of @adjustment
+	 * Returns: the minimum increment of @adjustment
 	 *
 	 * Since: 3.2
 	 */
@@ -188,7 +188,7 @@ public class Adjustment : ObjectG
 	/**
 	 * Retrieves the page increment of the adjustment.
 	 *
-	 * Return: The current page increment of the adjustment
+	 * Returns: The current page increment of the adjustment
 	 *
 	 * Since: 2.14
 	 */
@@ -200,7 +200,7 @@ public class Adjustment : ObjectG
 	/**
 	 * Retrieves the page size of the adjustment.
 	 *
-	 * Return: The current page size of the adjustment
+	 * Returns: The current page size of the adjustment
 	 *
 	 * Since: 2.14
 	 */
@@ -212,7 +212,7 @@ public class Adjustment : ObjectG
 	/**
 	 * Retrieves the step increment of the adjustment.
 	 *
-	 * Return: The current step increment of the adjustment.
+	 * Returns: The current step increment of the adjustment.
 	 *
 	 * Since: 2.14
 	 */
@@ -224,7 +224,7 @@ public class Adjustment : ObjectG
 	/**
 	 * Retrieves the maximum value of the adjustment.
 	 *
-	 * Return: The current maximum value of the adjustment
+	 * Returns: The current maximum value of the adjustment
 	 *
 	 * Since: 2.14
 	 */
@@ -237,7 +237,7 @@ public class Adjustment : ObjectG
 	 * Gets the current value of the adjustment.
 	 * See gtk_adjustment_set_value().
 	 *
-	 * Return: The current value of the adjustment
+	 * Returns: The current value of the adjustment
 	 */
 	public double getValue()
 	{

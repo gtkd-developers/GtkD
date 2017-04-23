@@ -71,7 +71,7 @@ public struct Testing
 	 *     windowTitle = Title of the window to be displayed.
 	 *     dialogText = Text inside the window to be displayed.
 	 *
-	 * Return: a widget pointer to the newly created GtkWindow.
+	 * Returns: a widget pointer to the newly created GtkWindow.
 	 *
 	 * Since: 2.14
 	 */
@@ -100,7 +100,7 @@ public struct Testing
 	 *     widget = Valid label or container widget.
 	 *     labelPattern = Shell-glob pattern to match a label string.
 	 *
-	 * Return: a GtkLabel widget if any is found.
+	 * Returns: a GtkLabel widget if any is found.
 	 *
 	 * Since: 2.14
 	 */
@@ -129,7 +129,7 @@ public struct Testing
 	 *     baseWidget = Valid widget, part of a widget hierarchy
 	 *     widgetType = Type of a aearched for sibling widget
 	 *
-	 * Return: a widget of type @widget_type if any is found.
+	 * Returns: a widget of type @widget_type if any is found.
 	 *
 	 * Since: 2.14
 	 */
@@ -159,7 +159,7 @@ public struct Testing
 	 *     labelPattern = Shell-glob pattern to match a label string.
 	 *     widgetType = Type of a aearched for label sibling widget.
 	 *
-	 * Return: a valid widget if any is found or %NULL.
+	 * Returns: a valid widget if any is found or %NULL.
 	 *
 	 * Since: 2.14
 	 */
@@ -179,7 +179,7 @@ public struct Testing
 	 * Return the type ids that have been registered after
 	 * calling gtk_test_register_all_types().
 	 *
-	 * Return: 0-terminated array of type ids
+	 * Returns: 0-terminated array of type ids
 	 *
 	 * Since: 2.14
 	 */
@@ -216,7 +216,7 @@ public struct Testing
 	 * Params:
 	 *     widget = valid widget pointer.
 	 *
-	 * Return: gtk_adjustment_get_value (adjustment) for an adjustment belonging to @widget.
+	 * Returns: gtk_adjustment_get_value (adjustment) for an adjustment belonging to @widget.
 	 *
 	 * Since: 2.14
 	 */
@@ -257,7 +257,7 @@ public struct Testing
 	 *     button = Number of the pointer button for the event, usually 1, 2 or 3.
 	 *     upwards = %TRUE for upwards arrow click, %FALSE for downwards arrow click.
 	 *
-	 * Return: whether all actions neccessary for the button click simulation were carried out successfully.
+	 * Returns: whether all actions neccessary for the button click simulation were carried out successfully.
 	 *
 	 * Since: 2.14
 	 */
@@ -275,7 +275,7 @@ public struct Testing
 	 * Params:
 	 *     widget = valid widget pointer.
 	 *
-	 * Return: new 0-terminated C string, needs to be released with g_free().
+	 * Returns: new 0-terminated C string, needs to be released with g_free().
 	 *
 	 * Since: 2.14
 	 */
@@ -322,7 +322,7 @@ public struct Testing
 	 *     button = Number of the pointer button for the event, usually 1, 2 or 3.
 	 *     modifiers = Keyboard modifiers the event is setup with.
 	 *
-	 * Return: whether all actions neccessary for the button click simulation were carried out successfully.
+	 * Returns: whether all actions neccessary for the button click simulation were carried out successfully.
 	 *
 	 * Since: 2.14
 	 */
@@ -346,7 +346,7 @@ public struct Testing
 	 *     keyval = A Gdk keyboard value.
 	 *     modifiers = Keyboard modifiers the event is setup with.
 	 *
-	 * Return: whether all actions neccessary for the key event simulation were carried out successfully.
+	 * Returns: whether all actions neccessary for the key event simulation were carried out successfully.
 	 *
 	 * Since: 2.14
 	 */

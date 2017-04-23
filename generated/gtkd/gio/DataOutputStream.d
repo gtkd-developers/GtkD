@@ -90,7 +90,7 @@ public class DataOutputStream : FilterOutputStream, SeekableIF
 	 * Params:
 	 *     baseStream = a #GOutputStream.
 	 *
-	 * Return: #GDataOutputStream.
+	 * Returns: #GDataOutputStream.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -109,7 +109,7 @@ public class DataOutputStream : FilterOutputStream, SeekableIF
 	/**
 	 * Gets the byte order for the stream.
 	 *
-	 * Return: the #GDataStreamByteOrder for the @stream.
+	 * Returns: the #GDataStreamByteOrder for the @stream.
 	 */
 	public GDataStreamByteOrder getByteOrder()
 	{
@@ -123,7 +123,7 @@ public class DataOutputStream : FilterOutputStream, SeekableIF
 	 *     data = a #guchar.
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Return: %TRUE if @data was successfully added to the @stream.
+	 * Returns: %TRUE if @data was successfully added to the @stream.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -148,7 +148,7 @@ public class DataOutputStream : FilterOutputStream, SeekableIF
 	 *     data = a #gint16.
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Return: %TRUE if @data was successfully added to the @stream.
+	 * Returns: %TRUE if @data was successfully added to the @stream.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -173,7 +173,7 @@ public class DataOutputStream : FilterOutputStream, SeekableIF
 	 *     data = a #gint32.
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Return: %TRUE if @data was successfully added to the @stream.
+	 * Returns: %TRUE if @data was successfully added to the @stream.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -198,7 +198,7 @@ public class DataOutputStream : FilterOutputStream, SeekableIF
 	 *     data = a #gint64.
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Return: %TRUE if @data was successfully added to the @stream.
+	 * Returns: %TRUE if @data was successfully added to the @stream.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -223,7 +223,7 @@ public class DataOutputStream : FilterOutputStream, SeekableIF
 	 *     str = a string.
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Return: %TRUE if @string was successfully added to the @stream.
+	 * Returns: %TRUE if @string was successfully added to the @stream.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -248,7 +248,7 @@ public class DataOutputStream : FilterOutputStream, SeekableIF
 	 *     data = a #guint16.
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Return: %TRUE if @data was successfully added to the @stream.
+	 * Returns: %TRUE if @data was successfully added to the @stream.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -273,7 +273,7 @@ public class DataOutputStream : FilterOutputStream, SeekableIF
 	 *     data = a #guint32.
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Return: %TRUE if @data was successfully added to the @stream.
+	 * Returns: %TRUE if @data was successfully added to the @stream.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -298,7 +298,7 @@ public class DataOutputStream : FilterOutputStream, SeekableIF
 	 *     data = a #guint64.
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Return: %TRUE if @data was successfully added to the @stream.
+	 * Returns: %TRUE if @data was successfully added to the @stream.
 	 *
 	 * Throws: GException on failure.
 	 */

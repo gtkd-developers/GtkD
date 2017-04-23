@@ -380,7 +380,7 @@ public alias extern(C) void function(char* pixels, void* data) GdkPixbufDestroyN
  *     error = A location to return an error.
  *     data = user data passed to gdk_pixbuf_save_to_callback().
  *
- * Return: %TRUE if successful, %FALSE (with @error set) if failed.
+ * Returns: %TRUE if successful, %FALSE (with @error set) if failed.
  *
  * Since: 2.4
  */

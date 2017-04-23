@@ -87,7 +87,7 @@ public class Cursor : ObjectG
 	 * Params:
 	 *     cursorType = cursor to create
 	 *
-	 * Return: a new #GdkCursor
+	 * Returns: a new #GdkCursor
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -110,7 +110,7 @@ public class Cursor : ObjectG
 	 *     display = the #GdkDisplay for which the cursor will be created
 	 *     cursorType = cursor to create
 	 *
-	 * Return: a new #GdkCursor
+	 * Returns: a new #GdkCursor
 	 *
 	 * Since: 2.2
 	 *
@@ -174,7 +174,7 @@ public class Cursor : ObjectG
 	 *     display = the #GdkDisplay for which the cursor will be created
 	 *     name = the name of the cursor
 	 *
-	 * Return: a new #GdkCursor, or %NULL if there is no
+	 * Returns: a new #GdkCursor, or %NULL if there is no
 	 *     cursor with the given name
 	 *
 	 * Since: 2.8
@@ -219,7 +219,7 @@ public class Cursor : ObjectG
 	 *     x = the horizontal offset of the “hotspot” of the cursor.
 	 *     y = the vertical offset of the “hotspot” of the cursor.
 	 *
-	 * Return: a new #GdkCursor.
+	 * Returns: a new #GdkCursor.
 	 *
 	 * Since: 2.4
 	 *
@@ -258,7 +258,7 @@ public class Cursor : ObjectG
 	 *     x = the horizontal offset of the “hotspot” of the cursor
 	 *     y = the vertical offset of the “hotspot” of the cursor
 	 *
-	 * Return: a new #GdkCursor.
+	 * Returns: a new #GdkCursor.
 	 *
 	 * Since: 3.10
 	 *
@@ -279,7 +279,7 @@ public class Cursor : ObjectG
 	/**
 	 * Returns the cursor type for this cursor.
 	 *
-	 * Return: a #GdkCursorType
+	 * Returns: a #GdkCursorType
 	 *
 	 * Since: 2.22
 	 */
@@ -291,7 +291,7 @@ public class Cursor : ObjectG
 	/**
 	 * Returns the display on which the #GdkCursor is defined.
 	 *
-	 * Return: the #GdkDisplay associated to @cursor
+	 * Returns: the #GdkDisplay associated to @cursor
 	 *
 	 * Since: 2.2
 	 */
@@ -314,7 +314,7 @@ public class Cursor : ObjectG
 	 * on the cursor, GDK may not be able to obtain the image data. In this
 	 * case, %NULL is returned.
 	 *
-	 * Return: a #GdkPixbuf representing
+	 * Returns: a #GdkPixbuf representing
 	 *     @cursor, or %NULL
 	 *
 	 * Since: 2.8
@@ -344,7 +344,7 @@ public class Cursor : ObjectG
 	 *     yHot = Location to store the hotspot y position,
 	 *         or %NULL
 	 *
-	 * Return: a #cairo_surface_t
+	 * Returns: a #cairo_surface_t
 	 *     representing @cursor, or %NULL
 	 *
 	 * Since: 3.10
@@ -366,7 +366,7 @@ public class Cursor : ObjectG
 	 *
 	 * Deprecated: Use g_object_ref() instead
 	 *
-	 * Return: Same @cursor that was passed in
+	 * Returns: Same @cursor that was passed in
 	 */
 	public override Cursor doref()
 	{

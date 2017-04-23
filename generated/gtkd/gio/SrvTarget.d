@@ -94,7 +94,7 @@ public class SrvTarget
 	 *     priority = the target's priority
 	 *     weight = the target's weight
 	 *
-	 * Return: a new #GSrvTarget.
+	 * Returns: a new #GSrvTarget.
 	 *
 	 * Since: 2.22
 	 *
@@ -115,7 +115,7 @@ public class SrvTarget
 	/**
 	 * Copies @target
 	 *
-	 * Return: a copy of @target
+	 * Returns: a copy of @target
 	 *
 	 * Since: 2.22
 	 */
@@ -147,7 +147,7 @@ public class SrvTarget
 	 * check if it contains encoded Unicode segments, and use
 	 * g_hostname_to_unicode() to convert it if it does.)
 	 *
-	 * Return: @target's hostname
+	 * Returns: @target's hostname
 	 *
 	 * Since: 2.22
 	 */
@@ -159,7 +159,7 @@ public class SrvTarget
 	/**
 	 * Gets @target's port
 	 *
-	 * Return: @target's port
+	 * Returns: @target's port
 	 *
 	 * Since: 2.22
 	 */
@@ -173,7 +173,7 @@ public class SrvTarget
 	 * #GResolver already sorts the targets according to the algorithm in
 	 * RFC 2782.
 	 *
-	 * Return: @target's priority
+	 * Returns: @target's priority
 	 *
 	 * Since: 2.22
 	 */
@@ -187,7 +187,7 @@ public class SrvTarget
 	 * #GResolver already sorts the targets according to the algorithm in
 	 * RFC 2782.
 	 *
-	 * Return: @target's weight
+	 * Returns: @target's weight
 	 *
 	 * Since: 2.22
 	 */
@@ -202,7 +202,7 @@ public class SrvTarget
 	 * Params:
 	 *     targets = a #GList of #GSrvTarget
 	 *
-	 * Return: the head of the sorted list.
+	 * Returns: the head of the sorted list.
 	 *
 	 * Since: 2.22
 	 */

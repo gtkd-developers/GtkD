@@ -91,7 +91,7 @@ public class ValueList
 	 * Params:
 	 *     value = a #GValue of type #GST_TYPE_LIST
 	 *
-	 * Return: the number of values
+	 * Returns: the number of values
 	 */
 	public static uint getSize(Value value)
 	{
@@ -106,7 +106,7 @@ public class ValueList
 	 *     value = a #GValue of type #GST_TYPE_LIST
 	 *     index = index of value to get from the list
 	 *
-	 * Return: the value at the given index
+	 * Returns: the value at the given index
 	 */
 	public static Value getValue(Value value, uint index)
 	{

@@ -49,7 +49,7 @@ public struct UnixMountEntry
 	 * Params:
 	 *     mountPath = a mount path, e.g. `/media/disk` or `/usr`
 	 *
-	 * Return: %TRUE if @mount_path is considered an implementation detail
+	 * Returns: %TRUE if @mount_path is considered an implementation detail
 	 *     of the OS.
 	 */
 	public static bool isMountPathSystemInternal(string mountPath)
@@ -66,7 +66,7 @@ public struct UnixMountEntry
 	 *     mountPath = path for a possible unix mount.
 	 *     timeRead = guint64 to contain a timestamp.
 	 *
-	 * Return: a #GUnixMountEntry.
+	 * Returns: a #GUnixMountEntry.
 	 */
 	public static GUnixMountEntry* at(string mountPath, out ulong timeRead)
 	{
@@ -80,7 +80,7 @@ public struct UnixMountEntry
 	 *     mount1 = first #GUnixMountEntry to compare.
 	 *     mount2 = second #GUnixMountEntry to compare.
 	 *
-	 * Return: 1, 0 or -1 if @mount1 is greater than, equal to,
+	 * Returns: 1, 0 or -1 if @mount1 is greater than, equal to,
 	 *     or less than @mount2, respectively.
 	 */
 	public static int compare(GUnixMountEntry* mount1, GUnixMountEntry* mount2)
@@ -105,7 +105,7 @@ public struct UnixMountEntry
 	 * Params:
 	 *     mountEntry = a #GUnixMount.
 	 *
-	 * Return: a string containing the device path.
+	 * Returns: a string containing the device path.
 	 */
 	public static string getDevicePath(GUnixMountEntry* mountEntry)
 	{
@@ -118,7 +118,7 @@ public struct UnixMountEntry
 	 * Params:
 	 *     mountEntry = a #GUnixMount.
 	 *
-	 * Return: a string containing the file system type.
+	 * Returns: a string containing the file system type.
 	 */
 	public static string getFsType(GUnixMountEntry* mountEntry)
 	{
@@ -131,7 +131,7 @@ public struct UnixMountEntry
 	 * Params:
 	 *     mountEntry = input #GUnixMountEntry to get the mount path for.
 	 *
-	 * Return: the mount path for @mount_entry.
+	 * Returns: the mount path for @mount_entry.
 	 */
 	public static string getMountPath(GUnixMountEntry* mountEntry)
 	{
@@ -144,7 +144,7 @@ public struct UnixMountEntry
 	 * Params:
 	 *     mountEntry = a #GUnixMountEntry
 	 *
-	 * Return: %TRUE if @mount_entry is deemed to be ejectable.
+	 * Returns: %TRUE if @mount_entry is deemed to be ejectable.
 	 */
 	public static bool guessCanEject(GUnixMountEntry* mountEntry)
 	{
@@ -157,7 +157,7 @@ public struct UnixMountEntry
 	 * Params:
 	 *     mountEntry = a #GUnixMountEntry
 	 *
-	 * Return: a #GIcon
+	 * Returns: a #GIcon
 	 */
 	public static IconIF guessIcon(GUnixMountEntry* mountEntry)
 	{
@@ -178,7 +178,7 @@ public struct UnixMountEntry
 	 * Params:
 	 *     mountEntry = a #GUnixMountEntry
 	 *
-	 * Return: A newly allocated string that must
+	 * Returns: A newly allocated string that must
 	 *     be freed with g_free()
 	 */
 	public static string guessName(GUnixMountEntry* mountEntry)
@@ -195,7 +195,7 @@ public struct UnixMountEntry
 	 * Params:
 	 *     mountEntry = a #GUnixMountEntry
 	 *
-	 * Return: %TRUE if @mount_entry is deemed to be displayable.
+	 * Returns: %TRUE if @mount_entry is deemed to be displayable.
 	 */
 	public static bool guessShouldDisplay(GUnixMountEntry* mountEntry)
 	{
@@ -208,7 +208,7 @@ public struct UnixMountEntry
 	 * Params:
 	 *     mountEntry = a #GUnixMountEntry
 	 *
-	 * Return: a #GIcon
+	 * Returns: a #GIcon
 	 *
 	 * Since: 2.34
 	 */
@@ -230,7 +230,7 @@ public struct UnixMountEntry
 	 * Params:
 	 *     mountEntry = a #GUnixMount.
 	 *
-	 * Return: %TRUE if @mount_entry is read only.
+	 * Returns: %TRUE if @mount_entry is read only.
 	 */
 	public static bool isReadonly(GUnixMountEntry* mountEntry)
 	{
@@ -243,7 +243,7 @@ public struct UnixMountEntry
 	 * Params:
 	 *     mountEntry = a #GUnixMount.
 	 *
-	 * Return: %TRUE if the unix mount is for a system path.
+	 * Returns: %TRUE if the unix mount is for a system path.
 	 */
 	public static bool isSystemInternal(GUnixMountEntry* mountEntry)
 	{
@@ -256,7 +256,7 @@ public struct UnixMountEntry
 	 * Params:
 	 *     time = guint64 to contain a timestamp.
 	 *
-	 * Return: %TRUE if the mount points have changed since @time.
+	 * Returns: %TRUE if the mount points have changed since @time.
 	 */
 	public static bool pointsChangedSince(ulong time)
 	{
@@ -272,7 +272,7 @@ public struct UnixMountEntry
 	 * Params:
 	 *     timeRead = guint64 to contain a timestamp.
 	 *
-	 * Return: a #GList of the UNIX mountpoints.
+	 * Returns: a #GList of the UNIX mountpoints.
 	 */
 	public static ListG mountPointsGet(out ulong timeRead)
 	{
@@ -292,7 +292,7 @@ public struct UnixMountEntry
 	 * Params:
 	 *     time = guint64 to contain a timestamp.
 	 *
-	 * Return: %TRUE if the mounts have changed since @time.
+	 * Returns: %TRUE if the mounts have changed since @time.
 	 */
 	public static bool mountsChangedSince(ulong time)
 	{
@@ -308,7 +308,7 @@ public struct UnixMountEntry
 	 * Params:
 	 *     timeRead = guint64 to contain a timestamp, or %NULL
 	 *
-	 * Return: a #GList of the UNIX mounts.
+	 * Returns: a #GList of the UNIX mounts.
 	 */
 	public static ListG mountsGet(out ulong timeRead)
 	{

@@ -72,7 +72,7 @@ public class FileAttributeInfoList
 	/**
 	 * Creates a new file attribute info list.
 	 *
-	 * Return: a #GFileAttributeInfoList.
+	 * Returns: a #GFileAttributeInfoList.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -105,7 +105,7 @@ public class FileAttributeInfoList
 	/**
 	 * Makes a duplicate of a file attribute info list.
 	 *
-	 * Return: a copy of the given @list.
+	 * Returns: a copy of the given @list.
 	 */
 	public FileAttributeInfoList dup()
 	{
@@ -125,7 +125,7 @@ public class FileAttributeInfoList
 	 * Params:
 	 *     name = the name of the attribute to lookup.
 	 *
-	 * Return: a #GFileAttributeInfo for the @name, or %NULL if an
+	 * Returns: a #GFileAttributeInfo for the @name, or %NULL if an
 	 *     attribute isn't found.
 	 */
 	public GFileAttributeInfo* lookup(string name)
@@ -136,7 +136,7 @@ public class FileAttributeInfoList
 	/**
 	 * References a file attribute info list.
 	 *
-	 * Return: #GFileAttributeInfoList or %NULL on error.
+	 * Returns: #GFileAttributeInfoList or %NULL on error.
 	 */
 	public FileAttributeInfoList doref()
 	{

@@ -121,7 +121,7 @@ public class SubprocessLauncher : ObjectG
 	 * Params:
 	 *     variable = the environment variable to get
 	 *
-	 * Return: the value of the environment variable, %NULL if unset
+	 * Returns: the value of the environment variable, %NULL if unset
 	 *
 	 * Since: 2.40
 	 */
@@ -319,7 +319,7 @@ public class SubprocessLauncher : ObjectG
 	 * Params:
 	 *     argv = Command line arguments
 	 *
-	 * Return: A new #GSubprocess, or %NULL on error (and @error will be set)
+	 * Returns: A new #GSubprocess, or %NULL on error (and @error will be set)
 	 *
 	 * Since: 2.40
 	 *

@@ -88,7 +88,7 @@ public class GestureDrag : GestureSingle
 	 * Params:
 	 *     widget = a #GtkWidget
 	 *
-	 * Return: a newly created #GtkGestureDrag
+	 * Returns: a newly created #GtkGestureDrag
 	 *
 	 * Since: 3.14
 	 *
@@ -115,7 +115,7 @@ public class GestureDrag : GestureSingle
 	 *     x = X offset for the current point
 	 *     y = Y offset for the current point
 	 *
-	 * Return: %TRUE if the gesture is active
+	 * Returns: %TRUE if the gesture is active
 	 *
 	 * Since: 3.14
 	 */
@@ -133,7 +133,7 @@ public class GestureDrag : GestureSingle
 	 *     x = X coordinate for the drag start point
 	 *     y = Y coordinate for the drag start point
 	 *
-	 * Return: %TRUE if the gesture is active
+	 * Returns: %TRUE if the gesture is active
 	 *
 	 * Since: 3.14
 	 */

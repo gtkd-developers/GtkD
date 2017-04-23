@@ -100,7 +100,7 @@ public class Layout : Container, ScrollableIF
 	 *     hadjustment = horizontal scroll adjustment, or %NULL
 	 *     vadjustment = vertical scroll adjustment, or %NULL
 	 *
-	 * Return: a new #GtkLayout
+	 * Returns: a new #GtkLayout
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -119,7 +119,7 @@ public class Layout : Container, ScrollableIF
 	/**
 	 * Retrieve the bin window of the layout used for drawing operations.
 	 *
-	 * Return: a #GdkWindow
+	 * Returns: a #GdkWindow
 	 *
 	 * Since: 2.14
 	 */
@@ -145,7 +145,7 @@ public class Layout : Container, ScrollableIF
 	 *
 	 * Deprecated: Use gtk_scrollable_get_hadjustment()
 	 *
-	 * Return: horizontal scroll adjustment
+	 * Returns: horizontal scroll adjustment
 	 */
 	public Adjustment getHadjustment()
 	{
@@ -185,7 +185,7 @@ public class Layout : Container, ScrollableIF
 	 *
 	 * Deprecated: Use gtk_scrollable_get_vadjustment()
 	 *
-	 * Return: vertical scroll adjustment
+	 * Returns: vertical scroll adjustment
 	 */
 	public Adjustment getVadjustment()
 	{

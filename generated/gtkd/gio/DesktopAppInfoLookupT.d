@@ -60,7 +60,7 @@ public template DesktopAppInfoLookupT(TStruct)
 	 * Params:
 	 *     uriScheme = a string containing a URI scheme.
 	 *
-	 * Return: #GAppInfo for given @uri_scheme or %NULL on error.
+	 * Returns: #GAppInfo for given @uri_scheme or %NULL on error.
 	 */
 	public AppInfoIF getDefaultForUriScheme(string uriScheme)
 	{

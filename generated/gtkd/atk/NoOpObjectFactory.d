@@ -79,7 +79,7 @@ public class NoOpObjectFactory : ObjectFactory
 	 * Creates an instance of an #AtkObjectFactory which generates primitive
 	 * (non-functioning) #AtkObjects.
 	 *
-	 * Return: an instance of an #AtkObjectFactory
+	 * Returns: an instance of an #AtkObjectFactory
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

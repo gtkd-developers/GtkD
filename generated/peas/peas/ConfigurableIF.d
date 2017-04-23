@@ -52,7 +52,7 @@ public interface ConfigurableIF{
 	 *
 	 * This method should always return a valid #GtkWidget instance, never %NULL.
 	 *
-	 * Return: A #GtkWidget used for configuration.
+	 * Returns: A #GtkWidget used for configuration.
 	 */
 	public Widget createConfigureWidget();
 }

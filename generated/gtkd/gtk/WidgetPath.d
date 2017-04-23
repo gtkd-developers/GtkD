@@ -131,7 +131,7 @@ public class WidgetPath
 	/**
 	 * Returns an empty widget path.
 	 *
-	 * Return: A newly created, empty, #GtkWidgetPath
+	 * Returns: A newly created, empty, #GtkWidgetPath
 	 *
 	 * Since: 3.0
 	 *
@@ -158,7 +158,7 @@ public class WidgetPath
 	 * Params:
 	 *     widget = the widget to append to the widget path
 	 *
-	 * Return: the position where the data was inserted
+	 * Returns: the position where the data was inserted
 	 *
 	 * Since: 3.2
 	 */
@@ -173,7 +173,7 @@ public class WidgetPath
 	 * Params:
 	 *     type = widget type to append
 	 *
-	 * Return: the position where the element was inserted
+	 * Returns: the position where the element was inserted
 	 *
 	 * Since: 3.0
 	 */
@@ -198,7 +198,7 @@ public class WidgetPath
 	 *     siblingIndex = index into @siblings for where the added element is
 	 *         positioned.
 	 *
-	 * Return: the position where the element was inserted.
+	 * Returns: the position where the element was inserted.
 	 *
 	 * Since: 3.2
 	 */
@@ -210,7 +210,7 @@ public class WidgetPath
 	/**
 	 * Returns a copy of @path
 	 *
-	 * Return: a copy of @path
+	 * Returns: a copy of @path
 	 *
 	 * Since: 3.0
 	 */
@@ -241,7 +241,7 @@ public class WidgetPath
 	 * Returns the topmost object type, that is, the object type this path
 	 * is representing.
 	 *
-	 * Return: The object type
+	 * Returns: The object type
 	 *
 	 * Since: 3.0
 	 */
@@ -257,7 +257,7 @@ public class WidgetPath
 	 * Params:
 	 *     type = widget type to check in parents
 	 *
-	 * Return: %TRUE if any parent is of type @type
+	 * Returns: %TRUE if any parent is of type @type
 	 *
 	 * Since: 3.0
 	 */
@@ -273,7 +273,7 @@ public class WidgetPath
 	 * Params:
 	 *     type = widget type to match
 	 *
-	 * Return: %TRUE if the widget represented by @path is of type @type
+	 * Returns: %TRUE if the widget represented by @path is of type @type
 	 *
 	 * Since: 3.0
 	 */
@@ -358,7 +358,7 @@ public class WidgetPath
 	 * Params:
 	 *     pos = position to get the widget name for, -1 for the path head
 	 *
-	 * Return: The widget name, or %NULL if none was set.
+	 * Returns: The widget name, or %NULL if none was set.
 	 */
 	public string iterGetName(int pos)
 	{
@@ -372,7 +372,7 @@ public class WidgetPath
 	 * Params:
 	 *     pos = position to get the object name for, -1 for the path head
 	 *
-	 * Return: the name or %NULL
+	 * Returns: the name or %NULL
 	 *
 	 * Since: 3.20
 	 */
@@ -388,7 +388,7 @@ public class WidgetPath
 	 * Params:
 	 *     pos = position to get the object type for, -1 for the path head
 	 *
-	 * Return: a widget type
+	 * Returns: a widget type
 	 *
 	 * Since: 3.0
 	 */
@@ -406,7 +406,7 @@ public class WidgetPath
 	 * Params:
 	 *     pos = position to get the sibling index for, -1 for the path head
 	 *
-	 * Return: 0 or the index into the list of siblings for the element at @pos.
+	 * Returns: 0 or the index into the list of siblings for the element at @pos.
 	 */
 	public uint iterGetSiblingIndex(int pos)
 	{
@@ -420,7 +420,7 @@ public class WidgetPath
 	 * Params:
 	 *     pos = position to get the siblings for, -1 for the path head
 	 *
-	 * Return: %NULL or the list of siblings for the element at @pos.
+	 * Returns: %NULL or the list of siblings for the element at @pos.
 	 */
 	public WidgetPath iterGetSiblings(int pos)
 	{
@@ -442,7 +442,7 @@ public class WidgetPath
 	 * Params:
 	 *     pos = position to get the state for, -1 for the path head
 	 *
-	 * Return: The state flags
+	 * Returns: The state flags
 	 *
 	 * Since: 3.14
 	 */
@@ -459,7 +459,7 @@ public class WidgetPath
 	 *     pos = position to query, -1 for the path head
 	 *     name = class name
 	 *
-	 * Return: %TRUE if the class @name is defined for the widget at @pos
+	 * Returns: %TRUE if the class @name is defined for the widget at @pos
 	 *
 	 * Since: 3.0
 	 */
@@ -476,7 +476,7 @@ public class WidgetPath
 	 *     pos = position to query, -1 for the path head
 	 *     name = a widget name
 	 *
-	 * Return: %TRUE if the widget at @pos has this name
+	 * Returns: %TRUE if the widget at @pos has this name
 	 *
 	 * Since: 3.0
 	 */
@@ -493,7 +493,7 @@ public class WidgetPath
 	 *     pos = position to query, -1 for the path head
 	 *     qname = class name as a #GQuark
 	 *
-	 * Return: %TRUE if the widget at @pos has the class defined.
+	 * Returns: %TRUE if the widget at @pos has the class defined.
 	 *
 	 * Since: 3.0
 	 */
@@ -510,7 +510,7 @@ public class WidgetPath
 	 *     pos = position to query, -1 for the path head
 	 *     qname = widget name as a #GQuark
 	 *
-	 * Return: %TRUE if the widget at @pos has this name
+	 * Returns: %TRUE if the widget at @pos has this name
 	 *
 	 * Since: 3.0
 	 */
@@ -530,7 +530,7 @@ public class WidgetPath
 	 *     qname = region name as a #GQuark
 	 *     flags = return location for the region flags
 	 *
-	 * Return: %TRUE if the widget at @pos has the region defined.
+	 * Returns: %TRUE if the widget at @pos has the region defined.
 	 *
 	 * Since: 3.0
 	 */
@@ -550,7 +550,7 @@ public class WidgetPath
 	 *     name = region name
 	 *     flags = return location for the region flags
 	 *
-	 * Return: %TRUE if the class @name is defined for the widget at @pos
+	 * Returns: %TRUE if the class @name is defined for the widget at @pos
 	 *
 	 * Since: 3.0
 	 */
@@ -566,7 +566,7 @@ public class WidgetPath
 	 * Params:
 	 *     pos = position to query, -1 for the path head
 	 *
-	 * Return: The list of
+	 * Returns: The list of
 	 *     classes, This is a list of strings, the #GSList contents
 	 *     are owned by GTK+, but you should use g_slist_free() to
 	 *     free the list itself.
@@ -594,7 +594,7 @@ public class WidgetPath
 	 * Params:
 	 *     pos = position to query, -1 for the path head
 	 *
-	 * Return: The list of
+	 * Returns: The list of
 	 *     regions, This is a list of strings, the #GSList contents
 	 *     are owned by GTK+, but you should use g_slist_free() to
 	 *     free the list itself.
@@ -727,7 +727,7 @@ public class WidgetPath
 	 * Returns the number of #GtkWidget #GTypes between the represented
 	 * widget and its topmost container.
 	 *
-	 * Return: the number of elements in the path
+	 * Returns: the number of elements in the path
 	 *
 	 * Since: 3.0
 	 */
@@ -752,7 +752,7 @@ public class WidgetPath
 	/**
 	 * Increments the reference count on @path.
 	 *
-	 * Return: @path itself.
+	 * Returns: @path itself.
 	 *
 	 * Since: 3.2
 	 */
@@ -776,7 +776,7 @@ public class WidgetPath
 	 * The main use of this code is for debugging purposes, so that you can
 	 * g_print() the path or dump it in a gdb session.
 	 *
-	 * Return: A new string describing @path.
+	 * Returns: A new string describing @path.
 	 *
 	 * Since: 3.2
 	 */

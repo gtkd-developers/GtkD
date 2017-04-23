@@ -144,7 +144,7 @@ public class RecMutex
 	 * by another thread, it immediately returns %FALSE. Otherwise
 	 * it locks @rec_mutex and returns %TRUE.
 	 *
-	 * Return: %TRUE if @rec_mutex could be locked
+	 * Returns: %TRUE if @rec_mutex could be locked
 	 *
 	 * Since: 2.32
 	 */

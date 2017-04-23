@@ -78,7 +78,7 @@ public class FlowBoxChild : Bin
 	 * Creates a new #GtkFlowBoxChild, to be used as a child
 	 * of a #GtkFlowBox.
 	 *
-	 * Return: a new #GtkFlowBoxChild
+	 * Returns: a new #GtkFlowBoxChild
 	 *
 	 * Since: 3.12
 	 *
@@ -124,7 +124,7 @@ public class FlowBoxChild : Bin
 	/**
 	 * Gets the current index of the @child in its #GtkFlowBox container.
 	 *
-	 * Return: the index of the @child, or -1 if the @child is not
+	 * Returns: the index of the @child, or -1 if the @child is not
 	 *     in a flow box.
 	 *
 	 * Since: 3.12
@@ -138,7 +138,7 @@ public class FlowBoxChild : Bin
 	 * Returns whether the @child is currently selected in its
 	 * #GtkFlowBox container.
 	 *
-	 * Return: %TRUE if @child is selected
+	 * Returns: %TRUE if @child is selected
 	 *
 	 * Since: 3.12
 	 */

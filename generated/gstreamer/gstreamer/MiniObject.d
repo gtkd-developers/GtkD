@@ -89,7 +89,7 @@ public class MiniObject
 	 *
 	 * MT safe
 	 *
-	 * Return: the new mini-object.
+	 * Returns: the new mini-object.
 	 */
 	public MiniObject copy()
 	{
@@ -110,7 +110,7 @@ public class MiniObject
 	 * Params:
 	 *     quark = A #GQuark, naming the user data pointer
 	 *
-	 * Return: The user data pointer set, or
+	 * Returns: The user data pointer set, or
 	 *     %NULL
 	 */
 	public void* getQdata(GQuark quark)
@@ -146,7 +146,7 @@ public class MiniObject
 	 * Modification of a mini-object should only be done after verifying that it
 	 * is writable.
 	 *
-	 * Return: %TRUE if the object is writable.
+	 * Returns: %TRUE if the object is writable.
 	 */
 	public bool isWritable()
 	{
@@ -159,7 +159,7 @@ public class MiniObject
 	 * Params:
 	 *     flags = #GstLockFlags
 	 *
-	 * Return: %TRUE if @object could be locked.
+	 * Returns: %TRUE if @object could be locked.
 	 */
 	public bool lock(GstLockFlags flags)
 	{
@@ -173,7 +173,7 @@ public class MiniObject
 	 *
 	 * MT safe
 	 *
-	 * Return: a mini-object (possibly the same pointer) that
+	 * Returns: a mini-object (possibly the same pointer) that
 	 *     is writable.
 	 */
 	public MiniObject makeWritable()
@@ -198,7 +198,7 @@ public class MiniObject
 	 * of memcpy operations in a pipeline, especially if the miniobject
 	 * is a #GstBuffer.
 	 *
-	 * Return: the mini-object.
+	 * Returns: the mini-object.
 	 */
 	public MiniObject doref()
 	{
@@ -245,7 +245,7 @@ public class MiniObject
 	 * Params:
 	 *     quark = A #GQuark, naming the user data pointer
 	 *
-	 * Return: The user data pointer set, or
+	 * Returns: The user data pointer set, or
 	 *     %NULL
 	 */
 	public void* stealQdata(GQuark quark)
@@ -314,7 +314,7 @@ public class MiniObject
 	 *         mini-object to be replaced
 	 *     newdata = pointer to new mini-object
 	 *
-	 * Return: %TRUE if @newdata was different from @olddata
+	 * Returns: %TRUE if @newdata was different from @olddata
 	 */
 	public static bool replace(ref MiniObject olddata, MiniObject newdata)
 	{
@@ -335,7 +335,7 @@ public class MiniObject
 	 *     olddata = pointer to a pointer to a mini-object to
 	 *         be stolen
 	 *
-	 * Return: the #GstMiniObject at @oldata
+	 * Returns: the #GstMiniObject at @oldata
 	 */
 	public static MiniObject steal(ref MiniObject olddata)
 	{
@@ -366,7 +366,7 @@ public class MiniObject
 	 *         be replaced
 	 *     newdata = pointer to new mini-object
 	 *
-	 * Return: %TRUE if @newdata was different from @olddata
+	 * Returns: %TRUE if @newdata was different from @olddata
 	 */
 	public static bool take(ref MiniObject olddata, MiniObject newdata)
 	{

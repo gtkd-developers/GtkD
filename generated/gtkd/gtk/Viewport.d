@@ -107,7 +107,7 @@ public class Viewport : Bin, ScrollableIF
 	 *     hadjustment = horizontal adjustment
 	 *     vadjustment = vertical adjustment
 	 *
-	 * Return: a new #GtkViewport
+	 * Returns: a new #GtkViewport
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -126,7 +126,7 @@ public class Viewport : Bin, ScrollableIF
 	/**
 	 * Gets the bin window of the #GtkViewport.
 	 *
-	 * Return: a #GdkWindow
+	 * Returns: a #GdkWindow
 	 *
 	 * Since: 2.20
 	 */
@@ -147,7 +147,7 @@ public class Viewport : Bin, ScrollableIF
 	 *
 	 * Deprecated: Use gtk_scrollable_get_hadjustment()
 	 *
-	 * Return: the horizontal adjustment of @viewport.
+	 * Returns: the horizontal adjustment of @viewport.
 	 */
 	public Adjustment getHadjustment()
 	{
@@ -165,7 +165,7 @@ public class Viewport : Bin, ScrollableIF
 	 * Gets the shadow type of the #GtkViewport. See
 	 * gtk_viewport_set_shadow_type().
 	 *
-	 * Return: the shadow type
+	 * Returns: the shadow type
 	 */
 	public GtkShadowType getShadowType()
 	{
@@ -177,7 +177,7 @@ public class Viewport : Bin, ScrollableIF
 	 *
 	 * Deprecated: Use gtk_scrollable_get_vadjustment()
 	 *
-	 * Return: the vertical adjustment of @viewport.
+	 * Returns: the vertical adjustment of @viewport.
 	 */
 	public Adjustment getVadjustment()
 	{
@@ -194,7 +194,7 @@ public class Viewport : Bin, ScrollableIF
 	/**
 	 * Gets the view window of the #GtkViewport.
 	 *
-	 * Return: a #GdkWindow
+	 * Returns: a #GdkWindow
 	 *
 	 * Since: 2.22
 	 */

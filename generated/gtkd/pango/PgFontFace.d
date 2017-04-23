@@ -79,7 +79,7 @@ public class PgFontFace : ObjectG
 	 * a #PangoFontFace. The size field of the resulting font description
 	 * will be unset.
 	 *
-	 * Return: a newly-created #PangoFontDescription structure
+	 * Returns: a newly-created #PangoFontDescription structure
 	 *     holding the description of the face. Use pango_font_description_free()
 	 *     to free the result.
 	 */
@@ -101,7 +101,7 @@ public class PgFontFace : ObjectG
 	 * name is unique among all faces in the family and is suitable
 	 * for displaying to users.
 	 *
-	 * Return: the face name for the face. This string is
+	 * Returns: the face name for the face. This string is
 	 *     owned by the face object and must not be modified or freed.
 	 */
 	public string getFaceName()
@@ -114,7 +114,7 @@ public class PgFontFace : ObjectG
 	 * font rendering engine from another face, perhaps by shearing, emboldening,
 	 * or lightening it.
 	 *
-	 * Return: whether @face is synthesized.
+	 * Returns: whether @face is synthesized.
 	 *
 	 * Since: 1.18
 	 */

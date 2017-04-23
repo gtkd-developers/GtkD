@@ -90,7 +90,7 @@ public class TargetEntry
 	 *     flags = Set of flags, see #GtkTargetFlags
 	 *     info = an ID that will be passed back to the application
 	 *
-	 * Return: a pointer to a new #GtkTargetEntry.
+	 * Returns: a pointer to a new #GtkTargetEntry.
 	 *     Free with gtk_target_entry_free()
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -110,7 +110,7 @@ public class TargetEntry
 	/**
 	 * Makes a copy of a #GtkTargetEntry and its data.
 	 *
-	 * Return: a pointer to a copy of @data.
+	 * Returns: a pointer to a copy of @data.
 	 *     Free with gtk_target_entry_free()
 	 */
 	public TargetEntry copy()

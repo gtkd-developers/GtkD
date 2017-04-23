@@ -82,7 +82,7 @@ public class StyleSchemeChooserWidget : Bin, StyleSchemeChooserIF
 	/**
 	 * Creates a new #GtkSourceStyleSchemeChooserWidget.
 	 *
-	 * Return: a new  #GtkSourceStyleSchemeChooserWidget.
+	 * Returns: a new  #GtkSourceStyleSchemeChooserWidget.
 	 *
 	 * Since: 3.16
 	 *

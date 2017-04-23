@@ -120,7 +120,7 @@ public class ProgressBar : Widget, OrientableIF
 	/**
 	 * Creates a new #GtkProgressBar.
 	 *
-	 * Return: a #GtkProgressBar.
+	 * Returns: a #GtkProgressBar.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -140,7 +140,7 @@ public class ProgressBar : Widget, OrientableIF
 	 * Returns the ellipsizing position of the progress bar.
 	 * See gtk_progress_bar_set_ellipsize().
 	 *
-	 * Return: #PangoEllipsizeMode
+	 * Returns: #PangoEllipsizeMode
 	 *
 	 * Since: 2.6
 	 */
@@ -152,7 +152,7 @@ public class ProgressBar : Widget, OrientableIF
 	/**
 	 * Returns the current fraction of the task that’s been completed.
 	 *
-	 * Return: a fraction from 0.0 to 1.0
+	 * Returns: a fraction from 0.0 to 1.0
 	 */
 	public double getFraction()
 	{
@@ -162,7 +162,7 @@ public class ProgressBar : Widget, OrientableIF
 	/**
 	 * Gets the value set by gtk_progress_bar_set_inverted().
 	 *
-	 * Return: %TRUE if the progress bar is inverted
+	 * Returns: %TRUE if the progress bar is inverted
 	 */
 	public bool getInverted()
 	{
@@ -172,7 +172,7 @@ public class ProgressBar : Widget, OrientableIF
 	/**
 	 * Retrieves the pulse step set with gtk_progress_bar_set_pulse_step().
 	 *
-	 * Return: a fraction from 0.0 to 1.0
+	 * Returns: a fraction from 0.0 to 1.0
 	 */
 	public double getPulseStep()
 	{
@@ -183,7 +183,7 @@ public class ProgressBar : Widget, OrientableIF
 	 * Gets the value of the #GtkProgressBar:show-text property.
 	 * See gtk_progress_bar_set_show_text().
 	 *
-	 * Return: %TRUE if text is shown in the progress bar
+	 * Returns: %TRUE if text is shown in the progress bar
 	 *
 	 * Since: 3.0
 	 */
@@ -198,7 +198,7 @@ public class ProgressBar : Widget, OrientableIF
 	 * to the text, not a copy of it, so will become invalid
 	 * if you change the text in the progress bar.
 	 *
-	 * Return: text, or %NULL; this string is owned by the widget
+	 * Returns: text, or %NULL; this string is owned by the widget
 	 *     and should not be modified or freed.
 	 */
 	public string getText()

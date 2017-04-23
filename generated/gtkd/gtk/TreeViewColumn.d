@@ -162,7 +162,7 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	/**
 	 * Creates a new #GtkTreeViewColumn.
 	 *
-	 * Return: A newly created #GtkTreeViewColumn.
+	 * Returns: A newly created #GtkTreeViewColumn.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -184,7 +184,7 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	 * Params:
 	 *     area = the #GtkCellArea that the newly created column should use to layout cells.
 	 *
-	 * Return: A newly created #GtkTreeViewColumn.
+	 * Returns: A newly created #GtkTreeViewColumn.
 	 *
 	 * Since: 3.0
 	 *
@@ -214,7 +214,7 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	 *     width = return location for the width of @cell,
 	 *         may be %NULL
 	 *
-	 * Return: %TRUE if @cell belongs to @tree_column.
+	 * Returns: %TRUE if @cell belongs to @tree_column.
 	 */
 	public bool cellGetPosition(CellRenderer cellRenderer, out int xOffset, out int width)
 	{
@@ -242,7 +242,7 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	 * For this to be meaningful, you must first initialize the cells with
 	 * gtk_tree_view_column_cell_set_cell_data()
 	 *
-	 * Return: %TRUE, if any of the cells packed into the @tree_column are currently visible
+	 * Returns: %TRUE, if any of the cells packed into the @tree_column are currently visible
 	 */
 	public bool cellIsVisible()
 	{
@@ -293,7 +293,7 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	 * Returns the current x alignment of @tree_column.  This value can range
 	 * between 0.0 and 1.0.
 	 *
-	 * Return: The current alignent of @tree_column.
+	 * Returns: The current alignent of @tree_column.
 	 */
 	public float getAlignment()
 	{
@@ -303,7 +303,7 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	/**
 	 * Returns %TRUE if the user can click on the header for the column.
 	 *
-	 * Return: %TRUE if user can click the column header.
+	 * Returns: %TRUE if user can click the column header.
 	 */
 	public bool getClickable()
 	{
@@ -313,7 +313,7 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	/**
 	 * Returns %TRUE if the column expands to fill available space.
 	 *
-	 * Return: %TRUE if the column expands to fill available space.
+	 * Returns: %TRUE if the column expands to fill available space.
 	 *
 	 * Since: 2.4
 	 */
@@ -326,7 +326,7 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	 * Gets the fixed width of the column.  This may not be the actual displayed
 	 * width of the column; for that, use gtk_tree_view_column_get_width().
 	 *
-	 * Return: The fixed width of the column.
+	 * Returns: The fixed width of the column.
 	 */
 	public int getFixedWidth()
 	{
@@ -337,7 +337,7 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	 * Returns the maximum width in pixels of the @tree_column, or -1 if no maximum
 	 * width is set.
 	 *
-	 * Return: The maximum width of the @tree_column.
+	 * Returns: The maximum width of the @tree_column.
 	 */
 	public int getMaxWidth()
 	{
@@ -348,7 +348,7 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	 * Returns the minimum width in pixels of the @tree_column, or -1 if no minimum
 	 * width is set.
 	 *
-	 * Return: The minimum width of the @tree_column.
+	 * Returns: The minimum width of the @tree_column.
 	 */
 	public int getMinWidth()
 	{
@@ -358,7 +358,7 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	/**
 	 * Returns %TRUE if the @tree_column can be reordered by the user.
 	 *
-	 * Return: %TRUE if the @tree_column can be reordered by the user.
+	 * Returns: %TRUE if the @tree_column can be reordered by the user.
 	 */
 	public bool getReorderable()
 	{
@@ -368,7 +368,7 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	/**
 	 * Returns %TRUE if the @tree_column can be resized by the end user.
 	 *
-	 * Return: %TRUE, if the @tree_column can be resized.
+	 * Returns: %TRUE, if the @tree_column can be resized.
 	 */
 	public bool getResizable()
 	{
@@ -378,7 +378,7 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	/**
 	 * Returns the current type of @tree_column.
 	 *
-	 * Return: The type of @tree_column.
+	 * Returns: The type of @tree_column.
 	 */
 	public GtkTreeViewColumnSizing getSizing()
 	{
@@ -390,7 +390,7 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	 * column is selected for sorting.
 	 * See gtk_tree_view_column_set_sort_column_id().
 	 *
-	 * Return: the current @sort_column_id for this column, or -1 if
+	 * Returns: the current @sort_column_id for this column, or -1 if
 	 *     this column can’t be used for sorting.
 	 */
 	public int getSortColumnId()
@@ -401,7 +401,7 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	/**
 	 * Gets the value set by gtk_tree_view_column_set_sort_indicator().
 	 *
-	 * Return: whether the sort indicator arrow is displayed
+	 * Returns: whether the sort indicator arrow is displayed
 	 */
 	public bool getSortIndicator()
 	{
@@ -411,7 +411,7 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	/**
 	 * Gets the value set by gtk_tree_view_column_set_sort_order().
 	 *
-	 * Return: the sort order the sort indicator is indicating
+	 * Returns: the sort order the sort indicator is indicating
 	 */
 	public GtkSortType getSortOrder()
 	{
@@ -421,7 +421,7 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	/**
 	 * Returns the spacing of @tree_column.
 	 *
-	 * Return: the spacing of @tree_column.
+	 * Returns: the spacing of @tree_column.
 	 */
 	public int getSpacing()
 	{
@@ -431,7 +431,7 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	/**
 	 * Returns the title of the widget.
 	 *
-	 * Return: the title of the column. This string should not be
+	 * Returns: the title of the column. This string should not be
 	 *     modified or freed.
 	 */
 	public string getTitle()
@@ -442,7 +442,7 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	/**
 	 * Returns %TRUE if @tree_column is visible.
 	 *
-	 * Return: whether the column is visible or not.  If it is visible, then
+	 * Returns: whether the column is visible or not.  If it is visible, then
 	 *     the tree will show the column.
 	 */
 	public bool getVisible()
@@ -454,7 +454,7 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	 * Returns the #GtkWidget in the button on the column header.
 	 * If a custom widget has not been set then %NULL is returned.
 	 *
-	 * Return: The #GtkWidget in the column
+	 * Returns: The #GtkWidget in the column
 	 *     header, or %NULL
 	 */
 	public Widget getWidget()
@@ -472,7 +472,7 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	/**
 	 * Returns the current size of @tree_column in pixels.
 	 *
-	 * Return: The current width of @tree_column.
+	 * Returns: The current width of @tree_column.
 	 */
 	public int getWidth()
 	{
@@ -482,7 +482,7 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	/**
 	 * Returns the current X offset of @tree_column in pixels.
 	 *
-	 * Return: The current X offset of @tree_column.
+	 * Returns: The current X offset of @tree_column.
 	 *
 	 * Since: 3.2
 	 */

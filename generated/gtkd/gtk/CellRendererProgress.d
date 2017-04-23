@@ -84,7 +84,7 @@ public class CellRendererProgress : CellRenderer, OrientableIF
 	/**
 	 * Creates a new #GtkCellRendererProgress.
 	 *
-	 * Return: the new cell renderer
+	 * Returns: the new cell renderer
 	 *
 	 * Since: 2.6
 	 *

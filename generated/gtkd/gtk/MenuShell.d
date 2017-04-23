@@ -214,7 +214,7 @@ public class MenuShell : Container
 	 * The parent menu shell of a submenu is the #GtkMenu or #GtkMenuBar
 	 * from which it was opened up.
 	 *
-	 * Return: the parent #GtkMenuShell
+	 * Returns: the parent #GtkMenuShell
 	 *
 	 * Since: 3.0
 	 */
@@ -233,7 +233,7 @@ public class MenuShell : Container
 	/**
 	 * Gets the currently selected item.
 	 *
-	 * Return: the currently selected item
+	 * Returns: the currently selected item
 	 *
 	 * Since: 3.0
 	 */
@@ -252,7 +252,7 @@ public class MenuShell : Container
 	/**
 	 * Returns %TRUE if the menu shell will take the keyboard focus on popup.
 	 *
-	 * Return: %TRUE if the menu shell will take the keyboard focus on popup.
+	 * Returns: %TRUE if the menu shell will take the keyboard focus on popup.
 	 *
 	 * Since: 2.8
 	 */
@@ -725,7 +725,7 @@ public class MenuShell : Container
 	 * Params:
 	 *     distance = +1 to move to the next item, -1 to move to the previous
 	 *
-	 * Return: %TRUE to stop the signal emission, %FALSE to continue
+	 * Returns: %TRUE to stop the signal emission, %FALSE to continue
 	 *
 	 * Since: 2.12
 	 */

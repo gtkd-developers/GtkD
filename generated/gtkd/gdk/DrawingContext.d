@@ -91,7 +91,7 @@ public class DrawingContext : ObjectG
 	 * #GdkDrawingContext is valid, that is between a call to
 	 * gdk_window_begin_draw_frame() and gdk_window_end_draw_frame().
 	 *
-	 * Return: a Cairo context to be used to draw
+	 * Returns: a Cairo context to be used to draw
 	 *     the contents of the #GdkWindow. The context is owned by the
 	 *     #GdkDrawingContext and should not be destroyed
 	 *
@@ -112,7 +112,7 @@ public class DrawingContext : ObjectG
 	/**
 	 * Retrieves a copy of the clip region used when creating the @context.
 	 *
-	 * Return: a Cairo region
+	 * Returns: a Cairo region
 	 *
 	 * Since: 3.22
 	 */
@@ -131,7 +131,7 @@ public class DrawingContext : ObjectG
 	/**
 	 * Retrieves the window that created the drawing @context.
 	 *
-	 * Return: a #GdkWindow
+	 * Returns: a #GdkWindow
 	 *
 	 * Since: 3.22
 	 */
@@ -150,7 +150,7 @@ public class DrawingContext : ObjectG
 	/**
 	 * Checks whether the given #GdkDrawingContext is valid.
 	 *
-	 * Return: %TRUE if the context is valid
+	 * Returns: %TRUE if the context is valid
 	 *
 	 * Since: 3.22
 	 */

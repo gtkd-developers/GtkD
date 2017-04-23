@@ -53,7 +53,7 @@ public interface TreeSortableIF{
 	 *     sortColumnId = The sort column id to be filled in
 	 *     order = The #GtkSortType to be filled in
 	 *
-	 * Return: %TRUE if the sort column is not one of the special sort
+	 * Returns: %TRUE if the sort column is not one of the special sort
 	 *     column ids.
 	 */
 	public bool getSortColumnId(out int sortColumnId, out GtkSortType order);
@@ -63,7 +63,7 @@ public interface TreeSortableIF{
 	 * primarily by GtkTreeViewColumns in order to determine if a model can
 	 * go back to the default state, or not.
 	 *
-	 * Return: %TRUE, if the model has a default sort function
+	 * Returns: %TRUE, if the model has a default sort function
 	 */
 	public bool hasDefaultSortFunc();
 

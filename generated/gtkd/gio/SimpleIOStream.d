@@ -92,7 +92,7 @@ public class SimpleIOStream : IOStream
 	 *     inputStream = a #GInputStream.
 	 *     outputStream = a #GOutputStream.
 	 *
-	 * Return: a new #GSimpleIOStream instance.
+	 * Returns: a new #GSimpleIOStream instance.
 	 *
 	 * Since: 2.44
 	 *

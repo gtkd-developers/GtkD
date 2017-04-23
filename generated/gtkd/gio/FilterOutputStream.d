@@ -78,7 +78,7 @@ public class FilterOutputStream : OutputStream
 	/**
 	 * Gets the base stream for the filter stream.
 	 *
-	 * Return: a #GOutputStream.
+	 * Returns: a #GOutputStream.
 	 */
 	public OutputStream getBaseStream()
 	{
@@ -96,7 +96,7 @@ public class FilterOutputStream : OutputStream
 	 * Returns whether the base stream will be closed when @stream is
 	 * closed.
 	 *
-	 * Return: %TRUE if the base stream will be closed.
+	 * Returns: %TRUE if the base stream will be closed.
 	 */
 	public bool getCloseBaseStream()
 	{

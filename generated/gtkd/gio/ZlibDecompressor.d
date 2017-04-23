@@ -84,7 +84,7 @@ public class ZlibDecompressor : ObjectG, ConverterIF
 	 * Params:
 	 *     format = The format to use for the compressed data
 	 *
-	 * Return: a new #GZlibDecompressor
+	 * Returns: a new #GZlibDecompressor
 	 *
 	 * Since: 2.24
 	 *
@@ -109,7 +109,7 @@ public class ZlibDecompressor : ObjectG, ConverterIF
 	 * or the header data was not fully processed yet, or it not present in the
 	 * data stream at all.
 	 *
-	 * Return: a #GFileInfo, or %NULL
+	 * Returns: a #GFileInfo, or %NULL
 	 *
 	 * Since: 2.26
 	 */

@@ -186,7 +186,7 @@ public class Window : Bin
 	 * Params:
 	 *     type = type of window
 	 *
-	 * Return: a new #GtkWindow.
+	 * Returns: a new #GtkWindow.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -208,7 +208,7 @@ public class Window : Bin
 	 * but the pixbufs in the list have not had their reference count
 	 * incremented.
 	 *
-	 * Return: copy of default icon list
+	 * Returns: copy of default icon list
 	 */
 	public static ListG getDefaultIconList()
 	{
@@ -229,7 +229,7 @@ public class Window : Bin
 	 * is only valid until the next call to
 	 * gtk_window_set_default_icon_name().
 	 *
-	 * Return: the fallback icon name for windows
+	 * Returns: the fallback icon name for windows
 	 *
 	 * Since: 2.16
 	 */
@@ -246,7 +246,7 @@ public class Window : Bin
 	 * `g_list_foreach (result, (GFunc)g_object_ref, NULL)` first, and
 	 * then unref all the widgets afterwards.
 	 *
-	 * Return: list of toplevel widgets
+	 * Returns: list of toplevel widgets
 	 */
 	public static ListG listToplevels()
 	{
@@ -303,7 +303,7 @@ public class Window : Bin
 	 * Params:
 	 *     filename = location of icon file
 	 *
-	 * Return: %TRUE if setting the icon succeeded.
+	 * Returns: %TRUE if setting the icon succeeded.
 	 *
 	 * Since: 2.2
 	 *
@@ -375,7 +375,7 @@ public class Window : Bin
 	 * (see gtk_widget_set_receives_default()), in which case the
 	 * focused widget is activated.
 	 *
-	 * Return: %TRUE if a widget got activated.
+	 * Returns: %TRUE if a widget got activated.
 	 */
 	public bool activateDefault()
 	{
@@ -385,7 +385,7 @@ public class Window : Bin
 	/**
 	 * Activates the current focused widget within the window.
 	 *
-	 * Return: %TRUE if a widget got activated.
+	 * Returns: %TRUE if a widget got activated.
 	 */
 	public bool activateFocus()
 	{
@@ -401,7 +401,7 @@ public class Window : Bin
 	 * Params:
 	 *     event = a #GdkEventKey
 	 *
-	 * Return: %TRUE if a mnemonic or accelerator was found and activated.
+	 * Returns: %TRUE if a mnemonic or accelerator was found and activated.
 	 *
 	 * Since: 2.4
 	 */
@@ -543,7 +543,7 @@ public class Window : Bin
 	/**
 	 * Gets the value set by gtk_window_set_accept_focus().
 	 *
-	 * Return: %TRUE if window should receive the input focus
+	 * Returns: %TRUE if window should receive the input focus
 	 *
 	 * Since: 2.4
 	 */
@@ -555,7 +555,7 @@ public class Window : Bin
 	/**
 	 * Gets the #GtkApplication associated with the window (if any).
 	 *
-	 * Return: a #GtkApplication, or %NULL
+	 * Returns: a #GtkApplication, or %NULL
 	 *
 	 * Since: 3.0
 	 */
@@ -575,7 +575,7 @@ public class Window : Bin
 	 * Fetches the attach widget for this window. See
 	 * gtk_window_set_attached_to().
 	 *
-	 * Return: the widget where the window
+	 * Returns: the widget where the window
 	 *     is attached, or %NULL if the window is not attached to any widget.
 	 *
 	 * Since: 3.4
@@ -596,7 +596,7 @@ public class Window : Bin
 	 * Returns whether the window has been set to have decorations
 	 * such as a title bar via gtk_window_set_decorated().
 	 *
-	 * Return: %TRUE if the window has been set to have decorations
+	 * Returns: %TRUE if the window has been set to have decorations
 	 */
 	public bool getDecorated()
 	{
@@ -622,7 +622,7 @@ public class Window : Bin
 	 * Returns the default widget for @window. See
 	 * gtk_window_set_default() for more details.
 	 *
-	 * Return: the default widget, or %NULL
+	 * Returns: the default widget, or %NULL
 	 *     if there is none.
 	 *
 	 * Since: 2.14
@@ -643,7 +643,7 @@ public class Window : Bin
 	 * Returns whether the window has been set to have a close button
 	 * via gtk_window_set_deletable().
 	 *
-	 * Return: %TRUE if the window has been set to have a close button
+	 * Returns: %TRUE if the window has been set to have a close button
 	 *
 	 * Since: 2.10
 	 */
@@ -656,7 +656,7 @@ public class Window : Bin
 	 * Returns whether the window will be destroyed with its transient parent. See
 	 * gtk_window_set_destroy_with_parent ().
 	 *
-	 * Return: %TRUE if the window will be destroyed with its transient parent.
+	 * Returns: %TRUE if the window will be destroyed with its transient parent.
 	 */
 	public bool getDestroyWithParent()
 	{
@@ -670,7 +670,7 @@ public class Window : Bin
 	 * is not focused then  `gtk_widget_has_focus (widget)` will
 	 * not be %TRUE for the widget.
 	 *
-	 * Return: the currently focused widget,
+	 * Returns: the currently focused widget,
 	 *     or %NULL if there is none.
 	 */
 	public Widget getFocus()
@@ -688,7 +688,7 @@ public class Window : Bin
 	/**
 	 * Gets the value set by gtk_window_set_focus_on_map().
 	 *
-	 * Return: %TRUE if window should receive the input focus when
+	 * Returns: %TRUE if window should receive the input focus when
 	 *     mapped.
 	 *
 	 * Since: 2.6
@@ -701,7 +701,7 @@ public class Window : Bin
 	/**
 	 * Gets the value of the #GtkWindow:focus-visible property.
 	 *
-	 * Return: %TRUE if “focus rectangles” are supposed to be visible
+	 * Returns: %TRUE if “focus rectangles” are supposed to be visible
 	 *     in this window.
 	 *
 	 * Since: 3.2
@@ -714,7 +714,7 @@ public class Window : Bin
 	/**
 	 * Gets the value set by gtk_window_set_gravity().
 	 *
-	 * Return: window gravity
+	 * Returns: window gravity
 	 */
 	public GdkGravity getGravity()
 	{
@@ -726,7 +726,7 @@ public class Window : Bin
 	 * @window is %NULL or if @window does not have an explicit
 	 * window group.
 	 *
-	 * Return: the #GtkWindowGroup for a window or the default group
+	 * Returns: the #GtkWindowGroup for a window or the default group
 	 *
 	 * Since: 2.10
 	 */
@@ -747,7 +747,7 @@ public class Window : Bin
 	 *
 	 * Deprecated: Resize grips have been removed.
 	 *
-	 * Return: %TRUE if the window has a resize grip
+	 * Returns: %TRUE if the window has a resize grip
 	 *
 	 * Since: 3.0
 	 */
@@ -760,7 +760,7 @@ public class Window : Bin
 	 * Returns whether the window has requested to have its titlebar hidden
 	 * when maximized. See gtk_window_set_hide_titlebar_when_maximized ().
 	 *
-	 * Return: %TRUE if the window has requested to have its titlebar
+	 * Returns: %TRUE if the window has requested to have its titlebar
 	 *     hidden when maximized
 	 *
 	 * Since: 3.4
@@ -775,7 +775,7 @@ public class Window : Bin
 	 * called gtk_window_set_icon_list(), gets the first icon in
 	 * the icon list).
 	 *
-	 * Return: icon for window
+	 * Returns: icon for window
 	 */
 	public Pixbuf getIcon()
 	{
@@ -794,7 +794,7 @@ public class Window : Bin
 	 * The list is copied, but the reference count on each
 	 * member won’t be incremented.
 	 *
-	 * Return: copy of window’s icon list
+	 * Returns: copy of window’s icon list
 	 */
 	public ListG getIconList()
 	{
@@ -812,7 +812,7 @@ public class Window : Bin
 	 * Returns the name of the themed icon for the window,
 	 * see gtk_window_set_icon_name().
 	 *
-	 * Return: the icon name or %NULL if the window has
+	 * Returns: the icon name or %NULL if the window has
 	 *     no themed icon
 	 *
 	 * Since: 2.6
@@ -826,7 +826,7 @@ public class Window : Bin
 	 * Returns the mnemonic modifier for this window. See
 	 * gtk_window_set_mnemonic_modifier().
 	 *
-	 * Return: the modifier mask used to activate
+	 * Returns: the modifier mask used to activate
 	 *     mnemonics on this window.
 	 */
 	public GdkModifierType getMnemonicModifier()
@@ -837,7 +837,7 @@ public class Window : Bin
 	/**
 	 * Gets the value of the #GtkWindow:mnemonics-visible property.
 	 *
-	 * Return: %TRUE if mnemonics are supposed to be visible
+	 * Returns: %TRUE if mnemonics are supposed to be visible
 	 *     in this window.
 	 *
 	 * Since: 2.20
@@ -850,7 +850,7 @@ public class Window : Bin
 	/**
 	 * Returns whether the window is modal. See gtk_window_set_modal().
 	 *
-	 * Return: %TRUE if the window is set to be modal and
+	 * Returns: %TRUE if the window is set to be modal and
 	 *     establishes a grab when shown
 	 */
 	public bool getModal()
@@ -864,7 +864,7 @@ public class Window : Bin
 	 *
 	 * Deprecated: Use gtk_widget_get_opacity instead.
 	 *
-	 * Return: the requested opacity for this window.
+	 * Returns: the requested opacity for this window.
 	 *
 	 * Since: 2.12
 	 */
@@ -925,7 +925,7 @@ public class Window : Bin
 	/**
 	 * Gets the value set by gtk_window_set_resizable().
 	 *
-	 * Return: %TRUE if the user can resize the window
+	 * Returns: %TRUE if the user can resize the window
 	 */
 	public bool getResizable()
 	{
@@ -942,7 +942,7 @@ public class Window : Bin
 	 *     rect = a pointer to a #GdkRectangle which we should store
 	 *         the resize grip area
 	 *
-	 * Return: %TRUE if the resize grip’s area was retrieved
+	 * Returns: %TRUE if the resize grip’s area was retrieved
 	 *
 	 * Since: 3.0
 	 */
@@ -955,7 +955,7 @@ public class Window : Bin
 	 * Returns the role of the window. See gtk_window_set_role() for
 	 * further explanation.
 	 *
-	 * Return: the role of the window if set, or %NULL. The
+	 * Returns: the role of the window if set, or %NULL. The
 	 *     returned is owned by the widget and must not be modified or freed.
 	 */
 	public string getRole()
@@ -966,7 +966,7 @@ public class Window : Bin
 	/**
 	 * Returns the #GdkScreen associated with @window.
 	 *
-	 * Return: a #GdkScreen.
+	 * Returns: a #GdkScreen.
 	 *
 	 * Since: 2.2
 	 */
@@ -1068,7 +1068,7 @@ public class Window : Bin
 	/**
 	 * Gets the value set by gtk_window_set_skip_pager_hint().
 	 *
-	 * Return: %TRUE if window shouldn’t be in pager
+	 * Returns: %TRUE if window shouldn’t be in pager
 	 *
 	 * Since: 2.2
 	 */
@@ -1080,7 +1080,7 @@ public class Window : Bin
 	/**
 	 * Gets the value set by gtk_window_set_skip_taskbar_hint()
 	 *
-	 * Return: %TRUE if window shouldn’t be in taskbar
+	 * Returns: %TRUE if window shouldn’t be in taskbar
 	 *
 	 * Since: 2.2
 	 */
@@ -1092,7 +1092,7 @@ public class Window : Bin
 	/**
 	 * Retrieves the title of the window. See gtk_window_set_title().
 	 *
-	 * Return: the title of the window, or %NULL if none has
+	 * Returns: the title of the window, or %NULL if none has
 	 *     been set explicitly. The returned string is owned by the widget
 	 *     and must not be modified or freed.
 	 */
@@ -1105,7 +1105,7 @@ public class Window : Bin
 	 * Returns the custom titlebar that has been set with
 	 * gtk_window_set_titlebar().
 	 *
-	 * Return: the custom titlebar, or %NULL
+	 * Returns: the custom titlebar, or %NULL
 	 *
 	 * Since: 3.16
 	 */
@@ -1125,7 +1125,7 @@ public class Window : Bin
 	 * Fetches the transient parent for this window. See
 	 * gtk_window_set_transient_for().
 	 *
-	 * Return: the transient parent for this
+	 * Returns: the transient parent for this
 	 *     window, or %NULL if no transient parent has been set.
 	 */
 	public Window getTransientFor()
@@ -1143,7 +1143,7 @@ public class Window : Bin
 	/**
 	 * Gets the type hint for this window. See gtk_window_set_type_hint().
 	 *
-	 * Return: the type hint for @window.
+	 * Returns: the type hint for @window.
 	 */
 	public GdkWindowTypeHint getTypeHint()
 	{
@@ -1153,7 +1153,7 @@ public class Window : Bin
 	/**
 	 * Gets the value set by gtk_window_set_urgency_hint()
 	 *
-	 * Return: %TRUE if window is urgent
+	 * Returns: %TRUE if window is urgent
 	 *
 	 * Since: 2.8
 	 */
@@ -1165,7 +1165,7 @@ public class Window : Bin
 	/**
 	 * Gets the type of the window. See #GtkWindowType.
 	 *
-	 * Return: the type of the window
+	 * Returns: the type of the window
 	 *
 	 * Since: 2.20
 	 */
@@ -1177,7 +1177,7 @@ public class Window : Bin
 	/**
 	 * Returns whether @window has an explicit window group.
 	 *
-	 * Return: %TRUE if @window has an explicit window group.
+	 * Returns: %TRUE if @window has an explicit window group.
 	 *
 	 *     Since 2.22
 	 */
@@ -1191,7 +1191,7 @@ public class Window : Bin
 	 * For real toplevel windows, this is identical to gtk_window_is_active(),
 	 * but for embedded windows, like #GtkPlug, the results will differ.
 	 *
-	 * Return: %TRUE if the input focus is within this GtkWindow
+	 * Returns: %TRUE if the input focus is within this GtkWindow
 	 *
 	 * Since: 2.4
 	 */
@@ -1230,7 +1230,7 @@ public class Window : Bin
 	 * differently in an active window from a widget in an inactive window.
 	 * See gtk_window_has_toplevel_focus()
 	 *
-	 * Return: %TRUE if the window part of the current active window.
+	 * Returns: %TRUE if the window part of the current active window.
 	 *
 	 * Since: 2.4
 	 */
@@ -1248,7 +1248,7 @@ public class Window : Bin
 	 * immediately (or at all), as an effect of calling
 	 * gtk_window_maximize() or gtk_window_unmaximize().
 	 *
-	 * Return: whether the window has a maximized state.
+	 * Returns: whether the window has a maximized state.
 	 *
 	 * Since: 3.12
 	 */
@@ -1286,7 +1286,7 @@ public class Window : Bin
 	 *     keyval = the mnemonic
 	 *     modifier = the modifiers
 	 *
-	 * Return: %TRUE if the activation is done.
+	 * Returns: %TRUE if the activation is done.
 	 */
 	public bool mnemonicActivate(uint keyval, GdkModifierType modifier)
 	{
@@ -1415,7 +1415,7 @@ public class Window : Bin
 	 * Params:
 	 *     geometry = geometry string
 	 *
-	 * Return: %TRUE if string was parsed successfully
+	 * Returns: %TRUE if string was parsed successfully
 	 */
 	public bool parseGeometry(string geometry)
 	{
@@ -1472,7 +1472,7 @@ public class Window : Bin
 	 * Params:
 	 *     event = a #GdkEventKey
 	 *
-	 * Return: %TRUE if a widget in the focus chain handled the event.
+	 * Returns: %TRUE if a widget in the focus chain handled the event.
 	 *
 	 * Since: 2.4
 	 */
@@ -1561,7 +1561,7 @@ public class Window : Bin
 	 *
 	 * Deprecated: Resize grips have been removed.
 	 *
-	 * Return: %TRUE if a resize grip exists and is visible
+	 * Returns: %TRUE if a resize grip exists and is visible
 	 *
 	 * Since: 3.0
 	 */
@@ -1961,7 +1961,7 @@ public class Window : Bin
 	 * Params:
 	 *     filename = location of icon file
 	 *
-	 * Return: %TRUE if setting the icon succeeded.
+	 * Returns: %TRUE if setting the icon succeeded.
 	 *
 	 * Since: 2.2
 	 *
@@ -2612,7 +2612,7 @@ public class Window : Bin
 	 * Params:
 	 *     toggle = toggle the debugger
 	 *
-	 * Return: %TRUE if the key binding was handled
+	 * Returns: %TRUE if the key binding was handled
 	 */
 	gulong addOnEnableDebugging(bool delegate(bool, Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -2762,7 +2762,7 @@ public class Window : Bin
 	 *     uri = the uri to show
 	 *     timestamp = a timestamp to prevent focus stealing
 	 *
-	 * Return: %TRUE on success, %FALSE on error
+	 * Returns: %TRUE on success, %FALSE on error
 	 *
 	 * Since: 3.22
 	 *

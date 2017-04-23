@@ -1293,14 +1293,14 @@ struct AtkActionIface
 	 * Params:
 	 *     action = a #GObject instance that implements AtkActionIface
 	 *     i = the action index corresponding to the action to be performed
-	 * Return: %TRUE if success, %FALSE otherwise
+	 * Returns: %TRUE if success, %FALSE otherwise
 	 */
 	extern(C) int function(AtkAction* action, int i) doAction;
 	/**
 	 *
 	 * Params:
 	 *     action = a #GObject instance that implements AtkActionIface
-	 * Return: a the number of actions, or 0 if @action does not
+	 * Returns: a the number of actions, or 0 if @action does not
 	 *     implement this interface.
 	 */
 	extern(C) int function(AtkAction* action) getNActions;
@@ -1309,7 +1309,7 @@ struct AtkActionIface
 	 * Params:
 	 *     action = a #GObject instance that implements AtkActionIface
 	 *     i = the action index corresponding to the action to be performed
-	 * Return: a description string, or %NULL if @action does
+	 * Returns: a description string, or %NULL if @action does
 	 *     not implement this interface.
 	 */
 	extern(C) const(char)* function(AtkAction* action, int i) getDescription;
@@ -1318,7 +1318,7 @@ struct AtkActionIface
 	 * Params:
 	 *     action = a #GObject instance that implements AtkActionIface
 	 *     i = the action index corresponding to the action to be performed
-	 * Return: a name string, or %NULL if @action does not
+	 * Returns: a name string, or %NULL if @action does not
 	 *     implement this interface.
 	 */
 	extern(C) const(char)* function(AtkAction* action, int i) getName;
@@ -1327,7 +1327,7 @@ struct AtkActionIface
 	 * Params:
 	 *     action = a #GObject instance that implements AtkActionIface
 	 *     i = the action index corresponding to the action to be performed
-	 * Return: the keybinding which can be used to activate
+	 * Returns: the keybinding which can be used to activate
 	 *     this action, or %NULL if there is no keybinding for this action.
 	 */
 	extern(C) const(char)* function(AtkAction* action, int i) getKeybinding;
@@ -1337,7 +1337,7 @@ struct AtkActionIface
 	 *     action = a #GObject instance that implements AtkActionIface
 	 *     i = the action index corresponding to the action to be performed
 	 *     desc = the description to be assigned to this action
-	 * Return: a gboolean representing if the description was successfully set;
+	 * Returns: a gboolean representing if the description was successfully set;
 	 */
 	extern(C) int function(AtkAction* action, int i, const(char)* desc) setDescription;
 	/**
@@ -1345,7 +1345,7 @@ struct AtkActionIface
 	 * Params:
 	 *     action = a #GObject instance that implements AtkActionIface
 	 *     i = the action index corresponding to the action to be performed
-	 * Return: a name string, or %NULL if @action does not
+	 * Returns: a name string, or %NULL if @action does not
 	 *     implement this interface.
 	 */
 	extern(C) const(char)* function(AtkAction* action, int i) getLocalizedName;
@@ -1361,7 +1361,7 @@ struct AtkComponentIface
 	 * Params:
 	 *     component = The #AtkComponent to attach the @handler to
 	 *     handler = The #AtkFocusHandler to be attached to @component
-	 * Return: a handler id which can be used in atk_component_remove_focus_handler()
+	 * Returns: a handler id which can be used in atk_component_remove_focus_handler()
 	 *     or zero if the handler was already added.
 	 */
 	extern(C) uint function(AtkComponent* component, AtkFocusHandler handler) addFocusHandler;
@@ -1373,7 +1373,7 @@ struct AtkComponentIface
 	 *     y = y coordinate
 	 *     coordType = specifies whether the coordinates are relative to the screen
 	 *         or to the components top level window
-	 * Return: %TRUE or %FALSE indicating whether the specified point is within
+	 * Returns: %TRUE or %FALSE indicating whether the specified point is within
 	 *     the extent of the @component or not
 	 */
 	extern(C) int function(AtkComponent* component, int x, int y, AtkCoordType coordType) contains;
@@ -1385,7 +1385,7 @@ struct AtkComponentIface
 	 *     y = y coordinate
 	 *     coordType = specifies whether the coordinates are relative to the screen
 	 *         or to the components top level window
-	 * Return: a reference to the accessible
+	 * Returns: a reference to the accessible
 	 *     child, if one exists
 	 */
 	extern(C) AtkObject* function(AtkComponent* component, int x, int y, AtkCoordType coordType) refAccessibleAtPoint;
@@ -1399,7 +1399,7 @@ struct AtkComponentIface
 	 *
 	 * Params:
 	 *     component = an #AtkComponent
-	 * Return: %TRUE if successful, %FALSE otherwise.
+	 * Returns: %TRUE if successful, %FALSE otherwise.
 	 */
 	extern(C) int function(AtkComponent* component) grabFocus;
 	/** */
@@ -1414,7 +1414,7 @@ struct AtkComponentIface
 	 *     height = height to set for @component
 	 *     coordType = specifies whether the coordinates are relative to the screen
 	 *         or to the components top level window
-	 * Return: %TRUE or %FALSE whether the extents were set or not
+	 * Returns: %TRUE or %FALSE whether the extents were set or not
 	 */
 	extern(C) int function(AtkComponent* component, int x, int y, int width, int height, AtkCoordType coordType) setExtents;
 	/**
@@ -1425,7 +1425,7 @@ struct AtkComponentIface
 	 *     y = y coordinate
 	 *     coordType = specifies whether the coordinates are relative to the screen
 	 *         or to the components top level window
-	 * Return: %TRUE or %FALSE whether or not the position was set or not
+	 * Returns: %TRUE or %FALSE whether or not the position was set or not
 	 */
 	extern(C) int function(AtkComponent* component, int x, int y, AtkCoordType coordType) setPosition;
 	/**
@@ -1434,21 +1434,21 @@ struct AtkComponentIface
 	 *     component = an #AtkComponent
 	 *     width = width to set for @component
 	 *     height = height to set for @component
-	 * Return: %TRUE or %FALSE whether the size was set or not
+	 * Returns: %TRUE or %FALSE whether the size was set or not
 	 */
 	extern(C) int function(AtkComponent* component, int width, int height) setSize;
 	/**
 	 *
 	 * Params:
 	 *     component = an #AtkComponent
-	 * Return: an #AtkLayer which is the layer of the component
+	 * Returns: an #AtkLayer which is the layer of the component
 	 */
 	extern(C) AtkLayer function(AtkComponent* component) getLayer;
 	/**
 	 *
 	 * Params:
 	 *     component = an #AtkComponent
-	 * Return: a gint which is the zorder of the component, i.e. the depth at
+	 * Returns: a gint which is the zorder of the component, i.e. the depth at
 	 *     which the component is shown in relation to other components in the same
 	 *     container.
 	 */
@@ -1459,7 +1459,7 @@ struct AtkComponentIface
 	 *
 	 * Params:
 	 *     component = an #AtkComponent
-	 * Return: An alpha value from 0 to 1.0, inclusive.
+	 * Returns: An alpha value from 0 to 1.0, inclusive.
 	 */
 	extern(C) double function(AtkComponent* component) getAlpha;
 }
@@ -1473,14 +1473,14 @@ struct AtkDocumentIface
 	 *
 	 * Params:
 	 *     document = a #GObject instance that implements AtkDocumentIface
-	 * Return: a string indicating the document type
+	 * Returns: a string indicating the document type
 	 */
 	extern(C) const(char)* function(AtkDocument* document) getDocumentType;
 	/**
 	 *
 	 * Params:
 	 *     document = a #GObject instance that implements AtkDocumentIface
-	 * Return: a %gpointer that points to an instance of the DOM.
+	 * Returns: a %gpointer that points to an instance of the DOM.
 	 */
 	extern(C) void* function(AtkDocument* document) getDocument;
 	/** */
@@ -1495,7 +1495,7 @@ struct AtkDocumentIface
 	 *
 	 * Params:
 	 *     document = the #AtkDocument
-	 * Return: current page number inside @document. -1 if not
+	 * Returns: current page number inside @document. -1 if not
 	 *     implemented, not know by the implementor or irrelevant.
 	 */
 	extern(C) int function(AtkDocument* document) getCurrentPageNumber;
@@ -1503,7 +1503,7 @@ struct AtkDocumentIface
 	 *
 	 * Params:
 	 *     document = the #AtkDocument
-	 * Return: total page count of @document. -1 if not implemented, not
+	 * Returns: total page count of @document. -1 if not implemented, not
 	 *     know by the implementor or irrelevant.
 	 */
 	extern(C) int function(AtkDocument* document) getPageCount;
@@ -1521,7 +1521,7 @@ struct AtkEditableTextIface
 	 *     attribSet = an #AtkAttributeSet
 	 *     startOffset = start of range in which to set attributes
 	 *     endOffset = end of range in which to set attributes
-	 * Return: %TRUE if attributes successfully set for the specified
+	 * Returns: %TRUE if attributes successfully set for the specified
 	 *     range, otherwise %FALSE
 	 */
 	extern(C) int function(AtkEditableText* text, AtkAttributeSet* attribSet, int startOffset, int endOffset) setRunAttributes;
@@ -1564,7 +1564,7 @@ struct AtkHyperlinkClass
 	 * Params:
 	 *     link = an #AtkHyperlink
 	 *     i = a (zero-index) integer specifying the desired anchor
-	 * Return: a string specifying the URI
+	 * Returns: a string specifying the URI
 	 */
 	extern(C) char* function(AtkHyperlink* link, int i) getUri;
 	/**
@@ -1572,7 +1572,7 @@ struct AtkHyperlinkClass
 	 * Params:
 	 *     link = an #AtkHyperlink
 	 *     i = a (zero-index) integer specifying the desired anchor
-	 * Return: an #AtkObject associated with this hyperlinks
+	 * Returns: an #AtkObject associated with this hyperlinks
 	 *     i-th anchor
 	 */
 	extern(C) AtkObject* function(AtkHyperlink* link, int i) getObject;
@@ -1580,28 +1580,28 @@ struct AtkHyperlinkClass
 	 *
 	 * Params:
 	 *     link = an #AtkHyperlink
-	 * Return: the index with the hypertext document at which this link ends
+	 * Returns: the index with the hypertext document at which this link ends
 	 */
 	extern(C) int function(AtkHyperlink* link) getEndIndex;
 	/**
 	 *
 	 * Params:
 	 *     link = an #AtkHyperlink
-	 * Return: the index with the hypertext document at which this link begins
+	 * Returns: the index with the hypertext document at which this link begins
 	 */
 	extern(C) int function(AtkHyperlink* link) getStartIndex;
 	/**
 	 *
 	 * Params:
 	 *     link = an #AtkHyperlink
-	 * Return: whether or not this link is still valid
+	 * Returns: whether or not this link is still valid
 	 */
 	extern(C) int function(AtkHyperlink* link) isValid;
 	/**
 	 *
 	 * Params:
 	 *     link = an #AtkHyperlink
-	 * Return: the number of anchors associated with this hyperlink
+	 * Returns: the number of anchors associated with this hyperlink
 	 */
 	extern(C) int function(AtkHyperlink* link) getNAnchors;
 	/** */
@@ -1610,7 +1610,7 @@ struct AtkHyperlinkClass
 	 *
 	 * Params:
 	 *     link = an #AtkHyperlink
-	 * Return: True if the AtkHyperlink is selected, False otherwise
+	 * Returns: True if the AtkHyperlink is selected, False otherwise
 	 */
 	extern(C) int function(AtkHyperlink* link) isSelectedLink;
 	/** */
@@ -1627,7 +1627,7 @@ struct AtkHyperlinkImplIface
 	 *
 	 * Params:
 	 *     impl = a #GObject instance that implements AtkHyperlinkImplIface
-	 * Return: an AtkHyperlink object which points to this
+	 * Returns: an AtkHyperlink object which points to this
 	 *     implementing AtkObject.
 	 */
 	extern(C) AtkHyperlink* function(AtkHyperlinkImpl* impl) getHyperlink;
@@ -1643,7 +1643,7 @@ struct AtkHypertextIface
 	 * Params:
 	 *     hypertext = an #AtkHypertext
 	 *     linkIndex = an integer specifying the desired link
-	 * Return: the link in this hypertext document at
+	 * Returns: the link in this hypertext document at
 	 *     index @link_index
 	 */
 	extern(C) AtkHyperlink* function(AtkHypertext* hypertext, int linkIndex) getLink;
@@ -1651,7 +1651,7 @@ struct AtkHypertextIface
 	 *
 	 * Params:
 	 *     hypertext = an #AtkHypertext
-	 * Return: the number of links within this hypertext document
+	 * Returns: the number of links within this hypertext document
 	 */
 	extern(C) int function(AtkHypertext* hypertext) getNLinks;
 	/**
@@ -1659,7 +1659,7 @@ struct AtkHypertextIface
 	 * Params:
 	 *     hypertext = an #AtkHypertext
 	 *     charIndex = a character index
-	 * Return: an index into the array of hyperlinks in @hypertext,
+	 * Returns: an index into the array of hyperlinks in @hypertext,
 	 *     or -1 if there is no hyperlink associated with this character.
 	 */
 	extern(C) int function(AtkHypertext* hypertext, int charIndex) getLinkIndex;
@@ -1678,7 +1678,7 @@ struct AtkImageIface
 	 *
 	 * Params:
 	 *     image = a #GObject instance that implements AtkImageIface
-	 * Return: a string representing the image description
+	 * Returns: a string representing the image description
 	 */
 	extern(C) const(char)* function(AtkImage* image) getImageDescription;
 	/** */
@@ -1688,7 +1688,7 @@ struct AtkImageIface
 	 * Params:
 	 *     image = a #GObject instance that implements AtkImageIface
 	 *     description = a string description to set for @image
-	 * Return: boolean TRUE, or FALSE if operation could
+	 * Returns: boolean TRUE, or FALSE if operation could
 	 *     not be completed.
 	 */
 	extern(C) int function(AtkImage* image, const(char)* description) setImageDescription;
@@ -1696,7 +1696,7 @@ struct AtkImageIface
 	 *
 	 * Params:
 	 *     image = An #AtkImage
-	 * Return: a string corresponding to the POSIX
+	 * Returns: a string corresponding to the POSIX
 	 *     LC_MESSAGES locale used by the image description, or %NULL if the
 	 *     image does not specify a locale.
 	 */
@@ -1805,14 +1805,14 @@ struct AtkObjectClass
 	 *
 	 * Params:
 	 *     accessible = an #AtkObject
-	 * Return: a character string representing the accessible name of the object.
+	 * Returns: a character string representing the accessible name of the object.
 	 */
 	extern(C) const(char)* function(AtkObject* accessible) getName;
 	/**
 	 *
 	 * Params:
 	 *     accessible = an #AtkObject
-	 * Return: a character string representing the accessible description
+	 * Returns: a character string representing the accessible description
 	 *     of the accessible.
 	 */
 	extern(C) const(char)* function(AtkObject* accessible) getDescription;
@@ -1820,7 +1820,7 @@ struct AtkObjectClass
 	 *
 	 * Params:
 	 *     accessible = an #AtkObject
-	 * Return: an #AtkObject representing the accessible
+	 * Returns: an #AtkObject representing the accessible
 	 *     parent of the accessible
 	 */
 	extern(C) AtkObject* function(AtkObject* accessible) getParent;
@@ -1832,14 +1832,14 @@ struct AtkObjectClass
 	 *
 	 * Params:
 	 *     accessible = an #AtkObject
-	 * Return: an integer which is the index of the accessible in its parent
+	 * Returns: an integer which is the index of the accessible in its parent
 	 */
 	extern(C) int function(AtkObject* accessible) getIndexInParent;
 	/**
 	 *
 	 * Params:
 	 *     accessible = an #AtkObject
-	 * Return: an #AtkRelationSet representing the relation set
+	 * Returns: an #AtkRelationSet representing the relation set
 	 *     of the object.
 	 */
 	extern(C) AtkRelationSet* function(AtkObject* accessible) refRelationSet;
@@ -1847,21 +1847,21 @@ struct AtkObjectClass
 	 *
 	 * Params:
 	 *     accessible = an #AtkObject
-	 * Return: an #AtkRole which is the role of the accessible
+	 * Returns: an #AtkRole which is the role of the accessible
 	 */
 	extern(C) AtkRole function(AtkObject* accessible) getRole;
 	/**
 	 *
 	 * Params:
 	 *     accessible = an #AtkObject
-	 * Return: an #AtkLayer which is the layer of the accessible
+	 * Returns: an #AtkLayer which is the layer of the accessible
 	 */
 	extern(C) AtkLayer function(AtkObject* accessible) getLayer;
 	/**
 	 *
 	 * Params:
 	 *     accessible = an #AtkObject
-	 * Return: a gint which is the zorder of the accessible, i.e. the depth at
+	 * Returns: a gint which is the zorder of the accessible, i.e. the depth at
 	 *     which the component is shown in relation to other components in the same
 	 *     container.
 	 */
@@ -1870,7 +1870,7 @@ struct AtkObjectClass
 	 *
 	 * Params:
 	 *     accessible = an #AtkObject
-	 * Return: a reference to an #AtkStateSet which is the state
+	 * Returns: a reference to an #AtkStateSet which is the state
 	 *     set of the accessible
 	 */
 	extern(C) AtkStateSet* function(AtkObject* accessible) refStateSet;
@@ -1887,7 +1887,7 @@ struct AtkObjectClass
 	 * Params:
 	 *     accessible = an #AtkObject
 	 *     handler = a function to be called when a property changes its value
-	 * Return: a #guint which is the handler id used in
+	 * Returns: a #guint which is the handler id used in
 	 *     atk_object_remove_property_change_handler()
 	 */
 	extern(C) uint function(AtkObject* accessible, AtkPropertyChangeHandler* handler) connectPropertyChangeHandler;
@@ -1911,7 +1911,7 @@ struct AtkObjectClass
 	 *
 	 * Params:
 	 *     accessible = An #AtkObject.
-	 * Return: an #AtkAttributeSet consisting of all
+	 * Returns: an #AtkAttributeSet consisting of all
 	 *     explicit properties/annotations applied to the object, or an empty
 	 *     set if the object has no name-value pair attributes assigned to
 	 *     it. This #atkattributeset should be freed by a call to
@@ -1922,7 +1922,7 @@ struct AtkObjectClass
 	 *
 	 * Params:
 	 *     accessible = an #AtkObject
-	 * Return: a UTF-8 string indicating the POSIX-style LC_MESSAGES
+	 * Returns: a UTF-8 string indicating the POSIX-style LC_MESSAGES
 	 *     locale of @accessible.
 	 */
 	extern(C) const(char)* function(AtkObject* accessible) getObjectLocale;
@@ -2053,14 +2053,14 @@ struct AtkSelectionIface
 	 * Params:
 	 *     selection = a #GObject instance that implements AtkSelectionIface
 	 *     i = a #gint specifying the child index.
-	 * Return: TRUE if success, FALSE otherwise.
+	 * Returns: TRUE if success, FALSE otherwise.
 	 */
 	extern(C) int function(AtkSelection* selection, int i) addSelection;
 	/**
 	 *
 	 * Params:
 	 *     selection = a #GObject instance that implements AtkSelectionIface
-	 * Return: TRUE if success, FALSE otherwise.
+	 * Returns: TRUE if success, FALSE otherwise.
 	 */
 	extern(C) int function(AtkSelection* selection) clearSelection;
 	/**
@@ -2069,7 +2069,7 @@ struct AtkSelectionIface
 	 *     selection = a #GObject instance that implements AtkSelectionIface
 	 *     i = a #gint specifying the index in the selection set.  (e.g. the
 	 *         ith selection as opposed to the ith child).
-	 * Return: an #AtkObject representing the
+	 * Returns: an #AtkObject representing the
 	 *     selected accessible, or %NULL if @selection does not implement this
 	 *     interface.
 	 */
@@ -2078,7 +2078,7 @@ struct AtkSelectionIface
 	 *
 	 * Params:
 	 *     selection = a #GObject instance that implements AtkSelectionIface
-	 * Return: a gint representing the number of items selected, or 0
+	 * Returns: a gint representing the number of items selected, or 0
 	 *     if @selection does not implement this interface.
 	 */
 	extern(C) int function(AtkSelection* selection) getSelectionCount;
@@ -2087,7 +2087,7 @@ struct AtkSelectionIface
 	 * Params:
 	 *     selection = a #GObject instance that implements AtkSelectionIface
 	 *     i = a #gint specifying the child index.
-	 * Return: a gboolean representing the specified child is selected, or 0
+	 * Returns: a gboolean representing the specified child is selected, or 0
 	 *     if @selection does not implement this interface.
 	 */
 	extern(C) int function(AtkSelection* selection, int i) isChildSelected;
@@ -2097,14 +2097,14 @@ struct AtkSelectionIface
 	 *     selection = a #GObject instance that implements AtkSelectionIface
 	 *     i = a #gint specifying the index in the selection set.  (e.g. the
 	 *         ith selection as opposed to the ith child).
-	 * Return: TRUE if success, FALSE otherwise.
+	 * Returns: TRUE if success, FALSE otherwise.
 	 */
 	extern(C) int function(AtkSelection* selection, int i) removeSelection;
 	/**
 	 *
 	 * Params:
 	 *     selection = a #GObject instance that implements AtkSelectionIface
-	 * Return: TRUE if success, FALSE otherwise.
+	 * Returns: TRUE if success, FALSE otherwise.
 	 */
 	extern(C) int function(AtkSelection* selection) selectAllSelection;
 	/** */
@@ -2143,7 +2143,7 @@ struct AtkStreamableContentIface
 	 *
 	 * Params:
 	 *     streamable = a GObject instance that implements AtkStreamableContentIface
-	 * Return: a gint which is the number of mime types supported by the object.
+	 * Returns: a gint which is the number of mime types supported by the object.
 	 */
 	extern(C) int function(AtkStreamableContent* streamable) getNMimeTypes;
 	/**
@@ -2151,7 +2151,7 @@ struct AtkStreamableContentIface
 	 * Params:
 	 *     streamable = a GObject instance that implements AtkStreamableContent
 	 *     i = a gint representing the position of the mime type starting from 0
-	 * Return: a gchar* representing the specified mime type; the caller
+	 * Returns: a gchar* representing the specified mime type; the caller
 	 *     should not free the character string.
 	 */
 	extern(C) const(char)* function(AtkStreamableContent* streamable, int i) getMimeType;
@@ -2160,7 +2160,7 @@ struct AtkStreamableContentIface
 	 * Params:
 	 *     streamable = a GObject instance that implements AtkStreamableContentIface
 	 *     mimeType = a gchar* representing the mime type
-	 * Return: A #GIOChannel which contains the content in the
+	 * Returns: A #GIOChannel which contains the content in the
 	 *     specified mime type.
 	 */
 	extern(C) GIOChannel* function(AtkStreamableContent* streamable, const(char)* mimeType) getStream;
@@ -2170,7 +2170,7 @@ struct AtkStreamableContentIface
 	 *     streamable = a GObject instance that implements AtkStreamableContentIface
 	 *     mimeType = a gchar* representing the mime type, or NULL to request a URI
 	 *         for the default mime type.
-	 * Return: Returns a string representing a URI, or %NULL
+	 * Returns: Returns a string representing a URI, or %NULL
 	 *     if no corresponding URI can be constructed.
 	 */
 	extern(C) const(char)* function(AtkStreamableContent* streamable, const(char)* mimeType) getUri;
@@ -2190,7 +2190,7 @@ struct AtkTableCellIface
 	 *
 	 * Params:
 	 *     cell = a GObject instance that implements AtkTableCellIface
-	 * Return: a gint representing the number of columns occupied by this cell,
+	 * Returns: a gint representing the number of columns occupied by this cell,
 	 *     or 0 if the cell does not implement this method.
 	 */
 	extern(C) int function(AtkTableCell* cell) getColumnSpan;
@@ -2198,7 +2198,7 @@ struct AtkTableCellIface
 	 *
 	 * Params:
 	 *     cell = a GObject instance that implements AtkTableCellIface
-	 * Return: a GPtrArray of AtkObjects
+	 * Returns: a GPtrArray of AtkObjects
 	 *     representing the column header cells.
 	 */
 	extern(C) GPtrArray* function(AtkTableCell* cell) getColumnHeaderCells;
@@ -2208,14 +2208,14 @@ struct AtkTableCellIface
 	 *     cell = a GObject instance that implements AtkTableCellIface
 	 *     row = the row of the given cell.
 	 *     column = the column of the given cell.
-	 * Return: TRUE if successful; FALSE otherwise.
+	 * Returns: TRUE if successful; FALSE otherwise.
 	 */
 	extern(C) int function(AtkTableCell* cell, int* row, int* column) getPosition;
 	/**
 	 *
 	 * Params:
 	 *     cell = a GObject instance that implements AtkTableCellIface
-	 * Return: a gint representing the number of rows occupied by this cell,
+	 * Returns: a gint representing the number of rows occupied by this cell,
 	 *     or 0 if the cell does not implement this method.
 	 */
 	extern(C) int function(AtkTableCell* cell) getRowSpan;
@@ -2223,7 +2223,7 @@ struct AtkTableCellIface
 	 *
 	 * Params:
 	 *     cell = a GObject instance that implements AtkTableCellIface
-	 * Return: a GPtrArray of AtkObjects
+	 * Returns: a GPtrArray of AtkObjects
 	 *     representing the row header cells.
 	 */
 	extern(C) GPtrArray* function(AtkTableCell* cell) getRowHeaderCells;
@@ -2235,14 +2235,14 @@ struct AtkTableCellIface
 	 *     column = the column index of the given cell.
 	 *     rowSpan = the number of rows occupied by this cell.
 	 *     columnSpan = the number of columns occupied by this cell.
-	 * Return: TRUE if successful; FALSE otherwise.
+	 * Returns: TRUE if successful; FALSE otherwise.
 	 */
 	extern(C) int function(AtkTableCell* cell, int* row, int* column, int* rowSpan, int* columnSpan) getRowColumnSpan;
 	/**
 	 *
 	 * Params:
 	 *     cell = a GObject instance that implements AtkTableCellIface
-	 * Return: the atk object for the containing table.
+	 * Returns: the atk object for the containing table.
 	 */
 	extern(C) AtkObject* function(AtkTableCell* cell) getTable;
 }
@@ -2256,7 +2256,7 @@ struct AtkTableIface
 	 *     table = a GObject instance that implements AtkTableIface
 	 *     row = a #gint representing a row in @table
 	 *     column = a #gint representing a column in @table
-	 * Return: an #AtkObject representing the referred
+	 * Returns: an #AtkObject representing the referred
 	 *     to accessible
 	 */
 	extern(C) AtkObject* function(AtkTable* table, int row, int column) refAt;
@@ -2266,7 +2266,7 @@ struct AtkTableIface
 	 *     table = a GObject instance that implements AtkTableIface
 	 *     row = a #gint representing a row in @table
 	 *     column = a #gint representing a column in @table
-	 * Return: a #gint representing the index at specified position.
+	 * Returns: a #gint representing the index at specified position.
 	 *     The value -1 is returned if the object at row,column is not a child
 	 *     of table or table does not implement this interface.
 	 */
@@ -2276,7 +2276,7 @@ struct AtkTableIface
 	 * Params:
 	 *     table = a GObject instance that implements AtkTableInterface
 	 *     index = a #gint representing an index in @table
-	 * Return: a gint representing the column at the specified index,
+	 * Returns: a gint representing the column at the specified index,
 	 *     or -1 if the table does not implement this method.
 	 */
 	extern(C) int function(AtkTable* table, int index) getColumnAtIndex;
@@ -2285,7 +2285,7 @@ struct AtkTableIface
 	 * Params:
 	 *     table = a GObject instance that implements AtkTableInterface
 	 *     index = a #gint representing an index in @table
-	 * Return: a gint representing the row at the specified index,
+	 * Returns: a gint representing the row at the specified index,
 	 *     or -1 if the table does not implement this method.
 	 */
 	extern(C) int function(AtkTable* table, int index) getRowAtIndex;
@@ -2293,7 +2293,7 @@ struct AtkTableIface
 	 *
 	 * Params:
 	 *     table = a GObject instance that implements AtkTableIface
-	 * Return: a gint representing the number of columns, or 0
+	 * Returns: a gint representing the number of columns, or 0
 	 *     if value does not implement this interface.
 	 */
 	extern(C) int function(AtkTable* table) getNColumns;
@@ -2301,7 +2301,7 @@ struct AtkTableIface
 	 *
 	 * Params:
 	 *     table = a GObject instance that implements AtkTableIface
-	 * Return: a gint representing the number of rows, or 0
+	 * Returns: a gint representing the number of rows, or 0
 	 *     if value does not implement this interface.
 	 */
 	extern(C) int function(AtkTable* table) getNRows;
@@ -2311,7 +2311,7 @@ struct AtkTableIface
 	 *     table = a GObject instance that implements AtkTableIface
 	 *     row = a #gint representing a row in @table
 	 *     column = a #gint representing a column in @table
-	 * Return: a gint representing the column extent at specified position, or 0
+	 * Returns: a gint representing the column extent at specified position, or 0
 	 *     if value does not implement this interface.
 	 */
 	extern(C) int function(AtkTable* table, int row, int column) getColumnExtentAt;
@@ -2321,7 +2321,7 @@ struct AtkTableIface
 	 *     table = a GObject instance that implements AtkTableIface
 	 *     row = a #gint representing a row in @table
 	 *     column = a #gint representing a column in @table
-	 * Return: a gint representing the row extent at specified position, or 0
+	 * Returns: a gint representing the row extent at specified position, or 0
 	 *     if value does not implement this interface.
 	 */
 	extern(C) int function(AtkTable* table, int row, int column) getRowExtentAt;
@@ -2329,7 +2329,7 @@ struct AtkTableIface
 	 *
 	 * Params:
 	 *     table = a GObject instance that implements AtkTableInterface
-	 * Return: a AtkObject* representing the
+	 * Returns: a AtkObject* representing the
 	 *     table caption, or %NULL if value does not implement this interface.
 	 */
 	extern(C) AtkObject* function(AtkTable* table) getCaption;
@@ -2338,7 +2338,7 @@ struct AtkTableIface
 	 * Params:
 	 *     table = a GObject instance that implements AtkTableIface
 	 *     column = a #gint representing a column in @table
-	 * Return: a gchar* representing the column description, or %NULL
+	 * Returns: a gchar* representing the column description, or %NULL
 	 *     if value does not implement this interface.
 	 */
 	extern(C) const(char)* function(AtkTable* table, int column) getColumnDescription;
@@ -2347,7 +2347,7 @@ struct AtkTableIface
 	 * Params:
 	 *     table = a GObject instance that implements AtkTableIface
 	 *     column = a #gint representing a column in the table
-	 * Return: a AtkObject* representing the
+	 * Returns: a AtkObject* representing the
 	 *     specified column header, or %NULL if value does not implement this
 	 *     interface.
 	 */
@@ -2357,7 +2357,7 @@ struct AtkTableIface
 	 * Params:
 	 *     table = a GObject instance that implements AtkTableIface
 	 *     row = a #gint representing a row in @table
-	 * Return: a gchar* representing the row description, or
+	 * Returns: a gchar* representing the row description, or
 	 *     %NULL if value does not implement this interface.
 	 */
 	extern(C) const(char)* function(AtkTable* table, int row) getRowDescription;
@@ -2366,7 +2366,7 @@ struct AtkTableIface
 	 * Params:
 	 *     table = a GObject instance that implements AtkTableIface
 	 *     row = a #gint representing a row in the table
-	 * Return: a AtkObject* representing the
+	 * Returns: a AtkObject* representing the
 	 *     specified row header, or %NULL if value does not implement this
 	 *     interface.
 	 */
@@ -2375,7 +2375,7 @@ struct AtkTableIface
 	 *
 	 * Params:
 	 *     table = a GObject instance that implements AtkTableIface
-	 * Return: a AtkObject* representing a summary description
+	 * Returns: a AtkObject* representing a summary description
 	 *     of the table, or zero if value does not implement this interface.
 	 */
 	extern(C) AtkObject* function(AtkTable* table) getSummary;
@@ -2396,7 +2396,7 @@ struct AtkTableIface
 	 * Params:
 	 *     table = a GObject instance that implements AtkTableIface
 	 *     selected = a #gint** that is to contain the selected columns numbers
-	 * Return: a gint representing the number of selected columns,
+	 * Returns: a gint representing the number of selected columns,
 	 *     or %0 if value does not implement this interface.
 	 */
 	extern(C) int function(AtkTable* table, int** selected) getSelectedColumns;
@@ -2405,7 +2405,7 @@ struct AtkTableIface
 	 * Params:
 	 *     table = a GObject instance that implements AtkTableIface
 	 *     selected = a #gint** that is to contain the selected row numbers
-	 * Return: a gint representing the number of selected rows,
+	 * Returns: a gint representing the number of selected rows,
 	 *     or zero if value does not implement this interface.
 	 */
 	extern(C) int function(AtkTable* table, int** selected) getSelectedRows;
@@ -2414,7 +2414,7 @@ struct AtkTableIface
 	 * Params:
 	 *     table = a GObject instance that implements AtkTableIface
 	 *     column = a #gint representing a column in @table
-	 * Return: a gboolean representing if the column is selected, or 0
+	 * Returns: a gboolean representing if the column is selected, or 0
 	 *     if value does not implement this interface.
 	 */
 	extern(C) int function(AtkTable* table, int column) isColumnSelected;
@@ -2423,7 +2423,7 @@ struct AtkTableIface
 	 * Params:
 	 *     table = a GObject instance that implements AtkTableIface
 	 *     row = a #gint representing a row in @table
-	 * Return: a gboolean representing if the row is selected, or 0
+	 * Returns: a gboolean representing if the row is selected, or 0
 	 *     if value does not implement this interface.
 	 */
 	extern(C) int function(AtkTable* table, int row) isRowSelected;
@@ -2433,7 +2433,7 @@ struct AtkTableIface
 	 *     table = a GObject instance that implements AtkTableIface
 	 *     row = a #gint representing a row in @table
 	 *     column = a #gint representing a column in @table
-	 * Return: a gboolean representing if the cell is selected, or 0
+	 * Returns: a gboolean representing if the cell is selected, or 0
 	 *     if value does not implement this interface.
 	 */
 	extern(C) int function(AtkTable* table, int row, int column) isSelected;
@@ -2442,7 +2442,7 @@ struct AtkTableIface
 	 * Params:
 	 *     table = a GObject instance that implements AtkTableIface
 	 *     row = a #gint representing a row in @table
-	 * Return: a gboolean representing if row was successfully added to selection,
+	 * Returns: a gboolean representing if row was successfully added to selection,
 	 *     or 0 if value does not implement this interface.
 	 */
 	extern(C) int function(AtkTable* table, int row) addRowSelection;
@@ -2451,7 +2451,7 @@ struct AtkTableIface
 	 * Params:
 	 *     table = a GObject instance that implements AtkTableIface
 	 *     row = a #gint representing a row in @table
-	 * Return: a gboolean representing if the row was successfully removed from
+	 * Returns: a gboolean representing if the row was successfully removed from
 	 *     the selection, or 0 if value does not implement this interface.
 	 */
 	extern(C) int function(AtkTable* table, int row) removeRowSelection;
@@ -2460,7 +2460,7 @@ struct AtkTableIface
 	 * Params:
 	 *     table = a GObject instance that implements AtkTableIface
 	 *     column = a #gint representing a column in @table
-	 * Return: a gboolean representing if the column was successfully added to
+	 * Returns: a gboolean representing if the column was successfully added to
 	 *     the selection, or 0 if value does not implement this interface.
 	 */
 	extern(C) int function(AtkTable* table, int column) addColumnSelection;
@@ -2469,7 +2469,7 @@ struct AtkTableIface
 	 * Params:
 	 *     table = a GObject instance that implements AtkTableIface
 	 *     column = a #gint representing a column in @table
-	 * Return: a gboolean representing if the column was successfully removed from
+	 * Returns: a gboolean representing if the column was successfully removed from
 	 *     the selection, or 0 if value does not implement this interface.
 	 */
 	extern(C) int function(AtkTable* table, int column) removeColumnSelection;
@@ -2500,7 +2500,7 @@ struct AtkTextIface
 	 *     text = an #AtkText
 	 *     startOffset = start position
 	 *     endOffset = end position, or -1 for the end of the string.
-	 * Return: a newly allocated string containing the text from @start_offset up
+	 * Returns: a newly allocated string containing the text from @start_offset up
 	 *     to, but not including @end_offset. Use g_free() to free the returned string.
 	 */
 	extern(C) char* function(AtkText* text, int startOffset, int endOffset) getText;
@@ -2513,7 +2513,7 @@ struct AtkTextIface
 	 *     startOffset = the start offset of the returned string
 	 *     endOffset = the offset of the first character after the
 	 *         returned substring
-	 * Return: a newly allocated string containing the text after @offset bounded
+	 * Returns: a newly allocated string containing the text after @offset bounded
 	 *     by the specified @boundary_type. Use g_free() to free the returned string.
 	 */
 	extern(C) char* function(AtkText* text, int offset, AtkTextBoundary boundaryType, int* startOffset, int* endOffset) getTextAfterOffset;
@@ -2526,7 +2526,7 @@ struct AtkTextIface
 	 *     startOffset = the start offset of the returned string
 	 *     endOffset = the offset of the first character after the
 	 *         returned substring
-	 * Return: a newly allocated string containing the text at @offset bounded by
+	 * Returns: a newly allocated string containing the text at @offset bounded by
 	 *     the specified @boundary_type. Use g_free() to free the returned string.
 	 */
 	extern(C) char* function(AtkText* text, int offset, AtkTextBoundary boundaryType, int* startOffset, int* endOffset) getTextAtOffset;
@@ -2535,7 +2535,7 @@ struct AtkTextIface
 	 * Params:
 	 *     text = an #AtkText
 	 *     offset = position
-	 * Return: the character at @offset.
+	 * Returns: the character at @offset.
 	 */
 	extern(C) dchar function(AtkText* text, int offset) getCharacterAtOffset;
 	/**
@@ -2547,7 +2547,7 @@ struct AtkTextIface
 	 *     startOffset = the start offset of the returned string
 	 *     endOffset = the offset of the first character after the
 	 *         returned substring
-	 * Return: a newly allocated string containing the text before @offset bounded
+	 * Returns: a newly allocated string containing the text before @offset bounded
 	 *     by the specified @boundary_type. Use g_free() to free the returned string.
 	 */
 	extern(C) char* function(AtkText* text, int offset, AtkTextBoundary boundaryType, int* startOffset, int* endOffset) getTextBeforeOffset;
@@ -2555,7 +2555,7 @@ struct AtkTextIface
 	 *
 	 * Params:
 	 *     text = an #AtkText
-	 * Return: the offset position of the caret (cursor).
+	 * Returns: the offset position of the caret (cursor).
 	 */
 	extern(C) int function(AtkText* text) getCaretOffset;
 	/**
@@ -2566,7 +2566,7 @@ struct AtkTextIface
 	 *         the character to be inserted at the caret location.
 	 *     startOffset = the address to put the start offset of the range
 	 *     endOffset = the address to put the end offset of the range
-	 * Return: an #AtkAttributeSet which contains the attributes
+	 * Returns: an #AtkAttributeSet which contains the attributes
 	 *     explicitly set at @offset. This #AtkAttributeSet should be freed by a call
 	 *     to atk_attribute_set_free().
 	 */
@@ -2575,7 +2575,7 @@ struct AtkTextIface
 	 *
 	 * Params:
 	 *     text = an #AtkText
-	 * Return: an #AtkAttributeSet which contains the default
+	 * Returns: an #AtkAttributeSet which contains the default
 	 *     values of attributes.  at @offset. this #atkattributeset should be freed by
 	 *     a call to atk_attribute_set_free().
 	 */
@@ -2586,7 +2586,7 @@ struct AtkTextIface
 	 *
 	 * Params:
 	 *     text = an #AtkText
-	 * Return: the number of characters.
+	 * Returns: the number of characters.
 	 */
 	extern(C) int function(AtkText* text) getCharacterCount;
 	/**
@@ -2597,7 +2597,7 @@ struct AtkTextIface
 	 *     y = screen y-position of character
 	 *     coords = specify whether coordinates are relative to the screen or
 	 *         widget window
-	 * Return: the offset to the character which is located at
+	 * Returns: the offset to the character which is located at
 	 *     the specified @x and @y coordinates.
 	 */
 	extern(C) int function(AtkText* text, int x, int y, AtkCoordType coords) getOffsetAtPoint;
@@ -2605,7 +2605,7 @@ struct AtkTextIface
 	 *
 	 * Params:
 	 *     text = an #AtkText
-	 * Return: The number of selected regions, or -1 if a failure
+	 * Returns: The number of selected regions, or -1 if a failure
 	 *     occurred.
 	 */
 	extern(C) int function(AtkText* text) getNSelections;
@@ -2621,7 +2621,7 @@ struct AtkTextIface
 	 *     startOffset = passes back the start position of the selected region
 	 *     endOffset = passes back the end position of (e.g. offset immediately past)
 	 *         the selected region
-	 * Return: a newly allocated string containing the selected text. Use g_free()
+	 * Returns: a newly allocated string containing the selected text. Use g_free()
 	 *     to free the returned string.
 	 */
 	extern(C) char* function(AtkText* text, int selectionNum, int* startOffset, int* endOffset) getSelection;
@@ -2631,7 +2631,7 @@ struct AtkTextIface
 	 *     text = an #AtkText
 	 *     startOffset = the start position of the selected region
 	 *     endOffset = the offset of the first character after the selected region.
-	 * Return: %TRUE if success, %FALSE otherwise
+	 * Returns: %TRUE if success, %FALSE otherwise
 	 */
 	extern(C) int function(AtkText* text, int startOffset, int endOffset) addSelection;
 	/**
@@ -2643,7 +2643,7 @@ struct AtkTextIface
 	 *         start of the text.  The selected region closest to the beginning
 	 *         of the text region is assigned the number 0, etc.  Note that adding,
 	 *         moving or deleting a selected region can change the numbering.
-	 * Return: %TRUE if success, %FALSE otherwise
+	 * Returns: %TRUE if success, %FALSE otherwise
 	 */
 	extern(C) int function(AtkText* text, int selectionNum) removeSelection;
 	/**
@@ -2658,7 +2658,7 @@ struct AtkTextIface
 	 *     startOffset = the new start position of the selection
 	 *     endOffset = the new end position of (e.g. offset immediately past)
 	 *         the selection
-	 * Return: %TRUE if success, %FALSE otherwise
+	 * Returns: %TRUE if success, %FALSE otherwise
 	 */
 	extern(C) int function(AtkText* text, int selectionNum, int startOffset, int endOffset) setSelection;
 	/**
@@ -2666,7 +2666,7 @@ struct AtkTextIface
 	 * Params:
 	 *     text = an #AtkText
 	 *     offset = position
-	 * Return: %TRUE if success, %FALSE otherwise.
+	 * Returns: %TRUE if success, %FALSE otherwise.
 	 */
 	extern(C) int function(AtkText* text, int offset) setCaretOffset;
 	/** */
@@ -2691,7 +2691,7 @@ struct AtkTextIface
 	 *         if an error has occurred (e.g. invalid offset, not implemented)
 	 *     endOffset = the offset of the first character after the returned string,
 	 *         or -1 if an error has occurred (e.g. invalid offset, not implemented)
-	 * Return: a newly allocated string containing the text
+	 * Returns: a newly allocated string containing the text
 	 *     at the @offset bounded by the specified @granularity. Use
 	 *     g_free() to free the returned string.  Returns %NULL if the
 	 *     offset is invalid or no implementation is available.
@@ -2791,7 +2791,7 @@ struct AtkValueIface
 	 * Params:
 	 *     obj = a GObject instance that implements AtkValueIface
 	 *     value = a #GValue which is the desired new accessible value.
-	 * Return: %TRUE if new value is successfully set, %FALSE otherwise.
+	 * Returns: %TRUE if new value is successfully set, %FALSE otherwise.
 	 */
 	extern(C) int function(AtkValue* obj, GValue* value) setCurrentValue;
 	/** */
@@ -2802,7 +2802,7 @@ struct AtkValueIface
 	 *
 	 * Params:
 	 *     obj = a GObject instance that implements AtkValueIface
-	 * Return: a newly allocated #AtkRange
+	 * Returns: a newly allocated #AtkRange
 	 *     that represents the minimum, maximum and descriptor (if available)
 	 *     of @obj. NULL if that range is not defined.
 	 */
@@ -2811,7 +2811,7 @@ struct AtkValueIface
 	 *
 	 * Params:
 	 *     obj = a GObject instance that implements AtkValueIface
-	 * Return: the minimum increment by which the value of this
+	 * Returns: the minimum increment by which the value of this
 	 *     object may be changed. zero if undefined.
 	 */
 	extern(C) double function(AtkValue* obj) getIncrement;
@@ -2819,7 +2819,7 @@ struct AtkValueIface
 	 *
 	 * Params:
 	 *     obj = a GObject instance that implements AtkValueIface
-	 * Return: an #GSList of
+	 * Returns: an #GSList of
 	 *     #AtkRange which each of the subranges defined for this object. Free
 	 *     the returns list with g_slist_free().
 	 */
@@ -2882,7 +2882,7 @@ public alias extern(C) void function(AtkObject* object, int focusIn) AtkFocusHan
  * Params:
  *     userData = custom data defined by the user
  *
- * Return: not used
+ * Returns: not used
  */
 public alias extern(C) int function(void* userData) AtkFunction;
 
@@ -2896,7 +2896,7 @@ public alias extern(C) int function(void* userData) AtkFunction;
  *         notification is being given.
  *     userData = a block of data which will be passed to the event listener, on notification.
  *
- * Return: TRUE (nonzero) if the event emission should be stopped and the event
+ * Returns: TRUE (nonzero) if the event emission should be stopped and the event
  *     discarded without being passed to the normal GUI recipient; FALSE (zero) if the
  *     event dispatch to the client application should proceed as normal.
  *

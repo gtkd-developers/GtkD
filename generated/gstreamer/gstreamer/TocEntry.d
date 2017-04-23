@@ -76,7 +76,7 @@ public class TocEntry
 	 *     type = entry type.
 	 *     uid = unique ID (UID) in the whole TOC.
 	 *
-	 * Return: newly allocated #GstTocEntry structure, free it with gst_toc_entry_unref().
+	 * Returns: newly allocated #GstTocEntry structure, free it with gst_toc_entry_unref().
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -104,7 +104,7 @@ public class TocEntry
 	}
 
 	/**
-	 * Return: @entry's entry type
+	 * Returns: @entry's entry type
 	 */
 	public GstTocEntryType getEntryType()
 	{
@@ -123,7 +123,7 @@ public class TocEntry
 	 *     repeatCount = the storage for the repeat_count
 	 *         value, leave %NULL if not need.
 	 *
-	 * Return: %TRUE if all non-%NULL storage pointers were filled with appropriate
+	 * Returns: %TRUE if all non-%NULL storage pointers were filled with appropriate
 	 *     values, %FALSE otherwise.
 	 *
 	 * Since: 1.4
@@ -136,7 +136,7 @@ public class TocEntry
 	/**
 	 * Gets the parent #GstTocEntry of @entry.
 	 *
-	 * Return: The parent #GstTocEntry of @entry
+	 * Returns: The parent #GstTocEntry of @entry
 	 */
 	public TocEntry getParent()
 	{
@@ -160,7 +160,7 @@ public class TocEntry
 	 *     stop = the storage for the stop value, leave
 	 *         %NULL if not need.
 	 *
-	 * Return: %TRUE if all non-%NULL storage pointers were filled with appropriate
+	 * Returns: %TRUE if all non-%NULL storage pointers were filled with appropriate
 	 *     values, %FALSE otherwise.
 	 */
 	public bool getStartStopTimes(out long start, out long stop)
@@ -171,7 +171,7 @@ public class TocEntry
 	/**
 	 * Gets the sub-entries of @entry.
 	 *
-	 * Return: A #GList of #GstTocEntry of @entry
+	 * Returns: A #GList of #GstTocEntry of @entry
 	 */
 	public ListG getSubEntries()
 	{
@@ -188,7 +188,7 @@ public class TocEntry
 	/**
 	 * Gets the tags for @entry.
 	 *
-	 * Return: A #GstTagList for @entry
+	 * Returns: A #GstTagList for @entry
 	 */
 	public TagList getTags()
 	{
@@ -205,7 +205,7 @@ public class TocEntry
 	/**
 	 * Gets the parent #GstToc of @entry.
 	 *
-	 * Return: The parent #GstToc of @entry
+	 * Returns: The parent #GstToc of @entry
 	 */
 	public Toc getToc()
 	{
@@ -222,7 +222,7 @@ public class TocEntry
 	/**
 	 * Gets the UID of @entry.
 	 *
-	 * Return: The UID of @entry
+	 * Returns: The UID of @entry
 	 */
 	public string getUid()
 	{
@@ -230,7 +230,7 @@ public class TocEntry
 	}
 
 	/**
-	 * Return: %TRUE if @entry's type is an alternative type, otherwise %FALSE
+	 * Returns: %TRUE if @entry's type is an alternative type, otherwise %FALSE
 	 */
 	public bool isAlternative()
 	{
@@ -238,7 +238,7 @@ public class TocEntry
 	}
 
 	/**
-	 * Return: %TRUE if @entry's type is a sequence type, otherwise %FALSE
+	 * Returns: %TRUE if @entry's type is a sequence type, otherwise %FALSE
 	 */
 	public bool isSequence()
 	{

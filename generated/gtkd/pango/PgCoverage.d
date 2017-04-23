@@ -67,7 +67,7 @@ public class PgCoverage
 	 * Copy an existing #PangoCoverage. (This function may now be unnecessary
 	 * since we refcount the structure. File a bug if you use it.)
 	 *
-	 * Return: the newly allocated #PangoCoverage,
+	 * Returns: the newly allocated #PangoCoverage,
 	 *     with a reference count of one, which should be freed
 	 *     with pango_coverage_unref().
 	 */
@@ -89,7 +89,7 @@ public class PgCoverage
 	 * Params:
 	 *     index = the index to check
 	 *
-	 * Return: the coverage level of @coverage for character @index_.
+	 * Returns: the coverage level of @coverage for character @index_.
 	 */
 	public PangoCoverageLevel get(int index)
 	{
@@ -112,7 +112,7 @@ public class PgCoverage
 	/**
 	 * Increase the reference count on the #PangoCoverage by one
 	 *
-	 * Return: @coverage
+	 * Returns: @coverage
 	 */
 	public PgCoverage doref()
 	{
@@ -173,7 +173,7 @@ public class PgCoverage
 	 *         representing a #PangoCoverage
 	 *     nBytes = the size of @bytes in bytes
 	 *
-	 * Return: a newly allocated
+	 * Returns: a newly allocated
 	 *     #PangoCoverage, or %NULL if the data was invalid.
 	 */
 	public static PgCoverage fromBytes(char[] bytes)
@@ -191,7 +191,7 @@ public class PgCoverage
 	/**
 	 * Create a new #PangoCoverage
 	 *
-	 * Return: the newly allocated #PangoCoverage,
+	 * Returns: the newly allocated #PangoCoverage,
 	 *     initialized to %PANGO_COVERAGE_NONE
 	 *     with a reference count of one, which
 	 *     should be freed with pango_coverage_unref().

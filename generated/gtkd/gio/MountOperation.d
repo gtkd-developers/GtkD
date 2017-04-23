@@ -93,7 +93,7 @@ public class MountOperation : ObjectG
 	/**
 	 * Creates a new mount operation.
 	 *
-	 * Return: a #GMountOperation.
+	 * Returns: a #GMountOperation.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -113,7 +113,7 @@ public class MountOperation : ObjectG
 	 * Check to see whether the mount operation is being used
 	 * for an anonymous user.
 	 *
-	 * Return: %TRUE if mount operation is anonymous.
+	 * Returns: %TRUE if mount operation is anonymous.
 	 */
 	public bool getAnonymous()
 	{
@@ -123,7 +123,7 @@ public class MountOperation : ObjectG
 	/**
 	 * Gets a choice from the mount operation.
 	 *
-	 * Return: an integer containing an index of the user's choice from
+	 * Returns: an integer containing an index of the user's choice from
 	 *     the choice's list, or %0.
 	 */
 	public int getChoice()
@@ -134,7 +134,7 @@ public class MountOperation : ObjectG
 	/**
 	 * Gets the domain of the mount operation.
 	 *
-	 * Return: a string set to the domain.
+	 * Returns: a string set to the domain.
 	 */
 	public string getDomain()
 	{
@@ -144,7 +144,7 @@ public class MountOperation : ObjectG
 	/**
 	 * Gets a password from the mount operation.
 	 *
-	 * Return: a string containing the password within @op.
+	 * Returns: a string containing the password within @op.
 	 */
 	public string getPassword()
 	{
@@ -154,7 +154,7 @@ public class MountOperation : ObjectG
 	/**
 	 * Gets the state of saving passwords for the mount operation.
 	 *
-	 * Return: a #GPasswordSave flag.
+	 * Returns: a #GPasswordSave flag.
 	 */
 	public GPasswordSave getPasswordSave()
 	{
@@ -164,7 +164,7 @@ public class MountOperation : ObjectG
 	/**
 	 * Get the user name from the mount operation.
 	 *
-	 * Return: a string containing the user name.
+	 * Returns: a string containing the user name.
 	 */
 	public string getUsername()
 	{

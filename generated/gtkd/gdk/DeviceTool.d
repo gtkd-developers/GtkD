@@ -80,7 +80,7 @@ public class DeviceTool : ObjectG
 	 * may support multiple devices with the same #GdkDeviceToolType,
 	 * but having different hardware identificators.
 	 *
-	 * Return: The hardware identificator of this tool.
+	 * Returns: The hardware identificator of this tool.
 	 *
 	 * Since: 3.22
 	 */
@@ -93,7 +93,7 @@ public class DeviceTool : ObjectG
 	 * Gets the serial of this tool, this value can be used to identify a
 	 * physical tool (eg. a tablet pen) across program executions.
 	 *
-	 * Return: The serial ID for this tool
+	 * Returns: The serial ID for this tool
 	 *
 	 * Since: 3.22
 	 */
@@ -105,7 +105,7 @@ public class DeviceTool : ObjectG
 	/**
 	 * Gets the #GdkDeviceToolType of the tool.
 	 *
-	 * Return: The physical type for this tool. This can be used to figure out what
+	 * Returns: The physical type for this tool. This can be used to figure out what
 	 *     sort of pen is being used, such as an airbrush or a pencil.
 	 *
 	 * Since: 3.22

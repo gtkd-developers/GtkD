@@ -96,7 +96,7 @@ public class UnixSocketAddress : SocketAddress
 	 * Params:
 	 *     path = the socket path
 	 *
-	 * Return: a new #GUnixSocketAddress
+	 * Returns: a new #GUnixSocketAddress
 	 *
 	 * Since: 2.22
 	 *
@@ -152,7 +152,7 @@ public class UnixSocketAddress : SocketAddress
 	 *     pathLen = the length of @path, or -1
 	 *     type = a #GUnixSocketAddressType
 	 *
-	 * Return: a new #GUnixSocketAddress
+	 * Returns: a new #GUnixSocketAddress
 	 *
 	 * Since: 2.26
 	 *
@@ -173,7 +173,7 @@ public class UnixSocketAddress : SocketAddress
 	/**
 	 * Checks if abstract UNIX domain socket names are supported.
 	 *
-	 * Return: %TRUE if supported, %FALSE otherwise
+	 * Returns: %TRUE if supported, %FALSE otherwise
 	 *
 	 * Since: 2.22
 	 */
@@ -185,7 +185,7 @@ public class UnixSocketAddress : SocketAddress
 	/**
 	 * Gets @address's type.
 	 *
-	 * Return: a #GUnixSocketAddressType
+	 * Returns: a #GUnixSocketAddressType
 	 *
 	 * Since: 2.26
 	 */
@@ -199,7 +199,7 @@ public class UnixSocketAddress : SocketAddress
 	 *
 	 * Deprecated: Use g_unix_socket_address_get_address_type()
 	 *
-	 * Return: %TRUE if the address is abstract, %FALSE otherwise
+	 * Returns: %TRUE if the address is abstract, %FALSE otherwise
 	 *
 	 * Since: 2.22
 	 */
@@ -216,7 +216,7 @@ public class UnixSocketAddress : SocketAddress
 	 * g_unix_socket_address_get_path_len() to get the true length
 	 * of this string.
 	 *
-	 * Return: the path for @address
+	 * Returns: the path for @address
 	 *
 	 * Since: 2.22
 	 */
@@ -230,7 +230,7 @@ public class UnixSocketAddress : SocketAddress
 	 *
 	 * For details, see g_unix_socket_address_get_path().
 	 *
-	 * Return: the length of the path
+	 * Returns: the length of the path
 	 *
 	 * Since: 2.22
 	 */

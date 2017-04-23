@@ -241,7 +241,7 @@ public class ApplicationCommandLine : ObjectG
 	 * Params:
 	 *     arg = an argument from @cmdline
 	 *
-	 * Return: a new #GFile
+	 * Returns: a new #GFile
 	 *
 	 * Since: 2.36
 	 */
@@ -270,7 +270,7 @@ public class ApplicationCommandLine : ObjectG
 	 * The return value is %NULL-terminated and should be freed using
 	 * g_strfreev().
 	 *
-	 * Return: the string array
+	 * Returns: the string array
 	 *     containing the arguments (the argv)
 	 *
 	 * Since: 2.28
@@ -295,7 +295,7 @@ public class ApplicationCommandLine : ObjectG
 	 * The return value should not be modified or freed and is valid for as
 	 * long as @cmdline exists.
 	 *
-	 * Return: the current directory, or %NULL
+	 * Returns: the current directory, or %NULL
 	 *
 	 * Since: 2.28
 	 */
@@ -321,7 +321,7 @@ public class ApplicationCommandLine : ObjectG
 	 * See g_application_command_line_getenv() if you are only interested
 	 * in the value of a single environment variable.
 	 *
-	 * Return: the environment
+	 * Returns: the environment
 	 *     strings, or %NULL if they were not sent
 	 *
 	 * Since: 2.28
@@ -335,7 +335,7 @@ public class ApplicationCommandLine : ObjectG
 	 * Gets the exit status of @cmdline.  See
 	 * g_application_command_line_set_exit_status() for more information.
 	 *
-	 * Return: the exit status
+	 * Returns: the exit status
 	 *
 	 * Since: 2.28
 	 */
@@ -347,7 +347,7 @@ public class ApplicationCommandLine : ObjectG
 	/**
 	 * Determines if @cmdline represents a remote invocation.
 	 *
-	 * Return: %TRUE if the invocation was remote
+	 * Returns: %TRUE if the invocation was remote
 	 *
 	 * Since: 2.28
 	 */
@@ -367,7 +367,7 @@ public class ApplicationCommandLine : ObjectG
 	 * If no options were sent then an empty dictionary is returned so that
 	 * you don't need to check for %NULL.
 	 *
-	 * Return: a #GVariantDict with the options
+	 * Returns: a #GVariantDict with the options
 	 *
 	 * Since: 2.40
 	 */
@@ -393,7 +393,7 @@ public class ApplicationCommandLine : ObjectG
 	 *
 	 * For local invocation, it will be %NULL.
 	 *
-	 * Return: the platform data, or %NULL
+	 * Returns: the platform data, or %NULL
 	 *
 	 * Since: 2.28
 	 */
@@ -421,7 +421,7 @@ public class ApplicationCommandLine : ObjectG
 	 *
 	 * You must only call this function once per commandline invocation.
 	 *
-	 * Return: a #GInputStream for stdin
+	 * Returns: a #GInputStream for stdin
 	 *
 	 * Since: 2.34
 	 */
@@ -453,7 +453,7 @@ public class ApplicationCommandLine : ObjectG
 	 * Params:
 	 *     name = the environment variable to get
 	 *
-	 * Return: the value of the variable, or %NULL if unset or unsent
+	 * Returns: the value of the variable, or %NULL if unset or unsent
 	 *
 	 * Since: 2.28
 	 */

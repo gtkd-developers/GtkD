@@ -83,7 +83,7 @@ public class VSeparator : Separator
 	 *
 	 * Deprecated: Use gtk_separator_new() with %GTK_ORIENTATION_VERTICAL instead
 	 *
-	 * Return: a new #GtkVSeparator.
+	 * Returns: a new #GtkVSeparator.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

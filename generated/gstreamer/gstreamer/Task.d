@@ -133,7 +133,7 @@ public class Task : ObjectGst
 	 *     userData = User data to pass to @func
 	 *     notify = the function to call when @user_data is no longer needed.
 	 *
-	 * Return: A new #GstTask.
+	 * Returns: A new #GstTask.
 	 *
 	 *     MT safe.
 	 *
@@ -168,7 +168,7 @@ public class Task : ObjectGst
 	 *
 	 * MT safe.
 	 *
-	 * Return: the #GstTaskPool used by @task. gst_object_unref()
+	 * Returns: the #GstTaskPool used by @task. gst_object_unref()
 	 *     after usage.
 	 */
 	public TaskPool getPool()
@@ -186,7 +186,7 @@ public class Task : ObjectGst
 	/**
 	 * Get the current state of the task.
 	 *
-	 * Return: The #GstTaskState of the task
+	 * Returns: The #GstTaskState of the task
 	 *
 	 *     MT safe.
 	 */
@@ -205,7 +205,7 @@ public class Task : ObjectGst
 	 * would cause a deadlock. The function will detect this and print a
 	 * g_warning.
 	 *
-	 * Return: %TRUE if the task could be joined.
+	 * Returns: %TRUE if the task could be joined.
 	 *
 	 *     MT safe.
 	 */
@@ -220,7 +220,7 @@ public class Task : ObjectGst
 	 * in the paused state. This function does not wait for the task to complete
 	 * the paused state.
 	 *
-	 * Return: %TRUE if the task could be paused.
+	 * Returns: %TRUE if the task could be paused.
 	 *
 	 *     MT safe.
 	 */
@@ -302,7 +302,7 @@ public class Task : ObjectGst
 	 * Params:
 	 *     state = the new task state
 	 *
-	 * Return: %TRUE if the state could be changed.
+	 * Returns: %TRUE if the state could be changed.
 	 */
 	public bool setState(GstTaskState state)
 	{
@@ -313,7 +313,7 @@ public class Task : ObjectGst
 	 * Starts @task. The @task must have a lock associated with it using
 	 * gst_task_set_lock() or this function will return %FALSE.
 	 *
-	 * Return: %TRUE if the task could be started.
+	 * Returns: %TRUE if the task could be started.
 	 *
 	 *     MT safe.
 	 */
@@ -327,7 +327,7 @@ public class Task : ObjectGst
 	 * will not wait for the task to have completely stopped. Use
 	 * gst_task_join() to stop and wait for completion.
 	 *
-	 * Return: %TRUE if the task could be stopped.
+	 * Returns: %TRUE if the task could be stopped.
 	 *
 	 *     MT safe.
 	 */

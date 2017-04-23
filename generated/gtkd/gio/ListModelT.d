@@ -99,7 +99,7 @@ public template ListModelT(TStruct)
 	 * Params:
 	 *     position = the position of the item to fetch
 	 *
-	 * Return: the item at @position.
+	 * Returns: the item at @position.
 	 *
 	 * Since: 2.44
 	 */
@@ -123,7 +123,7 @@ public template ListModelT(TStruct)
 	 * The item type of a #GListModel can not change during the life of the
 	 * model.
 	 *
-	 * Return: the #GType of the items contained in @list.
+	 * Returns: the #GType of the items contained in @list.
 	 *
 	 * Since: 2.44
 	 */
@@ -139,7 +139,7 @@ public template ListModelT(TStruct)
 	 * less efficient than iterating the list with increasing values for
 	 * @position until g_list_model_get_item() returns %NULL.
 	 *
-	 * Return: the number of items in @list.
+	 * Returns: the number of items in @list.
 	 *
 	 * Since: 2.44
 	 */
@@ -158,7 +158,7 @@ public template ListModelT(TStruct)
 	 * Params:
 	 *     position = the position of the item to fetch
 	 *
-	 * Return: the object at @position.
+	 * Returns: the object at @position.
 	 *
 	 * Since: 2.44
 	 */

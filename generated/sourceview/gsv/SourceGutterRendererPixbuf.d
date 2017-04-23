@@ -86,7 +86,7 @@ public class SourceGutterRendererPixbuf : SourceGutterRenderer
 	/**
 	 * Create a new #GtkSourceGutterRendererPixbuf.
 	 *
-	 * Return: A #GtkSourceGutterRenderer
+	 * Returns: A #GtkSourceGutterRenderer
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -105,7 +105,7 @@ public class SourceGutterRendererPixbuf : SourceGutterRenderer
 	/**
 	 * Get the gicon of the renderer
 	 *
-	 * Return: a #GIcon
+	 * Returns: a #GIcon
 	 */
 	public IconIF getGicon()
 	{
@@ -128,7 +128,7 @@ public class SourceGutterRendererPixbuf : SourceGutterRenderer
 	/**
 	 * Get the pixbuf of the renderer.
 	 *
-	 * Return: a #GdkPixbuf
+	 * Returns: a #GdkPixbuf
 	 */
 	public Pixbuf getPixbuf()
 	{
@@ -147,7 +147,7 @@ public class SourceGutterRendererPixbuf : SourceGutterRenderer
 	 *
 	 * Deprecated: Don't use this function.
 	 *
-	 * Return: the stock id.
+	 * Returns: the stock id.
 	 */
 	public string getStockId()
 	{

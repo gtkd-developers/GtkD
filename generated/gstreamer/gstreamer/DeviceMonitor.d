@@ -142,7 +142,7 @@ public class DeviceMonitor : ObjectGst
 	/**
 	 * Create a new #GstDeviceMonitor
 	 *
-	 * Return: a new device monitor.
+	 * Returns: a new device monitor.
 	 *
 	 * Since: 1.4
 	 *
@@ -177,7 +177,7 @@ public class DeviceMonitor : ObjectGst
 	 *     classes = device classes to use as filter or %NULL for any class
 	 *     caps = the #GstCaps to filter or %NULL for ANY
 	 *
-	 * Return: The id of the new filter or 0 if no provider matched the filter's
+	 * Returns: The id of the new filter or 0 if no provider matched the filter's
 	 *     classes.
 	 *
 	 * Since: 1.4
@@ -190,7 +190,7 @@ public class DeviceMonitor : ObjectGst
 	/**
 	 * Gets the #GstBus of this #GstDeviceMonitor
 	 *
-	 * Return: a #GstBus
+	 * Returns: a #GstBus
 	 *
 	 * Since: 1.4
 	 */
@@ -210,7 +210,7 @@ public class DeviceMonitor : ObjectGst
 	 * Gets a list of devices from all of the relevant monitors. This may actually
 	 * probe the hardware if the monitor is not currently started.
 	 *
-	 * Return: a #GList of
+	 * Returns: a #GList of
 	 *     #GstDevice
 	 *
 	 * Since: 1.4
@@ -232,7 +232,7 @@ public class DeviceMonitor : ObjectGst
 	 *
 	 * This
 	 *
-	 * Return: A list of device provider factory names that are currently being
+	 * Returns: A list of device provider factory names that are currently being
 	 *     monitored by @monitor or %NULL when nothing is being monitored.
 	 *
 	 * Since: 1.6
@@ -249,7 +249,7 @@ public class DeviceMonitor : ObjectGst
 	 * Get if @monitor is curretly showing all devices, even those from hidden
 	 * providers.
 	 *
-	 * Return: %TRUE when all devices will be shown.
+	 * Returns: %TRUE when all devices will be shown.
 	 *
 	 * Since: 1.6
 	 */
@@ -265,7 +265,7 @@ public class DeviceMonitor : ObjectGst
 	 * Params:
 	 *     filterId = the id of the filter
 	 *
-	 * Return: %TRUE of the filter id was valid, %FALSE otherwise
+	 * Returns: %TRUE of the filter id was valid, %FALSE otherwise
 	 *
 	 * Since: 1.4
 	 */
@@ -293,7 +293,7 @@ public class DeviceMonitor : ObjectGst
 	 * %GST_MESSAGE_DEVICE_ADDED and %GST_MESSAGE_DEVICE_REMOVED messages
 	 * will be emitted on the bus when the list of devices changes.
 	 *
-	 * Return: %TRUE if the device monitoring could be started
+	 * Returns: %TRUE if the device monitoring could be started
 	 *
 	 * Since: 1.4
 	 */

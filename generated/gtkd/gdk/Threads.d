@@ -40,7 +40,7 @@ public  import gtkc.gdktypes;
  *     funct = function to call
  *     data = data to pass to @function
  *
- * Return: the ID (greater than 0) of the event source.
+ * Returns: the ID (greater than 0) of the event source.
  *
  * Since: 2.12
  */
@@ -99,7 +99,7 @@ public uint threadsAddIdle(GSourceFunc funct, void* data)
  *     data = data to pass to @function
  *     notify = function to call when the idle is removed, or %NULL
  *
- * Return: the ID (greater than 0) of the event source.
+ * Returns: the ID (greater than 0) of the event source.
  *
  * Since: 2.12
  */
@@ -120,7 +120,7 @@ public uint threadsAddIdleFull(int priority, GSourceFunc funct, void* data, GDes
  *     funct = function to call
  *     data = data to pass to @function
  *
- * Return: the ID (greater than 0) of the event source.
+ * Returns: the ID (greater than 0) of the event source.
  *
  * Since: 2.12
  */
@@ -183,7 +183,7 @@ public uint threadsAddTimeout(uint interval, GSourceFunc funct, void* data)
  *     data = data to pass to @function
  *     notify = function to call when the timeout is removed, or %NULL
  *
- * Return: the ID (greater than 0) of the event source.
+ * Returns: the ID (greater than 0) of the event source.
  *
  * Since: 2.12
  */
@@ -203,7 +203,7 @@ public uint threadsAddTimeoutFull(int priority, uint interval, GSourceFunc funct
  *     funct = function to call
  *     data = data to pass to @function
  *
- * Return: the ID (greater than 0) of the event source.
+ * Returns: the ID (greater than 0) of the event source.
  *
  * Since: 2.14
  */
@@ -225,7 +225,7 @@ public uint threadsAddTimeoutSeconds(uint interval, GSourceFunc funct, void* dat
  *     data = data to pass to @function
  *     notify = function to call when the timeout is removed, or %NULL
  *
- * Return: the ID (greater than 0) of the event source.
+ * Returns: the ID (greater than 0) of the event source.
  *
  * Since: 2.14
  */

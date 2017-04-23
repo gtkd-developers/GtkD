@@ -55,7 +55,7 @@ public template SourceUndoManagerT(TStruct)
 	/**
 	 * Get whether there are redo operations available.
 	 *
-	 * Return: %TRUE if there are redo operations available, %FALSE otherwise
+	 * Returns: %TRUE if there are redo operations available, %FALSE otherwise
 	 *
 	 * Since: 2.10
 	 */
@@ -77,7 +77,7 @@ public template SourceUndoManagerT(TStruct)
 	/**
 	 * Get whether there are undo operations available.
 	 *
-	 * Return: %TRUE if there are undo operations available, %FALSE otherwise
+	 * Returns: %TRUE if there are undo operations available, %FALSE otherwise
 	 *
 	 * Since: 2.10
 	 */

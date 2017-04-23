@@ -69,7 +69,7 @@ public class IOExtension
 	 * Note that the same type may be registered as extension
 	 * for multiple extension points, under different names.
 	 *
-	 * Return: the name of @extension.
+	 * Returns: the name of @extension.
 	 */
 	public string getName()
 	{
@@ -79,7 +79,7 @@ public class IOExtension
 	/**
 	 * Gets the priority with which @extension was registered.
 	 *
-	 * Return: the priority of @extension
+	 * Returns: the priority of @extension
 	 */
 	public int getPriority()
 	{
@@ -89,7 +89,7 @@ public class IOExtension
 	/**
 	 * Gets the type associated with @extension.
 	 *
-	 * Return: the type of @extension
+	 * Returns: the type of @extension
 	 */
 	public GType getType()
 	{
@@ -100,7 +100,7 @@ public class IOExtension
 	 * Gets a reference to the class for the type that is
 	 * associated with @extension.
 	 *
-	 * Return: the #GTypeClass for the type of @extension
+	 * Returns: the #GTypeClass for the type of @extension
 	 */
 	public TypeClass refClass()
 	{

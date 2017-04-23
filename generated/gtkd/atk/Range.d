@@ -80,7 +80,7 @@ public class Range
 	 *     upperLimit = superior limit for this range
 	 *     description = human readable description of this range.
 	 *
-	 * Return: a new #AtkRange
+	 * Returns: a new #AtkRange
 	 *
 	 * Since: 2.12
 	 *
@@ -101,7 +101,7 @@ public class Range
 	/**
 	 * Returns a new #AtkRange that is a exact copy of @src
 	 *
-	 * Return: a new #AtkRange copy of @src
+	 * Returns: a new #AtkRange copy of @src
 	 *
 	 * Since: 2.12
 	 */
@@ -130,7 +130,7 @@ public class Range
 	/**
 	 * Returns the human readable description of @range
 	 *
-	 * Return: the human-readable description of @range
+	 * Returns: the human-readable description of @range
 	 *
 	 * Since: 2.12
 	 */
@@ -142,7 +142,7 @@ public class Range
 	/**
 	 * Returns the lower limit of @range
 	 *
-	 * Return: the lower limit of @range
+	 * Returns: the lower limit of @range
 	 *
 	 * Since: 2.12
 	 */
@@ -154,7 +154,7 @@ public class Range
 	/**
 	 * Returns the upper limit of @range
 	 *
-	 * Return: the upper limit of @range
+	 * Returns: the upper limit of @range
 	 *
 	 * Since: 2.12
 	 */

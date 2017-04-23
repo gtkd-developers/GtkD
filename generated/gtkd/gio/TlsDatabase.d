@@ -101,7 +101,7 @@ public class TlsDatabase : ObjectG
 	 * Params:
 	 *     certificate = certificate for which to create a handle.
 	 *
-	 * Return: a newly allocated string containing the
+	 * Returns: a newly allocated string containing the
 	 *     handle.
 	 *
 	 * Since: 2.30
@@ -134,7 +134,7 @@ public class TlsDatabase : ObjectG
 	 *     flags = Flags which affect the lookup.
 	 *     cancellable = a #GCancellable, or %NULL
 	 *
-	 * Return: a newly allocated
+	 * Returns: a newly allocated
 	 *     #GTlsCertificate, or %NULL. Use g_object_unref() to release the certificate.
 	 *
 	 * Since: 2.30
@@ -189,7 +189,7 @@ public class TlsDatabase : ObjectG
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *
-	 * Return: a newly allocated #GTlsCertificate object.
+	 * Returns: a newly allocated #GTlsCertificate object.
 	 *     Use g_object_unref() to release the certificate.
 	 *
 	 * Since: 2.30
@@ -231,7 +231,7 @@ public class TlsDatabase : ObjectG
 	 *     flags = flags which affect the lookup operation
 	 *     cancellable = a #GCancellable, or %NULL
 	 *
-	 * Return: a newly allocated issuer #GTlsCertificate,
+	 * Returns: a newly allocated issuer #GTlsCertificate,
 	 *     or %NULL. Use g_object_unref() to release the certificate.
 	 *
 	 * Since: 2.30
@@ -283,7 +283,7 @@ public class TlsDatabase : ObjectG
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *
-	 * Return: a newly allocated issuer #GTlsCertificate,
+	 * Returns: a newly allocated issuer #GTlsCertificate,
 	 *     or %NULL. Use g_object_unref() to release the certificate.
 	 *
 	 * Since: 2.30
@@ -321,7 +321,7 @@ public class TlsDatabase : ObjectG
 	 *     flags = Flags which affect the lookup operation.
 	 *     cancellable = a #GCancellable, or %NULL
 	 *
-	 * Return: a newly allocated list of #GTlsCertificate
+	 * Returns: a newly allocated list of #GTlsCertificate
 	 *     objects. Use g_object_unref() on each certificate, and g_list_free() on the release the list.
 	 *
 	 * Since: 2.30
@@ -377,7 +377,7 @@ public class TlsDatabase : ObjectG
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *
-	 * Return: a newly allocated list of #GTlsCertificate
+	 * Returns: a newly allocated list of #GTlsCertificate
 	 *     objects. Use g_object_unref() on each certificate, and g_list_free() on the release the list.
 	 *
 	 * Since: 2.30
@@ -446,7 +446,7 @@ public class TlsDatabase : ObjectG
 	 *     flags = additional verify flags
 	 *     cancellable = a #GCancellable, or %NULL
 	 *
-	 * Return: the appropriate #GTlsCertificateFlags which represents the
+	 * Returns: the appropriate #GTlsCertificateFlags which represents the
 	 *     result of verification.
 	 *
 	 * Since: 2.30
@@ -505,7 +505,7 @@ public class TlsDatabase : ObjectG
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *
-	 * Return: the appropriate #GTlsCertificateFlags which represents the
+	 * Returns: the appropriate #GTlsCertificateFlags which represents the
 	 *     result of verification.
 	 *
 	 * Since: 2.30

@@ -84,7 +84,7 @@ public class RelationSet : ObjectG
 	/**
 	 * Creates a new empty relation set.
 	 *
-	 * Return: a new #AtkRelationSet
+	 * Returns: a new #AtkRelationSet
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -139,7 +139,7 @@ public class RelationSet : ObjectG
 	 * Params:
 	 *     relationship = an #AtkRelationType
 	 *
-	 * Return: %TRUE if @relationship is the relationship type of a relation
+	 * Returns: %TRUE if @relationship is the relationship type of a relation
 	 *     in @set, %FALSE otherwise
 	 */
 	public bool contains(AtkRelationType relationship)
@@ -156,7 +156,7 @@ public class RelationSet : ObjectG
 	 *     relationship = an #AtkRelationType
 	 *     target = an #AtkObject
 	 *
-	 * Return: %TRUE if @set contains a relation with the relationship
+	 * Returns: %TRUE if @set contains a relation with the relationship
 	 *     type @relationship with an object @target, %FALSE otherwise
 	 */
 	public bool containsTarget(AtkRelationType relationship, ObjectAtk target)
@@ -167,7 +167,7 @@ public class RelationSet : ObjectG
 	/**
 	 * Determines the number of relations in a relation set.
 	 *
-	 * Return: an integer representing the number of relations in the set.
+	 * Returns: an integer representing the number of relations in the set.
 	 */
 	public int getNRelations()
 	{
@@ -180,7 +180,7 @@ public class RelationSet : ObjectG
 	 * Params:
 	 *     i = a gint representing a position in the set, starting from 0.
 	 *
-	 * Return: a #AtkRelation, which is the relation at
+	 * Returns: a #AtkRelation, which is the relation at
 	 *     position i in the set.
 	 */
 	public Relation getRelation(int i)
@@ -201,7 +201,7 @@ public class RelationSet : ObjectG
 	 * Params:
 	 *     relationship = an #AtkRelationType
 	 *
-	 * Return: an #AtkRelation, which is a relation matching the
+	 * Returns: an #AtkRelation, which is a relation matching the
 	 *     specified type.
 	 */
 	public Relation getRelationByType(AtkRelationType relationship)

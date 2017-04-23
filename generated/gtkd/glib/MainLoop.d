@@ -72,7 +72,7 @@ public class MainLoop
 	 *         is not very important since calling g_main_loop_run() will set this to
 	 *         %TRUE anyway.
 	 *
-	 * Return: a new #GMainLoop.
+	 * Returns: a new #GMainLoop.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -91,7 +91,7 @@ public class MainLoop
 	/**
 	 * Returns the #GMainContext of @loop.
 	 *
-	 * Return: the #GMainContext of @loop
+	 * Returns: the #GMainContext of @loop
 	 */
 	public MainContext getContext()
 	{
@@ -108,7 +108,7 @@ public class MainLoop
 	/**
 	 * Checks to see if the main loop is currently being run via g_main_loop_run().
 	 *
-	 * Return: %TRUE if the mainloop is currently being run.
+	 * Returns: %TRUE if the mainloop is currently being run.
 	 */
 	public bool isRunning()
 	{
@@ -130,7 +130,7 @@ public class MainLoop
 	/**
 	 * Increases the reference count on a #GMainLoop object by one.
 	 *
-	 * Return: @loop
+	 * Returns: @loop
 	 */
 	public MainLoop doref()
 	{
@@ -167,7 +167,7 @@ public class MainLoop
 	/**
 	 * Returns the currently firing source for this thread.
 	 *
-	 * Return: The currently firing source or %NULL.
+	 * Returns: The currently firing source or %NULL.
 	 *
 	 * Since: 2.12
 	 */
@@ -286,7 +286,7 @@ public class MainLoop
 	 * simply return to the main loop and then get called again when
 	 * there is more work to do.
 	 *
-	 * Return: The main loop recursion level in the current thread
+	 * Returns: The main loop recursion level in the current thread
 	 */
 	public static int mainDepth()
 	{
@@ -317,7 +317,7 @@ public class MainLoop
 	 *     nfds = the number of file descriptors in @fds
 	 *     timeout = amount of time to wait, in milliseconds, or -1 to wait forever
 	 *
-	 * Return: the number of entries in @fds whose %revents fields
+	 * Returns: the number of entries in @fds whose %revents fields
 	 *     were filled in, or 0 if the operation timed out, or -1 on error or
 	 *     if the call was interrupted.
 	 *

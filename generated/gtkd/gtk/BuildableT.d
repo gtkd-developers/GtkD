@@ -81,7 +81,7 @@ public template BuildableT(TStruct)
 	 *     builder = #GtkBuilder used to construct this object
 	 *     name = name of child to construct
 	 *
-	 * Return: the constructed child
+	 * Returns: the constructed child
 	 *
 	 * Since: 2.12
 	 */
@@ -142,7 +142,7 @@ public template BuildableT(TStruct)
 	 *     data = return location for user data that will be passed in
 	 *         to parser functions
 	 *
-	 * Return: %TRUE if a object has a custom implementation, %FALSE
+	 * Returns: %TRUE if a object has a custom implementation, %FALSE
 	 *     if it doesn't.
 	 *
 	 * Since: 2.12
@@ -159,7 +159,7 @@ public template BuildableT(TStruct)
 	 *     builder = a #GtkBuilder
 	 *     childname = name of child
 	 *
-	 * Return: the internal child of the buildable object
+	 * Returns: the internal child of the buildable object
 	 *
 	 * Since: 2.12
 	 */
@@ -182,7 +182,7 @@ public template BuildableT(TStruct)
 	 * [GtkBuilder UI definition][BUILDER-UI]
 	 * used to construct the @buildable.
 	 *
-	 * Return: the name set with gtk_buildable_set_name()
+	 * Returns: the name set with gtk_buildable_set_name()
 	 *
 	 * Since: 2.12
 	 */

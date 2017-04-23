@@ -69,7 +69,7 @@ public class TypeInterface
 	 * deriving the implementation of an interface from the parent type and
 	 * then possibly overriding some methods.
 	 *
-	 * Return: the
+	 * Returns: the
 	 *     corresponding #GTypeInterface structure of the parent type of the
 	 *     instance type to which @g_iface belongs, or %NULL if the parent
 	 *     type doesn't conform to the interface
@@ -112,7 +112,7 @@ public class TypeInterface
 	 *     instanceType = #GType of an instantiatable type
 	 *     interfaceType = #GType of an interface type
 	 *
-	 * Return: the #GTypePlugin for the dynamic
+	 * Returns: the #GTypePlugin for the dynamic
 	 *     interface @interface_type of @instance_type
 	 */
 	public static TypePluginIF getPlugin(GType instanceType, GType interfaceType)
@@ -135,7 +135,7 @@ public class TypeInterface
 	 *     instanceClass = a #GTypeClass structure
 	 *     ifaceType = an interface ID which this class conforms to
 	 *
-	 * Return: the #GTypeInterface
+	 * Returns: the #GTypeInterface
 	 *     structure of @iface_type if implemented by @instance_class, %NULL
 	 *     otherwise
 	 */
@@ -157,7 +157,7 @@ public class TypeInterface
 	 * Params:
 	 *     interfaceType = an interface type
 	 *
-	 * Return: a
+	 * Returns: a
 	 *     newly-allocated zero-terminated array of #GType containing
 	 *     the prerequisites of @interface_type
 	 *

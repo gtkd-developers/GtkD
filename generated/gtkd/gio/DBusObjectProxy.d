@@ -92,7 +92,7 @@ public class DBusObjectProxy : ObjectG, DBusObjectIF
 	 *     connection = a #GDBusConnection
 	 *     objectPath = the object path
 	 *
-	 * Return: a new #GDBusObjectProxy
+	 * Returns: a new #GDBusObjectProxy
 	 *
 	 * Since: 2.30
 	 *
@@ -113,7 +113,7 @@ public class DBusObjectProxy : ObjectG, DBusObjectIF
 	/**
 	 * Gets the connection that @proxy is for.
 	 *
-	 * Return: A #GDBusConnection. Do not free, the
+	 * Returns: A #GDBusConnection. Do not free, the
 	 *     object is owned by @proxy.
 	 *
 	 * Since: 2.30

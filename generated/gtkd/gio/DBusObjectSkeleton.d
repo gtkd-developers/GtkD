@@ -94,7 +94,7 @@ public class DBusObjectSkeleton : ObjectG, DBusObjectIF
 	 * Params:
 	 *     objectPath = An object path.
 	 *
-	 * Return: A #GDBusObjectSkeleton. Free with g_object_unref().
+	 * Returns: A #GDBusObjectSkeleton. Free with g_object_unref().
 	 *
 	 * Since: 2.30
 	 *
@@ -225,7 +225,7 @@ public class DBusObjectSkeleton : ObjectG, DBusObjectIF
 	 *     iface = The #GDBusInterfaceSkeleton that @invocation is for.
 	 *     invocation = A #GDBusMethodInvocation.
 	 *
-	 * Return: %TRUE if the call is authorized, %FALSE otherwise.
+	 * Returns: %TRUE if the call is authorized, %FALSE otherwise.
 	 *
 	 * Since: 2.30
 	 */

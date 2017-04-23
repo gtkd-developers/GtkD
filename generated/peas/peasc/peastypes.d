@@ -183,7 +183,7 @@ struct PeasGtkConfigurableInterface
 	 *
 	 * Params:
 	 *     configurable = A #PeasGtkConfigurable
-	 * Return: A #GtkWidget used for configuration.
+	 * Returns: A #GtkWidget used for configuration.
 	 */
 	extern(C) GtkWidget* function(PeasGtkConfigurable* configurable) createConfigureWidget;
 }
@@ -255,6 +255,6 @@ public alias extern(C) void function(PeasExtensionSet* set, PeasPluginInfo* info
  *     parameters = The parameters.
  *     userData = Optional data to be passed to the function, or %NULL.
  *
- * Return: The created object.
+ * Returns: The created object.
  */
 public alias extern(C) GObject* function(uint nParameters, GParameter* parameters, void* userData) PeasFactoryFunc;

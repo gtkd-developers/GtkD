@@ -122,7 +122,7 @@ public class DBusActionGroup : ObjectG, ActionGroupIF, RemoteActionGroupIF
 	 *     busName = the bus name which exports the action group
 	 *     objectPath = the object path at which the action group is exported
 	 *
-	 * Return: a #GDBusActionGroup
+	 * Returns: a #GDBusActionGroup
 	 *
 	 * Since: 2.32
 	 */

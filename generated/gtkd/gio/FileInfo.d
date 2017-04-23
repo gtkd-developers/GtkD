@@ -104,7 +104,7 @@ public class FileInfo : ObjectG
 	/**
 	 * Creates a new file info structure.
 	 *
-	 * Return: a #GFileInfo.
+	 * Returns: a #GFileInfo.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -143,7 +143,7 @@ public class FileInfo : ObjectG
 	/**
 	 * Duplicates a file info structure.
 	 *
-	 * Return: a duplicate #GFileInfo of @other.
+	 * Returns: a duplicate #GFileInfo of @other.
 	 */
 	public FileInfo dup()
 	{
@@ -165,7 +165,7 @@ public class FileInfo : ObjectG
 	 * Params:
 	 *     attribute = a file attribute key.
 	 *
-	 * Return: a UTF-8 string associated with the given @attribute.
+	 * Returns: a UTF-8 string associated with the given @attribute.
 	 *     When you're done with the string it must be freed with g_free().
 	 */
 	public string getAttributeAsString(string attribute)
@@ -183,7 +183,7 @@ public class FileInfo : ObjectG
 	 * Params:
 	 *     attribute = a file attribute key.
 	 *
-	 * Return: the boolean value contained within the attribute.
+	 * Returns: the boolean value contained within the attribute.
 	 */
 	public bool getAttributeBoolean(string attribute)
 	{
@@ -197,7 +197,7 @@ public class FileInfo : ObjectG
 	 * Params:
 	 *     attribute = a file attribute key.
 	 *
-	 * Return: the contents of the @attribute value as a byte string, or
+	 * Returns: the contents of the @attribute value as a byte string, or
 	 *     %NULL otherwise.
 	 */
 	public string getAttributeByteString(string attribute)
@@ -215,7 +215,7 @@ public class FileInfo : ObjectG
 	 *         attribute value, or %NULL; the attribute value will not be %NULL
 	 *     status = return location for the attribute status, or %NULL
 	 *
-	 * Return: %TRUE if @info has an attribute named @attribute,
+	 * Returns: %TRUE if @info has an attribute named @attribute,
 	 *     %FALSE otherwise.
 	 */
 	public bool getAttributeData(string attribute, out GFileAttributeType type, out void* valuePp, out GFileAttributeStatus status)
@@ -231,7 +231,7 @@ public class FileInfo : ObjectG
 	 * Params:
 	 *     attribute = a file attribute key.
 	 *
-	 * Return: a signed 32-bit integer from the attribute.
+	 * Returns: a signed 32-bit integer from the attribute.
 	 */
 	public int getAttributeInt32(string attribute)
 	{
@@ -246,7 +246,7 @@ public class FileInfo : ObjectG
 	 * Params:
 	 *     attribute = a file attribute key.
 	 *
-	 * Return: a signed 64-bit integer from the attribute.
+	 * Returns: a signed 64-bit integer from the attribute.
 	 */
 	public long getAttributeInt64(string attribute)
 	{
@@ -260,7 +260,7 @@ public class FileInfo : ObjectG
 	 * Params:
 	 *     attribute = a file attribute key.
 	 *
-	 * Return: a #GObject associated with the given @attribute, or
+	 * Returns: a #GObject associated with the given @attribute, or
 	 *     %NULL otherwise.
 	 */
 	public ObjectG getAttributeObject(string attribute)
@@ -281,7 +281,7 @@ public class FileInfo : ObjectG
 	 * Params:
 	 *     attribute = a file attribute key
 	 *
-	 * Return: a #GFileAttributeStatus for the given @attribute, or
+	 * Returns: a #GFileAttributeStatus for the given @attribute, or
 	 *     %G_FILE_ATTRIBUTE_STATUS_UNSET if the key is invalid.
 	 */
 	public GFileAttributeStatus getAttributeStatus(string attribute)
@@ -296,7 +296,7 @@ public class FileInfo : ObjectG
 	 * Params:
 	 *     attribute = a file attribute key.
 	 *
-	 * Return: the contents of the @attribute value as a UTF-8 string, or
+	 * Returns: the contents of the @attribute value as a UTF-8 string, or
 	 *     %NULL otherwise.
 	 */
 	public string getAttributeString(string attribute)
@@ -311,7 +311,7 @@ public class FileInfo : ObjectG
 	 * Params:
 	 *     attribute = a file attribute key.
 	 *
-	 * Return: the contents of the @attribute value as a stringv, or
+	 * Returns: the contents of the @attribute value as a stringv, or
 	 *     %NULL otherwise. Do not free. These returned strings are UTF-8.
 	 *
 	 * Since: 2.22
@@ -327,7 +327,7 @@ public class FileInfo : ObjectG
 	 * Params:
 	 *     attribute = a file attribute key.
 	 *
-	 * Return: a #GFileAttributeType for the given @attribute, or
+	 * Returns: a #GFileAttributeType for the given @attribute, or
 	 *     %G_FILE_ATTRIBUTE_TYPE_INVALID if the key is not set.
 	 */
 	public GFileAttributeType getAttributeType(string attribute)
@@ -343,7 +343,7 @@ public class FileInfo : ObjectG
 	 * Params:
 	 *     attribute = a file attribute key.
 	 *
-	 * Return: an unsigned 32-bit integer from the attribute.
+	 * Returns: an unsigned 32-bit integer from the attribute.
 	 */
 	public uint getAttributeUint32(string attribute)
 	{
@@ -358,7 +358,7 @@ public class FileInfo : ObjectG
 	 * Params:
 	 *     attribute = a file attribute key.
 	 *
-	 * Return: a unsigned 64-bit integer from the attribute.
+	 * Returns: a unsigned 64-bit integer from the attribute.
 	 */
 	public ulong getAttributeUint64(string attribute)
 	{
@@ -368,7 +368,7 @@ public class FileInfo : ObjectG
 	/**
 	 * Gets the file's content type.
 	 *
-	 * Return: a string containing the file's content type.
+	 * Returns: a string containing the file's content type.
 	 */
 	public string getContentType()
 	{
@@ -380,7 +380,7 @@ public class FileInfo : ObjectG
 	 * available in G_FILE_ATTRIBUTE_TRASH_DELETION_DATE. If the
 	 * G_FILE_ATTRIBUTE_TRASH_DELETION_DATE attribute is unset, %NULL is returned.
 	 *
-	 * Return: a #GDateTime, or %NULL.
+	 * Returns: a #GDateTime, or %NULL.
 	 *
 	 * Since: 2.36
 	 */
@@ -399,7 +399,7 @@ public class FileInfo : ObjectG
 	/**
 	 * Gets a display name for a file.
 	 *
-	 * Return: a string containing the display name.
+	 * Returns: a string containing the display name.
 	 */
 	public string getDisplayName()
 	{
@@ -409,7 +409,7 @@ public class FileInfo : ObjectG
 	/**
 	 * Gets the edit name for a file.
 	 *
-	 * Return: a string containing the edit name.
+	 * Returns: a string containing the edit name.
 	 */
 	public string getEditName()
 	{
@@ -420,7 +420,7 @@ public class FileInfo : ObjectG
 	 * Gets the [entity tag][gfile-etag] for a given
 	 * #GFileInfo. See %G_FILE_ATTRIBUTE_ETAG_VALUE.
 	 *
-	 * Return: a string containing the value of the "etag:value" attribute.
+	 * Returns: a string containing the value of the "etag:value" attribute.
 	 */
 	public string getEtag()
 	{
@@ -431,7 +431,7 @@ public class FileInfo : ObjectG
 	 * Gets a file's type (whether it is a regular file, symlink, etc).
 	 * This is different from the file's content type, see g_file_info_get_content_type().
 	 *
-	 * Return: a #GFileType for the given file.
+	 * Returns: a #GFileType for the given file.
 	 */
 	public GFileType getFileType()
 	{
@@ -441,7 +441,7 @@ public class FileInfo : ObjectG
 	/**
 	 * Gets the icon for a file.
 	 *
-	 * Return: #GIcon for the given @info.
+	 * Returns: #GIcon for the given @info.
 	 */
 	public IconIF getIcon()
 	{
@@ -458,7 +458,7 @@ public class FileInfo : ObjectG
 	/**
 	 * Checks if a file is a backup file.
 	 *
-	 * Return: %TRUE if file is a backup file, %FALSE otherwise.
+	 * Returns: %TRUE if file is a backup file, %FALSE otherwise.
 	 */
 	public bool getIsBackup()
 	{
@@ -468,7 +468,7 @@ public class FileInfo : ObjectG
 	/**
 	 * Checks if a file is hidden.
 	 *
-	 * Return: %TRUE if the file is a hidden file, %FALSE otherwise.
+	 * Returns: %TRUE if the file is a hidden file, %FALSE otherwise.
 	 */
 	public bool getIsHidden()
 	{
@@ -478,7 +478,7 @@ public class FileInfo : ObjectG
 	/**
 	 * Checks if a file is a symlink.
 	 *
-	 * Return: %TRUE if the given @info is a symlink.
+	 * Returns: %TRUE if the given @info is a symlink.
 	 */
 	public bool getIsSymlink()
 	{
@@ -504,7 +504,7 @@ public class FileInfo : ObjectG
 	/**
 	 * Gets the name for a file.
 	 *
-	 * Return: a string containing the file name.
+	 * Returns: a string containing the file name.
 	 */
 	public string getName()
 	{
@@ -514,7 +514,7 @@ public class FileInfo : ObjectG
 	/**
 	 * Gets the file's size.
 	 *
-	 * Return: a #goffset containing the file's size.
+	 * Returns: a #goffset containing the file's size.
 	 */
 	public long getSize()
 	{
@@ -525,7 +525,7 @@ public class FileInfo : ObjectG
 	 * Gets the value of the sort_order attribute from the #GFileInfo.
 	 * See %G_FILE_ATTRIBUTE_STANDARD_SORT_ORDER.
 	 *
-	 * Return: a #gint32 containing the value of the "standard::sort_order" attribute.
+	 * Returns: a #gint32 containing the value of the "standard::sort_order" attribute.
 	 */
 	public int getSortOrder()
 	{
@@ -535,7 +535,7 @@ public class FileInfo : ObjectG
 	/**
 	 * Gets the symbolic icon for a file.
 	 *
-	 * Return: #GIcon for the given @info.
+	 * Returns: #GIcon for the given @info.
 	 *
 	 * Since: 2.34
 	 */
@@ -554,7 +554,7 @@ public class FileInfo : ObjectG
 	/**
 	 * Gets the symlink target for a given #GFileInfo.
 	 *
-	 * Return: a string containing the symlink target.
+	 * Returns: a string containing the symlink target.
 	 */
 	public string getSymlinkTarget()
 	{
@@ -567,7 +567,7 @@ public class FileInfo : ObjectG
 	 * Params:
 	 *     attribute = a file attribute key.
 	 *
-	 * Return: %TRUE if @Ginfo has an attribute named @attribute,
+	 * Returns: %TRUE if @Ginfo has an attribute named @attribute,
 	 *     %FALSE otherwise.
 	 */
 	public bool hasAttribute(string attribute)
@@ -582,7 +582,7 @@ public class FileInfo : ObjectG
 	 * Params:
 	 *     nameSpace = a file attribute namespace.
 	 *
-	 * Return: %TRUE if @Ginfo has an attribute in @name_space,
+	 * Returns: %TRUE if @Ginfo has an attribute in @name_space,
 	 *     %FALSE otherwise.
 	 *
 	 * Since: 2.22
@@ -599,7 +599,7 @@ public class FileInfo : ObjectG
 	 *     nameSpace = a file attribute key's namespace, or %NULL to list
 	 *         all attributes.
 	 *
-	 * Return: a
+	 * Returns: a
 	 *     null-terminated array of strings of all of the possible attribute
 	 *     types for the given @name_space, or %NULL on error.
 	 */
@@ -724,7 +724,7 @@ public class FileInfo : ObjectG
 	 *     attribute = a file attribute key
 	 *     status = a #GFileAttributeStatus
 	 *
-	 * Return: %TRUE if the status was changed, %FALSE if the key was not set.
+	 * Returns: %TRUE if the status was changed, %FALSE if the key was not set.
 	 *
 	 * Since: 2.22
 	 */

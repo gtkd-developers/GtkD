@@ -119,7 +119,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	/**
 	 * Creates a new #GtkIconView widget
 	 *
-	 * Return: A newly created #GtkIconView widget
+	 * Returns: A newly created #GtkIconView widget
 	 *
 	 * Since: 2.6
 	 *
@@ -144,7 +144,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	 * Params:
 	 *     area = the #GtkCellArea to use to layout cells
 	 *
-	 * Return: A newly created #GtkIconView widget
+	 * Returns: A newly created #GtkIconView widget
 	 *
 	 * Since: 3.0
 	 *
@@ -168,7 +168,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	 * Params:
 	 *     model = The model.
 	 *
-	 * Return: A newly created #GtkIconView widget.
+	 * Returns: A newly created #GtkIconView widget.
 	 *
 	 * Since: 2.6
 	 *
@@ -210,7 +210,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	 * Params:
 	 *     path = a #GtkTreePath in @icon_view
 	 *
-	 * Return: a newly-allocated surface of the drag icon.
+	 * Returns: a newly-allocated surface of the drag icon.
 	 *
 	 * Since: 2.8
 	 */
@@ -278,7 +278,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	/**
 	 * Gets the setting set by gtk_icon_view_set_activate_on_single_click().
 	 *
-	 * Return: %TRUE if item-activated will be emitted on a single click
+	 * Returns: %TRUE if item-activated will be emitted on a single click
 	 *
 	 * Since: 3.8
 	 */
@@ -298,7 +298,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	 *     cell = a #GtkCellRenderer or %NULL
 	 *     rect = rectangle to fill with cell rect
 	 *
-	 * Return: %FALSE if there is no such item, %TRUE otherwise
+	 * Returns: %FALSE if there is no such item, %TRUE otherwise
 	 *
 	 * Since: 3.6
 	 */
@@ -310,7 +310,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	/**
 	 * Returns the value of the ::column-spacing property.
 	 *
-	 * Return: the space between columns
+	 * Returns: the space between columns
 	 *
 	 * Since: 2.6
 	 */
@@ -322,7 +322,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	/**
 	 * Returns the value of the ::columns property.
 	 *
-	 * Return: the number of columns, or -1
+	 * Returns: the number of columns, or -1
 	 *
 	 * Since: 2.6
 	 */
@@ -344,7 +344,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	 *     cell = Return location the current
 	 *         focus cell, or %NULL
 	 *
-	 * Return: %TRUE if the cursor is set.
+	 * Returns: %TRUE if the cursor is set.
 	 *
 	 * Since: 2.8
 	 */
@@ -371,7 +371,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	 *         or %NULL.
 	 *     pos = Return location for the drop position, or %NULL
 	 *
-	 * Return: whether there is an item at the given position.
+	 * Returns: whether there is an item at the given position.
 	 *
 	 * Since: 2.8
 	 */
@@ -420,7 +420,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	 *     cell = Return location for the renderer
 	 *         responsible for the cell at (@x, @y), or %NULL
 	 *
-	 * Return: %TRUE if an item exists at the specified position
+	 * Returns: %TRUE if an item exists at the specified position
 	 *
 	 * Since: 2.8
 	 */
@@ -444,7 +444,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	 * Params:
 	 *     path = the #GtkTreePath of the item
 	 *
-	 * Return: The column in which the item is displayed
+	 * Returns: The column in which the item is displayed
 	 *
 	 * Since: 2.22
 	 */
@@ -457,7 +457,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	 * Returns the value of the ::item-orientation property which determines
 	 * whether the labels are drawn beside the icons instead of below.
 	 *
-	 * Return: the relative position of texts and icons
+	 * Returns: the relative position of texts and icons
 	 *
 	 * Since: 2.6
 	 */
@@ -469,7 +469,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	/**
 	 * Returns the value of the ::item-padding property.
 	 *
-	 * Return: the padding around items
+	 * Returns: the padding around items
 	 *
 	 * Since: 2.18
 	 */
@@ -485,7 +485,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	 * Params:
 	 *     path = the #GtkTreePath of the item
 	 *
-	 * Return: The row in which the item is displayed
+	 * Returns: The row in which the item is displayed
 	 *
 	 * Since: 2.22
 	 */
@@ -497,7 +497,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	/**
 	 * Returns the value of the ::item-width property.
 	 *
-	 * Return: the width of a single item, or -1
+	 * Returns: the width of a single item, or -1
 	 *
 	 * Since: 2.6
 	 */
@@ -509,7 +509,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	/**
 	 * Returns the value of the ::margin property.
 	 *
-	 * Return: the space at the borders
+	 * Returns: the space at the borders
 	 *
 	 * Since: 2.6
 	 */
@@ -521,7 +521,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	/**
 	 * Returns the column with markup text for @icon_view.
 	 *
-	 * Return: the markup column, or -1 if it’s unset.
+	 * Returns: the markup column, or -1 if it’s unset.
 	 *
 	 * Since: 2.6
 	 */
@@ -534,7 +534,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	 * Returns the model the #GtkIconView is based on.  Returns %NULL if the
 	 * model is unset.
 	 *
-	 * Return: A #GtkTreeModel, or %NULL if none is
+	 * Returns: A #GtkTreeModel, or %NULL if none is
 	 *     currently being used.
 	 *
 	 * Since: 2.6
@@ -562,7 +562,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	 *     x = The x position to be identified
 	 *     y = The y position to be identified
 	 *
-	 * Return: The #GtkTreePath corresponding
+	 * Returns: The #GtkTreePath corresponding
 	 *     to the icon or %NULL if no icon exists at that position.
 	 *
 	 * Since: 2.6
@@ -582,7 +582,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	/**
 	 * Returns the column with pixbufs for @icon_view.
 	 *
-	 * Return: the pixbuf column, or -1 if it’s unset.
+	 * Returns: the pixbuf column, or -1 if it’s unset.
 	 *
 	 * Since: 2.6
 	 */
@@ -595,7 +595,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	 * Retrieves whether the user can reorder the list via drag-and-drop.
 	 * See gtk_icon_view_set_reorderable().
 	 *
-	 * Return: %TRUE if the list can be reordered.
+	 * Returns: %TRUE if the list can be reordered.
 	 *
 	 * Since: 2.8
 	 */
@@ -607,7 +607,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	/**
 	 * Returns the value of the ::row-spacing property.
 	 *
-	 * Return: the space between rows
+	 * Returns: the space between rows
 	 *
 	 * Since: 2.6
 	 */
@@ -627,7 +627,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	 * g_list_free_full (list, (GDestroyNotify) gtk_tree_path_free);
 	 * ]|
 	 *
-	 * Return: A #GList containing a #GtkTreePath for each selected row.
+	 * Returns: A #GList containing a #GtkTreePath for each selected row.
 	 *
 	 * Since: 2.6
 	 */
@@ -646,7 +646,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	/**
 	 * Gets the selection mode of the @icon_view.
 	 *
-	 * Return: the current selection mode
+	 * Returns: the current selection mode
 	 *
 	 * Since: 2.6
 	 */
@@ -658,7 +658,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	/**
 	 * Returns the value of the ::spacing property.
 	 *
-	 * Return: the space between cells
+	 * Returns: the space between cells
 	 *
 	 * Since: 2.6
 	 */
@@ -670,7 +670,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	/**
 	 * Returns the column with text for @icon_view.
 	 *
-	 * Return: the text column, or -1 if it’s unset.
+	 * Returns: the text column, or -1 if it’s unset.
 	 *
 	 * Since: 2.6
 	 */
@@ -683,7 +683,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	 * Returns the column of @icon_view’s model which is being used for
 	 * displaying tooltips on @icon_view’s rows.
 	 *
-	 * Return: the index of the tooltip column that is currently being
+	 * Returns: the index of the tooltip column that is currently being
 	 *     used, or -1 if this is disabled.
 	 *
 	 * Since: 2.12
@@ -715,7 +715,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	 *     path = a pointer to receive a #GtkTreePath or %NULL
 	 *     iter = a pointer to receive a #GtkTreeIter or %NULL
 	 *
-	 * Return: whether or not the given tooltip context points to a item
+	 * Returns: whether or not the given tooltip context points to a item
 	 *
 	 * Since: 2.12
 	 */
@@ -745,7 +745,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	 *         or %NULL
 	 *     endPath = Return location for end of region, or %NULL
 	 *
-	 * Return: %TRUE, if valid paths were placed in @start_path and @end_path
+	 * Returns: %TRUE, if valid paths were placed in @start_path and @end_path
 	 *
 	 * Since: 2.8
 	 */
@@ -782,7 +782,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	 * Params:
 	 *     path = A #GtkTreePath to check selection on.
 	 *
-	 * Return: %TRUE if @path is selected.
+	 * Returns: %TRUE if @path is selected.
 	 *
 	 * Since: 2.6
 	 */

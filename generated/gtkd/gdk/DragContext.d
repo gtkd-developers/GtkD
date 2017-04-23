@@ -79,7 +79,7 @@ public class DragContext : ObjectG
 	 * Determines the bitmask of actions proposed by the source if
 	 * gdk_drag_context_get_suggested_action() returns %GDK_ACTION_ASK.
 	 *
-	 * Return: the #GdkDragAction flags
+	 * Returns: the #GdkDragAction flags
 	 *
 	 * Since: 2.22
 	 */
@@ -91,7 +91,7 @@ public class DragContext : ObjectG
 	/**
 	 * Returns the destination windw for the DND operation.
 	 *
-	 * Return: a #GdkWindow
+	 * Returns: a #GdkWindow
 	 *
 	 * Since: 3.0
 	 */
@@ -110,7 +110,7 @@ public class DragContext : ObjectG
 	/**
 	 * Returns the #GdkDevice associated to the drag context.
 	 *
-	 * Return: The #GdkDevice associated to @context.
+	 * Returns: The #GdkDevice associated to @context.
 	 */
 	public Device getDevice()
 	{
@@ -132,7 +132,7 @@ public class DragContext : ObjectG
 	 * The window is owned by @context and will be destroyed when
 	 * the drag operation is over.
 	 *
-	 * Return: the drag window, or %NULL
+	 * Returns: the drag window, or %NULL
 	 *
 	 * Since: 3.20
 	 */
@@ -151,7 +151,7 @@ public class DragContext : ObjectG
 	/**
 	 * Returns the drag protocol thats used by this context.
 	 *
-	 * Return: the drag protocol
+	 * Returns: the drag protocol
 	 *
 	 * Since: 3.0
 	 */
@@ -163,7 +163,7 @@ public class DragContext : ObjectG
 	/**
 	 * Determines the action chosen by the drag destination.
 	 *
-	 * Return: a #GdkDragAction value
+	 * Returns: a #GdkDragAction value
 	 *
 	 * Since: 2.22
 	 */
@@ -175,7 +175,7 @@ public class DragContext : ObjectG
 	/**
 	 * Returns the #GdkWindow where the DND operation started.
 	 *
-	 * Return: a #GdkWindow
+	 * Returns: a #GdkWindow
 	 *
 	 * Since: 2.22
 	 */
@@ -194,7 +194,7 @@ public class DragContext : ObjectG
 	/**
 	 * Determines the suggested drag action of the context.
 	 *
-	 * Return: a #GdkDragAction value
+	 * Returns: a #GdkDragAction value
 	 *
 	 * Since: 2.22
 	 */
@@ -206,7 +206,7 @@ public class DragContext : ObjectG
 	/**
 	 * Retrieves the list of targets of the context.
 	 *
-	 * Return: a #GList of targets
+	 * Returns: a #GList of targets
 	 *
 	 * Since: 2.22
 	 */
@@ -244,7 +244,7 @@ public class DragContext : ObjectG
 	 *     ipcWindow = Window to use for IPC messaging/events
 	 *     actions = the actions supported by the drag source
 	 *
-	 * Return: #TRUE if the drag and drop operation is managed.
+	 * Returns: #TRUE if the drag and drop operation is managed.
 	 *
 	 * Since: 3.20
 	 */
@@ -554,7 +554,7 @@ public class DragContext : ObjectG
 	 *     targets = the offered targets,
 	 *         as list of #GdkAtoms
 	 *
-	 * Return: a newly created #GdkDragContext
+	 * Returns: a newly created #GdkDragContext
 	 */
 	public static DragContext dragBegin(Window window, ListG targets)
 	{
@@ -579,7 +579,7 @@ public class DragContext : ObjectG
 	 *     targets = the offered targets,
 	 *         as list of #GdkAtoms
 	 *
-	 * Return: a newly created #GdkDragContext
+	 * Returns: a newly created #GdkDragContext
 	 */
 	public static DragContext dragBeginForDevice(Window window, Device device, ListG targets)
 	{
@@ -606,7 +606,7 @@ public class DragContext : ObjectG
 	 *     xRoot = the x coordinate where the drag nominally started
 	 *     yRoot = the y coordinate where the drag nominally started
 	 *
-	 * Return: a newly created #GdkDragContext
+	 * Returns: a newly created #GdkDragContext
 	 *
 	 * Since: 3.20
 	 */
@@ -671,7 +671,7 @@ public class DragContext : ObjectG
 	 * Params:
 	 *     context = a #GdkDragContext
 	 *
-	 * Return: %TRUE if the drop was successful.
+	 * Returns: %TRUE if the drop was successful.
 	 *
 	 * Since: 2.6
 	 */
@@ -714,7 +714,7 @@ public class DragContext : ObjectG
 	 * Params:
 	 *     context = a #GdkDragContext.
 	 *
-	 * Return: the selection atom, or %GDK_NONE
+	 * Returns: the selection atom, or %GDK_NONE
 	 */
 	public static GdkAtom dragGetSelection(DragContext context)
 	{

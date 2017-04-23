@@ -82,7 +82,7 @@ public class UnixMountMonitor : ObjectG
 	 *
 	 * Deprecated: Use g_unix_mount_monitor_get() instead.
 	 *
-	 * Return: a #GUnixMountMonitor.
+	 * Returns: a #GUnixMountMonitor.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -109,7 +109,7 @@ public class UnixMountMonitor : ObjectG
 	 * You must only call g_object_unref() on the return value from under
 	 * the same main context as you called this function.
 	 *
-	 * Return: the #GUnixMountMonitor.
+	 * Returns: the #GUnixMountMonitor.
 	 *
 	 * Since: 2.44
 	 */

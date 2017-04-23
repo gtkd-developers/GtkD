@@ -45,7 +45,7 @@ public struct TypeValueTable
 	 * Params:
 	 *     type = a #GType
 	 *
-	 * Return: location of the #GTypeValueTable associated with @type or
+	 * Returns: location of the #GTypeValueTable associated with @type or
 	 *     %NULL if there is no #GTypeValueTable associated with @type
 	 */
 	public static GTypeValueTable* peek(GType type)

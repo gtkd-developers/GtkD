@@ -193,7 +193,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 *     interfaceName = A D-Bus interface name.
 	 *     cancellable = A #GCancellable or %NULL.
 	 *
-	 * Return: A #GDBusProxy or %NULL if error is set. Free with g_object_unref().
+	 * Returns: A #GDBusProxy or %NULL if error is set. Free with g_object_unref().
 	 *
 	 * Since: 2.26
 	 *
@@ -248,7 +248,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 *     interfaceName = A D-Bus interface name.
 	 *     cancellable = A #GCancellable or %NULL.
 	 *
-	 * Return: A #GDBusProxy or %NULL if error is set. Free with g_object_unref().
+	 * Returns: A #GDBusProxy or %NULL if error is set. Free with g_object_unref().
 	 *
 	 * Since: 2.26
 	 *
@@ -408,7 +408,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 * Params:
 	 *     res = A #GAsyncResult obtained from the #GAsyncReadyCallback passed to g_dbus_proxy_call().
 	 *
-	 * Return: %NULL if @error is set. Otherwise a #GVariant tuple with
+	 * Returns: %NULL if @error is set. Otherwise a #GVariant tuple with
 	 *     return values. Free with g_variant_unref().
 	 *
 	 * Since: 2.26
@@ -479,7 +479,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 *         "infinite") or -1 to use the proxy default timeout.
 	 *     cancellable = A #GCancellable or %NULL.
 	 *
-	 * Return: %NULL if @error is set. Otherwise a #GVariant tuple with
+	 * Returns: %NULL if @error is set. Otherwise a #GVariant tuple with
 	 *     return values. Free with g_variant_unref().
 	 *
 	 * Since: 2.26
@@ -536,7 +536,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 *     outFdList = Return location for a #GUnixFDList or %NULL.
 	 *     res = A #GAsyncResult obtained from the #GAsyncReadyCallback passed to g_dbus_proxy_call_with_unix_fd_list().
 	 *
-	 * Return: %NULL if @error is set. Otherwise a #GVariant tuple with
+	 * Returns: %NULL if @error is set. Otherwise a #GVariant tuple with
 	 *     return values. Free with g_variant_unref().
 	 *
 	 * Since: 2.30
@@ -581,7 +581,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 *     outFdList = Return location for a #GUnixFDList or %NULL.
 	 *     cancellable = A #GCancellable or %NULL.
 	 *
-	 * Return: %NULL if @error is set. Otherwise a #GVariant tuple with
+	 * Returns: %NULL if @error is set. Otherwise a #GVariant tuple with
 	 *     return values. Free with g_variant_unref().
 	 *
 	 * Since: 2.30
@@ -621,7 +621,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 * Params:
 	 *     propertyName = Property name.
 	 *
-	 * Return: A reference to the #GVariant instance that holds the value
+	 * Returns: A reference to the #GVariant instance that holds the value
 	 *     for @property_name or %NULL if the value is not in the cache. The
 	 *     returned reference must be freed with g_variant_unref().
 	 *
@@ -642,7 +642,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	/**
 	 * Gets the names of all cached properties on @proxy.
 	 *
-	 * Return: A %NULL-terminated array of strings or %NULL if
+	 * Returns: A %NULL-terminated array of strings or %NULL if
 	 *     @proxy has no cached properties. Free the returned array with
 	 *     g_strfreev().
 	 *
@@ -659,7 +659,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	/**
 	 * Gets the connection @proxy is for.
 	 *
-	 * Return: A #GDBusConnection owned by @proxy. Do not free.
+	 * Returns: A #GDBusConnection owned by @proxy. Do not free.
 	 *
 	 * Since: 2.26
 	 */
@@ -682,7 +682,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 *
 	 * See the #GDBusProxy:g-default-timeout property for more details.
 	 *
-	 * Return: Timeout to use for @proxy.
+	 * Returns: Timeout to use for @proxy.
 	 *
 	 * Since: 2.26
 	 */
@@ -694,7 +694,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	/**
 	 * Gets the flags that @proxy was constructed with.
 	 *
-	 * Return: Flags from the #GDBusProxyFlags enumeration.
+	 * Returns: Flags from the #GDBusProxyFlags enumeration.
 	 *
 	 * Since: 2.26
 	 */
@@ -708,7 +708,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 * that @proxy conforms to. See the #GDBusProxy:g-interface-info
 	 * property for more details.
 	 *
-	 * Return: A #GDBusInterfaceInfo or %NULL. Do not unref the returned
+	 * Returns: A #GDBusInterfaceInfo or %NULL. Do not unref the returned
 	 *     object, it is owned by @proxy.
 	 *
 	 * Since: 2.26
@@ -728,7 +728,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	/**
 	 * Gets the D-Bus interface name @proxy is for.
 	 *
-	 * Return: A string owned by @proxy. Do not free.
+	 * Returns: A string owned by @proxy. Do not free.
 	 *
 	 * Since: 2.26
 	 */
@@ -740,7 +740,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	/**
 	 * Gets the name that @proxy was constructed for.
 	 *
-	 * Return: A string owned by @proxy. Do not free.
+	 * Returns: A string owned by @proxy. Do not free.
 	 *
 	 * Since: 2.26
 	 */
@@ -755,7 +755,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 * #GObject::notify signal to track changes to the
 	 * #GDBusProxy:g-name-owner property.
 	 *
-	 * Return: The name owner or %NULL if no name owner exists. Free with g_free().
+	 * Returns: The name owner or %NULL if no name owner exists. Free with g_free().
 	 *
 	 * Since: 2.26
 	 */
@@ -770,7 +770,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	/**
 	 * Gets the object path @proxy is for.
 	 *
-	 * Return: A string owned by @proxy. Do not free.
+	 * Returns: A string owned by @proxy. Do not free.
 	 *
 	 * Since: 2.26
 	 */

@@ -116,7 +116,7 @@ public class RecentChooserMenu : Menu, ActivatableIF, RecentChooserIF
 	 * gtk_recent_chooser_menu_new_for_manager() function to know how to create
 	 * a #GtkRecentChooserMenu widget bound to another #GtkRecentManager object.
 	 *
-	 * Return: a new #GtkRecentChooserMenu
+	 * Returns: a new #GtkRecentChooserMenu
 	 *
 	 * Since: 2.10
 	 *
@@ -146,7 +146,7 @@ public class RecentChooserMenu : Menu, ActivatableIF, RecentChooserIF
 	 * Params:
 	 *     manager = a #GtkRecentManager
 	 *
-	 * Return: a new #GtkRecentChooserMenu, bound to @manager.
+	 * Returns: a new #GtkRecentChooserMenu, bound to @manager.
 	 *
 	 * Since: 2.10
 	 *
@@ -167,7 +167,7 @@ public class RecentChooserMenu : Menu, ActivatableIF, RecentChooserIF
 	/**
 	 * Returns the value set by gtk_recent_chooser_menu_set_show_numbers().
 	 *
-	 * Return: %TRUE if numbers should be shown.
+	 * Returns: %TRUE if numbers should be shown.
 	 *
 	 * Since: 2.10
 	 */

@@ -45,7 +45,7 @@ public struct URI
 	 *         If there is no hostname in the URI, %NULL will be
 	 *         stored in this location.
 	 *
-	 * Return: a newly-allocated string holding
+	 * Returns: a newly-allocated string holding
 	 *     the resulting filename, or %NULL on an error.
 	 *
 	 * Throws: GException on failure.
@@ -78,7 +78,7 @@ public struct URI
 	 *         on Windows
 	 *     hostname = A UTF-8 encoded hostname, or %NULL for none.
 	 *
-	 * Return: a newly-allocated string holding the resulting
+	 * Returns: a newly-allocated string holding the resulting
 	 *     URI, or %NULL on an error.
 	 *
 	 * Throws: GException on failure.
@@ -114,7 +114,7 @@ public struct URI
 	 *         are allowed to be used, or %NULL.
 	 *     allowUtf8 = %TRUE if the result can include UTF-8 characters.
 	 *
-	 * Return: an escaped version of @unescaped. The returned string should be
+	 * Returns: an escaped version of @unescaped. The returned string should be
 	 *     freed when no longer needed.
 	 *
 	 * Since: 2.16
@@ -135,7 +135,7 @@ public struct URI
 	 * Params:
 	 *     uriList = an URI list
 	 *
-	 * Return: a newly allocated %NULL-terminated list
+	 * Returns: a newly allocated %NULL-terminated list
 	 *     of strings holding the individual URIs. The array should be freed
 	 *     with g_strfreev().
 	 *
@@ -159,7 +159,7 @@ public struct URI
 	 * Params:
 	 *     uri = a valid URI.
 	 *
-	 * Return: The "Scheme" component of the URI, or %NULL on error.
+	 * Returns: The "Scheme" component of the URI, or %NULL on error.
 	 *     The returned string should be freed when no longer needed.
 	 *
 	 * Since: 2.16
@@ -186,7 +186,7 @@ public struct URI
 	 *     escapedStringEnd = Pointer to end of @escaped_string, may be %NULL
 	 *     illegalCharacters = An optional string of illegal characters not to be allowed, may be %NULL
 	 *
-	 * Return: an unescaped version of @escaped_string or %NULL on error.
+	 * Returns: an unescaped version of @escaped_string or %NULL on error.
 	 *     The returned string should be freed when no longer needed.  As a
 	 *     special case if %NULL is given for @escaped_string, this function
 	 *     will return %NULL.
@@ -215,7 +215,7 @@ public struct URI
 	 *     illegalCharacters = a string of illegal characters not to be
 	 *         allowed, or %NULL.
 	 *
-	 * Return: an unescaped version of @escaped_string. The returned string
+	 * Returns: an unescaped version of @escaped_string. The returned string
 	 *     should be freed when no longer needed.
 	 *
 	 * Since: 2.16

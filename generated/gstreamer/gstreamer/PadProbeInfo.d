@@ -65,7 +65,7 @@ public class PadProbeInfo
 
 
 	/**
-	 * Return: The #GstBuffer from the probe
+	 * Returns: The #GstBuffer from the probe
 	 */
 	public Buffer getBuffer()
 	{
@@ -80,7 +80,7 @@ public class PadProbeInfo
 	}
 
 	/**
-	 * Return: The #GstBufferList from the probe
+	 * Returns: The #GstBufferList from the probe
 	 */
 	public BufferList getBufferList()
 	{
@@ -95,7 +95,7 @@ public class PadProbeInfo
 	}
 
 	/**
-	 * Return: The #GstEvent from the probe
+	 * Returns: The #GstEvent from the probe
 	 */
 	public Event getEvent()
 	{
@@ -110,7 +110,7 @@ public class PadProbeInfo
 	}
 
 	/**
-	 * Return: The #GstQuery from the probe
+	 * Returns: The #GstQuery from the probe
 	 */
 	public Query getQuery()
 	{

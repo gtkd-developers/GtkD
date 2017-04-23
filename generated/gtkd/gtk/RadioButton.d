@@ -261,7 +261,7 @@ public class RadioButton : CheckButton
 	 *     group = an existing
 	 *         radio button group, or %NULL if you are creating a new group.
 	 *
-	 * Return: a new radio button
+	 * Returns: a new radio button
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -285,7 +285,7 @@ public class RadioButton : CheckButton
 	 * Params:
 	 *     radioGroupMember = an existing #GtkRadioButton.
 	 *
-	 * Return: a new radio button.
+	 * Returns: a new radio button.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -304,7 +304,7 @@ public class RadioButton : CheckButton
 	/**
 	 * Retrieves the group assigned to a radio button.
 	 *
-	 * Return: a linked list
+	 * Returns: a linked list
 	 *     containing all the radio buttons in the same group
 	 *     as @radio_button. The returned list is owned by the radio button
 	 *     and must not be modified or freed.

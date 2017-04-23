@@ -91,7 +91,7 @@ public class PgLanguage
 	 * pango_language_get_sample_string (pango_language_from_string ("xx"))
 	 * </programlisting></informalexample>
 	 *
-	 * Return: the sample string. This value is owned by Pango
+	 * Returns: the sample string. This value is owned by Pango
 	 *     and should not be freed.
 	 */
 	public string getSampleString()
@@ -119,7 +119,7 @@ public class PgLanguage
 	 * The pango_language_includes_script() function uses this function
 	 * internally.
 	 *
-	 * Return: An array of
+	 * Returns: An array of
 	 *     #PangoScript values, with the number of entries in the array stored
 	 *     in @num_scripts, or %NULL if Pango does not have any information
 	 *     about this particular language tag (also the case if @language is
@@ -154,7 +154,7 @@ public class PgLanguage
 	 * Params:
 	 *     script = a #PangoScript
 	 *
-	 * Return: %TRUE if @script is one of the scripts used
+	 * Returns: %TRUE if @script is one of the scripts used
 	 *     to write @language or if nothing is known about @language
 	 *     (including the case that @language is %NULL),
 	 *     %FALSE otherwise.
@@ -179,7 +179,7 @@ public class PgLanguage
 	 *         Each element must either be '*', or a RFC 3066 language range
 	 *         canonicalized as by pango_language_from_string()
 	 *
-	 * Return: %TRUE if a match was found.
+	 * Returns: %TRUE if a match was found.
 	 */
 	public bool matches(string rangeList)
 	{
@@ -189,7 +189,7 @@ public class PgLanguage
 	/**
 	 * Gets the RFC-3066 format string representing the given language tag.
 	 *
-	 * Return: a string representing the language tag.  This is owned by
+	 * Returns: a string representing the language tag.  This is owned by
 	 *     Pango and should not be freed.
 	 */
 	public override string toString()
@@ -213,7 +213,7 @@ public class PgLanguage
 	 * Params:
 	 *     language = a string representing a language tag, or %NULL
 	 *
-	 * Return: an opaque pointer to a
+	 * Returns: an opaque pointer to a
 	 *     #PangoLanguage structure, or %NULL if @language was
 	 *     %NULL.  The returned pointer will be valid forever
 	 *     after, and should not be freed.
@@ -258,7 +258,7 @@ public class PgLanguage
 	 * functions automatically (by calling gtk_set_locale()).
 	 * See <literal>man setlocale</literal> for more details.
 	 *
-	 * Return: the default language as a
+	 * Returns: the default language as a
 	 *     #PangoLanguage, must not be freed.
 	 *
 	 * Since: 1.16

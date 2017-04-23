@@ -105,7 +105,7 @@ public class FontSelectionDialog : Dialog
 	 * Params:
 	 *     title = the title of the dialog window
 	 *
-	 * Return: a new #GtkFontSelectionDialog
+	 * Returns: a new #GtkFontSelectionDialog
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -126,7 +126,7 @@ public class FontSelectionDialog : Dialog
 	 *
 	 * Deprecated: Use #GtkFontChooserDialog
 	 *
-	 * Return: the #GtkWidget used in the dialog
+	 * Returns: the #GtkWidget used in the dialog
 	 *     for the “Cancel” button.
 	 *
 	 * Since: 2.14
@@ -155,7 +155,7 @@ public class FontSelectionDialog : Dialog
 	 *
 	 * Deprecated: Use #GtkFontChooserDialog
 	 *
-	 * Return: A string with the name of the current font, or %NULL if no
+	 * Returns: A string with the name of the current font, or %NULL if no
 	 *     font is selected. You must free this string with g_free().
 	 */
 	public string getFontName()
@@ -171,7 +171,7 @@ public class FontSelectionDialog : Dialog
 	 *
 	 * Deprecated: Use #GtkFontChooserDialog
 	 *
-	 * Return: the #GtkWidget used in the dialog
+	 * Returns: the #GtkWidget used in the dialog
 	 *     for the “OK” button.
 	 *
 	 * Since: 2.14
@@ -193,7 +193,7 @@ public class FontSelectionDialog : Dialog
 	 *
 	 * Deprecated: Use #GtkFontChooserDialog
 	 *
-	 * Return: the text displayed in the preview area.
+	 * Returns: the text displayed in the preview area.
 	 *     This string is owned by the widget and should not be
 	 *     modified or freed
 	 */
@@ -210,7 +210,7 @@ public class FontSelectionDialog : Dialog
 	 * Params:
 	 *     fontname = a font name like “Helvetica 12” or “Times Bold 18”
 	 *
-	 * Return: %TRUE if the font selected in @fsd is now the
+	 * Returns: %TRUE if the font selected in @fsd is now the
 	 *     @fontname specified, %FALSE otherwise.
 	 */
 	public bool setFontName(string fontname)

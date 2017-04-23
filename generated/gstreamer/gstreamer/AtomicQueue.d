@@ -75,7 +75,7 @@ public class AtomicQueue
 	 * Params:
 	 *     initialSize = initial queue size
 	 *
-	 * Return: a new #GstAtomicQueue
+	 * Returns: a new #GstAtomicQueue
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -94,7 +94,7 @@ public class AtomicQueue
 	/**
 	 * Get the amount of items in the queue.
 	 *
-	 * Return: the number of elements in the queue.
+	 * Returns: the number of elements in the queue.
 	 */
 	public uint length()
 	{
@@ -104,7 +104,7 @@ public class AtomicQueue
 	/**
 	 * Peek the head element of the queue without removing it from the queue.
 	 *
-	 * Return: the head element of @queue or
+	 * Returns: the head element of @queue or
 	 *     %NULL when the queue is empty.
 	 */
 	public void* peek()
@@ -115,7 +115,7 @@ public class AtomicQueue
 	/**
 	 * Get the head element of the queue.
 	 *
-	 * Return: the head element of @queue or %NULL when
+	 * Returns: the head element of @queue or %NULL when
 	 *     the queue is empty.
 	 */
 	public void* pop()

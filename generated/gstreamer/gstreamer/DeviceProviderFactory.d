@@ -91,7 +91,7 @@ public class DeviceProviderFactory : PluginFeature
 	 * Params:
 	 *     name = name of factory to find
 	 *
-	 * Return: #GstDeviceProviderFactory if
+	 * Returns: #GstDeviceProviderFactory if
 	 *     found, %NULL otherwise
 	 *
 	 * Since: 1.4
@@ -115,7 +115,7 @@ public class DeviceProviderFactory : PluginFeature
 	 * Params:
 	 *     factoryname = a named factory to instantiate
 	 *
-	 * Return: a #GstDeviceProvider or %NULL
+	 * Returns: a #GstDeviceProvider or %NULL
 	 *     if unable to create device provider
 	 *
 	 * Since: 1.4
@@ -139,7 +139,7 @@ public class DeviceProviderFactory : PluginFeature
 	 * Params:
 	 *     minrank = Minimum rank
 	 *
-	 * Return: a #GList of #GstDeviceProviderFactory device providers. Use
+	 * Returns: a #GList of #GstDeviceProviderFactory device providers. Use
 	 *     gst_plugin_feature_list_free() after usage.
 	 *
 	 * Since: 1.4
@@ -160,7 +160,7 @@ public class DeviceProviderFactory : PluginFeature
 	 * Returns the device provider of the type defined by the given device
 	 * providerfactory.
 	 *
-	 * Return: the #GstDeviceProvider or %NULL
+	 * Returns: the #GstDeviceProvider or %NULL
 	 *     if the device provider couldn't be created
 	 *
 	 * Since: 1.4
@@ -182,7 +182,7 @@ public class DeviceProviderFactory : PluginFeature
 	 * only be retrieved if the device provider factory is loaded, which can be
 	 * assured with gst_plugin_feature_load().
 	 *
-	 * Return: the #GType for device providers managed by this factory.
+	 * Returns: the #GType for device providers managed by this factory.
 	 *
 	 * Since: 1.4
 	 */
@@ -197,7 +197,7 @@ public class DeviceProviderFactory : PluginFeature
 	 * Params:
 	 *     key = a key
 	 *
-	 * Return: the metadata with @key on @factory or %NULL
+	 * Returns: the metadata with @key on @factory or %NULL
 	 *     when there was no metadata with the given @key.
 	 *
 	 * Since: 1.4
@@ -210,7 +210,7 @@ public class DeviceProviderFactory : PluginFeature
 	/**
 	 * Get the available keys for the metadata on @factory.
 	 *
-	 * Return: a %NULL-terminated array of key strings, or %NULL when there is no
+	 * Returns: a %NULL-terminated array of key strings, or %NULL when there is no
 	 *     metadata. Free with g_strfreev() when no longer needed.
 	 *
 	 * Since: 1.4
@@ -230,7 +230,7 @@ public class DeviceProviderFactory : PluginFeature
 	 *     classes = a "/" separate list of classes to match, only match
 	 *         if all classes are matched
 	 *
-	 * Return: %TRUE if @factory matches or if @classes is %NULL.
+	 * Returns: %TRUE if @factory matches or if @classes is %NULL.
 	 *
 	 * Since: 1.4
 	 */
@@ -246,7 +246,7 @@ public class DeviceProviderFactory : PluginFeature
 	 *     classes = a %NULL terminated array
 	 *         of classes to match, only match if all classes are matched
 	 *
-	 * Return: %TRUE if @factory matches.
+	 * Returns: %TRUE if @factory matches.
 	 *
 	 * Since: 1.4
 	 */

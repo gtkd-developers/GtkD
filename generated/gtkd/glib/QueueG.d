@@ -78,7 +78,7 @@ public class QueueG
 	 * queue consist of pointers to data, the pointers are copied, but the
 	 * actual data is not.
 	 *
-	 * Return: a copy of @queue
+	 * Returns: a copy of @queue
 	 *
 	 * Since: 2.4
 	 */
@@ -115,7 +115,7 @@ public class QueueG
 	 * Params:
 	 *     data = data to find
 	 *
-	 * Return: the first link in @queue which contains @data
+	 * Returns: the first link in @queue which contains @data
 	 *
 	 * Since: 2.4
 	 */
@@ -143,7 +143,7 @@ public class QueueG
 	 *     func = a #GCompareFunc to call for each element. It should return 0
 	 *         when the desired element is found
 	 *
-	 * Return: the found link, or %NULL if it wasn't found
+	 * Returns: the found link, or %NULL if it wasn't found
 	 *
 	 * Since: 2.4
 	 */
@@ -204,7 +204,7 @@ public class QueueG
 	/**
 	 * Returns the number of items in @queue.
 	 *
-	 * Return: the number of items in @queue
+	 * Returns: the number of items in @queue
 	 *
 	 * Since: 2.4
 	 */
@@ -219,7 +219,7 @@ public class QueueG
 	 * Params:
 	 *     data = the data to find
 	 *
-	 * Return: the position of the first element in @queue which
+	 * Returns: the position of the first element in @queue which
 	 *     contains @data, or -1 if no element in @queue contains @data
 	 *
 	 * Since: 2.4
@@ -300,7 +300,7 @@ public class QueueG
 	/**
 	 * Returns %TRUE if the queue is empty.
 	 *
-	 * Return: %TRUE if the queue is empty
+	 * Returns: %TRUE if the queue is empty
 	 */
 	public bool isEmpty()
 	{
@@ -313,7 +313,7 @@ public class QueueG
 	 * Params:
 	 *     link = a #GList link
 	 *
-	 * Return: the position of @link_, or -1 if the link is
+	 * Returns: the position of @link_, or -1 if the link is
 	 *     not part of @queue
 	 *
 	 * Since: 2.4
@@ -326,7 +326,7 @@ public class QueueG
 	/**
 	 * Returns the first element of the queue.
 	 *
-	 * Return: the data of the first element in the queue, or %NULL
+	 * Returns: the data of the first element in the queue, or %NULL
 	 *     if the queue is empty
 	 */
 	public void* peekHead()
@@ -337,7 +337,7 @@ public class QueueG
 	/**
 	 * Returns the first link in @queue.
 	 *
-	 * Return: the first link in @queue, or %NULL if @queue is empty
+	 * Returns: the first link in @queue, or %NULL if @queue is empty
 	 *
 	 * Since: 2.4
 	 */
@@ -359,7 +359,7 @@ public class QueueG
 	 * Params:
 	 *     n = the position of the element
 	 *
-	 * Return: the data for the @n'th element of @queue,
+	 * Returns: the data for the @n'th element of @queue,
 	 *     or %NULL if @n is off the end of @queue
 	 *
 	 * Since: 2.4
@@ -375,7 +375,7 @@ public class QueueG
 	 * Params:
 	 *     n = the position of the link
 	 *
-	 * Return: the link at the @n'th position, or %NULL
+	 * Returns: the link at the @n'th position, or %NULL
 	 *     if @n is off the end of the list
 	 *
 	 * Since: 2.4
@@ -395,7 +395,7 @@ public class QueueG
 	/**
 	 * Returns the last element of the queue.
 	 *
-	 * Return: the data of the last element in the queue, or %NULL
+	 * Returns: the data of the last element in the queue, or %NULL
 	 *     if the queue is empty
 	 */
 	public void* peekTail()
@@ -406,7 +406,7 @@ public class QueueG
 	/**
 	 * Returns the last link in @queue.
 	 *
-	 * Return: the last link in @queue, or %NULL if @queue is empty
+	 * Returns: the last link in @queue, or %NULL if @queue is empty
 	 *
 	 * Since: 2.4
 	 */
@@ -425,7 +425,7 @@ public class QueueG
 	/**
 	 * Removes the first element of the queue and returns its data.
 	 *
-	 * Return: the data of the first element in the queue, or %NULL
+	 * Returns: the data of the first element in the queue, or %NULL
 	 *     if the queue is empty
 	 */
 	public void* popHead()
@@ -436,7 +436,7 @@ public class QueueG
 	/**
 	 * Removes and returns the first element of the queue.
 	 *
-	 * Return: the #GList element at the head of the queue, or %NULL
+	 * Returns: the #GList element at the head of the queue, or %NULL
 	 *     if the queue is empty
 	 */
 	public ListG popHeadLink()
@@ -457,7 +457,7 @@ public class QueueG
 	 * Params:
 	 *     n = the position of the element
 	 *
-	 * Return: the element's data, or %NULL if @n is off the end of @queue
+	 * Returns: the element's data, or %NULL if @n is off the end of @queue
 	 *
 	 * Since: 2.4
 	 */
@@ -472,7 +472,7 @@ public class QueueG
 	 * Params:
 	 *     n = the link's position
 	 *
-	 * Return: the @n'th link, or %NULL if @n is off the end of @queue
+	 * Returns: the @n'th link, or %NULL if @n is off the end of @queue
 	 *
 	 * Since: 2.4
 	 */
@@ -491,7 +491,7 @@ public class QueueG
 	/**
 	 * Removes the last element of the queue and returns its data.
 	 *
-	 * Return: the data of the last element in the queue, or %NULL
+	 * Returns: the data of the last element in the queue, or %NULL
 	 *     if the queue is empty
 	 */
 	public void* popTail()
@@ -502,7 +502,7 @@ public class QueueG
 	/**
 	 * Removes and returns the last element of the queue.
 	 *
-	 * Return: the #GList element at the tail of the queue, or %NULL
+	 * Returns: the #GList element at the tail of the queue, or %NULL
 	 *     if the queue is empty
 	 */
 	public ListG popTailLink()
@@ -599,7 +599,7 @@ public class QueueG
 	 * Params:
 	 *     data = the data to remove
 	 *
-	 * Return: %TRUE if @data was found and removed from @queue
+	 * Returns: %TRUE if @data was found and removed from @queue
 	 *
 	 * Since: 2.4
 	 */
@@ -614,7 +614,7 @@ public class QueueG
 	 * Params:
 	 *     data = the data to remove
 	 *
-	 * Return: the number of elements removed from @queue
+	 * Returns: the number of elements removed from @queue
 	 *
 	 * Since: 2.4
 	 */
@@ -669,7 +669,7 @@ public class QueueG
 	/**
 	 * Creates a new #GQueue.
 	 *
-	 * Return: a newly allocated #GQueue
+	 * Returns: a newly allocated #GQueue
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

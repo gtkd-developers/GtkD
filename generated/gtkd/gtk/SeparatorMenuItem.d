@@ -83,7 +83,7 @@ public class SeparatorMenuItem : MenuItem
 	/**
 	 * Creates a new #GtkSeparatorMenuItem.
 	 *
-	 * Return: a new #GtkSeparatorMenuItem.
+	 * Returns: a new #GtkSeparatorMenuItem.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

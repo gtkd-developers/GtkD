@@ -79,7 +79,7 @@ public class IOChannel
 	 *     mode = One of "r", "w", "a", "r+", "w+", "a+". These have
 	 *         the same meaning as in fopen()
 	 *
-	 * Return: A #GIOChannel on success, %NULL on failure.
+	 * Returns: A #GIOChannel on success, %NULL on failure.
 	 *
 	 * Throws: GException on failure.
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -128,7 +128,7 @@ public class IOChannel
 	 * Params:
 	 *     fd = a file descriptor.
 	 *
-	 * Return: a new #GIOChannel.
+	 * Returns: a new #GIOChannel.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -159,7 +159,7 @@ public class IOChannel
 	/**
 	 * Flushes the write buffer for the GIOChannel.
 	 *
-	 * Return: the status of the operation: One of
+	 * Returns: the status of the operation: One of
 	 *     #G_IO_STATUS_NORMAL, #G_IO_STATUS_AGAIN, or
 	 *     #G_IO_STATUS_ERROR.
 	 *
@@ -184,7 +184,7 @@ public class IOChannel
 	 * is data to be read/space to write data in the internal buffers in
 	 * the #GIOChannel. Only the flags %G_IO_IN and %G_IO_OUT may be set.
 	 *
-	 * Return: A #GIOCondition
+	 * Returns: A #GIOCondition
 	 */
 	public GIOCondition getBufferCondition()
 	{
@@ -194,7 +194,7 @@ public class IOChannel
 	/**
 	 * Gets the buffer size.
 	 *
-	 * Return: the size of the buffer.
+	 * Returns: the size of the buffer.
 	 */
 	public size_t getBufferSize()
 	{
@@ -204,7 +204,7 @@ public class IOChannel
 	/**
 	 * Returns whether @channel is buffered.
 	 *
-	 * Return: %TRUE if the @channel is buffered.
+	 * Returns: %TRUE if the @channel is buffered.
 	 */
 	public bool getBuffered()
 	{
@@ -217,7 +217,7 @@ public class IOChannel
 	 * destroyed. The default value of this is %TRUE for channels created
 	 * by g_io_channel_new_file (), and %FALSE for all other channels.
 	 *
-	 * Return: Whether the channel will be closed on the final unref of
+	 * Returns: Whether the channel will be closed on the final unref of
 	 *     the GIOChannel data structure.
 	 */
 	public bool getCloseOnUnref()
@@ -230,7 +230,7 @@ public class IOChannel
 	 * The internal encoding is always UTF-8. The encoding %NULL
 	 * makes the channel safe for binary data.
 	 *
-	 * Return: A string containing the encoding, this string is
+	 * Returns: A string containing the encoding, this string is
 	 *     owned by GLib and must not be freed.
 	 */
 	public string getEncoding()
@@ -249,7 +249,7 @@ public class IOChannel
 	 * should immediately call g_io_channel_get_flags() to update
 	 * the internal values of these flags.
 	 *
-	 * Return: the flags which are set on the channel
+	 * Returns: the flags which are set on the channel
 	 */
 	public GIOFlags getFlags()
 	{
@@ -264,7 +264,7 @@ public class IOChannel
 	 * Params:
 	 *     length = a location to return the length of the line terminator
 	 *
-	 * Return: The line termination string. This value
+	 * Returns: The line termination string. This value
 	 *     is owned by GLib and must not be freed.
 	 */
 	public string getLineTerm(int* length)
@@ -295,7 +295,7 @@ public class IOChannel
 	 *     count = the number of bytes to read from the #GIOChannel
 	 *     bytesRead = returns the number of bytes actually read
 	 *
-	 * Return: %G_IO_ERROR_NONE if the operation was successful.
+	 * Returns: %G_IO_ERROR_NONE if the operation was successful.
 	 */
 	public GIOError read(string buf, size_t count, size_t* bytesRead)
 	{
@@ -315,7 +315,7 @@ public class IOChannel
 	 *         is non-%NULL. This indicates that the next UTF-8 character is
 	 *         too wide for the buffer.
 	 *
-	 * Return: the status of the operation.
+	 * Returns: the status of the operation.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -347,7 +347,7 @@ public class IOChannel
 	 *     length = location to store length of the read data, or %NULL
 	 *     terminatorPos = location to store position of line terminator, or %NULL
 	 *
-	 * Return: the status of the operation.
+	 * Returns: the status of the operation.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -378,7 +378,7 @@ public class IOChannel
 	 *         be overwritten.
 	 *     terminatorPos = location to store position of line terminator, or %NULL
 	 *
-	 * Return: the status of the operation.
+	 * Returns: the status of the operation.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -407,7 +407,7 @@ public class IOChannel
 	 *         character, but there may be other nuls in the intervening data.
 	 *     length = location to store length of the data
 	 *
-	 * Return: %G_IO_STATUS_NORMAL on success.
+	 * Returns: %G_IO_STATUS_NORMAL on success.
 	 *     This function never returns %G_IO_STATUS_EOF.
 	 *
 	 * Throws: GException on failure.
@@ -437,7 +437,7 @@ public class IOChannel
 	 * Params:
 	 *     thechar = a location to return a character
 	 *
-	 * Return: a #GIOStatus
+	 * Returns: a #GIOStatus
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -458,7 +458,7 @@ public class IOChannel
 	/**
 	 * Increments the reference count of a #GIOChannel.
 	 *
-	 * Return: the @channel that was passed in (since 2.6)
+	 * Returns: the @channel that was passed in (since 2.6)
 	 */
 	public IOChannel doref()
 	{
@@ -485,7 +485,7 @@ public class IOChannel
 	 *         position), %G_SEEK_SET (the start of the file), or %G_SEEK_END
 	 *         (the end of the file)
 	 *
-	 * Return: %G_IO_ERROR_NONE if the operation was successful.
+	 * Returns: %G_IO_ERROR_NONE if the operation was successful.
 	 */
 	public GIOError seek(long offset, GSeekType type)
 	{
@@ -502,7 +502,7 @@ public class IOChannel
 	 *         is allowed. See the documentation for
 	 *         g_io_channel_set_encoding () for details.
 	 *
-	 * Return: the status of the operation.
+	 * Returns: the status of the operation.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -614,7 +614,7 @@ public class IOChannel
 	 * Params:
 	 *     encoding = the encoding type
 	 *
-	 * Return: %G_IO_STATUS_NORMAL if the encoding was successfully set
+	 * Returns: %G_IO_STATUS_NORMAL if the encoding was successfully set
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -638,7 +638,7 @@ public class IOChannel
 	 * Params:
 	 *     flags = the flags to set on the IO channel
 	 *
-	 * Return: the status of the operation.
+	 * Returns: the status of the operation.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -682,7 +682,7 @@ public class IOChannel
 	 * Params:
 	 *     flush = if %TRUE, flush pending
 	 *
-	 * Return: the status of the operation.
+	 * Returns: the status of the operation.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -706,7 +706,7 @@ public class IOChannel
 	 * On Windows this function returns the file descriptor or socket of
 	 * the #GIOChannel.
 	 *
-	 * Return: the file descriptor of the #GIOChannel.
+	 * Returns: the file descriptor of the #GIOChannel.
 	 */
 	public int unixGetFd()
 	{
@@ -731,7 +731,7 @@ public class IOChannel
 	 *     count = the number of bytes to write
 	 *     bytesWritten = the number of bytes actually written
 	 *
-	 * Return: %G_IO_ERROR_NONE if the operation was successful.
+	 * Returns: %G_IO_ERROR_NONE if the operation was successful.
 	 */
 	public GIOError write(string buf, size_t count, size_t* bytesWritten)
 	{
@@ -756,7 +756,7 @@ public class IOChannel
 	 *         channel is blocking, this will always be equal
 	 *         to @count if @count >= 0.
 	 *
-	 * Return: the status of the operation.
+	 * Returns: the status of the operation.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -781,7 +781,7 @@ public class IOChannel
 	 * Params:
 	 *     thechar = a character
 	 *
-	 * Return: a #GIOStatus
+	 * Returns: a #GIOStatus
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -805,7 +805,7 @@ public class IOChannel
 	 * Params:
 	 *     en = an `errno` error number, e.g. `EINVAL`
 	 *
-	 * Return: a #GIOChannelError error number, e.g.
+	 * Returns: a #GIOChannelError error number, e.g.
 	 *     %G_IO_CHANNEL_ERROR_INVAL.
 	 */
 	public static GIOChannelError errorFromErrno(int en)
@@ -829,7 +829,7 @@ public class IOChannel
 	 *     func = the function to call when the condition is satisfied
 	 *     userData = user data to pass to @func
 	 *
-	 * Return: the event source id
+	 * Returns: the event source id
 	 */
 	public static uint ioAddWatch(IOChannel channel, GIOCondition condition, GIOFunc func, void* userData)
 	{
@@ -852,7 +852,7 @@ public class IOChannel
 	 *     userData = user data to pass to @func
 	 *     notify = the function to call when the source is removed
 	 *
-	 * Return: the event source id
+	 * Returns: the event source id
 	 */
 	public static uint ioAddWatchFull(IOChannel channel, int priority, GIOCondition condition, GIOFunc func, void* userData, GDestroyNotify notify)
 	{
@@ -876,7 +876,7 @@ public class IOChannel
 	 *     channel = a #GIOChannel to watch
 	 *     condition = conditions to watch for
 	 *
-	 * Return: a new #GSource
+	 * Returns: a new #GSource
 	 */
 	public static Source ioCreateWatch(IOChannel channel, GIOCondition condition)
 	{

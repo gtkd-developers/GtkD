@@ -58,7 +58,7 @@ public interface TocSetterIF{
 	 * Return current TOC the setter uses. The TOC should not be
 	 * modified without making it writable first.
 	 *
-	 * Return: TOC set, or %NULL. Unref with
+	 * Returns: TOC set, or %NULL. Unref with
 	 *     gst_toc_unref() when no longer needed
 	 */
 	public Toc getToc();

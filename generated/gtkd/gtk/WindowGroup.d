@@ -94,7 +94,7 @@ public class WindowGroup : ObjectG
 	 * Creates a new #GtkWindowGroup object. Grabs added with
 	 * gtk_grab_add() only affect windows within the same #GtkWindowGroup.
 	 *
-	 * Return: a new #GtkWindowGroup.
+	 * Returns: a new #GtkWindowGroup.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -127,7 +127,7 @@ public class WindowGroup : ObjectG
 	 * Params:
 	 *     device = a #GdkDevice
 	 *
-	 * Return: The grab widget, or %NULL
+	 * Returns: The grab widget, or %NULL
 	 *
 	 * Since: 3.0
 	 */
@@ -147,7 +147,7 @@ public class WindowGroup : ObjectG
 	 * Gets the current grab widget of the given group,
 	 * see gtk_grab_add().
 	 *
-	 * Return: the current grab widget of the group
+	 * Returns: the current grab widget of the group
 	 *
 	 * Since: 2.22
 	 */
@@ -166,7 +166,7 @@ public class WindowGroup : ObjectG
 	/**
 	 * Returns a list of the #GtkWindows that belong to @window_group.
 	 *
-	 * Return: A
+	 * Returns: A
 	 *     newly-allocated list of windows inside the group.
 	 *
 	 * Since: 2.14

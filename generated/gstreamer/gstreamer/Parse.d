@@ -55,7 +55,7 @@ public struct Parse
 	 *     ghostUnlinkedPads = whether to automatically create ghost pads
 	 *         for unlinked source or sink pads within the bin
 	 *
-	 * Return: a
+	 * Returns: a
 	 *     newly-created bin, or %NULL if an error occurred.
 	 *
 	 * Throws: GException on failure.
@@ -98,7 +98,7 @@ public struct Parse
 	 *         gst_parse_context_new(), or %NULL
 	 *     flags = parsing options, or #GST_PARSE_FLAG_NONE
 	 *
-	 * Return: a newly-created
+	 * Returns: a newly-created
 	 *     element, which is guaranteed to be a bin unless
 	 *     GST_FLAG_NO_SINGLE_ELEMENT_BINS was passed, or %NULL if an error
 	 *     occurred.
@@ -127,7 +127,7 @@ public struct Parse
 	/**
 	 * Get the error quark used by the parsing subsystem.
 	 *
-	 * Return: the quark of the parse errors.
+	 * Returns: the quark of the parse errors.
 	 */
 	public static GQuark errorQuark()
 	{
@@ -143,7 +143,7 @@ public struct Parse
 	 * Params:
 	 *     pipelineDescription = the command line describing the pipeline
 	 *
-	 * Return: a new element on success, %NULL on failure. If
+	 * Returns: a new element on success, %NULL on failure. If
 	 *     more than one toplevel element is specified by the @pipeline_description,
 	 *     all elements are put into a #GstPipeline, which than is returned.
 	 *
@@ -180,7 +180,7 @@ public struct Parse
 	 *         gst_parse_context_new(), or %NULL
 	 *     flags = parsing options, or #GST_PARSE_FLAG_NONE
 	 *
-	 * Return: a new element on success, %NULL on failure. If
+	 * Returns: a new element on success, %NULL on failure. If
 	 *     more than one toplevel element is specified by the @pipeline_description,
 	 *     all elements are put into a #GstPipeline, which then is returned (unless
 	 *     the GST_PARSE_FLAG_PLACE_IN_BIN flag is set, in which case they are put
@@ -215,7 +215,7 @@ public struct Parse
 	 * Params:
 	 *     argv = null-terminated array of arguments
 	 *
-	 * Return: a new element on success and %NULL on failure.
+	 * Returns: a new element on success and %NULL on failure.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -249,7 +249,7 @@ public struct Parse
 	 *         gst_parse_context_new(), or %NULL
 	 *     flags = parsing options, or #GST_PARSE_FLAG_NONE
 	 *
-	 * Return: a new element on success; on failure, either %NULL
+	 * Returns: a new element on success; on failure, either %NULL
 	 *     or a partially-constructed bin or element will be returned and @error will
 	 *     be set (unless you passed #GST_PARSE_FLAG_FATAL_ERRORS in @flags, then
 	 *     %NULL will always be returned on failure)

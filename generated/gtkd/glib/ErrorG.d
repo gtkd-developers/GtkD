@@ -73,7 +73,7 @@ public class ErrorG
 	 *     code = error code
 	 *     message = error message
 	 *
-	 * Return: a new #GError
+	 * Returns: a new #GError
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -99,7 +99,7 @@ public class ErrorG
 	 *     format = printf()-style format for error message
 	 *     args = #va_list of parameters for the message format
 	 *
-	 * Return: a new #GError
+	 * Returns: a new #GError
 	 *
 	 * Since: 2.22
 	 *
@@ -120,7 +120,7 @@ public class ErrorG
 	/**
 	 * Makes a copy of @error.
 	 *
-	 * Return: a new #GError
+	 * Returns: a new #GError
 	 */
 	public ErrorG copy()
 	{
@@ -158,7 +158,7 @@ public class ErrorG
 	 *     domain = an error domain
 	 *     code = an error code
 	 *
-	 * Return: whether @error has @domain and @code
+	 * Returns: whether @error has @domain and @code
 	 */
 	public bool matches(GQuark domain, int code)
 	{

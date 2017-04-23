@@ -102,7 +102,7 @@ public class Arrow : Misc
 	 *     arrowType = a valid #GtkArrowType.
 	 *     shadowType = a valid #GtkShadowType.
 	 *
-	 * Return: the new #GtkArrow widget.
+	 * Returns: the new #GtkArrow widget.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

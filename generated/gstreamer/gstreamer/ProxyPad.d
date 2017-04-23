@@ -83,7 +83,7 @@ public class ProxyPad : Pad
 	 *     buffer = the #GstBuffer to send, return GST_FLOW_ERROR
 	 *         if not.
 	 *
-	 * Return: a #GstFlowReturn from the pad.
+	 * Returns: a #GstFlowReturn from the pad.
 	 */
 	public static GstFlowReturn chainDefault(Pad pad, ObjectGst parent, Buffer buffer)
 	{
@@ -99,7 +99,7 @@ public class ProxyPad : Pad
 	 *     list = the #GstBufferList to send, return GST_FLOW_ERROR
 	 *         if not.
 	 *
-	 * Return: a #GstFlowReturn from the pad.
+	 * Returns: a #GstFlowReturn from the pad.
 	 */
 	public static GstFlowReturn chainListDefault(Pad pad, ObjectGst parent, BufferList list)
 	{
@@ -117,7 +117,7 @@ public class ProxyPad : Pad
 	 *     buffer = a pointer to hold the #GstBuffer,
 	 *         returns #GST_FLOW_ERROR if %NULL.
 	 *
-	 * Return: a #GstFlowReturn from the pad.
+	 * Returns: a #GstFlowReturn from the pad.
 	 */
 	public static GstFlowReturn getrangeDefault(Pad pad, ObjectGst parent, ulong offset, uint size, out Buffer buffer)
 	{
@@ -137,7 +137,7 @@ public class ProxyPad : Pad
 	 *     pad = the #GstPad to get the internal links of.
 	 *     parent = the parent of @pad or %NULL
 	 *
-	 * Return: a #GstIterator of #GstPad, or %NULL if @pad
+	 * Returns: a #GstIterator of #GstPad, or %NULL if @pad
 	 *     has no parent. Unref each returned pad with gst_object_unref().
 	 */
 	public static Iterator iterateInternalLinksDefault(Pad pad, ObjectGst parent)
@@ -158,7 +158,7 @@ public class ProxyPad : Pad
 	 * The internal pad of a #GstGhostPad is the internally used
 	 * pad of opposite direction, which is used to link to the target.
 	 *
-	 * Return: the target #GstProxyPad, can
+	 * Returns: the target #GstProxyPad, can
 	 *     be %NULL.  Unref target pad after usage.
 	 */
 	public ProxyPad getInternal()

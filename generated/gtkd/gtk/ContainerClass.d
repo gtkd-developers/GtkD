@@ -68,7 +68,7 @@ public class ContainerClass
 	 * Params:
 	 *     propertyName = the name of the child property to find
 	 *
-	 * Return: the #GParamSpec of the child
+	 * Returns: the #GParamSpec of the child
 	 *     property or %NULL if @class has no child property with that
 	 *     name.
 	 */
@@ -137,7 +137,7 @@ public class ContainerClass
 	/**
 	 * Returns all child properties of a container class.
 	 *
-	 * Return: a newly allocated %NULL-terminated array of #GParamSpec*.
+	 * Returns: a newly allocated %NULL-terminated array of #GParamSpec*.
 	 *     The array must be freed with g_free().
 	 */
 	public ParamSpec[] listChildProperties()

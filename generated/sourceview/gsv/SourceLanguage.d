@@ -75,7 +75,7 @@ public class SourceLanguage : ObjectG
 	 * an utility wrapper around gtk_source_language_get_metadata() to
 	 * retrieve the "globs" metadata property and split it into an array.
 	 *
-	 * Return: a newly-allocated %NULL terminated array containing the globs or %NULL
+	 * Returns: a newly-allocated %NULL terminated array containing the globs or %NULL
 	 *     if no globs are found.
 	 *     The returned array must be freed with g_strfreev().
 	 */
@@ -90,7 +90,7 @@ public class SourceLanguage : ObjectG
 	/**
 	 * Returns whether the language should be hidden from the user.
 	 *
-	 * Return: %TRUE if the language should be hidden, %FALSE otherwise.
+	 * Returns: %TRUE if the language should be hidden, %FALSE otherwise.
 	 */
 	public bool getHidden()
 	{
@@ -102,7 +102,7 @@ public class SourceLanguage : ObjectG
 	 * The returned string is owned by @language and should not be freed
 	 * or modified.
 	 *
-	 * Return: the ID of @language.
+	 * Returns: the ID of @language.
 	 */
 	public string getId()
 	{
@@ -113,7 +113,7 @@ public class SourceLanguage : ObjectG
 	 *
 	 * Params:
 	 *     name = metadata property name.
-	 * Return: value of property @name stored in
+	 * Returns: value of property @name stored in
 	 *     the metadata of @language or %NULL if language does not contain the
 	 *     specified metadata property.
 	 *     The returned string is owned by @language and should not be freed
@@ -130,7 +130,7 @@ public class SourceLanguage : ObjectG
 	 * retrieve the "mimetypes" metadata property and split it into an
 	 * array.
 	 *
-	 * Return: a newly-allocated %NULL terminated array containing the mime types
+	 * Returns: a newly-allocated %NULL terminated array containing the mime types
 	 *     or %NULL if no mime types are found.
 	 *     The returned array must be freed with g_strfreev().
 	 */
@@ -147,7 +147,7 @@ public class SourceLanguage : ObjectG
 	 * The returned string is owned by @language and should not be freed
 	 * or modified.
 	 *
-	 * Return: the name of @language.
+	 * Returns: the name of @language.
 	 */
 	public string getName()
 	{
@@ -161,7 +161,7 @@ public class SourceLanguage : ObjectG
 	 * The returned string is owned by @language and should not be freed
 	 * or modified.
 	 *
-	 * Return: the section of @language.
+	 * Returns: the section of @language.
 	 */
 	public string getSection()
 	{
@@ -175,7 +175,7 @@ public class SourceLanguage : ObjectG
 	 * Params:
 	 *     styleId = a style ID.
 	 *
-	 * Return: the ID of the style to use if the
+	 * Returns: the ID of the style to use if the
 	 *     specified @style_id is not present in the current style scheme or %NULL
 	 *     if the style has no fallback defined.
 	 *     The returned string is owned by the @language and must not be modified.
@@ -190,7 +190,7 @@ public class SourceLanguage : ObjectG
 	/**
 	 * Returns the ids of the styles defined by this @language.
 	 *
-	 * Return: a newly-allocated %NULL terminated array containing ids of the
+	 * Returns: a newly-allocated %NULL terminated array containing ids of the
 	 *     styles defined by this @language or %NULL if no style is defined.
 	 *     The returned array must be freed with g_strfreev().
 	 */
@@ -208,7 +208,7 @@ public class SourceLanguage : ObjectG
 	 * Params:
 	 *     styleId = a style ID.
 	 *
-	 * Return: the name of the style with ID @style_id
+	 * Returns: the name of the style with ID @style_id
 	 *     defined by this @language or %NULL if the style has no name or there is no
 	 *     style with ID @style_id defined by this @language.
 	 *     The returned string is owned by the @language and must not be modified.

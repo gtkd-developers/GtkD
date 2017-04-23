@@ -75,7 +75,7 @@ public class PgGlyphString
 	/**
 	 * Create a new #PangoGlyphString.
 	 *
-	 * Return: the newly allocated #PangoGlyphString, which
+	 * Returns: the newly allocated #PangoGlyphString, which
 	 *     should be freed with pango_glyph_string_free().
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -95,7 +95,7 @@ public class PgGlyphString
 	/**
 	 * Copy a glyph string and associated storage.
 	 *
-	 * Return: the newly allocated #PangoGlyphString,
+	 * Returns: the newly allocated #PangoGlyphString,
 	 *     which should be freed with pango_glyph_string_free(),
 	 *     or %NULL if @string was %NULL.
 	 */
@@ -187,7 +187,7 @@ public class PgGlyphString
 	 * width, it's much faster.  This is in fact only a convenience function that
 	 * computes the sum of geometry.width for each glyph in the @glyphs.
 	 *
-	 * Return: the logical width of the glyph string.
+	 * Returns: the logical width of the glyph string.
 	 *
 	 * Since: 1.14
 	 */

@@ -121,7 +121,7 @@ public class Closure
 	 *     object = a #GObject pointer to store in the @data field of the newly
 	 *         allocated #GClosure
 	 *
-	 * Return: a newly allocated #GClosure
+	 * Returns: a newly allocated #GClosure
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -180,7 +180,7 @@ public class Closure
 	 *         `sizeof (GClosure)`
 	 *     data = data to store in the @data field of the newly allocated #GClosure
 	 *
-	 * Return: a newly allocated #GClosure
+	 * Returns: a newly allocated #GClosure
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -299,7 +299,7 @@ public class Closure
 	 * Increments the reference count on a closure to force it staying
 	 * alive while the caller holds a pointer to it.
 	 *
-	 * Return: The @closure passed in, for convenience
+	 * Returns: The @closure passed in, for convenience
 	 */
 	public Closure doref()
 	{

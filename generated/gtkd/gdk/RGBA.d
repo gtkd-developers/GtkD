@@ -159,7 +159,7 @@ public class RGBA
 	 *
 	 * The result must be freed through gdk_rgba_free().
 	 *
-	 * Return: A newly allocated #GdkRGBA, with the same contents as @rgba
+	 * Returns: A newly allocated #GdkRGBA, with the same contents as @rgba
 	 *
 	 * Since: 3.0
 	 */
@@ -181,7 +181,7 @@ public class RGBA
 	 * Params:
 	 *     p2 = another #GdkRGBA pointer
 	 *
-	 * Return: %TRUE if the two colors compare equal
+	 * Returns: %TRUE if the two colors compare equal
 	 *
 	 * Since: 3.0
 	 */
@@ -204,7 +204,7 @@ public class RGBA
 	 * A hash function suitable for using for a hash
 	 * table that stores #GdkRGBAs.
 	 *
-	 * Return: The hash value for @p
+	 * Returns: The hash value for @p
 	 *
 	 * Since: 3.0
 	 */
@@ -233,7 +233,7 @@ public class RGBA
 	 * Params:
 	 *     spec = the string specifying the color
 	 *
-	 * Return: %TRUE if the parsing succeeded
+	 * Returns: %TRUE if the parsing succeeded
 	 *
 	 * Since: 3.0
 	 */
@@ -259,7 +259,7 @@ public class RGBA
 	 * integers. If this is a concern, you should use a
 	 * different representation.
 	 *
-	 * Return: A newly allocated text string
+	 * Returns: A newly allocated text string
 	 *
 	 * Since: 3.0
 	 */

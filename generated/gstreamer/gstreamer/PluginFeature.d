@@ -83,7 +83,7 @@ public class PluginFeature : ObjectGst
 	 *     list = list
 	 *         of #GstPluginFeature
 	 *
-	 * Return: a copy of @list,
+	 * Returns: a copy of @list,
 	 *     with each feature's reference count incremented.
 	 */
 	public static ListG listCopy(ListG list)
@@ -130,7 +130,7 @@ public class PluginFeature : ObjectGst
 	 *     p1 = a #GstPluginFeature
 	 *     p2 = a #GstPluginFeature
 	 *
-	 * Return: negative value if the rank of p1 > the rank of p2 or the ranks are
+	 * Returns: negative value if the rank of p1 > the rank of p2 or the ranks are
 	 *     equal but the name of p1 comes before the name of p2; zero if the rank
 	 *     and names are equal; positive value if the rank of p1 < the rank of p2 or the
 	 *     ranks are equal but the name of p2 comes before the name of p1
@@ -149,7 +149,7 @@ public class PluginFeature : ObjectGst
 	 *     minMinor = minimum required minor version
 	 *     minMicro = minimum required micro version
 	 *
-	 * Return: %TRUE if the plugin feature has at least
+	 * Returns: %TRUE if the plugin feature has at least
 	 *     the required version, otherwise %FALSE.
 	 */
 	public bool checkVersion(uint minMajor, uint minMinor, uint minMicro)
@@ -160,7 +160,7 @@ public class PluginFeature : ObjectGst
 	/**
 	 * Get the plugin that provides this feature.
 	 *
-	 * Return: the plugin that provides this
+	 * Returns: the plugin that provides this
 	 *     feature, or %NULL.  Unref with gst_object_unref() when no
 	 *     longer needed.
 	 */
@@ -179,7 +179,7 @@ public class PluginFeature : ObjectGst
 	/**
 	 * Get the name of the plugin that provides this feature.
 	 *
-	 * Return: the name of the plugin that provides this
+	 * Returns: the name of the plugin that provides this
 	 *     feature, or %NULL if the feature is not associated with a
 	 *     plugin.
 	 *
@@ -193,7 +193,7 @@ public class PluginFeature : ObjectGst
 	/**
 	 * Gets the rank of a plugin feature.
 	 *
-	 * Return: The rank of the feature
+	 * Returns: The rank of the feature
 	 */
 	public uint getRank()
 	{
@@ -214,7 +214,7 @@ public class PluginFeature : ObjectGst
 	 * feature = loaded_feature;
 	 * ]|
 	 *
-	 * Return: a reference to the loaded
+	 * Returns: a reference to the loaded
 	 *     feature, or %NULL on error
 	 */
 	public PluginFeature load()

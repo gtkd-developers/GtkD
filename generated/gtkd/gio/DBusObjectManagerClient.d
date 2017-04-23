@@ -231,7 +231,7 @@ public class DBusObjectManagerClient : ObjectG, AsyncInitableIF, DBusObjectManag
 	 *     getProxyTypeDestroyNotify = Free function for @get_proxy_type_user_data or %NULL.
 	 *     cancellable = A #GCancellable or %NULL
 	 *
-	 * Return: A
+	 * Returns: A
 	 *     #GDBusObjectManagerClient object or %NULL if @error is set. Free
 	 *     with g_object_unref().
 	 *
@@ -276,7 +276,7 @@ public class DBusObjectManagerClient : ObjectG, AsyncInitableIF, DBusObjectManag
 	 *     getProxyTypeDestroyNotify = Free function for @get_proxy_type_user_data or %NULL.
 	 *     cancellable = A #GCancellable or %NULL
 	 *
-	 * Return: A
+	 * Returns: A
 	 *     #GDBusObjectManagerClient object or %NULL if @error is set. Free
 	 *     with g_object_unref().
 	 *
@@ -366,7 +366,7 @@ public class DBusObjectManagerClient : ObjectG, AsyncInitableIF, DBusObjectManag
 	/**
 	 * Gets the #GDBusConnection used by @manager.
 	 *
-	 * Return: A #GDBusConnection object. Do not free,
+	 * Returns: A #GDBusConnection object. Do not free,
 	 *     the object belongs to @manager.
 	 *
 	 * Since: 2.30
@@ -386,7 +386,7 @@ public class DBusObjectManagerClient : ObjectG, AsyncInitableIF, DBusObjectManag
 	/**
 	 * Gets the flags that @manager was constructed with.
 	 *
-	 * Return: Zero of more flags from the #GDBusObjectManagerClientFlags
+	 * Returns: Zero of more flags from the #GDBusObjectManagerClientFlags
 	 *     enumeration.
 	 *
 	 * Since: 2.30
@@ -400,7 +400,7 @@ public class DBusObjectManagerClient : ObjectG, AsyncInitableIF, DBusObjectManag
 	 * Gets the name that @manager is for, or %NULL if not a message bus
 	 * connection.
 	 *
-	 * Return: A unique or well-known name. Do not free, the string
+	 * Returns: A unique or well-known name. Do not free, the string
 	 *     belongs to @manager.
 	 *
 	 * Since: 2.30
@@ -416,7 +416,7 @@ public class DBusObjectManagerClient : ObjectG, AsyncInitableIF, DBusObjectManag
 	 * #GObject::notify signal to track changes to the
 	 * #GDBusObjectManagerClient:name-owner property.
 	 *
-	 * Return: The name owner or %NULL if no name owner
+	 * Returns: The name owner or %NULL if no name owner
 	 *     exists. Free with g_free().
 	 *
 	 * Since: 2.30

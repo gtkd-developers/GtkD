@@ -85,7 +85,7 @@ public class GestureRotate : Gesture
 	 * Params:
 	 *     widget = a #GtkWidget
 	 *
-	 * Return: a newly created #GtkGestureRotate
+	 * Returns: a newly created #GtkGestureRotate
 	 *
 	 * Since: 3.14
 	 *
@@ -108,7 +108,7 @@ public class GestureRotate : Gesture
 	 * in radians since the gesture was first recognized. If @gesture is
 	 * not active, 0 is returned.
 	 *
-	 * Return: the angle delta in radians
+	 * Returns: the angle delta in radians
 	 *
 	 * Since: 3.14
 	 */

@@ -90,7 +90,7 @@ public class SourceBuffer : TextBuffer
 	 * Params:
 	 *     table = a #GtkTextTagTable, or %NULL to create a new one.
 	 *
-	 * Return: a new source buffer.
+	 * Returns: a new source buffer.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -114,7 +114,7 @@ public class SourceBuffer : TextBuffer
 	 * Params:
 	 *     language = a #GtkSourceLanguage.
 	 *
-	 * Return: a new source buffer which will highlight text
+	 * Returns: a new source buffer which will highlight text
 	 *     according to the highlighting patterns in @language.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -140,7 +140,7 @@ public class SourceBuffer : TextBuffer
 	 *     iter = an iterator.
 	 *     category = category to search for, or %NULL
 	 *
-	 * Return: whether @iter was moved.
+	 * Returns: whether @iter was moved.
 	 *
 	 * Since: 2.2
 	 */
@@ -167,7 +167,7 @@ public class SourceBuffer : TextBuffer
 	 * Determines whether a source buffer can redo the last action
 	 * (i.e. if the last operation was an undo).
 	 *
-	 * Return: %TRUE if a redo is possible.
+	 * Returns: %TRUE if a redo is possible.
 	 */
 	public bool canRedo()
 	{
@@ -177,7 +177,7 @@ public class SourceBuffer : TextBuffer
 	/**
 	 * Determines whether a source buffer can undo the last action.
 	 *
-	 * Return: %TRUE if it's possible to undo the last action.
+	 * Returns: %TRUE if it's possible to undo the last action.
 	 */
 	public bool canUndo()
 	{
@@ -219,7 +219,7 @@ public class SourceBuffer : TextBuffer
 	 *     category = a string defining the mark category.
 	 *     where = location to place the mark.
 	 *
-	 * Return: a new #GtkSourceMark, owned by the buffer.
+	 * Returns: a new #GtkSourceMark, owned by the buffer.
 	 *
 	 * Since: 2.2
 	 */
@@ -275,7 +275,7 @@ public class SourceBuffer : TextBuffer
 	 *     iter = an iterator.
 	 *     category = category to search for, or %NULL
 	 *
-	 * Return: whether @iter was moved.
+	 * Returns: whether @iter was moved.
 	 *
 	 * Since: 2.2
 	 */
@@ -292,7 +292,7 @@ public class SourceBuffer : TextBuffer
 	 * Params:
 	 *     iter = a #GtkTextIter.
 	 *
-	 * Return: a new %NULL
+	 * Returns: a new %NULL
 	 *     terminated array of context class names.
 	 *     Use g_strfreev() to free the array if it is no longer needed.
 	 *
@@ -310,7 +310,7 @@ public class SourceBuffer : TextBuffer
 	 * Determines whether bracket match highlighting is activated for the
 	 * source buffer.
 	 *
-	 * Return: %TRUE if the source buffer will highlight matching
+	 * Returns: %TRUE if the source buffer will highlight matching
 	 *     brackets.
 	 */
 	public bool getHighlightMatchingBrackets()
@@ -322,7 +322,7 @@ public class SourceBuffer : TextBuffer
 	 * Determines whether syntax highlighting is activated in the source
 	 * buffer.
 	 *
-	 * Return: %TRUE if syntax highlighting is enabled, %FALSE otherwise.
+	 * Returns: %TRUE if syntax highlighting is enabled, %FALSE otherwise.
 	 */
 	public bool getHighlightSyntax()
 	{
@@ -330,7 +330,7 @@ public class SourceBuffer : TextBuffer
 	}
 
 	/**
-	 * Return: whether the @buffer has an implicit trailing newline.
+	 * Returns: whether the @buffer has an implicit trailing newline.
 	 *
 	 * Since: 3.14
 	 */
@@ -344,7 +344,7 @@ public class SourceBuffer : TextBuffer
 	 * see gtk_source_buffer_set_language().  The returned object should not be
 	 * unreferenced by the user.
 	 *
-	 * Return: the #GtkSourceLanguage associated
+	 * Returns: the #GtkSourceLanguage associated
 	 *     with the buffer, or %NULL.
 	 */
 	public SourceLanguage getLanguage()
@@ -362,7 +362,7 @@ public class SourceBuffer : TextBuffer
 	/**
 	 * Determines the number of undo levels the buffer will track for buffer edits.
 	 *
-	 * Return: the maximum number of possible undo levels or -1 if no limit is set.
+	 * Returns: the maximum number of possible undo levels or -1 if no limit is set.
 	 */
 	public int getMaxUndoLevels()
 	{
@@ -377,7 +377,7 @@ public class SourceBuffer : TextBuffer
 	 *     iter = an iterator.
 	 *     category = category to search for, or %NULL
 	 *
-	 * Return: a newly allocated #GSList.
+	 * Returns: a newly allocated #GSList.
 	 *
 	 * Since: 2.2
 	 */
@@ -401,7 +401,7 @@ public class SourceBuffer : TextBuffer
 	 *     line = a line number.
 	 *     category = category to search for, or %NULL
 	 *
-	 * Return: a newly allocated #GSList.
+	 * Returns: a newly allocated #GSList.
 	 *
 	 * Since: 2.2
 	 */
@@ -422,7 +422,7 @@ public class SourceBuffer : TextBuffer
 	 * see gtk_source_buffer_set_style_scheme().
 	 * The returned object should not be unreferenced by the user.
 	 *
-	 * Return: the #GtkSourceStyleScheme
+	 * Returns: the #GtkSourceStyleScheme
 	 *     associated with the buffer, or %NULL.
 	 */
 	public SourceStyleScheme getStyleScheme()
@@ -442,7 +442,7 @@ public class SourceBuffer : TextBuffer
 	 * see gtk_source_buffer_set_undo_manager().  The returned object should not be
 	 * unreferenced by the user.
 	 *
-	 * Return: the #GtkSourceUndoManager associated
+	 * Returns: the #GtkSourceUndoManager associated
 	 *     with the buffer, or %NULL.
 	 */
 	public SourceUndoManagerIF getUndoManager()
@@ -470,7 +470,7 @@ public class SourceBuffer : TextBuffer
 	 *     iter = a #GtkTextIter.
 	 *     contextClass = the context class.
 	 *
-	 * Return: whether we found a context class toggle before @iter
+	 * Returns: whether we found a context class toggle before @iter
 	 *
 	 * Since: 2.10
 	 */
@@ -492,7 +492,7 @@ public class SourceBuffer : TextBuffer
 	 *     iter = a #GtkTextIter.
 	 *     contextClass = the context class.
 	 *
-	 * Return: whether we found a context class toggle after @iter
+	 * Returns: whether we found a context class toggle after @iter
 	 *
 	 * Since: 2.10
 	 */
@@ -510,7 +510,7 @@ public class SourceBuffer : TextBuffer
 	 *     iter = a #GtkTextIter.
 	 *     contextClass = class to search for.
 	 *
-	 * Return: whether @iter has the context class.
+	 * Returns: whether @iter has the context class.
 	 *
 	 * Since: 2.10
 	 */

@@ -62,7 +62,7 @@ public interface ActionIF{
 	 * Params:
 	 *     i = the action index corresponding to the action to be performed
 	 *
-	 * Return: %TRUE if success, %FALSE otherwise
+	 * Returns: %TRUE if success, %FALSE otherwise
 	 */
 	public bool doAction(int i);
 
@@ -72,7 +72,7 @@ public interface ActionIF{
 	 * Params:
 	 *     i = the action index corresponding to the action to be performed
 	 *
-	 * Return: a description string, or %NULL if @action does
+	 * Returns: a description string, or %NULL if @action does
 	 *     not implement this interface.
 	 */
 	public string getDescription(int i);
@@ -104,7 +104,7 @@ public interface ActionIF{
 	 * Params:
 	 *     i = the action index corresponding to the action to be performed
 	 *
-	 * Return: the keybinding which can be used to activate
+	 * Returns: the keybinding which can be used to activate
 	 *     this action, or %NULL if there is no keybinding for this action.
 	 */
 	public string getKeybinding(int i);
@@ -115,7 +115,7 @@ public interface ActionIF{
 	 * Params:
 	 *     i = the action index corresponding to the action to be performed
 	 *
-	 * Return: a name string, or %NULL if @action does not
+	 * Returns: a name string, or %NULL if @action does not
 	 *     implement this interface.
 	 */
 	public string getLocalizedName(int i);
@@ -125,7 +125,7 @@ public interface ActionIF{
 	 * If there are more than one, the first one is considered the
 	 * "default" action of the object.
 	 *
-	 * Return: a the number of actions, or 0 if @action does not
+	 * Returns: a the number of actions, or 0 if @action does not
 	 *     implement this interface.
 	 */
 	public int getNActions();
@@ -149,7 +149,7 @@ public interface ActionIF{
 	 * Params:
 	 *     i = the action index corresponding to the action to be performed
 	 *
-	 * Return: a name string, or %NULL if @action does not
+	 * Returns: a name string, or %NULL if @action does not
 	 *     implement this interface.
 	 */
 	public string getName(int i);
@@ -161,7 +161,7 @@ public interface ActionIF{
 	 *     i = the action index corresponding to the action to be performed
 	 *     desc = the description to be assigned to this action
 	 *
-	 * Return: a gboolean representing if the description was successfully set;
+	 * Returns: a gboolean representing if the description was successfully set;
 	 */
 	public bool setDescription(int i, string desc);
 }

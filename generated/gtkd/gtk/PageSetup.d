@@ -123,7 +123,7 @@ public class PageSetup : ObjectG
 	/**
 	 * Creates a new #GtkPageSetup.
 	 *
-	 * Return: a new #GtkPageSetup.
+	 * Returns: a new #GtkPageSetup.
 	 *
 	 * Since: 2.10
 	 *
@@ -149,7 +149,7 @@ public class PageSetup : ObjectG
 	 * Params:
 	 *     fileName = the filename to read the page setup from
 	 *
-	 * Return: the restored #GtkPageSetup
+	 * Returns: the restored #GtkPageSetup
 	 *
 	 * Since: 2.12
 	 *
@@ -182,7 +182,7 @@ public class PageSetup : ObjectG
 	 * Params:
 	 *     variant = an a{sv} #GVariant
 	 *
-	 * Return: a new #GtkPageSetup object
+	 * Returns: a new #GtkPageSetup object
 	 *
 	 * Since: 3.22
 	 *
@@ -210,7 +210,7 @@ public class PageSetup : ObjectG
 	 *     groupName = the name of the group in the key_file to read, or %NULL
 	 *         to use the default name “Page Setup”
 	 *
-	 * Return: the restored #GtkPageSetup
+	 * Returns: the restored #GtkPageSetup
 	 *
 	 * Since: 2.12
 	 *
@@ -239,7 +239,7 @@ public class PageSetup : ObjectG
 	/**
 	 * Copies a #GtkPageSetup.
 	 *
-	 * Return: a copy of @other
+	 * Returns: a copy of @other
 	 *
 	 * Since: 2.10
 	 */
@@ -261,7 +261,7 @@ public class PageSetup : ObjectG
 	 * Params:
 	 *     unit = the unit for the return value
 	 *
-	 * Return: the bottom margin
+	 * Returns: the bottom margin
 	 *
 	 * Since: 2.10
 	 */
@@ -276,7 +276,7 @@ public class PageSetup : ObjectG
 	 * Params:
 	 *     unit = the unit for the return value
 	 *
-	 * Return: the left margin
+	 * Returns: the left margin
 	 *
 	 * Since: 2.10
 	 */
@@ -288,7 +288,7 @@ public class PageSetup : ObjectG
 	/**
 	 * Gets the page orientation of the #GtkPageSetup.
 	 *
-	 * Return: the page orientation
+	 * Returns: the page orientation
 	 *
 	 * Since: 2.10
 	 */
@@ -307,7 +307,7 @@ public class PageSetup : ObjectG
 	 * Params:
 	 *     unit = the unit for the return value
 	 *
-	 * Return: the page height.
+	 * Returns: the page height.
 	 *
 	 * Since: 2.10
 	 */
@@ -326,7 +326,7 @@ public class PageSetup : ObjectG
 	 * Params:
 	 *     unit = the unit for the return value
 	 *
-	 * Return: the page width.
+	 * Returns: the page width.
 	 *
 	 * Since: 2.10
 	 */
@@ -345,7 +345,7 @@ public class PageSetup : ObjectG
 	 * Params:
 	 *     unit = the unit for the return value
 	 *
-	 * Return: the paper height.
+	 * Returns: the paper height.
 	 *
 	 * Since: 2.10
 	 */
@@ -357,7 +357,7 @@ public class PageSetup : ObjectG
 	/**
 	 * Gets the paper size of the #GtkPageSetup.
 	 *
-	 * Return: the paper size
+	 * Returns: the paper size
 	 *
 	 * Since: 2.10
 	 */
@@ -383,7 +383,7 @@ public class PageSetup : ObjectG
 	 * Params:
 	 *     unit = the unit for the return value
 	 *
-	 * Return: the paper width.
+	 * Returns: the paper width.
 	 *
 	 * Since: 2.10
 	 */
@@ -398,7 +398,7 @@ public class PageSetup : ObjectG
 	 * Params:
 	 *     unit = the unit for the return value
 	 *
-	 * Return: the right margin
+	 * Returns: the right margin
 	 *
 	 * Since: 2.10
 	 */
@@ -413,7 +413,7 @@ public class PageSetup : ObjectG
 	 * Params:
 	 *     unit = the unit for the return value
 	 *
-	 * Return: the top margin
+	 * Returns: the top margin
 	 *
 	 * Since: 2.10
 	 */
@@ -429,7 +429,7 @@ public class PageSetup : ObjectG
 	 * Params:
 	 *     fileName = the filename to read the page setup from
 	 *
-	 * Return: %TRUE on success
+	 * Returns: %TRUE on success
 	 *
 	 * Since: 2.14
 	 *
@@ -458,7 +458,7 @@ public class PageSetup : ObjectG
 	 *     groupName = the name of the group in the key_file to read, or %NULL
 	 *         to use the default name “Page Setup”
 	 *
-	 * Return: %TRUE on success
+	 * Returns: %TRUE on success
 	 *
 	 * Since: 2.14
 	 *
@@ -582,7 +582,7 @@ public class PageSetup : ObjectG
 	 * Params:
 	 *     fileName = the file to save to
 	 *
-	 * Return: %TRUE on success
+	 * Returns: %TRUE on success
 	 *
 	 * Since: 2.12
 	 *
@@ -605,7 +605,7 @@ public class PageSetup : ObjectG
 	/**
 	 * Serialize page setup to an a{sv} variant.
 	 *
-	 * Return: a new, floating, #GVariant
+	 * Returns: a new, floating, #GVariant
 	 *
 	 * Since: 3.22
 	 */

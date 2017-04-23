@@ -85,7 +85,7 @@ public class SystemClock : Clock
 	 * clock will be increased so you need to unref the clock after
 	 * usage.
 	 *
-	 * Return: the default clock.
+	 * Returns: the default clock.
 	 *
 	 *     MT safe.
 	 */

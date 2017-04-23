@@ -74,7 +74,7 @@ public class SourceFile : ObjectG
 	}
 
 	/**
-	 * Return: a new #GtkSourceFile object.
+	 * Returns: a new #GtkSourceFile object.
 	 *
 	 * Since: 3.14
 	 *
@@ -111,7 +111,7 @@ public class SourceFile : ObjectG
 	}
 
 	/**
-	 * Return: the compression type.
+	 * Returns: the compression type.
 	 *
 	 * Since: 3.14
 	 */
@@ -124,7 +124,7 @@ public class SourceFile : ObjectG
 	 * The encoding is initially %NULL. After a successful file loading or saving
 	 * operation, the encoding is non-%NULL.
 	 *
-	 * Return: the character encoding.
+	 * Returns: the character encoding.
 	 *
 	 * Since: 3.14
 	 */
@@ -141,7 +141,7 @@ public class SourceFile : ObjectG
 	}
 
 	/**
-	 * Return: the #GFile.
+	 * Returns: the #GFile.
 	 *
 	 * Since: 3.14
 	 */
@@ -158,7 +158,7 @@ public class SourceFile : ObjectG
 	}
 
 	/**
-	 * Return: the newline type.
+	 * Returns: the newline type.
 	 *
 	 * Since: 3.14
 	 */
@@ -174,7 +174,7 @@ public class SourceFile : ObjectG
 	 * To have an up-to-date value, you must first call
 	 * gtk_source_file_check_file_on_disk().
 	 *
-	 * Return: whether the file has been deleted.
+	 * Returns: whether the file has been deleted.
 	 *
 	 * Since: 3.18
 	 */
@@ -190,7 +190,7 @@ public class SourceFile : ObjectG
 	 * To have an up-to-date value, you must first call
 	 * gtk_source_file_check_file_on_disk().
 	 *
-	 * Return: whether the file is externally modified.
+	 * Returns: whether the file is externally modified.
 	 *
 	 * Since: 3.18
 	 */
@@ -203,7 +203,7 @@ public class SourceFile : ObjectG
 	 * Returns whether the file is local. If the #GtkSourceFile:location is %NULL,
 	 * returns %FALSE.
 	 *
-	 * Return: whether the file is local.
+	 * Returns: whether the file is local.
 	 *
 	 * Since: 3.18
 	 */
@@ -219,7 +219,7 @@ public class SourceFile : ObjectG
 	 * To have an up-to-date value, you must first call
 	 * gtk_source_file_check_file_on_disk().
 	 *
-	 * Return: whether the file is read-only.
+	 * Returns: whether the file is read-only.
 	 *
 	 * Since: 3.18
 	 */

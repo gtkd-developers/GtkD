@@ -89,7 +89,7 @@ public class Relation : ObjectG
 	 *     relationship = an #AtkRelationType with which to create the new
 	 *         #AtkRelation
 	 *
-	 * Return: a pointer to a new #AtkRelation
+	 * Returns: a pointer to a new #AtkRelation
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -128,7 +128,7 @@ public class Relation : ObjectG
 	/**
 	 * Gets the type of @relation
 	 *
-	 * Return: the type of @relation
+	 * Returns: the type of @relation
 	 */
 	public AtkRelationType getRelationType()
 	{
@@ -138,7 +138,7 @@ public class Relation : ObjectG
 	/**
 	 * Gets the target list of @relation
 	 *
-	 * Return: the target list of @relation
+	 * Returns: the target list of @relation
 	 */
 	public PtrArray getTarget()
 	{
@@ -158,7 +158,7 @@ public class Relation : ObjectG
 	 * Params:
 	 *     target = an #AtkObject
 	 *
-	 * Return: TRUE if the removal is successful.
+	 * Returns: TRUE if the removal is successful.
 	 */
 	public bool removeTarget(ObjectAtk target)
 	{
@@ -171,7 +171,7 @@ public class Relation : ObjectG
 	 * Params:
 	 *     name = a string which is the (non-localized) name of an ATK relation type.
 	 *
-	 * Return: the #AtkRelationType enumerated type corresponding to the specified name,
+	 * Returns: the #AtkRelationType enumerated type corresponding to the specified name,
 	 *     or #ATK_RELATION_NULL if no matching relation type is found.
 	 */
 	public static AtkRelationType typeForName(string name)
@@ -185,7 +185,7 @@ public class Relation : ObjectG
 	 * Params:
 	 *     type = The #AtkRelationType whose name is required
 	 *
-	 * Return: the string describing the AtkRelationType
+	 * Returns: the string describing the AtkRelationType
 	 */
 	public static string typeGetName(AtkRelationType type)
 	{
@@ -198,7 +198,7 @@ public class Relation : ObjectG
 	 * Params:
 	 *     name = a name string
 	 *
-	 * Return: an #AtkRelationType associated with @name
+	 * Returns: an #AtkRelationType associated with @name
 	 */
 	public static AtkRelationType typeRegister(string name)
 	{

@@ -135,7 +135,7 @@ public class RecentFilter : ObjectG, BuildableIF
 	 * gtk_recent_filter_add_pattern (filter, "*");
 	 * ]|
 	 *
-	 * Return: a new #GtkRecentFilter
+	 * Returns: a new #GtkRecentFilter
 	 *
 	 * Since: 2.10
 	 *
@@ -270,7 +270,7 @@ public class RecentFilter : ObjectG, BuildableIF
 	 *     filterInfo = a #GtkRecentFilterInfo containing information
 	 *         about a recently used resource
 	 *
-	 * Return: %TRUE if the file should be displayed
+	 * Returns: %TRUE if the file should be displayed
 	 *
 	 * Since: 2.10
 	 */
@@ -283,7 +283,7 @@ public class RecentFilter : ObjectG, BuildableIF
 	 * Gets the human-readable name for the filter.
 	 * See gtk_recent_filter_set_name().
 	 *
-	 * Return: the name of the filter, or %NULL.  The returned string
+	 * Returns: the name of the filter, or %NULL.  The returned string
 	 *     is owned by the filter object and should not be freed.
 	 *
 	 * Since: 2.10
@@ -301,7 +301,7 @@ public class RecentFilter : ObjectG, BuildableIF
 	 * is intended principally for use in the implementation of
 	 * #GtkRecentChooser.
 	 *
-	 * Return: bitfield of flags indicating needed fields when
+	 * Returns: bitfield of flags indicating needed fields when
 	 *     calling gtk_recent_filter_filter()
 	 *
 	 * Since: 2.10

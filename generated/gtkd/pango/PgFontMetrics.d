@@ -76,7 +76,7 @@ public class PgFontMetrics
 	 * internal use by Pango backends and there is no public way
 	 * to set the fields of the structure.
 	 *
-	 * Return: a newly-created #PangoFontMetrics structure
+	 * Returns: a newly-created #PangoFontMetrics structure
 	 *     with a reference count of 1.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -99,7 +99,7 @@ public class PgFontMetrics
 	 * determining the initial size for a window. Actual characters in
 	 * text will be wider and narrower than this.
 	 *
-	 * Return: the character width, in Pango units.
+	 * Returns: the character width, in Pango units.
 	 */
 	public int getApproximateCharWidth()
 	{
@@ -114,7 +114,7 @@ public class PgFontMetrics
 	 * is generally somewhat more accurate than the result of
 	 * pango_font_metrics_get_approximate_char_width() for digits.
 	 *
-	 * Return: the digit width, in Pango units.
+	 * Returns: the digit width, in Pango units.
 	 */
 	public int getApproximateDigitWidth()
 	{
@@ -128,7 +128,7 @@ public class PgFontMetrics
 	 * actual drawn ink. It is necessary to lay out the text to figure
 	 * where the ink will be.)
 	 *
-	 * Return: the ascent, in Pango units.
+	 * Returns: the ascent, in Pango units.
 	 */
 	public int getAscent()
 	{
@@ -142,7 +142,7 @@ public class PgFontMetrics
 	 * actual drawn ink. It is necessary to lay out the text to figure
 	 * where the ink will be.)
 	 *
-	 * Return: the descent, in Pango units.
+	 * Returns: the descent, in Pango units.
 	 */
 	public int getDescent()
 	{
@@ -154,7 +154,7 @@ public class PgFontMetrics
 	 * The value returned is the distance <emphasis>above</emphasis> the
 	 * baseline of the top of the strikethrough.
 	 *
-	 * Return: the suggested strikethrough position, in Pango units.
+	 * Returns: the suggested strikethrough position, in Pango units.
 	 *
 	 * Since: 1.6
 	 */
@@ -166,7 +166,7 @@ public class PgFontMetrics
 	/**
 	 * Gets the suggested thickness to draw for the strikethrough.
 	 *
-	 * Return: the suggested strikethrough thickness, in Pango units.
+	 * Returns: the suggested strikethrough thickness, in Pango units.
 	 *
 	 * Since: 1.6
 	 */
@@ -182,7 +182,7 @@ public class PgFontMetrics
 	 * underline positions beneath the baseline, this value is typically
 	 * negative.
 	 *
-	 * Return: the suggested underline position, in Pango units.
+	 * Returns: the suggested underline position, in Pango units.
 	 *
 	 * Since: 1.6
 	 */
@@ -194,7 +194,7 @@ public class PgFontMetrics
 	/**
 	 * Gets the suggested thickness to draw for the underline.
 	 *
-	 * Return: the suggested underline thickness, in Pango units.
+	 * Returns: the suggested underline thickness, in Pango units.
 	 *
 	 * Since: 1.6
 	 */
@@ -206,7 +206,7 @@ public class PgFontMetrics
 	/**
 	 * Increase the reference count of a font metrics structure by one.
 	 *
-	 * Return: @metrics
+	 * Returns: @metrics
 	 */
 	public PgFontMetrics doref()
 	{

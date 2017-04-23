@@ -94,7 +94,7 @@ public class ObjectClass
 	 * Params:
 	 *     propertyName = the name of the property to look up
 	 *
-	 * Return: the #GParamSpec for the property, or
+	 * Returns: the #GParamSpec for the property, or
 	 *     %NULL if the class doesn't have a property of that name
 	 */
 	public ParamSpec findProperty(string propertyName)
@@ -214,7 +214,7 @@ public class ObjectClass
 	/**
 	 * Get an array of #GParamSpec* for all properties of a class.
 	 *
-	 * Return: an array of
+	 * Returns: an array of
 	 *     #GParamSpec* which should be freed after use
 	 */
 	public ParamSpec[] listProperties()

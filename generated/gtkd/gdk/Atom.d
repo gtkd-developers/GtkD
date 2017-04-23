@@ -39,7 +39,7 @@ public  import gtkc.gdktypes;
 /**
  * Determines the string corresponding to an atom.
  *
- * Return: a newly-allocated string containing the string
+ * Returns: a newly-allocated string containing the string
  *     corresponding to @atom. When you are done with the
  *     return value, you should free it using g_free().
  */
@@ -61,7 +61,7 @@ public string name(GdkAtom atom)
  *         exists. Currently, the flag is ignored, since checking the
  *         existance of an atom is as expensive as creating it.
  *
- * Return: the atom corresponding to @atom_name.
+ * Returns: the atom corresponding to @atom_name.
  */
 public GdkAtom intern(string atomName, bool onlyIfExists)
 {
@@ -83,7 +83,7 @@ public GdkAtom intern(string atomName, bool onlyIfExists)
  * Params:
  *     atomName = a static string
  *
- * Return: the atom corresponding to @atom_name
+ * Returns: the atom corresponding to @atom_name
  *
  * Since: 2.10
  */
@@ -174,7 +174,7 @@ public void propertyDelete(Window window, GdkAtom property)
  *         to store a pointer to the data. The retrieved data should be
  *         freed with g_free() when you are finished using it.
  *
- * Return: %TRUE if data was successfully received and stored
+ * Returns: %TRUE if data was successfully received and stored
  *     in @data, otherwise %FALSE.
  */
 public bool propertyGet(Window window, GdkAtom property, GdkAtom type, gulong offset, gulong length, int pdelete, out GdkAtom actualPropertyType, out int actualFormat, out char[] data)
@@ -203,7 +203,7 @@ public bool propertyGet(Window window, GdkAtom property, GdkAtom type, gulong of
  *         of strings or %NULL. The list should be freed with
  *         g_strfreev().
  *
- * Return: the number of strings in the resulting list
+ * Returns: the number of strings in the resulting list
  *
  * Since: 2.2
  */
@@ -227,7 +227,7 @@ public int textPropertyToUtf8ListForDisplay(Display display, GdkAtom encoding, i
  * Params:
  *     str = a UTF-8 string
  *
- * Return: the newly-allocated string, or %NULL if the
+ * Returns: the newly-allocated string, or %NULL if the
  *     conversion failed. (It should not fail for any properly
  *     formed UTF-8 string unless system limits like memory or
  *     file descriptors are exceeded.)

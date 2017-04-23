@@ -122,7 +122,7 @@ public class DBusServer : ObjectG, InitableIF
 	 *     observer = A #GDBusAuthObserver or %NULL.
 	 *     cancellable = A #GCancellable or %NULL.
 	 *
-	 * Return: A #GDBusServer or %NULL if @error is set. Free with
+	 * Returns: A #GDBusServer or %NULL if @error is set. Free with
 	 *     g_object_unref().
 	 *
 	 * Since: 2.26
@@ -154,7 +154,7 @@ public class DBusServer : ObjectG, InitableIF
 	 * [D-Bus address](https://dbus.freedesktop.org/doc/dbus-specification.html#addresses)
 	 * string that can be used by clients to connect to @server.
 	 *
-	 * Return: A D-Bus address string. Do not free, the string is owned
+	 * Returns: A D-Bus address string. Do not free, the string is owned
 	 *     by @server.
 	 *
 	 * Since: 2.26
@@ -167,7 +167,7 @@ public class DBusServer : ObjectG, InitableIF
 	/**
 	 * Gets the flags for @server.
 	 *
-	 * Return: A set of flags from the #GDBusServerFlags enumeration.
+	 * Returns: A set of flags from the #GDBusServerFlags enumeration.
 	 *
 	 * Since: 2.26
 	 */
@@ -179,7 +179,7 @@ public class DBusServer : ObjectG, InitableIF
 	/**
 	 * Gets the GUID for @server.
 	 *
-	 * Return: A D-Bus GUID. Do not free this string, it is owned by @server.
+	 * Returns: A D-Bus GUID. Do not free this string, it is owned by @server.
 	 *
 	 * Since: 2.26
 	 */
@@ -191,7 +191,7 @@ public class DBusServer : ObjectG, InitableIF
 	/**
 	 * Gets whether @server is active.
 	 *
-	 * Return: %TRUE if server is active, %FALSE otherwise.
+	 * Returns: %TRUE if server is active, %FALSE otherwise.
 	 *
 	 * Since: 2.26
 	 */
@@ -272,7 +272,7 @@ public class DBusServer : ObjectG, InitableIF
 	 * Params:
 	 *     connection = A #GDBusConnection for the new connection.
 	 *
-	 * Return: %TRUE to claim @connection, %FALSE to let other handlers
+	 * Returns: %TRUE to claim @connection, %FALSE to let other handlers
 	 *     run.
 	 *
 	 * Since: 2.26

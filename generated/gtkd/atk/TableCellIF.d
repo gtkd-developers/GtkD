@@ -49,7 +49,7 @@ public interface TableCellIF{
 	/**
 	 * Returns the column headers as an array of cell accessibles.
 	 *
-	 * Return: a GPtrArray of AtkObjects
+	 * Returns: a GPtrArray of AtkObjects
 	 *     representing the column header cells.
 	 *
 	 * Since: 2.12
@@ -59,7 +59,7 @@ public interface TableCellIF{
 	/**
 	 * Returns the number of columns occupied by this cell accessible.
 	 *
-	 * Return: a gint representing the number of columns occupied by this cell,
+	 * Returns: a gint representing the number of columns occupied by this cell,
 	 *     or 0 if the cell does not implement this method.
 	 *
 	 * Since: 2.12
@@ -73,7 +73,7 @@ public interface TableCellIF{
 	 *     row = the row of the given cell.
 	 *     column = the column of the given cell.
 	 *
-	 * Return: TRUE if successful; FALSE otherwise.
+	 * Returns: TRUE if successful; FALSE otherwise.
 	 *
 	 * Since: 2.12
 	 */
@@ -92,7 +92,7 @@ public interface TableCellIF{
 	 *     rowSpan = the number of rows occupied by this cell.
 	 *     columnSpan = the number of columns occupied by this cell.
 	 *
-	 * Return: TRUE if successful; FALSE otherwise.
+	 * Returns: TRUE if successful; FALSE otherwise.
 	 *
 	 * Since: 2.12
 	 */
@@ -101,7 +101,7 @@ public interface TableCellIF{
 	/**
 	 * Returns the row headers as an array of cell accessibles.
 	 *
-	 * Return: a GPtrArray of AtkObjects
+	 * Returns: a GPtrArray of AtkObjects
 	 *     representing the row header cells.
 	 *
 	 * Since: 2.12
@@ -111,7 +111,7 @@ public interface TableCellIF{
 	/**
 	 * Returns the number of rows occupied by this cell accessible.
 	 *
-	 * Return: a gint representing the number of rows occupied by this cell,
+	 * Returns: a gint representing the number of rows occupied by this cell,
 	 *     or 0 if the cell does not implement this method.
 	 *
 	 * Since: 2.12
@@ -121,7 +121,7 @@ public interface TableCellIF{
 	/**
 	 * Returns a reference to the accessible of the containing table.
 	 *
-	 * Return: the atk object for the containing table.
+	 * Returns: the atk object for the containing table.
 	 *
 	 * Since: 2.12
 	 */

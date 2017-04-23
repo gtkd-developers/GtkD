@@ -83,7 +83,7 @@ public class OptionGroup
 	 *         the error hook and to callbacks of %G_OPTION_ARG_CALLBACK options, or %NULL
 	 *     destroy = a function that will be called to free @user_data, or %NULL
 	 *
-	 * Return: a newly created option group. It should be added
+	 * Returns: a newly created option group. It should be added
 	 *     to a #GOptionContext or freed with g_option_group_unref().
 	 *
 	 * Since: 2.6
@@ -131,7 +131,7 @@ public class OptionGroup
 	/**
 	 * Increments the reference count of @group by one.
 	 *
-	 * Return: a #GoptionGroup
+	 * Returns: a #GoptionGroup
 	 *
 	 * Since: 2.44
 	 */

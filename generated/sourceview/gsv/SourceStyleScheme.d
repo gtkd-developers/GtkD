@@ -72,7 +72,7 @@ public class SourceStyleScheme : ObjectG
 	}
 
 	/**
-	 * Return: a
+	 * Returns: a
 	 *     %NULL-terminated array containing the @scheme authors or %NULL if
 	 *     no author is specified by the style scheme.
 	 *
@@ -84,7 +84,7 @@ public class SourceStyleScheme : ObjectG
 	}
 
 	/**
-	 * Return: @scheme description (if defined), or %NULL.
+	 * Returns: @scheme description (if defined), or %NULL.
 	 *
 	 * Since: 2.0
 	 */
@@ -94,7 +94,7 @@ public class SourceStyleScheme : ObjectG
 	}
 
 	/**
-	 * Return: @scheme file name if the scheme was created
+	 * Returns: @scheme file name if the scheme was created
 	 *     parsing a style scheme file or %NULL in the other cases.
 	 *
 	 * Since: 2.0
@@ -105,7 +105,7 @@ public class SourceStyleScheme : ObjectG
 	}
 
 	/**
-	 * Return: @scheme id.
+	 * Returns: @scheme id.
 	 *
 	 * Since: 2.0
 	 */
@@ -115,7 +115,7 @@ public class SourceStyleScheme : ObjectG
 	}
 
 	/**
-	 * Return: @scheme name.
+	 * Returns: @scheme name.
 	 *
 	 * Since: 2.0
 	 */
@@ -128,7 +128,7 @@ public class SourceStyleScheme : ObjectG
 	 *
 	 * Params:
 	 *     styleId = id of the style to retrieve.
-	 * Return: style which corresponds to @style_id in
+	 * Returns: style which corresponds to @style_id in
 	 *     the @scheme, or %NULL when no style with this name found.  It is owned by
 	 *     @scheme and may not be unref'ed.
 	 *

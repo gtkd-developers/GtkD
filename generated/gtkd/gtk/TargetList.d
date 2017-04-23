@@ -91,7 +91,7 @@ public class TargetList
 	 *         of #GtkTargetEntry
 	 *     ntargets = number of entries in @targets.
 	 *
-	 * Return: the new #GtkTargetList.
+	 * Returns: the new #GtkTargetList.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -215,7 +215,7 @@ public class TargetList
 	 *     info = a pointer to the location to store
 	 *         application info for target, or %NULL
 	 *
-	 * Return: %TRUE if the target was found, otherwise %FALSE
+	 * Returns: %TRUE if the target was found, otherwise %FALSE
 	 */
 	public bool find(GdkAtom target, out uint info)
 	{
@@ -225,7 +225,7 @@ public class TargetList
 	/**
 	 * Increases the reference count of a #GtkTargetList by one.
 	 *
-	 * Return: the passed in #GtkTargetList.
+	 * Returns: the passed in #GtkTargetList.
 	 */
 	public TargetList doref()
 	{
@@ -289,7 +289,7 @@ public class TargetList
 	 * Params:
 	 *     list = a #GtkTargetList
 	 *
-	 * Return: the new table.
+	 * Returns: the new table.
 	 *
 	 * Since: 2.10
 	 */
@@ -323,7 +323,7 @@ public class TargetList
 	 *     writable = whether to accept only targets for which GTK+ knows
 	 *         how to convert a pixbuf into the format
 	 *
-	 * Return: %TRUE if @targets include a suitable target for images,
+	 * Returns: %TRUE if @targets include a suitable target for images,
 	 *     otherwise %FALSE.
 	 *
 	 * Since: 2.10
@@ -342,7 +342,7 @@ public class TargetList
 	 *     nTargets = the length of @targets
 	 *     buffer = a #GtkTextBuffer
 	 *
-	 * Return: %TRUE if @targets include a suitable target for rich text,
+	 * Returns: %TRUE if @targets include a suitable target for rich text,
 	 *     otherwise %FALSE.
 	 *
 	 * Since: 2.10
@@ -360,7 +360,7 @@ public class TargetList
 	 *     targets = an array of #GdkAtoms
 	 *     nTargets = the length of @targets
 	 *
-	 * Return: %TRUE if @targets include a suitable target for text,
+	 * Returns: %TRUE if @targets include a suitable target for text,
 	 *     otherwise %FALSE.
 	 *
 	 * Since: 2.10
@@ -378,7 +378,7 @@ public class TargetList
 	 *     targets = an array of #GdkAtoms
 	 *     nTargets = the length of @targets
 	 *
-	 * Return: %TRUE if @targets include a suitable target for uri lists,
+	 * Returns: %TRUE if @targets include a suitable target for uri lists,
 	 *     otherwise %FALSE.
 	 *
 	 * Since: 2.10

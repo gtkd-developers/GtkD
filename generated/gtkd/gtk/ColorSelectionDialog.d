@@ -101,7 +101,7 @@ public class ColorSelectionDialog : Dialog
 	 * Params:
 	 *     title = a string containing the title text for the dialog.
 	 *
-	 * Return: a #GtkColorSelectionDialog.
+	 * Returns: a #GtkColorSelectionDialog.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

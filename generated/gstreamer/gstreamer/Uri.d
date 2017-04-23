@@ -91,7 +91,7 @@ public class Uri
 	 *         should encode them as "&percnt;26".
 	 *     fragment = The fragment name for the new URI.
 	 *
-	 * Return: A new #GstUri object.
+	 * Returns: A new #GstUri object.
 	 *
 	 * Since: 1.6
 	 *
@@ -116,7 +116,7 @@ public class Uri
 	 * Params:
 	 *     relativePath = Relative path to append to the end of the current path.
 	 *
-	 * Return: %TRUE if the path was appended successfully.
+	 * Returns: %TRUE if the path was appended successfully.
 	 *
 	 * Since: 1.6
 	 */
@@ -131,7 +131,7 @@ public class Uri
 	 * Params:
 	 *     pathSegment = The path segment string to append to the URI path.
 	 *
-	 * Return: %TRUE if the path was appended successfully.
+	 * Returns: %TRUE if the path was appended successfully.
 	 *
 	 * Since: 1.6
 	 */
@@ -147,7 +147,7 @@ public class Uri
 	 * Params:
 	 *     second = Second #GstUri to compare.
 	 *
-	 * Return: %TRUE if the normalized versions of the two URI's would be equal.
+	 * Returns: %TRUE if the normalized versions of the two URI's would be equal.
 	 *
 	 * Since: 1.6
 	 */
@@ -162,7 +162,7 @@ public class Uri
 	 * Params:
 	 *     uri = The URI string to parse.
 	 *
-	 * Return: A new #GstUri object.
+	 * Returns: A new #GstUri object.
 	 *
 	 * Since: 1.6
 	 */
@@ -182,7 +182,7 @@ public class Uri
 	 * Get the fragment name from the URI or %NULL if it doesn't exist.
 	 * If @uri is %NULL then returns %NULL.
 	 *
-	 * Return: The host name from the #GstUri object or %NULL.
+	 * Returns: The host name from the #GstUri object or %NULL.
 	 *
 	 * Since: 1.6
 	 */
@@ -195,7 +195,7 @@ public class Uri
 	 * Get the host name from the URI or %NULL if it doesn't exist.
 	 * If @uri is %NULL then returns %NULL.
 	 *
-	 * Return: The host name from the #GstUri object or %NULL.
+	 * Returns: The host name from the #GstUri object or %NULL.
 	 *
 	 * Since: 1.6
 	 */
@@ -217,7 +217,7 @@ public class Uri
 	 *
 	 * See more about Media Fragments URI 1.0 (W3C) at https://www.w3.org/TR/media-frags/
 	 *
-	 * Return: The fragment hash table
+	 * Returns: The fragment hash table
 	 *     from the URI.
 	 *
 	 * Since: 1.12
@@ -237,7 +237,7 @@ public class Uri
 	/**
 	 * Extract the path string from the URI object.
 	 *
-	 * Return: The path from the URI. Once finished with the
+	 * Returns: The path from the URI. Once finished with the
 	 *     string should be g_free()'d.
 	 *
 	 * Since: 1.6
@@ -253,7 +253,7 @@ public class Uri
 	/**
 	 * Get a list of path segments from the URI.
 	 *
-	 * Return: A #GList of path segment
+	 * Returns: A #GList of path segment
 	 *     strings or %NULL if no path segments are available. Free the list
 	 *     when no longer needed with g_list_free_full(list, g_free).
 	 *
@@ -274,7 +274,7 @@ public class Uri
 	/**
 	 * Extract the path string from the URI object as a percent encoded URI path.
 	 *
-	 * Return: The path from the URI. Once finished with the
+	 * Returns: The path from the URI. Once finished with the
 	 *     string should be g_free()'d.
 	 *
 	 * Since: 1.6
@@ -291,7 +291,7 @@ public class Uri
 	 * Get the port number from the URI or %GST_URI_NO_PORT if it doesn't exist.
 	 * If @uri is %NULL then returns %GST_URI_NO_PORT.
 	 *
-	 * Return: The port number from the #GstUri object or %GST_URI_NO_PORT.
+	 * Returns: The port number from the #GstUri object or %GST_URI_NO_PORT.
 	 *
 	 * Since: 1.6
 	 */
@@ -303,7 +303,7 @@ public class Uri
 	/**
 	 * Get a list of the query keys from the URI.
 	 *
-	 * Return: A list of keys from
+	 * Returns: A list of keys from
 	 *     the URI query. Free the list with g_list_free().
 	 *
 	 * Since: 1.6
@@ -323,7 +323,7 @@ public class Uri
 	/**
 	 * Get a percent encoded URI query string from the @uri.
 	 *
-	 * Return: A percent encoded query string. Use g_free() when
+	 * Returns: A percent encoded query string. Use g_free() when
 	 *     no longer needed.
 	 *
 	 * Since: 1.6
@@ -344,7 +344,7 @@ public class Uri
 	 * no longer required. Modifying this hash table will modify the query in the
 	 * URI.
 	 *
-	 * Return: The query hash table
+	 * Returns: The query hash table
 	 *     from the URI.
 	 *
 	 * Since: 1.6
@@ -371,7 +371,7 @@ public class Uri
 	 * Params:
 	 *     queryKey = The key to lookup.
 	 *
-	 * Return: The value for the given key, or %NULL if not found.
+	 * Returns: The value for the given key, or %NULL if not found.
 	 *
 	 * Since: 1.6
 	 */
@@ -384,7 +384,7 @@ public class Uri
 	 * Get the scheme name from the URI or %NULL if it doesn't exist.
 	 * If @uri is %NULL then returns %NULL.
 	 *
-	 * Return: The scheme from the #GstUri object or %NULL.
+	 * Returns: The scheme from the #GstUri object or %NULL.
 	 */
 	public string getScheme()
 	{
@@ -395,7 +395,7 @@ public class Uri
 	 * Get the userinfo (usually in the form "username:password") from the URI
 	 * or %NULL if it doesn't exist. If @uri is %NULL then returns %NULL.
 	 *
-	 * Return: The userinfo from the #GstUri object or %NULL.
+	 * Returns: The userinfo from the #GstUri object or %NULL.
 	 *
 	 * Since: 1.6
 	 */
@@ -408,7 +408,7 @@ public class Uri
 	 * Tests the @uri to see if it is normalized. A %NULL @uri is considered to be
 	 * normalized.
 	 *
-	 * Return: TRUE if the URI is normalized or is %NULL.
+	 * Returns: TRUE if the URI is normalized or is %NULL.
 	 *
 	 * Since: 1.6
 	 */
@@ -426,7 +426,7 @@ public class Uri
 	 * Modification of a #GstUri should only be done after verifying that it is
 	 * writable.
 	 *
-	 * Return: %TRUE if it is safe to write to the object.
+	 * Returns: %TRUE if it is safe to write to the object.
 	 *
 	 * Since: 1.6
 	 */
@@ -444,7 +444,7 @@ public class Uri
 	 *     refUri = The reference URI to join onto the
 	 *         base URI.
 	 *
-	 * Return: A #GstUri which represents the base with the
+	 * Returns: A #GstUri which represents the base with the
 	 *     reference URI joined on.
 	 *
 	 * Since: 1.6
@@ -469,7 +469,7 @@ public class Uri
 	 * reference to @uri and returns a reference to the new #GstUri.
 	 * If @uri is %NULL then %NULL is returned.
 	 *
-	 * Return: A writable version of @uri.
+	 * Returns: A writable version of @uri.
 	 *
 	 * Since: 1.6
 	 */
@@ -500,7 +500,7 @@ public class Uri
 	 *         should encode them as "&percnt;26".
 	 *     fragment = The fragment name for the new URI.
 	 *
-	 * Return: The new URI joined onto @base.
+	 * Returns: The new URI joined onto @base.
 	 *
 	 * Since: 1.6
 	 */
@@ -524,7 +524,7 @@ public class Uri
 	 * The #GstUri object must be writable. Check with gst_uri_is_writable() or use
 	 * gst_uri_make_writable() first.
 	 *
-	 * Return: TRUE if the URI was modified.
+	 * Returns: TRUE if the URI was modified.
 	 *
 	 * Since: 1.6
 	 */
@@ -539,7 +539,7 @@ public class Uri
 	 * Params:
 	 *     queryKey = The key to lookup.
 	 *
-	 * Return: %TRUE if @query_key exists in the URI query table.
+	 * Returns: %TRUE if @query_key exists in the URI query table.
 	 *
 	 * Since: 1.6
 	 */
@@ -554,7 +554,7 @@ public class Uri
 	 * Params:
 	 *     queryKey = The key to remove.
 	 *
-	 * Return: %TRUE if the key existed in the table and was removed.
+	 * Returns: %TRUE if the key existed in the table and was removed.
 	 *
 	 * Since: 1.6
 	 */
@@ -570,7 +570,7 @@ public class Uri
 	 * Params:
 	 *     fragment = The fragment string to set.
 	 *
-	 * Return: %TRUE if the fragment was set/unset successfully.
+	 * Returns: %TRUE if the fragment was set/unset successfully.
 	 *
 	 * Since: 1.6
 	 */
@@ -585,7 +585,7 @@ public class Uri
 	 * Params:
 	 *     host = The new host string to set or %NULL to unset.
 	 *
-	 * Return: %TRUE if the host was set/unset successfully.
+	 * Returns: %TRUE if the host was set/unset successfully.
 	 *
 	 * Since: 1.6
 	 */
@@ -601,7 +601,7 @@ public class Uri
 	 *     path = The new path to set with path segments separated by '/', or use %NULL
 	 *         to unset the path.
 	 *
-	 * Return: %TRUE if the path was set successfully.
+	 * Returns: %TRUE if the path was set successfully.
 	 *
 	 * Since: 1.6
 	 */
@@ -617,7 +617,7 @@ public class Uri
 	 *     pathSegments = The new
 	 *         path list to set.
 	 *
-	 * Return: %TRUE if the path segments were set successfully.
+	 * Returns: %TRUE if the path segments were set successfully.
 	 *
 	 * Since: 1.6
 	 */
@@ -633,7 +633,7 @@ public class Uri
 	 *     path = The new percent encoded path to set with path segments separated by
 	 *         '/', or use %NULL to unset the path.
 	 *
-	 * Return: %TRUE if the path was set successfully.
+	 * Returns: %TRUE if the path was set successfully.
 	 *
 	 * Since: 1.6
 	 */
@@ -648,7 +648,7 @@ public class Uri
 	 * Params:
 	 *     port = The new port number to set or %GST_URI_NO_PORT to unset.
 	 *
-	 * Return: %TRUE if the port number was set/unset successfully.
+	 * Returns: %TRUE if the port number was set/unset successfully.
 	 *
 	 * Since: 1.6
 	 */
@@ -664,7 +664,7 @@ public class Uri
 	 *     query = The new percent encoded query string to use to populate the query
 	 *         table, or use %NULL to unset the query table.
 	 *
-	 * Return: %TRUE if the query table was set successfully.
+	 * Returns: %TRUE if the query table was set successfully.
 	 *
 	 * Since: 1.6
 	 */
@@ -682,7 +682,7 @@ public class Uri
 	 *     queryTable = The new
 	 *         query table to use.
 	 *
-	 * Return: %TRUE if the new table was sucessfully used for the query table.
+	 * Returns: %TRUE if the new table was sucessfully used for the query table.
 	 *
 	 * Since: 1.6
 	 */
@@ -700,7 +700,7 @@ public class Uri
 	 *     queryKey = The key for the query entry.
 	 *     queryValue = The value for the key.
 	 *
-	 * Return: %TRUE if the query table was sucessfully updated.
+	 * Returns: %TRUE if the query table was sucessfully updated.
 	 *
 	 * Since: 1.6
 	 */
@@ -715,7 +715,7 @@ public class Uri
 	 * Params:
 	 *     scheme = The new scheme to set or %NULL to unset the scheme.
 	 *
-	 * Return: %TRUE if the scheme was set/unset successfully.
+	 * Returns: %TRUE if the scheme was set/unset successfully.
 	 *
 	 * Since: 1.6
 	 */
@@ -730,7 +730,7 @@ public class Uri
 	 * Params:
 	 *     userinfo = The new user-information string to set or %NULL to unset.
 	 *
-	 * Return: %TRUE if the user information was set/unset successfully.
+	 * Returns: %TRUE if the user information was set/unset successfully.
 	 *
 	 * Since: 1.6
 	 */
@@ -746,7 +746,7 @@ public class Uri
 	 * The caller should g_free() the string once they are finished with it.
 	 * The string is put together as described in RFC 3986.
 	 *
-	 * Return: The string version of the URI.
+	 * Returns: The string version of the URI.
 	 *
 	 * Since: 1.6
 	 */
@@ -767,7 +767,7 @@ public class Uri
 	 *     protocol = Protocol for URI
 	 *     location = Location for URI
 	 *
-	 * Return: a new string for this URI. Returns %NULL if the
+	 * Returns: a new string for this URI. Returns %NULL if the
 	 *     given URI protocol is not valid, or the given location is %NULL.
 	 */
 	public static string construct(string protocol, string location)
@@ -785,7 +785,7 @@ public class Uri
 	 * Params:
 	 *     uri = The URI string to parse.
 	 *
-	 * Return: A new #GstUri object, or NULL.
+	 * Returns: A new #GstUri object, or NULL.
 	 *
 	 * Since: 1.6
 	 */
@@ -812,7 +812,7 @@ public class Uri
 	 * Params:
 	 *     uri = A URI string
 	 *
-	 * Return: the location for this URI. Returns %NULL if the
+	 * Returns: the location for this URI. Returns %NULL if the
 	 *     URI isn't valid. If the URI does not contain a location, an empty
 	 *     string is returned.
 	 */
@@ -831,7 +831,7 @@ public class Uri
 	 * Params:
 	 *     uri = A URI string
 	 *
-	 * Return: The protocol for this URI.
+	 * Returns: The protocol for this URI.
 	 */
 	public static string getProtocol(string uri)
 	{
@@ -848,7 +848,7 @@ public class Uri
 	 *     uri = a URI string
 	 *     protocol = a protocol string (e.g. "http")
 	 *
-	 * Return: %TRUE if the protocol matches.
+	 * Returns: %TRUE if the protocol matches.
 	 */
 	public static bool hasProtocol(string uri, string protocol)
 	{
@@ -862,7 +862,7 @@ public class Uri
 	 * Params:
 	 *     uri = A URI string
 	 *
-	 * Return: %TRUE if the string is a valid URI
+	 * Returns: %TRUE if the string is a valid URI
 	 */
 	public static bool isValid(string uri)
 	{
@@ -877,7 +877,7 @@ public class Uri
 	 *     baseUri = The percent-encoded base URI.
 	 *     refUri = The percent-encoded reference URI to join to the @base_uri.
 	 *
-	 * Return: A string representing the percent-encoded join of
+	 * Returns: A string representing the percent-encoded join of
 	 *     the two URIs.
 	 *
 	 * Since: 1.6
@@ -899,7 +899,7 @@ public class Uri
 	 *     type = Whether to check for a source or a sink
 	 *     protocol = Protocol that should be checked for (e.g. "http" or "smb")
 	 *
-	 * Return: %TRUE
+	 * Returns: %TRUE
 	 */
 	public static bool protocolIsSupported(GstURIType type, string protocol)
 	{
@@ -914,7 +914,7 @@ public class Uri
 	 * Params:
 	 *     protocol = A string
 	 *
-	 * Return: %TRUE if the string is a valid protocol identifier, %FALSE otherwise.
+	 * Returns: %TRUE if the string is a valid protocol identifier, %FALSE otherwise.
 	 */
 	public static bool protocolIsValid(string protocol)
 	{
@@ -932,7 +932,7 @@ public class Uri
 	 * Params:
 	 *     filename = absolute or relative file name path
 	 *
-	 * Return: newly-allocated URI string, or NULL on error. The caller must
+	 * Returns: newly-allocated URI string, or NULL on error. The caller must
 	 *     free the URI string with g_free() when no longer needed.
 	 *
 	 * Throws: GException on failure.

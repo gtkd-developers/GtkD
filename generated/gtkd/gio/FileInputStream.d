@@ -102,7 +102,7 @@ public class FileInputStream : InputStream, SeekableIF
 	 *     attributes = a file attribute query string.
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Return: a #GFileInfo, or %NULL on error.
+	 * Returns: a #GFileInfo, or %NULL on error.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -156,7 +156,7 @@ public class FileInputStream : InputStream, SeekableIF
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *
-	 * Return: #GFileInfo.
+	 * Returns: #GFileInfo.
 	 *
 	 * Throws: GException on failure.
 	 */

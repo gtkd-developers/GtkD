@@ -628,7 +628,7 @@ public class Message
 	 *     structure = the structure for the message. The message
 	 *         will take ownership of the structure.
 	 *
-	 * Return: The new application message.
+	 * Returns: The new application message.
 	 *
 	 *     MT safe.
 	 *
@@ -657,7 +657,7 @@ public class Message
 	 *     src = The object originating the message.
 	 *     runningTime = the desired running_time
 	 *
-	 * Return: The new async_done message.
+	 * Returns: The new async_done message.
 	 *
 	 *     MT safe.
 	 *
@@ -693,7 +693,7 @@ public class Message
 	 *     src = The object originating the message.
 	 *     percent = The buffering percent
 	 *
-	 * Return: The new buffering message.
+	 * Returns: The new buffering message.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -721,7 +721,7 @@ public class Message
 	 *     src = The object originating the message.
 	 *     clock = the clock that was lost
 	 *
-	 * Return: The new clock lost message.
+	 * Returns: The new clock lost message.
 	 *
 	 *     MT safe.
 	 *
@@ -752,7 +752,7 @@ public class Message
 	 *     clock = the clock it provides
 	 *     ready = %TRUE if the sender can provide a clock
 	 *
-	 * Return: the new provide clock message.
+	 * Returns: the new provide clock message.
 	 *
 	 *     MT safe.
 	 *
@@ -781,7 +781,7 @@ public class Message
 	 *     structure = the structure for the
 	 *         message. The message will take ownership of the structure.
 	 *
-	 * Return: The new message.
+	 * Returns: The new message.
 	 *
 	 *     MT safe.
 	 *
@@ -806,7 +806,7 @@ public class Message
 	 *     src = The object originating the message.
 	 *     context = the context
 	 *
-	 * Return: The new have-context message.
+	 * Returns: The new have-context message.
 	 *
 	 *     MT safe.
 	 *
@@ -833,7 +833,7 @@ public class Message
 	 *     src = The object originating the message.
 	 *     contextType = The context type that is needed
 	 *
-	 * Return: The new need-context message.
+	 * Returns: The new need-context message.
 	 *
 	 *     MT safe.
 	 *
@@ -866,7 +866,7 @@ public class Message
 	 *     code = a progress code
 	 *     text = free, user visible text describing the progress
 	 *
-	 * Return: The new qos message.
+	 * Returns: The new qos message.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -888,7 +888,7 @@ public class Message
 	 *     src = The #GstObject whose property changed (may or may not be a #GstElement)
 	 *     propertyName = name of the property that changed
 	 *     val = new property value, or %NULL
-	 * Return: a newly allocated #GstMessage
+	 * Returns: a newly allocated #GstMessage
 	 *
 	 * Since: 1.10
 	 *
@@ -929,7 +929,7 @@ public class Message
 	 *     timestamp = the timestamps of the buffer that generated the message
 	 *     duration = the duration of the buffer that generated the message
 	 *
-	 * Return: The new qos message.
+	 * Returns: The new qos message.
 	 *
 	 *     MT safe.
 	 *
@@ -980,7 +980,7 @@ public class Message
 	 *     tagList = tag list for the new entry
 	 *     entryStruct = structure for the new entry
 	 *
-	 * Return: a newly allocated #GstMessage
+	 * Returns: a newly allocated #GstMessage
 	 *
 	 * Since: 1.10
 	 *
@@ -1007,7 +1007,7 @@ public class Message
 	 *     src = The object originating the message.
 	 *     state = The new requested state
 	 *
-	 * Return: the new request state message.
+	 * Returns: the new request state message.
 	 *
 	 *     MT safe.
 	 *
@@ -1035,7 +1035,7 @@ public class Message
 	 *     newstate = the new (current) state
 	 *     pending = the pending (target) state
 	 *
-	 * Return: the new state change message.
+	 * Returns: the new state change message.
 	 *
 	 *     MT safe.
 	 *
@@ -1070,7 +1070,7 @@ public class Message
 	 *     duration = the duration of the data
 	 *     eos = the step caused EOS
 	 *
-	 * Return: the new step_done message.
+	 * Returns: the new step_done message.
 	 *
 	 *     MT safe.
 	 *
@@ -1109,7 +1109,7 @@ public class Message
 	 *     flush = is this an flushing step
 	 *     intermediate = is this an intermediate step
 	 *
-	 * Return: The new step_start message.
+	 * Returns: The new step_start message.
 	 *
 	 *     MT safe.
 	 *
@@ -1135,7 +1135,7 @@ public class Message
 	 * Params:
 	 *     src = The object originating the message.
 	 *
-	 * Return: The new stream_start message.
+	 * Returns: The new stream_start message.
 	 *
 	 *     MT safe.
 	 *
@@ -1162,7 +1162,7 @@ public class Message
 	 *     type = The stream status type.
 	 *     owner = the owner element of @src.
 	 *
-	 * Return: the new stream status message.
+	 * Returns: the new stream status message.
 	 *
 	 *     MT safe.
 	 *
@@ -1193,7 +1193,7 @@ public class Message
 	 *     owner = The owner element of @src.
 	 *     busy = Whether the structure change is busy.
 	 *
-	 * Return: the new structure change message.
+	 * Returns: the new structure change message.
 	 *
 	 *     MT safe.
 	 *
@@ -1219,7 +1219,7 @@ public class Message
 	 *     src = The object originating the message.
 	 *     tagList = the tag list for the message.
 	 *
-	 * Return: the new tag message.
+	 * Returns: the new tag message.
 	 *
 	 *     MT safe.
 	 *
@@ -1246,7 +1246,7 @@ public class Message
 	 *     toc = #GstToc structure for the message.
 	 *     updated = whether TOC was updated or not.
 	 *
-	 * Return: a new TOC message.
+	 * Returns: a new TOC message.
 	 *
 	 *     MT safe.
 	 *
@@ -1283,7 +1283,7 @@ public class Message
 	}
 
 	/**
-	 * Return: the number of entries stored in the message
+	 * Returns: the number of entries stored in the message
 	 *
 	 * Since: 1.10
 	 */
@@ -1306,7 +1306,7 @@ public class Message
 	 * two events or messages will never have the same sequence number unless
 	 * that correspondence was made explicitly.
 	 *
-	 * Return: The message's sequence number.
+	 * Returns: The message's sequence number.
 	 *
 	 *     MT safe.
 	 */
@@ -1318,7 +1318,7 @@ public class Message
 	/**
 	 * Extracts the object managing the streaming thread from @message.
 	 *
-	 * Return: a GValue containing the object that manages the streaming thread.
+	 * Returns: a GValue containing the object that manages the streaming thread.
 	 *     This object is usually of type GstTask but other types can be added in the
 	 *     future. The object remains valid as long as @message is valid.
 	 */
@@ -1337,7 +1337,7 @@ public class Message
 	/**
 	 * Access the structure of the message.
 	 *
-	 * Return: The structure of the message. The structure is
+	 * Returns: The structure of the message. The structure is
 	 *     still owned by the message, which means that you should not free it and
 	 *     that the pointer becomes invalid when you free the message.
 	 *
@@ -1362,7 +1362,7 @@ public class Message
 	 * Params:
 	 *     name = name to check
 	 *
-	 * Return: %TRUE if @name matches the name of the message structure.
+	 * Returns: %TRUE if @name matches the name of the message structure.
 	 */
 	public bool hasName(string name)
 	{
@@ -1457,7 +1457,7 @@ public class Message
 	 * Params:
 	 *     contextType = the context type, or %NULL
 	 *
-	 * Return: a #gboolean indicating if the parsing succeeded.
+	 * Returns: a #gboolean indicating if the parsing succeeded.
 	 *
 	 * Since: 1.2
 	 */
@@ -1580,7 +1580,7 @@ public class Message
 	 *     groupId = Result location for the group id or
 	 *         %NULL
 	 *
-	 * Return: %TRUE if the message had a group id set, %FALSE otherwise
+	 * Returns: %TRUE if the message had a group id set, %FALSE otherwise
 	 *
 	 *     MT safe.
 	 *
@@ -2258,7 +2258,7 @@ public class Message
 	/**
 	 * Returns the number of streams contained in the @message.
 	 *
-	 * Return: The number of streams contained within.
+	 * Returns: The number of streams contained within.
 	 *
 	 * Since: 1.10
 	 */
@@ -2273,7 +2273,7 @@ public class Message
 	 * Params:
 	 *     idx = Index of the stream to retrieve
 	 *
-	 * Return: A #GstStream
+	 * Returns: A #GstStream
 	 *
 	 * Since: 1.10
 	 */
@@ -2295,7 +2295,7 @@ public class Message
 	 * Params:
 	 *     type = the message type
 	 *
-	 * Return: a reference to the static name of the message.
+	 * Returns: a reference to the static name of the message.
 	 */
 	public static string typeGetName(GstMessageType type)
 	{
@@ -2308,7 +2308,7 @@ public class Message
 	 * Params:
 	 *     type = the message type
 	 *
-	 * Return: the quark associated with the message type
+	 * Returns: the quark associated with the message type
 	 */
 	public static GQuark typeToQuark(GstMessageType type)
 	{

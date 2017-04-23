@@ -77,7 +77,7 @@ public class Misc : ObjectG
 	 *
 	 * Deprecated: Since 2.12.
 	 *
-	 * Return: The singleton instance of AtkMisc for this application.
+	 * Returns: The singleton instance of AtkMisc for this application.
 	 *
 	 * Since: 1.13
 	 */

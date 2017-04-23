@@ -101,7 +101,7 @@ public class UnixInputStream : InputStream, FileDescriptorBasedIF, PollableInput
 	 *     fd = a UNIX file descriptor
 	 *     closeFd = %TRUE to close the file descriptor when done
 	 *
-	 * Return: a new #GUnixInputStream
+	 * Returns: a new #GUnixInputStream
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -121,7 +121,7 @@ public class UnixInputStream : InputStream, FileDescriptorBasedIF, PollableInput
 	 * Returns whether the file descriptor of @stream will be
 	 * closed when the stream is closed.
 	 *
-	 * Return: %TRUE if the file descriptor is closed when done
+	 * Returns: %TRUE if the file descriptor is closed when done
 	 *
 	 * Since: 2.20
 	 */
@@ -133,7 +133,7 @@ public class UnixInputStream : InputStream, FileDescriptorBasedIF, PollableInput
 	/**
 	 * Return the UNIX file descriptor that the stream reads from.
 	 *
-	 * Return: The file descriptor of @stream
+	 * Returns: The file descriptor of @stream
 	 *
 	 * Since: 2.20
 	 */

@@ -182,7 +182,7 @@ public class Alignment : Bin
 	 *     yscale = the amount that the child widget expands vertically to fill up
 	 *         unused space, from 0 to 1. The values are similar to @xscale.
 	 *
-	 * Return: the new #GtkAlignment
+	 * Returns: the new #GtkAlignment
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

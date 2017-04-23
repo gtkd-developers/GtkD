@@ -94,7 +94,7 @@ public class InetAddressMask : ObjectG, InitableIF
 	 *     addr = a #GInetAddress
 	 *     length = number of bits of @addr to use
 	 *
-	 * Return: a new #GInetAddressMask, or %NULL on error
+	 * Returns: a new #GInetAddressMask, or %NULL on error
 	 *
 	 * Since: 2.32
 	 *
@@ -129,7 +129,7 @@ public class InetAddressMask : ObjectG, InitableIF
 	 * Params:
 	 *     maskString = an IP address or address/length string
 	 *
-	 * Return: a new #GInetAddressMask corresponding to @string, or %NULL
+	 * Returns: a new #GInetAddressMask corresponding to @string, or %NULL
 	 *     on error.
 	 *
 	 * Since: 2.32
@@ -162,7 +162,7 @@ public class InetAddressMask : ObjectG, InitableIF
 	 * Params:
 	 *     mask2 = another #GInetAddressMask
 	 *
-	 * Return: whether @mask and @mask2 are the same mask
+	 * Returns: whether @mask and @mask2 are the same mask
 	 *
 	 * Since: 2.32
 	 */
@@ -174,7 +174,7 @@ public class InetAddressMask : ObjectG, InitableIF
 	/**
 	 * Gets @mask's base address
 	 *
-	 * Return: @mask's base address
+	 * Returns: @mask's base address
 	 *
 	 * Since: 2.32
 	 */
@@ -193,7 +193,7 @@ public class InetAddressMask : ObjectG, InitableIF
 	/**
 	 * Gets the #GSocketFamily of @mask's address
 	 *
-	 * Return: the #GSocketFamily of @mask's address
+	 * Returns: the #GSocketFamily of @mask's address
 	 *
 	 * Since: 2.32
 	 */
@@ -205,7 +205,7 @@ public class InetAddressMask : ObjectG, InitableIF
 	/**
 	 * Gets @mask's length
 	 *
-	 * Return: @mask's length
+	 * Returns: @mask's length
 	 *
 	 * Since: 2.32
 	 */
@@ -220,7 +220,7 @@ public class InetAddressMask : ObjectG, InitableIF
 	 * Params:
 	 *     address = a #GInetAddress
 	 *
-	 * Return: whether @address falls within the range described by
+	 * Returns: whether @address falls within the range described by
 	 *     @mask.
 	 *
 	 * Since: 2.32
@@ -233,7 +233,7 @@ public class InetAddressMask : ObjectG, InitableIF
 	/**
 	 * Converts @mask back to its corresponding string form.
 	 *
-	 * Return: a string corresponding to @mask.
+	 * Returns: a string corresponding to @mask.
 	 *
 	 * Since: 2.32
 	 */

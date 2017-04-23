@@ -118,7 +118,7 @@ public class Settings : ObjectG, StyleProviderIF
 	 * Gets the #GtkSettings object for the default GDK screen, creating
 	 * it if necessary. See gtk_settings_get_for_screen().
 	 *
-	 * Return: a #GtkSettings object. If there is
+	 * Returns: a #GtkSettings object. If there is
 	 *     no default screen, then returns %NULL.
 	 */
 	public static Settings getDefault()
@@ -139,7 +139,7 @@ public class Settings : ObjectG, StyleProviderIF
 	 * Params:
 	 *     screen = a #GdkScreen.
 	 *
-	 * Return: a #GtkSettings object.
+	 * Returns: a #GtkSettings object.
 	 *
 	 * Since: 2.2
 	 */

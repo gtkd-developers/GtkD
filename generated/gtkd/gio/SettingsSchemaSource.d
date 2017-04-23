@@ -194,7 +194,7 @@ public class SettingsSchemaSource
 	 *     schemaId = a schema ID
 	 *     recursive = %TRUE if the lookup should be recursive
 	 *
-	 * Return: a new #GSettingsSchema
+	 * Returns: a new #GSettingsSchema
 	 *
 	 * Since: 2.32
 	 */
@@ -213,7 +213,7 @@ public class SettingsSchemaSource
 	/**
 	 * Increase the reference count of @source, returning a new reference.
 	 *
-	 * Return: a new reference to @source
+	 * Returns: a new reference to @source
 	 *
 	 * Since: 2.32
 	 */
@@ -254,7 +254,7 @@ public class SettingsSchemaSource
 	 * lookups performed against the default source should probably be done
 	 * recursively.
 	 *
-	 * Return: the default schema source
+	 * Returns: the default schema source
 	 *
 	 * Since: 2.32
 	 */

@@ -153,7 +153,7 @@ public class Clock : ObjectGst
 	 *     id1 = A #GstClockID
 	 *     id2 = A #GstClockID to compare with
 	 *
-	 * Return: negative value if a < b; zero if a = b; positive value if a > b
+	 * Returns: negative value if a < b; zero if a = b; positive value if a > b
 	 *
 	 *     MT safe.
 	 */
@@ -168,7 +168,7 @@ public class Clock : ObjectGst
 	 * Params:
 	 *     id = The #GstClockID to query
 	 *
-	 * Return: the time of the given clock id.
+	 * Returns: the time of the given clock id.
 	 *
 	 *     MT safe.
 	 */
@@ -183,7 +183,7 @@ public class Clock : ObjectGst
 	 * Params:
 	 *     id = The #GstClockID to ref
 	 *
-	 * Return: The same #GstClockID with increased refcount.
+	 * Returns: The same #GstClockID with increased refcount.
 	 *
 	 *     MT safe.
 	 */
@@ -242,7 +242,7 @@ public class Clock : ObjectGst
 	 *     jitter = a pointer that will contain the jitter,
 	 *         can be %NULL.
 	 *
-	 * Return: the result of the blocking wait. #GST_CLOCK_EARLY will be returned
+	 * Returns: the result of the blocking wait. #GST_CLOCK_EARLY will be returned
 	 *     if the current clock time is past the time of @id, #GST_CLOCK_OK if
 	 *     @id was scheduled in time. #GST_CLOCK_UNSCHEDULED if @id was
 	 *     unscheduled with gst_clock_id_unschedule().
@@ -270,7 +270,7 @@ public class Clock : ObjectGst
 	 *     userData = User data passed in the callback
 	 *     destroyData = #GDestroyNotify for user_data
 	 *
-	 * Return: the result of the non blocking wait.
+	 * Returns: the result of the non blocking wait.
 	 *
 	 *     MT safe.
 	 */
@@ -296,7 +296,7 @@ public class Clock : ObjectGst
 	 *     master = a time on the master
 	 *     rSquared = a pointer to hold the result
 	 *
-	 * Return: %TRUE if enough observations were added to run the
+	 * Returns: %TRUE if enough observations were added to run the
 	 *     regression algorithm.
 	 *
 	 *     MT safe.
@@ -341,7 +341,7 @@ public class Clock : ObjectGst
 	 * Params:
 	 *     internal = a clock time
 	 *
-	 * Return: the converted time of the clock.
+	 * Returns: the converted time of the clock.
 	 */
 	public GstClockTime adjustUnlocked(GstClockTime internal)
 	{
@@ -365,7 +365,7 @@ public class Clock : ObjectGst
 	 *         internal time
 	 *     cdenom = the denominator of the rate of the clock
 	 *
-	 * Return: the converted time of the clock.
+	 * Returns: the converted time of the clock.
 	 *
 	 * Since: 1.6
 	 */
@@ -398,7 +398,7 @@ public class Clock : ObjectGst
 	 * Gets the current internal time of the given clock. The time is returned
 	 * unadjusted for the offset and the rate.
 	 *
-	 * Return: the internal time of the clock. Or GST_CLOCK_TIME_NONE when
+	 * Returns: the internal time of the clock. Or GST_CLOCK_TIME_NONE when
 	 *     given invalid input.
 	 *
 	 *     MT safe.
@@ -412,7 +412,7 @@ public class Clock : ObjectGst
 	 * Get the master clock that @clock is slaved to or %NULL when the clock is
 	 * not slaved to any master clock.
 	 *
-	 * Return: a master #GstClock or %NULL
+	 * Returns: a master #GstClock or %NULL
 	 *     when this clock is not slaved to a master clock. Unref after
 	 *     usage.
 	 *
@@ -434,7 +434,7 @@ public class Clock : ObjectGst
 	 * Get the accuracy of the clock. The accuracy of the clock is the granularity
 	 * of the values returned by gst_clock_get_time().
 	 *
-	 * Return: the resolution of the clock in units of #GstClockTime.
+	 * Returns: the resolution of the clock in units of #GstClockTime.
 	 *
 	 *     MT safe.
 	 */
@@ -448,7 +448,7 @@ public class Clock : ObjectGst
 	 * monotonically increasing and adjusted according to the current
 	 * offset and rate.
 	 *
-	 * Return: the time of the clock. Or GST_CLOCK_TIME_NONE when
+	 * Returns: the time of the clock. Or GST_CLOCK_TIME_NONE when
 	 *     given invalid input.
 	 *
 	 *     MT safe.
@@ -461,7 +461,7 @@ public class Clock : ObjectGst
 	/**
 	 * Get the amount of time that master and slave clocks are sampled.
 	 *
-	 * Return: the interval between samples.
+	 * Returns: the interval between samples.
 	 */
 	public GstClockTime getTimeout()
 	{
@@ -473,7 +473,7 @@ public class Clock : ObjectGst
 	 *
 	 * This returns if GST_CLOCK_FLAG_NEEDS_STARTUP_SYNC is not set on the clock.
 	 *
-	 * Return: %TRUE if the clock is currently synced
+	 * Returns: %TRUE if the clock is currently synced
 	 *
 	 * Since: 1.6
 	 */
@@ -494,7 +494,7 @@ public class Clock : ObjectGst
 	 *     startTime = the requested start time
 	 *     interval = the requested interval
 	 *
-	 * Return: a #GstClockID that can be used to request the
+	 * Returns: a #GstClockID that can be used to request the
 	 *     time notification.
 	 *
 	 *     MT safe.
@@ -514,7 +514,7 @@ public class Clock : ObjectGst
 	 * Params:
 	 *     time = the requested time
 	 *
-	 * Return: a #GstClockID that can be used to request the
+	 * Returns: a #GstClockID that can be used to request the
 	 *     time notification.
 	 *
 	 *     MT safe.
@@ -533,7 +533,7 @@ public class Clock : ObjectGst
 	 *     startTime = the requested start time
 	 *     interval = the requested interval
 	 *
-	 * Return: %TRUE if the GstClockID could be reinitialized to the provided
+	 * Returns: %TRUE if the GstClockID could be reinitialized to the provided
 	 *     @time, else %FALSE.
 	 */
 	public bool periodicIdReinit(GstClockID id, GstClockTime startTime, GstClockTime interval)
@@ -593,7 +593,7 @@ public class Clock : ObjectGst
 	 * Params:
 	 *     master = a master #GstClock
 	 *
-	 * Return: %TRUE if the clock is capable of being slaved to a master clock.
+	 * Returns: %TRUE if the clock is capable of being slaved to a master clock.
 	 *     Trying to set a master on a clock without the
 	 *     #GST_CLOCK_FLAG_CAN_SET_MASTER flag will make this function return %FALSE.
 	 *
@@ -614,7 +614,7 @@ public class Clock : ObjectGst
 	 * Params:
 	 *     resolution = The resolution to set
 	 *
-	 * Return: the new resolution of the clock.
+	 * Returns: the new resolution of the clock.
 	 */
 	public GstClockTime setResolution(GstClockTime resolution)
 	{
@@ -658,7 +658,7 @@ public class Clock : ObjectGst
 	 *     id = a #GstClockID
 	 *     time = The requested time.
 	 *
-	 * Return: %TRUE if the GstClockID could be reinitialized to the provided
+	 * Returns: %TRUE if the GstClockID could be reinitialized to the provided
 	 *     @time, else %FALSE.
 	 */
 	public bool singleShotIdReinit(GstClockID id, GstClockTime time)
@@ -677,7 +677,7 @@ public class Clock : ObjectGst
 	 * Params:
 	 *     external = an external clock time
 	 *
-	 * Return: the internal time of the clock corresponding to @external.
+	 * Returns: the internal time of the clock corresponding to @external.
 	 */
 	public GstClockTime unadjustUnlocked(GstClockTime external)
 	{
@@ -700,7 +700,7 @@ public class Clock : ObjectGst
 	 *         internal time
 	 *     cdenom = the denominator of the rate of the clock
 	 *
-	 * Return: the converted time of the clock.
+	 * Returns: the converted time of the clock.
 	 *
 	 * Since: 1.8
 	 */
@@ -722,7 +722,7 @@ public class Clock : ObjectGst
 	 * Params:
 	 *     timeout = timeout for waiting or %GST_CLOCK_TIME_NONE
 	 *
-	 * Return: %TRUE if waiting was successful, or %FALSE on timeout
+	 * Returns: %TRUE if waiting was successful, or %FALSE on timeout
 	 *
 	 * Since: 1.6
 	 */

@@ -78,7 +78,7 @@ public class FilterInputStream : InputStream
 	/**
 	 * Gets the base stream for the filter stream.
 	 *
-	 * Return: a #GInputStream.
+	 * Returns: a #GInputStream.
 	 */
 	public InputStream getBaseStream()
 	{
@@ -96,7 +96,7 @@ public class FilterInputStream : InputStream
 	 * Returns whether the base stream will be closed when @stream is
 	 * closed.
 	 *
-	 * Return: %TRUE if the base stream will be closed.
+	 * Returns: %TRUE if the base stream will be closed.
 	 */
 	public bool getCloseBaseStream()
 	{

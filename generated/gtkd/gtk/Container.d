@@ -427,7 +427,7 @@ public class Container : Widget
 	 * children can be added, e.g. for a #GtkPaned which already has two
 	 * children.
 	 *
-	 * Return: a #GType.
+	 * Returns: a #GType.
 	 */
 	public GType childType()
 	{
@@ -477,7 +477,7 @@ public class Container : Widget
 	 * Retrieves the border width of the container. See
 	 * gtk_container_set_border_width().
 	 *
-	 * Return: the current border width
+	 * Returns: the current border width
 	 */
 	public uint getBorderWidth()
 	{
@@ -488,7 +488,7 @@ public class Container : Widget
 	 * Returns the container’s non-internal children. See
 	 * gtk_container_forall() for details on what constitutes an "internal" child.
 	 *
-	 * Return: a newly-allocated list of the container’s non-internal children.
+	 * Returns: a newly-allocated list of the container’s non-internal children.
 	 */
 	public ListG getChildren()
 	{
@@ -517,7 +517,7 @@ public class Container : Widget
 	 *         no additional reference count is added to the
 	 *         individual widgets in the focus chain.
 	 *
-	 * Return: %TRUE if the focus chain of the container
+	 * Returns: %TRUE if the focus chain of the container
 	 *     has been set explicitly.
 	 */
 	public bool getFocusChain(out ListG focusableWidgets)
@@ -536,7 +536,7 @@ public class Container : Widget
 	 * currently focused widget. That can be obtained by calling
 	 * gtk_window_get_focus().
 	 *
-	 * Return: The child widget which will receive the
+	 * Returns: The child widget which will receive the
 	 *     focus inside @container when the @container is focused,
 	 *     or %NULL if none is set.
 	 *
@@ -558,7 +558,7 @@ public class Container : Widget
 	 * Retrieves the horizontal focus adjustment for the container. See
 	 * gtk_container_set_focus_hadjustment ().
 	 *
-	 * Return: the horizontal focus adjustment, or %NULL if
+	 * Returns: the horizontal focus adjustment, or %NULL if
 	 *     none has been set.
 	 */
 	public Adjustment getFocusHadjustment()
@@ -577,7 +577,7 @@ public class Container : Widget
 	 * Retrieves the vertical focus adjustment for the container. See
 	 * gtk_container_set_focus_vadjustment().
 	 *
-	 * Return: the vertical focus adjustment, or
+	 * Returns: the vertical focus adjustment, or
 	 *     %NULL if none has been set.
 	 */
 	public Adjustment getFocusVadjustment()
@@ -599,7 +599,7 @@ public class Container : Widget
 	 * Params:
 	 *     child = a child of @container
 	 *
-	 * Return: A newly created #GtkWidgetPath
+	 * Returns: A newly created #GtkWidgetPath
 	 */
 	public WidgetPath getPathForChild(Widget child)
 	{
@@ -621,7 +621,7 @@ public class Container : Widget
 	 * anymore since frame clocks and might introduce obscure bugs if
 	 * used.
 	 *
-	 * Return: the current resize mode
+	 * Returns: the current resize mode
 	 */
 	public GtkResizeMode getResizeMode()
 	{

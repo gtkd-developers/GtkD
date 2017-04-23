@@ -420,7 +420,7 @@ public class VideoOverlay
 	 *     width = the width of the render area inside the window
 	 *     height = the height of the render area inside the window
 	 *
-	 * Return: %FALSE if not supported by the sink.
+	 * Returns: %FALSE if not supported by the sink.
 	 */
 	public bool setRenderRectangle(int x, int y, int width, int height)
 	{

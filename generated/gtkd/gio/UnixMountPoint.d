@@ -70,7 +70,7 @@ public class UnixMountPoint
 	 * Params:
 	 *     mount2 = a #GUnixMount.
 	 *
-	 * Return: 1, 0 or -1 if @mount1 is greater than, equal to,
+	 * Returns: 1, 0 or -1 if @mount1 is greater than, equal to,
 	 *     or less than @mount2, respectively.
 	 */
 	public int compare(UnixMountPoint mount2)
@@ -89,7 +89,7 @@ public class UnixMountPoint
 	/**
 	 * Gets the device path for a unix mount point.
 	 *
-	 * Return: a string containing the device path.
+	 * Returns: a string containing the device path.
 	 */
 	public string getDevicePath()
 	{
@@ -99,7 +99,7 @@ public class UnixMountPoint
 	/**
 	 * Gets the file system type for the mount point.
 	 *
-	 * Return: a string containing the file system type.
+	 * Returns: a string containing the file system type.
 	 */
 	public string getFsType()
 	{
@@ -109,7 +109,7 @@ public class UnixMountPoint
 	/**
 	 * Gets the mount path for a unix mount point.
 	 *
-	 * Return: a string containing the mount path.
+	 * Returns: a string containing the mount path.
 	 */
 	public string getMountPath()
 	{
@@ -119,7 +119,7 @@ public class UnixMountPoint
 	/**
 	 * Gets the options for the mount point.
 	 *
-	 * Return: a string containing the options.
+	 * Returns: a string containing the options.
 	 *
 	 * Since: 2.32
 	 */
@@ -131,7 +131,7 @@ public class UnixMountPoint
 	/**
 	 * Guesses whether a Unix mount point can be ejected.
 	 *
-	 * Return: %TRUE if @mount_point is deemed to be ejectable.
+	 * Returns: %TRUE if @mount_point is deemed to be ejectable.
 	 */
 	public bool guessCanEject()
 	{
@@ -141,7 +141,7 @@ public class UnixMountPoint
 	/**
 	 * Guesses the icon of a Unix mount point.
 	 *
-	 * Return: a #GIcon
+	 * Returns: a #GIcon
 	 */
 	public IconIF guessIcon()
 	{
@@ -159,7 +159,7 @@ public class UnixMountPoint
 	 * Guesses the name of a Unix mount point.
 	 * The result is a translated string.
 	 *
-	 * Return: A newly allocated string that must
+	 * Returns: A newly allocated string that must
 	 *     be freed with g_free()
 	 */
 	public string guessName()
@@ -173,7 +173,7 @@ public class UnixMountPoint
 	/**
 	 * Guesses the symbolic icon of a Unix mount point.
 	 *
-	 * Return: a #GIcon
+	 * Returns: a #GIcon
 	 *
 	 * Since: 2.34
 	 */
@@ -192,7 +192,7 @@ public class UnixMountPoint
 	/**
 	 * Checks if a unix mount point is a loopback device.
 	 *
-	 * Return: %TRUE if the mount point is a loopback. %FALSE otherwise.
+	 * Returns: %TRUE if the mount point is a loopback. %FALSE otherwise.
 	 */
 	public bool isLoopback()
 	{
@@ -202,7 +202,7 @@ public class UnixMountPoint
 	/**
 	 * Checks if a unix mount point is read only.
 	 *
-	 * Return: %TRUE if a mount point is read only.
+	 * Returns: %TRUE if a mount point is read only.
 	 */
 	public bool isReadonly()
 	{
@@ -212,7 +212,7 @@ public class UnixMountPoint
 	/**
 	 * Checks if a unix mount point is mountable by the user.
 	 *
-	 * Return: %TRUE if the mount point is user mountable.
+	 * Returns: %TRUE if the mount point is user mountable.
 	 */
 	public bool isUserMountable()
 	{

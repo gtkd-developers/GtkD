@@ -1602,14 +1602,14 @@ struct PangoFontClass
 	 *
 	 * Params:
 	 *     font = a #PangoFont
-	 * Return: a newly-allocated #PangoFontDescription object.
+	 * Returns: a newly-allocated #PangoFontDescription object.
 	 */
 	extern(C) PangoFontDescription* function(PangoFont* font) describe;
 	/**
 	 *
 	 * Params:
 	 *     font = a #PangoFont
-	 * Return: a newly-allocated #PangoCoverage
+	 * Returns: a newly-allocated #PangoCoverage
 	 *     object.
 	 */
 	extern(C) PangoCoverage* function(PangoFont* font, PangoLanguage* lang) getCoverage;
@@ -1618,7 +1618,7 @@ struct PangoFontClass
 	 * Params:
 	 *     font = a #PangoFont
 	 *     ch = a Unicode character.
-	 * Return: the best matching shaper.
+	 * Returns: the best matching shaper.
 	 */
 	extern(C) PangoEngineShape* function(PangoFont* font, PangoLanguage* lang, uint ch) findShaper;
 	/** */
@@ -1629,7 +1629,7 @@ struct PangoFontClass
 	 *     font = a #PangoFont
 	 *     language = language tag used to determine which script to get the metrics
 	 *         for, or %NULL to indicate to get the metrics for the entire font.
-	 * Return: a #PangoFontMetrics object. The caller must call pango_font_metrics_unref()
+	 * Returns: a #PangoFontMetrics object. The caller must call pango_font_metrics_unref()
 	 *     when finished using the object.
 	 */
 	extern(C) PangoFontMetrics* function(PangoFont* font, PangoLanguage* language) getMetrics;
@@ -1637,7 +1637,7 @@ struct PangoFontClass
 	 *
 	 * Params:
 	 *     font = a #PangoFont, or %NULL
-	 * Return: the #PangoFontMap for the
+	 * Returns: the #PangoFontMap for the
 	 *     font, or %NULL if @font is %NULL.
 	 */
 	extern(C) PangoFontMap* function(PangoFont* font) getFontMap;
@@ -1663,7 +1663,7 @@ struct PangoFontFaceClass
 	 *
 	 * Params:
 	 *     face = a #PangoFontFace.
-	 * Return: the face name for the face. This string is
+	 * Returns: the face name for the face. This string is
 	 *     owned by the face object and must not be modified or freed.
 	 */
 	extern(C) const(char)* function(PangoFontFace* face) getFaceName;
@@ -1671,7 +1671,7 @@ struct PangoFontFaceClass
 	 *
 	 * Params:
 	 *     face = a #PangoFontFace
-	 * Return: a newly-created #PangoFontDescription structure
+	 * Returns: a newly-created #PangoFontDescription structure
 	 *     holding the description of the face. Use pango_font_description_free()
 	 *     to free the result.
 	 */
@@ -1682,7 +1682,7 @@ struct PangoFontFaceClass
 	 *
 	 * Params:
 	 *     face = a #PangoFontFace
-	 * Return: whether @face is synthesized.
+	 * Returns: whether @face is synthesized.
 	 */
 	extern(C) int function(PangoFontFace* face) isSynthesized;
 	/** */
@@ -1705,7 +1705,7 @@ struct PangoFontFamilyClass
 	 *
 	 * Params:
 	 *     family = a #PangoFontFamily
-	 * Return: the name of the family. This string is owned
+	 * Returns: the name of the family. This string is owned
 	 *     by the family object and must not be modified or freed.
 	 */
 	extern(C) const(char)* function(PangoFontFamily* family) getName;
@@ -1713,7 +1713,7 @@ struct PangoFontFamilyClass
 	 *
 	 * Params:
 	 *     family = a #PangoFontFamily
-	 * Return: %TRUE if the family is monospace.
+	 * Returns: %TRUE if the family is monospace.
 	 */
 	extern(C) int function(PangoFontFamily* family) isMonospace;
 	/** */
@@ -1745,7 +1745,7 @@ struct PangoFontMapClass
 	 *     fontmap = a #PangoFontMap
 	 *     context = the #PangoContext the font will be used with
 	 *     desc = a #PangoFontDescription describing the font to load
-	 * Return: the newly allocated #PangoFont
+	 * Returns: the newly allocated #PangoFont
 	 *     loaded, or %NULL if no font matched.
 	 */
 	extern(C) PangoFont* function(PangoFontMap* fontmap, PangoContext* context, PangoFontDescription* desc) loadFont;
@@ -1758,7 +1758,7 @@ struct PangoFontMapClass
 	 *     context = the #PangoContext the font will be used with
 	 *     desc = a #PangoFontDescription describing the font to load
 	 *     language = a #PangoLanguage the fonts will be used for
-	 * Return: the newly allocated
+	 * Returns: the newly allocated
 	 *     #PangoFontset loaded, or %NULL if no font matched.
 	 */
 	extern(C) PangoFontset* function(PangoFontMap* fontmap, PangoContext* context, PangoFontDescription* desc, PangoLanguage* language) loadFontset;
@@ -1771,7 +1771,7 @@ struct PangoFontMapClass
 	 *
 	 * Params:
 	 *     fontmap = a #PangoFontMap
-	 * Return: The current serial number of @fontmap.
+	 * Returns: The current serial number of @fontmap.
 	 */
 	extern(C) uint function(PangoFontMap* fontmap) getSerial;
 	/** */
@@ -1815,7 +1815,7 @@ struct PangoFontsetClass
 	 * Params:
 	 *     fontset = a #PangoFontset
 	 *     wc = a Unicode character
-	 * Return: a #PangoFont. The caller must call
+	 * Returns: a #PangoFont. The caller must call
 	 *     g_object_unref when finished with the font.
 	 */
 	extern(C) PangoFont* function(PangoFontset* fontset, uint wc) getFont;
@@ -1823,7 +1823,7 @@ struct PangoFontsetClass
 	 *
 	 * Params:
 	 *     fontset = a #PangoFontset
-	 * Return: a #PangoFontMetrics object. The caller must call pango_font_metrics_unref()
+	 * Returns: a #PangoFontMetrics object. The caller must call pango_font_metrics_unref()
 	 *     when finished using the object.
 	 */
 	extern(C) PangoFontMetrics* function(PangoFontset* fontset) getMetrics;
@@ -2176,7 +2176,7 @@ struct PangoCairoFcFontMap
  * Params:
  *     userData = user data to copy
  *
- * Return: new copy of @user_data.
+ * Returns: new copy of @user_data.
  */
 public alias extern(C) void* function(void* userData) PangoAttrDataCopyFunc;
 
@@ -2187,7 +2187,7 @@ public alias extern(C) void* function(void* userData) PangoAttrDataCopyFunc;
  *     attribute = a Pango attribute
  *     userData = user data passed to the function
  *
- * Return: %TRUE if the attribute should be selected for
+ * Returns: %TRUE if the attribute should be selected for
  *     filtering, %FALSE otherwise.
  */
 public alias extern(C) int function(PangoAttribute* attribute, void* userData) PangoAttrFilterFunc;
@@ -2201,7 +2201,7 @@ public alias extern(C) int function(PangoAttribute* attribute, void* userData) P
  *     font = a font from @fontset
  *     userData = callback data
  *
- * Return: if %TRUE, stop iteration and return immediately.
+ * Returns: if %TRUE, stop iteration and return immediately.
  *
  * Since: 1.4
  */

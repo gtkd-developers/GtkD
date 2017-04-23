@@ -4640,7 +4640,7 @@ public alias extern(C) void function(GPid pid, int status, void* userData) GChil
  *     b = a value to compare with
  *     userData = user data
  *
- * Return: negative value if @a < @b; zero if @a = @b; positive
+ * Returns: negative value if @a < @b; zero if @a = @b; positive
  *     value if @a > @b
  */
 public alias extern(C) int function(void* a, void* b, void* userData) GCompareDataFunc;
@@ -4655,7 +4655,7 @@ public alias extern(C) int function(void* a, void* b, void* userData) GCompareDa
  *     a = a value
  *     b = a value to compare with
  *
- * Return: negative value if @a < @b; zero if @a = @b; positive
+ * Returns: negative value if @a < @b; zero if @a = @b; positive
  *     value if @a > @b
  */
 public alias extern(C) int function(void* a, void* b) GCompareFunc;
@@ -4668,7 +4668,7 @@ public alias extern(C) int function(void* a, void* b) GCompareFunc;
  *     src = A pointer to the data which should be copied
  *     data = Additional data
  *
- * Return: A pointer to the copy
+ * Returns: A pointer to the copy
  *
  * Since: 2.4
  */
@@ -4706,7 +4706,7 @@ public alias extern(C) void function(void* data) GDestroyNotify;
  *     data = the data to duplicate
  *     userData = user data that was specified in g_datalist_id_dup_data()
  *
- * Return: a duplicate of data
+ * Returns: a duplicate of data
  */
 public alias extern(C) void* function(void* data, void* userData) GDuplicateFunc;
 
@@ -4719,7 +4719,7 @@ public alias extern(C) void* function(void* data, void* userData) GDuplicateFunc
  *     a = a value
  *     b = a value to compare with
  *
- * Return: %TRUE if @a = @b; %FALSE otherwise
+ * Returns: %TRUE if @a = @b; %FALSE otherwise
  */
 public alias extern(C) int function(void* a, void* b) GEqualFunc;
 
@@ -4767,7 +4767,7 @@ public alias extern(C) void function(void* key, void* value, void* userData) GHF
  *     value = the value associated with the key
  *     userData = user data passed to g_hash_table_remove()
  *
- * Return: %TRUE if the key/value pair should be removed from the
+ * Returns: %TRUE if the key/value pair should be removed from the
  *     #GHashTable
  */
 public alias extern(C) int function(void* key, void* value, void* userData) GHRFunc;
@@ -4807,7 +4807,7 @@ public alias extern(C) int function(void* key, void* value, void* userData) GHRF
  * Params:
  *     key = a key
  *
- * Return: the hash value corresponding to the key
+ * Returns: the hash value corresponding to the key
  */
 public alias extern(C) uint function(void* key) GHashFunc;
 
@@ -4818,7 +4818,7 @@ public alias extern(C) uint function(void* key) GHashFunc;
  * Params:
  *     data = the data field of the #GHook is passed to the hook function here
  *
- * Return: %FALSE if the #GHook should be destroyed
+ * Returns: %FALSE if the #GHook should be destroyed
  */
 public alias extern(C) int function(void* data) GHookCheckFunc;
 
@@ -4829,7 +4829,7 @@ public alias extern(C) int function(void* data) GHookCheckFunc;
  *     hook = a #GHook
  *     marshalData = user data
  *
- * Return: %FALSE if @hook should be destroyed
+ * Returns: %FALSE if @hook should be destroyed
  */
 public alias extern(C) int function(GHook* hook, void* marshalData) GHookCheckMarshaller;
 
@@ -4841,7 +4841,7 @@ public alias extern(C) int function(GHook* hook, void* marshalData) GHookCheckMa
  *     newHook = the #GHook being inserted
  *     sibling = the #GHook to compare with @new_hook
  *
- * Return: a value <= 0 if @new_hook should be before @sibling
+ * Returns: a value <= 0 if @new_hook should be before @sibling
  */
 public alias extern(C) int function(GHook* newHook, GHook* sibling) GHookCompareFunc;
 
@@ -4862,7 +4862,7 @@ public alias extern(C) void function(GHookList* hookList, GHook* hook) GHookFina
  *     hook = a #GHook
  *     data = user data passed to g_hook_find_func()
  *
- * Return: %TRUE if the required #GHook has been found
+ * Returns: %TRUE if the required #GHook has been found
  */
 public alias extern(C) int function(GHook* hook, void* data) GHookFindFunc;
 
@@ -4894,7 +4894,7 @@ public alias extern(C) void function(GHook* hook, void* marshalData) GHookMarsha
  *     condition = the condition which has been satisfied
  *     data = user data set in g_io_add_watch() or g_io_add_watch_full()
  *
- * Return: the function should return %FALSE if the event source
+ * Returns: the function should return %FALSE if the event source
  *     should be removed
  */
 public alias extern(C) int function(GIOChannel* source, GIOCondition condition, void* data) GIOFunc;
@@ -4939,7 +4939,7 @@ public alias extern(C) void function(const(char)* logDomain, GLogLevelFlags logL
  *     nFields = number of @fields
  *     userData = user data passed to g_log_set_writer_func()
  *
- * Return: %G_LOG_WRITER_HANDLED if the log entry was handled successfully;
+ * Returns: %G_LOG_WRITER_HANDLED if the log entry was handled successfully;
  *     %G_LOG_WRITER_UNHANDLED otherwise
  *
  * Since: 2.50
@@ -4967,7 +4967,7 @@ public alias extern(C) void function(GNode* node, void* data) GNodeForeachFunc;
  *     node = a #GNode.
  *     data = user data passed to g_node_traverse().
  *
- * Return: %TRUE to stop the traversal.
+ * Returns: %TRUE to stop the traversal.
  */
 public alias extern(C) int function(GNode* node, void* data) GNodeTraverseFunc;
 
@@ -4983,7 +4983,7 @@ public alias extern(C) int function(GNode* node, void* data) GNodeTraverseFunc;
  *     data = User data added to the #GOptionGroup containing the option when it
  *         was created with g_option_group_new()
  *
- * Return: %TRUE if the option was successfully parsed, %FALSE if an error
+ * Returns: %TRUE if the option was successfully parsed, %FALSE if an error
  *     occurred, in which case @error should be set with g_set_error()
  *
  * Throws: GException on failure.
@@ -5012,7 +5012,7 @@ public alias extern(C) void function(GOptionContext* context, GOptionGroup* grou
  *     data = User data added to the #GOptionGroup containing the option when it
  *         was created with g_option_group_new()
  *
- * Return: %TRUE if the function completed successfully, %FALSE if an error
+ * Returns: %TRUE if the function completed successfully, %FALSE if an error
  *     occurred, in which case @error should be set with g_set_error()
  *
  * Throws: GException on failure.
@@ -5029,7 +5029,7 @@ public alias extern(C) int function(GOptionContext* context, GOptionGroup* group
  *     timeout = the maximum time to wait for an event of the file descriptors.
  *         A negative value indicates an infinite timeout.
  *
- * Return: the number of #GPollFD elements which have events or errors
+ * Returns: the number of #GPollFD elements which have events or errors
  *     reported, or -1 if an error occurred.
  */
 public alias extern(C) int function(GPollFD* ufds, uint nfsd, int timeout) GPollFunc;
@@ -5056,7 +5056,7 @@ public alias extern(C) void function(const(char)* str) GPrintFunc;
  *     result = a #GString containing the new string
  *     userData = user data passed to g_regex_replace_eval()
  *
- * Return: %FALSE to continue the replacement process, %TRUE to stop it
+ * Returns: %FALSE to continue the replacement process, %TRUE to stop it
  *
  * Since: 2.14
  */
@@ -5083,7 +5083,7 @@ public alias extern(C) void function(GScanner* scanner, char* message, int error
  *     b = a #GSequenceIter
  *     data = user data
  *
- * Return: zero if the iterators are equal, a negative value if @a
+ * Returns: zero if the iterators are equal, a negative value if @a
  *     comes before @b, and a positive value if @b comes before @a.
  */
 public alias extern(C) int function(GSequenceIter* a, GSequenceIter* b, void* data) GSequenceIterCompareFunc;
@@ -5102,7 +5102,7 @@ public alias extern(C) void function() GSourceDummyMarshal;
  *     userData = data passed to the function, set when the source was
  *         created with one of the above functions
  *
- * Return: %FALSE if the source should be removed. #G_SOURCE_CONTINUE and
+ * Returns: %FALSE if the source should be removed. #G_SOURCE_CONTINUE and
  *     #G_SOURCE_REMOVE are more memorable names for the return value.
  */
 public alias extern(C) int function(void* userData) GSourceFunc;
@@ -5191,7 +5191,7 @@ public alias extern(C) void function() GTestFunc;
  *     message = the message to process
  *     userData = user data, set in g_test_log_set_fatal_handler()
  *
- * Return: %TRUE if the program should abort, %FALSE otherwise
+ * Returns: %TRUE if the program should abort, %FALSE otherwise
  *
  * Since: 2.22
  */
@@ -5204,7 +5204,7 @@ public alias extern(C) int function(const(char)* logDomain, GLogLevelFlags logLe
  * Params:
  *     data = data passed to the thread
  *
- * Return: the return value of the thread
+ * Returns: the return value of the thread
  */
 public alias extern(C) void* function(void* data) GThreadFunc;
 
@@ -5217,7 +5217,7 @@ public alias extern(C) void* function(void* data) GThreadFunc;
  *     data = user data specified when installing the function, e.g.
  *         in g_option_group_set_translate_func()
  *
- * Return: a translation of the string for the current locale.
+ * Returns: a translation of the string for the current locale.
  *     The returned string is owned by GLib and must not be freed.
  */
 public alias extern(C) const(char)* function(const(char)* str, void* data) GTranslateFunc;
@@ -5233,7 +5233,7 @@ public alias extern(C) const(char)* function(const(char)* str, void* data) GTran
  *     value = the value corresponding to the key
  *     data = user data passed to g_tree_traverse()
  *
- * Return: %TRUE to stop the traversal
+ * Returns: %TRUE to stop the traversal
  */
 public alias extern(C) int function(void* key, void* value, void* data) GTraverseFunc;
 
@@ -5246,7 +5246,7 @@ public alias extern(C) int function(void* key, void* value, void* data) GTravers
  *     condition = the IO conditions reported on @fd
  *     userData = user data passed to g_unix_fd_add()
  *
- * Return: %FALSE if the source should be removed
+ * Returns: %FALSE if the source should be removed
  */
 public alias extern(C) int function(int fd, GIOCondition condition, void* userData) GUnixFDSourceFunc;
 
@@ -5267,7 +5267,7 @@ public alias extern(C) void function() GVoidFunc;
  * Params:
  *     modul = the #GModule corresponding to the module which has just been loaded
  *
- * Return: %NULL on success, or a string describing the initialization error
+ * Returns: %NULL on success, or a string describing the initialization error
  */
 public alias extern(C) const(char)* function(GModule* modul) GModuleCheckInit;
 

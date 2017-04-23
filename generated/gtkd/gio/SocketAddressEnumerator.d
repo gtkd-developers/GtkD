@@ -95,7 +95,7 @@ public class SocketAddressEnumerator : ObjectG
 	 * Params:
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Return: a #GSocketAddress (owned by the caller), or %NULL on
+	 * Returns: a #GSocketAddress (owned by the caller), or %NULL on
 	 *     error (in which case *@error will be set) or if there are no
 	 *     more addresses.
 	 *
@@ -145,7 +145,7 @@ public class SocketAddressEnumerator : ObjectG
 	 * Params:
 	 *     result = a #GAsyncResult
 	 *
-	 * Return: a #GSocketAddress (owned by the caller), or %NULL on
+	 * Returns: a #GSocketAddress (owned by the caller), or %NULL on
 	 *     error (in which case *@error will be set) or if there are no
 	 *     more addresses.
 	 *

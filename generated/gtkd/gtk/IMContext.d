@@ -164,7 +164,7 @@ public class IMContext : ObjectG
 	 *         a negative value means start before the cursor.
 	 *     nChars = number of characters to delete.
 	 *
-	 * Return: %TRUE if the signal was handled.
+	 * Returns: %TRUE if the signal was handled.
 	 */
 	public bool deleteSurrounding(int offset, int nChars)
 	{
@@ -179,7 +179,7 @@ public class IMContext : ObjectG
 	 * Params:
 	 *     event = the key event
 	 *
-	 * Return: %TRUE if the input method handled the key event.
+	 * Returns: %TRUE if the input method handled the key event.
 	 */
 	public bool filterKeypress(GdkEventKey* event)
 	{
@@ -256,7 +256,7 @@ public class IMContext : ObjectG
 	 *     cursorIndex = location to store byte index of the insertion
 	 *         cursor within @text.
 	 *
-	 * Return: %TRUE if surrounding text was provided; in this case
+	 * Returns: %TRUE if surrounding text was provided; in this case
 	 *     you must free the result stored in *text.
 	 */
 	public bool getSurrounding(out string text, out int cursorIndex)
@@ -433,7 +433,7 @@ public class IMContext : ObjectG
 	 *         the cursor.
 	 *     nChars = the number of characters to be deleted
 	 *
-	 * Return: %TRUE if the signal was handled.
+	 * Returns: %TRUE if the signal was handled.
 	 */
 	gulong addOnDeleteSurrounding(bool delegate(int, int, IMContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -651,7 +651,7 @@ public class IMContext : ObjectG
 	 * the input method surrounding context by calling the
 	 * gtk_im_context_set_surrounding() method.
 	 *
-	 * Return: %TRUE if the signal was handled.
+	 * Returns: %TRUE if the signal was handled.
 	 */
 	gulong addOnRetrieveSurrounding(bool delegate(IMContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

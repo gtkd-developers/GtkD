@@ -73,7 +73,7 @@ public class DebugCategory
 	 * Returns the color of a debug category used when printing output in this
 	 * category.
 	 *
-	 * Return: the color of the category.
+	 * Returns: the color of the category.
 	 */
 	public uint getColor()
 	{
@@ -83,7 +83,7 @@ public class DebugCategory
 	/**
 	 * Returns the description of a debug category.
 	 *
-	 * Return: the description of the category.
+	 * Returns: the description of the category.
 	 */
 	public string getDescription()
 	{
@@ -93,7 +93,7 @@ public class DebugCategory
 	/**
 	 * Returns the name of a debug category.
 	 *
-	 * Return: the name of the category.
+	 * Returns: the name of the category.
 	 */
 	public string getName()
 	{
@@ -103,7 +103,7 @@ public class DebugCategory
 	/**
 	 * Returns the threshold of a #GstDebugCategory.
 	 *
-	 * Return: the #GstDebugLevel that is used as threshold.
+	 * Returns: the #GstDebugLevel that is used as threshold.
 	 */
 	public GstDebugLevel getThreshold()
 	{

@@ -120,7 +120,7 @@ public class Memory
 	 *     userData = user_data
 	 *     notify = called with @user_data when the memory is freed
 	 *
-	 * Return: a new #GstMemory.
+	 * Returns: a new #GstMemory.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -145,7 +145,7 @@ public class Memory
 	 *     offset = offset to copy from
 	 *     size = size to copy, or -1 to copy to the end of the memory region
 	 *
-	 * Return: a new #GstMemory.
+	 * Returns: a new #GstMemory.
 	 */
 	public Memory copy(ptrdiff_t offset, ptrdiff_t size)
 	{
@@ -166,7 +166,7 @@ public class Memory
 	 *     offset = pointer to offset
 	 *     maxsize = pointer to maxsize
 	 *
-	 * Return: the current sizes of @mem
+	 * Returns: the current sizes of @mem
 	 */
 	public size_t getSizes(size_t* offset, size_t* maxsize)
 	{
@@ -203,7 +203,7 @@ public class Memory
 	 *     mem2 = a #GstMemory
 	 *     offset = a pointer to a result offset
 	 *
-	 * Return: %TRUE if the memory is contiguous and of a common parent.
+	 * Returns: %TRUE if the memory is contiguous and of a common parent.
 	 */
 	public bool isSpan(Memory mem2, size_t* offset)
 	{
@@ -216,7 +216,7 @@ public class Memory
 	 * Params:
 	 *     memType = a memory type
 	 *
-	 * Return: %TRUE if @mem was allocated from an allocator for @mem_type.
+	 * Returns: %TRUE if @mem was allocated from an allocator for @mem_type.
 	 *
 	 * Since: 1.2
 	 */
@@ -237,7 +237,7 @@ public class Memory
 	 *     info = pointer for info
 	 *     flags = mapping flags
 	 *
-	 * Return: a #GstMemory object mapped
+	 * Returns: a #GstMemory object mapped
 	 *     with @flags or %NULL when a mapping is not possible.
 	 */
 	public Memory makeMapped(out GstMapInfo info, GstMapFlags flags)
@@ -270,7 +270,7 @@ public class Memory
 	 *     info = pointer for info
 	 *     flags = mapping flags
 	 *
-	 * Return: %TRUE if the map operation was successful.
+	 * Returns: %TRUE if the map operation was successful.
 	 */
 	public bool map(out GstMapInfo info, GstMapFlags flags)
 	{
@@ -303,7 +303,7 @@ public class Memory
 	 *     offset = offset to share from
 	 *     size = size to share, or -1 to share to the end of the memory region
 	 *
-	 * Return: a new #GstMemory.
+	 * Returns: a new #GstMemory.
 	 */
 	public Memory share(ptrdiff_t offset, ptrdiff_t size)
 	{

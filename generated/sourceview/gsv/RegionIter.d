@@ -71,7 +71,7 @@ public class RegionIter
 	 *     start = iterator to initialize with the subregion start, or %NULL.
 	 *     end = iterator to initialize with the subregion end, or %NULL.
 	 *
-	 * Return: %TRUE if @start and @end have been set successfully (if non-%NULL),
+	 * Returns: %TRUE if @start and @end have been set successfully (if non-%NULL),
 	 *     or %FALSE if @iter is the end iterator or if the region is empty.
 	 *
 	 * Since: 3.22
@@ -90,7 +90,7 @@ public class RegionIter
 	}
 
 	/**
-	 * Return: whether @iter is the end iterator.
+	 * Returns: whether @iter is the end iterator.
 	 *
 	 * Since: 3.22
 	 */
@@ -102,7 +102,7 @@ public class RegionIter
 	/**
 	 * Moves @iter to the next subregion.
 	 *
-	 * Return: %TRUE if @iter moved and is dereferenceable, or %FALSE if @iter has
+	 * Returns: %TRUE if @iter moved and is dereferenceable, or %FALSE if @iter has
 	 *     been set to the end iterator.
 	 *
 	 * Since: 3.22

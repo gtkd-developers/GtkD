@@ -232,7 +232,7 @@ public class Table : Container
 	 * Params:
 	 *     column = a column in the table, 0 indicates the first column
 	 *
-	 * Return: the column spacing
+	 * Returns: the column spacing
 	 */
 	public uint getColSpacing(uint column)
 	{
@@ -246,7 +246,7 @@ public class Table : Container
 	 *
 	 * Deprecated: Use gtk_grid_get_column_spacing() with #GtkGrid.
 	 *
-	 * Return: the default column spacing
+	 * Returns: the default column spacing
 	 */
 	public uint getDefaultColSpacing()
 	{
@@ -260,7 +260,7 @@ public class Table : Container
 	 *
 	 * Deprecated: Use gtk_grid_get_row_spacing() with #GtkGrid.
 	 *
-	 * Return: the default row spacing
+	 * Returns: the default row spacing
 	 */
 	public uint getDefaultRowSpacing()
 	{
@@ -274,7 +274,7 @@ public class Table : Container
 	 * Deprecated: Use gtk_grid_get_row_homogeneous() and
 	 * gtk_grid_get_column_homogeneous() with #GtkGrid.
 	 *
-	 * Return: %TRUE if the cells are all constrained to the same size
+	 * Returns: %TRUE if the cells are all constrained to the same size
 	 */
 	public bool getHomogeneous()
 	{
@@ -291,7 +291,7 @@ public class Table : Container
 	 * Params:
 	 *     row = a row in the table, 0 indicates the first row
 	 *
-	 * Return: the row spacing
+	 * Returns: the row spacing
 	 */
 	public uint getRowSpacing(uint row)
 	{

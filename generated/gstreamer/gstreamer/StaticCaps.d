@@ -74,7 +74,7 @@ public class StaticCaps
 	/**
 	 * Converts a #GstStaticCaps to a #GstCaps.
 	 *
-	 * Return: a pointer to the #GstCaps. Unref after usage.
+	 * Returns: a pointer to the #GstCaps. Unref after usage.
 	 *     Since the core holds an additional ref to the returned caps,
 	 *     use gst_caps_make_writable() on the returned caps to modify it.
 	 */

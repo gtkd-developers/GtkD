@@ -438,7 +438,7 @@ public class Variant
 	 *         #GVariant pointers, the children
 	 *     nChildren = the length of @children
 	 *
-	 * Return: a floating reference to a new #GVariant array
+	 * Returns: a floating reference to a new #GVariant array
 	 *
 	 * Since: 2.24
 	 *
@@ -468,7 +468,7 @@ public class Variant
 	 * Params:
 	 *     value = a #gboolean value
 	 *
-	 * Return: a floating reference to a new boolean #GVariant instance
+	 * Returns: a floating reference to a new boolean #GVariant instance
 	 *
 	 * Since: 2.24
 	 *
@@ -492,7 +492,7 @@ public class Variant
 	 * Params:
 	 *     value = a #guint8 value
 	 *
-	 * Return: a floating reference to a new byte #GVariant instance
+	 * Returns: a floating reference to a new byte #GVariant instance
 	 *
 	 * Since: 2.24
 	 *
@@ -521,7 +521,7 @@ public class Variant
 	 *     key = a basic #GVariant, the key
 	 *     value = a #GVariant, the value
 	 *
-	 * Return: a floating reference to a new dictionary entry #GVariant
+	 * Returns: a floating reference to a new dictionary entry #GVariant
 	 *
 	 * Since: 2.24
 	 *
@@ -545,7 +545,7 @@ public class Variant
 	 * Params:
 	 *     value = a #gdouble floating point value
 	 *
-	 * Return: a floating reference to a new double #GVariant instance
+	 * Returns: a floating reference to a new double #GVariant instance
 	 *
 	 * Since: 2.24
 	 *
@@ -585,7 +585,7 @@ public class Variant
 	 *     nElements = the number of elements
 	 *     elementSize = the size of each element
 	 *
-	 * Return: a floating reference to a new array #GVariant instance
+	 * Returns: a floating reference to a new array #GVariant instance
 	 *
 	 * Since: 2.32
 	 *
@@ -615,7 +615,7 @@ public class Variant
 	 *     bytes = a #GBytes
 	 *     trusted = if the contents of @bytes are trusted
 	 *
-	 * Return: a new #GVariant with a floating reference
+	 * Returns: a new #GVariant with a floating reference
 	 *
 	 * Since: 2.36
 	 *
@@ -667,7 +667,7 @@ public class Variant
 	 *     notify = function to call when @data is no longer needed
 	 *     userData = data for @notify
 	 *
-	 * Return: a new floating #GVariant of type @type
+	 * Returns: a new floating #GVariant of type @type
 	 *
 	 * Since: 2.24
 	 *
@@ -691,7 +691,7 @@ public class Variant
 	 * Params:
 	 *     value = a #gint16 value
 	 *
-	 * Return: a floating reference to a new int16 #GVariant instance
+	 * Returns: a floating reference to a new int16 #GVariant instance
 	 *
 	 * Since: 2.24
 	 *
@@ -715,7 +715,7 @@ public class Variant
 	 * Params:
 	 *     value = a #gint32 value
 	 *
-	 * Return: a floating reference to a new int32 #GVariant instance
+	 * Returns: a floating reference to a new int32 #GVariant instance
 	 *
 	 * Since: 2.24
 	 *
@@ -739,7 +739,7 @@ public class Variant
 	 * Params:
 	 *     value = a #gint64 value
 	 *
-	 * Return: a floating reference to a new int64 #GVariant instance
+	 * Returns: a floating reference to a new int64 #GVariant instance
 	 *
 	 * Since: 2.24
 	 *
@@ -773,7 +773,7 @@ public class Variant
 	 *     childType = the #GVariantType of the child, or %NULL
 	 *     child = the child value, or %NULL
 	 *
-	 * Return: a floating reference to a new #GVariant maybe instance
+	 * Returns: a floating reference to a new #GVariant maybe instance
 	 *
 	 * Since: 2.24
 	 *
@@ -818,7 +818,7 @@ public class Variant
 	 *     format = a text format #GVariant
 	 *     app = a pointer to a #va_list
 	 *
-	 * Return: a new, usually floating, #GVariant
+	 * Returns: a new, usually floating, #GVariant
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -844,7 +844,7 @@ public class Variant
 	 * Params:
 	 *     str = a normal UTF-8 nul-terminated string
 	 *
-	 * Return: a floating reference to a new string #GVariant instance
+	 * Returns: a floating reference to a new string #GVariant instance
 	 *
 	 * Since: 2.24
 	 *
@@ -872,7 +872,7 @@ public class Variant
 	 *     strv = an array of strings
 	 *     length = the length of @strv, or -1
 	 *
-	 * Return: a new floating #GVariant instance
+	 * Returns: a new floating #GVariant instance
 	 *
 	 * Since: 2.24
 	 *
@@ -904,7 +904,7 @@ public class Variant
 	 *     children = the items to make the tuple out of
 	 *     nChildren = the length of @children
 	 *
-	 * Return: a floating reference to a new #GVariant tuple
+	 * Returns: a floating reference to a new #GVariant tuple
 	 *
 	 * Since: 2.24
 	 *
@@ -934,7 +934,7 @@ public class Variant
 	 * Params:
 	 *     value = a #guint16 value
 	 *
-	 * Return: a floating reference to a new uint16 #GVariant instance
+	 * Returns: a floating reference to a new uint16 #GVariant instance
 	 *
 	 * Since: 2.24
 	 *
@@ -958,7 +958,7 @@ public class Variant
 	 * Params:
 	 *     value = a #guint32 value
 	 *
-	 * Return: a floating reference to a new uint32 #GVariant instance
+	 * Returns: a floating reference to a new uint32 #GVariant instance
 	 *
 	 * Since: 2.24
 	 *
@@ -982,7 +982,7 @@ public class Variant
 	 * Params:
 	 *     value = a #guint64 value
 	 *
-	 * Return: a floating reference to a new uint64 #GVariant instance
+	 * Returns: a floating reference to a new uint64 #GVariant instance
 	 *
 	 * Since: 2.24
 	 *
@@ -1044,7 +1044,7 @@ public class Variant
 	 *         or %NULL
 	 *     app = a pointer to a #va_list
 	 *
-	 * Return: a new, usually floating, #GVariant
+	 * Returns: a new, usually floating, #GVariant
 	 *
 	 * Since: 2.24
 	 *
@@ -1072,7 +1072,7 @@ public class Variant
 	 * Params:
 	 *     value = a #GVariant instance
 	 *
-	 * Return: a floating reference to a new variant #GVariant instance
+	 * Returns: a floating reference to a new variant #GVariant instance
 	 *
 	 * Since: 2.24
 	 *
@@ -1103,7 +1103,7 @@ public class Variant
 	 *
 	 * The returned value is always in normal form and is marked as trusted.
 	 *
-	 * Return: the byteswapped form of @value
+	 * Returns: the byteswapped form of @value
 	 *
 	 * Since: 2.24
 	 */
@@ -1139,7 +1139,7 @@ public class Variant
 	 *     formatString = a valid #GVariant format string
 	 *     copyOnly = %TRUE to ensure the format string makes deep copies
 	 *
-	 * Return: %TRUE if @format_string is safe to use
+	 * Returns: %TRUE if @format_string is safe to use
 	 *
 	 * Since: 2.34
 	 */
@@ -1151,7 +1151,7 @@ public class Variant
 	/**
 	 * Classifies @value according to its top-level type.
 	 *
-	 * Return: the #GVariantClass of @value
+	 * Returns: the #GVariantClass of @value
 	 *
 	 * Since: 2.24
 	 */
@@ -1184,7 +1184,7 @@ public class Variant
 	 * Params:
 	 *     two = a #GVariant instance of the same type
 	 *
-	 * Return: negative value if a < b;
+	 * Returns: negative value if a < b;
 	 *     zero if a = b;
 	 *     positive value if a > b.
 	 *
@@ -1201,7 +1201,7 @@ public class Variant
 	 *
 	 * The return value must be freed using g_free().
 	 *
-	 * Return: a newly allocated string
+	 * Returns: a newly allocated string
 	 *
 	 * Since: 2.26
 	 */
@@ -1227,7 +1227,7 @@ public class Variant
 	 * For an empty array, @length will be set to 0 and a pointer to a
 	 * %NULL pointer will be returned.
 	 *
-	 * Return: an array of strings
+	 * Returns: an array of strings
 	 *
 	 * Since: 2.26
 	 */
@@ -1253,7 +1253,7 @@ public class Variant
 	 * For an empty array, @length will be set to 0 and a pointer to a
 	 * %NULL pointer will be returned.
 	 *
-	 * Return: an array of strings
+	 * Returns: an array of strings
 	 *
 	 * Since: 2.30
 	 */
@@ -1278,7 +1278,7 @@ public class Variant
 	 * Params:
 	 *     length = a pointer to a #gsize, to store the length
 	 *
-	 * Return: a newly allocated string, UTF-8 encoded
+	 * Returns: a newly allocated string, UTF-8 encoded
 	 *
 	 * Since: 2.24
 	 */
@@ -1302,7 +1302,7 @@ public class Variant
 	 * For an empty array, @length will be set to 0 and a pointer to a
 	 * %NULL pointer will be returned.
 	 *
-	 * Return: an array of strings
+	 * Returns: an array of strings
 	 *
 	 * Since: 2.24
 	 */
@@ -1325,7 +1325,7 @@ public class Variant
 	 * Params:
 	 *     two = a #GVariant instance
 	 *
-	 * Return: %TRUE if @one and @two are equal
+	 * Returns: %TRUE if @one and @two are equal
 	 *
 	 * Since: 2.24
 	 */
@@ -1340,7 +1340,7 @@ public class Variant
 	 * It is an error to call this function with a @value of any type
 	 * other than %G_VARIANT_TYPE_BOOLEAN.
 	 *
-	 * Return: %TRUE or %FALSE
+	 * Returns: %TRUE or %FALSE
 	 *
 	 * Since: 2.24
 	 */
@@ -1355,7 +1355,7 @@ public class Variant
 	 * It is an error to call this function with a @value of any type
 	 * other than %G_VARIANT_TYPE_BYTE.
 	 *
-	 * Return: a #guchar
+	 * Returns: a #guchar
 	 *
 	 * Since: 2.24
 	 */
@@ -1384,7 +1384,7 @@ public class Variant
 	 *
 	 * The return value remains valid as long as @value exists.
 	 *
-	 * Return: the constant string
+	 * Returns: the constant string
 	 *
 	 * Since: 2.26
 	 */
@@ -1405,7 +1405,7 @@ public class Variant
 	 * For an empty array, @length will be set to 0 and a pointer to a
 	 * %NULL pointer will be returned.
 	 *
-	 * Return: an array of constant strings
+	 * Returns: an array of constant strings
 	 *
 	 * Since: 2.26
 	 */
@@ -1433,7 +1433,7 @@ public class Variant
 	 * Params:
 	 *     index = the index of the child to fetch
 	 *
-	 * Return: the child at the specified index
+	 * Returns: the child at the specified index
 	 *
 	 * Since: 2.24
 	 */
@@ -1476,7 +1476,7 @@ public class Variant
 	 * explicitly (by storing the type and/or endianness in addition to the
 	 * serialised data).
 	 *
-	 * Return: the serialised form of @value, or %NULL
+	 * Returns: the serialised form of @value, or %NULL
 	 *
 	 * Since: 2.24
 	 */
@@ -1491,7 +1491,7 @@ public class Variant
 	 * g_variant_get_data(), except that the returned #GBytes holds
 	 * a reference to the variant data.
 	 *
-	 * Return: A new #GBytes representing the variant data
+	 * Returns: A new #GBytes representing the variant data
 	 *
 	 * Since: 2.36
 	 */
@@ -1513,7 +1513,7 @@ public class Variant
 	 * It is an error to call this function with a @value of any type
 	 * other than %G_VARIANT_TYPE_DOUBLE.
 	 *
-	 * Return: a #gdouble
+	 * Returns: a #gdouble
 	 *
 	 * Since: 2.24
 	 */
@@ -1553,7 +1553,7 @@ public class Variant
 	 * Params:
 	 *     elementSize = the size of each element
 	 *
-	 * Return: a pointer to
+	 * Returns: a pointer to
 	 *     the fixed array
 	 *
 	 * Since: 2.24
@@ -1577,7 +1577,7 @@ public class Variant
 	 * that are sent alongside a D-Bus message.  If you're not interacting
 	 * with D-Bus, you probably don't need them.
 	 *
-	 * Return: a #gint32
+	 * Returns: a #gint32
 	 *
 	 * Since: 2.24
 	 */
@@ -1592,7 +1592,7 @@ public class Variant
 	 * It is an error to call this function with a @value of any type
 	 * other than %G_VARIANT_TYPE_INT16.
 	 *
-	 * Return: a #gint16
+	 * Returns: a #gint16
 	 *
 	 * Since: 2.24
 	 */
@@ -1607,7 +1607,7 @@ public class Variant
 	 * It is an error to call this function with a @value of any type
 	 * other than %G_VARIANT_TYPE_INT32.
 	 *
-	 * Return: a #gint32
+	 * Returns: a #gint32
 	 *
 	 * Since: 2.24
 	 */
@@ -1622,7 +1622,7 @@ public class Variant
 	 * It is an error to call this function with a @value of any type
 	 * other than %G_VARIANT_TYPE_INT64.
 	 *
-	 * Return: a #gint64
+	 * Returns: a #gint64
 	 *
 	 * Since: 2.24
 	 */
@@ -1635,7 +1635,7 @@ public class Variant
 	 * Given a maybe-typed #GVariant instance, extract its value.  If the
 	 * value is Nothing, then this function returns %NULL.
 	 *
-	 * Return: the contents of @value, or %NULL
+	 * Returns: the contents of @value, or %NULL
 	 *
 	 * Since: 2.24
 	 */
@@ -1669,7 +1669,7 @@ public class Variant
 	 * data from untrusted sources and you want to ensure your serialised
 	 * output is definitely in normal form.
 	 *
-	 * Return: a trusted #GVariant
+	 * Returns: a trusted #GVariant
 	 *
 	 * Since: 2.24
 	 */
@@ -1697,7 +1697,7 @@ public class Variant
 	 * For an empty array, @length will be set to 0 and a pointer to a
 	 * %NULL pointer will be returned.
 	 *
-	 * Return: an array of constant strings
+	 * Returns: an array of constant strings
 	 *
 	 * Since: 2.30
 	 */
@@ -1721,7 +1721,7 @@ public class Variant
 	 * operation which is approximately O(n) in the number of values
 	 * involved.
 	 *
-	 * Return: the serialised size of @value
+	 * Returns: the serialised size of @value
 	 *
 	 * Since: 2.24
 	 */
@@ -1750,7 +1750,7 @@ public class Variant
 	 *     length = a pointer to a #gsize,
 	 *         to store the length
 	 *
-	 * Return: the constant string, UTF-8 encoded
+	 * Returns: the constant string, UTF-8 encoded
 	 *
 	 * Since: 2.24
 	 */
@@ -1771,7 +1771,7 @@ public class Variant
 	 * For an empty array, @length will be set to 0 and a pointer to a
 	 * %NULL pointer will be returned.
 	 *
-	 * Return: an array of constant strings
+	 * Returns: an array of constant strings
 	 *
 	 * Since: 2.24
 	 */
@@ -1788,7 +1788,7 @@ public class Variant
 	 * The return value is valid for the lifetime of @value and must not
 	 * be freed.
 	 *
-	 * Return: a #GVariantType
+	 * Returns: a #GVariantType
 	 *
 	 * Since: 2.24
 	 */
@@ -1809,7 +1809,7 @@ public class Variant
 	 * g_variant_type_peek_string(), this string is nul-terminated.  This
 	 * string belongs to #GVariant and must not be freed.
 	 *
-	 * Return: the type string for the type of @value
+	 * Returns: the type string for the type of @value
 	 *
 	 * Since: 2.24
 	 */
@@ -1824,7 +1824,7 @@ public class Variant
 	 * It is an error to call this function with a @value of any type
 	 * other than %G_VARIANT_TYPE_UINT16.
 	 *
-	 * Return: a #guint16
+	 * Returns: a #guint16
 	 *
 	 * Since: 2.24
 	 */
@@ -1839,7 +1839,7 @@ public class Variant
 	 * It is an error to call this function with a @value of any type
 	 * other than %G_VARIANT_TYPE_UINT32.
 	 *
-	 * Return: a #guint32
+	 * Returns: a #guint32
 	 *
 	 * Since: 2.24
 	 */
@@ -1854,7 +1854,7 @@ public class Variant
 	 * It is an error to call this function with a @value of any type
 	 * other than %G_VARIANT_TYPE_UINT64.
 	 *
-	 * Return: a #guint64
+	 * Returns: a #guint64
 	 *
 	 * Since: 2.24
 	 */
@@ -1906,7 +1906,7 @@ public class Variant
 	 * Unboxes @value.  The result is the #GVariant instance that was
 	 * contained in @value.
 	 *
-	 * Return: the item contained in the variant
+	 * Returns: the item contained in the variant
 	 *
 	 * Since: 2.24
 	 */
@@ -1933,7 +1933,7 @@ public class Variant
 	 * The type of @value is #gconstpointer only to allow use of this
 	 * function with #GHashTable.  @value must be a #GVariant.
 	 *
-	 * Return: a hash value corresponding to @value
+	 * Returns: a hash value corresponding to @value
 	 *
 	 * Since: 2.24
 	 */
@@ -1945,7 +1945,7 @@ public class Variant
 	/**
 	 * Checks if @value is a container.
 	 *
-	 * Return: %TRUE if @value is a container
+	 * Returns: %TRUE if @value is a container
 	 *
 	 * Since: 2.24
 	 */
@@ -1965,7 +1965,7 @@ public class Variant
 	 * See g_variant_ref_sink() for more information about floating reference
 	 * counts.
 	 *
-	 * Return: whether @value is floating
+	 * Returns: whether @value is floating
 	 *
 	 * Since: 2.26
 	 */
@@ -1986,7 +1986,7 @@ public class Variant
 	 * being trusted.  If the value was already marked as being trusted then
 	 * this function will immediately return %TRUE.
 	 *
-	 * Return: %TRUE if @value is in normal form
+	 * Returns: %TRUE if @value is in normal form
 	 *
 	 * Since: 2.24
 	 */
@@ -2001,7 +2001,7 @@ public class Variant
 	 * Params:
 	 *     type = a #GVariantType
 	 *
-	 * Return: %TRUE if the type of @value matches @type
+	 * Returns: %TRUE if the type of @value matches @type
 	 *
 	 * Since: 2.24
 	 */
@@ -2020,7 +2020,7 @@ public class Variant
 	 * A reference is taken to @value and will be released only when
 	 * g_variant_iter_free() is called.
 	 *
-	 * Return: a new heap-allocated #GVariantIter
+	 * Returns: a new heap-allocated #GVariantIter
 	 *
 	 * Since: 2.24
 	 */
@@ -2063,7 +2063,7 @@ public class Variant
 	 *     key = the key to lookup in the dictionary
 	 *     expectedType = a #GVariantType, or %NULL
 	 *
-	 * Return: the value of the dictionary key, or %NULL
+	 * Returns: the value of the dictionary key, or %NULL
 	 *
 	 * Since: 2.28
 	 */
@@ -2092,7 +2092,7 @@ public class Variant
 	 *
 	 * This function is O(1).
 	 *
-	 * Return: the number of children in the container
+	 * Returns: the number of children in the container
 	 *
 	 * Since: 2.24
 	 */
@@ -2113,7 +2113,7 @@ public class Variant
 	 *     typeAnnotate = %TRUE if type information should be included in
 	 *         the output
 	 *
-	 * Return: a newly-allocated string holding the result.
+	 * Returns: a newly-allocated string holding the result.
 	 *
 	 * Since: 2.24
 	 */
@@ -2136,7 +2136,7 @@ public class Variant
 	 *     typeAnnotate = %TRUE if type information should be included in
 	 *         the output
 	 *
-	 * Return: a #GString containing the string
+	 * Returns: a #GString containing the string
 	 *
 	 * Since: 2.24
 	 */
@@ -2155,7 +2155,7 @@ public class Variant
 	/**
 	 * Increases the reference count of @value.
 	 *
-	 * Return: the same @value
+	 * Returns: the same @value
 	 *
 	 * Since: 2.24
 	 */
@@ -2195,7 +2195,7 @@ public class Variant
 	 * maintaining normal refcounting semantics in situations where values
 	 * are not floating.
 	 *
-	 * Return: the same @value
+	 * Returns: the same @value
 	 *
 	 * Since: 2.24
 	 */
@@ -2269,7 +2269,7 @@ public class Variant
 	 * an additional reference on top of that one is added.  It is best to
 	 * avoid this situation.
 	 *
-	 * Return: the same @value
+	 * Returns: the same @value
 	 */
 	public Variant takeRef()
 	{
@@ -2307,7 +2307,7 @@ public class Variant
 	 * Params:
 	 *     str = a normal C nul-terminated string
 	 *
-	 * Return: %TRUE if @string is a D-Bus object path
+	 * Returns: %TRUE if @string is a D-Bus object path
 	 *
 	 * Since: 2.24
 	 */
@@ -2327,7 +2327,7 @@ public class Variant
 	 * Params:
 	 *     str = a normal C nul-terminated string
 	 *
-	 * Return: %TRUE if @string is a D-Bus type signature
+	 * Returns: %TRUE if @string is a D-Bus type signature
 	 *
 	 * Since: 2.24
 	 */
@@ -2375,7 +2375,7 @@ public class Variant
 	 *     limit = a pointer to the end of @text, or %NULL
 	 *     endptr = a location to store the end pointer, or %NULL
 	 *
-	 * Return: a non-floating reference to a #GVariant, or %NULL
+	 * Returns: a non-floating reference to a #GVariant, or %NULL
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -2433,7 +2433,7 @@ public class Variant
 	 *     error = a #GError from the #GVariantParseError domain
 	 *     sourceStr = the string that was given to the parser
 	 *
-	 * Return: the printed message
+	 * Returns: the printed message
 	 *
 	 * Since: 2.40
 	 */

@@ -91,7 +91,7 @@ public class FileIcon : ObjectG, IconIF, LoadableIconIF
 	 * Params:
 	 *     file = a #GFile.
 	 *
-	 * Return: a #GIcon for the given
+	 * Returns: a #GIcon for the given
 	 *     @file, or %NULL on error.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -111,7 +111,7 @@ public class FileIcon : ObjectG, IconIF, LoadableIconIF
 	/**
 	 * Gets the #GFile associated with the given @icon.
 	 *
-	 * Return: a #GFile, or %NULL.
+	 * Returns: a #GFile, or %NULL.
 	 */
 	public FileIF getFile()
 	{

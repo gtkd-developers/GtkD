@@ -121,7 +121,7 @@ public class Scrollbar : Range
 	 *     orientation = the scrollbar’s orientation.
 	 *     adjustment = the #GtkAdjustment to use, or %NULL to create a new adjustment.
 	 *
-	 * Return: the new #GtkScrollbar.
+	 * Returns: the new #GtkScrollbar.
 	 *
 	 * Since: 3.0
 	 *

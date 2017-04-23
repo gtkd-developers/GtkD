@@ -71,7 +71,7 @@ public class AllocationParams
 	 *
 	 * Free-function: gst_allocation_params_free
 	 *
-	 * Return: a new ##GstAllocationParams, free with
+	 * Returns: a new ##GstAllocationParams, free with
 	 *     gst_allocation_params_free().
 	 */
 	public AllocationParams copy()

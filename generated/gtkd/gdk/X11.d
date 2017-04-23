@@ -65,7 +65,7 @@ public Window lookupForDisplay(Display display, uint window)
 /**
  * Gets the number of the workspace @window is on.
  *
- * Return: the current workspace of @window
+ * Returns: the current workspace of @window
  *
  * Since: 3.10
  */
@@ -77,7 +77,7 @@ public uint getDesktop(Window window)
 /**
  * Returns the X resource (window) belonging to a #GdkWindow.
  *
- * Return: the ID of @drawable’s X resource.
+ * Returns: the ID of @drawable’s X resource.
  */
 public uint getXid(Window window)
 {

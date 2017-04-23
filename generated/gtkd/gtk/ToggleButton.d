@@ -170,7 +170,7 @@ public class ToggleButton : Button
 	/**
 	 * Creates a new toggle button. A widget should be packed into the button, as in gtk_button_new().
 	 *
-	 * Return: a new toggle button.
+	 * Returns: a new toggle button.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -190,7 +190,7 @@ public class ToggleButton : Button
 	 * Queries a #GtkToggleButton and returns its current state. Returns %TRUE if
 	 * the toggle button is pressed in and %FALSE if it is raised.
 	 *
-	 * Return: a #gboolean value.
+	 * Returns: a #gboolean value.
 	 */
 	public bool getActive()
 	{
@@ -200,7 +200,7 @@ public class ToggleButton : Button
 	/**
 	 * Gets the value set by gtk_toggle_button_set_inconsistent().
 	 *
-	 * Return: %TRUE if the button is displayed as inconsistent, %FALSE otherwise
+	 * Returns: %TRUE if the button is displayed as inconsistent, %FALSE otherwise
 	 */
 	public bool getInconsistent()
 	{
@@ -211,7 +211,7 @@ public class ToggleButton : Button
 	 * Retrieves whether the button is displayed as a separate indicator
 	 * and label. See gtk_toggle_button_set_mode().
 	 *
-	 * Return: %TRUE if the togglebutton is drawn as a separate indicator
+	 * Returns: %TRUE if the togglebutton is drawn as a separate indicator
 	 *     and label.
 	 */
 	public bool getMode()

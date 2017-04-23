@@ -84,7 +84,7 @@ public class PgFontsetSimple : PgFontset
 	 * Params:
 	 *     language = a #PangoLanguage tag
 	 *
-	 * Return: the newly allocated #PangoFontsetSimple, which should
+	 * Returns: the newly allocated #PangoFontsetSimple, which should
 	 *     be freed with g_object_unref().
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -115,7 +115,7 @@ public class PgFontsetSimple : PgFontset
 	/**
 	 * Returns the number of fonts in the fontset.
 	 *
-	 * Return: the size of @fontset.
+	 * Returns: the size of @fontset.
 	 */
 	public int size()
 	{

@@ -82,7 +82,7 @@ public class MenuAttributeIter : ObjectG
 	 *
 	 * The iterator is not advanced.
 	 *
-	 * Return: the name of the attribute
+	 * Returns: the name of the attribute
 	 *
 	 * Since: 2.32
 	 */
@@ -112,7 +112,7 @@ public class MenuAttributeIter : ObjectG
 	 *     outName = the type of the attribute
 	 *     value = the attribute value
 	 *
-	 * Return: %TRUE on success, or %FALSE if there is no additional
+	 * Returns: %TRUE on success, or %FALSE if there is no additional
 	 *     attribute
 	 *
 	 * Since: 2.32
@@ -135,7 +135,7 @@ public class MenuAttributeIter : ObjectG
 	 *
 	 * The iterator is not advanced.
 	 *
-	 * Return: the value of the current attribute
+	 * Returns: the value of the current attribute
 	 *
 	 * Since: 2.32
 	 */
@@ -162,7 +162,7 @@ public class MenuAttributeIter : ObjectG
 	 * to advance it to the first attribute (and determine if the first
 	 * attribute exists at all).
 	 *
-	 * Return: %TRUE on success, or %FALSE when there are no more attributes
+	 * Returns: %TRUE on success, or %FALSE when there are no more attributes
 	 *
 	 * Since: 2.32
 	 */

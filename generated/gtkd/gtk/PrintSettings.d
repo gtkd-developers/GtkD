@@ -92,7 +92,7 @@ public class PrintSettings : ObjectG
 	/**
 	 * Creates a new #GtkPrintSettings object.
 	 *
-	 * Return: a new #GtkPrintSettings object
+	 * Returns: a new #GtkPrintSettings object
 	 *
 	 * Since: 2.10
 	 *
@@ -119,7 +119,7 @@ public class PrintSettings : ObjectG
 	 * Params:
 	 *     fileName = the filename to read the settings from
 	 *
-	 * Return: the restored #GtkPrintSettings
+	 * Returns: the restored #GtkPrintSettings
 	 *
 	 * Since: 2.12
 	 *
@@ -152,7 +152,7 @@ public class PrintSettings : ObjectG
 	 * Params:
 	 *     variant = an a{sv} #GVariant
 	 *
-	 * Return: a new #GtkPrintSettings object
+	 * Returns: a new #GtkPrintSettings object
 	 *
 	 * Since: 3.22
 	 *
@@ -181,7 +181,7 @@ public class PrintSettings : ObjectG
 	 *     groupName = the name of the group to use, or %NULL to use
 	 *         the default “Print Settings”
 	 *
-	 * Return: the restored #GtkPrintSettings
+	 * Returns: the restored #GtkPrintSettings
 	 *
 	 * Since: 2.12
 	 *
@@ -210,7 +210,7 @@ public class PrintSettings : ObjectG
 	/**
 	 * Copies a #GtkPrintSettings object.
 	 *
-	 * Return: a newly allocated copy of @other
+	 * Returns: a newly allocated copy of @other
 	 *
 	 * Since: 2.10
 	 */
@@ -246,7 +246,7 @@ public class PrintSettings : ObjectG
 	 * Params:
 	 *     key = a key
 	 *
-	 * Return: the string value for @key
+	 * Returns: the string value for @key
 	 *
 	 * Since: 2.10
 	 */
@@ -265,7 +265,7 @@ public class PrintSettings : ObjectG
 	 * Params:
 	 *     key = a key
 	 *
-	 * Return: %TRUE, if @key maps to a true value.
+	 * Returns: %TRUE, if @key maps to a true value.
 	 *
 	 * Since: 2.10
 	 */
@@ -277,7 +277,7 @@ public class PrintSettings : ObjectG
 	/**
 	 * Gets the value of %GTK_PRINT_SETTINGS_COLLATE.
 	 *
-	 * Return: whether to collate the printed pages
+	 * Returns: whether to collate the printed pages
 	 *
 	 * Since: 2.10
 	 */
@@ -289,7 +289,7 @@ public class PrintSettings : ObjectG
 	/**
 	 * Gets the value of %GTK_PRINT_SETTINGS_DEFAULT_SOURCE.
 	 *
-	 * Return: the default source
+	 * Returns: the default source
 	 *
 	 * Since: 2.10
 	 */
@@ -301,7 +301,7 @@ public class PrintSettings : ObjectG
 	/**
 	 * Gets the value of %GTK_PRINT_SETTINGS_DITHER.
 	 *
-	 * Return: the dithering that is used
+	 * Returns: the dithering that is used
 	 *
 	 * Since: 2.10
 	 */
@@ -316,7 +316,7 @@ public class PrintSettings : ObjectG
 	 * Params:
 	 *     key = a key
 	 *
-	 * Return: the double value of @key
+	 * Returns: the double value of @key
 	 *
 	 * Since: 2.10
 	 */
@@ -336,7 +336,7 @@ public class PrintSettings : ObjectG
 	 *     key = a key
 	 *     def = the default value
 	 *
-	 * Return: the floating point number associated with @key
+	 * Returns: the floating point number associated with @key
 	 *
 	 * Since: 2.10
 	 */
@@ -348,7 +348,7 @@ public class PrintSettings : ObjectG
 	/**
 	 * Gets the value of %GTK_PRINT_SETTINGS_DUPLEX.
 	 *
-	 * Return: whether to print the output in duplex.
+	 * Returns: whether to print the output in duplex.
 	 *
 	 * Since: 2.10
 	 */
@@ -360,7 +360,7 @@ public class PrintSettings : ObjectG
 	/**
 	 * Gets the value of %GTK_PRINT_SETTINGS_FINISHINGS.
 	 *
-	 * Return: the finishings
+	 * Returns: the finishings
 	 *
 	 * Since: 2.10
 	 */
@@ -375,7 +375,7 @@ public class PrintSettings : ObjectG
 	 * Params:
 	 *     key = a key
 	 *
-	 * Return: the integer value of @key
+	 * Returns: the integer value of @key
 	 *
 	 * Since: 2.10
 	 */
@@ -392,7 +392,7 @@ public class PrintSettings : ObjectG
 	 *     key = a key
 	 *     def = the default value
 	 *
-	 * Return: the integer value of @key
+	 * Returns: the integer value of @key
 	 *
 	 * Since: 2.10
 	 */
@@ -409,7 +409,7 @@ public class PrintSettings : ObjectG
 	 *     key = a key
 	 *     unit = the unit of the return value
 	 *
-	 * Return: the length value of @key, converted to @unit
+	 * Returns: the length value of @key, converted to @unit
 	 *
 	 * Since: 2.10
 	 */
@@ -423,7 +423,7 @@ public class PrintSettings : ObjectG
 	 *
 	 * The set of media types is defined in PWG 5101.1-2002 PWG.
 	 *
-	 * Return: the media type
+	 * Returns: the media type
 	 *
 	 * Since: 2.10
 	 */
@@ -435,7 +435,7 @@ public class PrintSettings : ObjectG
 	/**
 	 * Gets the value of %GTK_PRINT_SETTINGS_N_COPIES.
 	 *
-	 * Return: the number of copies to print
+	 * Returns: the number of copies to print
 	 *
 	 * Since: 2.10
 	 */
@@ -447,7 +447,7 @@ public class PrintSettings : ObjectG
 	/**
 	 * Gets the value of %GTK_PRINT_SETTINGS_NUMBER_UP.
 	 *
-	 * Return: the number of pages per sheet
+	 * Returns: the number of pages per sheet
 	 *
 	 * Since: 2.10
 	 */
@@ -459,7 +459,7 @@ public class PrintSettings : ObjectG
 	/**
 	 * Gets the value of %GTK_PRINT_SETTINGS_NUMBER_UP_LAYOUT.
 	 *
-	 * Return: layout of page in number-up mode
+	 * Returns: layout of page in number-up mode
 	 *
 	 * Since: 2.14
 	 */
@@ -472,7 +472,7 @@ public class PrintSettings : ObjectG
 	 * Get the value of %GTK_PRINT_SETTINGS_ORIENTATION,
 	 * converted to a #GtkPageOrientation.
 	 *
-	 * Return: the orientation
+	 * Returns: the orientation
 	 *
 	 * Since: 2.10
 	 */
@@ -484,7 +484,7 @@ public class PrintSettings : ObjectG
 	/**
 	 * Gets the value of %GTK_PRINT_SETTINGS_OUTPUT_BIN.
 	 *
-	 * Return: the output bin
+	 * Returns: the output bin
 	 *
 	 * Since: 2.10
 	 */
@@ -496,7 +496,7 @@ public class PrintSettings : ObjectG
 	/**
 	 * Gets the value of %GTK_PRINT_SETTINGS_PAGE_RANGES.
 	 *
-	 * Return: an array
+	 * Returns: an array
 	 *     of #GtkPageRanges.  Use g_free() to free the array when
 	 *     it is no longer needed.
 	 *
@@ -514,7 +514,7 @@ public class PrintSettings : ObjectG
 	/**
 	 * Gets the value of %GTK_PRINT_SETTINGS_PAGE_SET.
 	 *
-	 * Return: the set of pages to print
+	 * Returns: the set of pages to print
 	 *
 	 * Since: 2.10
 	 */
@@ -530,7 +530,7 @@ public class PrintSettings : ObjectG
 	 * Params:
 	 *     unit = the unit for the return value
 	 *
-	 * Return: the paper height, in units of @unit
+	 * Returns: the paper height, in units of @unit
 	 *
 	 * Since: 2.10
 	 */
@@ -543,7 +543,7 @@ public class PrintSettings : ObjectG
 	 * Gets the value of %GTK_PRINT_SETTINGS_PAPER_FORMAT,
 	 * converted to a #GtkPaperSize.
 	 *
-	 * Return: the paper size
+	 * Returns: the paper size
 	 *
 	 * Since: 2.10
 	 */
@@ -566,7 +566,7 @@ public class PrintSettings : ObjectG
 	 * Params:
 	 *     unit = the unit for the return value
 	 *
-	 * Return: the paper width, in units of @unit
+	 * Returns: the paper width, in units of @unit
 	 *
 	 * Since: 2.10
 	 */
@@ -578,7 +578,7 @@ public class PrintSettings : ObjectG
 	/**
 	 * Gets the value of %GTK_PRINT_SETTINGS_PRINT_PAGES.
 	 *
-	 * Return: which pages to print
+	 * Returns: which pages to print
 	 *
 	 * Since: 2.10
 	 */
@@ -591,7 +591,7 @@ public class PrintSettings : ObjectG
 	 * Convenience function to obtain the value of
 	 * %GTK_PRINT_SETTINGS_PRINTER.
 	 *
-	 * Return: the printer name
+	 * Returns: the printer name
 	 *
 	 * Since: 2.10
 	 */
@@ -603,7 +603,7 @@ public class PrintSettings : ObjectG
 	/**
 	 * Gets the value of %GTK_PRINT_SETTINGS_PRINTER_LPI.
 	 *
-	 * Return: the resolution in lpi (lines per inch)
+	 * Returns: the resolution in lpi (lines per inch)
 	 *
 	 * Since: 2.16
 	 */
@@ -615,7 +615,7 @@ public class PrintSettings : ObjectG
 	/**
 	 * Gets the value of %GTK_PRINT_SETTINGS_QUALITY.
 	 *
-	 * Return: the print quality
+	 * Returns: the print quality
 	 *
 	 * Since: 2.10
 	 */
@@ -627,7 +627,7 @@ public class PrintSettings : ObjectG
 	/**
 	 * Gets the value of %GTK_PRINT_SETTINGS_RESOLUTION.
 	 *
-	 * Return: the resolution in dpi
+	 * Returns: the resolution in dpi
 	 *
 	 * Since: 2.10
 	 */
@@ -639,7 +639,7 @@ public class PrintSettings : ObjectG
 	/**
 	 * Gets the value of %GTK_PRINT_SETTINGS_RESOLUTION_X.
 	 *
-	 * Return: the horizontal resolution in dpi
+	 * Returns: the horizontal resolution in dpi
 	 *
 	 * Since: 2.16
 	 */
@@ -651,7 +651,7 @@ public class PrintSettings : ObjectG
 	/**
 	 * Gets the value of %GTK_PRINT_SETTINGS_RESOLUTION_Y.
 	 *
-	 * Return: the vertical resolution in dpi
+	 * Returns: the vertical resolution in dpi
 	 *
 	 * Since: 2.16
 	 */
@@ -663,7 +663,7 @@ public class PrintSettings : ObjectG
 	/**
 	 * Gets the value of %GTK_PRINT_SETTINGS_REVERSE.
 	 *
-	 * Return: whether to reverse the order of the printed pages
+	 * Returns: whether to reverse the order of the printed pages
 	 *
 	 * Since: 2.10
 	 */
@@ -675,7 +675,7 @@ public class PrintSettings : ObjectG
 	/**
 	 * Gets the value of %GTK_PRINT_SETTINGS_SCALE.
 	 *
-	 * Return: the scale in percent
+	 * Returns: the scale in percent
 	 *
 	 * Since: 2.10
 	 */
@@ -687,7 +687,7 @@ public class PrintSettings : ObjectG
 	/**
 	 * Gets the value of %GTK_PRINT_SETTINGS_USE_COLOR.
 	 *
-	 * Return: whether to use color
+	 * Returns: whether to use color
 	 *
 	 * Since: 2.10
 	 */
@@ -702,7 +702,7 @@ public class PrintSettings : ObjectG
 	 * Params:
 	 *     key = a key
 	 *
-	 * Return: %TRUE, if @key has a value
+	 * Returns: %TRUE, if @key has a value
 	 *
 	 * Since: 2.10
 	 */
@@ -719,7 +719,7 @@ public class PrintSettings : ObjectG
 	 * Params:
 	 *     fileName = the filename to read the settings from
 	 *
-	 * Return: %TRUE on success
+	 * Returns: %TRUE on success
 	 *
 	 * Since: 2.14
 	 *
@@ -749,7 +749,7 @@ public class PrintSettings : ObjectG
 	 *     groupName = the name of the group to use, or %NULL to use the default
 	 *         “Print Settings”
 	 *
-	 * Return: %TRUE on success
+	 * Returns: %TRUE on success
 	 *
 	 * Since: 2.14
 	 *
@@ -1186,7 +1186,7 @@ public class PrintSettings : ObjectG
 	 * Params:
 	 *     fileName = the file to save to
 	 *
-	 * Return: %TRUE on success
+	 * Returns: %TRUE on success
 	 *
 	 * Since: 2.12
 	 *
@@ -1209,7 +1209,7 @@ public class PrintSettings : ObjectG
 	/**
 	 * Serialize print settings to an a{sv} variant.
 	 *
-	 * Return: a new, floating, #GVariant
+	 * Returns: a new, floating, #GVariant
 	 *
 	 * Since: 3.22
 	 */

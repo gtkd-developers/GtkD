@@ -421,7 +421,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *     editOnly = if %TRUE then only cell renderers that are %GTK_CELL_RENDERER_MODE_EDITABLE
 	 *         will be activated.
 	 *
-	 * Return: Whether @area was successfully activated.
+	 * Returns: Whether @area was successfully activated.
 	 *
 	 * Since: 3.0
 	 */
@@ -444,7 +444,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *         of @renderer for the current row.
 	 *     flags = the #GtkCellRendererState for @renderer
 	 *
-	 * Return: whether cell activation was successful
+	 * Returns: whether cell activation was successful
 	 *
 	 * Since: 3.0
 	 */
@@ -543,7 +543,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *     renderer = a #GtkCellRenderer
 	 *     attribute = an attribute on the renderer
 	 *
-	 * Return: the model column, or -1
+	 * Returns: the model column, or -1
 	 *
 	 * Since: 3.14
 	 */
@@ -630,7 +630,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 * Params:
 	 *     context = the #GtkCellAreaContext to copy
 	 *
-	 * Return: a newly created #GtkCellAreaContext copy of @context.
+	 * Returns: a newly created #GtkCellAreaContext copy of @context.
 	 *
 	 * Since: 3.0
 	 */
@@ -654,7 +654,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 * one should render and handle events with the same #GtkCellAreaContext
 	 * which was used to request the size of those rows of data).
 	 *
-	 * Return: a newly created #GtkCellAreaContext which can be used with @area.
+	 * Returns: a newly created #GtkCellAreaContext which can be used with @area.
 	 *
 	 * Since: 3.0
 	 */
@@ -680,7 +680,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *     cellArea = the @widget relative coordinates for @area
 	 *     flags = the #GtkCellRendererState for @area in this row.
 	 *
-	 * Return: %TRUE if the event was handled by @area.
+	 * Returns: %TRUE if the event was handled by @area.
 	 *
 	 * Since: 3.0
 	 */
@@ -701,7 +701,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 * Params:
 	 *     direction = the #GtkDirectionType
 	 *
-	 * Return: %TRUE if focus remains inside @area as a result of this call.
+	 * Returns: %TRUE if focus remains inside @area as a result of this call.
 	 *
 	 * Since: 3.0
 	 */
@@ -776,7 +776,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *     allocArea = where to store the inner allocated area of the
 	 *         returned cell renderer, or %NULL.
 	 *
-	 * Return: the #GtkCellRenderer at @x and @y.
+	 * Returns: the #GtkCellRenderer at @x and @y.
 	 *
 	 * Since: 3.0
 	 */
@@ -799,7 +799,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 * used to interact with renderers from #GtkCellArea
 	 * subclasses.
 	 *
-	 * Return: The current #GtkTreePath string for the current
+	 * Returns: The current #GtkTreePath string for the current
 	 *     attributes applied to @area. This string belongs to the area and
 	 *     should not be freed.
 	 *
@@ -814,7 +814,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 * Gets the #GtkCellEditable widget currently used
 	 * to edit the currently edited cell.
 	 *
-	 * Return: The currently active #GtkCellEditable widget
+	 * Returns: The currently active #GtkCellEditable widget
 	 *
 	 * Since: 3.0
 	 */
@@ -834,7 +834,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 * Gets the #GtkCellRenderer in @area that is currently
 	 * being edited.
 	 *
-	 * Return: The currently edited #GtkCellRenderer
+	 * Returns: The currently edited #GtkCellRenderer
 	 *
 	 * Since: 3.0
 	 */
@@ -853,7 +853,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	/**
 	 * Retrieves the currently focused cell for @area
 	 *
-	 * Return: the currently focused cell in @area.
+	 * Returns: the currently focused cell in @area.
 	 *
 	 * Since: 3.0
 	 */
@@ -881,7 +881,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 * Params:
 	 *     renderer = the #GtkCellRenderer
 	 *
-	 * Return: the #GtkCellRenderer for which @renderer
+	 * Returns: the #GtkCellRenderer for which @renderer
 	 *     is a sibling, or %NULL.
 	 *
 	 * Since: 3.0
@@ -904,7 +904,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 * Params:
 	 *     renderer = the #GtkCellRenderer expected to have focus
 	 *
-	 * Return: A #GList of #GtkCellRenderers.
+	 * Returns: A #GList of #GtkCellRenderers.
 	 *     The returned list is internal and should not be freed.
 	 *
 	 * Since: 3.0
@@ -1029,7 +1029,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 * Gets whether the area prefers a height-for-width layout
 	 * or a width-for-height layout.
 	 *
-	 * Return: The #GtkSizeRequestMode preferred by @area.
+	 * Returns: The #GtkSizeRequestMode preferred by @area.
 	 *
 	 * Since: 3.0
 	 */
@@ -1044,7 +1044,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 * Params:
 	 *     renderer = the #GtkCellRenderer to check
 	 *
-	 * Return: %TRUE if @renderer is in the @area.
+	 * Returns: %TRUE if @renderer is in the @area.
 	 *
 	 * Since: 3.0
 	 */
@@ -1075,7 +1075,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 * Returns whether the area can do anything when activated,
 	 * after applying new attributes to @area.
 	 *
-	 * Return: whether @area can do anything when activated.
+	 * Returns: whether @area can do anything when activated.
 	 *
 	 * Since: 3.0
 	 */
@@ -1092,7 +1092,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *     renderer = the #GtkCellRenderer expected to have focus
 	 *     sibling = the #GtkCellRenderer to check against @renderer’s sibling list
 	 *
-	 * Return: %TRUE if @sibling is a focus sibling of @renderer
+	 * Returns: %TRUE if @sibling is a focus sibling of @renderer
 	 *
 	 * Since: 3.0
 	 */

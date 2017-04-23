@@ -117,7 +117,7 @@ public class TextMark : ObjectG
 	 *     name = mark name or %NULL
 	 *     leftGravity = whether the mark should have left gravity
 	 *
-	 * Return: new #GtkTextMark
+	 * Returns: new #GtkTextMark
 	 *
 	 * Since: 2.12
 	 *
@@ -139,7 +139,7 @@ public class TextMark : ObjectG
 	 * Gets the buffer this mark is located inside,
 	 * or %NULL if the mark is deleted.
 	 *
-	 * Return: the mark’s #GtkTextBuffer
+	 * Returns: the mark’s #GtkTextBuffer
 	 */
 	public TextBuffer getBuffer()
 	{
@@ -158,7 +158,7 @@ public class TextMark : ObjectG
 	 * with gtk_text_buffer_delete_mark(). See gtk_text_buffer_add_mark()
 	 * for a way to add it to a buffer again.
 	 *
-	 * Return: whether the mark is deleted
+	 * Returns: whether the mark is deleted
 	 */
 	public bool getDeleted()
 	{
@@ -168,7 +168,7 @@ public class TextMark : ObjectG
 	/**
 	 * Determines whether the mark has left gravity.
 	 *
-	 * Return: %TRUE if the mark has left gravity, %FALSE otherwise
+	 * Returns: %TRUE if the mark has left gravity, %FALSE otherwise
 	 */
 	public bool getLeftGravity()
 	{
@@ -178,7 +178,7 @@ public class TextMark : ObjectG
 	/**
 	 * Returns the mark name; returns NULL for anonymous marks.
 	 *
-	 * Return: mark name
+	 * Returns: mark name
 	 */
 	public string getName()
 	{
@@ -189,7 +189,7 @@ public class TextMark : ObjectG
 	 * Returns %TRUE if the mark is visible (i.e. a cursor is displayed
 	 * for it).
 	 *
-	 * Return: %TRUE if visible
+	 * Returns: %TRUE if visible
 	 */
 	public bool getVisible()
 	{

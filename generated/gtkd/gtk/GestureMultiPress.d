@@ -93,7 +93,7 @@ public class GestureMultiPress : GestureSingle
 	 * Params:
 	 *     widget = a #GtkWidget
 	 *
-	 * Return: a newly created #GtkGestureMultiPress
+	 * Returns: a newly created #GtkGestureMultiPress
 	 *
 	 * Since: 3.14
 	 *
@@ -120,7 +120,7 @@ public class GestureMultiPress : GestureSingle
 	 * Params:
 	 *     rect = return location for the press area
 	 *
-	 * Return: %TRUE if @rect was filled with the press area
+	 * Returns: %TRUE if @rect was filled with the press area
 	 *
 	 * Since: 3.14
 	 */

@@ -138,7 +138,7 @@ public class Socket : ObjectAtk, ComponentIF
 	/**
 	 * Determines whether or not the socket has an embedded plug.
 	 *
-	 * Return: TRUE if a plug is embedded in the socket
+	 * Returns: TRUE if a plug is embedded in the socket
 	 *
 	 * Since: 1.30
 	 */

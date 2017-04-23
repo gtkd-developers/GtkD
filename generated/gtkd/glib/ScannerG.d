@@ -79,7 +79,7 @@ public class ScannerG
 	 * from 1). This is the line of the last token parsed via
 	 * g_scanner_get_next_token().
 	 *
-	 * Return: the current line
+	 * Returns: the current line
 	 */
 	public uint curLine()
 	{
@@ -91,7 +91,7 @@ public class ScannerG
 	 * from 0). This is the position of the last token parsed via
 	 * g_scanner_get_next_token().
 	 *
-	 * Return: the current position on the line
+	 * Returns: the current position on the line
 	 */
 	public uint curPosition()
 	{
@@ -102,7 +102,7 @@ public class ScannerG
 	 * Gets the current token type. This is simply the @token
 	 * field in the #GScanner structure.
 	 *
-	 * Return: the current token type
+	 * Returns: the current token type
 	 */
 	public GTokenType curToken()
 	{
@@ -113,7 +113,7 @@ public class ScannerG
 	 * Gets the current token value. This is simply the @value
 	 * field in the #GScanner structure.
 	 *
-	 * Return: the current token value
+	 * Returns: the current token value
 	 */
 	public GTokenValue curValue()
 	{
@@ -132,7 +132,7 @@ public class ScannerG
 	 * Returns %TRUE if the scanner has reached the end of
 	 * the file or text buffer.
 	 *
-	 * Return: %TRUE if the scanner has reached the end of
+	 * Returns: %TRUE if the scanner has reached the end of
 	 *     the file or text buffer
 	 */
 	public bool eof()
@@ -146,7 +146,7 @@ public class ScannerG
 	 * placed in the @token, @value, @line, and @position fields of
 	 * the #GScanner structure.
 	 *
-	 * Return: the type of the token
+	 * Returns: the type of the token
 	 */
 	public GTokenType getNextToken()
 	{
@@ -184,7 +184,7 @@ public class ScannerG
 	 * Params:
 	 *     symbol = the symbol to look up
 	 *
-	 * Return: the value of @symbol in the current scope, or %NULL
+	 * Returns: the value of @symbol in the current scope, or %NULL
 	 *     if @symbol is not bound in the current scope
 	 */
 	public void* lookupSymbol(string symbol)
@@ -205,7 +205,7 @@ public class ScannerG
 	 * configuration will return whatever was peeked before, regardless of
 	 * any symbols that may have been added or removed in the new scope.
 	 *
-	 * Return: the type of the token
+	 * Returns: the type of the token
 	 */
 	public GTokenType peekNextToken()
 	{
@@ -249,7 +249,7 @@ public class ScannerG
 	 *     scopeId = the scope id
 	 *     symbol = the symbol to look up
 	 *
-	 * Return: the value of @symbol in the given scope, or %NULL
+	 * Returns: the value of @symbol in the given scope, or %NULL
 	 *     if @symbol is not bound in the given scope.
 	 */
 	public void* scopeLookupSymbol(uint scopeId, string symbol)
@@ -275,7 +275,7 @@ public class ScannerG
 	 * Params:
 	 *     scopeId = the new scope id
 	 *
-	 * Return: the old scope id
+	 * Returns: the old scope id
 	 */
 	public uint setScope(uint scopeId)
 	{
@@ -335,7 +335,7 @@ public class ScannerG
 	 * Params:
 	 *     configTempl = the initial scanner settings
 	 *
-	 * Return: the new #GScanner
+	 * Returns: the new #GScanner
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

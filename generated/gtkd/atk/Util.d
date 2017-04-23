@@ -58,7 +58,7 @@ public struct Util
 	 *     focusTracker = Function to be added to the list of functions to be called
 	 *         when an object receives focus.
 	 *
-	 * Return: added focus tracker id, or 0 on failure.
+	 * Returns: added focus tracker id, or 0 on failure.
 	 */
 	public static uint addFocusTracker(AtkEventListener focusTracker)
 	{
@@ -104,7 +104,7 @@ public struct Util
 	 *     listener = the listener to notify
 	 *     eventType = the type of event for which notification is requested
 	 *
-	 * Return: added event listener id, or 0 on failure.
+	 * Returns: added event listener id, or 0 on failure.
 	 */
 	public static uint addGlobalEventListener(GSignalEmissionHook listener, string eventType)
 	{
@@ -121,7 +121,7 @@ public struct Util
 	 *     data = a #gpointer that points to a block of data that should be sent to the registered listeners,
 	 *         along with the event notification, when it occurs.
 	 *
-	 * Return: added event listener id, or 0 on failure.
+	 * Returns: added event listener id, or 0 on failure.
 	 */
 	public static uint addKeyEventListener(AtkKeySnoopFunc listener, void* data)
 	{
@@ -166,7 +166,7 @@ public struct Util
 	/**
 	 * Gets the currently focused object.
 	 *
-	 * Return: the currently focused object for the current
+	 * Returns: the currently focused object for the current
 	 *     application
 	 *
 	 * Since: 1.6
@@ -186,7 +186,7 @@ public struct Util
 	/**
 	 * Gets the root accessible container for the current application.
 	 *
-	 * Return: the root accessible container for the current
+	 * Returns: the root accessible container for the current
 	 *     application
 	 */
 	public static ObjectAtk getRoot()
@@ -204,7 +204,7 @@ public struct Util
 	/**
 	 * Gets name string for the GUI toolkit implementing ATK for this application.
 	 *
-	 * Return: name string for the GUI toolkit implementing ATK for this application
+	 * Returns: name string for the GUI toolkit implementing ATK for this application
 	 */
 	public static string getToolkitName()
 	{

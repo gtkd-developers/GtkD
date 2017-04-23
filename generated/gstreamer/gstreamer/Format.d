@@ -41,7 +41,7 @@ public struct Format
 	 * Params:
 	 *     nick = The nick of the format
 	 *
-	 * Return: The format with @nick or GST_FORMAT_UNDEFINED
+	 * Returns: The format with @nick or GST_FORMAT_UNDEFINED
 	 *     if the format was not registered.
 	 */
 	public static GstFormat getByNick(string nick)
@@ -55,7 +55,7 @@ public struct Format
 	 * Params:
 	 *     format = The format to get details of
 	 *
-	 * Return: The #GstFormatDefinition for @format or %NULL
+	 * Returns: The #GstFormatDefinition for @format or %NULL
 	 *     on failure.
 	 *
 	 *     MT safe.
@@ -71,7 +71,7 @@ public struct Format
 	 * Params:
 	 *     format = a #GstFormat
 	 *
-	 * Return: a reference to the static name of the format
+	 * Returns: a reference to the static name of the format
 	 *     or %NULL if the format is unknown.
 	 */
 	public static string getName(GstFormat format)
@@ -83,7 +83,7 @@ public struct Format
 	 * Iterate all the registered formats. The format definition is read
 	 * only.
 	 *
-	 * Return: a GstIterator of #GstFormatDefinition.
+	 * Returns: a GstIterator of #GstFormatDefinition.
 	 */
 	public static Iterator iterateDefinitions()
 	{
@@ -105,7 +105,7 @@ public struct Format
 	 *     nick = The nick of the new format
 	 *     description = The description of the new format
 	 *
-	 * Return: A new GstFormat or an already registered format
+	 * Returns: A new GstFormat or an already registered format
 	 *     with the same nick.
 	 *
 	 *     MT safe.
@@ -121,7 +121,7 @@ public struct Format
 	 * Params:
 	 *     format = a #GstFormat
 	 *
-	 * Return: the quark associated with the format or 0 if the format
+	 * Returns: the quark associated with the format or 0 if the format
 	 *     is unknown.
 	 */
 	public static GQuark toQuark(GstFormat format)
@@ -136,7 +136,7 @@ public struct Format
 	 *     formats = The format array to search
 	 *     format = the format to find
 	 *
-	 * Return: %TRUE if the format is found inside the array
+	 * Returns: %TRUE if the format is found inside the array
 	 */
 	public static bool contains(GstFormat[] formats, GstFormat format)
 	{

@@ -112,7 +112,7 @@ public class AppChooserWidget : Box, AppChooserIF
 	 * Params:
 	 *     contentType = the content type to show applications for
 	 *
-	 * Return: a newly created #GtkAppChooserWidget
+	 * Returns: a newly created #GtkAppChooserWidget
 	 *
 	 * Since: 3.0
 	 *
@@ -134,7 +134,7 @@ public class AppChooserWidget : Box, AppChooserIF
 	 * Returns the text that is shown if there are not applications
 	 * that can handle the content type.
 	 *
-	 * Return: the value of #GtkAppChooserWidget:default-text
+	 * Returns: the value of #GtkAppChooserWidget:default-text
 	 *
 	 * Since: 3.0
 	 */
@@ -147,7 +147,7 @@ public class AppChooserWidget : Box, AppChooserIF
 	 * Returns the current value of the #GtkAppChooserWidget:show-all
 	 * property.
 	 *
-	 * Return: the value of #GtkAppChooserWidget:show-all
+	 * Returns: the value of #GtkAppChooserWidget:show-all
 	 *
 	 * Since: 3.0
 	 */
@@ -160,7 +160,7 @@ public class AppChooserWidget : Box, AppChooserIF
 	 * Returns the current value of the #GtkAppChooserWidget:show-default
 	 * property.
 	 *
-	 * Return: the value of #GtkAppChooserWidget:show-default
+	 * Returns: the value of #GtkAppChooserWidget:show-default
 	 *
 	 * Since: 3.0
 	 */
@@ -173,7 +173,7 @@ public class AppChooserWidget : Box, AppChooserIF
 	 * Returns the current value of the #GtkAppChooserWidget:show-fallback
 	 * property.
 	 *
-	 * Return: the value of #GtkAppChooserWidget:show-fallback
+	 * Returns: the value of #GtkAppChooserWidget:show-fallback
 	 *
 	 * Since: 3.0
 	 */
@@ -186,7 +186,7 @@ public class AppChooserWidget : Box, AppChooserIF
 	 * Returns the current value of the #GtkAppChooserWidget:show-other
 	 * property.
 	 *
-	 * Return: the value of #GtkAppChooserWidget:show-other
+	 * Returns: the value of #GtkAppChooserWidget:show-other
 	 *
 	 * Since: 3.0
 	 */
@@ -199,7 +199,7 @@ public class AppChooserWidget : Box, AppChooserIF
 	 * Returns the current value of the #GtkAppChooserWidget:show-recommended
 	 * property.
 	 *
-	 * Return: the value of #GtkAppChooserWidget:show-recommended
+	 * Returns: the value of #GtkAppChooserWidget:show-recommended
 	 *
 	 * Since: 3.0
 	 */

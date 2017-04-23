@@ -90,7 +90,7 @@ public class DBusMethodInvocation : ObjectG
 	/**
 	 * Gets the #GDBusConnection the method was invoked on.
 	 *
-	 * Return: A #GDBusConnection. Do not free, it is owned by @invocation.
+	 * Returns: A #GDBusConnection. Do not free, it is owned by @invocation.
 	 *
 	 * Since: 2.26
 	 */
@@ -114,7 +114,7 @@ public class DBusMethodInvocation : ObjectG
 	 * "org.freedesktop.DBus.Properties" will be returned.  See
 	 * #GDBusInterfaceVTable for more information.
 	 *
-	 * Return: A string. Do not free, it is owned by @invocation.
+	 * Returns: A string. Do not free, it is owned by @invocation.
 	 *
 	 * Since: 2.26
 	 */
@@ -133,7 +133,7 @@ public class DBusMethodInvocation : ObjectG
 	 * for an example of how to use this low-level API to send and receive
 	 * UNIX file descriptors.
 	 *
-	 * Return: #GDBusMessage. Do not free, it is owned by @invocation.
+	 * Returns: #GDBusMessage. Do not free, it is owned by @invocation.
 	 *
 	 * Since: 2.26
 	 */
@@ -157,7 +157,7 @@ public class DBusMethodInvocation : ObjectG
 	 * returned.  See g_dbus_method_invocation_get_property_info() and
 	 * #GDBusInterfaceVTable for more information.
 	 *
-	 * Return: A #GDBusMethodInfo or %NULL. Do not free, it is owned by @invocation.
+	 * Returns: A #GDBusMethodInfo or %NULL. Do not free, it is owned by @invocation.
 	 *
 	 * Since: 2.26
 	 */
@@ -176,7 +176,7 @@ public class DBusMethodInvocation : ObjectG
 	/**
 	 * Gets the name of the method that was invoked.
 	 *
-	 * Return: A string. Do not free, it is owned by @invocation.
+	 * Returns: A string. Do not free, it is owned by @invocation.
 	 *
 	 * Since: 2.26
 	 */
@@ -188,7 +188,7 @@ public class DBusMethodInvocation : ObjectG
 	/**
 	 * Gets the object path the method was invoked on.
 	 *
-	 * Return: A string. Do not free, it is owned by @invocation.
+	 * Returns: A string. Do not free, it is owned by @invocation.
 	 *
 	 * Since: 2.26
 	 */
@@ -201,7 +201,7 @@ public class DBusMethodInvocation : ObjectG
 	 * Gets the parameters of the method invocation. If there are no input
 	 * parameters then this will return a GVariant with 0 children rather than NULL.
 	 *
-	 * Return: A #GVariant tuple. Do not unref this because it is owned by @invocation.
+	 * Returns: A #GVariant tuple. Do not unref this because it is owned by @invocation.
 	 *
 	 * Since: 2.26
 	 */
@@ -230,7 +230,7 @@ public class DBusMethodInvocation : ObjectG
 	 *
 	 * If the call was GetAll, %NULL will be returned.
 	 *
-	 * Return: a #GDBusPropertyInfo or %NULL
+	 * Returns: a #GDBusPropertyInfo or %NULL
 	 *
 	 * Since: 2.38
 	 */
@@ -249,7 +249,7 @@ public class DBusMethodInvocation : ObjectG
 	/**
 	 * Gets the bus name that invoked the method.
 	 *
-	 * Return: A string. Do not free, it is owned by @invocation.
+	 * Returns: A string. Do not free, it is owned by @invocation.
 	 *
 	 * Since: 2.26
 	 */
@@ -261,7 +261,7 @@ public class DBusMethodInvocation : ObjectG
 	/**
 	 * Gets the @user_data #gpointer passed to g_dbus_connection_register_object().
 	 *
-	 * Return: A #gpointer.
+	 * Returns: A #gpointer.
 	 *
 	 * Since: 2.26
 	 */

@@ -99,14 +99,14 @@ public interface VolumeIF{
 	/**
 	 * Checks if a volume can be ejected.
 	 *
-	 * Return: %TRUE if the @volume can be ejected. %FALSE otherwise
+	 * Returns: %TRUE if the @volume can be ejected. %FALSE otherwise
 	 */
 	public bool canEject();
 
 	/**
 	 * Checks if a volume can be mounted.
 	 *
-	 * Return: %TRUE if the @volume can be mounted. %FALSE otherwise
+	 * Returns: %TRUE if the @volume can be mounted. %FALSE otherwise
 	 */
 	public bool canMount();
 
@@ -134,7 +134,7 @@ public interface VolumeIF{
 	 * Params:
 	 *     result = a #GAsyncResult
 	 *
-	 * Return: %TRUE, %FALSE if operation failed
+	 * Returns: %TRUE, %FALSE if operation failed
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -164,7 +164,7 @@ public interface VolumeIF{
 	 * Params:
 	 *     result = a #GAsyncResult
 	 *
-	 * Return: %TRUE if the volume was successfully ejected. %FALSE otherwise
+	 * Returns: %TRUE if the volume was successfully ejected. %FALSE otherwise
 	 *
 	 * Since: 2.22
 	 *
@@ -176,7 +176,7 @@ public interface VolumeIF{
 	 * Gets the kinds of [identifiers][volume-identifier] that @volume has.
 	 * Use g_volume_get_identifier() to obtain the identifiers themselves.
 	 *
-	 * Return: a %NULL-terminated array
+	 * Returns: a %NULL-terminated array
 	 *     of strings containing kinds of identifiers. Use g_strfreev() to free.
 	 */
 	public string[] enumerateIdentifiers();
@@ -209,7 +209,7 @@ public interface VolumeIF{
 	 * implementations to find the underlying mount to shadow, see
 	 * g_mount_is_shadowed() for more details.
 	 *
-	 * Return: the activation root of @volume
+	 * Returns: the activation root of @volume
 	 *     or %NULL. Use g_object_unref() to free.
 	 *
 	 * Since: 2.18
@@ -219,7 +219,7 @@ public interface VolumeIF{
 	/**
 	 * Gets the drive for the @volume.
 	 *
-	 * Return: a #GDrive or %NULL if @volume is not
+	 * Returns: a #GDrive or %NULL if @volume is not
 	 *     associated with a drive. The returned object should be unreffed
 	 *     with g_object_unref() when no longer needed.
 	 */
@@ -228,7 +228,7 @@ public interface VolumeIF{
 	/**
 	 * Gets the icon for @volume.
 	 *
-	 * Return: a #GIcon.
+	 * Returns: a #GIcon.
 	 *     The returned object should be unreffed with g_object_unref()
 	 *     when no longer needed.
 	 */
@@ -242,7 +242,7 @@ public interface VolumeIF{
 	 * Params:
 	 *     kind = the kind of identifier to return
 	 *
-	 * Return: a newly allocated string containing the
+	 * Returns: a newly allocated string containing the
 	 *     requested identfier, or %NULL if the #GVolume
 	 *     doesn't have this kind of identifier
 	 */
@@ -251,7 +251,7 @@ public interface VolumeIF{
 	/**
 	 * Gets the mount for the @volume.
 	 *
-	 * Return: a #GMount or %NULL if @volume isn't mounted.
+	 * Returns: a #GMount or %NULL if @volume isn't mounted.
 	 *     The returned object should be unreffed with g_object_unref()
 	 *     when no longer needed.
 	 */
@@ -260,7 +260,7 @@ public interface VolumeIF{
 	/**
 	 * Gets the name of @volume.
 	 *
-	 * Return: the name for the given @volume. The returned string should
+	 * Returns: the name for the given @volume. The returned string should
 	 *     be freed with g_free() when no longer needed.
 	 */
 	public string getName();
@@ -268,7 +268,7 @@ public interface VolumeIF{
 	/**
 	 * Gets the sort key for @volume, if any.
 	 *
-	 * Return: Sorting key for @volume or %NULL if no such key is available
+	 * Returns: Sorting key for @volume or %NULL if no such key is available
 	 *
 	 * Since: 2.32
 	 */
@@ -277,7 +277,7 @@ public interface VolumeIF{
 	/**
 	 * Gets the symbolic icon for @volume.
 	 *
-	 * Return: a #GIcon.
+	 * Returns: a #GIcon.
 	 *     The returned object should be unreffed with g_object_unref()
 	 *     when no longer needed.
 	 *
@@ -291,7 +291,7 @@ public interface VolumeIF{
 	 * considered an opaque string. Returns %NULL if there is no UUID
 	 * available.
 	 *
-	 * Return: the UUID for @volume or %NULL if no UUID can be computed.
+	 * Returns: the UUID for @volume or %NULL if no UUID can be computed.
 	 *     The returned string should be freed with g_free()
 	 *     when no longer needed.
 	 */
@@ -323,7 +323,7 @@ public interface VolumeIF{
 	 * Params:
 	 *     result = a #GAsyncResult
 	 *
-	 * Return: %TRUE, %FALSE if operation failed
+	 * Returns: %TRUE, %FALSE if operation failed
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -332,7 +332,7 @@ public interface VolumeIF{
 	/**
 	 * Returns whether the volume should be automatically mounted.
 	 *
-	 * Return: %TRUE if the volume should be automatically mounted
+	 * Returns: %TRUE if the volume should be automatically mounted
 	 */
 	public bool shouldAutomount();
 

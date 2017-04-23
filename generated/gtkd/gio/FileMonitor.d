@@ -91,7 +91,7 @@ public class FileMonitor : ObjectG
 	/**
 	 * Cancels a file monitor.
 	 *
-	 * Return: always %TRUE
+	 * Returns: always %TRUE
 	 */
 	public bool cancel()
 	{
@@ -120,7 +120,7 @@ public class FileMonitor : ObjectG
 	/**
 	 * Returns whether the monitor is canceled.
 	 *
-	 * Return: %TRUE if monitor is canceled. %FALSE otherwise.
+	 * Returns: %TRUE if monitor is canceled. %FALSE otherwise.
 	 */
 	public bool isCancelled()
 	{

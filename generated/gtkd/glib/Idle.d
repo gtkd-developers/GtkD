@@ -177,7 +177,7 @@ public class Idle
 	 *     funct = function to call
 	 *     data = data to pass to @function.
 	 *
-	 * Return: the ID (greater than 0) of the event source.
+	 * Returns: the ID (greater than 0) of the event source.
 	 */
 	public static uint add(GSourceFunc funct, void* data)
 	{
@@ -205,7 +205,7 @@ public class Idle
 	 *     data = data to pass to @function
 	 *     notify = function to call when the idle is removed, or %NULL
 	 *
-	 * Return: the ID (greater than 0) of the event source.
+	 * Returns: the ID (greater than 0) of the event source.
 	 */
 	public static uint addFull(int priority, GSourceFunc funct, void* data, GDestroyNotify notify)
 	{
@@ -218,7 +218,7 @@ public class Idle
 	 * Params:
 	 *     data = the data for the idle source's callback.
 	 *
-	 * Return: %TRUE if an idle source was found and removed.
+	 * Returns: %TRUE if an idle source was found and removed.
 	 */
 	public static bool removeByData(void* data)
 	{
@@ -234,7 +234,7 @@ public class Idle
 	 * %G_PRIORITY_DEFAULT_IDLE, as compared to other sources which
 	 * have a default priority of %G_PRIORITY_DEFAULT.
 	 *
-	 * Return: the newly-created idle source
+	 * Returns: the newly-created idle source
 	 */
 	public static Source sourceNew()
 	{

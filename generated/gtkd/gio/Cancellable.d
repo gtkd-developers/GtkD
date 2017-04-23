@@ -89,7 +89,7 @@ public class Cancellable : ObjectG
 	 * One #GCancellable can be used in multiple consecutive
 	 * operations or in multiple concurrent operations.
 	 *
-	 * Return: a #GCancellable.
+	 * Returns: a #GCancellable.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -108,7 +108,7 @@ public class Cancellable : ObjectG
 	/**
 	 * Gets the top cancellable from the stack.
 	 *
-	 * Return: a #GCancellable from the top
+	 * Returns: a #GCancellable from the top
 	 *     of the stack, or %NULL if the stack is empty.
 	 */
 	public static Cancellable getCurrent()
@@ -171,7 +171,7 @@ public class Cancellable : ObjectG
 	 *     data = Data to pass to @callback.
 	 *     dataDestroyFunc = Free function for @data or %NULL.
 	 *
-	 * Return: The id of the signal handler or 0 if @cancellable has already
+	 * Returns: The id of the signal handler or 0 if @cancellable has already
 	 *     been cancelled.
 	 *
 	 * Since: 2.22
@@ -222,7 +222,7 @@ public class Cancellable : ObjectG
 	 *
 	 * See also g_cancellable_make_pollfd().
 	 *
-	 * Return: A valid file descriptor. %-1 if the file descriptor
+	 * Returns: A valid file descriptor. %-1 if the file descriptor
 	 *     is not supported, or on errors.
 	 */
 	public int getFd()
@@ -233,7 +233,7 @@ public class Cancellable : ObjectG
 	/**
 	 * Checks if a cancellable job has been cancelled.
 	 *
-	 * Return: %TRUE if @cancellable is cancelled,
+	 * Returns: %TRUE if @cancellable is cancelled,
 	 *     FALSE if called with %NULL or if item is not cancelled.
 	 */
 	public bool isCancelled()
@@ -264,7 +264,7 @@ public class Cancellable : ObjectG
 	 * Params:
 	 *     pollfd = a pointer to a #GPollFD
 	 *
-	 * Return: %TRUE if @pollfd was successfully initialized, %FALSE on
+	 * Returns: %TRUE if @pollfd was successfully initialized, %FALSE on
 	 *     failure to prepare the cancellable.
 	 *
 	 * Since: 2.22
@@ -338,7 +338,7 @@ public class Cancellable : ObjectG
 	 * If the @cancellable is cancelled, sets the error to notify
 	 * that the operation was cancelled.
 	 *
-	 * Return: %TRUE if @cancellable was cancelled, %FALSE if it was not
+	 * Returns: %TRUE if @cancellable was cancelled, %FALSE if it was not
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -367,7 +367,7 @@ public class Cancellable : ObjectG
 	 *
 	 * The new #GSource will hold a reference to the #GCancellable.
 	 *
-	 * Return: the new #GSource.
+	 * Returns: the new #GSource.
 	 *
 	 * Since: 2.28
 	 */

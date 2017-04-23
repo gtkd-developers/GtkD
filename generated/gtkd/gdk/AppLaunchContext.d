@@ -101,7 +101,7 @@ public class AppLaunchContext : GioAppLaunchContext
 	 *
 	 * Deprecated: Use gdk_display_get_app_launch_context() instead
 	 *
-	 * Return: a new #GdkAppLaunchContext
+	 * Returns: a new #GdkAppLaunchContext
 	 *
 	 * Since: 2.14
 	 *

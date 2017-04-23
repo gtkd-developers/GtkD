@@ -102,7 +102,7 @@ public class LinkButton : Button
 	 * Params:
 	 *     uri = a valid URI
 	 *
-	 * Return: a new link button widget.
+	 * Returns: a new link button widget.
 	 *
 	 * Since: 2.10
 	 *
@@ -127,7 +127,7 @@ public class LinkButton : Button
 	 *     uri = a valid URI
 	 *     label = the text of the button
 	 *
-	 * Return: a new link button widget.
+	 * Returns: a new link button widget.
 	 *
 	 * Since: 2.10
 	 *
@@ -148,7 +148,7 @@ public class LinkButton : Button
 	/**
 	 * Retrieves the URI set using gtk_link_button_set_uri().
 	 *
-	 * Return: a valid URI.  The returned string is owned by the link button
+	 * Returns: a valid URI.  The returned string is owned by the link button
 	 *     and should not be modified or freed.
 	 *
 	 * Since: 2.10
@@ -165,7 +165,7 @@ public class LinkButton : Button
 	 *
 	 * The state may also be changed using gtk_link_button_set_visited().
 	 *
-	 * Return: %TRUE if the link has been visited, %FALSE otherwise
+	 * Returns: %TRUE if the link has been visited, %FALSE otherwise
 	 *
 	 * Since: 2.14
 	 */

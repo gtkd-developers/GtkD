@@ -103,7 +103,7 @@ public class Switch : Widget, ActionableIF, ActivatableIF
 	/**
 	 * Creates a new #GtkSwitch widget.
 	 *
-	 * Return: the newly created #GtkSwitch instance
+	 * Returns: the newly created #GtkSwitch instance
 	 *
 	 * Since: 3.0
 	 *
@@ -124,7 +124,7 @@ public class Switch : Widget, ActionableIF, ActivatableIF
 	/**
 	 * Gets whether the #GtkSwitch is in its “on” or “off” state.
 	 *
-	 * Return: %TRUE if the #GtkSwitch is active, and %FALSE otherwise
+	 * Returns: %TRUE if the #GtkSwitch is active, and %FALSE otherwise
 	 *
 	 * Since: 3.0
 	 */
@@ -136,7 +136,7 @@ public class Switch : Widget, ActionableIF, ActivatableIF
 	/**
 	 * Gets the underlying state of the #GtkSwitch.
 	 *
-	 * Return: the underlying state
+	 * Returns: the underlying state
 	 *
 	 * Since: 3.14
 	 */
@@ -276,7 +276,7 @@ public class Switch : Widget, ActionableIF, ActivatableIF
 	 * Params:
 	 *     state = the new state of the switch
 	 *
-	 * Return: %TRUE to stop the signal emission
+	 * Returns: %TRUE to stop the signal emission
 	 *
 	 * Since: 3.14
 	 */

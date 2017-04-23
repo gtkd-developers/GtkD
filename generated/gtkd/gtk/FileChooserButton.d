@@ -118,7 +118,7 @@ public class FileChooserButton : Box, FileChooserIF
 	 *     title = the title of the browse dialog.
 	 *     action = the open mode for the widget.
 	 *
-	 * Return: a new button widget.
+	 * Returns: a new button widget.
 	 *
 	 * Since: 2.6
 	 *
@@ -151,7 +151,7 @@ public class FileChooserButton : Box, FileChooserIF
 	 * Params:
 	 *     dialog = the widget to use as dialog
 	 *
-	 * Return: a new button widget.
+	 * Returns: a new button widget.
 	 *
 	 * Since: 2.6
 	 *
@@ -175,7 +175,7 @@ public class FileChooserButton : Box, FileChooserIF
 	 *
 	 * Deprecated: Use gtk_widget_get_focus_on_click() instead
 	 *
-	 * Return: %TRUE if the button grabs focus when it is clicked with
+	 * Returns: %TRUE if the button grabs focus when it is clicked with
 	 *     the mouse.
 	 *
 	 * Since: 2.10
@@ -189,7 +189,7 @@ public class FileChooserButton : Box, FileChooserIF
 	 * Retrieves the title of the browse dialog used by @button. The returned value
 	 * should not be modified or freed.
 	 *
-	 * Return: a pointer to the browse dialog’s title.
+	 * Returns: a pointer to the browse dialog’s title.
 	 *
 	 * Since: 2.6
 	 */
@@ -201,7 +201,7 @@ public class FileChooserButton : Box, FileChooserIF
 	/**
 	 * Retrieves the width in characters of the @button widget’s entry and/or label.
 	 *
-	 * Return: an integer width (in characters) that the button will use to size itself.
+	 * Returns: an integer width (in characters) that the button will use to size itself.
 	 *
 	 * Since: 2.6
 	 */

@@ -210,7 +210,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	/**
 	 * Creates a new entry.
 	 *
-	 * Return: a new #GtkEntry.
+	 * Returns: a new #GtkEntry.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -232,7 +232,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * Params:
 	 *     buffer = The buffer to use for the new #GtkEntry.
 	 *
-	 * Return: a new #GtkEntry
+	 * Returns: a new #GtkEntry
 	 *
 	 * Since: 2.18
 	 *
@@ -253,7 +253,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	/**
 	 * Retrieves the value set by gtk_entry_set_activates_default().
 	 *
-	 * Return: %TRUE if the entry will activate the default widget
+	 * Returns: %TRUE if the entry will activate the default widget
 	 */
 	public bool getActivatesDefault()
 	{
@@ -263,7 +263,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	/**
 	 * Gets the value set by gtk_entry_set_alignment().
 	 *
-	 * Return: the alignment
+	 * Returns: the alignment
 	 *
 	 * Since: 2.4
 	 */
@@ -276,7 +276,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * Gets the attribute list that was set on the entry using
 	 * gtk_entry_set_attributes(), if any.
 	 *
-	 * Return: the attribute list, or %NULL
+	 * Returns: the attribute list, or %NULL
 	 *     if none was set.
 	 *
 	 * Since: 3.6
@@ -297,7 +297,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * Get the #GtkEntryBuffer object which holds the text for
 	 * this widget.
 	 *
-	 * Return: A #GtkEntryBuffer object.
+	 * Returns: A #GtkEntryBuffer object.
 	 *
 	 * Since: 2.18
 	 */
@@ -316,7 +316,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	/**
 	 * Returns the auxiliary completion object currently in use by @entry.
 	 *
-	 * Return: The auxiliary completion object currently
+	 * Returns: The auxiliary completion object currently
 	 *     in use by @entry.
 	 *
 	 * Since: 2.4
@@ -340,7 +340,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * This function is meant to be used in a #GtkWidget::drag-data-get
 	 * callback.
 	 *
-	 * Return: index of the icon which is the source of the current
+	 * Returns: index of the icon which is the source of the current
 	 *     DND operation, or -1.
 	 *
 	 * Since: 2.16
@@ -354,7 +354,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * Retrieves the horizontal cursor adjustment for the entry.
 	 * See gtk_entry_set_cursor_hadjustment().
 	 *
-	 * Return: the horizontal cursor adjustment, or %NULL
+	 * Returns: the horizontal cursor adjustment, or %NULL
 	 *     if none has been set.
 	 *
 	 * Since: 2.12
@@ -374,7 +374,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	/**
 	 * Gets the value set by gtk_entry_set_has_frame().
 	 *
-	 * Return: whether the entry has a beveled frame
+	 * Returns: whether the entry has a beveled frame
 	 */
 	public bool getHasFrame()
 	{
@@ -387,7 +387,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * Params:
 	 *     iconPos = Icon position
 	 *
-	 * Return: %TRUE if the icon is activatable.
+	 * Returns: %TRUE if the icon is activatable.
 	 *
 	 * Since: 2.16
 	 */
@@ -428,7 +428,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 *     x = the x coordinate of the position to find
 	 *     y = the y coordinate of the position to find
 	 *
-	 * Return: the index of the icon at the given position, or -1
+	 * Returns: the index of the icon at the given position, or -1
 	 *
 	 * Since: 2.16
 	 */
@@ -445,7 +445,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * Params:
 	 *     iconPos = Icon position
 	 *
-	 * Return: A #GIcon, or %NULL if no icon is set
+	 * Returns: A #GIcon, or %NULL if no icon is set
 	 *     or if the icon is not a #GIcon
 	 *
 	 * Since: 2.16
@@ -470,7 +470,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * Params:
 	 *     iconPos = Icon position
 	 *
-	 * Return: An icon name, or %NULL if no icon is set or if the icon
+	 * Returns: An icon name, or %NULL if no icon is set or if the icon
 	 *     wasn’t set from an icon name
 	 *
 	 * Since: 2.16
@@ -490,7 +490,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * Params:
 	 *     iconPos = Icon position
 	 *
-	 * Return: A #GdkPixbuf, or %NULL if no icon is
+	 * Returns: A #GdkPixbuf, or %NULL if no icon is
 	 *     set for this position.
 	 *
 	 * Since: 2.16
@@ -513,7 +513,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * Params:
 	 *     iconPos = Icon position
 	 *
-	 * Return: %TRUE if the icon is sensitive.
+	 * Returns: %TRUE if the icon is sensitive.
 	 *
 	 * Since: 2.16
 	 */
@@ -532,7 +532,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * Params:
 	 *     iconPos = Icon position
 	 *
-	 * Return: A stock id, or %NULL if no icon is set or if the icon
+	 * Returns: A stock id, or %NULL if no icon is set or if the icon
 	 *     wasn’t set from a stock id
 	 *
 	 * Since: 2.16
@@ -550,7 +550,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * Params:
 	 *     iconPos = Icon position
 	 *
-	 * Return: image representation being used
+	 * Returns: image representation being used
 	 *
 	 * Since: 2.16
 	 */
@@ -566,7 +566,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * Params:
 	 *     iconPos = the icon position
 	 *
-	 * Return: the tooltip text, or %NULL. Free the returned
+	 * Returns: the tooltip text, or %NULL. Free the returned
 	 *     string with g_free() when done.
 	 *
 	 * Since: 2.16
@@ -586,7 +586,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * Params:
 	 *     iconPos = the icon position
 	 *
-	 * Return: the tooltip text, or %NULL. Free the returned
+	 * Returns: the tooltip text, or %NULL. Free the returned
 	 *     string with g_free() when done.
 	 *
 	 * Since: 2.16
@@ -607,7 +607,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * objects like #GtkStyleContext and #GtkCssProvider); the value returned by
 	 * this function is ignored by #GtkEntry.
 	 *
-	 * Return: the entry’s #GtkBorder, or
+	 * Returns: the entry’s #GtkBorder, or
 	 *     %NULL if none was set.
 	 *
 	 * Since: 2.10
@@ -648,7 +648,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * Retrieves the character displayed in place of the real characters
 	 * for entries with visibility set to false. See gtk_entry_set_invisible_char().
 	 *
-	 * Return: the current invisible char, or 0, if the entry does not
+	 * Returns: the current invisible char, or 0, if the entry does not
 	 *     show invisible text at all.
 	 */
 	public dchar getInvisibleChar()
@@ -668,7 +668,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * gtk_entry_text_index_to_layout_index() are needed to convert byte
 	 * indices in the layout to byte indices in the entry contents.
 	 *
-	 * Return: the #PangoLayout for this entry
+	 * Returns: the #PangoLayout for this entry
 	 */
 	public PgLayout getLayout()
 	{
@@ -724,7 +724,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * gtk_entry_buffer_get_max_length (buffer);
 	 * ]|
 	 *
-	 * Return: the maximum allowed number of characters
+	 * Returns: the maximum allowed number of characters
 	 *     in #GtkEntry, or 0 if there is no maximum.
 	 */
 	public int getMaxLength()
@@ -736,7 +736,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * Retrieves the desired maximum width of @entry, in characters.
 	 * See gtk_entry_set_max_width_chars().
 	 *
-	 * Return: the maximum width of the entry, in characters
+	 * Returns: the maximum width of the entry, in characters
 	 *
 	 * Since: 3.12
 	 */
@@ -748,7 +748,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	/**
 	 * Gets the value set by gtk_entry_set_overwrite_mode().
 	 *
-	 * Return: whether the text is overwritten when typing.
+	 * Returns: whether the text is overwritten when typing.
 	 *
 	 * Since: 2.14
 	 */
@@ -760,7 +760,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	/**
 	 * Retrieves the text that will be displayed when @entry is empty and unfocused
 	 *
-	 * Return: a pointer to the placeholder text as a string. This string points to internally allocated
+	 * Returns: a pointer to the placeholder text as a string. This string points to internally allocated
 	 *     storage in the widget and must not be freed, modified or stored.
 	 *
 	 * Since: 3.2
@@ -774,7 +774,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * Returns the current fraction of the task that’s been completed.
 	 * See gtk_entry_set_progress_fraction().
 	 *
-	 * Return: a fraction from 0.0 to 1.0
+	 * Returns: a fraction from 0.0 to 1.0
 	 *
 	 * Since: 2.16
 	 */
@@ -786,7 +786,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	/**
 	 * Retrieves the pulse step set with gtk_entry_set_progress_pulse_step().
 	 *
-	 * Return: a fraction from 0.0 to 1.0
+	 * Returns: a fraction from 0.0 to 1.0
 	 *
 	 * Since: 2.16
 	 */
@@ -799,7 +799,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * Gets the tabstops that were set on the entry using gtk_entry_set_tabs(), if
 	 * any.
 	 *
-	 * Return: the tabstops, or %NULL if none was set.
+	 * Returns: the tabstops, or %NULL if none was set.
 	 *
 	 * Since: 3.10
 	 */
@@ -827,7 +827,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * gtk_entry_buffer_get_text (buffer);
 	 * ]|
 	 *
-	 * Return: a pointer to the contents of the widget as a
+	 * Returns: a pointer to the contents of the widget as a
 	 *     string. This string points to internally allocated
 	 *     storage in the widget and must not be freed, modified or
 	 *     stored.
@@ -867,7 +867,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * gtk_entry_buffer_get_length (buffer);
 	 * ]|
 	 *
-	 * Return: the current number of characters
+	 * Returns: the current number of characters
 	 *     in #GtkEntry, or 0 if there are none.
 	 *
 	 * Since: 2.14
@@ -881,7 +881,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * Retrieves whether the text in @entry is visible. See
 	 * gtk_entry_set_visibility().
 	 *
-	 * Return: %TRUE if the text is currently visible
+	 * Returns: %TRUE if the text is currently visible
 	 */
 	public bool getVisibility()
 	{
@@ -891,7 +891,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	/**
 	 * Gets the value set by gtk_entry_set_width_chars().
 	 *
-	 * Return: number of chars to request space for, or negative if unset
+	 * Returns: number of chars to request space for, or negative if unset
 	 */
 	public int getWidthChars()
 	{
@@ -929,7 +929,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * Params:
 	 *     event = the key event
 	 *
-	 * Return: %TRUE if the input method handled the key event.
+	 * Returns: %TRUE if the input method handled the key event.
 	 *
 	 * Since: 2.22
 	 */
@@ -946,7 +946,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * Params:
 	 *     layoutIndex = byte index into the entry layout text
 	 *
-	 * Return: byte index into the entry contents
+	 * Returns: byte index into the entry contents
 	 */
 	public int layoutIndexToTextIndex(int layoutIndex)
 	{
@@ -1506,7 +1506,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	 * Params:
 	 *     textIndex = byte index into the entry contents
 	 *
-	 * Return: byte index into the entry layout text
+	 * Returns: byte index into the entry layout text
 	 */
 	public int textIndexToLayoutIndex(int textIndex)
 	{

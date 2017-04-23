@@ -65,7 +65,7 @@ public class StaticPadTemplate
 	/**
 	 * Converts a #GstStaticPadTemplate into a #GstPadTemplate.
 	 *
-	 * Return: a new #GstPadTemplate.
+	 * Returns: a new #GstPadTemplate.
 	 */
 	public PadTemplate get()
 	{
@@ -82,7 +82,7 @@ public class StaticPadTemplate
 	/**
 	 * Gets the capabilities of the static pad template.
 	 *
-	 * Return: the #GstCaps of the static pad template.
+	 * Returns: the #GstCaps of the static pad template.
 	 *     Unref after usage. Since the core holds an additional
 	 *     ref to the returned caps, use gst_caps_make_writable()
 	 *     on the returned caps to modify it.

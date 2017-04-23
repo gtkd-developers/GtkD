@@ -136,7 +136,7 @@ public class TypeModule : ObjectG, TypePluginIF
 	 *         terminated by a struct with all members being
 	 *         0.
 	 *
-	 * Return: the new or existing type ID
+	 * Returns: the new or existing type ID
 	 *
 	 * Since: 2.6
 	 */
@@ -161,7 +161,7 @@ public class TypeModule : ObjectG, TypePluginIF
 	 *         terminated by a struct with all members being
 	 *         0.
 	 *
-	 * Return: the new or existing type ID
+	 * Returns: the new or existing type ID
 	 *
 	 * Since: 2.6
 	 */
@@ -189,7 +189,7 @@ public class TypeModule : ObjectG, TypePluginIF
 	 *     typeInfo = type information structure
 	 *     flags = flags field providing details about the type
 	 *
-	 * Return: the new or existing type ID
+	 * Returns: the new or existing type ID
 	 */
 	public GType registerType(GType parentType, string typeName, GTypeInfo* typeInfo, GTypeFlags flags)
 	{
@@ -225,7 +225,7 @@ public class TypeModule : ObjectG, TypePluginIF
 	 * If loading the plugin fails, the use count is reset to
 	 * its prior value.
 	 *
-	 * Return: %FALSE if the plugin needed to be loaded and
+	 * Returns: %FALSE if the plugin needed to be loaded and
 	 *     loading the plugin failed.
 	 */
 	public bool use()

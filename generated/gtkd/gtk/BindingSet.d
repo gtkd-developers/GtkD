@@ -76,7 +76,7 @@ public class BindingSet
 	 *     modifiers = key modifier of the binding
 	 *     object = object to activate when binding found
 	 *
-	 * Return: %TRUE if a binding was found and activated
+	 * Returns: %TRUE if a binding was found and activated
 	 */
 	public bool activate(uint keyval, GdkModifierType modifiers, ObjectG object)
 	{
@@ -107,7 +107,7 @@ public class BindingSet
 	 * Params:
 	 *     objectClass = a valid #GObject class
 	 *
-	 * Return: the binding set corresponding to
+	 * Returns: the binding set corresponding to
 	 *     @object_class
 	 */
 	public static BindingSet byClass(void* objectClass)
@@ -131,7 +131,7 @@ public class BindingSet
 	 * Params:
 	 *     setName = unique binding set name
 	 *
-	 * Return: %NULL or the specified binding set
+	 * Returns: %NULL or the specified binding set
 	 */
 	public static BindingSet find(string setName)
 	{
@@ -152,7 +152,7 @@ public class BindingSet
 	 * Params:
 	 *     setName = unique name of this binding set
 	 *
-	 * Return: new binding set
+	 * Returns: new binding set
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -177,7 +177,7 @@ public class BindingSet
 	 *     keyval = key value of the binding
 	 *     modifiers = key modifier of the binding
 	 *
-	 * Return: %TRUE if a binding was found and activated
+	 * Returns: %TRUE if a binding was found and activated
 	 */
 	public static bool bindingsActivate(ObjectG object, uint keyval, GdkModifierType modifiers)
 	{
@@ -192,7 +192,7 @@ public class BindingSet
 	 *     object = a #GObject (generally must be a widget)
 	 *     event = a #GdkEventKey
 	 *
-	 * Return: %TRUE if a matching key binding was found
+	 * Returns: %TRUE if a matching key binding was found
 	 *
 	 * Since: 2.4
 	 */

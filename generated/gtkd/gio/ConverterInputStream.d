@@ -92,7 +92,7 @@ public class ConverterInputStream : FilterInputStream, PollableInputStreamIF
 	 *     baseStream = a #GInputStream
 	 *     converter = a #GConverter
 	 *
-	 * Return: a new #GInputStream.
+	 * Returns: a new #GInputStream.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -111,7 +111,7 @@ public class ConverterInputStream : FilterInputStream, PollableInputStreamIF
 	/**
 	 * Gets the #GConverter that is used by @converter_stream.
 	 *
-	 * Return: the converter of the converter input stream
+	 * Returns: the converter of the converter input stream
 	 *
 	 * Since: 2.24
 	 */

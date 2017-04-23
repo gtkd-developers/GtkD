@@ -89,7 +89,7 @@ public class SourceSearchContext : ObjectG
 	 *     buffer = a #GtkSourceBuffer.
 	 *     settings = a #GtkSourceSearchSettings, or %NULL.
 	 *
-	 * Return: a new search context.
+	 * Returns: a new search context.
 	 *
 	 * Since: 3.10
 	 *
@@ -119,7 +119,7 @@ public class SourceSearchContext : ObjectG
 	 *     matchStart = return location for start of match, or %NULL.
 	 *     matchEnd = return location for end of match, or %NULL.
 	 *
-	 * Return: whether a match was found.
+	 * Returns: whether a match was found.
 	 *
 	 * Since: 3.10
 	 */
@@ -158,7 +158,7 @@ public class SourceSearchContext : ObjectG
 	 *     hasWrappedAround = return location to know whether the
 	 *         search has wrapped around, or %NULL.
 	 *
-	 * Return: whether a match was found.
+	 * Returns: whether a match was found.
 	 *
 	 * Since: 3.22
 	 */
@@ -213,7 +213,7 @@ public class SourceSearchContext : ObjectG
 	 *     matchStart = return location for start of match, or %NULL.
 	 *     matchEnd = return location for end of match, or %NULL.
 	 *
-	 * Return: whether a match was found.
+	 * Returns: whether a match was found.
 	 *
 	 * Since: 3.10
 	 *
@@ -252,7 +252,7 @@ public class SourceSearchContext : ObjectG
 	 *     hasWrappedAround = return location to know whether the
 	 *         search has wrapped around, or %NULL.
 	 *
-	 * Return: whether a match was found.
+	 * Returns: whether a match was found.
 	 *
 	 * Since: 3.22
 	 *
@@ -291,7 +291,7 @@ public class SourceSearchContext : ObjectG
 	 *     matchStart = return location for start of match, or %NULL.
 	 *     matchEnd = return location for end of match, or %NULL.
 	 *
-	 * Return: whether a match was found.
+	 * Returns: whether a match was found.
 	 *
 	 * Since: 3.10
 	 */
@@ -330,7 +330,7 @@ public class SourceSearchContext : ObjectG
 	 *     hasWrappedAround = return location to know whether the
 	 *         search has wrapped around, or %NULL.
 	 *
-	 * Return: whether a match was found.
+	 * Returns: whether a match was found.
 	 *
 	 * Since: 3.22
 	 */
@@ -385,7 +385,7 @@ public class SourceSearchContext : ObjectG
 	 *     matchStart = return location for start of match, or %NULL.
 	 *     matchEnd = return location for end of match, or %NULL.
 	 *
-	 * Return: whether a match was found.
+	 * Returns: whether a match was found.
 	 *
 	 * Since: 3.10
 	 *
@@ -424,7 +424,7 @@ public class SourceSearchContext : ObjectG
 	 *     hasWrappedAround = return location to know whether the
 	 *         search has wrapped around, or %NULL.
 	 *
-	 * Return: whether a match was found.
+	 * Returns: whether a match was found.
 	 *
 	 * Since: 3.22
 	 *
@@ -452,7 +452,7 @@ public class SourceSearchContext : ObjectG
 	}
 
 	/**
-	 * Return: the associated buffer.
+	 * Returns: the associated buffer.
 	 *
 	 * Since: 3.10
 	 */
@@ -469,7 +469,7 @@ public class SourceSearchContext : ObjectG
 	}
 
 	/**
-	 * Return: whether to highlight the search occurrences.
+	 * Returns: whether to highlight the search occurrences.
 	 *
 	 * Since: 3.10
 	 */
@@ -479,7 +479,7 @@ public class SourceSearchContext : ObjectG
 	}
 
 	/**
-	 * Return: the #GtkSourceStyle to apply on search matches.
+	 * Returns: the #GtkSourceStyle to apply on search matches.
 	 *
 	 * Since: 3.16
 	 */
@@ -505,7 +505,7 @@ public class SourceSearchContext : ObjectG
 	 *     matchStart = the start of the occurrence.
 	 *     matchEnd = the end of the occurrence.
 	 *
-	 * Return: the position of the search occurrence. The first occurrence has the
+	 * Returns: the position of the search occurrence. The first occurrence has the
 	 *     position 1 (not 0). Returns 0 if @match_start and @match_end don't delimit
 	 *     an occurrence. Returns -1 if the position is not yet known.
 	 *
@@ -521,7 +521,7 @@ public class SourceSearchContext : ObjectG
 	 * fully scanned, the total number of occurrences is unknown, and -1 is
 	 * returned.
 	 *
-	 * Return: the total number of search occurrences, or -1 if unknown.
+	 * Returns: the total number of search occurrences, or -1 if unknown.
 	 *
 	 * Since: 3.10
 	 */
@@ -537,7 +537,7 @@ public class SourceSearchContext : ObjectG
 	 *
 	 * Free the return value with g_error_free().
 	 *
-	 * Return: the #GError, or %NULL if the pattern is valid.
+	 * Returns: the #GError, or %NULL if the pattern is valid.
 	 *
 	 * Since: 3.10
 	 */
@@ -554,7 +554,7 @@ public class SourceSearchContext : ObjectG
 	}
 
 	/**
-	 * Return: the search settings.
+	 * Returns: the search settings.
 	 *
 	 * Since: 3.10
 	 */
@@ -586,7 +586,7 @@ public class SourceSearchContext : ObjectG
 	 *     replace = the replacement text.
 	 *     replaceLength = the length of @replace in bytes, or -1.
 	 *
-	 * Return: whether the match has been replaced.
+	 * Returns: whether the match has been replaced.
 	 *
 	 * Since: 3.10
 	 *
@@ -623,7 +623,7 @@ public class SourceSearchContext : ObjectG
 	 *     replace = the replacement text.
 	 *     replaceLength = the length of @replace in bytes, or -1.
 	 *
-	 * Return: whether the match has been replaced.
+	 * Returns: whether the match has been replaced.
 	 *
 	 * Since: 3.22
 	 *
@@ -655,7 +655,7 @@ public class SourceSearchContext : ObjectG
 	 *     replace = the replacement text.
 	 *     replaceLength = the length of @replace in bytes, or -1.
 	 *
-	 * Return: the number of replaced matches.
+	 * Returns: the number of replaced matches.
 	 *
 	 * Since: 3.10
 	 *

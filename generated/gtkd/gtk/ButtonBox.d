@@ -132,7 +132,7 @@ public class ButtonBox : Box
 	 * Params:
 	 *     orientation = the box's orientation.
 	 *
-	 * Return: a new #GtkButtonBox.
+	 * Returns: a new #GtkButtonBox.
 	 *
 	 * Since: 3.0
 	 *
@@ -157,7 +157,7 @@ public class ButtonBox : Box
 	 * Params:
 	 *     child = a child of @widget
 	 *
-	 * Return: %TRUE if the child is not subject to homogenous sizing
+	 * Returns: %TRUE if the child is not subject to homogenous sizing
 	 *
 	 * Since: 3.2
 	 */
@@ -172,7 +172,7 @@ public class ButtonBox : Box
 	 * Params:
 	 *     child = a child of @widget
 	 *
-	 * Return: whether @child should appear in a secondary group of children.
+	 * Returns: whether @child should appear in a secondary group of children.
 	 *
 	 * Since: 2.4
 	 */
@@ -184,7 +184,7 @@ public class ButtonBox : Box
 	/**
 	 * Retrieves the method being used to arrange the buttons in a button box.
 	 *
-	 * Return: the method used to lay out buttons in @widget.
+	 * Returns: the method used to lay out buttons in @widget.
 	 */
 	public GtkButtonBoxStyle getLayout()
 	{

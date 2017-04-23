@@ -37,7 +37,7 @@ public struct Version
 	 * Returns the binary age as passed to libtool when building the ATK
 	 * library the process is running against.
 	 *
-	 * Return: the binary age of the ATK library
+	 * Returns: the binary age of the ATK library
 	 *
 	 * Since: 2.8
 	 */
@@ -50,7 +50,7 @@ public struct Version
 	 * Returns the interface age as passed to libtool when building the
 	 * ATK library the process is running against.
 	 *
-	 * Return: the interface age of the ATK library
+	 * Returns: the interface age of the ATK library
 	 *
 	 * Since: 2.8
 	 */
@@ -68,7 +68,7 @@ public struct Version
 	 * macro represents the major version of the ATK headers you have
 	 * included when compiling your code.
 	 *
-	 * Return: the major version number of the ATK library
+	 * Returns: the major version number of the ATK library
 	 *
 	 * Since: 2.8
 	 */
@@ -86,7 +86,7 @@ public struct Version
 	 * #ATK_MICRO_VERSION macro represents the micro version of the ATK
 	 * headers you have included when compiling your code.
 	 *
-	 * Return: the micro version number of the ATK library
+	 * Returns: the micro version number of the ATK library
 	 *
 	 * Since: 2.8
 	 */
@@ -104,7 +104,7 @@ public struct Version
 	 * #ATK_MINOR_VERSION macro represents the minor version of the ATK
 	 * headers you have included when compiling your code.
 	 *
-	 * Return: the minor version number of the ATK library
+	 * Returns: the minor version number of the ATK library
 	 *
 	 * Since: 2.8
 	 */
@@ -116,7 +116,7 @@ public struct Version
 	/**
 	 * Gets version string for the GUI toolkit implementing ATK for this application.
 	 *
-	 * Return: version string for the GUI toolkit implementing ATK for this application
+	 * Returns: version string for the GUI toolkit implementing ATK for this application
 	 */
 	public static string getToolkitVersion()
 	{
@@ -126,7 +126,7 @@ public struct Version
 	/**
 	 * Gets the current version for ATK.
 	 *
-	 * Return: version string for ATK
+	 * Returns: version string for ATK
 	 *
 	 * Since: 1.20
 	 */

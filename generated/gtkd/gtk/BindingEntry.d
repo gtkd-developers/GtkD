@@ -63,7 +63,7 @@ public struct BindingEntry
 	 *     bindingSet = a #GtkBindingSet
 	 *     signalDesc = a signal description
 	 *
-	 * Return: %G_TOKEN_NONE if the signal was successfully parsed and added,
+	 * Returns: %G_TOKEN_NONE if the signal was successfully parsed and added,
 	 *     the expected token otherwise
 	 *
 	 * Since: 3.0

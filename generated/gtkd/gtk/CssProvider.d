@@ -109,7 +109,7 @@ public class CssProvider : ObjectG, StyleProviderIF
 	/**
 	 * Returns a newly created #GtkCssProvider.
 	 *
-	 * Return: A new #GtkCssProvider
+	 * Returns: A new #GtkCssProvider
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -129,7 +129,7 @@ public class CssProvider : ObjectG, StyleProviderIF
 	 * Returns the provider containing the style settings used as a
 	 * fallback for all widgets.
 	 *
-	 * Return: The provider used for fallback styling.
+	 * Returns: The provider used for fallback styling.
 	 *     This memory is owned by GTK+, and you must not free it.
 	 */
 	public static CssProvider getDefault()
@@ -152,7 +152,7 @@ public class CssProvider : ObjectG, StyleProviderIF
 	 *     variant = variant to load, for example, "dark", or
 	 *         %NULL for the default
 	 *
-	 * Return: a #GtkCssProvider with the theme loaded.
+	 * Returns: a #GtkCssProvider with the theme loaded.
 	 *     This memory is owned by GTK+, and you must not free it.
 	 */
 	public static CssProvider getNamed(string name, string variant)
@@ -177,7 +177,7 @@ public class CssProvider : ObjectG, StyleProviderIF
 	 *         @length is not -1, the code will assume it is not NUL terminated and will
 	 *         potentially do a copy.
 	 *
-	 * Return: %TRUE. The return value is deprecated and %FALSE will only be
+	 * Returns: %TRUE. The return value is deprecated and %FALSE will only be
 	 *     returned for backwards compatibility reasons if an @error is not
 	 *     %NULL and a loading error occurred. To track errors while loading
 	 *     CSS, connect to the #GtkCssProvider::parsing-error signal.
@@ -205,7 +205,7 @@ public class CssProvider : ObjectG, StyleProviderIF
 	 * Params:
 	 *     file = #GFile pointing to a file to load
 	 *
-	 * Return: %TRUE. The return value is deprecated and %FALSE will only be
+	 * Returns: %TRUE. The return value is deprecated and %FALSE will only be
 	 *     returned for backwards compatibility reasons if an @error is not
 	 *     %NULL and a loading error occurred. To track errors while loading
 	 *     CSS, connect to the #GtkCssProvider::parsing-error signal.
@@ -233,7 +233,7 @@ public class CssProvider : ObjectG, StyleProviderIF
 	 * Params:
 	 *     path = the path of a filename to load, in the GLib filename encoding
 	 *
-	 * Return: %TRUE. The return value is deprecated and %FALSE will only be
+	 * Returns: %TRUE. The return value is deprecated and %FALSE will only be
 	 *     returned for backwards compatibility reasons if an @error is not
 	 *     %NULL and a loading error occurred. To track errors while loading
 	 *     CSS, connect to the #GtkCssProvider::parsing-error signal.
@@ -280,7 +280,7 @@ public class CssProvider : ObjectG, StyleProviderIF
 	 * gtk_css_provider_new() will basically create a duplicate of
 	 * this @provider.
 	 *
-	 * Return: a new string representing the @provider.
+	 * Returns: a new string representing the @provider.
 	 *
 	 * Since: 3.2
 	 */

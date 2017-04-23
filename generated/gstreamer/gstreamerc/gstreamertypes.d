@@ -3379,7 +3379,7 @@ struct GstAllocatorClass
 	 *     allocator = a #GstAllocator to use
 	 *     size = size of the visible memory area
 	 *     params = optional parameters
-	 * Return: a new #GstMemory.
+	 * Returns: a new #GstMemory.
 	 */
 	extern(C) GstMemory* function(GstAllocator* allocator, size_t size, GstAllocationParams* params) alloc;
 	/** */
@@ -3575,7 +3575,7 @@ struct GstBufferPoolClass
 	 *
 	 * Params:
 	 *     pool = a #GstBufferPool
-	 * Return: a %NULL terminated array
+	 * Returns: a %NULL terminated array
 	 *     of strings.
 	 */
 	extern(C) char** function(GstBufferPool* pool) getOptions;
@@ -3584,7 +3584,7 @@ struct GstBufferPoolClass
 	 * Params:
 	 *     pool = a #GstBufferPool
 	 *     config = a #GstStructure
-	 * Return: %TRUE when the configuration could be set.
+	 * Returns: %TRUE when the configuration could be set.
 	 */
 	extern(C) int function(GstBufferPool* pool, GstStructure* config) setConfig;
 	/** */
@@ -3597,7 +3597,7 @@ struct GstBufferPoolClass
 	 *     pool = a #GstBufferPool
 	 *     buffer = a location for a #GstBuffer
 	 *     params = parameters.
-	 * Return: a #GstFlowReturn such as %GST_FLOW_FLUSHING when the pool is
+	 * Returns: a #GstFlowReturn such as %GST_FLOW_FLUSHING when the pool is
 	 *     inactive.
 	 */
 	extern(C) GstFlowReturn function(GstBufferPool* pool, GstBuffer** buffer, GstBufferPoolAcquireParams* params) acquireBuffer;
@@ -3663,7 +3663,7 @@ struct GstChildProxyInterface
 	 * Params:
 	 *     parent = the parent object to get the child from
 	 *     name = the child's name
-	 * Return: the child object or %NULL if
+	 * Returns: the child object or %NULL if
 	 *     not found. Unref after usage.
 	 *
 	 *     MT safe.
@@ -3674,7 +3674,7 @@ struct GstChildProxyInterface
 	 * Params:
 	 *     parent = the parent object to get the child from
 	 *     index = the child's position in the child list
-	 * Return: the child object or %NULL if
+	 * Returns: the child object or %NULL if
 	 *     not found (index too high). Unref after usage.
 	 *
 	 *     MT safe.
@@ -3684,7 +3684,7 @@ struct GstChildProxyInterface
 	 *
 	 * Params:
 	 *     parent = the parent object
-	 * Return: the number of child objects
+	 * Returns: the number of child objects
 	 *
 	 *     MT safe.
 	 */
@@ -3719,7 +3719,7 @@ struct GstClockClass
 	 *
 	 * Params:
 	 *     clock = a #GstClock
-	 * Return: the resolution of the clock in units of #GstClockTime.
+	 * Returns: the resolution of the clock in units of #GstClockTime.
 	 *
 	 *     MT safe.
 	 */
@@ -3728,7 +3728,7 @@ struct GstClockClass
 	 *
 	 * Params:
 	 *     clock = a #GstClock to query
-	 * Return: the internal time of the clock. Or GST_CLOCK_TIME_NONE when
+	 * Returns: the internal time of the clock. Or GST_CLOCK_TIME_NONE when
 	 *     given invalid input.
 	 *
 	 *     MT safe.
@@ -3813,7 +3813,7 @@ struct GstControlBindingClass
 	 *     object = the object that has controlled properties
 	 *     timestamp = the time that should be processed
 	 *     lastSync = the last time this was called
-	 * Return: %TRUE if the controller value could be applied to the object
+	 * Returns: %TRUE if the controller value could be applied to the object
 	 *     property, %FALSE otherwise
 	 */
 	extern(C) int function(GstControlBinding* binding, GstObject* object, GstClockTime timestamp, GstClockTime lastSync) syncValues;
@@ -3822,7 +3822,7 @@ struct GstControlBindingClass
 	 * Params:
 	 *     binding = the control binding
 	 *     timestamp = the time the control-change should be read from
-	 * Return: the GValue of the property at the given time,
+	 * Returns: the GValue of the property at the given time,
 	 *     or %NULL if the property isn't controlled.
 	 */
 	extern(C) GValue* function(GstControlBinding* binding, GstClockTime timestamp) getValue;
@@ -3834,7 +3834,7 @@ struct GstControlBindingClass
 	 *     interval = the time spacing between subsequent values
 	 *     nValues = the number of values
 	 *     values = array to put control-values in
-	 * Return: %TRUE if the given array could be filled, %FALSE otherwise
+	 * Returns: %TRUE if the given array could be filled, %FALSE otherwise
 	 */
 	extern(C) int function(GstControlBinding* binding, GstClockTime timestamp, GstClockTime interval, uint nValues, void* values) getValueArray;
 	/**
@@ -3845,7 +3845,7 @@ struct GstControlBindingClass
 	 *     interval = the time spacing between subsequent values
 	 *     nValues = the number of values
 	 *     values = array to put control-values in
-	 * Return: %TRUE if the given array could be filled, %FALSE otherwise
+	 * Returns: %TRUE if the given array could be filled, %FALSE otherwise
 	 */
 	extern(C) int function(GstControlBinding* binding, GstClockTime timestamp, GstClockTime interval, uint nValues, GValue* values) getGValueArray;
 	void*[4] GstReserved;
@@ -3918,7 +3918,7 @@ struct GstDeviceClass
 	 *     device = a #GstDevice
 	 *     name = name of new element, or %NULL to automatically
 	 *         create a unique name.
-	 * Return: a new #GstElement configured to use this device
+	 * Returns: a new #GstElement configured to use this device
 	 */
 	extern(C) GstElement* function(GstDevice* device, const(char)* name) createElement;
 	/**
@@ -3926,7 +3926,7 @@ struct GstDeviceClass
 	 * Params:
 	 *     device = a #GstDevice
 	 *     element = a #GstElement
-	 * Return: %TRUE if the element could be reconfigured to use this device,
+	 * Returns: %TRUE if the element could be reconfigured to use this device,
 	 *     %FALSE otherwise.
 	 */
 	extern(C) int function(GstDevice* device, GstElement* element) reconfigureElement;
@@ -3992,7 +3992,7 @@ struct GstDeviceProviderClass
 	 *
 	 * Params:
 	 *     provider = A #GstDeviceProvider
-	 * Return: %TRUE if the device providering could be started
+	 * Returns: %TRUE if the device providering could be started
 	 */
 	extern(C) int function(GstDeviceProvider* provider) start;
 	/** */
@@ -4151,7 +4151,7 @@ struct GstElementClass
 	 *         to retrieve. Can be %NULL.
 	 *     caps = the caps of the pad we want to
 	 *         request. Can be %NULL.
-	 * Return: requested #GstPad if found,
+	 * Returns: requested #GstPad if found,
 	 *     otherwise %NULL.  Release after usage.
 	 */
 	extern(C) GstPad* function(GstElement* element, GstPadTemplate* templ, const(char)* name, GstCaps* caps) requestNewPad;
@@ -4167,7 +4167,7 @@ struct GstElementClass
 	 *         state. Can be %NULL.
 	 *     timeout = a #GstClockTime to specify the timeout for an async
 	 *         state change or %GST_CLOCK_TIME_NONE for infinite timeout.
-	 * Return: %GST_STATE_CHANGE_SUCCESS if the element has no more pending state
+	 * Returns: %GST_STATE_CHANGE_SUCCESS if the element has no more pending state
 	 *     and the last state change succeeded, %GST_STATE_CHANGE_ASYNC if the
 	 *     element is still performing a state change or
 	 *     %GST_STATE_CHANGE_FAILURE if the last state change failed.
@@ -4180,7 +4180,7 @@ struct GstElementClass
 	 * Params:
 	 *     element = a #GstElement to change state of.
 	 *     state = the element's new #GstState.
-	 * Return: Result of the state change using #GstStateChangeReturn.
+	 * Returns: Result of the state change using #GstStateChangeReturn.
 	 *
 	 *     MT safe.
 	 */
@@ -4190,7 +4190,7 @@ struct GstElementClass
 	 * Params:
 	 *     element = a #GstElement
 	 *     transition = the requested transition
-	 * Return: the #GstStateChangeReturn of the state transition.
+	 * Returns: the #GstStateChangeReturn of the state transition.
 	 */
 	extern(C) GstStateChangeReturn function(GstElement* element, GstStateChange transition) changeState;
 	/** */
@@ -4201,7 +4201,7 @@ struct GstElementClass
 	 *
 	 * Params:
 	 *     element = a #GstElement to query
-	 * Return: the GstClock provided by the
+	 * Returns: the GstClock provided by the
 	 *     element or %NULL if no clock could be provided.  Unref after usage.
 	 *
 	 *     MT safe.
@@ -4212,7 +4212,7 @@ struct GstElementClass
 	 * Params:
 	 *     element = a #GstElement to set the clock for.
 	 *     clock = the #GstClock to set for the element.
-	 * Return: %TRUE if the element accepted the clock. An element can refuse a
+	 * Returns: %TRUE if the element accepted the clock. An element can refuse a
 	 *     clock when it, for example, is not able to slave its internal clock to the
 	 *     @clock or when it requires a specific clock to operate.
 	 *
@@ -4224,7 +4224,7 @@ struct GstElementClass
 	 * Params:
 	 *     element = a #GstElement to send the event to.
 	 *     event = the #GstEvent to send to the element.
-	 * Return: %TRUE if the event was handled. Events that trigger a preroll (such
+	 * Returns: %TRUE if the event was handled. Events that trigger a preroll (such
 	 *     as flushing seeks and steps) will emit %GST_MESSAGE_ASYNC_DONE.
 	 */
 	extern(C) int function(GstElement* element, GstEvent* event) sendEvent;
@@ -4233,7 +4233,7 @@ struct GstElementClass
 	 * Params:
 	 *     element = a #GstElement to perform the query on.
 	 *     query = the #GstQuery.
-	 * Return: %TRUE if the query could be performed.
+	 * Returns: %TRUE if the query could be performed.
 	 *
 	 *     MT safe.
 	 */
@@ -4243,7 +4243,7 @@ struct GstElementClass
 	 * Params:
 	 *     element = a #GstElement posting the message
 	 *     message = a #GstMessage to post
-	 * Return: %TRUE if the message was successfully posted. The function returns
+	 * Returns: %TRUE if the message was successfully posted. The function returns
 	 *     %FALSE if the element did not have a bus.
 	 *
 	 *     MT safe.
@@ -4963,14 +4963,14 @@ struct GstPresetInterface
 	 *
 	 * Params:
 	 *     preset = a #GObject that implements #GstPreset
-	 * Return: list with names, use g_strfreev() after usage.
+	 * Returns: list with names, use g_strfreev() after usage.
 	 */
 	extern(C) char** function(GstPreset* preset) getPresetNames;
 	/**
 	 *
 	 * Params:
 	 *     preset = a #GObject that implements #GstPreset
-	 * Return: an
+	 * Returns: an
 	 *     array of property names which should be freed with g_strfreev() after use.
 	 */
 	extern(C) char** function(GstPreset* preset) getPropertyNames;
@@ -4979,7 +4979,7 @@ struct GstPresetInterface
 	 * Params:
 	 *     preset = a #GObject that implements #GstPreset
 	 *     name = preset name to load
-	 * Return: %TRUE for success, %FALSE if e.g. there is no preset with that @name
+	 * Returns: %TRUE for success, %FALSE if e.g. there is no preset with that @name
 	 */
 	extern(C) int function(GstPreset* preset, const(char)* name) loadPreset;
 	/**
@@ -4987,7 +4987,7 @@ struct GstPresetInterface
 	 * Params:
 	 *     preset = a #GObject that implements #GstPreset
 	 *     name = preset name to save
-	 * Return: %TRUE for success, %FALSE
+	 * Returns: %TRUE for success, %FALSE
 	 */
 	extern(C) int function(GstPreset* preset, const(char)* name) savePreset;
 	/**
@@ -4996,7 +4996,7 @@ struct GstPresetInterface
 	 *     preset = a #GObject that implements #GstPreset
 	 *     oldName = current preset name
 	 *     newName = new preset name
-	 * Return: %TRUE for success, %FALSE if e.g. there is no preset with @old_name
+	 * Returns: %TRUE for success, %FALSE if e.g. there is no preset with @old_name
 	 */
 	extern(C) int function(GstPreset* preset, const(char)* oldName, const(char)* newName) renamePreset;
 	/**
@@ -5004,7 +5004,7 @@ struct GstPresetInterface
 	 * Params:
 	 *     preset = a #GObject that implements #GstPreset
 	 *     name = preset name to remove
-	 * Return: %TRUE for success, %FALSE if e.g. there is no preset with that @name
+	 * Returns: %TRUE for success, %FALSE if e.g. there is no preset with that @name
 	 */
 	extern(C) int function(GstPreset* preset, const(char)* name) deletePreset;
 	/**
@@ -5014,7 +5014,7 @@ struct GstPresetInterface
 	 *     name = preset name
 	 *     tag = meta data item name
 	 *     value = new value
-	 * Return: %TRUE for success, %FALSE if e.g. there is no preset with that @name
+	 * Returns: %TRUE for success, %FALSE if e.g. there is no preset with that @name
 	 */
 	extern(C) int function(GstPreset* preset, const(char)* name, const(char)* tag, const(char)* value) setMeta;
 	/**
@@ -5024,7 +5024,7 @@ struct GstPresetInterface
 	 *     name = preset name
 	 *     tag = meta data item name
 	 *     value = value
-	 * Return: %TRUE for success, %FALSE if e.g. there is no preset with that @name
+	 * Returns: %TRUE for success, %FALSE if e.g. there is no preset with that @name
 	 *     or no value for the given @tag
 	 */
 	extern(C) int function(GstPreset* preset, const(char)* name, const(char)* tag, char** value) getMeta;
@@ -5337,7 +5337,7 @@ struct GstTaskPoolClass
 	 *     pool = a #GstTaskPool
 	 *     func = the function to call
 	 *     userData = data to pass to @func
-	 * Return: a pointer that should be used
+	 * Returns: a pointer that should be used
 	 *     for the gst_task_pool_join function. This pointer can be %NULL, you
 	 *     must check @error to detect errors.
 	 *
@@ -5444,7 +5444,7 @@ struct GstURIHandlerInterface
 	 *
 	 * Params:
 	 *     handler = A #GstURIHandler
-	 * Return: the URI currently handled by
+	 * Returns: the URI currently handled by
 	 *     the @handler.  Returns %NULL if there are no URI currently
 	 *     handled. The returned string must be freed with g_free() when no
 	 *     longer needed.
@@ -5455,7 +5455,7 @@ struct GstURIHandlerInterface
 	 * Params:
 	 *     handler = A #GstURIHandler
 	 *     uri = URI to set
-	 * Return: %TRUE if the URI was set successfully, else %FALSE.
+	 * Returns: %TRUE if the URI was set successfully, else %FALSE.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -5507,7 +5507,7 @@ struct GstValueTable
  *     meta = a pointer to a #GstMeta
  *     userData = user data passed to gst_buffer_foreach_meta()
  *
- * Return: %FALSE when gst_buffer_foreach_meta() should stop
+ * Returns: %FALSE when gst_buffer_foreach_meta() should stop
  */
 public alias extern(C) int function(GstBuffer* buffer, GstMeta** meta, void* userData) GstBufferForeachMetaFunc;
 
@@ -5528,7 +5528,7 @@ public alias extern(C) int function(GstBuffer* buffer, GstMeta** meta, void* use
  *     idx = the index of @buffer
  *     userData = user data passed to gst_buffer_list_foreach()
  *
- * Return: %FALSE when gst_buffer_list_foreach() should stop
+ * Returns: %FALSE when gst_buffer_list_foreach() should stop
  */
 public alias extern(C) int function(GstBuffer** buffer, uint idx, void* userData) GstBufferListFunc;
 
@@ -5548,7 +5548,7 @@ public alias extern(C) int function(GstBuffer** buffer, uint idx, void* userData
  *     message = the #GstMessage
  *     userData = user data that has been given, when registering the handler
  *
- * Return: %FALSE if the event source should be removed.
+ * Returns: %FALSE if the event source should be removed.
  */
 public alias extern(C) int function(GstBus* bus, GstMessage* message, void* userData) GstBusFunc;
 
@@ -5565,7 +5565,7 @@ public alias extern(C) int function(GstBus* bus, GstMessage* message, void* user
  *     message = the #GstMessage
  *     userData = user data that has been given, when registering the handler
  *
- * Return: #GstBusSyncReply stating what to do with the message
+ * Returns: #GstBusSyncReply stating what to do with the message
  */
 public alias extern(C) GstBusSyncReply function(GstBus* bus, GstMessage* message, void* userData) GstBusSyncHandler;
 
@@ -5579,7 +5579,7 @@ public alias extern(C) GstBusSyncReply function(GstBus* bus, GstMessage* message
  *     structure = the #GstStructure
  *     userData = user data
  *
- * Return: %TRUE if the features and structure should be preserved,
+ * Returns: %TRUE if the features and structure should be preserved,
  *     %FALSE if it should be removed.
  */
 public alias extern(C) int function(GstCapsFeatures* features, GstStructure* structure, void* userData) GstCapsFilterMapFunc;
@@ -5593,7 +5593,7 @@ public alias extern(C) int function(GstCapsFeatures* features, GstStructure* str
  *     structure = the #GstStructure
  *     userData = user data
  *
- * Return: %TRUE if the foreach operation should continue, %FALSE if
+ * Returns: %TRUE if the foreach operation should continue, %FALSE if
  *     the foreach operation should stop with %FALSE.
  *
  * Since: 1.6
@@ -5609,7 +5609,7 @@ public alias extern(C) int function(GstCapsFeatures* features, GstStructure* str
  *     structure = the #GstStructure
  *     userData = user data
  *
- * Return: %TRUE if the map operation should continue, %FALSE if
+ * Returns: %TRUE if the map operation should continue, %FALSE if
  *     the map operation should stop with %FALSE.
  */
 public alias extern(C) int function(GstCapsFeatures* features, GstStructure* structure, void* userData) GstCapsMapFunc;
@@ -5623,7 +5623,7 @@ public alias extern(C) int function(GstCapsFeatures* features, GstStructure* str
  *     id = The #GstClockID that expired
  *     userData = user data passed in the gst_clock_id_wait_async() function
  *
- * Return: %TRUE or %FALSE (currently unused)
+ * Returns: %TRUE or %FALSE (currently unused)
  */
 public alias extern(C) int function(GstClock* clock, GstClockTime time, GstClockID id, void* userData) GstClockCallback;
 
@@ -5638,7 +5638,7 @@ public alias extern(C) void function(GstControlBinding* binding, double srcValue
  *     timestamp = timestamp for which a value should be calculated
  *     value = a value which will be set to the result.
  *
- * Return: %TRUE if the value was successfully calculated.
+ * Returns: %TRUE if the value was successfully calculated.
  */
 public alias extern(C) int function(GstControlSource* self, GstClockTime timestamp, double* value) GstControlSourceGetValue;
 
@@ -5652,7 +5652,7 @@ public alias extern(C) int function(GstControlSource* self, GstClockTime timesta
  *     nValues = the number of values
  *     values = array to put control-values in
  *
- * Return: %TRUE if the values were successfully calculated.
+ * Returns: %TRUE if the values were successfully calculated.
  */
 public alias extern(C) int function(GstControlSource* self, GstClockTime timestamp, GstClockTime interval, uint nValues, double* values) GstControlSourceGetValueArray;
 
@@ -5681,7 +5681,7 @@ public alias extern(C) void function(GstIterator* it, GstIterator* copy) GstIter
  *     ret = a #GValue collecting the result
  *     userData = data passed to gst_iterator_fold()
  *
- * Return: %TRUE if the fold should continue, %FALSE if it should stop.
+ * Returns: %TRUE if the fold should continue, %FALSE if it should stop.
  */
 public alias extern(C) int function(GValue* item, GValue* ret, void* userData) GstIteratorFoldFunction;
 
@@ -5717,7 +5717,7 @@ public alias extern(C) void function(GstIterator* it) GstIteratorFreeFunction;
  *     it = the iterator
  *     item = the item being retrieved.
  *
- * Return: the result of the operation.
+ * Returns: the result of the operation.
  */
 public alias extern(C) GstIteratorItem function(GstIterator* it, GValue* item) GstIteratorItemFunction;
 
@@ -5733,7 +5733,7 @@ public alias extern(C) GstIteratorItem function(GstIterator* it, GValue* item) G
  *     it = the iterator
  *     result = a pointer to hold the next item
  *
- * Return: the result of the operation.
+ * Returns: the result of the operation.
  */
 public alias extern(C) GstIteratorResult function(GstIterator* it, GValue* result) GstIteratorNextFunction;
 
@@ -5779,7 +5779,7 @@ public alias extern(C) void function(GstDebugCategory* category, GstDebugLevel l
  *     offset = an offset
  *     size = a size or -1
  *
- * Return: a new #GstMemory object wrapping a copy of the requested region in
+ * Returns: a new #GstMemory object wrapping a copy of the requested region in
  *     @mem.
  */
 public alias extern(C) GstMemory* function(GstMemory* mem, ptrdiff_t offset, ptrdiff_t size) GstMemoryCopyFunction;
@@ -5793,7 +5793,7 @@ public alias extern(C) GstMemory* function(GstMemory* mem, ptrdiff_t offset, ptr
  *     mem2 = a #GstMemory
  *     offset = a result offset
  *
- * Return: %TRUE if @mem1 and @mem2 are in contiguous memory.
+ * Returns: %TRUE if @mem1 and @mem2 are in contiguous memory.
  */
 public alias extern(C) int function(GstMemory* mem1, GstMemory* mem2, size_t* offset) GstMemoryIsSpanFunction;
 
@@ -5807,7 +5807,7 @@ public alias extern(C) int function(GstMemory* mem1, GstMemory* mem2, size_t* of
  *     info = the #GstMapInfo to map with
  *     maxsize = size to map
  *
- * Return: a pointer to memory of which at least @maxsize bytes can be
+ * Returns: a pointer to memory of which at least @maxsize bytes can be
  *     accessed according to the access pattern in @info's flags.
  */
 public alias extern(C) void* function(GstMemory* mem, GstMapInfo* info, size_t maxsize) GstMemoryMapFullFunction;
@@ -5822,7 +5822,7 @@ public alias extern(C) void* function(GstMemory* mem, GstMapInfo* info, size_t m
  *     maxsize = size to map
  *     flags = access mode for the memory
  *
- * Return: a pointer to memory of which at least @maxsize bytes can be
+ * Returns: a pointer to memory of which at least @maxsize bytes can be
  *     accessed according to the access pattern in @flags.
  */
 public alias extern(C) void* function(GstMemory* mem, size_t maxsize, GstMapFlags flags) GstMemoryMapFunction;
@@ -5837,7 +5837,7 @@ public alias extern(C) void* function(GstMemory* mem, size_t maxsize, GstMapFlag
  *     offset = an offset
  *     size = a size or -1
  *
- * Return: a new #GstMemory object sharing the requested region in @mem.
+ * Returns: a new #GstMemory object sharing the requested region in @mem.
  */
 public alias extern(C) GstMemory* function(GstMemory* mem, ptrdiff_t offset, ptrdiff_t size) GstMemoryShareFunction;
 
@@ -5893,7 +5893,7 @@ public alias extern(C) int function(GstMeta* meta, void* params, GstBuffer* buff
  *     type = the transform type
  *     data = transform specific data.
  *
- * Return: %TRUE if the transform could be performed
+ * Returns: %TRUE if the transform could be performed
  */
 public alias extern(C) int function(GstBuffer* transbuf, GstMeta* meta, GstBuffer* buffer, GQuark type, void* data) GstMetaTransformFunction;
 
@@ -5903,7 +5903,7 @@ public alias extern(C) int function(GstBuffer* transbuf, GstMeta* meta, GstBuffe
  * Params:
  *     obj = MiniObject to copy
  *
- * Return: reference to cloned instance.
+ * Returns: reference to cloned instance.
  */
 public alias extern(C) GstMiniObject* function(GstMiniObject* obj) GstMiniObjectCopyFunction;
 
@@ -5917,7 +5917,7 @@ public alias extern(C) GstMiniObject* function(GstMiniObject* obj) GstMiniObject
  * Params:
  *     obj = MiniObject to dispose
  *
- * Return: %TRUE if the object should be cleaned up.
+ * Returns: %TRUE if the object should be cleaned up.
  */
 public alias extern(C) int function(GstMiniObject* obj) GstMiniObjectDisposeFunction;
 
@@ -5951,7 +5951,7 @@ public alias extern(C) void function(void* userData, GstMiniObject* obj) GstMini
  *     pad = a #GstPad
  *     parent = the parent of @pad
  *
- * Return: %TRUE if the pad could be activated.
+ * Returns: %TRUE if the pad could be activated.
  */
 public alias extern(C) int function(GstPad* pad, GstObject* parent) GstPadActivateFunction;
 
@@ -5964,7 +5964,7 @@ public alias extern(C) int function(GstPad* pad, GstObject* parent) GstPadActiva
  *     mode = the requested activation mode of @pad
  *     active = activate or deactivate the pad.
  *
- * Return: %TRUE if the pad could be activated or deactivated.
+ * Returns: %TRUE if the pad could be activated or deactivated.
  */
 public alias extern(C) int function(GstPad* pad, GstObject* parent, GstPadMode mode, int active) GstPadActivateModeFunction;
 
@@ -5986,7 +5986,7 @@ public alias extern(C) int function(GstPad* pad, GstObject* parent, GstPadMode m
  *         during the execution of this function.
  *     buffer = the #GstBuffer that is chained, not %NULL.
  *
- * Return: #GST_FLOW_OK for success
+ * Returns: #GST_FLOW_OK for success
  */
 public alias extern(C) GstFlowReturn function(GstPad* pad, GstObject* parent, GstBuffer* buffer) GstPadChainFunction;
 
@@ -6008,7 +6008,7 @@ public alias extern(C) GstFlowReturn function(GstPad* pad, GstObject* parent, Gs
  *         during the execution of this function.
  *     list = the #GstBufferList that is chained, not %NULL.
  *
- * Return: #GST_FLOW_OK for success
+ * Returns: #GST_FLOW_OK for success
  */
 public alias extern(C) GstFlowReturn function(GstPad* pad, GstObject* parent, GstBufferList* list) GstPadChainListFunction;
 
@@ -6026,7 +6026,7 @@ public alias extern(C) GstFlowReturn function(GstPad* pad, GstObject* parent, Gs
  *         during the execution of this function.
  *     event = the #GstEvent to handle.
  *
- * Return: %GST_FLOW_OK if the event was handled properly, or any other
+ * Returns: %GST_FLOW_OK if the event was handled properly, or any other
  *     #GstFlowReturn dependent on downstream state.
  *
  * Since: 1.8
@@ -6043,7 +6043,7 @@ public alias extern(C) GstFlowReturn function(GstPad* pad, GstObject* parent, Gs
  *         during the execution of this function.
  *     event = the #GstEvent to handle.
  *
- * Return: %TRUE if the pad could handle the event.
+ * Returns: %TRUE if the pad could handle the event.
  */
 public alias extern(C) int function(GstPad* pad, GstObject* parent, GstEvent* event) GstPadEventFunction;
 
@@ -6055,7 +6055,7 @@ public alias extern(C) int function(GstPad* pad, GstObject* parent, GstEvent* ev
  *     pad = the #GstPad that is forwarded.
  *     userData = the gpointer to optional user data.
  *
- * Return: %TRUE if the dispatching procedure has to be stopped.
+ * Returns: %TRUE if the dispatching procedure has to be stopped.
  */
 public alias extern(C) int function(GstPad* pad, void* userData) GstPadForwardFunction;
 
@@ -6103,7 +6103,7 @@ public alias extern(C) int function(GstPad* pad, void* userData) GstPadForwardFu
  *     length = the length of the range
  *     buffer = a memory location to hold the result buffer, cannot be %NULL.
  *
- * Return: #GST_FLOW_OK for success and a valid buffer in @buffer. Any other
+ * Returns: #GST_FLOW_OK for success and a valid buffer in @buffer. Any other
  *     return value leaves @buffer undefined.
  */
 public alias extern(C) GstFlowReturn function(GstPad* pad, GstObject* parent, ulong offset, uint length, GstBuffer** buffer) GstPadGetRangeFunction;
@@ -6117,7 +6117,7 @@ public alias extern(C) GstFlowReturn function(GstPad* pad, GstObject* parent, ul
  *         flag is set, @parent is guaranteed to be not-%NULL and remain valid
  *         during the execution of this function.
  *
- * Return: a new #GstIterator that will iterate over all pads that are
+ * Returns: a new #GstIterator that will iterate over all pads that are
  *     linked to the given pad on the inside of the parent element.
  *
  *     the caller must call gst_iterator_free() after usage.
@@ -6134,7 +6134,7 @@ public alias extern(C) GstIterator* function(GstPad* pad, GstObject* parent) Gst
  *         during the execution of this function.
  *     peer = the peer #GstPad of the link
  *
- * Return: the result of the link with the specified peer.
+ * Returns: the result of the link with the specified peer.
  */
 public alias extern(C) GstPadLinkReturn function(GstPad* pad, GstObject* parent, GstPad* peer) GstPadLinkFunction;
 
@@ -6149,7 +6149,7 @@ public alias extern(C) GstPadLinkReturn function(GstPad* pad, GstObject* parent,
  *     info = #GstPadProbeInfo
  *     userData = the gpointer to optional user data.
  *
- * Return: a #GstPadProbeReturn
+ * Returns: a #GstPadProbeReturn
  */
 public alias extern(C) GstPadProbeReturn function(GstPad* pad, GstPadProbeInfo* info, void* userData) GstPadProbeCallback;
 
@@ -6163,7 +6163,7 @@ public alias extern(C) GstPadProbeReturn function(GstPad* pad, GstPadProbeInfo* 
  *         during the execution of this function.
  *     query = the #GstQuery object to execute
  *
- * Return: %TRUE if the query could be performed.
+ * Returns: %TRUE if the query could be performed.
  */
 public alias extern(C) int function(GstPad* pad, GstObject* parent, GstQuery* query) GstPadQueryFunction;
 
@@ -6183,7 +6183,7 @@ public alias extern(C) int function(GstPad* pad, GstObject* parent, GstQuery* qu
  *     event = a sticky #GstEvent.
  *     userData = the #gpointer to optional user data.
  *
- * Return: %TRUE if the iteration should continue
+ * Returns: %TRUE if the iteration should continue
  */
 public alias extern(C) int function(GstPad* pad, GstEvent** event, void* userData) GstPadStickyEventsForeachFunction;
 
@@ -6207,7 +6207,7 @@ public alias extern(C) void function(GstPad* pad, GstObject* parent) GstPadUnlin
  *     userData = the user_data that has been passed on e.g.
  *         gst_registry_feature_filter()
  *
- * Return: %TRUE for a positive match, %FALSE otherwise
+ * Returns: %TRUE for a positive match, %FALSE otherwise
  */
 public alias extern(C) int function(GstPluginFeature* feature, void* userData) GstPluginFeatureFilter;
 
@@ -6219,7 +6219,7 @@ public alias extern(C) int function(GstPluginFeature* feature, void* userData) G
  *     plugin = the plugin to check
  *     userData = the user_data that has been passed on e.g. gst_registry_plugin_filter()
  *
- * Return: %TRUE for a positive match, %FALSE otherwise
+ * Returns: %TRUE for a positive match, %FALSE otherwise
  */
 public alias extern(C) int function(GstPlugin* plugin, void* userData) GstPluginFilter;
 
@@ -6234,7 +6234,7 @@ public alias extern(C) int function(GstPlugin* plugin, void* userData) GstPlugin
  *     plugin = The plugin object
  *     userData = extra data
  *
- * Return: %TRUE if plugin initialised successfully
+ * Returns: %TRUE if plugin initialised successfully
  */
 public alias extern(C) int function(GstPlugin* plugin, void* userData) GstPluginInitFullFunc;
 
@@ -6247,7 +6247,7 @@ public alias extern(C) int function(GstPlugin* plugin, void* userData) GstPlugin
  * Params:
  *     plugin = The plugin object
  *
- * Return: %TRUE if plugin initialised successfully
+ * Returns: %TRUE if plugin initialised successfully
  */
 public alias extern(C) int function(GstPlugin* plugin) GstPluginInitFunc;
 
@@ -6261,7 +6261,7 @@ public alias extern(C) int function(GstPlugin* plugin) GstPluginInitFunc;
  *     value = the #GValue of the field
  *     userData = user data
  *
- * Return: %TRUE if the field should be preserved, %FALSE if it
+ * Returns: %TRUE if the field should be preserved, %FALSE if it
  *     should be removed.
  */
 public alias extern(C) int function(GQuark fieldId, GValue* value, void* userData) GstStructureFilterMapFunc;
@@ -6275,7 +6275,7 @@ public alias extern(C) int function(GQuark fieldId, GValue* value, void* userDat
  *     value = the #GValue of the field
  *     userData = user data
  *
- * Return: %TRUE if the foreach operation should continue, %FALSE if
+ * Returns: %TRUE if the foreach operation should continue, %FALSE if
  *     the foreach operation should stop with %FALSE.
  */
 public alias extern(C) int function(GQuark fieldId, GValue* value, void* userData) GstStructureForeachFunc;
@@ -6289,7 +6289,7 @@ public alias extern(C) int function(GQuark fieldId, GValue* value, void* userDat
  *     value = the #GValue of the field
  *     userData = user data
  *
- * Return: %TRUE if the map operation should continue, %FALSE if
+ * Returns: %TRUE if the map operation should continue, %FALSE if
  *     the map operation should stop with %FALSE.
  */
 public alias extern(C) int function(GQuark fieldId, GValue* value, void* userData) GstStructureMapFunc;
@@ -6358,7 +6358,7 @@ public alias extern(C) void function(GstTypeFind* find, void* userData) GstTypeF
  *     value1 = first value for comparison
  *     value2 = second value for comparison
  *
- * Return: one of GST_VALUE_LESS_THAN, GST_VALUE_EQUAL, GST_VALUE_GREATER_THAN
+ * Returns: one of GST_VALUE_LESS_THAN, GST_VALUE_EQUAL, GST_VALUE_GREATER_THAN
  *     or GST_VALUE_UNORDERED
  */
 public alias extern(C) int function(GValue* value1, GValue* value2) GstValueCompareFunc;
@@ -6370,7 +6370,7 @@ public alias extern(C) int function(GValue* value1, GValue* value2) GstValueComp
  *     dest = a #GValue
  *     s = a string
  *
- * Return: %TRUE for success
+ * Returns: %TRUE for success
  */
 public alias extern(C) int function(GValue* dest, const(char)* s) GstValueDeserializeFunc;
 
@@ -6382,6 +6382,6 @@ public alias extern(C) int function(GValue* dest, const(char)* s) GstValueDeseri
  * Params:
  *     value1 = a #GValue
  *
- * Return: the string representation of the value
+ * Returns: the string representation of the value
  */
 public alias extern(C) char* function(GValue* value1) GstValueSerializeFunc;

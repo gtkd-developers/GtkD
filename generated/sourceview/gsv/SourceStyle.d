@@ -93,7 +93,7 @@ public class SourceStyle : ObjectG
 	 * Creates a copy of @style, that is a new #GtkSourceStyle instance which
 	 * has the same attributes set.
 	 *
-	 * Return: copy of @style, call g_object_unref()
+	 * Returns: copy of @style, call g_object_unref()
 	 *     when you are done with it.
 	 *
 	 * Since: 2.0

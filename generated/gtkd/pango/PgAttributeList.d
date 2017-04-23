@@ -81,7 +81,7 @@ public class PgAttributeList
 	/**
 	 * Create a new empty attribute list with a reference count of one.
 	 *
-	 * Return: the newly allocated #PangoAttrList,
+	 * Returns: the newly allocated #PangoAttrList,
 	 *     which should be freed with pango_attr_list_unref().
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -121,7 +121,7 @@ public class PgAttributeList
 	/**
 	 * Copy @list and return an identical new list.
 	 *
-	 * Return: the newly allocated #PangoAttrList, with a
+	 * Returns: the newly allocated #PangoAttrList, with a
 	 *     reference count of one, which should
 	 *     be freed with pango_attr_list_unref().
 	 *     Returns %NULL if @list was %NULL.
@@ -148,7 +148,7 @@ public class PgAttributeList
 	 *         if an attribute should be filtered out.
 	 *     data = Data to be passed to @func
 	 *
-	 * Return: the new #PangoAttrList or
+	 * Returns: the new #PangoAttrList or
 	 *     %NULL if no attributes of the given types were found.
 	 *
 	 * Since: 1.2
@@ -169,7 +169,7 @@ public class PgAttributeList
 	 * Create a iterator initialized to the beginning of the list.
 	 * @list must not be modified until this iterator is freed.
 	 *
-	 * Return: the newly allocated #PangoAttrIterator, which should
+	 * Returns: the newly allocated #PangoAttrIterator, which should
 	 *     be freed with pango_attr_iterator_destroy().
 	 */
 	public PgAttributeIterator getIterator()
@@ -215,7 +215,7 @@ public class PgAttributeList
 	/**
 	 * Increase the reference count of the given attribute list by one.
 	 *
-	 * Return: The attribute list passed in
+	 * Returns: The attribute list passed in
 	 *
 	 * Since: 1.10
 	 */

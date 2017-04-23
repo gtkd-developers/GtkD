@@ -41,7 +41,7 @@ public struct PgMiscellaneous
 	 * Params:
 	 *     key = Key to look up, in the form "SECTION/KEY".
 	 *
-	 * Return: %NULL
+	 * Returns: %NULL
 	 */
 	public static string configKeyGet(string key)
 	{
@@ -57,7 +57,7 @@ public struct PgMiscellaneous
 	 * Params:
 	 *     key = Key to look up, in the form "SECTION/KEY".
 	 *
-	 * Return: %NULL
+	 * Returns: %NULL
 	 */
 	public static string configKeyGetSystem(string key)
 	{
@@ -71,7 +71,7 @@ public struct PgMiscellaneous
 	 * Returns the name of the "pango" subdirectory of LIBDIR
 	 * (which is set at compile time).
 	 *
-	 * Return: the Pango lib directory. The returned string should
+	 * Returns: the Pango lib directory. The returned string should
 	 *     not be freed.
 	 */
 	public static string getLibSubdirectory()
@@ -83,7 +83,7 @@ public struct PgMiscellaneous
 	 * Returns the name of the "pango" subdirectory of SYSCONFDIR
 	 * (which is set at compile time).
 	 *
-	 * Return: the Pango sysconf directory. The returned string should
+	 * Returns: the Pango sysconf directory. The returned string should
 	 *     not be freed.
 	 */
 	public static string getSysconfSubdirectory()
@@ -101,7 +101,7 @@ public struct PgMiscellaneous
 	 * Params:
 	 *     ch = a Unicode character
 	 *
-	 * Return: %TRUE if @ch is a zero-width character, %FALSE otherwise
+	 * Returns: %TRUE if @ch is a zero-width character, %FALSE otherwise
 	 *
 	 * Since: 1.10
 	 */
@@ -125,7 +125,7 @@ public struct PgMiscellaneous
 	 *         if @text is nul-terminated and the length should be calculated.
 	 *     pbaseDir = input base direction, and output resolved direction.
 	 *
-	 * Return: a newly allocated array of embedding levels, one item per
+	 * Returns: a newly allocated array of embedding levels, one item per
 	 *     character (not byte), that should be freed using g_free.
 	 *
 	 * Since: 1.4
@@ -176,7 +176,7 @@ public struct PgMiscellaneous
 	 *     warn = if %TRUE, issue a g_warning() on bad input.
 	 *     possibleValues = place to store list of possible values on failure, or %NULL.
 	 *
-	 * Return: %TRUE if @str was successfully parsed.
+	 * Returns: %TRUE if @str was successfully parsed.
 	 *
 	 * Since: 1.16
 	 */
@@ -204,7 +204,7 @@ public struct PgMiscellaneous
 	 *         result in.
 	 *     warn = if %TRUE, issue a g_warning() on bad input.
 	 *
-	 * Return: %TRUE if @str was successfully parsed.
+	 * Returns: %TRUE if @str was successfully parsed.
 	 */
 	public static bool parseStretch(string str, out PangoStretch stretch, bool warn)
 	{
@@ -222,7 +222,7 @@ public struct PgMiscellaneous
 	 *         in.
 	 *     warn = if %TRUE, issue a g_warning() on bad input.
 	 *
-	 * Return: %TRUE if @str was successfully parsed.
+	 * Returns: %TRUE if @str was successfully parsed.
 	 */
 	public static bool parseStyle(string str, out PangoStyle style, bool warn)
 	{
@@ -240,7 +240,7 @@ public struct PgMiscellaneous
 	 *         result in.
 	 *     warn = if %TRUE, issue a g_warning() on bad input.
 	 *
-	 * Return: %TRUE if @str was successfully parsed.
+	 * Returns: %TRUE if @str was successfully parsed.
 	 */
 	public static bool parseVariant(string str, out PangoVariant variant, bool warn)
 	{
@@ -258,7 +258,7 @@ public struct PgMiscellaneous
 	 *         in.
 	 *     warn = if %TRUE, issue a g_warning() on bad input.
 	 *
-	 * Return: %TRUE if @str was successfully parsed.
+	 * Returns: %TRUE if @str was successfully parsed.
 	 */
 	public static bool parseWeight(string str, out PangoWeight weight, bool warn)
 	{
@@ -299,7 +299,7 @@ public struct PgMiscellaneous
 	 *     stream = a stdio stream
 	 *     str = #GString buffer into which to write the result
 	 *
-	 * Return: 0 if the stream was already at an %EOF character, otherwise
+	 * Returns: 0 if the stream was already at an %EOF character, otherwise
 	 *     the number of lines read (this is useful for maintaining
 	 *     a line number counter which doesn't combine lines with '\')
 	 */
@@ -322,7 +322,7 @@ public struct PgMiscellaneous
 	 *     pos = in/out string position
 	 *     output = an int into which to write the result
 	 *
-	 * Return: %FALSE if a parse error occurred.
+	 * Returns: %FALSE if a parse error occurred.
 	 */
 	public static bool scanInt(ref string pos, out int output)
 	{
@@ -345,7 +345,7 @@ public struct PgMiscellaneous
 	 *     pos = in/out string position
 	 *     output = a #GString into which to write the result
 	 *
-	 * Return: %FALSE if a parse error occurred.
+	 * Returns: %FALSE if a parse error occurred.
 	 */
 	public static bool scanString(ref string pos, out StringG output)
 	{
@@ -369,7 +369,7 @@ public struct PgMiscellaneous
 	 *     pos = in/out string position
 	 *     output = a #GString into which to write the result
 	 *
-	 * Return: %FALSE if a parse error occurred.
+	 * Returns: %FALSE if a parse error occurred.
 	 */
 	public static bool scanWord(ref string pos, out StringG output)
 	{
@@ -390,7 +390,7 @@ public struct PgMiscellaneous
 	 * Params:
 	 *     pos = in/out string position
 	 *
-	 * Return: %FALSE if skipping the white space leaves
+	 * Returns: %FALSE if skipping the white space leaves
 	 *     the position at a '\0' character.
 	 */
 	public static bool skipSpace(ref string pos)
@@ -411,7 +411,7 @@ public struct PgMiscellaneous
 	 * Params:
 	 *     str = a %G_SEARCHPATH_SEPARATOR separated list of filenames
 	 *
-	 * Return: a list of
+	 * Returns: a list of
 	 *     strings to be freed with g_strfreev()
 	 */
 	public static string[] splitFileList(string str)
@@ -428,7 +428,7 @@ public struct PgMiscellaneous
 	 * Params:
 	 *     str = a string
 	 *
-	 * Return: A newly-allocated string that must be freed with g_free()
+	 * Returns: A newly-allocated string that must be freed with g_free()
 	 */
 	public static string trimString(string str)
 	{

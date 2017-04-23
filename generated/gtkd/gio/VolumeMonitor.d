@@ -148,7 +148,7 @@ public class VolumeMonitor : ObjectG
 	 * Params:
 	 *     mount = a #GMount object to find a parent for
 	 *
-	 * Return: the #GVolume object that is the parent for @mount or %NULL
+	 * Returns: the #GVolume object that is the parent for @mount or %NULL
 	 *     if no wants to adopt the #GMount.
 	 */
 	public static VolumeIF adoptOrphanMount(MountIF mount)
@@ -169,7 +169,7 @@ public class VolumeMonitor : ObjectG
 	 * The returned list should be freed with g_list_free(), after
 	 * its elements have been unreffed with g_object_unref().
 	 *
-	 * Return: a #GList of connected #GDrive objects.
+	 * Returns: a #GList of connected #GDrive objects.
 	 */
 	public ListG getConnectedDrives()
 	{
@@ -189,7 +189,7 @@ public class VolumeMonitor : ObjectG
 	 * Params:
 	 *     uuid = the UUID to look for
 	 *
-	 * Return: a #GMount or %NULL if no such mount is available.
+	 * Returns: a #GMount or %NULL if no such mount is available.
 	 *     Free the returned object with g_object_unref().
 	 */
 	public MountIF getMountForUuid(string uuid)
@@ -210,7 +210,7 @@ public class VolumeMonitor : ObjectG
 	 * The returned list should be freed with g_list_free(), after
 	 * its elements have been unreffed with g_object_unref().
 	 *
-	 * Return: a #GList of #GMount objects.
+	 * Returns: a #GList of #GMount objects.
 	 */
 	public ListG getMounts()
 	{
@@ -230,7 +230,7 @@ public class VolumeMonitor : ObjectG
 	 * Params:
 	 *     uuid = the UUID to look for
 	 *
-	 * Return: a #GVolume or %NULL if no such volume is available.
+	 * Returns: a #GVolume or %NULL if no such volume is available.
 	 *     Free the returned object with g_object_unref().
 	 */
 	public VolumeIF getVolumeForUuid(string uuid)
@@ -251,7 +251,7 @@ public class VolumeMonitor : ObjectG
 	 * The returned list should be freed with g_list_free(), after
 	 * its elements have been unreffed with g_object_unref().
 	 *
-	 * Return: a #GList of #GVolume objects.
+	 * Returns: a #GList of #GVolume objects.
 	 */
 	public ListG getVolumes()
 	{

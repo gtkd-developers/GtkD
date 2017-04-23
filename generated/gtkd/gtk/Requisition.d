@@ -84,7 +84,7 @@ public class Requisition
 	/**
 	 * Allocates a new #GtkRequisition-struct and initializes its elements to zero.
 	 *
-	 * Return: a new empty #GtkRequisition. The newly allocated #GtkRequisition should
+	 * Returns: a new empty #GtkRequisition. The newly allocated #GtkRequisition should
 	 *     be freed with gtk_requisition_free().
 	 *
 	 * Since: 3.0
@@ -106,7 +106,7 @@ public class Requisition
 	/**
 	 * Copies a #GtkRequisition.
 	 *
-	 * Return: a copy of @requisition
+	 * Returns: a copy of @requisition
 	 */
 	public Requisition copy()
 	{

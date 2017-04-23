@@ -48,7 +48,7 @@ public interface TlsBackendIF{
 	/**
 	 * Gets the default #GTlsBackend for the system.
 	 *
-	 * Return: a #GTlsBackend
+	 * Returns: a #GTlsBackend
 	 *
 	 * Since: 2.28
 	 */
@@ -57,7 +57,7 @@ public interface TlsBackendIF{
 	/**
 	 * Gets the #GType of @backend's #GTlsCertificate implementation.
 	 *
-	 * Return: the #GType of @backend's #GTlsCertificate
+	 * Returns: the #GType of @backend's #GTlsCertificate
 	 *     implementation.
 	 *
 	 * Since: 2.28
@@ -67,7 +67,7 @@ public interface TlsBackendIF{
 	/**
 	 * Gets the #GType of @backend's #GTlsClientConnection implementation.
 	 *
-	 * Return: the #GType of @backend's #GTlsClientConnection
+	 * Returns: the #GType of @backend's #GTlsClientConnection
 	 *     implementation.
 	 *
 	 * Since: 2.28
@@ -77,7 +77,7 @@ public interface TlsBackendIF{
 	/**
 	 * Gets the default #GTlsDatabase used to verify TLS connections.
 	 *
-	 * Return: the default database, which should be
+	 * Returns: the default database, which should be
 	 *     unreffed when done.
 	 *
 	 * Since: 2.30
@@ -87,7 +87,7 @@ public interface TlsBackendIF{
 	/**
 	 * Gets the #GType of @backend’s #GDtlsClientConnection implementation.
 	 *
-	 * Return: the #GType of @backend’s #GDtlsClientConnection
+	 * Returns: the #GType of @backend’s #GDtlsClientConnection
 	 *     implementation.
 	 *
 	 * Since: 2.48
@@ -97,7 +97,7 @@ public interface TlsBackendIF{
 	/**
 	 * Gets the #GType of @backend’s #GDtlsServerConnection implementation.
 	 *
-	 * Return: the #GType of @backend’s #GDtlsServerConnection
+	 * Returns: the #GType of @backend’s #GDtlsServerConnection
 	 *     implementation.
 	 *
 	 * Since: 2.48
@@ -107,7 +107,7 @@ public interface TlsBackendIF{
 	/**
 	 * Gets the #GType of @backend's #GTlsFileDatabase implementation.
 	 *
-	 * Return: the #GType of backend's #GTlsFileDatabase implementation.
+	 * Returns: the #GType of backend's #GTlsFileDatabase implementation.
 	 *
 	 * Since: 2.30
 	 */
@@ -116,7 +116,7 @@ public interface TlsBackendIF{
 	/**
 	 * Gets the #GType of @backend's #GTlsServerConnection implementation.
 	 *
-	 * Return: the #GType of @backend's #GTlsServerConnection
+	 * Returns: the #GType of @backend's #GTlsServerConnection
 	 *     implementation.
 	 *
 	 * Since: 2.28
@@ -127,7 +127,7 @@ public interface TlsBackendIF{
 	 * Checks if DTLS is supported. DTLS support may not be available even if TLS
 	 * support is available, and vice-versa.
 	 *
-	 * Return: whether DTLS is supported
+	 * Returns: whether DTLS is supported
 	 *
 	 * Since: 2.48
 	 */
@@ -137,7 +137,7 @@ public interface TlsBackendIF{
 	 * Checks if TLS is supported; if this returns %FALSE for the default
 	 * #GTlsBackend, it means no "real" TLS backend is available.
 	 *
-	 * Return: whether or not TLS is supported
+	 * Returns: whether or not TLS is supported
 	 *
 	 * Since: 2.28
 	 */

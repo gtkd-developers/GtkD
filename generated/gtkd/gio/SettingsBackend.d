@@ -140,7 +140,7 @@ public class SettingsBackend : ObjectG
 	 *
 	 * The user gets a reference to the backend.
 	 *
-	 * Return: the default #GSettingsBackend
+	 * Returns: the default #GSettingsBackend
 	 *
 	 * Since: 2.28
 	 */
@@ -361,7 +361,7 @@ public class SettingsBackend : ObjectG
 	 *     rootGroup = the group name corresponding to
 	 *         @root_path, or %NULL
 	 *
-	 * Return: a keyfile-backed #GSettingsBackend
+	 * Returns: a keyfile-backed #GSettingsBackend
 	 */
 	public static SettingsBackend keyfileSettingsBackendNew(string filename, string rootPath, string rootGroup)
 	{
@@ -382,7 +382,7 @@ public class SettingsBackend : ObjectG
 	 * to any backing storage, so the next time you run your application,
 	 * the memory backend will start out with the default values again.
 	 *
-	 * Return: a newly created #GSettingsBackend
+	 * Returns: a newly created #GSettingsBackend
 	 *
 	 * Since: 2.28
 	 */
@@ -404,7 +404,7 @@ public class SettingsBackend : ObjectG
 	 * This backend does not allow changes to settings, so all settings
 	 * will always have their default values.
 	 *
-	 * Return: a newly created #GSettingsBackend
+	 * Returns: a newly created #GSettingsBackend
 	 *
 	 * Since: 2.28
 	 */

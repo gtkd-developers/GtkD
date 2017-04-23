@@ -58,7 +58,7 @@ public template ActionableT(TStruct)
 	 *
 	 * See gtk_actionable_set_action_name() for more information.
 	 *
-	 * Return: the action name, or %NULL if none is set
+	 * Returns: the action name, or %NULL if none is set
 	 *
 	 * Since: 3.4
 	 */
@@ -72,7 +72,7 @@ public template ActionableT(TStruct)
 	 *
 	 * See gtk_actionable_set_action_target_value() for more information.
 	 *
-	 * Return: the current target value
+	 * Returns: the current target value
 	 *
 	 * Since: 3.4
 	 */

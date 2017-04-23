@@ -63,7 +63,7 @@ public interface ProxyIF{
 	 * Params:
 	 *     protocol = the proxy protocol name (e.g. http, socks, etc)
 	 *
-	 * Return: return a #GProxy or NULL if protocol
+	 * Returns: return a #GProxy or NULL if protocol
 	 *     is not supported.
 	 *
 	 * Since: 2.26
@@ -81,7 +81,7 @@ public interface ProxyIF{
 	 *     proxyAddress = a #GProxyAddress
 	 *     cancellable = a #GCancellable
 	 *
-	 * Return: a #GIOStream that will replace @connection. This might
+	 * Returns: a #GIOStream that will replace @connection. This might
 	 *     be the same as @connection, in which case a reference
 	 *     will be added.
 	 *
@@ -111,7 +111,7 @@ public interface ProxyIF{
 	 * Params:
 	 *     result = a #GAsyncResult
 	 *
-	 * Return: a #GIOStream.
+	 * Returns: a #GIOStream.
 	 *
 	 * Since: 2.26
 	 *
@@ -128,7 +128,7 @@ public interface ProxyIF{
 	 * #GProxyAddress containing the stringified IP address to
 	 * g_proxy_connect() or g_proxy_connect_async().
 	 *
-	 * Return: %TRUE if hostname resolution is supported.
+	 * Returns: %TRUE if hostname resolution is supported.
 	 *
 	 * Since: 2.26
 	 */

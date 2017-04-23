@@ -108,7 +108,7 @@ public class Assistant : Window
 	/**
 	 * Creates a new #GtkAssistant.
 	 *
-	 * Return: a newly created #GtkAssistant
+	 * Returns: a newly created #GtkAssistant
 	 *
 	 * Since: 2.10
 	 *
@@ -145,7 +145,7 @@ public class Assistant : Window
 	 * Params:
 	 *     page = a #GtkWidget
 	 *
-	 * Return: the index (starting at 0) of the inserted page
+	 * Returns: the index (starting at 0) of the inserted page
 	 *
 	 * Since: 2.10
 	 */
@@ -175,7 +175,7 @@ public class Assistant : Window
 	/**
 	 * Returns the page number of the current page.
 	 *
-	 * Return: The index (starting from 0) of the current
+	 * Returns: The index (starting from 0) of the current
 	 *     page in the @assistant, or -1 if the @assistant has no pages,
 	 *     or no current page.
 	 *
@@ -189,7 +189,7 @@ public class Assistant : Window
 	/**
 	 * Returns the number of pages in the @assistant
 	 *
-	 * Return: the number of pages in the @assistant
+	 * Returns: the number of pages in the @assistant
 	 *
 	 * Since: 2.10
 	 */
@@ -205,7 +205,7 @@ public class Assistant : Window
 	 *     pageNum = the index of a page in the @assistant,
 	 *         or -1 to get the last page
 	 *
-	 * Return: the child widget, or %NULL
+	 * Returns: the child widget, or %NULL
 	 *     if @page_num is out of bounds
 	 *
 	 * Since: 2.10
@@ -228,7 +228,7 @@ public class Assistant : Window
 	 * Params:
 	 *     page = a page of @assistant
 	 *
-	 * Return: %TRUE if @page is complete.
+	 * Returns: %TRUE if @page is complete.
 	 *
 	 * Since: 2.10
 	 */
@@ -243,7 +243,7 @@ public class Assistant : Window
 	 * Params:
 	 *     page = a page of @assistant
 	 *
-	 * Return: %TRUE if @page has padding
+	 * Returns: %TRUE if @page has padding
 	 *
 	 * Since: 3.18
 	 */
@@ -261,7 +261,7 @@ public class Assistant : Window
 	 * Params:
 	 *     page = a page of @assistant
 	 *
-	 * Return: the header image for @page,
+	 * Returns: the header image for @page,
 	 *     or %NULL if there’s no header image for the page
 	 *
 	 * Since: 2.10
@@ -287,7 +287,7 @@ public class Assistant : Window
 	 * Params:
 	 *     page = a page of @assistant
 	 *
-	 * Return: the side image for @page,
+	 * Returns: the side image for @page,
 	 *     or %NULL if there’s no side image for the page
 	 *
 	 * Since: 2.10
@@ -310,7 +310,7 @@ public class Assistant : Window
 	 * Params:
 	 *     page = a page of @assistant
 	 *
-	 * Return: the title for @page
+	 * Returns: the title for @page
 	 *
 	 * Since: 2.10
 	 */
@@ -325,7 +325,7 @@ public class Assistant : Window
 	 * Params:
 	 *     page = a page of @assistant
 	 *
-	 * Return: the page type of @page
+	 * Returns: the page type of @page
 	 *
 	 * Since: 2.10
 	 */
@@ -342,7 +342,7 @@ public class Assistant : Window
 	 *     position = the index (starting at 0) at which to insert the page,
 	 *         or -1 to append the page to the @assistant
 	 *
-	 * Return: the index (starting from 0) of the inserted page
+	 * Returns: the index (starting from 0) of the inserted page
 	 *
 	 * Since: 2.10
 	 */
@@ -373,7 +373,7 @@ public class Assistant : Window
 	 * Params:
 	 *     page = a #GtkWidget
 	 *
-	 * Return: the index (starting at 0) of the inserted page
+	 * Returns: the index (starting at 0) of the inserted page
 	 *
 	 * Since: 2.10
 	 */

@@ -64,7 +64,7 @@ public template ComponentT(TStruct)
 	 * Params:
 	 *     handler = The #AtkFocusHandler to be attached to @component
 	 *
-	 * Return: a handler id which can be used in atk_component_remove_focus_handler()
+	 * Returns: a handler id which can be used in atk_component_remove_focus_handler()
 	 *     or zero if the handler was already added.
 	 */
 	public uint addFocusHandler(AtkFocusHandler handler)
@@ -85,7 +85,7 @@ public template ComponentT(TStruct)
 	 *     coordType = specifies whether the coordinates are relative to the screen
 	 *         or to the components top level window
 	 *
-	 * Return: %TRUE or %FALSE indicating whether the specified point is within
+	 * Returns: %TRUE or %FALSE indicating whether the specified point is within
 	 *     the extent of the @component or not
 	 */
 	public bool contains(int x, int y, AtkCoordType coordType)
@@ -98,7 +98,7 @@ public template ComponentT(TStruct)
 	 * @component, on a scale from 0 (fully transparent) to 1.0
 	 * (fully opaque).
 	 *
-	 * Return: An alpha value from 0 to 1.0, inclusive.
+	 * Returns: An alpha value from 0 to 1.0, inclusive.
 	 *
 	 * Since: 1.12
 	 */
@@ -126,7 +126,7 @@ public template ComponentT(TStruct)
 	/**
 	 * Gets the layer of the component.
 	 *
-	 * Return: an #AtkLayer which is the layer of the component
+	 * Returns: an #AtkLayer which is the layer of the component
 	 */
 	public override AtkLayer getLayer()
 	{
@@ -137,7 +137,7 @@ public template ComponentT(TStruct)
 	 * Gets the zorder of the component. The value G_MININT will be returned
 	 * if the layer of the component is not ATK_LAYER_MDI or ATK_LAYER_WINDOW.
 	 *
-	 * Return: a gint which is the zorder of the component, i.e. the depth at
+	 * Returns: a gint which is the zorder of the component, i.e. the depth at
 	 *     which the component is shown in relation to other components in the same
 	 *     container.
 	 */
@@ -180,7 +180,7 @@ public template ComponentT(TStruct)
 	/**
 	 * Grabs focus for this @component.
 	 *
-	 * Return: %TRUE if successful, %FALSE otherwise.
+	 * Returns: %TRUE if successful, %FALSE otherwise.
 	 */
 	public bool grabFocus()
 	{
@@ -197,7 +197,7 @@ public template ComponentT(TStruct)
 	 *     coordType = specifies whether the coordinates are relative to the screen
 	 *         or to the components top level window
 	 *
-	 * Return: a reference to the accessible
+	 * Returns: a reference to the accessible
 	 *     child, if one exists
 	 */
 	public ObjectAtk refAccessibleAtPoint(int x, int y, AtkCoordType coordType)
@@ -240,7 +240,7 @@ public template ComponentT(TStruct)
 	 *     coordType = specifies whether the coordinates are relative to the screen
 	 *         or to the components top level window
 	 *
-	 * Return: %TRUE or %FALSE whether the extents were set or not
+	 * Returns: %TRUE or %FALSE whether the extents were set or not
 	 */
 	public bool setExtents(int x, int y, int width, int height, AtkCoordType coordType)
 	{
@@ -256,7 +256,7 @@ public template ComponentT(TStruct)
 	 *     coordType = specifies whether the coordinates are relative to the screen
 	 *         or to the components top level window
 	 *
-	 * Return: %TRUE or %FALSE whether or not the position was set or not
+	 * Returns: %TRUE or %FALSE whether or not the position was set or not
 	 */
 	public bool setPosition(int x, int y, AtkCoordType coordType)
 	{
@@ -270,7 +270,7 @@ public template ComponentT(TStruct)
 	 *     width = width to set for @component
 	 *     height = height to set for @component
 	 *
-	 * Return: %TRUE or %FALSE whether the size was set or not
+	 * Returns: %TRUE or %FALSE whether the size was set or not
 	 */
 	public bool setSize(int width, int height)
 	{

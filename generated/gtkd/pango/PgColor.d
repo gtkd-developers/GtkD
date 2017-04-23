@@ -74,7 +74,7 @@ public class PgColor
 	 * not that useful otherwise (since colors can just be copied
 	 * by assignment in C).
 	 *
-	 * Return: the newly allocated #PangoColor, which
+	 * Returns: the newly allocated #PangoColor, which
 	 *     should be freed with pango_color_free(), or %NULL if
 	 *     @src was %NULL.
 	 */
@@ -111,7 +111,7 @@ public class PgColor
 	 * Params:
 	 *     spec = a string specifying the new color
 	 *
-	 * Return: %TRUE if parsing of the specifier succeeded,
+	 * Returns: %TRUE if parsing of the specifier succeeded,
 	 *     otherwise false.
 	 */
 	public bool parse(string spec)
@@ -125,7 +125,7 @@ public class PgColor
 	 * <literal>g</literal> and <literal>b</literal> are hex digits representing
 	 * the red, green, and blue components respectively.
 	 *
-	 * Return: a newly-allocated text string that must be freed with g_free().
+	 * Returns: a newly-allocated text string that must be freed with g_free().
 	 *
 	 * Since: 1.16
 	 */

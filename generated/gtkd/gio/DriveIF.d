@@ -79,14 +79,14 @@ public interface DriveIF{
 	/**
 	 * Checks if a drive can be ejected.
 	 *
-	 * Return: %TRUE if the @drive can be ejected, %FALSE otherwise.
+	 * Returns: %TRUE if the @drive can be ejected, %FALSE otherwise.
 	 */
 	public bool canEject();
 
 	/**
 	 * Checks if a drive can be polled for media changes.
 	 *
-	 * Return: %TRUE if the @drive can be polled for media changes,
+	 * Returns: %TRUE if the @drive can be polled for media changes,
 	 *     %FALSE otherwise.
 	 */
 	public bool canPollForMedia();
@@ -94,7 +94,7 @@ public interface DriveIF{
 	/**
 	 * Checks if a drive can be started.
 	 *
-	 * Return: %TRUE if the @drive can be started, %FALSE otherwise.
+	 * Returns: %TRUE if the @drive can be started, %FALSE otherwise.
 	 *
 	 * Since: 2.22
 	 */
@@ -103,7 +103,7 @@ public interface DriveIF{
 	/**
 	 * Checks if a drive can be started degraded.
 	 *
-	 * Return: %TRUE if the @drive can be started degraded, %FALSE otherwise.
+	 * Returns: %TRUE if the @drive can be started degraded, %FALSE otherwise.
 	 *
 	 * Since: 2.22
 	 */
@@ -112,7 +112,7 @@ public interface DriveIF{
 	/**
 	 * Checks if a drive can be stopped.
 	 *
-	 * Return: %TRUE if the @drive can be stopped, %FALSE otherwise.
+	 * Returns: %TRUE if the @drive can be stopped, %FALSE otherwise.
 	 *
 	 * Since: 2.22
 	 */
@@ -143,7 +143,7 @@ public interface DriveIF{
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *
-	 * Return: %TRUE if the drive has been ejected successfully,
+	 * Returns: %TRUE if the drive has been ejected successfully,
 	 *     %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
@@ -174,7 +174,7 @@ public interface DriveIF{
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *
-	 * Return: %TRUE if the drive was successfully ejected. %FALSE otherwise.
+	 * Returns: %TRUE if the drive was successfully ejected. %FALSE otherwise.
 	 *
 	 * Since: 2.22
 	 *
@@ -187,7 +187,7 @@ public interface DriveIF{
 	 * Use g_drive_get_identifier() to obtain the identifiers
 	 * themselves.
 	 *
-	 * Return: a %NULL-terminated
+	 * Returns: a %NULL-terminated
 	 *     array of strings containing kinds of identifiers. Use g_strfreev()
 	 *     to free.
 	 */
@@ -196,7 +196,7 @@ public interface DriveIF{
 	/**
 	 * Gets the icon for @drive.
 	 *
-	 * Return: #GIcon for the @drive.
+	 * Returns: #GIcon for the @drive.
 	 *     Free the returned object with g_object_unref().
 	 */
 	public IconIF getIcon();
@@ -207,7 +207,7 @@ public interface DriveIF{
 	 * Params:
 	 *     kind = the kind of identifier to return
 	 *
-	 * Return: a newly allocated string containing the
+	 * Returns: a newly allocated string containing the
 	 *     requested identfier, or %NULL if the #GDrive
 	 *     doesn't have this kind of identifier.
 	 */
@@ -216,7 +216,7 @@ public interface DriveIF{
 	/**
 	 * Gets the name of @drive.
 	 *
-	 * Return: a string containing @drive's name. The returned
+	 * Returns: a string containing @drive's name. The returned
 	 *     string should be freed when no longer needed.
 	 */
 	public string getName();
@@ -224,7 +224,7 @@ public interface DriveIF{
 	/**
 	 * Gets the sort key for @drive, if any.
 	 *
-	 * Return: Sorting key for @drive or %NULL if no such key is available.
+	 * Returns: Sorting key for @drive or %NULL if no such key is available.
 	 *
 	 * Since: 2.32
 	 */
@@ -233,7 +233,7 @@ public interface DriveIF{
 	/**
 	 * Gets a hint about how a drive can be started/stopped.
 	 *
-	 * Return: A value from the #GDriveStartStopType enumeration.
+	 * Returns: A value from the #GDriveStartStopType enumeration.
 	 *
 	 * Since: 2.22
 	 */
@@ -242,7 +242,7 @@ public interface DriveIF{
 	/**
 	 * Gets the icon for @drive.
 	 *
-	 * Return: symbolic #GIcon for the @drive.
+	 * Returns: symbolic #GIcon for the @drive.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Since: 2.34
@@ -255,7 +255,7 @@ public interface DriveIF{
 	 * The returned list should be freed with g_list_free(), after
 	 * its elements have been unreffed with g_object_unref().
 	 *
-	 * Return: #GList containing any #GVolume objects on the given @drive.
+	 * Returns: #GList containing any #GVolume objects on the given @drive.
 	 */
 	public ListG getVolumes();
 
@@ -264,21 +264,21 @@ public interface DriveIF{
 	 * the drive for media changes; see g_drive_is_media_check_automatic()
 	 * for more details.
 	 *
-	 * Return: %TRUE if @drive has media, %FALSE otherwise.
+	 * Returns: %TRUE if @drive has media, %FALSE otherwise.
 	 */
 	public bool hasMedia();
 
 	/**
 	 * Check if @drive has any mountable volumes.
 	 *
-	 * Return: %TRUE if the @drive contains volumes, %FALSE otherwise.
+	 * Returns: %TRUE if the @drive contains volumes, %FALSE otherwise.
 	 */
 	public bool hasVolumes();
 
 	/**
 	 * Checks if @drive is capabable of automatically detecting media changes.
 	 *
-	 * Return: %TRUE if the @drive is capabable of automatically detecting
+	 * Returns: %TRUE if the @drive is capabable of automatically detecting
 	 *     media changes, %FALSE otherwise.
 	 */
 	public bool isMediaCheckAutomatic();
@@ -286,7 +286,7 @@ public interface DriveIF{
 	/**
 	 * Checks if the @drive supports removable media.
 	 *
-	 * Return: %TRUE if @drive supports removable media, %FALSE otherwise.
+	 * Returns: %TRUE if @drive supports removable media, %FALSE otherwise.
 	 */
 	public bool isMediaRemovable();
 
@@ -294,7 +294,7 @@ public interface DriveIF{
 	 * Checks if the #GDrive and/or its media is considered removable by the user.
 	 * See g_drive_is_media_removable().
 	 *
-	 * Return: %TRUE if @drive and/or its media is considered removable, %FALSE otherwise.
+	 * Returns: %TRUE if @drive and/or its media is considered removable, %FALSE otherwise.
 	 *
 	 * Since: 2.50
 	 */
@@ -320,7 +320,7 @@ public interface DriveIF{
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *
-	 * Return: %TRUE if the drive has been poll_for_mediaed successfully,
+	 * Returns: %TRUE if the drive has been poll_for_mediaed successfully,
 	 *     %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
@@ -352,7 +352,7 @@ public interface DriveIF{
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *
-	 * Return: %TRUE if the drive has been started successfully,
+	 * Returns: %TRUE if the drive has been started successfully,
 	 *     %FALSE otherwise.
 	 *
 	 * Since: 2.22
@@ -386,7 +386,7 @@ public interface DriveIF{
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *
-	 * Return: %TRUE if the drive has been stopped successfully,
+	 * Returns: %TRUE if the drive has been stopped successfully,
 	 *     %FALSE otherwise.
 	 *
 	 * Since: 2.22

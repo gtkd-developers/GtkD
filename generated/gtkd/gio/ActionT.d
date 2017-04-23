@@ -85,7 +85,7 @@ public template ActionT(TStruct)
 	 * Params:
 	 *     actionName = an potential action name
 	 *
-	 * Return: %TRUE if @action_name is valid
+	 * Returns: %TRUE if @action_name is valid
 	 *
 	 * Since: 2.38
 	 */
@@ -125,7 +125,7 @@ public template ActionT(TStruct)
 	 *     actionName = the action name
 	 *     targetValue = the target value, or %NULL for no target
 	 *
-	 * Return: %TRUE if successful, else %FALSE with @error set
+	 * Returns: %TRUE if successful, else %FALSE with @error set
 	 *
 	 * Since: 2.38
 	 *
@@ -166,7 +166,7 @@ public template ActionT(TStruct)
 	 *     actionName = a valid action name
 	 *     targetValue = a #GVariant target value, or %NULL
 	 *
-	 * Return: a detailed format string
+	 * Returns: a detailed format string
 	 *
 	 * Since: 2.38
 	 */
@@ -225,7 +225,7 @@ public template ActionT(TStruct)
 	 * An action must be enabled in order to be activated or in order to
 	 * have its state changed from outside callers.
 	 *
-	 * Return: whether the action is enabled
+	 * Returns: whether the action is enabled
 	 *
 	 * Since: 2.28
 	 */
@@ -237,7 +237,7 @@ public template ActionT(TStruct)
 	/**
 	 * Queries the name of @action.
 	 *
-	 * Return: the name of the action
+	 * Returns: the name of the action
 	 *
 	 * Since: 2.28
 	 */
@@ -256,7 +256,7 @@ public template ActionT(TStruct)
 	 * In the case that this function returns %NULL, you must not give any
 	 * #GVariant, but %NULL instead.
 	 *
-	 * Return: the parameter type
+	 * Returns: the parameter type
 	 *
 	 * Since: 2.28
 	 */
@@ -282,7 +282,7 @@ public template ActionT(TStruct)
 	 * The return value (if non-%NULL) should be freed with
 	 * g_variant_unref() when it is no longer required.
 	 *
-	 * Return: the current state of the action
+	 * Returns: the current state of the action
 	 *
 	 * Since: 2.28
 	 */
@@ -318,7 +318,7 @@ public template ActionT(TStruct)
 	 * The return value (if non-%NULL) should be freed with
 	 * g_variant_unref() when it is no longer required.
 	 *
-	 * Return: the state range hint
+	 * Returns: the state range hint
 	 *
 	 * Since: 2.28
 	 */
@@ -348,7 +348,7 @@ public template ActionT(TStruct)
 	 * then this function will return %NULL. In that case, g_action_get_state()
 	 * will return %NULL and you must not call g_action_change_state().
 	 *
-	 * Return: the state type, if the action is stateful
+	 * Returns: the state type, if the action is stateful
 	 *
 	 * Since: 2.28
 	 */

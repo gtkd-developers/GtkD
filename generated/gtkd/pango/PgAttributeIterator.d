@@ -73,7 +73,7 @@ public class PgAttributeIterator
 	/**
 	 * Copy a #PangoAttrIterator
 	 *
-	 * Return: the newly allocated
+	 * Returns: the newly allocated
 	 *     #PangoAttrIterator, which should be freed with
 	 *     pango_attr_iterator_destroy().
 	 */
@@ -106,7 +106,7 @@ public class PgAttributeIterator
 	 * Params:
 	 *     type = the type of attribute to find.
 	 *
-	 * Return: the current attribute of the given type,
+	 * Returns: the current attribute of the given type,
 	 *     or %NULL if no attribute of that type applies to the
 	 *     current location.
 	 */
@@ -126,7 +126,7 @@ public class PgAttributeIterator
 	 * Gets a list of all attributes at the current position of the
 	 * iterator.
 	 *
-	 * Return: a list of
+	 * Returns: a list of
 	 *     all attributes for the current range.
 	 *     To free this value, call pango_attribute_destroy() on
 	 *     each value and g_slist_free() on the list.
@@ -178,7 +178,7 @@ public class PgAttributeIterator
 	/**
 	 * Advance the iterator until the next change of style.
 	 *
-	 * Return: %FALSE if the iterator is at the end of the list, otherwise %TRUE
+	 * Returns: %FALSE if the iterator is at the end of the list, otherwise %TRUE
 	 */
 	public bool next()
 	{

@@ -93,7 +93,7 @@ public class StackSidebar : Bin
 	/**
 	 * Creates a new sidebar.
 	 *
-	 * Return: the new #GtkStackSidebar
+	 * Returns: the new #GtkStackSidebar
 	 *
 	 * Since: 3.16
 	 *
@@ -115,7 +115,7 @@ public class StackSidebar : Bin
 	 * Retrieves the stack.
 	 * See gtk_stack_sidebar_set_stack().
 	 *
-	 * Return: the associated #GtkStack or
+	 * Returns: the associated #GtkStack or
 	 *     %NULL if none has been set explicitly
 	 *
 	 * Since: 3.16

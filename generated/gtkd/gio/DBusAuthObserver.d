@@ -115,7 +115,7 @@ public class DBusAuthObserver : ObjectG
 	/**
 	 * Creates a new #GDBusAuthObserver object.
 	 *
-	 * Return: A #GDBusAuthObserver. Free with g_object_unref().
+	 * Returns: A #GDBusAuthObserver. Free with g_object_unref().
 	 *
 	 * Since: 2.26
 	 *
@@ -139,7 +139,7 @@ public class DBusAuthObserver : ObjectG
 	 * Params:
 	 *     mechanism = The name of the mechanism, e.g. `DBUS_COOKIE_SHA1`.
 	 *
-	 * Return: %TRUE if @mechanism can be used to authenticate the other peer, %FALSE if not.
+	 * Returns: %TRUE if @mechanism can be used to authenticate the other peer, %FALSE if not.
 	 *
 	 * Since: 2.34
 	 */
@@ -155,7 +155,7 @@ public class DBusAuthObserver : ObjectG
 	 *     stream = A #GIOStream for the #GDBusConnection.
 	 *     credentials = Credentials received from the peer or %NULL.
 	 *
-	 * Return: %TRUE if the peer is authorized, %FALSE if not.
+	 * Returns: %TRUE if the peer is authorized, %FALSE if not.
 	 *
 	 * Since: 2.26
 	 */
@@ -196,7 +196,7 @@ public class DBusAuthObserver : ObjectG
 	 * Params:
 	 *     mechanism = The name of the mechanism, e.g. `DBUS_COOKIE_SHA1`.
 	 *
-	 * Return: %TRUE if @mechanism can be used to authenticate the other peer, %FALSE if not.
+	 * Returns: %TRUE if @mechanism can be used to authenticate the other peer, %FALSE if not.
 	 *
 	 * Since: 2.34
 	 */
@@ -257,7 +257,7 @@ public class DBusAuthObserver : ObjectG
 	 *     stream = A #GIOStream for the #GDBusConnection.
 	 *     credentials = Credentials received from the peer or %NULL.
 	 *
-	 * Return: %TRUE if the peer is authorized, %FALSE if not.
+	 * Returns: %TRUE if the peer is authorized, %FALSE if not.
 	 *
 	 * Since: 2.26
 	 */

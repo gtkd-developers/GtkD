@@ -97,7 +97,7 @@ public class ParamSpec
 	 *     blurb = a short description of the property
 	 *     flags = a combination of #GParamFlags
 	 *
-	 * Return: a newly allocated #GParamSpec instance
+	 * Returns: a newly allocated #GParamSpec instance
 	 */
 	public static ParamSpec internal(GType paramType, string name, string nick, string blurb, GParamFlags flags)
 	{
@@ -114,7 +114,7 @@ public class ParamSpec
 	/**
 	 * Get the short description of a #GParamSpec.
 	 *
-	 * Return: the short description of @pspec.
+	 * Returns: the short description of @pspec.
 	 */
 	public string getBlurb()
 	{
@@ -126,7 +126,7 @@ public class ParamSpec
 	 *
 	 * The #GValue will remain value for the life of @pspec.
 	 *
-	 * Return: a pointer to a #GValue which must not be modified
+	 * Returns: a pointer to a #GValue which must not be modified
 	 *
 	 * Since: 2.38
 	 */
@@ -148,7 +148,7 @@ public class ParamSpec
 	 * The name is always an "interned" string (as per g_intern_string()).
 	 * This allows for pointer-value comparisons.
 	 *
-	 * Return: the name of @pspec.
+	 * Returns: the name of @pspec.
 	 */
 	public string getName()
 	{
@@ -158,7 +158,7 @@ public class ParamSpec
 	/**
 	 * Gets the GQuark for the name.
 	 *
-	 * Return: the GQuark for @pspec->name.
+	 * Returns: the GQuark for @pspec->name.
 	 *
 	 * Since: 2.46
 	 */
@@ -170,7 +170,7 @@ public class ParamSpec
 	/**
 	 * Get the nickname of a #GParamSpec.
 	 *
-	 * Return: the nickname of @pspec.
+	 * Returns: the nickname of @pspec.
 	 */
 	public string getNick()
 	{
@@ -183,7 +183,7 @@ public class ParamSpec
 	 * Params:
 	 *     quark = a #GQuark, naming the user data pointer
 	 *
-	 * Return: the user data pointer set, or %NULL
+	 * Returns: the user data pointer set, or %NULL
 	 */
 	public void* getQdata(GQuark quark)
 	{
@@ -199,7 +199,7 @@ public class ParamSpec
 	 * of type #GParamSpecOverride. See g_object_class_override_property()
 	 * for an example of the use of this capability.
 	 *
-	 * Return: paramspec to which requests on this
+	 * Returns: paramspec to which requests on this
 	 *     paramspec should be redirected, or %NULL if none.
 	 *
 	 * Since: 2.4
@@ -219,7 +219,7 @@ public class ParamSpec
 	/**
 	 * Increments the reference count of @pspec.
 	 *
-	 * Return: the #GParamSpec that was passed into this function
+	 * Returns: the #GParamSpec that was passed into this function
 	 */
 	public ParamSpec doref()
 	{
@@ -236,7 +236,7 @@ public class ParamSpec
 	/**
 	 * Convenience function to ref and sink a #GParamSpec.
 	 *
-	 * Return: the #GParamSpec that was passed into this function
+	 * Returns: the #GParamSpec that was passed into this function
 	 *
 	 * Since: 2.10
 	 */
@@ -310,7 +310,7 @@ public class ParamSpec
 	 * Params:
 	 *     quark = a #GQuark, naming the user data pointer
 	 *
-	 * Return: the user data pointer set, or %NULL
+	 * Returns: the user data pointer set, or %NULL
 	 */
 	public void* stealQdata(GQuark quark)
 	{
@@ -335,7 +335,7 @@ public class ParamSpec
 	 *     name = 0-terminated string used as the name of the new #GParamSpec type.
 	 *     pspecInfo = The #GParamSpecTypeInfo for this #GParamSpec type.
 	 *
-	 * Return: The new type identifier.
+	 * Returns: The new type identifier.
 	 */
 	public static GType paramTypeRegisterStatic(string name, GParamSpecTypeInfo* pspecInfo)
 	{
@@ -358,7 +358,7 @@ public class ParamSpec
 	 *     strictValidation = %TRUE requires @dest_value to conform to @pspec
 	 *         without modifications
 	 *
-	 * Return: %TRUE if transformation and validation were successful,
+	 * Returns: %TRUE if transformation and validation were successful,
 	 *     %FALSE otherwise and @dest_value is left untouched.
 	 */
 	public static bool paramValueConvert(ParamSpec pspec, Value srcValue, Value destValue, bool strictValidation)
@@ -373,7 +373,7 @@ public class ParamSpec
 	 *     pspec = a valid #GParamSpec
 	 *     value = a #GValue of correct type for @pspec
 	 *
-	 * Return: whether @value contains the canonical default for this @pspec
+	 * Returns: whether @value contains the canonical default for this @pspec
 	 */
 	public static bool paramValueDefaults(ParamSpec pspec, Value value)
 	{
@@ -404,7 +404,7 @@ public class ParamSpec
 	 *     pspec = a valid #GParamSpec
 	 *     value = a #GValue of correct type for @pspec
 	 *
-	 * Return: whether modifying @value was necessary to ensure validity
+	 * Returns: whether modifying @value was necessary to ensure validity
 	 */
 	public static bool paramValueValidate(ParamSpec pspec, Value value)
 	{
@@ -421,7 +421,7 @@ public class ParamSpec
 	 *     value1 = a #GValue of correct type for @pspec
 	 *     value2 = a #GValue of correct type for @pspec
 	 *
-	 * Return: -1, 0 or +1, for a less than, equal to or greater than result
+	 * Returns: -1, 0 or +1, for a less than, equal to or greater than result
 	 */
 	public static int paramValuesCmp(ParamSpec pspec, Value value1, Value value2)
 	{

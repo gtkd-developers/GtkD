@@ -87,7 +87,7 @@ public class IOModule : TypeModule
 	 * Params:
 	 *     filename = filename of the shared library module.
 	 *
-	 * Return: a #GIOModule from given @filename,
+	 * Returns: a #GIOModule from given @filename,
 	 *     or %NULL on error.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -115,7 +115,7 @@ public class IOModule : TypeModule
 	 *     dirname = pathname for a directory containing modules
 	 *         to load.
 	 *
-	 * Return: a list of #GIOModules loaded
+	 * Returns: a list of #GIOModules loaded
 	 *     from the directory,
 	 *     All the modules are loaded into memory, if you want to
 	 *     unload them (enabling on-demand loading) you must call
@@ -146,7 +146,7 @@ public class IOModule : TypeModule
 	 *         to load.
 	 *     scop = a scope to use when scanning the modules.
 	 *
-	 * Return: a list of #GIOModules loaded
+	 * Returns: a list of #GIOModules loaded
 	 *     from the directory,
 	 *     All the modules are loaded into memory, if you want to
 	 *     unload them (enabling on-demand loading) you must call

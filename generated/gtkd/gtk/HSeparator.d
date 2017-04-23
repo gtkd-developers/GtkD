@@ -88,7 +88,7 @@ public class HSeparator : Separator
 	 *
 	 * Deprecated: Use gtk_separator_new() with %GTK_ORIENTATION_HORIZONTAL instead
 	 *
-	 * Return: a new #GtkHSeparator.
+	 * Returns: a new #GtkHSeparator.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

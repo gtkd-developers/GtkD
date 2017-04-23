@@ -585,7 +585,7 @@ public class ComboBoxText : ComboBox
 	 * function will return its contents (which will not necessarily
 	 * be an item from the list).
 	 *
-	 * Return: a newly allocated string containing the
+	 * Returns: a newly allocated string containing the
 	 *     currently active text. Must be freed with g_free().
 	 *
 	 * Since: 2.24

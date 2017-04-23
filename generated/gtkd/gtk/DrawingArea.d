@@ -172,7 +172,7 @@ public class DrawingArea : Widget
 	/**
 	 * Creates a new drawing area.
 	 *
-	 * Return: a new #GtkDrawingArea
+	 * Returns: a new #GtkDrawingArea
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

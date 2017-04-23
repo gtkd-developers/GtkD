@@ -176,7 +176,7 @@ public class LevelBar : Widget, OrientableIF
 	/**
 	 * Creates a new #GtkLevelBar.
 	 *
-	 * Return: a #GtkLevelBar.
+	 * Returns: a #GtkLevelBar.
 	 *
 	 * Since: 3.6
 	 *
@@ -202,7 +202,7 @@ public class LevelBar : Widget, OrientableIF
 	 *     minValue = a positive value
 	 *     maxValue = a positive value
 	 *
-	 * Return: a #GtkLevelBar
+	 * Returns: a #GtkLevelBar
 	 *
 	 * Since: 3.6
 	 *
@@ -243,7 +243,7 @@ public class LevelBar : Widget, OrientableIF
 	/**
 	 * Return the value of the #GtkLevelBar:inverted property.
 	 *
-	 * Return: %TRUE if the level bar is inverted
+	 * Returns: %TRUE if the level bar is inverted
 	 *
 	 * Since: 3.8
 	 */
@@ -255,7 +255,7 @@ public class LevelBar : Widget, OrientableIF
 	/**
 	 * Returns the value of the #GtkLevelBar:max-value property.
 	 *
-	 * Return: a positive value
+	 * Returns: a positive value
 	 *
 	 * Since: 3.6
 	 */
@@ -267,7 +267,7 @@ public class LevelBar : Widget, OrientableIF
 	/**
 	 * Returns the value of the #GtkLevelBar:min-value property.
 	 *
-	 * Return: a positive value
+	 * Returns: a positive value
 	 *
 	 * Since: 3.6
 	 */
@@ -279,7 +279,7 @@ public class LevelBar : Widget, OrientableIF
 	/**
 	 * Returns the value of the #GtkLevelBar:mode property.
 	 *
-	 * Return: a #GtkLevelBarMode
+	 * Returns: a #GtkLevelBarMode
 	 *
 	 * Since: 3.6
 	 */
@@ -296,7 +296,7 @@ public class LevelBar : Widget, OrientableIF
 	 *     name = the name of an offset in the bar
 	 *     value = location where to store the value
 	 *
-	 * Return: %TRUE if the specified offset is found
+	 * Returns: %TRUE if the specified offset is found
 	 *
 	 * Since: 3.6
 	 */
@@ -308,7 +308,7 @@ public class LevelBar : Widget, OrientableIF
 	/**
 	 * Returns the value of the #GtkLevelBar:value property.
 	 *
-	 * Return: a value in the interval between
+	 * Returns: a value in the interval between
 	 *     #GtkLevelBar:min-value and #GtkLevelBar:max-value
 	 *
 	 * Since: 3.6

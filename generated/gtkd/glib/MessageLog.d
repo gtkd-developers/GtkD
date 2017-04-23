@@ -110,7 +110,7 @@ public struct MessageLog
 	 *     fatalMask = the mask containing bits set for each level
 	 *         of error which is to be fatal
 	 *
-	 * Return: the old fatal mask
+	 * Returns: the old fatal mask
 	 */
 	public static GLogLevelFlags logSetAlwaysFatal(GLogLevelFlags fatalMask)
 	{
@@ -130,7 +130,7 @@ public struct MessageLog
 	 *     logFunc = the log handler function
 	 *     userData = data passed to the log handler
 	 *
-	 * Return: the previous default log handler
+	 * Returns: the previous default log handler
 	 *
 	 * Since: 2.6
 	 */
@@ -153,7 +153,7 @@ public struct MessageLog
 	 *     logDomain = the log domain
 	 *     fatalMask = the new fatal mask
 	 *
-	 * Return: the old fatal mask for the log domain
+	 * Returns: the old fatal mask for the log domain
 	 */
 	public static GLogLevelFlags logSetFatalMask(string logDomain, GLogLevelFlags fatalMask)
 	{
@@ -202,7 +202,7 @@ public struct MessageLog
 	 *     logFunc = the log handler function
 	 *     userData = data passed to the log handler
 	 *
-	 * Return: the id of the new handler
+	 * Returns: the id of the new handler
 	 */
 	public static uint logSetHandler(string logDomain, GLogLevelFlags logLevels, GLogFunc logFunc, void* userData)
 	{
@@ -226,7 +226,7 @@ public struct MessageLog
 	 *     userData = data passed to the log handler
 	 *     destroy = destroy notify for @user_data, or %NULL
 	 *
-	 * Return: the id of the new handler
+	 * Returns: the id of the new handler
 	 *
 	 * Since: 2.46
 	 */

@@ -97,7 +97,7 @@ public interface InitableIF{
 	 * Params:
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Return: %TRUE if successful. If an error has occurred, this function will
+	 * Returns: %TRUE if successful. If an error has occurred, this function will
 	 *     return %FALSE and set @error appropriately if present.
 	 *
 	 * Since: 2.22

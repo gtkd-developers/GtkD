@@ -134,7 +134,7 @@ public class PadController : EventController
 	 *     group = #GActionGroup to trigger actions from
 	 *     pad = A %GDK_SOURCE_TABLET_PAD device, or %NULL to handle all pads
 	 *
-	 * Return: A newly created #GtkPadController
+	 * Returns: A newly created #GtkPadController
 	 *
 	 * Since: 3.22
 	 *

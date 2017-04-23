@@ -83,7 +83,7 @@ public class Keymap : ObjectG
 	/**
 	 * Returns the #GdkKeymap attached to the default display.
 	 *
-	 * Return: the #GdkKeymap attached to the default display.
+	 * Returns: the #GdkKeymap attached to the default display.
 	 */
 	public static Keymap getDefault()
 	{
@@ -103,7 +103,7 @@ public class Keymap : ObjectG
 	 * Params:
 	 *     display = the #GdkDisplay.
 	 *
-	 * Return: the #GdkKeymap attached to @display.
+	 * Returns: the #GdkKeymap attached to @display.
 	 *
 	 * Since: 2.2
 	 */
@@ -144,7 +144,7 @@ public class Keymap : ObjectG
 	/**
 	 * Returns whether the Caps Lock modifer is locked.
 	 *
-	 * Return: %TRUE if Caps Lock is on
+	 * Returns: %TRUE if Caps Lock is on
 	 *
 	 * Since: 2.16
 	 */
@@ -156,7 +156,7 @@ public class Keymap : ObjectG
 	/**
 	 * Returns the direction of effective layout of the keymap.
 	 *
-	 * Return: %PANGO_DIRECTION_LTR or %PANGO_DIRECTION_RTL
+	 * Returns: %PANGO_DIRECTION_LTR or %PANGO_DIRECTION_RTL
 	 *     if it can determine the direction. %PANGO_DIRECTION_NEUTRAL
 	 *     otherwise.
 	 */
@@ -181,7 +181,7 @@ public class Keymap : ObjectG
 	 *         location for array of keyvals, or %NULL
 	 *     nEntries = length of @keys and @keyvals
 	 *
-	 * Return: %TRUE if there were any entries
+	 * Returns: %TRUE if there were any entries
 	 */
 	public bool getEntriesForKeycode(uint hardwareKeycode, out GdkKeymapKey[] keys, out uint[] keyvals)
 	{
@@ -216,7 +216,7 @@ public class Keymap : ObjectG
 	 *         for an array of #GdkKeymapKey
 	 *     nKeys = return location for number of elements in returned array
 	 *
-	 * Return: %TRUE if keys were found and returned
+	 * Returns: %TRUE if keys were found and returned
 	 */
 	public bool getEntriesForKeyval(uint keyval, out GdkKeymapKey[] keys)
 	{
@@ -244,7 +244,7 @@ public class Keymap : ObjectG
 	 * Params:
 	 *     intent = the use case for the modifier mask
 	 *
-	 * Return: the modifier mask used for @intent.
+	 * Returns: the modifier mask used for @intent.
 	 *
 	 * Since: 3.4
 	 */
@@ -256,7 +256,7 @@ public class Keymap : ObjectG
 	/**
 	 * Returns the current modifier state.
 	 *
-	 * Return: the current modifier state.
+	 * Returns: the current modifier state.
 	 *
 	 * Since: 3.4
 	 */
@@ -268,7 +268,7 @@ public class Keymap : ObjectG
 	/**
 	 * Returns whether the Num Lock modifer is locked.
 	 *
-	 * Return: %TRUE if Num Lock is on
+	 * Returns: %TRUE if Num Lock is on
 	 *
 	 * Since: 3.0
 	 */
@@ -280,7 +280,7 @@ public class Keymap : ObjectG
 	/**
 	 * Returns whether the Scroll Lock modifer is locked.
 	 *
-	 * Return: %TRUE if Scroll Lock is on
+	 * Returns: %TRUE if Scroll Lock is on
 	 *
 	 * Since: 3.18
 	 */
@@ -293,7 +293,7 @@ public class Keymap : ObjectG
 	 * Determines if keyboard layouts for both right-to-left and left-to-right
 	 * languages are in use.
 	 *
-	 * Return: %TRUE if there are layouts in both directions, %FALSE otherwise
+	 * Returns: %TRUE if there are layouts in both directions, %FALSE otherwise
 	 *
 	 * Since: 2.12
 	 */
@@ -312,7 +312,7 @@ public class Keymap : ObjectG
 	 * Params:
 	 *     key = a #GdkKeymapKey with keycode, group, and level initialized
 	 *
-	 * Return: a keyval, or 0 if none was mapped to the given @key
+	 * Returns: a keyval, or 0 if none was mapped to the given @key
 	 */
 	public uint lookupKey(GdkKeymapKey* key)
 	{
@@ -330,7 +330,7 @@ public class Keymap : ObjectG
 	 * Params:
 	 *     state = pointer to the modifier state to map
 	 *
-	 * Return: %FALSE if two virtual modifiers were mapped to the
+	 * Returns: %FALSE if two virtual modifiers were mapped to the
 	 *     same non-virtual modifier. Note that %FALSE is also returned
 	 *     if a virtual modifier is mapped to a non-virtual modifier that
 	 *     was already set in @state.
@@ -402,7 +402,7 @@ public class Keymap : ObjectG
 	 *     consumedModifiers = return location for modifiers
 	 *         that were used to determine the group or level, or %NULL
 	 *
-	 * Return: %TRUE if there was a keyval bound to the keycode/state/group
+	 * Returns: %TRUE if there was a keyval bound to the keycode/state/group
 	 */
 	public bool translateKeyboardState(uint hardwareKeycode, GdkModifierType state, int group, out uint keyval, out int effectiveGroup, out int level, out GdkModifierType consumedModifiers)
 	{
@@ -599,7 +599,7 @@ public class Keymap : ObjectG
 	 * Params:
 	 *     keyvalName = a key name
 	 *
-	 * Return: the corresponding key value, or %GDK_KEY_VoidSymbol
+	 * Returns: the corresponding key value, or %GDK_KEY_VoidSymbol
 	 *     if the key name is not a valid key
 	 */
 	public static uint keyvalFromName(string keyvalName)
@@ -613,7 +613,7 @@ public class Keymap : ObjectG
 	 * Params:
 	 *     keyval = a key value.
 	 *
-	 * Return: %TRUE if @keyval is in lower case, or if @keyval is not
+	 * Returns: %TRUE if @keyval is in lower case, or if @keyval is not
 	 *     subject to case conversion.
 	 */
 	public static bool keyvalIsLower(uint keyval)
@@ -627,7 +627,7 @@ public class Keymap : ObjectG
 	 * Params:
 	 *     keyval = a key value.
 	 *
-	 * Return: %TRUE if @keyval is in upper case, or if @keyval is not subject to
+	 * Returns: %TRUE if @keyval is in upper case, or if @keyval is not subject to
 	 *     case conversion.
 	 */
 	public static bool keyvalIsUpper(uint keyval)
@@ -645,7 +645,7 @@ public class Keymap : ObjectG
 	 * Params:
 	 *     keyval = a key value
 	 *
-	 * Return: a string containing the name
+	 * Returns: a string containing the name
 	 *     of the key, or %NULL if @keyval is not a valid key. The string
 	 *     should not be modified.
 	 */
@@ -660,7 +660,7 @@ public class Keymap : ObjectG
 	 * Params:
 	 *     keyval = a key value.
 	 *
-	 * Return: the lower case form of @keyval, or @keyval itself if it is already
+	 * Returns: the lower case form of @keyval, or @keyval itself if it is already
 	 *     in lower case or it is not subject to case conversion.
 	 */
 	public static uint keyvalToLower(uint keyval)
@@ -675,7 +675,7 @@ public class Keymap : ObjectG
 	 * Params:
 	 *     keyval = a GDK key symbol
 	 *
-	 * Return: the corresponding unicode character, or 0 if there
+	 * Returns: the corresponding unicode character, or 0 if there
 	 *     is no corresponding character.
 	 */
 	public static uint keyvalToUnicode(uint keyval)
@@ -689,7 +689,7 @@ public class Keymap : ObjectG
 	 * Params:
 	 *     keyval = a key value.
 	 *
-	 * Return: the upper case form of @keyval, or @keyval itself if it is already
+	 * Returns: the upper case form of @keyval, or @keyval itself if it is already
 	 *     in upper case or it is not subject to case conversion.
 	 */
 	public static uint keyvalToUpper(uint keyval)
@@ -703,7 +703,7 @@ public class Keymap : ObjectG
 	 * Params:
 	 *     wc = a ISO10646 encoded character
 	 *
-	 * Return: the corresponding GDK key symbol, if one exists.
+	 * Returns: the corresponding GDK key symbol, if one exists.
 	 *     or, if there is no corresponding symbol,
 	 *     wc | 0x01000000
 	 */

@@ -248,7 +248,7 @@ public class TreeView : Container, ScrollableIF
 	/**
 	 * Creates a new #GtkTreeView widget.
 	 *
-	 * Return: A newly created #GtkTreeView widget.
+	 * Returns: A newly created #GtkTreeView widget.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -270,7 +270,7 @@ public class TreeView : Container, ScrollableIF
 	 * Params:
 	 *     model = the model.
 	 *
-	 * Return: A newly created #GtkTreeView widget.
+	 * Returns: A newly created #GtkTreeView widget.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -294,7 +294,7 @@ public class TreeView : Container, ScrollableIF
 	 * Params:
 	 *     column = The #GtkTreeViewColumn to add.
 	 *
-	 * Return: The number of columns in @tree_view after appending.
+	 * Returns: The number of columns in @tree_view after appending.
 	 */
 	public int appendColumn(TreeViewColumn column)
 	{
@@ -315,7 +315,7 @@ public class TreeView : Container, ScrollableIF
 	 * Params:
 	 *     path = path to a row in the @tree_view
 	 *
-	 * Return: %TRUE if the row was collapsed.
+	 * Returns: %TRUE if the row was collapsed.
 	 */
 	public bool collapseRow(TreePath path)
 	{
@@ -440,7 +440,7 @@ public class TreeView : Container, ScrollableIF
 	 * Params:
 	 *     path = a #GtkTreePath in @tree_view
 	 *
-	 * Return: a newly-allocated surface of the drag icon.
+	 * Returns: a newly-allocated surface of the drag icon.
 	 */
 	public Surface createRowDragIcon(TreePath path)
 	{
@@ -513,7 +513,7 @@ public class TreeView : Container, ScrollableIF
 	 *     path = path to a row
 	 *     openAll = whether to recursively expand, or just expand immediate children
 	 *
-	 * Return: %TRUE if the row existed and had children
+	 * Returns: %TRUE if the row existed and had children
 	 */
 	public bool expandRow(TreePath path, bool openAll)
 	{
@@ -537,7 +537,7 @@ public class TreeView : Container, ScrollableIF
 	/**
 	 * Gets the setting set by gtk_tree_view_set_activate_on_single_click().
 	 *
-	 * Return: %TRUE if row-activated will be emitted on a single click
+	 * Returns: %TRUE if row-activated will be emitted on a single click
 	 *
 	 * Since: 3.8
 	 */
@@ -572,7 +572,7 @@ public class TreeView : Container, ScrollableIF
 	 * This is used primarily to compare to `event->window`
 	 * to confirm that the event on @tree_view is on the right window.
 	 *
-	 * Return: A #GdkWindow, or %NULL when @tree_view
+	 * Returns: A #GdkWindow, or %NULL when @tree_view
 	 *     hasn’t been realized yet.
 	 */
 	public Window getBinWindow()
@@ -614,7 +614,7 @@ public class TreeView : Container, ScrollableIF
 	 * Params:
 	 *     n = The position of the column, counting from 0.
 	 *
-	 * Return: The #GtkTreeViewColumn, or %NULL if the
+	 * Returns: The #GtkTreeViewColumn, or %NULL if the
 	 *     position is outside the range of columns.
 	 */
 	public TreeViewColumn getColumn(int n)
@@ -633,7 +633,7 @@ public class TreeView : Container, ScrollableIF
 	 * Returns a #GList of all the #GtkTreeViewColumn s currently in @tree_view.
 	 * The returned list must be freed with g_list_free ().
 	 *
-	 * Return: A list of #GtkTreeViewColumn s
+	 * Returns: A list of #GtkTreeViewColumn s
 	 */
 	public ListG getColumns()
 	{
@@ -686,7 +686,7 @@ public class TreeView : Container, ScrollableIF
 	 *     pos = Return location for the drop position, or
 	 *         %NULL
 	 *
-	 * Return: whether there is a row at the given position, %TRUE if this
+	 * Returns: whether there is a row at the given position, %TRUE if this
 	 *     is indeed the case.
 	 */
 	public bool getDestRowAtPos(int dragX, int dragY, out TreePath path, out GtkTreeViewDropPosition pos)
@@ -720,7 +720,7 @@ public class TreeView : Container, ScrollableIF
 	 * Returns whether or not the tree allows to start interactive searching
 	 * by typing in text.
 	 *
-	 * Return: whether or not to let the user search interactively
+	 * Returns: whether or not to let the user search interactively
 	 */
 	public bool getEnableSearch()
 	{
@@ -730,7 +730,7 @@ public class TreeView : Container, ScrollableIF
 	/**
 	 * Returns whether or not tree lines are drawn in @tree_view.
 	 *
-	 * Return: %TRUE if tree lines are drawn in @tree_view, %FALSE
+	 * Returns: %TRUE if tree lines are drawn in @tree_view, %FALSE
 	 *     otherwise.
 	 *
 	 * Since: 2.10
@@ -744,7 +744,7 @@ public class TreeView : Container, ScrollableIF
 	 * Returns the column that is the current expander column.
 	 * This column has the expander arrow drawn next to it.
 	 *
-	 * Return: The expander column.
+	 * Returns: The expander column.
 	 */
 	public TreeViewColumn getExpanderColumn()
 	{
@@ -761,7 +761,7 @@ public class TreeView : Container, ScrollableIF
 	/**
 	 * Returns whether fixed height mode is turned on for @tree_view.
 	 *
-	 * Return: %TRUE if @tree_view is in fixed height mode
+	 * Returns: %TRUE if @tree_view is in fixed height mode
 	 *
 	 * Since: 2.6
 	 */
@@ -773,7 +773,7 @@ public class TreeView : Container, ScrollableIF
 	/**
 	 * Returns which grid lines are enabled in @tree_view.
 	 *
-	 * Return: a #GtkTreeViewGridLines value indicating which grid lines
+	 * Returns: a #GtkTreeViewGridLines value indicating which grid lines
 	 *     are enabled.
 	 *
 	 * Since: 2.10
@@ -786,7 +786,7 @@ public class TreeView : Container, ScrollableIF
 	/**
 	 * Returns whether all header columns are clickable.
 	 *
-	 * Return: %TRUE if all header columns are clickable, otherwise %FALSE
+	 * Returns: %TRUE if all header columns are clickable, otherwise %FALSE
 	 *
 	 * Since: 2.10
 	 */
@@ -798,7 +798,7 @@ public class TreeView : Container, ScrollableIF
 	/**
 	 * Returns %TRUE if the headers on the @tree_view are visible.
 	 *
-	 * Return: Whether the headers are visible or not.
+	 * Returns: Whether the headers are visible or not.
 	 */
 	public bool getHeadersVisible()
 	{
@@ -808,7 +808,7 @@ public class TreeView : Container, ScrollableIF
 	/**
 	 * Returns whether hover expansion mode is turned on for @tree_view.
 	 *
-	 * Return: %TRUE if @tree_view is in hover expansion mode
+	 * Returns: %TRUE if @tree_view is in hover expansion mode
 	 *
 	 * Since: 2.6
 	 */
@@ -820,7 +820,7 @@ public class TreeView : Container, ScrollableIF
 	/**
 	 * Returns whether hover selection mode is turned on for @tree_view.
 	 *
-	 * Return: %TRUE if @tree_view is in hover selection mode
+	 * Returns: %TRUE if @tree_view is in hover selection mode
 	 *
 	 * Since: 2.6
 	 */
@@ -833,7 +833,7 @@ public class TreeView : Container, ScrollableIF
 	 * Returns the amount, in pixels, of extra indentation for child levels
 	 * in @tree_view.
 	 *
-	 * Return: the amount of extra indentation for child levels in
+	 * Returns: the amount of extra indentation for child levels in
 	 *     @tree_view.  A return value of 0 means that this feature is disabled.
 	 *
 	 * Since: 2.12
@@ -847,7 +847,7 @@ public class TreeView : Container, ScrollableIF
 	 * Returns the model the #GtkTreeView is based on.  Returns %NULL if the
 	 * model is unset.
 	 *
-	 * Return: A #GtkTreeModel, or %NULL if
+	 * Returns: A #GtkTreeModel, or %NULL if
 	 *     none is currently being used.
 	 */
 	public TreeModelIF getModel()
@@ -865,7 +865,7 @@ public class TreeView : Container, ScrollableIF
 	/**
 	 * Queries the number of columns in the given @tree_view.
 	 *
-	 * Return: The number of columns in the @tree_view
+	 * Returns: The number of columns in the @tree_view
 	 *
 	 * Since: 3.4
 	 */
@@ -905,7 +905,7 @@ public class TreeView : Container, ScrollableIF
 	 *     cellY = A pointer where the Y coordinate
 	 *         relative to the cell can be placed, or %NULL
 	 *
-	 * Return: %TRUE if a row exists at that coordinate.
+	 * Returns: %TRUE if a row exists at that coordinate.
 	 */
 	public bool getPathAtPos(int x, int y, out TreePath path, out TreeViewColumn column, out int cellX, out int cellY)
 	{
@@ -924,7 +924,7 @@ public class TreeView : Container, ScrollableIF
 	 * Retrieves whether the user can reorder the tree via drag-and-drop. See
 	 * gtk_tree_view_set_reorderable().
 	 *
-	 * Return: %TRUE if the tree can be reordered.
+	 * Returns: %TRUE if the tree can be reordered.
 	 */
 	public bool getReorderable()
 	{
@@ -934,7 +934,7 @@ public class TreeView : Container, ScrollableIF
 	/**
 	 * Returns the current row separator function.
 	 *
-	 * Return: the current row separator function.
+	 * Returns: the current row separator function.
 	 *
 	 * Since: 2.6
 	 */
@@ -948,7 +948,7 @@ public class TreeView : Container, ScrollableIF
 	 * selection mode is #GTK_SELECTION_MULTIPLE, rubber banding will allow the
 	 * user to select multiple rows by dragging the mouse.
 	 *
-	 * Return: %TRUE if rubber banding in @tree_view is enabled.
+	 * Returns: %TRUE if rubber banding in @tree_view is enabled.
 	 *
 	 * Since: 2.10
 	 */
@@ -960,7 +960,7 @@ public class TreeView : Container, ScrollableIF
 	/**
 	 * Gets the setting set by gtk_tree_view_set_rules_hint().
 	 *
-	 * Return: %TRUE if the hint is set
+	 * Returns: %TRUE if the hint is set
 	 */
 	public bool getRulesHint()
 	{
@@ -970,7 +970,7 @@ public class TreeView : Container, ScrollableIF
 	/**
 	 * Gets the column searched on by the interactive search code.
 	 *
-	 * Return: the column the interactive search code searches in.
+	 * Returns: the column the interactive search code searches in.
 	 */
 	public int getSearchColumn()
 	{
@@ -982,7 +982,7 @@ public class TreeView : Container, ScrollableIF
 	 * entry for @tree_view.  In case the built-in entry is being used, %NULL
 	 * will be returned.
 	 *
-	 * Return: the entry currently in use as search entry.
+	 * Returns: the entry currently in use as search entry.
 	 *
 	 * Since: 2.10
 	 */
@@ -1001,7 +1001,7 @@ public class TreeView : Container, ScrollableIF
 	/**
 	 * Returns the compare function currently in use.
 	 *
-	 * Return: the currently used compare function for the search code.
+	 * Returns: the currently used compare function for the search code.
 	 */
 	public GtkTreeViewSearchEqualFunc getSearchEqualFunc()
 	{
@@ -1011,7 +1011,7 @@ public class TreeView : Container, ScrollableIF
 	/**
 	 * Returns the positioning function currently in use.
 	 *
-	 * Return: the currently used function for positioning the search dialog.
+	 * Returns: the currently used function for positioning the search dialog.
 	 *
 	 * Since: 2.10
 	 */
@@ -1023,7 +1023,7 @@ public class TreeView : Container, ScrollableIF
 	/**
 	 * Gets the #GtkTreeSelection associated with @tree_view.
 	 *
-	 * Return: A #GtkTreeSelection object.
+	 * Returns: A #GtkTreeSelection object.
 	 */
 	public TreeSelection getSelection()
 	{
@@ -1040,7 +1040,7 @@ public class TreeView : Container, ScrollableIF
 	/**
 	 * Returns whether or not expanders are drawn in @tree_view.
 	 *
-	 * Return: %TRUE if expanders are drawn in @tree_view, %FALSE
+	 * Returns: %TRUE if expanders are drawn in @tree_view, %FALSE
 	 *     otherwise.
 	 *
 	 * Since: 2.12
@@ -1054,7 +1054,7 @@ public class TreeView : Container, ScrollableIF
 	 * Returns the column of @tree_view’s model which is being used for
 	 * displaying tooltips on @tree_view’s rows.
 	 *
-	 * Return: the index of the tooltip column that is currently being
+	 * Returns: the index of the tooltip column that is currently being
 	 *     used, or -1 if this is disabled.
 	 *
 	 * Since: 2.12
@@ -1086,7 +1086,7 @@ public class TreeView : Container, ScrollableIF
 	 *     path = a pointer to receive a #GtkTreePath or %NULL
 	 *     iter = a pointer to receive a #GtkTreeIter or %NULL
 	 *
-	 * Return: whether or not the given tooltip context points to a row.
+	 * Returns: whether or not the given tooltip context points to a row.
 	 *
 	 * Since: 2.12
 	 */
@@ -1116,7 +1116,7 @@ public class TreeView : Container, ScrollableIF
 	 *         or %NULL.
 	 *     endPath = Return location for end of region, or %NULL.
 	 *
-	 * Return: %TRUE, if valid paths were placed in @start_path and @end_path.
+	 * Returns: %TRUE, if valid paths were placed in @start_path and @end_path.
 	 *
 	 * Since: 2.8
 	 */
@@ -1158,7 +1158,7 @@ public class TreeView : Container, ScrollableIF
 	 *     column = The #GtkTreeViewColumn to be inserted.
 	 *     position = The position to insert @column in.
 	 *
-	 * Return: The number of columns in @tree_view after insertion.
+	 * Returns: The number of columns in @tree_view after insertion.
 	 */
 	public int insertColumn(TreeViewColumn column, int position)
 	{
@@ -1181,7 +1181,7 @@ public class TreeView : Container, ScrollableIF
 	 *     data = data for @func
 	 *     dnotify = destroy notifier for @data
 	 *
-	 * Return: number of columns in the tree view post-insert
+	 * Returns: number of columns in the tree view post-insert
 	 */
 	public int insertColumnWithDataFunc(int position, string title, CellRenderer cell, GtkTreeCellDataFunc func, void* data, GDestroyNotify dnotify)
 	{
@@ -1215,7 +1215,7 @@ public class TreeView : Container, ScrollableIF
 	 *     cellX = A pointer where the X coordinate relative to the cell can be placed, or %NULL
 	 *     cellY = A pointer where the Y coordinate relative to the cell can be placed, or %NULL
 	 *
-	 * Return: %TRUE if the area at the given coordinates is blank,
+	 * Returns: %TRUE if the area at the given coordinates is blank,
 	 *     %FALSE otherwise.
 	 *
 	 * Since: 3.0
@@ -1237,7 +1237,7 @@ public class TreeView : Container, ScrollableIF
 	 * Returns whether a rubber banding operation is currently being done
 	 * in @tree_view.
 	 *
-	 * Return: %TRUE if a rubber banding operation is currently being
+	 * Returns: %TRUE if a rubber banding operation is currently being
 	 *     done in @tree_view.
 	 *
 	 * Since: 2.12
@@ -1278,7 +1278,7 @@ public class TreeView : Container, ScrollableIF
 	 * Params:
 	 *     column = The #GtkTreeViewColumn to remove.
 	 *
-	 * Return: The number of columns in @tree_view after removing.
+	 * Returns: The number of columns in @tree_view after removing.
 	 */
 	public int removeColumn(TreeViewColumn column)
 	{
@@ -1303,7 +1303,7 @@ public class TreeView : Container, ScrollableIF
 	 * Params:
 	 *     path = A #GtkTreePath to test expansion state.
 	 *
-	 * Return: %TRUE if #path is expanded.
+	 * Returns: %TRUE if #path is expanded.
 	 */
 	public bool rowExpanded(TreePath path)
 	{
@@ -2087,7 +2087,7 @@ public class TreeView : Container, ScrollableIF
 	 *         -1 to move backwards. The resulting movement is
 	 *         undefined for all other values.
 	 *
-	 * Return: %TRUE if @step is supported, %FALSE otherwise.
+	 * Returns: %TRUE if @step is supported, %FALSE otherwise.
 	 */
 	gulong addOnMoveCursor(bool delegate(GtkMovementStep, int, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -2524,7 +2524,7 @@ public class TreeView : Container, ScrollableIF
 	 *     iter = the tree iter of the row to collapse
 	 *     path = a tree path that points to the row
 	 *
-	 * Return: %FALSE to allow collapsing, %TRUE to reject
+	 * Returns: %FALSE to allow collapsing, %TRUE to reject
 	 */
 	gulong addOnTestCollapseRow(bool delegate(TreeIter, TreePath, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -2583,7 +2583,7 @@ public class TreeView : Container, ScrollableIF
 	 *     iter = the tree iter of the row to expand
 	 *     path = a tree path that points to the row
 	 *
-	 * Return: %FALSE to allow expansion, %TRUE to reject
+	 * Returns: %FALSE to allow expansion, %TRUE to reject
 	 */
 	gulong addOnTestExpandRow(bool delegate(TreeIter, TreePath, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

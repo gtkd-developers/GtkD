@@ -111,7 +111,7 @@ public class Gradient
 	 *     x1 = X coordinate of the end point
 	 *     y1 = Y coordinate of the end point
 	 *
-	 * Return: A newly created #GtkGradient
+	 * Returns: A newly created #GtkGradient
 	 *
 	 * Since: 3.0
 	 *
@@ -144,7 +144,7 @@ public class Gradient
 	 *     y1 = Y coordinate of the end circle
 	 *     radius1 = radius of the end circle
 	 *
-	 * Return: A newly created #GtkGradient
+	 * Returns: A newly created #GtkGradient
 	 *
 	 * Since: 3.0
 	 *
@@ -183,7 +183,7 @@ public class Gradient
 	 *
 	 * Deprecated: #GtkGradient is deprecated.
 	 *
-	 * Return: The same @gradient
+	 * Returns: The same @gradient
 	 *
 	 * Since: 3.0
 	 */
@@ -212,7 +212,7 @@ public class Gradient
 	 *     props = #GtkStyleProperties to use when resolving named colors
 	 *     resolvedGradient = return location for the resolved pattern
 	 *
-	 * Return: %TRUE if the gradient has been resolved
+	 * Returns: %TRUE if the gradient has been resolved
 	 *
 	 * Since: 3.0
 	 */
@@ -246,7 +246,7 @@ public class Gradient
 	 *
 	 * Deprecated: #GtkGradient is deprecated.
 	 *
-	 * Return: A string representation for @gradient
+	 * Returns: A string representation for @gradient
 	 */
 	public override string toString()
 	{

@@ -87,7 +87,7 @@ public class SelectionData
 	/**
 	 * Makes a copy of a #GtkSelectionData-struct and its data.
 	 *
-	 * Return: a pointer to a copy of @data.
+	 * Returns: a pointer to a copy of @data.
 	 */
 	public SelectionData copy()
 	{
@@ -113,7 +113,7 @@ public class SelectionData
 	/**
 	 * Retrieves the data type of the selection.
 	 *
-	 * Return: the data type of the selection.
+	 * Returns: the data type of the selection.
 	 *
 	 * Since: 2.14
 	 */
@@ -125,7 +125,7 @@ public class SelectionData
 	/**
 	 * Retrieves the raw data of the selection along with its length.
 	 *
-	 * Return: the raw data of the selection
+	 * Returns: the raw data of the selection
 	 *
 	 * Since: 3.0
 	 */
@@ -141,7 +141,7 @@ public class SelectionData
 	/**
 	 * Retrieves the display of the selection.
 	 *
-	 * Return: the display of the selection.
+	 * Returns: the display of the selection.
 	 *
 	 * Since: 2.14
 	 */
@@ -160,7 +160,7 @@ public class SelectionData
 	/**
 	 * Retrieves the format of the selection.
 	 *
-	 * Return: the format of the selection.
+	 * Returns: the format of the selection.
 	 *
 	 * Since: 2.14
 	 */
@@ -172,7 +172,7 @@ public class SelectionData
 	/**
 	 * Retrieves the length of the raw data of the selection.
 	 *
-	 * Return: the length of the data of the selection.
+	 * Returns: the length of the data of the selection.
 	 *
 	 * Since: 2.14
 	 */
@@ -184,7 +184,7 @@ public class SelectionData
 	/**
 	 * Gets the contents of the selection data as a #GdkPixbuf.
 	 *
-	 * Return: if the selection data
+	 * Returns: if the selection data
 	 *     contained a recognized image type and it could be converted to a
 	 *     #GdkPixbuf, a newly allocated pixbuf is returned, otherwise
 	 *     %NULL.  If the result is non-%NULL it must be freed with
@@ -207,7 +207,7 @@ public class SelectionData
 	/**
 	 * Retrieves the selection #GdkAtom of the selection data.
 	 *
-	 * Return: the selection #GdkAtom of the selection data.
+	 * Returns: the selection #GdkAtom of the selection data.
 	 *
 	 * Since: 2.16
 	 */
@@ -219,7 +219,7 @@ public class SelectionData
 	/**
 	 * Retrieves the target of the selection.
 	 *
-	 * Return: the target of the selection.
+	 * Returns: the target of the selection.
 	 *
 	 * Since: 2.14
 	 */
@@ -239,7 +239,7 @@ public class SelectionData
 	 *         here must be freed with g_free().
 	 *     nAtoms = location to store number of items in @targets.
 	 *
-	 * Return: %TRUE if @selection_data contains a valid
+	 * Returns: %TRUE if @selection_data contains a valid
 	 *     array of targets, otherwise %FALSE.
 	 */
 	public bool getTargets(out GdkAtom[] targets)
@@ -257,7 +257,7 @@ public class SelectionData
 	/**
 	 * Gets the contents of the selection data as a UTF-8 string.
 	 *
-	 * Return: if the selection data contained a
+	 * Returns: if the selection data contained a
 	 *     recognized text type and it could be converted to UTF-8, a newly
 	 *     allocated string containing the converted text, otherwise %NULL.
 	 *     If the result is non-%NULL it must be freed with g_free().
@@ -273,7 +273,7 @@ public class SelectionData
 	/**
 	 * Gets the contents of the selection data as array of URIs.
 	 *
-	 * Return: if
+	 * Returns: if
 	 *     the selection data contains a list of
 	 *     URIs, a newly allocated %NULL-terminated string array
 	 *     containing the URIs, otherwise %NULL. If the result is
@@ -313,7 +313,7 @@ public class SelectionData
 	 * Params:
 	 *     pixbuf = a #GdkPixbuf
 	 *
-	 * Return: %TRUE if the selection was successfully set,
+	 * Returns: %TRUE if the selection was successfully set,
 	 *     otherwise %FALSE.
 	 *
 	 * Since: 2.6
@@ -332,7 +332,7 @@ public class SelectionData
 	 *     str = a UTF-8 string
 	 *     len = the length of @str, or -1 if @str is nul-terminated.
 	 *
-	 * Return: %TRUE if the selection was successfully set,
+	 * Returns: %TRUE if the selection was successfully set,
 	 *     otherwise %FALSE.
 	 */
 	public bool setText(string str, int len)
@@ -349,7 +349,7 @@ public class SelectionData
 	 *     uris = a %NULL-terminated array of
 	 *         strings holding URIs
 	 *
-	 * Return: %TRUE if the selection was successfully set,
+	 * Returns: %TRUE if the selection was successfully set,
 	 *     otherwise %FALSE.
 	 *
 	 * Since: 2.6
@@ -368,7 +368,7 @@ public class SelectionData
 	 *     writable = whether to accept only targets for which GTK+ knows
 	 *         how to convert a pixbuf into the format
 	 *
-	 * Return: %TRUE if @selection_data holds a list of targets,
+	 * Returns: %TRUE if @selection_data holds a list of targets,
 	 *     and a suitable target for images is included, otherwise %FALSE.
 	 *
 	 * Since: 2.6
@@ -386,7 +386,7 @@ public class SelectionData
 	 * Params:
 	 *     buffer = a #GtkTextBuffer
 	 *
-	 * Return: %TRUE if @selection_data holds a list of targets,
+	 * Returns: %TRUE if @selection_data holds a list of targets,
 	 *     and a suitable target for rich text is included,
 	 *     otherwise %FALSE.
 	 *
@@ -402,7 +402,7 @@ public class SelectionData
 	 * determines if any of the targets in @targets can be used to
 	 * provide text.
 	 *
-	 * Return: %TRUE if @selection_data holds a list of targets,
+	 * Returns: %TRUE if @selection_data holds a list of targets,
 	 *     and a suitable target for text is included, otherwise %FALSE.
 	 */
 	public bool targetsIncludeText()
@@ -415,7 +415,7 @@ public class SelectionData
 	 * determines if any of the targets in @targets can be used to
 	 * provide a list or URIs.
 	 *
-	 * Return: %TRUE if @selection_data holds a list of targets,
+	 * Returns: %TRUE if @selection_data holds a list of targets,
 	 *     and a suitable target for URI lists is included, otherwise %FALSE.
 	 *
 	 * Since: 2.10
@@ -485,7 +485,7 @@ public class SelectionData
 	 *     time = Time of request (usually of triggering event)
 	 *         In emergency, you could use #GDK_CURRENT_TIME
 	 *
-	 * Return: %TRUE if requested succeeded. %FALSE if we could not process
+	 * Returns: %TRUE if requested succeeded. %FALSE if we could not process
 	 *     request. (e.g., there was already a request in process for
 	 *     this widget).
 	 */
@@ -503,7 +503,7 @@ public class SelectionData
 	 *     selection = an interned atom representing the selection to claim
 	 *     time = timestamp with which to claim the selection
 	 *
-	 * Return: %TRUE if the operation succeeded
+	 * Returns: %TRUE if the operation succeeded
 	 */
 	public static bool ownerSet(Widget widget, GdkAtom selection, uint time)
 	{
@@ -520,7 +520,7 @@ public class SelectionData
 	 *     selection = an interned atom representing the selection to claim.
 	 *     time = timestamp with which to claim the selection
 	 *
-	 * Return: TRUE if the operation succeeded
+	 * Returns: TRUE if the operation succeeded
 	 *
 	 * Since: 2.2
 	 */

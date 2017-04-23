@@ -70,7 +70,7 @@ public struct CharacterSet
 	 *     bytesWritten = the number of bytes stored in the output buffer (not
 	 *         including the terminating nul).
 	 *
-	 * Return: If the conversion was successful, a newly allocated
+	 * Returns: If the conversion was successful, a newly allocated
 	 *     nul-terminated string, which must be freed with
 	 *     g_free(). Otherwise %NULL and @error will be set.
 	 *
@@ -137,7 +137,7 @@ public struct CharacterSet
 	 *     bytesWritten = the number of bytes stored in the output buffer (not
 	 *         including the terminating nul).
 	 *
-	 * Return: If the conversion was successful, a newly allocated
+	 * Returns: If the conversion was successful, a newly allocated
 	 *     nul-terminated string, which must be freed with
 	 *     g_free(). Otherwise %NULL and @error will be set.
 	 *
@@ -189,7 +189,7 @@ public struct CharacterSet
 	 *     bytesWritten = the number of bytes stored in the output buffer (not
 	 *         including the terminating nul).
 	 *
-	 * Return: If the conversion was successful, a newly allocated
+	 * Returns: If the conversion was successful, a newly allocated
 	 *     nul-terminated string, which must be freed with
 	 *     g_free(). Otherwise %NULL and @error will be set.
 	 *
@@ -232,7 +232,7 @@ public struct CharacterSet
 	 *     filename = an absolute pathname in the
 	 *         GLib file name encoding
 	 *
-	 * Return: a newly allocated string containing
+	 * Returns: a newly allocated string containing
 	 *     a rendition of the basename of the filename in valid UTF-8
 	 *
 	 * Since: 2.6
@@ -266,7 +266,7 @@ public struct CharacterSet
 	 *     filename = a pathname hopefully in the
 	 *         GLib file name encoding
 	 *
-	 * Return: a newly allocated string containing
+	 * Returns: a newly allocated string containing
 	 *     a rendition of the filename in valid UTF-8
 	 *
 	 * Since: 2.6
@@ -298,7 +298,7 @@ public struct CharacterSet
 	 *         stored will the byte offset after the last valid
 	 *         input sequence.
 	 *
-	 * Return: The converted string, or %NULL on an error.
+	 * Returns: The converted string, or %NULL on an error.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -341,7 +341,7 @@ public struct CharacterSet
 	 *     bytesWritten = the number of bytes stored in the output
 	 *         buffer (not including the terminating nul).
 	 *
-	 * Return: The converted string, or %NULL on an error.
+	 * Returns: The converted string, or %NULL on an error.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -382,7 +382,7 @@ public struct CharacterSet
 	 *     charset = return location for character set
 	 *         name, or %NULL.
 	 *
-	 * Return: %TRUE if the returned charset is UTF-8
+	 * Returns: %TRUE if the returned charset is UTF-8
 	 */
 	public static bool getCharset(out string charset)
 	{
@@ -398,7 +398,7 @@ public struct CharacterSet
 	/**
 	 * Gets the character set for the current locale.
 	 *
-	 * Return: a newly allocated string containing the name
+	 * Returns: a newly allocated string containing the name
 	 *     of the character set. This string must be freed with g_free().
 	 */
 	public static string getCodeset()
@@ -438,7 +438,7 @@ public struct CharacterSet
 	 * Params:
 	 *     charsets = return location for the %NULL-terminated list of encoding names
 	 *
-	 * Return: %TRUE if the filename encoding is UTF-8.
+	 * Returns: %TRUE if the filename encoding is UTF-8.
 	 *
 	 * Since: 2.6
 	 */
@@ -470,7 +470,7 @@ public struct CharacterSet
 	 *     bytesWritten = the number of bytes stored in the output
 	 *         buffer (not including the terminating nul).
 	 *
-	 * Return: A newly-allocated buffer containing the converted string,
+	 * Returns: A newly-allocated buffer containing the converted string,
 	 *     or %NULL on an error, and error will be set.
 	 *
 	 * Throws: GException on failure.
@@ -513,7 +513,7 @@ public struct CharacterSet
 	 *     bytesWritten = the number of bytes stored in the output
 	 *         buffer (not including the terminating nul).
 	 *
-	 * Return: A newly-allocated buffer containing the converted string,
+	 * Returns: A newly-allocated buffer containing the converted string,
 	 *     or %NULL on an error, and error will be set.
 	 *
 	 * Throws: GException on failure.

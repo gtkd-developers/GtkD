@@ -121,7 +121,7 @@ public class Toc
 	 * Params:
 	 *     scop = scope of this TOC
 	 *
-	 * Return: newly allocated #GstToc structure, free it
+	 * Returns: newly allocated #GstToc structure, free it
 	 *     with gst_toc_unref().
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -161,7 +161,7 @@ public class Toc
 	 * Params:
 	 *     uid = UID to find #GstTocEntry with.
 	 *
-	 * Return: #GstTocEntry with specified
+	 * Returns: #GstTocEntry with specified
 	 *     @uid from the @toc, or %NULL if not found.
 	 */
 	public TocEntry findEntry(string uid)
@@ -179,7 +179,7 @@ public class Toc
 	/**
 	 * Gets the list of #GstTocEntry of @toc.
 	 *
-	 * Return: A #GList of #GstTocEntry for @entry
+	 * Returns: A #GList of #GstTocEntry for @entry
 	 */
 	public ListG getEntries()
 	{
@@ -194,7 +194,7 @@ public class Toc
 	}
 
 	/**
-	 * Return: scope of @toc
+	 * Returns: scope of @toc
 	 */
 	public GstTocScope getScope()
 	{
@@ -204,7 +204,7 @@ public class Toc
 	/**
 	 * Gets the tags for @toc.
 	 *
-	 * Return: A #GstTagList for @entry
+	 * Returns: A #GstTagList for @entry
 	 */
 	public TagList getTags()
 	{

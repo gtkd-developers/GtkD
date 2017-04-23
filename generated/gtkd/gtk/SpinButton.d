@@ -194,7 +194,7 @@ public class SpinButton : Entry, OrientableIF
 	 *         is clicked on
 	 *     digits = the number of decimal places to display
 	 *
-	 * Return: The new spin button as a #GtkWidget
+	 * Returns: The new spin button as a #GtkWidget
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -226,7 +226,7 @@ public class SpinButton : Entry, OrientableIF
 	 *     max = Maximum allowable value
 	 *     step = Increment added or subtracted by spinning the widget
 	 *
-	 * Return: The new spin button as a #GtkWidget
+	 * Returns: The new spin button as a #GtkWidget
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -260,7 +260,7 @@ public class SpinButton : Entry, OrientableIF
 	/**
 	 * Get the adjustment associated with a #GtkSpinButton
 	 *
-	 * Return: the #GtkAdjustment of @spin_button
+	 * Returns: the #GtkAdjustment of @spin_button
 	 */
 	public Adjustment getAdjustment()
 	{
@@ -277,7 +277,7 @@ public class SpinButton : Entry, OrientableIF
 	/**
 	 * Fetches the precision of @spin_button. See gtk_spin_button_set_digits().
 	 *
-	 * Return: the current precision
+	 * Returns: the current precision
 	 */
 	public uint getDigits()
 	{
@@ -301,7 +301,7 @@ public class SpinButton : Entry, OrientableIF
 	 * Returns whether non-numeric text can be typed into the spin button.
 	 * See gtk_spin_button_set_numeric().
 	 *
-	 * Return: %TRUE if only numeric text can be entered
+	 * Returns: %TRUE if only numeric text can be entered
 	 */
 	public bool getNumeric()
 	{
@@ -325,7 +325,7 @@ public class SpinButton : Entry, OrientableIF
 	 * Returns whether the values are corrected to the nearest step.
 	 * See gtk_spin_button_set_snap_to_ticks().
 	 *
-	 * Return: %TRUE if values are snapped to the nearest step
+	 * Returns: %TRUE if values are snapped to the nearest step
 	 */
 	public bool getSnapToTicks()
 	{
@@ -336,7 +336,7 @@ public class SpinButton : Entry, OrientableIF
 	 * Gets the update behavior of a spin button.
 	 * See gtk_spin_button_set_update_policy().
 	 *
-	 * Return: the current update policy
+	 * Returns: the current update policy
 	 */
 	public GtkSpinButtonUpdatePolicy getUpdatePolicy()
 	{
@@ -346,7 +346,7 @@ public class SpinButton : Entry, OrientableIF
 	/**
 	 * Get the value in the @spin_button.
 	 *
-	 * Return: the value of @spin_button
+	 * Returns: the value of @spin_button
 	 */
 	public double getValue()
 	{
@@ -356,7 +356,7 @@ public class SpinButton : Entry, OrientableIF
 	/**
 	 * Get the value @spin_button represented as an integer.
 	 *
-	 * Return: the value of @spin_button
+	 * Returns: the value of @spin_button
 	 */
 	public int getValueAsInt()
 	{
@@ -368,7 +368,7 @@ public class SpinButton : Entry, OrientableIF
 	 * opposite limit when the upper or lower limit of the range is
 	 * exceeded. See gtk_spin_button_set_wrap().
 	 *
-	 * Return: %TRUE if the spin button wraps around
+	 * Returns: %TRUE if the spin button wraps around
 	 */
 	public bool getWrap()
 	{
@@ -608,7 +608,7 @@ public class SpinButton : Entry, OrientableIF
 	 * Params:
 	 *     newValue = return location for the new value
 	 *
-	 * Return: %TRUE for a successful conversion, %FALSE if the input
+	 * Returns: %TRUE for a successful conversion, %FALSE if the input
 	 *     was not handled, and %GTK_INPUT_ERROR if the conversion failed.
 	 */
 	gulong addOnInput(int delegate(void*, SpinButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -683,7 +683,7 @@ public class SpinButton : Entry, OrientableIF
 	 * }
 	 * ]|
 	 *
-	 * Return: %TRUE if the value has been displayed
+	 * Returns: %TRUE if the value has been displayed
 	 */
 	gulong addOnOutput(bool delegate(SpinButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

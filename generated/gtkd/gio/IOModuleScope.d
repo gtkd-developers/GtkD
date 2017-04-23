@@ -116,7 +116,7 @@ public class IOModuleScope
 	 * Params:
 	 *     flags = flags for the new scope
 	 *
-	 * Return: the new module scope
+	 * Returns: the new module scope
 	 *
 	 * Since: 2.30
 	 *

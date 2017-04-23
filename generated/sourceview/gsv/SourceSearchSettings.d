@@ -74,7 +74,7 @@ public class SourceSearchSettings : ObjectG
 	/**
 	 * Creates a new search settings object.
 	 *
-	 * Return: a new search settings object.
+	 * Returns: a new search settings object.
 	 *
 	 * Since: 3.10
 	 *
@@ -93,7 +93,7 @@ public class SourceSearchSettings : ObjectG
 	}
 
 	/**
-	 * Return: whether to search at word boundaries.
+	 * Returns: whether to search at word boundaries.
 	 *
 	 * Since: 3.10
 	 */
@@ -103,7 +103,7 @@ public class SourceSearchSettings : ObjectG
 	}
 
 	/**
-	 * Return: whether the search is case sensitive.
+	 * Returns: whether the search is case sensitive.
 	 *
 	 * Since: 3.10
 	 */
@@ -113,7 +113,7 @@ public class SourceSearchSettings : ObjectG
 	}
 
 	/**
-	 * Return: whether to search by regular expressions.
+	 * Returns: whether to search by regular expressions.
 	 *
 	 * Since: 3.10
 	 */
@@ -128,7 +128,7 @@ public class SourceSearchSettings : ObjectG
 	 * You may be interested to call gtk_source_utils_escape_search_text() after
 	 * this function.
 	 *
-	 * Return: the text to search, or %NULL if the search is disabled.
+	 * Returns: the text to search, or %NULL if the search is disabled.
 	 *
 	 * Since: 3.10
 	 */
@@ -138,7 +138,7 @@ public class SourceSearchSettings : ObjectG
 	}
 
 	/**
-	 * Return: whether to wrap around the search.
+	 * Returns: whether to wrap around the search.
 	 *
 	 * Since: 3.10
 	 */

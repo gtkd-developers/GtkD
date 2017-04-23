@@ -90,7 +90,7 @@ public class Poll
 	 * Params:
 	 *     fd = a file descriptor.
 	 *
-	 * Return: %TRUE if the file descriptor was successfully added to the set.
+	 * Returns: %TRUE if the file descriptor was successfully added to the set.
 	 */
 	public bool addFd(PollFD fd)
 	{
@@ -103,7 +103,7 @@ public class Poll
 	 * Params:
 	 *     fd = a file descriptor.
 	 *
-	 * Return: %TRUE if the descriptor has data to be read.
+	 * Returns: %TRUE if the descriptor has data to be read.
 	 */
 	public bool fdCanRead(PollFD fd)
 	{
@@ -116,7 +116,7 @@ public class Poll
 	 * Params:
 	 *     fd = a file descriptor.
 	 *
-	 * Return: %TRUE if the descriptor can be used for writing.
+	 * Returns: %TRUE if the descriptor can be used for writing.
 	 */
 	public bool fdCanWrite(PollFD fd)
 	{
@@ -131,7 +131,7 @@ public class Poll
 	 *     fd = a file descriptor.
 	 *     active = a new status.
 	 *
-	 * Return: %TRUE if the descriptor was successfully updated.
+	 * Returns: %TRUE if the descriptor was successfully updated.
 	 */
 	public bool fdCtlRead(PollFD fd, bool active)
 	{
@@ -146,7 +146,7 @@ public class Poll
 	 *     fd = a file descriptor.
 	 *     active = a new status.
 	 *
-	 * Return: %TRUE if the descriptor was successfully updated.
+	 * Returns: %TRUE if the descriptor was successfully updated.
 	 */
 	public bool fdCtlWrite(PollFD fd, bool active)
 	{
@@ -159,7 +159,7 @@ public class Poll
 	 * Params:
 	 *     fd = a file descriptor.
 	 *
-	 * Return: %TRUE if the connection was closed.
+	 * Returns: %TRUE if the connection was closed.
 	 */
 	public bool fdHasClosed(PollFD fd)
 	{
@@ -172,7 +172,7 @@ public class Poll
 	 * Params:
 	 *     fd = a file descriptor.
 	 *
-	 * Return: %TRUE if the descriptor has an error.
+	 * Returns: %TRUE if the descriptor has an error.
 	 */
 	public bool fdHasError(PollFD fd)
 	{
@@ -223,7 +223,7 @@ public class Poll
 	 * This function only works for timer #GstPoll objects created with
 	 * gst_poll_new_timer().
 	 *
-	 * Return: %TRUE on success. %FALSE when when there was no byte to read or
+	 * Returns: %TRUE on success. %FALSE when when there was no byte to read or
 	 *     reading the byte failed. If there was no byte to read, and only then, errno
 	 *     will contain EWOULDBLOCK or EAGAIN. For all other values of errno this always signals a
 	 *     critical error.
@@ -239,7 +239,7 @@ public class Poll
 	 * Params:
 	 *     fd = a file descriptor.
 	 *
-	 * Return: %TRUE if the file descriptor was successfully removed from the set.
+	 * Returns: %TRUE if the file descriptor was successfully removed from the set.
 	 */
 	public bool removeFd(PollFD fd)
 	{
@@ -271,7 +271,7 @@ public class Poll
 	 * Params:
 	 *     controllable = new controllable state.
 	 *
-	 * Return: %TRUE if the controllability of @set could be updated.
+	 * Returns: %TRUE if the controllability of @set could be updated.
 	 */
 	public bool setControllable(bool controllable)
 	{
@@ -310,7 +310,7 @@ public class Poll
 	 * Params:
 	 *     timeout = a timeout in nanoseconds.
 	 *
-	 * Return: The number of #GstPollFD in @set that have activity or 0 when no
+	 * Returns: The number of #GstPollFD in @set that have activity or 0 when no
 	 *     activity was detected after @timeout. If an error occurs, -1 is returned
 	 *     and errno is set.
 	 */
@@ -332,7 +332,7 @@ public class Poll
 	 * This function only works for timer #GstPoll objects created with
 	 * gst_poll_new_timer().
 	 *
-	 * Return: %TRUE on success. %FALSE when when the byte could not be written.
+	 * Returns: %TRUE on success. %FALSE when when the byte could not be written.
 	 *     errno contains the detailed error code but will never be EAGAIN, EINTR or
 	 *     EWOULDBLOCK. %FALSE always signals a critical error.
 	 */
@@ -351,7 +351,7 @@ public class Poll
 	 * Params:
 	 *     controllable = whether it should be possible to control a wait.
 	 *
-	 * Return: a new #GstPoll, or %NULL in
+	 * Returns: a new #GstPoll, or %NULL in
 	 *     case of an error.  Free with gst_poll_free().
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -377,7 +377,7 @@ public class Poll
 	 *
 	 * Free-function: gst_poll_free
 	 *
-	 * Return: a new #GstPoll, or %NULL in
+	 * Returns: a new #GstPoll, or %NULL in
 	 *     case of an error.  Free with gst_poll_free().
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.

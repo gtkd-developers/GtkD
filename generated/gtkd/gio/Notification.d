@@ -108,7 +108,7 @@ public class Notification : ObjectG
 	 * Params:
 	 *     title = the title of the notification
 	 *
-	 * Return: a new #GNotification instance
+	 * Returns: a new #GNotification instance
 	 *
 	 * Since: 2.40
 	 *

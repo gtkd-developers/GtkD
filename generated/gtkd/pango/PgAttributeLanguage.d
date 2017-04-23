@@ -75,7 +75,7 @@ public class PgAttributeLanguage : PgAttribute
 	 * Params:
 	 *     language = language tag
 	 *
-	 * Return: the newly allocated #PangoAttribute,
+	 * Returns: the newly allocated #PangoAttribute,
 	 *     which should be freed with pango_attribute_destroy().
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.

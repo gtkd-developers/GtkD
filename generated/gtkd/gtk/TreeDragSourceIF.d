@@ -52,7 +52,7 @@ public interface TreeDragSourceIF{
 	 * Params:
 	 *     path = row that was being dragged
 	 *
-	 * Return: %TRUE if the row was successfully deleted
+	 * Returns: %TRUE if the row was successfully deleted
 	 */
 	public bool dragDataDelete(TreePath path);
 
@@ -67,7 +67,7 @@ public interface TreeDragSourceIF{
 	 *     selectionData = a #GtkSelectionData to fill with data
 	 *         from the dragged row
 	 *
-	 * Return: %TRUE if data of the required type was provided
+	 * Returns: %TRUE if data of the required type was provided
 	 */
 	public bool dragDataGet(TreePath path, SelectionData selectionData);
 
@@ -79,7 +79,7 @@ public interface TreeDragSourceIF{
 	 * Params:
 	 *     path = row on which user is initiating a drag
 	 *
-	 * Return: %TRUE if the row can be dragged
+	 * Returns: %TRUE if the row can be dragged
 	 */
 	public bool rowDraggable(TreePath path);
 
@@ -99,7 +99,7 @@ public interface TreeDragSourceIF{
 	 *     treeModel = a #GtkTreeModel
 	 *     path = row in @tree_model
 	 *
-	 * Return: %TRUE if @selection_data had target type %GTK_TREE_MODEL_ROW and
+	 * Returns: %TRUE if @selection_data had target type %GTK_TREE_MODEL_ROW and
 	 *     is otherwise valid
 	 */
 	public static bool getRowDragData(SelectionData selectionData, out TreeModelIF treeModel, out TreePath path);
@@ -113,7 +113,7 @@ public interface TreeDragSourceIF{
 	 *     treeModel = a #GtkTreeModel
 	 *     path = a row in @tree_model
 	 *
-	 * Return: %TRUE if the #GtkSelectionData had the proper target type to allow us to set a tree row
+	 * Returns: %TRUE if the #GtkSelectionData had the proper target type to allow us to set a tree row
 	 */
 	public static bool setRowDragData(SelectionData selectionData, TreeModelIF treeModel, TreePath path);
 }

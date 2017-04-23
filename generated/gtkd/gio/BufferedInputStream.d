@@ -124,7 +124,7 @@ public class BufferedInputStream : FilterInputStream, SeekableIF
 	 * Params:
 	 *     baseStream = a #GInputStream
 	 *
-	 * Return: a #GInputStream for the given @base_stream.
+	 * Returns: a #GInputStream for the given @base_stream.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -148,7 +148,7 @@ public class BufferedInputStream : FilterInputStream, SeekableIF
 	 *     baseStream = a #GInputStream
 	 *     size = a #gsize
 	 *
-	 * Return: a #GInputStream.
+	 * Returns: a #GInputStream.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -194,7 +194,7 @@ public class BufferedInputStream : FilterInputStream, SeekableIF
 	 *     count = the number of bytes that will be read from the stream
 	 *     cancellable = optional #GCancellable object, %NULL to ignore
 	 *
-	 * Return: the number of bytes read into @stream's buffer, up to @count,
+	 * Returns: the number of bytes read into @stream's buffer, up to @count,
 	 *     or -1 on error.
 	 *
 	 * Throws: GException on failure.
@@ -239,7 +239,7 @@ public class BufferedInputStream : FilterInputStream, SeekableIF
 	 * Params:
 	 *     result = a #GAsyncResult
 	 *
-	 * Return: a #gssize of the read stream, or %-1 on an error.
+	 * Returns: a #gssize of the read stream, or %-1 on an error.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -260,7 +260,7 @@ public class BufferedInputStream : FilterInputStream, SeekableIF
 	/**
 	 * Gets the size of the available data within the stream.
 	 *
-	 * Return: size of the available stream.
+	 * Returns: size of the available stream.
 	 */
 	public size_t getAvailable()
 	{
@@ -270,7 +270,7 @@ public class BufferedInputStream : FilterInputStream, SeekableIF
 	/**
 	 * Gets the size of the input buffer.
 	 *
-	 * Return: the current buffer size.
+	 * Returns: the current buffer size.
 	 */
 	public size_t getBufferSize()
 	{
@@ -287,7 +287,7 @@ public class BufferedInputStream : FilterInputStream, SeekableIF
 	 *     offset = a #gsize
 	 *     count = a #gsize
 	 *
-	 * Return: a #gsize of the number of bytes peeked, or -1 on error.
+	 * Returns: a #gsize of the number of bytes peeked, or -1 on error.
 	 */
 	public size_t peek(ubyte[] buffer, size_t offset)
 	{
@@ -312,7 +312,7 @@ public class BufferedInputStream : FilterInputStream, SeekableIF
 	 * Params:
 	 *     cancellable = optional #GCancellable object, %NULL to ignore
 	 *
-	 * Return: the byte read from the @stream, or -1 on end of stream or error.
+	 * Returns: the byte read from the @stream, or -1 on end of stream or error.
 	 *
 	 * Throws: GException on failure.
 	 */

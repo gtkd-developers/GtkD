@@ -110,7 +110,7 @@ public class NativeDialog : ObjectG
 	/**
 	 * Returns whether the dialog is modal. See gtk_native_dialog_set_modal().
 	 *
-	 * Return: %TRUE if the dialog is set to be modal
+	 * Returns: %TRUE if the dialog is set to be modal
 	 *
 	 * Since: 3.20
 	 */
@@ -122,7 +122,7 @@ public class NativeDialog : ObjectG
 	/**
 	 * Gets the title of the #GtkNativeDialog.
 	 *
-	 * Return: the title of the dialog, or %NULL if none has
+	 * Returns: the title of the dialog, or %NULL if none has
 	 *     been set explicitly. The returned string is owned by the widget
 	 *     and must not be modified or freed.
 	 *
@@ -137,7 +137,7 @@ public class NativeDialog : ObjectG
 	 * Fetches the transient parent for this window. See
 	 * gtk_native_dialog_set_transient_for().
 	 *
-	 * Return: the transient parent for this window,
+	 * Returns: the transient parent for this window,
 	 *     or %NULL if no transient parent has been set.
 	 *
 	 * Since: 3.20
@@ -157,7 +157,7 @@ public class NativeDialog : ObjectG
 	/**
 	 * Determines whether the dialog is visible.
 	 *
-	 * Return: %TRUE if the dialog is visible
+	 * Returns: %TRUE if the dialog is visible
 	 *
 	 * Since: 3.20
 	 */
@@ -211,7 +211,7 @@ public class NativeDialog : ObjectG
 	 * such as timeouts, IO channel watches, DND drops, etc, will
 	 * be triggered during a gtk_nautilus_dialog_run() call.
 	 *
-	 * Return: response ID
+	 * Returns: response ID
 	 *
 	 * Since: 3.20
 	 */

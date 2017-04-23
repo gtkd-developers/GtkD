@@ -199,7 +199,7 @@ public class ImageMenuItem : MenuItem
 	 *
 	 * Deprecated: Use gtk_menu_item_new() instead.
 	 *
-	 * Return: a new #GtkImageMenuItem
+	 * Returns: a new #GtkImageMenuItem
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -219,7 +219,7 @@ public class ImageMenuItem : MenuItem
 	 * Returns whether the menu item will ignore the #GtkSettings:gtk-menu-images
 	 * setting and always show the image, if available.
 	 *
-	 * Return: %TRUE if the menu item will always show the image
+	 * Returns: %TRUE if the menu item will always show the image
 	 *
 	 * Since: 2.16
 	 */
@@ -232,7 +232,7 @@ public class ImageMenuItem : MenuItem
 	 * Gets the widget that is currently set as the image of @image_menu_item.
 	 * See gtk_image_menu_item_set_image().
 	 *
-	 * Return: the widget set as image of @image_menu_item
+	 * Returns: the widget set as image of @image_menu_item
 	 */
 	public Widget getImage()
 	{
@@ -250,7 +250,7 @@ public class ImageMenuItem : MenuItem
 	 * Checks whether the label set in the menuitem is used as a
 	 * stock id to select the stock item for the item.
 	 *
-	 * Return: %TRUE if the label set in the menuitem is used as a
+	 * Returns: %TRUE if the label set in the menuitem is used as a
 	 *     stock id to select the stock item for the item
 	 *
 	 * Since: 2.16

@@ -81,7 +81,7 @@ public class Pixdata
 	 *     stream = stream of bytes containing a
 	 *         serialized #GdkPixdata structure.
 	 *
-	 * Return: Upon successful deserialization %TRUE is returned,
+	 * Returns: Upon successful deserialization %TRUE is returned,
 	 *     %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
@@ -111,7 +111,7 @@ public class Pixdata
 	 *     pixbuf = the data to fill @pixdata with.
 	 *     useRle = whether to use run-length encoding for the pixel data.
 	 *
-	 * Return: If @use_rle is %TRUE, a pointer to the
+	 * Returns: If @use_rle is %TRUE, a pointer to the
 	 *     newly-allocated memory for the run-length encoded pixel data,
 	 *     otherwise %NULL.
 	 */
@@ -128,7 +128,7 @@ public class Pixdata
 	 *
 	 * Deprecated: Use #GResource instead.
 	 *
-	 * Return: A
+	 * Returns: A
 	 *     newly-allocated string containing the serialized #GdkPixdata
 	 *     structure.
 	 */
@@ -156,7 +156,7 @@ public class Pixdata
 	 *     dumpType = a #GdkPixdataDumpType determining the kind of C
 	 *         source to be generated.
 	 *
-	 * Return: a newly-allocated string containing the C source form
+	 * Returns: a newly-allocated string containing the C source form
 	 *     of @pixdata.
 	 */
 	public StringG toCsource(string name, GdkPixdataDumpType dumpType)

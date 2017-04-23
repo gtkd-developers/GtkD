@@ -118,7 +118,7 @@ public struct Messages
 	 * Params:
 	 *     func = the new print handler
 	 *
-	 * Return: the old print handler
+	 * Returns: the old print handler
 	 */
 	public static GPrintFunc setPrintHandler(GPrintFunc func)
 	{
@@ -137,7 +137,7 @@ public struct Messages
 	 * Params:
 	 *     func = the new error message handler
 	 *
-	 * Return: the old error message handler
+	 * Returns: the old error message handler
 	 */
 	public static GPrintFunc setPrinterrHandler(GPrintFunc func)
 	{

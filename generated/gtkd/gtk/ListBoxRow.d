@@ -77,7 +77,7 @@ public class ListBoxRow : Bin
 	/**
 	 * Creates a new #GtkListBoxRow, to be used as a child of a #GtkListBox.
 	 *
-	 * Return: a new #GtkListBoxRow
+	 * Returns: a new #GtkListBoxRow
 	 *
 	 * Since: 3.10
 	 *
@@ -124,7 +124,7 @@ public class ListBoxRow : Bin
 	 * Gets the value of the #GtkListBoxRow:activatable property
 	 * for this row.
 	 *
-	 * Return: %TRUE if the row is activatable
+	 * Returns: %TRUE if the row is activatable
 	 *
 	 * Since: 3.14
 	 */
@@ -138,7 +138,7 @@ public class ListBoxRow : Bin
 	 * in a #GtkListBoxUpdateHeaderFunc to see if there is a header
 	 * set already, and if so to update the state of it.
 	 *
-	 * Return: the current header, or %NULL if none
+	 * Returns: the current header, or %NULL if none
 	 *
 	 * Since: 3.10
 	 */
@@ -157,7 +157,7 @@ public class ListBoxRow : Bin
 	/**
 	 * Gets the current index of the @row in its #GtkListBox container.
 	 *
-	 * Return: the index of the @row, or -1 if the @row is not in a listbox
+	 * Returns: the index of the @row, or -1 if the @row is not in a listbox
 	 *
 	 * Since: 3.10
 	 */
@@ -170,7 +170,7 @@ public class ListBoxRow : Bin
 	 * Gets the value of the #GtkListBoxRow:selectable property
 	 * for this row.
 	 *
-	 * Return: %TRUE if the row is selectable
+	 * Returns: %TRUE if the row is selectable
 	 *
 	 * Since: 3.14
 	 */
@@ -183,7 +183,7 @@ public class ListBoxRow : Bin
 	 * Returns whether the child is currently selected in its
 	 * #GtkListBox container.
 	 *
-	 * Return: %TRUE if @row is selected
+	 * Returns: %TRUE if @row is selected
 	 *
 	 * Since: 3.14
 	 */

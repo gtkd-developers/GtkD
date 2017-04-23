@@ -100,7 +100,7 @@ public class AspectFrame : Frame
 	 *     obeyChild = If %TRUE, @ratio is ignored, and the aspect
 	 *         ratio is taken from the requistion of the child.
 	 *
-	 * Return: the new #GtkAspectFrame.
+	 * Returns: the new #GtkAspectFrame.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

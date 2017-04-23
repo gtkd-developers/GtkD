@@ -46,7 +46,7 @@ public struct ParentBufferMeta
 	/**
 	 * Get the global #GstMetaInfo describing  the #GstParentBufferMeta meta.
 	 *
-	 * Return: The #GstMetaInfo
+	 * Returns: The #GstMetaInfo
 	 *
 	 * Since: 1.6
 	 */

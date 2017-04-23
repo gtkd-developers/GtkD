@@ -242,7 +242,7 @@ public interface AsyncInitableIF{
 	 * Params:
 	 *     res = a #GAsyncResult.
 	 *
-	 * Return: %TRUE if successful. If an error has occurred, this function
+	 * Returns: %TRUE if successful. If an error has occurred, this function
 	 *     will return %FALSE and set @error appropriately if present.
 	 *
 	 * Since: 2.22
@@ -258,7 +258,7 @@ public interface AsyncInitableIF{
 	 * Params:
 	 *     res = the #GAsyncResult from the callback
 	 *
-	 * Return: a newly created #GObject,
+	 * Returns: a newly created #GObject,
 	 *     or %NULL on error. Free with g_object_unref().
 	 *
 	 * Since: 2.22

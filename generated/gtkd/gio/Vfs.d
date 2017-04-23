@@ -77,7 +77,7 @@ public class Vfs : ObjectG
 	/**
 	 * Gets the default #GVfs for the system.
 	 *
-	 * Return: a #GVfs.
+	 * Returns: a #GVfs.
 	 */
 	public static Vfs getDefault()
 	{
@@ -94,7 +94,7 @@ public class Vfs : ObjectG
 	/**
 	 * Gets the local #GVfs for the system.
 	 *
-	 * Return: a #GVfs.
+	 * Returns: a #GVfs.
 	 */
 	public static Vfs getLocal()
 	{
@@ -114,7 +114,7 @@ public class Vfs : ObjectG
 	 * Params:
 	 *     path = a string containing a VFS path.
 	 *
-	 * Return: a #GFile.
+	 * Returns: a #GFile.
 	 *     Free the returned object with g_object_unref().
 	 */
 	public FileIF getFileForPath(string path)
@@ -139,7 +139,7 @@ public class Vfs : ObjectG
 	 * Params:
 	 *     uri = a string containing a URI
 	 *
-	 * Return: a #GFile.
+	 * Returns: a #GFile.
 	 *     Free the returned object with g_object_unref().
 	 */
 	public FileIF getFileForUri(string uri)
@@ -157,7 +157,7 @@ public class Vfs : ObjectG
 	/**
 	 * Gets a list of URI schemes supported by @vfs.
 	 *
-	 * Return: a %NULL-terminated array of strings.
+	 * Returns: a %NULL-terminated array of strings.
 	 *     The returned array belongs to GIO and must
 	 *     not be freed or modified.
 	 */
@@ -169,7 +169,7 @@ public class Vfs : ObjectG
 	/**
 	 * Checks if the VFS is active.
 	 *
-	 * Return: %TRUE if construction of the @vfs was successful
+	 * Returns: %TRUE if construction of the @vfs was successful
 	 *     and it is now active.
 	 */
 	public bool isActive()
@@ -185,7 +185,7 @@ public class Vfs : ObjectG
 	 * Params:
 	 *     parseName = a string to be parsed by the VFS module.
 	 *
-	 * Return: a #GFile for the given @parse_name.
+	 * Returns: a #GFile for the given @parse_name.
 	 *     Free the returned object with g_object_unref().
 	 */
 	public FileIF parseName(string parseName)
@@ -236,7 +236,7 @@ public class Vfs : ObjectG
 	 *         URI scheme, or when @vfs is disposed, to free the resources used
 	 *         by the parse name lookup function
 	 *
-	 * Return: %TRUE if @scheme was successfully registered, or %FALSE if a handler
+	 * Returns: %TRUE if @scheme was successfully registered, or %FALSE if a handler
 	 *     for @scheme already exists.
 	 *
 	 * Since: 2.50
@@ -253,7 +253,7 @@ public class Vfs : ObjectG
 	 * Params:
 	 *     scheme = an URI scheme, e.g. "http"
 	 *
-	 * Return: %TRUE if @scheme was successfully unregistered, or %FALSE if a
+	 * Returns: %TRUE if @scheme was successfully unregistered, or %FALSE if a
 	 *     handler for @scheme does not exist.
 	 *
 	 * Since: 2.50

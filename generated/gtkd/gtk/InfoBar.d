@@ -238,7 +238,7 @@ public class InfoBar : Box
 	/**
 	 * Creates a new #GtkInfoBar object.
 	 *
-	 * Return: a new #GtkInfoBar object
+	 * Returns: a new #GtkInfoBar object
 	 *
 	 * Since: 2.18
 	 *
@@ -284,7 +284,7 @@ public class InfoBar : Box
 	 *     buttonText = text of button
 	 *     responseId = response ID for the button
 	 *
-	 * Return: the #GtkButton widget
+	 * Returns: the #GtkButton widget
 	 *     that was added
 	 *
 	 * Since: 2.18
@@ -304,7 +304,7 @@ public class InfoBar : Box
 	/**
 	 * Returns the message type of the message area.
 	 *
-	 * Return: the message type of the message area.
+	 * Returns: the message type of the message area.
 	 *
 	 * Since: 2.18
 	 */
@@ -316,7 +316,7 @@ public class InfoBar : Box
 	/**
 	 * Returns whether the widget will display a standard close button.
 	 *
-	 * Return: %TRUE if the widget displays standard close button
+	 * Returns: %TRUE if the widget displays standard close button
 	 *
 	 * Since: 3.10
 	 */

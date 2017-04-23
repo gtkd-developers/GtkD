@@ -58,7 +58,7 @@ public struct ShellUtils
 	 *     argvp = return
 	 *         location for array of args
 	 *
-	 * Return: %TRUE on success, %FALSE if error set
+	 * Returns: %TRUE on success, %FALSE if error set
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -91,7 +91,7 @@ public struct ShellUtils
 	 * Params:
 	 *     unquotedString = a literal string
 	 *
-	 * Return: quoted string
+	 * Returns: quoted string
 	 */
 	public static string shellQuote(string unquotedString)
 	{
@@ -127,7 +127,7 @@ public struct ShellUtils
 	 * Params:
 	 *     quotedString = shell-quoted string
 	 *
-	 * Return: an unquoted string
+	 * Returns: an unquoted string
 	 *
 	 * Throws: GException on failure.
 	 */

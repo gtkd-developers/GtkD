@@ -100,7 +100,7 @@ public class RecentInfo
 	 *         be mapped to a #GAppInfo; if %NULL is used then the default
 	 *         application for the MIME type is used
 	 *
-	 * Return: the newly created #GAppInfo, or %NULL.
+	 * Returns: the newly created #GAppInfo, or %NULL.
 	 *     In case of error, @error will be set either with a
 	 *     %GTK_RECENT_MANAGER_ERROR or a %G_IO_ERROR
 	 *
@@ -130,7 +130,7 @@ public class RecentInfo
 	 * At the moment this check is done only on resources pointing
 	 * to local files.
 	 *
-	 * Return: %TRUE if the resource exists
+	 * Returns: %TRUE if the resource exists
 	 *
 	 * Since: 2.10
 	 */
@@ -143,7 +143,7 @@ public class RecentInfo
 	 * Gets the timestamp (seconds from system’s Epoch) when the resource
 	 * was added to the recently used resources list.
 	 *
-	 * Return: the number of seconds elapsed from system’s Epoch when
+	 * Returns: the number of seconds elapsed from system’s Epoch when
 	 *     the resource was added to the list, or -1 on failure.
 	 *
 	 * Since: 2.10
@@ -157,7 +157,7 @@ public class RecentInfo
 	 * Gets the number of days elapsed since the last update
 	 * of the resource pointed by @info.
 	 *
-	 * Return: a positive integer containing the number of days
+	 * Returns: a positive integer containing the number of days
 	 *     elapsed since the time this resource was last modified
 	 *
 	 * Since: 2.10
@@ -182,7 +182,7 @@ public class RecentInfo
 	 *     time = return location for the timestamp this item was last registered
 	 *         for this application
 	 *
-	 * Return: %TRUE if an application with @app_name has registered this
+	 * Returns: %TRUE if an application with @app_name has registered this
 	 *     resource inside the recently used list, or %FALSE otherwise. The
 	 *     @app_exec string is owned by the #GtkRecentInfo and should not be
 	 *     modified or freed
@@ -203,7 +203,7 @@ public class RecentInfo
 	/**
 	 * Retrieves the list of applications that have registered this resource.
 	 *
-	 * Return: a newly allocated %NULL-terminated array of strings.
+	 * Returns: a newly allocated %NULL-terminated array of strings.
 	 *     Use g_strfreev() to free it.
 	 *
 	 * Since: 2.10
@@ -221,7 +221,7 @@ public class RecentInfo
 	/**
 	 * Gets the (short) description of the resource.
 	 *
-	 * Return: the description of the resource. The returned string
+	 * Returns: the description of the resource. The returned string
 	 *     is owned by the recent manager, and should not be freed.
 	 *
 	 * Since: 2.10
@@ -235,7 +235,7 @@ public class RecentInfo
 	 * Gets the name of the resource. If none has been defined, the basename
 	 * of the resource is obtained.
 	 *
-	 * Return: the display name of the resource. The returned string
+	 * Returns: the display name of the resource. The returned string
 	 *     is owned by the recent manager, and should not be freed.
 	 *
 	 * Since: 2.10
@@ -248,7 +248,7 @@ public class RecentInfo
 	/**
 	 * Retrieves the icon associated to the resource MIME type.
 	 *
-	 * Return: a #GIcon containing the icon, or %NULL.
+	 * Returns: a #GIcon containing the icon, or %NULL.
 	 *     Use g_object_unref() when finished using the icon
 	 *
 	 * Since: 2.22
@@ -270,7 +270,7 @@ public class RecentInfo
 	 * The array of returned group names will be %NULL terminated, so
 	 * length might optionally be %NULL.
 	 *
-	 * Return: a newly allocated %NULL terminated array of strings.
+	 * Returns: a newly allocated %NULL terminated array of strings.
 	 *     Use g_strfreev() to free it.
 	 *
 	 * Since: 2.10
@@ -291,7 +291,7 @@ public class RecentInfo
 	 * Params:
 	 *     size = the size of the icon in pixels
 	 *
-	 * Return: a #GdkPixbuf containing the icon,
+	 * Returns: a #GdkPixbuf containing the icon,
 	 *     or %NULL. Use g_object_unref() when finished using the icon.
 	 *
 	 * Since: 2.10
@@ -311,7 +311,7 @@ public class RecentInfo
 	/**
 	 * Gets the MIME type of the resource.
 	 *
-	 * Return: the MIME type of the resource. The returned string
+	 * Returns: the MIME type of the resource. The returned string
 	 *     is owned by the recent manager, and should not be freed.
 	 *
 	 * Since: 2.10
@@ -325,7 +325,7 @@ public class RecentInfo
 	 * Gets the timestamp (seconds from system’s Epoch) when the meta-data
 	 * for the resource was last modified.
 	 *
-	 * Return: the number of seconds elapsed from system’s Epoch when
+	 * Returns: the number of seconds elapsed from system’s Epoch when
 	 *     the resource was last modified, or -1 on failure.
 	 *
 	 * Since: 2.10
@@ -340,7 +340,7 @@ public class RecentInfo
 	 * list that have this flag set to %TRUE should only be displayed by the
 	 * applications that have registered them.
 	 *
-	 * Return: %TRUE if the private flag was found, %FALSE otherwise
+	 * Returns: %TRUE if the private flag was found, %FALSE otherwise
 	 *
 	 * Since: 2.10
 	 */
@@ -355,7 +355,7 @@ public class RecentInfo
 	 * this function on an item that refers to
 	 * “file:///foo/bar.txt” will yield “bar.txt”.
 	 *
-	 * Return: A newly-allocated string in UTF-8 encoding
+	 * Returns: A newly-allocated string in UTF-8 encoding
 	 *     free it with g_free()
 	 *
 	 * Since: 2.10
@@ -371,7 +371,7 @@ public class RecentInfo
 	/**
 	 * Gets the URI of the resource.
 	 *
-	 * Return: the URI of the resource. The returned string is
+	 * Returns: the URI of the resource. The returned string is
 	 *     owned by the recent manager, and should not be freed.
 	 *
 	 * Since: 2.10
@@ -386,7 +386,7 @@ public class RecentInfo
 	 * is local, it returns a local path; if the resource is not local,
 	 * it returns the UTF-8 encoded content of gtk_recent_info_get_uri().
 	 *
-	 * Return: a newly allocated UTF-8 string containing the
+	 * Returns: a newly allocated UTF-8 string containing the
 	 *     resource’s URI or %NULL. Use g_free() when done using it.
 	 *
 	 * Since: 2.10
@@ -403,7 +403,7 @@ public class RecentInfo
 	 * Gets the timestamp (seconds from system’s Epoch) when the meta-data
 	 * for the resource was last visited.
 	 *
-	 * Return: the number of seconds elapsed from system’s Epoch when
+	 * Returns: the number of seconds elapsed from system’s Epoch when
 	 *     the resource was last visited, or -1 on failure.
 	 *
 	 * Since: 2.10
@@ -419,7 +419,7 @@ public class RecentInfo
 	 * Params:
 	 *     appName = a string containing an application name
 	 *
-	 * Return: %TRUE if an application with name @app_name was found,
+	 * Returns: %TRUE if an application with name @app_name was found,
 	 *     %FALSE otherwise
 	 *
 	 * Since: 2.10
@@ -436,7 +436,7 @@ public class RecentInfo
 	 * Params:
 	 *     groupName = name of a group
 	 *
-	 * Return: %TRUE if the group was found
+	 * Returns: %TRUE if the group was found
 	 *
 	 * Since: 2.10
 	 */
@@ -449,7 +449,7 @@ public class RecentInfo
 	 * Checks whether the resource is local or not by looking at the
 	 * scheme of its URI.
 	 *
-	 * Return: %TRUE if the resource is local
+	 * Returns: %TRUE if the resource is local
 	 *
 	 * Since: 2.10
 	 */
@@ -462,7 +462,7 @@ public class RecentInfo
 	 * Gets the name of the last application that have registered the
 	 * recently used resource represented by @info.
 	 *
-	 * Return: an application name. Use g_free() to free it.
+	 * Returns: an application name. Use g_free() to free it.
 	 *
 	 * Since: 2.10
 	 */
@@ -481,7 +481,7 @@ public class RecentInfo
 	 * Params:
 	 *     infoB = a #GtkRecentInfo
 	 *
-	 * Return: %TRUE if both #GtkRecentInfo-struct point to the same
+	 * Returns: %TRUE if both #GtkRecentInfo-struct point to the same
 	 *     resource, %FALSE otherwise
 	 *
 	 * Since: 2.10
@@ -494,7 +494,7 @@ public class RecentInfo
 	/**
 	 * Increases the reference count of @recent_info by one.
 	 *
-	 * Return: the recent info object with its reference count
+	 * Returns: the recent info object with its reference count
 	 *     increased by one
 	 *
 	 * Since: 2.10

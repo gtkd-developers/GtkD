@@ -400,7 +400,7 @@ public class UIManager : ObjectG, BuildableIF
 	/**
 	 * Creates a new ui manager object.
 	 *
-	 * Return: a new ui manager object.
+	 * Returns: a new ui manager object.
 	 *
 	 * Since: 2.4
 	 *
@@ -452,7 +452,7 @@ public class UIManager : ObjectG, BuildableIF
 	 * Params:
 	 *     filename = the name of the file to parse
 	 *
-	 * Return: The merge id for the merged UI. The merge id can be used
+	 * Returns: The merge id for the merged UI. The merge id can be used
 	 *     to unmerge the UI with gtk_ui_manager_remove_ui(). If an error occurred,
 	 *     the return value is 0.
 	 *
@@ -481,7 +481,7 @@ public class UIManager : ObjectG, BuildableIF
 	 * Params:
 	 *     resourcePath = the resource path of the file to parse
 	 *
-	 * Return: The merge id for the merged UI. The merge id can be used
+	 * Returns: The merge id for the merged UI. The merge id can be used
 	 *     to unmerge the UI with gtk_ui_manager_remove_ui(). If an error occurred,
 	 *     the return value is 0.
 	 *
@@ -512,7 +512,7 @@ public class UIManager : ObjectG, BuildableIF
 	 *     buffer = the string to parse
 	 *     length = the length of @buffer (may be -1 if @buffer is nul-terminated)
 	 *
-	 * Return: The merge id for the merged UI. The merge id can be used
+	 * Returns: The merge id for the merged UI. The merge id can be used
 	 *     to unmerge the UI with gtk_ui_manager_remove_ui(). If an error occurred,
 	 *     the return value is 0.
 	 *
@@ -561,7 +561,7 @@ public class UIManager : ObjectG, BuildableIF
 	/**
 	 * Returns the #GtkAccelGroup associated with @manager.
 	 *
-	 * Return: the #GtkAccelGroup.
+	 * Returns: the #GtkAccelGroup.
 	 *
 	 * Since: 2.4
 	 */
@@ -584,7 +584,7 @@ public class UIManager : ObjectG, BuildableIF
 	 * Params:
 	 *     path = a path
 	 *
-	 * Return: the action whose proxy widget is found by following the path,
+	 * Returns: the action whose proxy widget is found by following the path,
 	 *     or %NULL if no widget was found.
 	 *
 	 * Since: 2.4
@@ -604,7 +604,7 @@ public class UIManager : ObjectG, BuildableIF
 	/**
 	 * Returns the list of action groups associated with @manager.
 	 *
-	 * Return: a #GList of
+	 * Returns: a #GList of
 	 *     action groups. The list is owned by GTK+
 	 *     and should not be modified.
 	 *
@@ -629,7 +629,7 @@ public class UIManager : ObjectG, BuildableIF
 	 * Deprecated: Tearoff menus are deprecated and should not
 	 * be used in newly written code.
 	 *
-	 * Return: whether tearoff menu items are added
+	 * Returns: whether tearoff menu items are added
 	 *
 	 * Since: 2.4
 	 */
@@ -646,7 +646,7 @@ public class UIManager : ObjectG, BuildableIF
 	 *         types are #GTK_UI_MANAGER_MENUBAR, #GTK_UI_MANAGER_TOOLBAR and
 	 *         #GTK_UI_MANAGER_POPUP.
 	 *
-	 * Return: a newly-allocated #GSList of
+	 * Returns: a newly-allocated #GSList of
 	 *     all toplevel widgets of the requested types.  Free the returned list with g_slist_free().
 	 *
 	 * Since: 2.4
@@ -666,7 +666,7 @@ public class UIManager : ObjectG, BuildableIF
 	/**
 	 * Creates a [UI definition][XML-UI] of the merged UI.
 	 *
-	 * Return: A newly allocated string containing an XML representation of
+	 * Returns: A newly allocated string containing an XML representation of
 	 *     the merged UI.
 	 *
 	 * Since: 2.4
@@ -703,7 +703,7 @@ public class UIManager : ObjectG, BuildableIF
 	 * Returns an unused merge id, suitable for use with
 	 * gtk_ui_manager_add_ui().
 	 *
-	 * Return: an unused merge id.
+	 * Returns: an unused merge id.
 	 *
 	 * Since: 2.4
 	 */

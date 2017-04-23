@@ -89,7 +89,7 @@ public class Emblem : ObjectG, IconIF
 	 * Params:
 	 *     icon = a GIcon containing the icon.
 	 *
-	 * Return: a new #GEmblem.
+	 * Returns: a new #GEmblem.
 	 *
 	 * Since: 2.18
 	 *
@@ -114,7 +114,7 @@ public class Emblem : ObjectG, IconIF
 	 *     icon = a GIcon containing the icon.
 	 *     origin = a GEmblemOrigin enum defining the emblem's origin
 	 *
-	 * Return: a new #GEmblem.
+	 * Returns: a new #GEmblem.
 	 *
 	 * Since: 2.18
 	 *
@@ -135,7 +135,7 @@ public class Emblem : ObjectG, IconIF
 	/**
 	 * Gives back the icon from @emblem.
 	 *
-	 * Return: a #GIcon. The returned object belongs to
+	 * Returns: a #GIcon. The returned object belongs to
 	 *     the emblem and should not be modified or freed.
 	 *
 	 * Since: 2.18
@@ -155,7 +155,7 @@ public class Emblem : ObjectG, IconIF
 	/**
 	 * Gets the origin of the emblem.
 	 *
-	 * Return: the origin of the emblem
+	 * Returns: the origin of the emblem
 	 *
 	 * Since: 2.18
 	 */

@@ -59,7 +59,7 @@ public template SeekableT(TStruct)
 	/**
 	 * Tests if the stream supports the #GSeekableIface.
 	 *
-	 * Return: %TRUE if @seekable can be seeked. %FALSE otherwise.
+	 * Returns: %TRUE if @seekable can be seeked. %FALSE otherwise.
 	 */
 	public bool canSeek()
 	{
@@ -69,7 +69,7 @@ public template SeekableT(TStruct)
 	/**
 	 * Tests if the stream can be truncated.
 	 *
-	 * Return: %TRUE if the stream can be truncated, %FALSE otherwise.
+	 * Returns: %TRUE if the stream can be truncated, %FALSE otherwise.
 	 */
 	public bool canTruncate()
 	{
@@ -97,7 +97,7 @@ public template SeekableT(TStruct)
 	 *     type = a #GSeekType.
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Return: %TRUE if successful. If an error
+	 * Returns: %TRUE if successful. If an error
 	 *     has occurred, this function will return %FALSE and set @error
 	 *     appropriately if present.
 	 *
@@ -120,7 +120,7 @@ public template SeekableT(TStruct)
 	/**
 	 * Tells the current position within the stream.
 	 *
-	 * Return: the offset from the beginning of the buffer.
+	 * Returns: the offset from the beginning of the buffer.
 	 */
 	public long tell()
 	{
@@ -140,7 +140,7 @@ public template SeekableT(TStruct)
 	 *     offset = a #goffset.
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Return: %TRUE if successful. If an error
+	 * Returns: %TRUE if successful. If an error
 	 *     has occurred, this function will return %FALSE and set @error
 	 *     appropriately if present.
 	 *

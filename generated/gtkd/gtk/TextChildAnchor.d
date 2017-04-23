@@ -81,7 +81,7 @@ public class TextChildAnchor : ObjectG
 	 * To perform the creation and insertion in one step, use the
 	 * convenience function gtk_text_buffer_create_child_anchor().
 	 *
-	 * Return: a new #GtkTextChildAnchor
+	 * Returns: a new #GtkTextChildAnchor
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -105,7 +105,7 @@ public class TextChildAnchor : ObjectG
 	 * to use this function — otherwise all deleted child anchors
 	 * will also be finalized.
 	 *
-	 * Return: %TRUE if the child anchor has been deleted from its buffer
+	 * Returns: %TRUE if the child anchor has been deleted from its buffer
 	 */
 	public bool getDeleted()
 	{
@@ -116,7 +116,7 @@ public class TextChildAnchor : ObjectG
 	 * Gets a list of all widgets anchored at this child anchor.
 	 * The returned list should be freed with g_list_free().
 	 *
-	 * Return: list of widgets anchored at @anchor
+	 * Returns: list of widgets anchored at @anchor
 	 */
 	public ListG getWidgets()
 	{

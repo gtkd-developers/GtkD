@@ -39,7 +39,7 @@ public struct State
 	 * Params:
 	 *     name = a character string state name
 	 *
-	 * Return: an #AtkStateType corresponding to @name
+	 * Returns: an #AtkStateType corresponding to @name
 	 */
 	public static AtkStateType typeForName(string name)
 	{
@@ -52,7 +52,7 @@ public struct State
 	 * Params:
 	 *     type = The #AtkStateType whose name is required
 	 *
-	 * Return: the string describing the AtkStateType
+	 * Returns: the string describing the AtkStateType
 	 */
 	public static string typeGetName(AtkStateType type)
 	{
@@ -65,7 +65,7 @@ public struct State
 	 * Params:
 	 *     name = a character string describing the new state.
 	 *
-	 * Return: an #AtkState value for the new state.
+	 * Returns: an #AtkState value for the new state.
 	 */
 	public static AtkStateType typeRegister(string name)
 	{

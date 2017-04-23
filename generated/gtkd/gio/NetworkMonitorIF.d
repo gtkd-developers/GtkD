@@ -56,7 +56,7 @@ public interface NetworkMonitorIF{
 	/**
 	 * Gets the default #GNetworkMonitor for the system.
 	 *
-	 * Return: a #GNetworkMonitor
+	 * Returns: a #GNetworkMonitor
 	 *
 	 * Since: 2.32
 	 */
@@ -85,7 +85,7 @@ public interface NetworkMonitorIF{
 	 *     connectable = a #GSocketConnectable
 	 *     cancellable = a #GCancellable, or %NULL
 	 *
-	 * Return: %TRUE if @connectable is reachable, %FALSE if not.
+	 * Returns: %TRUE if @connectable is reachable, %FALSE if not.
 	 *
 	 * Since: 2.32
 	 *
@@ -120,7 +120,7 @@ public interface NetworkMonitorIF{
 	 * Params:
 	 *     result = a #GAsyncResult
 	 *
-	 * Return: %TRUE if network is reachable, %FALSE if not.
+	 * Returns: %TRUE if network is reachable, %FALSE if not.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -147,7 +147,7 @@ public interface NetworkMonitorIF{
 	 * attempt to connect to remote servers, but should gracefully fall
 	 * back to their "offline" behavior if the connection attempt fails.
 	 *
-	 * Return: the network connectivity state
+	 * Returns: the network connectivity state
 	 *
 	 * Since: 2.44
 	 */
@@ -159,7 +159,7 @@ public interface NetworkMonitorIF{
 	 * IPv6. It does not necessarily imply that the public Internet is
 	 * reachable. See #GNetworkMonitor:network-available for more details.
 	 *
-	 * Return: whether the network is available
+	 * Returns: whether the network is available
 	 *
 	 * Since: 2.32
 	 */
@@ -169,7 +169,7 @@ public interface NetworkMonitorIF{
 	 * Checks if the network is metered.
 	 * See #GNetworkMonitor:network-metered for more details.
 	 *
-	 * Return: whether the connection is metered
+	 * Returns: whether the connection is metered
 	 *
 	 * Since: 2.46
 	 */

@@ -95,7 +95,7 @@ public class FontChooserDialog : Dialog, FontChooserIF
 	 *     title = Title of the dialog, or %NULL
 	 *     parent = Transient parent of the dialog, or %NULL
 	 *
-	 * Return: a new #GtkFontChooserDialog
+	 * Returns: a new #GtkFontChooserDialog
 	 *
 	 * Since: 3.2
 	 *

@@ -86,7 +86,7 @@ public class CellRendererSpinner : CellRenderer
 	 * Returns a new cell renderer which will show a spinner to indicate
 	 * activity.
 	 *
-	 * Return: a new #GtkCellRenderer
+	 * Returns: a new #GtkCellRenderer
 	 *
 	 * Since: 2.20
 	 *

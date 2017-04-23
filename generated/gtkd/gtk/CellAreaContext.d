@@ -136,7 +136,7 @@ public class CellAreaContext : ObjectG
 	 * that the #GtkCellArea is configured with in order to
 	 * compute a proper allocation.
 	 *
-	 * Return: the #GtkCellArea this context was created by.
+	 * Returns: the #GtkCellArea this context was created by.
 	 *
 	 * Since: 3.0
 	 */

@@ -72,7 +72,7 @@ public class IOSchedulerJob
 	 *     userData = data to pass to @func
 	 *     notify = a #GDestroyNotify for @user_data, or %NULL
 	 *
-	 * Return: The return value of @func
+	 * Returns: The return value of @func
 	 */
 	public bool sendToMainloop(GSourceFunc func, void* userData, GDestroyNotify notify)
 	{

@@ -169,7 +169,7 @@ public class VariantDict
 	 *     fromAsv = the #GVariant with which to initialise the
 	 *         dictionary
 	 *
-	 * Return: a #GVariantDict
+	 * Returns: a #GVariantDict
 	 *
 	 * Since: 2.40
 	 *
@@ -216,7 +216,7 @@ public class VariantDict
 	 * Params:
 	 *     key = the key to lookup in the dictionary
 	 *
-	 * Return: %TRUE if @key is in @dict
+	 * Returns: %TRUE if @key is in @dict
 	 *
 	 * Since: 2.40
 	 */
@@ -234,7 +234,7 @@ public class VariantDict
 	 * #GVariantDict) or by reinitialising it with g_variant_dict_init() (in
 	 * the case of stack-allocated).
 	 *
-	 * Return: a new, floating, #GVariant
+	 * Returns: a new, floating, #GVariant
 	 *
 	 * Since: 2.40
 	 */
@@ -311,7 +311,7 @@ public class VariantDict
 	 *     key = the key to lookup in the dictionary
 	 *     expectedType = a #GVariantType, or %NULL
 	 *
-	 * Return: the value of the dictionary key, or %NULL
+	 * Returns: the value of the dictionary key, or %NULL
 	 *
 	 * Since: 2.40
 	 */
@@ -333,7 +333,7 @@ public class VariantDict
 	 * Don't call this on stack-allocated #GVariantDict instances or bad
 	 * things will happen.
 	 *
-	 * Return: a new reference to @dict
+	 * Returns: a new reference to @dict
 	 *
 	 * Since: 2.40
 	 */
@@ -355,7 +355,7 @@ public class VariantDict
 	 * Params:
 	 *     key = the key to remove
 	 *
-	 * Return: %TRUE if the key was found and removed
+	 * Returns: %TRUE if the key was found and removed
 	 *
 	 * Since: 2.40
 	 */

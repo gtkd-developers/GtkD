@@ -94,7 +94,7 @@ public class SocketListener : ObjectG
 	 * New listeners can be added with e.g. g_socket_listener_add_address()
 	 * or g_socket_listener_add_inet_port().
 	 *
-	 * Return: a new #GSocketListener.
+	 * Returns: a new #GSocketListener.
 	 *
 	 * Since: 2.22
 	 *
@@ -129,7 +129,7 @@ public class SocketListener : ObjectG
 	 *     sourceObject = location where #GObject pointer will be stored, or %NULL
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Return: a #GSocketConnection on success, %NULL on error.
+	 * Returns: a #GSocketConnection on success, %NULL on error.
 	 *
 	 * Since: 2.22
 	 *
@@ -183,7 +183,7 @@ public class SocketListener : ObjectG
 	 *     result = a #GAsyncResult.
 	 *     sourceObject = Optional #GObject identifying this source
 	 *
-	 * Return: a #GSocketConnection on success, %NULL on error.
+	 * Returns: a #GSocketConnection on success, %NULL on error.
 	 *
 	 * Since: 2.22
 	 *
@@ -231,7 +231,7 @@ public class SocketListener : ObjectG
 	 *     sourceObject = location where #GObject pointer will be stored, or %NULL.
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Return: a #GSocket on success, %NULL on error.
+	 * Returns: a #GSocket on success, %NULL on error.
 	 *
 	 * Since: 2.22
 	 *
@@ -285,7 +285,7 @@ public class SocketListener : ObjectG
 	 *     result = a #GAsyncResult.
 	 *     sourceObject = Optional #GObject identifying this source
 	 *
-	 * Return: a #GSocket on success, %NULL on error.
+	 * Returns: a #GSocket on success, %NULL on error.
 	 *
 	 * Since: 2.22
 	 *
@@ -341,7 +341,7 @@ public class SocketListener : ObjectG
 	 *     sourceObject = Optional #GObject identifying this source
 	 *     effectiveAddress = location to store the address that was bound to, or %NULL.
 	 *
-	 * Return: %TRUE on success, %FALSE on error.
+	 * Returns: %TRUE on success, %FALSE on error.
 	 *
 	 * Since: 2.22
 	 *
@@ -379,7 +379,7 @@ public class SocketListener : ObjectG
 	 * Params:
 	 *     sourceObject = Optional #GObject identifying this source
 	 *
-	 * Return: the port number, or 0 in case of failure.
+	 * Returns: the port number, or 0 in case of failure.
 	 *
 	 * Since: 2.24
 	 *
@@ -413,7 +413,7 @@ public class SocketListener : ObjectG
 	 *     port = an IP port number (non-zero)
 	 *     sourceObject = Optional #GObject identifying this source
 	 *
-	 * Return: %TRUE on success, %FALSE on error.
+	 * Returns: %TRUE on success, %FALSE on error.
 	 *
 	 * Since: 2.22
 	 *
@@ -452,7 +452,7 @@ public class SocketListener : ObjectG
 	 *     socket = a listening #GSocket
 	 *     sourceObject = Optional #GObject identifying this source
 	 *
-	 * Return: %TRUE on success, %FALSE on error.
+	 * Returns: %TRUE on success, %FALSE on error.
 	 *
 	 * Since: 2.22
 	 *

@@ -84,7 +84,7 @@ public template TextT(TStruct)
 	 *     startOffset = the start position of the selected region
 	 *     endOffset = the offset of the first character after the selected region.
 	 *
-	 * Return: %TRUE if success, %FALSE otherwise
+	 * Returns: %TRUE if success, %FALSE otherwise
 	 */
 	public bool addSelection(int startOffset, int endOffset)
 	{
@@ -100,7 +100,7 @@ public template TextT(TStruct)
 	 *     xClipType = Specify the horizontal clip type.
 	 *     yClipType = Specify the vertical clip type.
 	 *
-	 * Return: Array of AtkTextRange. The last
+	 * Returns: Array of AtkTextRange. The last
 	 *     element of the array returned by this function will be NULL.
 	 *
 	 * Since: 1.3
@@ -115,7 +115,7 @@ public template TextT(TStruct)
 	/**
 	 * Gets the offset position of the caret (cursor).
 	 *
-	 * Return: the offset position of the caret (cursor).
+	 * Returns: the offset position of the caret (cursor).
 	 */
 	public int getCaretOffset()
 	{
@@ -128,7 +128,7 @@ public template TextT(TStruct)
 	 * Params:
 	 *     offset = position
 	 *
-	 * Return: the character at @offset.
+	 * Returns: the character at @offset.
 	 */
 	public dchar getCharacterAtOffset(int offset)
 	{
@@ -138,7 +138,7 @@ public template TextT(TStruct)
 	/**
 	 * Gets the character count.
 	 *
-	 * Return: the number of characters.
+	 * Returns: the number of characters.
 	 */
 	public int getCharacterCount()
 	{
@@ -168,7 +168,7 @@ public template TextT(TStruct)
 	 * attributes that can be returned. Note that other attributes may also be
 	 * returned.
 	 *
-	 * Return: an #AtkAttributeSet which contains the default
+	 * Returns: an #AtkAttributeSet which contains the default
 	 *     values of attributes.  at @offset. this #atkattributeset should be freed by
 	 *     a call to atk_attribute_set_free().
 	 */
@@ -180,7 +180,7 @@ public template TextT(TStruct)
 	/**
 	 * Gets the number of selected regions.
 	 *
-	 * Return: The number of selected regions, or -1 if a failure
+	 * Returns: The number of selected regions, or -1 if a failure
 	 *     occurred.
 	 */
 	public int getNSelections()
@@ -199,7 +199,7 @@ public template TextT(TStruct)
 	 *     coords = specify whether coordinates are relative to the screen or
 	 *         widget window
 	 *
-	 * Return: the offset to the character which is located at
+	 * Returns: the offset to the character which is located at
 	 *     the specified @x and @y coordinates.
 	 */
 	public int getOffsetAtPoint(int x, int y, AtkCoordType coords)
@@ -240,7 +240,7 @@ public template TextT(TStruct)
 	 *     startOffset = the address to put the start offset of the range
 	 *     endOffset = the address to put the end offset of the range
 	 *
-	 * Return: an #AtkAttributeSet which contains the attributes
+	 * Returns: an #AtkAttributeSet which contains the attributes
 	 *     explicitly set at @offset. This #AtkAttributeSet should be freed by a call
 	 *     to atk_attribute_set_free().
 	 */
@@ -262,7 +262,7 @@ public template TextT(TStruct)
 	 *     endOffset = passes back the end position of (e.g. offset immediately past)
 	 *         the selected region
 	 *
-	 * Return: a newly allocated string containing the selected text. Use g_free()
+	 * Returns: a newly allocated string containing the selected text. Use g_free()
 	 *     to free the returned string.
 	 */
 	public string getSelection(int selectionNum, out int startOffset, out int endOffset)
@@ -313,7 +313,7 @@ public template TextT(TStruct)
 	 *     endOffset = the offset of the first character after the returned string,
 	 *         or -1 if an error has occurred (e.g. invalid offset, not implemented)
 	 *
-	 * Return: a newly allocated string containing the text
+	 * Returns: a newly allocated string containing the text
 	 *     at the @offset bounded by the specified @granularity. Use
 	 *     g_free() to free the returned string.  Returns %NULL if the
 	 *     offset is invalid or no implementation is available.
@@ -335,7 +335,7 @@ public template TextT(TStruct)
 	 *     startOffset = start position
 	 *     endOffset = end position, or -1 for the end of the string.
 	 *
-	 * Return: a newly allocated string containing the text from @start_offset up
+	 * Returns: a newly allocated string containing the text from @start_offset up
 	 *     to, but not including @end_offset. Use g_free() to free the returned string.
 	 */
 	public string getText(int startOffset, int endOffset)
@@ -358,7 +358,7 @@ public template TextT(TStruct)
 	 *     endOffset = the offset of the first character after the
 	 *         returned substring
 	 *
-	 * Return: a newly allocated string containing the text after @offset bounded
+	 * Returns: a newly allocated string containing the text after @offset bounded
 	 *     by the specified @boundary_type. Use g_free() to free the returned string.
 	 */
 	public string getTextAfterOffset(int offset, AtkTextBoundary boundaryType, out int startOffset, out int endOffset)
@@ -405,7 +405,7 @@ public template TextT(TStruct)
 	 *     endOffset = the offset of the first character after the
 	 *         returned substring
 	 *
-	 * Return: a newly allocated string containing the text at @offset bounded by
+	 * Returns: a newly allocated string containing the text at @offset bounded by
 	 *     the specified @boundary_type. Use g_free() to free the returned string.
 	 */
 	public string getTextAtOffset(int offset, AtkTextBoundary boundaryType, out int startOffset, out int endOffset)
@@ -428,7 +428,7 @@ public template TextT(TStruct)
 	 *     endOffset = the offset of the first character after the
 	 *         returned substring
 	 *
-	 * Return: a newly allocated string containing the text before @offset bounded
+	 * Returns: a newly allocated string containing the text before @offset bounded
 	 *     by the specified @boundary_type. Use g_free() to free the returned string.
 	 */
 	public string getTextBeforeOffset(int offset, AtkTextBoundary boundaryType, out int startOffset, out int endOffset)
@@ -449,7 +449,7 @@ public template TextT(TStruct)
 	 *         of the text region is assigned the number 0, etc.  Note that adding,
 	 *         moving or deleting a selected region can change the numbering.
 	 *
-	 * Return: %TRUE if success, %FALSE otherwise
+	 * Returns: %TRUE if success, %FALSE otherwise
 	 */
 	public bool removeSelection(int selectionNum)
 	{
@@ -462,7 +462,7 @@ public template TextT(TStruct)
 	 * Params:
 	 *     offset = position
 	 *
-	 * Return: %TRUE if success, %FALSE otherwise.
+	 * Returns: %TRUE if success, %FALSE otherwise.
 	 */
 	public bool setCaretOffset(int offset)
 	{
@@ -482,7 +482,7 @@ public template TextT(TStruct)
 	 *     endOffset = the new end position of (e.g. offset immediately past)
 	 *         the selection
 	 *
-	 * Return: %TRUE if success, %FALSE otherwise
+	 * Returns: %TRUE if success, %FALSE otherwise
 	 */
 	public bool setSelection(int selectionNum, int startOffset, int endOffset)
 	{
@@ -854,7 +854,7 @@ public template TextT(TStruct)
 	 * Params:
 	 *     name = a string which is the (non-localized) name of an ATK text attribute.
 	 *
-	 * Return: the #AtkTextAttribute enumerated type corresponding to the specified
+	 * Returns: the #AtkTextAttribute enumerated type corresponding to the specified
 	 *     name,
 	 *     or #ATK_TEXT_ATTRIBUTE_INVALID if no matching text attribute is found.
 	 */
@@ -869,7 +869,7 @@ public template TextT(TStruct)
 	 * Params:
 	 *     attr = The #AtkTextAttribute whose name is required
 	 *
-	 * Return: a string containing the name; this string should not be freed
+	 * Returns: a string containing the name; this string should not be freed
 	 */
 	public static string attributeGetName(AtkTextAttribute attr)
 	{
@@ -883,7 +883,7 @@ public template TextT(TStruct)
 	 *     attr = The #AtkTextAttribute for which a value is required
 	 *     index = The index of the required value
 	 *
-	 * Return: a string containing the value; this string
+	 * Returns: a string containing the value; this string
 	 *     should not be freed; %NULL is returned if there are no values
 	 *     maintained for the attr value.
 	 */
@@ -898,7 +898,7 @@ public template TextT(TStruct)
 	 * Params:
 	 *     name = a name string
 	 *
-	 * Return: an #AtkTextAttribute associated with @name
+	 * Returns: an #AtkTextAttribute associated with @name
 	 */
 	public static AtkTextAttribute attributeRegister(string name)
 	{

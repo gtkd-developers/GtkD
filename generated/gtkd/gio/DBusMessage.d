@@ -83,7 +83,7 @@ public class DBusMessage : ObjectG
 	/**
 	 * Creates a new empty #GDBusMessage.
 	 *
-	 * Return: A #GDBusMessage. Free with g_object_unref().
+	 * Returns: A #GDBusMessage. Free with g_object_unref().
 	 *
 	 * Since: 2.26
 	 *
@@ -111,7 +111,7 @@ public class DBusMessage : ObjectG
 	 *     blobLen = The length of @blob.
 	 *     capabilities = A #GDBusCapabilityFlags describing what protocol features are supported.
 	 *
-	 * Return: A new #GDBusMessage or %NULL if @error is set. Free with
+	 * Returns: A new #GDBusMessage or %NULL if @error is set. Free with
 	 *     g_object_unref().
 	 *
 	 * Since: 2.26
@@ -147,7 +147,7 @@ public class DBusMessage : ObjectG
 	 *     iface = A valid D-Bus interface name or %NULL.
 	 *     method = A valid method name.
 	 *
-	 * Return: A #GDBusMessage. Free with g_object_unref().
+	 * Returns: A #GDBusMessage. Free with g_object_unref().
 	 *
 	 * Since: 2.26
 	 *
@@ -173,7 +173,7 @@ public class DBusMessage : ObjectG
 	 *     iface = A valid D-Bus interface name.
 	 *     signal = A valid signal name.
 	 *
-	 * Return: A #GDBusMessage. Free with g_object_unref().
+	 * Returns: A #GDBusMessage. Free with g_object_unref().
 	 *
 	 * Since: 2.26
 	 *
@@ -199,7 +199,7 @@ public class DBusMessage : ObjectG
 	 *     blob = A blob represent a binary D-Bus message.
 	 *     blobLen = The length of @blob (must be at least 16).
 	 *
-	 * Return: Number of bytes needed or -1 if @error is set (e.g. if
+	 * Returns: Number of bytes needed or -1 if @error is set (e.g. if
 	 *     @blob contains invalid data or not enough data is available to
 	 *     determine the size).
 	 *
@@ -229,7 +229,7 @@ public class DBusMessage : ObjectG
 	 * This operation can fail if e.g. @message contains file descriptors
 	 * and the per-process or system-wide open files limit is reached.
 	 *
-	 * Return: A new #GDBusMessage or %NULL if @error is set.
+	 * Returns: A new #GDBusMessage or %NULL if @error is set.
 	 *     Free with g_object_unref().
 	 *
 	 * Since: 2.26
@@ -258,7 +258,7 @@ public class DBusMessage : ObjectG
 	/**
 	 * Convenience to get the first item in the body of @message.
 	 *
-	 * Return: The string item or %NULL if the first item in the body of
+	 * Returns: The string item or %NULL if the first item in the body of
 	 *     @message is not a string.
 	 *
 	 * Since: 2.26
@@ -271,7 +271,7 @@ public class DBusMessage : ObjectG
 	/**
 	 * Gets the body of a message.
 	 *
-	 * Return: A #GVariant or %NULL if the body is
+	 * Returns: A #GVariant or %NULL if the body is
 	 *     empty. Do not free, it is owned by @message.
 	 *
 	 * Since: 2.26
@@ -291,7 +291,7 @@ public class DBusMessage : ObjectG
 	/**
 	 * Gets the byte order of @message.
 	 *
-	 * Return: The byte order.
+	 * Returns: The byte order.
 	 */
 	public GDBusMessageByteOrder getByteOrder()
 	{
@@ -301,7 +301,7 @@ public class DBusMessage : ObjectG
 	/**
 	 * Convenience getter for the %G_DBUS_MESSAGE_HEADER_FIELD_DESTINATION header field.
 	 *
-	 * Return: The value.
+	 * Returns: The value.
 	 *
 	 * Since: 2.26
 	 */
@@ -313,7 +313,7 @@ public class DBusMessage : ObjectG
 	/**
 	 * Convenience getter for the %G_DBUS_MESSAGE_HEADER_FIELD_ERROR_NAME header field.
 	 *
-	 * Return: The value.
+	 * Returns: The value.
 	 *
 	 * Since: 2.26
 	 */
@@ -325,7 +325,7 @@ public class DBusMessage : ObjectG
 	/**
 	 * Gets the flags for @message.
 	 *
-	 * Return: Flags that are set (typically values from the #GDBusMessageFlags enumeration bitwise ORed together).
+	 * Returns: Flags that are set (typically values from the #GDBusMessageFlags enumeration bitwise ORed together).
 	 *
 	 * Since: 2.26
 	 */
@@ -340,7 +340,7 @@ public class DBusMessage : ObjectG
 	 * Params:
 	 *     headerField = A 8-bit unsigned integer (typically a value from the #GDBusMessageHeaderField enumeration)
 	 *
-	 * Return: A #GVariant with the value if the header was found, %NULL
+	 * Returns: A #GVariant with the value if the header was found, %NULL
 	 *     otherwise. Do not free, it is owned by @message.
 	 *
 	 * Since: 2.26
@@ -360,7 +360,7 @@ public class DBusMessage : ObjectG
 	/**
 	 * Gets an array of all header fields on @message that are set.
 	 *
-	 * Return: An array of header fields
+	 * Returns: An array of header fields
 	 *     terminated by %G_DBUS_MESSAGE_HEADER_FIELD_INVALID.  Each element
 	 *     is a #guchar. Free with g_free().
 	 *
@@ -376,7 +376,7 @@ public class DBusMessage : ObjectG
 	/**
 	 * Convenience getter for the %G_DBUS_MESSAGE_HEADER_FIELD_INTERFACE header field.
 	 *
-	 * Return: The value.
+	 * Returns: The value.
 	 *
 	 * Since: 2.26
 	 */
@@ -390,7 +390,7 @@ public class DBusMessage : ObjectG
 	 * value, conncet to the #GObject::notify signal to listen for changes
 	 * on the #GDBusMessage:locked property.
 	 *
-	 * Return: %TRUE if @message is locked, %FALSE otherwise.
+	 * Returns: %TRUE if @message is locked, %FALSE otherwise.
 	 *
 	 * Since: 2.26
 	 */
@@ -402,7 +402,7 @@ public class DBusMessage : ObjectG
 	/**
 	 * Convenience getter for the %G_DBUS_MESSAGE_HEADER_FIELD_MEMBER header field.
 	 *
-	 * Return: The value.
+	 * Returns: The value.
 	 *
 	 * Since: 2.26
 	 */
@@ -414,7 +414,7 @@ public class DBusMessage : ObjectG
 	/**
 	 * Gets the type of @message.
 	 *
-	 * Return: A 8-bit unsigned integer (typically a value from the #GDBusMessageType enumeration).
+	 * Returns: A 8-bit unsigned integer (typically a value from the #GDBusMessageType enumeration).
 	 *
 	 * Since: 2.26
 	 */
@@ -426,7 +426,7 @@ public class DBusMessage : ObjectG
 	/**
 	 * Convenience getter for the %G_DBUS_MESSAGE_HEADER_FIELD_NUM_UNIX_FDS header field.
 	 *
-	 * Return: The value.
+	 * Returns: The value.
 	 *
 	 * Since: 2.26
 	 */
@@ -438,7 +438,7 @@ public class DBusMessage : ObjectG
 	/**
 	 * Convenience getter for the %G_DBUS_MESSAGE_HEADER_FIELD_PATH header field.
 	 *
-	 * Return: The value.
+	 * Returns: The value.
 	 *
 	 * Since: 2.26
 	 */
@@ -450,7 +450,7 @@ public class DBusMessage : ObjectG
 	/**
 	 * Convenience getter for the %G_DBUS_MESSAGE_HEADER_FIELD_REPLY_SERIAL header field.
 	 *
-	 * Return: The value.
+	 * Returns: The value.
 	 *
 	 * Since: 2.26
 	 */
@@ -462,7 +462,7 @@ public class DBusMessage : ObjectG
 	/**
 	 * Convenience getter for the %G_DBUS_MESSAGE_HEADER_FIELD_SENDER header field.
 	 *
-	 * Return: The value.
+	 * Returns: The value.
 	 *
 	 * Since: 2.26
 	 */
@@ -474,7 +474,7 @@ public class DBusMessage : ObjectG
 	/**
 	 * Gets the serial for @message.
 	 *
-	 * Return: A #guint32.
+	 * Returns: A #guint32.
 	 *
 	 * Since: 2.26
 	 */
@@ -486,7 +486,7 @@ public class DBusMessage : ObjectG
 	/**
 	 * Convenience getter for the %G_DBUS_MESSAGE_HEADER_FIELD_SIGNATURE header field.
 	 *
-	 * Return: The value.
+	 * Returns: The value.
 	 *
 	 * Since: 2.26
 	 */
@@ -500,7 +500,7 @@ public class DBusMessage : ObjectG
 	 *
 	 * This method is only available on UNIX.
 	 *
-	 * Return: A #GUnixFDList or %NULL if no file descriptors are
+	 * Returns: A #GUnixFDList or %NULL if no file descriptors are
 	 *     associated. Do not free, this object is owned by @message.
 	 *
 	 * Since: 2.26
@@ -534,7 +534,7 @@ public class DBusMessage : ObjectG
 	 *     errorName = A valid D-Bus error name.
 	 *     errorMessage = The D-Bus error message.
 	 *
-	 * Return: A #GDBusMessage. Free with g_object_unref().
+	 * Returns: A #GDBusMessage. Free with g_object_unref().
 	 *
 	 * Since: 2.26
 	 */
@@ -558,7 +558,7 @@ public class DBusMessage : ObjectG
 	 *     errorMessageFormat = The D-Bus error message in a printf() format.
 	 *     varArgs = Arguments for @error_message_format.
 	 *
-	 * Return: A #GDBusMessage. Free with g_object_unref().
+	 * Returns: A #GDBusMessage. Free with g_object_unref().
 	 *
 	 * Since: 2.26
 	 */
@@ -577,7 +577,7 @@ public class DBusMessage : ObjectG
 	/**
 	 * Creates a new #GDBusMessage that is a reply to @method_call_message.
 	 *
-	 * Return: #GDBusMessage. Free with g_object_unref().
+	 * Returns: #GDBusMessage. Free with g_object_unref().
 	 *
 	 * Since: 2.26
 	 */
@@ -630,7 +630,7 @@ public class DBusMessage : ObjectG
 	 * Params:
 	 *     indent = Indentation level.
 	 *
-	 * Return: A string that should be freed with g_free().
+	 * Returns: A string that should be freed with g_free().
 	 *
 	 * Since: 2.26
 	 */
@@ -868,7 +868,7 @@ public class DBusMessage : ObjectG
 	 * Params:
 	 *     capabilities = A #GDBusCapabilityFlags describing what protocol features are supported.
 	 *
-	 * Return: A pointer to a
+	 * Returns: A pointer to a
 	 *     valid binary D-Bus message of @out_size bytes generated by @message
 	 *     or %NULL if @error is set. Free with g_free().
 	 *
@@ -900,7 +900,7 @@ public class DBusMessage : ObjectG
 	 * %G_DBUS_MESSAGE_HEADER_FIELD_ERROR_NAME header field of @message as
 	 * well as the first string item in @message's body.
 	 *
-	 * Return: %TRUE if @error was set, %FALSE otherwise.
+	 * Returns: %TRUE if @error was set, %FALSE otherwise.
 	 *
 	 * Since: 2.26
 	 *

@@ -57,7 +57,7 @@ public interface HypertextIF{
 	 * Params:
 	 *     linkIndex = an integer specifying the desired link
 	 *
-	 * Return: the link in this hypertext document at
+	 * Returns: the link in this hypertext document at
 	 *     index @link_index
 	 */
 	public Hyperlink getLink(int linkIndex);
@@ -69,7 +69,7 @@ public interface HypertextIF{
 	 * Params:
 	 *     charIndex = a character index
 	 *
-	 * Return: an index into the array of hyperlinks in @hypertext,
+	 * Returns: an index into the array of hyperlinks in @hypertext,
 	 *     or -1 if there is no hyperlink associated with this character.
 	 */
 	public int getLinkIndex(int charIndex);
@@ -77,7 +77,7 @@ public interface HypertextIF{
 	/**
 	 * Gets the number of links within this hypertext document.
 	 *
-	 * Return: the number of links within this hypertext document
+	 * Returns: the number of links within this hypertext document
 	 */
 	public int getNLinks();
 

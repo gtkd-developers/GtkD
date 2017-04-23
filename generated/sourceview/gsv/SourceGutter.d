@@ -89,7 +89,7 @@ public class SourceGutter : ObjectG
 	 *     x = The x position to get identified.
 	 *     y = The y position to get identified.
 	 *
-	 * Return: the renderer at (x, y) or %NULL.
+	 * Returns: the renderer at (x, y) or %NULL.
 	 */
 	public SourceGutterRenderer getRendererAtPos(int x, int y)
 	{
@@ -104,7 +104,7 @@ public class SourceGutter : ObjectG
 	}
 
 	/**
-	 * Return: the associated #GtkSourceView.
+	 * Returns: the associated #GtkSourceView.
 	 *
 	 * Since: 3.24
 	 */
@@ -126,7 +126,7 @@ public class SourceGutter : ObjectG
 	 *
 	 * Deprecated: Use gtk_text_view_get_window() instead.
 	 *
-	 * Return: the #GdkWindow of the gutter, or %NULL
+	 * Returns: the #GdkWindow of the gutter, or %NULL
 	 *     if the gutter has no window.
 	 *
 	 * Since: 2.8
@@ -144,7 +144,7 @@ public class SourceGutter : ObjectG
 	}
 
 	/**
-	 * Return: the #GtkTextWindowType of @gutter.
+	 * Returns: the #GtkTextWindowType of @gutter.
 	 *
 	 * Since: 3.24
 	 */
@@ -162,7 +162,7 @@ public class SourceGutter : ObjectG
 	 *     renderer = a gutter renderer (must inherit from #GtkSourceGutterRenderer).
 	 *     position = the renderer position.
 	 *
-	 * Return: %TRUE if operation succeeded. Otherwise %FALSE.
+	 * Returns: %TRUE if operation succeeded. Otherwise %FALSE.
 	 *
 	 * Since: 3.0
 	 */

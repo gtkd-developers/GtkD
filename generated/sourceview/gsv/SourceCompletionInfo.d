@@ -79,7 +79,7 @@ public class SourceCompletionInfo : Window
 	}
 
 	/**
-	 * Return: a new GtkSourceCompletionInfo.
+	 * Returns: a new GtkSourceCompletionInfo.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -100,7 +100,7 @@ public class SourceCompletionInfo : Window
 	 *
 	 * Deprecated: Use gtk_bin_get_child() instead.
 	 *
-	 * Return: The current content widget.
+	 * Returns: The current content widget.
 	 */
 	public Widget getWidget()
 	{

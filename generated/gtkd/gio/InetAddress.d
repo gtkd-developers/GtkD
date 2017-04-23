@@ -125,7 +125,7 @@ public class InetAddress : ObjectG
 	 *     bytes = raw address data
 	 *     family = the address family of @bytes
 	 *
-	 * Return: a new #GInetAddress corresponding to @family and @bytes.
+	 * Returns: a new #GInetAddress corresponding to @family and @bytes.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Since: 2.22
@@ -150,7 +150,7 @@ public class InetAddress : ObjectG
 	 * Params:
 	 *     str = a string representation of an IP address
 	 *
-	 * Return: a new #GInetAddress corresponding to @string, or %NULL if
+	 * Returns: a new #GInetAddress corresponding to @string, or %NULL if
 	 *     @string could not be parsed.
 	 *     Free the returned object with g_object_unref().
 	 *
@@ -176,7 +176,7 @@ public class InetAddress : ObjectG
 	 * Params:
 	 *     otherAddress = Another #GInetAddress.
 	 *
-	 * Return: %TRUE if @address and @other_address are equal, %FALSE otherwise.
+	 * Returns: %TRUE if @address and @other_address are equal, %FALSE otherwise.
 	 *
 	 * Since: 2.30
 	 */
@@ -188,7 +188,7 @@ public class InetAddress : ObjectG
 	/**
 	 * Gets @address's family
 	 *
-	 * Return: @address's family
+	 * Returns: @address's family
 	 *
 	 * Since: 2.22
 	 */
@@ -200,7 +200,7 @@ public class InetAddress : ObjectG
 	/**
 	 * Tests whether @address is the "any" address for its family.
 	 *
-	 * Return: %TRUE if @address is the "any" address for its family.
+	 * Returns: %TRUE if @address is the "any" address for its family.
 	 *
 	 * Since: 2.22
 	 */
@@ -214,7 +214,7 @@ public class InetAddress : ObjectG
 	 * identifies a host on a local network that is not connected to the
 	 * Internet).
 	 *
-	 * Return: %TRUE if @address is a link-local address.
+	 * Returns: %TRUE if @address is a link-local address.
 	 *
 	 * Since: 2.22
 	 */
@@ -226,7 +226,7 @@ public class InetAddress : ObjectG
 	/**
 	 * Tests whether @address is the loopback address for its family.
 	 *
-	 * Return: %TRUE if @address is the loopback address for its family.
+	 * Returns: %TRUE if @address is the loopback address for its family.
 	 *
 	 * Since: 2.22
 	 */
@@ -238,7 +238,7 @@ public class InetAddress : ObjectG
 	/**
 	 * Tests whether @address is a global multicast address.
 	 *
-	 * Return: %TRUE if @address is a global multicast address.
+	 * Returns: %TRUE if @address is a global multicast address.
 	 *
 	 * Since: 2.22
 	 */
@@ -250,7 +250,7 @@ public class InetAddress : ObjectG
 	/**
 	 * Tests whether @address is a link-local multicast address.
 	 *
-	 * Return: %TRUE if @address is a link-local multicast address.
+	 * Returns: %TRUE if @address is a link-local multicast address.
 	 *
 	 * Since: 2.22
 	 */
@@ -262,7 +262,7 @@ public class InetAddress : ObjectG
 	/**
 	 * Tests whether @address is a node-local multicast address.
 	 *
-	 * Return: %TRUE if @address is a node-local multicast address.
+	 * Returns: %TRUE if @address is a node-local multicast address.
 	 *
 	 * Since: 2.22
 	 */
@@ -274,7 +274,7 @@ public class InetAddress : ObjectG
 	/**
 	 * Tests whether @address is an organization-local multicast address.
 	 *
-	 * Return: %TRUE if @address is an organization-local multicast address.
+	 * Returns: %TRUE if @address is an organization-local multicast address.
 	 *
 	 * Since: 2.22
 	 */
@@ -286,7 +286,7 @@ public class InetAddress : ObjectG
 	/**
 	 * Tests whether @address is a site-local multicast address.
 	 *
-	 * Return: %TRUE if @address is a site-local multicast address.
+	 * Returns: %TRUE if @address is a site-local multicast address.
 	 *
 	 * Since: 2.22
 	 */
@@ -298,7 +298,7 @@ public class InetAddress : ObjectG
 	/**
 	 * Tests whether @address is a multicast address.
 	 *
-	 * Return: %TRUE if @address is a multicast address.
+	 * Returns: %TRUE if @address is a multicast address.
 	 *
 	 * Since: 2.22
 	 */
@@ -313,7 +313,7 @@ public class InetAddress : ObjectG
 	 * not be reached directly from the Internet, but which may have
 	 * outgoing Internet connectivity via a NAT or firewall).
 	 *
-	 * Return: %TRUE if @address is a site-local address.
+	 * Returns: %TRUE if @address is a site-local address.
 	 *
 	 * Since: 2.22
 	 */
@@ -326,7 +326,7 @@ public class InetAddress : ObjectG
 	 * Gets the size of the native raw binary address for @address. This
 	 * is the size of the data that you get from g_inet_address_to_bytes().
 	 *
-	 * Return: the number of bytes used for the native version of @address.
+	 * Returns: the number of bytes used for the native version of @address.
 	 *
 	 * Since: 2.22
 	 */
@@ -338,7 +338,7 @@ public class InetAddress : ObjectG
 	/**
 	 * Gets the raw binary address data from @address.
 	 *
-	 * Return: a pointer to an internal array of the bytes in @address,
+	 * Returns: a pointer to an internal array of the bytes in @address,
 	 *     which should not be modified, stored, or freed. The size of this
 	 *     array can be gotten with g_inet_address_get_native_size().
 	 *
@@ -352,7 +352,7 @@ public class InetAddress : ObjectG
 	/**
 	 * Converts @address to string form.
 	 *
-	 * Return: a representation of @address as a string, which should be
+	 * Returns: a representation of @address as a string, which should be
 	 *     freed after use.
 	 *
 	 * Since: 2.22

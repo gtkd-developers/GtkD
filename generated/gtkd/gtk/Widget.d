@@ -916,7 +916,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Obtains the current default reading direction. See
 		 * gtk_widget_set_default_direction().
 		 *
-		 * Return: the current default direction.
+		 * Returns: the current default direction.
 		 */
 		public static GtkTextDirection getDefaultDirection()
 		{
@@ -930,7 +930,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * gtk_css_provider_get_default() to obtain a #GtkStyleProvider
 		 * with the default widget style information.
 		 *
-		 * Return: the default style. This #GtkStyle
+		 * Returns: the default style. This #GtkStyle
 		 *     object is owned by GTK+ and should not be modified or freed.
 		 */
 		public static Style getDefaultStyle()
@@ -992,7 +992,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * press Enter on a widget during key navigation. If @widget isn't
 		 * activatable, the function returns %FALSE.
 		 *
-		 * Return: %TRUE if the widget was activatable
+		 * Returns: %TRUE if the widget was activatable
 		 */
 		public bool activate()
 		{
@@ -1094,7 +1094,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     userData = data to pass to @callback
 		 *     notify = function to call to free @user_data when the callback is removed.
 		 *
-		 * Return: an id for the connection of this callback. Remove the callback
+		 * Returns: an id for the connection of this callback. Remove the callback
 		 *     by passing it to gtk_widget_remove_tick_callback()
 		 *
 		 * Since: 3.8
@@ -1116,7 +1116,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Params:
 		 *     signalId = the ID of a signal installed on @widget
 		 *
-		 * Return: %TRUE if the accelerator can be activated.
+		 * Returns: %TRUE if the accelerator can be activated.
 		 *
 		 * Since: 2.4
 		 */
@@ -1149,7 +1149,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Params:
 		 *     direction = direction of focus movement
 		 *
-		 * Return: %TRUE if focus ended up inside @widget
+		 * Returns: %TRUE if focus ended up inside @widget
 		 */
 		public bool childFocus(GtkDirectionType direction)
 		{
@@ -1215,7 +1215,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Params:
 		 *     orientation = expand direction
 		 *
-		 * Return: whether widget tree rooted here should be expanded
+		 * Returns: whether widget tree rooted here should be expanded
 		 */
 		public bool computeExpand(GtkOrientation orientation)
 		{
@@ -1227,7 +1227,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * font options, font description, and base direction for drawing
 		 * text for this widget. See also gtk_widget_get_pango_context().
 		 *
-		 * Return: the new #PangoContext
+		 * Returns: the new #PangoContext
 		 */
 		public PgContext createPangoContext()
 		{
@@ -1254,7 +1254,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Params:
 		 *     text = text to set on the layout (can be %NULL)
 		 *
-		 * Return: the new #PangoLayout
+		 * Returns: the new #PangoLayout
 		 */
 		public PgLayout createPangoLayout(string text)
 		{
@@ -1337,7 +1337,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Params:
 		 *     device = a #GdkDevice
 		 *
-		 * Return: %TRUE if there is an ongoing grab on @device
+		 * Returns: %TRUE if there is an ongoing grab on @device
 		 *     by another #GtkWidget than @widget.
 		 *
 		 * Since: 3.0
@@ -1361,7 +1361,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     event = The event that triggered the start of the drag,
 		 *         or %NULL if none can be obtained.
 		 *
-		 * Return: the context for this drag
+		 * Returns: the context for this drag
 		 */
 		public DragContext dragBegin(TargetList targets, GdkDragAction actions, int button, Event event)
 		{
@@ -1416,7 +1416,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *         of @widget. If -1 is passed, the coordinates are retrieved from @event or
 		 *         the current pointer position
 		 *
-		 * Return: the context for this drag
+		 * Returns: the context for this drag
 		 *
 		 * Since: 3.10
 		 */
@@ -1443,7 +1443,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     currentX = current X coordinate
 		 *     currentY = current Y coordinate
 		 *
-		 * Return: %TRUE if the drag threshold has been passed.
+		 * Returns: %TRUE if the drag threshold has been passed.
 		 */
 		public bool dragCheckThreshold(int startX, int startY, int currentX, int currentY)
 		{
@@ -1506,7 +1506,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     targetList = list of droppable targets, or %NULL to use
 		 *         gtk_drag_dest_get_target_list (@widget).
 		 *
-		 * Return: first target that the source offers
+		 * Returns: first target that the source offers
 		 *     and the dest can accept, or %GDK_NONE
 		 */
 		public GdkAtom dragDestFindTarget(DragContext context, TargetList targetList)
@@ -1518,7 +1518,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Returns the list of targets this widget can accept from
 		 * drag-and-drop.
 		 *
-		 * Return: the #GtkTargetList, or %NULL if none
+		 * Returns: the #GtkTargetList, or %NULL if none
 		 */
 		public TargetList dragDestGetTargetList()
 		{
@@ -1536,7 +1536,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Returns whether the widget has been configured to always
 		 * emit #GtkWidget::drag-motion signals.
 		 *
-		 * Return: %TRUE if the widget always emits
+		 * Returns: %TRUE if the widget always emits
 		 *     #GtkWidget::drag-motion events
 		 *
 		 * Since: 2.10
@@ -1742,7 +1742,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Gets the list of targets this widget can provide for
 		 * drag-and-drop.
 		 *
-		 * Return: the #GtkTargetList, or %NULL if none
+		 * Returns: the #GtkTargetList, or %NULL if none
 		 *
 		 * Since: 2.4
 		 */
@@ -1939,7 +1939,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Params:
 		 *     event = a #GdkEvent
 		 *
-		 * Return: return from the event signal emission (%TRUE if
+		 * Returns: return from the event signal emission (%TRUE if
 		 *     the event was handled)
 		 */
 		public bool event(Event event)
@@ -1973,7 +1973,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * [ATK](http://developer.gnome.org/atk/stable/)
 		 * library contains more information about accessible objects and their uses.
 		 *
-		 * Return: the #AtkObject associated with @widget
+		 * Returns: the #AtkObject associated with @widget
 		 */
 		public ObjectAtk getAccessible()
 		{
@@ -1997,7 +1997,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Params:
 		 *     prefix = The “prefix” of the action group.
 		 *
-		 * Return: A #GActionGroup or %NULL.
+		 * Returns: A #GActionGroup or %NULL.
 		 *
 		 * Since: 3.16
 		 */
@@ -2019,7 +2019,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * for the #GtkWidget::draw function, and when allocating child
 		 * widgets in #GtkWidget::size_allocate.
 		 *
-		 * Return: the baseline of the @widget, or -1 if none
+		 * Returns: the baseline of the @widget, or -1 if none
 		 *
 		 * Since: 3.10
 		 */
@@ -2033,7 +2033,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * This function is intended to be used when implementing handlers
 		 * for the #GtkWidget::draw function.
 		 *
-		 * Return: the height of the @widget
+		 * Returns: the height of the @widget
 		 */
 		public int getAllocatedHeight()
 		{
@@ -2067,7 +2067,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * This function is intended to be used when implementing handlers
 		 * for the #GtkWidget::draw function.
 		 *
-		 * Return: the width of the @widget
+		 * Returns: the width of the @widget
 		 */
 		public int getAllocatedWidth()
 		{
@@ -2116,7 +2116,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Params:
 		 *     widgetType = ancestor type
 		 *
-		 * Return: the ancestor widget, or %NULL if not found
+		 * Returns: the ancestor widget, or %NULL if not found
 		 */
 		public Widget getAncestor(GType widgetType)
 		{
@@ -2136,7 +2136,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *
 		 * See gtk_widget_set_app_paintable()
 		 *
-		 * Return: %TRUE if the widget is app paintable
+		 * Returns: %TRUE if the widget is app paintable
 		 *
 		 * Since: 2.18
 		 */
@@ -2149,7 +2149,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Determines whether @widget can be a default widget. See
 		 * gtk_widget_set_can_default().
 		 *
-		 * Return: %TRUE if @widget can be a default widget, %FALSE otherwise
+		 * Returns: %TRUE if @widget can be a default widget, %FALSE otherwise
 		 *
 		 * Since: 2.18
 		 */
@@ -2162,7 +2162,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Determines whether @widget can own the input focus. See
 		 * gtk_widget_set_can_focus().
 		 *
-		 * Return: %TRUE if @widget can own the input focus, %FALSE otherwise
+		 * Returns: %TRUE if @widget can own the input focus, %FALSE otherwise
 		 *
 		 * Since: 2.18
 		 */
@@ -2213,7 +2213,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * This function is only useful for container implementations and
 		 * never should be called by an application.
 		 *
-		 * Return: %TRUE if the widget is mapped with the parent.
+		 * Returns: %TRUE if the widget is mapped with the parent.
 		 */
 		public bool getChildVisible()
 		{
@@ -2252,7 +2252,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *         is %GDK_SELECTION_PRIMARY, which gives
 		 *         the primary X selection.
 		 *
-		 * Return: the appropriate clipboard object. If no
+		 * Returns: the appropriate clipboard object. If no
 		 *     clipboard already exists, a new one will
 		 *     be created. Once a clipboard object has
 		 *     been created, it is persistent for all time.
@@ -2276,7 +2276,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *
 		 * Deprecated: Use gtk_widget_class_set_template(), or don’t use this API at all.
 		 *
-		 * Return: the composite name of @widget, or %NULL if @widget is not
+		 * Returns: the composite name of @widget, or %NULL if @widget is not
 		 *     a composite child. The string should be freed when it is no
 		 *     longer needed.
 		 */
@@ -2295,7 +2295,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Params:
 		 *     device = a #GdkDevice
 		 *
-		 * Return: %TRUE is @device is enabled for @widget
+		 * Returns: %TRUE is @device is enabled for @widget
 		 *
 		 * Since: 3.0
 		 */
@@ -2311,7 +2311,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Params:
 		 *     device = a #GdkDevice
 		 *
-		 * Return: device event mask for @widget
+		 * Returns: device event mask for @widget
 		 *
 		 * Since: 3.0
 		 */
@@ -2324,7 +2324,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Gets the reading direction for a particular widget. See
 		 * gtk_widget_set_direction().
 		 *
-		 * Return: the reading direction for the widget.
+		 * Returns: the reading direction for the widget.
 		 */
 		public GtkTextDirection getDirection()
 		{
@@ -2340,7 +2340,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * resources when a widget has been realized, and you should
 		 * free those resources when the widget is unrealized.
 		 *
-		 * Return: the #GdkDisplay for the toplevel for this widget.
+		 * Returns: the #GdkDisplay for the toplevel for this widget.
 		 *
 		 * Since: 2.2
 		 */
@@ -2361,7 +2361,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *
 		 * See gtk_widget_set_double_buffered()
 		 *
-		 * Return: %TRUE if the widget is double buffered
+		 * Returns: %TRUE if the widget is double buffered
 		 *
 		 * Since: 2.18
 		 */
@@ -2379,7 +2379,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * event mask necessary to cater for every #GtkEventController created for the
 		 * widget.
 		 *
-		 * Return: event mask for @widget
+		 * Returns: event mask for @widget
 		 */
 		public int getEvents()
 		{
@@ -2390,7 +2390,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Returns whether the widget should grab focus when it is clicked with the mouse.
 		 * See gtk_widget_set_focus_on_click().
 		 *
-		 * Return: %TRUE if the widget should grab focus when it is clicked with
+		 * Returns: %TRUE if the widget should grab focus when it is clicked with
 		 *     the mouse.
 		 *
 		 * Since: 3.20
@@ -2403,7 +2403,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		/**
 		 * Gets the font map that has been set with gtk_widget_set_font_map().
 		 *
-		 * Return: A #PangoFontMap, or %NULL
+		 * Returns: A #PangoFontMap, or %NULL
 		 *
 		 * Since: 3.18
 		 */
@@ -2423,7 +2423,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Returns the #cairo_font_options_t used for Pango rendering. When not set,
 		 * the defaults font options for the #GdkScreen will be used.
 		 *
-		 * Return: the #cairo_font_options_t or %NULL if not set
+		 * Returns: the #cairo_font_options_t or %NULL if not set
 		 *
 		 * Since: 3.18
 		 */
@@ -2462,7 +2462,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *
 		 * Unrealized widgets do not have a frame clock.
 		 *
-		 * Return: a #GdkFrameClock,
+		 * Returns: a #GdkFrameClock,
 		 *     or #NULL if widget is unrealized
 		 *
 		 * Since: 3.8
@@ -2487,7 +2487,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * %GTK_ALIGN_FILL. Baselines are not supported for horizontal
 		 * alignment.
 		 *
-		 * Return: the horizontal alignment of @widget
+		 * Returns: the horizontal alignment of @widget
 		 */
 		public GtkAlign getHalign()
 		{
@@ -2498,7 +2498,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Returns the current value of the has-tooltip property.  See
 		 * #GtkWidget:has-tooltip for more information.
 		 *
-		 * Return: current value of has-tooltip on @widget.
+		 * Returns: current value of has-tooltip on @widget.
 		 *
 		 * Since: 2.12
 		 */
@@ -2511,7 +2511,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Determines whether @widget has a #GdkWindow of its own. See
 		 * gtk_widget_set_has_window().
 		 *
-		 * Return: %TRUE if @widget has a window, %FALSE otherwise
+		 * Returns: %TRUE if @widget has a window, %FALSE otherwise
 		 *
 		 * Since: 2.18
 		 */
@@ -2536,7 +2536,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * than computing whether the entire widget tree rooted at this widget
 		 * wants to expand.
 		 *
-		 * Return: whether hexpand flag is set
+		 * Returns: whether hexpand flag is set
 		 */
 		public bool getHexpand()
 		{
@@ -2555,7 +2555,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * There are few reasons to use this function, but it’s here
 		 * for completeness and consistency.
 		 *
-		 * Return: whether hexpand has been explicitly set
+		 * Returns: whether hexpand has been explicitly set
 		 */
 		public bool getHexpandSet()
 		{
@@ -2565,7 +2565,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		/**
 		 * Whether the widget is mapped.
 		 *
-		 * Return: %TRUE if the widget is mapped, %FALSE otherwise.
+		 * Returns: %TRUE if the widget is mapped, %FALSE otherwise.
 		 *
 		 * Since: 2.20
 		 */
@@ -2577,7 +2577,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		/**
 		 * Gets the value of the #GtkWidget:margin-bottom property.
 		 *
-		 * Return: The bottom margin of @widget
+		 * Returns: The bottom margin of @widget
 		 *
 		 * Since: 3.0
 		 */
@@ -2589,7 +2589,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		/**
 		 * Gets the value of the #GtkWidget:margin-end property.
 		 *
-		 * Return: The end margin of @widget
+		 * Returns: The end margin of @widget
 		 *
 		 * Since: 3.12
 		 */
@@ -2603,7 +2603,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *
 		 * Deprecated: Use gtk_widget_get_margin_start() instead.
 		 *
-		 * Return: The left margin of @widget
+		 * Returns: The left margin of @widget
 		 *
 		 * Since: 3.0
 		 */
@@ -2617,7 +2617,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *
 		 * Deprecated: Use gtk_widget_get_margin_end() instead.
 		 *
-		 * Return: The right margin of @widget
+		 * Returns: The right margin of @widget
 		 *
 		 * Since: 3.0
 		 */
@@ -2629,7 +2629,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		/**
 		 * Gets the value of the #GtkWidget:margin-start property.
 		 *
-		 * Return: The start margin of @widget
+		 * Returns: The start margin of @widget
 		 *
 		 * Since: 3.12
 		 */
@@ -2641,7 +2641,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		/**
 		 * Gets the value of the #GtkWidget:margin-top property.
 		 *
-		 * Return: The top margin of @widget
+		 * Returns: The top margin of @widget
 		 *
 		 * Since: 3.0
 		 */
@@ -2659,7 +2659,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Params:
 		 *     intent = the use case for the modifier mask
 		 *
-		 * Return: the modifier mask used for @intent.
+		 * Returns: the modifier mask used for @intent.
 		 *
 		 * Since: 3.4
 		 */
@@ -2684,7 +2684,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *
 		 * Deprecated: Use #GtkStyleContext with a custom #GtkStyleProvider instead
 		 *
-		 * Return: the modifier style for the widget.
+		 * Returns: the modifier style for the widget.
 		 *     This rc style is owned by the widget. If you want to keep a
 		 *     pointer to value this around, you must add a refcount using
 		 *     g_object_ref().
@@ -2705,7 +2705,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Retrieves the name of a widget. See gtk_widget_set_name() for the
 		 * significance of widget names.
 		 *
-		 * Return: name of the widget. This string is owned by GTK+ and
+		 * Returns: name of the widget. This string is owned by GTK+ and
 		 *     should not be modified or freed
 		 */
 		public string getName()
@@ -2718,7 +2718,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * which determines whether calls to gtk_widget_show_all()
 		 * will affect this widget.
 		 *
-		 * Return: the current value of the “no-show-all” property.
+		 * Returns: the current value of the “no-show-all” property.
 		 *
 		 * Since: 2.4
 		 */
@@ -2731,7 +2731,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Fetches the requested opacity for this widget.
 		 * See gtk_widget_set_opacity().
 		 *
-		 * Return: the requested opacity for this widget.
+		 * Returns: the requested opacity for this widget.
 		 *
 		 * Since: 3.8
 		 */
@@ -2749,7 +2749,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * match any changes to the widget’s attributes. This can be tracked
 		 * by using the #GtkWidget::screen-changed signal on the widget.
 		 *
-		 * Return: the #PangoContext for the widget.
+		 * Returns: the #PangoContext for the widget.
 		 */
 		public PgContext getPangoContext()
 		{
@@ -2766,7 +2766,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		/**
 		 * Returns the parent container of @widget.
 		 *
-		 * Return: the parent container of @widget, or %NULL
+		 * Returns: the parent container of @widget, or %NULL
 		 */
 		public Widget getParent()
 		{
@@ -2783,7 +2783,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		/**
 		 * Gets @widget’s parent window.
 		 *
-		 * Return: the parent window of @widget.
+		 * Returns: the parent window of @widget.
 		 */
 		public GdkWin getParentWindow()
 		{
@@ -2802,7 +2802,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * is not connected to a toplevel widget, a partial path will be
 		 * created.
 		 *
-		 * Return: The #GtkWidgetPath representing @widget
+		 * Returns: The #GtkWidgetPath representing @widget
 		 */
 		public WidgetPath getPath()
 		{
@@ -2984,7 +2984,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		/**
 		 * Determines whether @widget is realized.
 		 *
-		 * Return: %TRUE if @widget is realized, %FALSE otherwise
+		 * Returns: %TRUE if @widget is realized, %FALSE otherwise
 		 *
 		 * Since: 2.20
 		 */
@@ -3000,7 +3000,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *
 		 * See gtk_widget_set_receives_default().
 		 *
-		 * Return: %TRUE if @widget acts as the default widget when focused,
+		 * Returns: %TRUE if @widget acts as the default widget when focused,
 		 *     %FALSE otherwise
 		 *
 		 * Since: 2.18
@@ -3019,7 +3019,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * context of their children or in context of their allocation
 		 * capabilities.
 		 *
-		 * Return: The #GtkSizeRequestMode preferred by @widget.
+		 * Returns: The #GtkSizeRequestMode preferred by @widget.
 		 *
 		 * Since: 3.0
 		 */
@@ -3068,7 +3068,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *
 		 * Deprecated: Use gdk_screen_get_root_window() instead
 		 *
-		 * Return: the #GdkWindow root window for the toplevel for this widget.
+		 * Returns: the #GdkWindow root window for the toplevel for this widget.
 		 *
 		 * Since: 2.2
 		 */
@@ -3091,7 +3091,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *
 		 * See gdk_window_get_scale_factor().
 		 *
-		 * Return: the scale factor for @widget
+		 * Returns: the scale factor for @widget
 		 *
 		 * Since: 3.10
 		 */
@@ -3110,7 +3110,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * resources when a widget has been realized, and you should
 		 * free those resources when the widget is unrealized.
 		 *
-		 * Return: the #GdkScreen for the toplevel for this widget.
+		 * Returns: the #GdkScreen for the toplevel for this widget.
 		 *
 		 * Since: 2.2
 		 */
@@ -3133,7 +3133,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * The effective sensitivity of a widget is however determined by both its
 		 * own and its parent widget’s sensitivity. See gtk_widget_is_sensitive().
 		 *
-		 * Return: %TRUE if the widget is sensitive
+		 * Returns: %TRUE if the widget is sensitive
 		 *
 		 * Since: 2.18
 		 */
@@ -3149,7 +3149,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * is attached to a toplevel, since the settings object is specific
 		 * to a particular #GdkScreen.
 		 *
-		 * Return: the relevant #GtkSettings object
+		 * Returns: the relevant #GtkSettings object
 		 */
 		public Settings getSettings()
 		{
@@ -3191,7 +3191,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * #GtkStateFlags to pass to a #GtkStyleContext method, you
 		 * should look at gtk_style_context_get_state().
 		 *
-		 * Return: The state flags for widget
+		 * Returns: The state flags for widget
 		 *
 		 * Since: 3.0
 		 */
@@ -3205,7 +3205,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *
 		 * Deprecated: Use #GtkStyleContext instead
 		 *
-		 * Return: the widget’s #GtkStyle
+		 * Returns: the widget’s #GtkStyle
 		 */
 		public Style getStyle()
 		{
@@ -3223,7 +3223,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Returns the style context associated to @widget. The returned object is
 		 * guaranteed to be the same for the lifetime of @widget.
 		 *
-		 * Return: a #GtkStyleContext. This memory is owned by @widget and
+		 * Returns: a #GtkStyleContext. This memory is owned by @widget and
 		 *     must not be freed.
 		 */
 		public StyleContext getStyleContext()
@@ -3242,7 +3242,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Returns %TRUE if @widget is multiple pointer aware. See
 		 * gtk_widget_set_support_multidevice() for more information.
 		 *
-		 * Return: %TRUE if @widget is multidevice aware.
+		 * Returns: %TRUE if @widget is multidevice aware.
 		 */
 		public bool getSupportMultidevice()
 		{
@@ -3264,7 +3264,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     widgetType = The #GType to get a template child for
 		 *     name = The “id” of the child defined in the template XML
 		 *
-		 * Return: The object built in the template XML with the id @name
+		 * Returns: The object built in the template XML with the id @name
 		 */
 		public ObjectG getTemplateChild(GType widgetType, string name)
 		{
@@ -3281,7 +3281,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		/**
 		 * Gets the contents of the tooltip for @widget.
 		 *
-		 * Return: the tooltip text, or %NULL. You should free the
+		 * Returns: the tooltip text, or %NULL. You should free the
 		 *     returned string with g_free() when done.
 		 *
 		 * Since: 2.12
@@ -3297,7 +3297,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		/**
 		 * Gets the contents of the tooltip for @widget.
 		 *
-		 * Return: the tooltip text, or %NULL. You should free the
+		 * Returns: the tooltip text, or %NULL. You should free the
 		 *     returned string with g_free() when done.
 		 *
 		 * Since: 2.12
@@ -3315,7 +3315,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * GtkWindow created by default, or the custom tooltip window set
 		 * using gtk_widget_set_tooltip_window().
 		 *
-		 * Return: The #GtkWindow of the current tooltip.
+		 * Returns: The #GtkWindow of the current tooltip.
 		 *
 		 * Since: 2.12
 		 */
@@ -3357,7 +3357,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * }
 		 * ]|
 		 *
-		 * Return: the topmost ancestor of @widget, or @widget itself
+		 * Returns: the topmost ancestor of @widget, or @widget itself
 		 *     if there’s no ancestor.
 		 */
 		public Widget getToplevel()
@@ -3382,7 +3382,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * `g_object_get (widget, "valign", &value, NULL)`, which will
 		 * also report the true value.
 		 *
-		 * Return: the vertical alignment of @widget, ignoring baseline alignment
+		 * Returns: the vertical alignment of @widget, ignoring baseline alignment
 		 */
 		public GtkAlign getValign()
 		{
@@ -3393,7 +3393,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Gets the value of the #GtkWidget:valign property, including
 		 * %GTK_ALIGN_BASELINE.
 		 *
-		 * Return: the vertical alignment of @widget
+		 * Returns: the vertical alignment of @widget
 		 *
 		 * Since: 3.10
 		 */
@@ -3408,7 +3408,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *
 		 * See gtk_widget_get_hexpand() for more detail.
 		 *
-		 * Return: whether vexpand flag is set
+		 * Returns: whether vexpand flag is set
 		 */
 		public bool getVexpand()
 		{
@@ -3421,7 +3421,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *
 		 * See gtk_widget_get_hexpand_set() for more detail.
 		 *
-		 * Return: whether vexpand has been explicitly set
+		 * Returns: whether vexpand has been explicitly set
 		 */
 		public bool getVexpandSet()
 		{
@@ -3437,7 +3437,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *
 		 * See gtk_widget_set_visible().
 		 *
-		 * Return: %TRUE if the widget is visible
+		 * Returns: %TRUE if the widget is visible
 		 *
 		 * Since: 2.18
 		 */
@@ -3449,7 +3449,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		/**
 		 * Gets the visual that will be used to render @widget.
 		 *
-		 * Return: the visual for @widget
+		 * Returns: the visual for @widget
 		 */
 		public Visual getVisual()
 		{
@@ -3466,7 +3466,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		/**
 		 * Returns the widget’s window if it is realized, %NULL otherwise
 		 *
-		 * Return: @widget’s window.
+		 * Returns: @widget’s window.
 		 *
 		 * Since: 2.14
 		 */
@@ -3546,7 +3546,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Determines whether @widget is the current default widget within its
 		 * toplevel. See gtk_widget_set_can_default().
 		 *
-		 * Return: %TRUE if @widget is the current default widget within
+		 * Returns: %TRUE if @widget is the current default widget within
 		 *     its toplevel, %FALSE otherwise
 		 *
 		 * Since: 2.18
@@ -3561,7 +3561,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * gtk_widget_is_focus() for the difference between having the global
 		 * input focus, and only having the focus within a toplevel.
 		 *
-		 * Return: %TRUE if the widget has the global input focus.
+		 * Returns: %TRUE if the widget has the global input focus.
 		 *
 		 * Since: 2.18
 		 */
@@ -3576,7 +3576,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *
 		 * See also gtk_grab_add().
 		 *
-		 * Return: %TRUE if the widget is in the grab_widgets stack
+		 * Returns: %TRUE if the widget is in the grab_widgets stack
 		 *
 		 * Since: 2.18
 		 */
@@ -3590,7 +3590,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *
 		 * Deprecated: Use #GtkStyleContext instead
 		 *
-		 * Return: %TRUE if the widget has been looked up through the rc
+		 * Returns: %TRUE if the widget has been looked up through the rc
 		 *     mechanism, %FALSE otherwise.
 		 *
 		 * Since: 2.20
@@ -3606,7 +3606,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * screen, and all widgets added into a hierarchy with a toplevel
 		 * window at the top.
 		 *
-		 * Return: %TRUE if there is a #GdkScreen associated
+		 * Returns: %TRUE if there is a #GdkScreen associated
 		 *     with the widget.
 		 *
 		 * Since: 2.2
@@ -3627,7 +3627,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * To find out if the widget has the global input focus, use
 		 * gtk_widget_has_focus().
 		 *
-		 * Return: %TRUE if the widget should display a “focus rectangle”
+		 * Returns: %TRUE if the widget should display a “focus rectangle”
 		 *
 		 * Since: 3.2
 		 */
@@ -3654,7 +3654,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * the window. By default, GTK+ destroys windows when ::delete-event
 		 * is received.
 		 *
-		 * Return: %TRUE
+		 * Returns: %TRUE
 		 */
 		public bool hideOnDelete()
 		{
@@ -3666,7 +3666,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * This information can sometimes be used to avoid doing
 		 * unnecessary work.
 		 *
-		 * Return: %TRUE if @widget is being destroyed
+		 * Returns: %TRUE if @widget is being destroyed
 		 */
 		public bool inDestruction()
 		{
@@ -3743,7 +3743,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     area = a rectangle
 		 *     intersection = rectangle to store intersection of @widget and @area
 		 *
-		 * Return: %TRUE if there was an intersection
+		 * Returns: %TRUE if there was an intersection
 		 */
 		public bool intersect(GdkRectangle* area, GdkRectangle* intersection)
 		{
@@ -3757,7 +3757,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Params:
 		 *     ancestor = another #GtkWidget
 		 *
-		 * Return: %TRUE if @ancestor contains @widget as a child,
+		 * Returns: %TRUE if @ancestor contains @widget as a child,
 		 *     grandchild, great grandchild, etc.
 		 */
 		public bool isAncestor(Widget ancestor)
@@ -3776,7 +3776,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *
 		 * Deprecated: Use gdk_screen_is_composited() instead.
 		 *
-		 * Return: %TRUE if the widget can rely on its alpha
+		 * Returns: %TRUE if the widget can rely on its alpha
 		 *     channel being drawn correctly.
 		 *
 		 * Since: 2.10
@@ -3790,7 +3790,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Determines whether @widget can be drawn to. A widget can be drawn
 		 * to if it is mapped and visible.
 		 *
-		 * Return: %TRUE if @widget is drawable, %FALSE otherwise
+		 * Returns: %TRUE if @widget is drawable, %FALSE otherwise
 		 *
 		 * Since: 2.18
 		 */
@@ -3805,7 +3805,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * necessarily set; #GtkWidget:has-focus will only be set if the
 		 * toplevel widget additionally has the global input focus.)
 		 *
-		 * Return: %TRUE if the widget is the focus widget.
+		 * Returns: %TRUE if the widget is the focus widget.
 		 */
 		public bool isFocus()
 		{
@@ -3816,7 +3816,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Returns the widget’s effective sensitivity, which means
 		 * it is sensitive itself and also its parent widget is sensitive
 		 *
-		 * Return: %TRUE if the widget is effectively sensitive
+		 * Returns: %TRUE if the widget is effectively sensitive
 		 *
 		 * Since: 2.18
 		 */
@@ -3832,7 +3832,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * #GtkPlugs) are toplevel widgets. Toplevel widgets have no parent
 		 * widget.
 		 *
-		 * Return: %TRUE if @widget is a toplevel, %FALSE otherwise
+		 * Returns: %TRUE if @widget is a toplevel, %FALSE otherwise
 		 *
 		 * Since: 2.18
 		 */
@@ -3849,7 +3849,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *
 		 * See also gtk_widget_get_visible() and gtk_widget_set_visible()
 		 *
-		 * Return: %TRUE if the widget and all its parents are visible
+		 * Returns: %TRUE if the widget and all its parents are visible
 		 *
 		 * Since: 3.8
 		 */
@@ -3890,7 +3890,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Params:
 		 *     direction = direction of focus movement
 		 *
-		 * Return: %TRUE if stopping keyboard navigation is fine, %FALSE
+		 * Returns: %TRUE if stopping keyboard navigation is fine, %FALSE
 		 *     if the emitting widget should try to handle the keyboard
 		 *     navigation attempt in its parent container(s).
 		 *
@@ -3909,7 +3909,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * #GtkAccelGroup of a closure which can be found out with
 		 * gtk_accel_group_from_accel_closure().
 		 *
-		 * Return: a newly allocated #GList of closures
+		 * Returns: a newly allocated #GList of closures
 		 */
 		public ListG listAccelClosures()
 		{
@@ -3927,7 +3927,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Retrieves a %NULL-terminated array of strings containing the prefixes of
 		 * #GActionGroup's available to @widget.
 		 *
-		 * Return: a %NULL-terminated array of strings.
+		 * Returns: a %NULL-terminated array of strings.
 		 *
 		 * Since: 3.16
 		 */
@@ -3948,7 +3948,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * (GFunc)g_object_ref, NULL)` first, and then unref all the
 		 * widgets afterwards.
 		 *
-		 * Return: the list of
+		 * Returns: the list of
 		 *     mnemonic labels; free this list
 		 *     with g_list_free() when you are done with it.
 		 *
@@ -3981,7 +3981,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Params:
 		 *     groupCycling = %TRUE if there are other widgets with the same mnemonic
 		 *
-		 * Return: %TRUE if the signal has been handled
+		 * Returns: %TRUE if the signal has been handled
 		 */
 		public bool mnemonicActivate(bool groupCycling)
 		{
@@ -4486,7 +4486,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *         for widgets which return %FALSE from gtk_widget_get_has_window();
 		 *         relative to the parent window of @widget->window otherwise.
 		 *
-		 * Return: A newly allocated region holding the intersection of @widget
+		 * Returns: A newly allocated region holding the intersection of @widget
 		 *     and @region.
 		 */
 		public Region regionIntersect(Region region)
@@ -4530,7 +4530,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     accelKey = GDK keyval of the accelerator
 		 *     accelMods = modifier key combination of the accelerator
 		 *
-		 * Return: whether an accelerator was installed and could be removed
+		 * Returns: whether an accelerator was installed and could be removed
 		 */
 		public bool removeAccelerator(AccelGroup accelGroup, uint accelKey, GdkModifierType accelMods)
 		{
@@ -4590,7 +4590,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *         multiple source sizes, GTK+ picks one of the available sizes).
 		 *     detail = render detail to pass to theme engine
 		 *
-		 * Return: a new pixbuf, or %NULL if the
+		 * Returns: a new pixbuf, or %NULL if the
 		 *     stock ID wasn’t known
 		 */
 		public Pixbuf renderIcon(string stockId, GtkIconSize size, string detail)
@@ -4624,7 +4624,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *         means render at the size of the source and don’t scale (if there are
 		 *         multiple source sizes, GTK+ picks one of the available sizes).
 		 *
-		 * Return: a new pixbuf, or %NULL if the
+		 * Returns: a new pixbuf, or %NULL if the
 		 *     stock ID wasn’t known
 		 *
 		 * Since: 3.0
@@ -4702,7 +4702,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Params:
 		 *     event = a expose #GdkEvent
 		 *
-		 * Return: return from the event signal emission (%TRUE if
+		 * Returns: return from the event signal emission (%TRUE if
 		 *     the event was handled)
 		 */
 		public int sendExpose(Event event)
@@ -4738,7 +4738,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Params:
 		 *     event = a #GdkEvent of type GDK_FOCUS_CHANGE
 		 *
-		 * Return: the return value from the event signal emission: %TRUE
+		 * Returns: the return value from the event signal emission: %TRUE
 		 *     if the event was handled, and %FALSE otherwise
 		 *
 		 * Since: 2.20
@@ -5927,7 +5927,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     destX = location to store X position relative to @dest_widget
 		 *     destY = location to store Y position relative to @dest_widget
 		 *
-		 * Return: %FALSE if either widget was not realized, or there
+		 * Returns: %FALSE if either widget was not realized, or there
 		 *     was no common ancestor. In this case, nothing is stored in
 		 *     *@dest_x and *@dest_y. Otherwise %TRUE.
 		 */
@@ -6096,7 +6096,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     event = the #GdkEventButton which triggered
 		 *         this signal.
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnButtonPress(bool delegate(GdkEventButton*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -6162,7 +6162,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     event = the #GdkEventButton which triggered
 		 *         this signal.
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnButtonPress(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -6228,7 +6228,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     event = the #GdkEventButton which triggered
 		 *         this signal.
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnButtonRelease(bool delegate(GdkEventButton*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -6294,7 +6294,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     event = the #GdkEventButton which triggered
 		 *         this signal.
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnButtonRelease(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -6357,7 +6357,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Params:
 		 *     signalId = the ID of a signal installed on @widget
 		 *
-		 * Return: %TRUE if the signal can be activated.
+		 * Returns: %TRUE if the signal can be activated.
 		 */
 		gulong addOnCanActivateAccel(bool delegate(uint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
@@ -6533,7 +6533,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     event = the #GdkEventConfigure which triggered
 		 *         this signal.
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnConfigure(bool delegate(GdkEventConfigure*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -6597,7 +6597,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     event = the #GdkEventConfigure which triggered
 		 *         this signal.
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnConfigure(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -6657,7 +6657,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Params:
 		 *     event = the #GdkEventExpose event
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 *
 		 * Since: 2.14
@@ -6719,7 +6719,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Params:
 		 *     event = the #GdkEventExpose event
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 *
 		 * Since: 2.14
@@ -6783,7 +6783,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Params:
 		 *     event = the event which triggered this signal
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnDelete(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -6904,7 +6904,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Params:
 		 *     event = the event which triggered this signal
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnDestroyEvent(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -7332,7 +7332,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     y = the y coordinate of the current cursor position
 		 *     time = the timestamp of the motion event
 		 *
-		 * Return: whether the cursor position is in a drop zone
+		 * Returns: whether the cursor position is in a drop zone
 		 */
 		gulong addOnDragDrop(bool delegate(DragContext, int, int, uint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
@@ -7451,7 +7451,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     context = the drag context
 		 *     result = the result of the drag operation
 		 *
-		 * Return: %TRUE if the failed drag operation has been already handled.
+		 * Returns: %TRUE if the failed drag operation has been already handled.
 		 *
 		 * Since: 2.12
 		 */
@@ -7662,7 +7662,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     y = the y coordinate of the current cursor position
 		 *     time = the timestamp of the motion event
 		 *
-		 * Return: whether the cursor position is in a drop zone
+		 * Returns: whether the cursor position is in a drop zone
 		 */
 		gulong addOnDragMotion(bool delegate(DragContext, int, int, uint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
@@ -7726,7 +7726,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     event = the #GdkEventCrossing which triggered
 		 *         this signal.
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnEnterNotify(bool delegate(GdkEventCrossing*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -7792,7 +7792,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     event = the #GdkEventCrossing which triggered
 		 *         this signal.
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnEnterNotify(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -7855,7 +7855,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Params:
 		 *     event = the #GdkEvent which triggered this signal
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event
+		 * Returns: %TRUE to stop other handlers from being invoked for the event
 		 *     and to cancel the emission of the second specific ::event signal.
 		 *     %FALSE to propagate the event further and to allow the emission of
 		 *     the second signal. The ::event-after signal is emitted regardless of
@@ -7968,7 +7968,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		}
 
 		/**
-		 * Return: %TRUE to stop other handlers from being invoked for the event. %FALSE to propagate the event further.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event. %FALSE to propagate the event further.
 		 */
 		gulong addOnFocus(bool delegate(GtkDirectionType, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
@@ -8030,7 +8030,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     event = the #GdkEventFocus which triggered
 		 *         this signal.
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnFocusIn(bool delegate(GdkEventFocus*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -8094,7 +8094,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     event = the #GdkEventFocus which triggered
 		 *         this signal.
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnFocusIn(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -8158,7 +8158,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     event = the #GdkEventFocus which triggered this
 		 *         signal.
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnFocusOut(bool delegate(GdkEventFocus*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -8222,7 +8222,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     event = the #GdkEventFocus which triggered this
 		 *         signal.
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnFocusOut(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -8286,7 +8286,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Params:
 		 *     event = the #GdkEventGrabBroken event
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for
+		 * Returns: %TRUE to stop other handlers from being invoked for
 		 *     the event. %FALSE to propagate the event further.
 		 *
 		 * Since: 2.8
@@ -8351,7 +8351,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Params:
 		 *     event = the #GdkEventGrabBroken event
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for
+		 * Returns: %TRUE to stop other handlers from being invoked for
 		 *     the event. %FALSE to propagate the event further.
 		 *
 		 * Since: 2.8
@@ -8643,7 +8643,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Params:
 		 *     event = the #GdkEventKey which triggered this signal.
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnKeyPress(bool delegate(GdkEventKey*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -8708,7 +8708,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Params:
 		 *     event = the #GdkEventKey which triggered this signal.
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnKeyPress(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -8772,7 +8772,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Params:
 		 *     event = the #GdkEventKey which triggered this signal.
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnKeyRelease(bool delegate(GdkEventKey*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -8836,7 +8836,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Params:
 		 *     event = the #GdkEventKey which triggered this signal.
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnKeyRelease(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -8896,7 +8896,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Params:
 		 *     direction = the direction of movement
 		 *
-		 * Return: %TRUE if stopping keyboard navigation is fine, %FALSE
+		 * Returns: %TRUE if stopping keyboard navigation is fine, %FALSE
 		 *     if the emitting widget should try to handle the keyboard
 		 *     navigation attempt in its parent container(s).
 		 *
@@ -8964,7 +8964,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     event = the #GdkEventCrossing which triggered
 		 *         this signal.
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnLeaveNotify(bool delegate(GdkEventCrossing*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -9030,7 +9030,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     event = the #GdkEventCrossing which triggered
 		 *         this signal.
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnLeaveNotify(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -9154,7 +9154,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Params:
 		 *     event = the #GdkEventAny which triggered this signal.
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnMapEvent(bool delegate(GdkEventAny*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -9217,7 +9217,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Params:
 		 *     event = the #GdkEventAny which triggered this signal.
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnMapEvent(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -9276,7 +9276,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Params:
 		 *     groupCycling = %TRUE if there are other widgets with the same mnemonic
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnMnemonicActivate(bool delegate(bool, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -9341,7 +9341,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     event = the #GdkEventMotion which triggered
 		 *         this signal.
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnMotionNotify(bool delegate(GdkEventMotion*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -9407,7 +9407,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     event = the #GdkEventMotion which triggered
 		 *         this signal.
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnMotionNotify(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -9576,7 +9576,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * [Popup Menu Migration Checklist][checklist-popup-menu]
 		 * for an example of how to use this signal.
 		 *
-		 * Return: %TRUE if a menu was activated
+		 * Returns: %TRUE if a menu was activated
 		 */
 		gulong addOnPopupMenu(bool delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
@@ -9638,7 +9638,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     event = the #GdkEventProperty which triggered
 		 *         this signal.
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnPropertyNotify(bool delegate(GdkEventProperty*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -9702,7 +9702,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     event = the #GdkEventProperty which triggered
 		 *         this signal.
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnPropertyNotify(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -9765,7 +9765,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     event = the #GdkEventProximity which triggered
 		 *         this signal.
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnProximityIn(bool delegate(GdkEventProximity*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -9828,7 +9828,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     event = the #GdkEventProximity which triggered
 		 *         this signal.
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnProximityIn(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -9891,7 +9891,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     event = the #GdkEventProximity which triggered
 		 *         this signal.
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnProximityOut(bool delegate(GdkEventProximity*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -9954,7 +9954,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     event = the #GdkEventProximity which triggered
 		 *         this signal.
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnProximityOut(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -10029,7 +10029,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     keyboardMode = %TRUE if the tooltip was triggered using the keyboard
 		 *     tooltip = a #GtkTooltip
 		 *
-		 * Return: %TRUE if @tooltip should be shown right now, %FALSE otherwise.
+		 * Returns: %TRUE if @tooltip should be shown right now, %FALSE otherwise.
 		 *
 		 * Since: 2.12
 		 */
@@ -10207,7 +10207,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     event = the #GdkEventScroll which triggered
 		 *         this signal.
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnScroll(bool delegate(GdkEventScroll*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -10274,7 +10274,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     event = the #GdkEventScroll which triggered
 		 *         this signal.
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnScroll(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -10335,7 +10335,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     event = the #GdkEventSelection which triggered
 		 *         this signal.
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnSelectionClear(bool delegate(GdkEventSelection*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -10395,7 +10395,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     event = the #GdkEventSelection which triggered
 		 *         this signal.
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnSelectionClear(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -10498,7 +10498,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		}
 
 		/**
-		 * Return: %TRUE to stop other handlers from being invoked for the event. %FALSE to propagate the event further.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event. %FALSE to propagate the event further.
 		 */
 		gulong addOnSelectionNotify(bool delegate(GdkEventSelection*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
@@ -10550,7 +10550,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		}
 		
 		/**
-		 * Return: %TRUE to stop other handlers from being invoked for the event. %FALSE to propagate the event further.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event. %FALSE to propagate the event further.
 		 */
 		gulong addOnSelectionNotify(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
@@ -10660,7 +10660,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     event = the #GdkEventSelection which triggered
 		 *         this signal.
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnSelectionRequest(bool delegate(GdkEventSelection*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -10721,7 +10721,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     event = the #GdkEventSelection which triggered
 		 *         this signal.
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnSelectionRequest(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -10827,7 +10827,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		}
 
 		/**
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnShowHelp(bool delegate(GtkWidgetHelpType, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -11286,7 +11286,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Params:
 		 *     event = the #GdkEventAny which triggered this signal
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnUnmapEvent(bool delegate(GdkEventAny*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -11349,7 +11349,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Params:
 		 *     event = the #GdkEventAny which triggered this signal
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnUnmapEvent(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -11472,7 +11472,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     event = the #GdkEventVisibility which
 		 *         triggered this signal.
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnVisibilityNotify(bool delegate(GdkEventVisibility*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -11541,7 +11541,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     event = the #GdkEventVisibility which
 		 *         triggered this signal.
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the event.
+		 * Returns: %TRUE to stop other handlers from being invoked for the event.
 		 *     %FALSE to propagate the event further.
 		 */
 		gulong addOnVisibilityNotify(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -11606,7 +11606,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     event = the #GdkEventWindowState which
 		 *         triggered this signal.
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the
+		 * Returns: %TRUE to stop other handlers from being invoked for the
 		 *     event. %FALSE to propagate the event further.
 		 */
 		gulong addOnWindowState(bool delegate(GdkEventWindowState*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -11670,7 +11670,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     event = the #GdkEventWindowState which
 		 *         triggered this signal.
 		 *
-		 * Return: %TRUE to stop other handlers from being invoked for the
+		 * Returns: %TRUE to stop other handlers from being invoked for the
 		 *     event. %FALSE to propagate the event further.
 		 */
 		gulong addOnWindowState(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -11712,7 +11712,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     window = the window to check. @window may not be an input-only
 		 *         window.
 		 *
-		 * Return: %TRUE if @window should be drawn
+		 * Returns: %TRUE if @window should be drawn
 		 *
 		 * Since: 3.0
 		 */
@@ -11759,7 +11759,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     sizes = An array of structs with a client pointer and a minimum/natural size
 		 *         in the orientation of the allocation.
 		 *
-		 * Return: The remainder of @extra_space after redistributing space
+		 * Returns: The remainder of @extra_space after redistributing space
 		 *     to @sizes.
 		 */
 		public static int distributeNaturalAllocation(int extraSpace, uint nRequestedSizes, GtkRequestedSize* sizes)

@@ -119,7 +119,7 @@ public class ToolButton : ToolItem, ActionableIF
 	 *     iconWidget = a widget that will be used as the button contents, or %NULL
 	 *     label = a string that will be used as label, or %NULL
 	 *
-	 * Return: A new #GtkToolButton
+	 * Returns: A new #GtkToolButton
 	 *
 	 * Since: 2.4
 	 *
@@ -150,7 +150,7 @@ public class ToolButton : ToolItem, ActionableIF
 	 * Params:
 	 *     stockId = the name of the stock item
 	 *
-	 * Return: A new #GtkToolButton
+	 * Returns: A new #GtkToolButton
 	 *
 	 * Since: 2.4
 	 *
@@ -172,7 +172,7 @@ public class ToolButton : ToolItem, ActionableIF
 	 * Returns the name of the themed icon for the tool button,
 	 * see gtk_tool_button_set_icon_name().
 	 *
-	 * Return: the icon name or %NULL if the tool button has
+	 * Returns: the icon name or %NULL if the tool button has
 	 *     no themed icon
 	 *
 	 * Since: 2.8
@@ -186,7 +186,7 @@ public class ToolButton : ToolItem, ActionableIF
 	 * Return the widget used as icon widget on @button.
 	 * See gtk_tool_button_set_icon_widget().
 	 *
-	 * Return: The widget used as icon
+	 * Returns: The widget used as icon
 	 *     on @button, or %NULL.
 	 *
 	 * Since: 2.4
@@ -208,7 +208,7 @@ public class ToolButton : ToolItem, ActionableIF
 	 * doesn’t have a label. or uses a the label from a stock item. The returned
 	 * string is owned by GTK+, and must not be modified or freed.
 	 *
-	 * Return: The label, or %NULL
+	 * Returns: The label, or %NULL
 	 *
 	 * Since: 2.4
 	 */
@@ -221,7 +221,7 @@ public class ToolButton : ToolItem, ActionableIF
 	 * Returns the widget used as label on @button.
 	 * See gtk_tool_button_set_label_widget().
 	 *
-	 * Return: The widget used as label
+	 * Returns: The widget used as label
 	 *     on @button, or %NULL.
 	 *
 	 * Since: 2.4
@@ -244,7 +244,7 @@ public class ToolButton : ToolItem, ActionableIF
 	 *
 	 * Deprecated: Use gtk_tool_button_get_icon_name() instead.
 	 *
-	 * Return: the name of the stock item for @button.
+	 * Returns: the name of the stock item for @button.
 	 *
 	 * Since: 2.4
 	 */
@@ -257,7 +257,7 @@ public class ToolButton : ToolItem, ActionableIF
 	 * Returns whether underscores in the label property are used as mnemonics
 	 * on menu items on the overflow menu. See gtk_tool_button_set_use_underline().
 	 *
-	 * Return: %TRUE if underscores in the label property are used as
+	 * Returns: %TRUE if underscores in the label property are used as
 	 *     mnemonics on menu items on the overflow menu.
 	 *
 	 * Since: 2.4

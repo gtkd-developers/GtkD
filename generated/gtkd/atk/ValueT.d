@@ -210,7 +210,7 @@ public template ValueT(TStruct)
 	 * mean that it is limited only by the floating point precision of the
 	 * platform.
 	 *
-	 * Return: the minimum increment by which the value of this
+	 * Returns: the minimum increment by which the value of this
 	 *     object may be changed. zero if undefined.
 	 *
 	 * Since: 2.12
@@ -278,7 +278,7 @@ public template ValueT(TStruct)
 	/**
 	 * Gets the range of this object.
 	 *
-	 * Return: a newly allocated #AtkRange
+	 * Returns: a newly allocated #AtkRange
 	 *     that represents the minimum, maximum and descriptor (if available)
 	 *     of @obj. NULL if that range is not defined.
 	 *
@@ -300,7 +300,7 @@ public template ValueT(TStruct)
 	 * Gets the list of subranges defined for this object. See #AtkValue
 	 * introduction for examples of subranges and when to expose them.
 	 *
-	 * Return: an #GSList of
+	 * Returns: an #GSList of
 	 *     #AtkRange which each of the subranges defined for this object. Free
 	 *     the returns list with g_slist_free().
 	 *
@@ -347,7 +347,7 @@ public template ValueT(TStruct)
 	 * Params:
 	 *     value = a #GValue which is the desired new accessible value.
 	 *
-	 * Return: %TRUE if new value is successfully set, %FALSE otherwise.
+	 * Returns: %TRUE if new value is successfully set, %FALSE otherwise.
 	 */
 	public bool setCurrentValue(Value value)
 	{

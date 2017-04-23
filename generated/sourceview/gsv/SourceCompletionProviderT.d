@@ -64,7 +64,7 @@ public template SourceCompletionProviderT(TStruct)
 	 *     proposal = a #GtkSourceCompletionProposal.
 	 *     iter = a #GtkTextIter.
 	 *
-	 * Return: %TRUE to indicate that the proposal activation has been handled,
+	 * Returns: %TRUE to indicate that the proposal activation has been handled,
 	 *     %FALSE otherwise.
 	 */
 	public bool activateProposal(SourceCompletionProposalIF proposal, TextIter iter)
@@ -75,7 +75,7 @@ public template SourceCompletionProviderT(TStruct)
 	/**
 	 * Get with what kind of activation the provider should be activated.
 	 *
-	 * Return: a combination of #GtkSourceCompletionActivation.
+	 * Returns: a combination of #GtkSourceCompletionActivation.
 	 */
 	public GtkSourceCompletionActivation getActivation()
 	{
@@ -85,7 +85,7 @@ public template SourceCompletionProviderT(TStruct)
 	/**
 	 * Gets the #GIcon for the icon of @provider.
 	 *
-	 * Return: The icon to be used for the provider,
+	 * Returns: The icon to be used for the provider,
 	 *     or %NULL if the provider does not have a special icon.
 	 *
 	 * Since: 3.18
@@ -105,7 +105,7 @@ public template SourceCompletionProviderT(TStruct)
 	/**
 	 * Get the #GdkPixbuf for the icon of the @provider.
 	 *
-	 * Return: The icon to be used for the provider,
+	 * Returns: The icon to be used for the provider,
 	 *     or %NULL if the provider does not have a special icon.
 	 */
 	public Pixbuf getIcon()
@@ -123,7 +123,7 @@ public template SourceCompletionProviderT(TStruct)
 	/**
 	 * Gets the icon name of @provider.
 	 *
-	 * Return: The icon name to be used for the provider,
+	 * Returns: The icon name to be used for the provider,
 	 *     or %NULL if the provider does not have a special icon.
 	 *
 	 * Since: 3.18
@@ -153,7 +153,7 @@ public template SourceCompletionProviderT(TStruct)
 	 * Params:
 	 *     proposal = a currently selected #GtkSourceCompletionProposal.
 	 *
-	 * Return: a custom #GtkWidget to show extra
+	 * Returns: a custom #GtkWidget to show extra
 	 *     information about @proposal, or %NULL if the provider does not have a special
 	 *     info widget.
 	 */
@@ -174,7 +174,7 @@ public template SourceCompletionProviderT(TStruct)
 	 * this provider. A value of -1 indicates to use the default value as set
 	 * by the #GtkSourceCompletion:auto-complete-delay property.
 	 *
-	 * Return: the interactive delay in milliseconds.
+	 * Returns: the interactive delay in milliseconds.
 	 */
 	public int getInteractiveDelay()
 	{
@@ -186,7 +186,7 @@ public template SourceCompletionProviderT(TStruct)
 	 * display to the user. For example: _("Document word completion provider"). The
 	 * returned string must be freed with g_free().
 	 *
-	 * Return: a new string containing the name of the provider.
+	 * Returns: a new string containing the name of the provider.
 	 */
 	public string getName()
 	{
@@ -201,7 +201,7 @@ public template SourceCompletionProviderT(TStruct)
 	 * proposals appear in the completion popup. Higher priorities are sorted
 	 * before lower priorities. The default priority is 0.
 	 *
-	 * Return: the provider priority.
+	 * Returns: the provider priority.
 	 */
 	public int getPriority()
 	{
@@ -227,7 +227,7 @@ public template SourceCompletionProviderT(TStruct)
 	 *     proposal = a #GtkSourceCompletionProposal.
 	 *     iter = a #GtkTextIter.
 	 *
-	 * Return: %TRUE if @iter was set for @proposal, %FALSE otherwise.
+	 * Returns: %TRUE if @iter was set for @proposal, %FALSE otherwise.
 	 */
 	public bool getStartIter(SourceCompletionContext context, SourceCompletionProposalIF proposal, out TextIter iter)
 	{
@@ -247,7 +247,7 @@ public template SourceCompletionProviderT(TStruct)
 	 * Params:
 	 *     context = a #GtkSourceCompletionContext.
 	 *
-	 * Return: %TRUE if @provider matches the completion context, %FALSE otherwise.
+	 * Returns: %TRUE if @provider matches the completion context, %FALSE otherwise.
 	 */
 	public bool match(SourceCompletionContext context)
 	{

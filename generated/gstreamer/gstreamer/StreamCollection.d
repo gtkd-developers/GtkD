@@ -101,7 +101,7 @@ public class StreamCollection : ObjectGst
 	 * Params:
 	 *     upstreamId = The stream id of the parent stream
 	 *
-	 * Return: The new #GstStreamCollection.
+	 * Returns: The new #GstStreamCollection.
 	 *
 	 * Since: 1.10
 	 *
@@ -125,7 +125,7 @@ public class StreamCollection : ObjectGst
 	 * Params:
 	 *     stream = the #GstStream to add
 	 *
-	 * Return: %TRUE if the @stream was properly added, else %FALSE
+	 * Returns: %TRUE if the @stream was properly added, else %FALSE
 	 *
 	 * Since: 1.10
 	 */
@@ -137,7 +137,7 @@ public class StreamCollection : ObjectGst
 	/**
 	 * Get the number of streams this collection contains
 	 *
-	 * Return: The number of streams that @collection contains
+	 * Returns: The number of streams that @collection contains
 	 *
 	 * Since: 1.10
 	 */
@@ -154,7 +154,7 @@ public class StreamCollection : ObjectGst
 	 * Params:
 	 *     index = Index of the stream to retrieve
 	 *
-	 * Return: A #GstStream
+	 * Returns: A #GstStream
 	 *
 	 * Since: 1.10
 	 */
@@ -173,7 +173,7 @@ public class StreamCollection : ObjectGst
 	/**
 	 * Returns the upstream id of the @collection.
 	 *
-	 * Return: The upstream id
+	 * Returns: The upstream id
 	 *
 	 * Since: 1.10
 	 */

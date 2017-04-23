@@ -113,7 +113,7 @@ public class Device : ObjectG
 	 *         the @owner_events flag to gdk_keyboard_grab() or
 	 *         gdk_pointer_grab() was %TRUE.
 	 *
-	 * Return: %TRUE if this application currently has the
+	 * Returns: %TRUE if this application currently has the
 	 *     keyboard grabbed.
 	 */
 	public static bool grabInfoLibgtkOnly(Display display, Device device, out Window grabWindow, out bool ownerEvents)
@@ -140,7 +140,7 @@ public class Device : ObjectG
 	 * If @device is of type %GDK_DEVICE_TYPE_FLOATING, %NULL will be
 	 * returned, as there is no associated device.
 	 *
-	 * Return: The associated device, or
+	 * Returns: The associated device, or
 	 *     %NULL
 	 *
 	 * Since: 3.0
@@ -176,7 +176,7 @@ public class Device : ObjectG
 	 *     use = the use to look for
 	 *     value = location to store the found value.
 	 *
-	 * Return: %TRUE if the given axis use was found, otherwise %FALSE
+	 * Returns: %TRUE if the given axis use was found, otherwise %FALSE
 	 */
 	public bool getAxis(double[] axes, GdkAxisUse use, out double value)
 	{
@@ -189,7 +189,7 @@ public class Device : ObjectG
 	 * Params:
 	 *     index = the index of the axis.
 	 *
-	 * Return: a #GdkAxisUse specifying how the axis is used.
+	 * Returns: a #GdkAxisUse specifying how the axis is used.
 	 *
 	 * Since: 2.20
 	 */
@@ -208,7 +208,7 @@ public class Device : ObjectG
 	 *     axisLabel = #GdkAtom with the axis label.
 	 *     value = location to store the found value.
 	 *
-	 * Return: %TRUE if the given axis use was found, otherwise %FALSE.
+	 * Returns: %TRUE if the given axis use was found, otherwise %FALSE.
 	 *
 	 * Since: 3.0
 	 */
@@ -220,7 +220,7 @@ public class Device : ObjectG
 	/**
 	 * Returns the device type for @device.
 	 *
-	 * Return: the #GdkDeviceType for @device.
+	 * Returns: the #GdkDeviceType for @device.
 	 *
 	 * Since: 3.0
 	 */
@@ -232,7 +232,7 @@ public class Device : ObjectG
 	/**
 	 * Returns the #GdkDisplay to which @device pertains.
 	 *
-	 * Return: a #GdkDisplay. This memory is owned
+	 * Returns: a #GdkDisplay. This memory is owned
 	 *     by GTK+, and must not be freed or unreffed.
 	 *
 	 * Since: 3.0
@@ -253,7 +253,7 @@ public class Device : ObjectG
 	 * Determines whether the pointer follows device motion.
 	 * This is not meaningful for keyboard devices, which don't have a pointer.
 	 *
-	 * Return: %TRUE if the pointer follows device motion
+	 * Returns: %TRUE if the pointer follows device motion
 	 *
 	 * Since: 2.20
 	 */
@@ -283,7 +283,7 @@ public class Device : ObjectG
 	 *     nEvents = location to store the length of
 	 *         @events, or %NULL
 	 *
-	 * Return: %TRUE if the windowing system supports motion history and
+	 * Returns: %TRUE if the windowing system supports motion history and
 	 *     at least one event was found.
 	 */
 	public bool getHistory(Window window, uint start, uint stop, out GdkTimeCoord*[] events)
@@ -307,7 +307,7 @@ public class Device : ObjectG
 	 *     keyval = return value for the keyval.
 	 *     modifiers = return value for modifiers.
 	 *
-	 * Return: %TRUE if keyval is set for @index.
+	 * Returns: %TRUE if keyval is set for @index.
 	 *
 	 * Since: 2.20
 	 */
@@ -323,7 +323,7 @@ public class Device : ObjectG
 	 * %NULL may be returned even if the pointer is physically over one of this
 	 * application's windows.
 	 *
-	 * Return: the last window the device
+	 * Returns: the last window the device
 	 *
 	 * Since: 3.12
 	 */
@@ -342,7 +342,7 @@ public class Device : ObjectG
 	/**
 	 * Determines the mode of the device.
 	 *
-	 * Return: a #GdkInputSource
+	 * Returns: a #GdkInputSource
 	 *
 	 * Since: 2.20
 	 */
@@ -354,7 +354,7 @@ public class Device : ObjectG
 	/**
 	 * Returns the number of axes the device currently has.
 	 *
-	 * Return: the number of axes.
+	 * Returns: the number of axes.
 	 *
 	 * Since: 3.0
 	 */
@@ -366,7 +366,7 @@ public class Device : ObjectG
 	/**
 	 * Returns the number of keys the device currently has.
 	 *
-	 * Return: the number of keys.
+	 * Returns: the number of keys.
 	 *
 	 * Since: 2.24
 	 */
@@ -378,7 +378,7 @@ public class Device : ObjectG
 	/**
 	 * Determines the name of the device.
 	 *
-	 * Return: a name
+	 * Returns: a name
 	 *
 	 * Since: 2.20
 	 */
@@ -438,7 +438,7 @@ public class Device : ObjectG
 	 * be obtained. This ID is retrieved from the device, and is thus constant for
 	 * it. See gdk_device_get_vendor_id() for more information.
 	 *
-	 * Return: the product ID, or %NULL
+	 * Returns: the product ID, or %NULL
 	 *
 	 * Since: 3.16
 	 */
@@ -450,7 +450,7 @@ public class Device : ObjectG
 	/**
 	 * Returns the #GdkSeat the device belongs to.
 	 *
-	 * Return: A #GdkSeat. This memory is owned by GTK+ and
+	 * Returns: A #GdkSeat. This memory is owned by GTK+ and
 	 *     must not be freed.
 	 *
 	 * Since: 3.20
@@ -470,7 +470,7 @@ public class Device : ObjectG
 	/**
 	 * Determines the type of the device.
 	 *
-	 * Return: a #GdkInputSource
+	 * Returns: a #GdkInputSource
 	 *
 	 * Since: 2.20
 	 */
@@ -524,7 +524,7 @@ public class Device : ObjectG
 	 * }
 	 * ]|
 	 *
-	 * Return: the vendor ID, or %NULL
+	 * Returns: the vendor ID, or %NULL
 	 *
 	 * Since: 3.16
 	 */
@@ -547,7 +547,7 @@ public class Device : ObjectG
 	 *     winY = return location for the Y coordinate of the device location,
 	 *         relative to the window origin, or %NULL.
 	 *
-	 * Return: the #GdkWindow under the
+	 * Returns: the #GdkWindow under the
 	 *     device position, or %NULL.
 	 *
 	 * Since: 3.0
@@ -579,7 +579,7 @@ public class Device : ObjectG
 	 *     winY = return location for the Y coordinate of the device location,
 	 *         relative to the window origin, or %NULL.
 	 *
-	 * Return: the #GdkWindow under the
+	 * Returns: the #GdkWindow under the
 	 *     device position, or %NULL.
 	 *
 	 * Since: 3.0
@@ -640,7 +640,7 @@ public class Device : ObjectG
 	 *         usually comes from the #GdkEvent struct, though %GDK_CURRENT_TIME
 	 *         can be used if the time isn’t known.
 	 *
-	 * Return: %GDK_GRAB_SUCCESS if the grab was successful.
+	 * Returns: %GDK_GRAB_SUCCESS if the grab was successful.
 	 *
 	 * Since: 3.0
 	 */
@@ -653,7 +653,7 @@ public class Device : ObjectG
 	 * Returns a #GList of #GdkAtoms, containing the labels for
 	 * the axes that @device currently has.
 	 *
-	 * Return: A #GList of #GdkAtoms, free with g_list_free().
+	 * Returns: A #GList of #GdkAtoms, free with g_list_free().
 	 *
 	 * Since: 3.0
 	 */
@@ -674,7 +674,7 @@ public class Device : ObjectG
 	 * the list of slave devices attached to it, otherwise it will return
 	 * %NULL
 	 *
-	 * Return: the list of slave devices, or %NULL. The list must be
+	 * Returns: the list of slave devices, or %NULL. The list must be
 	 *     freed with g_list_free(), the contents of the list are
 	 *     owned by GTK+ and should not be freed.
 	 */
@@ -728,7 +728,7 @@ public class Device : ObjectG
 	 * Params:
 	 *     mode = the input mode.
 	 *
-	 * Return: %TRUE if the mode was successfully changed.
+	 * Returns: %TRUE if the mode was successfully changed.
 	 */
 	public bool setMode(GdkInputMode mode)
 	{

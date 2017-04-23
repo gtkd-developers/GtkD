@@ -151,7 +151,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	/**
 	 * Creates a new #GtkPrintOperation.
 	 *
-	 * Return: a new #GtkPrintOperation
+	 * Returns: a new #GtkPrintOperation
 	 *
 	 * Since: 2.10
 	 *
@@ -203,7 +203,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * Returns the default page setup, see
 	 * gtk_print_operation_set_default_page_setup().
 	 *
-	 * Return: the default page setup
+	 * Returns: the default page setup
 	 *
 	 * Since: 2.10
 	 */
@@ -222,7 +222,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	/**
 	 * Gets the value of #GtkPrintOperation:embed-page-setup property.
 	 *
-	 * Return: whether page setup selection combos are embedded
+	 * Returns: whether page setup selection combos are embedded
 	 *
 	 * Since: 2.18
 	 */
@@ -256,7 +256,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	/**
 	 * Gets the value of #GtkPrintOperation:has-selection property.
 	 *
-	 * Return: whether there is a selection
+	 * Returns: whether there is a selection
 	 *
 	 * Since: 2.18
 	 */
@@ -276,7 +276,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * print status is %GTK_PRINT_STATUS_GENERATING_DATA.
 	 * This is typically used to track the progress of print operation.
 	 *
-	 * Return: the number of pages that will be printed
+	 * Returns: the number of pages that will be printed
 	 *
 	 * Since: 2.18
 	 */
@@ -292,7 +292,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * gtk_print_operation_set_print_settings() or
 	 * gtk_print_operation_run() have been called.
 	 *
-	 * Return: the current print settings of @op.
+	 * Returns: the current print settings of @op.
 	 *
 	 * Since: 2.10
 	 */
@@ -312,7 +312,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * Returns the status of the print operation.
 	 * Also see gtk_print_operation_get_status_string().
 	 *
-	 * Return: the status of the print operation
+	 * Returns: the status of the print operation
 	 *
 	 * Since: 2.10
 	 */
@@ -329,7 +329,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * Use gtk_print_operation_get_status() to obtain a status
 	 * value that is suitable for programmatic use.
 	 *
-	 * Return: a string representation of the status
+	 * Returns: a string representation of the status
 	 *     of the print operation
 	 *
 	 * Since: 2.10
@@ -342,7 +342,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	/**
 	 * Gets the value of #GtkPrintOperation:support-selection property.
 	 *
-	 * Return: whether the application supports print of selection
+	 * Returns: whether the application supports print of selection
 	 *
 	 * Since: 2.18
 	 */
@@ -360,7 +360,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * can be in a non-finished state even after done has been called, as
 	 * the operation status then tracks the print job status on the printer.
 	 *
-	 * Return: %TRUE, if the print operation is finished.
+	 * Returns: %TRUE, if the print operation is finished.
 	 *
 	 * Since: 2.10
 	 */
@@ -430,7 +430,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *     action = the action to start
 	 *     parent = Transient parent of the dialog
 	 *
-	 * Return: the result of the print operation. A return value of
+	 * Returns: the result of the print operation. A return value of
 	 *     %GTK_PRINT_OPERATION_RESULT_APPLY indicates that the printing was
 	 *     completed successfully. In this case, it is a good idea to obtain
 	 *     the used print settings with gtk_print_operation_get_print_settings()
@@ -819,7 +819,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * signal is emitted on the operation. Then you can read out any
 	 * information you need from the widgets.
 	 *
-	 * Return: A custom widget that gets embedded in
+	 * Returns: A custom widget that gets embedded in
 	 *     the print dialog, or %NULL
 	 *
 	 * Since: 2.10
@@ -1183,7 +1183,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 * Params:
 	 *     context = the #GtkPrintContext for the current operation
 	 *
-	 * Return: %TRUE if pagination is complete
+	 * Returns: %TRUE if pagination is complete
 	 *
 	 * Since: 2.10
 	 */
@@ -1259,7 +1259,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *     context = the #GtkPrintContext that will be used
 	 *     parent = the #GtkWindow to use as window parent, or %NULL
 	 *
-	 * Return: %TRUE if the listener wants to take over control of the preview
+	 * Returns: %TRUE if the listener wants to take over control of the preview
 	 *
 	 * Since: 2.10
 	 */
@@ -1480,7 +1480,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	 *     pageSetup = an existing #GtkPageSetup
 	 *     settings = a #GtkPrintSettings
 	 *
-	 * Return: a new #GtkPageSetup
+	 * Returns: a new #GtkPageSetup
 	 *
 	 * Since: 2.10
 	 */

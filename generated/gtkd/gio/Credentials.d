@@ -110,7 +110,7 @@ public class Credentials : ObjectG
 	 * Creates a new #GCredentials object with credentials matching the
 	 * the current process.
 	 *
-	 * Return: A #GCredentials. Free with g_object_unref().
+	 * Returns: A #GCredentials. Free with g_object_unref().
 	 *
 	 * Since: 2.26
 	 *
@@ -139,7 +139,7 @@ public class Credentials : ObjectG
 	 * Params:
 	 *     nativeType = The type of native credentials to get.
 	 *
-	 * Return: The pointer to native credentials or %NULL if the
+	 * Returns: The pointer to native credentials or %NULL if the
 	 *     operation there is no #GCredentials support for the OS or if
 	 *     @native_type isn't supported by the OS. Do not free the returned
 	 *     data, it is owned by @credentials.
@@ -159,7 +159,7 @@ public class Credentials : ObjectG
 	 * OS or if the native credentials type does not contain information
 	 * about the UNIX process ID.
 	 *
-	 * Return: The UNIX process ID, or -1 if @error is set.
+	 * Returns: The UNIX process ID, or -1 if @error is set.
 	 *
 	 * Since: 2.36
 	 *
@@ -187,7 +187,7 @@ public class Credentials : ObjectG
 	 * OS or if the native credentials type does not contain information
 	 * about the UNIX user.
 	 *
-	 * Return: The UNIX user identifier or -1 if @error is set.
+	 * Returns: The UNIX user identifier or -1 if @error is set.
 	 *
 	 * Since: 2.26
 	 *
@@ -216,7 +216,7 @@ public class Credentials : ObjectG
 	 * Params:
 	 *     otherCredentials = A #GCredentials.
 	 *
-	 * Return: %TRUE if @credentials and @other_credentials has the same
+	 * Returns: %TRUE if @credentials and @other_credentials has the same
 	 *     user, %FALSE otherwise or if @error is set.
 	 *
 	 * Since: 2.26
@@ -268,7 +268,7 @@ public class Credentials : ObjectG
 	 * Params:
 	 *     uid = The UNIX user identifier to set.
 	 *
-	 * Return: %TRUE if @uid was set, %FALSE if error is set.
+	 * Returns: %TRUE if @uid was set, %FALSE if error is set.
 	 *
 	 * Since: 2.26
 	 *
@@ -293,7 +293,7 @@ public class Credentials : ObjectG
 	 * that can be used in logging and debug messages. The format of the
 	 * returned string may change in future GLib release.
 	 *
-	 * Return: A string that should be freed with g_free().
+	 * Returns: A string that should be freed with g_free().
 	 *
 	 * Since: 2.26
 	 */

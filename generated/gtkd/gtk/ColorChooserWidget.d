@@ -101,7 +101,7 @@ public class ColorChooserWidget : Box, ColorChooserIF
 	/**
 	 * Creates a new #GtkColorChooserWidget.
 	 *
-	 * Return: a new #GtkColorChooserWidget
+	 * Returns: a new #GtkColorChooserWidget
 	 *
 	 * Since: 3.4
 	 *

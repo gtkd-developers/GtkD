@@ -132,7 +132,7 @@ public class TimeZone
 	 * Params:
 	 *     identifier = a timezone identifier
 	 *
-	 * Return: the requested timezone
+	 * Returns: the requested timezone
 	 *
 	 * Since: 2.26
 	 *
@@ -172,7 +172,7 @@ public class TimeZone
 	 *     type = the #GTimeType of @time_
 	 *     time = a pointer to a number of seconds since January 1, 1970
 	 *
-	 * Return: the interval containing @time_, never -1
+	 * Returns: the interval containing @time_, never -1
 	 *
 	 * Since: 2.26
 	 */
@@ -205,7 +205,7 @@ public class TimeZone
 	 *     type = the #GTimeType of @time_
 	 *     time = a number of seconds since January 1, 1970
 	 *
-	 * Return: the interval containing @time_, or -1 in case of failure
+	 * Returns: the interval containing @time_, or -1 in case of failure
 	 *
 	 * Since: 2.26
 	 */
@@ -225,7 +225,7 @@ public class TimeZone
 	 * Params:
 	 *     interval = an interval within the timezone
 	 *
-	 * Return: the time zone abbreviation, which belongs to @tz
+	 * Returns: the time zone abbreviation, which belongs to @tz
 	 *
 	 * Since: 2.26
 	 */
@@ -245,7 +245,7 @@ public class TimeZone
 	 * Params:
 	 *     interval = an interval within the timezone
 	 *
-	 * Return: the number of seconds that should be added to UTC to get the
+	 * Returns: the number of seconds that should be added to UTC to get the
 	 *     local time in @tz
 	 *
 	 * Since: 2.26
@@ -262,7 +262,7 @@ public class TimeZone
 	 * Params:
 	 *     interval = an interval within the timezone
 	 *
-	 * Return: %TRUE if daylight savings time is in effect
+	 * Returns: %TRUE if daylight savings time is in effect
 	 *
 	 * Since: 2.26
 	 */
@@ -274,7 +274,7 @@ public class TimeZone
 	/**
 	 * Increases the reference count on @tz.
 	 *
-	 * Return: a new reference to @tz.
+	 * Returns: a new reference to @tz.
 	 *
 	 * Since: 2.26
 	 */

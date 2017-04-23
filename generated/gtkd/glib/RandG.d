@@ -66,7 +66,7 @@ public class RandG
 	 * This way you can take a snapshot of the random number generator for
 	 * replaying later.
 	 *
-	 * Return: the new #GRand
+	 * Returns: the new #GRand
 	 *
 	 * Since: 2.4
 	 */
@@ -86,7 +86,7 @@ public class RandG
 	 * Returns the next random #gdouble from @rand_ equally distributed over
 	 * the range [0..1).
 	 *
-	 * Return: a random number
+	 * Returns: a random number
 	 */
 	public double randDouble()
 	{
@@ -101,7 +101,7 @@ public class RandG
 	 *     begin = lower closed bound of the interval
 	 *     end = upper open bound of the interval
 	 *
-	 * Return: a random number
+	 * Returns: a random number
 	 */
 	public double doubleRange(double begin, double end)
 	{
@@ -120,7 +120,7 @@ public class RandG
 	 * Returns the next random #guint32 from @rand_ equally distributed over
 	 * the range [0..2^32-1].
 	 *
-	 * Return: a random number
+	 * Returns: a random number
 	 */
 	public uint randInt()
 	{
@@ -135,7 +135,7 @@ public class RandG
 	 *     begin = lower closed bound of the interval
 	 *     end = upper open bound of the interval
 	 *
-	 * Return: a random number
+	 * Returns: a random number
 	 */
 	public int intRange(int begin, int end)
 	{
@@ -178,7 +178,7 @@ public class RandG
 	 *
 	 * On Windows, the seed is taken from rand_s().
 	 *
-	 * Return: the new #GRand
+	 * Returns: the new #GRand
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -200,7 +200,7 @@ public class RandG
 	 * Params:
 	 *     seed = a value to initialize the random number generator
 	 *
-	 * Return: the new #GRand
+	 * Returns: the new #GRand
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -224,7 +224,7 @@ public class RandG
 	 *     seedLength = an array of seeds to initialize the random number
 	 *         generator
 	 *
-	 * Return: the new #GRand
+	 * Returns: the new #GRand
 	 *
 	 * Since: 2.4
 	 *
@@ -245,7 +245,7 @@ public class RandG
 	/**
 	 * Returns a random #gdouble equally distributed over the range [0..1).
 	 *
-	 * Return: a random number
+	 * Returns: a random number
 	 */
 	public static double randomDouble()
 	{
@@ -260,7 +260,7 @@ public class RandG
 	 *     begin = lower closed bound of the interval
 	 *     end = upper open bound of the interval
 	 *
-	 * Return: a random number
+	 * Returns: a random number
 	 */
 	public static double randomDoubleRange(double begin, double end)
 	{
@@ -271,7 +271,7 @@ public class RandG
 	 * Return a random #guint32 equally distributed over the range
 	 * [0..2^32-1].
 	 *
-	 * Return: a random number
+	 * Returns: a random number
 	 */
 	public static uint randomInt()
 	{
@@ -286,7 +286,7 @@ public class RandG
 	 *     begin = lower closed bound of the interval
 	 *     end = upper open bound of the interval
 	 *
-	 * Return: a random number
+	 * Returns: a random number
 	 */
 	public static int randomIntRange(int begin, int end)
 	{

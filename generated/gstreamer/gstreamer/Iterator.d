@@ -126,7 +126,7 @@ public class Iterator
 	 *     resync = function to resync the iterator
 	 *     free = function to free the iterator
 	 *
-	 * Return: the new #GstIterator.
+	 * Returns: the new #GstIterator.
 	 *
 	 *     MT safe.
 	 *
@@ -167,7 +167,7 @@ public class Iterator
 	 *     owner = object owning the list
 	 *     item = function to call on each item retrieved
 	 *
-	 * Return: the new #GstIterator for @list.
+	 * Returns: the new #GstIterator for @list.
 	 *
 	 *     MT safe.
 	 *
@@ -199,7 +199,7 @@ public class Iterator
 	 *     type = #GType of the passed object
 	 *     object = object that this iterator should return
 	 *
-	 * Return: the new #GstIterator for @object.
+	 * Returns: the new #GstIterator for @object.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -218,7 +218,7 @@ public class Iterator
 	/**
 	 * Copy the iterator and its state.
 	 *
-	 * Return: a new copy of @it.
+	 * Returns: a new copy of @it.
 	 */
 	public Iterator copy()
 	{
@@ -245,7 +245,7 @@ public class Iterator
 	 *     func = the compare function to select elements
 	 *     userData = user data passed to the compare function
 	 *
-	 * Return: a new #GstIterator.
+	 * Returns: a new #GstIterator.
 	 *
 	 *     MT safe.
 	 */
@@ -278,7 +278,7 @@ public class Iterator
 	 *     elem = pointer to a #GValue where to store the result
 	 *     userData = user data passed to the compare function
 	 *
-	 * Return: Returns %TRUE if the element was found, else %FALSE.
+	 * Returns: Returns %TRUE if the element was found, else %FALSE.
 	 *
 	 *     MT safe.
 	 */
@@ -315,7 +315,7 @@ public class Iterator
 	 *     ret = the seed value passed to the fold function
 	 *     userData = user data passed to the fold function
 	 *
-	 * Return: A #GstIteratorResult, as described above.
+	 * Returns: A #GstIteratorResult, as described above.
 	 *
 	 *     MT safe.
 	 */
@@ -332,7 +332,7 @@ public class Iterator
 	 *     func = the function to call for each element.
 	 *     userData = user data passed to the function
 	 *
-	 * Return: the result call to gst_iterator_fold(). The iterator will not be
+	 * Returns: the result call to gst_iterator_fold(). The iterator will not be
 	 *     freed.
 	 *
 	 *     MT safe.
@@ -373,7 +373,7 @@ public class Iterator
 	 * Params:
 	 *     elem = pointer to hold next element
 	 *
-	 * Return: The result of the iteration. Unset @elem after usage.
+	 * Returns: The result of the iteration. Unset @elem after usage.
 	 *
 	 *     MT safe.
 	 */

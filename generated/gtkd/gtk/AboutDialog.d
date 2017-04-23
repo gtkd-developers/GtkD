@@ -117,7 +117,7 @@ public class AboutDialog : Dialog
 	/**
 	 * Creates a new #GtkAboutDialog.
 	 *
-	 * Return: a newly created #GtkAboutDialog
+	 * Returns: a newly created #GtkAboutDialog
 	 *
 	 * Since: 2.6
 	 *
@@ -153,7 +153,7 @@ public class AboutDialog : Dialog
 	 * Returns the string which are displayed in the artists tab
 	 * of the secondary credits dialog.
 	 *
-	 * Return: A
+	 * Returns: A
 	 *     %NULL-terminated string array containing the artists. The array is
 	 *     owned by the about dialog and must not be modified.
 	 *
@@ -168,7 +168,7 @@ public class AboutDialog : Dialog
 	 * Returns the string which are displayed in the authors tab
 	 * of the secondary credits dialog.
 	 *
-	 * Return: A
+	 * Returns: A
 	 *     %NULL-terminated string array containing the authors. The array is
 	 *     owned by the about dialog and must not be modified.
 	 *
@@ -182,7 +182,7 @@ public class AboutDialog : Dialog
 	/**
 	 * Returns the comments string.
 	 *
-	 * Return: The comments. The string is owned by the about
+	 * Returns: The comments. The string is owned by the about
 	 *     dialog and must not be modified.
 	 *
 	 * Since: 2.6
@@ -195,7 +195,7 @@ public class AboutDialog : Dialog
 	/**
 	 * Returns the copyright string.
 	 *
-	 * Return: The copyright string. The string is owned by the about
+	 * Returns: The copyright string. The string is owned by the about
 	 *     dialog and must not be modified.
 	 *
 	 * Since: 2.6
@@ -209,7 +209,7 @@ public class AboutDialog : Dialog
 	 * Returns the string which are displayed in the documenters
 	 * tab of the secondary credits dialog.
 	 *
-	 * Return: A
+	 * Returns: A
 	 *     %NULL-terminated string array containing the documenters. The
 	 *     array is owned by the about dialog and must not be modified.
 	 *
@@ -223,7 +223,7 @@ public class AboutDialog : Dialog
 	/**
 	 * Returns the license information.
 	 *
-	 * Return: The license information. The string is owned by the about
+	 * Returns: The license information. The string is owned by the about
 	 *     dialog and must not be modified.
 	 *
 	 * Since: 2.6
@@ -236,7 +236,7 @@ public class AboutDialog : Dialog
 	/**
 	 * Retrieves the license set using gtk_about_dialog_set_license_type()
 	 *
-	 * Return: a #GtkLicense value
+	 * Returns: a #GtkLicense value
 	 *
 	 * Since: 3.0
 	 */
@@ -248,7 +248,7 @@ public class AboutDialog : Dialog
 	/**
 	 * Returns the pixbuf displayed as logo in the about dialog.
 	 *
-	 * Return: the pixbuf displayed as logo. The
+	 * Returns: the pixbuf displayed as logo. The
 	 *     pixbuf is owned by the about dialog. If you want to keep a
 	 *     reference to it, you have to call g_object_ref() on it.
 	 *
@@ -269,7 +269,7 @@ public class AboutDialog : Dialog
 	/**
 	 * Returns the icon name displayed as logo in the about dialog.
 	 *
-	 * Return: the icon name displayed as logo. The string is
+	 * Returns: the icon name displayed as logo. The string is
 	 *     owned by the dialog. If you want to keep a reference
 	 *     to it, you have to call g_strdup() on it.
 	 *
@@ -283,7 +283,7 @@ public class AboutDialog : Dialog
 	/**
 	 * Returns the program name displayed in the about dialog.
 	 *
-	 * Return: The program name. The string is owned by the about
+	 * Returns: The program name. The string is owned by the about
 	 *     dialog and must not be modified.
 	 *
 	 * Since: 2.12
@@ -297,7 +297,7 @@ public class AboutDialog : Dialog
 	 * Returns the translator credits string which is displayed
 	 * in the translators tab of the secondary credits dialog.
 	 *
-	 * Return: The translator credits string. The string is
+	 * Returns: The translator credits string. The string is
 	 *     owned by the about dialog and must not be modified.
 	 *
 	 * Since: 2.6
@@ -310,7 +310,7 @@ public class AboutDialog : Dialog
 	/**
 	 * Returns the version string.
 	 *
-	 * Return: The version string. The string is owned by the about
+	 * Returns: The version string. The string is owned by the about
 	 *     dialog and must not be modified.
 	 *
 	 * Since: 2.6
@@ -323,7 +323,7 @@ public class AboutDialog : Dialog
 	/**
 	 * Returns the website URL.
 	 *
-	 * Return: The website URL. The string is owned by the about
+	 * Returns: The website URL. The string is owned by the about
 	 *     dialog and must not be modified.
 	 *
 	 * Since: 2.6
@@ -336,7 +336,7 @@ public class AboutDialog : Dialog
 	/**
 	 * Returns the label used for the website link.
 	 *
-	 * Return: The label used for the website link. The string is
+	 * Returns: The label used for the website link. The string is
 	 *     owned by the about dialog and must not be modified.
 	 *
 	 * Since: 2.6
@@ -350,7 +350,7 @@ public class AboutDialog : Dialog
 	 * Returns whether the license text in @about is
 	 * automatically wrapped.
 	 *
-	 * Return: %TRUE if the license text is wrapped
+	 * Returns: %TRUE if the license text is wrapped
 	 *
 	 * Since: 2.8
 	 */
@@ -619,7 +619,7 @@ public class AboutDialog : Dialog
 	 * Params:
 	 *     uri = the URI that is activated
 	 *
-	 * Return: %TRUE if the link has been activated
+	 * Returns: %TRUE if the link has been activated
 	 *
 	 * Since: 2.24
 	 */

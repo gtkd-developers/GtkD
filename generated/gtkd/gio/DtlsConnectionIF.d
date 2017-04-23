@@ -93,7 +93,7 @@ public interface DtlsConnectionIF{
 	 * Params:
 	 *     cancellable = a #GCancellable, or %NULL
 	 *
-	 * Return: %TRUE on success, %FALSE otherwise
+	 * Returns: %TRUE on success, %FALSE otherwise
 	 *
 	 * Since: 2.48
 	 *
@@ -122,7 +122,7 @@ public interface DtlsConnectionIF{
 	 * Params:
 	 *     result = a #GAsyncResult
 	 *
-	 * Return: %TRUE on success, %FALSE on failure, in which
+	 * Returns: %TRUE on success, %FALSE on failure, in which
 	 *     case @error will be set
 	 *
 	 * Since: 2.48
@@ -139,7 +139,7 @@ public interface DtlsConnectionIF{
 	 *     peerCert = the peer's #GTlsCertificate
 	 *     errors = the problems with @peer_cert
 	 *
-	 * Return: %TRUE if one of the signal handlers has returned
+	 * Returns: %TRUE if one of the signal handlers has returned
 	 *     %TRUE to accept @peer_cert
 	 *
 	 * Since: 2.48
@@ -150,7 +150,7 @@ public interface DtlsConnectionIF{
 	 * Gets @conn's certificate, as set by
 	 * g_dtls_connection_set_certificate().
 	 *
-	 * Return: @conn's certificate, or %NULL
+	 * Returns: @conn's certificate, or %NULL
 	 *
 	 * Since: 2.48
 	 */
@@ -160,7 +160,7 @@ public interface DtlsConnectionIF{
 	 * Gets the certificate database that @conn uses to verify
 	 * peer certificates. See g_dtls_connection_set_database().
 	 *
-	 * Return: the certificate database that @conn uses or %NULL
+	 * Returns: the certificate database that @conn uses or %NULL
 	 *
 	 * Since: 2.48
 	 */
@@ -171,7 +171,7 @@ public interface DtlsConnectionIF{
 	 * for things like prompting the user for passwords. If %NULL is returned, then
 	 * no user interaction will occur for this connection.
 	 *
-	 * Return: The interaction object.
+	 * Returns: The interaction object.
 	 *
 	 * Since: 2.48
 	 */
@@ -182,7 +182,7 @@ public interface DtlsConnectionIF{
 	 * (It is not set during the emission of
 	 * #GDtlsConnection::accept-certificate.)
 	 *
-	 * Return: @conn's peer's certificate, or %NULL
+	 * Returns: @conn's peer's certificate, or %NULL
 	 *
 	 * Since: 2.48
 	 */
@@ -193,7 +193,7 @@ public interface DtlsConnectionIF{
 	 * certificate, after the handshake has completed. (It is not set
 	 * during the emission of #GDtlsConnection::accept-certificate.)
 	 *
-	 * Return: @conn's peer's certificate errors
+	 * Returns: @conn's peer's certificate errors
 	 *
 	 * Since: 2.48
 	 */
@@ -203,7 +203,7 @@ public interface DtlsConnectionIF{
 	 * Gets @conn rehandshaking mode. See
 	 * g_dtls_connection_set_rehandshake_mode() for details.
 	 *
-	 * Return: @conn's rehandshaking mode
+	 * Returns: @conn's rehandshaking mode
 	 *
 	 * Since: 2.48
 	 */
@@ -214,7 +214,7 @@ public interface DtlsConnectionIF{
 	 * when the connection is closed. See
 	 * g_dtls_connection_set_require_close_notify() for details.
 	 *
-	 * Return: %TRUE if @conn requires a proper TLS close notification.
+	 * Returns: %TRUE if @conn requires a proper TLS close notification.
 	 *
 	 * Since: 2.48
 	 */
@@ -247,7 +247,7 @@ public interface DtlsConnectionIF{
 	 * Params:
 	 *     cancellable = a #GCancellable, or %NULL
 	 *
-	 * Return: success or failure
+	 * Returns: success or failure
 	 *
 	 * Since: 2.48
 	 *
@@ -276,7 +276,7 @@ public interface DtlsConnectionIF{
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *
-	 * Return: %TRUE on success, %FALSE on failure, in which
+	 * Returns: %TRUE on success, %FALSE on failure, in which
 	 *     case @error will be set.
 	 *
 	 * Since: 2.48
@@ -430,7 +430,7 @@ public interface DtlsConnectionIF{
 	 *     shutdownWrite = %TRUE to stop sending outgoing datagrams
 	 *     cancellable = a #GCancellable, or %NULL
 	 *
-	 * Return: %TRUE on success, %FALSE otherwise
+	 * Returns: %TRUE on success, %FALSE otherwise
 	 *
 	 * Since: 2.48
 	 *
@@ -461,7 +461,7 @@ public interface DtlsConnectionIF{
 	 * Params:
 	 *     result = a #GAsyncResult
 	 *
-	 * Return: %TRUE on success, %FALSE on failure, in which
+	 * Returns: %TRUE on success, %FALSE on failure, in which
 	 *     case @error will be set
 	 *
 	 * Since: 2.48
@@ -509,7 +509,7 @@ public interface DtlsConnectionIF{
 	 *     peerCert = the peer's #GTlsCertificate
 	 *     errors = the problems with @peer_cert.
 	 *
-	 * Return: %TRUE to accept @peer_cert (which will also
+	 * Returns: %TRUE to accept @peer_cert (which will also
 	 *     immediately end the signal emission). %FALSE to allow the signal
 	 *     emission to continue, which will cause the handshake to fail if
 	 *     no one else overrides it.

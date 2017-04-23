@@ -92,7 +92,7 @@ public class UnixFDMessage : SocketControlMessage
 	 * Creates a new #GUnixFDMessage containing an empty file descriptor
 	 * list.
 	 *
-	 * Return: a new #GUnixFDMessage
+	 * Returns: a new #GUnixFDMessage
 	 *
 	 * Since: 2.22
 	 *
@@ -116,7 +116,7 @@ public class UnixFDMessage : SocketControlMessage
 	 * Params:
 	 *     fdList = a #GUnixFDList
 	 *
-	 * Return: a new #GUnixFDMessage
+	 * Returns: a new #GUnixFDMessage
 	 *
 	 * Since: 2.24
 	 *
@@ -147,7 +147,7 @@ public class UnixFDMessage : SocketControlMessage
 	 * Params:
 	 *     fd = a valid open file descriptor
 	 *
-	 * Return: %TRUE in case of success, else %FALSE (and @error is set)
+	 * Returns: %TRUE in case of success, else %FALSE (and @error is set)
 	 *
 	 * Since: 2.22
 	 *
@@ -172,7 +172,7 @@ public class UnixFDMessage : SocketControlMessage
 	 * return a reference to the caller, but the returned list is valid for
 	 * the lifetime of @message.
 	 *
-	 * Return: the #GUnixFDList from @message
+	 * Returns: the #GUnixFDList from @message
 	 *
 	 * Since: 2.24
 	 */
@@ -207,7 +207,7 @@ public class UnixFDMessage : SocketControlMessage
 	 * This function never returns %NULL. In case there are no file
 	 * descriptors contained in @message, an empty array is returned.
 	 *
-	 * Return: an array of file
+	 * Returns: an array of file
 	 *     descriptors
 	 *
 	 * Since: 2.22

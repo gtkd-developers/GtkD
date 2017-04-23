@@ -157,7 +157,7 @@ public class StyleContext : ObjectG
 	 * theme #GtkWidgets, use gtk_widget_get_style_context()
 	 * in order to get a style context ready to theme the widget.
 	 *
-	 * Return: A newly created #GtkStyleContext.
+	 * Returns: A newly created #GtkStyleContext.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -443,7 +443,7 @@ public class StyleContext : ObjectG
 	 * check for #GTK_STATE_FLAG_DIR_LTR and
 	 * #GTK_STATE_FLAG_DIR_RTL instead.
 	 *
-	 * Return: the widget direction
+	 * Returns: the widget direction
 	 *
 	 * Since: 3.0
 	 */
@@ -463,7 +463,7 @@ public class StyleContext : ObjectG
 	 * Params:
 	 *     state = state to retrieve the font for
 	 *
-	 * Return: the #PangoFontDescription for the given
+	 * Returns: the #PangoFontDescription for the given
 	 *     state.  This object is owned by GTK+ and should not be
 	 *     freed.
 	 *
@@ -484,7 +484,7 @@ public class StyleContext : ObjectG
 	/**
 	 * Returns the #GdkFrameClock to which @context is attached.
 	 *
-	 * Return: a #GdkFrameClock, or %NULL
+	 * Returns: a #GdkFrameClock, or %NULL
 	 *     if @context does not have an attached frame clock.
 	 *
 	 * Since: 3.8
@@ -504,7 +504,7 @@ public class StyleContext : ObjectG
 	/**
 	 * Returns the sides where rendered elements connect visually with others.
 	 *
-	 * Return: the junction sides
+	 * Returns: the junction sides
 	 *
 	 * Since: 3.0
 	 */
@@ -557,7 +557,7 @@ public class StyleContext : ObjectG
 	 * Gets the parent context set via gtk_style_context_set_parent().
 	 * See that function for details.
 	 *
-	 * Return: the parent context or %NULL
+	 * Returns: the parent context or %NULL
 	 *
 	 * Since: 3.4
 	 */
@@ -576,7 +576,7 @@ public class StyleContext : ObjectG
 	/**
 	 * Returns the widget path used for style matching.
 	 *
-	 * Return: A #GtkWidgetPath
+	 * Returns: A #GtkWidgetPath
 	 *
 	 * Since: 3.0
 	 */
@@ -626,7 +626,7 @@ public class StyleContext : ObjectG
 	/**
 	 * Returns the scale used for assets.
 	 *
-	 * Return: the scale
+	 * Returns: the scale
 	 *
 	 * Since: 3.10
 	 */
@@ -638,7 +638,7 @@ public class StyleContext : ObjectG
 	/**
 	 * Returns the #GdkScreen to which @context is attached.
 	 *
-	 * Return: a #GdkScreen.
+	 * Returns: a #GdkScreen.
 	 */
 	public Screen getScreen()
 	{
@@ -669,7 +669,7 @@ public class StyleContext : ObjectG
 	 * Params:
 	 *     property = style property name
 	 *
-	 * Return: %NULL or the section where a value
+	 * Returns: %NULL or the section where a value
 	 *     for @property was defined
 	 */
 	public CssSection getSection(string property)
@@ -692,7 +692,7 @@ public class StyleContext : ObjectG
 	 * If you need to retrieve the current state of a #GtkWidget, use
 	 * gtk_widget_get_state_flags().
 	 *
-	 * Return: the state flags
+	 * Returns: the state flags
 	 *
 	 * Since: 3.0
 	 */
@@ -753,7 +753,7 @@ public class StyleContext : ObjectG
 	 * Params:
 	 *     className = a class name
 	 *
-	 * Return: %TRUE if @context has @class_name defined
+	 * Returns: %TRUE if @context has @class_name defined
 	 *
 	 * Since: 3.0
 	 */
@@ -771,7 +771,7 @@ public class StyleContext : ObjectG
 	 *     regionName = a region name
 	 *     flagsReturn = return location for region flags
 	 *
-	 * Return: %TRUE if region is defined
+	 * Returns: %TRUE if region is defined
 	 *
 	 * Since: 3.0
 	 */
@@ -797,7 +797,7 @@ public class StyleContext : ObjectG
 	/**
 	 * Returns the list of classes currently defined in @context.
 	 *
-	 * Return: a #GList of
+	 * Returns: a #GList of
 	 *     strings with the currently defined classes. The contents
 	 *     of the list are owned by GTK+, but you must free the list
 	 *     itself with g_list_free() when you are done with it.
@@ -819,7 +819,7 @@ public class StyleContext : ObjectG
 	/**
 	 * Returns the list of regions currently defined in @context.
 	 *
-	 * Return: a #GList of
+	 * Returns: a #GList of
 	 *     strings with the currently defined regions. The contents
 	 *     of the list are owned by GTK+, but you must free the list
 	 *     itself with g_list_free() when you are done with it.
@@ -845,7 +845,7 @@ public class StyleContext : ObjectG
 	 *     colorName = color name to lookup
 	 *     color = Return location for the looked up color
 	 *
-	 * Return: %TRUE if @color_name was found and resolved, %FALSE otherwise
+	 * Returns: %TRUE if @color_name was found and resolved, %FALSE otherwise
 	 */
 	public bool lookupColor(string colorName, out RGBA color)
 	{
@@ -868,7 +868,7 @@ public class StyleContext : ObjectG
 	 * Params:
 	 *     stockId = an icon name
 	 *
-	 * Return: The looked up %GtkIconSet, or %NULL
+	 * Returns: The looked up %GtkIconSet, or %NULL
 	 */
 	public IconSet lookupIconSet(string stockId)
 	{
@@ -1244,7 +1244,7 @@ public class StyleContext : ObjectG
 	 *     state = a widget state
 	 *     progress = return location for the transition progress
 	 *
-	 * Return: %TRUE if there is a running transition animation for @state.
+	 * Returns: %TRUE if there is a running transition animation for @state.
 	 *
 	 * Since: 3.0
 	 */
@@ -1268,7 +1268,7 @@ public class StyleContext : ObjectG
 	 * Params:
 	 *     flags = Flags that determine what to print
 	 *
-	 * Return: a newly allocated string representing @context
+	 * Returns: a newly allocated string representing @context
 	 *
 	 * Since: 3.20
 	 */
@@ -1634,7 +1634,7 @@ public class StyleContext : ObjectG
 	 *         A size of `(GtkIconSize) -1` means render at the size of the source
 	 *         and don’t scale.
 	 *
-	 * Return: a newly-created #GdkPixbuf containing the rendered icon
+	 * Returns: a newly-created #GdkPixbuf containing the rendered icon
 	 *
 	 * Since: 3.0
 	 */

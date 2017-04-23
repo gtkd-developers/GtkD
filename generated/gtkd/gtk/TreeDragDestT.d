@@ -52,7 +52,7 @@ public template TreeDragDestT(TStruct)
 	 *     dest = row to drop in front of
 	 *     selectionData = data to drop
 	 *
-	 * Return: whether a new row was created before position @dest
+	 * Returns: whether a new row was created before position @dest
 	 */
 	public bool dragDataReceived(TreePath dest, SelectionData selectionData)
 	{
@@ -70,7 +70,7 @@ public template TreeDragDestT(TStruct)
 	 *     destPath = destination row
 	 *     selectionData = the data being dragged
 	 *
-	 * Return: %TRUE if a drop is possible before @dest_path
+	 * Returns: %TRUE if a drop is possible before @dest_path
 	 */
 	public bool rowDropPossible(TreePath destPath, SelectionData selectionData)
 	{

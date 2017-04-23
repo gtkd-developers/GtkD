@@ -72,7 +72,7 @@ public struct Testing
 	 *     modifiers = Keyboard modifiers the event is setup with
 	 *     buttonPressrelease = either %GDK_BUTTON_PRESS or %GDK_BUTTON_RELEASE
 	 *
-	 * Return: whether all actions necessary for a button event simulation
+	 * Returns: whether all actions necessary for a button event simulation
 	 *     were carried out successfully
 	 *
 	 * Since: 2.14
@@ -108,7 +108,7 @@ public struct Testing
 	 *     modifiers = Keyboard modifiers the event is setup with
 	 *     keyPressrelease = either %GDK_KEY_PRESS or %GDK_KEY_RELEASE
 	 *
-	 * Return: whether all actions necessary for a key event simulation
+	 * Returns: whether all actions necessary for a key event simulation
 	 *     were carried out successfully
 	 *
 	 * Since: 2.14

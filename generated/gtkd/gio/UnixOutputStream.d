@@ -101,7 +101,7 @@ public class UnixOutputStream : OutputStream, FileDescriptorBasedIF, PollableOut
 	 *     fd = a UNIX file descriptor
 	 *     closeFd = %TRUE to close the file descriptor when done
 	 *
-	 * Return: a new #GOutputStream
+	 * Returns: a new #GOutputStream
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -121,7 +121,7 @@ public class UnixOutputStream : OutputStream, FileDescriptorBasedIF, PollableOut
 	 * Returns whether the file descriptor of @stream will be
 	 * closed when the stream is closed.
 	 *
-	 * Return: %TRUE if the file descriptor is closed when done
+	 * Returns: %TRUE if the file descriptor is closed when done
 	 *
 	 * Since: 2.20
 	 */
@@ -133,7 +133,7 @@ public class UnixOutputStream : OutputStream, FileDescriptorBasedIF, PollableOut
 	/**
 	 * Return the UNIX file descriptor that the stream writes to.
 	 *
-	 * Return: The file descriptor of @stream
+	 * Returns: The file descriptor of @stream
 	 *
 	 * Since: 2.20
 	 */

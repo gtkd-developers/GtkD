@@ -260,7 +260,7 @@ public class Cond
 	 *     mutex = a #GMutex that is currently locked
 	 *     endTime = the monotonic time to wait until
 	 *
-	 * Return: %TRUE on a signal, %FALSE on a timeout
+	 * Returns: %TRUE on a signal, %FALSE on a timeout
 	 *
 	 * Since: 2.32
 	 */

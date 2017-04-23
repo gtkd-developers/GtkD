@@ -131,7 +131,7 @@ public class ElementFactory : PluginFeature
 	 * Params:
 	 *     name = name of factory to find
 	 *
-	 * Return: #GstElementFactory if found,
+	 * Returns: #GstElementFactory if found,
 	 *     %NULL otherwise
 	 */
 	public static ElementFactory find(string name)
@@ -161,7 +161,7 @@ public class ElementFactory : PluginFeature
 	 *     direction = a #GstPadDirection to filter on
 	 *     subsetonly = whether to filter on caps subsets or not.
 	 *
-	 * Return: a #GList of
+	 * Returns: a #GList of
 	 *     #GstElementFactory elements that match the given requisites.
 	 *     Use #gst_plugin_feature_list_free after usage.
 	 */
@@ -186,7 +186,7 @@ public class ElementFactory : PluginFeature
 	 *     type = a #GstElementFactoryListType
 	 *     minrank = Minimum rank
 	 *
-	 * Return: a #GList of
+	 * Returns: a #GList of
 	 *     #GstElementFactory elements. Use gst_plugin_feature_list_free() after
 	 *     usage.
 	 */
@@ -213,7 +213,7 @@ public class ElementFactory : PluginFeature
 	 *     name = name of new element, or %NULL to automatically create
 	 *         a unique name
 	 *
-	 * Return: new #GstElement or %NULL
+	 * Returns: new #GstElement or %NULL
 	 *     if unable to create element
 	 */
 	public static Element make(string factoryname, string name)
@@ -234,7 +234,7 @@ public class ElementFactory : PluginFeature
 	 * Params:
 	 *     caps = the caps to check
 	 *
-	 * Return: %TRUE if the caps are fully compatible.
+	 * Returns: %TRUE if the caps are fully compatible.
 	 */
 	public bool canSinkAllCaps(Caps caps)
 	{
@@ -247,7 +247,7 @@ public class ElementFactory : PluginFeature
 	 * Params:
 	 *     caps = the caps to check
 	 *
-	 * Return: %TRUE if the caps have a common subset.
+	 * Returns: %TRUE if the caps have a common subset.
 	 */
 	public bool canSinkAnyCaps(Caps caps)
 	{
@@ -260,7 +260,7 @@ public class ElementFactory : PluginFeature
 	 * Params:
 	 *     caps = the caps to check
 	 *
-	 * Return: %TRUE if the caps are fully compatible.
+	 * Returns: %TRUE if the caps are fully compatible.
 	 */
 	public bool canSrcAllCaps(Caps caps)
 	{
@@ -273,7 +273,7 @@ public class ElementFactory : PluginFeature
 	 * Params:
 	 *     caps = the caps to check
 	 *
-	 * Return: %TRUE if the caps have a common subset.
+	 * Returns: %TRUE if the caps have a common subset.
 	 */
 	public bool canSrcAnyCaps(Caps caps)
 	{
@@ -289,7 +289,7 @@ public class ElementFactory : PluginFeature
 	 *     name = name of new element, or %NULL to automatically create
 	 *         a unique name
 	 *
-	 * Return: new #GstElement or %NULL
+	 * Returns: new #GstElement or %NULL
 	 *     if the element couldn't be created
 	 */
 	public Element create(string name)
@@ -309,7 +309,7 @@ public class ElementFactory : PluginFeature
 	 * only be retrieved if the element factory is loaded, which can be
 	 * assured with gst_plugin_feature_load().
 	 *
-	 * Return: the #GType for elements managed by this factory or 0 if
+	 * Returns: the #GType for elements managed by this factory or 0 if
 	 *     the factory is not loaded.
 	 */
 	public GType getElementType()
@@ -323,7 +323,7 @@ public class ElementFactory : PluginFeature
 	 * Params:
 	 *     key = a key
 	 *
-	 * Return: the metadata with @key on @factory or %NULL
+	 * Returns: the metadata with @key on @factory or %NULL
 	 *     when there was no metadata with the given @key.
 	 */
 	public string getMetadata(string key)
@@ -334,7 +334,7 @@ public class ElementFactory : PluginFeature
 	/**
 	 * Get the available keys for the metadata on @factory.
 	 *
-	 * Return: a %NULL-terminated array of key strings, or %NULL when there is no
+	 * Returns: a %NULL-terminated array of key strings, or %NULL when there is no
 	 *     metadata. Free with g_strfreev() when no longer needed.
 	 */
 	public string[] getMetadataKeys()
@@ -348,7 +348,7 @@ public class ElementFactory : PluginFeature
 	/**
 	 * Gets the number of pad_templates in this factory.
 	 *
-	 * Return: the number of pad_templates
+	 * Returns: the number of pad_templates
 	 */
 	public uint getNumPadTemplates()
 	{
@@ -358,7 +358,7 @@ public class ElementFactory : PluginFeature
 	/**
 	 * Gets the #GList of #GstStaticPadTemplate for this factory.
 	 *
-	 * Return: the
+	 * Returns: the
 	 *     static pad templates
 	 */
 	public ListG getStaticPadTemplates()
@@ -379,7 +379,7 @@ public class ElementFactory : PluginFeature
 	 * array, as it is still owned by the element factory. Use g_strdupv() to
 	 * make a copy of the protocol string array if you need to.
 	 *
-	 * Return: the supported protocols
+	 * Returns: the supported protocols
 	 *     or %NULL
 	 */
 	public string[] getUriProtocols()
@@ -390,7 +390,7 @@ public class ElementFactory : PluginFeature
 	/**
 	 * Gets the type of URIs the element supports or #GST_URI_UNKNOWN if none.
 	 *
-	 * Return: type of URIs this element supports
+	 * Returns: type of URIs this element supports
 	 */
 	public GstURIType getUriType()
 	{
@@ -403,7 +403,7 @@ public class ElementFactory : PluginFeature
 	 * Params:
 	 *     interfacename = an interface name
 	 *
-	 * Return: %TRUE when @factory implement the interface.
+	 * Returns: %TRUE when @factory implement the interface.
 	 */
 	public bool hasInterface(string interfacename)
 	{
@@ -416,7 +416,7 @@ public class ElementFactory : PluginFeature
 	 * Params:
 	 *     type = a #GstElementFactoryListType
 	 *
-	 * Return: %TRUE if @factory is of @type.
+	 * Returns: %TRUE if @factory is of @type.
 	 */
 	public bool listIsType(GstElementFactoryListType type)
 	{

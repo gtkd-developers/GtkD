@@ -75,7 +75,7 @@ public class StockItem
 	/**
 	 * Copies a stock item, mostly useful for language bindings and not in applications.
 	 *
-	 * Return: a new #GtkStockItem
+	 * Returns: a new #GtkStockItem
 	 */
 	public StockItem copy()
 	{
@@ -146,7 +146,7 @@ public class StockItem
 	 * or registered with gtk_stock_add(). The list must be freed with g_slist_free(),
 	 * and each string in the list must be freed with g_free().
 	 *
-	 * Return: a list of known stock IDs
+	 * Returns: a list of known stock IDs
 	 */
 	public static ListSG stockListIds()
 	{
@@ -168,7 +168,7 @@ public class StockItem
 	 *     stockId = a stock item name
 	 *     item = stock item to initialize with values
 	 *
-	 * Return: %TRUE if @item was initialized
+	 * Returns: %TRUE if @item was initialized
 	 */
 	public static bool stockLookup(string stockId, out StockItem item)
 	{

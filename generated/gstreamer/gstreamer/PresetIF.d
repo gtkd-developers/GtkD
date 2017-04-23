@@ -66,7 +66,7 @@ public interface PresetIF{
 	 * Gets the directory for application specific presets if set by the
 	 * application.
 	 *
-	 * Return: the directory or %NULL, don't free or modify
+	 * Returns: the directory or %NULL, don't free or modify
 	 *     the string
 	 */
 	public static string getAppDir();
@@ -79,7 +79,7 @@ public interface PresetIF{
 	 * Params:
 	 *     appDir = the application specific preset dir
 	 *
-	 * Return: %TRUE for success, %FALSE if the dir already has been set
+	 * Returns: %TRUE for success, %FALSE if the dir already has been set
 	 */
 	public static bool setAppDir(string appDir);
 
@@ -89,7 +89,7 @@ public interface PresetIF{
 	 * Params:
 	 *     name = preset name to remove
 	 *
-	 * Return: %TRUE for success, %FALSE if e.g. there is no preset with that @name
+	 * Returns: %TRUE for success, %FALSE if e.g. there is no preset with that @name
 	 */
 	public bool deletePreset(string name);
 
@@ -102,7 +102,7 @@ public interface PresetIF{
 	 *     tag = meta data item name
 	 *     value = value
 	 *
-	 * Return: %TRUE for success, %FALSE if e.g. there is no preset with that @name
+	 * Returns: %TRUE for success, %FALSE if e.g. there is no preset with that @name
 	 *     or no value for the given @tag
 	 */
 	public bool getMeta(string name, string tag, out string value);
@@ -110,14 +110,14 @@ public interface PresetIF{
 	/**
 	 * Get a copy of preset names as a %NULL terminated string array.
 	 *
-	 * Return: list with names, use g_strfreev() after usage.
+	 * Returns: list with names, use g_strfreev() after usage.
 	 */
 	public string[] getPresetNames();
 
 	/**
 	 * Get a the names of the GObject properties that can be used for presets.
 	 *
-	 * Return: an
+	 * Returns: an
 	 *     array of property names which should be freed with g_strfreev() after use.
 	 */
 	public string[] getPropertyNames();
@@ -125,7 +125,7 @@ public interface PresetIF{
 	/**
 	 * Check if one can add new presets, change existing ones and remove presets.
 	 *
-	 * Return: %TRUE if presets are editable or %FALSE if they are static
+	 * Returns: %TRUE if presets are editable or %FALSE if they are static
 	 *
 	 * Since: 1.6
 	 */
@@ -137,7 +137,7 @@ public interface PresetIF{
 	 * Params:
 	 *     name = preset name to load
 	 *
-	 * Return: %TRUE for success, %FALSE if e.g. there is no preset with that @name
+	 * Returns: %TRUE for success, %FALSE if e.g. there is no preset with that @name
 	 */
 	public bool loadPreset(string name);
 
@@ -149,7 +149,7 @@ public interface PresetIF{
 	 *     oldName = current preset name
 	 *     newName = new preset name
 	 *
-	 * Return: %TRUE for success, %FALSE if e.g. there is no preset with @old_name
+	 * Returns: %TRUE for success, %FALSE if e.g. there is no preset with @old_name
 	 */
 	public bool renamePreset(string oldName, string newName);
 
@@ -160,7 +160,7 @@ public interface PresetIF{
 	 * Params:
 	 *     name = preset name to save
 	 *
-	 * Return: %TRUE for success, %FALSE
+	 * Returns: %TRUE for success, %FALSE
 	 */
 	public bool savePreset(string name);
 
@@ -174,7 +174,7 @@ public interface PresetIF{
 	 *     tag = meta data item name
 	 *     value = new value
 	 *
-	 * Return: %TRUE for success, %FALSE if e.g. there is no preset with that @name
+	 * Returns: %TRUE for success, %FALSE if e.g. there is no preset with that @name
 	 */
 	public bool setMeta(string name, string tag, string value);
 }

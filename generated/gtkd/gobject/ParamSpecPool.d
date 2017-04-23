@@ -86,7 +86,7 @@ public class ParamSpecPool
 	 * Params:
 	 *     ownerType = the owner to look for
 	 *
-	 * Return: a newly
+	 * Returns: a newly
 	 *     allocated array containing pointers to all #GParamSpecs
 	 *     owned by @owner_type in the pool
 	 */
@@ -117,7 +117,7 @@ public class ParamSpecPool
 	 * Params:
 	 *     ownerType = the owner to look for
 	 *
-	 * Return: a
+	 * Returns: a
 	 *     #GList of all #GParamSpecs owned by @owner_type in
 	 *     the pool#GParamSpecs.
 	 */
@@ -142,7 +142,7 @@ public class ParamSpecPool
 	 *     walkAncestors = If %TRUE, also try to find a #GParamSpec with @param_name
 	 *         owned by an ancestor of @owner_type.
 	 *
-	 * Return: The found #GParamSpec, or %NULL if no
+	 * Returns: The found #GParamSpec, or %NULL if no
 	 *     matching #GParamSpec was found.
 	 */
 	public ParamSpec lookup(string paramName, GType ownerType, bool walkAncestors)
@@ -179,7 +179,7 @@ public class ParamSpecPool
 	 * Params:
 	 *     typePrefixing = Whether the pool will support type-prefixed property names.
 	 *
-	 * Return: a newly allocated #GParamSpecPool.
+	 * Returns: a newly allocated #GParamSpecPool.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

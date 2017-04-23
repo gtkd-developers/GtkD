@@ -59,7 +59,7 @@ public template LoadableIconT(TStruct)
 	 *     cancellable = optional #GCancellable object, %NULL to
 	 *         ignore.
 	 *
-	 * Return: a #GInputStream to read the icon from.
+	 * Returns: a #GInputStream to read the icon from.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -110,7 +110,7 @@ public template LoadableIconT(TStruct)
 	 *     type = a location to store the type of the loaded
 	 *         icon, %NULL to ignore.
 	 *
-	 * Return: a #GInputStream to read the icon from.
+	 * Returns: a #GInputStream to read the icon from.
 	 *
 	 * Throws: GException on failure.
 	 */

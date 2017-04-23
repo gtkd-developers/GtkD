@@ -159,7 +159,7 @@ public class ToolPalette : Container, OrientableIF, ScrollableIF
 	/**
 	 * Creates a new tool palette.
 	 *
-	 * Return: a new #GtkToolPalette
+	 * Returns: a new #GtkToolPalette
 	 *
 	 * Since: 2.20
 	 *
@@ -180,7 +180,7 @@ public class ToolPalette : Container, OrientableIF, ScrollableIF
 	/**
 	 * Get the target entry for a dragged #GtkToolItemGroup.
 	 *
-	 * Return: the #GtkTargetEntry for a dragged group
+	 * Returns: the #GtkTargetEntry for a dragged group
 	 *
 	 * Since: 2.20
 	 */
@@ -199,7 +199,7 @@ public class ToolPalette : Container, OrientableIF, ScrollableIF
 	/**
 	 * Gets the target entry for a dragged #GtkToolItem.
 	 *
-	 * Return: the #GtkTargetEntry for a dragged item.
+	 * Returns: the #GtkTargetEntry for a dragged item.
 	 *
 	 * Since: 2.20
 	 */
@@ -242,7 +242,7 @@ public class ToolPalette : Container, OrientableIF, ScrollableIF
 	 * Params:
 	 *     selection = a #GtkSelectionData
 	 *
-	 * Return: the dragged item in selection
+	 * Returns: the dragged item in selection
 	 *
 	 * Since: 2.20
 	 */
@@ -265,7 +265,7 @@ public class ToolPalette : Container, OrientableIF, ScrollableIF
 	 *     x = the x position
 	 *     y = the y position
 	 *
-	 * Return: the #GtkToolItemGroup at position
+	 * Returns: the #GtkToolItemGroup at position
 	 *     or %NULL if there is no such group
 	 *
 	 * Since: 2.20
@@ -290,7 +290,7 @@ public class ToolPalette : Container, OrientableIF, ScrollableIF
 	 *     x = the x position
 	 *     y = the y position
 	 *
-	 * Return: the #GtkToolItem at position or %NULL if there is no such item
+	 * Returns: the #GtkToolItem at position or %NULL if there is no such item
 	 *
 	 * Since: 2.20
 	 */
@@ -313,7 +313,7 @@ public class ToolPalette : Container, OrientableIF, ScrollableIF
 	 * Params:
 	 *     group = a #GtkToolItemGroup which is a child of palette
 	 *
-	 * Return: %TRUE if @group is exclusive
+	 * Returns: %TRUE if @group is exclusive
 	 *
 	 * Since: 2.20
 	 */
@@ -329,7 +329,7 @@ public class ToolPalette : Container, OrientableIF, ScrollableIF
 	 * Params:
 	 *     group = a #GtkToolItemGroup which is a child of palette
 	 *
-	 * Return: %TRUE if group should be given extra space, %FALSE otherwise
+	 * Returns: %TRUE if group should be given extra space, %FALSE otherwise
 	 *
 	 * Since: 2.20
 	 */
@@ -345,7 +345,7 @@ public class ToolPalette : Container, OrientableIF, ScrollableIF
 	 * Params:
 	 *     group = a #GtkToolItemGroup
 	 *
-	 * Return: the index of group or -1 if @group is not a child of @palette
+	 * Returns: the index of group or -1 if @group is not a child of @palette
 	 *
 	 * Since: 2.20
 	 */
@@ -358,7 +358,7 @@ public class ToolPalette : Container, OrientableIF, ScrollableIF
 	 * Gets the size of icons in the tool palette.
 	 * See gtk_tool_palette_set_icon_size().
 	 *
-	 * Return: the #GtkIconSize of icons in the tool palette
+	 * Returns: the #GtkIconSize of icons in the tool palette
 	 *
 	 * Since: 2.20
 	 */
@@ -370,7 +370,7 @@ public class ToolPalette : Container, OrientableIF, ScrollableIF
 	/**
 	 * Gets the style (icons, text or both) of items in the tool palette.
 	 *
-	 * Return: the #GtkToolbarStyle of items in the tool palette.
+	 * Returns: the #GtkToolbarStyle of items in the tool palette.
 	 *
 	 * Since: 2.20
 	 */

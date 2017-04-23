@@ -95,7 +95,7 @@ public class SimpleAction : ObjectG, ActionIF
 	 *     name = the name of the action
 	 *     parameterType = the type of parameter to the activate function
 	 *
-	 * Return: a new #GSimpleAction
+	 * Returns: a new #GSimpleAction
 	 *
 	 * Since: 2.28
 	 *
@@ -126,7 +126,7 @@ public class SimpleAction : ObjectG, ActionIF
 	 *     parameterType = the type of the parameter to the activate function
 	 *     state = the initial state of the action
 	 *
-	 * Return: a new #GSimpleAction
+	 * Returns: a new #GSimpleAction
 	 *
 	 * Since: 2.28
 	 *

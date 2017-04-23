@@ -88,7 +88,7 @@ public class TextAttributes
 	 * Creates a #GtkTextAttributes, which describes
 	 * a set of properties on some text.
 	 *
-	 * Return: a new #GtkTextAttributes,
+	 * Returns: a new #GtkTextAttributes,
 	 *     free with gtk_text_attributes_unref().
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -108,7 +108,7 @@ public class TextAttributes
 	/**
 	 * Copies @src and returns a new #GtkTextAttributes.
 	 *
-	 * Return: a copy of @src,
+	 * Returns: a copy of @src,
 	 *     free with gtk_text_attributes_unref()
 	 */
 	public TextAttributes copy()
@@ -138,7 +138,7 @@ public class TextAttributes
 	/**
 	 * Increments the reference count on @values.
 	 *
-	 * Return: the #GtkTextAttributes that were passed in
+	 * Returns: the #GtkTextAttributes that were passed in
 	 */
 	public TextAttributes doref()
 	{

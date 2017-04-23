@@ -89,7 +89,7 @@ public class SocketAddress : ObjectG, SocketConnectableIF
 	 *     native = a pointer to a struct sockaddr
 	 *     len = the size of the memory location pointed to by @native
 	 *
-	 * Return: a new #GSocketAddress if @native could successfully
+	 * Returns: a new #GSocketAddress if @native could successfully
 	 *     be converted, otherwise %NULL
 	 *
 	 * Since: 2.22
@@ -111,7 +111,7 @@ public class SocketAddress : ObjectG, SocketConnectableIF
 	/**
 	 * Gets the socket family type of @address.
 	 *
-	 * Return: the socket family type of @address
+	 * Returns: the socket family type of @address
 	 *
 	 * Since: 2.22
 	 */
@@ -125,7 +125,7 @@ public class SocketAddress : ObjectG, SocketConnectableIF
 	 * You can use this to allocate memory to pass to
 	 * g_socket_address_to_native().
 	 *
-	 * Return: the size of the native struct sockaddr that
+	 * Returns: the size of the native struct sockaddr that
 	 *     @address represents
 	 *
 	 * Since: 2.22
@@ -149,7 +149,7 @@ public class SocketAddress : ObjectG, SocketConnectableIF
 	 *     destlen = the size of @dest. Must be at least as large as
 	 *         g_socket_address_get_native_size()
 	 *
-	 * Return: %TRUE if @dest was filled in, %FALSE on error
+	 * Returns: %TRUE if @dest was filled in, %FALSE on error
 	 *
 	 * Since: 2.22
 	 *

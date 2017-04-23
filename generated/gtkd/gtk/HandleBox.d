@@ -105,7 +105,7 @@ public class HandleBox : Bin
 	 *
 	 * Deprecated: #GtkHandleBox has been deprecated.
 	 *
-	 * Return: a new #GtkHandleBox.
+	 * Returns: a new #GtkHandleBox.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -126,7 +126,7 @@ public class HandleBox : Bin
 	 *
 	 * Deprecated: #GtkHandleBox has been deprecated.
 	 *
-	 * Return: %TRUE if the child is currently detached, otherwise %FALSE
+	 * Returns: %TRUE if the child is currently detached, otherwise %FALSE
 	 *
 	 * Since: 2.14
 	 */
@@ -141,7 +141,7 @@ public class HandleBox : Bin
 	 *
 	 * Deprecated: #GtkHandleBox has been deprecated.
 	 *
-	 * Return: the current handle position.
+	 * Returns: the current handle position.
 	 */
 	public GtkPositionType getHandlePosition()
 	{
@@ -154,7 +154,7 @@ public class HandleBox : Bin
 	 *
 	 * Deprecated: #GtkHandleBox has been deprecated.
 	 *
-	 * Return: the type of shadow currently drawn around the handle box.
+	 * Returns: the type of shadow currently drawn around the handle box.
 	 */
 	public GtkShadowType getShadowType()
 	{
@@ -167,7 +167,7 @@ public class HandleBox : Bin
 	 *
 	 * Deprecated: #GtkHandleBox has been deprecated.
 	 *
-	 * Return: the edge used for determining reattachment, or
+	 * Returns: the edge used for determining reattachment, or
 	 *     (GtkPositionType)-1 if this is determined (as per default)
 	 *     from the handle position.
 	 */

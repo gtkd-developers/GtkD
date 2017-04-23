@@ -152,7 +152,7 @@ public class TestDBus : ObjectG
 	 * Params:
 	 *     flags = a #GTestDBusFlags
 	 *
-	 * Return: a new #GTestDBus.
+	 * Returns: a new #GTestDBus.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -210,7 +210,7 @@ public class TestDBus : ObjectG
 	 * been called yet, %NULL is returned. This can be used with
 	 * g_dbus_connection_new_for_address().
 	 *
-	 * Return: the address of the bus, or %NULL.
+	 * Returns: the address of the bus, or %NULL.
 	 */
 	public string getBusAddress()
 	{
@@ -220,7 +220,7 @@ public class TestDBus : ObjectG
 	/**
 	 * Get the flags of the #GTestDBus object.
 	 *
-	 * Return: the value of #GTestDBus:flags property
+	 * Returns: the value of #GTestDBus:flags property
 	 */
 	public GTestDBusFlags getFlags()
 	{

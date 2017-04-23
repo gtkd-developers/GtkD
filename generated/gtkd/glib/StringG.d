@@ -68,7 +68,7 @@ public class StringG
 	 * Params:
 	 *     val = the string to append onto the end of @string
 	 *
-	 * Return: @string
+	 * Returns: @string
 	 */
 	public StringG append(string val)
 	{
@@ -89,7 +89,7 @@ public class StringG
 	 * Params:
 	 *     c = the byte to append onto the end of @string
 	 *
-	 * Return: @string
+	 * Returns: @string
 	 */
 	public StringG appendC(char c)
 	{
@@ -116,7 +116,7 @@ public class StringG
 	 *     val = bytes to append
 	 *     len = number of bytes of @val to use
 	 *
-	 * Return: @string
+	 * Returns: @string
 	 */
 	public StringG appendLen(string val, ptrdiff_t len)
 	{
@@ -137,7 +137,7 @@ public class StringG
 	 * Params:
 	 *     wc = a Unicode character
 	 *
-	 * Return: @string
+	 * Returns: @string
 	 */
 	public StringG appendUnichar(dchar wc)
 	{
@@ -161,7 +161,7 @@ public class StringG
 	 *         to be used, or %NULL
 	 *     allowUtf8 = set %TRUE if the escaped string may include UTF8 characters
 	 *
-	 * Return: @string
+	 * Returns: @string
 	 *
 	 * Since: 2.16
 	 */
@@ -197,7 +197,7 @@ public class StringG
 	/**
 	 * Converts all uppercase ASCII letters to lowercase ASCII letters.
 	 *
-	 * Return: passed-in @string pointer, with all the
+	 * Returns: passed-in @string pointer, with all the
 	 *     uppercase characters converted to lowercase in place,
 	 *     with semantics that exactly match g_ascii_tolower().
 	 */
@@ -216,7 +216,7 @@ public class StringG
 	/**
 	 * Converts all lowercase ASCII letters to uppercase ASCII letters.
 	 *
-	 * Return: passed-in @string pointer, with all the
+	 * Returns: passed-in @string pointer, with all the
 	 *     lowercase characters converted to uppercase in place,
 	 *     with semantics that exactly match g_ascii_toupper().
 	 */
@@ -241,7 +241,7 @@ public class StringG
 	 * Params:
 	 *     rval = the string to copy into @string
 	 *
-	 * Return: @string
+	 * Returns: @string
 	 */
 	public StringG assign(string rval)
 	{
@@ -262,7 +262,7 @@ public class StringG
 	 * tolower() function, which is almost never the right thing.
 	 * Use g_string_ascii_down() or g_utf8_strdown() instead.
 	 *
-	 * Return: the #GString
+	 * Returns: the #GString
 	 */
 	public StringG down()
 	{
@@ -283,7 +283,7 @@ public class StringG
 	 * Params:
 	 *     v2 = another #GString
 	 *
-	 * Return: %TRUE if the strings are the same length and contain the
+	 * Returns: %TRUE if the strings are the same length and contain the
 	 *     same bytes
 	 */
 	public bool equal(StringG v2)
@@ -300,7 +300,7 @@ public class StringG
 	 *     len = the number of bytes to remove, or -1 to remove all
 	 *         following bytes
 	 *
-	 * Return: @string
+	 * Returns: @string
 	 */
 	public StringG erase(ptrdiff_t pos, ptrdiff_t len)
 	{
@@ -323,7 +323,7 @@ public class StringG
 	 * Params:
 	 *     freeSegment = if %TRUE, the actual character data is freed as well
 	 *
-	 * Return: the character data of @string
+	 * Returns: the character data of @string
 	 *     (i.e. %NULL if @free_segment is %TRUE)
 	 */
 	public string free(bool freeSegment)
@@ -344,7 +344,7 @@ public class StringG
 	 * #GBytes does not include this extra nul; i.e. it has length exactly
 	 * equal to the "len" member.
 	 *
-	 * Return: A newly allocated #GBytes containing contents of @string; @string itself is freed
+	 * Returns: A newly allocated #GBytes containing contents of @string; @string itself is freed
 	 *
 	 * Since: 2.34
 	 */
@@ -363,7 +363,7 @@ public class StringG
 	/**
 	 * Creates a hash code for @str; for use with #GHashTable.
 	 *
-	 * Return: hash code for @str
+	 * Returns: hash code for @str
 	 */
 	public uint hash()
 	{
@@ -378,7 +378,7 @@ public class StringG
 	 *     pos = the position to insert the copy of the string
 	 *     val = the string to insert
 	 *
-	 * Return: @string
+	 * Returns: @string
 	 */
 	public StringG insert(ptrdiff_t pos, string val)
 	{
@@ -399,7 +399,7 @@ public class StringG
 	 *     pos = the position to insert the byte
 	 *     c = the byte to insert
 	 *
-	 * Return: @string
+	 * Returns: @string
 	 */
 	public StringG insertC(ptrdiff_t pos, char c)
 	{
@@ -429,7 +429,7 @@ public class StringG
 	 *     val = bytes to insert
 	 *     len = number of bytes of @val to insert
 	 *
-	 * Return: @string
+	 * Returns: @string
 	 */
 	public StringG insertLen(ptrdiff_t pos, string val, ptrdiff_t len)
 	{
@@ -452,7 +452,7 @@ public class StringG
 	 *         to append at the end of the string
 	 *     wc = a Unicode character
 	 *
-	 * Return: @string
+	 * Returns: @string
 	 */
 	public StringG insertUnichar(ptrdiff_t pos, dchar wc)
 	{
@@ -473,7 +473,7 @@ public class StringG
 	 *     pos = the position at which to start overwriting
 	 *     val = the string that will overwrite the @string starting at @pos
 	 *
-	 * Return: @string
+	 * Returns: @string
 	 *
 	 * Since: 2.14
 	 */
@@ -498,7 +498,7 @@ public class StringG
 	 *     val = the string that will overwrite the @string starting at @pos
 	 *     len = the number of bytes to write from @val
 	 *
-	 * Return: @string
+	 * Returns: @string
 	 *
 	 * Since: 2.14
 	 */
@@ -521,7 +521,7 @@ public class StringG
 	 * Params:
 	 *     val = the string to prepend on the start of @string
 	 *
-	 * Return: @string
+	 * Returns: @string
 	 */
 	public StringG prepend(string val)
 	{
@@ -542,7 +542,7 @@ public class StringG
 	 * Params:
 	 *     c = the byte to prepend on the start of the #GString
 	 *
-	 * Return: @string
+	 * Returns: @string
 	 */
 	public StringG prependC(char c)
 	{
@@ -569,7 +569,7 @@ public class StringG
 	 *     val = bytes to prepend
 	 *     len = number of bytes in @val to prepend
 	 *
-	 * Return: @string
+	 * Returns: @string
 	 */
 	public StringG prependLen(string val, ptrdiff_t len)
 	{
@@ -590,7 +590,7 @@ public class StringG
 	 * Params:
 	 *     wc = a Unicode character
 	 *
-	 * Return: @string
+	 * Returns: @string
 	 */
 	public StringG prependUnichar(dchar wc)
 	{
@@ -614,7 +614,7 @@ public class StringG
 	 * Params:
 	 *     len = the new length
 	 *
-	 * Return: @string
+	 * Returns: @string
 	 */
 	public StringG setSize(size_t len)
 	{
@@ -634,7 +634,7 @@ public class StringG
 	 * Params:
 	 *     len = the new size of @string
 	 *
-	 * Return: @string
+	 * Returns: @string
 	 */
 	public StringG truncate(size_t len)
 	{
@@ -655,7 +655,7 @@ public class StringG
 	 * toupper() function, which is almost never the right thing.
 	 * Use g_string_ascii_up() or g_utf8_strup() instead.
 	 *
-	 * Return: @string
+	 * Returns: @string
 	 */
 	public StringG up()
 	{
@@ -692,7 +692,7 @@ public class StringG
 	 *     init = the initial text to copy into the string, or %NULL to
 	 *         start with an empty string
 	 *
-	 * Return: the new #GString
+	 * Returns: the new #GString
 	 */
 	public static StringG stringNew(string init)
 	{
@@ -719,7 +719,7 @@ public class StringG
 	 *     init = initial contents of the string
 	 *     len = length of @init to use
 	 *
-	 * Return: a new #GString
+	 * Returns: a new #GString
 	 */
 	public static StringG stringNewLen(string init, ptrdiff_t len)
 	{
@@ -743,7 +743,7 @@ public class StringG
 	 *     dflSize = the default size of the space allocated to
 	 *         hold the string
 	 *
-	 * Return: the new #GString
+	 * Returns: the new #GString
 	 */
 	public static StringG stringSizedNew(size_t dflSize)
 	{

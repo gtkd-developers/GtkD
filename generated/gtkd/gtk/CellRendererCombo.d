@@ -98,7 +98,7 @@ public class CellRendererCombo : CellRendererText
 	 * on the cell renderer to a string value in the model, thus rendering
 	 * a different string in each row of the #GtkTreeView.
 	 *
-	 * Return: the new cell renderer
+	 * Returns: the new cell renderer
 	 *
 	 * Since: 2.6
 	 *

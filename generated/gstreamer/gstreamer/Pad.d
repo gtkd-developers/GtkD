@@ -193,7 +193,7 @@ public class Pad : ObjectGst
 	 *     name = the name of the new pad.
 	 *     direction = the #GstPadDirection of the pad.
 	 *
-	 * Return: a new #GstPad, or %NULL in
+	 * Returns: a new #GstPad, or %NULL in
 	 *     case of an error.
 	 *
 	 *     MT safe.
@@ -222,7 +222,7 @@ public class Pad : ObjectGst
 	 *     templ = the #GstStaticPadTemplate to use
 	 *     name = the name of the pad
 	 *
-	 * Return: a new #GstPad, or %NULL in
+	 * Returns: a new #GstPad, or %NULL in
 	 *     case of an error.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -249,7 +249,7 @@ public class Pad : ObjectGst
 	 *     templ = the pad template to use
 	 *     name = the name of the pad
 	 *
-	 * Return: a new #GstPad, or %NULL in
+	 * Returns: a new #GstPad, or %NULL in
 	 *     case of an error.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -272,7 +272,7 @@ public class Pad : ObjectGst
 	 * Params:
 	 *     ret = a #GstPadLinkReturn to get the name of.
 	 *
-	 * Return: a static string with the name of the pad-link return.
+	 * Returns: a static string with the name of the pad-link return.
 	 *
 	 * Since: 1.4
 	 */
@@ -291,7 +291,7 @@ public class Pad : ObjectGst
 	 *     mode = the requested activation mode
 	 *     active = whether or not the pad should be active.
 	 *
-	 * Return: %TRUE if the operation was successful.
+	 * Returns: %TRUE if the operation was successful.
 	 *
 	 *     MT safe.
 	 */
@@ -318,7 +318,7 @@ public class Pad : ObjectGst
 	 *     userData = user data passed to the callback
 	 *     destroyData = #GDestroyNotify for user_data
 	 *
-	 * Return: an id or 0 if no probe is pending. The id can be used to remove the
+	 * Returns: an id or 0 if no probe is pending. The id can be used to remove the
 	 *     probe with gst_pad_remove_probe(). When using GST_PAD_PROBE_TYPE_IDLE it can
 	 *     happen that the probe can be run immediately and if the probe returns
 	 *     GST_PAD_PROBE_REMOVE this functions returns 0.
@@ -337,7 +337,7 @@ public class Pad : ObjectGst
 	 * Params:
 	 *     sinkpad = the sink #GstPad.
 	 *
-	 * Return: %TRUE if the pads can be linked.
+	 * Returns: %TRUE if the pads can be linked.
 	 */
 	public bool canLink(Pad sinkpad)
 	{
@@ -365,7 +365,7 @@ public class Pad : ObjectGst
 	 *     buffer = the #GstBuffer to send, return GST_FLOW_ERROR
 	 *         if not.
 	 *
-	 * Return: a #GstFlowReturn from the pad.
+	 * Returns: a #GstFlowReturn from the pad.
 	 *
 	 *     MT safe.
 	 */
@@ -396,7 +396,7 @@ public class Pad : ObjectGst
 	 *     list = the #GstBufferList to send, return GST_FLOW_ERROR
 	 *         if not.
 	 *
-	 * Return: a #GstFlowReturn from the pad.
+	 * Returns: a #GstFlowReturn from the pad.
 	 */
 	public GstFlowReturn chainList(BufferList list)
 	{
@@ -407,7 +407,7 @@ public class Pad : ObjectGst
 	 * Check and clear the #GST_PAD_FLAG_NEED_RECONFIGURE flag on @pad and return %TRUE
 	 * if the flag was set.
 	 *
-	 * Return: %TRUE is the GST_PAD_FLAG_NEED_RECONFIGURE flag was set on @pad.
+	 * Returns: %TRUE is the GST_PAD_FLAG_NEED_RECONFIGURE flag was set on @pad.
 	 */
 	public bool checkReconfigure()
 	{
@@ -437,7 +437,7 @@ public class Pad : ObjectGst
 	 *     parent = Parent #GstElement of @pad
 	 *     streamId = The stream-id
 	 *
-	 * Return: A stream-id for @pad. g_free() after usage.
+	 * Returns: A stream-id for @pad. g_free() after usage.
 	 */
 	public string createStreamId(Element parent, string streamId)
 	{
@@ -467,7 +467,7 @@ public class Pad : ObjectGst
 	 *     streamId = The stream-id
 	 *     varArgs = parameters for the @stream_id format string
 	 *
-	 * Return: A stream-id for @pad. g_free() after usage.
+	 * Returns: A stream-id for @pad. g_free() after usage.
 	 */
 	public string createStreamIdPrintfValist(Element parent, string streamId, void* varArgs)
 	{
@@ -490,7 +490,7 @@ public class Pad : ObjectGst
 	 *     parent = the parent of @pad or %NULL
 	 *     event = the #GstEvent to handle.
 	 *
-	 * Return: %TRUE if the event was sent successfully.
+	 * Returns: %TRUE if the event was sent successfully.
 	 */
 	public bool eventDefault(ObjectGst parent, Event event)
 	{
@@ -508,7 +508,7 @@ public class Pad : ObjectGst
 	 *     forward = a #GstPadForwardFunction
 	 *     userData = user data passed to @forward
 	 *
-	 * Return: %TRUE if one of the dispatcher functions returned %TRUE.
+	 * Returns: %TRUE if one of the dispatcher functions returned %TRUE.
 	 */
 	public bool forward(GstPadForwardFunction forward, void* userData)
 	{
@@ -523,7 +523,7 @@ public class Pad : ObjectGst
 	 * calling gst_pad_query_caps() on @pad and its peer. The caller owns a reference
 	 * on the resulting caps.
 	 *
-	 * Return: the allowed #GstCaps of the
+	 * Returns: the allowed #GstCaps of the
 	 *     pad link. Unref the caps when you no longer need it. This
 	 *     function returns %NULL when @pad has no peer.
 	 *
@@ -545,7 +545,7 @@ public class Pad : ObjectGst
 	 * Gets the capabilities currently configured on @pad with the last
 	 * #GST_EVENT_CAPS event.
 	 *
-	 * Return: the current caps of the pad with
+	 * Returns: the current caps of the pad with
 	 *     incremented ref-count or %NULL when pad has no caps. Unref after usage.
 	 */
 	public Caps getCurrentCaps()
@@ -565,7 +565,7 @@ public class Pad : ObjectGst
 	 * decided at construction time so this function does not take
 	 * the LOCK.
 	 *
-	 * Return: the #GstPadDirection of the pad.
+	 * Returns: the #GstPadDirection of the pad.
 	 *
 	 *     MT safe.
 	 */
@@ -578,7 +578,7 @@ public class Pad : ObjectGst
 	 * Gets the private data of a pad.
 	 * No locking is performed in this function.
 	 *
-	 * Return: a #gpointer to the private data.
+	 * Returns: a #gpointer to the private data.
 	 */
 	public void* getElementPrivate()
 	{
@@ -599,7 +599,7 @@ public class Pad : ObjectGst
 	 * Get the offset applied to the running time of @pad. @pad has to be a source
 	 * pad.
 	 *
-	 * Return: the offset.
+	 * Returns: the offset.
 	 */
 	public long getOffset()
 	{
@@ -609,7 +609,7 @@ public class Pad : ObjectGst
 	/**
 	 * Gets the template for @pad.
 	 *
-	 * Return: the #GstPadTemplate from which
+	 * Returns: the #GstPadTemplate from which
 	 *     this pad was instantiated, or %NULL if this pad has no
 	 *     template. Unref after usage.
 	 */
@@ -628,7 +628,7 @@ public class Pad : ObjectGst
 	/**
 	 * Gets the capabilities for @pad's template.
 	 *
-	 * Return: the #GstCaps of this pad template.
+	 * Returns: the #GstCaps of this pad template.
 	 *     Unref after usage.
 	 */
 	public Caps getPadTemplateCaps()
@@ -647,7 +647,7 @@ public class Pad : ObjectGst
 	 * Gets the parent of @pad, cast to a #GstElement. If a @pad has no parent or
 	 * its parent is not an element, return %NULL.
 	 *
-	 * Return: the parent of the pad. The
+	 * Returns: the parent of the pad. The
 	 *     caller has a reference on the parent, so unref when you're finished
 	 *     with it.
 	 *
@@ -669,7 +669,7 @@ public class Pad : ObjectGst
 	 * Gets the peer of @pad. This function refs the peer pad so
 	 * you need to unref it after use.
 	 *
-	 * Return: the peer #GstPad. Unref after usage.
+	 * Returns: the peer #GstPad. Unref after usage.
 	 *
 	 *     MT safe.
 	 */
@@ -719,7 +719,7 @@ public class Pad : ObjectGst
 	 *     buffer = a pointer to hold the #GstBuffer,
 	 *         returns #GST_FLOW_ERROR if %NULL.
 	 *
-	 * Return: a #GstFlowReturn from the pad.
+	 * Returns: a #GstFlowReturn from the pad.
 	 *
 	 *     MT safe.
 	 */
@@ -742,7 +742,7 @@ public class Pad : ObjectGst
 	 *     eventType = the #GstEventType that should be retrieved.
 	 *     idx = the index of the event
 	 *
-	 * Return: a #GstEvent of type
+	 * Returns: a #GstEvent of type
 	 *     @event_type or %NULL when no event of @event_type was on
 	 *     @pad. Unref after usage.
 	 */
@@ -765,7 +765,7 @@ public class Pad : ObjectGst
 	 * This is a convenience wrapper around gst_pad_get_sticky_event() and
 	 * gst_event_parse_stream().
 	 *
-	 * Return: the current #GstStream for @pad, or %NULL.
+	 * Returns: the current #GstStream for @pad, or %NULL.
 	 *     unref the returned stream when no longer needed.
 	 *
 	 * Since: 1.10
@@ -792,7 +792,7 @@ public class Pad : ObjectGst
 	 * The returned stream-id string should be treated as an opaque string, its
 	 * contents should not be interpreted.
 	 *
-	 * Return: a newly-allocated copy of the stream-id for
+	 * Returns: a newly-allocated copy of the stream-id for
 	 *     @pad, or %NULL.  g_free() the returned string when no longer
 	 *     needed.
 	 *
@@ -810,7 +810,7 @@ public class Pad : ObjectGst
 	 * Get @pad task state. If no task is currently
 	 * set, #GST_TASK_STOPPED is returned.
 	 *
-	 * Return: The current state of @pad's task.
+	 * Returns: The current state of @pad's task.
 	 *
 	 * Since: 1.12
 	 */
@@ -822,7 +822,7 @@ public class Pad : ObjectGst
 	/**
 	 * Check if @pad has caps set on it with a #GST_EVENT_CAPS event.
 	 *
-	 * Return: %TRUE when @pad has caps associated with it.
+	 * Returns: %TRUE when @pad has caps associated with it.
 	 */
 	public bool hasCurrentCaps()
 	{
@@ -832,7 +832,7 @@ public class Pad : ObjectGst
 	/**
 	 * Query if a pad is active
 	 *
-	 * Return: %TRUE if the pad is active.
+	 * Returns: %TRUE if the pad is active.
 	 *
 	 *     MT safe.
 	 */
@@ -846,7 +846,7 @@ public class Pad : ObjectGst
 	 * last requested state of the pad. It is not certain that the pad
 	 * is actually blocking at this point (see gst_pad_is_blocking()).
 	 *
-	 * Return: %TRUE if the pad is blocked.
+	 * Returns: %TRUE if the pad is blocked.
 	 *
 	 *     MT safe.
 	 */
@@ -859,7 +859,7 @@ public class Pad : ObjectGst
 	 * Checks if the pad is blocking or not. This is a guaranteed state
 	 * of whether the pad is actually blocking on a #GstBuffer or a #GstEvent.
 	 *
-	 * Return: %TRUE if the pad is blocking.
+	 * Returns: %TRUE if the pad is blocking.
 	 *
 	 *     MT safe.
 	 */
@@ -871,7 +871,7 @@ public class Pad : ObjectGst
 	/**
 	 * Checks if a @pad is linked to another pad or not.
 	 *
-	 * Return: %TRUE if the pad is linked, %FALSE otherwise.
+	 * Returns: %TRUE if the pad is linked, %FALSE otherwise.
 	 *
 	 *     MT safe.
 	 */
@@ -889,7 +889,7 @@ public class Pad : ObjectGst
 	 *
 	 * Free-function: gst_iterator_free
 	 *
-	 * Return: a new #GstIterator of #GstPad
+	 * Returns: a new #GstIterator of #GstPad
 	 *     or %NULL when the pad does not have an iterator function
 	 *     configured. Use gst_iterator_free() after usage.
 	 */
@@ -916,7 +916,7 @@ public class Pad : ObjectGst
 	 * Params:
 	 *     parent = the parent of @pad or %NULL
 	 *
-	 * Return: a #GstIterator of #GstPad, or %NULL if @pad
+	 * Returns: a #GstIterator of #GstPad, or %NULL if @pad
 	 *     has no parent. Unref each returned pad with gst_object_unref().
 	 */
 	public Iterator iterateInternalLinksDefault(ObjectGst parent)
@@ -937,7 +937,7 @@ public class Pad : ObjectGst
 	 * Params:
 	 *     sinkpad = the sink #GstPad to link.
 	 *
-	 * Return: A result code indicating if the connection worked or
+	 * Returns: A result code indicating if the connection worked or
 	 *     what went wrong.
 	 *
 	 *     MT Safe.
@@ -962,7 +962,7 @@ public class Pad : ObjectGst
 	 *     sinkpad = the sink #GstPad to link.
 	 *     flags = the checks to validate when linking
 	 *
-	 * Return: A result code indicating if the connection worked or
+	 * Returns: A result code indicating if the connection worked or
 	 *     what went wrong.
 	 */
 	public GstPadLinkReturn linkFull(Pad sinkpad, GstPadLinkCheck flags)
@@ -982,7 +982,7 @@ public class Pad : ObjectGst
 	 * Params:
 	 *     sink = a #GstPad
 	 *
-	 * Return: whether the link succeeded.
+	 * Returns: whether the link succeeded.
 	 *
 	 * Since: 1.10
 	 */
@@ -1008,7 +1008,7 @@ public class Pad : ObjectGst
 	 *     sink = a #GstPad
 	 *     flags = some #GstPadLinkCheck flags
 	 *
-	 * Return: whether the link succeeded.
+	 * Returns: whether the link succeeded.
 	 *
 	 * Since: 1.10
 	 */
@@ -1030,7 +1030,7 @@ public class Pad : ObjectGst
 	 * Check the #GST_PAD_FLAG_NEED_RECONFIGURE flag on @pad and return %TRUE
 	 * if the flag was set.
 	 *
-	 * Return: %TRUE is the GST_PAD_FLAG_NEED_RECONFIGURE flag is set on @pad.
+	 * Returns: %TRUE is the GST_PAD_FLAG_NEED_RECONFIGURE flag is set on @pad.
 	 */
 	public bool needsReconfigure()
 	{
@@ -1042,7 +1042,7 @@ public class Pad : ObjectGst
 	 * function executed by the task is finished if this function is not
 	 * called from the task function.
 	 *
-	 * Return: a %TRUE if the task could be paused or %FALSE when the pad
+	 * Returns: a %TRUE if the task could be paused or %FALSE when the pad
 	 *     has no task.
 	 */
 	public bool pauseTask()
@@ -1059,7 +1059,7 @@ public class Pad : ObjectGst
 	 * Params:
 	 *     query = the #GstQuery to perform.
 	 *
-	 * Return: %TRUE if the query could be performed. This function returns %FALSE
+	 * Returns: %TRUE if the query could be performed. This function returns %FALSE
 	 *     if @pad has no peer.
 	 */
 	public bool peerQuery(Query query)
@@ -1074,7 +1074,7 @@ public class Pad : ObjectGst
 	 * Params:
 	 *     caps = a #GstCaps to check on the pad
 	 *
-	 * Return: %TRUE if the peer of @pad can accept the caps or @pad has no peer.
+	 * Returns: %TRUE if the peer of @pad can accept the caps or @pad has no peer.
 	 */
 	public bool peerQueryAcceptCaps(Caps caps)
 	{
@@ -1094,7 +1094,7 @@ public class Pad : ObjectGst
 	 * Params:
 	 *     filter = a #GstCaps filter, or %NULL.
 	 *
-	 * Return: the caps of the peer pad with incremented
+	 * Returns: the caps of the peer pad with incremented
 	 *     ref-count. When there is no peer pad, this function returns @filter or,
 	 *     when @filter is %NULL, ANY caps.
 	 */
@@ -1120,7 +1120,7 @@ public class Pad : ObjectGst
 	 *     destFormat = the #GstFormat to convert to.
 	 *     destVal = a pointer to the result.
 	 *
-	 * Return: %TRUE if the query could be performed.
+	 * Returns: %TRUE if the query could be performed.
 	 */
 	public bool peerQueryConvert(GstFormat srcFormat, long srcVal, GstFormat destFormat, out long destVal)
 	{
@@ -1135,7 +1135,7 @@ public class Pad : ObjectGst
 	 *     duration = a location in which to store the total
 	 *         duration, or %NULL.
 	 *
-	 * Return: %TRUE if the query could be performed.
+	 * Returns: %TRUE if the query could be performed.
 	 */
 	public bool peerQueryDuration(GstFormat format, out long duration)
 	{
@@ -1150,7 +1150,7 @@ public class Pad : ObjectGst
 	 *     cur = a location in which to store the current
 	 *         position, or %NULL.
 	 *
-	 * Return: %TRUE if the query could be performed.
+	 * Returns: %TRUE if the query could be performed.
 	 */
 	public bool peerQueryPosition(GstFormat format, out long cur)
 	{
@@ -1168,7 +1168,7 @@ public class Pad : ObjectGst
 	 * Params:
 	 *     query = an ACCEPT_CAPS #GstQuery.
 	 *
-	 * Return: %TRUE if @query could be executed
+	 * Returns: %TRUE if @query could be executed
 	 */
 	public bool proxyQueryAcceptCaps(Query query)
 	{
@@ -1186,7 +1186,7 @@ public class Pad : ObjectGst
 	 * Params:
 	 *     query = a CAPS #GstQuery.
 	 *
-	 * Return: %TRUE if @query could be executed
+	 * Returns: %TRUE if @query could be executed
 	 */
 	public bool proxyQueryCaps(Query query)
 	{
@@ -1226,7 +1226,7 @@ public class Pad : ObjectGst
 	 *     buffer = a pointer to hold the #GstBuffer, returns
 	 *         GST_FLOW_ERROR if %NULL.
 	 *
-	 * Return: a #GstFlowReturn from the peer pad.
+	 * Returns: a #GstFlowReturn from the peer pad.
 	 *
 	 *     MT safe.
 	 */
@@ -1258,7 +1258,7 @@ public class Pad : ObjectGst
 	 *     buffer = the #GstBuffer to push returns GST_FLOW_ERROR
 	 *         if not.
 	 *
-	 * Return: a #GstFlowReturn from the peer pad.
+	 * Returns: a #GstFlowReturn from the peer pad.
 	 *
 	 *     MT safe.
 	 */
@@ -1278,7 +1278,7 @@ public class Pad : ObjectGst
 	 * Params:
 	 *     event = the #GstEvent to send to the pad.
 	 *
-	 * Return: %TRUE if the event was handled.
+	 * Returns: %TRUE if the event was handled.
 	 *
 	 *     MT safe.
 	 */
@@ -1306,7 +1306,7 @@ public class Pad : ObjectGst
 	 *     list = the #GstBufferList to push returns GST_FLOW_ERROR
 	 *         if not.
 	 *
-	 * Return: a #GstFlowReturn from the peer pad.
+	 * Returns: a #GstFlowReturn from the peer pad.
 	 *
 	 *     MT safe.
 	 */
@@ -1330,7 +1330,7 @@ public class Pad : ObjectGst
 	 * Params:
 	 *     query = the #GstQuery to perform.
 	 *
-	 * Return: %TRUE if the query could be performed.
+	 * Returns: %TRUE if the query could be performed.
 	 */
 	public bool query(Query query)
 	{
@@ -1343,7 +1343,7 @@ public class Pad : ObjectGst
 	 * Params:
 	 *     caps = a #GstCaps to check on the pad
 	 *
-	 * Return: %TRUE if the pad can accept the caps.
+	 * Returns: %TRUE if the pad can accept the caps.
 	 */
 	public bool queryAcceptCaps(Caps caps)
 	{
@@ -1370,7 +1370,7 @@ public class Pad : ObjectGst
 	 * Params:
 	 *     filter = suggested #GstCaps, or %NULL
 	 *
-	 * Return: the caps of the pad with incremented ref-count.
+	 * Returns: the caps of the pad with incremented ref-count.
 	 */
 	public Caps queryCaps(Caps filter)
 	{
@@ -1393,7 +1393,7 @@ public class Pad : ObjectGst
 	 *     destFormat = the #GstFormat to convert to.
 	 *     destVal = a pointer to the result.
 	 *
-	 * Return: %TRUE if the query could be performed.
+	 * Returns: %TRUE if the query could be performed.
 	 */
 	public bool queryConvert(GstFormat srcFormat, long srcVal, GstFormat destFormat, out long destVal)
 	{
@@ -1411,7 +1411,7 @@ public class Pad : ObjectGst
 	 *     parent = the parent of @pad or %NULL
 	 *     query = the #GstQuery to handle.
 	 *
-	 * Return: %TRUE if the query was performed successfully.
+	 * Returns: %TRUE if the query was performed successfully.
 	 */
 	public bool queryDefault(ObjectGst parent, Query query)
 	{
@@ -1426,7 +1426,7 @@ public class Pad : ObjectGst
 	 *     duration = a location in which to store the total
 	 *         duration, or %NULL.
 	 *
-	 * Return: %TRUE if the query could be performed.
+	 * Returns: %TRUE if the query could be performed.
 	 */
 	public bool queryDuration(GstFormat format, out long duration)
 	{
@@ -1440,7 +1440,7 @@ public class Pad : ObjectGst
 	 *     format = the #GstFormat requested
 	 *     cur = A location in which to store the current position, or %NULL.
 	 *
-	 * Return: %TRUE if the query could be performed.
+	 * Returns: %TRUE if the query could be performed.
 	 */
 	public bool queryPosition(GstFormat format, out long cur)
 	{
@@ -1485,7 +1485,7 @@ public class Pad : ObjectGst
 	 * Params:
 	 *     event = the #GstEvent to send to the pad.
 	 *
-	 * Return: %TRUE if the event was handled.
+	 * Returns: %TRUE if the event was handled.
 	 */
 	public bool sendEvent(Event event)
 	{
@@ -1537,7 +1537,7 @@ public class Pad : ObjectGst
 	 * Params:
 	 *     active = whether or not the pad should be active.
 	 *
-	 * Return: %TRUE if the operation was successful.
+	 * Returns: %TRUE if the operation was successful.
 	 *
 	 *     MT safe.
 	 */
@@ -1716,7 +1716,7 @@ public class Pad : ObjectGst
 	 *     userData = user data passed to the task function
 	 *     notify = called when @user_data is no longer referenced
 	 *
-	 * Return: a %TRUE if the task could be started.
+	 * Returns: a %TRUE if the task could be started.
 	 */
 	public bool startTask(GstTaskFunction func, void* userData, GDestroyNotify notify)
 	{
@@ -1748,7 +1748,7 @@ public class Pad : ObjectGst
 	 * Regardless of whether the pad has a task, the stream lock is acquired and
 	 * released so as to ensure that streaming through this pad has finished.
 	 *
-	 * Return: a %TRUE if the task could be stopped or %FALSE on error.
+	 * Returns: a %TRUE if the task could be stopped or %FALSE on error.
 	 */
 	public bool stopTask()
 	{
@@ -1761,7 +1761,7 @@ public class Pad : ObjectGst
 	 * Params:
 	 *     event = a #GstEvent
 	 *
-	 * Return: #GST_FLOW_OK on success, #GST_FLOW_FLUSHING when the pad
+	 * Returns: #GST_FLOW_OK on success, #GST_FLOW_FLUSHING when the pad
 	 *     was flushing or #GST_FLOW_EOS when the pad was EOS.
 	 *
 	 * Since: 1.2
@@ -1778,7 +1778,7 @@ public class Pad : ObjectGst
 	 * Params:
 	 *     sinkpad = the sink #GstPad to unlink.
 	 *
-	 * Return: %TRUE if the pads were unlinked. This function returns %FALSE if
+	 * Returns: %TRUE if the pads were unlinked. This function returns %FALSE if
 	 *     the pads were not linked together.
 	 *
 	 *     MT safe.
@@ -1918,7 +1918,7 @@ public class Pad : ObjectGst
 	 * Params:
 	 *     ret = a #GstFlowReturn to get the name of.
 	 *
-	 * Return: a static string with the name of the flow return.
+	 * Returns: a static string with the name of the flow return.
 	 */
 	public static string flowGetName(GstFlowReturn ret)
 	{
@@ -1931,7 +1931,7 @@ public class Pad : ObjectGst
 	 * Params:
 	 *     ret = a #GstFlowReturn to get the quark of.
 	 *
-	 * Return: the quark associated with the flow return or 0 if an
+	 * Returns: the quark associated with the flow return or 0 if an
 	 *     invalid return was specified.
 	 */
 	public static GQuark flowToQuark(GstFlowReturn ret)
@@ -1945,7 +1945,7 @@ public class Pad : ObjectGst
 	 * Params:
 	 *     mode = the pad mode
 	 *
-	 * Return: short mnemonic for pad mode @mode
+	 * Returns: short mnemonic for pad mode @mode
 	 */
 	public static string modeGetName(GstPadMode mode)
 	{

@@ -149,7 +149,7 @@ public class PopoverMenu : Popover
 	/**
 	 * Creates a new popover menu.
 	 *
-	 * Return: a new #GtkPopoverMenu
+	 * Returns: a new #GtkPopoverMenu
 	 *
 	 * Since: 3.16
 	 *

@@ -158,7 +158,7 @@ public class IconTheme : ObjectG
 	 * or gtk_icon_theme_get_for_screen() rather than creating
 	 * a new icon theme object for scratch.
 	 *
-	 * Return: the newly created #GtkIconTheme object.
+	 * Returns: the newly created #GtkIconTheme object.
 	 *
 	 * Since: 2.4
 	 *
@@ -211,7 +211,7 @@ public class IconTheme : ObjectG
 	 * Gets the icon theme for the default screen. See
 	 * gtk_icon_theme_get_for_screen().
 	 *
-	 * Return: A unique #GtkIconTheme associated with
+	 * Returns: A unique #GtkIconTheme associated with
 	 *     the default screen. This icon theme is associated with
 	 *     the screen and can be used as long as the screen
 	 *     is open. Do not ref or unref it.
@@ -243,7 +243,7 @@ public class IconTheme : ObjectG
 	 * Params:
 	 *     screen = a #GdkScreen
 	 *
-	 * Return: A unique #GtkIconTheme associated with
+	 * Returns: A unique #GtkIconTheme associated with
 	 *     the given screen. This icon theme is associated with
 	 *     the screen and can be used as long as the screen
 	 *     is open. Do not ref or unref it.
@@ -316,7 +316,7 @@ public class IconTheme : ObjectG
 	 *     size = desired icon size
 	 *     flags = flags modifying the behavior of the icon lookup
 	 *
-	 * Return: a #GtkIconInfo object
+	 * Returns: a #GtkIconInfo object
 	 *     containing information about the icon, or %NULL if the icon wasn’t
 	 *     found.
 	 *
@@ -352,7 +352,7 @@ public class IconTheme : ObjectG
 	 *     scale = desired scale
 	 *     flags = flags modifying the behavior of the icon lookup
 	 *
-	 * Return: a #GtkIconInfo object
+	 * Returns: a #GtkIconInfo object
 	 *     containing information about the icon, or %NULL if the
 	 *     icon wasn’t found.
 	 *
@@ -375,7 +375,7 @@ public class IconTheme : ObjectG
 	 * current theme (for instance, to use when presenting
 	 * a list of themes to the user.)
 	 *
-	 * Return: the name of an example icon or %NULL.
+	 * Returns: the name of an example icon or %NULL.
 	 *     Free with g_free().
 	 *
 	 * Since: 2.4
@@ -397,7 +397,7 @@ public class IconTheme : ObjectG
 	 * Params:
 	 *     iconName = the name of an icon
 	 *
-	 * Return: An newly
+	 * Returns: An newly
 	 *     allocated array describing the sizes at which the icon is
 	 *     available. The array should be freed with g_free() when it is no
 	 *     longer needed.
@@ -438,7 +438,7 @@ public class IconTheme : ObjectG
 	 * Params:
 	 *     iconName = the name of an icon
 	 *
-	 * Return: %TRUE if @icon_theme includes an
+	 * Returns: %TRUE if @icon_theme includes an
 	 *     icon for @icon_name.
 	 *
 	 * Since: 2.4
@@ -453,7 +453,7 @@ public class IconTheme : ObjectG
 	 * hierarchy of icon themes.
 	 * See gtk_icon_theme_list_icons() for details about contexts.
 	 *
-	 * Return: a #GList list
+	 * Returns: a #GList list
 	 *     holding the names of all the contexts in the theme. You must first
 	 *     free each element in the list with g_free(), then free the list
 	 *     itself with g_list_free().
@@ -487,7 +487,7 @@ public class IconTheme : ObjectG
 	 *     context = a string identifying a particular type of
 	 *         icon, or %NULL to list all icons.
 	 *
-	 * Return: a #GList list
+	 * Returns: a #GList list
 	 *     holding the names of all the icons in the theme. You must
 	 *     first free each element in the list with g_free(), then
 	 *     free the list itself with g_list_free().
@@ -526,7 +526,7 @@ public class IconTheme : ObjectG
 	 *         exactly this size; see gtk_icon_info_load_icon().
 	 *     flags = flags modifying the behavior of the icon lookup
 	 *
-	 * Return: the rendered icon; this may be
+	 * Returns: the rendered icon; this may be
 	 *     a newly created icon or a new reference to an internal icon, so
 	 *     you must not modify the icon. Use g_object_unref() to release
 	 *     your reference to the icon. %NULL if the icon isn’t found.
@@ -576,7 +576,7 @@ public class IconTheme : ObjectG
 	 *     scale = desired scale
 	 *     flags = flags modifying the behavior of the icon lookup
 	 *
-	 * Return: the rendered icon; this may be
+	 * Returns: the rendered icon; this may be
 	 *     a newly created icon or a new reference to an internal icon, so
 	 *     you must not modify the icon. Use g_object_unref() to release
 	 *     your reference to the icon. %NULL if the icon isn’t found.
@@ -623,7 +623,7 @@ public class IconTheme : ObjectG
 	 *     forWindow = #GdkWindow to optimize drawing for, or %NULL
 	 *     flags = flags modifying the behavior of the icon lookup
 	 *
-	 * Return: the rendered icon; this may be
+	 * Returns: the rendered icon; this may be
 	 *     a newly created icon or a new reference to an internal icon, so
 	 *     you must not modify the icon. Use cairo_surface_destroy() to
 	 *     release your reference to the icon. %NULL if the icon isn’t
@@ -668,7 +668,7 @@ public class IconTheme : ObjectG
 	 *     size = desired icon size
 	 *     flags = flags modifying the behavior of the icon lookup
 	 *
-	 * Return: a #GtkIconInfo containing
+	 * Returns: a #GtkIconInfo containing
 	 *     information about the icon, or %NULL if the icon wasn’t
 	 *     found. Unref with g_object_unref()
 	 *
@@ -697,7 +697,7 @@ public class IconTheme : ObjectG
 	 *     scale = the desired scale
 	 *     flags = flags modifying the behavior of the icon lookup
 	 *
-	 * Return: a #GtkIconInfo containing
+	 * Returns: a #GtkIconInfo containing
 	 *     information about the icon, or %NULL if the icon wasn’t
 	 *     found. Unref with g_object_unref()
 	 *
@@ -733,7 +733,7 @@ public class IconTheme : ObjectG
 	 *     size = desired icon size
 	 *     flags = flags modifying the behavior of the icon lookup
 	 *
-	 * Return: a #GtkIconInfo object
+	 * Returns: a #GtkIconInfo object
 	 *     containing information about the icon, or %NULL if the
 	 *     icon wasn’t found.
 	 *
@@ -764,7 +764,7 @@ public class IconTheme : ObjectG
 	 *     scale = the desired scale
 	 *     flags = flags modifying the behavior of the icon lookup
 	 *
-	 * Return: a #GtkIconInfo object
+	 * Returns: a #GtkIconInfo object
 	 *     containing information about the icon, or %NULL if the
 	 *     icon wasn’t found.
 	 *
@@ -801,7 +801,7 @@ public class IconTheme : ObjectG
 	 * currently cached information is discarded and will be reloaded
 	 * next time @icon_theme is accessed.
 	 *
-	 * Return: %TRUE if the icon theme has changed and needed
+	 * Returns: %TRUE if the icon theme has changed and needed
 	 *     to be reloaded.
 	 *
 	 * Since: 2.4

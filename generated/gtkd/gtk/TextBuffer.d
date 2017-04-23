@@ -244,7 +244,7 @@ public class TextBuffer : ObjectG
 	 * Params:
 	 *     table = a tag table, or %NULL to create a new one
 	 *
-	 * Return: a new text buffer
+	 * Returns: a new text buffer
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -338,7 +338,7 @@ public class TextBuffer : ObjectG
 	 *     interactive = whether the deletion is caused by user interaction
 	 *     defaultEditable = whether the buffer is editable by default
 	 *
-	 * Return: %TRUE if the buffer was modified
+	 * Returns: %TRUE if the buffer was modified
 	 *
 	 * Since: 2.6
 	 */
@@ -392,7 +392,7 @@ public class TextBuffer : ObjectG
 	 * Params:
 	 *     iter = location in the buffer
 	 *
-	 * Return: the created child anchor
+	 * Returns: the created child anchor
 	 */
 	public TextChildAnchor createChildAnchor(TextIter iter)
 	{
@@ -430,7 +430,7 @@ public class TextBuffer : ObjectG
 	 *     where = location to place mark
 	 *     leftGravity = whether the mark has left gravity
 	 *
-	 * Return: the new #GtkTextMark object
+	 * Returns: the new #GtkTextMark object
 	 */
 	public TextMark createMark(string markName, TextIter where, bool leftGravity)
 	{
@@ -487,7 +487,7 @@ public class TextBuffer : ObjectG
 	 *     endIter = end of range
 	 *     defaultEditable = whether the buffer is editable by default
 	 *
-	 * Return: whether some text was actually deleted
+	 * Returns: whether some text was actually deleted
 	 */
 	public bool deleteInteractive(TextIter startIter, TextIter endIter, bool defaultEditable)
 	{
@@ -535,7 +535,7 @@ public class TextBuffer : ObjectG
 	 *     interactive = whether the deletion is caused by user interaction
 	 *     defaultEditable = whether the buffer is editable by default
 	 *
-	 * Return: whether there was a non-empty selection to delete
+	 * Returns: whether there was a non-empty selection to delete
 	 */
 	public bool deleteSelection(bool interactive, bool defaultEditable)
 	{
@@ -557,7 +557,7 @@ public class TextBuffer : ObjectG
 	 *     data = data to deserialize
 	 *     length = length of @data
 	 *
-	 * Return: %TRUE on success, %FALSE otherwise.
+	 * Returns: %TRUE on success, %FALSE otherwise.
 	 *
 	 * Since: 2.10
 	 *
@@ -584,7 +584,7 @@ public class TextBuffer : ObjectG
 	 * Params:
 	 *     format = a #GdkAtom representing a registered rich text format
 	 *
-	 * Return: whether deserializing this format may create tags
+	 * Returns: whether deserializing this format may create tags
 	 *
 	 * Since: 2.10
 	 */
@@ -657,7 +657,7 @@ public class TextBuffer : ObjectG
 	 * the buffer in string form to be this many bytes long. The character
 	 * count is cached, so this function is very fast.
 	 *
-	 * Return: number of characters in the buffer
+	 * Returns: number of characters in the buffer
 	 */
 	public int getCharCount()
 	{
@@ -671,7 +671,7 @@ public class TextBuffer : ObjectG
 	 * using gtk_target_list_add_rich_text_targets() and
 	 * gtk_target_list_add_text_targets().
 	 *
-	 * Return: the #GtkTargetList
+	 * Returns: the #GtkTargetList
 	 *
 	 * Since: 2.10
 	 */
@@ -692,7 +692,7 @@ public class TextBuffer : ObjectG
 	 * with @buffer using gtk_text_buffer_register_deserialize_format() or
 	 * gtk_text_buffer_register_deserialize_tagset()
 	 *
-	 * Return: an array of
+	 * Returns: an array of
 	 *     #GdkAtoms representing the registered formats.
 	 *
 	 * Since: 2.10
@@ -729,7 +729,7 @@ public class TextBuffer : ObjectG
 	/**
 	 * Indicates whether the buffer has some text currently selected.
 	 *
-	 * Return: %TRUE if the there is text selected
+	 * Returns: %TRUE if the there is text selected
 	 *
 	 * Since: 2.10
 	 */
@@ -744,7 +744,7 @@ public class TextBuffer : ObjectG
 	 * named “insert”, but very slightly more efficient, and involves less
 	 * typing.
 	 *
-	 * Return: insertion point mark
+	 * Returns: insertion point mark
 	 */
 	public TextMark getInsert()
 	{
@@ -879,7 +879,7 @@ public class TextBuffer : ObjectG
 	 * Obtains the number of lines in the buffer. This value is cached, so
 	 * the function is very fast.
 	 *
-	 * Return: number of lines in the buffer
+	 * Returns: number of lines in the buffer
 	 */
 	public int getLineCount()
 	{
@@ -893,7 +893,7 @@ public class TextBuffer : ObjectG
 	 * Params:
 	 *     name = a mark name
 	 *
-	 * Return: a #GtkTextMark, or %NULL
+	 * Returns: a #GtkTextMark, or %NULL
 	 */
 	public TextMark getMark(string name)
 	{
@@ -913,7 +913,7 @@ public class TextBuffer : ObjectG
 	 * %FALSE. Used for example to enable a “save” function in a text
 	 * editor.
 	 *
-	 * Return: %TRUE if the buffer has been modified
+	 * Returns: %TRUE if the buffer has been modified
 	 */
 	public bool getModified()
 	{
@@ -927,7 +927,7 @@ public class TextBuffer : ObjectG
 	 * using gtk_target_list_add_rich_text_targets() and
 	 * gtk_target_list_add_text_targets().
 	 *
-	 * Return: the #GtkTargetList
+	 * Returns: the #GtkTargetList
 	 *
 	 * Since: 2.10
 	 */
@@ -956,7 +956,7 @@ public class TextBuffer : ObjectG
 	 * for handling the selection, if you just want to know whether there’s a
 	 * selection and what its bounds are.
 	 *
-	 * Return: selection bound mark
+	 * Returns: selection bound mark
 	 */
 	public TextMark getSelectionBound()
 	{
@@ -982,7 +982,7 @@ public class TextBuffer : ObjectG
 	 *     start = iterator to initialize with selection start
 	 *     end = iterator to initialize with selection end
 	 *
-	 * Return: whether the selection has nonzero length
+	 * Returns: whether the selection has nonzero length
 	 */
 	public bool getSelectionBounds(out TextIter start, out TextIter end)
 	{
@@ -1002,7 +1002,7 @@ public class TextBuffer : ObjectG
 	 * with @buffer using gtk_text_buffer_register_serialize_format() or
 	 * gtk_text_buffer_register_serialize_tagset()
 	 *
-	 * Return: an array of
+	 * Returns: an array of
 	 *     #GdkAtoms representing the registered formats.
 	 *
 	 * Since: 2.10
@@ -1033,7 +1033,7 @@ public class TextBuffer : ObjectG
 	 *     end = end of a range
 	 *     includeHiddenChars = whether to include invisible text
 	 *
-	 * Return: an allocated UTF-8 string
+	 * Returns: an allocated UTF-8 string
 	 */
 	public string getSlice(TextIter start, TextIter end, bool includeHiddenChars)
 	{
@@ -1063,7 +1063,7 @@ public class TextBuffer : ObjectG
 	/**
 	 * Get the #GtkTextTagTable associated with this buffer.
 	 *
-	 * Return: the buffer’s tag table
+	 * Returns: the buffer’s tag table
 	 */
 	public TextTagTable getTagTable()
 	{
@@ -1091,7 +1091,7 @@ public class TextBuffer : ObjectG
 	 *     end = end of a range
 	 *     includeHiddenChars = whether to include invisible text
 	 *
-	 * Return: an allocated UTF-8 string
+	 * Returns: an allocated UTF-8 string
 	 */
 	public string getText(TextIter start, TextIter end, bool includeHiddenChars)
 	{
@@ -1171,7 +1171,7 @@ public class TextBuffer : ObjectG
 	 *     len = length of text in bytes, or -1
 	 *     defaultEditable = default editability of buffer
 	 *
-	 * Return: whether text was actually inserted
+	 * Returns: whether text was actually inserted
 	 */
 	public bool insertInteractive(TextIter iter, string text, bool defaultEditable)
 	{
@@ -1191,7 +1191,7 @@ public class TextBuffer : ObjectG
 	 *     len = length of text in bytes, or -1
 	 *     defaultEditable = default editability of buffer
 	 *
-	 * Return: whether text was actually inserted
+	 * Returns: whether text was actually inserted
 	 */
 	public bool insertInteractiveAtCursor(string text, bool defaultEditable)
 	{
@@ -1269,7 +1269,7 @@ public class TextBuffer : ObjectG
 	 *     end = another position in the same buffer as @start
 	 *     defaultEditable = default editability of the buffer
 	 *
-	 * Return: whether an insertion was possible at @iter
+	 * Returns: whether an insertion was possible at @iter
 	 */
 	public bool insertRangeInteractive(TextIter iter, TextIter start, TextIter end, bool defaultEditable)
 	{
@@ -1348,7 +1348,7 @@ public class TextBuffer : ObjectG
 	 *     userData = @function’s user_data
 	 *     userDataDestroy = a function to call when @user_data is no longer needed
 	 *
-	 * Return: the #GdkAtom that corresponds to the
+	 * Returns: the #GdkAtom that corresponds to the
 	 *     newly registered format’s mime-type.
 	 *
 	 * Since: 2.10
@@ -1366,7 +1366,7 @@ public class TextBuffer : ObjectG
 	 * Params:
 	 *     tagsetName = an optional tagset name, on %NULL
 	 *
-	 * Return: the #GdkAtom that corresponds to the
+	 * Returns: the #GdkAtom that corresponds to the
 	 *     newly registered format’s mime-type.
 	 *
 	 * Since: 2.10
@@ -1386,7 +1386,7 @@ public class TextBuffer : ObjectG
 	 *     userData = @function’s user_data
 	 *     userDataDestroy = a function to call when @user_data is no longer needed
 	 *
-	 * Return: the #GdkAtom that corresponds to the
+	 * Returns: the #GdkAtom that corresponds to the
 	 *     newly registered format’s mime-type.
 	 *
 	 * Since: 2.10
@@ -1418,7 +1418,7 @@ public class TextBuffer : ObjectG
 	 * Params:
 	 *     tagsetName = an optional tagset name, on %NULL
 	 *
-	 * Return: the #GdkAtom that corresponds to the
+	 * Returns: the #GdkAtom that corresponds to the
 	 *     newly registered format’s mime-type.
 	 *
 	 * Since: 2.10
@@ -1520,7 +1520,7 @@ public class TextBuffer : ObjectG
 	 *     start = start of block of text to serialize
 	 *     end = end of block of test to serialize
 	 *
-	 * Return: the serialized
+	 * Returns: the serialized
 	 *     data, encoded as @format
 	 *
 	 * Since: 2.10

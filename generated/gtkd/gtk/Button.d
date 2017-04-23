@@ -222,7 +222,7 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	 * Creates a new #GtkButton widget. To add a child widget to the button,
 	 * use gtk_container_add().
 	 *
-	 * Return: The newly created #GtkButton widget.
+	 * Returns: The newly created #GtkButton widget.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -252,7 +252,7 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	 *     iconName = an icon name or %NULL
 	 *     size = an icon size (#GtkIconSize)
 	 *
-	 * Return: a new #GtkButton displaying the themed icon
+	 * Returns: a new #GtkButton displaying the themed icon
 	 *
 	 * Since: 3.10
 	 *
@@ -309,7 +309,7 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	 * Returns whether the button will ignore the #GtkSettings:gtk-button-images
 	 * setting and always show the image, if available.
 	 *
-	 * Return: %TRUE if the button will always show the image
+	 * Returns: %TRUE if the button will always show the image
 	 *
 	 * Since: 3.6
 	 */
@@ -322,7 +322,7 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	 * Returns the button’s event window if it is realized, %NULL otherwise.
 	 * This function should be rarely needed.
 	 *
-	 * Return: @button’s event window.
+	 * Returns: @button’s event window.
 	 *
 	 * Since: 2.22
 	 */
@@ -344,7 +344,7 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	 *
 	 * Deprecated: Use gtk_widget_get_focus_on_click() instead
 	 *
-	 * Return: %TRUE if the button grabs focus when it is clicked with
+	 * Returns: %TRUE if the button grabs focus when it is clicked with
 	 *     the mouse.
 	 *
 	 * Since: 2.4
@@ -359,7 +359,7 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	 * This may have been explicitly set by gtk_button_set_image()
 	 * or constructed by gtk_button_new_from_stock().
 	 *
-	 * Return: a #GtkWidget or %NULL in case
+	 * Returns: a #GtkWidget or %NULL in case
 	 *     there is no image
 	 *
 	 * Since: 2.6
@@ -380,7 +380,7 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	 * Gets the position of the image relative to the text
 	 * inside the button.
 	 *
-	 * Return: the position
+	 * Returns: the position
 	 *
 	 * Since: 2.10
 	 */
@@ -396,7 +396,7 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	 * case if you create an empty button with gtk_button_new() to
 	 * use as a container.
 	 *
-	 * Return: The text of the label widget. This string is owned
+	 * Returns: The text of the label widget. This string is owned
 	 *     by the widget and must not be modified or freed.
 	 */
 	public string getLabel()
@@ -407,7 +407,7 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	/**
 	 * Returns the current relief style of the given #GtkButton.
 	 *
-	 * Return: The current #GtkReliefStyle
+	 * Returns: The current #GtkReliefStyle
 	 */
 	public GtkReliefStyle getRelief()
 	{
@@ -417,7 +417,7 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	/**
 	 * Returns whether the button label is a stock item.
 	 *
-	 * Return: %TRUE if the button label is used to
+	 * Returns: %TRUE if the button label is used to
 	 *     select a stock item instead of being
 	 *     used directly as the label text.
 	 */
@@ -430,7 +430,7 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	 * Returns whether an embedded underline in the button label indicates a
 	 * mnemonic. See gtk_button_set_use_underline ().
 	 *
-	 * Return: %TRUE if an embedded underline in the button label
+	 * Returns: %TRUE if an embedded underline in the button label
 	 *     indicates the mnemonic accelerator keys.
 	 */
 	public bool getUseUnderline()

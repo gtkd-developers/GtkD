@@ -101,7 +101,7 @@ public class PtrArray
 	 * Params:
 	 *     freeSeg = if %TRUE the actual pointer array is freed as well
 	 *
-	 * Return: the pointer array if @free_seg is %FALSE, otherwise %NULL.
+	 * Returns: the pointer array if @free_seg is %FALSE, otherwise %NULL.
 	 *     The pointer array should be freed using g_free().
 	 */
 	public void** free(bool freeSeg)
@@ -127,7 +127,7 @@ public class PtrArray
 	/**
 	 * Creates a new #GPtrArray with a reference count of 1.
 	 *
-	 * Return: the new #GPtrArray
+	 * Returns: the new #GPtrArray
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -157,7 +157,7 @@ public class PtrArray
 	 *     elementFreeFunc = A function to free elements with
 	 *         destroy @array or %NULL
 	 *
-	 * Return: A new #GPtrArray
+	 * Returns: A new #GPtrArray
 	 *
 	 * Since: 2.30
 	 *
@@ -185,7 +185,7 @@ public class PtrArray
 	 *     elementFreeFunc = A function to free elements with
 	 *         destroy @array or %NULL
 	 *
-	 * Return: A new #GPtrArray
+	 * Returns: A new #GPtrArray
 	 *
 	 * Since: 2.22
 	 *
@@ -207,7 +207,7 @@ public class PtrArray
 	 * Atomically increments the reference count of @array by one.
 	 * This function is thread-safe and may be called from any thread.
 	 *
-	 * Return: The passed in #GPtrArray
+	 * Returns: The passed in #GPtrArray
 	 *
 	 * Since: 2.22
 	 */
@@ -235,7 +235,7 @@ public class PtrArray
 	 * Params:
 	 *     data = the pointer to remove
 	 *
-	 * Return: %TRUE if the pointer is removed, %FALSE if the pointer
+	 * Returns: %TRUE if the pointer is removed, %FALSE if the pointer
 	 *     is not found in the array
 	 */
 	public bool remove(void* data)
@@ -256,7 +256,7 @@ public class PtrArray
 	 * Params:
 	 *     data = the pointer to remove
 	 *
-	 * Return: %TRUE if the pointer was found in the array
+	 * Returns: %TRUE if the pointer was found in the array
 	 */
 	public bool removeFast(void* data)
 	{
@@ -272,7 +272,7 @@ public class PtrArray
 	 * Params:
 	 *     index = the index of the pointer to remove
 	 *
-	 * Return: the pointer which was removed
+	 * Returns: the pointer which was removed
 	 */
 	public void* removeIndex(uint index)
 	{
@@ -289,7 +289,7 @@ public class PtrArray
 	 * Params:
 	 *     index = the index of the pointer to remove
 	 *
-	 * Return: the pointer which was removed
+	 * Returns: the pointer which was removed
 	 */
 	public void* removeIndexFast(uint index)
 	{
@@ -306,7 +306,7 @@ public class PtrArray
 	 *     index = the index of the first pointer to remove
 	 *     length = the number of pointers to remove
 	 *
-	 * Return: the @array
+	 * Returns: the @array
 	 *
 	 * Since: 2.4
 	 */
@@ -361,7 +361,7 @@ public class PtrArray
 	 * Params:
 	 *     reservedSize = number of pointers preallocated
 	 *
-	 * Return: the new #GPtrArray
+	 * Returns: the new #GPtrArray
 	 */
 	public static PtrArray sizedNew(uint reservedSize)
 	{

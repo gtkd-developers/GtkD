@@ -57,7 +57,7 @@ public struct Flags
 	 *     flagsClass = a #GFlagsClass
 	 *     value = the value
 	 *
-	 * Return: the first #GFlagsValue which is set in
+	 * Returns: the first #GFlagsValue which is set in
 	 *     @value, or %NULL if none is set
 	 */
 	public static GFlagsValue* getFirstValue(GFlagsClass* flagsClass, uint value)
@@ -72,7 +72,7 @@ public struct Flags
 	 *     flagsClass = a #GFlagsClass
 	 *     name = the name to look up
 	 *
-	 * Return: the #GFlagsValue with name @name,
+	 * Returns: the #GFlagsValue with name @name,
 	 *     or %NULL if there is no flag with that name
 	 */
 	public static GFlagsValue* getValueByName(GFlagsClass* flagsClass, string name)
@@ -87,7 +87,7 @@ public struct Flags
 	 *     flagsClass = a #GFlagsClass
 	 *     nick = the nickname to look up
 	 *
-	 * Return: the #GFlagsValue with nickname @nick,
+	 * Returns: the #GFlagsValue with nickname @nick,
 	 *     or %NULL if there is no flag with that nickname
 	 */
 	public static GFlagsValue* getValueByNick(GFlagsClass* flagsClass, string nick)
@@ -108,7 +108,7 @@ public struct Flags
 	 *         flags values. The array is terminated by a struct with all members being 0.
 	 *         GObject keeps a reference to the data, so it cannot be stack-allocated.
 	 *
-	 * Return: The new type identifier.
+	 * Returns: The new type identifier.
 	 */
 	public static GType registerStatic(string name, GFlagsValue* constStaticValues)
 	{

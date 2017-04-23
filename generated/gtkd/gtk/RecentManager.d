@@ -149,7 +149,7 @@ public class RecentManager : ObjectG
 	 * #GtkRecentManager objects are expensive: be sure to create them only when
 	 * needed. You should use gtk_recent_manager_get_default() instead.
 	 *
-	 * Return: A newly created #GtkRecentManager object
+	 * Returns: A newly created #GtkRecentManager object
 	 *
 	 * Since: 2.10
 	 *
@@ -171,7 +171,7 @@ public class RecentManager : ObjectG
 	 * Gets a unique instance of #GtkRecentManager, that you can share
 	 * in your application without caring about memory management.
 	 *
-	 * Return: A unique #GtkRecentManager. Do not ref or
+	 * Returns: A unique #GtkRecentManager. Do not ref or
 	 *     unref it.
 	 *
 	 * Since: 2.10
@@ -213,7 +213,7 @@ public class RecentManager : ObjectG
 	 *     uri = a valid URI
 	 *     recentData = metadata of the resource
 	 *
-	 * Return: %TRUE if the new item was successfully added to the
+	 * Returns: %TRUE if the new item was successfully added to the
 	 *     recently used resources list, %FALSE otherwise
 	 *
 	 * Since: 2.10
@@ -237,7 +237,7 @@ public class RecentManager : ObjectG
 	 * Params:
 	 *     uri = a valid URI
 	 *
-	 * Return: %TRUE if the new item was successfully added
+	 * Returns: %TRUE if the new item was successfully added
 	 *     to the recently used resources list
 	 *
 	 * Since: 2.10
@@ -250,7 +250,7 @@ public class RecentManager : ObjectG
 	/**
 	 * Gets the list of recently used resources.
 	 *
-	 * Return: a list of
+	 * Returns: a list of
 	 *     newly allocated #GtkRecentInfo objects. Use
 	 *     gtk_recent_info_unref() on each item inside the list, and then
 	 *     free the list itself using g_list_free().
@@ -276,7 +276,7 @@ public class RecentManager : ObjectG
 	 * Params:
 	 *     uri = a URI
 	 *
-	 * Return: %TRUE if the resource was found, %FALSE otherwise
+	 * Returns: %TRUE if the resource was found, %FALSE otherwise
 	 *
 	 * Since: 2.10
 	 */
@@ -293,7 +293,7 @@ public class RecentManager : ObjectG
 	 * Params:
 	 *     uri = a URI
 	 *
-	 * Return: a #GtkRecentInfo-struct containing information
+	 * Returns: a #GtkRecentInfo-struct containing information
 	 *     about the resource pointed by @uri, or %NULL if the URI was
 	 *     not registered in the recently used resources list. Free with
 	 *     gtk_recent_info_unref().
@@ -332,7 +332,7 @@ public class RecentManager : ObjectG
 	 *     newUri = the new URI of the recently used resource, or
 	 *         %NULL to remove the item pointed by @uri in the list
 	 *
-	 * Return: %TRUE on success
+	 * Returns: %TRUE on success
 	 *
 	 * Since: 2.10
 	 *
@@ -355,7 +355,7 @@ public class RecentManager : ObjectG
 	/**
 	 * Purges every item from the recently used resources list.
 	 *
-	 * Return: the number of items that have been removed from the
+	 * Returns: the number of items that have been removed from the
 	 *     recently used resources list
 	 *
 	 * Since: 2.10
@@ -383,7 +383,7 @@ public class RecentManager : ObjectG
 	 * Params:
 	 *     uri = the URI of the item you wish to remove
 	 *
-	 * Return: %TRUE if the item pointed by @uri has been successfully
+	 * Returns: %TRUE if the item pointed by @uri has been successfully
 	 *     removed by the recently used resources list, and %FALSE otherwise
 	 *
 	 * Since: 2.10

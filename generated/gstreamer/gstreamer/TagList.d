@@ -75,7 +75,7 @@ public class TagList
 	 * Params:
 	 *     tag = the tag
 	 *
-	 * Return: the #GType of this tag
+	 * Returns: the #GType of this tag
 	 */
 	public static GType getType(string tag)
 	{
@@ -87,7 +87,7 @@ public class TagList
 	 *
 	 * Free-function: gst_tag_list_unref
 	 *
-	 * Return: An empty tag list
+	 * Returns: An empty tag list
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -109,7 +109,7 @@ public class TagList
 	 * Params:
 	 *     str = a string created with gst_tag_list_to_string()
 	 *
-	 * Return: a new #GstTagList, or %NULL in case of an
+	 * Returns: a new #GstTagList, or %NULL in case of an
 	 *     error.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -135,7 +135,7 @@ public class TagList
 	 * Params:
 	 *     varArgs = tag / value pairs to set
 	 *
-	 * Return: a new #GstTagList. Free with gst_tag_list_unref()
+	 * Returns: a new #GstTagList. Free with gst_tag_list_unref()
 	 *     when no longer needed.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -212,7 +212,7 @@ public class TagList
 	 *     tag = tag to read out
 	 *     value = location for the result
 	 *
-	 * Return: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
+	 * Returns: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
 	 *     given list.
 	 */
 	public bool getBoolean(string tag, out bool value)
@@ -235,7 +235,7 @@ public class TagList
 	 *     index = number of entry to read out
 	 *     value = location for the result
 	 *
-	 * Return: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
+	 * Returns: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
 	 *     given list.
 	 */
 	public bool getBooleanIndex(string tag, uint index, out bool value)
@@ -261,7 +261,7 @@ public class TagList
 	 *     value = address of a GDate pointer
 	 *         variable to store the result into
 	 *
-	 * Return: %TRUE, if a date was copied, %FALSE if the tag didn't exist in the
+	 * Returns: %TRUE, if a date was copied, %FALSE if the tag didn't exist in the
 	 *     given list or if it was %NULL.
 	 */
 	public bool getDate(string tag, out Date value)
@@ -287,7 +287,7 @@ public class TagList
 	 *     index = number of entry to read out
 	 *     value = location for the result
 	 *
-	 * Return: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
+	 * Returns: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
 	 *     given list or if it was %NULL.
 	 */
 	public bool getDateIndex(string tag, uint index, out Date value)
@@ -313,7 +313,7 @@ public class TagList
 	 *     value = address of a #GstDateTime
 	 *         pointer variable to store the result into
 	 *
-	 * Return: %TRUE, if a datetime was copied, %FALSE if the tag didn't exist in
+	 * Returns: %TRUE, if a datetime was copied, %FALSE if the tag didn't exist in
 	 *     the given list or if it was %NULL.
 	 */
 	public bool getDateTime(string tag, out DateTime value)
@@ -339,7 +339,7 @@ public class TagList
 	 *     index = number of entry to read out
 	 *     value = location for the result
 	 *
-	 * Return: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
+	 * Returns: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
 	 *     given list or if it was %NULL.
 	 */
 	public bool getDateTimeIndex(string tag, uint index, out DateTime value)
@@ -361,7 +361,7 @@ public class TagList
 	 *     tag = tag to read out
 	 *     value = location for the result
 	 *
-	 * Return: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
+	 * Returns: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
 	 *     given list.
 	 */
 	public bool getDouble(string tag, out double value)
@@ -378,7 +378,7 @@ public class TagList
 	 *     index = number of entry to read out
 	 *     value = location for the result
 	 *
-	 * Return: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
+	 * Returns: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
 	 *     given list.
 	 */
 	public bool getDoubleIndex(string tag, uint index, out double value)
@@ -394,7 +394,7 @@ public class TagList
 	 *     tag = tag to read out
 	 *     value = location for the result
 	 *
-	 * Return: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
+	 * Returns: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
 	 *     given list.
 	 */
 	public bool getFloat(string tag, out float value)
@@ -411,7 +411,7 @@ public class TagList
 	 *     index = number of entry to read out
 	 *     value = location for the result
 	 *
-	 * Return: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
+	 * Returns: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
 	 *     given list.
 	 */
 	public bool getFloatIndex(string tag, uint index, out float value)
@@ -427,7 +427,7 @@ public class TagList
 	 *     tag = tag to read out
 	 *     value = location for the result
 	 *
-	 * Return: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
+	 * Returns: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
 	 *     given list.
 	 */
 	public bool getInt(string tag, out int value)
@@ -450,7 +450,7 @@ public class TagList
 	 *     index = number of entry to read out
 	 *     value = location for the result
 	 *
-	 * Return: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
+	 * Returns: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
 	 *     given list.
 	 */
 	public bool getInt64Index(string tag, uint index, out long value)
@@ -467,7 +467,7 @@ public class TagList
 	 *     index = number of entry to read out
 	 *     value = location for the result
 	 *
-	 * Return: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
+	 * Returns: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
 	 *     given list.
 	 */
 	public bool getIntIndex(string tag, uint index, out int value)
@@ -483,7 +483,7 @@ public class TagList
 	 *     tag = tag to read out
 	 *     value = location for the result
 	 *
-	 * Return: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
+	 * Returns: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
 	 *     given list.
 	 */
 	public bool getPointer(string tag, out void* value)
@@ -500,7 +500,7 @@ public class TagList
 	 *     index = number of entry to read out
 	 *     value = location for the result
 	 *
-	 * Return: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
+	 * Returns: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
 	 *     given list.
 	 */
 	public bool getPointerIndex(string tag, uint index, out void* value)
@@ -522,7 +522,7 @@ public class TagList
 	 *     sample = address of a GstSample
 	 *         pointer variable to store the result into
 	 *
-	 * Return: %TRUE, if a sample was returned, %FALSE if the tag didn't exist in
+	 * Returns: %TRUE, if a sample was returned, %FALSE if the tag didn't exist in
 	 *     the given list or if it was %NULL.
 	 */
 	public bool getSample(string tag, out Sample sample)
@@ -551,7 +551,7 @@ public class TagList
 	 *     sample = address of a GstSample
 	 *         pointer variable to store the result into
 	 *
-	 * Return: %TRUE, if a sample was copied, %FALSE if the tag didn't exist in the
+	 * Returns: %TRUE, if a sample was copied, %FALSE if the tag didn't exist in the
 	 *     given list or if it was %NULL.
 	 */
 	public bool getSampleIndex(string tag, uint index, out Sample sample)
@@ -568,7 +568,7 @@ public class TagList
 	/**
 	 * Gets the scope of @list.
 	 *
-	 * Return: The scope of @list
+	 * Returns: The scope of @list
 	 */
 	public GstTagScope getScope()
 	{
@@ -592,7 +592,7 @@ public class TagList
 	 *     tag = tag to read out
 	 *     value = location for the result
 	 *
-	 * Return: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
+	 * Returns: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
 	 *     given list.
 	 */
 	public bool getString(string tag, out string value)
@@ -621,7 +621,7 @@ public class TagList
 	 *     index = number of entry to read out
 	 *     value = location for the result
 	 *
-	 * Return: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
+	 * Returns: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
 	 *     given list.
 	 */
 	public bool getStringIndex(string tag, uint index, out string value)
@@ -641,7 +641,7 @@ public class TagList
 	 * Params:
 	 *     tag = the tag to query
 	 *
-	 * Return: The number of tags stored
+	 * Returns: The number of tags stored
 	 */
 	public uint getTagSize(string tag)
 	{
@@ -656,7 +656,7 @@ public class TagList
 	 *     tag = tag to read out
 	 *     value = location for the result
 	 *
-	 * Return: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
+	 * Returns: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
 	 *     given list.
 	 */
 	public bool getUint(string tag, out uint value)
@@ -672,7 +672,7 @@ public class TagList
 	 *     tag = tag to read out
 	 *     value = location for the result
 	 *
-	 * Return: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
+	 * Returns: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
 	 *     given list.
 	 */
 	public bool getUint64(string tag, out ulong value)
@@ -689,7 +689,7 @@ public class TagList
 	 *     index = number of entry to read out
 	 *     value = location for the result
 	 *
-	 * Return: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
+	 * Returns: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
 	 *     given list.
 	 */
 	public bool getUint64Index(string tag, uint index, out ulong value)
@@ -706,7 +706,7 @@ public class TagList
 	 *     index = number of entry to read out
 	 *     value = location for the result
 	 *
-	 * Return: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
+	 * Returns: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
 	 *     given list.
 	 */
 	public bool getUintIndex(string tag, uint index, out uint value)
@@ -722,7 +722,7 @@ public class TagList
 	 *     tag = tag to read out
 	 *     index = number of entry to read out
 	 *
-	 * Return: The GValue for the specified
+	 * Returns: The GValue for the specified
 	 *     entry or %NULL if the tag wasn't available or the tag
 	 *     doesn't have as many entries
 	 */
@@ -753,7 +753,7 @@ public class TagList
 	/**
 	 * Checks if the given taglist is empty.
 	 *
-	 * Return: %TRUE if the taglist is empty, otherwise %FALSE.
+	 * Returns: %TRUE if the taglist is empty, otherwise %FALSE.
 	 */
 	public bool isEmpty()
 	{
@@ -766,7 +766,7 @@ public class TagList
 	 * Params:
 	 *     list2 = a #GstTagList.
 	 *
-	 * Return: %TRUE if the taglists are equal, otherwise %FALSE
+	 * Returns: %TRUE if the taglists are equal, otherwise %FALSE
 	 */
 	public bool isEqual(TagList list2)
 	{
@@ -783,7 +783,7 @@ public class TagList
 	 *     list2 = second list to merge
 	 *     mode = the mode to use
 	 *
-	 * Return: the new list
+	 * Returns: the new list
 	 */
 	public TagList merge(TagList list2, GstTagMergeMode mode)
 	{
@@ -800,7 +800,7 @@ public class TagList
 	/**
 	 * Get the number of tags in @list.
 	 *
-	 * Return: The number of tags in @list.
+	 * Returns: The number of tags in @list.
 	 */
 	public int nTags()
 	{
@@ -813,7 +813,7 @@ public class TagList
 	 * Params:
 	 *     index = the index
 	 *
-	 * Return: The name of the tag at @index.
+	 * Returns: The name of the tag at @index.
 	 */
 	public string nthTagName(uint index)
 	{
@@ -833,7 +833,7 @@ public class TagList
 	 *     index = number of entry to read out
 	 *     value = location for the result
 	 *
-	 * Return: %TRUE, if a value was set, %FALSE if the tag didn't exist in the
+	 * Returns: %TRUE, if a value was set, %FALSE if the tag didn't exist in the
 	 *     given list.
 	 */
 	public bool peekStringIndex(string tag, uint index, out string value)
@@ -873,7 +873,7 @@ public class TagList
 	/**
 	 * Serializes a tag list to a string.
 	 *
-	 * Return: a newly-allocated string, or %NULL in case of
+	 * Returns: a newly-allocated string, or %NULL in case of
 	 *     an error. The string must be freed with g_free() when no longer
 	 *     needed.
 	 */
@@ -896,7 +896,7 @@ public class TagList
 	 *     list = list to get the tag from
 	 *     tag = tag to read out
 	 *
-	 * Return: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
+	 * Returns: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
 	 *     given list.
 	 */
 	public static bool copyValue(out Value dest, TagList list, string tag)
@@ -916,7 +916,7 @@ public class TagList
 	 * Params:
 	 *     tag = name of the tag
 	 *
-	 * Return: %TRUE if the type is already registered
+	 * Returns: %TRUE if the type is already registered
 	 */
 	public static bool exists(string tag)
 	{
@@ -930,7 +930,7 @@ public class TagList
 	 * Params:
 	 *     tag = the tag
 	 *
-	 * Return: the human-readable description of this tag
+	 * Returns: the human-readable description of this tag
 	 */
 	public static string getDescription(string tag)
 	{
@@ -943,7 +943,7 @@ public class TagList
 	 * Params:
 	 *     tag = the tag
 	 *
-	 * Return: the flag of this tag.
+	 * Returns: the flag of this tag.
 	 */
 	public static GstTagFlag getFlag(string tag)
 	{
@@ -957,7 +957,7 @@ public class TagList
 	 * Params:
 	 *     tag = the tag
 	 *
-	 * Return: the human-readable name of this tag
+	 * Returns: the human-readable name of this tag
 	 */
 	public static string getNick(string tag)
 	{
@@ -971,7 +971,7 @@ public class TagList
 	 * Params:
 	 *     tag = tag to check
 	 *
-	 * Return: %TRUE, if the given tag is fixed.
+	 * Returns: %TRUE, if the given tag is fixed.
 	 */
 	public static bool isFixed(string tag)
 	{

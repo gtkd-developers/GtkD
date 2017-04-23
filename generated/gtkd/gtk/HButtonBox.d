@@ -91,7 +91,7 @@ public class HButtonBox : ButtonBox
 	 *
 	 * Deprecated: Use gtk_button_box_new() with %GTK_ORIENTATION_HORIZONTAL instead
 	 *
-	 * Return: a new button box #GtkWidget.
+	 * Returns: a new button box #GtkWidget.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

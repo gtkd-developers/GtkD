@@ -81,7 +81,7 @@ public class MenuLinkIter : ObjectG
 	 *
 	 * The iterator is not advanced.
 	 *
-	 * Return: the type of the link
+	 * Returns: the type of the link
 	 *
 	 * Since: 2.32
 	 */
@@ -110,7 +110,7 @@ public class MenuLinkIter : ObjectG
 	 *     outLink = the name of the link
 	 *     value = the linked #GMenuModel
 	 *
-	 * Return: %TRUE on success, or %FALSE if there is no additional link
+	 * Returns: %TRUE on success, or %FALSE if there is no additional link
 	 *
 	 * Since: 2.32
 	 */
@@ -132,7 +132,7 @@ public class MenuLinkIter : ObjectG
 	 *
 	 * The iterator is not advanced.
 	 *
-	 * Return: the #GMenuModel that is linked to
+	 * Returns: the #GMenuModel that is linked to
 	 *
 	 * Since: 2.32
 	 */
@@ -158,7 +158,7 @@ public class MenuLinkIter : ObjectG
 	 * advance it to the first link (and determine if the first link exists
 	 * at all).
 	 *
-	 * Return: %TRUE on success, or %FALSE when there are no more links
+	 * Returns: %TRUE on success, or %FALSE when there are no more links
 	 *
 	 * Since: 2.32
 	 */

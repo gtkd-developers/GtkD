@@ -78,7 +78,7 @@ public class ValueArray
 	 * Params:
 	 *     nPrealloced = number of values to preallocate space for
 	 *
-	 * Return: a newly allocated #GValueArray with 0 values
+	 * Returns: a newly allocated #GValueArray with 0 values
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -103,7 +103,7 @@ public class ValueArray
 	 * Params:
 	 *     value = #GValue to copy into #GValueArray, or %NULL
 	 *
-	 * Return: the #GValueArray passed in as @value_array
+	 * Returns: the #GValueArray passed in as @value_array
 	 */
 	public ValueArray append(Value value)
 	{
@@ -123,7 +123,7 @@ public class ValueArray
 	 *
 	 * Deprecated: Use #GArray and g_array_ref() instead.
 	 *
-	 * Return: Newly allocated copy of #GValueArray
+	 * Returns: Newly allocated copy of #GValueArray
 	 */
 	public ValueArray copy()
 	{
@@ -155,7 +155,7 @@ public class ValueArray
 	 * Params:
 	 *     index = index of the value of interest
 	 *
-	 * Return: pointer to a value at @index_ in @value_array
+	 * Returns: pointer to a value at @index_ in @value_array
 	 */
 	public Value getNth(uint index)
 	{
@@ -179,7 +179,7 @@ public class ValueArray
 	 *     index = insertion position, must be <= value_array->;n_values
 	 *     value = #GValue to copy into #GValueArray, or %NULL
 	 *
-	 * Return: the #GValueArray passed in as @value_array
+	 * Returns: the #GValueArray passed in as @value_array
 	 */
 	public ValueArray insert(uint index, Value value)
 	{
@@ -202,7 +202,7 @@ public class ValueArray
 	 * Params:
 	 *     value = #GValue to copy into #GValueArray, or %NULL
 	 *
-	 * Return: the #GValueArray passed in as @value_array
+	 * Returns: the #GValueArray passed in as @value_array
 	 */
 	public ValueArray prepend(Value value)
 	{
@@ -225,7 +225,7 @@ public class ValueArray
 	 *     index = position of value to remove, which must be less than
 	 *         @value_array->n_values
 	 *
-	 * Return: the #GValueArray passed in as @value_array
+	 * Returns: the #GValueArray passed in as @value_array
 	 */
 	public ValueArray remove(uint index)
 	{
@@ -251,7 +251,7 @@ public class ValueArray
 	 * Params:
 	 *     compareFunc = function to compare elements
 	 *
-	 * Return: the #GValueArray passed in as @value_array
+	 * Returns: the #GValueArray passed in as @value_array
 	 */
 	public ValueArray sort(GCompareFunc compareFunc)
 	{
@@ -278,7 +278,7 @@ public class ValueArray
 	 *     compareFunc = function to compare elements
 	 *     userData = extra data argument provided for @compare_func
 	 *
-	 * Return: the #GValueArray passed in as @value_array
+	 * Returns: the #GValueArray passed in as @value_array
 	 */
 	public ValueArray sortWithData(GCompareDataFunc compareFunc, void* userData)
 	{

@@ -69,7 +69,7 @@ public class Pattern
 	 * Params:
 	 *     pspec2 = another #GPatternSpec
 	 *
-	 * Return: Whether the compiled patterns are equal
+	 * Returns: Whether the compiled patterns are equal
 	 */
 	public bool equal(Pattern pspec2)
 	{
@@ -90,7 +90,7 @@ public class Pattern
 	 * Params:
 	 *     pattern = a zero-terminated UTF-8 encoded string
 	 *
-	 * Return: a newly-allocated #GPatternSpec
+	 * Returns: a newly-allocated #GPatternSpec
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -132,7 +132,7 @@ public class Pattern
 	 *     str = the UTF-8 encoded string to match
 	 *     stringReversed = the reverse of @string or %NULL
 	 *
-	 * Return: %TRUE if @string matches @pspec
+	 * Returns: %TRUE if @string matches @pspec
 	 */
 	public static bool patternMatch(Pattern pspec, uint stringLength, string str, string stringReversed)
 	{
@@ -149,7 +149,7 @@ public class Pattern
 	 *     pattern = the UTF-8 encoded pattern
 	 *     str = the UTF-8 encoded string to match
 	 *
-	 * Return: %TRUE if @string matches @pspec
+	 * Returns: %TRUE if @string matches @pspec
 	 */
 	public static bool patternMatchSimple(string pattern, string str)
 	{
@@ -165,7 +165,7 @@ public class Pattern
 	 *     pspec = a #GPatternSpec
 	 *     str = the UTF-8 encoded string to match
 	 *
-	 * Return: %TRUE if @string matches @pspec
+	 * Returns: %TRUE if @string matches @pspec
 	 */
 	public static bool patternMatchString(Pattern pspec, string str)
 	{

@@ -90,7 +90,7 @@ public class VScrollbar : Scrollbar
 	 * Params:
 	 *     adjustment = the #GtkAdjustment to use, or %NULL to create a new adjustment
 	 *
-	 * Return: the new #GtkVScrollbar
+	 * Returns: the new #GtkVScrollbar
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

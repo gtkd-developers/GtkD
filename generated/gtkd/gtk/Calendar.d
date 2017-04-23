@@ -98,7 +98,7 @@ public class Calendar : Widget
 	/**
 	 * Creates a new calendar, with the current date being selected.
 	 *
-	 * Return: a newly #GtkCalendar widget
+	 * Returns: a newly #GtkCalendar widget
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -144,7 +144,7 @@ public class Calendar : Widget
 	 * Params:
 	 *     day = the day number between 1 and 31.
 	 *
-	 * Return: whether the day is marked.
+	 * Returns: whether the day is marked.
 	 *
 	 * Since: 3.0
 	 */
@@ -157,7 +157,7 @@ public class Calendar : Widget
 	 * Queries the height of detail cells, in rows.
 	 * See #GtkCalendar:detail-width-chars.
 	 *
-	 * Return: The height of detail cells, in rows.
+	 * Returns: The height of detail cells, in rows.
 	 *
 	 * Since: 2.14
 	 */
@@ -170,7 +170,7 @@ public class Calendar : Widget
 	 * Queries the width of detail cells, in characters.
 	 * See #GtkCalendar:detail-width-chars.
 	 *
-	 * Return: The width of detail cells, in characters.
+	 * Returns: The width of detail cells, in characters.
 	 *
 	 * Since: 2.14
 	 */
@@ -182,7 +182,7 @@ public class Calendar : Widget
 	/**
 	 * Returns the current display options of @calendar.
 	 *
-	 * Return: the display options.
+	 * Returns: the display options.
 	 *
 	 * Since: 2.4
 	 */

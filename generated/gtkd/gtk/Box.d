@@ -136,7 +136,7 @@ public class Box : Container, OrientableIF
 	 *     orientation = the box’s orientation.
 	 *     spacing = the number of pixels to place by default between children.
 	 *
-	 * Return: a new #GtkBox.
+	 * Returns: a new #GtkBox.
 	 *
 	 * Since: 3.0
 	 *
@@ -157,7 +157,7 @@ public class Box : Container, OrientableIF
 	/**
 	 * Gets the value set by gtk_box_set_baseline_position().
 	 *
-	 * Return: the baseline position
+	 * Returns: the baseline position
 	 *
 	 * Since: 3.10
 	 */
@@ -169,7 +169,7 @@ public class Box : Container, OrientableIF
 	/**
 	 * Retrieves the center widget of the box.
 	 *
-	 * Return: the center widget
+	 * Returns: the center widget
 	 *     or %NULL in case no center widget is set.
 	 *
 	 * Since: 3.12
@@ -190,7 +190,7 @@ public class Box : Container, OrientableIF
 	 * Returns whether the box is homogeneous (all children are the
 	 * same size). See gtk_box_set_homogeneous().
 	 *
-	 * Return: %TRUE if the box is homogeneous.
+	 * Returns: %TRUE if the box is homogeneous.
 	 */
 	public bool getHomogeneous()
 	{
@@ -200,7 +200,7 @@ public class Box : Container, OrientableIF
 	/**
 	 * Gets the value set by gtk_box_set_spacing().
 	 *
-	 * Return: spacing between children
+	 * Returns: spacing between children
 	 */
 	public int getSpacing()
 	{

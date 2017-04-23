@@ -113,7 +113,7 @@ public interface AppInfoIF{
 	 *     applicationName = the application name, or %NULL to use @commandline
 	 *     flags = flags that can specify details of the created #GAppInfo
 	 *
-	 * Return: new #GAppInfo for given command.
+	 * Returns: new #GAppInfo for given command.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -129,7 +129,7 @@ public interface AppInfoIF{
 	 * The returned list does not include applications which have
 	 * the `Hidden` key set.
 	 *
-	 * Return: a newly allocated #GList of references to #GAppInfos.
+	 * Returns: a newly allocated #GList of references to #GAppInfos.
 	 */
 	public static ListG getAll();
 
@@ -142,7 +142,7 @@ public interface AppInfoIF{
 	 * Params:
 	 *     contentType = the content type to find a #GAppInfo for
 	 *
-	 * Return: #GList of #GAppInfos
+	 * Returns: #GList of #GAppInfos
 	 *     for given @content_type or %NULL on error.
 	 */
 	public static ListG getAllForType(string contentType);
@@ -155,7 +155,7 @@ public interface AppInfoIF{
 	 *     mustSupportUris = if %TRUE, the #GAppInfo is expected to
 	 *         support URIs
 	 *
-	 * Return: #GAppInfo for given @content_type or
+	 * Returns: #GAppInfo for given @content_type or
 	 *     %NULL on error.
 	 */
 	public static AppInfoIF getDefaultForType(string contentType, bool mustSupportUris);
@@ -169,7 +169,7 @@ public interface AppInfoIF{
 	 * Params:
 	 *     uriScheme = a string containing a URI scheme.
 	 *
-	 * Return: #GAppInfo for given @uri_scheme or %NULL on error.
+	 * Returns: #GAppInfo for given @uri_scheme or %NULL on error.
 	 */
 	public static AppInfoIF getDefaultForUriScheme(string uriScheme);
 
@@ -181,7 +181,7 @@ public interface AppInfoIF{
 	 * Params:
 	 *     contentType = the content type to find a #GAppInfo for
 	 *
-	 * Return: #GList of #GAppInfos
+	 * Returns: #GList of #GAppInfos
 	 *     for given @content_type or %NULL on error.
 	 *
 	 * Since: 2.28
@@ -199,7 +199,7 @@ public interface AppInfoIF{
 	 * Params:
 	 *     contentType = the content type to find a #GAppInfo for
 	 *
-	 * Return: #GList of #GAppInfos
+	 * Returns: #GList of #GAppInfos
 	 *     for given @content_type or %NULL on error.
 	 *
 	 * Since: 2.28
@@ -216,7 +216,7 @@ public interface AppInfoIF{
 	 *     uri = the uri to show
 	 *     launchContext = an optional #GAppLaunchContext
 	 *
-	 * Return: %TRUE on success, %FALSE on error.
+	 * Returns: %TRUE on success, %FALSE on error.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -245,7 +245,7 @@ public interface AppInfoIF{
 	 * Params:
 	 *     result = a #GAsyncResult
 	 *
-	 * Return: %TRUE if the launch was successful, %FALSE if @error is set
+	 * Returns: %TRUE if the launch was successful, %FALSE if @error is set
 	 *
 	 * Since: 2.50
 	 *
@@ -274,7 +274,7 @@ public interface AppInfoIF{
 	 * Params:
 	 *     contentType = a string.
 	 *
-	 * Return: %TRUE on success, %FALSE on error.
+	 * Returns: %TRUE on success, %FALSE on error.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -284,7 +284,7 @@ public interface AppInfoIF{
 	 * Obtains the information whether the #GAppInfo can be deleted.
 	 * See g_app_info_delete().
 	 *
-	 * Return: %TRUE if @appinfo can be deleted
+	 * Returns: %TRUE if @appinfo can be deleted
 	 *
 	 * Since: 2.20
 	 */
@@ -293,7 +293,7 @@ public interface AppInfoIF{
 	/**
 	 * Checks if a supported content type can be removed from an application.
 	 *
-	 * Return: %TRUE if it is possible to remove supported
+	 * Returns: %TRUE if it is possible to remove supported
 	 *     content types from a given @appinfo, %FALSE if not.
 	 */
 	public bool canRemoveSupportsType();
@@ -305,7 +305,7 @@ public interface AppInfoIF{
 	 * #GAppInfos which can be deleted, and system-wide ones which cannot.
 	 * See g_app_info_can_delete().
 	 *
-	 * Return: %TRUE if @appinfo has been deleted
+	 * Returns: %TRUE if @appinfo has been deleted
 	 *
 	 * Since: 2.20
 	 */
@@ -314,7 +314,7 @@ public interface AppInfoIF{
 	/**
 	 * Creates a duplicate of a #GAppInfo.
 	 *
-	 * Return: a duplicate of @appinfo.
+	 * Returns: a duplicate of @appinfo.
 	 */
 	public AppInfoIF dup();
 
@@ -328,7 +328,7 @@ public interface AppInfoIF{
 	 * Params:
 	 *     appinfo2 = the second #GAppInfo.
 	 *
-	 * Return: %TRUE if @appinfo1 is equal to @appinfo2. %FALSE otherwise.
+	 * Returns: %TRUE if @appinfo1 is equal to @appinfo2. %FALSE otherwise.
 	 */
 	public bool equal(AppInfoIF appinfo2);
 
@@ -336,7 +336,7 @@ public interface AppInfoIF{
 	 * Gets the commandline with which the application will be
 	 * started.
 	 *
-	 * Return: a string containing the @appinfo's commandline,
+	 * Returns: a string containing the @appinfo's commandline,
 	 *     or %NULL if this information is not available
 	 *
 	 * Since: 2.20
@@ -346,7 +346,7 @@ public interface AppInfoIF{
 	/**
 	 * Gets a human-readable description of an installed application.
 	 *
-	 * Return: a string containing a description of the
+	 * Returns: a string containing a description of the
 	 *     application @appinfo, or %NULL if none.
 	 */
 	public string getDescription();
@@ -355,7 +355,7 @@ public interface AppInfoIF{
 	 * Gets the display name of the application. The display name is often more
 	 * descriptive to the user than the name itself.
 	 *
-	 * Return: the display name of the application for @appinfo, or the name if
+	 * Returns: the display name of the application for @appinfo, or the name if
 	 *     no display name is available.
 	 *
 	 * Since: 2.24
@@ -365,7 +365,7 @@ public interface AppInfoIF{
 	/**
 	 * Gets the executable's name for the installed application.
 	 *
-	 * Return: a string containing the @appinfo's application
+	 * Returns: a string containing the @appinfo's application
 	 *     binaries name
 	 */
 	public string getExecutable();
@@ -373,7 +373,7 @@ public interface AppInfoIF{
 	/**
 	 * Gets the icon for the application.
 	 *
-	 * Return: the default #GIcon for @appinfo or %NULL
+	 * Returns: the default #GIcon for @appinfo or %NULL
 	 *     if there is no default icon.
 	 */
 	public IconIF getIcon();
@@ -387,14 +387,14 @@ public interface AppInfoIF{
 	 * Note that the returned ID may be %NULL, depending on how
 	 * the @appinfo has been constructed.
 	 *
-	 * Return: a string containing the application's ID.
+	 * Returns: a string containing the application's ID.
 	 */
 	public string getId();
 
 	/**
 	 * Gets the installed name of the application.
 	 *
-	 * Return: the name of the application for @appinfo.
+	 * Returns: the name of the application for @appinfo.
 	 */
 	public string getName();
 
@@ -406,7 +406,7 @@ public interface AppInfoIF{
 	 * g_app_info_add_supports_type(), but only those exported directly by
 	 * the application.
 	 *
-	 * Return: a list of content types.
+	 * Returns: a list of content types.
 	 *
 	 * Since: 2.34
 	 */
@@ -445,7 +445,7 @@ public interface AppInfoIF{
 	 *     files = a #GList of #GFile objects
 	 *     launchContext = a #GAppLaunchContext or %NULL
 	 *
-	 * Return: %TRUE on successful launch, %FALSE otherwise.
+	 * Returns: %TRUE on successful launch, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -467,7 +467,7 @@ public interface AppInfoIF{
 	 *     uris = a #GList containing URIs to launch.
 	 *     launchContext = a #GAppLaunchContext or %NULL
 	 *
-	 * Return: %TRUE on successful launch, %FALSE otherwise.
+	 * Returns: %TRUE on successful launch, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -479,7 +479,7 @@ public interface AppInfoIF{
 	 * Params:
 	 *     contentType = a string.
 	 *
-	 * Return: %TRUE on success, %FALSE on error.
+	 * Returns: %TRUE on success, %FALSE on error.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -492,7 +492,7 @@ public interface AppInfoIF{
 	 *     extension = a string containing the file extension
 	 *         (without the dot).
 	 *
-	 * Return: %TRUE on success, %FALSE on error.
+	 * Returns: %TRUE on success, %FALSE on error.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -504,7 +504,7 @@ public interface AppInfoIF{
 	 * Params:
 	 *     contentType = the content type.
 	 *
-	 * Return: %TRUE on success, %FALSE on error.
+	 * Returns: %TRUE on success, %FALSE on error.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -519,7 +519,7 @@ public interface AppInfoIF{
 	 * Params:
 	 *     contentType = the content type.
 	 *
-	 * Return: %TRUE on success, %FALSE on error.
+	 * Returns: %TRUE on success, %FALSE on error.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -529,21 +529,21 @@ public interface AppInfoIF{
 	 * Checks if the application info should be shown in menus that
 	 * list available applications.
 	 *
-	 * Return: %TRUE if the @appinfo should be shown, %FALSE otherwise.
+	 * Returns: %TRUE if the @appinfo should be shown, %FALSE otherwise.
 	 */
 	public bool shouldShow();
 
 	/**
 	 * Checks if the application accepts files as arguments.
 	 *
-	 * Return: %TRUE if the @appinfo supports files.
+	 * Returns: %TRUE if the @appinfo supports files.
 	 */
 	public bool supportsFiles();
 
 	/**
 	 * Checks if the application supports reading files and directories from URIs.
 	 *
-	 * Return: %TRUE if the @appinfo supports URIs.
+	 * Returns: %TRUE if the @appinfo supports URIs.
 	 */
 	public bool supportsUris();
 }

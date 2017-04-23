@@ -101,7 +101,7 @@ public class PgContext : ObjectG
 	 * gdk_pango_context_get_for_screen(), and
 	 * gtk_widget_get_pango_context().  Use those instead.
 	 *
-	 * Return: the newly allocated #PangoContext, which should
+	 * Returns: the newly allocated #PangoContext, which should
 	 *     be freed with g_object_unref().
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -138,7 +138,7 @@ public class PgContext : ObjectG
 	 * Retrieves the base direction for the context. See
 	 * pango_context_set_base_dir().
 	 *
-	 * Return: the base direction for the context.
+	 * Returns: the base direction for the context.
 	 */
 	public PangoDirection getBaseDir()
 	{
@@ -149,7 +149,7 @@ public class PgContext : ObjectG
 	 * Retrieves the base gravity for the context. See
 	 * pango_context_set_base_gravity().
 	 *
-	 * Return: the base gravity for the context.
+	 * Returns: the base gravity for the context.
 	 *
 	 * Since: 1.16
 	 */
@@ -161,7 +161,7 @@ public class PgContext : ObjectG
 	/**
 	 * Retrieve the default font description for the context.
 	 *
-	 * Return: a pointer to the context's default font
+	 * Returns: a pointer to the context's default font
 	 *     description. This value must not be modified or freed.
 	 */
 	public PgFontDescription getFontDescription()
@@ -179,7 +179,7 @@ public class PgContext : ObjectG
 	/**
 	 * Gets the #PangoFontMap used to look up fonts for this context.
 	 *
-	 * Return: the font map for the #PangoContext.
+	 * Returns: the font map for the #PangoContext.
 	 *     This value is owned by Pango and should not be unreferenced.
 	 *
 	 * Since: 1.6
@@ -202,7 +202,7 @@ public class PgContext : ObjectG
 	 * is %PANGO_GRAVITY_AUTO for which pango_gravity_get_for_matrix() is used
 	 * to return the gravity from the current context matrix.
 	 *
-	 * Return: the resolved gravity for the context.
+	 * Returns: the resolved gravity for the context.
 	 *
 	 * Since: 1.16
 	 */
@@ -215,7 +215,7 @@ public class PgContext : ObjectG
 	 * Retrieves the gravity hint for the context. See
 	 * pango_context_set_gravity_hint() for details.
 	 *
-	 * Return: the gravity hint for the context.
+	 * Returns: the gravity hint for the context.
 	 *
 	 * Since: 1.16
 	 */
@@ -227,7 +227,7 @@ public class PgContext : ObjectG
 	/**
 	 * Retrieves the global language tag for the context.
 	 *
-	 * Return: the global language tag.
+	 * Returns: the global language tag.
 	 */
 	public PgLanguage getLanguage()
 	{
@@ -245,7 +245,7 @@ public class PgContext : ObjectG
 	 * Gets the transformation matrix that will be applied when
 	 * rendering with this context. See pango_context_set_matrix().
 	 *
-	 * Return: the matrix, or %NULL if no matrix has
+	 * Returns: the matrix, or %NULL if no matrix has
 	 *     been set (which is the same as the identity matrix). The returned
 	 *     matrix is owned by Pango and must not be modified or freed.
 	 *
@@ -286,7 +286,7 @@ public class PgContext : ObjectG
 	 *         for the default language (as determined by pango_language_get_default())
 	 *         will be returned.
 	 *
-	 * Return: a #PangoFontMetrics object. The caller must call pango_font_metrics_unref()
+	 * Returns: a #PangoFontMetrics object. The caller must call pango_font_metrics_unref()
 	 *     when finished using the object.
 	 */
 	public PgFontMetrics getMetrics(PgFontDescription desc, PgLanguage language)
@@ -313,7 +313,7 @@ public class PgContext : ObjectG
 	 * is only useful when implementing objects that need update when their
 	 * #PangoContext changes, like #PangoLayout.
 	 *
-	 * Return: The current serial number of @context.
+	 * Returns: The current serial number of @context.
 	 *
 	 * Since: 1.32.4
 	 */
@@ -352,7 +352,7 @@ public class PgContext : ObjectG
 	 * Params:
 	 *     desc = a #PangoFontDescription describing the font to load
 	 *
-	 * Return: the newly allocated #PangoFont
+	 * Returns: the newly allocated #PangoFont
 	 *     that was loaded, or %NULL if no font matched.
 	 */
 	public PgFont loadFont(PgFontDescription desc)
@@ -375,7 +375,7 @@ public class PgContext : ObjectG
 	 *     desc = a #PangoFontDescription describing the fonts to load
 	 *     language = a #PangoLanguage the fonts will be used for
 	 *
-	 * Return: the newly allocated
+	 * Returns: the newly allocated
 	 *     #PangoFontset loaded, or %NULL if no font matched.
 	 */
 	public PgFontset loadFontset(PgFontDescription desc, PgLanguage language)
@@ -506,7 +506,7 @@ public class PgContext : ObjectG
 	 * Params:
 	 *     ch = a Unicode character
 	 *
-	 * Return: the bidirectional character type, as used in the
+	 * Returns: the bidirectional character type, as used in the
 	 *     Unicode bidirectional algorithm.
 	 *
 	 * Since: 1.22
@@ -563,7 +563,7 @@ public class PgContext : ObjectG
 	 *     text = the text to process
 	 *     length = length of @text in bytes (may be -1 if @text is nul-terminated)
 	 *
-	 * Return: The direction corresponding to the first strong character.
+	 * Returns: The direction corresponding to the first strong character.
 	 *     If no such character is found, then %PANGO_DIRECTION_NEUTRAL is returned.
 	 *
 	 * Since: 1.4
@@ -633,7 +633,7 @@ public class PgContext : ObjectG
 	 *     ch = a Unicode character
 	 *     mirroredCh = location to store the mirrored character
 	 *
-	 * Return: %TRUE if @ch has a mirrored character and @mirrored_ch is
+	 * Returns: %TRUE if @ch has a mirrored character and @mirrored_ch is
 	 *     filled in, %FALSE otherwise
 	 */
 	public static bool getMirrorChar(dchar ch, dchar* mirroredCh)
@@ -664,7 +664,7 @@ public class PgContext : ObjectG
 	 *     attrs = the set of attributes that apply to @text.
 	 *     cachedIter = Cached attribute iterator, or %NULL
 	 *
-	 * Return: a #GList of #PangoItem
+	 * Returns: a #GList of #PangoItem
 	 *     structures. The items should be freed using pango_item_free()
 	 *     probably in combination with g_list_foreach(), and the list itself
 	 *     using g_list_free().
@@ -697,7 +697,7 @@ public class PgContext : ObjectG
 	 *     attrs = the set of attributes that apply to @text.
 	 *     cachedIter = Cached attribute iterator, or %NULL
 	 *
-	 * Return: a #GList of
+	 * Returns: a #GList of
 	 *     #PangoItem structures.  The items should be freed using
 	 *     pango_item_free() probably in combination with
 	 *     g_list_foreach(), and the list itself using g_list_free().
@@ -724,7 +724,7 @@ public class PgContext : ObjectG
 	 * Params:
 	 *     logicalItems = a #GList of #PangoItem in logical order.
 	 *
-	 * Return: a #GList
+	 * Returns: a #GList
 	 *     of #PangoItem structures in visual order.
 	 *
 	 *     (Please open a bug if you use this function.
@@ -804,7 +804,7 @@ public class PgContext : ObjectG
 	 * Params:
 	 *     ch = a Unicode character
 	 *
-	 * Return: the direction of the character.
+	 * Returns: the direction of the character.
 	 */
 	public static PangoDirection unicharDirection(dchar ch)
 	{

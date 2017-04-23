@@ -101,7 +101,7 @@ public class FileOutputStream : OutputStream, SeekableIF
 	 * This must be called after the stream has been written
 	 * and closed, as the etag can change while writing.
 	 *
-	 * Return: the entity tag for the stream.
+	 * Returns: the entity tag for the stream.
 	 */
 	public string getEtag()
 	{
@@ -134,7 +134,7 @@ public class FileOutputStream : OutputStream, SeekableIF
 	 *     attributes = a file attribute query string.
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Return: a #GFileInfo for the @stream, or %NULL on error.
+	 * Returns: a #GFileInfo for the @stream, or %NULL on error.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -184,7 +184,7 @@ public class FileOutputStream : OutputStream, SeekableIF
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *
-	 * Return: A #GFileInfo for the finished query.
+	 * Returns: A #GFileInfo for the finished query.
 	 *
 	 * Throws: GException on failure.
 	 */

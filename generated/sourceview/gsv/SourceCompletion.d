@@ -92,7 +92,7 @@ public class SourceCompletion : ObjectG, BuildableIF
 	 * Params:
 	 *     provider = a #GtkSourceCompletionProvider.
 	 *
-	 * Return: %TRUE if @provider was successfully added, otherwise if @error
+	 * Returns: %TRUE if @provider was successfully added, otherwise if @error
 	 *     is provided, it will be set with the error and %FALSE is returned.
 	 *
 	 * Throws: GException on failure.
@@ -134,7 +134,7 @@ public class SourceCompletion : ObjectG, BuildableIF
 	 * Params:
 	 *     position = a #GtkTextIter, or %NULL.
 	 *
-	 * Return: a new #GtkSourceCompletionContext.
+	 * Returns: a new #GtkSourceCompletionContext.
 	 *     The reference being returned is a 'floating' reference,
 	 *     so if you invoke gtk_source_completion_show() with this context
 	 *     you don't need to unref it.
@@ -155,7 +155,7 @@ public class SourceCompletion : ObjectG, BuildableIF
 	 * The info widget is the window where the completion displays optional extra
 	 * information of the proposal.
 	 *
-	 * Return: The #GtkSourceCompletionInfo window
+	 * Returns: The #GtkSourceCompletionInfo window
 	 *     associated with @completion.
 	 */
 	public SourceCompletionInfo getInfoWindow()
@@ -174,7 +174,7 @@ public class SourceCompletion : ObjectG, BuildableIF
 	 * Get list of providers registered on @completion. The returned list is owned
 	 * by the completion and should not be freed.
 	 *
-	 * Return: list of #GtkSourceCompletionProvider.
+	 * Returns: list of #GtkSourceCompletionProvider.
 	 */
 	public ListG getProviders()
 	{
@@ -192,7 +192,7 @@ public class SourceCompletion : ObjectG, BuildableIF
 	 * The #GtkSourceView associated with @completion, or %NULL if the view has been
 	 * destroyed.
 	 *
-	 * Return: The #GtkSourceView associated with
+	 * Returns: The #GtkSourceView associated with
 	 *     @completion, or %NULL.
 	 */
 	public SourceView getView()
@@ -234,7 +234,7 @@ public class SourceCompletion : ObjectG, BuildableIF
 	 * Params:
 	 *     provider = a #GtkSourceCompletionProvider.
 	 *
-	 * Return: %TRUE if @provider was successfully removed, otherwise if @error
+	 * Returns: %TRUE if @provider was successfully removed, otherwise if @error
 	 *     is provided, it will be set with the error and %FALSE is returned.
 	 *
 	 * Throws: GException on failure.
@@ -269,7 +269,7 @@ public class SourceCompletion : ObjectG, BuildableIF
 	 *     context = The #GtkSourceCompletionContext
 	 *         with which to start the completion.
 	 *
-	 * Return: %TRUE if it was possible to the show completion window.
+	 * Returns: %TRUE if it was possible to the show completion window.
 	 */
 	public bool show(ListG providers, SourceCompletionContext context)
 	{

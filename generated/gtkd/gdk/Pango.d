@@ -52,7 +52,7 @@ private import pango.PgLayoutLine;
  * is more convenient if you want to keep a context around and track
  * changes to the screen’s font rendering settings.
  *
- * Return: a new #PangoContext for the default display
+ * Returns: a new #PangoContext for the default display
  */
 public PgContext contextGet()
 {
@@ -84,7 +84,7 @@ public PgContext contextGet()
  * Params:
  *     screen = the #GdkScreen for which the context is to be created.
  *
- * Return: a new #PangoContext for @screen
+ * Returns: a new #PangoContext for @screen
  *
  * Since: 2.2
  */
@@ -118,7 +118,7 @@ public PgContext contextGetForScreen(Screen screen)
  *     indexRanges = array of byte indexes into the layout, where even members of array are start indexes and odd elements are end indexes
  *     nRanges = number of ranges in @index_ranges, i.e. half the size of @index_ranges
  *
- * Return: a clip region containing the given ranges
+ * Returns: a clip region containing the given ranges
  */
 public Region layoutGetClipRegion(PgLayout layout, int xOrigin, int yOrigin, int* indexRanges, int nRanges)
 {
@@ -157,7 +157,7 @@ public Region layoutGetClipRegion(PgLayout layout, int xOrigin, int yOrigin, int
  *         are end indexes
  *     nRanges = number of ranges in @index_ranges, i.e. half the size of @index_ranges
  *
- * Return: a clip region containing the given ranges
+ * Returns: a clip region containing the given ranges
  */
 public Region layoutLineGetClipRegion(PgLayoutLine line, int xOrigin, int yOrigin, int[] indexRanges, int nRanges)
 {
@@ -189,7 +189,7 @@ public Region layoutLineGetClipRegion(PgLayoutLine line, int xOrigin, int yOrigi
  * Params:
  *     display = the #GdkDisplay for which the context is to be created
  *
- * Return: a new #PangoContext for @display
+ * Returns: a new #PangoContext for @display
  *
  * Since: 3.22
  */

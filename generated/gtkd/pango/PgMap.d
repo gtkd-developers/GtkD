@@ -67,7 +67,7 @@ public class PgMap
 	 * Params:
 	 *     script = a #PangoScript
 	 *
-	 * Return: %NULL.
+	 * Returns: %NULL.
 	 */
 	public PgEngine getEngine(PangoScript script)
 	{
@@ -112,7 +112,7 @@ public class PgMap
 	 *     engineTypeId = the engine type for the map to find
 	 *     renderTypeId = the render type for the map to find
 	 *
-	 * Return: %NULL.
+	 * Returns: %NULL.
 	 */
 	public static PgMap findMap(PgLanguage language, uint engineTypeId, uint renderTypeId)
 	{

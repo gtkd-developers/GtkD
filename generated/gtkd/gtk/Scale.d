@@ -158,7 +158,7 @@ public class Scale : Range
 	 *     adjustment = the #GtkAdjustment which sets the range
 	 *         of the scale, or %NULL to create a new adjustment.
 	 *
-	 * Return: a new #GtkScale
+	 * Returns: a new #GtkScale
 	 *
 	 * Since: 3.0
 	 *
@@ -193,7 +193,7 @@ public class Scale : Range
 	 *     max = maximum value
 	 *     step = step increment (tick size) used with keyboard shortcuts
 	 *
-	 * Return: a new #GtkScale
+	 * Returns: a new #GtkScale
 	 *
 	 * Since: 3.0
 	 *
@@ -252,7 +252,7 @@ public class Scale : Range
 	 * Gets the number of decimal places to which the value is rounded on change.
 	 * This number is also used by the default #GtkScale::format-value handler.
 	 *
-	 * Return: the number of decimal places
+	 * Returns: the number of decimal places
 	 */
 	public int getDigits()
 	{
@@ -263,7 +263,7 @@ public class Scale : Range
 	 * Returns whether the current value is displayed as a string
 	 * next to the slider.
 	 *
-	 * Return: whether the current value is displayed as a string
+	 * Returns: whether the current value is displayed as a string
 	 */
 	public bool getDrawValue()
 	{
@@ -273,7 +273,7 @@ public class Scale : Range
 	/**
 	 * Returns whether the scale has an origin.
 	 *
-	 * Return: %TRUE if the scale has an origin.
+	 * Returns: %TRUE if the scale has an origin.
 	 *
 	 * Since: 3.4
 	 */
@@ -287,7 +287,7 @@ public class Scale : Range
 	 * object is owned by the scale so does not need to be freed by
 	 * the caller.
 	 *
-	 * Return: the #PangoLayout for this scale,
+	 * Returns: the #PangoLayout for this scale,
 	 *     or %NULL if the #GtkScale:draw-value property is %FALSE.
 	 *
 	 * Since: 2.4
@@ -327,7 +327,7 @@ public class Scale : Range
 	/**
 	 * Gets the position in which the current value is displayed.
 	 *
-	 * Return: the position in which the current value is displayed
+	 * Returns: the position in which the current value is displayed
 	 */
 	public GtkPositionType getValuePos()
 	{
@@ -440,7 +440,7 @@ public class Scale : Range
 	 * Params:
 	 *     value = the value to format
 	 *
-	 * Return: allocated string representing @value
+	 * Returns: allocated string representing @value
 	 */
 	gulong addOnFormatValue(string delegate(double, Scale) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

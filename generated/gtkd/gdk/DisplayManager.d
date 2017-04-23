@@ -123,7 +123,7 @@ public class DisplayManager : ObjectG
 	 * with multiple backends). Applications can use gdk_set_allowed_backends()
 	 * to limit what backends can be used.
 	 *
-	 * Return: The global #GdkDisplayManager singleton;
+	 * Returns: The global #GdkDisplayManager singleton;
 	 *     gdk_parse_args(), gdk_init(), or gdk_init_check() must have
 	 *     been called first.
 	 *
@@ -144,7 +144,7 @@ public class DisplayManager : ObjectG
 	/**
 	 * Gets the default #GdkDisplay.
 	 *
-	 * Return: a #GdkDisplay, or %NULL if
+	 * Returns: a #GdkDisplay, or %NULL if
 	 *     there is no default display.
 	 *
 	 * Since: 2.2
@@ -164,7 +164,7 @@ public class DisplayManager : ObjectG
 	/**
 	 * List all currently open displays.
 	 *
-	 * Return: a newly
+	 * Returns: a newly
 	 *     allocated #GSList of #GdkDisplay objects. Free with g_slist_free()
 	 *     when you are done with it.
 	 *
@@ -188,7 +188,7 @@ public class DisplayManager : ObjectG
 	 * Params:
 	 *     name = the name of the display to open
 	 *
-	 * Return: a #GdkDisplay, or %NULL if the
+	 * Returns: a #GdkDisplay, or %NULL if the
 	 *     display could not be opened
 	 *
 	 * Since: 3.0

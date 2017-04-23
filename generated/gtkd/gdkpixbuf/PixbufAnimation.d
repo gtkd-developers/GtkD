@@ -90,7 +90,7 @@ public class PixbufAnimation : ObjectG
 	 * Params:
 	 *     filename = Name of file to load, in the GLib file name encoding
 	 *
-	 * Return: A newly-created animation with a reference count of 1, or %NULL
+	 * Returns: A newly-created animation with a reference count of 1, or %NULL
 	 *     if any of several error conditions ocurred:  the file could not be opened,
 	 *     there was no loader for the file's format, there was not enough memory to
 	 *     allocate the image buffer, or the image file contained invalid data.
@@ -132,7 +132,7 @@ public class PixbufAnimation : ObjectG
 	 *     stream = a #GInputStream to load the pixbuf from
 	 *     cancellable = optional #GCancellable object, %NULL to ignore
 	 *
-	 * Return: A newly-created pixbuf, or %NULL if any of several error
+	 * Returns: A newly-created pixbuf, or %NULL if any of several error
 	 *     conditions occurred: the file could not be opened, the image format is
 	 *     not supported, there was not enough memory to allocate the image buffer,
 	 *     the stream contained invalid data, or the operation was cancelled.
@@ -168,7 +168,7 @@ public class PixbufAnimation : ObjectG
 	 * Params:
 	 *     asyncResult = a #GAsyncResult
 	 *
-	 * Return: a #GdkPixbufAnimation or %NULL on error. Free the returned
+	 * Returns: a #GdkPixbufAnimation or %NULL on error. Free the returned
 	 *     object with g_object_unref().
 	 *
 	 * Since: 2.28
@@ -221,7 +221,7 @@ public class PixbufAnimation : ObjectG
 	/**
 	 * Queries the height of the bounding box of a pixbuf animation.
 	 *
-	 * Return: Height of the bounding box of the animation.
+	 * Returns: Height of the bounding box of the animation.
 	 */
 	public int getHeight()
 	{
@@ -266,7 +266,7 @@ public class PixbufAnimation : ObjectG
 	 * Params:
 	 *     startTime = time when the animation starts playing
 	 *
-	 * Return: an iterator to move over the animation
+	 * Returns: an iterator to move over the animation
 	 */
 	public PixbufAnimationIter getIter(TimeVal startTime)
 	{
@@ -288,7 +288,7 @@ public class PixbufAnimation : ObjectG
 	 * sophisticated. If an animation hasn't loaded any frames yet, this
 	 * function will return %NULL.
 	 *
-	 * Return: unanimated image representing the animation
+	 * Returns: unanimated image representing the animation
 	 */
 	public Pixbuf getStaticImage()
 	{
@@ -305,7 +305,7 @@ public class PixbufAnimation : ObjectG
 	/**
 	 * Queries the width of the bounding box of a pixbuf animation.
 	 *
-	 * Return: Width of the bounding box of the animation.
+	 * Returns: Width of the bounding box of the animation.
 	 */
 	public int getWidth()
 	{
@@ -318,7 +318,7 @@ public class PixbufAnimation : ObjectG
 	 * return %TRUE. Use gdk_pixbuf_animation_get_static_image() to retrieve
 	 * the image.
 	 *
-	 * Return: %TRUE if the "animation" was really just an image
+	 * Returns: %TRUE if the "animation" was really just an image
 	 */
 	public bool isStaticImage()
 	{
@@ -330,7 +330,7 @@ public class PixbufAnimation : ObjectG
 	 *
 	 * Deprecated: Use g_object_ref().
 	 *
-	 * Return: The same as the @animation argument.
+	 * Returns: The same as the @animation argument.
 	 */
 	public override PixbufAnimation doref()
 	{

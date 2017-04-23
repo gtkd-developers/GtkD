@@ -125,7 +125,7 @@ public struct Util
 	 * Params:
 	 *     fileName = the name of the file
 	 *
-	 * Return: the name of the file without any leading
+	 * Returns: the name of the file without any leading
 	 *     directory components
 	 */
 	public static string basename(string fileName)
@@ -143,7 +143,7 @@ public struct Util
 	 *     mask = a #gulong containing flags
 	 *     nthBit = the index of the bit to start the search from
 	 *
-	 * Return: the index of the first bit set which is higher than @nth_bit, or -1
+	 * Returns: the index of the first bit set which is higher than @nth_bit, or -1
 	 *     if no higher bits are set
 	 */
 	public static int bitNthLsf(gulong mask, int nthBit)
@@ -162,7 +162,7 @@ public struct Util
 	 *     mask = a #gulong containing flags
 	 *     nthBit = the index of the bit to start the search from
 	 *
-	 * Return: the index of the first bit set which is lower than @nth_bit, or -1
+	 * Returns: the index of the first bit set which is lower than @nth_bit, or -1
 	 *     if no lower bits are set
 	 */
 	public static int bitNthMsf(gulong mask, int nthBit)
@@ -177,7 +177,7 @@ public struct Util
 	 * Params:
 	 *     number = a #guint
 	 *
-	 * Return: the number of bits used to hold @number
+	 * Returns: the number of bits used to hold @number
 	 */
 	public static uint bitStorage(gulong number)
 	{
@@ -194,7 +194,7 @@ public struct Util
 	 *         for an empty environment list
 	 *     variable = the environment variable to get
 	 *
-	 * Return: the value of the environment variable, or %NULL if
+	 * Returns: the value of the environment variable, or %NULL if
 	 *     the environment variable is not set in @envp. The returned
 	 *     string is owned by @envp, and will be freed if @variable is
 	 *     set or unset again.
@@ -219,7 +219,7 @@ public struct Util
 	 *     value = the value for to set the variable to
 	 *     overwrite = whether to change the variable if it already exists
 	 *
-	 * Return: the
+	 * Returns: the
 	 *     updated environment list. Free it using g_strfreev().
 	 *
 	 * Since: 2.32
@@ -242,7 +242,7 @@ public struct Util
 	 *         or %NULL for an empty environment list
 	 *     variable = the environment variable to remove, must not contain '='
 	 *
-	 * Return: the
+	 * Returns: the
 	 *     updated environment list. Free it using g_strfreev().
 	 *
 	 * Since: 2.32
@@ -277,7 +277,7 @@ public struct Util
 	 * Params:
 	 *     program = a program name in the GLib file name encoding
 	 *
-	 * Return: a newly-allocated string with the absolute path,
+	 * Returns: a newly-allocated string with the absolute path,
 	 *     or %NULL
 	 */
 	public static string findProgramInPath(string program)
@@ -304,7 +304,7 @@ public struct Util
 	 * Params:
 	 *     size = a size in bytes
 	 *
-	 * Return: a newly-allocated formatted string containing a human readable
+	 * Returns: a newly-allocated formatted string containing a human readable
 	 *     file size
 	 *
 	 * Since: 2.30
@@ -334,7 +334,7 @@ public struct Util
 	 * Params:
 	 *     size = a size in bytes
 	 *
-	 * Return: a newly-allocated formatted string containing a human
+	 * Returns: a newly-allocated formatted string containing a human
 	 *     readable file size
 	 *
 	 * Since: 2.16
@@ -357,7 +357,7 @@ public struct Util
 	 *     size = a size in bytes
 	 *     flags = #GFormatSizeFlags to modify the output
 	 *
-	 * Return: a newly-allocated formatted string containing a human
+	 * Returns: a newly-allocated formatted string containing a human
 	 *     readable file size
 	 *
 	 * Since: 2.30
@@ -379,7 +379,7 @@ public struct Util
 	 * g_get_prgname() (which may be %NULL if g_set_prgname() has also not
 	 * been called).
 	 *
-	 * Return: human-readable application name. may return %NULL
+	 * Returns: human-readable application name. may return %NULL
 	 *
 	 * Since: 2.2
 	 */
@@ -400,7 +400,7 @@ public struct Util
 	 * The return value is freshly allocated and it should be freed with
 	 * g_strfreev() when it is no longer needed.
 	 *
-	 * Return: the list of
+	 * Returns: the list of
 	 *     environment variables
 	 *
 	 * Since: 2.28
@@ -425,7 +425,7 @@ public struct Util
 	 * the current directory.  This can make a difference in the case that
 	 * the current directory is the target of a symbolic link.
 	 *
-	 * Return: the current directory
+	 * Returns: the current directory
 	 */
 	public static string getCurrentDir()
 	{
@@ -457,7 +457,7 @@ public struct Util
 	 * should either directly check the `HOME` environment variable yourself
 	 * or unset it before calling any functions in GLib.
 	 *
-	 * Return: the current user's home directory
+	 * Returns: the current user's home directory
 	 */
 	public static string getHomeDir()
 	{
@@ -478,7 +478,7 @@ public struct Util
 	 * name can be determined, a default fixed string "localhost" is
 	 * returned.
 	 *
-	 * Return: the host name of the machine.
+	 * Returns: the host name of the machine.
 	 *
 	 * Since: 2.8
 	 */
@@ -495,7 +495,7 @@ public struct Util
 	 * which is called by gtk_init(). The program name is found by taking
 	 * the last component of @argv[0].
 	 *
-	 * Return: the name of the program. The returned string belongs
+	 * Returns: the name of the program. The returned string belongs
 	 *     to GLib and must not be modified or freed.
 	 */
 	public static string getPrgname()
@@ -510,7 +510,7 @@ public struct Util
 	 * real user name cannot be determined, the string "Unknown" is
 	 * returned.
 	 *
-	 * Return: the user's real name.
+	 * Returns: the user's real name.
 	 */
 	public static string getRealName()
 	{
@@ -533,7 +533,7 @@ public struct Util
 	 * of clip art, or a log file in the CSIDL_COMMON_APPDATA folder.
 	 * This information will not roam and is available to anyone using the computer.
 	 *
-	 * Return: a %NULL-terminated array of strings owned by GLib that must not be
+	 * Returns: a %NULL-terminated array of strings owned by GLib that must not be
 	 *     modified or freed.
 	 *
 	 * Since: 2.6
@@ -574,7 +574,7 @@ public struct Util
 	 * Note that on Windows the returned list can vary depending on where
 	 * this function is called.
 	 *
-	 * Return: a %NULL-terminated array of strings owned by GLib that must not be
+	 * Returns: a %NULL-terminated array of strings owned by GLib that must not be
 	 *     modified or freed.
 	 *
 	 * Since: 2.6
@@ -600,7 +600,7 @@ public struct Util
 	 * it is always UTF-8. The return value is never %NULL or the empty
 	 * string.
 	 *
-	 * Return: the directory to use for temporary files.
+	 * Returns: the directory to use for temporary files.
 	 */
 	public static string getTmpDir()
 	{
@@ -621,7 +621,7 @@ public struct Util
 	 * C:\Documents and Settings\username\Local Settings\Temporary Internet Files.
 	 * See documentation for CSIDL_INTERNET_CACHE.
 	 *
-	 * Return: a string owned by GLib that must not be modified
+	 * Returns: a string owned by GLib that must not be modified
 	 *     or freed.
 	 *
 	 * Since: 2.6
@@ -645,7 +645,7 @@ public struct Util
 	 * CSIDL_LOCAL_APPDATA. Note that on Windows it thus is the same as
 	 * what g_get_user_data_dir() returns.
 	 *
-	 * Return: a string owned by GLib that must not be modified
+	 * Returns: a string owned by GLib that must not be modified
 	 *     or freed.
 	 *
 	 * Since: 2.6
@@ -669,7 +669,7 @@ public struct Util
 	 * CSIDL_LOCAL_APPDATA. Note that on Windows it thus is the same as
 	 * what g_get_user_config_dir() returns.
 	 *
-	 * Return: a string owned by GLib that must not be modified
+	 * Returns: a string owned by GLib that must not be modified
 	 *     or freed.
 	 *
 	 * Since: 2.6
@@ -685,7 +685,7 @@ public struct Util
 	 * encoding, or something else, and there is no guarantee that it is even
 	 * consistent on a machine. On Windows, it is always UTF-8.
 	 *
-	 * Return: the user name of the current user.
+	 * Returns: the user name of the current user.
 	 */
 	public static string getUserName()
 	{
@@ -709,7 +709,7 @@ public struct Util
 	 * CSIDL_LOCAL_APPDATA.  Note that on Windows it thus is the same as
 	 * what g_get_user_config_dir() returns.
 	 *
-	 * Return: a string owned by GLib that must not be
+	 * Returns: a string owned by GLib that must not be
 	 *     modified or freed.
 	 *
 	 * Since: 2.28
@@ -734,7 +734,7 @@ public struct Util
 	 * Params:
 	 *     directory = the logical id of special directory
 	 *
-	 * Return: the path to the specified special directory, or
+	 * Returns: the path to the specified special directory, or
 	 *     %NULL if the logical id was not found. The returned string is owned by
 	 *     GLib and should not be modified or freed.
 	 *
@@ -757,7 +757,7 @@ public struct Util
 	 * Params:
 	 *     variable = the environment variable to get
 	 *
-	 * Return: the value of the environment variable, or %NULL if
+	 * Returns: the value of the environment variable, or %NULL if
 	 *     the environment variable is not found. The returned string
 	 *     may be overwritten by the next call to g_getenv(), g_setenv()
 	 *     or g_unsetenv().
@@ -777,7 +777,7 @@ public struct Util
 	 * use cases for environment variables in GLib-using programs you want
 	 * the UTF-8 encoding that this function and g_getenv() provide.
 	 *
-	 * Return: a %NULL-terminated
+	 * Returns: a %NULL-terminated
 	 *     list of strings which must be freed with g_strfreev().
 	 *
 	 * Since: 2.8
@@ -822,7 +822,7 @@ public struct Util
 	 *         strings with bit flags.
 	 *     nkeys = the number of #GDebugKeys in the array.
 	 *
-	 * Return: the combined set of bit flags.
+	 * Returns: the combined set of bit flags.
 	 */
 	public static uint parseDebugString(string str, GDebugKey[] keys)
 	{
@@ -840,7 +840,7 @@ public struct Util
 	 * Params:
 	 *     fileName = the name of the file
 	 *
-	 * Return: a newly allocated string containing the last
+	 * Returns: a newly allocated string containing the last
 	 *     component of the filename
 	 */
 	public static string pathGetBasename(string fileName)
@@ -860,7 +860,7 @@ public struct Util
 	 * Params:
 	 *     fileName = the name of the file
 	 *
-	 * Return: the directory components of the file
+	 * Returns: the directory components of the file
 	 */
 	public static string pathGetDirname(string fileName)
 	{
@@ -899,7 +899,7 @@ public struct Util
 	 * Params:
 	 *     fileName = a file name
 	 *
-	 * Return: %TRUE if @file_name is absolute
+	 * Returns: %TRUE if @file_name is absolute
 	 */
 	public static bool pathIsAbsolute(string fileName)
 	{
@@ -914,7 +914,7 @@ public struct Util
 	 * Params:
 	 *     fileName = a file name
 	 *
-	 * Return: a pointer into @file_name after the
+	 * Returns: a pointer into @file_name after the
 	 *     root component
 	 */
 	public static string pathSkipRoot(string fileName)
@@ -1020,7 +1020,7 @@ public struct Util
 	 *     value = the value for to set the variable to.
 	 *     overwrite = whether to change the variable if it already exists.
 	 *
-	 * Return: %FALSE if the environment variable couldn't be set.
+	 * Returns: %FALSE if the environment variable couldn't be set.
 	 *
 	 * Since: 2.4
 	 */
@@ -1040,7 +1040,7 @@ public struct Util
 	 * Params:
 	 *     num = a #guint
 	 *
-	 * Return: the smallest prime number from a built-in array of primes
+	 * Returns: the smallest prime number from a built-in array of primes
 	 *     which is larger than @num
 	 */
 	public static uint spacedPrimesClosest(uint num)

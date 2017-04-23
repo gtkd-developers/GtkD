@@ -105,7 +105,7 @@ public class Window : ObjectG
 	 *     attributesMask = mask indicating which
 	 *         fields in @attributes are valid
 	 *
-	 * Return: the new #GdkWindow
+	 * Returns: the new #GdkWindow
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -137,7 +137,7 @@ public class Window : ObjectG
 	 *     winX = return location for origin of the window under the pointer
 	 *     winY = return location for origin of the window under the pointer
 	 *
-	 * Return: window under the mouse pointer
+	 * Returns: window under the mouse pointer
 	 */
 	public static Window atPointer(out int winX, out int winY)
 	{
@@ -270,7 +270,7 @@ public class Window : ObjectG
 	 * Params:
 	 *     region = a Cairo region
 	 *
-	 * Return: a #GdkDrawingContext context that should be
+	 * Returns: a #GdkDrawingContext context that should be
 	 *     used to draw the contents of the window; the returned context is owned
 	 *     by GDK.
 	 *
@@ -520,7 +520,7 @@ public class Window : ObjectG
 	 * Before using the returned #GdkGLContext, you will need to
 	 * call gdk_gl_context_make_current() or gdk_gl_context_realize().
 	 *
-	 * Return: the newly created #GdkGLContext, or
+	 * Returns: the newly created #GdkGLContext, or
 	 *     %NULL on error
 	 *
 	 * Since: 3.16
@@ -582,7 +582,7 @@ public class Window : ObjectG
 	 *     height = height of the new surface
 	 *     scale = the scale of the new surface, or 0 to use same as @window
 	 *
-	 * Return: a pointer to the newly allocated surface. The caller
+	 * Returns: a pointer to the newly allocated surface. The caller
 	 *     owns the surface and should call cairo_surface_destroy() when done
 	 *     with it.
 	 *
@@ -620,7 +620,7 @@ public class Window : ObjectG
 	 *     width = width of the new surface
 	 *     height = height of the new surface
 	 *
-	 * Return: a pointer to the newly allocated surface. The caller
+	 * Returns: a pointer to the newly allocated surface. The caller
 	 *     owns the surface and should call cairo_surface_destroy() when done
 	 *     with it.
 	 *
@@ -727,7 +727,7 @@ public class Window : ObjectG
 	 *
 	 * Some backends may not support native child windows.
 	 *
-	 * Return: %TRUE if the window has a native window, %FALSE otherwise
+	 * Returns: %TRUE if the window has a native window, %FALSE otherwise
 	 *
 	 * Since: 2.18
 	 */
@@ -841,7 +841,7 @@ public class Window : ObjectG
 	 * Determines whether or not the desktop environment shuld be hinted that
 	 * the window does not want to receive input focus.
 	 *
-	 * Return: whether or not the window should receive input focus.
+	 * Returns: whether or not the window should receive input focus.
 	 *
 	 * Since: 2.22
 	 */
@@ -857,7 +857,7 @@ public class Window : ObjectG
 	 *
 	 * Deprecated: Don't use this function
 	 *
-	 * Return: The pattern to use for the
+	 * Returns: The pattern to use for the
 	 *     background or %NULL to use the parent’s background.
 	 *
 	 * Since: 2.22
@@ -883,7 +883,7 @@ public class Window : ObjectG
 	 * The returned list must be freed, but the elements in the
 	 * list need not be.
 	 *
-	 * Return: list of child windows inside @window
+	 * Returns: list of child windows inside @window
 	 */
 	public ListG getChildren()
 	{
@@ -910,7 +910,7 @@ public class Window : ObjectG
 	 * Params:
 	 *     userData = user data to look for
 	 *
-	 * Return: list of child windows inside @window
+	 * Returns: list of child windows inside @window
 	 *
 	 * Since: 3.10
 	 */
@@ -933,7 +933,7 @@ public class Window : ObjectG
 	 * but no area outside of this region will be affected by drawing
 	 * primitives.
 	 *
-	 * Return: a #cairo_region_t. This must be freed with cairo_region_destroy()
+	 * Returns: a #cairo_region_t. This must be freed with cairo_region_destroy()
 	 *     when you are done.
 	 */
 	public Region getClipRegion()
@@ -956,7 +956,7 @@ public class Window : ObjectG
 	 * Deprecated: Compositing is an outdated technology that
 	 * only ever worked on X11.
 	 *
-	 * Return: %TRUE if the window is composited.
+	 * Returns: %TRUE if the window is composited.
 	 *
 	 * Since: 2.22
 	 */
@@ -971,7 +971,7 @@ public class Window : ObjectG
 	 * there is no custom cursor set on the specified window, and it is
 	 * using the cursor for its parent window.
 	 *
-	 * Return: a #GdkCursor, or %NULL. The
+	 * Returns: a #GdkCursor, or %NULL. The
 	 *     returned object is owned by the #GdkWindow and should not be
 	 *     unreferenced directly. Use gdk_window_set_cursor() to unset the
 	 *     cursor of the window
@@ -997,7 +997,7 @@ public class Window : ObjectG
 	 * Params:
 	 *     decorations = The window decorations will be written here
 	 *
-	 * Return: %TRUE if the window has decorations set, %FALSE otherwise.
+	 * Returns: %TRUE if the window has decorations set, %FALSE otherwise.
 	 */
 	public bool getDecorations(out GdkWMDecoration decorations)
 	{
@@ -1013,7 +1013,7 @@ public class Window : ObjectG
 	 * Params:
 	 *     device = a master, pointer #GdkDevice.
 	 *
-	 * Return: a #GdkCursor, or %NULL. The
+	 * Returns: a #GdkCursor, or %NULL. The
 	 *     returned object is owned by the #GdkWindow and should not be
 	 *     unreferenced directly. Use gdk_window_set_cursor() to unset the
 	 *     cursor of the window
@@ -1038,7 +1038,7 @@ public class Window : ObjectG
 	 * Params:
 	 *     device = a #GdkDevice.
 	 *
-	 * Return: device event mask for @window
+	 * Returns: device event mask for @window
 	 *
 	 * Since: 3.0
 	 */
@@ -1060,7 +1060,7 @@ public class Window : ObjectG
 	 *     y = return location for the Y coordinate of @device, or %NULL.
 	 *     mask = return location for the modifier mask, or %NULL.
 	 *
-	 * Return: The window underneath @device
+	 * Returns: The window underneath @device
 	 *     (as with gdk_device_get_window_at_position()), or %NULL if the
 	 *     window is not known to GDK.
 	 *
@@ -1089,7 +1089,7 @@ public class Window : ObjectG
 	 *     y = return location for the Y coordinate of @device, or %NULL.
 	 *     mask = return location for the modifier mask, or %NULL.
 	 *
-	 * Return: The window underneath @device
+	 * Returns: The window underneath @device
 	 *     (as with gdk_device_get_window_at_position()), or %NULL if the
 	 *     window is not known to GDK.
 	 *
@@ -1110,7 +1110,7 @@ public class Window : ObjectG
 	/**
 	 * Gets the #GdkDisplay associated with a #GdkWindow.
 	 *
-	 * Return: the #GdkDisplay associated with @window
+	 * Returns: the #GdkDisplay associated with @window
 	 *
 	 * Since: 2.24
 	 */
@@ -1134,7 +1134,7 @@ public class Window : ObjectG
 	 *         where the drop should happen. This may be @window or a proxy window,
 	 *         or %NULL if @window does not support Drag and Drop.
 	 *
-	 * Return: the supported DND protocol.
+	 * Returns: the supported DND protocol.
 	 *
 	 * Since: 3.0
 	 */
@@ -1156,7 +1156,7 @@ public class Window : ObjectG
 	 *
 	 * See also: gdk_offscreen_window_get_embedder()
 	 *
-	 * Return: effective parent of @window
+	 * Returns: effective parent of @window
 	 *
 	 * Since: 2.22
 	 */
@@ -1180,7 +1180,7 @@ public class Window : ObjectG
 	 *
 	 * See also: gdk_offscreen_window_get_embedder()
 	 *
-	 * Return: the effective toplevel window containing @window
+	 * Returns: the effective toplevel window containing @window
 	 *
 	 * Since: 2.22
 	 */
@@ -1199,7 +1199,7 @@ public class Window : ObjectG
 	/**
 	 * Get the current event compression setting for this window.
 	 *
-	 * Return: %TRUE if motion events will be compressed
+	 * Returns: %TRUE if motion events will be compressed
 	 *
 	 * Since: 3.12
 	 */
@@ -1212,7 +1212,7 @@ public class Window : ObjectG
 	 * Gets the event mask for @window for all master input devices. See
 	 * gdk_window_set_events().
 	 *
-	 * Return: event mask for @window
+	 * Returns: event mask for @window
 	 */
 	public GdkEventMask getEvents()
 	{
@@ -1223,7 +1223,7 @@ public class Window : ObjectG
 	 * Determines whether or not the desktop environment should be hinted that the
 	 * window does not want to receive input focus when it is mapped.
 	 *
-	 * Return: whether or not the window wants to receive input focus when
+	 * Returns: whether or not the window wants to receive input focus when
 	 *     it is mapped.
 	 *
 	 * Since: 2.22
@@ -1238,7 +1238,7 @@ public class Window : ObjectG
 	 * never changes unless the window is reparented to a new toplevel
 	 * window.
 	 *
-	 * Return: the frame clock
+	 * Returns: the frame clock
 	 *
 	 * Since: 3.8
 	 */
@@ -1271,7 +1271,7 @@ public class Window : ObjectG
 	/**
 	 * Obtains the #GdkFullscreenMode of the @window.
 	 *
-	 * Return: The #GdkFullscreenMode applied to the window when fullscreen.
+	 * Returns: The #GdkFullscreenMode applied to the window when fullscreen.
 	 *
 	 * Since: 3.8
 	 */
@@ -1316,7 +1316,7 @@ public class Window : ObjectG
 	/**
 	 * Returns the group leader window for @window. See gdk_window_set_group().
 	 *
-	 * Return: the group leader window for @window
+	 * Returns: the group leader window for @window
 	 *
 	 * Since: 2.4
 	 */
@@ -1339,7 +1339,7 @@ public class Window : ObjectG
 	 * most-recently-processed configure event, rather than the current
 	 * size on the X server.
 	 *
-	 * Return: The height of @window
+	 * Returns: The height of @window
 	 *
 	 * Since: 2.24
 	 */
@@ -1352,7 +1352,7 @@ public class Window : ObjectG
 	 * Determines whether or not the window manager is hinted that @window
 	 * has modal behaviour.
 	 *
-	 * Return: whether or not the window has the modal hint set.
+	 * Returns: whether or not the window has the modal hint set.
 	 *
 	 * Since: 2.22
 	 */
@@ -1371,7 +1371,7 @@ public class Window : ObjectG
 	 *     x = return location for X coordinate
 	 *     y = return location for Y coordinate
 	 *
-	 * Return: not meaningful, ignore
+	 * Returns: not meaningful, ignore
 	 */
 	public int getOrigin(out int x, out int y)
 	{
@@ -1391,7 +1391,7 @@ public class Window : ObjectG
 	 * gdk_window_get_parent() will most likely not do what you expect if
 	 * there are offscreen windows in the hierarchy.
 	 *
-	 * Return: parent of @window
+	 * Returns: parent of @window
 	 */
 	public Window getParent()
 	{
@@ -1433,7 +1433,7 @@ public class Window : ObjectG
 	 *     mask = return location for modifier mask or %NULL to not return the
 	 *         modifier mask
 	 *
-	 * Return: the window containing the
+	 * Returns: the window containing the
 	 *     pointer (as with gdk_window_at_pointer()), or %NULL if the window
 	 *     containing the pointer isn’t known to GDK
 	 */
@@ -1513,7 +1513,7 @@ public class Window : ObjectG
 	 * The scale of a window may change during runtime, if this happens
 	 * a configure event will be sent to the toplevel window.
 	 *
-	 * Return: the scale factor
+	 * Returns: the scale factor
 	 *
 	 * Since: 3.10
 	 */
@@ -1525,7 +1525,7 @@ public class Window : ObjectG
 	/**
 	 * Gets the #GdkScreen associated with a #GdkWindow.
 	 *
-	 * Return: the #GdkScreen associated with @window
+	 * Returns: the #GdkScreen associated with @window
 	 *
 	 * Since: 2.24
 	 */
@@ -1548,7 +1548,7 @@ public class Window : ObjectG
 	 * Params:
 	 *     source = a #GdkInputSource to define the source class.
 	 *
-	 * Return: source event mask for @window
+	 * Returns: source event mask for @window
 	 */
 	public GdkEventMask getSourceEvents(GdkInputSource source)
 	{
@@ -1559,7 +1559,7 @@ public class Window : ObjectG
 	 * Gets the bitwise OR of the currently active window state flags,
 	 * from the #GdkWindowState enumeration.
 	 *
-	 * Return: window state bitfield
+	 * Returns: window state bitfield
 	 */
 	public GdkWindowState getState()
 	{
@@ -1570,7 +1570,7 @@ public class Window : ObjectG
 	 * Returns %TRUE if the window is aware of the existence of multiple
 	 * devices.
 	 *
-	 * Return: %TRUE if the window handles multidevice features.
+	 * Returns: %TRUE if the window handles multidevice features.
 	 *
 	 * Since: 3.0
 	 */
@@ -1591,7 +1591,7 @@ public class Window : ObjectG
 	 * gdk_window_get_toplevel() will most likely not do what you expect
 	 * if there are offscreen windows in the hierarchy.
 	 *
-	 * Return: the toplevel window containing @window
+	 * Returns: the toplevel window containing @window
 	 */
 	public Window getToplevel()
 	{
@@ -1608,7 +1608,7 @@ public class Window : ObjectG
 	/**
 	 * This function returns the type hint set for a window.
 	 *
-	 * Return: The type hint set for @window
+	 * Returns: The type hint set for @window
 	 *
 	 * Since: 2.10
 	 */
@@ -1625,7 +1625,7 @@ public class Window : ObjectG
 	 * gdk_window_get_update_area() returns %NULL. You are responsible for
 	 * calling cairo_region_destroy() on the returned region if it’s non-%NULL.
 	 *
-	 * Return: the update area for @window
+	 * Returns: the update area for @window
 	 */
 	public Region getUpdateArea()
 	{
@@ -1657,7 +1657,7 @@ public class Window : ObjectG
 	 * obscured by other windows, but no area outside of this region
 	 * is visible.
 	 *
-	 * Return: a #cairo_region_t. This must be freed with cairo_region_destroy()
+	 * Returns: a #cairo_region_t. This must be freed with cairo_region_destroy()
 	 *     when you are done.
 	 */
 	public Region getVisibleRegion()
@@ -1675,7 +1675,7 @@ public class Window : ObjectG
 	/**
 	 * Gets the #GdkVisual describing the pixel format of @window.
 	 *
-	 * Return: a #GdkVisual
+	 * Returns: a #GdkVisual
 	 *
 	 * Since: 2.24
 	 */
@@ -1698,7 +1698,7 @@ public class Window : ObjectG
 	 * most-recently-processed configure event, rather than the current
 	 * size on the X server.
 	 *
-	 * Return: The width of @window
+	 * Returns: The width of @window
 	 *
 	 * Since: 2.24
 	 */
@@ -1710,7 +1710,7 @@ public class Window : ObjectG
 	/**
 	 * Gets the type of the window. See #GdkWindowType.
 	 *
-	 * Return: type of window
+	 * Returns: type of window
 	 */
 	public GdkWindowType getWindowType()
 	{
@@ -1721,7 +1721,7 @@ public class Window : ObjectG
 	 * Checks whether the window has a native window or not. Note that
 	 * you can use gdk_window_ensure_native() if a native window is needed.
 	 *
-	 * Return: %TRUE if the @window has a native window, %FALSE otherwise.
+	 * Returns: %TRUE if the @window has a native window, %FALSE otherwise.
 	 *
 	 * Since: 2.22
 	 */
@@ -1858,7 +1858,7 @@ public class Window : ObjectG
 	/**
 	 * Check to see if a window is destroyed..
 	 *
-	 * Return: %TRUE if the window is destroyed
+	 * Returns: %TRUE if the window is destroyed
 	 *
 	 * Since: 2.18
 	 */
@@ -1870,7 +1870,7 @@ public class Window : ObjectG
 	/**
 	 * Determines whether or not the window is an input only window.
 	 *
-	 * Return: %TRUE if @window is input only
+	 * Returns: %TRUE if @window is input only
 	 *
 	 * Since: 2.22
 	 */
@@ -1882,7 +1882,7 @@ public class Window : ObjectG
 	/**
 	 * Determines whether or not the window is shaped.
 	 *
-	 * Return: %TRUE if @window is shaped
+	 * Returns: %TRUE if @window is shaped
 	 *
 	 * Since: 2.22
 	 */
@@ -1897,7 +1897,7 @@ public class Window : ObjectG
 	 * we only check as far as we have GDK window parents, not to the root
 	 * window.)
 	 *
-	 * Return: %TRUE if the window is viewable
+	 * Returns: %TRUE if the window is viewable
 	 */
 	public bool isViewable()
 	{
@@ -1908,7 +1908,7 @@ public class Window : ObjectG
 	 * Checks whether the window has been mapped (with gdk_window_show() or
 	 * gdk_window_show_unraised()).
 	 *
-	 * Return: %TRUE if the window is mapped
+	 * Returns: %TRUE if the window is mapped
 	 */
 	public bool isVisible()
 	{
@@ -2061,7 +2061,7 @@ public class Window : ObjectG
 	 * Like gdk_window_get_children(), but does not copy the list of
 	 * children, so the list does not need to be freed.
 	 *
-	 * Return: a reference to the list of child windows in @window
+	 * Returns: a reference to the list of child windows in @window
 	 */
 	public ListG peekChildren()
 	{
@@ -2930,7 +2930,7 @@ public class Window : ObjectG
 	 * Params:
 	 *     useStatic = %TRUE to turn on static gravity
 	 *
-	 * Return: %FALSE
+	 * Returns: %FALSE
 	 */
 	public bool setStaticGravities(bool useStatic)
 	{
@@ -3098,7 +3098,7 @@ public class Window : ObjectG
 	 * Params:
 	 *     event = a #GdkEvent to show the menu for
 	 *
-	 * Return: %TRUE if the window menu was shown and %FALSE otherwise.
+	 * Returns: %TRUE if the window menu was shown and %FALSE otherwise.
 	 *
 	 * Since: 3.14
 	 */
@@ -3243,7 +3243,7 @@ public class Window : ObjectG
 	 *     width = the width of the offscreen surface to create
 	 *     height = the height of the offscreen surface to create
 	 *
-	 * Return: the newly created #cairo_surface_t for the offscreen window
+	 * Returns: the newly created #cairo_surface_t for the offscreen window
 	 *
 	 * Since: 3.0
 	 */
@@ -3442,7 +3442,7 @@ public class Window : ObjectG
 	 *     x = x coordinate in the window
 	 *     y = y coordinate in the window
 	 *
-	 * Return: the #GdkWindow of the
+	 * Returns: the #GdkWindow of the
 	 *     embedded child at @x, @y, or %NULL
 	 *
 	 * Since: 2.18
@@ -3540,7 +3540,7 @@ public class Window : ObjectG
 	 * Obtains the root window (parent all other windows are inside)
 	 * for the default display and screen.
 	 *
-	 * Return: the default root window
+	 * Returns: the default root window
 	 */
 	public static Window getDefaultRootWindow()
 	{
@@ -3560,7 +3560,7 @@ public class Window : ObjectG
 	 * Params:
 	 *     window = a #GdkWindow
 	 *
-	 * Return: the embedding #GdkWindow, or
+	 * Returns: the embedding #GdkWindow, or
 	 *     %NULL if @window is not an mbedded offscreen window
 	 *
 	 * Since: 2.18
@@ -3585,7 +3585,7 @@ public class Window : ObjectG
 	 * Params:
 	 *     window = a #GdkWindow
 	 *
-	 * Return: The offscreen surface, or
+	 * Returns: The offscreen surface, or
 	 *     %NULL if not offscreen
 	 */
 	public static Surface offscreenWindowGetSurface(Window window)

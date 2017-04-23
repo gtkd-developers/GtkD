@@ -92,7 +92,7 @@ public class ConverterOutputStream : FilterOutputStream, PollableOutputStreamIF
 	 *     baseStream = a #GOutputStream
 	 *     converter = a #GConverter
 	 *
-	 * Return: a new #GOutputStream.
+	 * Returns: a new #GOutputStream.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -111,7 +111,7 @@ public class ConverterOutputStream : FilterOutputStream, PollableOutputStreamIF
 	/**
 	 * Gets the #GConverter that is used by @converter_stream.
 	 *
-	 * Return: the converter of the converter output stream
+	 * Returns: the converter of the converter output stream
 	 *
 	 * Since: 2.24
 	 */

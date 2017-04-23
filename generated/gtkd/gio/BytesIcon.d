@@ -90,7 +90,7 @@ public class BytesIcon : ObjectG, IconIF, LoadableIconIF
 	 * Params:
 	 *     bytes = a #GBytes.
 	 *
-	 * Return: a #GIcon for the given
+	 * Returns: a #GIcon for the given
 	 *     @bytes, or %NULL on error.
 	 *
 	 * Since: 2.38
@@ -112,7 +112,7 @@ public class BytesIcon : ObjectG, IconIF, LoadableIconIF
 	/**
 	 * Gets the #GBytes associated with the given @icon.
 	 *
-	 * Return: a #GBytes, or %NULL.
+	 * Returns: a #GBytes, or %NULL.
 	 *
 	 * Since: 2.38
 	 */

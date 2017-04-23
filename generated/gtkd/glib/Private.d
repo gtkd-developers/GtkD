@@ -82,7 +82,7 @@ public class Private
 	 * Values are never copied between threads (when a new thread is
 	 * created, for example).
 	 *
-	 * Return: the thread-local value
+	 * Returns: the thread-local value
 	 */
 	public void* get()
 	{

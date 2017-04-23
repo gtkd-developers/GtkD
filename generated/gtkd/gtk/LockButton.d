@@ -110,7 +110,7 @@ public class LockButton : Button
 	 * Params:
 	 *     permission = a #GPermission
 	 *
-	 * Return: a new #GtkLockButton
+	 * Returns: a new #GtkLockButton
 	 *
 	 * Since: 3.2
 	 *
@@ -131,7 +131,7 @@ public class LockButton : Button
 	/**
 	 * Obtains the #GPermission object that controls @button.
 	 *
-	 * Return: the #GPermission of @button
+	 * Returns: the #GPermission of @button
 	 *
 	 * Since: 3.2
 	 */

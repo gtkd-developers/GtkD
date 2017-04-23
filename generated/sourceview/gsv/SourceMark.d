@@ -86,7 +86,7 @@ public class SourceMark : TextMark
 	 *         category, or all the marks representing a compilation error could belong to
 	 *         "error" category).
 	 *
-	 * Return: a new #GtkSourceMark that can be added using gtk_text_buffer_add_mark().
+	 * Returns: a new #GtkSourceMark that can be added using gtk_text_buffer_add_mark().
 	 *
 	 * Since: 2.2
 	 *
@@ -107,7 +107,7 @@ public class SourceMark : TextMark
 	/**
 	 * Returns the mark category.
 	 *
-	 * Return: the category of the #GtkSourceMark.
+	 * Returns: the category of the #GtkSourceMark.
 	 *
 	 * Since: 2.2
 	 */
@@ -125,7 +125,7 @@ public class SourceMark : TextMark
 	 * Params:
 	 *     category = a string specifying the mark category, or %NULL.
 	 *
-	 * Return: the next #GtkSourceMark, or %NULL.
+	 * Returns: the next #GtkSourceMark, or %NULL.
 	 *
 	 * Since: 2.2
 	 */
@@ -150,7 +150,7 @@ public class SourceMark : TextMark
 	 * Params:
 	 *     category = a string specifying the mark category, or %NULL.
 	 *
-	 * Return: the previous #GtkSourceMark, or %NULL.
+	 * Returns: the previous #GtkSourceMark, or %NULL.
 	 *
 	 * Since: 2.2
 	 */

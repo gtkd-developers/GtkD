@@ -131,7 +131,7 @@ public class CheckMenuItem : MenuItem
 	/**
 	 * Creates a new #GtkCheckMenuItem.
 	 *
-	 * Return: a new #GtkCheckMenuItem.
+	 * Returns: a new #GtkCheckMenuItem.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -151,7 +151,7 @@ public class CheckMenuItem : MenuItem
 	 * Returns whether the check menu item is active. See
 	 * gtk_check_menu_item_set_active ().
 	 *
-	 * Return: %TRUE if the menu item is checked.
+	 * Returns: %TRUE if the menu item is checked.
 	 */
 	public bool getActive()
 	{
@@ -161,7 +161,7 @@ public class CheckMenuItem : MenuItem
 	/**
 	 * Returns whether @check_menu_item looks like a #GtkRadioMenuItem
 	 *
-	 * Return: Whether @check_menu_item looks like a #GtkRadioMenuItem
+	 * Returns: Whether @check_menu_item looks like a #GtkRadioMenuItem
 	 *
 	 * Since: 2.4
 	 */
@@ -173,7 +173,7 @@ public class CheckMenuItem : MenuItem
 	/**
 	 * Retrieves the value set by gtk_check_menu_item_set_inconsistent().
 	 *
-	 * Return: %TRUE if inconsistent
+	 * Returns: %TRUE if inconsistent
 	 */
 	public bool getInconsistent()
 	{

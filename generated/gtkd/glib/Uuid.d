@@ -46,7 +46,7 @@ public struct Uuid
 	 * Params:
 	 *     str = a string representing a UUID
 	 *
-	 * Return: %TRUE if @str is a valid UUID, %FALSE otherwise.
+	 * Returns: %TRUE if @str is a valid UUID, %FALSE otherwise.
 	 *
 	 * Since: 2.52
 	 */
@@ -58,7 +58,7 @@ public struct Uuid
 	/**
 	 * Generates a random UUID (RFC 4122 version 4) as a string.
 	 *
-	 * Return: A string that should be freed with g_free().
+	 * Returns: A string that should be freed with g_free().
 	 *
 	 * Since: 2.52
 	 */

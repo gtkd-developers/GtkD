@@ -71,7 +71,7 @@ public class KeyFile
 	 * g_key_file_load_from_dirs() or g_key_file_load_from_data_dirs() to
 	 * read an existing key file.
 	 *
-	 * Return: an empty #GKeyFile.
+	 * Returns: an empty #GKeyFile.
 	 *
 	 * Since: 2.6
 	 *
@@ -114,7 +114,7 @@ public class KeyFile
 	 *     groupName = a group name
 	 *     key = a key
 	 *
-	 * Return: the value associated with the key as a boolean,
+	 * Returns: the value associated with the key as a boolean,
 	 *     or %FALSE if the key was not found or could not be parsed.
 	 *
 	 * Since: 2.6
@@ -148,7 +148,7 @@ public class KeyFile
 	 *     groupName = a group name
 	 *     key = a key
 	 *
-	 * Return: the values associated with the key as a list of booleans, or %NULL if the
+	 * Returns: the values associated with the key as a list of booleans, or %NULL if the
 	 *     key was not found or could not be parsed. The returned list of booleans
 	 *     should be freed with g_free() when no longer needed.
 	 *
@@ -188,7 +188,7 @@ public class KeyFile
 	 *     groupName = a group name, or %NULL
 	 *     key = a key
 	 *
-	 * Return: a comment that should be freed with g_free()
+	 * Returns: a comment that should be freed with g_free()
 	 *
 	 * Since: 2.6
 	 *
@@ -222,7 +222,7 @@ public class KeyFile
 	 *     groupName = a group name
 	 *     key = a key
 	 *
-	 * Return: the value associated with the key as a double, or
+	 * Returns: the value associated with the key as a double, or
 	 *     0.0 if the key was not found or could not be parsed.
 	 *
 	 * Since: 2.12
@@ -256,7 +256,7 @@ public class KeyFile
 	 *     groupName = a group name
 	 *     key = a key
 	 *
-	 * Return: the values associated with the key as a list of doubles, or %NULL if the
+	 * Returns: the values associated with the key as a list of doubles, or %NULL if the
 	 *     key was not found or could not be parsed. The returned list of doubles
 	 *     should be freed with g_free() when no longer needed.
 	 *
@@ -287,7 +287,7 @@ public class KeyFile
 	 * Params:
 	 *     length = return location for the number of returned groups, or %NULL
 	 *
-	 * Return: a newly-allocated %NULL-terminated array of strings.
+	 * Returns: a newly-allocated %NULL-terminated array of strings.
 	 *     Use g_strfreev() to free it.
 	 *
 	 * Since: 2.6
@@ -309,7 +309,7 @@ public class KeyFile
 	 *     groupName = a non-%NULL group name
 	 *     key = a non-%NULL key
 	 *
-	 * Return: the value associated with the key as a signed 64-bit integer, or
+	 * Returns: the value associated with the key as a signed 64-bit integer, or
 	 *     0 if the key was not found or could not be parsed.
 	 *
 	 * Since: 2.26
@@ -344,7 +344,7 @@ public class KeyFile
 	 *     groupName = a group name
 	 *     key = a key
 	 *
-	 * Return: the value associated with the key as an integer, or
+	 * Returns: the value associated with the key as an integer, or
 	 *     0 if the key was not found or could not be parsed.
 	 *
 	 * Since: 2.6
@@ -379,7 +379,7 @@ public class KeyFile
 	 *     groupName = a group name
 	 *     key = a key
 	 *
-	 * Return: the values associated with the key as a list of integers, or %NULL if
+	 * Returns: the values associated with the key as a list of integers, or %NULL if
 	 *     the key was not found or could not be parsed. The returned list of
 	 *     integers should be freed with g_free() when no longer needed.
 	 *
@@ -413,7 +413,7 @@ public class KeyFile
 	 *     groupName = a group name
 	 *     length = return location for the number of keys returned, or %NULL
 	 *
-	 * Return: a newly-allocated %NULL-terminated array of strings.
+	 * Returns: a newly-allocated %NULL-terminated array of strings.
 	 *     Use g_strfreev() to free it.
 	 *
 	 * Since: 2.6
@@ -450,7 +450,7 @@ public class KeyFile
 	 *     key = a key
 	 *     locale = a locale identifier or %NULL
 	 *
-	 * Return: a newly allocated string or %NULL if the specified
+	 * Returns: a newly allocated string or %NULL if the specified
 	 *     key cannot be found.
 	 *
 	 * Since: 2.6
@@ -489,7 +489,7 @@ public class KeyFile
 	 *     key = a key
 	 *     locale = a locale identifier or %NULL
 	 *
-	 * Return: a newly allocated %NULL-terminated string array
+	 * Returns: a newly allocated %NULL-terminated string array
 	 *     or %NULL if the key isn't found. The string array should be freed
 	 *     with g_strfreev().
 	 *
@@ -516,7 +516,7 @@ public class KeyFile
 	/**
 	 * Returns the name of the start group of the file.
 	 *
-	 * Return: The start group of the key file.
+	 * Returns: The start group of the key file.
 	 *
 	 * Since: 2.6
 	 */
@@ -542,7 +542,7 @@ public class KeyFile
 	 *     groupName = a group name
 	 *     key = a key
 	 *
-	 * Return: a newly allocated string or %NULL if the specified
+	 * Returns: a newly allocated string or %NULL if the specified
 	 *     key cannot be found.
 	 *
 	 * Since: 2.6
@@ -576,7 +576,7 @@ public class KeyFile
 	 *     groupName = a group name
 	 *     key = a key
 	 *
-	 * Return: a %NULL-terminated string array or %NULL if the specified
+	 * Returns: a %NULL-terminated string array or %NULL if the specified
 	 *     key cannot be found. The array should be freed with g_strfreev().
 	 *
 	 * Since: 2.6
@@ -608,7 +608,7 @@ public class KeyFile
 	 *     groupName = a non-%NULL group name
 	 *     key = a non-%NULL key
 	 *
-	 * Return: the value associated with the key as an unsigned 64-bit integer,
+	 * Returns: the value associated with the key as an unsigned 64-bit integer,
 	 *     or 0 if the key was not found or could not be parsed.
 	 *
 	 * Since: 2.26
@@ -642,7 +642,7 @@ public class KeyFile
 	 *     groupName = a group name
 	 *     key = a key
 	 *
-	 * Return: a newly allocated string or %NULL if the specified
+	 * Returns: a newly allocated string or %NULL if the specified
 	 *     key cannot be found.
 	 *
 	 * Since: 2.6
@@ -670,7 +670,7 @@ public class KeyFile
 	 * Params:
 	 *     groupName = a group name
 	 *
-	 * Return: %TRUE if @group_name is a part of @key_file, %FALSE
+	 * Returns: %TRUE if @group_name is a part of @key_file, %FALSE
 	 *     otherwise.
 	 *
 	 * Since: 2.6
@@ -696,7 +696,7 @@ public class KeyFile
 	 *     groupName = a group name
 	 *     key = a key name
 	 *
-	 * Return: %TRUE if @key is a part of @group_name, %FALSE otherwise
+	 * Returns: %TRUE if @key is a part of @group_name, %FALSE otherwise
 	 *
 	 * Since: 2.6
 	 *
@@ -724,7 +724,7 @@ public class KeyFile
 	 *     bytes = a #GBytes
 	 *     flags = flags from #GKeyFileFlags
 	 *
-	 * Return: %TRUE if a key file could be loaded, %FALSE otherwise
+	 * Returns: %TRUE if a key file could be loaded, %FALSE otherwise
 	 *
 	 * Since: 2.50
 	 *
@@ -753,7 +753,7 @@ public class KeyFile
 	 *     length = the length of @data in bytes (or (gsize)-1 if data is nul-terminated)
 	 *     flags = flags from #GKeyFileFlags
 	 *
-	 * Return: %TRUE if a key file could be loaded, %FALSE otherwise
+	 * Returns: %TRUE if a key file could be loaded, %FALSE otherwise
 	 *
 	 * Since: 2.6
 	 *
@@ -786,7 +786,7 @@ public class KeyFile
 	 *         of the file, or %NULL
 	 *     flags = flags from #GKeyFileFlags
 	 *
-	 * Return: %TRUE if a key file could be loaded, %FALSE othewise
+	 * Returns: %TRUE if a key file could be loaded, %FALSE othewise
 	 *
 	 * Since: 2.6
 	 *
@@ -827,7 +827,7 @@ public class KeyFile
 	 *         of the file, or %NULL
 	 *     flags = flags from #GKeyFileFlags
 	 *
-	 * Return: %TRUE if a key file could be loaded, %FALSE otherwise
+	 * Returns: %TRUE if a key file could be loaded, %FALSE otherwise
 	 *
 	 * Since: 2.14
 	 *
@@ -864,7 +864,7 @@ public class KeyFile
 	 *     file = the path of a filename to load, in the GLib filename encoding
 	 *     flags = flags from #GKeyFileFlags
 	 *
-	 * Return: %TRUE if a key file could be loaded, %FALSE otherwise
+	 * Returns: %TRUE if a key file could be loaded, %FALSE otherwise
 	 *
 	 * Since: 2.6
 	 *
@@ -887,7 +887,7 @@ public class KeyFile
 	/**
 	 * Increases the reference count of @key_file.
 	 *
-	 * Return: the same @key_file.
+	 * Returns: the same @key_file.
 	 *
 	 * Since: 2.32
 	 */
@@ -913,7 +913,7 @@ public class KeyFile
 	 *     groupName = a group name, or %NULL
 	 *     key = a key
 	 *
-	 * Return: %TRUE if the comment was removed, %FALSE otherwise
+	 * Returns: %TRUE if the comment was removed, %FALSE otherwise
 	 *
 	 * Since: 2.6
 	 *
@@ -940,7 +940,7 @@ public class KeyFile
 	 * Params:
 	 *     groupName = a group name
 	 *
-	 * Return: %TRUE if the group was removed, %FALSE otherwise
+	 * Returns: %TRUE if the group was removed, %FALSE otherwise
 	 *
 	 * Since: 2.6
 	 *
@@ -967,7 +967,7 @@ public class KeyFile
 	 *     groupName = a group name
 	 *     key = a key name to remove
 	 *
-	 * Return: %TRUE if the key was removed, %FALSE otherwise
+	 * Returns: %TRUE if the key was removed, %FALSE otherwise
 	 *
 	 * Since: 2.6
 	 *
@@ -997,7 +997,7 @@ public class KeyFile
 	 * Params:
 	 *     filename = the name of the file to write to
 	 *
-	 * Return: %TRUE if successful, else %FALSE with @error set
+	 * Returns: %TRUE if successful, else %FALSE with @error set
 	 *
 	 * Since: 2.40
 	 *
@@ -1072,7 +1072,7 @@ public class KeyFile
 	 *     key = a key
 	 *     comment = a comment
 	 *
-	 * Return: %TRUE if the comment was written, %FALSE otherwise
+	 * Returns: %TRUE if the comment was written, %FALSE otherwise
 	 *
 	 * Since: 2.6
 	 *
@@ -1308,7 +1308,7 @@ public class KeyFile
 	 *     length = return location for the length of the
 	 *         returned string, or %NULL
 	 *
-	 * Return: a newly allocated string holding
+	 * Returns: a newly allocated string holding
 	 *     the contents of the #GKeyFile
 	 *
 	 * Since: 2.6

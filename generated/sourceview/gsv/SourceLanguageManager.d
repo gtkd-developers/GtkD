@@ -77,7 +77,7 @@ public class SourceLanguageManager : ObjectG
 	 * manager or a private language manager instance then use
 	 * gtk_source_language_manager_get_default() instead.
 	 *
-	 * Return: a new #GtkSourceLanguageManager.
+	 * Returns: a new #GtkSourceLanguageManager.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -96,7 +96,7 @@ public class SourceLanguageManager : ObjectG
 	/**
 	 * Returns the default #GtkSourceLanguageManager instance.
 	 *
-	 * Return: a #GtkSourceLanguageManager.
+	 * Returns: a #GtkSourceLanguageManager.
 	 *     Return value is owned by GtkSourceView library and must not be unref'ed.
 	 */
 	public static SourceLanguageManager getDefault()
@@ -118,7 +118,7 @@ public class SourceLanguageManager : ObjectG
 	 * Params:
 	 *     id = a language id.
 	 *
-	 * Return: a #GtkSourceLanguage, or %NULL
+	 * Returns: a #GtkSourceLanguage, or %NULL
 	 *     if there is no language identified by the given @id. Return value is
 	 *     owned by @lm and should not be freed.
 	 */
@@ -137,7 +137,7 @@ public class SourceLanguageManager : ObjectG
 	/**
 	 * Returns the ids of the available languages.
 	 *
-	 * Return: a %NULL-terminated array of strings containing the ids of the available
+	 * Returns: a %NULL-terminated array of strings containing the ids of the available
 	 *     languages or %NULL if no language is available.
 	 *     The array is sorted alphabetically according to the language name.
 	 *     The array is owned by @lm and must not be modified.
@@ -150,7 +150,7 @@ public class SourceLanguageManager : ObjectG
 	/**
 	 * Gets the list directories where @lm looks for language files.
 	 *
-	 * Return: %NULL-terminated array
+	 * Returns: %NULL-terminated array
 	 *     containg a list of language files directories.
 	 *     The array is owned by @lm and must not be modified.
 	 */
@@ -197,7 +197,7 @@ public class SourceLanguageManager : ObjectG
 	 *     filename = a filename in Glib filename encoding, or %NULL.
 	 *     contentType = a content type (as in GIO API), or %NULL.
 	 *
-	 * Return: a #GtkSourceLanguage, or %NULL if there
+	 * Returns: a #GtkSourceLanguage, or %NULL if there
 	 *     is no suitable language for given @filename and/or @content_type. Return
 	 *     value is owned by @lm and should not be freed.
 	 *

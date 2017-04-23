@@ -241,7 +241,7 @@ public class DateTime
 	 *     minute = the minute component of the date
 	 *     seconds = the number of seconds past the minute
 	 *
-	 * Return: a new #GDateTime, or %NULL
+	 * Returns: a new #GDateTime, or %NULL
 	 *
 	 * Since: 2.26
 	 *
@@ -274,7 +274,7 @@ public class DateTime
 	 * Params:
 	 *     tz = a #GTimeZone
 	 *
-	 * Return: a new #GDateTime, or %NULL
+	 * Returns: a new #GDateTime, or %NULL
 	 *
 	 * Since: 2.26
 	 *
@@ -298,7 +298,7 @@ public class DateTime
 	 * Params:
 	 *     timespan = a #GTimeSpan
 	 *
-	 * Return: the newly created #GDateTime which should be freed with
+	 * Returns: the newly created #GDateTime which should be freed with
 	 *     g_date_time_unref().
 	 *
 	 * Since: 2.26
@@ -322,7 +322,7 @@ public class DateTime
 	 * Params:
 	 *     days = the number of days
 	 *
-	 * Return: the newly created #GDateTime which should be freed with
+	 * Returns: the newly created #GDateTime which should be freed with
 	 *     g_date_time_unref().
 	 *
 	 * Since: 2.26
@@ -351,7 +351,7 @@ public class DateTime
 	 *     minutes = the number of minutes to add
 	 *     seconds = the number of seconds to add
 	 *
-	 * Return: the newly created #GDateTime that should be freed with
+	 * Returns: the newly created #GDateTime that should be freed with
 	 *     g_date_time_unref().
 	 *
 	 * Since: 2.26
@@ -375,7 +375,7 @@ public class DateTime
 	 * Params:
 	 *     hours = the number of hours to add
 	 *
-	 * Return: the newly created #GDateTime which should be freed with
+	 * Returns: the newly created #GDateTime which should be freed with
 	 *     g_date_time_unref().
 	 *
 	 * Since: 2.26
@@ -399,7 +399,7 @@ public class DateTime
 	 * Params:
 	 *     minutes = the number of minutes to add
 	 *
-	 * Return: the newly created #GDateTime which should be freed with
+	 * Returns: the newly created #GDateTime which should be freed with
 	 *     g_date_time_unref().
 	 *
 	 * Since: 2.26
@@ -423,7 +423,7 @@ public class DateTime
 	 * Params:
 	 *     months = the number of months
 	 *
-	 * Return: the newly created #GDateTime which should be freed with
+	 * Returns: the newly created #GDateTime which should be freed with
 	 *     g_date_time_unref().
 	 *
 	 * Since: 2.26
@@ -447,7 +447,7 @@ public class DateTime
 	 * Params:
 	 *     seconds = the number of seconds to add
 	 *
-	 * Return: the newly created #GDateTime which should be freed with
+	 * Returns: the newly created #GDateTime which should be freed with
 	 *     g_date_time_unref().
 	 *
 	 * Since: 2.26
@@ -471,7 +471,7 @@ public class DateTime
 	 * Params:
 	 *     weeks = the number of weeks
 	 *
-	 * Return: the newly created #GDateTime which should be freed with
+	 * Returns: the newly created #GDateTime which should be freed with
 	 *     g_date_time_unref().
 	 *
 	 * Since: 2.26
@@ -495,7 +495,7 @@ public class DateTime
 	 * Params:
 	 *     years = the number of years
 	 *
-	 * Return: the newly created #GDateTime which should be freed with
+	 * Returns: the newly created #GDateTime which should be freed with
 	 *     g_date_time_unref().
 	 *
 	 * Since: 2.26
@@ -520,7 +520,7 @@ public class DateTime
 	 * Params:
 	 *     begin = a #GDateTime
 	 *
-	 * Return: the difference between the two #GDateTime, as a time
+	 * Returns: the difference between the two #GDateTime, as a time
 	 *     span expressed in microseconds.
 	 *
 	 * Since: 2.26
@@ -622,7 +622,7 @@ public class DateTime
 	 *     format = a valid UTF-8 string, containing the format for the
 	 *         #GDateTime
 	 *
-	 * Return: a newly allocated string formatted to the requested format
+	 * Returns: a newly allocated string formatted to the requested format
 	 *     or %NULL in the case that there was an error. The string
 	 *     should be freed with g_free().
 	 *
@@ -640,7 +640,7 @@ public class DateTime
 	 * Retrieves the day of the month represented by @datetime in the gregorian
 	 * calendar.
 	 *
-	 * Return: the day of the month
+	 * Returns: the day of the month
 	 *
 	 * Since: 2.26
 	 */
@@ -653,7 +653,7 @@ public class DateTime
 	 * Retrieves the ISO 8601 day of the week on which @datetime falls (1 is
 	 * Monday, 2 is Tuesday... 7 is Sunday).
 	 *
-	 * Return: the day of the week
+	 * Returns: the day of the week
 	 *
 	 * Since: 2.26
 	 */
@@ -666,7 +666,7 @@ public class DateTime
 	 * Retrieves the day of the year represented by @datetime in the Gregorian
 	 * calendar.
 	 *
-	 * Return: the day of the year
+	 * Returns: the day of the year
 	 *
 	 * Since: 2.26
 	 */
@@ -678,7 +678,7 @@ public class DateTime
 	/**
 	 * Retrieves the hour of the day represented by @datetime
 	 *
-	 * Return: the hour of the day
+	 * Returns: the hour of the day
 	 *
 	 * Since: 2.26
 	 */
@@ -690,7 +690,7 @@ public class DateTime
 	/**
 	 * Retrieves the microsecond of the date represented by @datetime
 	 *
-	 * Return: the microsecond of the second
+	 * Returns: the microsecond of the second
 	 *
 	 * Since: 2.26
 	 */
@@ -702,7 +702,7 @@ public class DateTime
 	/**
 	 * Retrieves the minute of the hour represented by @datetime
 	 *
-	 * Return: the minute of the hour
+	 * Returns: the minute of the hour
 	 *
 	 * Since: 2.26
 	 */
@@ -715,7 +715,7 @@ public class DateTime
 	 * Retrieves the month of the year represented by @datetime in the Gregorian
 	 * calendar.
 	 *
-	 * Return: the month represented by @datetime
+	 * Returns: the month represented by @datetime
 	 *
 	 * Since: 2.26
 	 */
@@ -727,7 +727,7 @@ public class DateTime
 	/**
 	 * Retrieves the second of the minute represented by @datetime
 	 *
-	 * Return: the second represented by @datetime
+	 * Returns: the second represented by @datetime
 	 *
 	 * Since: 2.26
 	 */
@@ -740,7 +740,7 @@ public class DateTime
 	 * Retrieves the number of seconds since the start of the last minute,
 	 * including the fractional part.
 	 *
-	 * Return: the number of seconds
+	 * Returns: the number of seconds
 	 *
 	 * Since: 2.26
 	 */
@@ -757,7 +757,7 @@ public class DateTime
 	 * months and "EDT" during the summer months when daylight savings
 	 * time is in effect.
 	 *
-	 * Return: the time zone abbreviation. The returned
+	 * Returns: the time zone abbreviation. The returned
 	 *     string is owned by the #GDateTime and it should not be
 	 *     modified or freed
 	 *
@@ -778,7 +778,7 @@ public class DateTime
 	 *
 	 * If @datetime represents UTC time, then the offset is always zero.
 	 *
-	 * Return: the number of microseconds that should be added to UTC to
+	 * Returns: the number of microseconds that should be added to UTC to
 	 *     get the local time
 	 *
 	 * Since: 2.26
@@ -821,7 +821,7 @@ public class DateTime
 	 * Note that January 1 0001 in the proleptic Gregorian calendar is a
 	 * Monday, so this function never returns 0.
 	 *
-	 * Return: the ISO 8601 week-numbering year for @datetime
+	 * Returns: the ISO 8601 week-numbering year for @datetime
 	 *
 	 * Since: 2.26
 	 */
@@ -847,7 +847,7 @@ public class DateTime
 	 * considered as being part of the first ISO 8601 week of the next year
 	 * if 4 or more days of that week are contained within the new year.
 	 *
-	 * Return: the ISO 8601 week number for @datetime.
+	 * Returns: the ISO 8601 week number for @datetime.
 	 *
 	 * Since: 2.26
 	 */
@@ -859,7 +859,7 @@ public class DateTime
 	/**
 	 * Retrieves the year represented by @datetime in the Gregorian calendar.
 	 *
-	 * Return: the year represented by @datetime
+	 * Returns: the year represented by @datetime
 	 *
 	 * Since: 2.26
 	 */
@@ -887,7 +887,7 @@ public class DateTime
 	 * Determines if daylight savings time is in effect at the time and in
 	 * the time zone of @datetime.
 	 *
-	 * Return: %TRUE if daylight savings time is in effect
+	 * Returns: %TRUE if daylight savings time is in effect
 	 *
 	 * Since: 2.26
 	 */
@@ -899,7 +899,7 @@ public class DateTime
 	/**
 	 * Atomically increments the reference count of @datetime by one.
 	 *
-	 * Return: the #GDateTime with the reference count increased
+	 * Returns: the #GDateTime with the reference count increased
 	 *
 	 * Since: 2.26
 	 */
@@ -922,7 +922,7 @@ public class DateTime
 	 * This call is equivalent to calling g_date_time_to_timezone() with the
 	 * time zone returned by g_time_zone_new_local().
 	 *
-	 * Return: the newly created #GDateTime
+	 * Returns: the newly created #GDateTime
 	 *
 	 * Since: 2.26
 	 */
@@ -956,7 +956,7 @@ public class DateTime
 	 * Params:
 	 *     tv = a #GTimeVal to modify
 	 *
-	 * Return: %TRUE if successful, else %FALSE
+	 * Returns: %TRUE if successful, else %FALSE
 	 *
 	 * Since: 2.26
 	 */
@@ -979,7 +979,7 @@ public class DateTime
 	 * Params:
 	 *     tz = the new #GTimeZone
 	 *
-	 * Return: a new #GDateTime, or %NULL
+	 * Returns: a new #GDateTime, or %NULL
 	 *
 	 * Since: 2.26
 	 */
@@ -1002,7 +1002,7 @@ public class DateTime
 	 * Unix time is the number of seconds that have elapsed since 1970-01-01
 	 * 00:00:00 UTC, regardless of the time zone associated with @datetime.
 	 *
-	 * Return: the Unix time corresponding to @datetime
+	 * Returns: the Unix time corresponding to @datetime
 	 *
 	 * Since: 2.26
 	 */
@@ -1018,7 +1018,7 @@ public class DateTime
 	 * This call is equivalent to calling g_date_time_to_timezone() with the
 	 * time zone returned by g_time_zone_new_utc().
 	 *
-	 * Return: the newly created #GDateTime
+	 * Returns: the newly created #GDateTime
 	 *
 	 * Since: 2.26
 	 */
@@ -1055,7 +1055,7 @@ public class DateTime
 	 *     dt1 = first #GDateTime to compare
 	 *     dt2 = second #GDateTime to compare
 	 *
-	 * Return: -1, 0 or 1 if @dt1 is less than, equal to or greater
+	 * Returns: -1, 0 or 1 if @dt1 is less than, equal to or greater
 	 *     than @dt2.
 	 *
 	 * Since: 2.26
@@ -1075,7 +1075,7 @@ public class DateTime
 	 *     dt1 = a #GDateTime
 	 *     dt2 = a #GDateTime
 	 *
-	 * Return: %TRUE if @dt1 and @dt2 are equal
+	 * Returns: %TRUE if @dt1 and @dt2 are equal
 	 *
 	 * Since: 2.26
 	 */

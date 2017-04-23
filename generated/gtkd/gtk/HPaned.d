@@ -99,7 +99,7 @@ public class HPaned : Paned
 	 *
 	 * Deprecated: Use gtk_paned_new() with %GTK_ORIENTATION_HORIZONTAL instead
 	 *
-	 * Return: the new #GtkHPaned
+	 * Returns: the new #GtkHPaned
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

@@ -114,7 +114,7 @@ public class ListBox : Container
 	/**
 	 * Creates a new #GtkListBox container.
 	 *
-	 * Return: a new #GtkListBox
+	 * Returns: a new #GtkListBox
 	 *
 	 * Since: 3.10
 	 *
@@ -196,7 +196,7 @@ public class ListBox : Container
 	/**
 	 * Returns whether rows activate on single clicks.
 	 *
-	 * Return: %TRUE if rows are activated on single click, %FALSE otherwise
+	 * Returns: %TRUE if rows are activated on single click, %FALSE otherwise
 	 *
 	 * Since: 3.10
 	 */
@@ -209,7 +209,7 @@ public class ListBox : Container
 	 * Gets the adjustment (if any) that the widget uses to
 	 * for vertical scrolling.
 	 *
-	 * Return: the adjustment
+	 * Returns: the adjustment
 	 *
 	 * Since: 3.10
 	 */
@@ -233,7 +233,7 @@ public class ListBox : Container
 	 * Params:
 	 *     index = the index of the row
 	 *
-	 * Return: the child #GtkWidget or %NULL
+	 * Returns: the child #GtkWidget or %NULL
 	 *
 	 * Since: 3.10
 	 */
@@ -255,7 +255,7 @@ public class ListBox : Container
 	 * Params:
 	 *     y = position
 	 *
-	 * Return: the row or %NULL
+	 * Returns: the row or %NULL
 	 *     in case no row exists for the given y coordinate.
 	 *
 	 * Since: 3.10
@@ -279,7 +279,7 @@ public class ListBox : Container
 	 * case you should use gtk_list_box_selected_foreach() to
 	 * find all selected rows.
 	 *
-	 * Return: the selected row
+	 * Returns: the selected row
 	 *
 	 * Since: 3.10
 	 */
@@ -298,7 +298,7 @@ public class ListBox : Container
 	/**
 	 * Creates a list of all selected children.
 	 *
-	 * Return: A #GList containing the #GtkWidget for each selected child.
+	 * Returns: A #GList containing the #GtkWidget for each selected child.
 	 *     Free with g_list_free() when done.
 	 *
 	 * Since: 3.14
@@ -318,7 +318,7 @@ public class ListBox : Container
 	/**
 	 * Gets the selection mode of the listbox.
 	 *
-	 * Return: a #GtkSelectionMode
+	 * Returns: a #GtkSelectionMode
 	 *
 	 * Since: 3.10
 	 */

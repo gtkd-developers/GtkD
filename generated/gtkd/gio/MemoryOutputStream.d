@@ -139,7 +139,7 @@ public class MemoryOutputStream : OutputStream, PollableOutputStreamIF, Seekable
 	 *     destroyFunction = a function to be called on @data when the stream is
 	 *         finalized, or %NULL
 	 *
-	 * Return: A newly created #GMemoryOutputStream object.
+	 * Returns: A newly created #GMemoryOutputStream object.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -181,7 +181,7 @@ public class MemoryOutputStream : OutputStream, PollableOutputStreamIF, Seekable
 	 * Note that the returned pointer may become invalid on the next
 	 * write or truncate operation on the stream.
 	 *
-	 * Return: pointer to the stream's data, or %NULL if the data
+	 * Returns: pointer to the stream's data, or %NULL if the data
 	 *     has been stolen
 	 */
 	public void* getData()
@@ -193,7 +193,7 @@ public class MemoryOutputStream : OutputStream, PollableOutputStreamIF, Seekable
 	 * Returns the number of bytes from the start up to including the last
 	 * byte written in the stream that has not been truncated away.
 	 *
-	 * Return: the number of bytes written to the stream
+	 * Returns: the number of bytes written to the stream
 	 *
 	 * Since: 2.18
 	 */
@@ -219,7 +219,7 @@ public class MemoryOutputStream : OutputStream, PollableOutputStreamIF, Seekable
 	 * In any case, if you want the number of bytes currently written to the
 	 * stream, use g_memory_output_stream_get_data_size().
 	 *
-	 * Return: the number of bytes allocated for the data buffer
+	 * Returns: the number of bytes allocated for the data buffer
 	 */
 	public size_t getSize()
 	{
@@ -230,7 +230,7 @@ public class MemoryOutputStream : OutputStream, PollableOutputStreamIF, Seekable
 	 * Returns data from the @ostream as a #GBytes. @ostream must be
 	 * closed before calling this function.
 	 *
-	 * Return: the stream's data
+	 * Returns: the stream's data
 	 *
 	 * Since: 2.34
 	 */
@@ -254,7 +254,7 @@ public class MemoryOutputStream : OutputStream, PollableOutputStreamIF, Seekable
 	 *
 	 * @ostream must be closed before calling this function.
 	 *
-	 * Return: the stream's data, or %NULL if it has previously
+	 * Returns: the stream's data, or %NULL if it has previously
 	 *     been stolen
 	 *
 	 * Since: 2.26

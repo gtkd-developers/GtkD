@@ -141,7 +141,7 @@ public class MenuToolButton : ToolButton
 	 *     iconWidget = a widget that will be used as icon widget, or %NULL
 	 *     label = a string that will be used as label, or %NULL
 	 *
-	 * Return: the new #GtkMenuToolButton
+	 * Returns: the new #GtkMenuToolButton
 	 *
 	 * Since: 2.6
 	 *
@@ -169,7 +169,7 @@ public class MenuToolButton : ToolButton
 	 * Params:
 	 *     stockId = the name of a stock item
 	 *
-	 * Return: the new #GtkMenuToolButton
+	 * Returns: the new #GtkMenuToolButton
 	 *
 	 * Since: 2.6
 	 *

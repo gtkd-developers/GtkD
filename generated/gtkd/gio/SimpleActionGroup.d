@@ -91,7 +91,7 @@ public class SimpleActionGroup : ObjectG, ActionGroupIF, ActionMapIF
 	/**
 	 * Creates a new, empty, #GSimpleActionGroup.
 	 *
-	 * Return: a new #GSimpleActionGroup
+	 * Returns: a new #GSimpleActionGroup
 	 *
 	 * Since: 2.28
 	 *
@@ -158,7 +158,7 @@ public class SimpleActionGroup : ObjectG, ActionGroupIF, ActionMapIF
 	 * Params:
 	 *     actionName = the name of an action
 	 *
-	 * Return: a #GAction, or %NULL
+	 * Returns: a #GAction, or %NULL
 	 *
 	 * Since: 2.28
 	 */

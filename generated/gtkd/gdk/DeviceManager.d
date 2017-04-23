@@ -199,7 +199,7 @@ public class DeviceManager : ObjectG
 	 *
 	 * Deprecated: Use gdk_seat_get_pointer() instead.
 	 *
-	 * Return: The client pointer. This memory is
+	 * Returns: The client pointer. This memory is
 	 *     owned by GDK and must not be freed or unreferenced.
 	 *
 	 * Since: 3.0
@@ -219,7 +219,7 @@ public class DeviceManager : ObjectG
 	/**
 	 * Gets the #GdkDisplay associated to @device_manager.
 	 *
-	 * Return: the #GdkDisplay to which
+	 * Returns: the #GdkDisplay to which
 	 *     @device_manager is associated to, or #NULL. This memory is
 	 *     owned by GDK and must not be freed or unreferenced.
 	 *
@@ -247,7 +247,7 @@ public class DeviceManager : ObjectG
 	 * Params:
 	 *     type = device type to get.
 	 *
-	 * Return: a list of
+	 * Returns: a list of
 	 *     #GdkDevices. The returned list must be
 	 *     freed with g_list_free (). The list elements are owned by
 	 *     GTK+ and must not be freed or unreffed.

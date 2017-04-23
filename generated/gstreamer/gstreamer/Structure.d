@@ -129,7 +129,7 @@ public class Structure
 	 * Params:
 	 *     name = name of new structure
 	 *
-	 * Return: a new, empty #GstStructure
+	 * Returns: a new, empty #GstStructure
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -153,7 +153,7 @@ public class Structure
 	 * Params:
 	 *     quark = name of new structure
 	 *
-	 * Return: a new, empty #GstStructure
+	 * Returns: a new, empty #GstStructure
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -183,7 +183,7 @@ public class Structure
 	 *     firstfield = name of first field to set
 	 *     varargs = variable argument list
 	 *
-	 * Return: a new #GstStructure
+	 * Returns: a new #GstStructure
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -206,7 +206,7 @@ public class Structure
 	 * Params:
 	 *     struct2 = a #GstStructure
 	 *
-	 * Return: %TRUE if intersection would not be empty
+	 * Returns: %TRUE if intersection would not be empty
 	 */
 	public bool canIntersect(Structure struct2)
 	{
@@ -218,7 +218,7 @@ public class Structure
 	 *
 	 * Free-function: gst_structure_free
 	 *
-	 * Return: a new #GstStructure.
+	 * Returns: a new #GstStructure.
 	 */
 	public Structure copy()
 	{
@@ -265,7 +265,7 @@ public class Structure
 	 * Params:
 	 *     fieldName = a field in @structure
 	 *
-	 * Return: %TRUE if the structure field could be fixated
+	 * Returns: %TRUE if the structure field could be fixated
 	 */
 	public bool fixateField(string fieldName)
 	{
@@ -280,7 +280,7 @@ public class Structure
 	 *     fieldName = a field in @structure
 	 *     target = the target value of the fixation
 	 *
-	 * Return: %TRUE if the structure could be fixated
+	 * Returns: %TRUE if the structure could be fixated
 	 */
 	public bool fixateFieldBoolean(string fieldName, bool target)
 	{
@@ -295,7 +295,7 @@ public class Structure
 	 *     fieldName = a field in @structure
 	 *     target = the target value of the fixation
 	 *
-	 * Return: %TRUE if the structure could be fixated
+	 * Returns: %TRUE if the structure could be fixated
 	 */
 	public bool fixateFieldNearestDouble(string fieldName, double target)
 	{
@@ -312,7 +312,7 @@ public class Structure
 	 *     targetNumerator = The numerator of the target value of the fixation
 	 *     targetDenominator = The denominator of the target value of the fixation
 	 *
-	 * Return: %TRUE if the structure could be fixated
+	 * Returns: %TRUE if the structure could be fixated
 	 */
 	public bool fixateFieldNearestFraction(string fieldName, int targetNumerator, int targetDenominator)
 	{
@@ -327,7 +327,7 @@ public class Structure
 	 *     fieldName = a field in @structure
 	 *     target = the target value of the fixation
 	 *
-	 * Return: %TRUE if the structure could be fixated
+	 * Returns: %TRUE if the structure could be fixated
 	 */
 	public bool fixateFieldNearestInt(string fieldName, int target)
 	{
@@ -342,7 +342,7 @@ public class Structure
 	 *     fieldName = a field in @structure
 	 *     target = the target value of the fixation
 	 *
-	 * Return: %TRUE if the structure could be fixated
+	 * Returns: %TRUE if the structure could be fixated
 	 */
 	public bool fixateFieldString(string fieldName, string target)
 	{
@@ -358,7 +358,7 @@ public class Structure
 	 *     func = a function to call for each field
 	 *     userData = private data
 	 *
-	 * Return: %TRUE if the supplied function returns %TRUE For each of the fields,
+	 * Returns: %TRUE if the supplied function returns %TRUE For each of the fields,
 	 *     %FALSE otherwise.
 	 */
 	public bool foreac(GstStructureForeachFunc func, void* userData)
@@ -385,7 +385,7 @@ public class Structure
 	 *     fieldname = the name of a field
 	 *     array = a pointer to a #GValueArray
 	 *
-	 * Return: %TRUE if the value could be set correctly. If there was no field
+	 * Returns: %TRUE if the value could be set correctly. If there was no field
 	 *     with @fieldname or the existing field did not contain an int, this function
 	 *     returns %FALSE.
 	 */
@@ -409,7 +409,7 @@ public class Structure
 	 *     fieldname = the name of a field
 	 *     value = a pointer to a #gboolean to set
 	 *
-	 * Return: %TRUE if the value could be set correctly. If there was no field
+	 * Returns: %TRUE if the value could be set correctly. If there was no field
 	 *     with @fieldname or the existing field did not contain a boolean, this
 	 *     function returns %FALSE.
 	 */
@@ -433,7 +433,7 @@ public class Structure
 	 *     fieldname = the name of a field
 	 *     value = a pointer to a #GstClockTime to set
 	 *
-	 * Return: %TRUE if the value could be set correctly. If there was no field
+	 * Returns: %TRUE if the value could be set correctly. If there was no field
 	 *     with @fieldname or the existing field did not contain a #GstClockTime, this
 	 *     function returns %FALSE.
 	 */
@@ -456,7 +456,7 @@ public class Structure
 	 *     fieldname = the name of a field
 	 *     value = a pointer to a #GDate to set
 	 *
-	 * Return: %TRUE if the value could be set correctly. If there was no field
+	 * Returns: %TRUE if the value could be set correctly. If there was no field
 	 *     with @fieldname or the existing field did not contain a data, this function
 	 *     returns %FALSE.
 	 */
@@ -485,7 +485,7 @@ public class Structure
 	 *     fieldname = the name of a field
 	 *     value = a pointer to a #GstDateTime to set
 	 *
-	 * Return: %TRUE if the value could be set correctly. If there was no field
+	 * Returns: %TRUE if the value could be set correctly. If there was no field
 	 *     with @fieldname or the existing field did not contain a data, this function
 	 *     returns %FALSE.
 	 */
@@ -509,7 +509,7 @@ public class Structure
 	 *     fieldname = the name of a field
 	 *     value = a pointer to a gdouble to set
 	 *
-	 * Return: %TRUE if the value could be set correctly. If there was no field
+	 * Returns: %TRUE if the value could be set correctly. If there was no field
 	 *     with @fieldname or the existing field did not contain a double, this
 	 *     function returns %FALSE.
 	 */
@@ -528,7 +528,7 @@ public class Structure
 	 *     enumtype = the enum type of a field
 	 *     value = a pointer to an int to set
 	 *
-	 * Return: %TRUE if the value could be set correctly. If there was no field
+	 * Returns: %TRUE if the value could be set correctly. If there was no field
 	 *     with @fieldname or the existing field did not contain an enum of the given
 	 *     type, this function returns %FALSE.
 	 */
@@ -545,7 +545,7 @@ public class Structure
 	 * Params:
 	 *     fieldname = the name of the field
 	 *
-	 * Return: the #GValue of the field
+	 * Returns: the #GValue of the field
 	 */
 	public GType getFieldType(string fieldname)
 	{
@@ -561,7 +561,7 @@ public class Structure
 	 *     valueFlags = a pointer to a guint for the flags field
 	 *     valueMask = a pointer to a guint for the mask field
 	 *
-	 * Return: %TRUE if the values could be set correctly. If there was no field
+	 * Returns: %TRUE if the values could be set correctly. If there was no field
 	 *     with @fieldname or the existing field did not contain a GstFlagSet, this
 	 *     function returns %FALSE.
 	 *
@@ -582,7 +582,7 @@ public class Structure
 	 *     valueNumerator = a pointer to an int to set
 	 *     valueDenominator = a pointer to an int to set
 	 *
-	 * Return: %TRUE if the values could be set correctly. If there was no field
+	 * Returns: %TRUE if the values could be set correctly. If there was no field
 	 *     with @fieldname or the existing field did not contain a GstFraction, this
 	 *     function returns %FALSE.
 	 */
@@ -600,7 +600,7 @@ public class Structure
 	 *     fieldname = the name of a field
 	 *     value = a pointer to an int to set
 	 *
-	 * Return: %TRUE if the value could be set correctly. If there was no field
+	 * Returns: %TRUE if the value could be set correctly. If there was no field
 	 *     with @fieldname or the existing field did not contain an int, this function
 	 *     returns %FALSE.
 	 */
@@ -618,7 +618,7 @@ public class Structure
 	 *     fieldname = the name of a field
 	 *     value = a pointer to a #gint64 to set
 	 *
-	 * Return: %TRUE if the value could be set correctly. If there was no field
+	 * Returns: %TRUE if the value could be set correctly. If there was no field
 	 *     with @fieldname or the existing field did not contain a #gint64, this function
 	 *     returns %FALSE.
 	 *
@@ -639,7 +639,7 @@ public class Structure
 	 *     fieldname = the name of a field
 	 *     array = a pointer to a #GValueArray
 	 *
-	 * Return: %TRUE if the value could be set correctly. If there was no field
+	 * Returns: %TRUE if the value could be set correctly. If there was no field
 	 *     with @fieldname or the existing field did not contain an int, this function
 	 *     returns %FALSE.
 	 *
@@ -659,7 +659,7 @@ public class Structure
 	/**
 	 * Get the name of @structure as a string.
 	 *
-	 * Return: the name of the structure.
+	 * Returns: the name of the structure.
 	 */
 	public string getName()
 	{
@@ -669,7 +669,7 @@ public class Structure
 	/**
 	 * Get the name of @structure as a GQuark.
 	 *
-	 * Return: the quark representing the name of the structure.
+	 * Returns: the quark representing the name of the structure.
 	 */
 	public GQuark getNameId()
 	{
@@ -687,7 +687,7 @@ public class Structure
 	 * Params:
 	 *     fieldname = the name of a field
 	 *
-	 * Return: a pointer to the string or %NULL when the
+	 * Returns: a pointer to the string or %NULL when the
 	 *     field did not exist or did not contain a string.
 	 */
 	public string getString(string fieldname)
@@ -704,7 +704,7 @@ public class Structure
 	 *     fieldname = the name of a field
 	 *     value = a pointer to a uint to set
 	 *
-	 * Return: %TRUE if the value could be set correctly. If there was no field
+	 * Returns: %TRUE if the value could be set correctly. If there was no field
 	 *     with @fieldname or the existing field did not contain a uint, this function
 	 *     returns %FALSE.
 	 */
@@ -722,7 +722,7 @@ public class Structure
 	 *     fieldname = the name of a field
 	 *     value = a pointer to a #guint64 to set
 	 *
-	 * Return: %TRUE if the value could be set correctly. If there was no field
+	 * Returns: %TRUE if the value could be set correctly. If there was no field
 	 *     with @fieldname or the existing field did not contain a #guint64, this function
 	 *     returns %FALSE.
 	 *
@@ -742,7 +742,7 @@ public class Structure
 	 *     firstFieldname = the name of the first field to read
 	 *     args = variable arguments
 	 *
-	 * Return: %TRUE, or %FALSE if there was a problem reading any of the fields
+	 * Returns: %TRUE, or %FALSE if there was a problem reading any of the fields
 	 */
 	public bool getValist(string firstFieldname, void* args)
 	{
@@ -755,7 +755,7 @@ public class Structure
 	 * Params:
 	 *     fieldname = the name of the field to get
 	 *
-	 * Return: the #GValue corresponding to the field with the given name.
+	 * Returns: the #GValue corresponding to the field with the given name.
 	 */
 	public Value getValue(string fieldname)
 	{
@@ -775,7 +775,7 @@ public class Structure
 	 * Params:
 	 *     fieldname = the name of a field
 	 *
-	 * Return: %TRUE if the structure contains a field with the given name
+	 * Returns: %TRUE if the structure contains a field with the given name
 	 */
 	public bool hasField(string fieldname)
 	{
@@ -789,7 +789,7 @@ public class Structure
 	 *     fieldname = the name of a field
 	 *     type = the type of a value
 	 *
-	 * Return: %TRUE if the structure contains a field with the given name and type
+	 * Returns: %TRUE if the structure contains a field with the given name and type
 	 */
 	public bool hasFieldTyped(string fieldname, GType type)
 	{
@@ -802,7 +802,7 @@ public class Structure
 	 * Params:
 	 *     name = structure name to check for
 	 *
-	 * Return: %TRUE if @name matches the name of the structure.
+	 * Returns: %TRUE if @name matches the name of the structure.
 	 */
 	public bool hasName(string name)
 	{
@@ -818,7 +818,7 @@ public class Structure
 	 *     firstFieldId = the quark of the first field to read
 	 *     args = variable arguments
 	 *
-	 * Return: %TRUE, or %FALSE if there was a problem reading any of the fields
+	 * Returns: %TRUE, or %FALSE if there was a problem reading any of the fields
 	 */
 	public bool idGetValist(GQuark firstFieldId, void* args)
 	{
@@ -831,7 +831,7 @@ public class Structure
 	 * Params:
 	 *     field = the #GQuark of the field to get
 	 *
-	 * Return: the #GValue corresponding to the field with the given name
+	 * Returns: the #GValue corresponding to the field with the given name
 	 *     identifier.
 	 */
 	public Value idGetValue(GQuark field)
@@ -852,7 +852,7 @@ public class Structure
 	 * Params:
 	 *     field = #GQuark of the field name
 	 *
-	 * Return: %TRUE if the structure contains a field with the given name
+	 * Returns: %TRUE if the structure contains a field with the given name
 	 */
 	public bool idHasField(GQuark field)
 	{
@@ -866,7 +866,7 @@ public class Structure
 	 *     field = #GQuark of the field name
 	 *     type = the type of a value
 	 *
-	 * Return: %TRUE if the structure contains a field with the given name and type
+	 * Returns: %TRUE if the structure contains a field with the given name and type
 	 */
 	public bool idHasFieldTyped(GQuark field, GType type)
 	{
@@ -919,7 +919,7 @@ public class Structure
 	 * Params:
 	 *     struct2 = a #GstStructure
 	 *
-	 * Return: Intersection of @struct1 and @struct2
+	 * Returns: Intersection of @struct1 and @struct2
 	 */
 	public Structure intersect(Structure struct2)
 	{
@@ -939,7 +939,7 @@ public class Structure
 	 * Params:
 	 *     structure2 = a #GstStructure.
 	 *
-	 * Return: %TRUE if the two structures have the same name and field.
+	 * Returns: %TRUE if the two structures have the same name and field.
 	 */
 	public bool isEqual(Structure structure2)
 	{
@@ -954,7 +954,7 @@ public class Structure
 	 * Params:
 	 *     superset = a potentially greater #GstStructure
 	 *
-	 * Return: %TRUE if @subset is a subset of @superset
+	 * Returns: %TRUE if @subset is a subset of @superset
 	 */
 	public bool isSubset(Structure superset)
 	{
@@ -970,7 +970,7 @@ public class Structure
 	 *     func = a function to call for each field
 	 *     userData = private data
 	 *
-	 * Return: %TRUE if the supplied function returns %TRUE For each of the fields,
+	 * Returns: %TRUE if the supplied function returns %TRUE For each of the fields,
 	 *     %FALSE otherwise.
 	 */
 	public bool mapInPlace(GstStructureMapFunc func, void* userData)
@@ -981,7 +981,7 @@ public class Structure
 	/**
 	 * Get the number of fields in the structure.
 	 *
-	 * Return: the number of fields in the structure
+	 * Returns: the number of fields in the structure
 	 */
 	public int nFields()
 	{
@@ -994,7 +994,7 @@ public class Structure
 	 * Params:
 	 *     index = the index to get the name of
 	 *
-	 * Return: the name of the given field number
+	 * Returns: the name of the given field number
 	 */
 	public string nthFieldName(uint index)
 	{
@@ -1089,7 +1089,7 @@ public class Structure
 	 * Params:
 	 *     refcount = a pointer to the parent's refcount
 	 *
-	 * Return: %TRUE if the parent refcount could be set.
+	 * Returns: %TRUE if the parent refcount could be set.
 	 */
 	public bool setParentRefcount(int* refcount)
 	{
@@ -1150,7 +1150,7 @@ public class Structure
 	 *
 	 * Free-function: g_free
 	 *
-	 * Return: a pointer to string allocated by g_malloc().
+	 * Returns: a pointer to string allocated by g_malloc().
 	 *     g_free() after usage.
 	 */
 	public override string toString()
@@ -1172,7 +1172,7 @@ public class Structure
 	 *     str = a string representation of a #GstStructure.
 	 *     end = pointer to store the end of the string in.
 	 *
-	 * Return: a new #GstStructure or %NULL
+	 * Returns: a new #GstStructure or %NULL
 	 *     when the string could not be parsed. Free with
 	 *     gst_structure_free() after use.
 	 */

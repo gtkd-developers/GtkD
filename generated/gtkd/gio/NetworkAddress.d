@@ -99,7 +99,7 @@ public class NetworkAddress : ObjectG, SocketConnectableIF
 	 *     hostname = the hostname
 	 *     port = the port
 	 *
-	 * Return: the new #GNetworkAddress
+	 * Returns: the new #GNetworkAddress
 	 *
 	 * Since: 2.22
 	 *
@@ -134,7 +134,7 @@ public class NetworkAddress : ObjectG, SocketConnectableIF
 	 * Params:
 	 *     port = the port
 	 *
-	 * Return: the new #GNetworkAddress
+	 * Returns: the new #GNetworkAddress
 	 *
 	 * Since: 2.44
 	 *
@@ -179,7 +179,7 @@ public class NetworkAddress : ObjectG, SocketConnectableIF
 	 *     hostAndPort = the hostname and optionally a port
 	 *     defaultPort = the default port if not in @host_and_port
 	 *
-	 * Return: the new
+	 * Returns: the new
 	 *     #GNetworkAddress, or %NULL on error
 	 *
 	 * Since: 2.22
@@ -217,7 +217,7 @@ public class NetworkAddress : ObjectG, SocketConnectableIF
 	 *     uri = the hostname and optionally a port
 	 *     defaultPort = The default port if none is found in the URI
 	 *
-	 * Return: the new
+	 * Returns: the new
 	 *     #GNetworkAddress, or %NULL on error
 	 *
 	 * Since: 2.26
@@ -247,7 +247,7 @@ public class NetworkAddress : ObjectG, SocketConnectableIF
 	 * Gets @addr's hostname. This might be either UTF-8 or ASCII-encoded,
 	 * depending on what @addr was created with.
 	 *
-	 * Return: @addr's hostname
+	 * Returns: @addr's hostname
 	 *
 	 * Since: 2.22
 	 */
@@ -259,7 +259,7 @@ public class NetworkAddress : ObjectG, SocketConnectableIF
 	/**
 	 * Gets @addr's port number
 	 *
-	 * Return: @addr's port (which may be 0)
+	 * Returns: @addr's port (which may be 0)
 	 *
 	 * Since: 2.22
 	 */
@@ -271,7 +271,7 @@ public class NetworkAddress : ObjectG, SocketConnectableIF
 	/**
 	 * Gets @addr's scheme
 	 *
-	 * Return: @addr's scheme (%NULL if not built from URI)
+	 * Returns: @addr's scheme (%NULL if not built from URI)
 	 *
 	 * Since: 2.26
 	 */

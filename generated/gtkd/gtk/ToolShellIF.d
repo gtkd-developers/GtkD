@@ -58,7 +58,7 @@ public interface ToolShellIF{
 	 * call this function directly, but rely on gtk_tool_item_get_ellipsize_mode()
 	 * instead.
 	 *
-	 * Return: the current ellipsize mode of @shell
+	 * Returns: the current ellipsize mode of @shell
 	 *
 	 * Since: 2.20
 	 */
@@ -68,7 +68,7 @@ public interface ToolShellIF{
 	 * Retrieves the icon size for the tool shell. Tool items must not call this
 	 * function directly, but rely on gtk_tool_item_get_icon_size() instead.
 	 *
-	 * Return: the current size (#GtkIconSize) for icons of @shell
+	 * Returns: the current size (#GtkIconSize) for icons of @shell
 	 *
 	 * Since: 2.14
 	 */
@@ -78,7 +78,7 @@ public interface ToolShellIF{
 	 * Returns the relief style of buttons on @shell. Tool items must not call this
 	 * function directly, but rely on gtk_tool_item_get_relief_style() instead.
 	 *
-	 * Return: The relief style of buttons on @shell.
+	 * Returns: The relief style of buttons on @shell.
 	 *
 	 * Since: 2.14
 	 */
@@ -89,7 +89,7 @@ public interface ToolShellIF{
 	 * not call this function directly, but rely on gtk_tool_item_get_toolbar_style()
 	 * instead.
 	 *
-	 * Return: the current style of @shell
+	 * Returns: the current style of @shell
 	 *
 	 * Since: 2.14
 	 */
@@ -100,7 +100,7 @@ public interface ToolShellIF{
 	 * call this function directly, but rely on gtk_tool_item_get_text_alignment()
 	 * instead.
 	 *
-	 * Return: the current text alignment of @shell
+	 * Returns: the current text alignment of @shell
 	 *
 	 * Since: 2.20
 	 */
@@ -111,7 +111,7 @@ public interface ToolShellIF{
 	 * call this function directly, but rely on gtk_tool_item_get_text_orientation()
 	 * instead.
 	 *
-	 * Return: the current text orientation of @shell
+	 * Returns: the current text orientation of @shell
 	 *
 	 * Since: 2.20
 	 */
@@ -122,7 +122,7 @@ public interface ToolShellIF{
 	 * call this function directly, but rely on gtk_tool_item_get_text_size_group()
 	 * instead.
 	 *
-	 * Return: the current text size group of @shell
+	 * Returns: the current text size group of @shell
 	 *
 	 * Since: 2.20
 	 */

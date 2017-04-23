@@ -73,7 +73,7 @@ public class AsyncQueue
 	 * in the queue and n threads waiting. This can happen due to locking
 	 * of the queue or due to scheduling.
 	 *
-	 * Return: the length of the @queue
+	 * Returns: the length of the @queue
 	 */
 	public int length()
 	{
@@ -92,7 +92,7 @@ public class AsyncQueue
 	 *
 	 * This function must be called while holding the @queue's lock.
 	 *
-	 * Return: the length of the @queue.
+	 * Returns: the length of the @queue.
 	 */
 	public int lengthUnlocked()
 	{
@@ -119,7 +119,7 @@ public class AsyncQueue
 	 * Pops data from the @queue. If @queue is empty, this function
 	 * blocks until data becomes available.
 	 *
-	 * Return: data from the queue
+	 * Returns: data from the queue
 	 */
 	public void* pop()
 	{
@@ -132,7 +132,7 @@ public class AsyncQueue
 	 *
 	 * This function must be called while holding the @queue's lock.
 	 *
-	 * Return: data from the queue.
+	 * Returns: data from the queue.
 	 */
 	public void* popUnlocked()
 	{
@@ -254,7 +254,7 @@ public class AsyncQueue
 	 * Increases the reference count of the asynchronous @queue by 1.
 	 * You do not need to hold the lock to call this function.
 	 *
-	 * Return: the @queue that was passed in (since 2.6)
+	 * Returns: the @queue that was passed in (since 2.6)
 	 */
 	public AsyncQueue doref()
 	{
@@ -286,7 +286,7 @@ public class AsyncQueue
 	 * Params:
 	 *     item = the data to remove from the @queue
 	 *
-	 * Return: %TRUE if the item was removed
+	 * Returns: %TRUE if the item was removed
 	 *
 	 * Since: 2.46
 	 */
@@ -303,7 +303,7 @@ public class AsyncQueue
 	 * Params:
 	 *     item = the data to remove from the @queue
 	 *
-	 * Return: %TRUE if the item was removed
+	 * Returns: %TRUE if the item was removed
 	 *
 	 * Since: 2.46
 	 */
@@ -383,7 +383,7 @@ public class AsyncQueue
 	 * Params:
 	 *     endTime = a #GTimeVal, determining the final time
 	 *
-	 * Return: data from the queue or %NULL, when no data is
+	 * Returns: data from the queue or %NULL, when no data is
 	 *     received before @end_time.
 	 */
 	public void* timedPop(TimeVal endTime)
@@ -407,7 +407,7 @@ public class AsyncQueue
 	 * Params:
 	 *     endTime = a #GTimeVal, determining the final time
 	 *
-	 * Return: data from the queue or %NULL, when no data is
+	 * Returns: data from the queue or %NULL, when no data is
 	 *     received before @end_time.
 	 */
 	public void* timedPopUnlocked(TimeVal endTime)
@@ -424,7 +424,7 @@ public class AsyncQueue
 	 * Params:
 	 *     timeout = the number of microseconds to wait
 	 *
-	 * Return: data from the queue or %NULL, when no data is
+	 * Returns: data from the queue or %NULL, when no data is
 	 *     received before the timeout.
 	 */
 	public void* timeoutPop(ulong timeout)
@@ -443,7 +443,7 @@ public class AsyncQueue
 	 * Params:
 	 *     timeout = the number of microseconds to wait
 	 *
-	 * Return: data from the queue or %NULL, when no data is
+	 * Returns: data from the queue or %NULL, when no data is
 	 *     received before the timeout.
 	 */
 	public void* timeoutPopUnlocked(ulong timeout)
@@ -455,7 +455,7 @@ public class AsyncQueue
 	 * Tries to pop data from the @queue. If no data is available,
 	 * %NULL is returned.
 	 *
-	 * Return: data from the queue or %NULL, when no data is
+	 * Returns: data from the queue or %NULL, when no data is
 	 *     available immediately.
 	 */
 	public void* tryPop()
@@ -469,7 +469,7 @@ public class AsyncQueue
 	 *
 	 * This function must be called while holding the @queue's lock.
 	 *
-	 * Return: data from the queue or %NULL, when no data is
+	 * Returns: data from the queue or %NULL, when no data is
 	 *     available immediately.
 	 */
 	public void* tryPopUnlocked()
@@ -520,7 +520,7 @@ public class AsyncQueue
 	/**
 	 * Creates a new asynchronous queue.
 	 *
-	 * Return: a new #GAsyncQueue. Free with g_async_queue_unref()
+	 * Returns: a new #GAsyncQueue. Free with g_async_queue_unref()
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -544,7 +544,7 @@ public class AsyncQueue
 	 * Params:
 	 *     itemFreeFunc = function to free queue elements
 	 *
-	 * Return: a new #GAsyncQueue. Free with g_async_queue_unref()
+	 * Returns: a new #GAsyncQueue. Free with g_async_queue_unref()
 	 *
 	 * Since: 2.16
 	 *

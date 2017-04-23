@@ -94,7 +94,7 @@ public class ThemingEngine : ObjectG
 	 * Params:
 	 *     name = Theme engine name to load
 	 *
-	 * Return: A theming engine, or %NULL if
+	 * Returns: A theming engine, or %NULL if
 	 *     the engine @name doesn’t exist.
 	 */
 	public static ThemingEngine load(string name)
@@ -231,7 +231,7 @@ public class ThemingEngine : ObjectG
 	 * check for #GTK_STATE_FLAG_DIR_LTR and
 	 * #GTK_STATE_FLAG_DIR_RTL instead.
 	 *
-	 * Return: the widget direction
+	 * Returns: the widget direction
 	 *
 	 * Since: 3.0
 	 */
@@ -248,7 +248,7 @@ public class ThemingEngine : ObjectG
 	 * Params:
 	 *     state = state to retrieve the font for
 	 *
-	 * Return: the #PangoFontDescription for the given
+	 * Returns: the #PangoFontDescription for the given
 	 *     state. This object is owned by GTK+ and should not be
 	 *     freed.
 	 *
@@ -269,7 +269,7 @@ public class ThemingEngine : ObjectG
 	/**
 	 * Returns the widget direction used for rendering.
 	 *
-	 * Return: the widget direction
+	 * Returns: the widget direction
 	 *
 	 * Since: 3.0
 	 */
@@ -317,7 +317,7 @@ public class ThemingEngine : ObjectG
 	/**
 	 * Returns the widget path used for style matching.
 	 *
-	 * Return: A #GtkWidgetPath
+	 * Returns: A #GtkWidgetPath
 	 *
 	 * Since: 3.0
 	 */
@@ -358,7 +358,7 @@ public class ThemingEngine : ObjectG
 	/**
 	 * Returns the #GdkScreen to which @engine currently rendering to.
 	 *
-	 * Return: a #GdkScreen, or %NULL.
+	 * Returns: a #GdkScreen, or %NULL.
 	 */
 	public Screen getScreen()
 	{
@@ -375,7 +375,7 @@ public class ThemingEngine : ObjectG
 	/**
 	 * returns the state used when rendering.
 	 *
-	 * Return: the state flags
+	 * Returns: the state flags
 	 *
 	 * Since: 3.0
 	 */
@@ -439,7 +439,7 @@ public class ThemingEngine : ObjectG
 	 * Params:
 	 *     styleClass = class name to look up
 	 *
-	 * Return: %TRUE if @engine has @class_name defined
+	 * Returns: %TRUE if @engine has @class_name defined
 	 *
 	 * Since: 3.0
 	 */
@@ -457,7 +457,7 @@ public class ThemingEngine : ObjectG
 	 *     styleRegion = a region name
 	 *     flags = return location for region flags
 	 *
-	 * Return: %TRUE if region is defined
+	 * Returns: %TRUE if region is defined
 	 *
 	 * Since: 3.0
 	 */
@@ -473,7 +473,7 @@ public class ThemingEngine : ObjectG
 	 *     colorName = color name to lookup
 	 *     color = Return location for the looked up color
 	 *
-	 * Return: %TRUE if @color_name was found and resolved, %FALSE otherwise
+	 * Returns: %TRUE if @color_name was found and resolved, %FALSE otherwise
 	 *
 	 * Since: 3.0
 	 */
@@ -504,7 +504,7 @@ public class ThemingEngine : ObjectG
 	 *     state = a widget state
 	 *     progress = return location for the transition progress
 	 *
-	 * Return: %TRUE if there is a running transition animation for @state.
+	 * Returns: %TRUE if there is a running transition animation for @state.
 	 *
 	 * Since: 3.0
 	 */

@@ -71,7 +71,7 @@ public class PgCairoFontMap : PgFontMap
 	 * The scaled font can be referenced and kept using
 	 * cairo_scaled_font_reference().
 	 *
-	 * Return: the #cairo_scaled_font_t used by @font,
+	 * Returns: the #cairo_scaled_font_t used by @font,
 	 *     or %NULL if @font is %NULL.
 	 *
 	 * Since: 1.18
@@ -105,7 +105,7 @@ public class PgCairoFontMap : PgFontMap
 	 * Each thread gets its own default fontmap.  In this way,
 	 * PangoCairo can be used safely from multiple threads.
 	 *
-	 * Return: the default PangoCairo fontmap
+	 * Returns: the default PangoCairo fontmap
 	 *     for the current thread. This object is owned by Pango and must not be freed.
 	 *
 	 * Since: 1.10
@@ -141,7 +141,7 @@ public class PgCairoFontMap : PgFontMap
 	 * this is only useful for testing, when at least two backends
 	 * are compiled in.
 	 *
-	 * Return: the newly allocated #PangoFontMap,
+	 * Returns: the newly allocated #PangoFontMap,
 	 *     which should be freed with g_object_unref().
 	 *
 	 * Since: 1.10
@@ -171,7 +171,7 @@ public class PgCairoFontMap : PgFontMap
 	 * Params:
 	 *     fonttype = desired #cairo_font_type_t
 	 *
-	 * Return: the newly allocated
+	 * Returns: the newly allocated
 	 *     #PangoFontMap of suitable type which should be freed
 	 *     with g_object_unref(), or %NULL if the requested
 	 *     cairo font backend is not supported / compiled in.
@@ -195,7 +195,7 @@ public class PgCairoFontMap : PgFontMap
 	/**
 	 * Gets the type of Cairo font backend that @fontmap uses.
 	 *
-	 * Return: the #cairo_font_type_t cairo font backend type
+	 * Returns: the #cairo_font_type_t cairo font backend type
 	 *
 	 * Since: 1.18
 	 */
@@ -207,7 +207,7 @@ public class PgCairoFontMap : PgFontMap
 	/**
 	 * Gets the resolution for the fontmap. See pango_cairo_font_map_set_resolution()
 	 *
-	 * Return: the resolution in "dots per inch"
+	 * Returns: the resolution in "dots per inch"
 	 *
 	 * Since: 1.10
 	 */

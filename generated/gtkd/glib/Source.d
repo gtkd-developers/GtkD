@@ -79,7 +79,7 @@ public class Source
 	 *         the sources behavior.
 	 *     structSize = size of the #GSource structure to create.
 	 *
-	 * Return: the newly-created #GSource.
+	 * Returns: the newly-created #GSource.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -166,7 +166,7 @@ public class Source
 	 *     fd = the fd to monitor
 	 *     events = an event mask
 	 *
-	 * Return: an opaque tag
+	 * Returns: an opaque tag
 	 *
 	 * Since: 2.36
 	 */
@@ -182,7 +182,7 @@ public class Source
 	 * Params:
 	 *     context = a #GMainContext (if %NULL, the default context will be used)
 	 *
-	 * Return: the ID (greater than 0) for the source within the
+	 * Returns: the ID (greater than 0) for the source within the
 	 *     #GMainContext.
 	 */
 	public uint attach(MainContext context)
@@ -205,7 +205,7 @@ public class Source
 	 * Checks whether a source is allowed to be called recursively.
 	 * see g_source_set_can_recurse().
 	 *
-	 * Return: whether recursion is allowed.
+	 * Returns: whether recursion is allowed.
 	 */
 	public bool getCanRecurse()
 	{
@@ -222,7 +222,7 @@ public class Source
 	 * g_main_current_source(). But calling this function on a source
 	 * whose #GMainContext has been destroyed is an error.
 	 *
-	 * Return: the #GMainContext with which the
+	 * Returns: the #GMainContext with which the
 	 *     source is associated, or %NULL if the context has not
 	 *     yet been added to a source.
 	 */
@@ -258,7 +258,7 @@ public class Source
 	 * context. The reverse
 	 * mapping from ID to source is done by g_main_context_find_source_by_id().
 	 *
-	 * Return: the ID (greater than 0) for the source
+	 * Returns: the ID (greater than 0) for the source
 	 */
 	public uint getId()
 	{
@@ -269,7 +269,7 @@ public class Source
 	 * Gets a name for the source, used in debugging and profiling.  The
 	 * name may be #NULL if it has never been set with g_source_set_name().
 	 *
-	 * Return: the name of the source
+	 * Returns: the name of the source
 	 *
 	 * Since: 2.26
 	 */
@@ -281,7 +281,7 @@ public class Source
 	/**
 	 * Gets the priority of a source.
 	 *
-	 * Return: the priority of the source
+	 * Returns: the priority of the source
 	 */
 	public int getPriority()
 	{
@@ -295,7 +295,7 @@ public class Source
 	 * Any time before the current monotonic time (including 0) is an
 	 * indication that the source will fire immediately.
 	 *
-	 * Return: the monotonic ready time, -1 for "never"
+	 * Returns: the monotonic ready time, -1 for "never"
 	 */
 	public long getReadyTime()
 	{
@@ -311,7 +311,7 @@ public class Source
 	 * The time here is the system monotonic time, if available, or some
 	 * other reasonable alternative otherwise.  See g_get_monotonic_time().
 	 *
-	 * Return: the monotonic time in microseconds
+	 * Returns: the monotonic time in microseconds
 	 *
 	 * Since: 2.28
 	 */
@@ -388,7 +388,7 @@ public class Source
 	 * once a source is destroyed it cannot be un-destroyed, so this function can be
 	 * used for opportunistic checks from any thread.
 	 *
-	 * Return: %TRUE if the source has been destroyed
+	 * Returns: %TRUE if the source has been destroyed
 	 *
 	 * Since: 2.12
 	 */
@@ -436,7 +436,7 @@ public class Source
 	 * Params:
 	 *     tag = the tag from g_source_add_unix_fd()
 	 *
-	 * Return: the conditions reported on the fd
+	 * Returns: the conditions reported on the fd
 	 *
 	 * Since: 2.36
 	 */
@@ -448,7 +448,7 @@ public class Source
 	/**
 	 * Increases the reference count on a source by one.
 	 *
-	 * Return: @source
+	 * Returns: @source
 	 */
 	public Source doref()
 	{
@@ -703,7 +703,7 @@ public class Source
 	 * Params:
 	 *     tag = the ID of the source to remove.
 	 *
-	 * Return: For historical reasons, this function always returns %TRUE
+	 * Returns: For historical reasons, this function always returns %TRUE
 	 */
 	public static bool remove(uint tag)
 	{
@@ -719,7 +719,7 @@ public class Source
 	 *     funcs = The @source_funcs passed to g_source_new()
 	 *     userData = the user data for the callback
 	 *
-	 * Return: %TRUE if a source was found and removed.
+	 * Returns: %TRUE if a source was found and removed.
 	 */
 	public static bool removeByFuncsUserData(GSourceFuncs* funcs, void* userData)
 	{
@@ -734,7 +734,7 @@ public class Source
 	 * Params:
 	 *     userData = the user_data for the callback.
 	 *
-	 * Return: %TRUE if a source was found and removed.
+	 * Returns: %TRUE if a source was found and removed.
 	 */
 	public static bool removeByUserData(void* userData)
 	{

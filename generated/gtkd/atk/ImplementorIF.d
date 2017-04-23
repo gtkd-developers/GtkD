@@ -43,7 +43,7 @@ public interface ImplementorIF{
 	 * Gets a reference to an object's #AtkObject implementation, if
 	 * the object implements #AtkObjectIface
 	 *
-	 * Return: a reference to an object's #AtkObject
+	 * Returns: a reference to an object's #AtkObject
 	 *     implementation
 	 */
 	public ObjectAtk refAccessible();

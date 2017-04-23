@@ -94,7 +94,7 @@ public class EntryBuffer : ObjectG
 	 *     initialChars = initial buffer text, or %NULL
 	 *     nInitialChars = number of characters in @initial_chars, or -1
 	 *
-	 * Return: A new GtkEntryBuffer object.
+	 * Returns: A new GtkEntryBuffer object.
 	 *
 	 * Since: 2.18
 	 *
@@ -126,7 +126,7 @@ public class EntryBuffer : ObjectG
 	 *     position = position at which to delete text
 	 *     nChars = number of characters to delete
 	 *
-	 * Return: The number of characters deleted.
+	 * Returns: The number of characters deleted.
 	 *
 	 * Since: 2.18
 	 */
@@ -168,7 +168,7 @@ public class EntryBuffer : ObjectG
 	 * Retrieves the length in bytes of the buffer.
 	 * See gtk_entry_buffer_get_length().
 	 *
-	 * Return: The byte length of the buffer.
+	 * Returns: The byte length of the buffer.
 	 *
 	 * Since: 2.18
 	 */
@@ -180,7 +180,7 @@ public class EntryBuffer : ObjectG
 	/**
 	 * Retrieves the length in characters of the buffer.
 	 *
-	 * Return: The number of characters in the buffer.
+	 * Returns: The number of characters in the buffer.
 	 *
 	 * Since: 2.18
 	 */
@@ -193,7 +193,7 @@ public class EntryBuffer : ObjectG
 	 * Retrieves the maximum allowed length of the text in
 	 * @buffer. See gtk_entry_buffer_set_max_length().
 	 *
-	 * Return: the maximum allowed number of characters
+	 * Returns: the maximum allowed number of characters
 	 *     in #GtkEntryBuffer, or 0 if there is no maximum.
 	 *
 	 * Since: 2.18
@@ -209,7 +209,7 @@ public class EntryBuffer : ObjectG
 	 * The memory pointer returned by this call will not change
 	 * unless this object emits a signal, or is finalized.
 	 *
-	 * Return: a pointer to the contents of the widget as a
+	 * Returns: a pointer to the contents of the widget as a
 	 *     string. This string points to internally allocated
 	 *     storage in the buffer and must not be freed, modified or
 	 *     stored.
@@ -237,7 +237,7 @@ public class EntryBuffer : ObjectG
 	 *     chars = the text to insert into the buffer.
 	 *     nChars = the length of the text in characters, or -1
 	 *
-	 * Return: The number of characters actually inserted.
+	 * Returns: The number of characters actually inserted.
 	 *
 	 * Since: 2.18
 	 */

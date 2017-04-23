@@ -104,7 +104,7 @@ public class SearchEntry : Entry
 	 * Creates a #GtkSearchEntry, with a find icon when the search field is
 	 * empty, and a clear icon when it isn't.
 	 *
-	 * Return: a new #GtkSearchEntry
+	 * Returns: a new #GtkSearchEntry
 	 *
 	 * Since: 3.6
 	 *
@@ -138,7 +138,7 @@ public class SearchEntry : Entry
 	 * Params:
 	 *     event = a key event
 	 *
-	 * Return: %GDK_EVENT_STOP if the key press event resulted
+	 * Returns: %GDK_EVENT_STOP if the key press event resulted
 	 *     in a search beginning or continuing, %GDK_EVENT_PROPAGATE
 	 *     otherwise.
 	 *

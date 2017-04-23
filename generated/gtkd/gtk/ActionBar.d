@@ -88,7 +88,7 @@ public class ActionBar : Bin
 	/**
 	 * Creates a new #GtkActionBar widget.
 	 *
-	 * Return: a new #GtkActionBar
+	 * Returns: a new #GtkActionBar
 	 *
 	 * Since: 3.12
 	 *
@@ -109,7 +109,7 @@ public class ActionBar : Bin
 	/**
 	 * Retrieves the center bar widget of the bar.
 	 *
-	 * Return: the center #GtkWidget or %NULL.
+	 * Returns: the center #GtkWidget or %NULL.
 	 *
 	 * Since: 3.12
 	 */

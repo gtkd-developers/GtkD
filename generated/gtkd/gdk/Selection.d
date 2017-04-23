@@ -61,7 +61,7 @@ public struct Selection
 	 * Params:
 	 *     selection = an atom indentifying a selection.
 	 *
-	 * Return: if there is a selection owner
+	 * Returns: if there is a selection owner
 	 *     for this window, and it is a window known to the current process,
 	 *     the #GdkWindow that owns the selection, otherwise %NULL. Note
 	 *     that the return value may be owned by a different process if a
@@ -91,7 +91,7 @@ public struct Selection
 	 *     display = a #GdkDisplay
 	 *     selection = an atom indentifying a selection
 	 *
-	 * Return: if there is a selection owner
+	 * Returns: if there is a selection owner
 	 *     for this window, and it is a window known to the current
 	 *     process, the #GdkWindow that owns the selection, otherwise
 	 *     %NULL.
@@ -125,7 +125,7 @@ public struct Selection
 	 *         from the current owner, the current owner
 	 *         will be sent a SelectionClear event.
 	 *
-	 * Return: %TRUE if the selection owner was successfully
+	 * Returns: %TRUE if the selection owner was successfully
 	 *     changed to @owner, otherwise %FALSE.
 	 */
 	public static bool ownerSet(Window owner, GdkAtom selection, uint time, bool sendEvent)
@@ -147,7 +147,7 @@ public struct Selection
 	 *     sendEvent = if %TRUE, and the new owner is different from the current
 	 *         owner, the current owner will be sent a SelectionClear event
 	 *
-	 * Return: %TRUE if the selection owner was successfully changed to owner,
+	 * Returns: %TRUE if the selection owner was successfully changed to owner,
 	 *     otherwise %FALSE.
 	 *
 	 * Since: 2.2
@@ -175,7 +175,7 @@ public struct Selection
 	 *     propType = location to store the type of the property
 	 *     propFormat = location to store the format of the property
 	 *
-	 * Return: the length of the retrieved data.
+	 * Returns: the length of the retrieved data.
 	 */
 	public static int propertyGet(Window requestor, out char* data, GdkAtom* propType, int* propFormat)
 	{

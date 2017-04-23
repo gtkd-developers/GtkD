@@ -305,7 +305,7 @@ public template ActivatableT(TStruct)
 	/**
 	 * Gets the related #GtkAction for @activatable.
 	 *
-	 * Return: the related #GtkAction if one is set.
+	 * Returns: the related #GtkAction if one is set.
 	 *
 	 * Since: 2.16
 	 */
@@ -326,7 +326,7 @@ public template ActivatableT(TStruct)
 	 * and appearance when setting the related action or when
 	 * the action changes appearance.
 	 *
-	 * Return: whether @activatable uses its actions appearance.
+	 * Returns: whether @activatable uses its actions appearance.
 	 *
 	 * Since: 2.16
 	 */

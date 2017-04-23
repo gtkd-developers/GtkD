@@ -107,7 +107,7 @@ public class TextIter
 	 * offset 0), gtk_text_iter_backward_char() returns %FALSE for convenience when
 	 * writing loops.
 	 *
-	 * Return: whether movement was possible
+	 * Returns: whether movement was possible
 	 */
 	public bool backwardChar()
 	{
@@ -125,7 +125,7 @@ public class TextIter
 	 * Params:
 	 *     count = number of characters to move
 	 *
-	 * Return: whether @iter moved and is dereferenceable
+	 * Returns: whether @iter moved and is dereferenceable
 	 */
 	public bool backwardChars(int count)
 	{
@@ -135,7 +135,7 @@ public class TextIter
 	/**
 	 * Like gtk_text_iter_forward_cursor_position(), but moves backward.
 	 *
-	 * Return: %TRUE if we moved
+	 * Returns: %TRUE if we moved
 	 */
 	public bool backwardCursorPosition()
 	{
@@ -149,7 +149,7 @@ public class TextIter
 	 * Params:
 	 *     count = number of positions to move
 	 *
-	 * Return: %TRUE if we moved and the new position is dereferenceable
+	 * Returns: %TRUE if we moved and the new position is dereferenceable
 	 */
 	public bool backwardCursorPositions(int count)
 	{
@@ -164,7 +164,7 @@ public class TextIter
 	 *     userData = user data for @pred
 	 *     limit = search limit, or %NULL for none
 	 *
-	 * Return: whether a match was found
+	 * Returns: whether a match was found
 	 */
 	public bool backwardFindChar(GtkTextCharPredicate pred, void* userData, TextIter limit)
 	{
@@ -180,7 +180,7 @@ public class TextIter
 	 * in a loop calling this function, the line number may not change on
 	 * every iteration, if your first iteration is on line 0.)
 	 *
-	 * Return: whether @iter moved
+	 * Returns: whether @iter moved
 	 */
 	public bool backwardLine()
 	{
@@ -199,7 +199,7 @@ public class TextIter
 	 * Params:
 	 *     count = number of lines to move backward
 	 *
-	 * Return: whether @iter moved and is dereferenceable
+	 * Returns: whether @iter moved and is dereferenceable
 	 */
 	public bool backwardLines(int count)
 	{
@@ -219,7 +219,7 @@ public class TextIter
 	 *     matchEnd = return location for end of match, or %NULL
 	 *     limit = location of last possible @match_start, or %NULL for start of buffer
 	 *
-	 * Return: whether a match was found
+	 * Returns: whether a match was found
 	 */
 	public bool backwardSearch(string str, GtkTextSearchFlags flags, out TextIter matchStart, out TextIter matchEnd, TextIter limit)
 	{
@@ -241,7 +241,7 @@ public class TextIter
 	 * any language (if not, the correct fix would be to the Pango text
 	 * boundary algorithms).
 	 *
-	 * Return: %TRUE if @iter moved and is not the end iterator
+	 * Returns: %TRUE if @iter moved and is not the end iterator
 	 */
 	public bool backwardSentenceStart()
 	{
@@ -256,7 +256,7 @@ public class TextIter
 	 * Params:
 	 *     count = number of sentences to move
 	 *
-	 * Return: %TRUE if @iter moved and is not the end iterator
+	 * Returns: %TRUE if @iter moved and is not the end iterator
 	 */
 	public bool backwardSentenceStarts(int count)
 	{
@@ -275,7 +275,7 @@ public class TextIter
 	 * Params:
 	 *     tag = a #GtkTextTag, or %NULL
 	 *
-	 * Return: whether we found a tag toggle before @iter
+	 * Returns: whether we found a tag toggle before @iter
 	 */
 	public bool backwardToTagToggle(TextTag tag)
 	{
@@ -286,7 +286,7 @@ public class TextIter
 	 * Moves @iter forward to the previous visible cursor position. See
 	 * gtk_text_iter_backward_cursor_position() for details.
 	 *
-	 * Return: %TRUE if we moved and the new position is dereferenceable
+	 * Returns: %TRUE if we moved and the new position is dereferenceable
 	 *
 	 * Since: 2.4
 	 */
@@ -302,7 +302,7 @@ public class TextIter
 	 * Params:
 	 *     count = number of positions to move
 	 *
-	 * Return: %TRUE if we moved and the new position is dereferenceable
+	 * Returns: %TRUE if we moved and the new position is dereferenceable
 	 *
 	 * Since: 2.4
 	 */
@@ -320,7 +320,7 @@ public class TextIter
 	 * in a loop calling this function, the line number may not change on
 	 * every iteration, if your first iteration is on line 0.)
 	 *
-	 * Return: whether @iter moved
+	 * Returns: whether @iter moved
 	 *
 	 * Since: 2.8
 	 */
@@ -341,7 +341,7 @@ public class TextIter
 	 * Params:
 	 *     count = number of lines to move backward
 	 *
-	 * Return: whether @iter moved and is dereferenceable
+	 * Returns: whether @iter moved and is dereferenceable
 	 *
 	 * Since: 2.8
 	 */
@@ -357,7 +357,7 @@ public class TextIter
 	 * language (if not, the correct fix would be to the Pango word break
 	 * algorithms).
 	 *
-	 * Return: %TRUE if @iter moved and is not the end iterator
+	 * Returns: %TRUE if @iter moved and is not the end iterator
 	 *
 	 * Since: 2.4
 	 */
@@ -372,7 +372,7 @@ public class TextIter
 	 * Params:
 	 *     count = number of times to move
 	 *
-	 * Return: %TRUE if @iter moved and is not the end iterator
+	 * Returns: %TRUE if @iter moved and is not the end iterator
 	 *
 	 * Since: 2.4
 	 */
@@ -388,7 +388,7 @@ public class TextIter
 	 * language (if not, the correct fix would be to the Pango word break
 	 * algorithms).
 	 *
-	 * Return: %TRUE if @iter moved and is not the end iterator
+	 * Returns: %TRUE if @iter moved and is not the end iterator
 	 */
 	public bool backwardWordStart()
 	{
@@ -401,7 +401,7 @@ public class TextIter
 	 * Params:
 	 *     count = number of times to move
 	 *
-	 * Return: %TRUE if @iter moved and is not the end iterator
+	 * Returns: %TRUE if @iter moved and is not the end iterator
 	 */
 	public bool backwardWordStarts(int count)
 	{
@@ -424,7 +424,7 @@ public class TextIter
 	 * Params:
 	 *     tag = a #GtkTextTag, or %NULL
 	 *
-	 * Return: whether @iter is the start of a range tagged with @tag
+	 * Returns: whether @iter is the start of a range tagged with @tag
 	 */
 	public bool beginsTag(TextTag tag)
 	{
@@ -442,7 +442,7 @@ public class TextIter
 	 * Params:
 	 *     defaultEditability = %TRUE if text is editable by default
 	 *
-	 * Return: whether text inserted at @iter would be editable
+	 * Returns: whether text inserted at @iter would be editable
 	 */
 	public bool canInsert(bool defaultEditability)
 	{
@@ -458,7 +458,7 @@ public class TextIter
 	 * Params:
 	 *     rhs = another #GtkTextIter
 	 *
-	 * Return: -1 if @lhs is less than @rhs, 1 if @lhs is greater, 0 if they are equal
+	 * Returns: -1 if @lhs is less than @rhs, 1 if @lhs is greater, 0 if they are equal
 	 */
 	public int compare(TextIter rhs)
 	{
@@ -471,7 +471,7 @@ public class TextIter
 	 * simple assignment (`GtkTextIter i = j;`). The
 	 * function is used by language bindings.
 	 *
-	 * Return: a copy of the @iter, free with gtk_text_iter_free()
+	 * Returns: a copy of the @iter, free with gtk_text_iter_free()
 	 */
 	public TextIter copy()
 	{
@@ -502,7 +502,7 @@ public class TextIter
 	 * Params:
 	 *     defaultSetting = %TRUE if text is editable by default
 	 *
-	 * Return: whether @iter is inside an editable range
+	 * Returns: whether @iter is inside an editable range
 	 */
 	public bool editable(bool defaultSetting)
 	{
@@ -519,7 +519,7 @@ public class TextIter
 	 * considered to be at the end of a line, even though there are no
 	 * paragraph delimiter chars there.
 	 *
-	 * Return: whether @iter is at the end of a line
+	 * Returns: whether @iter is at the end of a line
 	 */
 	public bool endsLine()
 	{
@@ -532,7 +532,7 @@ public class TextIter
 	 * (if not, the correct fix would be to the Pango text boundary
 	 * algorithms).
 	 *
-	 * Return: %TRUE if @iter is at the end of a sentence.
+	 * Returns: %TRUE if @iter is at the end of a sentence.
 	 */
 	public bool endsSentence()
 	{
@@ -552,7 +552,7 @@ public class TextIter
 	 * Params:
 	 *     tag = a #GtkTextTag, or %NULL
 	 *
-	 * Return: whether @iter is the end of a range tagged with @tag
+	 * Returns: whether @iter is the end of a range tagged with @tag
 	 */
 	public bool endsTag(TextTag tag)
 	{
@@ -565,7 +565,7 @@ public class TextIter
 	 * language (if not, the correct fix would be to the Pango word break
 	 * algorithms).
 	 *
-	 * Return: %TRUE if @iter is at the end of a word
+	 * Returns: %TRUE if @iter is at the end of a word
 	 */
 	public bool endsWord()
 	{
@@ -582,7 +582,7 @@ public class TextIter
 	 * Params:
 	 *     rhs = another #GtkTextIter
 	 *
-	 * Return: %TRUE if the iterators point to the same place in the buffer
+	 * Returns: %TRUE if the iterators point to the same place in the buffer
 	 */
 	public bool equal(TextIter rhs)
 	{
@@ -598,7 +598,7 @@ public class TextIter
 	 * the end iterator, and gtk_text_iter_forward_char() returns %FALSE for
 	 * convenience when writing loops.
 	 *
-	 * Return: whether @iter moved and is dereferenceable
+	 * Returns: whether @iter moved and is dereferenceable
 	 */
 	public bool forwardChar()
 	{
@@ -616,7 +616,7 @@ public class TextIter
 	 * Params:
 	 *     count = number of characters to move, may be negative
 	 *
-	 * Return: whether @iter moved and is dereferenceable
+	 * Returns: whether @iter moved and is dereferenceable
 	 */
 	public bool forwardChars(int count)
 	{
@@ -635,7 +635,7 @@ public class TextIter
 	 * between those two characters. See also the #PangoLogAttr-struct and
 	 * pango_break() function.
 	 *
-	 * Return: %TRUE if we moved and the new position is dereferenceable
+	 * Returns: %TRUE if we moved and the new position is dereferenceable
 	 */
 	public bool forwardCursorPosition()
 	{
@@ -649,7 +649,7 @@ public class TextIter
 	 * Params:
 	 *     count = number of positions to move
 	 *
-	 * Return: %TRUE if we moved and the new position is dereferenceable
+	 * Returns: %TRUE if we moved and the new position is dereferenceable
 	 */
 	public bool forwardCursorPositions(int count)
 	{
@@ -667,7 +667,7 @@ public class TextIter
 	 *     userData = user data for @pred
 	 *     limit = search limit, or %NULL for none
 	 *
-	 * Return: whether a match was found
+	 * Returns: whether a match was found
 	 */
 	public bool forwardFindChar(GtkTextCharPredicate pred, void* userData, TextIter limit)
 	{
@@ -680,7 +680,7 @@ public class TextIter
 	 * If after the operation, the iter is at the end of the buffer and not
 	 * dereferencable, returns %FALSE. Otherwise, returns %TRUE.
 	 *
-	 * Return: whether @iter can be dereferenced
+	 * Returns: whether @iter can be dereferenced
 	 */
 	public bool forwardLine()
 	{
@@ -699,7 +699,7 @@ public class TextIter
 	 * Params:
 	 *     count = number of lines to move forward
 	 *
-	 * Return: whether @iter moved and is dereferenceable
+	 * Returns: whether @iter moved and is dereferenceable
 	 */
 	public bool forwardLines(int count)
 	{
@@ -724,7 +724,7 @@ public class TextIter
 	 *     matchEnd = return location for end of match, or %NULL
 	 *     limit = location of last possible @match_end, or %NULL for the end of the buffer
 	 *
-	 * Return: whether a match was found
+	 * Returns: whether a match was found
 	 */
 	public bool forwardSearch(string str, GtkTextSearchFlags flags, out TextIter matchStart, out TextIter matchEnd, TextIter limit)
 	{
@@ -746,7 +746,7 @@ public class TextIter
 	 * any language (if not, the correct fix would be to the Pango text
 	 * boundary algorithms).
 	 *
-	 * Return: %TRUE if @iter moved and is not the end iterator
+	 * Returns: %TRUE if @iter moved and is not the end iterator
 	 */
 	public bool forwardSentenceEnd()
 	{
@@ -761,7 +761,7 @@ public class TextIter
 	 * Params:
 	 *     count = number of sentences to move
 	 *
-	 * Return: %TRUE if @iter moved and is not the end iterator
+	 * Returns: %TRUE if @iter moved and is not the end iterator
 	 */
 	public bool forwardSentenceEnds(int count)
 	{
@@ -788,7 +788,7 @@ public class TextIter
 	 * not end in paragraph delimiters, moves to the end iterator (end of
 	 * the last line), and returns %FALSE.
 	 *
-	 * Return: %TRUE if we moved and the new location is not the end iterator
+	 * Returns: %TRUE if we moved and the new location is not the end iterator
 	 */
 	public bool forwardToLineEnd()
 	{
@@ -807,7 +807,7 @@ public class TextIter
 	 * Params:
 	 *     tag = a #GtkTextTag, or %NULL
 	 *
-	 * Return: whether we found a tag toggle after @iter
+	 * Returns: whether we found a tag toggle after @iter
 	 */
 	public bool forwardToTagToggle(TextTag tag)
 	{
@@ -818,7 +818,7 @@ public class TextIter
 	 * Moves @iter forward to the next visible cursor position. See
 	 * gtk_text_iter_forward_cursor_position() for details.
 	 *
-	 * Return: %TRUE if we moved and the new position is dereferenceable
+	 * Returns: %TRUE if we moved and the new position is dereferenceable
 	 *
 	 * Since: 2.4
 	 */
@@ -834,7 +834,7 @@ public class TextIter
 	 * Params:
 	 *     count = number of positions to move
 	 *
-	 * Return: %TRUE if we moved and the new position is dereferenceable
+	 * Returns: %TRUE if we moved and the new position is dereferenceable
 	 *
 	 * Since: 2.4
 	 */
@@ -849,7 +849,7 @@ public class TextIter
 	 * the end of the buffer and is now not dereferenceable, or if @iter was
 	 * already at the end of the buffer.
 	 *
-	 * Return: whether @iter can be dereferenced
+	 * Returns: whether @iter can be dereferenced
 	 *
 	 * Since: 2.8
 	 */
@@ -870,7 +870,7 @@ public class TextIter
 	 * Params:
 	 *     count = number of lines to move forward
 	 *
-	 * Return: whether @iter moved and is dereferenceable
+	 * Returns: whether @iter moved and is dereferenceable
 	 *
 	 * Since: 2.8
 	 */
@@ -886,7 +886,7 @@ public class TextIter
 	 * language (if not, the correct fix would be to the Pango word break
 	 * algorithms).
 	 *
-	 * Return: %TRUE if @iter moved and is not the end iterator
+	 * Returns: %TRUE if @iter moved and is not the end iterator
 	 *
 	 * Since: 2.4
 	 */
@@ -901,7 +901,7 @@ public class TextIter
 	 * Params:
 	 *     count = number of times to move
 	 *
-	 * Return: %TRUE if @iter moved and is not the end iterator
+	 * Returns: %TRUE if @iter moved and is not the end iterator
 	 *
 	 * Since: 2.4
 	 */
@@ -917,7 +917,7 @@ public class TextIter
 	 * language (if not, the correct fix would be to the Pango word break
 	 * algorithms).
 	 *
-	 * Return: %TRUE if @iter moved and is not the end iterator
+	 * Returns: %TRUE if @iter moved and is not the end iterator
 	 */
 	public bool forwardWordEnd()
 	{
@@ -930,7 +930,7 @@ public class TextIter
 	 * Params:
 	 *     count = number of times to move
 	 *
-	 * Return: %TRUE if @iter moved and is not the end iterator
+	 * Returns: %TRUE if @iter moved and is not the end iterator
 	 */
 	public bool forwardWordEnds(int count)
 	{
@@ -961,7 +961,7 @@ public class TextIter
 	 * Params:
 	 *     values = a #GtkTextAttributes to be filled in
 	 *
-	 * Return: %TRUE if @values was modified
+	 * Returns: %TRUE if @values was modified
 	 */
 	public bool getAttributes(out TextAttributes values)
 	{
@@ -977,7 +977,7 @@ public class TextIter
 	/**
 	 * Returns the #GtkTextBuffer this iterator is associated with.
 	 *
-	 * Return: the buffer
+	 * Returns: the buffer
 	 */
 	public TextBuffer getBuffer()
 	{
@@ -995,7 +995,7 @@ public class TextIter
 	 * Returns the number of bytes in the line containing @iter,
 	 * including the paragraph delimiters.
 	 *
-	 * Return: number of bytes in the line
+	 * Returns: number of bytes in the line
 	 */
 	public int getBytesInLine()
 	{
@@ -1011,7 +1011,7 @@ public class TextIter
 	 * So you can write a loop which ends when gtk_text_iter_get_char()
 	 * returns 0.
 	 *
-	 * Return: a Unicode character, or 0 if @iter is not dereferenceable
+	 * Returns: a Unicode character, or 0 if @iter is not dereferenceable
 	 */
 	public dchar getChar()
 	{
@@ -1022,7 +1022,7 @@ public class TextIter
 	 * Returns the number of characters in the line containing @iter,
 	 * including the paragraph delimiters.
 	 *
-	 * Return: number of characters in the line
+	 * Returns: number of characters in the line
 	 */
 	public int getCharsInLine()
 	{
@@ -1034,7 +1034,7 @@ public class TextIter
 	 * anchor is returned (with no new reference count added). Otherwise,
 	 * %NULL is returned.
 	 *
-	 * Return: the anchor at @iter
+	 * Returns: the anchor at @iter
 	 */
 	public TextChildAnchor getChildAnchor()
 	{
@@ -1054,7 +1054,7 @@ public class TextIter
 	 * language apply to @iter, the return value is identical to that of
 	 * gtk_get_default_language().
 	 *
-	 * Return: language in effect at @iter
+	 * Returns: language in effect at @iter
 	 */
 	public PgLanguage getLanguage()
 	{
@@ -1073,7 +1073,7 @@ public class TextIter
 	 * a #GtkTextBuffer are numbered beginning with 0 for the first
 	 * line in the buffer.
 	 *
-	 * Return: a line number
+	 * Returns: a line number
 	 */
 	public int getLine()
 	{
@@ -1087,7 +1087,7 @@ public class TextIter
 	 * UTF-8, and that characters can require a variable
 	 * number of bytes to represent.
 	 *
-	 * Return: distance from start of line, in bytes
+	 * Returns: distance from start of line, in bytes
 	 */
 	public int getLineIndex()
 	{
@@ -1099,7 +1099,7 @@ public class TextIter
 	 * counting from the start of a newline-terminated line.
 	 * The first character on the line has offset 0.
 	 *
-	 * Return: offset from start of line
+	 * Returns: offset from start of line
 	 */
 	public int getLineOffset()
 	{
@@ -1113,7 +1113,7 @@ public class TextIter
 	 * can exist in the same place. The returned list is not in any
 	 * meaningful order.
 	 *
-	 * Return: list of #GtkTextMark
+	 * Returns: list of #GtkTextMark
 	 */
 	public ListSG getMarks()
 	{
@@ -1134,7 +1134,7 @@ public class TextIter
 	 * Use gtk_text_buffer_get_iter_at_offset() to convert an
 	 * offset back into an iterator.
 	 *
-	 * Return: a character offset
+	 * Returns: a character offset
 	 */
 	public int getOffset()
 	{
@@ -1146,7 +1146,7 @@ public class TextIter
 	 * (with no new reference count added). Otherwise,
 	 * %NULL is returned.
 	 *
-	 * Return: the pixbuf at @iter
+	 * Returns: the pixbuf at @iter
 	 */
 	public Pixbuf getPixbuf()
 	{
@@ -1173,7 +1173,7 @@ public class TextIter
 	 * Params:
 	 *     end = iterator at end of a range
 	 *
-	 * Return: slice of text from the buffer
+	 * Returns: slice of text from the buffer
 	 */
 	public string getSlice(TextIter end)
 	{
@@ -1189,7 +1189,7 @@ public class TextIter
 	 * list don’t have a reference added, but you have to free the list
 	 * itself.
 	 *
-	 * Return: list of #GtkTextTag
+	 * Returns: list of #GtkTextTag
 	 */
 	public ListSG getTags()
 	{
@@ -1213,7 +1213,7 @@ public class TextIter
 	 * Params:
 	 *     end = iterator at end of a range
 	 *
-	 * Return: array of characters from the buffer
+	 * Returns: array of characters from the buffer
 	 */
 	public string getText(TextIter end)
 	{
@@ -1234,7 +1234,7 @@ public class TextIter
 	 * Params:
 	 *     toggledOn = %TRUE to get toggled-on tags
 	 *
-	 * Return: tags toggled at this point
+	 * Returns: tags toggled at this point
 	 */
 	public ListSG getToggledTags(bool toggledOn)
 	{
@@ -1254,7 +1254,7 @@ public class TextIter
 	 * are invisible due to tags with the “invisible” flag
 	 * toggled on.
 	 *
-	 * Return: byte index of @iter with respect to the start of the line
+	 * Returns: byte index of @iter with respect to the start of the line
 	 */
 	public int getVisibleLineIndex()
 	{
@@ -1267,7 +1267,7 @@ public class TextIter
 	 * are invisible due to tags with the “invisible” flag
 	 * toggled on.
 	 *
-	 * Return: offset in visible characters from the start of the line
+	 * Returns: offset in visible characters from the start of the line
 	 */
 	public int getVisibleLineOffset()
 	{
@@ -1282,7 +1282,7 @@ public class TextIter
 	 * Params:
 	 *     end = iterator at end of range
 	 *
-	 * Return: slice of text from the buffer
+	 * Returns: slice of text from the buffer
 	 */
 	public string getVisibleSlice(TextIter end)
 	{
@@ -1300,7 +1300,7 @@ public class TextIter
 	 * Params:
 	 *     end = iterator at end of range
 	 *
-	 * Return: string containing visible text in the
+	 * Returns: string containing visible text in the
 	 *     range
 	 */
 	public string getVisibleText(TextIter end)
@@ -1318,7 +1318,7 @@ public class TextIter
 	 * Params:
 	 *     tag = a #GtkTextTag
 	 *
-	 * Return: whether @iter is tagged with @tag
+	 * Returns: whether @iter is tagged with @tag
 	 */
 	public bool hasTag(TextTag tag)
 	{
@@ -1333,7 +1333,7 @@ public class TextIter
 	 *     start = start of range
 	 *     end = end of range
 	 *
-	 * Return: %TRUE if @iter is in the range
+	 * Returns: %TRUE if @iter is in the range
 	 */
 	public bool inRange(TextIter start, TextIter end)
 	{
@@ -1347,7 +1347,7 @@ public class TextIter
 	 * by Pango and should be correct for nearly any language (if not, the
 	 * correct fix would be to the Pango text boundary algorithms).
 	 *
-	 * Return: %TRUE if @iter is inside a sentence.
+	 * Returns: %TRUE if @iter is inside a sentence.
 	 */
 	public bool insideSentence()
 	{
@@ -1363,7 +1363,7 @@ public class TextIter
 	 * Note that if gtk_text_iter_starts_word() returns %TRUE, then this function
 	 * returns %TRUE too, since @iter points to the first character of the word.
 	 *
-	 * Return: %TRUE if @iter is inside a word
+	 * Returns: %TRUE if @iter is inside a word
 	 */
 	public bool insideWord()
 	{
@@ -1374,7 +1374,7 @@ public class TextIter
 	 * See gtk_text_iter_forward_cursor_position() or #PangoLogAttr or
 	 * pango_break() for details on what a cursor position is.
 	 *
-	 * Return: %TRUE if the cursor can be placed at @iter
+	 * Returns: %TRUE if the cursor can be placed at @iter
 	 */
 	public bool isCursorPosition()
 	{
@@ -1387,7 +1387,7 @@ public class TextIter
 	 * the most efficient way to check whether an iterator is the end
 	 * iterator.
 	 *
-	 * Return: whether @iter is the end iterator
+	 * Returns: whether @iter is the end iterator
 	 */
 	public bool isEnd()
 	{
@@ -1398,7 +1398,7 @@ public class TextIter
 	 * Returns %TRUE if @iter is the first iterator in the buffer, that is
 	 * if @iter has a character offset of 0.
 	 *
-	 * Return: whether @iter is the first in the buffer
+	 * Returns: whether @iter is the first in the buffer
 	 */
 	public bool isStart()
 	{
@@ -1509,7 +1509,7 @@ public class TextIter
 	 * gtk_text_iter_get_line_offset() because it doesn’t have to compute
 	 * the offset, it just has to see whether it’s 0.
 	 *
-	 * Return: whether @iter begins a line
+	 * Returns: whether @iter begins a line
 	 */
 	public bool startsLine()
 	{
@@ -1522,7 +1522,7 @@ public class TextIter
 	 * (if not, the correct fix would be to the Pango text boundary
 	 * algorithms).
 	 *
-	 * Return: %TRUE if @iter is at the start of a sentence.
+	 * Returns: %TRUE if @iter is at the start of a sentence.
 	 */
 	public bool startsSentence()
 	{
@@ -1543,7 +1543,7 @@ public class TextIter
 	 * Params:
 	 *     tag = a #GtkTextTag, or %NULL
 	 *
-	 * Return: whether @iter is the start of a range tagged with @tag
+	 * Returns: whether @iter is the start of a range tagged with @tag
 	 *
 	 * Since: 3.20
 	 */
@@ -1558,7 +1558,7 @@ public class TextIter
 	 * language (if not, the correct fix would be to the Pango word break
 	 * algorithms).
 	 *
-	 * Return: %TRUE if @iter is at the start of a word
+	 * Returns: %TRUE if @iter is at the start of a word
 	 */
 	public bool startsWord()
 	{
@@ -1573,7 +1573,7 @@ public class TextIter
 	 * Params:
 	 *     tag = a #GtkTextTag, or %NULL
 	 *
-	 * Return: whether @tag is toggled on or off at @iter
+	 * Returns: whether @tag is toggled on or off at @iter
 	 */
 	public bool togglesTag(TextTag tag)
 	{

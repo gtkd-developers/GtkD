@@ -103,7 +103,7 @@ public class SocketClient : ObjectG
 	/**
 	 * Creates a new #GSocketClient with the default options.
 	 *
-	 * Return: a #GSocketClient.
+	 * Returns: a #GSocketClient.
 	 *     Free the returned object with g_object_unref().
 	 *
 	 * Since: 2.22
@@ -175,7 +175,7 @@ public class SocketClient : ObjectG
 	 *     connectable = a #GSocketConnectable specifying the remote address.
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Return: a #GSocketConnection on success, %NULL on error.
+	 * Returns: a #GSocketConnection on success, %NULL on error.
 	 *
 	 * Since: 2.22
 	 *
@@ -226,7 +226,7 @@ public class SocketClient : ObjectG
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *
-	 * Return: a #GSocketConnection on success, %NULL on error.
+	 * Returns: a #GSocketConnection on success, %NULL on error.
 	 *
 	 * Since: 2.22
 	 *
@@ -288,7 +288,7 @@ public class SocketClient : ObjectG
 	 *     defaultPort = the default port to connect to
 	 *     cancellable = a #GCancellable, or %NULL
 	 *
-	 * Return: a #GSocketConnection on success, %NULL on error.
+	 * Returns: a #GSocketConnection on success, %NULL on error.
 	 *
 	 * Since: 2.22
 	 *
@@ -340,7 +340,7 @@ public class SocketClient : ObjectG
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *
-	 * Return: a #GSocketConnection on success, %NULL on error.
+	 * Returns: a #GSocketConnection on success, %NULL on error.
 	 *
 	 * Since: 2.22
 	 *
@@ -386,7 +386,7 @@ public class SocketClient : ObjectG
 	 *     service = the name of the service to connect to
 	 *     cancellable = a #GCancellable, or %NULL
 	 *
-	 * Return: a #GSocketConnection if successful, or %NULL on error
+	 * Returns: a #GSocketConnection if successful, or %NULL on error
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -433,7 +433,7 @@ public class SocketClient : ObjectG
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *
-	 * Return: a #GSocketConnection on success, %NULL on error.
+	 * Returns: a #GSocketConnection on success, %NULL on error.
 	 *
 	 * Since: 2.22
 	 *
@@ -486,7 +486,7 @@ public class SocketClient : ObjectG
 	 *     defaultPort = the default port to connect to
 	 *     cancellable = a #GCancellable, or %NULL
 	 *
-	 * Return: a #GSocketConnection on success, %NULL on error.
+	 * Returns: a #GSocketConnection on success, %NULL on error.
 	 *
 	 * Since: 2.26
 	 *
@@ -538,7 +538,7 @@ public class SocketClient : ObjectG
 	 * Params:
 	 *     result = a #GAsyncResult.
 	 *
-	 * Return: a #GSocketConnection on success, %NULL on error.
+	 * Returns: a #GSocketConnection on success, %NULL on error.
 	 *
 	 * Since: 2.26
 	 *
@@ -566,7 +566,7 @@ public class SocketClient : ObjectG
 	/**
 	 * Gets the proxy enable state; see g_socket_client_set_enable_proxy()
 	 *
-	 * Return: whether proxying is enabled
+	 * Returns: whether proxying is enabled
 	 *
 	 * Since: 2.26
 	 */
@@ -580,7 +580,7 @@ public class SocketClient : ObjectG
 	 *
 	 * See g_socket_client_set_family() for details.
 	 *
-	 * Return: a #GSocketFamily
+	 * Returns: a #GSocketFamily
 	 *
 	 * Since: 2.22
 	 */
@@ -594,7 +594,7 @@ public class SocketClient : ObjectG
 	 *
 	 * See g_socket_client_set_local_address() for details.
 	 *
-	 * Return: a #GSocketAddress or %NULL. Do not free.
+	 * Returns: a #GSocketAddress or %NULL. Do not free.
 	 *
 	 * Since: 2.22
 	 */
@@ -615,7 +615,7 @@ public class SocketClient : ObjectG
 	 *
 	 * See g_socket_client_set_protocol() for details.
 	 *
-	 * Return: a #GSocketProtocol
+	 * Returns: a #GSocketProtocol
 	 *
 	 * Since: 2.22
 	 */
@@ -629,7 +629,7 @@ public class SocketClient : ObjectG
 	 * be the resolver returned by g_proxy_resolver_get_default(), but you
 	 * can override it with g_socket_client_set_proxy_resolver().
 	 *
-	 * Return: The #GProxyResolver being used by
+	 * Returns: The #GProxyResolver being used by
 	 *     @client.
 	 *
 	 * Since: 2.36
@@ -651,7 +651,7 @@ public class SocketClient : ObjectG
 	 *
 	 * See g_socket_client_set_socket_type() for details.
 	 *
-	 * Return: a #GSocketFamily
+	 * Returns: a #GSocketFamily
 	 *
 	 * Since: 2.22
 	 */
@@ -665,7 +665,7 @@ public class SocketClient : ObjectG
 	 *
 	 * See g_socket_client_set_timeout() for details.
 	 *
-	 * Return: the timeout in seconds
+	 * Returns: the timeout in seconds
 	 *
 	 * Since: 2.26
 	 */
@@ -678,7 +678,7 @@ public class SocketClient : ObjectG
 	 * Gets whether @client creates TLS connections. See
 	 * g_socket_client_set_tls() for details.
 	 *
-	 * Return: whether @client uses TLS
+	 * Returns: whether @client uses TLS
 	 *
 	 * Since: 2.28
 	 */
@@ -691,7 +691,7 @@ public class SocketClient : ObjectG
 	 * Gets the TLS validation flags used creating TLS connections via
 	 * @client.
 	 *
-	 * Return: the TLS validation flags
+	 * Returns: the TLS validation flags
 	 *
 	 * Since: 2.28
 	 */

@@ -159,7 +159,7 @@ public class DateTime
 	 *     minute = the minute of the hour
 	 *     seconds = the second of the minute
 	 *
-	 * Return: the newly created #GstDateTime
+	 * Returns: the newly created #GstDateTime
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -183,7 +183,7 @@ public class DateTime
 	 * Params:
 	 *     dt = the #GDateTime. The new #GstDateTime takes ownership.
 	 *
-	 * Return: a newly created #GstDateTime,
+	 * Returns: a newly created #GstDateTime,
 	 *     or %NULL on error
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -215,7 +215,7 @@ public class DateTime
 	 * Params:
 	 *     str = ISO 8601-formatted datetime string.
 	 *
-	 * Return: a newly created #GstDateTime,
+	 * Returns: a newly created #GstDateTime,
 	 *     or %NULL on error
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
@@ -259,7 +259,7 @@ public class DateTime
 	 *     minute = the minute of the hour, or -1
 	 *     seconds = the second of the minute, or -1
 	 *
-	 * Return: the newly created #GstDateTime
+	 * Returns: the newly created #GstDateTime
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -286,7 +286,7 @@ public class DateTime
 	 * Params:
 	 *     year = the gregorian year
 	 *
-	 * Return: the newly created #GstDateTime
+	 * Returns: the newly created #GstDateTime
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -317,7 +317,7 @@ public class DateTime
 	 *     year = the gregorian year
 	 *     month = the gregorian month
 	 *
-	 * Return: the newly created #GstDateTime
+	 * Returns: the newly created #GstDateTime
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -352,7 +352,7 @@ public class DateTime
 	 *     month = the gregorian month
 	 *     day = the day of the gregorian month
 	 *
-	 * Return: the newly created #GstDateTime
+	 * Returns: the newly created #GstDateTime
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -372,7 +372,7 @@ public class DateTime
 	 * Returns the day of the month of this #GstDateTime.
 	 * Call gst_date_time_has_day before, to avoid warnings.
 	 *
-	 * Return: The day of this #GstDateTime
+	 * Returns: The day of this #GstDateTime
 	 */
 	public int getDay()
 	{
@@ -384,7 +384,7 @@ public class DateTime
 	 * calendar. The return is in the range of 0 to 23.
 	 * Call gst_date_time_has_haur before, to avoid warnings.
 	 *
-	 * Return: the hour of the day
+	 * Returns: the hour of the day
 	 */
 	public int getHour()
 	{
@@ -395,7 +395,7 @@ public class DateTime
 	 * Retrieves the fractional part of the seconds in microseconds represented by
 	 * @datetime in the gregorian calendar.
 	 *
-	 * Return: the microsecond of the second
+	 * Returns: the microsecond of the second
 	 */
 	public int getMicrosecond()
 	{
@@ -407,7 +407,7 @@ public class DateTime
 	 * calendar.
 	 * Call gst_date_time_has_minute before, to avoid warnings.
 	 *
-	 * Return: the minute of the hour
+	 * Returns: the minute of the hour
 	 */
 	public int getMinute()
 	{
@@ -418,7 +418,7 @@ public class DateTime
 	 * Returns the month of this #GstDateTime. January is 1, February is 2, etc..
 	 * Call gst_date_time_has_month before, to avoid warnings.
 	 *
-	 * Return: The month of this #GstDateTime
+	 * Returns: The month of this #GstDateTime
 	 */
 	public int getMonth()
 	{
@@ -430,7 +430,7 @@ public class DateTime
 	 * calendar.
 	 * Call gst_date_time_has_second before, to avoid warnings.
 	 *
-	 * Return: the second represented by @datetime
+	 * Returns: the second represented by @datetime
 	 */
 	public int getSecond()
 	{
@@ -443,7 +443,7 @@ public class DateTime
 	 * values, timezones before (to the west) of UTC have negative values.
 	 * If @datetime represents UTC time, then the offset is zero.
 	 *
-	 * Return: the offset from UTC in hours
+	 * Returns: the offset from UTC in hours
 	 */
 	public float getTimeZoneOffset()
 	{
@@ -454,7 +454,7 @@ public class DateTime
 	 * Returns the year of this #GstDateTime
 	 * Call gst_date_time_has_year before, to avoid warnings.
 	 *
-	 * Return: The year of this #GstDateTime
+	 * Returns: The year of this #GstDateTime
 	 */
 	public int getYear()
 	{
@@ -462,7 +462,7 @@ public class DateTime
 	}
 
 	/**
-	 * Return: %TRUE if @datetime<!-- -->'s day field is set, otherwise %FALSE
+	 * Returns: %TRUE if @datetime<!-- -->'s day field is set, otherwise %FALSE
 	 */
 	public bool hasDay()
 	{
@@ -470,7 +470,7 @@ public class DateTime
 	}
 
 	/**
-	 * Return: %TRUE if @datetime<!-- -->'s month field is set, otherwise %FALSE
+	 * Returns: %TRUE if @datetime<!-- -->'s month field is set, otherwise %FALSE
 	 */
 	public bool hasMonth()
 	{
@@ -478,7 +478,7 @@ public class DateTime
 	}
 
 	/**
-	 * Return: %TRUE if @datetime<!-- -->'s second field is set, otherwise %FALSE
+	 * Returns: %TRUE if @datetime<!-- -->'s second field is set, otherwise %FALSE
 	 */
 	public bool hasSecond()
 	{
@@ -486,7 +486,7 @@ public class DateTime
 	}
 
 	/**
-	 * Return: %TRUE if @datetime<!-- -->'s hour and minute fields are set,
+	 * Returns: %TRUE if @datetime<!-- -->'s hour and minute fields are set,
 	 *     otherwise %FALSE
 	 */
 	public bool hasTime()
@@ -495,7 +495,7 @@ public class DateTime
 	}
 
 	/**
-	 * Return: %TRUE if @datetime<!-- -->'s year field is set (which should always
+	 * Returns: %TRUE if @datetime<!-- -->'s year field is set (which should always
 	 *     be the case), otherwise %FALSE
 	 */
 	public bool hasYear()
@@ -506,7 +506,7 @@ public class DateTime
 	/**
 	 * Atomically increments the reference count of @datetime by one.
 	 *
-	 * Return: the reference @datetime
+	 * Returns: the reference @datetime
 	 */
 	public DateTime doref()
 	{
@@ -525,7 +525,7 @@ public class DateTime
 	 *
 	 * Free-function: g_date_time_unref
 	 *
-	 * Return: a newly created #GDateTime, or
+	 * Returns: a newly created #GDateTime, or
 	 *     %NULL on error
 	 */
 	public GLibDateTime toGDateTime()
@@ -545,7 +545,7 @@ public class DateTime
 	 * are (for example): 2012, 2012-06, 2012-06-23, 2012-06-23T23:30Z,
 	 * 2012-06-23T23:30+0100, 2012-06-23T23:30:59Z, 2012-06-23T23:30:59+0100
 	 *
-	 * Return: a newly allocated string formatted according
+	 * Returns: a newly allocated string formatted according
 	 *     to ISO 8601 and only including the datetime fields that are
 	 *     valid, or %NULL in case there was an error. The string should
 	 *     be freed with g_free().

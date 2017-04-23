@@ -85,7 +85,7 @@ public class MonitorG : ObjectG
 	/**
 	 * Gets the display that this monitor belongs to.
 	 *
-	 * Return: the display
+	 * Returns: the display
 	 *
 	 * Since: 3.22
 	 */
@@ -119,7 +119,7 @@ public class MonitorG : ObjectG
 	/**
 	 * Gets the height in millimeters of the monitor.
 	 *
-	 * Return: the physical height of the monitor
+	 * Returns: the physical height of the monitor
 	 *
 	 * Since: 3.22
 	 */
@@ -131,7 +131,7 @@ public class MonitorG : ObjectG
 	/**
 	 * Gets the name of the monitor's manufacturer, if available.
 	 *
-	 * Return: the name of the manufacturer, or %NULL
+	 * Returns: the name of the manufacturer, or %NULL
 	 */
 	public string getManufacturer()
 	{
@@ -141,7 +141,7 @@ public class MonitorG : ObjectG
 	/**
 	 * Gets the a string identifying the monitor model, if available.
 	 *
-	 * Return: the monitor model, or %NULL
+	 * Returns: the monitor model, or %NULL
 	 */
 	public string getModel()
 	{
@@ -154,7 +154,7 @@ public class MonitorG : ObjectG
 	 * The value is in milli-Hertz, so a refresh rate of 60Hz
 	 * is returned as 60000.
 	 *
-	 * Return: the refresh rate in milli-Hertz, or 0
+	 * Returns: the refresh rate in milli-Hertz, or 0
 	 *
 	 * Since: 3.22
 	 */
@@ -172,7 +172,7 @@ public class MonitorG : ObjectG
 	 * particular monitor, but most of the time you’re drawing to a window
 	 * where it is better to use gdk_window_get_scale_factor() instead.
 	 *
-	 * Return: the scale factor
+	 * Returns: the scale factor
 	 *
 	 * Since: 3.22
 	 */
@@ -185,7 +185,7 @@ public class MonitorG : ObjectG
 	 * Gets information about the layout of red, green and blue
 	 * primaries for each pixel in this monitor, if available.
 	 *
-	 * Return: the subpixel layout
+	 * Returns: the subpixel layout
 	 *
 	 * Since: 3.22
 	 */
@@ -197,7 +197,7 @@ public class MonitorG : ObjectG
 	/**
 	 * Gets the width in millimeters of the monitor.
 	 *
-	 * Return: the physical width of the monitor
+	 * Returns: the physical width of the monitor
 	 *
 	 * Since: 3.22
 	 */
@@ -235,7 +235,7 @@ public class MonitorG : ObjectG
 	 * Gets whether this monitor should be considered primary
 	 * (see gdk_display_get_primary_monitor()).
 	 *
-	 * Return: %TRUE if @monitor is primary
+	 * Returns: %TRUE if @monitor is primary
 	 *
 	 * Since: 3.22
 	 */

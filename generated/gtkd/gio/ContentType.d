@@ -45,7 +45,7 @@ public struct ContentType
 	 * Params:
 	 *     type = a content type string
 	 *
-	 * Return: %TRUE if the file type corresponds to a type that
+	 * Returns: %TRUE if the file type corresponds to a type that
 	 *     can be executable, %FALSE otherwise.
 	 */
 	public static bool canBeExecutable(string type)
@@ -60,7 +60,7 @@ public struct ContentType
 	 *     type1 = a content type string
 	 *     type2 = a content type string
 	 *
-	 * Return: %TRUE if the two strings are identical or equivalent,
+	 * Returns: %TRUE if the two strings are identical or equivalent,
 	 *     %FALSE otherwise.
 	 */
 	public static bool equals(string type1, string type2)
@@ -74,7 +74,7 @@ public struct ContentType
 	 * Params:
 	 *     mimeType = a mime type string
 	 *
-	 * Return: Newly allocated string with content type or
+	 * Returns: Newly allocated string with content type or
 	 *     %NULL. Free with g_free()
 	 *
 	 * Since: 2.18
@@ -93,7 +93,7 @@ public struct ContentType
 	 * Params:
 	 *     type = a content type string
 	 *
-	 * Return: a short description of the content type @type. Free the
+	 * Returns: a short description of the content type @type. Free the
 	 *     returned string with g_free()
 	 */
 	public static string getDescription(string type)
@@ -114,7 +114,7 @@ public struct ContentType
 	 * Params:
 	 *     type = a content type string
 	 *
-	 * Return: the registered generic icon name for the given @type,
+	 * Returns: the registered generic icon name for the given @type,
 	 *     or %NULL if unknown. Free with g_free()
 	 *
 	 * Since: 2.34
@@ -133,7 +133,7 @@ public struct ContentType
 	 * Params:
 	 *     type = a content type string
 	 *
-	 * Return: #GIcon corresponding to the content type. Free the returned
+	 * Returns: #GIcon corresponding to the content type. Free the returned
 	 *     object with g_object_unref()
 	 */
 	public static IconIF getIcon(string type)
@@ -154,7 +154,7 @@ public struct ContentType
 	 * Params:
 	 *     type = a content type string
 	 *
-	 * Return: the registered mime type for the given @type,
+	 * Returns: the registered mime type for the given @type,
 	 *     or %NULL if unknown.
 	 */
 	public static string getMimeType(string type)
@@ -171,7 +171,7 @@ public struct ContentType
 	 * Params:
 	 *     type = a content type string
 	 *
-	 * Return: symbolic #GIcon corresponding to the content type.
+	 * Returns: symbolic #GIcon corresponding to the content type.
 	 *     Free the returned object with g_object_unref()
 	 *
 	 * Since: 2.34
@@ -201,7 +201,7 @@ public struct ContentType
 	 *     resultUncertain = return location for the certainty
 	 *         of the result, or %NULL
 	 *
-	 * Return: a string indicating a guessed content type for the
+	 * Returns: a string indicating a guessed content type for the
 	 *     given data. Free with g_free()
 	 */
 	public static string typeGuess(string filename, char[] data, out bool resultUncertain)
@@ -233,7 +233,7 @@ public struct ContentType
 	 * Params:
 	 *     root = the root of the tree to guess a type for
 	 *
-	 * Return: an %NULL-terminated
+	 * Returns: an %NULL-terminated
 	 *     array of zero or more content types. Free with g_strfreev()
 	 *
 	 * Since: 2.18
@@ -253,7 +253,7 @@ public struct ContentType
 	 *     type = a content type string
 	 *     supertype = a content type string
 	 *
-	 * Return: %TRUE if @type is a kind of @supertype,
+	 * Returns: %TRUE if @type is a kind of @supertype,
 	 *     %FALSE otherwise.
 	 */
 	public static bool isA(string type, string supertype)
@@ -270,7 +270,7 @@ public struct ContentType
 	 * Params:
 	 *     type = a content type string
 	 *
-	 * Return: %TRUE if the type is the unknown type.
+	 * Returns: %TRUE if the type is the unknown type.
 	 */
 	public static bool isUnknown(string type)
 	{
@@ -282,7 +282,7 @@ public struct ContentType
 	 * known to the system. The list and its data should be freed using
 	 * g_list_free_full (list, g_free).
 	 *
-	 * Return: list of the registered
+	 * Returns: list of the registered
 	 *     content types
 	 */
 	public static ListG contentTypesGetRegistered()
@@ -305,7 +305,7 @@ public struct ContentType
 	 *     type = a content type string
 	 *     mimeType = a mime type string
 	 *
-	 * Return: %TRUE if @type is a kind of @mime_type,
+	 * Returns: %TRUE if @type is a kind of @mime_type,
 	 *     %FALSE otherwise.
 	 *
 	 * Since: 2.52

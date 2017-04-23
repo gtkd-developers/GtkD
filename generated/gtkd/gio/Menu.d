@@ -89,7 +89,7 @@ public class Menu : MenuModel
 	 *
 	 * The new menu has no items.
 	 *
-	 * Return: a new #GMenu
+	 * Returns: a new #GMenu
 	 *
 	 * Since: 2.32
 	 *

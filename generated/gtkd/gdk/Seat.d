@@ -84,7 +84,7 @@ public class Seat : ObjectG
 	/**
 	 * Returns the capabilities this #GdkSeat currently has.
 	 *
-	 * Return: the seat capabilities
+	 * Returns: the seat capabilities
 	 *
 	 * Since: 3.20
 	 */
@@ -96,7 +96,7 @@ public class Seat : ObjectG
 	/**
 	 * Returns the #GdkDisplay this seat belongs to.
 	 *
-	 * Return: a #GdkDisplay. This object is owned by GTK+
+	 * Returns: a #GdkDisplay. This object is owned by GTK+
 	 *     and must not be freed.
 	 */
 	public Display getDisplay()
@@ -114,7 +114,7 @@ public class Seat : ObjectG
 	/**
 	 * Returns the master device that routes keyboard events.
 	 *
-	 * Return: a master #GdkDevice with keyboard
+	 * Returns: a master #GdkDevice with keyboard
 	 *     capabilities. This object is owned by GTK+ and must not be freed.
 	 *
 	 * Since: 3.20
@@ -134,7 +134,7 @@ public class Seat : ObjectG
 	/**
 	 * Returns the master device that routes pointer events.
 	 *
-	 * Return: a master #GdkDevice with pointer
+	 * Returns: a master #GdkDevice with pointer
 	 *     capabilities. This object is owned by GTK+ and must not be freed.
 	 *
 	 * Since: 3.20
@@ -157,7 +157,7 @@ public class Seat : ObjectG
 	 * Params:
 	 *     capabilities = capabilities to get devices for
 	 *
-	 * Return: A list of #GdkDevices.
+	 * Returns: A list of #GdkDevices.
 	 *     The list must be freed with g_list_free(), the elements are owned
 	 *     by GDK and must not be freed.
 	 *
@@ -221,7 +221,7 @@ public class Seat : ObjectG
 	 *         visible before this call.
 	 *     prepareFuncData = user data to pass to @prepare_func
 	 *
-	 * Return: %GDK_GRAB_SUCCESS if the grab was successful.
+	 * Returns: %GDK_GRAB_SUCCESS if the grab was successful.
 	 *
 	 * Since: 3.20
 	 */

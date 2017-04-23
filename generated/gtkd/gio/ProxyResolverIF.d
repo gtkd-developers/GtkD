@@ -54,7 +54,7 @@ public interface ProxyResolverIF{
 	/**
 	 * Gets the default #GProxyResolver for the system.
 	 *
-	 * Return: the default #GProxyResolver.
+	 * Returns: the default #GProxyResolver.
 	 *
 	 * Since: 2.26
 	 */
@@ -65,7 +65,7 @@ public interface ProxyResolverIF{
 	 * internally; g_proxy_resolver_get_default() will only return a proxy
 	 * resolver that returns %TRUE for this method.)
 	 *
-	 * Return: %TRUE if @resolver is supported.
+	 * Returns: %TRUE if @resolver is supported.
 	 *
 	 * Since: 2.26
 	 */
@@ -92,7 +92,7 @@ public interface ProxyResolverIF{
 	 *     uri = a URI representing the destination to connect to
 	 *     cancellable = a #GCancellable, or %NULL
 	 *
-	 * Return: A
+	 * Returns: A
 	 *     NULL-terminated array of proxy URIs. Must be freed
 	 *     with g_strfreev().
 	 *
@@ -124,7 +124,7 @@ public interface ProxyResolverIF{
 	 * Params:
 	 *     result = the result passed to your #GAsyncReadyCallback
 	 *
-	 * Return: A
+	 * Returns: A
 	 *     NULL-terminated array of proxy URIs. Must be freed
 	 *     with g_strfreev().
 	 *

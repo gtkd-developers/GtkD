@@ -162,7 +162,7 @@ public class SourceGutterRenderer : ObjectG
 	 * Get the alignment mode. The alignment mode describes the manner in which the
 	 * renderer is aligned (see :xalign and :yalign).
 	 *
-	 * Return: a #GtkSourceGutterRendererAlignmentMode
+	 * Returns: a #GtkSourceGutterRendererAlignmentMode
 	 */
 	public GtkSourceGutterRendererAlignmentMode getAlignmentMode()
 	{
@@ -175,7 +175,7 @@ public class SourceGutterRenderer : ObjectG
 	 * Params:
 	 *     color = return value for a #GdkRGBA
 	 *
-	 * Return: %TRUE if the background color is set, %FALSE otherwise
+	 * Returns: %TRUE if the background color is set, %FALSE otherwise
 	 */
 	public bool getBackground(out RGBA color)
 	{
@@ -205,7 +205,7 @@ public class SourceGutterRenderer : ObjectG
 	/**
 	 * Get the size of the renderer.
 	 *
-	 * Return: the size of the renderer.
+	 * Returns: the size of the renderer.
 	 */
 	public int getSize()
 	{
@@ -215,7 +215,7 @@ public class SourceGutterRenderer : ObjectG
 	/**
 	 * Get the view associated to the gutter renderer
 	 *
-	 * Return: a #GtkTextView
+	 * Returns: a #GtkTextView
 	 */
 	public TextView getView()
 	{
@@ -232,7 +232,7 @@ public class SourceGutterRenderer : ObjectG
 	/**
 	 * Get whether the gutter renderer is visible.
 	 *
-	 * Return: %TRUE if the renderer is visible, %FALSE otherwise
+	 * Returns: %TRUE if the renderer is visible, %FALSE otherwise
 	 */
 	public bool getVisible()
 	{
@@ -242,7 +242,7 @@ public class SourceGutterRenderer : ObjectG
 	/**
 	 * Get the #GtkTextWindowType associated with the gutter renderer.
 	 *
-	 * Return: a #GtkTextWindowType
+	 * Returns: a #GtkTextWindowType
 	 */
 	public GtkTextWindowType getWindowType()
 	{
@@ -259,7 +259,7 @@ public class SourceGutterRenderer : ObjectG
 	 *     area = a #GdkRectangle of the cell area to be activated
 	 *     event = the event that triggered the query
 	 *
-	 * Return: %TRUE if the renderer can be activated, %FALSE otherwise
+	 * Returns: %TRUE if the renderer can be activated, %FALSE otherwise
 	 */
 	public bool queryActivatable(TextIter iter, GdkRectangle* area, Event event)
 	{
@@ -295,7 +295,7 @@ public class SourceGutterRenderer : ObjectG
 	 *     y = The y position of the tooltip.
 	 *     tooltip = a #GtkTooltip.
 	 *
-	 * Return: %TRUE if the tooltip has been set, %FALSE otherwise
+	 * Returns: %TRUE if the tooltip has been set, %FALSE otherwise
 	 */
 	public bool queryTooltip(TextIter iter, GdkRectangle* area, int x, int y, Tooltip tooltip)
 	{
