@@ -11,7 +11,7 @@ grep -h -e "^module" generated/vte/* -r | sort -u | sed 's/;//' | sed 's/\r//' |
 grep -h -e "^module" generated/gstreamer/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
 grep -h -e "^module" generated/peas/* -r | sort -u | sed 's/;//' | sed 's/\r//' |  sed 's/module \(.*\)$/\t$(MODULE \1)/' >> modules.ddoc
 
-dmd -o- -D -X -Xfddox/docs.json -Ddddox/temp modules.ddoc docs/candy.ddoc \
+dmd -o- -D -X -Xfddox/docs.json -Ddddox/temp \
 	generated/gtkd/gtk/*  generated/gtkd/gtkc/* generated/gtkd/gtkd/* generated/gtkd/glib/* generated/gtkd/gio/* generated/gtkd/gdk/* \
 	generated/gtkd/gobject/* generated/gtkd/gthread/* generated/gtkd/atk/* \
 	generated/gtkd/pango/* generated/gtkd/cairo/* generated/gtkd/gdkpixbuf/* \

@@ -227,15 +227,17 @@ function PackageExplorer()
                
 			if (path.length == i + 1) {
 				if ((path[0] == "gtkglc") || (path[0] == "glgtk") || (path[0] == "glgdk")) {
-					node.setRef("../../srcgl/" + path[0] + "/" + path[i] + ".html");
-				} else if ((path[0] == "gda") || (path[0] == "gdac")) {
-					node.setRef("../../srcgda/" + path[0] + "/" + path[i] + ".html");
+					node.setRef("../../gtkdgl/" + path[0] + "/" + path[i] + ".html");
 				} else if ((path[0] == "gstinterfaces") || (path[0] == "gstreamer") || (path[0] == "gstreamerc")) {
-					node.setRef("../../srcgstreamer/" + path[0] + "/" + path[i] + ".html");
+					node.setRef("../../gstreamer/" + path[0] + "/" + path[i] + ".html");
 				} else if ((path[0] == "gsv") || (path[0] == "gsvc")) {
-					node.setRef("../../srcsv/" + path[0] + "/" + path[i] + ".html");
+					node.setRef("../../sourceview/" + path[0] + "/" + path[i] + ".html");
+				} else if ((path[0] == "vte") || (path[0] == "vtec")) {
+					node.setRef("../../vte/" + path[0] + "/" + path[i] + ".html");
+				} else if ((path[0] == "peas") || (path[0] == "peasc")) {
+					node.setRef("../../peas/" + path[0] + "/" + path[i] + ".html");
 				} else {
-					node.setRef("../../src/" + path[0] + "/" + path[i] + ".html");
+					node.setRef("../../gtkd/" + path[0] + "/" + path[i] + ".html");
 				}
 			}
 		}
