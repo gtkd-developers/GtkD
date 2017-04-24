@@ -106,7 +106,7 @@ PICOBJECTS_PEASD = $(patsubst %.o,%.pic.o,$(OBJECTS_PEASD))
 
 USE_RUNTIME_LINKER = $(shell grep "Linker" generated/gtkd/gtkc/atk.d)
 
-ifneq (USE_RUNTIME_LINKER,)
+ifeq ($(USE_RUNTIME_LINKER),)
     SOFLAGS_GTKD = $(subst -l,$(LINKERFLAG)-l,$(shell pkg-config --libs gtk+-3.0 librsvg-2.0))
     SOFLAGS_GTKDGL = $(LINKERFLAG)-L. $(LINKERFLAG)-lgtkd-3 $(subst -l,$(LINKERFLAG)-l,$(shell pkg-config --libs gtkglext-3.0))
     SOFLAGS_GTKDSV = $(LINKERFLAG)-L. $(LINKERFLAG)-lgtkd-3 $(subst -l,$(LINKERFLAG)-l,$(shell pkg-config --libs gtksourceview-3.0))
@@ -294,9 +294,9 @@ ifeq ("$(OS)","Darwin")
     install-headers: install-headers-gtkd
     install-shared: install-shared-gtkd
 else
-    install: install-gtkd install-gtkdgl install-gtkdsv
-    install-headers: install-headers-gtkd install-headers-gtkdgl install-headers-gtkdsv
-    install-shared: install-shared-gtkd install-shared-gtkdgl install-shared-gtkdsv
+    install: install-gtkd install-gtkdsv install-gstreamer install-vte install-peas
+    install-headers: install-headers-gtkd install-headers-gtkdsv install-shared-gstreamer install-shared-vte install-shared-peas
+    install-shared: install-shared-gtkd install-shared-gtkdsv install-shared-gstreamer install-shared-vte install-shared-peas
 endif
 
 install-gtkd: $(LIBNAME_GTKD) install-headers-gtkd
