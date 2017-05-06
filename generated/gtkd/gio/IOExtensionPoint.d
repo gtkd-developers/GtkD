@@ -43,8 +43,10 @@ public class IOExtensionPoint
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GIOExtensionPoint* getIOExtensionPointStruct()
+	public GIOExtensionPoint* getIOExtensionPointStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gIOExtensionPoint;
 	}
 

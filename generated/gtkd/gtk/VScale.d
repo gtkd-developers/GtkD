@@ -48,8 +48,10 @@ public class VScale : Scale
 	protected GtkVScale* gtkVScale;
 
 	/** Get the main Gtk struct */
-	public GtkVScale* getVScaleStruct()
+	public GtkVScale* getVScaleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkVScale;
 	}
 

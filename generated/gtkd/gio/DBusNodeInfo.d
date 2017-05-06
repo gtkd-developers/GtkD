@@ -33,6 +33,8 @@ private import glib.StringG;
 private import gobject.ObjectG;
 private import gtkc.gio;
 public  import gtkc.giotypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -47,8 +49,10 @@ public class DBusNodeInfo
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GDBusNodeInfo* getDBusNodeInfoStruct()
+	public GDBusNodeInfo* getDBusNodeInfoStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gDBusNodeInfo;
 	}
 
@@ -65,6 +69,12 @@ public class DBusNodeInfo
 	{
 		this.gDBusNodeInfo = gDBusNodeInfo;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GIO) && ownedRef )
+			unref();
 	}
 
 

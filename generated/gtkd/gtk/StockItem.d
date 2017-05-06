@@ -41,8 +41,10 @@ public class StockItem
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GtkStockItem* getStockItemStruct()
+	public GtkStockItem* getStockItemStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkStockItem;
 	}
 
@@ -64,13 +66,9 @@ public class StockItem
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
-		{
-			gtk_stock_item_free(gtkStockItem);
-		}
+			free();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Copies a stock item, mostly useful for language bindings and not in applications.

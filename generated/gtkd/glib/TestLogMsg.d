@@ -26,6 +26,8 @@ module glib.TestLogMsg;
 
 private import gtkc.glib;
 public  import gtkc.glibtypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /** */
@@ -36,8 +38,10 @@ public class TestLogMsg
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GTestLogMsg* getTestLogMsgStruct()
+	public GTestLogMsg* getTestLogMsgStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gTestLogMsg;
 	}
 
@@ -54,6 +58,12 @@ public class TestLogMsg
 	{
 		this.gTestLogMsg = gTestLogMsg;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
+			free();
 	}
 
 

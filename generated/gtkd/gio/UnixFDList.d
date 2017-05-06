@@ -50,8 +50,10 @@ public class UnixFDList : ObjectG
 	protected GUnixFDList* gUnixFDList;
 
 	/** Get the main Gtk struct */
-	public GUnixFDList* getUnixFDListStruct()
+	public GUnixFDList* getUnixFDListStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gUnixFDList;
 	}
 

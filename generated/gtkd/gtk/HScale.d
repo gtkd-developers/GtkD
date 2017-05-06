@@ -48,8 +48,10 @@ public class HScale : Scale
 	protected GtkHScale* gtkHScale;
 
 	/** Get the main Gtk struct */
-	public GtkHScale* getHScaleStruct()
+	public GtkHScale* getHScaleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkHScale;
 	}
 

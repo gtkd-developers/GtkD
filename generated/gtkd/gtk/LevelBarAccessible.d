@@ -38,8 +38,10 @@ public class LevelBarAccessible : WidgetAccessible, ValueIF
 	protected GtkLevelBarAccessible* gtkLevelBarAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkLevelBarAccessible* getLevelBarAccessibleStruct()
+	public GtkLevelBarAccessible* getLevelBarAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkLevelBarAccessible;
 	}
 

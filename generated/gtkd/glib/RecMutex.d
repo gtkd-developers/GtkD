@@ -51,8 +51,10 @@ public class RecMutex
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GRecMutex* getRecMutexStruct()
+	public GRecMutex* getRecMutexStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gRecMutex;
 	}
 

@@ -42,8 +42,10 @@ public  import gtk.Widget;
 public template SourceCompletionProviderT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GtkSourceCompletionProvider* getSourceCompletionProviderStruct()
+	public GtkSourceCompletionProvider* getSourceCompletionProviderStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GtkSourceCompletionProvider*)getStruct();
 	}
 

@@ -65,8 +65,10 @@ public class SearchBar : Bin
 	protected GtkSearchBar* gtkSearchBar;
 
 	/** Get the main Gtk struct */
-	public GtkSearchBar* getSearchBarStruct()
+	public GtkSearchBar* getSearchBarStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSearchBar;
 	}
 

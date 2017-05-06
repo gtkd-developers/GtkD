@@ -42,8 +42,10 @@ public class SourceCompletionItem : ObjectG, SourceCompletionProposalIF
 	protected GtkSourceCompletionItem* gtkSourceCompletionItem;
 
 	/** Get the main Gtk struct */
-	public GtkSourceCompletionItem* getSourceCompletionItemStruct()
+	public GtkSourceCompletionItem* getSourceCompletionItemStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSourceCompletionItem;
 	}
 

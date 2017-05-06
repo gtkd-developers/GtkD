@@ -66,8 +66,10 @@ public  import std.algorithm;
 public template TableT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public AtkTable* getTableStruct()
+	public AtkTable* getTableStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(AtkTable*)getStruct();
 	}
 

@@ -38,8 +38,10 @@ public  import std.algorithm;
 public template TreeSortableT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GtkTreeSortable* getTreeSortableStruct()
+	public GtkTreeSortable* getTreeSortableStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GtkTreeSortable*)getStruct();
 	}
 

@@ -41,8 +41,10 @@ public class PgAttributeShape : PgAttribute
 	protected PangoAttrShape* pangoAttrShape;
 
 	/** Get the main Gtk struct */
-	public PangoAttrShape* getPgAttributeShapeStruct()
+	public PangoAttrShape* getPgAttributeShapeStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return pangoAttrShape;
 	}
 

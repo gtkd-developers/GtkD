@@ -45,8 +45,10 @@ public class ListStore : ObjectG, ListModelIF
 	protected GListStore* gListStore;
 
 	/** Get the main Gtk struct */
-	public GListStore* getListStoreStruct()
+	public GListStore* getListStoreStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gListStore;
 	}
 

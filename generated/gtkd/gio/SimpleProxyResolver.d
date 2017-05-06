@@ -49,8 +49,10 @@ public class SimpleProxyResolver : ObjectG, ProxyResolverIF
 	protected GSimpleProxyResolver* gSimpleProxyResolver;
 
 	/** Get the main Gtk struct */
-	public GSimpleProxyResolver* getSimpleProxyResolverStruct()
+	public GSimpleProxyResolver* getSimpleProxyResolverStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gSimpleProxyResolver;
 	}
 

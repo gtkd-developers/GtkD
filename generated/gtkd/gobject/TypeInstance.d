@@ -38,8 +38,10 @@ public class TypeInstance
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GTypeInstance* getTypeInstanceStruct()
+	public GTypeInstance* getTypeInstanceStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gTypeInstance;
 	}
 

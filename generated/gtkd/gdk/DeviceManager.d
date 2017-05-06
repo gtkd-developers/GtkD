@@ -156,8 +156,10 @@ public class DeviceManager : ObjectG
 	protected GdkDeviceManager* gdkDeviceManager;
 
 	/** Get the main Gtk struct */
-	public GdkDeviceManager* getDeviceManagerStruct()
+	public GdkDeviceManager* getDeviceManagerStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gdkDeviceManager;
 	}
 

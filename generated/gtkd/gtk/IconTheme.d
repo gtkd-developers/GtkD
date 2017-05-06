@@ -118,8 +118,10 @@ public class IconTheme : ObjectG
 	protected GtkIconTheme* gtkIconTheme;
 
 	/** Get the main Gtk struct */
-	public GtkIconTheme* getIconThemeStruct()
+	public GtkIconTheme* getIconThemeStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkIconTheme;
 	}
 

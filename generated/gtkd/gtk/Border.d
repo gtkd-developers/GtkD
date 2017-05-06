@@ -43,8 +43,10 @@ public class Border
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GtkBorder* getBorderStruct()
+	public GtkBorder* getBorderStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkBorder;
 	}
 
@@ -65,14 +67,10 @@ public class Border
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY.GTK) && ownedRef )
-		{
-			gtk_border_free(gtkBorder);
-		}
+		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
+			free();
 	}
 
-	/**
-	 */
 
 	/** */
 	public static GType getType()

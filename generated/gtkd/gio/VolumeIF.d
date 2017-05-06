@@ -90,7 +90,7 @@ private import std.algorithm;
  */
 public interface VolumeIF{
 	/** Get the main Gtk struct */
-	public GVolume* getVolumeStruct();
+	public GVolume* getVolumeStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

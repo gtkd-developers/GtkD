@@ -53,8 +53,10 @@ public class UnixCredentialsMessage : SocketControlMessage
 	protected GUnixCredentialsMessage* gUnixCredentialsMessage;
 
 	/** Get the main Gtk struct */
-	public GUnixCredentialsMessage* getUnixCredentialsMessageStruct()
+	public GUnixCredentialsMessage* getUnixCredentialsMessageStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gUnixCredentialsMessage;
 	}
 

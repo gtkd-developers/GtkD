@@ -44,8 +44,10 @@ public class DBusMenuModel : MenuModel
 	protected GDBusMenuModel* gDBusMenuModel;
 
 	/** Get the main Gtk struct */
-	public GDBusMenuModel* getDBusMenuModelStruct()
+	public GDBusMenuModel* getDBusMenuModelStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gDBusMenuModel;
 	}
 

@@ -38,8 +38,10 @@ public class Proxy : ObjectG, ProxyIF
 	protected GProxy* gProxy;
 
 	/** Get the main Gtk struct */
-	public GProxy* getProxyStruct()
+	public GProxy* getProxyStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gProxy;
 	}
 

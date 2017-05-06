@@ -76,8 +76,10 @@ public class Tooltip : ObjectG
 	protected GtkTooltip* gtkTooltip;
 
 	/** Get the main Gtk struct */
-	public GtkTooltip* getTooltipStruct()
+	public GtkTooltip* getTooltipStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkTooltip;
 	}
 

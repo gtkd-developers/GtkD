@@ -42,8 +42,10 @@ public class StaticCaps
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GstStaticCaps* getStaticCapsStruct()
+	public GstStaticCaps* getStaticCapsStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstStaticCaps;
 	}
 

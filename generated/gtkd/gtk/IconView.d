@@ -77,8 +77,10 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	protected GtkIconView* gtkIconView;
 
 	/** Get the main Gtk struct */
-	public GtkIconView* getIconViewStruct()
+	public GtkIconView* getIconViewStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkIconView;
 	}
 

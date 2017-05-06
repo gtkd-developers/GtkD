@@ -47,8 +47,10 @@ public class CssSection
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GtkCssSection* getCssSectionStruct()
+	public GtkCssSection* getCssSectionStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkCssSection;
 	}
 
@@ -69,14 +71,10 @@ public class CssSection
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY.GTK) && ownedRef )
-		{
-			gtk_css_section_unref(gtkCssSection);
-		}
+		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
+			unref();
 	}
 
-	/**
-	 */
 
 	/** */
 	public static GType getType()

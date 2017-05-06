@@ -77,8 +77,10 @@ public class Memory
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GstMemory* getMemoryStruct()
+	public GstMemory* getMemoryStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstMemory;
 	}
 

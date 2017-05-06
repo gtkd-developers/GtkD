@@ -80,8 +80,10 @@ public class CellRenderer : ObjectG
 	protected GtkCellRenderer* gtkCellRenderer;
 
 	/** Get the main Gtk struct */
-	public GtkCellRenderer* getCellRendererStruct()
+	public GtkCellRenderer* getCellRendererStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkCellRenderer;
 	}
 

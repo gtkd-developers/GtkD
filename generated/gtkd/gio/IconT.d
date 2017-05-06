@@ -69,8 +69,10 @@ public  import gtkc.giotypes;
 public template IconT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GIcon* getIconStruct()
+	public GIcon* getIconStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GIcon*)getStruct();
 	}
 

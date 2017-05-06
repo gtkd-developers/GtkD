@@ -45,8 +45,10 @@ public class ObjectModule : TypeModule
 	protected PeasObjectModule* peasObjectModule;
 
 	/** Get the main Gtk struct */
-	public PeasObjectModule* getObjectModuleStruct()
+	public PeasObjectModule* getObjectModuleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return peasObjectModule;
 	}
 

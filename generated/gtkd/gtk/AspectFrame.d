@@ -52,8 +52,10 @@ public class AspectFrame : Frame
 	protected GtkAspectFrame* gtkAspectFrame;
 
 	/** Get the main Gtk struct */
-	public GtkAspectFrame* getAspectFrameStruct()
+	public GtkAspectFrame* getAspectFrameStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkAspectFrame;
 	}
 

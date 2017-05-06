@@ -55,8 +55,10 @@ public class FileInputStream : InputStream, SeekableIF
 	protected GFileInputStream* gFileInputStream;
 
 	/** Get the main Gtk struct */
-	public GFileInputStream* getFileInputStreamStruct()
+	public GFileInputStream* getFileInputStreamStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gFileInputStream;
 	}
 

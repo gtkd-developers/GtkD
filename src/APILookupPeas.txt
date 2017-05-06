@@ -21,8 +21,8 @@
 
 # must start with wrap
 wrap: peas
-file: /usr/share/gir-1.0/Peas-1.0.gir
-file: /usr/share/gir-1.0/PeasGtk-1.0.gir
+file: Peas-1.0.gir
+file: PeasGtk-1.0.gir
 
 addAliases: start
 	public import gtkc.gtktypes;

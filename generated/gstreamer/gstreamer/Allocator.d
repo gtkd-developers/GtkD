@@ -52,8 +52,10 @@ public class Allocator : ObjectGst
 	protected GstAllocator* gstAllocator;
 
 	/** Get the main Gtk struct */
-	public GstAllocator* getAllocatorStruct()
+	public GstAllocator* getAllocatorStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstAllocator;
 	}
 

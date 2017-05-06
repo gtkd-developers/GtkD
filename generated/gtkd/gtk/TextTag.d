@@ -58,8 +58,10 @@ public class TextTag : ObjectG
 	protected GtkTextTag* gtkTextTag;
 
 	/** Get the main Gtk struct */
-	public GtkTextTag* getTextTagStruct()
+	public GtkTextTag* getTextTagStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkTextTag;
 	}
 

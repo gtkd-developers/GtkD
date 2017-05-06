@@ -39,8 +39,10 @@ public  import gtkc.giotypes;
 public template FileDescriptorBasedT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GFileDescriptorBased* getFileDescriptorBasedStruct()
+	public GFileDescriptorBased* getFileDescriptorBasedStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GFileDescriptorBased*)getStruct();
 	}
 

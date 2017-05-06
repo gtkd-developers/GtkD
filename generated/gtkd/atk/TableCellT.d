@@ -41,8 +41,10 @@ public  import gtkc.atktypes;
 public template TableCellT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public AtkTableCell* getTableCellStruct()
+	public AtkTableCell* getTableCellStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(AtkTableCell*)getStruct();
 	}
 

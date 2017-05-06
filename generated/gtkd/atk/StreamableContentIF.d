@@ -50,7 +50,7 @@ public  import gtkc.atktypes;
  */
 public interface StreamableContentIF{
 	/** Get the main Gtk struct */
-	public AtkStreamableContent* getStreamableContentStruct();
+	public AtkStreamableContent* getStreamableContentStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

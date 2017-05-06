@@ -42,8 +42,10 @@ public class EntryAccessible : WidgetAccessible, ActionIF, EditableTextIF, TextI
 	protected GtkEntryAccessible* gtkEntryAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkEntryAccessible* getEntryAccessibleStruct()
+	public GtkEntryAccessible* getEntryAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkEntryAccessible;
 	}
 

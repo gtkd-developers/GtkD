@@ -42,8 +42,10 @@ public class ZlibDecompressor : ObjectG, ConverterIF
 	protected GZlibDecompressor* gZlibDecompressor;
 
 	/** Get the main Gtk struct */
-	public GZlibDecompressor* getZlibDecompressorStruct()
+	public GZlibDecompressor* getZlibDecompressorStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gZlibDecompressor;
 	}
 

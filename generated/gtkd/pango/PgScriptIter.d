@@ -29,6 +29,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gtkc.pango;
 public  import gtkc.pangotypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -42,8 +44,10 @@ public class PgScriptIter
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public PangoScriptIter* getPgScriptIterStruct()
+	public PangoScriptIter* getPgScriptIterStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return pangoScriptIter;
 	}
 
@@ -60,6 +64,12 @@ public class PgScriptIter
 	{
 		this.pangoScriptIter = pangoScriptIter;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.PANGO) && ownedRef )
+			free();
 	}
 
 

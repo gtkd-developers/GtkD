@@ -21,7 +21,7 @@
 
 # must start with wrap
 wrap: rsvg
-file: /usr/share/gir-1.0/Rsvg-2.0.gir
+file: Rsvg-2.0.gir
 
 addAliases: start
 	public import gtkc.cairotypes;

@@ -71,8 +71,10 @@ public  import std.algorithm;
 public template EditableT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GtkEditable* getEditableStruct()
+	public GtkEditable* getEditableStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GtkEditable*)getStruct();
 	}
 

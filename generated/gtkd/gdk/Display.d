@@ -67,8 +67,10 @@ public class Display : ObjectG
 	protected GdkDisplay* gdkDisplay;
 
 	/** Get the main Gtk struct */
-	public GdkDisplay* getDisplayStruct()
+	public GdkDisplay* getDisplayStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gdkDisplay;
 	}
 

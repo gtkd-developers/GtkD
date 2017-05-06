@@ -41,8 +41,10 @@ public class Module
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GModule* getModuleStruct()
+	public GModule* getModuleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gModule;
 	}
 

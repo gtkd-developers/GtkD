@@ -64,8 +64,10 @@ public class SettingsBackend : ObjectG
 	protected GSettingsBackend* gSettingsBackend;
 
 	/** Get the main Gtk struct */
-	public GSettingsBackend* getSettingsBackendStruct()
+	public GSettingsBackend* getSettingsBackendStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gSettingsBackend;
 	}
 

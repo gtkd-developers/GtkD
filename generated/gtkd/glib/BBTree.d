@@ -27,6 +27,8 @@ module glib.BBTree;
 private import glib.ConstructionException;
 private import gtkc.glib;
 public  import gtkc.glibtypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -41,8 +43,10 @@ public class BBTree
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GTree* getBBTreeStruct()
+	public GTree* getBBTreeStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gTree;
 	}
 
@@ -59,6 +63,12 @@ public class BBTree
 	{
 		this.gTree = gTree;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
+			unref();
 	}
 
 

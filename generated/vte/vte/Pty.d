@@ -44,8 +44,10 @@ public class Pty : ObjectG, InitableIF
 	protected VtePty* vtePty;
 
 	/** Get the main Gtk struct */
-	public VtePty* getPtyStruct()
+	public VtePty* getPtyStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return vtePty;
 	}
 

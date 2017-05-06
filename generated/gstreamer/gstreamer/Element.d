@@ -108,8 +108,10 @@ public class Element : ObjectGst
 	protected GstElement* gstElement;
 
 	/** Get the main Gtk struct */
-	public GstElement* getElementStruct()
+	public GstElement* getElementStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstElement;
 	}
 
@@ -1016,7 +1018,7 @@ public class Element : ObjectGst
 	 */
 	public void messageFullWithDetails(GstMessageType type, GQuark domain, int code, string text, string dbg, string file, string funct, int line, Structure structure)
 	{
-		gst_element_message_full_with_details(gstElement, type, domain, code, Str.toStringz(text), Str.toStringz(dbg), Str.toStringz(file), Str.toStringz(funct), line, (structure is null) ? null : structure.getStructureStruct());
+		gst_element_message_full_with_details(gstElement, type, domain, code, Str.toStringz(text), Str.toStringz(dbg), Str.toStringz(file), Str.toStringz(funct), line, (structure is null) ? null : structure.getStructureStruct(true));
 	}
 
 	/**

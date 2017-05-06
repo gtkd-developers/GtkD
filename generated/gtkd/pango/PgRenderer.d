@@ -50,8 +50,10 @@ public class PgRenderer : ObjectG
 	protected PangoRenderer* pangoRenderer;
 
 	/** Get the main Gtk struct */
-	public PangoRenderer* getPgRendererStruct()
+	public PangoRenderer* getPgRendererStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return pangoRenderer;
 	}
 

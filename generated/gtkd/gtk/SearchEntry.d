@@ -67,8 +67,10 @@ public class SearchEntry : Entry
 	protected GtkSearchEntry* gtkSearchEntry;
 
 	/** Get the main Gtk struct */
-	public GtkSearchEntry* getSearchEntryStruct()
+	public GtkSearchEntry* getSearchEntryStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSearchEntry;
 	}
 

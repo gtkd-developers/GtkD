@@ -134,8 +134,10 @@ public class SettingsSchema
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GSettingsSchema* getSettingsSchemaStruct()
+	public GSettingsSchema* getSettingsSchemaStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gSettingsSchema;
 	}
 
@@ -154,16 +156,12 @@ public class SettingsSchema
 		this.ownedRef = ownedRef;
 	}
 
-	~this()
+	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY.GIO) && ownedRef )
-		{
-			g_settings_schema_unref(gSettingsSchema);
-		}
+		if (  Linker.isLoaded(LIBRARY.GIO) && ownedRef )
+			unref();
 	}
 
-	/**
-	 */
 
 	/** */
 	public static GType getType()

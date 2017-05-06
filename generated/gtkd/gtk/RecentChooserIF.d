@@ -48,7 +48,7 @@ private import std.algorithm;
  */
 public interface RecentChooserIF{
 	/** Get the main Gtk struct */
-	public GtkRecentChooser* getRecentChooserStruct();
+	public GtkRecentChooser* getRecentChooserStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

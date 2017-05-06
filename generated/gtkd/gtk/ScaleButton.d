@@ -55,8 +55,10 @@ public class ScaleButton : Button, OrientableIF
 	protected GtkScaleButton* gtkScaleButton;
 
 	/** Get the main Gtk struct */
-	public GtkScaleButton* getScaleButtonStruct()
+	public GtkScaleButton* getScaleButtonStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkScaleButton;
 	}
 

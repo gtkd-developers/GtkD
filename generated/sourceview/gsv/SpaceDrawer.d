@@ -40,8 +40,10 @@ public class SpaceDrawer : ObjectG
 	protected GtkSourceSpaceDrawer* gtkSourceSpaceDrawer;
 
 	/** Get the main Gtk struct */
-	public GtkSourceSpaceDrawer* getSpaceDrawerStruct()
+	public GtkSourceSpaceDrawer* getSpaceDrawerStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSourceSpaceDrawer;
 	}
 

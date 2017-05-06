@@ -139,8 +139,10 @@ public class ModelButton : Button
 	protected GtkModelButton* gtkModelButton;
 
 	/** Get the main Gtk struct */
-	public GtkModelButton* getModelButtonStruct()
+	public GtkModelButton* getModelButtonStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkModelButton;
 	}
 

@@ -57,8 +57,10 @@ public class MountOperation : ObjectG
 	protected GMountOperation* gMountOperation;
 
 	/** Get the main Gtk struct */
-	public GMountOperation* getMountOperationStruct()
+	public GMountOperation* getMountOperationStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gMountOperation;
 	}
 

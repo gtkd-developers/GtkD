@@ -45,8 +45,10 @@ public class VSeparator : Separator
 	protected GtkVSeparator* gtkVSeparator;
 
 	/** Get the main Gtk struct */
-	public GtkVSeparator* getVSeparatorStruct()
+	public GtkVSeparator* getVSeparatorStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkVSeparator;
 	}
 

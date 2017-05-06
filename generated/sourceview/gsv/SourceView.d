@@ -53,8 +53,10 @@ public class SourceView : TextView
 	protected GtkSourceView* gtkSourceView;
 
 	/** Get the main Gtk struct */
-	public GtkSourceView* getSourceViewStruct()
+	public GtkSourceView* getSourceViewStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSourceView;
 	}
 

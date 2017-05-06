@@ -38,7 +38,7 @@ private import std.algorithm;
 /** */
 public interface SourceCompletionProposalIF{
 	/** Get the main Gtk struct */
-	public GtkSourceCompletionProposal* getSourceCompletionProposalStruct();
+	public GtkSourceCompletionProposal* getSourceCompletionProposalStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

@@ -52,8 +52,10 @@ public class Value
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GValue* getValueStruct()
+	public GValue* getValueStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gValue;
 	}
 
@@ -968,7 +970,7 @@ public class Value
 	 */
 	public void takeVariant(Variant variant)
 	{
-		g_value_take_variant(gValue, (variant is null) ? null : variant.getVariantStruct());
+		g_value_take_variant(gValue, (variant is null) ? null : variant.getVariantStruct(true));
 	}
 
 	/**
@@ -1685,7 +1687,7 @@ public class Value
 	 */
 	public static ParamSpec paramSpecVariant(string name, string nick, string blurb, VariantType type, Variant defaultValue, GParamFlags flags)
 	{
-		auto p = g_param_spec_variant(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), (type is null) ? null : type.getVariantTypeStruct(), (defaultValue is null) ? null : defaultValue.getVariantStruct(), flags);
+		auto p = g_param_spec_variant(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), (type is null) ? null : type.getVariantTypeStruct(), (defaultValue is null) ? null : defaultValue.getVariantStruct(true), flags);
 		
 		if(p is null)
 		{

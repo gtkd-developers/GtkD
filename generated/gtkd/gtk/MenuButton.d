@@ -126,8 +126,10 @@ public class MenuButton : ToggleButton
 	protected GtkMenuButton* gtkMenuButton;
 
 	/** Get the main Gtk struct */
-	public GtkMenuButton* getMenuButtonStruct()
+	public GtkMenuButton* getMenuButtonStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkMenuButton;
 	}
 

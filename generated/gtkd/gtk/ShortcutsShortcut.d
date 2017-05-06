@@ -39,8 +39,10 @@ public class ShortcutsShortcut : Box
 	protected GtkShortcutsShortcut* gtkShortcutsShortcut;
 
 	/** Get the main Gtk struct */
-	public GtkShortcutsShortcut* getShortcutsShortcutStruct()
+	public GtkShortcutsShortcut* getShortcutsShortcutStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkShortcutsShortcut;
 	}
 

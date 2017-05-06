@@ -38,8 +38,10 @@ public class ScaleButtonAccessible : ButtonAccessible, ValueIF
 	protected GtkScaleButtonAccessible* gtkScaleButtonAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkScaleButtonAccessible* getScaleButtonAccessibleStruct()
+	public GtkScaleButtonAccessible* getScaleButtonAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkScaleButtonAccessible;
 	}
 

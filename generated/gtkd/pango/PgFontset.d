@@ -45,8 +45,10 @@ public class PgFontset : ObjectG
 	protected PangoFontset* pangoFontset;
 
 	/** Get the main Gtk struct */
-	public PangoFontset* getPgFontsetStruct()
+	public PangoFontset* getPgFontsetStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return pangoFontset;
 	}
 

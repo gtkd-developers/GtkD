@@ -40,7 +40,7 @@ public  import gtkc.gtktypes;
  */
 public interface OrientableIF{
 	/** Get the main Gtk struct */
-	public GtkOrientable* getOrientableStruct();
+	public GtkOrientable* getOrientableStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

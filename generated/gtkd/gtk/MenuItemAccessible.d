@@ -40,8 +40,10 @@ public class MenuItemAccessible : ContainerAccessible, ActionIF, SelectionIF
 	protected GtkMenuItemAccessible* gtkMenuItemAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkMenuItemAccessible* getMenuItemAccessibleStruct()
+	public GtkMenuItemAccessible* getMenuItemAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkMenuItemAccessible;
 	}
 

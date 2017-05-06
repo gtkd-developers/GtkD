@@ -43,8 +43,10 @@ public class Plug : ObjectAtk, ComponentIF
 	protected AtkPlug* atkPlug;
 
 	/** Get the main Gtk struct */
-	public AtkPlug* getPlugStruct()
+	public AtkPlug* getPlugStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return atkPlug;
 	}
 

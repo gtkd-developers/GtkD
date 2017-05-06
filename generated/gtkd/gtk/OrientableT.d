@@ -41,8 +41,10 @@ public  import gtkc.gtktypes;
 public template OrientableT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GtkOrientable* getOrientableStruct()
+	public GtkOrientable* getOrientableStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GtkOrientable*)getStruct();
 	}
 

@@ -124,8 +124,10 @@ public class Notebook : Container
 	protected GtkNotebook* gtkNotebook;
 
 	/** Get the main Gtk struct */
-	public GtkNotebook* getNotebookStruct()
+	public GtkNotebook* getNotebookStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkNotebook;
 	}
 

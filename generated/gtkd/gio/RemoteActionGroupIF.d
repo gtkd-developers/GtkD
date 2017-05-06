@@ -55,7 +55,7 @@ public  import gtkc.giotypes;
  */
 public interface RemoteActionGroupIF{
 	/** Get the main Gtk struct */
-	public GRemoteActionGroup* getRemoteActionGroupStruct();
+	public GRemoteActionGroup* getRemoteActionGroupStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

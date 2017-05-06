@@ -42,8 +42,10 @@ public class NoOpObjectFactory : ObjectFactory
 	protected AtkNoOpObjectFactory* atkNoOpObjectFactory;
 
 	/** Get the main Gtk struct */
-	public AtkNoOpObjectFactory* getNoOpObjectFactoryStruct()
+	public AtkNoOpObjectFactory* getNoOpObjectFactoryStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return atkNoOpObjectFactory;
 	}
 

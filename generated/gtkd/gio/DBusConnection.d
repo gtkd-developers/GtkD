@@ -111,8 +111,10 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	protected GDBusConnection* gDBusConnection;
 
 	/** Get the main Gtk struct */
-	public GDBusConnection* getDBusConnectionStruct()
+	public GDBusConnection* getDBusConnectionStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gDBusConnection;
 	}
 

@@ -37,8 +37,10 @@ public class SourceStyle : ObjectG
 	protected GtkSourceStyle* gtkSourceStyle;
 
 	/** Get the main Gtk struct */
-	public GtkSourceStyle* getSourceStyleStruct()
+	public GtkSourceStyle* getSourceStyleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSourceStyle;
 	}
 

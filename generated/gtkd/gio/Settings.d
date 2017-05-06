@@ -328,8 +328,10 @@ public class Settings : ObjectG
 	protected GSettings* gSettings;
 
 	/** Get the main Gtk struct */
-	public GSettings* getSettingsStruct()
+	public GSettings* getSettingsStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gSettings;
 	}
 

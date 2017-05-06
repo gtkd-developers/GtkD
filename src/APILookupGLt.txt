@@ -21,7 +21,7 @@
 
 # must start with wrap
 wrap: glgtk
-file: /usr/share/gir-1.0/GtkGLExt-3.0.gir
+file: GtkGLExt-3.0.gir
 
 addAliases: start
 	public import gtkc.glibtypes;

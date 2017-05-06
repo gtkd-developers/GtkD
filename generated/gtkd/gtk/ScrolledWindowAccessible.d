@@ -36,8 +36,10 @@ public class ScrolledWindowAccessible : ContainerAccessible
 	protected GtkScrolledWindowAccessible* gtkScrolledWindowAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkScrolledWindowAccessible* getScrolledWindowAccessibleStruct()
+	public GtkScrolledWindowAccessible* getScrolledWindowAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkScrolledWindowAccessible;
 	}
 

@@ -31,6 +31,8 @@ private import glib.GException;
 private import glib.Str;
 private import gtkc.glib;
 public  import gtkc.glibtypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -45,8 +47,10 @@ public class MappedFile
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GMappedFile* getMappedFileStruct()
+	public GMappedFile* getMappedFileStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gMappedFile;
 	}
 
@@ -63,6 +67,12 @@ public class MappedFile
 	{
 		this.gMappedFile = gMappedFile;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
+			unref();
 	}
 
 

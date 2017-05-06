@@ -41,8 +41,10 @@ public class ContainerClass
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GtkContainerClass* getContainerClassStruct()
+	public GtkContainerClass* getContainerClassStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkContainerClass;
 	}
 

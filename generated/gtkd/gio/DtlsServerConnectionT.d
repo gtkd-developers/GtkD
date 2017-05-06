@@ -43,8 +43,10 @@ public  import gtkc.giotypes;
 public template DtlsServerConnectionT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GDtlsServerConnection* getDtlsServerConnectionStruct()
+	public GDtlsServerConnection* getDtlsServerConnectionStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GDtlsServerConnection*)getStruct();
 	}
 

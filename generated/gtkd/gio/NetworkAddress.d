@@ -49,8 +49,10 @@ public class NetworkAddress : ObjectG, SocketConnectableIF
 	protected GNetworkAddress* gNetworkAddress;
 
 	/** Get the main Gtk struct */
-	public GNetworkAddress* getNetworkAddressStruct()
+	public GNetworkAddress* getNetworkAddressStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gNetworkAddress;
 	}
 

@@ -66,7 +66,7 @@ public  import gtkc.giotypes;
  */
 public interface ActionIF{
 	/** Get the main Gtk struct */
-	public GAction* getActionStruct();
+	public GAction* getActionStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

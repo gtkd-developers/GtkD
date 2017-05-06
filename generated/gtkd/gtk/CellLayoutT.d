@@ -141,8 +141,10 @@ public  import gtkc.gtktypes;
 public template CellLayoutT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GtkCellLayout* getCellLayoutStruct()
+	public GtkCellLayout* getCellLayoutStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GtkCellLayout*)getStruct();
 	}
 

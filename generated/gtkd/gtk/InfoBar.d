@@ -115,8 +115,10 @@ public class InfoBar : Box
 	protected GtkInfoBar* gtkInfoBar;
 
 	/** Get the main Gtk struct */
-	public GtkInfoBar* getInfoBarStruct()
+	public GtkInfoBar* getInfoBarStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkInfoBar;
 	}
 

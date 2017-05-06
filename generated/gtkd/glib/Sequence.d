@@ -28,6 +28,8 @@ private import glib.ConstructionException;
 private import glib.SequenceIter;
 private import gtkc.glib;
 public  import gtkc.glibtypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -41,8 +43,10 @@ public class Sequence
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GSequence* getSequenceStruct()
+	public GSequence* getSequenceStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gSequence;
 	}
 
@@ -59,6 +63,12 @@ public class Sequence
 	{
 		this.gSequence = gSequence;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
+			free();
 	}
 
 

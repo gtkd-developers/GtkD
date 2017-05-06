@@ -29,6 +29,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gtkc.pango;
 public  import gtkc.pangotypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 private import pango.PgAttributeList;
 
 
@@ -46,8 +48,10 @@ public class PgGlyphItem
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public PangoGlyphItem* getPgGlyphItemStruct()
+	public PangoGlyphItem* getPgGlyphItemStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return pangoGlyphItem;
 	}
 
@@ -64,6 +68,12 @@ public class PgGlyphItem
 	{
 		this.pangoGlyphItem = pangoGlyphItem;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.PANGO) && ownedRef )
+			free();
 	}
 
 

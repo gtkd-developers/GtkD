@@ -98,8 +98,10 @@ public class RWLock
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GRWLock* getRWLockStruct()
+	public GRWLock* getRWLockStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gRWLock;
 	}
 

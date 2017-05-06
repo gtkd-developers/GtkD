@@ -63,8 +63,10 @@ public  import gtkc.atktypes;
 public template HyperlinkImplT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public AtkHyperlinkImpl* getHyperlinkImplStruct()
+	public AtkHyperlinkImpl* getHyperlinkImplStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(AtkHyperlinkImpl*)getStruct();
 	}
 

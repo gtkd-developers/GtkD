@@ -148,8 +148,10 @@ public class SpinButton : Entry, OrientableIF
 	protected GtkSpinButton* gtkSpinButton;
 
 	/** Get the main Gtk struct */
-	public GtkSpinButton* getSpinButtonStruct()
+	public GtkSpinButton* getSpinButtonStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSpinButton;
 	}
 

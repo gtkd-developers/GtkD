@@ -42,8 +42,10 @@ public class TypeFind
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GstTypeFind* getTypeFindStruct()
+	public GstTypeFind* getTypeFindStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstTypeFind;
 	}
 

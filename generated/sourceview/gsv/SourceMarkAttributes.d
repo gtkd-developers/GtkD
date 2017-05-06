@@ -46,8 +46,10 @@ public class SourceMarkAttributes : ObjectG
 	protected GtkSourceMarkAttributes* gtkSourceMarkAttributes;
 
 	/** Get the main Gtk struct */
-	public GtkSourceMarkAttributes* getSourceMarkAttributesStruct()
+	public GtkSourceMarkAttributes* getSourceMarkAttributesStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSourceMarkAttributes;
 	}
 

@@ -54,8 +54,10 @@ public class Resolver : ObjectG
 	protected GResolver* gResolver;
 
 	/** Get the main Gtk struct */
-	public GResolver* getResolverStruct()
+	public GResolver* getResolverStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gResolver;
 	}
 

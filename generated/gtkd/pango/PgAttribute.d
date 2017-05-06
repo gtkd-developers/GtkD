@@ -49,8 +49,10 @@ public class PgAttribute
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public PangoAttribute* getPgAttributeStruct()
+	public PangoAttribute* getPgAttributeStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return pangoAttribute;
 	}
 

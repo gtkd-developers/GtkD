@@ -54,8 +54,10 @@ public class Stream : ObjectGst
 	protected GstStream* gstStream;
 
 	/** Get the main Gtk struct */
-	public GstStream* getStreamStruct()
+	public GstStream* getStreamStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstStream;
 	}
 

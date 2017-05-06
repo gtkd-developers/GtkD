@@ -56,8 +56,10 @@ public class NativeDialog : ObjectG
 	protected GtkNativeDialog* gtkNativeDialog;
 
 	/** Get the main Gtk struct */
-	public GtkNativeDialog* getNativeDialogStruct()
+	public GtkNativeDialog* getNativeDialogStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkNativeDialog;
 	}
 

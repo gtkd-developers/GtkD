@@ -42,8 +42,10 @@ public class Once
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GOnce* getOnceStruct()
+	public GOnce* getOnceStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gOnce;
 	}
 

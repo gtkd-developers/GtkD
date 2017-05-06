@@ -71,8 +71,10 @@ public class FileEnumerator : ObjectG
 	protected GFileEnumerator* gFileEnumerator;
 
 	/** Get the main Gtk struct */
-	public GFileEnumerator* getFileEnumeratorStruct()
+	public GFileEnumerator* getFileEnumeratorStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gFileEnumerator;
 	}
 

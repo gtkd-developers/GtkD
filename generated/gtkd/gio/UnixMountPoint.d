@@ -30,6 +30,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gtkc.gio;
 public  import gtkc.giotypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -43,8 +45,10 @@ public class UnixMountPoint
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GUnixMountPoint* getUnixMountPointStruct()
+	public GUnixMountPoint* getUnixMountPointStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gUnixMountPoint;
 	}
 
@@ -61,6 +65,12 @@ public class UnixMountPoint
 	{
 		this.gUnixMountPoint = gUnixMountPoint;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GIO) && ownedRef )
+			free();
 	}
 
 

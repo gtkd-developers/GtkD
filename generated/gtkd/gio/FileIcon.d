@@ -46,8 +46,10 @@ public class FileIcon : ObjectG, IconIF, LoadableIconIF
 	protected GFileIcon* gFileIcon;
 
 	/** Get the main Gtk struct */
-	public GFileIcon* getFileIconStruct()
+	public GFileIcon* getFileIconStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gFileIcon;
 	}
 

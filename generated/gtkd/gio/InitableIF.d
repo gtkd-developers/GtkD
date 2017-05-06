@@ -64,7 +64,7 @@ public  import gtkc.giotypes;
  */
 public interface InitableIF{
 	/** Get the main Gtk struct */
-	public GInitable* getInitableStruct();
+	public GInitable* getInitableStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

@@ -42,8 +42,10 @@ public class FontSelection : Box
 	protected GtkFontSelection* gtkFontSelection;
 
 	/** Get the main Gtk struct */
-	public GtkFontSelection* getFontSelectionStruct()
+	public GtkFontSelection* getFontSelectionStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkFontSelection;
 	}
 

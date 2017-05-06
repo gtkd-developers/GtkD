@@ -66,8 +66,10 @@ public class Style : ObjectG
 	protected GtkStyle* gtkStyle;
 
 	/** Get the main Gtk struct */
-	public GtkStyle* getStyleStruct()
+	public GtkStyle* getStyleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkStyle;
 	}
 

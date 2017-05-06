@@ -51,8 +51,10 @@ public  import gtkc.atktypes;
 public template StreamableContentT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public AtkStreamableContent* getStreamableContentStruct()
+	public AtkStreamableContent* getStreamableContentStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(AtkStreamableContent*)getStruct();
 	}
 

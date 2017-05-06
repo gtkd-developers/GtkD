@@ -40,7 +40,7 @@ public  import gtkc.atktypes;
  */
 public interface TableCellIF{
 	/** Get the main Gtk struct */
-	public AtkTableCell* getTableCellStruct();
+	public AtkTableCell* getTableCellStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

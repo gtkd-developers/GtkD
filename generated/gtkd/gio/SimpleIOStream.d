@@ -51,8 +51,10 @@ public class SimpleIOStream : IOStream
 	protected GSimpleIOStream* gSimpleIOStream;
 
 	/** Get the main Gtk struct */
-	public GSimpleIOStream* getSimpleIOStreamStruct()
+	public GSimpleIOStream* getSimpleIOStreamStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gSimpleIOStream;
 	}
 

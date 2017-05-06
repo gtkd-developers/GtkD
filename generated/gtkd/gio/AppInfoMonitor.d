@@ -58,8 +58,10 @@ public class AppInfoMonitor : ObjectG
 	protected GAppInfoMonitor* gAppInfoMonitor;
 
 	/** Get the main Gtk struct */
-	public GAppInfoMonitor* getAppInfoMonitorStruct()
+	public GAppInfoMonitor* getAppInfoMonitorStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gAppInfoMonitor;
 	}
 

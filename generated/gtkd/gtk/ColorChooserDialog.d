@@ -46,8 +46,10 @@ public class ColorChooserDialog : Dialog, ColorChooserIF
 	protected GtkColorChooserDialog* gtkColorChooserDialog;
 
 	/** Get the main Gtk struct */
-	public GtkColorChooserDialog* getColorChooserDialogStruct()
+	public GtkColorChooserDialog* getColorChooserDialogStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkColorChooserDialog;
 	}
 

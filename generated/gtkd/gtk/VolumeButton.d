@@ -43,8 +43,10 @@ public class VolumeButton : ScaleButton
 	protected GtkVolumeButton* gtkVolumeButton;
 
 	/** Get the main Gtk struct */
-	public GtkVolumeButton* getVolumeButtonStruct()
+	public GtkVolumeButton* getVolumeButtonStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkVolumeButton;
 	}
 

@@ -42,7 +42,7 @@ public  import gtkc.giotypes;
  */
 public interface TlsFileDatabaseIF{
 	/** Get the main Gtk struct */
-	public GTlsFileDatabase* getTlsFileDatabaseStruct();
+	public GTlsFileDatabase* getTlsFileDatabaseStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

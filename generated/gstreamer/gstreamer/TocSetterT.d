@@ -49,8 +49,10 @@ public  import gstreamerc.gstreamertypes;
 public template TocSetterT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GstTocSetter* getTocSetterStruct()
+	public GstTocSetter* getTocSetterStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GstTocSetter*)getStruct();
 	}
 

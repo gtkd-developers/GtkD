@@ -96,8 +96,10 @@ public class ActionGroup : ObjectG, BuildableIF
 	protected GtkActionGroup* gtkActionGroup;
 
 	/** Get the main Gtk struct */
-	public GtkActionGroup* getActionGroupStruct()
+	public GtkActionGroup* getActionGroupStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkActionGroup;
 	}
 

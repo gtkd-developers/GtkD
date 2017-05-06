@@ -52,8 +52,10 @@ public class SubprocessLauncher : ObjectG
 	protected GSubprocessLauncher* gSubprocessLauncher;
 
 	/** Get the main Gtk struct */
-	public GSubprocessLauncher* getSubprocessLauncherStruct()
+	public GSubprocessLauncher* getSubprocessLauncherStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gSubprocessLauncher;
 	}
 

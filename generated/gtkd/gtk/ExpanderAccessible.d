@@ -38,8 +38,10 @@ public class ExpanderAccessible : ContainerAccessible, ActionIF
 	protected GtkExpanderAccessible* gtkExpanderAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkExpanderAccessible* getExpanderAccessibleStruct()
+	public GtkExpanderAccessible* getExpanderAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkExpanderAccessible;
 	}
 

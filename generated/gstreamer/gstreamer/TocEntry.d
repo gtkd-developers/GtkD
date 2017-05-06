@@ -42,8 +42,10 @@ public class TocEntry
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GstTocEntry* getTocEntryStruct()
+	public GstTocEntry* getTocEntryStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstTocEntry;
 	}
 

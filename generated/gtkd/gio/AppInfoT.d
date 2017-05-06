@@ -94,8 +94,10 @@ public  import gtkc.giotypes;
 public template AppInfoT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GAppInfo* getAppInfoStruct()
+	public GAppInfo* getAppInfoStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GAppInfo*)getStruct();
 	}
 

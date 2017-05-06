@@ -60,8 +60,10 @@ public class FileOutputStream : OutputStream, SeekableIF
 	protected GFileOutputStream* gFileOutputStream;
 
 	/** Get the main Gtk struct */
-	public GFileOutputStream* getFileOutputStreamStruct()
+	public GFileOutputStream* getFileOutputStreamStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gFileOutputStream;
 	}
 

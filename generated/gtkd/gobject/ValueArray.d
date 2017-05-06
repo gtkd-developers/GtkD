@@ -29,6 +29,8 @@ private import gobject.ObjectG;
 private import gobject.Value;
 private import gtkc.gobject;
 public  import gtkc.gobjecttypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -41,8 +43,10 @@ public class ValueArray
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GValueArray* getValueArrayStruct()
+	public GValueArray* getValueArrayStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gValueArray;
 	}
 
@@ -59,6 +63,12 @@ public class ValueArray
 	{
 		this.gValueArray = gValueArray;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GOBJECT) && ownedRef )
+			free();
 	}
 
 

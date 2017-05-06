@@ -40,8 +40,10 @@ public class RendererCellAccessible : CellAccessible
 	protected GtkRendererCellAccessible* gtkRendererCellAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkRendererCellAccessible* getRendererCellAccessibleStruct()
+	public GtkRendererCellAccessible* getRendererCellAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkRendererCellAccessible;
 	}
 

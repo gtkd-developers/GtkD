@@ -40,8 +40,6 @@ private import gtk.Style;
 private import gtk.StyleContext;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
-private import gtkd.Loader;
-private import gtkd.paths;
 
 
 /**
@@ -54,8 +52,10 @@ public class IconInfo : ObjectG
 	protected GtkIconInfo* gtkIconInfo;
 
 	/** Get the main Gtk struct */
-	public GtkIconInfo* getIconInfoStruct()
+	public GtkIconInfo* getIconInfoStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkIconInfo;
 	}
 
@@ -80,16 +80,6 @@ public class IconInfo : ObjectG
 		super(cast(GObject*)gtkIconInfo, ownedRef);
 	}
 
-	~this ()
-	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
-		{
-			gtk_icon_info_free(gtkIconInfo);
-		}
-	}
-
-	/**
-	 */
 
 	/** */
 	public static GType getType()

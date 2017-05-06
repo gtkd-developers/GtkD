@@ -55,8 +55,10 @@ public class PgFontMap : ObjectG
 	protected PangoFontMap* pangoFontMap;
 
 	/** Get the main Gtk struct */
-	public PangoFontMap* getPgFontMapStruct()
+	public PangoFontMap* getPgFontMapStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return pangoFontMap;
 	}
 

@@ -38,8 +38,10 @@ public class AppInfo : ObjectG, AppInfoIF
 	protected GAppInfo* gAppInfo;
 
 	/** Get the main Gtk struct */
-	public GAppInfo* getAppInfoStruct()
+	public GAppInfo* getAppInfoStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gAppInfo;
 	}
 

@@ -47,8 +47,10 @@ public class DataInputStream : BufferedInputStream
 	protected GDataInputStream* gDataInputStream;
 
 	/** Get the main Gtk struct */
-	public GDataInputStream* getDataInputStreamStruct()
+	public GDataInputStream* getDataInputStreamStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gDataInputStream;
 	}
 

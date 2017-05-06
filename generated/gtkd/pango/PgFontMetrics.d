@@ -28,6 +28,8 @@ private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gtkc.pango;
 public  import gtkc.pangotypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -44,8 +46,10 @@ public class PgFontMetrics
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public PangoFontMetrics* getPgFontMetricsStruct()
+	public PangoFontMetrics* getPgFontMetricsStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return pangoFontMetrics;
 	}
 
@@ -62,6 +66,12 @@ public class PgFontMetrics
 	{
 		this.pangoFontMetrics = pangoFontMetrics;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.PANGO) && ownedRef )
+			unref();
 	}
 
 

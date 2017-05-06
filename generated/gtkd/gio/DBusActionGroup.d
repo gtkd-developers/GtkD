@@ -47,8 +47,10 @@ public class DBusActionGroup : ObjectG, ActionGroupIF, RemoteActionGroupIF
 	protected GDBusActionGroup* gDBusActionGroup;
 
 	/** Get the main Gtk struct */
-	public GDBusActionGroup* getDBusActionGroupStruct()
+	public GDBusActionGroup* getDBusActionGroupStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gDBusActionGroup;
 	}
 

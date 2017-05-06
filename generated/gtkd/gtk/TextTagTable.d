@@ -63,8 +63,10 @@ public class TextTagTable : ObjectG, BuildableIF
 	protected GtkTextTagTable* gtkTextTagTable;
 
 	/** Get the main Gtk struct */
-	public GtkTextTagTable* getTextTagTableStruct()
+	public GtkTextTagTable* getTextTagTableStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkTextTagTable;
 	}
 

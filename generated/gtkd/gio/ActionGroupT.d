@@ -83,8 +83,10 @@ public  import std.algorithm;
 public template ActionGroupT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GActionGroup* getActionGroupStruct()
+	public GActionGroup* getActionGroupStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GActionGroup*)getStruct();
 	}
 

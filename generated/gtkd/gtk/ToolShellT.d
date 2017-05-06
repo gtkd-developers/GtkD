@@ -37,8 +37,10 @@ public  import gtkc.gtktypes;
 public template ToolShellT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GtkToolShell* getToolShellStruct()
+	public GtkToolShell* getToolShellStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GtkToolShell*)getStruct();
 	}
 

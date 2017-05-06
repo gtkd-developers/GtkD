@@ -59,8 +59,10 @@ public class AccelGroup : ObjectG
 	protected GtkAccelGroup* gtkAccelGroup;
 
 	/** Get the main Gtk struct */
-	public GtkAccelGroup* getAccelGroupStruct()
+	public GtkAccelGroup* getAccelGroupStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkAccelGroup;
 	}
 

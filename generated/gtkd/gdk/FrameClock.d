@@ -73,8 +73,10 @@ public class FrameClock : ObjectG
 	protected GdkFrameClock* gdkFrameClock;
 
 	/** Get the main Gtk struct */
-	public GdkFrameClock* getFrameClockStruct()
+	public GdkFrameClock* getFrameClockStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gdkFrameClock;
 	}
 

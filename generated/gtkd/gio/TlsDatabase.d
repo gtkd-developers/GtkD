@@ -55,8 +55,10 @@ public class TlsDatabase : ObjectG
 	protected GTlsDatabase* gTlsDatabase;
 
 	/** Get the main Gtk struct */
-	public GTlsDatabase* getTlsDatabaseStruct()
+	public GTlsDatabase* getTlsDatabaseStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gTlsDatabase;
 	}
 

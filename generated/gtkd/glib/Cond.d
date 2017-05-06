@@ -103,8 +103,10 @@ public class Cond
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GCond* getCondStruct()
+	public GCond* getCondStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gCond;
 	}
 

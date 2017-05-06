@@ -81,8 +81,10 @@ public class Mutex
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GMutex* getMutexStruct()
+	public GMutex* getMutexStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gMutex;
 	}
 

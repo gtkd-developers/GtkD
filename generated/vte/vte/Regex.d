@@ -29,6 +29,8 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
+private import gtkd.Loader;
+private import gtkd.paths;
 private import vtec.vte;
 public  import vtec.vtetypes;
 
@@ -41,8 +43,10 @@ public class Regex
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public VteRegex* getRegexStruct()
+	public VteRegex* getRegexStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return vteRegex;
 	}
 
@@ -59,6 +63,12 @@ public class Regex
 	{
 		this.vteRegex = vteRegex;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.VTE) && ownedRef )
+			unref();
 	}
 
 	/** */

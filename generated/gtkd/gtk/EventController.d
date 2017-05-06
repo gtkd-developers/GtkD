@@ -42,8 +42,10 @@ public class EventController : ObjectG
 	protected GtkEventController* gtkEventController;
 
 	/** Get the main Gtk struct */
-	public GtkEventController* getEventControllerStruct()
+	public GtkEventController* getEventControllerStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkEventController;
 	}
 

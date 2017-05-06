@@ -38,8 +38,10 @@ public class ValueArray
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GstValueArray* getValueArrayStruct()
+	public GstValueArray* getValueArrayStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstValueArray;
 	}
 

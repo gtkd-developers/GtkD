@@ -36,8 +36,10 @@ public class FlowBoxChildAccessible : ContainerAccessible
 	protected GtkFlowBoxChildAccessible* gtkFlowBoxChildAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkFlowBoxChildAccessible* getFlowBoxChildAccessibleStruct()
+	public GtkFlowBoxChildAccessible* getFlowBoxChildAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkFlowBoxChildAccessible;
 	}
 

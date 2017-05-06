@@ -140,7 +140,7 @@ public  import gtkc.gtktypes;
  */
 public interface CellLayoutIF{
 	/** Get the main Gtk struct */
-	public GtkCellLayout* getCellLayoutStruct();
+	public GtkCellLayout* getCellLayoutStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

@@ -39,8 +39,10 @@ public class TracerRecord : ObjectGst
 	protected GstTracerRecord* gstTracerRecord;
 
 	/** Get the main Gtk struct */
-	public GstTracerRecord* getTracerRecordStruct()
+	public GstTracerRecord* getTracerRecordStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstTracerRecord;
 	}
 

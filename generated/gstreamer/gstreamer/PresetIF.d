@@ -56,7 +56,7 @@ public  import gstreamerc.gstreamertypes;
  */
 public interface PresetIF{
 	/** Get the main Gtk struct */
-	public GstPreset* getPresetStruct();
+	public GstPreset* getPresetStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

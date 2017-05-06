@@ -48,8 +48,10 @@ public class BufferList
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GstBufferList* getBufferListStruct()
+	public GstBufferList* getBufferListStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstBufferList;
 	}
 

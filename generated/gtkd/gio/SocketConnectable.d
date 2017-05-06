@@ -38,8 +38,10 @@ public class SocketConnectable : ObjectG, SocketConnectableIF
 	protected GSocketConnectable* gSocketConnectable;
 
 	/** Get the main Gtk struct */
-	public GSocketConnectable* getSocketConnectableStruct()
+	public GSocketConnectable* getSocketConnectableStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gSocketConnectable;
 	}
 

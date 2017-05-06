@@ -141,8 +141,10 @@ public class TreeModelSort : ObjectG, TreeDragSourceIF, TreeModelIF, TreeSortabl
 	protected GtkTreeModelSort* gtkTreeModelSort;
 
 	/** Get the main Gtk struct */
-	public GtkTreeModelSort* getTreeModelSortStruct()
+	public GtkTreeModelSort* getTreeModelSortStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkTreeModelSort;
 	}
 

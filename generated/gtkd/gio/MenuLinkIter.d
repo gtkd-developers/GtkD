@@ -43,8 +43,10 @@ public class MenuLinkIter : ObjectG
 	protected GMenuLinkIter* gMenuLinkIter;
 
 	/** Get the main Gtk struct */
-	public GMenuLinkIter* getMenuLinkIterStruct()
+	public GMenuLinkIter* getMenuLinkIterStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gMenuLinkIter;
 	}
 

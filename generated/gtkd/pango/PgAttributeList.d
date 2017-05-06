@@ -28,6 +28,8 @@ private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gtkc.pango;
 public  import gtkc.pangotypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 private import pango.PgAttribute;
 private import pango.PgAttributeIterator;
 
@@ -51,8 +53,10 @@ public class PgAttributeList
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public PangoAttrList* getPgAttributeListStruct()
+	public PangoAttrList* getPgAttributeListStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return pangoAttrList;
 	}
 
@@ -69,6 +73,12 @@ public class PgAttributeList
 	{
 		this.pangoAttrList = pangoAttrList;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.PANGO) && ownedRef )
+			unref();
 	}
 
 

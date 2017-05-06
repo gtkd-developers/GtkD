@@ -45,8 +45,10 @@ public  import std.algorithm;
 public template HypertextT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public AtkHypertext* getHypertextStruct()
+	public AtkHypertext* getHypertextStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(AtkHypertext*)getStruct();
 	}
 

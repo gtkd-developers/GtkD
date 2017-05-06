@@ -42,7 +42,7 @@ public  import gtkc.giotypes;
  */
 public interface DtlsServerConnectionIF{
 	/** Get the main Gtk struct */
-	public GDtlsServerConnection* getDtlsServerConnectionStruct();
+	public GDtlsServerConnection* getDtlsServerConnectionStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

@@ -39,8 +39,10 @@ public class Tag : TextTag
 	protected GtkSourceTag* gtkSourceTag;
 
 	/** Get the main Gtk struct */
-	public GtkSourceTag* getTagStruct()
+	public GtkSourceTag* getTagStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSourceTag;
 	}
 

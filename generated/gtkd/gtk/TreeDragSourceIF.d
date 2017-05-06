@@ -36,7 +36,7 @@ public  import gtkc.gtktypes;
 /** */
 public interface TreeDragSourceIF{
 	/** Get the main Gtk struct */
-	public GtkTreeDragSource* getTreeDragSourceStruct();
+	public GtkTreeDragSource* getTreeDragSourceStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

@@ -77,8 +77,10 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	protected GtkTreeStore* gtkTreeStore;
 
 	/** Get the main Gtk struct */
-	public GtkTreeStore* getTreeStoreStruct()
+	public GtkTreeStore* getTreeStoreStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkTreeStore;
 	}
 

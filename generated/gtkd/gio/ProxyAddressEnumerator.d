@@ -40,8 +40,10 @@ public class ProxyAddressEnumerator : SocketAddressEnumerator
 	protected GProxyAddressEnumerator* gProxyAddressEnumerator;
 
 	/** Get the main Gtk struct */
-	public GProxyAddressEnumerator* getProxyAddressEnumeratorStruct()
+	public GProxyAddressEnumerator* getProxyAddressEnumeratorStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gProxyAddressEnumerator;
 	}
 

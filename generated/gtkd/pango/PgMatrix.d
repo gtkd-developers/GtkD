@@ -27,6 +27,8 @@ module pango.PgMatrix;
 private import gobject.ObjectG;
 private import gtkc.pango;
 public  import gtkc.pangotypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -48,8 +50,10 @@ public class PgMatrix
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public PangoMatrix* getPgMatrixStruct()
+	public PangoMatrix* getPgMatrixStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return pangoMatrix;
 	}
 
@@ -66,6 +70,12 @@ public class PgMatrix
 	{
 		this.pangoMatrix = pangoMatrix;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.PANGO) && ownedRef )
+			free();
 	}
 
 

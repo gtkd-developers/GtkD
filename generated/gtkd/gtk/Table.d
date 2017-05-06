@@ -63,8 +63,10 @@ public class Table : Container
 	protected GtkTable* gtkTable;
 
 	/** Get the main Gtk struct */
-	public GtkTable* getTableStruct()
+	public GtkTable* getTableStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkTable;
 	}
 

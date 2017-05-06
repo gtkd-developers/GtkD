@@ -73,8 +73,10 @@ public class Credentials : ObjectG
 	protected GCredentials* gCredentials;
 
 	/** Get the main Gtk struct */
-	public GCredentials* getCredentialsStruct()
+	public GCredentials* getCredentialsStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gCredentials;
 	}
 

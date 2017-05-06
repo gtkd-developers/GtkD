@@ -64,8 +64,10 @@ public class Notification : ObjectG
 	protected GNotification* gNotification;
 
 	/** Get the main Gtk struct */
-	public GNotification* getNotificationStruct()
+	public GNotification* getNotificationStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gNotification;
 	}
 

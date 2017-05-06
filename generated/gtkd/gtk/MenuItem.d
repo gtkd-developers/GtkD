@@ -93,8 +93,10 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 	protected GtkMenuItem* gtkMenuItem;
 
 	/** Get the main Gtk struct */
-	public GtkMenuItem* getMenuItemStruct()
+	public GtkMenuItem* getMenuItemStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkMenuItem;
 	}
 

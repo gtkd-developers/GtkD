@@ -22,7 +22,7 @@
 
 # must start with wrap
 wrap: gtk
-file: /usr/share/gir-1.0/Gtk-3.0.gir
+file: Gtk-3.0.gir
 
 addAliases: start
 	public import gtkc.cairotypes;
@@ -313,19 +313,6 @@ code: start
 			accel = [cast(char*)null].ptr;
 		
 		gtk_application_set_accels_for_action(gtkApplication, Str.toStringz(detailedActionName), accel);
-	}
-code: end
-
-struct: Border
-import: gtkd.Loader
-import: gtkd.paths
-code: start
-	~this ()
-	{
-		if ( Linker.isLoaded(LIBRARY.GTK) && ownedRef )
-		{
-			gtk_border_free(gtkBorder);
-		}
 	}
 code: end
 
@@ -1420,19 +1407,6 @@ code: start
 	}
 code: end
 
-struct: CssSection
-import: gtkd.Loader
-import: gtkd.paths
-code: start
-	~this ()
-	{
-		if ( Linker.isLoaded(LIBRARY.GTK) && ownedRef )
-		{
-			gtk_css_section_unref(gtkCssSection);
-		}
-	}
-code: end
-
 struct: Dialog
 import: gtk.Button
 import: gtk.HButtonBox
@@ -1726,19 +1700,6 @@ code: start
 	}
 code: end
 
-struct: Gradient
-import: gtkd.Loader
-import: gtkd.paths
-code: start
-	~this ()
-	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
-		{
-			gtk_gradient_unref(gtkGradient);
-		}
-	}
-code: end
-
 struct: HButtonBox
 code: start
 	/**
@@ -1767,45 +1728,6 @@ code: start
 		this();
 		add1(child1);
 		add2(child2);
-	}
-code: end
-
-struct: IconInfo
-import: gtkd.Loader
-import: gtkd.paths
-code: start
-	~this ()
-	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
-		{
-			gtk_icon_info_free(gtkIconInfo);
-		}
-	}
-code: end
-
-struct: IconSet
-import: gtkd.Loader
-import: gtkd.paths
-code: start
-	~this ()
-	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
-		{
-			gtk_icon_set_unref(gtkIconSet);
-		}
-	}
-code: end
-
-struct: IconSource
-import: gtkd.Loader
-import: gtkd.paths
-code: start
-	~this ()
-	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
-		{
-			gtk_icon_source_free(gtkIconSource);
-		}
 	}
 code: end
 
@@ -3002,32 +2924,6 @@ code: start
 	}
 code: end
 
-struct: RecentInfo
-import: gtkd.Loader
-import: gtkd.paths
-code: start
-	~this ()
-	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
-		{
-			gtk_recent_info_unref(gtkRecentInfo);
-		}
-	}
-code: end
-
-struct: Requisition
-import: gtkd.Loader
-import: gtkd.paths
-code: start
-	~this ()
-	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
-		{
-			gtk_requisition_free(gtkRequisition);
-		}
-	}
-code: end
-
 struct: ScrolledWindow
 code: start
 	/** */
@@ -3155,19 +3051,6 @@ code: start
 	}
 code: end
 
-struct: StockItem
-import: gtkd.Loader
-import: gtkd.paths
-code: start
-	~this ()
-	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
-		{
-			gtk_stock_item_free(gtkStockItem);
-		}
-	}
-code: end
-
 struct: Style
 code: start
 	//TODO:
@@ -3181,19 +3064,9 @@ alias: getProperty getStyleProperty
 alias: getValist getStyleValist
 
 struct: SymbolicColor
-import: gtkd.Loader
-import: gtkd.paths
 noCode: new_shade
 noCode: new_alpha
 code: start
-	~this ()
-	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
-		{
-			gtk_symbolic_color_unref(gtkSymbolicColor);
-		}
-	}
-
 	/**
 	 * Creates a symbolic color defined as a shade of another color.
 	 * A factor > 1.0 would resolve to a brighter or more transparent color,
@@ -3302,32 +3175,6 @@ code: start
 	}
 code: end
 
-struct: TargetEntry
-import: gtkd.Loader
-import: gtkd.paths
-code: start
-	~this ()
-	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
-		{
-			gtk_target_entry_free(gtkTargetEntry);
-		}
-	}
-code: end
-
-struct: TargetList
-import: gtkd.Loader
-import: gtkd.paths
-code: start
-	~this ()
-	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
-		{
-			gtk_target_list_unref(gtkTargetList);
-		}
-	}
-code: end
-
 struct: Testing
 code: start
 	/**
@@ -3350,21 +3197,6 @@ code: start
 
 		argv = Str.toStringArray(outargv);
 	}
-code: end
-
-struct: TextAttributes
-import: gtkd.Loader
-import: gtkd.paths
-code: start
-	~this ()
-	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
-		{
-			gtk_text_attributes_unref(gtkTextAttributes);
-		}
-	}
-
-	//TODO: properties ?
 code: end
 
 struct: TextBuffer
@@ -5444,19 +5276,6 @@ code: start
 	extern(C) static void callBackDrawDestroy(OnDrawDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
-	}
-code: end
-
-struct: WidgetPath
-import: gtkd.Loader
-import: gtkd.paths
-code: start
-	~this ()
-	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
-		{
-			gtk_widget_path_free(gtkWidgetPath);
-		}
 	}
 code: end
 

@@ -49,8 +49,10 @@ public class Hyperlink : ObjectG, ActionIF
 	protected AtkHyperlink* atkHyperlink;
 
 	/** Get the main Gtk struct */
-	public AtkHyperlink* getHyperlinkStruct()
+	public AtkHyperlink* getHyperlinkStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return atkHyperlink;
 	}
 

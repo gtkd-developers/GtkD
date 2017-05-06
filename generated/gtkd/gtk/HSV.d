@@ -49,8 +49,10 @@ public class HSV : Widget
 	protected GtkHSV* gtkHSV;
 
 	/** Get the main Gtk struct */
-	public GtkHSV* getHSVStruct()
+	public GtkHSV* getHSVStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkHSV;
 	}
 

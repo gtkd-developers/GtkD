@@ -81,8 +81,10 @@ public class AboutDialog : Dialog
 	protected GtkAboutDialog* gtkAboutDialog;
 
 	/** Get the main Gtk struct */
-	public GtkAboutDialog* getAboutDialogStruct()
+	public GtkAboutDialog* getAboutDialogStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkAboutDialog;
 	}
 

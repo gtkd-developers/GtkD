@@ -170,8 +170,10 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	protected GApplication* gApplication;
 
 	/** Get the main Gtk struct */
-	public GApplication* getApplicationStruct()
+	public GApplication* getApplicationStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gApplication;
 	}
 
@@ -506,7 +508,7 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 */
 	public void addOptionGroup(OptionGroup group)
 	{
-		g_application_add_option_group(gApplication, (group is null) ? null : group.getOptionGroupStruct());
+		g_application_add_option_group(gApplication, (group is null) ? null : group.getOptionGroupStruct(true));
 	}
 
 	/**

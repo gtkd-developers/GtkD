@@ -71,8 +71,10 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	protected GtkButton* gtkButton;
 
 	/** Get the main Gtk struct */
-	public GtkButton* getButtonStruct()
+	public GtkButton* getButtonStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkButton;
 	}
 

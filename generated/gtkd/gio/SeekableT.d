@@ -50,8 +50,10 @@ public  import gtkc.giotypes;
 public template SeekableT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GSeekable* getSeekableStruct()
+	public GSeekable* getSeekableStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GSeekable*)getStruct();
 	}
 

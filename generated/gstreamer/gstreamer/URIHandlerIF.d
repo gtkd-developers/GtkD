@@ -43,7 +43,7 @@ public  import gstreamerc.gstreamertypes;
  */
 public interface URIHandlerIF{
 	/** Get the main Gtk struct */
-	public GstURIHandler* getURIHandlerStruct();
+	public GstURIHandler* getURIHandlerStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

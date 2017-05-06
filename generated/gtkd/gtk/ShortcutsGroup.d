@@ -43,8 +43,10 @@ public class ShortcutsGroup : Box
 	protected GtkShortcutsGroup* gtkShortcutsGroup;
 
 	/** Get the main Gtk struct */
-	public GtkShortcutsGroup* getShortcutsGroupStruct()
+	public GtkShortcutsGroup* getShortcutsGroupStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkShortcutsGroup;
 	}
 

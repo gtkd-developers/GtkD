@@ -56,8 +56,10 @@ public class SocketListener : ObjectG
 	protected GSocketListener* gSocketListener;
 
 	/** Get the main Gtk struct */
-	public GSocketListener* getSocketListenerStruct()
+	public GSocketListener* getSocketListenerStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gSocketListener;
 	}
 

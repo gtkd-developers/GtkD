@@ -40,7 +40,7 @@ public  import gtkc.gtktypes;
  */
 public interface StyleProviderIF{
 	/** Get the main Gtk struct */
-	public GtkStyleProvider* getStyleProviderStruct();
+	public GtkStyleProvider* getStyleProviderStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

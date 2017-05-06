@@ -37,8 +37,10 @@ public class ToplevelAccessible : ObjectAtk
 	protected GtkToplevelAccessible* gtkToplevelAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkToplevelAccessible* getToplevelAccessibleStruct()
+	public GtkToplevelAccessible* getToplevelAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkToplevelAccessible;
 	}
 

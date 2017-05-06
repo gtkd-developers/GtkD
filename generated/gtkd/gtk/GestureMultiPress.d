@@ -53,8 +53,10 @@ public class GestureMultiPress : GestureSingle
 	protected GtkGestureMultiPress* gtkGestureMultiPress;
 
 	/** Get the main Gtk struct */
-	public GtkGestureMultiPress* getGestureMultiPressStruct()
+	public GtkGestureMultiPress* getGestureMultiPressStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkGestureMultiPress;
 	}
 

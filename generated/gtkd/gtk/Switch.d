@@ -61,8 +61,10 @@ public class Switch : Widget, ActionableIF, ActivatableIF
 	protected GtkSwitch* gtkSwitch;
 
 	/** Get the main Gtk struct */
-	public GtkSwitch* getSwitchStruct()
+	public GtkSwitch* getSwitchStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSwitch;
 	}
 

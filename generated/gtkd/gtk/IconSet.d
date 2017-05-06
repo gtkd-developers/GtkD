@@ -48,8 +48,10 @@ public class IconSet
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GtkIconSet* getIconSetStruct()
+	public GtkIconSet* getIconSetStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkIconSet;
 	}
 
@@ -71,13 +73,9 @@ public class IconSet
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
-		{
-			gtk_icon_set_unref(gtkIconSet);
-		}
+			unref();
 	}
 
-	/**
-	 */
 
 	/** */
 	public static GType getType()

@@ -135,8 +135,10 @@ public  import gtkc.giotypes;
 public template FileT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GFile* getFileStruct()
+	public GFile* getFileStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GFile*)getStruct();
 	}
 

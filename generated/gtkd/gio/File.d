@@ -38,8 +38,10 @@ public class File : ObjectG, FileIF
 	protected GFile* gFile;
 
 	/** Get the main Gtk struct */
-	public GFile* getFileStruct()
+	public GFile* getFileStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gFile;
 	}
 

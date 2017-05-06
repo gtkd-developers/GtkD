@@ -46,7 +46,7 @@ public  import gtkc.gtktypes;
  */
 public interface ActionableIF{
 	/** Get the main Gtk struct */
-	public GtkActionable* getActionableStruct();
+	public GtkActionable* getActionableStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

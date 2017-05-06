@@ -33,7 +33,7 @@ public  import gtkc.gtktypes;
 /** */
 public interface TreeDragDestIF{
 	/** Get the main Gtk struct */
-	public GtkTreeDragDest* getTreeDragDestStruct();
+	public GtkTreeDragDest* getTreeDragDestStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

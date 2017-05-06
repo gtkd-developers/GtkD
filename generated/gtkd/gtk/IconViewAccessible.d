@@ -38,8 +38,10 @@ public class IconViewAccessible : ContainerAccessible, SelectionIF
 	protected GtkIconViewAccessible* gtkIconViewAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkIconViewAccessible* getIconViewAccessibleStruct()
+	public GtkIconViewAccessible* getIconViewAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkIconViewAccessible;
 	}
 

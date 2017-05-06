@@ -64,8 +64,10 @@ public  import std.algorithm;
 public template DtlsConnectionT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GDtlsConnection* getDtlsConnectionStruct()
+	public GDtlsConnection* getDtlsConnectionStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GDtlsConnection*)getStruct();
 	}
 

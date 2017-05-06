@@ -63,8 +63,10 @@ public class LinkButton : Button
 	protected GtkLinkButton* gtkLinkButton;
 
 	/** Get the main Gtk struct */
-	public GtkLinkButton* getLinkButtonStruct()
+	public GtkLinkButton* getLinkButtonStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkLinkButton;
 	}
 

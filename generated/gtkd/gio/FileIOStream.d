@@ -66,8 +66,10 @@ public class FileIOStream : IOStream, SeekableIF
 	protected GFileIOStream* gFileIOStream;
 
 	/** Get the main Gtk struct */
-	public GFileIOStream* getFileIOStreamStruct()
+	public GFileIOStream* getFileIOStreamStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gFileIOStream;
 	}
 

@@ -59,8 +59,10 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	protected GdkPixbuf* gdkPixbuf;
 
 	/** Get the main Gtk struct */
-	public GdkPixbuf* getPixbufStruct()
+	public GdkPixbuf* getPixbufStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gdkPixbuf;
 	}
 
@@ -1237,6 +1239,8 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 * the "multipage" option string to "yes" when a multi-page TIFF is loaded.
 	 * Since 2.32 the JPEG and PNG loaders set "x-dpi" and "y-dpi" if the file
 	 * contains image density information in dots per inch.
+	 * Since 2.36.6, the JPEG loader sets the "comment" option with the comment
+	 * EXIF tag.
 	 *
 	 * Params:
 	 *     key = a nul-terminated string.

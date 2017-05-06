@@ -83,8 +83,10 @@ public  import std.algorithm;
 public template ListModelT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GListModel* getListModelStruct()
+	public GListModel* getListModelStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GListModel*)getStruct();
 	}
 

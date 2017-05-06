@@ -42,8 +42,10 @@ public class TreeViewAccessible : ContainerAccessible, SelectionIF, TableIF, Cel
 	protected GtkTreeViewAccessible* gtkTreeViewAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkTreeViewAccessible* getTreeViewAccessibleStruct()
+	public GtkTreeViewAccessible* getTreeViewAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkTreeViewAccessible;
 	}
 

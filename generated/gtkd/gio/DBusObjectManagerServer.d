@@ -67,8 +67,10 @@ public class DBusObjectManagerServer : ObjectG, DBusObjectManagerIF
 	protected GDBusObjectManagerServer* gDBusObjectManagerServer;
 
 	/** Get the main Gtk struct */
-	public GDBusObjectManagerServer* getDBusObjectManagerServerStruct()
+	public GDBusObjectManagerServer* getDBusObjectManagerServerStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gDBusObjectManagerServer;
 	}
 

@@ -56,8 +56,10 @@ public class PrintSettings : ObjectG
 	protected GtkPrintSettings* gtkPrintSettings;
 
 	/** Get the main Gtk struct */
-	public GtkPrintSettings* getPrintSettingsStruct()
+	public GtkPrintSettings* getPrintSettingsStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkPrintSettings;
 	}
 

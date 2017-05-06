@@ -51,8 +51,10 @@ public class PluginManagerView : TreeView
 	protected PeasGtkPluginManagerView* peasGtkPluginManagerView;
 
 	/** Get the main Gtk struct */
-	public PeasGtkPluginManagerView* getPluginManagerViewStruct()
+	public PeasGtkPluginManagerView* getPluginManagerViewStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return peasGtkPluginManagerView;
 	}
 

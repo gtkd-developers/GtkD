@@ -65,8 +65,10 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	protected GtkToolbar* gtkToolbar;
 
 	/** Get the main Gtk struct */
-	public GtkToolbar* getToolbarStruct()
+	public GtkToolbar* getToolbarStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkToolbar;
 	}
 

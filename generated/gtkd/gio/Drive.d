@@ -38,8 +38,10 @@ public class Drive : ObjectG, DriveIF
 	protected GDrive* gDrive;
 
 	/** Get the main Gtk struct */
-	public GDrive* getDriveStruct()
+	public GDrive* getDriveStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gDrive;
 	}
 

@@ -57,8 +57,10 @@ public class SocketControlMessage : ObjectG
 	protected GSocketControlMessage* gSocketControlMessage;
 
 	/** Get the main Gtk struct */
-	public GSocketControlMessage* getSocketControlMessageStruct()
+	public GSocketControlMessage* getSocketControlMessageStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gSocketControlMessage;
 	}
 

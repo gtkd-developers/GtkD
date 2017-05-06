@@ -69,8 +69,10 @@ public class CheckButton : ToggleButton
 	protected GtkCheckButton* gtkCheckButton;
 
 	/** Get the main Gtk struct */
-	public GtkCheckButton* getCheckButtonStruct()
+	public GtkCheckButton* getCheckButtonStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkCheckButton;
 	}
 

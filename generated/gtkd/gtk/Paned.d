@@ -109,8 +109,10 @@ public class Paned : Container, OrientableIF
 	protected GtkPaned* gtkPaned;
 
 	/** Get the main Gtk struct */
-	public GtkPaned* getPanedStruct()
+	public GtkPaned* getPanedStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkPaned;
 	}
 

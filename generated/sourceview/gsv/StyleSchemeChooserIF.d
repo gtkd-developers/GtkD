@@ -33,7 +33,7 @@ public  import gsvc.gsvtypes;
 /** */
 public interface StyleSchemeChooserIF{
 	/** Get the main Gtk struct */
-	public GtkSourceStyleSchemeChooser* getStyleSchemeChooserStruct();
+	public GtkSourceStyleSchemeChooser* getStyleSchemeChooserStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

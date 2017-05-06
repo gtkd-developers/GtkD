@@ -38,8 +38,10 @@ public  import std.algorithm;
 public template CellEditableT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GtkCellEditable* getCellEditableStruct()
+	public GtkCellEditable* getCellEditableStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GtkCellEditable*)getStruct();
 	}
 

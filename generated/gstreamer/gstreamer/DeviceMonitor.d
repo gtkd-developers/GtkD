@@ -106,8 +106,10 @@ public class DeviceMonitor : ObjectGst
 	protected GstDeviceMonitor* gstDeviceMonitor;
 
 	/** Get the main Gtk struct */
-	public GstDeviceMonitor* getDeviceMonitorStruct()
+	public GstDeviceMonitor* getDeviceMonitorStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstDeviceMonitor;
 	}
 

@@ -91,8 +91,10 @@ public class Event
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GstEvent* getEventStruct()
+	public GstEvent* getEventStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstEvent;
 	}
 
@@ -263,7 +265,7 @@ public class Event
 	 */
 	public this(GstEventType type, Structure structure)
 	{
-		auto p = gst_event_new_custom(type, (structure is null) ? null : structure.getStructureStruct());
+		auto p = gst_event_new_custom(type, (structure is null) ? null : structure.getStructureStruct(true));
 		
 		if(p is null)
 		{
@@ -371,7 +373,7 @@ public class Event
 	 */
 	public this(Structure structure)
 	{
-		auto p = gst_event_new_navigation((structure is null) ? null : structure.getStructureStruct());
+		auto p = gst_event_new_navigation((structure is null) ? null : structure.getStructureStruct(true));
 		
 		if(p is null)
 		{

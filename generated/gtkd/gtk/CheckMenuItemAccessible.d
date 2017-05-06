@@ -36,8 +36,10 @@ public class CheckMenuItemAccessible : MenuItemAccessible
 	protected GtkCheckMenuItemAccessible* gtkCheckMenuItemAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkCheckMenuItemAccessible* getCheckMenuItemAccessibleStruct()
+	public GtkCheckMenuItemAccessible* getCheckMenuItemAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkCheckMenuItemAccessible;
 	}
 

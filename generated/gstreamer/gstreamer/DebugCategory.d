@@ -27,6 +27,8 @@ module gstreamer.DebugCategory;
 private import glib.Str;
 private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -40,8 +42,10 @@ public class DebugCategory
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GstDebugCategory* getDebugCategoryStruct()
+	public GstDebugCategory* getDebugCategoryStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstDebugCategory;
 	}
 
@@ -58,6 +62,12 @@ public class DebugCategory
 	{
 		this.gstDebugCategory = gstDebugCategory;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GSTREAMER) && ownedRef )
+			free();
 	}
 
 

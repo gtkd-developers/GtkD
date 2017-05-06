@@ -70,7 +70,7 @@ private import std.algorithm;
  */
 public interface EditableIF{
 	/** Get the main Gtk struct */
-	public GtkEditable* getEditableStruct();
+	public GtkEditable* getEditableStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

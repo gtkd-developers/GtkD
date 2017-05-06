@@ -36,8 +36,10 @@ public class DeviceTool : ObjectG
 	protected GdkDeviceTool* gdkDeviceTool;
 
 	/** Get the main Gtk struct */
-	public GdkDeviceTool* getDeviceToolStruct()
+	public GdkDeviceTool* getDeviceToolStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gdkDeviceTool;
 	}
 

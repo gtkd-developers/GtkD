@@ -42,8 +42,10 @@ public class ButtonBox : Box
 	protected GtkButtonBox* gtkButtonBox;
 
 	/** Get the main Gtk struct */
-	public GtkButtonBox* getButtonBoxStruct()
+	public GtkButtonBox* getButtonBoxStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkButtonBox;
 	}
 

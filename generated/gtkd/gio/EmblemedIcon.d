@@ -49,8 +49,10 @@ public class EmblemedIcon : ObjectG, IconIF
 	protected GEmblemedIcon* gEmblemedIcon;
 
 	/** Get the main Gtk struct */
-	public GEmblemedIcon* getEmblemedIconStruct()
+	public GEmblemedIcon* getEmblemedIconStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gEmblemedIcon;
 	}
 

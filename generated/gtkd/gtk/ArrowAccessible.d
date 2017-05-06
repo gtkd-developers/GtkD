@@ -38,8 +38,10 @@ public class ArrowAccessible : WidgetAccessible, ImageIF
 	protected GtkArrowAccessible* gtkArrowAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkArrowAccessible* getArrowAccessibleStruct()
+	public GtkArrowAccessible* getArrowAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkArrowAccessible;
 	}
 

@@ -52,8 +52,10 @@ public class Misc : Widget
 	protected GtkMisc* gtkMisc;
 
 	/** Get the main Gtk struct */
-	public GtkMisc* getMiscStruct()
+	public GtkMisc* getMiscStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkMisc;
 	}
 

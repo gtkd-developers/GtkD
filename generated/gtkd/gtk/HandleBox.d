@@ -67,8 +67,10 @@ public class HandleBox : Bin
 	protected GtkHandleBox* gtkHandleBox;
 
 	/** Get the main Gtk struct */
-	public GtkHandleBox* getHandleBoxStruct()
+	public GtkHandleBox* getHandleBoxStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkHandleBox;
 	}
 

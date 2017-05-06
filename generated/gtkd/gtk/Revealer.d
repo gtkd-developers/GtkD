@@ -54,8 +54,10 @@ public class Revealer : Bin
 	protected GtkRevealer* gtkRevealer;
 
 	/** Get the main Gtk struct */
-	public GtkRevealer* getRevealerStruct()
+	public GtkRevealer* getRevealerStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkRevealer;
 	}
 

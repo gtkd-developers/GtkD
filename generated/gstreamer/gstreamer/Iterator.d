@@ -31,6 +31,8 @@ private import gobject.ObjectG;
 private import gobject.Value;
 private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -80,8 +82,10 @@ public class Iterator
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GstIterator* getIteratorStruct()
+	public GstIterator* getIteratorStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstIterator;
 	}
 
@@ -98,6 +102,12 @@ public class Iterator
 	{
 		this.gstIterator = gstIterator;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GSTREAMER) && ownedRef )
+			free();
 	}
 
 

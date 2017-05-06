@@ -46,8 +46,10 @@ public class Cancellable : ObjectG
 	protected GCancellable* gCancellable;
 
 	/** Get the main Gtk struct */
-	public GCancellable* getCancellableStruct()
+	public GCancellable* getCancellableStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gCancellable;
 	}
 

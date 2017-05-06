@@ -29,6 +29,8 @@ private import gobject.ObjectG;
 private import gobject.Value;
 private import gtkc.gobject;
 public  import gtkc.gobjecttypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -50,8 +52,10 @@ public class ParamSpec
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GParamSpec* getParamSpecStruct()
+	public GParamSpec* getParamSpecStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gParamSpec;
 	}
 
@@ -68,6 +72,12 @@ public class ParamSpec
 	{
 		this.gParamSpec = gParamSpec;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GOBJECT) && ownedRef )
+			unref();
 	}
 
 

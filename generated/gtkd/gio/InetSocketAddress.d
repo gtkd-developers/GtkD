@@ -43,8 +43,10 @@ public class InetSocketAddress : SocketAddress
 	protected GInetSocketAddress* gInetSocketAddress;
 
 	/** Get the main Gtk struct */
-	public GInetSocketAddress* getInetSocketAddressStruct()
+	public GInetSocketAddress* getInetSocketAddressStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gInetSocketAddress;
 	}
 

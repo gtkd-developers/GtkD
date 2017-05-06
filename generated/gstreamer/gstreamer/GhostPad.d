@@ -56,8 +56,10 @@ public class GhostPad : ProxyPad
 	protected GstGhostPad* gstGhostPad;
 
 	/** Get the main Gtk struct */
-	public GstGhostPad* getGhostPadStruct()
+	public GstGhostPad* getGhostPadStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstGhostPad;
 	}
 

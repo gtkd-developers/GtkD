@@ -57,8 +57,10 @@ public class HBox : Box
 	protected GtkHBox* gtkHBox;
 
 	/** Get the main Gtk struct */
-	public GtkHBox* getHBoxStruct()
+	public GtkHBox* getHBoxStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkHBox;
 	}
 

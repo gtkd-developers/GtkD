@@ -30,6 +30,8 @@ private import gobject.ObjectG;
 private import gobject.Value;
 private import gtkc.gobject;
 public  import gtkc.gobjecttypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -82,8 +84,10 @@ public class Closure
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GClosure* getClosureStruct()
+	public GClosure* getClosureStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gClosure;
 	}
 
@@ -100,6 +104,12 @@ public class Closure
 	{
 		this.gClosure = gClosure;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GOBJECT) && ownedRef )
+			unref();
 	}
 
 

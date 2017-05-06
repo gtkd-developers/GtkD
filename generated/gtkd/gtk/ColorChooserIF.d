@@ -42,7 +42,7 @@ private import std.algorithm;
  */
 public interface ColorChooserIF{
 	/** Get the main Gtk struct */
-	public GtkColorChooser* getColorChooserStruct();
+	public GtkColorChooser* getColorChooserStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

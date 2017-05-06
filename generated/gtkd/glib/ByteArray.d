@@ -40,8 +40,10 @@ public class ByteArray
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GByteArray* getByteArrayStruct()
+	public GByteArray* getByteArrayStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gByteArray;
 	}
 

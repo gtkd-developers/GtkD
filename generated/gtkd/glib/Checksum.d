@@ -29,6 +29,8 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import gtkc.glib;
 public  import gtkc.glibtypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -45,8 +47,10 @@ public class Checksum
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GChecksum* getChecksumStruct()
+	public GChecksum* getChecksumStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gChecksum;
 	}
 
@@ -63,6 +67,12 @@ public class Checksum
 	{
 		this.gChecksum = gChecksum;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
+			free();
 	}
 
 	/**

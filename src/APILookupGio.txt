@@ -21,7 +21,7 @@
 
 # must start with wrap
 wrap: gio
-file: /usr/share/gir-1.0/Gio-2.0.gir
+file: Gio-2.0.gir
 
 addAliases: start
 	public import gtkc.glibtypes;
@@ -436,19 +436,6 @@ move: load NoExternal
 move: unload NoExternal
 move: query NoExternal
 
-struct: IOModuleScope
-import: gtkd.Loader
-import: gtkd.paths
-code: start
-	~this()
-	{
-		if ( Linker.isLoaded(LIBRARY.GIO) && ownedRef )
-		{
-			g_io_module_scope_free(gIOModuleScope);
-		}
-	}
-code: end
-
 struct: MenuItem
 noCode: new_section
 noCode: new_submenu
@@ -482,43 +469,6 @@ implements: ProxyResolver
 struct: Resource
 alias: _register register
 alias: _unregister unregister
-import: gtkd.Loader
-import: gtkd.paths
-code: start
-	~this()
-	{
-		if ( Linker.isLoaded(LIBRARY.GIO) && ownedRef )
-		{
-			g_resource_unref(gResource);
-		}
-	}
-code: end
-
-struct: SettingsSchema
-import: gtkd.Loader
-import: gtkd.paths
-code: start
-	~this()
-	{
-		if ( Linker.isLoaded(LIBRARY.GIO) && ownedRef )
-		{
-			g_settings_schema_unref(gSettingsSchema);
-		}
-	}
-code: end
-
-struct: SettingsSchemaSource
-import: gtkd.Loader
-import: gtkd.paths
-code: start
-	~this()
-	{
-		if ( Linker.isLoaded(LIBRARY.GIO) && ownedRef )
-		{
-			g_settings_schema_source_unref(gSettingsSchemaSource);
-		}
-	}
-code: end
 
 struct: SimpleAsyncResult
 noCode: new_take_error

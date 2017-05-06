@@ -45,8 +45,10 @@ public class ExtensionSet : ObjectG
 	protected PeasExtensionSet* peasExtensionSet;
 
 	/** Get the main Gtk struct */
-	public PeasExtensionSet* getExtensionSetStruct()
+	public PeasExtensionSet* getExtensionSetStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return peasExtensionSet;
 	}
 

@@ -66,8 +66,10 @@ public class TypeModule : ObjectG, TypePluginIF
 	protected GTypeModule* gTypeModule;
 
 	/** Get the main Gtk struct */
-	public GTypeModule* getTypeModuleStruct()
+	public GTypeModule* getTypeModuleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gTypeModule;
 	}
 

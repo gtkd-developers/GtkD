@@ -76,7 +76,7 @@ public  import gstreamerc.gstreamertypes;
  */
 public interface TagSetterIF{
 	/** Get the main Gtk struct */
-	public GstTagSetter* getTagSetterStruct();
+	public GstTagSetter* getTagSetterStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

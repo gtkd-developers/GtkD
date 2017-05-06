@@ -67,8 +67,10 @@ public class NoOpObject : ObjectAtk, ActionIF, ComponentIF, DocumentIF, Editable
 	protected AtkNoOpObject* atkNoOpObject;
 
 	/** Get the main Gtk struct */
-	public AtkNoOpObject* getNoOpObjectStruct()
+	public AtkNoOpObject* getNoOpObjectStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return atkNoOpObject;
 	}
 

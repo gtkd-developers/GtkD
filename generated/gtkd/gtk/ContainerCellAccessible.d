@@ -39,8 +39,10 @@ public class ContainerCellAccessible : CellAccessible
 	protected GtkContainerCellAccessible* gtkContainerCellAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkContainerCellAccessible* getContainerCellAccessibleStruct()
+	public GtkContainerCellAccessible* getContainerCellAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkContainerCellAccessible;
 	}
 

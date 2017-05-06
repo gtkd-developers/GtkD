@@ -42,8 +42,10 @@ public class ProtectionMeta
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GstProtectionMeta* getProtectionMetaStruct()
+	public GstProtectionMeta* getProtectionMetaStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstProtectionMeta;
 	}
 

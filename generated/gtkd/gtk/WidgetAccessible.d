@@ -38,8 +38,10 @@ public class WidgetAccessible : Accessible, ComponentIF
 	protected GtkWidgetAccessible* gtkWidgetAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkWidgetAccessible* getWidgetAccessibleStruct()
+	public GtkWidgetAccessible* getWidgetAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkWidgetAccessible;
 	}
 

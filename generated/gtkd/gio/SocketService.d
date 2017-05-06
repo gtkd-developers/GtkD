@@ -70,8 +70,10 @@ public class SocketService : SocketListener
 	protected GSocketService* gSocketService;
 
 	/** Get the main Gtk struct */
-	public GSocketService* getSocketServiceStruct()
+	public GSocketService* getSocketServiceStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gSocketService;
 	}
 

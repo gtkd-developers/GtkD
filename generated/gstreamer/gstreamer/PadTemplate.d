@@ -104,8 +104,10 @@ public class PadTemplate : ObjectGst
 	protected GstPadTemplate* gstPadTemplate;
 
 	/** Get the main Gtk struct */
-	public GstPadTemplate* getPadTemplateStruct()
+	public GstPadTemplate* getPadTemplateStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstPadTemplate;
 	}
 

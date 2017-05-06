@@ -29,6 +29,8 @@ private import glib.MainContext;
 private import glib.Source;
 private import gtkc.glib;
 public  import gtkc.glibtypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -42,8 +44,10 @@ public class MainLoop
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GMainLoop* getMainLoopStruct()
+	public GMainLoop* getMainLoopStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gMainLoop;
 	}
 
@@ -60,6 +64,12 @@ public class MainLoop
 	{
 		this.gMainLoop = gMainLoop;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
+			unref();
 	}
 
 

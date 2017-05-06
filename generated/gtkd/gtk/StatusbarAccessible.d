@@ -36,8 +36,10 @@ public class StatusbarAccessible : ContainerAccessible
 	protected GtkStatusbarAccessible* gtkStatusbarAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkStatusbarAccessible* getStatusbarAccessibleStruct()
+	public GtkStatusbarAccessible* getStatusbarAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkStatusbarAccessible;
 	}
 

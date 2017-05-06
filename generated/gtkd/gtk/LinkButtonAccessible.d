@@ -38,8 +38,10 @@ public class LinkButtonAccessible : ButtonAccessible, HyperlinkImplIF
 	protected GtkLinkButtonAccessible* gtkLinkButtonAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkLinkButtonAccessible* getLinkButtonAccessibleStruct()
+	public GtkLinkButtonAccessible* getLinkButtonAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkLinkButtonAccessible;
 	}
 

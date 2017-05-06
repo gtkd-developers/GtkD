@@ -34,8 +34,10 @@ public  import std.algorithm;
 public template SourceUndoManagerT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GtkSourceUndoManager* getSourceUndoManagerStruct()
+	public GtkSourceUndoManager* getSourceUndoManagerStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GtkSourceUndoManager*)getStruct();
 	}
 

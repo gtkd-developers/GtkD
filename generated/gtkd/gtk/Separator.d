@@ -50,8 +50,10 @@ public class Separator : Widget, OrientableIF
 	protected GtkSeparator* gtkSeparator;
 
 	/** Get the main Gtk struct */
-	public GtkSeparator* getSeparatorStruct()
+	public GtkSeparator* getSeparatorStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSeparator;
 	}
 

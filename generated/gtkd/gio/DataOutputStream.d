@@ -48,8 +48,10 @@ public class DataOutputStream : FilterOutputStream, SeekableIF
 	protected GDataOutputStream* gDataOutputStream;
 
 	/** Get the main Gtk struct */
-	public GDataOutputStream* getDataOutputStreamStruct()
+	public GDataOutputStream* getDataOutputStreamStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gDataOutputStream;
 	}
 

@@ -34,6 +34,8 @@ private import glib.Variant;
 private import gobject.ObjectG;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -56,8 +58,10 @@ public class PaperSize
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GtkPaperSize* getPaperSizeStruct()
+	public GtkPaperSize* getPaperSizeStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkPaperSize;
 	}
 
@@ -74,6 +78,12 @@ public class PaperSize
 	{
 		this.gtkPaperSize = gtkPaperSize;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
+			free();
 	}
 
 

@@ -47,8 +47,10 @@ public class SystemClock : Clock
 	protected GstSystemClock* gstSystemClock;
 
 	/** Get the main Gtk struct */
-	public GstSystemClock* getSystemClockStruct()
+	public GstSystemClock* getSystemClockStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstSystemClock;
 	}
 

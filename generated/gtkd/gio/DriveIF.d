@@ -70,7 +70,7 @@ private import std.algorithm;
  */
 public interface DriveIF{
 	/** Get the main Gtk struct */
-	public GDrive* getDriveStruct();
+	public GDrive* getDriveStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

@@ -43,7 +43,7 @@ public  import gtkc.giotypes;
  */
 public interface ConverterIF{
 	/** Get the main Gtk struct */
-	public GConverter* getConverterStruct();
+	public GConverter* getConverterStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

@@ -42,7 +42,7 @@ public  import gtkc.giotypes;
  */
 public interface PollableOutputStreamIF{
 	/** Get the main Gtk struct */
-	public GPollableOutputStream* getPollableOutputStreamStruct();
+	public GPollableOutputStream* getPollableOutputStreamStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

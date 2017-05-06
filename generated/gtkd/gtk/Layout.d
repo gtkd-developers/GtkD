@@ -55,8 +55,10 @@ public class Layout : Container, ScrollableIF
 	protected GtkLayout* gtkLayout;
 
 	/** Get the main Gtk struct */
-	public GtkLayout* getLayoutStruct()
+	public GtkLayout* getLayoutStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkLayout;
 	}
 

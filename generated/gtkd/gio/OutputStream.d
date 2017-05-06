@@ -55,8 +55,10 @@ public class OutputStream : ObjectG
 	protected GOutputStream* gOutputStream;
 
 	/** Get the main Gtk struct */
-	public GOutputStream* getOutputStreamStruct()
+	public GOutputStream* getOutputStreamStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gOutputStream;
 	}
 

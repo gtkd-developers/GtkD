@@ -40,8 +40,10 @@ public class ComboBoxAccessible : ContainerAccessible, ActionIF, SelectionIF
 	protected GtkComboBoxAccessible* gtkComboBoxAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkComboBoxAccessible* getComboBoxAccessibleStruct()
+	public GtkComboBoxAccessible* getComboBoxAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkComboBoxAccessible;
 	}
 

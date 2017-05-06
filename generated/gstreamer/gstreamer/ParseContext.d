@@ -29,6 +29,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -41,8 +43,10 @@ public class ParseContext
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GstParseContext* getParseContextStruct()
+	public GstParseContext* getParseContextStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstParseContext;
 	}
 
@@ -59,6 +63,12 @@ public class ParseContext
 	{
 		this.gstParseContext = gstParseContext;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GSTREAMER) && ownedRef )
+			free();
 	}
 
 

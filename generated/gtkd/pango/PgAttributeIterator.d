@@ -49,8 +49,10 @@ public class PgAttributeIterator
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public PangoAttrIterator* getPgAttributeIteratorStruct()
+	public PangoAttrIterator* getPgAttributeIteratorStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return pangoAttrIterator;
 	}
 

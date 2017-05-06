@@ -30,6 +30,8 @@ private import glib.GException;
 private import glib.Str;
 private import gtkc.glib;
 public  import gtkc.glibtypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -43,8 +45,10 @@ public class BookmarkFile
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GBookmarkFile* getBookmarkFileStruct()
+	public GBookmarkFile* getBookmarkFileStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gBookmarkFile;
 	}
 
@@ -61,6 +65,12 @@ public class BookmarkFile
 	{
 		this.gBookmarkFile = gBookmarkFile;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
+			free();
 	}
 
 

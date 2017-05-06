@@ -107,8 +107,10 @@ public class RecentManager : ObjectG
 	protected GtkRecentManager* gtkRecentManager;
 
 	/** Get the main Gtk struct */
-	public GtkRecentManager* getRecentManagerStruct()
+	public GtkRecentManager* getRecentManagerStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkRecentManager;
 	}
 

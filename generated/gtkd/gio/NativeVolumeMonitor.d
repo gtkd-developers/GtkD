@@ -36,8 +36,10 @@ public class NativeVolumeMonitor : VolumeMonitor
 	protected GNativeVolumeMonitor* gNativeVolumeMonitor;
 
 	/** Get the main Gtk struct */
-	public GNativeVolumeMonitor* getNativeVolumeMonitorStruct()
+	public GNativeVolumeMonitor* getNativeVolumeMonitorStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gNativeVolumeMonitor;
 	}
 

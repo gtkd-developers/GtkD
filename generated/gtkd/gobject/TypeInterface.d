@@ -42,8 +42,10 @@ public class TypeInterface
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GTypeInterface* getTypeInterfaceStruct()
+	public GTypeInterface* getTypeInterfaceStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gTypeInterface;
 	}
 

@@ -117,8 +117,10 @@ public class ToolPalette : Container, OrientableIF, ScrollableIF
 	protected GtkToolPalette* gtkToolPalette;
 
 	/** Get the main Gtk struct */
-	public GtkToolPalette* getToolPaletteStruct()
+	public GtkToolPalette* getToolPaletteStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkToolPalette;
 	}
 

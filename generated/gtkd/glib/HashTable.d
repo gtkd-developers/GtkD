@@ -42,8 +42,10 @@ public class HashTable
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GHashTable* getHashTableStruct()
+	public GHashTable* getHashTableStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gHashTable;
 	}
 

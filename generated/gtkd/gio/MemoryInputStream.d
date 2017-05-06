@@ -49,8 +49,10 @@ public class MemoryInputStream : InputStream, PollableInputStreamIF, SeekableIF
 	protected GMemoryInputStream* gMemoryInputStream;
 
 	/** Get the main Gtk struct */
-	public GMemoryInputStream* getMemoryInputStreamStruct()
+	public GMemoryInputStream* getMemoryInputStreamStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gMemoryInputStream;
 	}
 

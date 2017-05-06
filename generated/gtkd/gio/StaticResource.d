@@ -41,8 +41,10 @@ public class StaticResource
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GStaticResource* getStaticResourceStruct()
+	public GStaticResource* getStaticResourceStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gStaticResource;
 	}
 

@@ -42,8 +42,10 @@ public class GObjectAccessible : ObjectAtk
 	protected AtkGObjectAccessible* atkGObjectAccessible;
 
 	/** Get the main Gtk struct */
-	public AtkGObjectAccessible* getGObjectAccessibleStruct()
+	public AtkGObjectAccessible* getGObjectAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return atkGObjectAccessible;
 	}
 

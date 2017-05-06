@@ -52,8 +52,10 @@ public class DBusObjectSkeleton : ObjectG, DBusObjectIF
 	protected GDBusObjectSkeleton* gDBusObjectSkeleton;
 
 	/** Get the main Gtk struct */
-	public GDBusObjectSkeleton* getDBusObjectSkeletonStruct()
+	public GDBusObjectSkeleton* getDBusObjectSkeletonStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gDBusObjectSkeleton;
 	}
 

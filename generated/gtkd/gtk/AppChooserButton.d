@@ -68,8 +68,10 @@ public class AppChooserButton : ComboBox, AppChooserIF
 	protected GtkAppChooserButton* gtkAppChooserButton;
 
 	/** Get the main Gtk struct */
-	public GtkAppChooserButton* getAppChooserButtonStruct()
+	public GtkAppChooserButton* getAppChooserButtonStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkAppChooserButton;
 	}
 

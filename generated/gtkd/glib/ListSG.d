@@ -40,8 +40,10 @@ public class ListSG
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GSList* getListSGStruct()
+	public GSList* getListSGStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gSList;
 	}
 

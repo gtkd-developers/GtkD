@@ -55,8 +55,10 @@ public class ColorButton : Button, ColorChooserIF
 	protected GtkColorButton* gtkColorButton;
 
 	/** Get the main Gtk struct */
-	public GtkColorButton* getColorButtonStruct()
+	public GtkColorButton* getColorButtonStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkColorButton;
 	}
 

@@ -61,8 +61,10 @@ public class CheckMenuItem : MenuItem
 	protected GtkCheckMenuItem* gtkCheckMenuItem;
 
 	/** Get the main Gtk struct */
-	public GtkCheckMenuItem* getCheckMenuItemStruct()
+	public GtkCheckMenuItem* getCheckMenuItemStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkCheckMenuItem;
 	}
 

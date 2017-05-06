@@ -38,8 +38,10 @@ public class MenuShellAccessible : ContainerAccessible, SelectionIF
 	protected GtkMenuShellAccessible* gtkMenuShellAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkMenuShellAccessible* getMenuShellAccessibleStruct()
+	public GtkMenuShellAccessible* getMenuShellAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkMenuShellAccessible;
 	}
 

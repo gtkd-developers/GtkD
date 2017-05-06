@@ -36,8 +36,10 @@ public class ScaleAccessible : RangeAccessible
 	protected GtkScaleAccessible* gtkScaleAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkScaleAccessible* getScaleAccessibleStruct()
+	public GtkScaleAccessible* getScaleAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkScaleAccessible;
 	}
 

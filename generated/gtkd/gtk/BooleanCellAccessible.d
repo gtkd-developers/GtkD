@@ -36,8 +36,10 @@ public class BooleanCellAccessible : RendererCellAccessible
 	protected GtkBooleanCellAccessible* gtkBooleanCellAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkBooleanCellAccessible* getBooleanCellAccessibleStruct()
+	public GtkBooleanCellAccessible* getBooleanCellAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkBooleanCellAccessible;
 	}
 

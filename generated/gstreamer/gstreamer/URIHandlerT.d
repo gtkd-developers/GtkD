@@ -44,8 +44,10 @@ public  import gstreamerc.gstreamertypes;
 public template URIHandlerT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GstURIHandler* getURIHandlerStruct()
+	public GstURIHandler* getURIHandlerStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GstURIHandler*)getStruct();
 	}
 

@@ -69,8 +69,10 @@ public class AppChooserWidget : Box, AppChooserIF
 	protected GtkAppChooserWidget* gtkAppChooserWidget;
 
 	/** Get the main Gtk struct */
-	public GtkAppChooserWidget* getAppChooserWidgetStruct()
+	public GtkAppChooserWidget* getAppChooserWidgetStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkAppChooserWidget;
 	}
 

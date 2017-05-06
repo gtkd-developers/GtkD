@@ -38,8 +38,10 @@ public class NotebookAccessible : ContainerAccessible, SelectionIF
 	protected GtkNotebookAccessible* gtkNotebookAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkNotebookAccessible* getNotebookAccessibleStruct()
+	public GtkNotebookAccessible* getNotebookAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkNotebookAccessible;
 	}
 

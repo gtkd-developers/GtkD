@@ -180,8 +180,10 @@ public  import std.algorithm;
 public template ValueT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public AtkValue* getValueStruct()
+	public AtkValue* getValueStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(AtkValue*)getStruct();
 	}
 

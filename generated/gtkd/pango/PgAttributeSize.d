@@ -40,8 +40,10 @@ public class PgAttributeSize : PgAttribute
 	protected PangoAttrSize* pangoAttrSize;
 
 	/** Get the main Gtk struct */
-	public PangoAttrSize* getPgAttributeSizeStruct()
+	public PangoAttrSize* getPgAttributeSizeStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return pangoAttrSize;
 	}
 

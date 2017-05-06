@@ -34,7 +34,7 @@ public import gtkc.gdkpixbuftypes;
  * Used to represent native events (XEvents for the X11
  * backend, MSGs for Win32).
  */
-public alias void* GdkXEvent;
+public alias void GdkXEvent;
 
 /**
  * Positioning hints for aligning a window relative to a rectangle.

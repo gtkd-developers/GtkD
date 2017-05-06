@@ -36,8 +36,10 @@ public class ContainerAccessible : WidgetAccessible
 	protected GtkContainerAccessible* gtkContainerAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkContainerAccessible* getContainerAccessibleStruct()
+	public GtkContainerAccessible* getContainerAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkContainerAccessible;
 	}
 

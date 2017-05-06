@@ -28,6 +28,8 @@ private import glib.ConstructionException;
 private import glib.TimeVal;
 private import gtkc.glib;
 public  import gtkc.glibtypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -42,8 +44,10 @@ public class AsyncQueue
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GAsyncQueue* getAsyncQueueStruct()
+	public GAsyncQueue* getAsyncQueueStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gAsyncQueue;
 	}
 
@@ -60,6 +64,12 @@ public class AsyncQueue
 	{
 		this.gAsyncQueue = gAsyncQueue;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
+			unref();
 	}
 
 

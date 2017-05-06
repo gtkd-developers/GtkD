@@ -36,7 +36,7 @@ public  import gtkc.gtktypes;
  */
 public interface ToolShellIF{
 	/** Get the main Gtk struct */
-	public GtkToolShell* getToolShellStruct();
+	public GtkToolShell* getToolShellStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

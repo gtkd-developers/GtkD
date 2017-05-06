@@ -43,8 +43,10 @@ public class RGBA
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GdkRGBA* getRGBAStruct()
+	public GdkRGBA* getRGBAStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gdkRGBA;
 	}
 
@@ -61,6 +63,12 @@ public class RGBA
 	{
 		this.gdkRGBA = gdkRGBA;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GDK) && ownedRef )
+			free();
 	}
 
 	/**
@@ -84,14 +92,6 @@ public class RGBA
 		rgba.alpha = alpha;
 		
 		this(gdk_rgba_copy(&rgba), true);
-	}
-	
-	~this ()
-	{
-		if ( Linker.isLoaded(LIBRARY.GDK) && ownedRef )
-		{
-			gdk_rgba_free(gdkRGBA);
-		}
 	}
 	
 	/**

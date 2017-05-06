@@ -55,8 +55,10 @@ public  import std.algorithm;
 public template TextT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public AtkText* getTextStruct()
+	public AtkText* getTextStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(AtkText*)getStruct();
 	}
 

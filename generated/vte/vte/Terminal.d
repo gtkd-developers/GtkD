@@ -58,8 +58,10 @@ public class Terminal : Widget, ScrollableIF
 	protected VteTerminal* vteTerminal;
 
 	/** Get the main Gtk struct */
-	public VteTerminal* getTerminalStruct()
+	public VteTerminal* getTerminalStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return vteTerminal;
 	}
 

@@ -44,8 +44,10 @@ public class PluginInfo
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public PeasPluginInfo* getPluginInfoStruct()
+	public PeasPluginInfo* getPluginInfoStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return peasPluginInfo;
 	}
 

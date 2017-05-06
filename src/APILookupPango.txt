@@ -21,8 +21,8 @@
 
 # must start with wrap
 wrap: pango
-file: /usr/share/gir-1.0/Pango-1.0.gir
-file: /usr/share/gir-1.0/PangoCairo-1.0.gir
+file: Pango-1.0.gir
+file: PangoCairo-1.0.gir
 
 addAliases: start
 	public import gtkc.cairotypes;

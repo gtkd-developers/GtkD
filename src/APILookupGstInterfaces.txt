@@ -26,7 +26,7 @@ alias: 90L _90L
 
 # must start with wrap
 wrap: gstinterfaces
-file: /usr/share/gir-1.0/GstVideo-1.0.gir
+file: GstVideo-1.0.gir
 
 addAliases: start
 	public import gtkc.glibtypes;

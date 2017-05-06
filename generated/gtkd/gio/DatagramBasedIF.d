@@ -85,7 +85,7 @@ public  import gtkc.giotypes;
  */
 public interface DatagramBasedIF{
 	/** Get the main Gtk struct */
-	public GDatagramBased* getDatagramBasedStruct();
+	public GDatagramBased* getDatagramBasedStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

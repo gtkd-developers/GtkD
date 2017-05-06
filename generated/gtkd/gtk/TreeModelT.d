@@ -234,8 +234,10 @@ public  import std.algorithm;
 public template TreeModelT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GtkTreeModel* getTreeModelStruct()
+	public GtkTreeModel* getTreeModelStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GtkTreeModel*)getStruct();
 	}
 

@@ -128,8 +128,10 @@ public class RadioButton : CheckButton
 	protected GtkRadioButton* gtkRadioButton;
 
 	/** Get the main Gtk struct */
-	public GtkRadioButton* getRadioButtonStruct()
+	public GtkRadioButton* getRadioButtonStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkRadioButton;
 	}
 

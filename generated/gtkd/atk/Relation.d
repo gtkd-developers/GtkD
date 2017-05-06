@@ -45,8 +45,10 @@ public class Relation : ObjectG
 	protected AtkRelation* atkRelation;
 
 	/** Get the main Gtk struct */
-	public AtkRelation* getRelationStruct()
+	public AtkRelation* getRelationStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return atkRelation;
 	}
 

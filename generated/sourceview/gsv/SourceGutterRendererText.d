@@ -39,8 +39,10 @@ public class SourceGutterRendererText : SourceGutterRenderer
 	protected GtkSourceGutterRendererText* gtkSourceGutterRendererText;
 
 	/** Get the main Gtk struct */
-	public GtkSourceGutterRendererText* getSourceGutterRendererTextStruct()
+	public GtkSourceGutterRendererText* getSourceGutterRendererTextStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSourceGutterRendererText;
 	}
 

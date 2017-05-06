@@ -42,8 +42,10 @@ public class IOExtension
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GIOExtension* getIOExtensionStruct()
+	public GIOExtension* getIOExtensionStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gIOExtension;
 	}
 

@@ -117,8 +117,10 @@ public class Binding : ObjectG
 	protected GBinding* gBinding;
 
 	/** Get the main Gtk struct */
-	public GBinding* getBindingStruct()
+	public GBinding* getBindingStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gBinding;
 	}
 

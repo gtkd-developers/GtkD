@@ -50,8 +50,10 @@ public class SimpleAction : ObjectG, ActionIF
 	protected GSimpleAction* gSimpleAction;
 
 	/** Get the main Gtk struct */
-	public GSimpleAction* getSimpleActionStruct()
+	public GSimpleAction* getSimpleActionStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gSimpleAction;
 	}
 

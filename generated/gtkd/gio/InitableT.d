@@ -65,8 +65,10 @@ public  import gtkc.giotypes;
 public template InitableT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GInitable* getInitableStruct()
+	public GInitable* getInitableStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GInitable*)getStruct();
 	}
 

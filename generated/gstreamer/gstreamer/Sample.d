@@ -46,8 +46,10 @@ public class Sample
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GstSample* getSampleStruct()
+	public GstSample* getSampleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstSample;
 	}
 
@@ -91,7 +93,7 @@ public class Sample
 	 */
 	public this(Buffer buffer, Caps caps, Segment segment, Structure info)
 	{
-		auto p = gst_sample_new((buffer is null) ? null : buffer.getBufferStruct(), (caps is null) ? null : caps.getCapsStruct(), (segment is null) ? null : segment.getSegmentStruct(), (info is null) ? null : info.getStructureStruct());
+		auto p = gst_sample_new((buffer is null) ? null : buffer.getBufferStruct(), (caps is null) ? null : caps.getCapsStruct(), (segment is null) ? null : segment.getSegmentStruct(), (info is null) ? null : info.getStructureStruct(true));
 		
 		if(p is null)
 		{

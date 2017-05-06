@@ -39,8 +39,10 @@ public class SourceMap : SourceView
 	protected GtkSourceMap* gtkSourceMap;
 
 	/** Get the main Gtk struct */
-	public GtkSourceMap* getSourceMapStruct()
+	public GtkSourceMap* getSourceMapStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSourceMap;
 	}
 

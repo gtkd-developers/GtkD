@@ -45,8 +45,10 @@ public class GestureRotate : Gesture
 	protected GtkGestureRotate* gtkGestureRotate;
 
 	/** Get the main Gtk struct */
-	public GtkGestureRotate* getGestureRotateStruct()
+	public GtkGestureRotate* getGestureRotateStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkGestureRotate;
 	}
 

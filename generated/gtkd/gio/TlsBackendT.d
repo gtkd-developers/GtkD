@@ -40,8 +40,10 @@ public  import gtkc.giotypes;
 public template TlsBackendT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GTlsBackend* getTlsBackendStruct()
+	public GTlsBackend* getTlsBackendStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GTlsBackend*)getStruct();
 	}
 

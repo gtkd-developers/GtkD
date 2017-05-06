@@ -50,8 +50,10 @@ public class NetworkService : ObjectG, SocketConnectableIF
 	protected GNetworkService* gNetworkService;
 
 	/** Get the main Gtk struct */
-	public GNetworkService* getNetworkServiceStruct()
+	public GNetworkService* getNetworkServiceStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gNetworkService;
 	}
 

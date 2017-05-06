@@ -44,8 +44,10 @@ public  import gtkc.giotypes;
 public template ConverterT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GConverter* getConverterStruct()
+	public GConverter* getConverterStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GConverter*)getStruct();
 	}
 

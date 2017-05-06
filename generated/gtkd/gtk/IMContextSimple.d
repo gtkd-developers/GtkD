@@ -54,8 +54,10 @@ public class IMContextSimple : IMContext
 	protected GtkIMContextSimple* gtkIMContextSimple;
 
 	/** Get the main Gtk struct */
-	public GtkIMContextSimple* getIMContextSimpleStruct()
+	public GtkIMContextSimple* getIMContextSimpleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkIMContextSimple;
 	}
 

@@ -41,8 +41,10 @@ public class UnixMountMonitor : ObjectG
 	protected GUnixMountMonitor* gUnixMountMonitor;
 
 	/** Get the main Gtk struct */
-	public GUnixMountMonitor* getUnixMountMonitorStruct()
+	public GUnixMountMonitor* getUnixMountMonitorStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gUnixMountMonitor;
 	}
 

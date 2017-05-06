@@ -52,8 +52,10 @@ public class Device : ObjectGst
 	protected GstDevice* gstDevice;
 
 	/** Get the main Gtk struct */
-	public GstDevice* getDeviceStruct()
+	public GstDevice* getDeviceStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstDevice;
 	}
 

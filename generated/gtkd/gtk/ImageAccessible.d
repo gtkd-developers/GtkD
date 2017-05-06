@@ -38,8 +38,10 @@ public class ImageAccessible : WidgetAccessible, ImageIF
 	protected GtkImageAccessible* gtkImageAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkImageAccessible* getImageAccessibleStruct()
+	public GtkImageAccessible* getImageAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkImageAccessible;
 	}
 

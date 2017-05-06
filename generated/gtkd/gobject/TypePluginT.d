@@ -80,8 +80,10 @@ public  import gtkc.gobjecttypes;
 public template TypePluginT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GTypePlugin* getTypePluginStruct()
+	public GTypePlugin* getTypePluginStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GTypePlugin*)getStruct();
 	}
 

@@ -49,8 +49,10 @@ public class IOModuleScope
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GIOModuleScope* getIOModuleScopeStruct()
+	public GIOModuleScope* getIOModuleScopeStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gIOModuleScope;
 	}
 
@@ -69,16 +71,12 @@ public class IOModuleScope
 		this.ownedRef = ownedRef;
 	}
 
-	~this()
+	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY.GIO) && ownedRef )
-		{
-			g_io_module_scope_free(gIOModuleScope);
-		}
+		if (  Linker.isLoaded(LIBRARY.GIO) && ownedRef )
+			free();
 	}
 
-	/**
-	 */
 
 	/**
 	 * Block modules with the given @basename from being loaded when

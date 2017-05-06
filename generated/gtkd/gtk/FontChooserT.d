@@ -46,8 +46,10 @@ public  import std.algorithm;
 public template FontChooserT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GtkFontChooser* getFontChooserStruct()
+	public GtkFontChooser* getFontChooserStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GtkFontChooser*)getStruct();
 	}
 

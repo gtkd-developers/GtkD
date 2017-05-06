@@ -42,8 +42,10 @@ public class SourceGutterRendererPixbuf : SourceGutterRenderer
 	protected GtkSourceGutterRendererPixbuf* gtkSourceGutterRendererPixbuf;
 
 	/** Get the main Gtk struct */
-	public GtkSourceGutterRendererPixbuf* getSourceGutterRendererPixbufStruct()
+	public GtkSourceGutterRendererPixbuf* getSourceGutterRendererPixbufStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSourceGutterRendererPixbuf;
 	}
 

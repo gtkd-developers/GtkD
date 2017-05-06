@@ -94,8 +94,10 @@ public class Socket : Container
 	protected GtkSocket* gtkSocket;
 
 	/** Get the main Gtk struct */
-	public GtkSocket* getSocketStruct()
+	public GtkSocket* getSocketStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSocket;
 	}
 

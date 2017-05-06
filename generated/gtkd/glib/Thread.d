@@ -30,6 +30,8 @@ private import glib.GException;
 private import glib.Str;
 private import gtkc.glib;
 public  import gtkc.glibtypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -54,8 +56,10 @@ public class Thread
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GThread* getThreadStruct()
+	public GThread* getThreadStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gThread;
 	}
 
@@ -72,6 +76,12 @@ public class Thread
 	{
 		this.gThread = gThread;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
+			unref();
 	}
 
 

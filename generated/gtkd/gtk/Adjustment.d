@@ -47,8 +47,10 @@ public class Adjustment : ObjectG
 	protected GtkAdjustment* gtkAdjustment;
 
 	/** Get the main Gtk struct */
-	public GtkAdjustment* getAdjustmentStruct()
+	public GtkAdjustment* getAdjustmentStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkAdjustment;
 	}
 

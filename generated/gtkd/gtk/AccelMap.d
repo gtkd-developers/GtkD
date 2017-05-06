@@ -94,8 +94,10 @@ public class AccelMap : ObjectG
 	protected GtkAccelMap* gtkAccelMap;
 
 	/** Get the main Gtk struct */
-	public GtkAccelMap* getAccelMapStruct()
+	public GtkAccelMap* getAccelMapStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkAccelMap;
 	}
 

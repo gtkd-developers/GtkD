@@ -52,8 +52,10 @@ public class UnixOutputStream : OutputStream, FileDescriptorBasedIF, PollableOut
 	protected GUnixOutputStream* gUnixOutputStream;
 
 	/** Get the main Gtk struct */
-	public GUnixOutputStream* getUnixOutputStreamStruct()
+	public GUnixOutputStream* getUnixOutputStreamStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gUnixOutputStream;
 	}
 

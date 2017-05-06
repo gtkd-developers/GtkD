@@ -83,8 +83,10 @@ public class RecentChooserDialog : Dialog, RecentChooserIF
 	protected GtkRecentChooserDialog* gtkRecentChooserDialog;
 
 	/** Get the main Gtk struct */
-	public GtkRecentChooserDialog* getRecentChooserDialogStruct()
+	public GtkRecentChooserDialog* getRecentChooserDialogStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkRecentChooserDialog;
 	}
 

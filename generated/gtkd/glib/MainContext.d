@@ -30,6 +30,8 @@ private import glib.Mutex;
 private import glib.Source;
 private import gtkc.glib;
 public  import gtkc.glibtypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -43,8 +45,10 @@ public class MainContext
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GMainContext* getMainContextStruct()
+	public GMainContext* getMainContextStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gMainContext;
 	}
 
@@ -61,6 +65,12 @@ public class MainContext
 	{
 		this.gMainContext = gMainContext;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
+			unref();
 	}
 
 

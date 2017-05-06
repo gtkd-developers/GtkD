@@ -45,8 +45,10 @@ public class Bin : Container
 	protected GtkBin* gtkBin;
 
 	/** Get the main Gtk struct */
-	public GtkBin* getBinStruct()
+	public GtkBin* getBinStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkBin;
 	}
 

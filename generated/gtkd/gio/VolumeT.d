@@ -91,8 +91,10 @@ public  import std.algorithm;
 public template VolumeT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GVolume* getVolumeStruct()
+	public GVolume* getVolumeStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GVolume*)getStruct();
 	}
 

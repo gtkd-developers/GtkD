@@ -45,7 +45,7 @@ private import std.algorithm;
  */
 public interface FontChooserIF{
 	/** Get the main Gtk struct */
-	public GtkFontChooser* getFontChooserStruct();
+	public GtkFontChooser* getFontChooserStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

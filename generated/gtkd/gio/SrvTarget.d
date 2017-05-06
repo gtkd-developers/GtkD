@@ -30,6 +30,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gtkc.gio;
 public  import gtkc.giotypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -55,8 +57,10 @@ public class SrvTarget
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GSrvTarget* getSrvTargetStruct()
+	public GSrvTarget* getSrvTargetStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gSrvTarget;
 	}
 
@@ -73,6 +77,12 @@ public class SrvTarget
 	{
 		this.gSrvTarget = gSrvTarget;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GIO) && ownedRef )
+			free();
 	}
 
 

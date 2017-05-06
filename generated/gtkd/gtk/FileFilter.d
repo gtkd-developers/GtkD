@@ -80,8 +80,10 @@ public class FileFilter : ObjectG, BuildableIF
 	protected GtkFileFilter* gtkFileFilter;
 
 	/** Get the main Gtk struct */
-	public GtkFileFilter* getFileFilterStruct()
+	public GtkFileFilter* getFileFilterStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkFileFilter;
 	}
 

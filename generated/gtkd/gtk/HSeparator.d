@@ -50,8 +50,10 @@ public class HSeparator : Separator
 	protected GtkHSeparator* gtkHSeparator;
 
 	/** Get the main Gtk struct */
-	public GtkHSeparator* getHSeparatorStruct()
+	public GtkHSeparator* getHSeparatorStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkHSeparator;
 	}
 

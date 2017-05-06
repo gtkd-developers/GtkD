@@ -46,8 +46,10 @@ public  import gtkc.giotypes;
 public template ActionMapT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GActionMap* getActionMapStruct()
+	public GActionMap* getActionMapStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GActionMap*)getStruct();
 	}
 

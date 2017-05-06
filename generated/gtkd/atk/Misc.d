@@ -39,8 +39,10 @@ public class Misc : ObjectG
 	protected AtkMisc* atkMisc;
 
 	/** Get the main Gtk struct */
-	public AtkMisc* getMiscStruct()
+	public AtkMisc* getMiscStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return atkMisc;
 	}
 

@@ -28,6 +28,8 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import gtkc.glib;
 public  import gtkc.glibtypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -41,8 +43,10 @@ public class StringChunk
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GStringChunk* getStringChunkStruct()
+	public GStringChunk* getStringChunkStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gStringChunk;
 	}
 
@@ -59,6 +63,12 @@ public class StringChunk
 	{
 		this.gStringChunk = gStringChunk;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
+			free();
 	}
 
 

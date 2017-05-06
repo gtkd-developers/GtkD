@@ -49,8 +49,10 @@ public class ShortcutsSection : Box
 	protected GtkShortcutsSection* gtkShortcutsSection;
 
 	/** Get the main Gtk struct */
-	public GtkShortcutsSection* getShortcutsSectionStruct()
+	public GtkShortcutsSection* getShortcutsSectionStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkShortcutsSection;
 	}
 

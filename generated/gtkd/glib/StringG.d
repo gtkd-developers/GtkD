@@ -40,8 +40,10 @@ public class StringG
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GString* getStringGStruct()
+	public GString* getStringGStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gString;
 	}
 

@@ -45,8 +45,10 @@ public class PgEngineShape : PgEngine
 	protected PangoEngineShape* pangoEngineShape;
 
 	/** Get the main Gtk struct */
-	public PangoEngineShape* getPgEngineShapeStruct()
+	public PangoEngineShape* getPgEngineShapeStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return pangoEngineShape;
 	}
 

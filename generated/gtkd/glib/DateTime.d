@@ -47,8 +47,10 @@ public class DateTime
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GDateTime* getDateTimeStruct()
+	public GDateTime* getDateTimeStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gDateTime;
 	}
 
@@ -65,6 +67,12 @@ public class DateTime
 	{
 		this.gDateTime = gDateTime;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
+			unref();
 	}
 
 	/**
@@ -142,14 +150,6 @@ public class DateTime
 			throw new ConstructionException("null returned by g_date_time_new_from_timeval_local((tv is null) ? null : tv.getTimeValStruct())");
 		}
 		this(cast(GDateTime*) p);
-	}
-	
-	~this ()
-	{
-		if ( Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
-		{
-			g_date_time_unref(gDateTime);
-		}
 	}
 	
 	/** */

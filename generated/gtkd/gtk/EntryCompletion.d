@@ -90,8 +90,10 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	protected GtkEntryCompletion* gtkEntryCompletion;
 
 	/** Get the main Gtk struct */
-	public GtkEntryCompletion* getEntryCompletionStruct()
+	public GtkEntryCompletion* getEntryCompletionStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkEntryCompletion;
 	}
 

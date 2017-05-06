@@ -69,8 +69,10 @@ public class Context
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GstContext* getContextStruct()
+	public GstContext* getContextStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstContext;
 	}
 

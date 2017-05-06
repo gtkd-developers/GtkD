@@ -62,8 +62,10 @@ public class Plug : Window
 	protected GtkPlug* gtkPlug;
 
 	/** Get the main Gtk struct */
-	public GtkPlug* getPlugStruct()
+	public GtkPlug* getPlugStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkPlug;
 	}
 

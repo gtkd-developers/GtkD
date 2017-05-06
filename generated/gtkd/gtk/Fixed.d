@@ -76,8 +76,10 @@ public class Fixed : Container
 	protected GtkFixed* gtkFixed;
 
 	/** Get the main Gtk struct */
-	public GtkFixed* getFixedStruct()
+	public GtkFixed* getFixedStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkFixed;
 	}
 

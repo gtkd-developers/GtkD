@@ -44,8 +44,10 @@ public class PgLanguage
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public PangoLanguage* getPgLanguageStruct()
+	public PangoLanguage* getPgLanguageStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return pangoLanguage;
 	}
 

@@ -43,8 +43,10 @@ public class ThreadPool
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GThreadPool* getThreadPoolStruct()
+	public GThreadPool* getThreadPoolStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gThreadPool;
 	}
 

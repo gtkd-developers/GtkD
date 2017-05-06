@@ -268,7 +268,7 @@ public  import gtkc.gtktypes;
  */
 public interface ActivatableIF{
 	/** Get the main Gtk struct */
-	public GtkActivatable* getActivatableStruct();
+	public GtkActivatable* getActivatableStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

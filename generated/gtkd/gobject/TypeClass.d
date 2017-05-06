@@ -27,6 +27,8 @@ module gobject.TypeClass;
 private import gobject.ObjectG;
 private import gtkc.gobject;
 public  import gtkc.gobjecttypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -39,8 +41,10 @@ public class TypeClass
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GTypeClass* getTypeClassStruct()
+	public GTypeClass* getTypeClassStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gTypeClass;
 	}
 
@@ -57,6 +61,12 @@ public class TypeClass
 	{
 		this.gTypeClass = gTypeClass;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GOBJECT) && ownedRef )
+			unref();
 	}
 
 

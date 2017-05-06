@@ -47,10 +47,6 @@ license: start
 license: end
 
 includeComments: y
-
-# define the lookup and destination directories
-# "src" will be added to outputRoot
-inputRoot: ./gtkdocs
 outputRoot: generated
 
 ###########################################################

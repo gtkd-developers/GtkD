@@ -81,8 +81,10 @@ public class ProgressBar : Widget, OrientableIF
 	protected GtkProgressBar* gtkProgressBar;
 
 	/** Get the main Gtk struct */
-	public GtkProgressBar* getProgressBarStruct()
+	public GtkProgressBar* getProgressBarStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkProgressBar;
 	}
 

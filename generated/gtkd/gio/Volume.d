@@ -38,8 +38,10 @@ public class Volume : ObjectG, VolumeIF
 	protected GVolume* gVolume;
 
 	/** Get the main Gtk struct */
-	public GVolume* getVolumeStruct()
+	public GVolume* getVolumeStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gVolume;
 	}
 

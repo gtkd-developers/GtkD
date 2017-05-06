@@ -46,8 +46,10 @@ public class GestureZoom : Gesture
 	protected GtkGestureZoom* gtkGestureZoom;
 
 	/** Get the main Gtk struct */
-	public GtkGestureZoom* getGestureZoomStruct()
+	public GtkGestureZoom* getGestureZoomStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkGestureZoom;
 	}
 

@@ -57,8 +57,10 @@ public class Alignment : Bin
 	protected GtkAlignment* gtkAlignment;
 
 	/** Get the main Gtk struct */
-	public GtkAlignment* getAlignmentStruct()
+	public GtkAlignment* getAlignmentStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkAlignment;
 	}
 

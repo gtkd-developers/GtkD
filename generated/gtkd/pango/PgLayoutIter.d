@@ -27,6 +27,8 @@ module pango.PgLayoutIter;
 private import gobject.ObjectG;
 private import gtkc.pango;
 public  import gtkc.pangotypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 private import pango.PgLayout;
 private import pango.PgLayoutLine;
 
@@ -45,8 +47,10 @@ public class PgLayoutIter
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public PangoLayoutIter* getPgLayoutIterStruct()
+	public PangoLayoutIter* getPgLayoutIterStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return pangoLayoutIter;
 	}
 
@@ -63,6 +67,12 @@ public class PgLayoutIter
 	{
 		this.pangoLayoutIter = pangoLayoutIter;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.PANGO) && ownedRef )
+			free();
 	}
 
 

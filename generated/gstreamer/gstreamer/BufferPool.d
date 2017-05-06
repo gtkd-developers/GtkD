@@ -82,8 +82,10 @@ public class BufferPool : ObjectGst
 	protected GstBufferPool* gstBufferPool;
 
 	/** Get the main Gtk struct */
-	public GstBufferPool* getBufferPoolStruct()
+	public GstBufferPool* getBufferPoolStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstBufferPool;
 	}
 
@@ -447,7 +449,7 @@ public class BufferPool : ObjectGst
 	 */
 	public bool setConfig(Structure config)
 	{
-		return gst_buffer_pool_set_config(gstBufferPool, (config is null) ? null : config.getStructureStruct()) != 0;
+		return gst_buffer_pool_set_config(gstBufferPool, (config is null) ? null : config.getStructureStruct(true)) != 0;
 	}
 
 	/**

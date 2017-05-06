@@ -52,8 +52,10 @@ public class FontChooserDialog : Dialog, FontChooserIF
 	protected GtkFontChooserDialog* gtkFontChooserDialog;
 
 	/** Get the main Gtk struct */
-	public GtkFontChooserDialog* getFontChooserDialogStruct()
+	public GtkFontChooserDialog* getFontChooserDialogStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkFontChooserDialog;
 	}
 

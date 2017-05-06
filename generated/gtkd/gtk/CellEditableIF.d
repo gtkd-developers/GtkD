@@ -37,7 +37,7 @@ private import std.algorithm;
  */
 public interface CellEditableIF{
 	/** Get the main Gtk struct */
-	public GtkCellEditable* getCellEditableStruct();
+	public GtkCellEditable* getCellEditableStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

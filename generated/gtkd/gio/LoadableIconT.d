@@ -42,8 +42,10 @@ public  import gtkc.giotypes;
 public template LoadableIconT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GLoadableIcon* getLoadableIconStruct()
+	public GLoadableIcon* getLoadableIconStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GLoadableIcon*)getStruct();
 	}
 

@@ -38,8 +38,10 @@ public class TextCellAccessible : RendererCellAccessible, TextIF
 	protected GtkTextCellAccessible* gtkTextCellAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkTextCellAccessible* getTextCellAccessibleStruct()
+	public GtkTextCellAccessible* getTextCellAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkTextCellAccessible;
 	}
 

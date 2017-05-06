@@ -43,8 +43,10 @@ public class ShortcutLabel : Box
 	protected GtkShortcutLabel* gtkShortcutLabel;
 
 	/** Get the main Gtk struct */
-	public GtkShortcutLabel* getShortcutLabelStruct()
+	public GtkShortcutLabel* getShortcutLabelStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkShortcutLabel;
 	}
 

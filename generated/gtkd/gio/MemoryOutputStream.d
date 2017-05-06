@@ -49,8 +49,10 @@ public class MemoryOutputStream : OutputStream, PollableOutputStreamIF, Seekable
 	protected GMemoryOutputStream* gMemoryOutputStream;
 
 	/** Get the main Gtk struct */
-	public GMemoryOutputStream* getMemoryOutputStreamStruct()
+	public GMemoryOutputStream* getMemoryOutputStreamStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gMemoryOutputStream;
 	}
 

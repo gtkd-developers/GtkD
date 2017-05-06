@@ -48,8 +48,10 @@ public class SourceFileLoader : ObjectG
 	protected GtkSourceFileLoader* gtkSourceFileLoader;
 
 	/** Get the main Gtk struct */
-	public GtkSourceFileLoader* getSourceFileLoaderStruct()
+	public GtkSourceFileLoader* getSourceFileLoaderStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSourceFileLoader;
 	}
 

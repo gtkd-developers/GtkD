@@ -28,6 +28,8 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import gtkc.glib;
 public  import gtkc.glibtypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -183,8 +185,10 @@ public class VariantType
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GVariantType* getVariantTypeStruct()
+	public GVariantType* getVariantTypeStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gVariantType;
 	}
 
@@ -201,6 +205,12 @@ public class VariantType
 	{
 		this.gVariantType = gVariantType;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
+			free();
 	}
 
 	/**

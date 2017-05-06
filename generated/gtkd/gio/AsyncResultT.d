@@ -117,8 +117,10 @@ public  import gtkc.giotypes;
 public template AsyncResultT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GAsyncResult* getAsyncResultStruct()
+	public GAsyncResult* getAsyncResultStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GAsyncResult*)getStruct();
 	}
 

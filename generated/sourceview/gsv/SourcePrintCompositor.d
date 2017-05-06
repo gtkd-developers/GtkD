@@ -41,8 +41,10 @@ public class SourcePrintCompositor : ObjectG
 	protected GtkSourcePrintCompositor* gtkSourcePrintCompositor;
 
 	/** Get the main Gtk struct */
-	public GtkSourcePrintCompositor* getSourcePrintCompositorStruct()
+	public GtkSourcePrintCompositor* getSourcePrintCompositorStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSourcePrintCompositor;
 	}
 

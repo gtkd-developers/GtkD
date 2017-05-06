@@ -38,8 +38,10 @@ public class DBusInterface : ObjectG, DBusInterfaceIF
 	protected GDBusInterface* gDBusInterface;
 
 	/** Get the main Gtk struct */
-	public GDBusInterface* getDBusInterfaceStruct()
+	public GDBusInterface* getDBusInterfaceStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gDBusInterface;
 	}
 

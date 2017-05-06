@@ -36,8 +36,10 @@ public class RadioMenuItemAccessible : CheckMenuItemAccessible
 	protected GtkRadioMenuItemAccessible* gtkRadioMenuItemAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkRadioMenuItemAccessible* getRadioMenuItemAccessibleStruct()
+	public GtkRadioMenuItemAccessible* getRadioMenuItemAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkRadioMenuItemAccessible;
 	}
 

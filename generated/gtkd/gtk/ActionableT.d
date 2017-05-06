@@ -47,8 +47,10 @@ public  import gtkc.gtktypes;
 public template ActionableT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GtkActionable* getActionableStruct()
+	public GtkActionable* getActionableStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GtkActionable*)getStruct();
 	}
 

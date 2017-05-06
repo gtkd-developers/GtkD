@@ -28,6 +28,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gtkc.gdkpixbuf;
 public  import gtkc.gdkpixbuftypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /** */
@@ -38,8 +40,10 @@ public class PixbufFormat
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GdkPixbufFormat* getPixbufFormatStruct()
+	public GdkPixbufFormat* getPixbufFormatStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gdkPixbufFormat;
 	}
 
@@ -56,6 +60,12 @@ public class PixbufFormat
 	{
 		this.gdkPixbufFormat = gdkPixbufFormat;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GDKPIXBUF) && ownedRef )
+			free();
 	}
 
 

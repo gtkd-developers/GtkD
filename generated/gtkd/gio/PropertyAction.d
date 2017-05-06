@@ -94,8 +94,10 @@ public class PropertyAction : ObjectG, ActionIF
 	protected GPropertyAction* gPropertyAction;
 
 	/** Get the main Gtk struct */
-	public GPropertyAction* getPropertyActionStruct()
+	public GPropertyAction* getPropertyActionStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gPropertyAction;
 	}
 

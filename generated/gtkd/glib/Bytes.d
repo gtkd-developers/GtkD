@@ -28,6 +28,8 @@ private import glib.ByteArray;
 private import glib.ConstructionException;
 private import gtkc.glib;
 public  import gtkc.glibtypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -65,8 +67,10 @@ public class Bytes
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GBytes* getBytesStruct()
+	public GBytes* getBytesStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gBytes;
 	}
 
@@ -83,6 +87,12 @@ public class Bytes
 	{
 		this.gBytes = gBytes;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
+			unref();
 	}
 
 

@@ -43,8 +43,10 @@ public  import gtkc.giotypes;
 public template PollableInputStreamT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GPollableInputStream* getPollableInputStreamStruct()
+	public GPollableInputStream* getPollableInputStreamStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GPollableInputStream*)getStruct();
 	}
 

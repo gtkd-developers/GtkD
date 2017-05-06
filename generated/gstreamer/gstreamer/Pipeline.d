@@ -88,8 +88,10 @@ public class Pipeline : Bin
 	protected GstPipeline* gstPipeline;
 
 	/** Get the main Gtk struct */
-	public GstPipeline* getPipelineStruct()
+	public GstPipeline* getPipelineStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstPipeline;
 	}
 

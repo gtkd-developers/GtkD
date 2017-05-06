@@ -92,8 +92,10 @@ public class GLContext : ObjectG
 	protected GdkGLContext* gdkGLContext;
 
 	/** Get the main Gtk struct */
-	public GdkGLContext* getGLContextStruct()
+	public GdkGLContext* getGLContextStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gdkGLContext;
 	}
 

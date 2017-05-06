@@ -44,8 +44,10 @@ public class ToggleAction : Action
 	protected GtkToggleAction* gtkToggleAction;
 
 	/** Get the main Gtk struct */
-	public GtkToggleAction* getToggleActionStruct()
+	public GtkToggleAction* getToggleActionStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkToggleAction;
 	}
 

@@ -47,8 +47,10 @@ public class Keymap : ObjectG
 	protected GdkKeymap* gdkKeymap;
 
 	/** Get the main Gtk struct */
-	public GdkKeymap* getKeymapStruct()
+	public GdkKeymap* getKeymapStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gdkKeymap;
 	}
 

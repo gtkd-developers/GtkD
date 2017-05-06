@@ -44,8 +44,10 @@ public class FilenameCompleter : ObjectG
 	protected GFilenameCompleter* gFilenameCompleter;
 
 	/** Get the main Gtk struct */
-	public GFilenameCompleter* getFilenameCompleterStruct()
+	public GFilenameCompleter* getFilenameCompleterStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gFilenameCompleter;
 	}
 

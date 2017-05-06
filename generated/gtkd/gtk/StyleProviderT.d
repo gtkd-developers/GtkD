@@ -41,8 +41,10 @@ public  import gtkc.gtktypes;
 public template StyleProviderT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GtkStyleProvider* getStyleProviderStruct()
+	public GtkStyleProvider* getStyleProviderStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GtkStyleProvider*)getStruct();
 	}
 

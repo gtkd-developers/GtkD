@@ -43,8 +43,10 @@ public class RegionIter
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GtkSourceRegionIter* getRegionIterStruct()
+	public GtkSourceRegionIter* getRegionIterStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSourceRegionIter;
 	}
 

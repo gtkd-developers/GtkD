@@ -38,8 +38,10 @@ public class SpinnerAccessible : WidgetAccessible, ImageIF
 	protected GtkSpinnerAccessible* gtkSpinnerAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkSpinnerAccessible* getSpinnerAccessibleStruct()
+	public GtkSpinnerAccessible* getSpinnerAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSpinnerAccessible;
 	}
 

@@ -28,6 +28,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gtkc.gio;
 public  import gtkc.giotypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -42,8 +44,10 @@ public class DBusAnnotationInfo
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GDBusAnnotationInfo* getDBusAnnotationInfoStruct()
+	public GDBusAnnotationInfo* getDBusAnnotationInfoStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gDBusAnnotationInfo;
 	}
 
@@ -60,6 +64,12 @@ public class DBusAnnotationInfo
 	{
 		this.gDBusAnnotationInfo = gDBusAnnotationInfo;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GIO) && ownedRef )
+			unref();
 	}
 
 	/**

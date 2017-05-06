@@ -44,8 +44,10 @@ public class ColorSelection : Box
 	protected GtkColorSelection* gtkColorSelection;
 
 	/** Get the main Gtk struct */
-	public GtkColorSelection* getColorSelectionStruct()
+	public GtkColorSelection* getColorSelectionStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkColorSelection;
 	}
 

@@ -62,8 +62,10 @@ public class ColorChooserWidget : Box, ColorChooserIF
 	protected GtkColorChooserWidget* gtkColorChooserWidget;
 
 	/** Get the main Gtk struct */
-	public GtkColorChooserWidget* getColorChooserWidgetStruct()
+	public GtkColorChooserWidget* getColorChooserWidgetStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkColorChooserWidget;
 	}
 

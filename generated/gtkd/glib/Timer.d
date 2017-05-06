@@ -39,8 +39,10 @@ public class Timer
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GTimer* getTimerStruct()
+	public GTimer* getTimerStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gTimer;
 	}
 

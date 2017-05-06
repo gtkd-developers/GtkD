@@ -459,8 +459,10 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 	protected GtkWidget* gtkWidget;
 
 	/** Get the main Gtk struct */
-	public GtkWidget* getWidgetStruct()
+	public GtkWidget* getWidgetStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkWidget;
 	}
 
@@ -3741,13 +3743,14 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *
 		 * Params:
 		 *     area = a rectangle
-		 *     intersection = rectangle to store intersection of @widget and @area
+		 *     intersection = rectangle to store
+		 *         intersection of @widget and @area
 		 *
 		 * Returns: %TRUE if there was an intersection
 		 */
-		public bool intersect(GdkRectangle* area, GdkRectangle* intersection)
+		public bool intersect(GdkRectangle* area, out GdkRectangle intersection)
 		{
-			return gtk_widget_intersect(gtkWidget, area, intersection) != 0;
+			return gtk_widget_intersect(gtkWidget, area, &intersection) != 0;
 		}
 
 		/**

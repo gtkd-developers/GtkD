@@ -247,8 +247,10 @@ public class Container : Widget
 	protected GtkContainer* gtkContainer;
 
 	/** Get the main Gtk struct */
-	public GtkContainer* getContainerStruct()
+	public GtkContainer* getContainerStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkContainer;
 	}
 

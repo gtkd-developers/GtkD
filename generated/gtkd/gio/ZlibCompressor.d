@@ -42,8 +42,10 @@ public class ZlibCompressor : ObjectG, ConverterIF
 	protected GZlibCompressor* gZlibCompressor;
 
 	/** Get the main Gtk struct */
-	public GZlibCompressor* getZlibCompressorStruct()
+	public GZlibCompressor* getZlibCompressorStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gZlibCompressor;
 	}
 

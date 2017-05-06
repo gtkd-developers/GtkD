@@ -38,8 +38,10 @@ public class Action : ObjectG, ActionIF
 	protected GAction* gAction;
 
 	/** Get the main Gtk struct */
-	public GAction* getActionStruct()
+	public GAction* getActionStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gAction;
 	}
 

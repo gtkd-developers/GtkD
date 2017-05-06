@@ -46,8 +46,10 @@ public class BindingSet
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GtkBindingSet* getBindingSetStruct()
+	public GtkBindingSet* getBindingSetStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkBindingSet;
 	}
 

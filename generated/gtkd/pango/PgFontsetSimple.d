@@ -45,8 +45,10 @@ public class PgFontsetSimple : PgFontset
 	protected PangoFontsetSimple* pangoFontsetSimple;
 
 	/** Get the main Gtk struct */
-	public PangoFontsetSimple* getPgFontsetSimpleStruct()
+	public PangoFontsetSimple* getPgFontsetSimpleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return pangoFontsetSimple;
 	}
 

@@ -48,7 +48,7 @@ public  import gtkc.gtktypes;
  */
 public interface BuildableIF{
 	/** Get the main Gtk struct */
-	public GtkBuildable* getBuildableStruct();
+	public GtkBuildable* getBuildableStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

@@ -38,8 +38,10 @@ public class ImageCellAccessible : RendererCellAccessible, ImageIF
 	protected GtkImageCellAccessible* gtkImageCellAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkImageCellAccessible* getImageCellAccessibleStruct()
+	public GtkImageCellAccessible* getImageCellAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkImageCellAccessible;
 	}
 

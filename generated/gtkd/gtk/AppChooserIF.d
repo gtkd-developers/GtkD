@@ -53,7 +53,7 @@ public  import gtkc.gtktypes;
  */
 public interface AppChooserIF{
 	/** Get the main Gtk struct */
-	public GtkAppChooser* getAppChooserStruct();
+	public GtkAppChooser* getAppChooserStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

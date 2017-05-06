@@ -40,8 +40,10 @@ public class CellAccessible : Accessible, ActionIF, ComponentIF
 	protected GtkCellAccessible* gtkCellAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkCellAccessible* getCellAccessibleStruct()
+	public GtkCellAccessible* getCellAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkCellAccessible;
 	}
 

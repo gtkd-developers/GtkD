@@ -53,8 +53,10 @@ public class ScannerG
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GScanner* getScannerGStruct()
+	public GScanner* getScannerGStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gScanner;
 	}
 

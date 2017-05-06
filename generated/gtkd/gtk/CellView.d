@@ -69,8 +69,10 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 	protected GtkCellView* gtkCellView;
 
 	/** Get the main Gtk struct */
-	public GtkCellView* getCellViewStruct()
+	public GtkCellView* getCellViewStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkCellView;
 	}
 

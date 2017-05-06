@@ -52,8 +52,10 @@ public class HeaderBar : Container
 	protected GtkHeaderBar* gtkHeaderBar;
 
 	/** Get the main Gtk struct */
-	public GtkHeaderBar* getHeaderBarStruct()
+	public GtkHeaderBar* getHeaderBarStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkHeaderBar;
 	}
 

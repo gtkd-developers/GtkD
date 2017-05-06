@@ -43,8 +43,10 @@ public  import std.algorithm;
 public template ColorChooserT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GtkColorChooser* getColorChooserStruct()
+	public GtkColorChooser* getColorChooserStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GtkColorChooser*)getStruct();
 	}
 

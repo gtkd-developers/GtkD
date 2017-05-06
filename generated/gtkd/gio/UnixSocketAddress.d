@@ -54,8 +54,10 @@ public class UnixSocketAddress : SocketAddress
 	protected GUnixSocketAddress* gUnixSocketAddress;
 
 	/** Get the main Gtk struct */
-	public GUnixSocketAddress* getUnixSocketAddressStruct()
+	public GUnixSocketAddress* getUnixSocketAddressStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gUnixSocketAddress;
 	}
 

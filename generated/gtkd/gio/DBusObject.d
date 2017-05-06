@@ -38,8 +38,10 @@ public class DBusObject : ObjectG, DBusObjectIF
 	protected GDBusObject* gDBusObject;
 
 	/** Get the main Gtk struct */
-	public GDBusObject* getDBusObjectStruct()
+	public GDBusObject* getDBusObjectStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gDBusObject;
 	}
 

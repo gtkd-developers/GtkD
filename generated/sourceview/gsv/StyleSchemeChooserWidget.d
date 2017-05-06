@@ -43,8 +43,10 @@ public class StyleSchemeChooserWidget : Bin, StyleSchemeChooserIF
 	protected GtkSourceStyleSchemeChooserWidget* gtkSourceStyleSchemeChooserWidget;
 
 	/** Get the main Gtk struct */
-	public GtkSourceStyleSchemeChooserWidget* getStyleSchemeChooserWidgetStruct()
+	public GtkSourceStyleSchemeChooserWidget* getStyleSchemeChooserWidgetStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSourceStyleSchemeChooserWidget;
 	}
 

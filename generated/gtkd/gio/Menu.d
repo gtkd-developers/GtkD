@@ -51,8 +51,10 @@ public class Menu : MenuModel
 	protected GMenu* gMenu;
 
 	/** Get the main Gtk struct */
-	public GMenu* getMenuStruct()
+	public GMenu* getMenuStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gMenu;
 	}
 

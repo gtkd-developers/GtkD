@@ -36,8 +36,10 @@ public class ToggleButtonAccessible : ButtonAccessible
 	protected GtkToggleButtonAccessible* gtkToggleButtonAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkToggleButtonAccessible* getToggleButtonAccessibleStruct()
+	public GtkToggleButtonAccessible* getToggleButtonAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkToggleButtonAccessible;
 	}
 

@@ -32,6 +32,8 @@ private import gtk.TreeModelIF;
 private import gtk.TreePath;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -46,8 +48,10 @@ public class TreeRowReference
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GtkTreeRowReference* getTreeRowReferenceStruct()
+	public GtkTreeRowReference* getTreeRowReferenceStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkTreeRowReference;
 	}
 
@@ -64,6 +68,12 @@ public class TreeRowReference
 	{
 		this.gtkTreeRowReference = gtkTreeRowReference;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
+			free();
 	}
 
 

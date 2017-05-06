@@ -50,8 +50,10 @@ public class MenuBar : MenuShell
 	protected GtkMenuBar* gtkMenuBar;
 
 	/** Get the main Gtk struct */
-	public GtkMenuBar* getMenuBarStruct()
+	public GtkMenuBar* getMenuBarStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkMenuBar;
 	}
 

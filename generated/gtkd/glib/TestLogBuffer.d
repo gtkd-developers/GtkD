@@ -28,6 +28,8 @@ private import glib.ConstructionException;
 private import glib.TestLogMsg;
 private import gtkc.glib;
 public  import gtkc.glibtypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /** */
@@ -38,8 +40,10 @@ public class TestLogBuffer
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GTestLogBuffer* getTestLogBufferStruct()
+	public GTestLogBuffer* getTestLogBufferStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gTestLogBuffer;
 	}
 
@@ -56,6 +60,12 @@ public class TestLogBuffer
 	{
 		this.gTestLogBuffer = gTestLogBuffer;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
+			free();
 	}
 
 

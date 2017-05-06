@@ -79,8 +79,10 @@ public class TextView : Container, ScrollableIF
 	protected GtkTextView* gtkTextView;
 
 	/** Get the main Gtk struct */
-	public GtkTextView* getTextViewStruct()
+	public GtkTextView* getTextViewStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkTextView;
 	}
 

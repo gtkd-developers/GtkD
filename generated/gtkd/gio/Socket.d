@@ -105,8 +105,10 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	protected GSocket* gSocket;
 
 	/** Get the main Gtk struct */
-	public GSocket* getSocketStruct()
+	public GSocket* getSocketStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gSocket;
 	}
 

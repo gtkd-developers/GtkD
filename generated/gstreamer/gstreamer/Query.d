@@ -69,8 +69,10 @@ public class Query
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GstQuery* getQueryStruct()
+	public GstQuery* getQueryStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstQuery;
 	}
 
@@ -451,7 +453,7 @@ public class Query
 	 */
 	public this(GstQueryType type, Structure structure)
 	{
-		auto p = gst_query_new_custom(type, (structure is null) ? null : structure.getStructureStruct());
+		auto p = gst_query_new_custom(type, (structure is null) ? null : structure.getStructureStruct(true));
 		
 		if(p is null)
 		{

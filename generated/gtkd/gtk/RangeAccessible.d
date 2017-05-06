@@ -38,8 +38,10 @@ public class RangeAccessible : WidgetAccessible, ValueIF
 	protected GtkRangeAccessible* gtkRangeAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkRangeAccessible* getRangeAccessibleStruct()
+	public GtkRangeAccessible* getRangeAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkRangeAccessible;
 	}
 

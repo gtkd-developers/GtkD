@@ -185,8 +185,10 @@ public class ListStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	protected GtkListStore* gtkListStore;
 
 	/** Get the main Gtk struct */
-	public GtkListStore* getListStoreStruct()
+	public GtkListStore* getListStoreStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkListStore;
 	}
 

@@ -28,6 +28,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gtkc.pango;
 public  import gtkc.pangotypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -41,8 +43,10 @@ public class PgColor
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public PangoColor* getPgColorStruct()
+	public PangoColor* getPgColorStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return pangoColor;
 	}
 
@@ -59,6 +63,12 @@ public class PgColor
 	{
 		this.pangoColor = pangoColor;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.PANGO) && ownedRef )
+			free();
 	}
 
 

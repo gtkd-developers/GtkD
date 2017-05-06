@@ -77,8 +77,10 @@ public class Caps
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GstCaps* getCapsStruct()
+	public GstCaps* getCapsStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstCaps;
 	}
 
@@ -218,7 +220,7 @@ public class Caps
 	 */
 	public void appendStructure(Structure structure)
 	{
-		gst_caps_append_structure(gstCaps, (structure is null) ? null : structure.getStructureStruct());
+		gst_caps_append_structure(gstCaps, (structure is null) ? null : structure.getStructureStruct(true));
 	}
 
 	/**
@@ -233,7 +235,7 @@ public class Caps
 	 */
 	public void appendStructureFull(Structure structure, CapsFeatures features)
 	{
-		gst_caps_append_structure_full(gstCaps, (structure is null) ? null : structure.getStructureStruct(), (features is null) ? null : features.getCapsFeaturesStruct());
+		gst_caps_append_structure_full(gstCaps, (structure is null) ? null : structure.getStructureStruct(true), (features is null) ? null : features.getCapsFeaturesStruct(true));
 	}
 
 	/**
@@ -639,7 +641,7 @@ public class Caps
 	 */
 	public Caps mergeStructure(Structure structure)
 	{
-		auto p = gst_caps_merge_structure(gstCaps, (structure is null) ? null : structure.getStructureStruct());
+		auto p = gst_caps_merge_structure(gstCaps, (structure is null) ? null : structure.getStructureStruct(true));
 		
 		if(p is null)
 		{
@@ -662,7 +664,7 @@ public class Caps
 	 */
 	public Caps mergeStructureFull(Structure structure, CapsFeatures features)
 	{
-		auto p = gst_caps_merge_structure_full(gstCaps, (structure is null) ? null : structure.getStructureStruct(), (features is null) ? null : features.getCapsFeaturesStruct());
+		auto p = gst_caps_merge_structure_full(gstCaps, (structure is null) ? null : structure.getStructureStruct(true), (features is null) ? null : features.getCapsFeaturesStruct(true));
 		
 		if(p is null)
 		{
@@ -718,7 +720,7 @@ public class Caps
 	 */
 	public void setFeatures(uint index, CapsFeatures features)
 	{
-		gst_caps_set_features(gstCaps, index, (features is null) ? null : features.getCapsFeaturesStruct());
+		gst_caps_set_features(gstCaps, index, (features is null) ? null : features.getCapsFeaturesStruct(true));
 	}
 
 	/**

@@ -113,8 +113,10 @@ public class PopoverMenu : Popover
 	protected GtkPopoverMenu* gtkPopoverMenu;
 
 	/** Get the main Gtk struct */
-	public GtkPopoverMenu* getPopoverMenuStruct()
+	public GtkPopoverMenu* getPopoverMenuStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkPopoverMenu;
 	}
 

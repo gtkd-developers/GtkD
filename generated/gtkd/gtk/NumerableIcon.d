@@ -55,8 +55,10 @@ public class NumerableIcon : EmblemedIcon
 	protected GtkNumerableIcon* gtkNumerableIcon;
 
 	/** Get the main Gtk struct */
-	public GtkNumerableIcon* getNumerableIconStruct()
+	public GtkNumerableIcon* getNumerableIconStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkNumerableIcon;
 	}
 

@@ -142,8 +142,10 @@ public class Bin : Element, ChildProxyIF
 	protected GstBin* gstBin;
 
 	/** Get the main Gtk struct */
-	public GstBin* getBinStruct()
+	public GstBin* getBinStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstBin;
 	}
 

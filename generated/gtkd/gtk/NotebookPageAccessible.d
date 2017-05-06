@@ -42,8 +42,10 @@ public class NotebookPageAccessible : ObjectAtk, ComponentIF
 	protected GtkNotebookPageAccessible* gtkNotebookPageAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkNotebookPageAccessible* getNotebookPageAccessibleStruct()
+	public GtkNotebookPageAccessible* getNotebookPageAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkNotebookPageAccessible;
 	}
 

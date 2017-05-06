@@ -38,8 +38,10 @@ public class ProxyResolver : ObjectG, ProxyResolverIF
 	protected GProxyResolver* gProxyResolver;
 
 	/** Get the main Gtk struct */
-	public GProxyResolver* getProxyResolverStruct()
+	public GProxyResolver* getProxyResolverStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gProxyResolver;
 	}
 

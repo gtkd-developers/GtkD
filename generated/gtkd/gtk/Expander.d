@@ -120,8 +120,10 @@ public class Expander : Bin
 	protected GtkExpander* gtkExpander;
 
 	/** Get the main Gtk struct */
-	public GtkExpander* getExpanderStruct()
+	public GtkExpander* getExpanderStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkExpander;
 	}
 

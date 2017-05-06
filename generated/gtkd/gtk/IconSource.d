@@ -42,8 +42,10 @@ public class IconSource
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GtkIconSource* getIconSourceStruct()
+	public GtkIconSource* getIconSourceStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkIconSource;
 	}
 
@@ -65,13 +67,9 @@ public class IconSource
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
-		{
-			gtk_icon_source_free(gtkIconSource);
-		}
+			free();
 	}
 
-	/**
-	 */
 
 	/** */
 	public static GType getType()

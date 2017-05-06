@@ -100,8 +100,10 @@ public class ToggleButton : Button
 	protected GtkToggleButton* gtkToggleButton;
 
 	/** Get the main Gtk struct */
-	public GtkToggleButton* getToggleButtonStruct()
+	public GtkToggleButton* getToggleButtonStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkToggleButton;
 	}
 

@@ -66,8 +66,10 @@ public class MenuToolButton : ToolButton
 	protected GtkMenuToolButton* gtkMenuToolButton;
 
 	/** Get the main Gtk struct */
-	public GtkMenuToolButton* getMenuToolButtonStruct()
+	public GtkMenuToolButton* getMenuToolButtonStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkMenuToolButton;
 	}
 

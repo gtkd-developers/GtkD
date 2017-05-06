@@ -50,8 +50,10 @@ public class Range : Widget, OrientableIF
 	protected GtkRange* gtkRange;
 
 	/** Get the main Gtk struct */
-	public GtkRange* getRangeStruct()
+	public GtkRange* getRangeStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkRange;
 	}
 

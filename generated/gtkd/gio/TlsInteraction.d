@@ -65,8 +65,10 @@ public class TlsInteraction : ObjectG
 	protected GTlsInteraction* gTlsInteraction;
 
 	/** Get the main Gtk struct */
-	public GTlsInteraction* getTlsInteractionStruct()
+	public GTlsInteraction* getTlsInteractionStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gTlsInteraction;
 	}
 

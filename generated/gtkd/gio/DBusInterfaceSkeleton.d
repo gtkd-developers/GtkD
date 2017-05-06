@@ -52,8 +52,10 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 	protected GDBusInterfaceSkeleton* gDBusInterfaceSkeleton;
 
 	/** Get the main Gtk struct */
-	public GDBusInterfaceSkeleton* getDBusInterfaceSkeletonStruct()
+	public GDBusInterfaceSkeleton* getDBusInterfaceSkeletonStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gDBusInterfaceSkeleton;
 	}
 

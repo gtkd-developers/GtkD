@@ -63,8 +63,10 @@ public class RecentChooserMenu : Menu, ActivatableIF, RecentChooserIF
 	protected GtkRecentChooserMenu* gtkRecentChooserMenu;
 
 	/** Get the main Gtk struct */
-	public GtkRecentChooserMenu* getRecentChooserMenuStruct()
+	public GtkRecentChooserMenu* getRecentChooserMenuStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkRecentChooserMenu;
 	}
 

@@ -51,8 +51,10 @@ public class DeviceProviderFactory : PluginFeature
 	protected GstDeviceProviderFactory* gstDeviceProviderFactory;
 
 	/** Get the main Gtk struct */
-	public GstDeviceProviderFactory* getDeviceProviderFactoryStruct()
+	public GstDeviceProviderFactory* getDeviceProviderFactoryStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstDeviceProviderFactory;
 	}
 

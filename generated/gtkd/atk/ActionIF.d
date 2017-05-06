@@ -50,7 +50,7 @@ public  import gtkc.atktypes;
  */
 public interface ActionIF{
 	/** Get the main Gtk struct */
-	public AtkAction* getActionStruct();
+	public AtkAction* getActionStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

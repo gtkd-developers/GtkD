@@ -43,8 +43,10 @@ public  import gtkc.giotypes;
 public template TlsFileDatabaseT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GTlsFileDatabase* getTlsFileDatabaseStruct()
+	public GTlsFileDatabase* getTlsFileDatabaseStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GTlsFileDatabase*)getStruct();
 	}
 

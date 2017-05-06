@@ -28,6 +28,8 @@ private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -85,8 +87,10 @@ public class Segment
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GstSegment* getSegmentStruct()
+	public GstSegment* getSegmentStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstSegment;
 	}
 
@@ -103,6 +107,12 @@ public class Segment
 	{
 		this.gstSegment = gstSegment;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GSTREAMER) && ownedRef )
+			free();
 	}
 
 

@@ -108,8 +108,10 @@ public class IMContext : ObjectG
 	protected GtkIMContext* gtkIMContext;
 
 	/** Get the main Gtk struct */
-	public GtkIMContext* getIMContextStruct()
+	public GtkIMContext* getIMContextStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkIMContext;
 	}
 

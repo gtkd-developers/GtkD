@@ -43,8 +43,10 @@ public class EventBox : Bin
 	protected GtkEventBox* gtkEventBox;
 
 	/** Get the main Gtk struct */
-	public GtkEventBox* getEventBoxStruct()
+	public GtkEventBox* getEventBoxStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkEventBox;
 	}
 

@@ -45,8 +45,10 @@ public class MountOperation : GioMountOperation
 	protected GtkMountOperation* gtkMountOperation;
 
 	/** Get the main Gtk struct */
-	public GtkMountOperation* getGtkMountOperationStruct()
+	public GtkMountOperation* getGtkMountOperationStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkMountOperation;
 	}
 

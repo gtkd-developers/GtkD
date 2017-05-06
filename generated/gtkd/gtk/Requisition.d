@@ -44,8 +44,10 @@ public class Requisition
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GtkRequisition* getRequisitionStruct()
+	public GtkRequisition* getRequisitionStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkRequisition;
 	}
 
@@ -67,13 +69,9 @@ public class Requisition
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
-		{
-			gtk_requisition_free(gtkRequisition);
-		}
+			free();
 	}
 
-	/**
-	 */
 
 	/** */
 	public static GType getType()

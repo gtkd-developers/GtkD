@@ -29,6 +29,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gsvc.gsv;
 public  import gsvc.gsvtypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /** */
@@ -39,8 +41,10 @@ public class SourceEncoding
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GtkSourceEncoding* getSourceEncodingStruct()
+	public GtkSourceEncoding* getSourceEncodingStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSourceEncoding;
 	}
 
@@ -57,6 +61,12 @@ public class SourceEncoding
 	{
 		this.gtkSourceEncoding = gtkSourceEncoding;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GSV) && ownedRef )
+			free();
 	}
 
 

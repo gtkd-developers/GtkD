@@ -51,8 +51,10 @@ public class CellRendererPixbuf : CellRenderer
 	protected GtkCellRendererPixbuf* gtkCellRendererPixbuf;
 
 	/** Get the main Gtk struct */
-	public GtkCellRendererPixbuf* getCellRendererPixbufStruct()
+	public GtkCellRendererPixbuf* getCellRendererPixbufStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkCellRendererPixbuf;
 	}
 

@@ -29,6 +29,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gtkc.gio;
 public  import gtkc.giotypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -42,8 +44,10 @@ public class FileAttributeInfoList
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GFileAttributeInfoList* getFileAttributeInfoListStruct()
+	public GFileAttributeInfoList* getFileAttributeInfoListStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gFileAttributeInfoList;
 	}
 
@@ -60,6 +64,12 @@ public class FileAttributeInfoList
 	{
 		this.gFileAttributeInfoList = gFileAttributeInfoList;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GIO) && ownedRef )
+			unref();
 	}
 
 

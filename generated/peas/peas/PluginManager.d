@@ -47,8 +47,10 @@ public class PluginManager : Box
 	protected PeasGtkPluginManager* peasGtkPluginManager;
 
 	/** Get the main Gtk struct */
-	public PeasGtkPluginManager* getPluginManagerStruct()
+	public PeasGtkPluginManager* getPluginManagerStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return peasGtkPluginManager;
 	}
 

@@ -63,8 +63,10 @@ public class AppLaunchContext : GioAppLaunchContext
 	protected GdkAppLaunchContext* gdkAppLaunchContext;
 
 	/** Get the main Gtk struct */
-	public GdkAppLaunchContext* getGdkAppLaunchContextStruct()
+	public GdkAppLaunchContext* getGdkAppLaunchContextStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gdkAppLaunchContext;
 	}
 

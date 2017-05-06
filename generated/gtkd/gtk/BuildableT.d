@@ -49,8 +49,10 @@ public  import gtkc.gtktypes;
 public template BuildableT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GtkBuildable* getBuildableStruct()
+	public GtkBuildable* getBuildableStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GtkBuildable*)getStruct();
 	}
 

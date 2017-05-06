@@ -112,8 +112,10 @@ public class IconFactory : ObjectG, BuildableIF
 	protected GtkIconFactory* gtkIconFactory;
 
 	/** Get the main Gtk struct */
-	public GtkIconFactory* getIconFactoryStruct()
+	public GtkIconFactory* getIconFactoryStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkIconFactory;
 	}
 

@@ -33,6 +33,8 @@ private import gtk.TextBuffer;
 private import gtk.Widget;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /** */
@@ -43,8 +45,10 @@ public class SelectionData
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GtkSelectionData* getSelectionDataStruct()
+	public GtkSelectionData* getSelectionDataStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSelectionData;
 	}
 
@@ -61,6 +65,12 @@ public class SelectionData
 	{
 		this.gtkSelectionData = gtkSelectionData;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
+			free();
 	}
 
 	/**

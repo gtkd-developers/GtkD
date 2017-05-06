@@ -41,8 +41,10 @@ public class ParamSpecFraction
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GstParamSpecFraction* getParamSpecFractionStruct()
+	public GstParamSpecFraction* getParamSpecFractionStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstParamSpecFraction;
 	}
 

@@ -40,8 +40,10 @@ public class ArrayG
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GArray* getArrayGStruct()
+	public GArray* getArrayGStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gArray;
 	}
 

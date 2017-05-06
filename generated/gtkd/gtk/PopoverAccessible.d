@@ -36,8 +36,10 @@ public class PopoverAccessible : ContainerAccessible
 	protected GtkPopoverAccessible* gtkPopoverAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkPopoverAccessible* getPopoverAccessibleStruct()
+	public GtkPopoverAccessible* getPopoverAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkPopoverAccessible;
 	}
 

@@ -130,8 +130,10 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	protected GtkEntry* gtkEntry;
 
 	/** Get the main Gtk struct */
-	public GtkEntry* getEntryStruct()
+	public GtkEntry* getEntryStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkEntry;
 	}
 

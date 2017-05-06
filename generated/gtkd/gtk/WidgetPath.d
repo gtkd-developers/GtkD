@@ -91,8 +91,10 @@ public class WidgetPath
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GtkWidgetPath* getWidgetPathStruct()
+	public GtkWidgetPath* getWidgetPathStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkWidgetPath;
 	}
 
@@ -114,13 +116,9 @@ public class WidgetPath
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
-		{
-			gtk_widget_path_free(gtkWidgetPath);
-		}
+			unref();
 	}
 
-	/**
-	 */
 
 	/** */
 	public static GType getType()

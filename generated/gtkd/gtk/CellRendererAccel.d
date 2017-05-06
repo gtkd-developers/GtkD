@@ -48,8 +48,10 @@ public class CellRendererAccel : CellRendererText
 	protected GtkCellRendererAccel* gtkCellRendererAccel;
 
 	/** Get the main Gtk struct */
-	public GtkCellRendererAccel* getCellRendererAccelStruct()
+	public GtkCellRendererAccel* getCellRendererAccelStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkCellRendererAccel;
 	}
 

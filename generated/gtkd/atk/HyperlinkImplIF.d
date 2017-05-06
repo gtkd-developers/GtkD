@@ -62,7 +62,7 @@ public  import gtkc.atktypes;
  */
 public interface HyperlinkImplIF{
 	/** Get the main Gtk struct */
-	public AtkHyperlinkImpl* getHyperlinkImplStruct();
+	public AtkHyperlinkImpl* getHyperlinkImplStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

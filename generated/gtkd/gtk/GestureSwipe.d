@@ -53,8 +53,10 @@ public class GestureSwipe : GestureSingle
 	protected GtkGestureSwipe* gtkGestureSwipe;
 
 	/** Get the main Gtk struct */
-	public GtkGestureSwipe* getGestureSwipeStruct()
+	public GtkGestureSwipe* getGestureSwipeStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkGestureSwipe;
 	}
 

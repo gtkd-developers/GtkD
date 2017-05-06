@@ -56,8 +56,10 @@ public class CellRendererCombo : CellRendererText
 	protected GtkCellRendererCombo* gtkCellRendererCombo;
 
 	/** Get the main Gtk struct */
-	public GtkCellRendererCombo* getCellRendererComboStruct()
+	public GtkCellRendererCombo* getCellRendererComboStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkCellRendererCombo;
 	}
 

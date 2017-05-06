@@ -41,8 +41,10 @@ public class ProxyPad : Pad
 	protected GstProxyPad* gstProxyPad;
 
 	/** Get the main Gtk struct */
-	public GstProxyPad* getProxyPadStruct()
+	public GstProxyPad* getProxyPadStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstProxyPad;
 	}
 

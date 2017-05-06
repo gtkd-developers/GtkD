@@ -49,8 +49,10 @@ public class GestureSingle : Gesture
 	protected GtkGestureSingle* gtkGestureSingle;
 
 	/** Get the main Gtk struct */
-	public GtkGestureSingle* getGestureSingleStruct()
+	public GtkGestureSingle* getGestureSingleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkGestureSingle;
 	}
 

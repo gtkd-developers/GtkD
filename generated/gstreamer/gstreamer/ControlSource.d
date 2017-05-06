@@ -50,8 +50,10 @@ public class ControlSource : ObjectGst
 	protected GstControlSource* gstControlSource;
 
 	/** Get the main Gtk struct */
-	public GstControlSource* getControlSourceStruct()
+	public GstControlSource* getControlSourceStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstControlSource;
 	}
 

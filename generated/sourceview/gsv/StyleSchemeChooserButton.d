@@ -47,8 +47,10 @@ public class StyleSchemeChooserButton : Button, StyleSchemeChooserIF
 	protected GtkSourceStyleSchemeChooserButton* gtkSourceStyleSchemeChooserButton;
 
 	/** Get the main Gtk struct */
-	public GtkSourceStyleSchemeChooserButton* getStyleSchemeChooserButtonStruct()
+	public GtkSourceStyleSchemeChooserButton* getStyleSchemeChooserButtonStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSourceStyleSchemeChooserButton;
 	}
 

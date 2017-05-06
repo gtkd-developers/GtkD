@@ -50,8 +50,10 @@ public class Accessible : ObjectAtk
 	protected GtkAccessible* gtkAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkAccessible* getAccessibleStruct()
+	public GtkAccessible* getAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkAccessible;
 	}
 

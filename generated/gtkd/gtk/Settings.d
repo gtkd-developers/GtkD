@@ -78,8 +78,10 @@ public class Settings : ObjectG, StyleProviderIF
 	protected GtkSettings* gtkSettings;
 
 	/** Get the main Gtk struct */
-	public GtkSettings* getSettingsStruct()
+	public GtkSettings* getSettingsStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSettings;
 	}
 

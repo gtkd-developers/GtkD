@@ -168,8 +168,10 @@ public  import std.algorithm;
 public template FileChooserT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GtkFileChooser* getFileChooserStruct()
+	public GtkFileChooser* getFileChooserStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GtkFileChooser*)getStruct();
 	}
 

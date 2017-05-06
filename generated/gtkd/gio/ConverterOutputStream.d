@@ -49,8 +49,10 @@ public class ConverterOutputStream : FilterOutputStream, PollableOutputStreamIF
 	protected GConverterOutputStream* gConverterOutputStream;
 
 	/** Get the main Gtk struct */
-	public GConverterOutputStream* getConverterOutputStreamStruct()
+	public GConverterOutputStream* getConverterOutputStreamStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gConverterOutputStream;
 	}
 

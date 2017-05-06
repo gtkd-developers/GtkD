@@ -22,7 +22,7 @@
 
 # must start with wrap
 wrap: gstreamer
-file: /usr/share/gir-1.0/Gst-1.0.gir
+file: Gst-1.0.gir
 
 addAliases: start
 	public import gtkc.glibtypes;

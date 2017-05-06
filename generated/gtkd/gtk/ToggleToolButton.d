@@ -51,8 +51,10 @@ public class ToggleToolButton : ToolButton
 	protected GtkToggleToolButton* gtkToggleToolButton;
 
 	/** Get the main Gtk struct */
-	public GtkToggleToolButton* getToggleToolButtonStruct()
+	public GtkToggleToolButton* getToggleToolButtonStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkToggleToolButton;
 	}
 

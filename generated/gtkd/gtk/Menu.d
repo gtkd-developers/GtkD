@@ -122,8 +122,10 @@ public class Menu : MenuShell
 	protected GtkMenu* gtkMenu;
 
 	/** Get the main Gtk struct */
-	public GtkMenu* getMenuStruct()
+	public GtkMenu* getMenuStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkMenu;
 	}
 

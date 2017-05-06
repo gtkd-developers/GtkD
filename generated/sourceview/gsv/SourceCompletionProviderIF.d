@@ -41,7 +41,7 @@ private import gtk.Widget;
 /** */
 public interface SourceCompletionProviderIF{
 	/** Get the main Gtk struct */
-	public GtkSourceCompletionProvider* getSourceCompletionProviderStruct();
+	public GtkSourceCompletionProvider* getSourceCompletionProviderStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

@@ -94,8 +94,10 @@ public class ObjectGst : ObjectG
 	protected GstObject* gstObject;
 
 	/** Get the main Gtk struct */
-	public GstObject* getObjectGstStruct()
+	public GstObject* getObjectGstStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstObject;
 	}
 

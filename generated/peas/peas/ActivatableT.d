@@ -34,8 +34,10 @@ public  import peasc.peastypes;
 public template ActivatableT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public PeasActivatable* getActivatableStruct()
+	public PeasActivatable* getActivatableStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(PeasActivatable*)getStruct();
 	}
 

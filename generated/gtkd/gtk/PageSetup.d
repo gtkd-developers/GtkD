@@ -87,8 +87,10 @@ public class PageSetup : ObjectG
 	protected GtkPageSetup* gtkPageSetup;
 
 	/** Get the main Gtk struct */
-	public GtkPageSetup* getPageSetupStruct()
+	public GtkPageSetup* getPageSetupStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkPageSetup;
 	}
 

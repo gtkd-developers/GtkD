@@ -55,8 +55,10 @@ public class TlsConnection : IOStream
 	protected GTlsConnection* gTlsConnection;
 
 	/** Get the main Gtk struct */
-	public GTlsConnection* getTlsConnectionStruct()
+	public GTlsConnection* getTlsConnectionStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gTlsConnection;
 	}
 

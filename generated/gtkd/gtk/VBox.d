@@ -61,8 +61,10 @@ public class VBox : Box
 	protected GtkVBox* gtkVBox;
 
 	/** Get the main Gtk struct */
-	public GtkVBox* getVBoxStruct()
+	public GtkVBox* getVBoxStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkVBox;
 	}
 

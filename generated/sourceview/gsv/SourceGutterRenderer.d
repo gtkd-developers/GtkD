@@ -44,8 +44,10 @@ public class SourceGutterRenderer : ObjectG
 	protected GtkSourceGutterRenderer* gtkSourceGutterRenderer;
 
 	/** Get the main Gtk struct */
-	public GtkSourceGutterRenderer* getSourceGutterRendererStruct()
+	public GtkSourceGutterRenderer* getSourceGutterRendererStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSourceGutterRenderer;
 	}
 

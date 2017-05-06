@@ -31,6 +31,8 @@ private import glib.GException;
 private import glib.Str;
 private import gtkc.glib;
 public  import gtkc.glibtypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -44,8 +46,10 @@ public class KeyFile
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GKeyFile* getKeyFileStruct()
+	public GKeyFile* getKeyFileStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gKeyFile;
 	}
 
@@ -62,6 +66,12 @@ public class KeyFile
 	{
 		this.gKeyFile = gKeyFile;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
+			unref();
 	}
 
 

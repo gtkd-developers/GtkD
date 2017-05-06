@@ -41,8 +41,10 @@ public class PixbufSimpleAnimation : PixbufAnimation
 	protected GdkPixbufSimpleAnim* gdkPixbufSimpleAnim;
 
 	/** Get the main Gtk struct */
-	public GdkPixbufSimpleAnim* getPixbufSimpleAnimationStruct()
+	public GdkPixbufSimpleAnim* getPixbufSimpleAnimationStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gdkPixbufSimpleAnim;
 	}
 

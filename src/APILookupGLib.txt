@@ -21,8 +21,8 @@
 
 # must start with wrap
 wrap: glib
-file: /usr/share/gir-1.0/GLib-2.0.gir
-file: /usr/share/gir-1.0/GModule-2.0.gir
+file: GLib-2.0.gir
+file: GModule-2.0.gir
 
 addAliases: start
 	public alias uint uid_t;
@@ -232,8 +232,6 @@ code: start
 code: end
 
 struct: DateTime
-import: gtkd.Loader
-import: gtkd.paths
 structWrap: gpointer DateTime
 noCode: new_now_utc
 noCode: new_now_local
@@ -320,14 +318,6 @@ code: start
 			throw new ConstructionException("null returned by g_date_time_new_from_timeval_local((tv is null) ? null : tv.getTimeValStruct())");
 		}
 		this(cast(GDateTime*) p);
-	}
-
-	~this ()
-	{
-		if ( Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
-		{
-			g_date_time_unref(gDateTime);
-		}
 	}
 
 	/** */

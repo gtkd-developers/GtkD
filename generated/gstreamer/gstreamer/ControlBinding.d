@@ -43,8 +43,10 @@ public class ControlBinding : ObjectGst
 	protected GstControlBinding* gstControlBinding;
 
 	/** Get the main Gtk struct */
-	public GstControlBinding* getControlBindingStruct()
+	public GstControlBinding* getControlBindingStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstControlBinding;
 	}
 

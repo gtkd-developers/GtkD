@@ -59,8 +59,10 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	protected GtkTreeViewColumn* gtkTreeViewColumn;
 
 	/** Get the main Gtk struct */
-	public GtkTreeViewColumn* getTreeViewColumnStruct()
+	public GtkTreeViewColumn* getTreeViewColumnStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkTreeViewColumn;
 	}
 

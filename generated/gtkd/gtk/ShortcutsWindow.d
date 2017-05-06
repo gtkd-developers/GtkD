@@ -79,8 +79,10 @@ public class ShortcutsWindow : Window
 	protected GtkShortcutsWindow* gtkShortcutsWindow;
 
 	/** Get the main Gtk struct */
-	public GtkShortcutsWindow* getShortcutsWindowStruct()
+	public GtkShortcutsWindow* getShortcutsWindowStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkShortcutsWindow;
 	}
 

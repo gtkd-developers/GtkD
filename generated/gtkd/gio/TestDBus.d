@@ -113,8 +113,10 @@ public class TestDBus : ObjectG
 	protected GTestDBus* gTestDBus;
 
 	/** Get the main Gtk struct */
-	public GTestDBus* getTestDBusStruct()
+	public GTestDBus* getTestDBusStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gTestDBus;
 	}
 

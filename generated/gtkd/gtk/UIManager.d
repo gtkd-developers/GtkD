@@ -286,8 +286,10 @@ public class UIManager : ObjectG, BuildableIF
 	protected GtkUIManager* gtkUIManager;
 
 	/** Get the main Gtk struct */
-	public GtkUIManager* getUIManagerStruct()
+	public GtkUIManager* getUIManagerStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkUIManager;
 	}
 

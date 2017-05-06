@@ -30,6 +30,8 @@ private import glib.Variant;
 private import glib.VariantType;
 private import gtkc.glib;
 public  import gtkc.glibtypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -48,8 +50,10 @@ public class VariantBuilder
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GVariantBuilder* getVariantBuilderStruct()
+	public GVariantBuilder* getVariantBuilderStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gVariantBuilder;
 	}
 
@@ -66,6 +70,12 @@ public class VariantBuilder
 	{
 		this.gVariantBuilder = gVariantBuilder;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
+			unref();
 	}
 
 

@@ -57,8 +57,10 @@ public class Screen : ObjectG
 	protected GdkScreen* gdkScreen;
 
 	/** Get the main Gtk struct */
-	public GdkScreen* getScreenStruct()
+	public GdkScreen* getScreenStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gdkScreen;
 	}
 

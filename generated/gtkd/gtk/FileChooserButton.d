@@ -75,8 +75,10 @@ public class FileChooserButton : Box, FileChooserIF
 	protected GtkFileChooserButton* gtkFileChooserButton;
 
 	/** Get the main Gtk struct */
-	public GtkFileChooserButton* getFileChooserButtonStruct()
+	public GtkFileChooserButton* getFileChooserButtonStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkFileChooserButton;
 	}
 

@@ -45,8 +45,10 @@ public class BytesIcon : ObjectG, IconIF, LoadableIconIF
 	protected GBytesIcon* gBytesIcon;
 
 	/** Get the main Gtk struct */
-	public GBytesIcon* getBytesIconStruct()
+	public GBytesIcon* getBytesIconStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gBytesIcon;
 	}
 

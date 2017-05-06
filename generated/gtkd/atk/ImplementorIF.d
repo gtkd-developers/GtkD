@@ -33,7 +33,7 @@ public  import gtkc.atktypes;
 /** */
 public interface ImplementorIF{
 	/** Get the main Gtk struct */
-	public AtkImplementor* getImplementorStruct();
+	public AtkImplementor* getImplementorStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

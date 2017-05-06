@@ -28,6 +28,8 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import gtkc.glib;
 public  import gtkc.glibtypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -43,8 +45,10 @@ public class TimeZone
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GTimeZone* getTimeZoneStruct()
+	public GTimeZone* getTimeZoneStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gTimeZone;
 	}
 
@@ -61,6 +65,12 @@ public class TimeZone
 	{
 		this.gTimeZone = gTimeZone;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
+			unref();
 	}
 
 

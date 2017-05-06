@@ -43,8 +43,10 @@ public class CClosure
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GCClosure* getCClosureStruct()
+	public GCClosure* getCClosureStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gCClosure;
 	}
 

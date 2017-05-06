@@ -59,8 +59,10 @@ public class ThreadedSocketService : SocketService
 	protected GThreadedSocketService* gThreadedSocketService;
 
 	/** Get the main Gtk struct */
-	public GThreadedSocketService* getThreadedSocketServiceStruct()
+	public GThreadedSocketService* getThreadedSocketServiceStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gThreadedSocketService;
 	}
 

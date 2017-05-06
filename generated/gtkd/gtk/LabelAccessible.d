@@ -40,8 +40,10 @@ public class LabelAccessible : WidgetAccessible, HypertextIF, TextIF
 	protected GtkLabelAccessible* gtkLabelAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkLabelAccessible* getLabelAccessibleStruct()
+	public GtkLabelAccessible* getLabelAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkLabelAccessible;
 	}
 

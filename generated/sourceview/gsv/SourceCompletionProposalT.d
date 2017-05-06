@@ -39,8 +39,10 @@ public  import std.algorithm;
 public template SourceCompletionProposalT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GtkSourceCompletionProposal* getSourceCompletionProposalStruct()
+	public GtkSourceCompletionProposal* getSourceCompletionProposalStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GtkSourceCompletionProposal*)getStruct();
 	}
 

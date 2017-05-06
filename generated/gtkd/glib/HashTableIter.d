@@ -42,8 +42,10 @@ public class HashTableIter
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GHashTableIter* getHashTableIterStruct()
+	public GHashTableIter* getHashTableIterStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gHashTableIter;
 	}
 

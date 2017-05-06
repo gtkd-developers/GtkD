@@ -42,8 +42,10 @@ public class PgAttributeLanguage : PgAttribute
 	protected PangoAttrLanguage* pangoAttrLanguage;
 
 	/** Get the main Gtk struct */
-	public PangoAttrLanguage* getPgAttributeLanguageStruct()
+	public PangoAttrLanguage* getPgAttributeLanguageStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return pangoAttrLanguage;
 	}
 

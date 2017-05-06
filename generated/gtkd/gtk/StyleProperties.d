@@ -60,8 +60,10 @@ public class StyleProperties : ObjectG, StyleProviderIF
 	protected GtkStyleProperties* gtkStyleProperties;
 
 	/** Get the main Gtk struct */
-	public GtkStyleProperties* getStylePropertiesStruct()
+	public GtkStyleProperties* getStylePropertiesStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkStyleProperties;
 	}
 

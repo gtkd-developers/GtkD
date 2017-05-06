@@ -95,8 +95,10 @@ public class MessageDialog : Dialog
 	protected GtkMessageDialog* gtkMessageDialog;
 
 	/** Get the main Gtk struct */
-	public GtkMessageDialog* getMessageDialogStruct()
+	public GtkMessageDialog* getMessageDialogStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkMessageDialog;
 	}
 

@@ -38,8 +38,10 @@ public class Icon : ObjectG, IconIF
 	protected GIcon* gIcon;
 
 	/** Get the main Gtk struct */
-	public GIcon* getIconStruct()
+	public GIcon* getIconStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gIcon;
 	}
 

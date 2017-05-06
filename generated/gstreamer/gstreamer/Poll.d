@@ -29,6 +29,8 @@ private import gobject.ObjectG;
 private import gstreamer.PollFD;
 private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -63,8 +65,10 @@ public class Poll
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GstPoll* getPollStruct()
+	public GstPoll* getPollStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstPoll;
 	}
 
@@ -81,6 +85,12 @@ public class Poll
 	{
 		this.gstPoll = gstPoll;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GSTREAMER) && ownedRef )
+			free();
 	}
 
 

@@ -67,8 +67,10 @@ public class Message
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GstMessage* getMessageStruct()
+	public GstMessage* getMessageStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstMessage;
 	}
 
@@ -636,7 +638,7 @@ public class Message
 	 */
 	public this(ObjectGst src, Structure structure)
 	{
-		auto p = gst_message_new_application((src is null) ? null : src.getObjectGstStruct(), (structure is null) ? null : structure.getStructureStruct());
+		auto p = gst_message_new_application((src is null) ? null : src.getObjectGstStruct(), (structure is null) ? null : structure.getStructureStruct(true));
 		
 		if(p is null)
 		{
@@ -789,7 +791,7 @@ public class Message
 	 */
 	public this(GstMessageType type, ObjectGst src, Structure structure)
 	{
-		auto p = gst_message_new_custom(type, (src is null) ? null : src.getObjectGstStruct(), (structure is null) ? null : structure.getStructureStruct());
+		auto p = gst_message_new_custom(type, (src is null) ? null : src.getObjectGstStruct(), (structure is null) ? null : structure.getStructureStruct(true));
 		
 		if(p is null)
 		{
@@ -988,7 +990,7 @@ public class Message
 	 */
 	public this(ObjectGst src, string location, TagList tagList, Structure entryStruct)
 	{
-		auto p = gst_message_new_redirect((src is null) ? null : src.getObjectGstStruct(), Str.toStringz(location), (tagList is null) ? null : tagList.getTagListStruct(), (entryStruct is null) ? null : entryStruct.getStructureStruct());
+		auto p = gst_message_new_redirect((src is null) ? null : src.getObjectGstStruct(), Str.toStringz(location), (tagList is null) ? null : tagList.getTagListStruct(), (entryStruct is null) ? null : entryStruct.getStructureStruct(true));
 		
 		if(p is null)
 		{
@@ -1279,7 +1281,7 @@ public class Message
 	 */
 	public void addRedirectEntry(string location, TagList tagList, Structure entryStruct)
 	{
-		gst_message_add_redirect_entry(gstMessage, Str.toStringz(location), (tagList is null) ? null : tagList.getTagListStruct(), (entryStruct is null) ? null : entryStruct.getStructureStruct());
+		gst_message_add_redirect_entry(gstMessage, Str.toStringz(location), (tagList is null) ? null : tagList.getTagListStruct(), (entryStruct is null) ? null : entryStruct.getStructureStruct(true));
 	}
 
 	/**

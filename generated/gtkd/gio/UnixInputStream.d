@@ -52,8 +52,10 @@ public class UnixInputStream : InputStream, FileDescriptorBasedIF, PollableInput
 	protected GUnixInputStream* gUnixInputStream;
 
 	/** Get the main Gtk struct */
-	public GUnixInputStream* getUnixInputStreamStruct()
+	public GUnixInputStream* getUnixInputStreamStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gUnixInputStream;
 	}
 

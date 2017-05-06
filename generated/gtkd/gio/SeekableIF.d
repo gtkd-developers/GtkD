@@ -49,7 +49,7 @@ public  import gtkc.giotypes;
  */
 public interface SeekableIF{
 	/** Get the main Gtk struct */
-	public GSeekable* getSeekableStruct();
+	public GSeekable* getSeekableStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

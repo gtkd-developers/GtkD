@@ -42,8 +42,10 @@ public class DragContext : ObjectG
 	protected GdkDragContext* gdkDragContext;
 
 	/** Get the main Gtk struct */
-	public GdkDragContext* getDragContextStruct()
+	public GdkDragContext* getDragContextStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gdkDragContext;
 	}
 

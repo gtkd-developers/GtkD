@@ -38,8 +38,10 @@ public class PanedAccessible : ContainerAccessible, ValueIF
 	protected GtkPanedAccessible* gtkPanedAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkPanedAccessible* getPanedAccessibleStruct()
+	public GtkPanedAccessible* getPanedAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkPanedAccessible;
 	}
 

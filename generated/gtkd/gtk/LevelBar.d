@@ -137,8 +137,10 @@ public class LevelBar : Widget, OrientableIF
 	protected GtkLevelBar* gtkLevelBar;
 
 	/** Get the main Gtk struct */
-	public GtkLevelBar* getLevelBarStruct()
+	public GtkLevelBar* getLevelBarStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkLevelBar;
 	}
 

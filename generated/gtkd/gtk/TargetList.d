@@ -46,8 +46,10 @@ public class TargetList
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GtkTargetList* getTargetListStruct()
+	public GtkTargetList* getTargetListStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkTargetList;
 	}
 
@@ -69,13 +71,9 @@ public class TargetList
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
-		{
-			gtk_target_list_unref(gtkTargetList);
-		}
+			unref();
 	}
 
-	/**
-	 */
 
 	/** */
 	public static GType getType()

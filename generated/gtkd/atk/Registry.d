@@ -44,8 +44,10 @@ public class Registry : ObjectG
 	protected AtkRegistry* atkRegistry;
 
 	/** Get the main Gtk struct */
-	public AtkRegistry* getRegistryStruct()
+	public AtkRegistry* getRegistryStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return atkRegistry;
 	}
 

@@ -55,8 +55,10 @@ public class TearoffMenuItem : MenuItem
 	protected GtkTearoffMenuItem* gtkTearoffMenuItem;
 
 	/** Get the main Gtk struct */
-	public GtkTearoffMenuItem* getTearoffMenuItemStruct()
+	public GtkTearoffMenuItem* getTearoffMenuItemStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkTearoffMenuItem;
 	}
 

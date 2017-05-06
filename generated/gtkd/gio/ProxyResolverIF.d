@@ -45,7 +45,7 @@ public  import gtkc.giotypes;
  */
 public interface ProxyResolverIF{
 	/** Get the main Gtk struct */
-	public GProxyResolver* getProxyResolverStruct();
+	public GProxyResolver* getProxyResolverStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

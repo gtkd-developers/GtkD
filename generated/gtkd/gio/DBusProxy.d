@@ -95,8 +95,10 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	protected GDBusProxy* gDBusProxy;
 
 	/** Get the main Gtk struct */
-	public GDBusProxy* getDBusProxyStruct()
+	public GDBusProxy* getDBusProxyStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gDBusProxy;
 	}
 

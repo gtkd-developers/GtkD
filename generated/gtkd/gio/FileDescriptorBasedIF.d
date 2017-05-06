@@ -38,7 +38,7 @@ public  import gtkc.giotypes;
  */
 public interface FileDescriptorBasedIF{
 	/** Get the main Gtk struct */
-	public GFileDescriptorBased* getFileDescriptorBasedStruct();
+	public GFileDescriptorBased* getFileDescriptorBasedStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

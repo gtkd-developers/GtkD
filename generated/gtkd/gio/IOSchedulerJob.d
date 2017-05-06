@@ -39,8 +39,10 @@ public class IOSchedulerJob
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GIOSchedulerJob* getIOSchedulerJobStruct()
+	public GIOSchedulerJob* getIOSchedulerJobStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gIOSchedulerJob;
 	}
 

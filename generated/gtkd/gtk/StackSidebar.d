@@ -57,8 +57,10 @@ public class StackSidebar : Bin
 	protected GtkStackSidebar* gtkStackSidebar;
 
 	/** Get the main Gtk struct */
-	public GtkStackSidebar* getStackSidebarStruct()
+	public GtkStackSidebar* getStackSidebarStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkStackSidebar;
 	}
 

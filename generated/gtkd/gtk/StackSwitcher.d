@@ -61,8 +61,10 @@ public class StackSwitcher : Box
 	protected GtkStackSwitcher* gtkStackSwitcher;
 
 	/** Get the main Gtk struct */
-	public GtkStackSwitcher* getStackSwitcherStruct()
+	public GtkStackSwitcher* getStackSwitcherStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkStackSwitcher;
 	}
 

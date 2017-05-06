@@ -49,7 +49,7 @@ public  import gtkc.gdktypes;
  */
 public interface DevicePadIF{
 	/** Get the main Gtk struct */
-	public GdkDevicePad* getDevicePadStruct();
+	public GdkDevicePad* getDevicePadStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

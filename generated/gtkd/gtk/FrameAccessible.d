@@ -36,8 +36,10 @@ public class FrameAccessible : ContainerAccessible
 	protected GtkFrameAccessible* gtkFrameAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkFrameAccessible* getFrameAccessibleStruct()
+	public GtkFrameAccessible* getFrameAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkFrameAccessible;
 	}
 

@@ -27,6 +27,8 @@ module gdk.FrameTimings;
 private import gobject.ObjectG;
 private import gtkc.gdk;
 public  import gtkc.gdktypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -44,8 +46,10 @@ public class FrameTimings
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GdkFrameTimings* getFrameTimingsStruct()
+	public GdkFrameTimings* getFrameTimingsStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gdkFrameTimings;
 	}
 
@@ -62,6 +66,12 @@ public class FrameTimings
 	{
 		this.gdkFrameTimings = gdkFrameTimings;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GDK) && ownedRef )
+			unref();
 	}
 
 

@@ -48,8 +48,10 @@ public class RcStyle : ObjectG
 	protected GtkRcStyle* gtkRcStyle;
 
 	/** Get the main Gtk struct */
-	public GtkRcStyle* getRcStyleStruct()
+	public GtkRcStyle* getRcStyleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkRcStyle;
 	}
 

@@ -36,8 +36,10 @@ public class CellRendererClass
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GtkCellRendererClass* getCellRendererClassStruct()
+	public GtkCellRendererClass* getCellRendererClassStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkCellRendererClass;
 	}
 

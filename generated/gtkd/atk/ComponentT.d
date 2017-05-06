@@ -47,8 +47,10 @@ public  import std.algorithm;
 public template ComponentT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public AtkComponent* getComponentStruct()
+	public AtkComponent* getComponentStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(AtkComponent*)getStruct();
 	}
 

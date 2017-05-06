@@ -30,6 +30,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -47,8 +49,10 @@ public class DateTime
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GstDateTime* getDateTimeStruct()
+	public GstDateTime* getDateTimeStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstDateTime;
 	}
 
@@ -65,6 +69,12 @@ public class DateTime
 	{
 		this.gstDateTime = gstDateTime;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GSTREAMER) && ownedRef )
+			unref();
 	}
 
 	/**
@@ -190,7 +200,7 @@ public class DateTime
 	 */
 	public this(GLibDateTime dt)
 	{
-		auto p = gst_date_time_new_from_g_date_time((dt is null) ? null : dt.getDateTimeStruct());
+		auto p = gst_date_time_new_from_g_date_time((dt is null) ? null : dt.getDateTimeStruct(true));
 		
 		if(p is null)
 		{

@@ -61,8 +61,10 @@ public class TextBuffer : ObjectG
 	protected GtkTextBuffer* gtkTextBuffer;
 
 	/** Get the main Gtk struct */
-	public GtkTextBuffer* getTextBufferStruct()
+	public GtkTextBuffer* getTextBufferStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkTextBuffer;
 	}
 

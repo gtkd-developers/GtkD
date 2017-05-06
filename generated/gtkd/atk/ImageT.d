@@ -47,8 +47,10 @@ public  import gtkc.atktypes;
 public template ImageT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public AtkImage* getImageStruct()
+	public AtkImage* getImageStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(AtkImage*)getStruct();
 	}
 

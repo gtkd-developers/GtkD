@@ -44,7 +44,7 @@ public  import gtkc.giotypes;
  */
 public interface TlsClientConnectionIF{
 	/** Get the main Gtk struct */
-	public GTlsClientConnection* getTlsClientConnectionStruct();
+	public GTlsClientConnection* getTlsClientConnectionStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

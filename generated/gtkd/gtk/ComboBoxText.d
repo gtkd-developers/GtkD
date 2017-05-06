@@ -95,8 +95,10 @@ public class ComboBoxText : ComboBox
 	protected GtkComboBoxText* gtkComboBoxText;
 
 	/** Get the main Gtk struct */
-	public GtkComboBoxText* getComboBoxTextStruct()
+	public GtkComboBoxText* getComboBoxTextStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkComboBoxText;
 	}
 

@@ -28,6 +28,8 @@ private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gtkc.pango;
 public  import gtkc.pangotypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -41,8 +43,10 @@ public class PgTabArray
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public PangoTabArray* getPgTabArrayStruct()
+	public PangoTabArray* getPgTabArrayStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return pangoTabArray;
 	}
 
@@ -59,6 +63,12 @@ public class PgTabArray
 	{
 		this.pangoTabArray = pangoTabArray;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.PANGO) && ownedRef )
+			free();
 	}
 
 

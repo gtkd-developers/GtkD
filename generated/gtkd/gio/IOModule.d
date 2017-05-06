@@ -47,8 +47,10 @@ public class IOModule : TypeModule
 	protected GIOModule* gIOModule;
 
 	/** Get the main Gtk struct */
-	public GIOModule* getIOModuleStruct()
+	public GIOModule* getIOModuleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gIOModule;
 	}
 

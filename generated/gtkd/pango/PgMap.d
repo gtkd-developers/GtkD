@@ -40,8 +40,10 @@ public class PgMap
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public PangoMap* getPgMapStruct()
+	public PangoMap* getPgMapStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return pangoMap;
 	}
 

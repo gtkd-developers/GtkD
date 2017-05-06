@@ -38,8 +38,10 @@ public class SourceSearchSettings : ObjectG
 	protected GtkSourceSearchSettings* gtkSourceSearchSettings;
 
 	/** Get the main Gtk struct */
-	public GtkSourceSearchSettings* getSourceSearchSettingsStruct()
+	public GtkSourceSearchSettings* getSourceSearchSettingsStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSourceSearchSettings;
 	}
 

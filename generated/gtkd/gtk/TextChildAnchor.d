@@ -42,8 +42,10 @@ public class TextChildAnchor : ObjectG
 	protected GtkTextChildAnchor* gtkTextChildAnchor;
 
 	/** Get the main Gtk struct */
-	public GtkTextChildAnchor* getTextChildAnchorStruct()
+	public GtkTextChildAnchor* getTextChildAnchorStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkTextChildAnchor;
 	}
 

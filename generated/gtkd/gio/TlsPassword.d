@@ -42,8 +42,10 @@ public class TlsPassword : ObjectG
 	protected GTlsPassword* gTlsPassword;
 
 	/** Get the main Gtk struct */
-	public GTlsPassword* getTlsPasswordStruct()
+	public GTlsPassword* getTlsPasswordStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gTlsPassword;
 	}
 

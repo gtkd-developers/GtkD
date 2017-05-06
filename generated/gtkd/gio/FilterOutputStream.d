@@ -42,8 +42,10 @@ public class FilterOutputStream : OutputStream
 	protected GFilterOutputStream* gFilterOutputStream;
 
 	/** Get the main Gtk struct */
-	public GFilterOutputStream* getFilterOutputStreamStruct()
+	public GFilterOutputStream* getFilterOutputStreamStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gFilterOutputStream;
 	}
 

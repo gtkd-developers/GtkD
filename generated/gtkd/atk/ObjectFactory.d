@@ -43,8 +43,10 @@ public class ObjectFactory : ObjectG
 	protected AtkObjectFactory* atkObjectFactory;
 
 	/** Get the main Gtk struct */
-	public AtkObjectFactory* getObjectFactoryStruct()
+	public AtkObjectFactory* getObjectFactoryStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return atkObjectFactory;
 	}
 

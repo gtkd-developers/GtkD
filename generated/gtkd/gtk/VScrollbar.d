@@ -49,8 +49,10 @@ public class VScrollbar : Scrollbar
 	protected GtkVScrollbar* gtkVScrollbar;
 
 	/** Get the main Gtk struct */
-	public GtkVScrollbar* getVScrollbarStruct()
+	public GtkVScrollbar* getVScrollbarStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkVScrollbar;
 	}
 

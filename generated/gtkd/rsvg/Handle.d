@@ -47,8 +47,10 @@ public class Handle : ObjectG
 	protected RsvgHandle* rsvgHandle;
 
 	/** Get the main Gtk struct */
-	public RsvgHandle* getHandleStruct()
+	public RsvgHandle* getHandleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return rsvgHandle;
 	}
 

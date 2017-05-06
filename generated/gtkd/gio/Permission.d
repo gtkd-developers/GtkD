@@ -56,8 +56,10 @@ public class Permission : ObjectG
 	protected GPermission* gPermission;
 
 	/** Get the main Gtk struct */
-	public GPermission* getPermissionStruct()
+	public GPermission* getPermissionStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gPermission;
 	}
 

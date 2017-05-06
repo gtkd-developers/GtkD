@@ -59,8 +59,10 @@ public class FontChooserWidget : Box, FontChooserIF
 	protected GtkFontChooserWidget* gtkFontChooserWidget;
 
 	/** Get the main Gtk struct */
-	public GtkFontChooserWidget* getFontChooserWidgetStruct()
+	public GtkFontChooserWidget* getFontChooserWidgetStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkFontChooserWidget;
 	}
 

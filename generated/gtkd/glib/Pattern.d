@@ -28,6 +28,8 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import gtkc.glib;
 public  import gtkc.glibtypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -41,8 +43,10 @@ public class Pattern
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GPatternSpec* getPatternStruct()
+	public GPatternSpec* getPatternStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gPatternSpec;
 	}
 
@@ -59,6 +63,12 @@ public class Pattern
 	{
 		this.gPatternSpec = gPatternSpec;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
+			free();
 	}
 
 

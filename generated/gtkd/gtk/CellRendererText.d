@@ -48,8 +48,10 @@ public class CellRendererText : CellRenderer
 	protected GtkCellRendererText* gtkCellRendererText;
 
 	/** Get the main Gtk struct */
-	public GtkCellRendererText* getCellRendererTextStruct()
+	public GtkCellRendererText* getCellRendererTextStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkCellRendererText;
 	}
 

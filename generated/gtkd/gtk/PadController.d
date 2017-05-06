@@ -85,8 +85,10 @@ public class PadController : EventController
 	protected GtkPadController* gtkPadController;
 
 	/** Get the main Gtk struct */
-	public GtkPadController* getPadControllerStruct()
+	public GtkPadController* getPadControllerStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkPadController;
 	}
 

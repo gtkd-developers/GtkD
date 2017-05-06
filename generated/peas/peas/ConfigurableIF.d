@@ -35,7 +35,7 @@ public  import peasc.peastypes;
  */
 public interface ConfigurableIF{
 	/** Get the main Gtk struct */
-	public PeasGtkConfigurable* getConfigurableStruct();
+	public PeasGtkConfigurable* getConfigurableStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

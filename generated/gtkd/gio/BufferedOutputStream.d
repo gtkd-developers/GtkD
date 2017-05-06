@@ -56,8 +56,10 @@ public class BufferedOutputStream : FilterOutputStream, SeekableIF
 	protected GBufferedOutputStream* gBufferedOutputStream;
 
 	/** Get the main Gtk struct */
-	public GBufferedOutputStream* getBufferedOutputStreamStruct()
+	public GBufferedOutputStream* getBufferedOutputStreamStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gBufferedOutputStream;
 	}
 

@@ -44,8 +44,10 @@ public class SimplePermission : Permission
 	protected GSimplePermission* gSimplePermission;
 
 	/** Get the main Gtk struct */
-	public GSimplePermission* getSimplePermissionStruct()
+	public GSimplePermission* getSimplePermissionStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gSimplePermission;
 	}
 

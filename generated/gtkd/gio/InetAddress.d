@@ -49,8 +49,10 @@ public class InetAddress : ObjectG
 	protected GInetAddress* gInetAddress;
 
 	/** Get the main Gtk struct */
-	public GInetAddress* getInetAddressStruct()
+	public GInetAddress* getInetAddressStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gInetAddress;
 	}
 

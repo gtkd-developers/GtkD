@@ -99,8 +99,10 @@ public class Action : ObjectG, BuildableIF
 	protected GtkAction* gtkAction;
 
 	/** Get the main Gtk struct */
-	public GtkAction* getActionStruct()
+	public GtkAction* getActionStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkAction;
 	}
 

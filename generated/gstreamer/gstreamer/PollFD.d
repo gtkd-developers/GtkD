@@ -38,8 +38,10 @@ public class PollFD
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GstPollFD* getPollFDStruct()
+	public GstPollFD* getPollFDStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstPollFD;
 	}
 

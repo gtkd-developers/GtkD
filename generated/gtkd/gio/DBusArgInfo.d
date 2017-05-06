@@ -27,6 +27,8 @@ module gio.DBusArgInfo;
 private import gobject.ObjectG;
 private import gtkc.gio;
 public  import gtkc.giotypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -41,8 +43,10 @@ public class DBusArgInfo
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GDBusArgInfo* getDBusArgInfoStruct()
+	public GDBusArgInfo* getDBusArgInfoStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gDBusArgInfo;
 	}
 
@@ -59,6 +63,12 @@ public class DBusArgInfo
 	{
 		this.gDBusArgInfo = gDBusArgInfo;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GIO) && ownedRef )
+			unref();
 	}
 
 

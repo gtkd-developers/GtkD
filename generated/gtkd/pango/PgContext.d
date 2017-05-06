@@ -54,8 +54,10 @@ public class PgContext : ObjectG
 	protected PangoContext* pangoContext;
 
 	/** Get the main Gtk struct */
-	public PangoContext* getPgContextStruct()
+	public PangoContext* getPgContextStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return pangoContext;
 	}
 

@@ -64,8 +64,10 @@ public class Socket : ObjectAtk, ComponentIF
 	protected AtkSocket* atkSocket;
 
 	/** Get the main Gtk struct */
-	public AtkSocket* getSocketStruct()
+	public AtkSocket* getSocketStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return atkSocket;
 	}
 

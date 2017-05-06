@@ -46,7 +46,7 @@ alias GtkAllocation* Allocation;
  */
 public alias GdkRectangle GtkAllocation;
 
-public alias void* GtkStock;
+public alias char* GtkStock;
 
 /**
  * Accelerator flags used with gtk_accel_group_connect().

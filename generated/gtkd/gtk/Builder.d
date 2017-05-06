@@ -233,8 +233,10 @@ public class Builder : ObjectG
 	protected GtkBuilder* gtkBuilder;
 
 	/** Get the main Gtk struct */
-	public GtkBuilder* getBuilderStruct()
+	public GtkBuilder* getBuilderStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkBuilder;
 	}
 

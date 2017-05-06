@@ -40,8 +40,10 @@ public class SequenceIter
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GSequenceIter* getSequenceIterStruct()
+	public GSequenceIter* getSequenceIterStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gSequenceIter;
 	}
 

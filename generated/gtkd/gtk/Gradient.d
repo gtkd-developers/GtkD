@@ -62,8 +62,10 @@ public class Gradient
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GtkGradient* getGradientStruct()
+	public GtkGradient* getGradientStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkGradient;
 	}
 
@@ -85,13 +87,9 @@ public class Gradient
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
-		{
-			gtk_gradient_unref(gtkGradient);
-		}
+			unref();
 	}
 
-	/**
-	 */
 
 	/** */
 	public static GType getType()

@@ -45,8 +45,10 @@ public class ProxyAddress : InetSocketAddress
 	protected GProxyAddress* gProxyAddress;
 
 	/** Get the main Gtk struct */
-	public GProxyAddress* getProxyAddressStruct()
+	public GProxyAddress* getProxyAddressStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gProxyAddress;
 	}
 

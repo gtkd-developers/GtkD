@@ -60,8 +60,10 @@ public class Grid : Container, OrientableIF
 	protected GtkGrid* gtkGrid;
 
 	/** Get the main Gtk struct */
-	public GtkGrid* getGridStruct()
+	public GtkGrid* getGridStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkGrid;
 	}
 

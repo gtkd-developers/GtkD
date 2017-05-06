@@ -29,6 +29,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gtkc.pango;
 public  import gtkc.pangotypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -44,8 +46,10 @@ public class PgFontDescription
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public PangoFontDescription* getPgFontDescriptionStruct()
+	public PangoFontDescription* getPgFontDescriptionStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return pangoFontDescription;
 	}
 
@@ -62,6 +66,12 @@ public class PgFontDescription
 	{
 		this.pangoFontDescription = pangoFontDescription;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.PANGO) && ownedRef )
+			free();
 	}
 
 	/**

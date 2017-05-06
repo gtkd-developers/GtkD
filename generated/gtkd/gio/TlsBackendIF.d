@@ -39,7 +39,7 @@ public  import gtkc.giotypes;
  */
 public interface TlsBackendIF{
 	/** Get the main Gtk struct */
-	public GTlsBackend* getTlsBackendStruct();
+	public GTlsBackend* getTlsBackendStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

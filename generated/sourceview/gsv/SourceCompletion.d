@@ -48,8 +48,10 @@ public class SourceCompletion : ObjectG, BuildableIF
 	protected GtkSourceCompletion* gtkSourceCompletion;
 
 	/** Get the main Gtk struct */
-	public GtkSourceCompletion* getSourceCompletionStruct()
+	public GtkSourceCompletion* getSourceCompletionStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSourceCompletion;
 	}
 

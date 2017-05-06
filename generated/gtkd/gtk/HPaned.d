@@ -46,8 +46,10 @@ public class HPaned : Paned
 	protected GtkHPaned* gtkHPaned;
 
 	/** Get the main Gtk struct */
-	public GtkHPaned* getHPanedStruct()
+	public GtkHPaned* getHPanedStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkHPaned;
 	}
 

@@ -57,8 +57,10 @@ public class GesturePan : GestureDrag
 	protected GtkGesturePan* gtkGesturePan;
 
 	/** Get the main Gtk struct */
-	public GtkGesturePan* getGesturePanStruct()
+	public GtkGesturePan* getGesturePanStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkGesturePan;
 	}
 

@@ -41,8 +41,10 @@ public class StateSet : ObjectG
 	protected AtkStateSet* atkStateSet;
 
 	/** Get the main Gtk struct */
-	public AtkStateSet* getStateSetStruct()
+	public AtkStateSet* getStateSetStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return atkStateSet;
 	}
 

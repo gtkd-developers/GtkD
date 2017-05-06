@@ -27,6 +27,8 @@ module gstreamer.AllocationParams;
 private import gobject.ObjectG;
 private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -39,8 +41,10 @@ public class AllocationParams
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GstAllocationParams* getAllocationParamsStruct()
+	public GstAllocationParams* getAllocationParamsStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstAllocationParams;
 	}
 
@@ -57,6 +61,12 @@ public class AllocationParams
 	{
 		this.gstAllocationParams = gstAllocationParams;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GSTREAMER) && ownedRef )
+			free();
 	}
 
 

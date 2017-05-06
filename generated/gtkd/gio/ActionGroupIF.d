@@ -82,7 +82,7 @@ private import std.algorithm;
  */
 public interface ActionGroupIF{
 	/** Get the main Gtk struct */
-	public GActionGroup* getActionGroupStruct();
+	public GActionGroup* getActionGroupStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

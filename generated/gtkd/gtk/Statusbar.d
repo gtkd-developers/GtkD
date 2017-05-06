@@ -76,8 +76,10 @@ public class Statusbar : Box
 	protected GtkStatusbar* gtkStatusbar;
 
 	/** Get the main Gtk struct */
-	public GtkStatusbar* getStatusbarStruct()
+	public GtkStatusbar* getStatusbarStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkStatusbar;
 	}
 

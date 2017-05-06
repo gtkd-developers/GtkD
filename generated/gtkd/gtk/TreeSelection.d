@@ -68,8 +68,10 @@ public class TreeSelection : ObjectG
 	protected GtkTreeSelection* gtkTreeSelection;
 
 	/** Get the main Gtk struct */
-	public GtkTreeSelection* getTreeSelectionStruct()
+	public GtkTreeSelection* getTreeSelectionStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkTreeSelection;
 	}
 

@@ -44,7 +44,7 @@ private import std.algorithm;
  */
 public interface HypertextIF{
 	/** Get the main Gtk struct */
-	public AtkHypertext* getHypertextStruct();
+	public AtkHypertext* getHypertextStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

@@ -91,8 +91,10 @@ public class TypeFindFactory : PluginFeature
 	protected GstTypeFindFactory* gstTypeFindFactory;
 
 	/** Get the main Gtk struct */
-	public GstTypeFindFactory* getTypeFindFactoryStruct()
+	public GstTypeFindFactory* getTypeFindFactoryStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstTypeFindFactory;
 	}
 

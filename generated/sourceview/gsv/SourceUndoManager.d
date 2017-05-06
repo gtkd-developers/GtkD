@@ -38,8 +38,10 @@ public class SourceUndoManager : ObjectG, SourceUndoManagerIF
 	protected GtkSourceUndoManager* gtkSourceUndoManager;
 
 	/** Get the main Gtk struct */
-	public GtkSourceUndoManager* getSourceUndoManagerStruct()
+	public GtkSourceUndoManager* getSourceUndoManagerStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSourceUndoManager;
 	}
 

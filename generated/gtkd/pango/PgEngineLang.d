@@ -43,8 +43,10 @@ public class PgEngineLang : PgEngine
 	protected PangoEngineLang* pangoEngineLang;
 
 	/** Get the main Gtk struct */
-	public PangoEngineLang* getPgEngineLangStruct()
+	public PangoEngineLang* getPgEngineLangStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return pangoEngineLang;
 	}
 

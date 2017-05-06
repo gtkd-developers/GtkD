@@ -36,8 +36,10 @@ public  import std.algorithm;
 public template PrintOperationPreviewT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GtkPrintOperationPreview* getPrintOperationPreviewStruct()
+	public GtkPrintOperationPreview* getPrintOperationPreviewStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GtkPrintOperationPreview*)getStruct();
 	}
 

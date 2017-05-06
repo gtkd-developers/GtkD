@@ -49,8 +49,10 @@ public class ConverterInputStream : FilterInputStream, PollableInputStreamIF
 	protected GConverterInputStream* gConverterInputStream;
 
 	/** Get the main Gtk struct */
-	public GConverterInputStream* getConverterInputStreamStruct()
+	public GConverterInputStream* getConverterInputStreamStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gConverterInputStream;
 	}
 

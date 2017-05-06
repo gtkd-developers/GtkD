@@ -48,8 +48,10 @@ public  import std.algorithm;
 public template NetworkMonitorT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GNetworkMonitor* getNetworkMonitorStruct()
+	public GNetworkMonitor* getNetworkMonitorStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GNetworkMonitor*)getStruct();
 	}
 

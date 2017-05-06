@@ -38,8 +38,10 @@ public class PrintOperationPreview : ObjectG, PrintOperationPreviewIF
 	protected GtkPrintOperationPreview* gtkPrintOperationPreview;
 
 	/** Get the main Gtk struct */
-	public GtkPrintOperationPreview* getPrintOperationPreviewStruct()
+	public GtkPrintOperationPreview* getPrintOperationPreviewStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkPrintOperationPreview;
 	}
 

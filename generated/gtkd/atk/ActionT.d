@@ -51,8 +51,10 @@ public  import gtkc.atktypes;
 public template ActionT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public AtkAction* getActionStruct()
+	public AtkAction* getActionStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(AtkAction*)getStruct();
 	}
 

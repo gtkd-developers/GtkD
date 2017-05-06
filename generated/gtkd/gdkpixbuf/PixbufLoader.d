@@ -49,8 +49,10 @@ public class PixbufLoader : ObjectG
 	protected GdkPixbufLoader* gdkPixbufLoader;
 
 	/** Get the main Gtk struct */
-	public GdkPixbufLoader* getPixbufLoaderStruct()
+	public GdkPixbufLoader* getPixbufLoaderStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gdkPixbufLoader;
 	}
 

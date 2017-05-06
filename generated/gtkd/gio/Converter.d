@@ -38,8 +38,10 @@ public class Converter : ObjectG, ConverterIF
 	protected GConverter* gConverter;
 
 	/** Get the main Gtk struct */
-	public GConverter* getConverterStruct()
+	public GConverter* getConverterStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gConverter;
 	}
 

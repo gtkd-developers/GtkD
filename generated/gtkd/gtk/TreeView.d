@@ -131,8 +131,10 @@ public class TreeView : Container, ScrollableIF
 	protected GtkTreeView* gtkTreeView;
 
 	/** Get the main Gtk struct */
-	public GtkTreeView* getTreeViewStruct()
+	public GtkTreeView* getTreeViewStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkTreeView;
 	}
 

@@ -28,6 +28,8 @@ private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -41,8 +43,10 @@ public class AtomicQueue
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GstAtomicQueue* getAtomicQueueStruct()
+	public GstAtomicQueue* getAtomicQueueStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstAtomicQueue;
 	}
 
@@ -59,6 +63,12 @@ public class AtomicQueue
 	{
 		this.gstAtomicQueue = gstAtomicQueue;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GSTREAMER) && ownedRef )
+			unref();
 	}
 
 

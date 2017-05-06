@@ -103,8 +103,10 @@ public class Clipboard : ObjectG
 	protected GtkClipboard* gtkClipboard;
 
 	/** Get the main Gtk struct */
-	public GtkClipboard* getClipboardStruct()
+	public GtkClipboard* getClipboardStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkClipboard;
 	}
 

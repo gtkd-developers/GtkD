@@ -34,8 +34,10 @@ public  import gsvc.gsvtypes;
 public template StyleSchemeChooserT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GtkSourceStyleSchemeChooser* getStyleSchemeChooserStruct()
+	public GtkSourceStyleSchemeChooser* getStyleSchemeChooserStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GtkSourceStyleSchemeChooser*)getStruct();
 	}
 

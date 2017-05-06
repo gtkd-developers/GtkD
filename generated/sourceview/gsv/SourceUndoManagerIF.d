@@ -33,7 +33,7 @@ private import std.algorithm;
 /** */
 public interface SourceUndoManagerIF{
 	/** Get the main Gtk struct */
-	public GtkSourceUndoManager* getSourceUndoManagerStruct();
+	public GtkSourceUndoManager* getSourceUndoManagerStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

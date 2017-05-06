@@ -39,8 +39,10 @@ public class VButtonBox : ButtonBox
 	protected GtkVButtonBox* gtkVButtonBox;
 
 	/** Get the main Gtk struct */
-	public GtkVButtonBox* getVButtonBoxStruct()
+	public GtkVButtonBox* getVButtonBoxStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkVButtonBox;
 	}
 

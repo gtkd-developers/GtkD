@@ -34,8 +34,10 @@ public  import gtkc.atktypes;
 public template ImplementorT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public AtkImplementor* getImplementorStruct()
+	public AtkImplementor* getImplementorStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(AtkImplementor*)getStruct();
 	}
 

@@ -41,8 +41,10 @@ public class Region : ObjectG
 	protected GtkSourceRegion* gtkSourceRegion;
 
 	/** Get the main Gtk struct */
-	public GtkSourceRegion* getRegionStruct()
+	public GtkSourceRegion* getRegionStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSourceRegion;
 	}
 

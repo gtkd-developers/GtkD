@@ -77,8 +77,10 @@ public  import gstreamerc.gstreamertypes;
 public template TagSetterT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GstTagSetter* getTagSetterStruct()
+	public GstTagSetter* getTagSetterStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GstTagSetter*)getStruct();
 	}
 

@@ -48,8 +48,10 @@ public class Seat : ObjectG
 	protected GdkSeat* gdkSeat;
 
 	/** Get the main Gtk struct */
-	public GdkSeat* getSeatStruct()
+	public GdkSeat* getSeatStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gdkSeat;
 	}
 

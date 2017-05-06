@@ -30,6 +30,8 @@ private import glib.Regex;
 private import glib.Str;
 private import gtkc.glib;
 public  import gtkc.glibtypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -43,8 +45,10 @@ public class MatchInfo
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GMatchInfo* getMatchInfoStruct()
+	public GMatchInfo* getMatchInfoStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gMatchInfo;
 	}
 
@@ -61,6 +65,12 @@ public class MatchInfo
 	{
 		this.gMatchInfo = gMatchInfo;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
+			unref();
 	}
 
 

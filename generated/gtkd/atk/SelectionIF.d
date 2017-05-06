@@ -46,7 +46,7 @@ private import std.algorithm;
  */
 public interface SelectionIF{
 	/** Get the main Gtk struct */
-	public AtkSelection* getSelectionStruct();
+	public AtkSelection* getSelectionStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

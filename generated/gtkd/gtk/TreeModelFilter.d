@@ -110,8 +110,10 @@ public class TreeModelFilter : ObjectG, TreeDragSourceIF, TreeModelIF
 	protected GtkTreeModelFilter* gtkTreeModelFilter;
 
 	/** Get the main Gtk struct */
-	public GtkTreeModelFilter* getTreeModelFilterStruct()
+	public GtkTreeModelFilter* getTreeModelFilterStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkTreeModelFilter;
 	}
 

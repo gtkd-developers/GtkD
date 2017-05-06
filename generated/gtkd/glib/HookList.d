@@ -38,8 +38,10 @@ public class HookList
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GHookList* getHookListStruct()
+	public GHookList* getHookListStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gHookList;
 	}
 

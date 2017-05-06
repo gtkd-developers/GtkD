@@ -139,8 +139,10 @@ public  import gtkc.giotypes;
 public template AsyncInitableT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GAsyncInitable* getAsyncInitableStruct()
+	public GAsyncInitable* getAsyncInitableStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GAsyncInitable*)getStruct();
 	}
 

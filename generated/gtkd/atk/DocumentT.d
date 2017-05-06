@@ -43,8 +43,10 @@ public  import std.algorithm;
 public template DocumentT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public AtkDocument* getDocumentStruct()
+	public AtkDocument* getDocumentStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(AtkDocument*)getStruct();
 	}
 

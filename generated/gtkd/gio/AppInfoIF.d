@@ -93,7 +93,7 @@ public  import gtkc.giotypes;
  */
 public interface AppInfoIF{
 	/** Get the main Gtk struct */
-	public GAppInfo* getAppInfoStruct();
+	public GAppInfo* getAppInfoStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

@@ -47,8 +47,10 @@ public class SeparatorMenuItem : MenuItem
 	protected GtkSeparatorMenuItem* gtkSeparatorMenuItem;
 
 	/** Get the main Gtk struct */
-	public GtkSeparatorMenuItem* getSeparatorMenuItemStruct()
+	public GtkSeparatorMenuItem* getSeparatorMenuItemStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSeparatorMenuItem;
 	}
 

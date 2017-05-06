@@ -47,8 +47,10 @@ public class MenuItem : ObjectG
 	protected GMenuItem* gMenuItem;
 
 	/** Get the main Gtk struct */
-	public GMenuItem* getMenuItemStruct()
+	public GMenuItem* getMenuItemStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gMenuItem;
 	}
 

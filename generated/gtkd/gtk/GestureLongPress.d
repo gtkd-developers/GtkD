@@ -50,8 +50,10 @@ public class GestureLongPress : GestureSingle
 	protected GtkGestureLongPress* gtkGestureLongPress;
 
 	/** Get the main Gtk struct */
-	public GtkGestureLongPress* getGestureLongPressStruct()
+	public GtkGestureLongPress* getGestureLongPressStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkGestureLongPress;
 	}
 

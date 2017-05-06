@@ -53,8 +53,10 @@ public class Device : ObjectG
 	protected GdkDevice* gdkDevice;
 
 	/** Get the main Gtk struct */
-	public GdkDevice* getDeviceStruct()
+	public GdkDevice* getDeviceStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gdkDevice;
 	}
 

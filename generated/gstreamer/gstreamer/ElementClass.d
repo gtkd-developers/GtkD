@@ -44,8 +44,10 @@ public class ElementClass
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GstElementClass* getElementClassStruct()
+	public GstElementClass* getElementClassStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstElementClass;
 	}
 

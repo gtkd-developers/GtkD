@@ -46,8 +46,10 @@ public  import gtkc.giotypes;
 public template ProxyResolverT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GProxyResolver* getProxyResolverStruct()
+	public GProxyResolver* getProxyResolverStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GProxyResolver*)getStruct();
 	}
 

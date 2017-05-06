@@ -52,8 +52,10 @@ public class EntryBuffer : ObjectG
 	protected GtkEntryBuffer* gtkEntryBuffer;
 
 	/** Get the main Gtk struct */
-	public GtkEntryBuffer* getEntryBufferStruct()
+	public GtkEntryBuffer* getEntryBufferStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkEntryBuffer;
 	}
 

@@ -208,8 +208,10 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	protected GSimpleAsyncResult* gSimpleAsyncResult;
 
 	/** Get the main Gtk struct */
-	public GSimpleAsyncResult* getSimpleAsyncResultStruct()
+	public GSimpleAsyncResult* getSimpleAsyncResultStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gSimpleAsyncResult;
 	}
 

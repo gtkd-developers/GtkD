@@ -57,8 +57,10 @@ public  import gstreamerc.gstreamertypes;
 public template PresetT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GstPreset* getPresetStruct()
+	public GstPreset* getPresetStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GstPreset*)getStruct();
 	}
 

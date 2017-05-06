@@ -31,6 +31,8 @@ private import glib.OptionGroup;
 private import glib.Str;
 private import gtkc.glib;
 public  import gtkc.glibtypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -45,8 +47,10 @@ public class OptionContext
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GOptionContext* getOptionContextStruct()
+	public GOptionContext* getOptionContextStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gOptionContext;
 	}
 
@@ -65,6 +69,12 @@ public class OptionContext
 		this.ownedRef = ownedRef;
 	}
 
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
+			free();
+	}
+
 
 	/**
 	 * Adds a #GOptionGroup to the @context, so that parsing with @context
@@ -78,7 +88,7 @@ public class OptionContext
 	 */
 	public void addGroup(OptionGroup group)
 	{
-		g_option_context_add_group(gOptionContext, (group is null) ? null : group.getOptionGroupStruct());
+		g_option_context_add_group(gOptionContext, (group is null) ? null : group.getOptionGroupStruct(true));
 	}
 
 	/**
@@ -387,7 +397,7 @@ public class OptionContext
 	 */
 	public void setMainGroup(OptionGroup group)
 	{
-		g_option_context_set_main_group(gOptionContext, (group is null) ? null : group.getOptionGroupStruct());
+		g_option_context_set_main_group(gOptionContext, (group is null) ? null : group.getOptionGroupStruct(true));
 	}
 
 	/**

@@ -102,8 +102,10 @@ public class Registry : ObjectGst
 	protected GstRegistry* gstRegistry;
 
 	/** Get the main Gtk struct */
-	public GstRegistry* getRegistryStruct()
+	public GstRegistry* getRegistryStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstRegistry;
 	}
 

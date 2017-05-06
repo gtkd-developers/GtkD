@@ -52,8 +52,10 @@ public class SeparatorToolItem : ToolItem
 	protected GtkSeparatorToolItem* gtkSeparatorToolItem;
 
 	/** Get the main Gtk struct */
-	public GtkSeparatorToolItem* getSeparatorToolItemStruct()
+	public GtkSeparatorToolItem* getSeparatorToolItemStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSeparatorToolItem;
 	}
 

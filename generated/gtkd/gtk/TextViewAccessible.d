@@ -42,8 +42,10 @@ public class TextViewAccessible : ContainerAccessible, EditableTextIF, Streamabl
 	protected GtkTextViewAccessible* gtkTextViewAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkTextViewAccessible* getTextViewAccessibleStruct()
+	public GtkTextViewAccessible* getTextViewAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkTextViewAccessible;
 	}
 

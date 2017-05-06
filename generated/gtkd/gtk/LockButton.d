@@ -71,8 +71,10 @@ public class LockButton : Button
 	protected GtkLockButton* gtkLockButton;
 
 	/** Get the main Gtk struct */
-	public GtkLockButton* getLockButtonStruct()
+	public GtkLockButton* getLockButtonStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkLockButton;
 	}
 

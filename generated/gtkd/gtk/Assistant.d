@@ -72,8 +72,10 @@ public class Assistant : Window
 	protected GtkAssistant* gtkAssistant;
 
 	/** Get the main Gtk struct */
-	public GtkAssistant* getAssistantStruct()
+	public GtkAssistant* getAssistantStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkAssistant;
 	}
 

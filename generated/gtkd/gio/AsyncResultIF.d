@@ -116,7 +116,7 @@ public  import gtkc.giotypes;
  */
 public interface AsyncResultIF{
 	/** Get the main Gtk struct */
-	public GAsyncResult* getAsyncResultStruct();
+	public GAsyncResult* getAsyncResultStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

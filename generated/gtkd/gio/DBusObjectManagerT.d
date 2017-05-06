@@ -49,8 +49,10 @@ public  import std.algorithm;
 public template DBusObjectManagerT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GDBusObjectManager* getDBusObjectManagerStruct()
+	public GDBusObjectManager* getDBusObjectManagerStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GDBusObjectManager*)getStruct();
 	}
 

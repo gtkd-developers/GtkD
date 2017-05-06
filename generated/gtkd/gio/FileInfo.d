@@ -68,8 +68,10 @@ public class FileInfo : ObjectG
 	protected GFileInfo* gFileInfo;
 
 	/** Get the main Gtk struct */
-	public GFileInfo* getFileInfoStruct()
+	public GFileInfo* getFileInfoStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gFileInfo;
 	}
 

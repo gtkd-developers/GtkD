@@ -54,8 +54,10 @@ public  import gtkc.gtktypes;
 public template AppChooserT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GtkAppChooser* getAppChooserStruct()
+	public GtkAppChooser* getAppChooserStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GtkAppChooser*)getStruct();
 	}
 

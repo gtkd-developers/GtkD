@@ -40,8 +40,10 @@ public class ExtensionBase : ObjectG
 	protected PeasExtensionBase* peasExtensionBase;
 
 	/** Get the main Gtk struct */
-	public PeasExtensionBase* getExtensionBaseStruct()
+	public PeasExtensionBase* getExtensionBaseStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return peasExtensionBase;
 	}
 

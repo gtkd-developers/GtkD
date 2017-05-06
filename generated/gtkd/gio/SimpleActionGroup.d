@@ -49,8 +49,10 @@ public class SimpleActionGroup : ObjectG, ActionGroupIF, ActionMapIF
 	protected GSimpleActionGroup* gSimpleActionGroup;
 
 	/** Get the main Gtk struct */
-	public GSimpleActionGroup* getSimpleActionGroupStruct()
+	public GSimpleActionGroup* getSimpleActionGroupStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gSimpleActionGroup;
 	}
 

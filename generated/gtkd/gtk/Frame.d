@@ -81,8 +81,10 @@ public class Frame : Bin
 	protected GtkFrame* gtkFrame;
 
 	/** Get the main Gtk struct */
-	public GtkFrame* getFrameStruct()
+	public GtkFrame* getFrameStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkFrame;
 	}
 

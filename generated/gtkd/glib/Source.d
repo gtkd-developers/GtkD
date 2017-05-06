@@ -30,6 +30,8 @@ private import glib.Str;
 private import glib.TimeVal;
 private import gtkc.glib;
 public  import gtkc.glibtypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -43,8 +45,10 @@ public class Source
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GSource* getSourceStruct()
+	public GSource* getSourceStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gSource;
 	}
 
@@ -61,6 +65,12 @@ public class Source
 	{
 		this.gSource = gSource;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
+			unref();
 	}
 
 

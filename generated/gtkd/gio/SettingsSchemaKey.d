@@ -30,6 +30,8 @@ private import glib.VariantType;
 private import gobject.ObjectG;
 private import gtkc.gio;
 public  import gtkc.giotypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -43,8 +45,10 @@ public class SettingsSchemaKey
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GSettingsSchemaKey* getSettingsSchemaKeyStruct()
+	public GSettingsSchemaKey* getSettingsSchemaKeyStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gSettingsSchemaKey;
 	}
 
@@ -61,6 +65,12 @@ public class SettingsSchemaKey
 	{
 		this.gSettingsSchemaKey = gSettingsSchemaKey;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GIO) && ownedRef )
+			unref();
 	}
 
 

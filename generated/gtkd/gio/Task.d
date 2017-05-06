@@ -538,8 +538,10 @@ public class Task : ObjectG, AsyncResultIF
 	protected GTask* gTask;
 
 	/** Get the main Gtk struct */
-	public GTask* getTaskStruct()
+	public GTask* getTaskStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gTask;
 	}
 
@@ -659,7 +661,7 @@ public class Task : ObjectG, AsyncResultIF
 	 */
 	public static void reportError(ObjectG sourceObject, GAsyncReadyCallback callback, void* callbackData, void* sourceTag, ErrorG error)
 	{
-		g_task_report_error((sourceObject is null) ? null : sourceObject.getObjectGStruct(), callback, callbackData, sourceTag, (error is null) ? null : error.getErrorGStruct());
+		g_task_report_error((sourceObject is null) ? null : sourceObject.getObjectGStruct(), callback, callbackData, sourceTag, (error is null) ? null : error.getErrorGStruct(true));
 	}
 
 	/**
@@ -952,7 +954,7 @@ public class Task : ObjectG, AsyncResultIF
 	 */
 	public void returnError(ErrorG error)
 	{
-		g_task_return_error(gTask, (error is null) ? null : error.getErrorGStruct());
+		g_task_return_error(gTask, (error is null) ? null : error.getErrorGStruct(true));
 	}
 
 	/**

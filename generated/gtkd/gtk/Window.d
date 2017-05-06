@@ -105,8 +105,10 @@ public class Window : Bin
 	protected GtkWindow* gtkWindow;
 
 	/** Get the main Gtk struct */
-	public GtkWindow* getWindowStruct()
+	public GtkWindow* getWindowStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkWindow;
 	}
 

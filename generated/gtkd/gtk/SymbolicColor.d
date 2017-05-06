@@ -59,8 +59,10 @@ public class SymbolicColor
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GtkSymbolicColor* getSymbolicColorStruct()
+	public GtkSymbolicColor* getSymbolicColorStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSymbolicColor;
 	}
 
@@ -82,11 +84,9 @@ public class SymbolicColor
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
-		{
-			gtk_symbolic_color_unref(gtkSymbolicColor);
-		}
+			unref();
 	}
-	
+
 	/**
 	 * Creates a symbolic color defined as a shade of another color.
 	 * A factor > 1.0 would resolve to a brighter or more transparent color,

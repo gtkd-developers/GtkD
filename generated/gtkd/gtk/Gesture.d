@@ -133,8 +133,10 @@ public class Gesture : EventController
 	protected GtkGesture* gtkGesture;
 
 	/** Get the main Gtk struct */
-	public GtkGesture* getGestureStruct()
+	public GtkGesture* getGestureStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkGesture;
 	}
 

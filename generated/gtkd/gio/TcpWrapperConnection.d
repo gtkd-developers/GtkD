@@ -47,8 +47,10 @@ public class TcpWrapperConnection : TcpConnection
 	protected GTcpWrapperConnection* gTcpWrapperConnection;
 
 	/** Get the main Gtk struct */
-	public GTcpWrapperConnection* getTcpWrapperConnectionStruct()
+	public GTcpWrapperConnection* getTcpWrapperConnectionStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gTcpWrapperConnection;
 	}
 

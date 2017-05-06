@@ -69,8 +69,10 @@ public  import std.algorithm;
 public template MountT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GMount* getMountStruct()
+	public GMount* getMountStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GMount*)getStruct();
 	}
 

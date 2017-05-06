@@ -103,8 +103,10 @@ public class ImageMenuItem : MenuItem
 	protected GtkImageMenuItem* gtkImageMenuItem;
 
 	/** Get the main Gtk struct */
-	public GtkImageMenuItem* getImageMenuItemStruct()
+	public GtkImageMenuItem* getImageMenuItemStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkImageMenuItem;
 	}
 

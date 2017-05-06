@@ -39,8 +39,10 @@ public class SourceGutter : ObjectG
 	protected GtkSourceGutter* gtkSourceGutter;
 
 	/** Get the main Gtk struct */
-	public GtkSourceGutter* getSourceGutterStruct()
+	public GtkSourceGutter* getSourceGutterStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSourceGutter;
 	}
 

@@ -93,8 +93,10 @@ public  import gtkc.giotypes;
 public template SocketConnectableT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GSocketConnectable* getSocketConnectableStruct()
+	public GSocketConnectable* getSocketConnectableStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GSocketConnectable*)getStruct();
 	}
 

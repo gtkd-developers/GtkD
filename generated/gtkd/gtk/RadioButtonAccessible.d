@@ -36,8 +36,10 @@ public class RadioButtonAccessible : ToggleButtonAccessible
 	protected GtkRadioButtonAccessible* gtkRadioButtonAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkRadioButtonAccessible* getRadioButtonAccessibleStruct()
+	public GtkRadioButtonAccessible* getRadioButtonAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkRadioButtonAccessible;
 	}
 

@@ -41,8 +41,10 @@ public class TcpConnection : SocketConnection
 	protected GTcpConnection* gTcpConnection;
 
 	/** Get the main Gtk struct */
-	public GTcpConnection* getTcpConnectionStruct()
+	public GTcpConnection* getTcpConnectionStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gTcpConnection;
 	}
 

@@ -45,8 +45,10 @@ public class TargetEntry
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GtkTargetEntry* getTargetEntryStruct()
+	public GtkTargetEntry* getTargetEntryStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkTargetEntry;
 	}
 
@@ -68,13 +70,9 @@ public class TargetEntry
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
-		{
-			gtk_target_entry_free(gtkTargetEntry);
-		}
+			free();
 	}
 
-	/**
-	 */
 
 	/** */
 	public static GType getType()

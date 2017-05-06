@@ -38,8 +38,10 @@ public class TestSuite
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GTestSuite* getTestSuiteStruct()
+	public GTestSuite* getTestSuiteStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gTestSuite;
 	}
 

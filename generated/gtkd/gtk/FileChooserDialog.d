@@ -196,8 +196,10 @@ public class FileChooserDialog : Dialog, FileChooserIF
 	protected GtkFileChooserDialog* gtkFileChooserDialog;
 
 	/** Get the main Gtk struct */
-	public GtkFileChooserDialog* getFileChooserDialogStruct()
+	public GtkFileChooserDialog* getFileChooserDialogStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkFileChooserDialog;
 	}
 

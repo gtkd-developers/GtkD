@@ -42,8 +42,10 @@ public class SourceCompletionContext : ObjectG
 	protected GtkSourceCompletionContext* gtkSourceCompletionContext;
 
 	/** Get the main Gtk struct */
-	public GtkSourceCompletionContext* getSourceCompletionContextStruct()
+	public GtkSourceCompletionContext* getSourceCompletionContextStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSourceCompletionContext;
 	}
 

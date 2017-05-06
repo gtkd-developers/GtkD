@@ -144,8 +144,10 @@ public class GLArea : Widget
 	protected GtkGLArea* gtkGLArea;
 
 	/** Get the main Gtk struct */
-	public GtkGLArea* getGLAreaStruct()
+	public GtkGLArea* getGLAreaStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkGLArea;
 	}
 

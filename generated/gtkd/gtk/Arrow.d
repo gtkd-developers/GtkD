@@ -60,8 +60,10 @@ public class Arrow : Misc
 	protected GtkArrow* gtkArrow;
 
 	/** Get the main Gtk struct */
-	public GtkArrow* getArrowStruct()
+	public GtkArrow* getArrowStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkArrow;
 	}
 

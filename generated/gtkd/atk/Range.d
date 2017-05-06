@@ -29,6 +29,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gtkc.atk;
 public  import gtkc.atktypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -45,8 +47,10 @@ public class Range
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public AtkRange* getRangeStruct()
+	public AtkRange* getRangeStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return atkRange;
 	}
 
@@ -63,6 +67,12 @@ public class Range
 	{
 		this.atkRange = atkRange;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.ATK) && ownedRef )
+			free();
 	}
 
 

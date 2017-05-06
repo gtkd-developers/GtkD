@@ -42,8 +42,10 @@ public class SourceCompletionWords : ObjectG, SourceCompletionProviderIF
 	protected GtkSourceCompletionWords* gtkSourceCompletionWords;
 
 	/** Get the main Gtk struct */
-	public GtkSourceCompletionWords* getSourceCompletionWordsStruct()
+	public GtkSourceCompletionWords* getSourceCompletionWordsStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSourceCompletionWords;
 	}
 

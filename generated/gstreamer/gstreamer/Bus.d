@@ -82,8 +82,10 @@ public class Bus : ObjectGst
 	protected GstBus* gstBus;
 
 	/** Get the main Gtk struct */
-	public GstBus* getBusStruct()
+	public GstBus* getBusStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstBus;
 	}
 

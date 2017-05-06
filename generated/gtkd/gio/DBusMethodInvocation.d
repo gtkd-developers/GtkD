@@ -54,8 +54,10 @@ public class DBusMethodInvocation : ObjectG
 	protected GDBusMethodInvocation* gDBusMethodInvocation;
 
 	/** Get the main Gtk struct */
-	public GDBusMethodInvocation* getDBusMethodInvocationStruct()
+	public GDBusMethodInvocation* getDBusMethodInvocationStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gDBusMethodInvocation;
 	}
 
@@ -425,6 +427,6 @@ public class DBusMethodInvocation : ObjectG
 	 */
 	public void takeError(ErrorG error)
 	{
-		g_dbus_method_invocation_take_error(gDBusMethodInvocation, (error is null) ? null : error.getErrorGStruct());
+		g_dbus_method_invocation_take_error(gDBusMethodInvocation, (error is null) ? null : error.getErrorGStruct(true));
 	}
 }

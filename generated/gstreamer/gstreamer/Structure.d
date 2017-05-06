@@ -33,6 +33,8 @@ private import gobject.ValueArray;
 private import gstreamer.DateTime;
 private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -78,8 +80,10 @@ public class Structure
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GstStructure* getStructureStruct()
+	public GstStructure* getStructureStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstStructure;
 	}
 
@@ -96,6 +100,12 @@ public class Structure
 	{
 		this.gstStructure = gstStructure;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GSTREAMER) && ownedRef )
+			free();
 	}
 
 	public static Structure fromString(string name)

@@ -48,7 +48,7 @@ public  import gstreamerc.gstreamertypes;
  */
 public interface TocSetterIF{
 	/** Get the main Gtk struct */
-	public GstTocSetter* getTocSetterStruct();
+	public GstTocSetter* getTocSetterStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

@@ -54,7 +54,7 @@ private import std.algorithm;
  */
 public interface TextIF{
 	/** Get the main Gtk struct */
-	public AtkText* getTextStruct();
+	public AtkText* getTextStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

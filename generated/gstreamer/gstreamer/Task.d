@@ -80,8 +80,10 @@ public class Task : ObjectGst
 	protected GstTask* gstTask;
 
 	/** Get the main Gtk struct */
-	public GstTask* getTaskStruct()
+	public GstTask* getTaskStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstTask;
 	}
 

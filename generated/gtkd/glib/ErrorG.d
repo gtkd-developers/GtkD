@@ -28,6 +28,8 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import gtkc.glib;
 public  import gtkc.glibtypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -41,8 +43,10 @@ public class ErrorG
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GError* getErrorGStruct()
+	public GError* getErrorGStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gError;
 	}
 
@@ -59,6 +63,12 @@ public class ErrorG
 	{
 		this.gError = gError;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
+			free();
 	}
 
 
@@ -183,7 +193,7 @@ public class ErrorG
 	{
 		GError* outdest = null;
 		
-		g_propagate_error(&outdest, (src is null) ? null : src.getErrorGStruct());
+		g_propagate_error(&outdest, (src is null) ? null : src.getErrorGStruct(true));
 		
 		dest = new ErrorG(outdest);
 	}

@@ -38,8 +38,10 @@ public class ProgressBarAccessible : WidgetAccessible, ValueIF
 	protected GtkProgressBarAccessible* gtkProgressBarAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkProgressBarAccessible* getProgressBarAccessibleStruct()
+	public GtkProgressBarAccessible* getProgressBarAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkProgressBarAccessible;
 	}
 

@@ -50,8 +50,10 @@ public class InetAddressMask : ObjectG, InitableIF
 	protected GInetAddressMask* gInetAddressMask;
 
 	/** Get the main Gtk struct */
-	public GInetAddressMask* getInetAddressMaskStruct()
+	public GInetAddressMask* getInetAddressMaskStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gInetAddressMask;
 	}
 

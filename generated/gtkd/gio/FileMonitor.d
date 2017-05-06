@@ -55,8 +55,10 @@ public class FileMonitor : ObjectG
 	protected GFileMonitor* gFileMonitor;
 
 	/** Get the main Gtk struct */
-	public GFileMonitor* getFileMonitorStruct()
+	public GFileMonitor* getFileMonitorStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gFileMonitor;
 	}
 

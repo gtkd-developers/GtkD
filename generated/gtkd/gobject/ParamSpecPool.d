@@ -46,8 +46,10 @@ public class ParamSpecPool
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GParamSpecPool* getParamSpecPoolStruct()
+	public GParamSpecPool* getParamSpecPoolStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gParamSpecPool;
 	}
 

@@ -56,8 +56,10 @@ public class VolumeMonitor : ObjectG
 	protected GVolumeMonitor* gVolumeMonitor;
 
 	/** Get the main Gtk struct */
-	public GVolumeMonitor* getVolumeMonitorStruct()
+	public GVolumeMonitor* getVolumeMonitorStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gVolumeMonitor;
 	}
 

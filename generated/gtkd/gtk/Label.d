@@ -221,8 +221,10 @@ public class Label : Misc
 	protected GtkLabel* gtkLabel;
 
 	/** Get the main Gtk struct */
-	public GtkLabel* getLabelStruct()
+	public GtkLabel* getLabelStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkLabel;
 	}
 

@@ -66,8 +66,10 @@ public class PgLayout : ObjectG
 	protected PangoLayout* pangoLayout;
 
 	/** Get the main Gtk struct */
-	public PangoLayout* getPgLayoutStruct()
+	public PangoLayout* getPgLayoutStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return pangoLayout;
 	}
 

@@ -53,8 +53,10 @@ public class InputStream : ObjectG
 	protected GInputStream* gInputStream;
 
 	/** Get the main Gtk struct */
-	public GInputStream* getInputStreamStruct()
+	public GInputStream* getInputStreamStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gInputStream;
 	}
 

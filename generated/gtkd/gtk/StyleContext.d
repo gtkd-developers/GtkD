@@ -114,8 +114,10 @@ public class StyleContext : ObjectG
 	protected GtkStyleContext* gtkStyleContext;
 
 	/** Get the main Gtk struct */
-	public GtkStyleContext* getStyleContextStruct()
+	public GtkStyleContext* getStyleContextStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkStyleContext;
 	}
 

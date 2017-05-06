@@ -52,8 +52,10 @@ public  import std.algorithm;
 public template ChildProxyT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GstChildProxy* getChildProxyStruct()
+	public GstChildProxy* getChildProxyStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GstChildProxy*)getStruct();
 	}
 

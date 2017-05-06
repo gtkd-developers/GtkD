@@ -59,8 +59,10 @@ public class CellAreaBox : CellArea, OrientableIF
 	protected GtkCellAreaBox* gtkCellAreaBox;
 
 	/** Get the main Gtk struct */
-	public GtkCellAreaBox* getCellAreaBoxStruct()
+	public GtkCellAreaBox* getCellAreaBoxStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkCellAreaBox;
 	}
 

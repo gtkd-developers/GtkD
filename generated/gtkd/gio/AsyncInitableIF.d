@@ -138,7 +138,7 @@ public  import gtkc.giotypes;
  */
 public interface AsyncInitableIF{
 	/** Get the main Gtk struct */
-	public GAsyncInitable* getAsyncInitableStruct();
+	public GAsyncInitable* getAsyncInitableStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

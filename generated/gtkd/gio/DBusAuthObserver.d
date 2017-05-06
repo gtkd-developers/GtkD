@@ -79,8 +79,10 @@ public class DBusAuthObserver : ObjectG
 	protected GDBusAuthObserver* gDBusAuthObserver;
 
 	/** Get the main Gtk struct */
-	public GDBusAuthObserver* getDBusAuthObserverStruct()
+	public GDBusAuthObserver* getDBusAuthObserverStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gDBusAuthObserver;
 	}
 

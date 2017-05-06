@@ -38,8 +38,10 @@ public  import std.algorithm;
 public template WindowT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public AtkWindow* getWindowStruct()
+	public AtkWindow* getWindowStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(AtkWindow*)getStruct();
 	}
 

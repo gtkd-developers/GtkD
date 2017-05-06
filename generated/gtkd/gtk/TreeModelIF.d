@@ -233,7 +233,7 @@ private import std.algorithm;
  */
 public interface TreeModelIF{
 	/** Get the main Gtk struct */
-	public GtkTreeModel* getTreeModelStruct();
+	public GtkTreeModel* getTreeModelStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

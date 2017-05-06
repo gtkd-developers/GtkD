@@ -40,8 +40,10 @@ public class SourceFile : ObjectG
 	protected GtkSourceFile* gtkSourceFile;
 
 	/** Get the main Gtk struct */
-	public GtkSourceFile* getSourceFileStruct()
+	public GtkSourceFile* getSourceFileStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSourceFile;
 	}
 

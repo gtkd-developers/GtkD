@@ -43,8 +43,10 @@ public class PadProbeInfo
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GstPadProbeInfo* getPadProbeInfoStruct()
+	public GstPadProbeInfo* getPadProbeInfoStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstPadProbeInfo;
 	}
 

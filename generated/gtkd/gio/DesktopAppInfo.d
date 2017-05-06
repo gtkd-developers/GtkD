@@ -52,8 +52,10 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	protected GDesktopAppInfo* gDesktopAppInfo;
 
 	/** Get the main Gtk struct */
-	public GDesktopAppInfo* getDesktopAppInfoStruct()
+	public GDesktopAppInfo* getDesktopAppInfoStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gDesktopAppInfo;
 	}
 

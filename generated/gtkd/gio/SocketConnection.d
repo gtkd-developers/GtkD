@@ -62,8 +62,10 @@ public class SocketConnection : IOStream
 	protected GSocketConnection* gSocketConnection;
 
 	/** Get the main Gtk struct */
-	public GSocketConnection* getSocketConnectionStruct()
+	public GSocketConnection* getSocketConnectionStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gSocketConnection;
 	}
 

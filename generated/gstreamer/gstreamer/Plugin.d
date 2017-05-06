@@ -62,8 +62,10 @@ public class Plugin : ObjectGst
 	protected GstPlugin* gstPlugin;
 
 	/** Get the main Gtk struct */
-	public GstPlugin* getPluginStruct()
+	public GstPlugin* getPluginStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstPlugin;
 	}
 
@@ -450,7 +452,7 @@ public class Plugin : ObjectGst
 	 */
 	public void setCacheData(Structure cacheData)
 	{
-		gst_plugin_set_cache_data(gstPlugin, (cacheData is null) ? null : cacheData.getStructureStruct());
+		gst_plugin_set_cache_data(gstPlugin, (cacheData is null) ? null : cacheData.getStructureStruct(true));
 	}
 
 	/**

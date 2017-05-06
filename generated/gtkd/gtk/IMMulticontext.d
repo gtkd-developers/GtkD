@@ -40,8 +40,10 @@ public class IMMulticontext : IMContext
 	protected GtkIMMulticontext* gtkIMMulticontext;
 
 	/** Get the main Gtk struct */
-	public GtkIMMulticontext* getIMMulticontextStruct()
+	public GtkIMMulticontext* getIMMulticontextStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkIMMulticontext;
 	}
 

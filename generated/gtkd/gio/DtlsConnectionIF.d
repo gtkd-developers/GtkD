@@ -63,7 +63,7 @@ private import std.algorithm;
  */
 public interface DtlsConnectionIF{
 	/** Get the main Gtk struct */
-	public GDtlsConnection* getDtlsConnectionStruct();
+	public GDtlsConnection* getDtlsConnectionStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

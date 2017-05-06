@@ -34,8 +34,10 @@ public  import gtkc.gtktypes;
 public template CellAccessibleParentT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GtkCellAccessibleParent* getCellAccessibleParentStruct()
+	public GtkCellAccessibleParent* getCellAccessibleParentStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GtkCellAccessibleParent*)getStruct();
 	}
 

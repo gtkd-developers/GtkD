@@ -38,7 +38,7 @@ public  import gtkc.giotypes;
  */
 public interface DesktopAppInfoLookupIF{
 	/** Get the main Gtk struct */
-	public GDesktopAppInfoLookup* getDesktopAppInfoLookupStruct();
+	public GDesktopAppInfoLookup* getDesktopAppInfoLookupStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

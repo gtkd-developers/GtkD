@@ -49,8 +49,10 @@ public class Spinner : Widget
 	protected GtkSpinner* gtkSpinner;
 
 	/** Get the main Gtk struct */
-	public GtkSpinner* getSpinnerStruct()
+	public GtkSpinner* getSpinnerStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSpinner;
 	}
 

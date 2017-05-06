@@ -117,8 +117,10 @@ public class Scale : Range
 	protected GtkScale* gtkScale;
 
 	/** Get the main Gtk struct */
-	public GtkScale* getScaleStruct()
+	public GtkScale* getScaleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkScale;
 	}
 

@@ -43,7 +43,7 @@ private import std.algorithm;
  */
 public interface DBusObjectIF{
 	/** Get the main Gtk struct */
-	public GDBusObject* getDBusObjectStruct();
+	public GDBusObject* getDBusObjectStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

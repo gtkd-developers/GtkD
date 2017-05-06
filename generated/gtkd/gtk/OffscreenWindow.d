@@ -59,8 +59,10 @@ public class OffscreenWindow : Window
 	protected GtkOffscreenWindow* gtkOffscreenWindow;
 
 	/** Get the main Gtk struct */
-	public GtkOffscreenWindow* getOffscreenWindowStruct()
+	public GtkOffscreenWindow* getOffscreenWindowStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkOffscreenWindow;
 	}
 

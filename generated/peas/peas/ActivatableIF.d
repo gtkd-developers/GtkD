@@ -33,7 +33,7 @@ public  import peasc.peastypes;
  */
 public interface ActivatableIF{
 	/** Get the main Gtk struct */
-	public PeasActivatable* getActivatableStruct();
+	public PeasActivatable* getActivatableStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

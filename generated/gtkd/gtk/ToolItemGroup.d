@@ -51,8 +51,10 @@ public class ToolItemGroup : Container, ToolShellIF
 	protected GtkToolItemGroup* gtkToolItemGroup;
 
 	/** Get the main Gtk struct */
-	public GtkToolItemGroup* getToolItemGroupStruct()
+	public GtkToolItemGroup* getToolItemGroupStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkToolItemGroup;
 	}
 

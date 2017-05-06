@@ -31,6 +31,8 @@ private import glib.MatchInfo;
 private import glib.Str;
 private import gtkc.glib;
 public  import gtkc.glibtypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -109,8 +111,10 @@ public class Regex
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GRegex* getRegexStruct()
+	public GRegex* getRegexStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gRegex;
 	}
 
@@ -127,6 +131,12 @@ public class Regex
 	{
 		this.gRegex = gRegex;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
+			unref();
 	}
 
 

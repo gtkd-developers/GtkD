@@ -39,8 +39,10 @@ public class SourceMark : TextMark
 	protected GtkSourceMark* gtkSourceMark;
 
 	/** Get the main Gtk struct */
-	public GtkSourceMark* getSourceMarkStruct()
+	public GtkSourceMark* getSourceMarkStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSourceMark;
 	}
 

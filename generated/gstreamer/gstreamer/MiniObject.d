@@ -27,6 +27,8 @@ module gstreamer.MiniObject;
 private import gobject.ObjectG;
 private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -63,8 +65,10 @@ public class MiniObject
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GstMiniObject* getMiniObjectStruct()
+	public GstMiniObject* getMiniObjectStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstMiniObject;
 	}
 
@@ -81,6 +85,12 @@ public class MiniObject
 	{
 		this.gstMiniObject = gstMiniObject;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GSTREAMER) && ownedRef )
+			unref();
 	}
 
 

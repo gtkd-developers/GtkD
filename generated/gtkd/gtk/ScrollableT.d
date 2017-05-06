@@ -63,8 +63,10 @@ public  import gtkc.gtktypes;
 public template ScrollableT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GtkScrollable* getScrollableStruct()
+	public GtkScrollable* getScrollableStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GtkScrollable*)getStruct();
 	}
 

@@ -56,8 +56,10 @@ public class ToolItem : Bin, ActivatableIF
 	protected GtkToolItem* gtkToolItem;
 
 	/** Get the main Gtk struct */
-	public GtkToolItem* getToolItemStruct()
+	public GtkToolItem* getToolItemStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkToolItem;
 	}
 

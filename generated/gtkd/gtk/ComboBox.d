@@ -105,8 +105,10 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 	protected GtkComboBox* gtkComboBox;
 
 	/** Get the main Gtk struct */
-	public GtkComboBox* getComboBoxStruct()
+	public GtkComboBox* getComboBoxStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkComboBox;
 	}
 

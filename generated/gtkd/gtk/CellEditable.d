@@ -38,8 +38,10 @@ public class CellEditable : ObjectG, CellEditableIF
 	protected GtkCellEditable* gtkCellEditable;
 
 	/** Get the main Gtk struct */
-	public GtkCellEditable* getCellEditableStruct()
+	public GtkCellEditable* getCellEditableStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkCellEditable;
 	}
 

@@ -39,8 +39,10 @@ public class CellAreaClass
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GtkCellAreaClass* getCellAreaClassStruct()
+	public GtkCellAreaClass* getCellAreaClassStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkCellAreaClass;
 	}
 

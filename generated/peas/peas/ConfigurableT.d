@@ -36,8 +36,10 @@ public  import peasc.peastypes;
 public template ConfigurableT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public PeasGtkConfigurable* getConfigurableStruct()
+	public PeasGtkConfigurable* getConfigurableStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(PeasGtkConfigurable*)getStruct();
 	}
 

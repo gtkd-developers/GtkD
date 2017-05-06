@@ -41,8 +41,10 @@ public class Visual : ObjectG
 	protected GdkVisual* gdkVisual;
 
 	/** Get the main Gtk struct */
-	public GdkVisual* getVisualStruct()
+	public GdkVisual* getVisualStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gdkVisual;
 	}
 

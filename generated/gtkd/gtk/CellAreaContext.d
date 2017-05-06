@@ -48,8 +48,10 @@ public class CellAreaContext : ObjectG
 	protected GtkCellAreaContext* gtkCellAreaContext;
 
 	/** Get the main Gtk struct */
-	public GtkCellAreaContext* getCellAreaContextStruct()
+	public GtkCellAreaContext* getCellAreaContextStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkCellAreaContext;
 	}
 

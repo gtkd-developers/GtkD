@@ -50,8 +50,10 @@ public class DrawingContext : ObjectG
 	protected GdkDrawingContext* gdkDrawingContext;
 
 	/** Get the main Gtk struct */
-	public GdkDrawingContext* getDrawingContextStruct()
+	public GdkDrawingContext* getDrawingContextStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gdkDrawingContext;
 	}
 

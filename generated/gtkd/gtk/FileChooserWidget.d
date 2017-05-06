@@ -53,8 +53,10 @@ public class FileChooserWidget : Box, FileChooserIF
 	protected GtkFileChooserWidget* gtkFileChooserWidget;
 
 	/** Get the main Gtk struct */
-	public GtkFileChooserWidget* getFileChooserWidgetStruct()
+	public GtkFileChooserWidget* getFileChooserWidgetStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkFileChooserWidget;
 	}
 

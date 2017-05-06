@@ -130,8 +130,10 @@ public class Image : Misc
 	protected GtkImage* gtkImage;
 
 	/** Get the main Gtk struct */
-	public GtkImage* getImageStruct()
+	public GtkImage* getImageStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkImage;
 	}
 

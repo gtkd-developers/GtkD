@@ -30,6 +30,8 @@ private import glib.Variant;
 private import glib.VariantType;
 private import gtkc.glib;
 public  import gtkc.glibtypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -132,8 +134,10 @@ public class VariantDict
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GVariantDict* getVariantDictStruct()
+	public GVariantDict* getVariantDictStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gVariantDict;
 	}
 
@@ -150,6 +154,12 @@ public class VariantDict
 	{
 		this.gVariantDict = gVariantDict;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
+			unref();
 	}
 
 

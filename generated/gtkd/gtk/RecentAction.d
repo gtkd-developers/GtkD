@@ -51,8 +51,10 @@ public class RecentAction : Action, RecentChooserIF
 	protected GtkRecentAction* gtkRecentAction;
 
 	/** Get the main Gtk struct */
-	public GtkRecentAction* getRecentActionStruct()
+	public GtkRecentAction* getRecentActionStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkRecentAction;
 	}
 

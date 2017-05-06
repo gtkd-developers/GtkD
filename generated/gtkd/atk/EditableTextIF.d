@@ -42,7 +42,7 @@ public  import gtkc.atktypes;
  */
 public interface EditableTextIF{
 	/** Get the main Gtk struct */
-	public AtkEditableText* getEditableTextStruct();
+	public AtkEditableText* getEditableTextStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

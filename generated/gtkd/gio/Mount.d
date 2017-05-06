@@ -38,8 +38,10 @@ public class Mount : ObjectG, MountIF
 	protected GMount* gMount;
 
 	/** Get the main Gtk struct */
-	public GMount* getMountStruct()
+	public GMount* getMountStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gMount;
 	}
 

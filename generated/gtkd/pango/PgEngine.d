@@ -39,8 +39,10 @@ public class PgEngine : ObjectG
 	protected PangoEngine* pangoEngine;
 
 	/** Get the main Gtk struct */
-	public PangoEngine* getPgEngineStruct()
+	public PangoEngine* getPgEngineStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return pangoEngine;
 	}
 

@@ -48,8 +48,10 @@ public class TagList
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GstTagList* getTagListStruct()
+	public GstTagList* getTagListStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstTagList;
 	}
 

@@ -37,7 +37,7 @@ private import std.algorithm;
  */
 public interface TreeSortableIF{
 	/** Get the main Gtk struct */
-	public GtkTreeSortable* getTreeSortableStruct();
+	public GtkTreeSortable* getTreeSortableStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

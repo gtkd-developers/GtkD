@@ -55,8 +55,10 @@ public class RecentInfo
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GtkRecentInfo* getRecentInfoStruct()
+	public GtkRecentInfo* getRecentInfoStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkRecentInfo;
 	}
 
@@ -78,13 +80,9 @@ public class RecentInfo
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
-		{
-			gtk_recent_info_unref(gtkRecentInfo);
-		}
+			unref();
 	}
 
-	/**
-	 */
 
 	/** */
 	public static GType getType()

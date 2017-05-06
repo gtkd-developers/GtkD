@@ -41,8 +41,10 @@ public class Directory
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GDir* getDirectoryStruct()
+	public GDir* getDirectoryStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gDir;
 	}
 

@@ -47,8 +47,10 @@ public class CharsetConverter : ObjectG, ConverterIF, InitableIF
 	protected GCharsetConverter* gCharsetConverter;
 
 	/** Get the main Gtk struct */
-	public GCharsetConverter* getCharsetConverterStruct()
+	public GCharsetConverter* getCharsetConverterStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gCharsetConverter;
 	}
 

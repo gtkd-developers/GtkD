@@ -122,8 +122,10 @@ public class DrawingArea : Widget
 	protected GtkDrawingArea* gtkDrawingArea;
 
 	/** Get the main Gtk struct */
-	public GtkDrawingArea* getDrawingAreaStruct()
+	public GtkDrawingArea* getDrawingAreaStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkDrawingArea;
 	}
 

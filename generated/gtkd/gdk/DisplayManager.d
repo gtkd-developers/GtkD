@@ -81,8 +81,10 @@ public class DisplayManager : ObjectG
 	protected GdkDisplayManager* gdkDisplayManager;
 
 	/** Get the main Gtk struct */
-	public GdkDisplayManager* getDisplayManagerStruct()
+	public GdkDisplayManager* getDisplayManagerStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gdkDisplayManager;
 	}
 

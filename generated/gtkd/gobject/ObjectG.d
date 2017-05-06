@@ -53,8 +53,10 @@ public class ObjectG
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GObject* getObjectGStruct()
+	public GObject* getObjectGStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gObject;
 	}
 

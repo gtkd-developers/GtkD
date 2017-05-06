@@ -70,8 +70,10 @@ public class CssProvider : ObjectG, StyleProviderIF
 	protected GtkCssProvider* gtkCssProvider;
 
 	/** Get the main Gtk struct */
-	public GtkCssProvider* getCssProviderStruct()
+	public GtkCssProvider* getCssProviderStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkCssProvider;
 	}
 

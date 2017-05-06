@@ -369,8 +369,10 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	protected GtkCellArea* gtkCellArea;
 
 	/** Get the main Gtk struct */
-	public GtkCellArea* getCellAreaStruct()
+	public GtkCellArea* getCellAreaStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkCellArea;
 	}
 

@@ -74,8 +74,10 @@ public class StatusIcon : ObjectG
 	protected GtkStatusIcon* gtkStatusIcon;
 
 	/** Get the main Gtk struct */
-	public GtkStatusIcon* getStatusIconStruct()
+	public GtkStatusIcon* getStatusIconStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkStatusIcon;
 	}
 

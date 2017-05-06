@@ -38,8 +38,10 @@ public class SpinButtonAccessible : EntryAccessible, ValueIF
 	protected GtkSpinButtonAccessible* gtkSpinButtonAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkSpinButtonAccessible* getSpinButtonAccessibleStruct()
+	public GtkSpinButtonAccessible* getSpinButtonAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSpinButtonAccessible;
 	}
 

@@ -88,8 +88,10 @@ public class Toc
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GstToc* getTocStruct()
+	public GstToc* getTocStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstToc;
 	}
 

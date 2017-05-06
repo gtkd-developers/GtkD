@@ -112,8 +112,10 @@ public class Clock : ObjectGst
 	protected GstClock* gstClock;
 
 	/** Get the main Gtk struct */
-	public GstClock* getClockStruct()
+	public GstClock* getClockStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstClock;
 	}
 

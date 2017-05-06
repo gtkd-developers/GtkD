@@ -21,7 +21,7 @@
 
 # must start with wrap
 wrap: gsv
-file: /usr/share/gir-1.0/GtkSource-3.0.gir
+file: GtkSource-3.0.gir
 
 addAliases: start
 	public import gtkc.gtktypes;

@@ -42,8 +42,10 @@ public class TracerFactory : PluginFeature
 	protected GstTracerFactory* gstTracerFactory;
 
 	/** Get the main Gtk struct */
-	public GstTracerFactory* getTracerFactoryStruct()
+	public GstTracerFactory* getTracerFactoryStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstTracerFactory;
 	}
 

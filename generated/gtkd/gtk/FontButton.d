@@ -52,8 +52,10 @@ public class FontButton : Button, FontChooserIF
 	protected GtkFontButton* gtkFontButton;
 
 	/** Get the main Gtk struct */
-	public GtkFontButton* getFontButtonStruct()
+	public GtkFontButton* getFontButtonStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkFontButton;
 	}
 

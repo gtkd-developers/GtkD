@@ -67,8 +67,10 @@ public class ElementFactory : PluginFeature
 	protected GstElementFactory* gstElementFactory;
 
 	/** Get the main Gtk struct */
-	public GstElementFactory* getElementFactoryStruct()
+	public GstElementFactory* getElementFactoryStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstElementFactory;
 	}
 

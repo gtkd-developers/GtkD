@@ -48,8 +48,10 @@ public class DBusObjectProxy : ObjectG, DBusObjectIF
 	protected GDBusObjectProxy* gDBusObjectProxy;
 
 	/** Get the main Gtk struct */
-	public GDBusObjectProxy* getDBusObjectProxyStruct()
+	public GDBusObjectProxy* getDBusObjectProxyStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gDBusObjectProxy;
 	}
 

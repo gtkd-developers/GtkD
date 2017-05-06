@@ -51,8 +51,10 @@ public class SourceBuffer : TextBuffer
 	protected GtkSourceBuffer* gtkSourceBuffer;
 
 	/** Get the main Gtk struct */
-	public GtkSourceBuffer* getSourceBufferStruct()
+	public GtkSourceBuffer* getSourceBufferStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSourceBuffer;
 	}
 

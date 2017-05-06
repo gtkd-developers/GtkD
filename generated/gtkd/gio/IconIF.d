@@ -68,7 +68,7 @@ public  import gtkc.giotypes;
  */
 public interface IconIF{
 	/** Get the main Gtk struct */
-	public GIcon* getIconStruct();
+	public GIcon* getIconStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

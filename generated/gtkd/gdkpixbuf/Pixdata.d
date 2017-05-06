@@ -44,8 +44,10 @@ public class Pixdata
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GdkPixdata* getPixdataStruct()
+	public GdkPixdata* getPixdataStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gdkPixdata;
 	}
 

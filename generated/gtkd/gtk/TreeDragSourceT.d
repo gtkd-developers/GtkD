@@ -37,8 +37,10 @@ public  import gtkc.gtktypes;
 public template TreeDragSourceT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GtkTreeDragSource* getTreeDragSourceStruct()
+	public GtkTreeDragSource* getTreeDragSourceStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GtkTreeDragSource*)getStruct();
 	}
 

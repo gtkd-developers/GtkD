@@ -38,8 +38,10 @@ public class SourceCompletionProvider : ObjectG, SourceCompletionProviderIF
 	protected GtkSourceCompletionProvider* gtkSourceCompletionProvider;
 
 	/** Get the main Gtk struct */
-	public GtkSourceCompletionProvider* getSourceCompletionProviderStruct()
+	public GtkSourceCompletionProvider* getSourceCompletionProviderStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSourceCompletionProvider;
 	}
 

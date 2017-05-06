@@ -159,8 +159,10 @@ public class MenuModel : ObjectG
 	protected GMenuModel* gMenuModel;
 
 	/** Get the main Gtk struct */
-	public GMenuModel* getMenuModelStruct()
+	public GMenuModel* getMenuModelStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gMenuModel;
 	}
 

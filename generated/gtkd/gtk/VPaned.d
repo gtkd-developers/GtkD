@@ -46,8 +46,10 @@ public class VPaned : Paned
 	protected GtkVPaned* gtkVPaned;
 
 	/** Get the main Gtk struct */
-	public GtkVPaned* getVPanedStruct()
+	public GtkVPaned* getVPanedStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkVPaned;
 	}
 

@@ -52,8 +52,10 @@ public class ActionBar : Bin
 	protected GtkActionBar* gtkActionBar;
 
 	/** Get the main Gtk struct */
-	public GtkActionBar* getActionBarStruct()
+	public GtkActionBar* getActionBarStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkActionBar;
 	}
 

@@ -105,8 +105,10 @@ public class Popover : Bin
 	protected GtkPopover* gtkPopover;
 
 	/** Get the main Gtk struct */
-	public GtkPopover* getPopoverStruct()
+	public GtkPopover* getPopoverStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkPopover;
 	}
 

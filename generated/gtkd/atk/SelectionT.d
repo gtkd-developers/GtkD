@@ -47,8 +47,10 @@ public  import std.algorithm;
 public template SelectionT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public AtkSelection* getSelectionStruct()
+	public AtkSelection* getSelectionStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(AtkSelection*)getStruct();
 	}
 

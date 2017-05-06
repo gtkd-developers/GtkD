@@ -55,8 +55,10 @@ public class UnixFDMessage : SocketControlMessage
 	protected GUnixFDMessage* gUnixFDMessage;
 
 	/** Get the main Gtk struct */
-	public GUnixFDMessage* getUnixFDMessageStruct()
+	public GUnixFDMessage* getUnixFDMessageStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gUnixFDMessage;
 	}
 

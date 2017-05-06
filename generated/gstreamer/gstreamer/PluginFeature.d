@@ -42,8 +42,10 @@ public class PluginFeature : ObjectGst
 	protected GstPluginFeature* gstPluginFeature;
 
 	/** Get the main Gtk struct */
-	public GstPluginFeature* getPluginFeatureStruct()
+	public GstPluginFeature* getPluginFeatureStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstPluginFeature;
 	}
 

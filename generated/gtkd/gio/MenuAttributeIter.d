@@ -43,8 +43,10 @@ public class MenuAttributeIter : ObjectG
 	protected GMenuAttributeIter* gMenuAttributeIter;
 
 	/** Get the main Gtk struct */
-	public GMenuAttributeIter* getMenuAttributeIterStruct()
+	public GMenuAttributeIter* getMenuAttributeIterStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gMenuAttributeIter;
 	}
 

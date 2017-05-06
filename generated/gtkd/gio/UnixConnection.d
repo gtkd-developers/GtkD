@@ -52,8 +52,10 @@ public class UnixConnection : SocketConnection
 	protected GUnixConnection* gUnixConnection;
 
 	/** Get the main Gtk struct */
-	public GUnixConnection* getUnixConnectionStruct()
+	public GUnixConnection* getUnixConnectionStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gUnixConnection;
 	}
 

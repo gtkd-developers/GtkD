@@ -164,8 +164,10 @@ public class Dialog : Window
 	protected GtkDialog* gtkDialog;
 
 	/** Get the main Gtk struct */
-	public GtkDialog* getDialogStruct()
+	public GtkDialog* getDialogStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkDialog;
 	}
 

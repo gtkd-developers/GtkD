@@ -47,8 +47,10 @@ public class Uri
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GstUri* getUriStruct()
+	public GstUri* getUriStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstUri;
 	}
 

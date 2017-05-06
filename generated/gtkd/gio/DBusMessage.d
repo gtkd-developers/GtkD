@@ -47,8 +47,10 @@ public class DBusMessage : ObjectG
 	protected GDBusMessage* gDBusMessage;
 
 	/** Get the main Gtk struct */
-	public GDBusMessage* getDBusMessageStruct()
+	public GDBusMessage* getDBusMessageStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gDBusMessage;
 	}
 

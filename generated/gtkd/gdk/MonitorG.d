@@ -49,8 +49,10 @@ public class MonitorG : ObjectG
 	protected GdkMonitor* gdkMonitor;
 
 	/** Get the main Gtk struct */
-	public GdkMonitor* getMonitorGStruct()
+	public GdkMonitor* getMonitorGStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gdkMonitor;
 	}
 

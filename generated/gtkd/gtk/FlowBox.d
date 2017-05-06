@@ -87,8 +87,10 @@ public class FlowBox : Container, OrientableIF
 	protected GtkFlowBox* gtkFlowBox;
 
 	/** Get the main Gtk struct */
-	public GtkFlowBox* getFlowBoxStruct()
+	public GtkFlowBox* getFlowBoxStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkFlowBox;
 	}
 

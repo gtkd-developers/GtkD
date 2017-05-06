@@ -29,6 +29,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /** */
@@ -39,8 +41,10 @@ public class TreePath
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GtkTreePath* getTreePathStruct()
+	public GtkTreePath* getTreePathStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkTreePath;
 	}
 
@@ -57,6 +61,12 @@ public class TreePath
 	{
 		this.gtkTreePath = gtkTreePath;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
+			free();
 	}
 
 	/**

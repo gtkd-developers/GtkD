@@ -42,7 +42,7 @@ private import std.algorithm;
  */
 public interface DocumentIF{
 	/** Get the main Gtk struct */
-	public AtkDocument* getDocumentStruct();
+	public AtkDocument* getDocumentStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

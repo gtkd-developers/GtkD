@@ -50,8 +50,10 @@ public  import gtkc.gdktypes;
 public template DevicePadT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GdkDevicePad* getDevicePadStruct()
+	public GdkDevicePad* getDevicePadStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GdkDevicePad*)getStruct();
 	}
 

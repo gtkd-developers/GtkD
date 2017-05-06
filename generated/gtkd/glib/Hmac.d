@@ -28,6 +28,8 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import gtkc.glib;
 public  import gtkc.glibtypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -44,8 +46,10 @@ public class Hmac
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GHmac* getHmacStruct()
+	public GHmac* getHmacStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gHmac;
 	}
 
@@ -62,6 +66,12 @@ public class Hmac
 	{
 		this.gHmac = gHmac;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
+			unref();
 	}
 
 	/**

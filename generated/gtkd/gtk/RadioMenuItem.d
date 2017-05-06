@@ -79,8 +79,10 @@ public class RadioMenuItem : CheckMenuItem
 	protected GtkRadioMenuItem* gtkRadioMenuItem;
 
 	/** Get the main Gtk struct */
-	public GtkRadioMenuItem* getRadioMenuItemStruct()
+	public GtkRadioMenuItem* getRadioMenuItemStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkRadioMenuItem;
 	}
 

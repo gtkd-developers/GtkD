@@ -50,7 +50,7 @@ public  import gtkc.giotypes;
  */
 public interface ProxyIF{
 	/** Get the main Gtk struct */
-	public GProxy* getProxyStruct();
+	public GProxy* getProxyStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

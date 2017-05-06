@@ -34,6 +34,8 @@ private import gtk.TextChildAnchor;
 private import gtk.TextTag;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 private import pango.PgLanguage;
 
 
@@ -50,8 +52,10 @@ public class TextIter
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GtkTextIter* getTextIterStruct()
+	public GtkTextIter* getTextIterStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkTextIter;
 	}
 
@@ -68,6 +72,12 @@ public class TextIter
 	{
 		this.gtkTextIter = gtkTextIter;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
+			free();
 	}
 
 	/** */

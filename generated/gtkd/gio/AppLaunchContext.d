@@ -49,8 +49,10 @@ public class AppLaunchContext : ObjectG
 	protected GAppLaunchContext* gAppLaunchContext;
 
 	/** Get the main Gtk struct */
-	public GAppLaunchContext* getAppLaunchContextStruct()
+	public GAppLaunchContext* getAppLaunchContextStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gAppLaunchContext;
 	}
 

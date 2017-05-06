@@ -93,8 +93,10 @@ public class Box : Container, OrientableIF
 	protected GtkBox* gtkBox;
 
 	/** Get the main Gtk struct */
-	public GtkBox* getBoxStruct()
+	public GtkBox* getBoxStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkBox;
 	}
 

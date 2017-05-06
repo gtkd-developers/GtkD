@@ -52,8 +52,10 @@ public class RecentChooserWidget : Box, RecentChooserIF
 	protected GtkRecentChooserWidget* gtkRecentChooserWidget;
 
 	/** Get the main Gtk struct */
-	public GtkRecentChooserWidget* getRecentChooserWidgetStruct()
+	public GtkRecentChooserWidget* getRecentChooserWidgetStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkRecentChooserWidget;
 	}
 

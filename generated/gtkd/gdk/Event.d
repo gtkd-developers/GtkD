@@ -35,6 +35,8 @@ private import gobject.ObjectG;
 private import gobject.Value;
 private import gtkc.gdk;
 public  import gtkc.gdktypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -76,8 +78,10 @@ public class Event
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GdkEvent* getEventStruct()
+	public GdkEvent* getEventStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gdkEvent;
 	}
 
@@ -94,6 +98,12 @@ public class Event
 	{
 		this.gdkEvent = gdkEvent;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GDK) && ownedRef )
+			free();
 	}
 
 	/**

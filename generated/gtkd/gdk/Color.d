@@ -45,8 +45,10 @@ public class Color
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GdkColor* getColorStruct()
+	public GdkColor* getColorStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gdkColor;
 	}
 
@@ -63,6 +65,12 @@ public class Color
 	{
 		this.gdkColor = gdkColor;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GDK) && ownedRef )
+			free();
 	}
 
 	/**
@@ -97,14 +105,6 @@ public class Color
 		color.blue = blue;
 		
 		this(gdk_color_copy(&color));
-	}
-	
-	~this ()
-	{
-		if ( Linker.isLoaded(LIBRARY.GDK) && ownedRef )
-		{
-			gdk_color_free(gdkColor);
-		}
 	}
 	
 	/**

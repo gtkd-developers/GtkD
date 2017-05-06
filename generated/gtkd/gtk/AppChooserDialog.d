@@ -54,8 +54,10 @@ public class AppChooserDialog : Dialog, AppChooserIF
 	protected GtkAppChooserDialog* gtkAppChooserDialog;
 
 	/** Get the main Gtk struct */
-	public GtkAppChooserDialog* getAppChooserDialogStruct()
+	public GtkAppChooserDialog* getAppChooserDialogStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkAppChooserDialog;
 	}
 

@@ -41,8 +41,10 @@ public class StaticPadTemplate
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GstStaticPadTemplate* getStaticPadTemplateStruct()
+	public GstStaticPadTemplate* getStaticPadTemplateStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstStaticPadTemplate;
 	}
 

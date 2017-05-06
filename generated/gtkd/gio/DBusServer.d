@@ -61,8 +61,10 @@ public class DBusServer : ObjectG, InitableIF
 	protected GDBusServer* gDBusServer;
 
 	/** Get the main Gtk struct */
-	public GDBusServer* getDBusServerStruct()
+	public GDBusServer* getDBusServerStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gDBusServer;
 	}
 

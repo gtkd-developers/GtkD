@@ -21,7 +21,7 @@
 
 # must start with wrap
 wrap: vte
-file: /usr/share/gir-1.0/Vte-2.91.gir
+file: Vte-2.91.gir
 
 addAliases: start
 	public import gtkc.gtktypes;

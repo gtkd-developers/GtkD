@@ -62,8 +62,10 @@ public class ObjectAtk : ObjectG
 	protected AtkObject* atkObject;
 
 	/** Get the main Gtk struct */
-	public AtkObject* getObjectAtkStruct()
+	public AtkObject* getObjectAtkStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return atkObject;
 	}
 

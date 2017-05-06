@@ -62,8 +62,10 @@ public class Calendar : Widget
 	protected GtkCalendar* gtkCalendar;
 
 	/** Get the main Gtk struct */
-	public GtkCalendar* getCalendarStruct()
+	public GtkCalendar* getCalendarStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkCalendar;
 	}
 

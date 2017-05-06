@@ -58,8 +58,10 @@ public class WeakRef
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GWeakRef* getWeakRefStruct()
+	public GWeakRef* getWeakRefStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gWeakRef;
 	}
 

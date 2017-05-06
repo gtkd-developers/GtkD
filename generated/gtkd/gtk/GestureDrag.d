@@ -49,8 +49,10 @@ public class GestureDrag : GestureSingle
 	protected GtkGestureDrag* gtkGestureDrag;
 
 	/** Get the main Gtk struct */
-	public GtkGestureDrag* getGestureDragStruct()
+	public GtkGestureDrag* getGestureDragStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkGestureDrag;
 	}
 

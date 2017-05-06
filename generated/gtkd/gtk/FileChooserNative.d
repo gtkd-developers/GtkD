@@ -183,8 +183,10 @@ public class FileChooserNative : NativeDialog, FileChooserIF
 	protected GtkFileChooserNative* gtkFileChooserNative;
 
 	/** Get the main Gtk struct */
-	public GtkFileChooserNative* getFileChooserNativeStruct()
+	public GtkFileChooserNative* getFileChooserNativeStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkFileChooserNative;
 	}
 

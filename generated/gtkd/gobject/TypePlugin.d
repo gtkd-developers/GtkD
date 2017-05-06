@@ -38,8 +38,10 @@ public class TypePlugin : ObjectG, TypePluginIF
 	protected GTypePlugin* gTypePlugin;
 
 	/** Get the main Gtk struct */
-	public GTypePlugin* getTypePluginStruct()
+	public GTypePlugin* getTypePluginStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gTypePlugin;
 	}
 

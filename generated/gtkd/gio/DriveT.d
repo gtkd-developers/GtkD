@@ -71,8 +71,10 @@ public  import std.algorithm;
 public template DriveT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GDrive* getDriveStruct()
+	public GDrive* getDriveStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GDrive*)getStruct();
 	}
 

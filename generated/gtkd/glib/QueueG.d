@@ -28,6 +28,8 @@ private import glib.ConstructionException;
 private import glib.ListG;
 private import gtkc.glib;
 public  import gtkc.glibtypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -41,8 +43,10 @@ public class QueueG
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GQueue* getQueueGStruct()
+	public GQueue* getQueueGStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gQueue;
 	}
 
@@ -59,6 +63,12 @@ public class QueueG
 	{
 		this.gQueue = gQueue;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
+			free();
 	}
 
 

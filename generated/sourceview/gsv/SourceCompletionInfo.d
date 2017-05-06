@@ -45,8 +45,10 @@ public class SourceCompletionInfo : Window
 	protected GtkSourceCompletionInfo* gtkSourceCompletionInfo;
 
 	/** Get the main Gtk struct */
-	public GtkSourceCompletionInfo* getSourceCompletionInfoStruct()
+	public GtkSourceCompletionInfo* getSourceCompletionInfoStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSourceCompletionInfo;
 	}
 

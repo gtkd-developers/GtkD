@@ -131,8 +131,10 @@ public class DBusObjectManagerClient : ObjectG, AsyncInitableIF, DBusObjectManag
 	protected GDBusObjectManagerClient* gDBusObjectManagerClient;
 
 	/** Get the main Gtk struct */
-	public GDBusObjectManagerClient* getDBusObjectManagerClientStruct()
+	public GDBusObjectManagerClient* getDBusObjectManagerClientStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gDBusObjectManagerClient;
 	}
 

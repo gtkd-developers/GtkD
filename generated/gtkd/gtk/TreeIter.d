@@ -48,8 +48,10 @@ public class TreeIter
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GtkTreeIter* getTreeIterStruct()
+	public GtkTreeIter* getTreeIterStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkTreeIter;
 	}
 

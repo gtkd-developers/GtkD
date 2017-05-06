@@ -57,8 +57,10 @@ public class WindowGroup : ObjectG
 	protected GtkWindowGroup* gtkWindowGroup;
 
 	/** Get the main Gtk struct */
-	public GtkWindowGroup* getWindowGroupStruct()
+	public GtkWindowGroup* getWindowGroupStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkWindowGroup;
 	}
 

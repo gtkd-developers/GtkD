@@ -36,8 +36,10 @@ public class LockButtonAccessible : ButtonAccessible
 	protected GtkLockButtonAccessible* gtkLockButtonAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkLockButtonAccessible* getLockButtonAccessibleStruct()
+	public GtkLockButtonAccessible* getLockButtonAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkLockButtonAccessible;
 	}
 

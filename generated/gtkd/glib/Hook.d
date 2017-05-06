@@ -39,8 +39,10 @@ public class Hook
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GHook* getHookStruct()
+	public GHook* getHookStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gHook;
 	}
 

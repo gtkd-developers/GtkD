@@ -104,8 +104,10 @@ public class Subprocess : ObjectG, InitableIF
 	protected GSubprocess* gSubprocess;
 
 	/** Get the main Gtk struct */
-	public GSubprocess* getSubprocessStruct()
+	public GSubprocess* getSubprocessStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gSubprocess;
 	}
 

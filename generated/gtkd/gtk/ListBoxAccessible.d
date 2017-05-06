@@ -38,8 +38,10 @@ public class ListBoxAccessible : ContainerAccessible, SelectionIF
 	protected GtkListBoxAccessible* gtkListBoxAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkListBoxAccessible* getListBoxAccessibleStruct()
+	public GtkListBoxAccessible* getListBoxAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkListBoxAccessible;
 	}
 

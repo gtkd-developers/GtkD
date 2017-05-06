@@ -43,8 +43,10 @@ public  import gtkc.atktypes;
 public template EditableTextT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public AtkEditableText* getEditableTextStruct()
+	public AtkEditableText* getEditableTextStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(AtkEditableText*)getStruct();
 	}
 

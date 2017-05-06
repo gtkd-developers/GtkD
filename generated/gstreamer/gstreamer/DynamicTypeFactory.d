@@ -57,8 +57,10 @@ public class DynamicTypeFactory : PluginFeature
 	protected GstDynamicTypeFactory* gstDynamicTypeFactory;
 
 	/** Get the main Gtk struct */
-	public GstDynamicTypeFactory* getDynamicTypeFactoryStruct()
+	public GstDynamicTypeFactory* getDynamicTypeFactoryStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstDynamicTypeFactory;
 	}
 

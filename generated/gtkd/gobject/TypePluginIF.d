@@ -79,7 +79,7 @@ public  import gtkc.gobjecttypes;
  */
 public interface TypePluginIF{
 	/** Get the main Gtk struct */
-	public GTypePlugin* getTypePluginStruct();
+	public GTypePlugin* getTypePluginStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

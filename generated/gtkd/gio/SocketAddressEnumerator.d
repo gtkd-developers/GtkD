@@ -44,8 +44,10 @@ public class SocketAddressEnumerator : ObjectG
 	protected GSocketAddressEnumerator* gSocketAddressEnumerator;
 
 	/** Get the main Gtk struct */
-	public GSocketAddressEnumerator* getSocketAddressEnumeratorStruct()
+	public GSocketAddressEnumerator* getSocketAddressEnumeratorStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gSocketAddressEnumerator;
 	}
 

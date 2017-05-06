@@ -41,7 +41,7 @@ public  import gtkc.giotypes;
  */
 public interface LoadableIconIF{
 	/** Get the main Gtk struct */
-	public GLoadableIcon* getLoadableIconStruct();
+	public GLoadableIcon* getLoadableIconStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

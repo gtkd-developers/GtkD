@@ -37,8 +37,10 @@ public class SourceLanguage : ObjectG
 	protected GtkSourceLanguage* gtkSourceLanguage;
 
 	/** Get the main Gtk struct */
-	public GtkSourceLanguage* getSourceLanguageStruct()
+	public GtkSourceLanguage* getSourceLanguageStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSourceLanguage;
 	}
 

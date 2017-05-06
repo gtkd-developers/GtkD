@@ -45,8 +45,10 @@ public class TextAttributes
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GtkTextAttributes* getTextAttributesStruct()
+	public GtkTextAttributes* getTextAttributesStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkTextAttributes;
 	}
 
@@ -68,15 +70,9 @@ public class TextAttributes
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
-		{
-			gtk_text_attributes_unref(gtkTextAttributes);
-		}
+			unref();
 	}
-	
-	//TODO: properties ?
 
-	/**
-	 */
 
 	/** */
 	public static GType getType()

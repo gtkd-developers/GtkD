@@ -45,8 +45,10 @@ public class Engine : ObjectG
 	protected PeasEngine* peasEngine;
 
 	/** Get the main Gtk struct */
-	public PeasEngine* getEngineStruct()
+	public PeasEngine* getEngineStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return peasEngine;
 	}
 

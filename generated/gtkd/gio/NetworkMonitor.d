@@ -38,8 +38,10 @@ public class NetworkMonitor : ObjectG, NetworkMonitorIF
 	protected GNetworkMonitor* gNetworkMonitor;
 
 	/** Get the main Gtk struct */
-	public GNetworkMonitor* getNetworkMonitorStruct()
+	public GNetworkMonitor* getNetworkMonitorStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gNetworkMonitor;
 	}
 

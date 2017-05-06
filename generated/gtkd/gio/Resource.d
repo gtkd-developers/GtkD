@@ -162,8 +162,10 @@ public class Resource
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GResource* getResourceStruct()
+	public GResource* getResourceStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gResource;
 	}
 
@@ -182,16 +184,12 @@ public class Resource
 		this.ownedRef = ownedRef;
 	}
 
-	~this()
+	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY.GIO) && ownedRef )
-		{
-			g_resource_unref(gResource);
-		}
+		if (  Linker.isLoaded(LIBRARY.GIO) && ownedRef )
+			unref();
 	}
 
-	/**
-	 */
 
 	/** */
 	public static GType getType()

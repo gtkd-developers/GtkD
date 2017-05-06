@@ -39,8 +39,10 @@ public class SourceStyleSchemeManager : ObjectG
 	protected GtkSourceStyleSchemeManager* gtkSourceStyleSchemeManager;
 
 	/** Get the main Gtk struct */
-	public GtkSourceStyleSchemeManager* getSourceStyleSchemeManagerStruct()
+	public GtkSourceStyleSchemeManager* getSourceStyleSchemeManagerStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSourceStyleSchemeManager;
 	}
 

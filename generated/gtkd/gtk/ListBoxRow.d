@@ -41,8 +41,10 @@ public class ListBoxRow : Bin
 	protected GtkListBoxRow* gtkListBoxRow;
 
 	/** Get the main Gtk struct */
-	public GtkListBoxRow* getListBoxRowStruct()
+	public GtkListBoxRow* getListBoxRowStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkListBoxRow;
 	}
 

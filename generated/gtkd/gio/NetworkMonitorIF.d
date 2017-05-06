@@ -47,7 +47,7 @@ private import std.algorithm;
  */
 public interface NetworkMonitorIF{
 	/** Get the main Gtk struct */
-	public GNetworkMonitor* getNetworkMonitorStruct();
+	public GNetworkMonitor* getNetworkMonitorStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

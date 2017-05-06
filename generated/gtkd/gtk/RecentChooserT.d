@@ -49,8 +49,10 @@ public  import std.algorithm;
 public template RecentChooserT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GtkRecentChooser* getRecentChooserStruct()
+	public GtkRecentChooser* getRecentChooserStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GtkRecentChooser*)getStruct();
 	}
 

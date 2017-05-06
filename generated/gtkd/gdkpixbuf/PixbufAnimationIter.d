@@ -41,8 +41,10 @@ public class PixbufAnimationIter : ObjectG
 	protected GdkPixbufAnimationIter* gdkPixbufAnimationIter;
 
 	/** Get the main Gtk struct */
-	public GdkPixbufAnimationIter* getPixbufAnimationIterStruct()
+	public GdkPixbufAnimationIter* getPixbufAnimationIterStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gdkPixbufAnimationIter;
 	}
 

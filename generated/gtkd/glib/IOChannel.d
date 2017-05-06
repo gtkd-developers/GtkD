@@ -32,6 +32,8 @@ private import glib.Str;
 private import glib.StringG;
 private import gtkc.glib;
 public  import gtkc.glibtypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -46,8 +48,10 @@ public class IOChannel
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GIOChannel* getIOChannelStruct()
+	public GIOChannel* getIOChannelStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gIOChannel;
 	}
 
@@ -64,6 +68,12 @@ public class IOChannel
 	{
 		this.gIOChannel = gIOChannel;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
+			unref();
 	}
 
 

@@ -45,8 +45,10 @@ public class Invisible : Widget
 	protected GtkInvisible* gtkInvisible;
 
 	/** Get the main Gtk struct */
-	public GtkInvisible* getInvisibleStruct()
+	public GtkInvisible* getInvisibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkInvisible;
 	}
 

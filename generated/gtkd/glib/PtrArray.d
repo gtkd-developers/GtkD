@@ -39,8 +39,10 @@ public class PtrArray
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GPtrArray* getPtrArrayStruct()
+	public GPtrArray* getPtrArrayStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gPtrArray;
 	}
 

@@ -38,8 +38,10 @@ public class TlsBackend : ObjectG, TlsBackendIF
 	protected GTlsBackend* gTlsBackend;
 
 	/** Get the main Gtk struct */
-	public GTlsBackend* getTlsBackendStruct()
+	public GTlsBackend* getTlsBackendStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gTlsBackend;
 	}
 

@@ -27,6 +27,8 @@ module glib.RandG;
 private import glib.ConstructionException;
 private import gtkc.glib;
 public  import gtkc.glibtypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -40,8 +42,10 @@ public class RandG
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GRand* getRandGStruct()
+	public GRand* getRandGStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gRand;
 	}
 
@@ -58,6 +62,12 @@ public class RandG
 	{
 		this.gRand = gRand;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
+			free();
 	}
 
 

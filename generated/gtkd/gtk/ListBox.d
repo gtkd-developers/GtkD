@@ -78,8 +78,10 @@ public class ListBox : Container
 	protected GtkListBox* gtkListBox;
 
 	/** Get the main Gtk struct */
-	public GtkListBox* getListBoxStruct()
+	public GtkListBox* getListBoxStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkListBox;
 	}
 

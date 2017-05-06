@@ -60,8 +60,10 @@ public class Overlay : Bin
 	protected GtkOverlay* gtkOverlay;
 
 	/** Get the main Gtk struct */
-	public GtkOverlay* getOverlayStruct()
+	public GtkOverlay* getOverlayStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkOverlay;
 	}
 

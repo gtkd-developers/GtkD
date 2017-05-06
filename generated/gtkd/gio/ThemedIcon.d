@@ -48,8 +48,10 @@ public class ThemedIcon : ObjectG, IconIF
 	protected GThemedIcon* gThemedIcon;
 
 	/** Get the main Gtk struct */
-	public GThemedIcon* getThemedIconStruct()
+	public GThemedIcon* getThemedIconStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gThemedIcon;
 	}
 

@@ -36,8 +36,10 @@ public class StackAccessible : ContainerAccessible
 	protected GtkStackAccessible* gtkStackAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkStackAccessible* getStackAccessibleStruct()
+	public GtkStackAccessible* getStackAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkStackAccessible;
 	}
 

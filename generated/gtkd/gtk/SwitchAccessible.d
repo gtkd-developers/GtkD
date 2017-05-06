@@ -38,8 +38,10 @@ public class SwitchAccessible : WidgetAccessible, ActionIF
 	protected GtkSwitchAccessible* gtkSwitchAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkSwitchAccessible* getSwitchAccessibleStruct()
+	public GtkSwitchAccessible* getSwitchAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSwitchAccessible;
 	}
 

@@ -45,7 +45,7 @@ public  import gtkc.giotypes;
  */
 public interface ActionMapIF{
 	/** Get the main Gtk struct */
-	public GActionMap* getActionMapStruct();
+	public GActionMap* getActionMapStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

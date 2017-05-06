@@ -36,8 +36,10 @@ public class ListBoxRowAccessible : ContainerAccessible
 	protected GtkListBoxRowAccessible* gtkListBoxRowAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkListBoxRowAccessible* getListBoxRowAccessibleStruct()
+	public GtkListBoxRowAccessible* getListBoxRowAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkListBoxRowAccessible;
 	}
 

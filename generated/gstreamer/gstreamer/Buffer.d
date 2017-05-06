@@ -132,8 +132,10 @@ public class Buffer
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GstBuffer* getBufferStruct()
+	public GstBuffer* getBufferStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstBuffer;
 	}
 
@@ -320,7 +322,7 @@ public class Buffer
 	 */
 	public ProtectionMeta addProtectionMeta(Structure info)
 	{
-		auto p = gst_buffer_add_protection_meta(gstBuffer, (info is null) ? null : info.getStructureStruct());
+		auto p = gst_buffer_add_protection_meta(gstBuffer, (info is null) ? null : info.getStructureStruct(true));
 		
 		if(p is null)
 		{

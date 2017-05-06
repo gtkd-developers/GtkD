@@ -67,8 +67,10 @@ public class ToolButton : ToolItem, ActionableIF
 	protected GtkToolButton* gtkToolButton;
 
 	/** Get the main Gtk struct */
-	public GtkToolButton* getToolButtonStruct()
+	public GtkToolButton* getToolButtonStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkToolButton;
 	}
 

@@ -46,7 +46,7 @@ public  import gtkc.atktypes;
  */
 public interface ImageIF{
 	/** Get the main Gtk struct */
-	public AtkImage* getImageStruct();
+	public AtkImage* getImageStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

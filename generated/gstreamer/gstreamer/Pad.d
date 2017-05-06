@@ -111,8 +111,10 @@ public class Pad : ObjectGst
 	protected GstPad* gstPad;
 
 	/** Get the main Gtk struct */
-	public GstPad* getPadStruct()
+	public GstPad* getPadStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gstPad;
 	}
 

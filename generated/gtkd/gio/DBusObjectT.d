@@ -44,8 +44,10 @@ public  import std.algorithm;
 public template DBusObjectT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GDBusObject* getDBusObjectStruct()
+	public GDBusObject* getDBusObjectStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GDBusObject*)getStruct();
 	}
 

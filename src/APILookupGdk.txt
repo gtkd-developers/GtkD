@@ -22,8 +22,8 @@
 
 # must start with wrap
 wrap: gdk
-file: /usr/share/gir-1.0/Gdk-3.0.gir
-file: /usr/share/gir-1.0/GdkX11-3.0.gir
+file: Gdk-3.0.gir
+file: GdkX11-3.0.gir
 
 addAliases: start
 	public import gtkc.glibtypes;
@@ -54,8 +54,6 @@ namespace:
 
 struct: Color
 import: gobject.ObjectG
-import: gtkd.Loader
-import: gtkd.paths
 override: to_string
 code: start
 	/**
@@ -90,14 +88,6 @@ code: start
 		color.blue = blue;
 
 		this(gdk_color_copy(&color));
-	}
-
-	~this ()
-	{
-		if ( Linker.isLoaded(LIBRARY.GDK) && ownedRef )
-		{
-			gdk_color_free(gdkColor);
-		}
 	}
 
 	/**
@@ -306,8 +296,6 @@ noCode: get_type
 namespace:
 
 struct: RGBA
-import: gtkd.Loader
-import: gtkd.paths
 override: to_string
 code: start
 	/**
@@ -331,14 +319,6 @@ code: start
 		rgba.alpha = alpha;
 
 		this(gdk_rgba_copy(&rgba), true);
-	}
-
-	~this ()
-	{
-		if ( Linker.isLoaded(LIBRARY.GDK) && ownedRef )
-		{
-			gdk_rgba_free(gdkRGBA);
-		}
 	}
 
 	/**

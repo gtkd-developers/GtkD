@@ -89,8 +89,10 @@ public class IOStream : ObjectG
 	protected GIOStream* gIOStream;
 
 	/** Get the main Gtk struct */
-	public GIOStream* getIOStreamStruct()
+	public GIOStream* getIOStreamStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gIOStream;
 	}
 

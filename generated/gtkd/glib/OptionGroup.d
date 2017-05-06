@@ -28,6 +28,8 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import gtkc.glib;
 public  import gtkc.glibtypes;
+private import gtkd.Loader;
+private import gtkd.paths;
 
 
 /**
@@ -46,8 +48,10 @@ public class OptionGroup
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GOptionGroup* getOptionGroupStruct()
+	public GOptionGroup* getOptionGroupStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gOptionGroup;
 	}
 
@@ -64,6 +68,12 @@ public class OptionGroup
 	{
 		this.gOptionGroup = gOptionGroup;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
+			unref();
 	}
 
 

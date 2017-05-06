@@ -51,7 +51,7 @@ private import std.algorithm;
  */
 public interface ChildProxyIF{
 	/** Get the main Gtk struct */
-	public GstChildProxy* getChildProxyStruct();
+	public GstChildProxy* getChildProxyStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

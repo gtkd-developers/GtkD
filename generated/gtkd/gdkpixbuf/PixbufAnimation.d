@@ -48,8 +48,10 @@ public class PixbufAnimation : ObjectG
 	protected GdkPixbufAnimation* gdkPixbufAnimation;
 
 	/** Get the main Gtk struct */
-	public GdkPixbufAnimation* getPixbufAnimationStruct()
+	public GdkPixbufAnimation* getPixbufAnimationStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gdkPixbufAnimation;
 	}
 

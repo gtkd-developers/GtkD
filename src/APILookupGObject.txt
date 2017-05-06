@@ -21,7 +21,7 @@
 
 # must start with wrap
 wrap: gobject
-file: /usr/share/gir-1.0/GObject-2.0.gir
+file: GObject-2.0.gir
 
 addAliases: start
 	public import gtkc.glibtypes;

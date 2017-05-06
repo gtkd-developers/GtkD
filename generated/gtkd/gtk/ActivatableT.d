@@ -269,8 +269,10 @@ public  import gtkc.gtktypes;
 public template ActivatableT(TStruct)
 {
 	/** Get the main Gtk struct */
-	public GtkActivatable* getActivatableStruct()
+	public GtkActivatable* getActivatableStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return cast(GtkActivatable*)getStruct();
 	}
 

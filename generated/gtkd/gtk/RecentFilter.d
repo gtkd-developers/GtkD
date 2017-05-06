@@ -87,8 +87,10 @@ public class RecentFilter : ObjectG, BuildableIF
 	protected GtkRecentFilter* gtkRecentFilter;
 
 	/** Get the main Gtk struct */
-	public GtkRecentFilter* getRecentFilterStruct()
+	public GtkRecentFilter* getRecentFilterStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkRecentFilter;
 	}
 

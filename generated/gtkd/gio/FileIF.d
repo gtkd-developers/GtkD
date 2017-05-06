@@ -134,7 +134,7 @@ public  import gtkc.giotypes;
  */
 public interface FileIF{
 	/** Get the main Gtk struct */
-	public GFile* getFileStruct();
+	public GFile* getFileStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

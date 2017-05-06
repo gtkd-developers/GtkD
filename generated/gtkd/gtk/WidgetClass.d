@@ -40,8 +40,10 @@ public class WidgetClass
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GtkWidgetClass* getWidgetClassStruct()
+	public GtkWidgetClass* getWidgetClassStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkWidgetClass;
 	}
 

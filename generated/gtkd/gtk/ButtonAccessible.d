@@ -40,8 +40,10 @@ public class ButtonAccessible : ContainerAccessible, ActionIF, ImageIF
 	protected GtkButtonAccessible* gtkButtonAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkButtonAccessible* getButtonAccessibleStruct()
+	public GtkButtonAccessible* getButtonAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkButtonAccessible;
 	}
 

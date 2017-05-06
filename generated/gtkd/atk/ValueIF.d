@@ -179,7 +179,7 @@ private import std.algorithm;
  */
 public interface ValueIF{
 	/** Get the main Gtk struct */
-	public AtkValue* getValueStruct();
+	public AtkValue* getValueStruct(bool transferOwnership = false);
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();

@@ -38,8 +38,10 @@ public class WindowAccessible : ContainerAccessible, WindowIF
 	protected GtkWindowAccessible* gtkWindowAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkWindowAccessible* getWindowAccessibleStruct()
+	public GtkWindowAccessible* getWindowAccessibleStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkWindowAccessible;
 	}
 

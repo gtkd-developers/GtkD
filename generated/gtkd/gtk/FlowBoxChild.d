@@ -41,8 +41,10 @@ public class FlowBoxChild : Bin
 	protected GtkFlowBoxChild* gtkFlowBoxChild;
 
 	/** Get the main Gtk struct */
-	public GtkFlowBoxChild* getFlowBoxChildStruct()
+	public GtkFlowBoxChild* getFlowBoxChildStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkFlowBoxChild;
 	}
 

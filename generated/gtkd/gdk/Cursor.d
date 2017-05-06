@@ -43,8 +43,10 @@ public class Cursor : ObjectG
 	protected GdkCursor* gdkCursor;
 
 	/** Get the main Gtk struct */
-	public GdkCursor* getCursorStruct()
+	public GdkCursor* getCursorStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gdkCursor;
 	}
 

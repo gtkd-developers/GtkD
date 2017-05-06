@@ -42,8 +42,10 @@ public class PgAttributeFontDesc : PgAttribute
 	protected PangoAttrFontDesc* pangoAttrFontDesc;
 
 	/** Get the main Gtk struct */
-	public PangoAttrFontDesc* getPgAttributeFontDescStruct()
+	public PangoAttrFontDesc* getPgAttributeFontDescStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return pangoAttrFontDesc;
 	}
 

@@ -59,8 +59,10 @@ public class Window : ObjectG
 	protected GdkWindow* gdkWindow;
 
 	/** Get the main Gtk struct */
-	public GdkWindow* getWindowStruct()
+	public GdkWindow* getWindowStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gdkWindow;
 	}
 

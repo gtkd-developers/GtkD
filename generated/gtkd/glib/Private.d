@@ -54,8 +54,10 @@ public class Private
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GPrivate* getPrivateStruct()
+	public GPrivate* getPrivateStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gPrivate;
 	}
 

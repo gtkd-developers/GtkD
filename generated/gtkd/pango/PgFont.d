@@ -55,8 +55,10 @@ public class PgFont : ObjectG
 	protected PangoFont* pangoFont;
 
 	/** Get the main Gtk struct */
-	public PangoFont* getPgFontStruct()
+	public PangoFont* getPgFontStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return pangoFont;
 	}
 

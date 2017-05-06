@@ -60,8 +60,10 @@ public class BufferedInputStream : FilterInputStream, SeekableIF
 	protected GBufferedInputStream* gBufferedInputStream;
 
 	/** Get the main Gtk struct */
-	public GBufferedInputStream* getBufferedInputStreamStruct()
+	public GBufferedInputStream* getBufferedInputStreamStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gBufferedInputStream;
 	}
 

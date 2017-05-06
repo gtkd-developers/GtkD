@@ -46,8 +46,10 @@ public class SourceFileSaver : ObjectG
 	protected GtkSourceFileSaver* gtkSourceFileSaver;
 
 	/** Get the main Gtk struct */
-	public GtkSourceFileSaver* getSourceFileSaverStruct()
+	public GtkSourceFileSaver* getSourceFileSaverStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkSourceFileSaver;
 	}
 

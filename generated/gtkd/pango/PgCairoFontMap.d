@@ -39,8 +39,10 @@ public class PgCairoFontMap : PgFontMap
 	protected PangoCairoFcFontMap* pangoCairoFcFontMap;
 
 	/** Get the main Gtk struct */
-	public PangoCairoFcFontMap* getPgCairoFontMapStruct()
+	public PangoCairoFcFontMap* getPgCairoFontMapStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return pangoCairoFcFontMap;
 	}
 

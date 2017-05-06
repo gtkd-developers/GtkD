@@ -39,8 +39,10 @@ public class Node
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GNode* getNodeStruct()
+	public GNode* getNodeStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gNode;
 	}
 

@@ -45,8 +45,10 @@ public class TimeVal
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GTimeVal* getTimeValStruct()
+	public GTimeVal* getTimeValStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gTimeVal;
 	}
 

@@ -67,8 +67,10 @@ public class SocketClient : ObjectG
 	protected GSocketClient* gSocketClient;
 
 	/** Get the main Gtk struct */
-	public GSocketClient* getSocketClientStruct()
+	public GSocketClient* getSocketClientStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gSocketClient;
 	}
 

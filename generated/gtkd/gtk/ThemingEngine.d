@@ -54,8 +54,10 @@ public class ThemingEngine : ObjectG
 	protected GtkThemingEngine* gtkThemingEngine;
 
 	/** Get the main Gtk struct */
-	public GtkThemingEngine* getThemingEngineStruct()
+	public GtkThemingEngine* getThemingEngineStruct(bool transferOwnership = false)
 	{
+		if (transferOwnership)
+			ownedRef = false;
 		return gtkThemingEngine;
 	}
 
