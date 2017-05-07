@@ -81,8 +81,9 @@ private import cairo.ScaledFont;
 private import cairo.Surface;
 private import cairo.Pattern;
 private import glib.Str;
-private import gtkd.paths;;
-private import gtkd.Loader;;
+private import gtkd.paths;
+private import gtkd.Loader;
+private import std.traits;
 
 
 
@@ -133,9 +134,12 @@ public class Context
 	
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY.CAIRO) &&
-		cairo !is null &&
-		cairo_get_reference_count(cairo) > 0 )
+		static if ( isPointer!(typeof(cairo_get_reference_count)) )
+			bool libLoaded = Linker.isLoaded(LIBRARY.GOBJECT);
+		else
+			enum libLoaded = true;
+
+		if ( libLoaded && cairo !is null && cairo_get_reference_count(cairo) > 0 )
 		{
 			cairo_destroy(cairo);
 		}
