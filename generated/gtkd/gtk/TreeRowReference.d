@@ -33,7 +33,6 @@ private import gtk.TreePath;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
 private import gtkd.Loader;
-private import gtkd.paths;
 
 
 /**
@@ -72,7 +71,7 @@ public class TreeRowReference
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
+		if (  Linker.isLoaded(LIBRARY_GTK) && ownedRef )
 			gtk_tree_row_reference_free(gtkTreeRowReference);
 	}
 

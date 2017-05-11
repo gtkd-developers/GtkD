@@ -35,7 +35,6 @@ private import gtk.TextTag;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
 private import gtkd.Loader;
-private import gtkd.paths;
 private import pango.PgLanguage;
 
 
@@ -76,7 +75,7 @@ public class TextIter
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
+		if (  Linker.isLoaded(LIBRARY_GTK) && ownedRef )
 			gtk_text_iter_free(gtkTextIter);
 	}
 

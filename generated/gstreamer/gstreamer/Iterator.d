@@ -32,7 +32,6 @@ private import gobject.Value;
 private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
 private import gtkd.Loader;
-private import gtkd.paths;
 
 
 /**
@@ -106,7 +105,7 @@ public class Iterator
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GSTREAMER) && ownedRef )
+		if (  Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
 			gst_iterator_free(gstIterator);
 	}
 

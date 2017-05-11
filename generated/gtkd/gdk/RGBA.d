@@ -29,7 +29,6 @@ private import gobject.ObjectG;
 private import gtkc.gdk;
 public  import gtkc.gdktypes;
 private import gtkd.Loader;
-private import gtkd.paths;
 
 
 /**
@@ -67,7 +66,7 @@ public class RGBA
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GDK) && ownedRef )
+		if (  Linker.isLoaded(LIBRARY_GDK) && ownedRef )
 			gdk_rgba_free(gdkRGBA);
 	}
 

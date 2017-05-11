@@ -30,7 +30,6 @@ private import gobject.ObjectG;
 private import gtkc.pango;
 public  import gtkc.pangotypes;
 private import gtkd.Loader;
-private import gtkd.paths;
 private import pango.PgAttributeList;
 
 
@@ -72,7 +71,7 @@ public class PgGlyphItem
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.PANGO) && ownedRef )
+		if (  Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
 			pango_glyph_item_free(pangoGlyphItem);
 	}
 

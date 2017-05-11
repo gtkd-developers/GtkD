@@ -37,7 +37,6 @@ private import gobject.Value;
 private import gtkc.gobject;
 public  import gtkc.gobjecttypes;
 private import gtkd.Loader;
-private import gtkd.paths;
 private import std.algorithm;
 private import std.traits;
 
@@ -139,7 +138,7 @@ public class ObjectG
 	~this()
 	{
 		static if ( isPointer!(typeof(g_object_steal_data)) )
-			bool libLoaded = Linker.isLoaded(LIBRARY.GOBJECT);
+			bool libLoaded = Linker.isLoaded(LIBRARY_GOBJECT);
 		else
 			enum libLoaded = true;
 		

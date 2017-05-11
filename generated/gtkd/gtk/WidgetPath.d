@@ -32,7 +32,6 @@ private import gtk.Widget;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
 private import gtkd.Loader;
-private import gtkd.paths;
 
 
 /**
@@ -115,7 +114,7 @@ public class WidgetPath
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
+		if (  Linker.isLoaded(LIBRARY_GTK) && ownedRef )
 			gtk_widget_path_unref(gtkWidgetPath);
 	}
 

@@ -29,7 +29,6 @@ private import gobject.ObjectG;
 private import gtkc.gdkpixbuf;
 public  import gtkc.gdkpixbuftypes;
 private import gtkd.Loader;
-private import gtkd.paths;
 
 
 /** */
@@ -64,7 +63,7 @@ public class PixbufFormat
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GDKPIXBUF) && ownedRef )
+		if (  Linker.isLoaded(LIBRARY_GDKPIXBUF) && ownedRef )
 			gdk_pixbuf_format_free(gdkPixbufFormat);
 	}
 

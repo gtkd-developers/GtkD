@@ -28,7 +28,6 @@ private import gobject.ObjectG;
 private import gtkc.gobject;
 public  import gtkc.gobjecttypes;
 private import gtkd.Loader;
-private import gtkd.paths;
 
 
 /**
@@ -65,7 +64,7 @@ public class TypeClass
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GOBJECT) && ownedRef )
+		if (  Linker.isLoaded(LIBRARY_GOBJECT) && ownedRef )
 			g_type_class_unref(gTypeClass);
 	}
 

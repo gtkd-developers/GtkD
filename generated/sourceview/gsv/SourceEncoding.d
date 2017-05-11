@@ -30,7 +30,6 @@ private import gobject.ObjectG;
 private import gsvc.gsv;
 public  import gsvc.gsvtypes;
 private import gtkd.Loader;
-private import gtkd.paths;
 
 
 /** */
@@ -65,7 +64,7 @@ public class SourceEncoding
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GSV) && ownedRef )
+		if (  Linker.isLoaded(LIBRARY_GSV) && ownedRef )
 			gtk_source_encoding_free(gtkSourceEncoding);
 	}
 

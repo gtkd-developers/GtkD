@@ -29,7 +29,6 @@ private import glib.TestLogMsg;
 private import gtkc.glib;
 public  import gtkc.glibtypes;
 private import gtkd.Loader;
-private import gtkd.paths;
 
 
 /** */
@@ -64,7 +63,7 @@ public class TestLogBuffer
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
+		if (  Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
 			g_test_log_buffer_free(gTestLogBuffer);
 	}
 

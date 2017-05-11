@@ -37,7 +37,6 @@ private import gtk.Widget;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
 private import gtkd.Loader;
-private import gtkd.paths;
 
 
 /** */
@@ -72,7 +71,7 @@ public class IconSet
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
+		if (  Linker.isLoaded(LIBRARY_GTK) && ownedRef )
 			gtk_icon_set_unref(gtkIconSet);
 	}
 

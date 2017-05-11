@@ -28,7 +28,6 @@ private import gobject.ObjectG;
 private import gtkc.pango;
 public  import gtkc.pangotypes;
 private import gtkd.Loader;
-private import gtkd.paths;
 private import pango.PgLayout;
 private import pango.PgLayoutLine;
 
@@ -71,7 +70,7 @@ public class PgLayoutIter
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.PANGO) && ownedRef )
+		if (  Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
 			pango_layout_iter_free(pangoLayoutIter);
 	}
 

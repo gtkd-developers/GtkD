@@ -31,7 +31,6 @@ private import gtk.TextBuffer;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
 private import gtkd.Loader;
-private import gtkd.paths;
 
 
 /**
@@ -70,7 +69,7 @@ public class TargetList
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
+		if (  Linker.isLoaded(LIBRARY_GTK) && ownedRef )
 			gtk_target_list_unref(gtkTargetList);
 	}
 

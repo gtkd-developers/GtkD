@@ -29,7 +29,6 @@ private import glib.ListG;
 private import gtkc.glib;
 public  import gtkc.glibtypes;
 private import gtkd.Loader;
-private import gtkd.paths;
 
 
 /**
@@ -67,7 +66,7 @@ public class QueueG
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
+		if (  Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
 			g_queue_free(gQueue);
 	}
 

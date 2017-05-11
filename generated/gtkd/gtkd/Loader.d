@@ -146,6 +146,15 @@ public struct Linker
 		loadedLibraries.remove(library);
 	}
 
+	///Ditto
+	public static void unloadLibrary(const string[] libraries)
+	{
+		foreach ( lib; libraries )
+		{
+			unloadLibrary(lib);
+		}
+	}
+
 	/**
 	 * Checks if any symbol failed to load
 	 * Returns: true if ALL symbols are loaded
@@ -197,6 +206,12 @@ public struct Linker
 			return false;
 	}
 
+	///Ditto
+	public static bool isLoaded(const string[] libraries)
+	{
+		return isLoaded(libraries[0]);
+	}
+
 	/**
 	 * Gets all the failed loads for a specific library.
 	 * returns: An array of the names hat failed to load for a specific library
@@ -219,6 +234,19 @@ public struct Linker
 			return loadFailures[library];
 		else
 			return null;
+	}
+
+	///Ditto.
+	public static string[] getLoadFailures(const string[] libraries)
+	{
+		string[] failures;
+
+		foreach ( lib; libraries )
+		{
+			failures ~= getLoadFailures(lib);
+		}
+
+		return failures;
 	}
 
 	/**

@@ -32,7 +32,6 @@ private import glib.Str;
 private import gtkc.glib;
 public  import gtkc.glibtypes;
 private import gtkd.Loader;
-private import gtkd.paths;
 
 
 /**
@@ -73,7 +72,7 @@ public class SimpleXML
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
+		if (  Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
 			g_markup_parse_context_unref(gMarkupParseContext);
 	}
 

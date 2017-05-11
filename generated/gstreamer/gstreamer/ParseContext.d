@@ -30,7 +30,6 @@ private import gobject.ObjectG;
 private import gstreamerc.gstreamer;
 public  import gstreamerc.gstreamertypes;
 private import gtkd.Loader;
-private import gtkd.paths;
 
 
 /**
@@ -67,7 +66,7 @@ public class ParseContext
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GSTREAMER) && ownedRef )
+		if (  Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
 			gst_parse_context_free(gstParseContext);
 	}
 

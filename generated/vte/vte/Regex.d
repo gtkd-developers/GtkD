@@ -30,7 +30,6 @@ private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gtkd.Loader;
-private import gtkd.paths;
 private import vtec.vte;
 public  import vtec.vtetypes;
 
@@ -67,7 +66,7 @@ public class Regex
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.VTE) && ownedRef )
+		if (  Linker.isLoaded(LIBRARY_VTE) && ownedRef )
 			vte_regex_unref(vteRegex);
 	}
 

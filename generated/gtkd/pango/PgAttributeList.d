@@ -29,7 +29,6 @@ private import gobject.ObjectG;
 private import gtkc.pango;
 public  import gtkc.pangotypes;
 private import gtkd.Loader;
-private import gtkd.paths;
 private import pango.PgAttribute;
 private import pango.PgAttributeIterator;
 
@@ -77,7 +76,7 @@ public class PgAttributeList
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.PANGO) && ownedRef )
+		if (  Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
 			pango_attr_list_unref(pangoAttrList);
 	}
 

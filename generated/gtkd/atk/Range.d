@@ -30,7 +30,6 @@ private import gobject.ObjectG;
 private import gtkc.atk;
 public  import gtkc.atktypes;
 private import gtkd.Loader;
-private import gtkd.paths;
 
 
 /**
@@ -71,7 +70,7 @@ public class Range
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.ATK) && ownedRef )
+		if (  Linker.isLoaded(LIBRARY_ATK) && ownedRef )
 			atk_range_free(atkRange);
 	}
 

@@ -34,7 +34,6 @@ private import gtk.SymbolicColor;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
 private import gtkd.Loader;
-private import gtkd.paths;
 
 
 /**
@@ -86,7 +85,7 @@ public class Gradient
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
+		if (  Linker.isLoaded(LIBRARY_GTK) && ownedRef )
 			gtk_gradient_unref(gtkGradient);
 	}
 

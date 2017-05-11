@@ -31,7 +31,6 @@ private import glib.VariantType;
 private import gtkc.glib;
 public  import gtkc.glibtypes;
 private import gtkd.Loader;
-private import gtkd.paths;
 
 
 /**
@@ -74,7 +73,7 @@ public class VariantBuilder
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
+		if (  Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
 			g_variant_builder_unref(gVariantBuilder);
 	}
 

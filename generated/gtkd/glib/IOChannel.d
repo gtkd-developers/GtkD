@@ -33,7 +33,6 @@ private import glib.StringG;
 private import gtkc.glib;
 public  import gtkc.glibtypes;
 private import gtkd.Loader;
-private import gtkd.paths;
 
 
 /**
@@ -72,7 +71,7 @@ public class IOChannel
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
+		if (  Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
 			g_io_channel_unref(gIOChannel);
 	}
 

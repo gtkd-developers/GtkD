@@ -29,7 +29,6 @@ private import gobject.ObjectG;
 private import gtkc.gdk;
 public  import gtkc.gdktypes;
 private import gtkd.Loader;
-private import gtkd.paths;
 
 
 /**
@@ -69,7 +68,7 @@ public class Color
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GDK) && ownedRef )
+		if (  Linker.isLoaded(LIBRARY_GDK) && ownedRef )
 			gdk_color_free(gdkColor);
 	}
 

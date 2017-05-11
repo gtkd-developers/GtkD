@@ -135,7 +135,6 @@ class: ObjectG
 import: core.memory
 import: gobject.Signals
 import: gtkd.Loader
-import: gtkd.paths
 import: std.algorithm
 import: std.traits
 merge: InitiallyUnowned
@@ -217,7 +216,7 @@ code: start
 	~this()
 	{
 		static if ( isPointer!(typeof(g_object_steal_data)) )
-			bool libLoaded = Linker.isLoaded(LIBRARY.GOBJECT);
+			bool libLoaded = Linker.isLoaded(LIBRARY_GOBJECT);
 		else
 			enum libLoaded = true;
 

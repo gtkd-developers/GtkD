@@ -34,7 +34,6 @@ private import gtk.Widget;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
 private import gtkd.Loader;
-private import gtkd.paths;
 
 
 /** */
@@ -69,7 +68,7 @@ public class SelectionData
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
+		if (  Linker.isLoaded(LIBRARY_GTK) && ownedRef )
 			gtk_selection_data_free(gtkSelectionData);
 	}
 

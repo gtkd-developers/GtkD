@@ -31,7 +31,6 @@ private import gobject.Value;
 private import gtkc.gobject;
 public  import gtkc.gobjecttypes;
 private import gtkd.Loader;
-private import gtkd.paths;
 
 
 /**
@@ -108,7 +107,7 @@ public class Closure
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GOBJECT) && ownedRef )
+		if (  Linker.isLoaded(LIBRARY_GOBJECT) && ownedRef )
 			g_closure_unref(gClosure);
 	}
 

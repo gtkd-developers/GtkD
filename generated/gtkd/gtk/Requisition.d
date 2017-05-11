@@ -29,7 +29,6 @@ private import gobject.ObjectG;
 private import gtkc.gtk;
 public  import gtkc.gtktypes;
 private import gtkd.Loader;
-private import gtkd.paths;
 
 
 /**
@@ -68,7 +67,7 @@ public class Requisition
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
+		if (  Linker.isLoaded(LIBRARY_GTK) && ownedRef )
 			gtk_requisition_free(gtkRequisition);
 	}
 

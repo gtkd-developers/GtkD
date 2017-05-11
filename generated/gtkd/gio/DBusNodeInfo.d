@@ -34,7 +34,6 @@ private import gobject.ObjectG;
 private import gtkc.gio;
 public  import gtkc.giotypes;
 private import gtkd.Loader;
-private import gtkd.paths;
 
 
 /**
@@ -73,7 +72,7 @@ public class DBusNodeInfo
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY.GIO) && ownedRef )
+		if (  Linker.isLoaded(LIBRARY_GIO) && ownedRef )
 			g_dbus_node_info_unref(gDBusNodeInfo);
 	}
 
