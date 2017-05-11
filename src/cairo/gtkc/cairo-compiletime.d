@@ -27,6 +27,13 @@ module gtkc.cairo;
 private import std.stdio;
 private import gtkc.cairotypes;
 
+version (Windows)
+	static immutable LIBRARY_CAIRO = ["libcairo-2.dll"];
+else version (OSX)
+	static immutable LIBRARY_CAIRO = ["libcairo.dylib"];
+else
+	static immutable LIBRARY_CAIRO = ["libcairo.so.2"];
+
 __gshared extern(C)
 {
 	// cairo.Context

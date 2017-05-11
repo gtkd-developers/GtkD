@@ -27,35 +27,41 @@ module gtkc.rsvg;
 import std.stdio;
 import gtkc.rsvgtypes;
 import gtkd.Loader;
-import gtkd.paths;
+
+version (Windows)
+	static immutable LIBRARY_RSVG = ["librsvg-2-2.dll"];
+else version (OSX)
+	static immutable LIBRARY_RSVG = ["librsvg-2.2.dylib"];
+else
+	static immutable LIBRARY_RSVG = ["librsvg-2.so.2"];
 
 shared static this()
 {
 	// rsvg.Handle
 
-	Linker.link(rsvg_handle_get_type, "rsvg_handle_get_type", LIBRARY.RSVG);
-	Linker.link(rsvg_handle_new, "rsvg_handle_new", LIBRARY.RSVG);
-	Linker.link(rsvg_handle_new_from_data, "rsvg_handle_new_from_data", LIBRARY.RSVG);
-	Linker.link(rsvg_handle_new_from_file, "rsvg_handle_new_from_file", LIBRARY.RSVG);
-	Linker.link(rsvg_handle_new_from_gfile_sync, "rsvg_handle_new_from_gfile_sync", LIBRARY.RSVG);
-	Linker.link(rsvg_handle_new_from_stream_sync, "rsvg_handle_new_from_stream_sync", LIBRARY.RSVG);
-	Linker.link(rsvg_handle_new_with_flags, "rsvg_handle_new_with_flags", LIBRARY.RSVG);
-	Linker.link(rsvg_handle_close, "rsvg_handle_close", LIBRARY.RSVG);
-	Linker.link(rsvg_handle_get_base_uri, "rsvg_handle_get_base_uri", LIBRARY.RSVG);
-	Linker.link(rsvg_handle_get_dimensions, "rsvg_handle_get_dimensions", LIBRARY.RSVG);
-	Linker.link(rsvg_handle_get_dimensions_sub, "rsvg_handle_get_dimensions_sub", LIBRARY.RSVG);
-	Linker.link(rsvg_handle_get_pixbuf, "rsvg_handle_get_pixbuf", LIBRARY.RSVG);
-	Linker.link(rsvg_handle_get_pixbuf_sub, "rsvg_handle_get_pixbuf_sub", LIBRARY.RSVG);
-	Linker.link(rsvg_handle_get_position_sub, "rsvg_handle_get_position_sub", LIBRARY.RSVG);
-	Linker.link(rsvg_handle_has_sub, "rsvg_handle_has_sub", LIBRARY.RSVG);
-	Linker.link(rsvg_handle_read_stream_sync, "rsvg_handle_read_stream_sync", LIBRARY.RSVG);
-	Linker.link(rsvg_handle_render_cairo, "rsvg_handle_render_cairo", LIBRARY.RSVG);
-	Linker.link(rsvg_handle_render_cairo_sub, "rsvg_handle_render_cairo_sub", LIBRARY.RSVG);
-	Linker.link(rsvg_handle_set_base_gfile, "rsvg_handle_set_base_gfile", LIBRARY.RSVG);
-	Linker.link(rsvg_handle_set_base_uri, "rsvg_handle_set_base_uri", LIBRARY.RSVG);
-	Linker.link(rsvg_handle_set_dpi, "rsvg_handle_set_dpi", LIBRARY.RSVG);
-	Linker.link(rsvg_handle_set_dpi_x_y, "rsvg_handle_set_dpi_x_y", LIBRARY.RSVG);
-	Linker.link(rsvg_handle_write, "rsvg_handle_write", LIBRARY.RSVG);
+	Linker.link(rsvg_handle_get_type, "rsvg_handle_get_type", LIBRARY_RSVG);
+	Linker.link(rsvg_handle_new, "rsvg_handle_new", LIBRARY_RSVG);
+	Linker.link(rsvg_handle_new_from_data, "rsvg_handle_new_from_data", LIBRARY_RSVG);
+	Linker.link(rsvg_handle_new_from_file, "rsvg_handle_new_from_file", LIBRARY_RSVG);
+	Linker.link(rsvg_handle_new_from_gfile_sync, "rsvg_handle_new_from_gfile_sync", LIBRARY_RSVG);
+	Linker.link(rsvg_handle_new_from_stream_sync, "rsvg_handle_new_from_stream_sync", LIBRARY_RSVG);
+	Linker.link(rsvg_handle_new_with_flags, "rsvg_handle_new_with_flags", LIBRARY_RSVG);
+	Linker.link(rsvg_handle_close, "rsvg_handle_close", LIBRARY_RSVG);
+	Linker.link(rsvg_handle_get_base_uri, "rsvg_handle_get_base_uri", LIBRARY_RSVG);
+	Linker.link(rsvg_handle_get_dimensions, "rsvg_handle_get_dimensions", LIBRARY_RSVG);
+	Linker.link(rsvg_handle_get_dimensions_sub, "rsvg_handle_get_dimensions_sub", LIBRARY_RSVG);
+	Linker.link(rsvg_handle_get_pixbuf, "rsvg_handle_get_pixbuf", LIBRARY_RSVG);
+	Linker.link(rsvg_handle_get_pixbuf_sub, "rsvg_handle_get_pixbuf_sub", LIBRARY_RSVG);
+	Linker.link(rsvg_handle_get_position_sub, "rsvg_handle_get_position_sub", LIBRARY_RSVG);
+	Linker.link(rsvg_handle_has_sub, "rsvg_handle_has_sub", LIBRARY_RSVG);
+	Linker.link(rsvg_handle_read_stream_sync, "rsvg_handle_read_stream_sync", LIBRARY_RSVG);
+	Linker.link(rsvg_handle_render_cairo, "rsvg_handle_render_cairo", LIBRARY_RSVG);
+	Linker.link(rsvg_handle_render_cairo_sub, "rsvg_handle_render_cairo_sub", LIBRARY_RSVG);
+	Linker.link(rsvg_handle_set_base_gfile, "rsvg_handle_set_base_gfile", LIBRARY_RSVG);
+	Linker.link(rsvg_handle_set_base_uri, "rsvg_handle_set_base_uri", LIBRARY_RSVG);
+	Linker.link(rsvg_handle_set_dpi, "rsvg_handle_set_dpi", LIBRARY_RSVG);
+	Linker.link(rsvg_handle_set_dpi_x_y, "rsvg_handle_set_dpi_x_y", LIBRARY_RSVG);
+	Linker.link(rsvg_handle_write, "rsvg_handle_write", LIBRARY_RSVG);
 }
 
 __gshared extern(C)

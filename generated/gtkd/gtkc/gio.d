@@ -27,2395 +27,2401 @@ module gtkc.gio;
 import std.stdio;
 import gtkc.giotypes;
 import gtkd.Loader;
-import gtkd.paths;
+
+version (Windows)
+	static immutable LIBRARY_GIO = ["libgio-2.0-0.dll"];
+else version (OSX)
+	static immutable LIBRARY_GIO = ["libgio-2.0.0.dylib"];
+else
+	static immutable LIBRARY_GIO = ["libgio-2.0.so.0"];
 
 shared static this()
 {
 	// gio.Action
 
-	Linker.link(g_action_get_type, "g_action_get_type", LIBRARY.GIO);
-	Linker.link(g_action_name_is_valid, "g_action_name_is_valid", LIBRARY.GIO);
-	Linker.link(g_action_parse_detailed_name, "g_action_parse_detailed_name", LIBRARY.GIO);
-	Linker.link(g_action_print_detailed_name, "g_action_print_detailed_name", LIBRARY.GIO);
-	Linker.link(g_action_activate, "g_action_activate", LIBRARY.GIO);
-	Linker.link(g_action_change_state, "g_action_change_state", LIBRARY.GIO);
-	Linker.link(g_action_get_enabled, "g_action_get_enabled", LIBRARY.GIO);
-	Linker.link(g_action_get_name, "g_action_get_name", LIBRARY.GIO);
-	Linker.link(g_action_get_parameter_type, "g_action_get_parameter_type", LIBRARY.GIO);
-	Linker.link(g_action_get_state, "g_action_get_state", LIBRARY.GIO);
-	Linker.link(g_action_get_state_hint, "g_action_get_state_hint", LIBRARY.GIO);
-	Linker.link(g_action_get_state_type, "g_action_get_state_type", LIBRARY.GIO);
+	Linker.link(g_action_get_type, "g_action_get_type", LIBRARY_GIO);
+	Linker.link(g_action_name_is_valid, "g_action_name_is_valid", LIBRARY_GIO);
+	Linker.link(g_action_parse_detailed_name, "g_action_parse_detailed_name", LIBRARY_GIO);
+	Linker.link(g_action_print_detailed_name, "g_action_print_detailed_name", LIBRARY_GIO);
+	Linker.link(g_action_activate, "g_action_activate", LIBRARY_GIO);
+	Linker.link(g_action_change_state, "g_action_change_state", LIBRARY_GIO);
+	Linker.link(g_action_get_enabled, "g_action_get_enabled", LIBRARY_GIO);
+	Linker.link(g_action_get_name, "g_action_get_name", LIBRARY_GIO);
+	Linker.link(g_action_get_parameter_type, "g_action_get_parameter_type", LIBRARY_GIO);
+	Linker.link(g_action_get_state, "g_action_get_state", LIBRARY_GIO);
+	Linker.link(g_action_get_state_hint, "g_action_get_state_hint", LIBRARY_GIO);
+	Linker.link(g_action_get_state_type, "g_action_get_state_type", LIBRARY_GIO);
 
 	// gio.ActionGroup
 
-	Linker.link(g_action_group_get_type, "g_action_group_get_type", LIBRARY.GIO);
-	Linker.link(g_action_group_action_added, "g_action_group_action_added", LIBRARY.GIO);
-	Linker.link(g_action_group_action_enabled_changed, "g_action_group_action_enabled_changed", LIBRARY.GIO);
-	Linker.link(g_action_group_action_removed, "g_action_group_action_removed", LIBRARY.GIO);
-	Linker.link(g_action_group_action_state_changed, "g_action_group_action_state_changed", LIBRARY.GIO);
-	Linker.link(g_action_group_activate_action, "g_action_group_activate_action", LIBRARY.GIO);
-	Linker.link(g_action_group_change_action_state, "g_action_group_change_action_state", LIBRARY.GIO);
-	Linker.link(g_action_group_get_action_enabled, "g_action_group_get_action_enabled", LIBRARY.GIO);
-	Linker.link(g_action_group_get_action_parameter_type, "g_action_group_get_action_parameter_type", LIBRARY.GIO);
-	Linker.link(g_action_group_get_action_state, "g_action_group_get_action_state", LIBRARY.GIO);
-	Linker.link(g_action_group_get_action_state_hint, "g_action_group_get_action_state_hint", LIBRARY.GIO);
-	Linker.link(g_action_group_get_action_state_type, "g_action_group_get_action_state_type", LIBRARY.GIO);
-	Linker.link(g_action_group_has_action, "g_action_group_has_action", LIBRARY.GIO);
-	Linker.link(g_action_group_list_actions, "g_action_group_list_actions", LIBRARY.GIO);
-	Linker.link(g_action_group_query_action, "g_action_group_query_action", LIBRARY.GIO);
+	Linker.link(g_action_group_get_type, "g_action_group_get_type", LIBRARY_GIO);
+	Linker.link(g_action_group_action_added, "g_action_group_action_added", LIBRARY_GIO);
+	Linker.link(g_action_group_action_enabled_changed, "g_action_group_action_enabled_changed", LIBRARY_GIO);
+	Linker.link(g_action_group_action_removed, "g_action_group_action_removed", LIBRARY_GIO);
+	Linker.link(g_action_group_action_state_changed, "g_action_group_action_state_changed", LIBRARY_GIO);
+	Linker.link(g_action_group_activate_action, "g_action_group_activate_action", LIBRARY_GIO);
+	Linker.link(g_action_group_change_action_state, "g_action_group_change_action_state", LIBRARY_GIO);
+	Linker.link(g_action_group_get_action_enabled, "g_action_group_get_action_enabled", LIBRARY_GIO);
+	Linker.link(g_action_group_get_action_parameter_type, "g_action_group_get_action_parameter_type", LIBRARY_GIO);
+	Linker.link(g_action_group_get_action_state, "g_action_group_get_action_state", LIBRARY_GIO);
+	Linker.link(g_action_group_get_action_state_hint, "g_action_group_get_action_state_hint", LIBRARY_GIO);
+	Linker.link(g_action_group_get_action_state_type, "g_action_group_get_action_state_type", LIBRARY_GIO);
+	Linker.link(g_action_group_has_action, "g_action_group_has_action", LIBRARY_GIO);
+	Linker.link(g_action_group_list_actions, "g_action_group_list_actions", LIBRARY_GIO);
+	Linker.link(g_action_group_query_action, "g_action_group_query_action", LIBRARY_GIO);
 
 	// gio.ActionMap
 
-	Linker.link(g_action_map_get_type, "g_action_map_get_type", LIBRARY.GIO);
-	Linker.link(g_action_map_add_action, "g_action_map_add_action", LIBRARY.GIO);
-	Linker.link(g_action_map_add_action_entries, "g_action_map_add_action_entries", LIBRARY.GIO);
-	Linker.link(g_action_map_lookup_action, "g_action_map_lookup_action", LIBRARY.GIO);
-	Linker.link(g_action_map_remove_action, "g_action_map_remove_action", LIBRARY.GIO);
+	Linker.link(g_action_map_get_type, "g_action_map_get_type", LIBRARY_GIO);
+	Linker.link(g_action_map_add_action, "g_action_map_add_action", LIBRARY_GIO);
+	Linker.link(g_action_map_add_action_entries, "g_action_map_add_action_entries", LIBRARY_GIO);
+	Linker.link(g_action_map_lookup_action, "g_action_map_lookup_action", LIBRARY_GIO);
+	Linker.link(g_action_map_remove_action, "g_action_map_remove_action", LIBRARY_GIO);
 
 	// gio.AppInfo
 
-	Linker.link(g_app_info_get_type, "g_app_info_get_type", LIBRARY.GIO);
-	Linker.link(g_app_info_create_from_commandline, "g_app_info_create_from_commandline", LIBRARY.GIO);
-	Linker.link(g_app_info_get_all, "g_app_info_get_all", LIBRARY.GIO);
-	Linker.link(g_app_info_get_all_for_type, "g_app_info_get_all_for_type", LIBRARY.GIO);
-	Linker.link(g_app_info_get_default_for_type, "g_app_info_get_default_for_type", LIBRARY.GIO);
-	Linker.link(g_app_info_get_default_for_uri_scheme, "g_app_info_get_default_for_uri_scheme", LIBRARY.GIO);
-	Linker.link(g_app_info_get_fallback_for_type, "g_app_info_get_fallback_for_type", LIBRARY.GIO);
-	Linker.link(g_app_info_get_recommended_for_type, "g_app_info_get_recommended_for_type", LIBRARY.GIO);
-	Linker.link(g_app_info_launch_default_for_uri, "g_app_info_launch_default_for_uri", LIBRARY.GIO);
-	Linker.link(g_app_info_launch_default_for_uri_async, "g_app_info_launch_default_for_uri_async", LIBRARY.GIO);
-	Linker.link(g_app_info_launch_default_for_uri_finish, "g_app_info_launch_default_for_uri_finish", LIBRARY.GIO);
-	Linker.link(g_app_info_reset_type_associations, "g_app_info_reset_type_associations", LIBRARY.GIO);
-	Linker.link(g_app_info_add_supports_type, "g_app_info_add_supports_type", LIBRARY.GIO);
-	Linker.link(g_app_info_can_delete, "g_app_info_can_delete", LIBRARY.GIO);
-	Linker.link(g_app_info_can_remove_supports_type, "g_app_info_can_remove_supports_type", LIBRARY.GIO);
-	Linker.link(g_app_info_delete, "g_app_info_delete", LIBRARY.GIO);
-	Linker.link(g_app_info_dup, "g_app_info_dup", LIBRARY.GIO);
-	Linker.link(g_app_info_equal, "g_app_info_equal", LIBRARY.GIO);
-	Linker.link(g_app_info_get_commandline, "g_app_info_get_commandline", LIBRARY.GIO);
-	Linker.link(g_app_info_get_description, "g_app_info_get_description", LIBRARY.GIO);
-	Linker.link(g_app_info_get_display_name, "g_app_info_get_display_name", LIBRARY.GIO);
-	Linker.link(g_app_info_get_executable, "g_app_info_get_executable", LIBRARY.GIO);
-	Linker.link(g_app_info_get_icon, "g_app_info_get_icon", LIBRARY.GIO);
-	Linker.link(g_app_info_get_id, "g_app_info_get_id", LIBRARY.GIO);
-	Linker.link(g_app_info_get_name, "g_app_info_get_name", LIBRARY.GIO);
-	Linker.link(g_app_info_get_supported_types, "g_app_info_get_supported_types", LIBRARY.GIO);
-	Linker.link(g_app_info_launch, "g_app_info_launch", LIBRARY.GIO);
-	Linker.link(g_app_info_launch_uris, "g_app_info_launch_uris", LIBRARY.GIO);
-	Linker.link(g_app_info_remove_supports_type, "g_app_info_remove_supports_type", LIBRARY.GIO);
-	Linker.link(g_app_info_set_as_default_for_extension, "g_app_info_set_as_default_for_extension", LIBRARY.GIO);
-	Linker.link(g_app_info_set_as_default_for_type, "g_app_info_set_as_default_for_type", LIBRARY.GIO);
-	Linker.link(g_app_info_set_as_last_used_for_type, "g_app_info_set_as_last_used_for_type", LIBRARY.GIO);
-	Linker.link(g_app_info_should_show, "g_app_info_should_show", LIBRARY.GIO);
-	Linker.link(g_app_info_supports_files, "g_app_info_supports_files", LIBRARY.GIO);
-	Linker.link(g_app_info_supports_uris, "g_app_info_supports_uris", LIBRARY.GIO);
+	Linker.link(g_app_info_get_type, "g_app_info_get_type", LIBRARY_GIO);
+	Linker.link(g_app_info_create_from_commandline, "g_app_info_create_from_commandline", LIBRARY_GIO);
+	Linker.link(g_app_info_get_all, "g_app_info_get_all", LIBRARY_GIO);
+	Linker.link(g_app_info_get_all_for_type, "g_app_info_get_all_for_type", LIBRARY_GIO);
+	Linker.link(g_app_info_get_default_for_type, "g_app_info_get_default_for_type", LIBRARY_GIO);
+	Linker.link(g_app_info_get_default_for_uri_scheme, "g_app_info_get_default_for_uri_scheme", LIBRARY_GIO);
+	Linker.link(g_app_info_get_fallback_for_type, "g_app_info_get_fallback_for_type", LIBRARY_GIO);
+	Linker.link(g_app_info_get_recommended_for_type, "g_app_info_get_recommended_for_type", LIBRARY_GIO);
+	Linker.link(g_app_info_launch_default_for_uri, "g_app_info_launch_default_for_uri", LIBRARY_GIO);
+	Linker.link(g_app_info_launch_default_for_uri_async, "g_app_info_launch_default_for_uri_async", LIBRARY_GIO);
+	Linker.link(g_app_info_launch_default_for_uri_finish, "g_app_info_launch_default_for_uri_finish", LIBRARY_GIO);
+	Linker.link(g_app_info_reset_type_associations, "g_app_info_reset_type_associations", LIBRARY_GIO);
+	Linker.link(g_app_info_add_supports_type, "g_app_info_add_supports_type", LIBRARY_GIO);
+	Linker.link(g_app_info_can_delete, "g_app_info_can_delete", LIBRARY_GIO);
+	Linker.link(g_app_info_can_remove_supports_type, "g_app_info_can_remove_supports_type", LIBRARY_GIO);
+	Linker.link(g_app_info_delete, "g_app_info_delete", LIBRARY_GIO);
+	Linker.link(g_app_info_dup, "g_app_info_dup", LIBRARY_GIO);
+	Linker.link(g_app_info_equal, "g_app_info_equal", LIBRARY_GIO);
+	Linker.link(g_app_info_get_commandline, "g_app_info_get_commandline", LIBRARY_GIO);
+	Linker.link(g_app_info_get_description, "g_app_info_get_description", LIBRARY_GIO);
+	Linker.link(g_app_info_get_display_name, "g_app_info_get_display_name", LIBRARY_GIO);
+	Linker.link(g_app_info_get_executable, "g_app_info_get_executable", LIBRARY_GIO);
+	Linker.link(g_app_info_get_icon, "g_app_info_get_icon", LIBRARY_GIO);
+	Linker.link(g_app_info_get_id, "g_app_info_get_id", LIBRARY_GIO);
+	Linker.link(g_app_info_get_name, "g_app_info_get_name", LIBRARY_GIO);
+	Linker.link(g_app_info_get_supported_types, "g_app_info_get_supported_types", LIBRARY_GIO);
+	Linker.link(g_app_info_launch, "g_app_info_launch", LIBRARY_GIO);
+	Linker.link(g_app_info_launch_uris, "g_app_info_launch_uris", LIBRARY_GIO);
+	Linker.link(g_app_info_remove_supports_type, "g_app_info_remove_supports_type", LIBRARY_GIO);
+	Linker.link(g_app_info_set_as_default_for_extension, "g_app_info_set_as_default_for_extension", LIBRARY_GIO);
+	Linker.link(g_app_info_set_as_default_for_type, "g_app_info_set_as_default_for_type", LIBRARY_GIO);
+	Linker.link(g_app_info_set_as_last_used_for_type, "g_app_info_set_as_last_used_for_type", LIBRARY_GIO);
+	Linker.link(g_app_info_should_show, "g_app_info_should_show", LIBRARY_GIO);
+	Linker.link(g_app_info_supports_files, "g_app_info_supports_files", LIBRARY_GIO);
+	Linker.link(g_app_info_supports_uris, "g_app_info_supports_uris", LIBRARY_GIO);
 
 	// gio.AppInfoMonitor
 
-	Linker.link(g_app_info_monitor_get_type, "g_app_info_monitor_get_type", LIBRARY.GIO);
-	Linker.link(g_app_info_monitor_get, "g_app_info_monitor_get", LIBRARY.GIO);
+	Linker.link(g_app_info_monitor_get_type, "g_app_info_monitor_get_type", LIBRARY_GIO);
+	Linker.link(g_app_info_monitor_get, "g_app_info_monitor_get", LIBRARY_GIO);
 
 	// gio.AppLaunchContext
 
-	Linker.link(g_app_launch_context_get_type, "g_app_launch_context_get_type", LIBRARY.GIO);
-	Linker.link(g_app_launch_context_new, "g_app_launch_context_new", LIBRARY.GIO);
-	Linker.link(g_app_launch_context_get_display, "g_app_launch_context_get_display", LIBRARY.GIO);
-	Linker.link(g_app_launch_context_get_environment, "g_app_launch_context_get_environment", LIBRARY.GIO);
-	Linker.link(g_app_launch_context_get_startup_notify_id, "g_app_launch_context_get_startup_notify_id", LIBRARY.GIO);
-	Linker.link(g_app_launch_context_launch_failed, "g_app_launch_context_launch_failed", LIBRARY.GIO);
-	Linker.link(g_app_launch_context_setenv, "g_app_launch_context_setenv", LIBRARY.GIO);
-	Linker.link(g_app_launch_context_unsetenv, "g_app_launch_context_unsetenv", LIBRARY.GIO);
+	Linker.link(g_app_launch_context_get_type, "g_app_launch_context_get_type", LIBRARY_GIO);
+	Linker.link(g_app_launch_context_new, "g_app_launch_context_new", LIBRARY_GIO);
+	Linker.link(g_app_launch_context_get_display, "g_app_launch_context_get_display", LIBRARY_GIO);
+	Linker.link(g_app_launch_context_get_environment, "g_app_launch_context_get_environment", LIBRARY_GIO);
+	Linker.link(g_app_launch_context_get_startup_notify_id, "g_app_launch_context_get_startup_notify_id", LIBRARY_GIO);
+	Linker.link(g_app_launch_context_launch_failed, "g_app_launch_context_launch_failed", LIBRARY_GIO);
+	Linker.link(g_app_launch_context_setenv, "g_app_launch_context_setenv", LIBRARY_GIO);
+	Linker.link(g_app_launch_context_unsetenv, "g_app_launch_context_unsetenv", LIBRARY_GIO);
 
 	// gio.Application
 
-	Linker.link(g_application_get_type, "g_application_get_type", LIBRARY.GIO);
-	Linker.link(g_application_new, "g_application_new", LIBRARY.GIO);
-	Linker.link(g_application_get_default, "g_application_get_default", LIBRARY.GIO);
-	Linker.link(g_application_id_is_valid, "g_application_id_is_valid", LIBRARY.GIO);
-	Linker.link(g_application_activate, "g_application_activate", LIBRARY.GIO);
-	Linker.link(g_application_add_main_option, "g_application_add_main_option", LIBRARY.GIO);
-	Linker.link(g_application_add_main_option_entries, "g_application_add_main_option_entries", LIBRARY.GIO);
-	Linker.link(g_application_add_option_group, "g_application_add_option_group", LIBRARY.GIO);
-	Linker.link(g_application_bind_busy_property, "g_application_bind_busy_property", LIBRARY.GIO);
-	Linker.link(g_application_get_application_id, "g_application_get_application_id", LIBRARY.GIO);
-	Linker.link(g_application_get_dbus_connection, "g_application_get_dbus_connection", LIBRARY.GIO);
-	Linker.link(g_application_get_dbus_object_path, "g_application_get_dbus_object_path", LIBRARY.GIO);
-	Linker.link(g_application_get_flags, "g_application_get_flags", LIBRARY.GIO);
-	Linker.link(g_application_get_inactivity_timeout, "g_application_get_inactivity_timeout", LIBRARY.GIO);
-	Linker.link(g_application_get_is_busy, "g_application_get_is_busy", LIBRARY.GIO);
-	Linker.link(g_application_get_is_registered, "g_application_get_is_registered", LIBRARY.GIO);
-	Linker.link(g_application_get_is_remote, "g_application_get_is_remote", LIBRARY.GIO);
-	Linker.link(g_application_get_resource_base_path, "g_application_get_resource_base_path", LIBRARY.GIO);
-	Linker.link(g_application_hold, "g_application_hold", LIBRARY.GIO);
-	Linker.link(g_application_mark_busy, "g_application_mark_busy", LIBRARY.GIO);
-	Linker.link(g_application_open, "g_application_open", LIBRARY.GIO);
-	Linker.link(g_application_quit, "g_application_quit", LIBRARY.GIO);
-	Linker.link(g_application_register, "g_application_register", LIBRARY.GIO);
-	Linker.link(g_application_release, "g_application_release", LIBRARY.GIO);
-	Linker.link(g_application_run, "g_application_run", LIBRARY.GIO);
-	Linker.link(g_application_send_notification, "g_application_send_notification", LIBRARY.GIO);
-	Linker.link(g_application_set_action_group, "g_application_set_action_group", LIBRARY.GIO);
-	Linker.link(g_application_set_application_id, "g_application_set_application_id", LIBRARY.GIO);
-	Linker.link(g_application_set_default, "g_application_set_default", LIBRARY.GIO);
-	Linker.link(g_application_set_flags, "g_application_set_flags", LIBRARY.GIO);
-	Linker.link(g_application_set_inactivity_timeout, "g_application_set_inactivity_timeout", LIBRARY.GIO);
-	Linker.link(g_application_set_resource_base_path, "g_application_set_resource_base_path", LIBRARY.GIO);
-	Linker.link(g_application_unbind_busy_property, "g_application_unbind_busy_property", LIBRARY.GIO);
-	Linker.link(g_application_unmark_busy, "g_application_unmark_busy", LIBRARY.GIO);
-	Linker.link(g_application_withdraw_notification, "g_application_withdraw_notification", LIBRARY.GIO);
+	Linker.link(g_application_get_type, "g_application_get_type", LIBRARY_GIO);
+	Linker.link(g_application_new, "g_application_new", LIBRARY_GIO);
+	Linker.link(g_application_get_default, "g_application_get_default", LIBRARY_GIO);
+	Linker.link(g_application_id_is_valid, "g_application_id_is_valid", LIBRARY_GIO);
+	Linker.link(g_application_activate, "g_application_activate", LIBRARY_GIO);
+	Linker.link(g_application_add_main_option, "g_application_add_main_option", LIBRARY_GIO);
+	Linker.link(g_application_add_main_option_entries, "g_application_add_main_option_entries", LIBRARY_GIO);
+	Linker.link(g_application_add_option_group, "g_application_add_option_group", LIBRARY_GIO);
+	Linker.link(g_application_bind_busy_property, "g_application_bind_busy_property", LIBRARY_GIO);
+	Linker.link(g_application_get_application_id, "g_application_get_application_id", LIBRARY_GIO);
+	Linker.link(g_application_get_dbus_connection, "g_application_get_dbus_connection", LIBRARY_GIO);
+	Linker.link(g_application_get_dbus_object_path, "g_application_get_dbus_object_path", LIBRARY_GIO);
+	Linker.link(g_application_get_flags, "g_application_get_flags", LIBRARY_GIO);
+	Linker.link(g_application_get_inactivity_timeout, "g_application_get_inactivity_timeout", LIBRARY_GIO);
+	Linker.link(g_application_get_is_busy, "g_application_get_is_busy", LIBRARY_GIO);
+	Linker.link(g_application_get_is_registered, "g_application_get_is_registered", LIBRARY_GIO);
+	Linker.link(g_application_get_is_remote, "g_application_get_is_remote", LIBRARY_GIO);
+	Linker.link(g_application_get_resource_base_path, "g_application_get_resource_base_path", LIBRARY_GIO);
+	Linker.link(g_application_hold, "g_application_hold", LIBRARY_GIO);
+	Linker.link(g_application_mark_busy, "g_application_mark_busy", LIBRARY_GIO);
+	Linker.link(g_application_open, "g_application_open", LIBRARY_GIO);
+	Linker.link(g_application_quit, "g_application_quit", LIBRARY_GIO);
+	Linker.link(g_application_register, "g_application_register", LIBRARY_GIO);
+	Linker.link(g_application_release, "g_application_release", LIBRARY_GIO);
+	Linker.link(g_application_run, "g_application_run", LIBRARY_GIO);
+	Linker.link(g_application_send_notification, "g_application_send_notification", LIBRARY_GIO);
+	Linker.link(g_application_set_action_group, "g_application_set_action_group", LIBRARY_GIO);
+	Linker.link(g_application_set_application_id, "g_application_set_application_id", LIBRARY_GIO);
+	Linker.link(g_application_set_default, "g_application_set_default", LIBRARY_GIO);
+	Linker.link(g_application_set_flags, "g_application_set_flags", LIBRARY_GIO);
+	Linker.link(g_application_set_inactivity_timeout, "g_application_set_inactivity_timeout", LIBRARY_GIO);
+	Linker.link(g_application_set_resource_base_path, "g_application_set_resource_base_path", LIBRARY_GIO);
+	Linker.link(g_application_unbind_busy_property, "g_application_unbind_busy_property", LIBRARY_GIO);
+	Linker.link(g_application_unmark_busy, "g_application_unmark_busy", LIBRARY_GIO);
+	Linker.link(g_application_withdraw_notification, "g_application_withdraw_notification", LIBRARY_GIO);
 
 	// gio.ApplicationCommandLine
 
-	Linker.link(g_application_command_line_get_type, "g_application_command_line_get_type", LIBRARY.GIO);
-	Linker.link(g_application_command_line_create_file_for_arg, "g_application_command_line_create_file_for_arg", LIBRARY.GIO);
-	Linker.link(g_application_command_line_get_arguments, "g_application_command_line_get_arguments", LIBRARY.GIO);
-	Linker.link(g_application_command_line_get_cwd, "g_application_command_line_get_cwd", LIBRARY.GIO);
-	Linker.link(g_application_command_line_get_environ, "g_application_command_line_get_environ", LIBRARY.GIO);
-	Linker.link(g_application_command_line_get_exit_status, "g_application_command_line_get_exit_status", LIBRARY.GIO);
-	Linker.link(g_application_command_line_get_is_remote, "g_application_command_line_get_is_remote", LIBRARY.GIO);
-	Linker.link(g_application_command_line_get_options_dict, "g_application_command_line_get_options_dict", LIBRARY.GIO);
-	Linker.link(g_application_command_line_get_platform_data, "g_application_command_line_get_platform_data", LIBRARY.GIO);
-	Linker.link(g_application_command_line_get_stdin, "g_application_command_line_get_stdin", LIBRARY.GIO);
-	Linker.link(g_application_command_line_getenv, "g_application_command_line_getenv", LIBRARY.GIO);
-	Linker.link(g_application_command_line_print, "g_application_command_line_print", LIBRARY.GIO);
-	Linker.link(g_application_command_line_printerr, "g_application_command_line_printerr", LIBRARY.GIO);
-	Linker.link(g_application_command_line_set_exit_status, "g_application_command_line_set_exit_status", LIBRARY.GIO);
+	Linker.link(g_application_command_line_get_type, "g_application_command_line_get_type", LIBRARY_GIO);
+	Linker.link(g_application_command_line_create_file_for_arg, "g_application_command_line_create_file_for_arg", LIBRARY_GIO);
+	Linker.link(g_application_command_line_get_arguments, "g_application_command_line_get_arguments", LIBRARY_GIO);
+	Linker.link(g_application_command_line_get_cwd, "g_application_command_line_get_cwd", LIBRARY_GIO);
+	Linker.link(g_application_command_line_get_environ, "g_application_command_line_get_environ", LIBRARY_GIO);
+	Linker.link(g_application_command_line_get_exit_status, "g_application_command_line_get_exit_status", LIBRARY_GIO);
+	Linker.link(g_application_command_line_get_is_remote, "g_application_command_line_get_is_remote", LIBRARY_GIO);
+	Linker.link(g_application_command_line_get_options_dict, "g_application_command_line_get_options_dict", LIBRARY_GIO);
+	Linker.link(g_application_command_line_get_platform_data, "g_application_command_line_get_platform_data", LIBRARY_GIO);
+	Linker.link(g_application_command_line_get_stdin, "g_application_command_line_get_stdin", LIBRARY_GIO);
+	Linker.link(g_application_command_line_getenv, "g_application_command_line_getenv", LIBRARY_GIO);
+	Linker.link(g_application_command_line_print, "g_application_command_line_print", LIBRARY_GIO);
+	Linker.link(g_application_command_line_printerr, "g_application_command_line_printerr", LIBRARY_GIO);
+	Linker.link(g_application_command_line_set_exit_status, "g_application_command_line_set_exit_status", LIBRARY_GIO);
 
 	// gio.AsyncInitable
 
-	Linker.link(g_async_initable_get_type, "g_async_initable_get_type", LIBRARY.GIO);
-	Linker.link(g_async_initable_new_async, "g_async_initable_new_async", LIBRARY.GIO);
-	Linker.link(g_async_initable_new_valist_async, "g_async_initable_new_valist_async", LIBRARY.GIO);
-	Linker.link(g_async_initable_newv_async, "g_async_initable_newv_async", LIBRARY.GIO);
-	Linker.link(g_async_initable_init_async, "g_async_initable_init_async", LIBRARY.GIO);
-	Linker.link(g_async_initable_init_finish, "g_async_initable_init_finish", LIBRARY.GIO);
-	Linker.link(g_async_initable_new_finish, "g_async_initable_new_finish", LIBRARY.GIO);
+	Linker.link(g_async_initable_get_type, "g_async_initable_get_type", LIBRARY_GIO);
+	Linker.link(g_async_initable_new_async, "g_async_initable_new_async", LIBRARY_GIO);
+	Linker.link(g_async_initable_new_valist_async, "g_async_initable_new_valist_async", LIBRARY_GIO);
+	Linker.link(g_async_initable_newv_async, "g_async_initable_newv_async", LIBRARY_GIO);
+	Linker.link(g_async_initable_init_async, "g_async_initable_init_async", LIBRARY_GIO);
+	Linker.link(g_async_initable_init_finish, "g_async_initable_init_finish", LIBRARY_GIO);
+	Linker.link(g_async_initable_new_finish, "g_async_initable_new_finish", LIBRARY_GIO);
 
 	// gio.AsyncResult
 
-	Linker.link(g_async_result_get_type, "g_async_result_get_type", LIBRARY.GIO);
-	Linker.link(g_async_result_get_source_object, "g_async_result_get_source_object", LIBRARY.GIO);
-	Linker.link(g_async_result_get_user_data, "g_async_result_get_user_data", LIBRARY.GIO);
-	Linker.link(g_async_result_is_tagged, "g_async_result_is_tagged", LIBRARY.GIO);
-	Linker.link(g_async_result_legacy_propagate_error, "g_async_result_legacy_propagate_error", LIBRARY.GIO);
+	Linker.link(g_async_result_get_type, "g_async_result_get_type", LIBRARY_GIO);
+	Linker.link(g_async_result_get_source_object, "g_async_result_get_source_object", LIBRARY_GIO);
+	Linker.link(g_async_result_get_user_data, "g_async_result_get_user_data", LIBRARY_GIO);
+	Linker.link(g_async_result_is_tagged, "g_async_result_is_tagged", LIBRARY_GIO);
+	Linker.link(g_async_result_legacy_propagate_error, "g_async_result_legacy_propagate_error", LIBRARY_GIO);
 
 	// gio.BufferedInputStream
 
-	Linker.link(g_buffered_input_stream_get_type, "g_buffered_input_stream_get_type", LIBRARY.GIO);
-	Linker.link(g_buffered_input_stream_new, "g_buffered_input_stream_new", LIBRARY.GIO);
-	Linker.link(g_buffered_input_stream_new_sized, "g_buffered_input_stream_new_sized", LIBRARY.GIO);
-	Linker.link(g_buffered_input_stream_fill, "g_buffered_input_stream_fill", LIBRARY.GIO);
-	Linker.link(g_buffered_input_stream_fill_async, "g_buffered_input_stream_fill_async", LIBRARY.GIO);
-	Linker.link(g_buffered_input_stream_fill_finish, "g_buffered_input_stream_fill_finish", LIBRARY.GIO);
-	Linker.link(g_buffered_input_stream_get_available, "g_buffered_input_stream_get_available", LIBRARY.GIO);
-	Linker.link(g_buffered_input_stream_get_buffer_size, "g_buffered_input_stream_get_buffer_size", LIBRARY.GIO);
-	Linker.link(g_buffered_input_stream_peek, "g_buffered_input_stream_peek", LIBRARY.GIO);
-	Linker.link(g_buffered_input_stream_peek_buffer, "g_buffered_input_stream_peek_buffer", LIBRARY.GIO);
-	Linker.link(g_buffered_input_stream_read_byte, "g_buffered_input_stream_read_byte", LIBRARY.GIO);
-	Linker.link(g_buffered_input_stream_set_buffer_size, "g_buffered_input_stream_set_buffer_size", LIBRARY.GIO);
+	Linker.link(g_buffered_input_stream_get_type, "g_buffered_input_stream_get_type", LIBRARY_GIO);
+	Linker.link(g_buffered_input_stream_new, "g_buffered_input_stream_new", LIBRARY_GIO);
+	Linker.link(g_buffered_input_stream_new_sized, "g_buffered_input_stream_new_sized", LIBRARY_GIO);
+	Linker.link(g_buffered_input_stream_fill, "g_buffered_input_stream_fill", LIBRARY_GIO);
+	Linker.link(g_buffered_input_stream_fill_async, "g_buffered_input_stream_fill_async", LIBRARY_GIO);
+	Linker.link(g_buffered_input_stream_fill_finish, "g_buffered_input_stream_fill_finish", LIBRARY_GIO);
+	Linker.link(g_buffered_input_stream_get_available, "g_buffered_input_stream_get_available", LIBRARY_GIO);
+	Linker.link(g_buffered_input_stream_get_buffer_size, "g_buffered_input_stream_get_buffer_size", LIBRARY_GIO);
+	Linker.link(g_buffered_input_stream_peek, "g_buffered_input_stream_peek", LIBRARY_GIO);
+	Linker.link(g_buffered_input_stream_peek_buffer, "g_buffered_input_stream_peek_buffer", LIBRARY_GIO);
+	Linker.link(g_buffered_input_stream_read_byte, "g_buffered_input_stream_read_byte", LIBRARY_GIO);
+	Linker.link(g_buffered_input_stream_set_buffer_size, "g_buffered_input_stream_set_buffer_size", LIBRARY_GIO);
 
 	// gio.BufferedOutputStream
 
-	Linker.link(g_buffered_output_stream_get_type, "g_buffered_output_stream_get_type", LIBRARY.GIO);
-	Linker.link(g_buffered_output_stream_new, "g_buffered_output_stream_new", LIBRARY.GIO);
-	Linker.link(g_buffered_output_stream_new_sized, "g_buffered_output_stream_new_sized", LIBRARY.GIO);
-	Linker.link(g_buffered_output_stream_get_auto_grow, "g_buffered_output_stream_get_auto_grow", LIBRARY.GIO);
-	Linker.link(g_buffered_output_stream_get_buffer_size, "g_buffered_output_stream_get_buffer_size", LIBRARY.GIO);
-	Linker.link(g_buffered_output_stream_set_auto_grow, "g_buffered_output_stream_set_auto_grow", LIBRARY.GIO);
-	Linker.link(g_buffered_output_stream_set_buffer_size, "g_buffered_output_stream_set_buffer_size", LIBRARY.GIO);
+	Linker.link(g_buffered_output_stream_get_type, "g_buffered_output_stream_get_type", LIBRARY_GIO);
+	Linker.link(g_buffered_output_stream_new, "g_buffered_output_stream_new", LIBRARY_GIO);
+	Linker.link(g_buffered_output_stream_new_sized, "g_buffered_output_stream_new_sized", LIBRARY_GIO);
+	Linker.link(g_buffered_output_stream_get_auto_grow, "g_buffered_output_stream_get_auto_grow", LIBRARY_GIO);
+	Linker.link(g_buffered_output_stream_get_buffer_size, "g_buffered_output_stream_get_buffer_size", LIBRARY_GIO);
+	Linker.link(g_buffered_output_stream_set_auto_grow, "g_buffered_output_stream_set_auto_grow", LIBRARY_GIO);
+	Linker.link(g_buffered_output_stream_set_buffer_size, "g_buffered_output_stream_set_buffer_size", LIBRARY_GIO);
 
 	// gio.BytesIcon
 
-	Linker.link(g_bytes_icon_get_type, "g_bytes_icon_get_type", LIBRARY.GIO);
-	Linker.link(g_bytes_icon_new, "g_bytes_icon_new", LIBRARY.GIO);
-	Linker.link(g_bytes_icon_get_bytes, "g_bytes_icon_get_bytes", LIBRARY.GIO);
+	Linker.link(g_bytes_icon_get_type, "g_bytes_icon_get_type", LIBRARY_GIO);
+	Linker.link(g_bytes_icon_new, "g_bytes_icon_new", LIBRARY_GIO);
+	Linker.link(g_bytes_icon_get_bytes, "g_bytes_icon_get_bytes", LIBRARY_GIO);
 
 	// gio.Cancellable
 
-	Linker.link(g_cancellable_get_type, "g_cancellable_get_type", LIBRARY.GIO);
-	Linker.link(g_cancellable_new, "g_cancellable_new", LIBRARY.GIO);
-	Linker.link(g_cancellable_get_current, "g_cancellable_get_current", LIBRARY.GIO);
-	Linker.link(g_cancellable_cancel, "g_cancellable_cancel", LIBRARY.GIO);
-	Linker.link(g_cancellable_connect, "g_cancellable_connect", LIBRARY.GIO);
-	Linker.link(g_cancellable_disconnect, "g_cancellable_disconnect", LIBRARY.GIO);
-	Linker.link(g_cancellable_get_fd, "g_cancellable_get_fd", LIBRARY.GIO);
-	Linker.link(g_cancellable_is_cancelled, "g_cancellable_is_cancelled", LIBRARY.GIO);
-	Linker.link(g_cancellable_make_pollfd, "g_cancellable_make_pollfd", LIBRARY.GIO);
-	Linker.link(g_cancellable_pop_current, "g_cancellable_pop_current", LIBRARY.GIO);
-	Linker.link(g_cancellable_push_current, "g_cancellable_push_current", LIBRARY.GIO);
-	Linker.link(g_cancellable_release_fd, "g_cancellable_release_fd", LIBRARY.GIO);
-	Linker.link(g_cancellable_reset, "g_cancellable_reset", LIBRARY.GIO);
-	Linker.link(g_cancellable_set_error_if_cancelled, "g_cancellable_set_error_if_cancelled", LIBRARY.GIO);
-	Linker.link(g_cancellable_source_new, "g_cancellable_source_new", LIBRARY.GIO);
+	Linker.link(g_cancellable_get_type, "g_cancellable_get_type", LIBRARY_GIO);
+	Linker.link(g_cancellable_new, "g_cancellable_new", LIBRARY_GIO);
+	Linker.link(g_cancellable_get_current, "g_cancellable_get_current", LIBRARY_GIO);
+	Linker.link(g_cancellable_cancel, "g_cancellable_cancel", LIBRARY_GIO);
+	Linker.link(g_cancellable_connect, "g_cancellable_connect", LIBRARY_GIO);
+	Linker.link(g_cancellable_disconnect, "g_cancellable_disconnect", LIBRARY_GIO);
+	Linker.link(g_cancellable_get_fd, "g_cancellable_get_fd", LIBRARY_GIO);
+	Linker.link(g_cancellable_is_cancelled, "g_cancellable_is_cancelled", LIBRARY_GIO);
+	Linker.link(g_cancellable_make_pollfd, "g_cancellable_make_pollfd", LIBRARY_GIO);
+	Linker.link(g_cancellable_pop_current, "g_cancellable_pop_current", LIBRARY_GIO);
+	Linker.link(g_cancellable_push_current, "g_cancellable_push_current", LIBRARY_GIO);
+	Linker.link(g_cancellable_release_fd, "g_cancellable_release_fd", LIBRARY_GIO);
+	Linker.link(g_cancellable_reset, "g_cancellable_reset", LIBRARY_GIO);
+	Linker.link(g_cancellable_set_error_if_cancelled, "g_cancellable_set_error_if_cancelled", LIBRARY_GIO);
+	Linker.link(g_cancellable_source_new, "g_cancellable_source_new", LIBRARY_GIO);
 
 	// gio.CharsetConverter
 
-	Linker.link(g_charset_converter_get_type, "g_charset_converter_get_type", LIBRARY.GIO);
-	Linker.link(g_charset_converter_new, "g_charset_converter_new", LIBRARY.GIO);
-	Linker.link(g_charset_converter_get_num_fallbacks, "g_charset_converter_get_num_fallbacks", LIBRARY.GIO);
-	Linker.link(g_charset_converter_get_use_fallback, "g_charset_converter_get_use_fallback", LIBRARY.GIO);
-	Linker.link(g_charset_converter_set_use_fallback, "g_charset_converter_set_use_fallback", LIBRARY.GIO);
+	Linker.link(g_charset_converter_get_type, "g_charset_converter_get_type", LIBRARY_GIO);
+	Linker.link(g_charset_converter_new, "g_charset_converter_new", LIBRARY_GIO);
+	Linker.link(g_charset_converter_get_num_fallbacks, "g_charset_converter_get_num_fallbacks", LIBRARY_GIO);
+	Linker.link(g_charset_converter_get_use_fallback, "g_charset_converter_get_use_fallback", LIBRARY_GIO);
+	Linker.link(g_charset_converter_set_use_fallback, "g_charset_converter_set_use_fallback", LIBRARY_GIO);
 
 	// gio.Converter
 
-	Linker.link(g_converter_get_type, "g_converter_get_type", LIBRARY.GIO);
-	Linker.link(g_converter_convert, "g_converter_convert", LIBRARY.GIO);
-	Linker.link(g_converter_reset, "g_converter_reset", LIBRARY.GIO);
+	Linker.link(g_converter_get_type, "g_converter_get_type", LIBRARY_GIO);
+	Linker.link(g_converter_convert, "g_converter_convert", LIBRARY_GIO);
+	Linker.link(g_converter_reset, "g_converter_reset", LIBRARY_GIO);
 
 	// gio.ConverterInputStream
 
-	Linker.link(g_converter_input_stream_get_type, "g_converter_input_stream_get_type", LIBRARY.GIO);
-	Linker.link(g_converter_input_stream_new, "g_converter_input_stream_new", LIBRARY.GIO);
-	Linker.link(g_converter_input_stream_get_converter, "g_converter_input_stream_get_converter", LIBRARY.GIO);
+	Linker.link(g_converter_input_stream_get_type, "g_converter_input_stream_get_type", LIBRARY_GIO);
+	Linker.link(g_converter_input_stream_new, "g_converter_input_stream_new", LIBRARY_GIO);
+	Linker.link(g_converter_input_stream_get_converter, "g_converter_input_stream_get_converter", LIBRARY_GIO);
 
 	// gio.ConverterOutputStream
 
-	Linker.link(g_converter_output_stream_get_type, "g_converter_output_stream_get_type", LIBRARY.GIO);
-	Linker.link(g_converter_output_stream_new, "g_converter_output_stream_new", LIBRARY.GIO);
-	Linker.link(g_converter_output_stream_get_converter, "g_converter_output_stream_get_converter", LIBRARY.GIO);
+	Linker.link(g_converter_output_stream_get_type, "g_converter_output_stream_get_type", LIBRARY_GIO);
+	Linker.link(g_converter_output_stream_new, "g_converter_output_stream_new", LIBRARY_GIO);
+	Linker.link(g_converter_output_stream_get_converter, "g_converter_output_stream_get_converter", LIBRARY_GIO);
 
 	// gio.Credentials
 
-	Linker.link(g_credentials_get_type, "g_credentials_get_type", LIBRARY.GIO);
-	Linker.link(g_credentials_new, "g_credentials_new", LIBRARY.GIO);
-	Linker.link(g_credentials_get_native, "g_credentials_get_native", LIBRARY.GIO);
-	Linker.link(g_credentials_get_unix_pid, "g_credentials_get_unix_pid", LIBRARY.GIO);
-	Linker.link(g_credentials_get_unix_user, "g_credentials_get_unix_user", LIBRARY.GIO);
-	Linker.link(g_credentials_is_same_user, "g_credentials_is_same_user", LIBRARY.GIO);
-	Linker.link(g_credentials_set_native, "g_credentials_set_native", LIBRARY.GIO);
-	Linker.link(g_credentials_set_unix_user, "g_credentials_set_unix_user", LIBRARY.GIO);
-	Linker.link(g_credentials_to_string, "g_credentials_to_string", LIBRARY.GIO);
+	Linker.link(g_credentials_get_type, "g_credentials_get_type", LIBRARY_GIO);
+	Linker.link(g_credentials_new, "g_credentials_new", LIBRARY_GIO);
+	Linker.link(g_credentials_get_native, "g_credentials_get_native", LIBRARY_GIO);
+	Linker.link(g_credentials_get_unix_pid, "g_credentials_get_unix_pid", LIBRARY_GIO);
+	Linker.link(g_credentials_get_unix_user, "g_credentials_get_unix_user", LIBRARY_GIO);
+	Linker.link(g_credentials_is_same_user, "g_credentials_is_same_user", LIBRARY_GIO);
+	Linker.link(g_credentials_set_native, "g_credentials_set_native", LIBRARY_GIO);
+	Linker.link(g_credentials_set_unix_user, "g_credentials_set_unix_user", LIBRARY_GIO);
+	Linker.link(g_credentials_to_string, "g_credentials_to_string", LIBRARY_GIO);
 
 	// gio.DBusActionGroup
 
-	Linker.link(g_dbus_action_group_get_type, "g_dbus_action_group_get_type", LIBRARY.GIO);
-	Linker.link(g_dbus_action_group_get, "g_dbus_action_group_get", LIBRARY.GIO);
+	Linker.link(g_dbus_action_group_get_type, "g_dbus_action_group_get_type", LIBRARY_GIO);
+	Linker.link(g_dbus_action_group_get, "g_dbus_action_group_get", LIBRARY_GIO);
 
 	// gio.DBusAnnotationInfo
 
-	Linker.link(g_dbus_annotation_info_get_type, "g_dbus_annotation_info_get_type", LIBRARY.GIO);
-	Linker.link(g_dbus_annotation_info_ref, "g_dbus_annotation_info_ref", LIBRARY.GIO);
-	Linker.link(g_dbus_annotation_info_unref, "g_dbus_annotation_info_unref", LIBRARY.GIO);
-	Linker.link(g_dbus_annotation_info_lookup, "g_dbus_annotation_info_lookup", LIBRARY.GIO);
+	Linker.link(g_dbus_annotation_info_get_type, "g_dbus_annotation_info_get_type", LIBRARY_GIO);
+	Linker.link(g_dbus_annotation_info_ref, "g_dbus_annotation_info_ref", LIBRARY_GIO);
+	Linker.link(g_dbus_annotation_info_unref, "g_dbus_annotation_info_unref", LIBRARY_GIO);
+	Linker.link(g_dbus_annotation_info_lookup, "g_dbus_annotation_info_lookup", LIBRARY_GIO);
 
 	// gio.DBusArgInfo
 
-	Linker.link(g_dbus_arg_info_get_type, "g_dbus_arg_info_get_type", LIBRARY.GIO);
-	Linker.link(g_dbus_arg_info_ref, "g_dbus_arg_info_ref", LIBRARY.GIO);
-	Linker.link(g_dbus_arg_info_unref, "g_dbus_arg_info_unref", LIBRARY.GIO);
+	Linker.link(g_dbus_arg_info_get_type, "g_dbus_arg_info_get_type", LIBRARY_GIO);
+	Linker.link(g_dbus_arg_info_ref, "g_dbus_arg_info_ref", LIBRARY_GIO);
+	Linker.link(g_dbus_arg_info_unref, "g_dbus_arg_info_unref", LIBRARY_GIO);
 
 	// gio.DBusAuthObserver
 
-	Linker.link(g_dbus_auth_observer_get_type, "g_dbus_auth_observer_get_type", LIBRARY.GIO);
-	Linker.link(g_dbus_auth_observer_new, "g_dbus_auth_observer_new", LIBRARY.GIO);
-	Linker.link(g_dbus_auth_observer_allow_mechanism, "g_dbus_auth_observer_allow_mechanism", LIBRARY.GIO);
-	Linker.link(g_dbus_auth_observer_authorize_authenticated_peer, "g_dbus_auth_observer_authorize_authenticated_peer", LIBRARY.GIO);
+	Linker.link(g_dbus_auth_observer_get_type, "g_dbus_auth_observer_get_type", LIBRARY_GIO);
+	Linker.link(g_dbus_auth_observer_new, "g_dbus_auth_observer_new", LIBRARY_GIO);
+	Linker.link(g_dbus_auth_observer_allow_mechanism, "g_dbus_auth_observer_allow_mechanism", LIBRARY_GIO);
+	Linker.link(g_dbus_auth_observer_authorize_authenticated_peer, "g_dbus_auth_observer_authorize_authenticated_peer", LIBRARY_GIO);
 
 	// gio.DBusConnection
 
-	Linker.link(g_dbus_connection_get_type, "g_dbus_connection_get_type", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_new_finish, "g_dbus_connection_new_finish", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_new_for_address_finish, "g_dbus_connection_new_for_address_finish", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_new_for_address_sync, "g_dbus_connection_new_for_address_sync", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_new_sync, "g_dbus_connection_new_sync", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_new, "g_dbus_connection_new", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_new_for_address, "g_dbus_connection_new_for_address", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_add_filter, "g_dbus_connection_add_filter", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_call, "g_dbus_connection_call", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_call_finish, "g_dbus_connection_call_finish", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_call_sync, "g_dbus_connection_call_sync", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_call_with_unix_fd_list, "g_dbus_connection_call_with_unix_fd_list", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_call_with_unix_fd_list_finish, "g_dbus_connection_call_with_unix_fd_list_finish", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_call_with_unix_fd_list_sync, "g_dbus_connection_call_with_unix_fd_list_sync", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_close, "g_dbus_connection_close", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_close_finish, "g_dbus_connection_close_finish", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_close_sync, "g_dbus_connection_close_sync", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_emit_signal, "g_dbus_connection_emit_signal", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_export_action_group, "g_dbus_connection_export_action_group", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_export_menu_model, "g_dbus_connection_export_menu_model", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_flush, "g_dbus_connection_flush", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_flush_finish, "g_dbus_connection_flush_finish", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_flush_sync, "g_dbus_connection_flush_sync", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_get_capabilities, "g_dbus_connection_get_capabilities", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_get_exit_on_close, "g_dbus_connection_get_exit_on_close", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_get_guid, "g_dbus_connection_get_guid", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_get_last_serial, "g_dbus_connection_get_last_serial", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_get_peer_credentials, "g_dbus_connection_get_peer_credentials", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_get_stream, "g_dbus_connection_get_stream", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_get_unique_name, "g_dbus_connection_get_unique_name", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_is_closed, "g_dbus_connection_is_closed", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_register_object, "g_dbus_connection_register_object", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_register_object_with_closures, "g_dbus_connection_register_object_with_closures", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_register_subtree, "g_dbus_connection_register_subtree", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_remove_filter, "g_dbus_connection_remove_filter", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_send_message, "g_dbus_connection_send_message", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_send_message_with_reply, "g_dbus_connection_send_message_with_reply", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_send_message_with_reply_finish, "g_dbus_connection_send_message_with_reply_finish", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_send_message_with_reply_sync, "g_dbus_connection_send_message_with_reply_sync", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_set_exit_on_close, "g_dbus_connection_set_exit_on_close", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_signal_subscribe, "g_dbus_connection_signal_subscribe", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_signal_unsubscribe, "g_dbus_connection_signal_unsubscribe", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_start_message_processing, "g_dbus_connection_start_message_processing", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_unexport_action_group, "g_dbus_connection_unexport_action_group", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_unexport_menu_model, "g_dbus_connection_unexport_menu_model", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_unregister_object, "g_dbus_connection_unregister_object", LIBRARY.GIO);
-	Linker.link(g_dbus_connection_unregister_subtree, "g_dbus_connection_unregister_subtree", LIBRARY.GIO);
-	Linker.link(g_bus_get, "g_bus_get", LIBRARY.GIO);
-	Linker.link(g_bus_get_finish, "g_bus_get_finish", LIBRARY.GIO);
-	Linker.link(g_bus_get_sync, "g_bus_get_sync", LIBRARY.GIO);
+	Linker.link(g_dbus_connection_get_type, "g_dbus_connection_get_type", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_new_finish, "g_dbus_connection_new_finish", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_new_for_address_finish, "g_dbus_connection_new_for_address_finish", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_new_for_address_sync, "g_dbus_connection_new_for_address_sync", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_new_sync, "g_dbus_connection_new_sync", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_new, "g_dbus_connection_new", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_new_for_address, "g_dbus_connection_new_for_address", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_add_filter, "g_dbus_connection_add_filter", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_call, "g_dbus_connection_call", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_call_finish, "g_dbus_connection_call_finish", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_call_sync, "g_dbus_connection_call_sync", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_call_with_unix_fd_list, "g_dbus_connection_call_with_unix_fd_list", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_call_with_unix_fd_list_finish, "g_dbus_connection_call_with_unix_fd_list_finish", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_call_with_unix_fd_list_sync, "g_dbus_connection_call_with_unix_fd_list_sync", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_close, "g_dbus_connection_close", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_close_finish, "g_dbus_connection_close_finish", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_close_sync, "g_dbus_connection_close_sync", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_emit_signal, "g_dbus_connection_emit_signal", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_export_action_group, "g_dbus_connection_export_action_group", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_export_menu_model, "g_dbus_connection_export_menu_model", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_flush, "g_dbus_connection_flush", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_flush_finish, "g_dbus_connection_flush_finish", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_flush_sync, "g_dbus_connection_flush_sync", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_get_capabilities, "g_dbus_connection_get_capabilities", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_get_exit_on_close, "g_dbus_connection_get_exit_on_close", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_get_guid, "g_dbus_connection_get_guid", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_get_last_serial, "g_dbus_connection_get_last_serial", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_get_peer_credentials, "g_dbus_connection_get_peer_credentials", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_get_stream, "g_dbus_connection_get_stream", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_get_unique_name, "g_dbus_connection_get_unique_name", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_is_closed, "g_dbus_connection_is_closed", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_register_object, "g_dbus_connection_register_object", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_register_object_with_closures, "g_dbus_connection_register_object_with_closures", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_register_subtree, "g_dbus_connection_register_subtree", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_remove_filter, "g_dbus_connection_remove_filter", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_send_message, "g_dbus_connection_send_message", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_send_message_with_reply, "g_dbus_connection_send_message_with_reply", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_send_message_with_reply_finish, "g_dbus_connection_send_message_with_reply_finish", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_send_message_with_reply_sync, "g_dbus_connection_send_message_with_reply_sync", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_set_exit_on_close, "g_dbus_connection_set_exit_on_close", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_signal_subscribe, "g_dbus_connection_signal_subscribe", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_signal_unsubscribe, "g_dbus_connection_signal_unsubscribe", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_start_message_processing, "g_dbus_connection_start_message_processing", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_unexport_action_group, "g_dbus_connection_unexport_action_group", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_unexport_menu_model, "g_dbus_connection_unexport_menu_model", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_unregister_object, "g_dbus_connection_unregister_object", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_unregister_subtree, "g_dbus_connection_unregister_subtree", LIBRARY_GIO);
+	Linker.link(g_bus_get, "g_bus_get", LIBRARY_GIO);
+	Linker.link(g_bus_get_finish, "g_bus_get_finish", LIBRARY_GIO);
+	Linker.link(g_bus_get_sync, "g_bus_get_sync", LIBRARY_GIO);
 
 	// gio.DBusInterface
 
-	Linker.link(g_dbus_interface_get_type, "g_dbus_interface_get_type", LIBRARY.GIO);
-	Linker.link(g_dbus_interface_dup_object, "g_dbus_interface_dup_object", LIBRARY.GIO);
-	Linker.link(g_dbus_interface_get_info, "g_dbus_interface_get_info", LIBRARY.GIO);
-	Linker.link(g_dbus_interface_get_object, "g_dbus_interface_get_object", LIBRARY.GIO);
-	Linker.link(g_dbus_interface_set_object, "g_dbus_interface_set_object", LIBRARY.GIO);
+	Linker.link(g_dbus_interface_get_type, "g_dbus_interface_get_type", LIBRARY_GIO);
+	Linker.link(g_dbus_interface_dup_object, "g_dbus_interface_dup_object", LIBRARY_GIO);
+	Linker.link(g_dbus_interface_get_info, "g_dbus_interface_get_info", LIBRARY_GIO);
+	Linker.link(g_dbus_interface_get_object, "g_dbus_interface_get_object", LIBRARY_GIO);
+	Linker.link(g_dbus_interface_set_object, "g_dbus_interface_set_object", LIBRARY_GIO);
 
 	// gio.DBusInterfaceInfo
 
-	Linker.link(g_dbus_interface_info_get_type, "g_dbus_interface_info_get_type", LIBRARY.GIO);
-	Linker.link(g_dbus_interface_info_cache_build, "g_dbus_interface_info_cache_build", LIBRARY.GIO);
-	Linker.link(g_dbus_interface_info_cache_release, "g_dbus_interface_info_cache_release", LIBRARY.GIO);
-	Linker.link(g_dbus_interface_info_generate_xml, "g_dbus_interface_info_generate_xml", LIBRARY.GIO);
-	Linker.link(g_dbus_interface_info_lookup_method, "g_dbus_interface_info_lookup_method", LIBRARY.GIO);
-	Linker.link(g_dbus_interface_info_lookup_property, "g_dbus_interface_info_lookup_property", LIBRARY.GIO);
-	Linker.link(g_dbus_interface_info_lookup_signal, "g_dbus_interface_info_lookup_signal", LIBRARY.GIO);
-	Linker.link(g_dbus_interface_info_ref, "g_dbus_interface_info_ref", LIBRARY.GIO);
-	Linker.link(g_dbus_interface_info_unref, "g_dbus_interface_info_unref", LIBRARY.GIO);
+	Linker.link(g_dbus_interface_info_get_type, "g_dbus_interface_info_get_type", LIBRARY_GIO);
+	Linker.link(g_dbus_interface_info_cache_build, "g_dbus_interface_info_cache_build", LIBRARY_GIO);
+	Linker.link(g_dbus_interface_info_cache_release, "g_dbus_interface_info_cache_release", LIBRARY_GIO);
+	Linker.link(g_dbus_interface_info_generate_xml, "g_dbus_interface_info_generate_xml", LIBRARY_GIO);
+	Linker.link(g_dbus_interface_info_lookup_method, "g_dbus_interface_info_lookup_method", LIBRARY_GIO);
+	Linker.link(g_dbus_interface_info_lookup_property, "g_dbus_interface_info_lookup_property", LIBRARY_GIO);
+	Linker.link(g_dbus_interface_info_lookup_signal, "g_dbus_interface_info_lookup_signal", LIBRARY_GIO);
+	Linker.link(g_dbus_interface_info_ref, "g_dbus_interface_info_ref", LIBRARY_GIO);
+	Linker.link(g_dbus_interface_info_unref, "g_dbus_interface_info_unref", LIBRARY_GIO);
 
 	// gio.DBusInterfaceSkeleton
 
-	Linker.link(g_dbus_interface_skeleton_get_type, "g_dbus_interface_skeleton_get_type", LIBRARY.GIO);
-	Linker.link(g_dbus_interface_skeleton_export, "g_dbus_interface_skeleton_export", LIBRARY.GIO);
-	Linker.link(g_dbus_interface_skeleton_flush, "g_dbus_interface_skeleton_flush", LIBRARY.GIO);
-	Linker.link(g_dbus_interface_skeleton_get_connection, "g_dbus_interface_skeleton_get_connection", LIBRARY.GIO);
-	Linker.link(g_dbus_interface_skeleton_get_connections, "g_dbus_interface_skeleton_get_connections", LIBRARY.GIO);
-	Linker.link(g_dbus_interface_skeleton_get_flags, "g_dbus_interface_skeleton_get_flags", LIBRARY.GIO);
-	Linker.link(g_dbus_interface_skeleton_get_info, "g_dbus_interface_skeleton_get_info", LIBRARY.GIO);
-	Linker.link(g_dbus_interface_skeleton_get_object_path, "g_dbus_interface_skeleton_get_object_path", LIBRARY.GIO);
-	Linker.link(g_dbus_interface_skeleton_get_properties, "g_dbus_interface_skeleton_get_properties", LIBRARY.GIO);
-	Linker.link(g_dbus_interface_skeleton_get_vtable, "g_dbus_interface_skeleton_get_vtable", LIBRARY.GIO);
-	Linker.link(g_dbus_interface_skeleton_has_connection, "g_dbus_interface_skeleton_has_connection", LIBRARY.GIO);
-	Linker.link(g_dbus_interface_skeleton_set_flags, "g_dbus_interface_skeleton_set_flags", LIBRARY.GIO);
-	Linker.link(g_dbus_interface_skeleton_unexport, "g_dbus_interface_skeleton_unexport", LIBRARY.GIO);
-	Linker.link(g_dbus_interface_skeleton_unexport_from_connection, "g_dbus_interface_skeleton_unexport_from_connection", LIBRARY.GIO);
+	Linker.link(g_dbus_interface_skeleton_get_type, "g_dbus_interface_skeleton_get_type", LIBRARY_GIO);
+	Linker.link(g_dbus_interface_skeleton_export, "g_dbus_interface_skeleton_export", LIBRARY_GIO);
+	Linker.link(g_dbus_interface_skeleton_flush, "g_dbus_interface_skeleton_flush", LIBRARY_GIO);
+	Linker.link(g_dbus_interface_skeleton_get_connection, "g_dbus_interface_skeleton_get_connection", LIBRARY_GIO);
+	Linker.link(g_dbus_interface_skeleton_get_connections, "g_dbus_interface_skeleton_get_connections", LIBRARY_GIO);
+	Linker.link(g_dbus_interface_skeleton_get_flags, "g_dbus_interface_skeleton_get_flags", LIBRARY_GIO);
+	Linker.link(g_dbus_interface_skeleton_get_info, "g_dbus_interface_skeleton_get_info", LIBRARY_GIO);
+	Linker.link(g_dbus_interface_skeleton_get_object_path, "g_dbus_interface_skeleton_get_object_path", LIBRARY_GIO);
+	Linker.link(g_dbus_interface_skeleton_get_properties, "g_dbus_interface_skeleton_get_properties", LIBRARY_GIO);
+	Linker.link(g_dbus_interface_skeleton_get_vtable, "g_dbus_interface_skeleton_get_vtable", LIBRARY_GIO);
+	Linker.link(g_dbus_interface_skeleton_has_connection, "g_dbus_interface_skeleton_has_connection", LIBRARY_GIO);
+	Linker.link(g_dbus_interface_skeleton_set_flags, "g_dbus_interface_skeleton_set_flags", LIBRARY_GIO);
+	Linker.link(g_dbus_interface_skeleton_unexport, "g_dbus_interface_skeleton_unexport", LIBRARY_GIO);
+	Linker.link(g_dbus_interface_skeleton_unexport_from_connection, "g_dbus_interface_skeleton_unexport_from_connection", LIBRARY_GIO);
 
 	// gio.DBusMenuModel
 
-	Linker.link(g_dbus_menu_model_get_type, "g_dbus_menu_model_get_type", LIBRARY.GIO);
-	Linker.link(g_dbus_menu_model_get, "g_dbus_menu_model_get", LIBRARY.GIO);
+	Linker.link(g_dbus_menu_model_get_type, "g_dbus_menu_model_get_type", LIBRARY_GIO);
+	Linker.link(g_dbus_menu_model_get, "g_dbus_menu_model_get", LIBRARY_GIO);
 
 	// gio.DBusMessage
 
-	Linker.link(g_dbus_message_get_type, "g_dbus_message_get_type", LIBRARY.GIO);
-	Linker.link(g_dbus_message_new, "g_dbus_message_new", LIBRARY.GIO);
-	Linker.link(g_dbus_message_new_from_blob, "g_dbus_message_new_from_blob", LIBRARY.GIO);
-	Linker.link(g_dbus_message_new_method_call, "g_dbus_message_new_method_call", LIBRARY.GIO);
-	Linker.link(g_dbus_message_new_signal, "g_dbus_message_new_signal", LIBRARY.GIO);
-	Linker.link(g_dbus_message_bytes_needed, "g_dbus_message_bytes_needed", LIBRARY.GIO);
-	Linker.link(g_dbus_message_copy, "g_dbus_message_copy", LIBRARY.GIO);
-	Linker.link(g_dbus_message_get_arg0, "g_dbus_message_get_arg0", LIBRARY.GIO);
-	Linker.link(g_dbus_message_get_body, "g_dbus_message_get_body", LIBRARY.GIO);
-	Linker.link(g_dbus_message_get_byte_order, "g_dbus_message_get_byte_order", LIBRARY.GIO);
-	Linker.link(g_dbus_message_get_destination, "g_dbus_message_get_destination", LIBRARY.GIO);
-	Linker.link(g_dbus_message_get_error_name, "g_dbus_message_get_error_name", LIBRARY.GIO);
-	Linker.link(g_dbus_message_get_flags, "g_dbus_message_get_flags", LIBRARY.GIO);
-	Linker.link(g_dbus_message_get_header, "g_dbus_message_get_header", LIBRARY.GIO);
-	Linker.link(g_dbus_message_get_header_fields, "g_dbus_message_get_header_fields", LIBRARY.GIO);
-	Linker.link(g_dbus_message_get_interface, "g_dbus_message_get_interface", LIBRARY.GIO);
-	Linker.link(g_dbus_message_get_locked, "g_dbus_message_get_locked", LIBRARY.GIO);
-	Linker.link(g_dbus_message_get_member, "g_dbus_message_get_member", LIBRARY.GIO);
-	Linker.link(g_dbus_message_get_message_type, "g_dbus_message_get_message_type", LIBRARY.GIO);
-	Linker.link(g_dbus_message_get_num_unix_fds, "g_dbus_message_get_num_unix_fds", LIBRARY.GIO);
-	Linker.link(g_dbus_message_get_path, "g_dbus_message_get_path", LIBRARY.GIO);
-	Linker.link(g_dbus_message_get_reply_serial, "g_dbus_message_get_reply_serial", LIBRARY.GIO);
-	Linker.link(g_dbus_message_get_sender, "g_dbus_message_get_sender", LIBRARY.GIO);
-	Linker.link(g_dbus_message_get_serial, "g_dbus_message_get_serial", LIBRARY.GIO);
-	Linker.link(g_dbus_message_get_signature, "g_dbus_message_get_signature", LIBRARY.GIO);
-	Linker.link(g_dbus_message_get_unix_fd_list, "g_dbus_message_get_unix_fd_list", LIBRARY.GIO);
-	Linker.link(g_dbus_message_lock, "g_dbus_message_lock", LIBRARY.GIO);
-	Linker.link(g_dbus_message_new_method_error, "g_dbus_message_new_method_error", LIBRARY.GIO);
-	Linker.link(g_dbus_message_new_method_error_literal, "g_dbus_message_new_method_error_literal", LIBRARY.GIO);
-	Linker.link(g_dbus_message_new_method_error_valist, "g_dbus_message_new_method_error_valist", LIBRARY.GIO);
-	Linker.link(g_dbus_message_new_method_reply, "g_dbus_message_new_method_reply", LIBRARY.GIO);
-	Linker.link(g_dbus_message_print, "g_dbus_message_print", LIBRARY.GIO);
-	Linker.link(g_dbus_message_set_body, "g_dbus_message_set_body", LIBRARY.GIO);
-	Linker.link(g_dbus_message_set_byte_order, "g_dbus_message_set_byte_order", LIBRARY.GIO);
-	Linker.link(g_dbus_message_set_destination, "g_dbus_message_set_destination", LIBRARY.GIO);
-	Linker.link(g_dbus_message_set_error_name, "g_dbus_message_set_error_name", LIBRARY.GIO);
-	Linker.link(g_dbus_message_set_flags, "g_dbus_message_set_flags", LIBRARY.GIO);
-	Linker.link(g_dbus_message_set_header, "g_dbus_message_set_header", LIBRARY.GIO);
-	Linker.link(g_dbus_message_set_interface, "g_dbus_message_set_interface", LIBRARY.GIO);
-	Linker.link(g_dbus_message_set_member, "g_dbus_message_set_member", LIBRARY.GIO);
-	Linker.link(g_dbus_message_set_message_type, "g_dbus_message_set_message_type", LIBRARY.GIO);
-	Linker.link(g_dbus_message_set_num_unix_fds, "g_dbus_message_set_num_unix_fds", LIBRARY.GIO);
-	Linker.link(g_dbus_message_set_path, "g_dbus_message_set_path", LIBRARY.GIO);
-	Linker.link(g_dbus_message_set_reply_serial, "g_dbus_message_set_reply_serial", LIBRARY.GIO);
-	Linker.link(g_dbus_message_set_sender, "g_dbus_message_set_sender", LIBRARY.GIO);
-	Linker.link(g_dbus_message_set_serial, "g_dbus_message_set_serial", LIBRARY.GIO);
-	Linker.link(g_dbus_message_set_signature, "g_dbus_message_set_signature", LIBRARY.GIO);
-	Linker.link(g_dbus_message_set_unix_fd_list, "g_dbus_message_set_unix_fd_list", LIBRARY.GIO);
-	Linker.link(g_dbus_message_to_blob, "g_dbus_message_to_blob", LIBRARY.GIO);
-	Linker.link(g_dbus_message_to_gerror, "g_dbus_message_to_gerror", LIBRARY.GIO);
+	Linker.link(g_dbus_message_get_type, "g_dbus_message_get_type", LIBRARY_GIO);
+	Linker.link(g_dbus_message_new, "g_dbus_message_new", LIBRARY_GIO);
+	Linker.link(g_dbus_message_new_from_blob, "g_dbus_message_new_from_blob", LIBRARY_GIO);
+	Linker.link(g_dbus_message_new_method_call, "g_dbus_message_new_method_call", LIBRARY_GIO);
+	Linker.link(g_dbus_message_new_signal, "g_dbus_message_new_signal", LIBRARY_GIO);
+	Linker.link(g_dbus_message_bytes_needed, "g_dbus_message_bytes_needed", LIBRARY_GIO);
+	Linker.link(g_dbus_message_copy, "g_dbus_message_copy", LIBRARY_GIO);
+	Linker.link(g_dbus_message_get_arg0, "g_dbus_message_get_arg0", LIBRARY_GIO);
+	Linker.link(g_dbus_message_get_body, "g_dbus_message_get_body", LIBRARY_GIO);
+	Linker.link(g_dbus_message_get_byte_order, "g_dbus_message_get_byte_order", LIBRARY_GIO);
+	Linker.link(g_dbus_message_get_destination, "g_dbus_message_get_destination", LIBRARY_GIO);
+	Linker.link(g_dbus_message_get_error_name, "g_dbus_message_get_error_name", LIBRARY_GIO);
+	Linker.link(g_dbus_message_get_flags, "g_dbus_message_get_flags", LIBRARY_GIO);
+	Linker.link(g_dbus_message_get_header, "g_dbus_message_get_header", LIBRARY_GIO);
+	Linker.link(g_dbus_message_get_header_fields, "g_dbus_message_get_header_fields", LIBRARY_GIO);
+	Linker.link(g_dbus_message_get_interface, "g_dbus_message_get_interface", LIBRARY_GIO);
+	Linker.link(g_dbus_message_get_locked, "g_dbus_message_get_locked", LIBRARY_GIO);
+	Linker.link(g_dbus_message_get_member, "g_dbus_message_get_member", LIBRARY_GIO);
+	Linker.link(g_dbus_message_get_message_type, "g_dbus_message_get_message_type", LIBRARY_GIO);
+	Linker.link(g_dbus_message_get_num_unix_fds, "g_dbus_message_get_num_unix_fds", LIBRARY_GIO);
+	Linker.link(g_dbus_message_get_path, "g_dbus_message_get_path", LIBRARY_GIO);
+	Linker.link(g_dbus_message_get_reply_serial, "g_dbus_message_get_reply_serial", LIBRARY_GIO);
+	Linker.link(g_dbus_message_get_sender, "g_dbus_message_get_sender", LIBRARY_GIO);
+	Linker.link(g_dbus_message_get_serial, "g_dbus_message_get_serial", LIBRARY_GIO);
+	Linker.link(g_dbus_message_get_signature, "g_dbus_message_get_signature", LIBRARY_GIO);
+	Linker.link(g_dbus_message_get_unix_fd_list, "g_dbus_message_get_unix_fd_list", LIBRARY_GIO);
+	Linker.link(g_dbus_message_lock, "g_dbus_message_lock", LIBRARY_GIO);
+	Linker.link(g_dbus_message_new_method_error, "g_dbus_message_new_method_error", LIBRARY_GIO);
+	Linker.link(g_dbus_message_new_method_error_literal, "g_dbus_message_new_method_error_literal", LIBRARY_GIO);
+	Linker.link(g_dbus_message_new_method_error_valist, "g_dbus_message_new_method_error_valist", LIBRARY_GIO);
+	Linker.link(g_dbus_message_new_method_reply, "g_dbus_message_new_method_reply", LIBRARY_GIO);
+	Linker.link(g_dbus_message_print, "g_dbus_message_print", LIBRARY_GIO);
+	Linker.link(g_dbus_message_set_body, "g_dbus_message_set_body", LIBRARY_GIO);
+	Linker.link(g_dbus_message_set_byte_order, "g_dbus_message_set_byte_order", LIBRARY_GIO);
+	Linker.link(g_dbus_message_set_destination, "g_dbus_message_set_destination", LIBRARY_GIO);
+	Linker.link(g_dbus_message_set_error_name, "g_dbus_message_set_error_name", LIBRARY_GIO);
+	Linker.link(g_dbus_message_set_flags, "g_dbus_message_set_flags", LIBRARY_GIO);
+	Linker.link(g_dbus_message_set_header, "g_dbus_message_set_header", LIBRARY_GIO);
+	Linker.link(g_dbus_message_set_interface, "g_dbus_message_set_interface", LIBRARY_GIO);
+	Linker.link(g_dbus_message_set_member, "g_dbus_message_set_member", LIBRARY_GIO);
+	Linker.link(g_dbus_message_set_message_type, "g_dbus_message_set_message_type", LIBRARY_GIO);
+	Linker.link(g_dbus_message_set_num_unix_fds, "g_dbus_message_set_num_unix_fds", LIBRARY_GIO);
+	Linker.link(g_dbus_message_set_path, "g_dbus_message_set_path", LIBRARY_GIO);
+	Linker.link(g_dbus_message_set_reply_serial, "g_dbus_message_set_reply_serial", LIBRARY_GIO);
+	Linker.link(g_dbus_message_set_sender, "g_dbus_message_set_sender", LIBRARY_GIO);
+	Linker.link(g_dbus_message_set_serial, "g_dbus_message_set_serial", LIBRARY_GIO);
+	Linker.link(g_dbus_message_set_signature, "g_dbus_message_set_signature", LIBRARY_GIO);
+	Linker.link(g_dbus_message_set_unix_fd_list, "g_dbus_message_set_unix_fd_list", LIBRARY_GIO);
+	Linker.link(g_dbus_message_to_blob, "g_dbus_message_to_blob", LIBRARY_GIO);
+	Linker.link(g_dbus_message_to_gerror, "g_dbus_message_to_gerror", LIBRARY_GIO);
 
 	// gio.DBusMethodInfo
 
-	Linker.link(g_dbus_method_info_get_type, "g_dbus_method_info_get_type", LIBRARY.GIO);
-	Linker.link(g_dbus_method_info_ref, "g_dbus_method_info_ref", LIBRARY.GIO);
-	Linker.link(g_dbus_method_info_unref, "g_dbus_method_info_unref", LIBRARY.GIO);
+	Linker.link(g_dbus_method_info_get_type, "g_dbus_method_info_get_type", LIBRARY_GIO);
+	Linker.link(g_dbus_method_info_ref, "g_dbus_method_info_ref", LIBRARY_GIO);
+	Linker.link(g_dbus_method_info_unref, "g_dbus_method_info_unref", LIBRARY_GIO);
 
 	// gio.DBusMethodInvocation
 
-	Linker.link(g_dbus_method_invocation_get_type, "g_dbus_method_invocation_get_type", LIBRARY.GIO);
-	Linker.link(g_dbus_method_invocation_get_connection, "g_dbus_method_invocation_get_connection", LIBRARY.GIO);
-	Linker.link(g_dbus_method_invocation_get_interface_name, "g_dbus_method_invocation_get_interface_name", LIBRARY.GIO);
-	Linker.link(g_dbus_method_invocation_get_message, "g_dbus_method_invocation_get_message", LIBRARY.GIO);
-	Linker.link(g_dbus_method_invocation_get_method_info, "g_dbus_method_invocation_get_method_info", LIBRARY.GIO);
-	Linker.link(g_dbus_method_invocation_get_method_name, "g_dbus_method_invocation_get_method_name", LIBRARY.GIO);
-	Linker.link(g_dbus_method_invocation_get_object_path, "g_dbus_method_invocation_get_object_path", LIBRARY.GIO);
-	Linker.link(g_dbus_method_invocation_get_parameters, "g_dbus_method_invocation_get_parameters", LIBRARY.GIO);
-	Linker.link(g_dbus_method_invocation_get_property_info, "g_dbus_method_invocation_get_property_info", LIBRARY.GIO);
-	Linker.link(g_dbus_method_invocation_get_sender, "g_dbus_method_invocation_get_sender", LIBRARY.GIO);
-	Linker.link(g_dbus_method_invocation_get_user_data, "g_dbus_method_invocation_get_user_data", LIBRARY.GIO);
-	Linker.link(g_dbus_method_invocation_return_dbus_error, "g_dbus_method_invocation_return_dbus_error", LIBRARY.GIO);
-	Linker.link(g_dbus_method_invocation_return_error, "g_dbus_method_invocation_return_error", LIBRARY.GIO);
-	Linker.link(g_dbus_method_invocation_return_error_literal, "g_dbus_method_invocation_return_error_literal", LIBRARY.GIO);
-	Linker.link(g_dbus_method_invocation_return_error_valist, "g_dbus_method_invocation_return_error_valist", LIBRARY.GIO);
-	Linker.link(g_dbus_method_invocation_return_gerror, "g_dbus_method_invocation_return_gerror", LIBRARY.GIO);
-	Linker.link(g_dbus_method_invocation_return_value, "g_dbus_method_invocation_return_value", LIBRARY.GIO);
-	Linker.link(g_dbus_method_invocation_return_value_with_unix_fd_list, "g_dbus_method_invocation_return_value_with_unix_fd_list", LIBRARY.GIO);
-	Linker.link(g_dbus_method_invocation_take_error, "g_dbus_method_invocation_take_error", LIBRARY.GIO);
+	Linker.link(g_dbus_method_invocation_get_type, "g_dbus_method_invocation_get_type", LIBRARY_GIO);
+	Linker.link(g_dbus_method_invocation_get_connection, "g_dbus_method_invocation_get_connection", LIBRARY_GIO);
+	Linker.link(g_dbus_method_invocation_get_interface_name, "g_dbus_method_invocation_get_interface_name", LIBRARY_GIO);
+	Linker.link(g_dbus_method_invocation_get_message, "g_dbus_method_invocation_get_message", LIBRARY_GIO);
+	Linker.link(g_dbus_method_invocation_get_method_info, "g_dbus_method_invocation_get_method_info", LIBRARY_GIO);
+	Linker.link(g_dbus_method_invocation_get_method_name, "g_dbus_method_invocation_get_method_name", LIBRARY_GIO);
+	Linker.link(g_dbus_method_invocation_get_object_path, "g_dbus_method_invocation_get_object_path", LIBRARY_GIO);
+	Linker.link(g_dbus_method_invocation_get_parameters, "g_dbus_method_invocation_get_parameters", LIBRARY_GIO);
+	Linker.link(g_dbus_method_invocation_get_property_info, "g_dbus_method_invocation_get_property_info", LIBRARY_GIO);
+	Linker.link(g_dbus_method_invocation_get_sender, "g_dbus_method_invocation_get_sender", LIBRARY_GIO);
+	Linker.link(g_dbus_method_invocation_get_user_data, "g_dbus_method_invocation_get_user_data", LIBRARY_GIO);
+	Linker.link(g_dbus_method_invocation_return_dbus_error, "g_dbus_method_invocation_return_dbus_error", LIBRARY_GIO);
+	Linker.link(g_dbus_method_invocation_return_error, "g_dbus_method_invocation_return_error", LIBRARY_GIO);
+	Linker.link(g_dbus_method_invocation_return_error_literal, "g_dbus_method_invocation_return_error_literal", LIBRARY_GIO);
+	Linker.link(g_dbus_method_invocation_return_error_valist, "g_dbus_method_invocation_return_error_valist", LIBRARY_GIO);
+	Linker.link(g_dbus_method_invocation_return_gerror, "g_dbus_method_invocation_return_gerror", LIBRARY_GIO);
+	Linker.link(g_dbus_method_invocation_return_value, "g_dbus_method_invocation_return_value", LIBRARY_GIO);
+	Linker.link(g_dbus_method_invocation_return_value_with_unix_fd_list, "g_dbus_method_invocation_return_value_with_unix_fd_list", LIBRARY_GIO);
+	Linker.link(g_dbus_method_invocation_take_error, "g_dbus_method_invocation_take_error", LIBRARY_GIO);
 
 	// gio.DBusNodeInfo
 
-	Linker.link(g_dbus_node_info_get_type, "g_dbus_node_info_get_type", LIBRARY.GIO);
-	Linker.link(g_dbus_node_info_new_for_xml, "g_dbus_node_info_new_for_xml", LIBRARY.GIO);
-	Linker.link(g_dbus_node_info_generate_xml, "g_dbus_node_info_generate_xml", LIBRARY.GIO);
-	Linker.link(g_dbus_node_info_lookup_interface, "g_dbus_node_info_lookup_interface", LIBRARY.GIO);
-	Linker.link(g_dbus_node_info_ref, "g_dbus_node_info_ref", LIBRARY.GIO);
-	Linker.link(g_dbus_node_info_unref, "g_dbus_node_info_unref", LIBRARY.GIO);
+	Linker.link(g_dbus_node_info_get_type, "g_dbus_node_info_get_type", LIBRARY_GIO);
+	Linker.link(g_dbus_node_info_new_for_xml, "g_dbus_node_info_new_for_xml", LIBRARY_GIO);
+	Linker.link(g_dbus_node_info_generate_xml, "g_dbus_node_info_generate_xml", LIBRARY_GIO);
+	Linker.link(g_dbus_node_info_lookup_interface, "g_dbus_node_info_lookup_interface", LIBRARY_GIO);
+	Linker.link(g_dbus_node_info_ref, "g_dbus_node_info_ref", LIBRARY_GIO);
+	Linker.link(g_dbus_node_info_unref, "g_dbus_node_info_unref", LIBRARY_GIO);
 
 	// gio.DBusObject
 
-	Linker.link(g_dbus_object_get_type, "g_dbus_object_get_type", LIBRARY.GIO);
-	Linker.link(g_dbus_object_get_interface, "g_dbus_object_get_interface", LIBRARY.GIO);
-	Linker.link(g_dbus_object_get_interfaces, "g_dbus_object_get_interfaces", LIBRARY.GIO);
-	Linker.link(g_dbus_object_get_object_path, "g_dbus_object_get_object_path", LIBRARY.GIO);
+	Linker.link(g_dbus_object_get_type, "g_dbus_object_get_type", LIBRARY_GIO);
+	Linker.link(g_dbus_object_get_interface, "g_dbus_object_get_interface", LIBRARY_GIO);
+	Linker.link(g_dbus_object_get_interfaces, "g_dbus_object_get_interfaces", LIBRARY_GIO);
+	Linker.link(g_dbus_object_get_object_path, "g_dbus_object_get_object_path", LIBRARY_GIO);
 
 	// gio.DBusObjectManager
 
-	Linker.link(g_dbus_object_manager_get_type, "g_dbus_object_manager_get_type", LIBRARY.GIO);
-	Linker.link(g_dbus_object_manager_get_interface, "g_dbus_object_manager_get_interface", LIBRARY.GIO);
-	Linker.link(g_dbus_object_manager_get_object, "g_dbus_object_manager_get_object", LIBRARY.GIO);
-	Linker.link(g_dbus_object_manager_get_object_path, "g_dbus_object_manager_get_object_path", LIBRARY.GIO);
-	Linker.link(g_dbus_object_manager_get_objects, "g_dbus_object_manager_get_objects", LIBRARY.GIO);
+	Linker.link(g_dbus_object_manager_get_type, "g_dbus_object_manager_get_type", LIBRARY_GIO);
+	Linker.link(g_dbus_object_manager_get_interface, "g_dbus_object_manager_get_interface", LIBRARY_GIO);
+	Linker.link(g_dbus_object_manager_get_object, "g_dbus_object_manager_get_object", LIBRARY_GIO);
+	Linker.link(g_dbus_object_manager_get_object_path, "g_dbus_object_manager_get_object_path", LIBRARY_GIO);
+	Linker.link(g_dbus_object_manager_get_objects, "g_dbus_object_manager_get_objects", LIBRARY_GIO);
 
 	// gio.DBusObjectManagerClient
 
-	Linker.link(g_dbus_object_manager_client_get_type, "g_dbus_object_manager_client_get_type", LIBRARY.GIO);
-	Linker.link(g_dbus_object_manager_client_new_finish, "g_dbus_object_manager_client_new_finish", LIBRARY.GIO);
-	Linker.link(g_dbus_object_manager_client_new_for_bus_finish, "g_dbus_object_manager_client_new_for_bus_finish", LIBRARY.GIO);
-	Linker.link(g_dbus_object_manager_client_new_for_bus_sync, "g_dbus_object_manager_client_new_for_bus_sync", LIBRARY.GIO);
-	Linker.link(g_dbus_object_manager_client_new_sync, "g_dbus_object_manager_client_new_sync", LIBRARY.GIO);
-	Linker.link(g_dbus_object_manager_client_new, "g_dbus_object_manager_client_new", LIBRARY.GIO);
-	Linker.link(g_dbus_object_manager_client_new_for_bus, "g_dbus_object_manager_client_new_for_bus", LIBRARY.GIO);
-	Linker.link(g_dbus_object_manager_client_get_connection, "g_dbus_object_manager_client_get_connection", LIBRARY.GIO);
-	Linker.link(g_dbus_object_manager_client_get_flags, "g_dbus_object_manager_client_get_flags", LIBRARY.GIO);
-	Linker.link(g_dbus_object_manager_client_get_name, "g_dbus_object_manager_client_get_name", LIBRARY.GIO);
-	Linker.link(g_dbus_object_manager_client_get_name_owner, "g_dbus_object_manager_client_get_name_owner", LIBRARY.GIO);
+	Linker.link(g_dbus_object_manager_client_get_type, "g_dbus_object_manager_client_get_type", LIBRARY_GIO);
+	Linker.link(g_dbus_object_manager_client_new_finish, "g_dbus_object_manager_client_new_finish", LIBRARY_GIO);
+	Linker.link(g_dbus_object_manager_client_new_for_bus_finish, "g_dbus_object_manager_client_new_for_bus_finish", LIBRARY_GIO);
+	Linker.link(g_dbus_object_manager_client_new_for_bus_sync, "g_dbus_object_manager_client_new_for_bus_sync", LIBRARY_GIO);
+	Linker.link(g_dbus_object_manager_client_new_sync, "g_dbus_object_manager_client_new_sync", LIBRARY_GIO);
+	Linker.link(g_dbus_object_manager_client_new, "g_dbus_object_manager_client_new", LIBRARY_GIO);
+	Linker.link(g_dbus_object_manager_client_new_for_bus, "g_dbus_object_manager_client_new_for_bus", LIBRARY_GIO);
+	Linker.link(g_dbus_object_manager_client_get_connection, "g_dbus_object_manager_client_get_connection", LIBRARY_GIO);
+	Linker.link(g_dbus_object_manager_client_get_flags, "g_dbus_object_manager_client_get_flags", LIBRARY_GIO);
+	Linker.link(g_dbus_object_manager_client_get_name, "g_dbus_object_manager_client_get_name", LIBRARY_GIO);
+	Linker.link(g_dbus_object_manager_client_get_name_owner, "g_dbus_object_manager_client_get_name_owner", LIBRARY_GIO);
 
 	// gio.DBusObjectManagerServer
 
-	Linker.link(g_dbus_object_manager_server_get_type, "g_dbus_object_manager_server_get_type", LIBRARY.GIO);
-	Linker.link(g_dbus_object_manager_server_new, "g_dbus_object_manager_server_new", LIBRARY.GIO);
-	Linker.link(g_dbus_object_manager_server_export, "g_dbus_object_manager_server_export", LIBRARY.GIO);
-	Linker.link(g_dbus_object_manager_server_export_uniquely, "g_dbus_object_manager_server_export_uniquely", LIBRARY.GIO);
-	Linker.link(g_dbus_object_manager_server_get_connection, "g_dbus_object_manager_server_get_connection", LIBRARY.GIO);
-	Linker.link(g_dbus_object_manager_server_is_exported, "g_dbus_object_manager_server_is_exported", LIBRARY.GIO);
-	Linker.link(g_dbus_object_manager_server_set_connection, "g_dbus_object_manager_server_set_connection", LIBRARY.GIO);
-	Linker.link(g_dbus_object_manager_server_unexport, "g_dbus_object_manager_server_unexport", LIBRARY.GIO);
+	Linker.link(g_dbus_object_manager_server_get_type, "g_dbus_object_manager_server_get_type", LIBRARY_GIO);
+	Linker.link(g_dbus_object_manager_server_new, "g_dbus_object_manager_server_new", LIBRARY_GIO);
+	Linker.link(g_dbus_object_manager_server_export, "g_dbus_object_manager_server_export", LIBRARY_GIO);
+	Linker.link(g_dbus_object_manager_server_export_uniquely, "g_dbus_object_manager_server_export_uniquely", LIBRARY_GIO);
+	Linker.link(g_dbus_object_manager_server_get_connection, "g_dbus_object_manager_server_get_connection", LIBRARY_GIO);
+	Linker.link(g_dbus_object_manager_server_is_exported, "g_dbus_object_manager_server_is_exported", LIBRARY_GIO);
+	Linker.link(g_dbus_object_manager_server_set_connection, "g_dbus_object_manager_server_set_connection", LIBRARY_GIO);
+	Linker.link(g_dbus_object_manager_server_unexport, "g_dbus_object_manager_server_unexport", LIBRARY_GIO);
 
 	// gio.DBusObjectProxy
 
-	Linker.link(g_dbus_object_proxy_get_type, "g_dbus_object_proxy_get_type", LIBRARY.GIO);
-	Linker.link(g_dbus_object_proxy_new, "g_dbus_object_proxy_new", LIBRARY.GIO);
-	Linker.link(g_dbus_object_proxy_get_connection, "g_dbus_object_proxy_get_connection", LIBRARY.GIO);
+	Linker.link(g_dbus_object_proxy_get_type, "g_dbus_object_proxy_get_type", LIBRARY_GIO);
+	Linker.link(g_dbus_object_proxy_new, "g_dbus_object_proxy_new", LIBRARY_GIO);
+	Linker.link(g_dbus_object_proxy_get_connection, "g_dbus_object_proxy_get_connection", LIBRARY_GIO);
 
 	// gio.DBusObjectSkeleton
 
-	Linker.link(g_dbus_object_skeleton_get_type, "g_dbus_object_skeleton_get_type", LIBRARY.GIO);
-	Linker.link(g_dbus_object_skeleton_new, "g_dbus_object_skeleton_new", LIBRARY.GIO);
-	Linker.link(g_dbus_object_skeleton_add_interface, "g_dbus_object_skeleton_add_interface", LIBRARY.GIO);
-	Linker.link(g_dbus_object_skeleton_flush, "g_dbus_object_skeleton_flush", LIBRARY.GIO);
-	Linker.link(g_dbus_object_skeleton_remove_interface, "g_dbus_object_skeleton_remove_interface", LIBRARY.GIO);
-	Linker.link(g_dbus_object_skeleton_remove_interface_by_name, "g_dbus_object_skeleton_remove_interface_by_name", LIBRARY.GIO);
-	Linker.link(g_dbus_object_skeleton_set_object_path, "g_dbus_object_skeleton_set_object_path", LIBRARY.GIO);
+	Linker.link(g_dbus_object_skeleton_get_type, "g_dbus_object_skeleton_get_type", LIBRARY_GIO);
+	Linker.link(g_dbus_object_skeleton_new, "g_dbus_object_skeleton_new", LIBRARY_GIO);
+	Linker.link(g_dbus_object_skeleton_add_interface, "g_dbus_object_skeleton_add_interface", LIBRARY_GIO);
+	Linker.link(g_dbus_object_skeleton_flush, "g_dbus_object_skeleton_flush", LIBRARY_GIO);
+	Linker.link(g_dbus_object_skeleton_remove_interface, "g_dbus_object_skeleton_remove_interface", LIBRARY_GIO);
+	Linker.link(g_dbus_object_skeleton_remove_interface_by_name, "g_dbus_object_skeleton_remove_interface_by_name", LIBRARY_GIO);
+	Linker.link(g_dbus_object_skeleton_set_object_path, "g_dbus_object_skeleton_set_object_path", LIBRARY_GIO);
 
 	// gio.DBusPropertyInfo
 
-	Linker.link(g_dbus_property_info_get_type, "g_dbus_property_info_get_type", LIBRARY.GIO);
-	Linker.link(g_dbus_property_info_ref, "g_dbus_property_info_ref", LIBRARY.GIO);
-	Linker.link(g_dbus_property_info_unref, "g_dbus_property_info_unref", LIBRARY.GIO);
+	Linker.link(g_dbus_property_info_get_type, "g_dbus_property_info_get_type", LIBRARY_GIO);
+	Linker.link(g_dbus_property_info_ref, "g_dbus_property_info_ref", LIBRARY_GIO);
+	Linker.link(g_dbus_property_info_unref, "g_dbus_property_info_unref", LIBRARY_GIO);
 
 	// gio.DBusProxy
 
-	Linker.link(g_dbus_proxy_get_type, "g_dbus_proxy_get_type", LIBRARY.GIO);
-	Linker.link(g_dbus_proxy_new_finish, "g_dbus_proxy_new_finish", LIBRARY.GIO);
-	Linker.link(g_dbus_proxy_new_for_bus_finish, "g_dbus_proxy_new_for_bus_finish", LIBRARY.GIO);
-	Linker.link(g_dbus_proxy_new_for_bus_sync, "g_dbus_proxy_new_for_bus_sync", LIBRARY.GIO);
-	Linker.link(g_dbus_proxy_new_sync, "g_dbus_proxy_new_sync", LIBRARY.GIO);
-	Linker.link(g_dbus_proxy_new, "g_dbus_proxy_new", LIBRARY.GIO);
-	Linker.link(g_dbus_proxy_new_for_bus, "g_dbus_proxy_new_for_bus", LIBRARY.GIO);
-	Linker.link(g_dbus_proxy_call, "g_dbus_proxy_call", LIBRARY.GIO);
-	Linker.link(g_dbus_proxy_call_finish, "g_dbus_proxy_call_finish", LIBRARY.GIO);
-	Linker.link(g_dbus_proxy_call_sync, "g_dbus_proxy_call_sync", LIBRARY.GIO);
-	Linker.link(g_dbus_proxy_call_with_unix_fd_list, "g_dbus_proxy_call_with_unix_fd_list", LIBRARY.GIO);
-	Linker.link(g_dbus_proxy_call_with_unix_fd_list_finish, "g_dbus_proxy_call_with_unix_fd_list_finish", LIBRARY.GIO);
-	Linker.link(g_dbus_proxy_call_with_unix_fd_list_sync, "g_dbus_proxy_call_with_unix_fd_list_sync", LIBRARY.GIO);
-	Linker.link(g_dbus_proxy_get_cached_property, "g_dbus_proxy_get_cached_property", LIBRARY.GIO);
-	Linker.link(g_dbus_proxy_get_cached_property_names, "g_dbus_proxy_get_cached_property_names", LIBRARY.GIO);
-	Linker.link(g_dbus_proxy_get_connection, "g_dbus_proxy_get_connection", LIBRARY.GIO);
-	Linker.link(g_dbus_proxy_get_default_timeout, "g_dbus_proxy_get_default_timeout", LIBRARY.GIO);
-	Linker.link(g_dbus_proxy_get_flags, "g_dbus_proxy_get_flags", LIBRARY.GIO);
-	Linker.link(g_dbus_proxy_get_interface_info, "g_dbus_proxy_get_interface_info", LIBRARY.GIO);
-	Linker.link(g_dbus_proxy_get_interface_name, "g_dbus_proxy_get_interface_name", LIBRARY.GIO);
-	Linker.link(g_dbus_proxy_get_name, "g_dbus_proxy_get_name", LIBRARY.GIO);
-	Linker.link(g_dbus_proxy_get_name_owner, "g_dbus_proxy_get_name_owner", LIBRARY.GIO);
-	Linker.link(g_dbus_proxy_get_object_path, "g_dbus_proxy_get_object_path", LIBRARY.GIO);
-	Linker.link(g_dbus_proxy_set_cached_property, "g_dbus_proxy_set_cached_property", LIBRARY.GIO);
-	Linker.link(g_dbus_proxy_set_default_timeout, "g_dbus_proxy_set_default_timeout", LIBRARY.GIO);
-	Linker.link(g_dbus_proxy_set_interface_info, "g_dbus_proxy_set_interface_info", LIBRARY.GIO);
+	Linker.link(g_dbus_proxy_get_type, "g_dbus_proxy_get_type", LIBRARY_GIO);
+	Linker.link(g_dbus_proxy_new_finish, "g_dbus_proxy_new_finish", LIBRARY_GIO);
+	Linker.link(g_dbus_proxy_new_for_bus_finish, "g_dbus_proxy_new_for_bus_finish", LIBRARY_GIO);
+	Linker.link(g_dbus_proxy_new_for_bus_sync, "g_dbus_proxy_new_for_bus_sync", LIBRARY_GIO);
+	Linker.link(g_dbus_proxy_new_sync, "g_dbus_proxy_new_sync", LIBRARY_GIO);
+	Linker.link(g_dbus_proxy_new, "g_dbus_proxy_new", LIBRARY_GIO);
+	Linker.link(g_dbus_proxy_new_for_bus, "g_dbus_proxy_new_for_bus", LIBRARY_GIO);
+	Linker.link(g_dbus_proxy_call, "g_dbus_proxy_call", LIBRARY_GIO);
+	Linker.link(g_dbus_proxy_call_finish, "g_dbus_proxy_call_finish", LIBRARY_GIO);
+	Linker.link(g_dbus_proxy_call_sync, "g_dbus_proxy_call_sync", LIBRARY_GIO);
+	Linker.link(g_dbus_proxy_call_with_unix_fd_list, "g_dbus_proxy_call_with_unix_fd_list", LIBRARY_GIO);
+	Linker.link(g_dbus_proxy_call_with_unix_fd_list_finish, "g_dbus_proxy_call_with_unix_fd_list_finish", LIBRARY_GIO);
+	Linker.link(g_dbus_proxy_call_with_unix_fd_list_sync, "g_dbus_proxy_call_with_unix_fd_list_sync", LIBRARY_GIO);
+	Linker.link(g_dbus_proxy_get_cached_property, "g_dbus_proxy_get_cached_property", LIBRARY_GIO);
+	Linker.link(g_dbus_proxy_get_cached_property_names, "g_dbus_proxy_get_cached_property_names", LIBRARY_GIO);
+	Linker.link(g_dbus_proxy_get_connection, "g_dbus_proxy_get_connection", LIBRARY_GIO);
+	Linker.link(g_dbus_proxy_get_default_timeout, "g_dbus_proxy_get_default_timeout", LIBRARY_GIO);
+	Linker.link(g_dbus_proxy_get_flags, "g_dbus_proxy_get_flags", LIBRARY_GIO);
+	Linker.link(g_dbus_proxy_get_interface_info, "g_dbus_proxy_get_interface_info", LIBRARY_GIO);
+	Linker.link(g_dbus_proxy_get_interface_name, "g_dbus_proxy_get_interface_name", LIBRARY_GIO);
+	Linker.link(g_dbus_proxy_get_name, "g_dbus_proxy_get_name", LIBRARY_GIO);
+	Linker.link(g_dbus_proxy_get_name_owner, "g_dbus_proxy_get_name_owner", LIBRARY_GIO);
+	Linker.link(g_dbus_proxy_get_object_path, "g_dbus_proxy_get_object_path", LIBRARY_GIO);
+	Linker.link(g_dbus_proxy_set_cached_property, "g_dbus_proxy_set_cached_property", LIBRARY_GIO);
+	Linker.link(g_dbus_proxy_set_default_timeout, "g_dbus_proxy_set_default_timeout", LIBRARY_GIO);
+	Linker.link(g_dbus_proxy_set_interface_info, "g_dbus_proxy_set_interface_info", LIBRARY_GIO);
 
 	// gio.DBusServer
 
-	Linker.link(g_dbus_server_get_type, "g_dbus_server_get_type", LIBRARY.GIO);
-	Linker.link(g_dbus_server_new_sync, "g_dbus_server_new_sync", LIBRARY.GIO);
-	Linker.link(g_dbus_server_get_client_address, "g_dbus_server_get_client_address", LIBRARY.GIO);
-	Linker.link(g_dbus_server_get_flags, "g_dbus_server_get_flags", LIBRARY.GIO);
-	Linker.link(g_dbus_server_get_guid, "g_dbus_server_get_guid", LIBRARY.GIO);
-	Linker.link(g_dbus_server_is_active, "g_dbus_server_is_active", LIBRARY.GIO);
-	Linker.link(g_dbus_server_start, "g_dbus_server_start", LIBRARY.GIO);
-	Linker.link(g_dbus_server_stop, "g_dbus_server_stop", LIBRARY.GIO);
+	Linker.link(g_dbus_server_get_type, "g_dbus_server_get_type", LIBRARY_GIO);
+	Linker.link(g_dbus_server_new_sync, "g_dbus_server_new_sync", LIBRARY_GIO);
+	Linker.link(g_dbus_server_get_client_address, "g_dbus_server_get_client_address", LIBRARY_GIO);
+	Linker.link(g_dbus_server_get_flags, "g_dbus_server_get_flags", LIBRARY_GIO);
+	Linker.link(g_dbus_server_get_guid, "g_dbus_server_get_guid", LIBRARY_GIO);
+	Linker.link(g_dbus_server_is_active, "g_dbus_server_is_active", LIBRARY_GIO);
+	Linker.link(g_dbus_server_start, "g_dbus_server_start", LIBRARY_GIO);
+	Linker.link(g_dbus_server_stop, "g_dbus_server_stop", LIBRARY_GIO);
 
 	// gio.DBusSignalInfo
 
-	Linker.link(g_dbus_signal_info_get_type, "g_dbus_signal_info_get_type", LIBRARY.GIO);
-	Linker.link(g_dbus_signal_info_ref, "g_dbus_signal_info_ref", LIBRARY.GIO);
-	Linker.link(g_dbus_signal_info_unref, "g_dbus_signal_info_unref", LIBRARY.GIO);
+	Linker.link(g_dbus_signal_info_get_type, "g_dbus_signal_info_get_type", LIBRARY_GIO);
+	Linker.link(g_dbus_signal_info_ref, "g_dbus_signal_info_ref", LIBRARY_GIO);
+	Linker.link(g_dbus_signal_info_unref, "g_dbus_signal_info_unref", LIBRARY_GIO);
 
 	// gio.DataInputStream
 
-	Linker.link(g_data_input_stream_get_type, "g_data_input_stream_get_type", LIBRARY.GIO);
-	Linker.link(g_data_input_stream_new, "g_data_input_stream_new", LIBRARY.GIO);
-	Linker.link(g_data_input_stream_get_byte_order, "g_data_input_stream_get_byte_order", LIBRARY.GIO);
-	Linker.link(g_data_input_stream_get_newline_type, "g_data_input_stream_get_newline_type", LIBRARY.GIO);
-	Linker.link(g_data_input_stream_read_byte, "g_data_input_stream_read_byte", LIBRARY.GIO);
-	Linker.link(g_data_input_stream_read_int16, "g_data_input_stream_read_int16", LIBRARY.GIO);
-	Linker.link(g_data_input_stream_read_int32, "g_data_input_stream_read_int32", LIBRARY.GIO);
-	Linker.link(g_data_input_stream_read_int64, "g_data_input_stream_read_int64", LIBRARY.GIO);
-	Linker.link(g_data_input_stream_read_line, "g_data_input_stream_read_line", LIBRARY.GIO);
-	Linker.link(g_data_input_stream_read_line_async, "g_data_input_stream_read_line_async", LIBRARY.GIO);
-	Linker.link(g_data_input_stream_read_line_finish, "g_data_input_stream_read_line_finish", LIBRARY.GIO);
-	Linker.link(g_data_input_stream_read_line_finish_utf8, "g_data_input_stream_read_line_finish_utf8", LIBRARY.GIO);
-	Linker.link(g_data_input_stream_read_line_utf8, "g_data_input_stream_read_line_utf8", LIBRARY.GIO);
-	Linker.link(g_data_input_stream_read_uint16, "g_data_input_stream_read_uint16", LIBRARY.GIO);
-	Linker.link(g_data_input_stream_read_uint32, "g_data_input_stream_read_uint32", LIBRARY.GIO);
-	Linker.link(g_data_input_stream_read_uint64, "g_data_input_stream_read_uint64", LIBRARY.GIO);
-	Linker.link(g_data_input_stream_read_until, "g_data_input_stream_read_until", LIBRARY.GIO);
-	Linker.link(g_data_input_stream_read_until_async, "g_data_input_stream_read_until_async", LIBRARY.GIO);
-	Linker.link(g_data_input_stream_read_until_finish, "g_data_input_stream_read_until_finish", LIBRARY.GIO);
-	Linker.link(g_data_input_stream_read_upto, "g_data_input_stream_read_upto", LIBRARY.GIO);
-	Linker.link(g_data_input_stream_read_upto_async, "g_data_input_stream_read_upto_async", LIBRARY.GIO);
-	Linker.link(g_data_input_stream_read_upto_finish, "g_data_input_stream_read_upto_finish", LIBRARY.GIO);
-	Linker.link(g_data_input_stream_set_byte_order, "g_data_input_stream_set_byte_order", LIBRARY.GIO);
-	Linker.link(g_data_input_stream_set_newline_type, "g_data_input_stream_set_newline_type", LIBRARY.GIO);
+	Linker.link(g_data_input_stream_get_type, "g_data_input_stream_get_type", LIBRARY_GIO);
+	Linker.link(g_data_input_stream_new, "g_data_input_stream_new", LIBRARY_GIO);
+	Linker.link(g_data_input_stream_get_byte_order, "g_data_input_stream_get_byte_order", LIBRARY_GIO);
+	Linker.link(g_data_input_stream_get_newline_type, "g_data_input_stream_get_newline_type", LIBRARY_GIO);
+	Linker.link(g_data_input_stream_read_byte, "g_data_input_stream_read_byte", LIBRARY_GIO);
+	Linker.link(g_data_input_stream_read_int16, "g_data_input_stream_read_int16", LIBRARY_GIO);
+	Linker.link(g_data_input_stream_read_int32, "g_data_input_stream_read_int32", LIBRARY_GIO);
+	Linker.link(g_data_input_stream_read_int64, "g_data_input_stream_read_int64", LIBRARY_GIO);
+	Linker.link(g_data_input_stream_read_line, "g_data_input_stream_read_line", LIBRARY_GIO);
+	Linker.link(g_data_input_stream_read_line_async, "g_data_input_stream_read_line_async", LIBRARY_GIO);
+	Linker.link(g_data_input_stream_read_line_finish, "g_data_input_stream_read_line_finish", LIBRARY_GIO);
+	Linker.link(g_data_input_stream_read_line_finish_utf8, "g_data_input_stream_read_line_finish_utf8", LIBRARY_GIO);
+	Linker.link(g_data_input_stream_read_line_utf8, "g_data_input_stream_read_line_utf8", LIBRARY_GIO);
+	Linker.link(g_data_input_stream_read_uint16, "g_data_input_stream_read_uint16", LIBRARY_GIO);
+	Linker.link(g_data_input_stream_read_uint32, "g_data_input_stream_read_uint32", LIBRARY_GIO);
+	Linker.link(g_data_input_stream_read_uint64, "g_data_input_stream_read_uint64", LIBRARY_GIO);
+	Linker.link(g_data_input_stream_read_until, "g_data_input_stream_read_until", LIBRARY_GIO);
+	Linker.link(g_data_input_stream_read_until_async, "g_data_input_stream_read_until_async", LIBRARY_GIO);
+	Linker.link(g_data_input_stream_read_until_finish, "g_data_input_stream_read_until_finish", LIBRARY_GIO);
+	Linker.link(g_data_input_stream_read_upto, "g_data_input_stream_read_upto", LIBRARY_GIO);
+	Linker.link(g_data_input_stream_read_upto_async, "g_data_input_stream_read_upto_async", LIBRARY_GIO);
+	Linker.link(g_data_input_stream_read_upto_finish, "g_data_input_stream_read_upto_finish", LIBRARY_GIO);
+	Linker.link(g_data_input_stream_set_byte_order, "g_data_input_stream_set_byte_order", LIBRARY_GIO);
+	Linker.link(g_data_input_stream_set_newline_type, "g_data_input_stream_set_newline_type", LIBRARY_GIO);
 
 	// gio.DataOutputStream
 
-	Linker.link(g_data_output_stream_get_type, "g_data_output_stream_get_type", LIBRARY.GIO);
-	Linker.link(g_data_output_stream_new, "g_data_output_stream_new", LIBRARY.GIO);
-	Linker.link(g_data_output_stream_get_byte_order, "g_data_output_stream_get_byte_order", LIBRARY.GIO);
-	Linker.link(g_data_output_stream_put_byte, "g_data_output_stream_put_byte", LIBRARY.GIO);
-	Linker.link(g_data_output_stream_put_int16, "g_data_output_stream_put_int16", LIBRARY.GIO);
-	Linker.link(g_data_output_stream_put_int32, "g_data_output_stream_put_int32", LIBRARY.GIO);
-	Linker.link(g_data_output_stream_put_int64, "g_data_output_stream_put_int64", LIBRARY.GIO);
-	Linker.link(g_data_output_stream_put_string, "g_data_output_stream_put_string", LIBRARY.GIO);
-	Linker.link(g_data_output_stream_put_uint16, "g_data_output_stream_put_uint16", LIBRARY.GIO);
-	Linker.link(g_data_output_stream_put_uint32, "g_data_output_stream_put_uint32", LIBRARY.GIO);
-	Linker.link(g_data_output_stream_put_uint64, "g_data_output_stream_put_uint64", LIBRARY.GIO);
-	Linker.link(g_data_output_stream_set_byte_order, "g_data_output_stream_set_byte_order", LIBRARY.GIO);
+	Linker.link(g_data_output_stream_get_type, "g_data_output_stream_get_type", LIBRARY_GIO);
+	Linker.link(g_data_output_stream_new, "g_data_output_stream_new", LIBRARY_GIO);
+	Linker.link(g_data_output_stream_get_byte_order, "g_data_output_stream_get_byte_order", LIBRARY_GIO);
+	Linker.link(g_data_output_stream_put_byte, "g_data_output_stream_put_byte", LIBRARY_GIO);
+	Linker.link(g_data_output_stream_put_int16, "g_data_output_stream_put_int16", LIBRARY_GIO);
+	Linker.link(g_data_output_stream_put_int32, "g_data_output_stream_put_int32", LIBRARY_GIO);
+	Linker.link(g_data_output_stream_put_int64, "g_data_output_stream_put_int64", LIBRARY_GIO);
+	Linker.link(g_data_output_stream_put_string, "g_data_output_stream_put_string", LIBRARY_GIO);
+	Linker.link(g_data_output_stream_put_uint16, "g_data_output_stream_put_uint16", LIBRARY_GIO);
+	Linker.link(g_data_output_stream_put_uint32, "g_data_output_stream_put_uint32", LIBRARY_GIO);
+	Linker.link(g_data_output_stream_put_uint64, "g_data_output_stream_put_uint64", LIBRARY_GIO);
+	Linker.link(g_data_output_stream_set_byte_order, "g_data_output_stream_set_byte_order", LIBRARY_GIO);
 
 	// gio.DatagramBased
 
-	Linker.link(g_datagram_based_get_type, "g_datagram_based_get_type", LIBRARY.GIO);
-	Linker.link(g_datagram_based_condition_check, "g_datagram_based_condition_check", LIBRARY.GIO);
-	Linker.link(g_datagram_based_condition_wait, "g_datagram_based_condition_wait", LIBRARY.GIO);
-	Linker.link(g_datagram_based_create_source, "g_datagram_based_create_source", LIBRARY.GIO);
-	Linker.link(g_datagram_based_receive_messages, "g_datagram_based_receive_messages", LIBRARY.GIO);
-	Linker.link(g_datagram_based_send_messages, "g_datagram_based_send_messages", LIBRARY.GIO);
+	Linker.link(g_datagram_based_get_type, "g_datagram_based_get_type", LIBRARY_GIO);
+	Linker.link(g_datagram_based_condition_check, "g_datagram_based_condition_check", LIBRARY_GIO);
+	Linker.link(g_datagram_based_condition_wait, "g_datagram_based_condition_wait", LIBRARY_GIO);
+	Linker.link(g_datagram_based_create_source, "g_datagram_based_create_source", LIBRARY_GIO);
+	Linker.link(g_datagram_based_receive_messages, "g_datagram_based_receive_messages", LIBRARY_GIO);
+	Linker.link(g_datagram_based_send_messages, "g_datagram_based_send_messages", LIBRARY_GIO);
 
 	// gio.DesktopAppInfo
 
-	Linker.link(g_desktop_app_info_get_type, "g_desktop_app_info_get_type", LIBRARY.GIO);
-	Linker.link(g_desktop_app_info_new, "g_desktop_app_info_new", LIBRARY.GIO);
-	Linker.link(g_desktop_app_info_new_from_filename, "g_desktop_app_info_new_from_filename", LIBRARY.GIO);
-	Linker.link(g_desktop_app_info_new_from_keyfile, "g_desktop_app_info_new_from_keyfile", LIBRARY.GIO);
-	Linker.link(g_desktop_app_info_get_implementations, "g_desktop_app_info_get_implementations", LIBRARY.GIO);
-	Linker.link(g_desktop_app_info_search, "g_desktop_app_info_search", LIBRARY.GIO);
-	Linker.link(g_desktop_app_info_set_desktop_env, "g_desktop_app_info_set_desktop_env", LIBRARY.GIO);
-	Linker.link(g_desktop_app_info_get_action_name, "g_desktop_app_info_get_action_name", LIBRARY.GIO);
-	Linker.link(g_desktop_app_info_get_boolean, "g_desktop_app_info_get_boolean", LIBRARY.GIO);
-	Linker.link(g_desktop_app_info_get_categories, "g_desktop_app_info_get_categories", LIBRARY.GIO);
-	Linker.link(g_desktop_app_info_get_filename, "g_desktop_app_info_get_filename", LIBRARY.GIO);
-	Linker.link(g_desktop_app_info_get_generic_name, "g_desktop_app_info_get_generic_name", LIBRARY.GIO);
-	Linker.link(g_desktop_app_info_get_is_hidden, "g_desktop_app_info_get_is_hidden", LIBRARY.GIO);
-	Linker.link(g_desktop_app_info_get_keywords, "g_desktop_app_info_get_keywords", LIBRARY.GIO);
-	Linker.link(g_desktop_app_info_get_nodisplay, "g_desktop_app_info_get_nodisplay", LIBRARY.GIO);
-	Linker.link(g_desktop_app_info_get_show_in, "g_desktop_app_info_get_show_in", LIBRARY.GIO);
-	Linker.link(g_desktop_app_info_get_startup_wm_class, "g_desktop_app_info_get_startup_wm_class", LIBRARY.GIO);
-	Linker.link(g_desktop_app_info_get_string, "g_desktop_app_info_get_string", LIBRARY.GIO);
-	Linker.link(g_desktop_app_info_has_key, "g_desktop_app_info_has_key", LIBRARY.GIO);
-	Linker.link(g_desktop_app_info_launch_action, "g_desktop_app_info_launch_action", LIBRARY.GIO);
-	Linker.link(g_desktop_app_info_launch_uris_as_manager, "g_desktop_app_info_launch_uris_as_manager", LIBRARY.GIO);
-	Linker.link(g_desktop_app_info_list_actions, "g_desktop_app_info_list_actions", LIBRARY.GIO);
+	Linker.link(g_desktop_app_info_get_type, "g_desktop_app_info_get_type", LIBRARY_GIO);
+	Linker.link(g_desktop_app_info_new, "g_desktop_app_info_new", LIBRARY_GIO);
+	Linker.link(g_desktop_app_info_new_from_filename, "g_desktop_app_info_new_from_filename", LIBRARY_GIO);
+	Linker.link(g_desktop_app_info_new_from_keyfile, "g_desktop_app_info_new_from_keyfile", LIBRARY_GIO);
+	Linker.link(g_desktop_app_info_get_implementations, "g_desktop_app_info_get_implementations", LIBRARY_GIO);
+	Linker.link(g_desktop_app_info_search, "g_desktop_app_info_search", LIBRARY_GIO);
+	Linker.link(g_desktop_app_info_set_desktop_env, "g_desktop_app_info_set_desktop_env", LIBRARY_GIO);
+	Linker.link(g_desktop_app_info_get_action_name, "g_desktop_app_info_get_action_name", LIBRARY_GIO);
+	Linker.link(g_desktop_app_info_get_boolean, "g_desktop_app_info_get_boolean", LIBRARY_GIO);
+	Linker.link(g_desktop_app_info_get_categories, "g_desktop_app_info_get_categories", LIBRARY_GIO);
+	Linker.link(g_desktop_app_info_get_filename, "g_desktop_app_info_get_filename", LIBRARY_GIO);
+	Linker.link(g_desktop_app_info_get_generic_name, "g_desktop_app_info_get_generic_name", LIBRARY_GIO);
+	Linker.link(g_desktop_app_info_get_is_hidden, "g_desktop_app_info_get_is_hidden", LIBRARY_GIO);
+	Linker.link(g_desktop_app_info_get_keywords, "g_desktop_app_info_get_keywords", LIBRARY_GIO);
+	Linker.link(g_desktop_app_info_get_nodisplay, "g_desktop_app_info_get_nodisplay", LIBRARY_GIO);
+	Linker.link(g_desktop_app_info_get_show_in, "g_desktop_app_info_get_show_in", LIBRARY_GIO);
+	Linker.link(g_desktop_app_info_get_startup_wm_class, "g_desktop_app_info_get_startup_wm_class", LIBRARY_GIO);
+	Linker.link(g_desktop_app_info_get_string, "g_desktop_app_info_get_string", LIBRARY_GIO);
+	Linker.link(g_desktop_app_info_has_key, "g_desktop_app_info_has_key", LIBRARY_GIO);
+	Linker.link(g_desktop_app_info_launch_action, "g_desktop_app_info_launch_action", LIBRARY_GIO);
+	Linker.link(g_desktop_app_info_launch_uris_as_manager, "g_desktop_app_info_launch_uris_as_manager", LIBRARY_GIO);
+	Linker.link(g_desktop_app_info_list_actions, "g_desktop_app_info_list_actions", LIBRARY_GIO);
 
 	// gio.DesktopAppInfoLookup
 
-	Linker.link(g_desktop_app_info_lookup_get_type, "g_desktop_app_info_lookup_get_type", LIBRARY.GIO);
-	Linker.link(g_desktop_app_info_lookup_get_default_for_uri_scheme, "g_desktop_app_info_lookup_get_default_for_uri_scheme", LIBRARY.GIO);
+	Linker.link(g_desktop_app_info_lookup_get_type, "g_desktop_app_info_lookup_get_type", LIBRARY_GIO);
+	Linker.link(g_desktop_app_info_lookup_get_default_for_uri_scheme, "g_desktop_app_info_lookup_get_default_for_uri_scheme", LIBRARY_GIO);
 
 	// gio.Drive
 
-	Linker.link(g_drive_get_type, "g_drive_get_type", LIBRARY.GIO);
-	Linker.link(g_drive_can_eject, "g_drive_can_eject", LIBRARY.GIO);
-	Linker.link(g_drive_can_poll_for_media, "g_drive_can_poll_for_media", LIBRARY.GIO);
-	Linker.link(g_drive_can_start, "g_drive_can_start", LIBRARY.GIO);
-	Linker.link(g_drive_can_start_degraded, "g_drive_can_start_degraded", LIBRARY.GIO);
-	Linker.link(g_drive_can_stop, "g_drive_can_stop", LIBRARY.GIO);
-	Linker.link(g_drive_eject, "g_drive_eject", LIBRARY.GIO);
-	Linker.link(g_drive_eject_finish, "g_drive_eject_finish", LIBRARY.GIO);
-	Linker.link(g_drive_eject_with_operation, "g_drive_eject_with_operation", LIBRARY.GIO);
-	Linker.link(g_drive_eject_with_operation_finish, "g_drive_eject_with_operation_finish", LIBRARY.GIO);
-	Linker.link(g_drive_enumerate_identifiers, "g_drive_enumerate_identifiers", LIBRARY.GIO);
-	Linker.link(g_drive_get_icon, "g_drive_get_icon", LIBRARY.GIO);
-	Linker.link(g_drive_get_identifier, "g_drive_get_identifier", LIBRARY.GIO);
-	Linker.link(g_drive_get_name, "g_drive_get_name", LIBRARY.GIO);
-	Linker.link(g_drive_get_sort_key, "g_drive_get_sort_key", LIBRARY.GIO);
-	Linker.link(g_drive_get_start_stop_type, "g_drive_get_start_stop_type", LIBRARY.GIO);
-	Linker.link(g_drive_get_symbolic_icon, "g_drive_get_symbolic_icon", LIBRARY.GIO);
-	Linker.link(g_drive_get_volumes, "g_drive_get_volumes", LIBRARY.GIO);
-	Linker.link(g_drive_has_media, "g_drive_has_media", LIBRARY.GIO);
-	Linker.link(g_drive_has_volumes, "g_drive_has_volumes", LIBRARY.GIO);
-	Linker.link(g_drive_is_media_check_automatic, "g_drive_is_media_check_automatic", LIBRARY.GIO);
-	Linker.link(g_drive_is_media_removable, "g_drive_is_media_removable", LIBRARY.GIO);
-	Linker.link(g_drive_is_removable, "g_drive_is_removable", LIBRARY.GIO);
-	Linker.link(g_drive_poll_for_media, "g_drive_poll_for_media", LIBRARY.GIO);
-	Linker.link(g_drive_poll_for_media_finish, "g_drive_poll_for_media_finish", LIBRARY.GIO);
-	Linker.link(g_drive_start, "g_drive_start", LIBRARY.GIO);
-	Linker.link(g_drive_start_finish, "g_drive_start_finish", LIBRARY.GIO);
-	Linker.link(g_drive_stop, "g_drive_stop", LIBRARY.GIO);
-	Linker.link(g_drive_stop_finish, "g_drive_stop_finish", LIBRARY.GIO);
+	Linker.link(g_drive_get_type, "g_drive_get_type", LIBRARY_GIO);
+	Linker.link(g_drive_can_eject, "g_drive_can_eject", LIBRARY_GIO);
+	Linker.link(g_drive_can_poll_for_media, "g_drive_can_poll_for_media", LIBRARY_GIO);
+	Linker.link(g_drive_can_start, "g_drive_can_start", LIBRARY_GIO);
+	Linker.link(g_drive_can_start_degraded, "g_drive_can_start_degraded", LIBRARY_GIO);
+	Linker.link(g_drive_can_stop, "g_drive_can_stop", LIBRARY_GIO);
+	Linker.link(g_drive_eject, "g_drive_eject", LIBRARY_GIO);
+	Linker.link(g_drive_eject_finish, "g_drive_eject_finish", LIBRARY_GIO);
+	Linker.link(g_drive_eject_with_operation, "g_drive_eject_with_operation", LIBRARY_GIO);
+	Linker.link(g_drive_eject_with_operation_finish, "g_drive_eject_with_operation_finish", LIBRARY_GIO);
+	Linker.link(g_drive_enumerate_identifiers, "g_drive_enumerate_identifiers", LIBRARY_GIO);
+	Linker.link(g_drive_get_icon, "g_drive_get_icon", LIBRARY_GIO);
+	Linker.link(g_drive_get_identifier, "g_drive_get_identifier", LIBRARY_GIO);
+	Linker.link(g_drive_get_name, "g_drive_get_name", LIBRARY_GIO);
+	Linker.link(g_drive_get_sort_key, "g_drive_get_sort_key", LIBRARY_GIO);
+	Linker.link(g_drive_get_start_stop_type, "g_drive_get_start_stop_type", LIBRARY_GIO);
+	Linker.link(g_drive_get_symbolic_icon, "g_drive_get_symbolic_icon", LIBRARY_GIO);
+	Linker.link(g_drive_get_volumes, "g_drive_get_volumes", LIBRARY_GIO);
+	Linker.link(g_drive_has_media, "g_drive_has_media", LIBRARY_GIO);
+	Linker.link(g_drive_has_volumes, "g_drive_has_volumes", LIBRARY_GIO);
+	Linker.link(g_drive_is_media_check_automatic, "g_drive_is_media_check_automatic", LIBRARY_GIO);
+	Linker.link(g_drive_is_media_removable, "g_drive_is_media_removable", LIBRARY_GIO);
+	Linker.link(g_drive_is_removable, "g_drive_is_removable", LIBRARY_GIO);
+	Linker.link(g_drive_poll_for_media, "g_drive_poll_for_media", LIBRARY_GIO);
+	Linker.link(g_drive_poll_for_media_finish, "g_drive_poll_for_media_finish", LIBRARY_GIO);
+	Linker.link(g_drive_start, "g_drive_start", LIBRARY_GIO);
+	Linker.link(g_drive_start_finish, "g_drive_start_finish", LIBRARY_GIO);
+	Linker.link(g_drive_stop, "g_drive_stop", LIBRARY_GIO);
+	Linker.link(g_drive_stop_finish, "g_drive_stop_finish", LIBRARY_GIO);
 
 	// gio.DtlsClientConnection
 
-	Linker.link(g_dtls_client_connection_get_type, "g_dtls_client_connection_get_type", LIBRARY.GIO);
-	Linker.link(g_dtls_client_connection_new, "g_dtls_client_connection_new", LIBRARY.GIO);
-	Linker.link(g_dtls_client_connection_get_accepted_cas, "g_dtls_client_connection_get_accepted_cas", LIBRARY.GIO);
-	Linker.link(g_dtls_client_connection_get_server_identity, "g_dtls_client_connection_get_server_identity", LIBRARY.GIO);
-	Linker.link(g_dtls_client_connection_get_validation_flags, "g_dtls_client_connection_get_validation_flags", LIBRARY.GIO);
-	Linker.link(g_dtls_client_connection_set_server_identity, "g_dtls_client_connection_set_server_identity", LIBRARY.GIO);
-	Linker.link(g_dtls_client_connection_set_validation_flags, "g_dtls_client_connection_set_validation_flags", LIBRARY.GIO);
+	Linker.link(g_dtls_client_connection_get_type, "g_dtls_client_connection_get_type", LIBRARY_GIO);
+	Linker.link(g_dtls_client_connection_new, "g_dtls_client_connection_new", LIBRARY_GIO);
+	Linker.link(g_dtls_client_connection_get_accepted_cas, "g_dtls_client_connection_get_accepted_cas", LIBRARY_GIO);
+	Linker.link(g_dtls_client_connection_get_server_identity, "g_dtls_client_connection_get_server_identity", LIBRARY_GIO);
+	Linker.link(g_dtls_client_connection_get_validation_flags, "g_dtls_client_connection_get_validation_flags", LIBRARY_GIO);
+	Linker.link(g_dtls_client_connection_set_server_identity, "g_dtls_client_connection_set_server_identity", LIBRARY_GIO);
+	Linker.link(g_dtls_client_connection_set_validation_flags, "g_dtls_client_connection_set_validation_flags", LIBRARY_GIO);
 
 	// gio.DtlsConnection
 
-	Linker.link(g_dtls_connection_get_type, "g_dtls_connection_get_type", LIBRARY.GIO);
-	Linker.link(g_dtls_connection_close, "g_dtls_connection_close", LIBRARY.GIO);
-	Linker.link(g_dtls_connection_close_async, "g_dtls_connection_close_async", LIBRARY.GIO);
-	Linker.link(g_dtls_connection_close_finish, "g_dtls_connection_close_finish", LIBRARY.GIO);
-	Linker.link(g_dtls_connection_emit_accept_certificate, "g_dtls_connection_emit_accept_certificate", LIBRARY.GIO);
-	Linker.link(g_dtls_connection_get_certificate, "g_dtls_connection_get_certificate", LIBRARY.GIO);
-	Linker.link(g_dtls_connection_get_database, "g_dtls_connection_get_database", LIBRARY.GIO);
-	Linker.link(g_dtls_connection_get_interaction, "g_dtls_connection_get_interaction", LIBRARY.GIO);
-	Linker.link(g_dtls_connection_get_peer_certificate, "g_dtls_connection_get_peer_certificate", LIBRARY.GIO);
-	Linker.link(g_dtls_connection_get_peer_certificate_errors, "g_dtls_connection_get_peer_certificate_errors", LIBRARY.GIO);
-	Linker.link(g_dtls_connection_get_rehandshake_mode, "g_dtls_connection_get_rehandshake_mode", LIBRARY.GIO);
-	Linker.link(g_dtls_connection_get_require_close_notify, "g_dtls_connection_get_require_close_notify", LIBRARY.GIO);
-	Linker.link(g_dtls_connection_handshake, "g_dtls_connection_handshake", LIBRARY.GIO);
-	Linker.link(g_dtls_connection_handshake_async, "g_dtls_connection_handshake_async", LIBRARY.GIO);
-	Linker.link(g_dtls_connection_handshake_finish, "g_dtls_connection_handshake_finish", LIBRARY.GIO);
-	Linker.link(g_dtls_connection_set_certificate, "g_dtls_connection_set_certificate", LIBRARY.GIO);
-	Linker.link(g_dtls_connection_set_database, "g_dtls_connection_set_database", LIBRARY.GIO);
-	Linker.link(g_dtls_connection_set_interaction, "g_dtls_connection_set_interaction", LIBRARY.GIO);
-	Linker.link(g_dtls_connection_set_rehandshake_mode, "g_dtls_connection_set_rehandshake_mode", LIBRARY.GIO);
-	Linker.link(g_dtls_connection_set_require_close_notify, "g_dtls_connection_set_require_close_notify", LIBRARY.GIO);
-	Linker.link(g_dtls_connection_shutdown, "g_dtls_connection_shutdown", LIBRARY.GIO);
-	Linker.link(g_dtls_connection_shutdown_async, "g_dtls_connection_shutdown_async", LIBRARY.GIO);
-	Linker.link(g_dtls_connection_shutdown_finish, "g_dtls_connection_shutdown_finish", LIBRARY.GIO);
+	Linker.link(g_dtls_connection_get_type, "g_dtls_connection_get_type", LIBRARY_GIO);
+	Linker.link(g_dtls_connection_close, "g_dtls_connection_close", LIBRARY_GIO);
+	Linker.link(g_dtls_connection_close_async, "g_dtls_connection_close_async", LIBRARY_GIO);
+	Linker.link(g_dtls_connection_close_finish, "g_dtls_connection_close_finish", LIBRARY_GIO);
+	Linker.link(g_dtls_connection_emit_accept_certificate, "g_dtls_connection_emit_accept_certificate", LIBRARY_GIO);
+	Linker.link(g_dtls_connection_get_certificate, "g_dtls_connection_get_certificate", LIBRARY_GIO);
+	Linker.link(g_dtls_connection_get_database, "g_dtls_connection_get_database", LIBRARY_GIO);
+	Linker.link(g_dtls_connection_get_interaction, "g_dtls_connection_get_interaction", LIBRARY_GIO);
+	Linker.link(g_dtls_connection_get_peer_certificate, "g_dtls_connection_get_peer_certificate", LIBRARY_GIO);
+	Linker.link(g_dtls_connection_get_peer_certificate_errors, "g_dtls_connection_get_peer_certificate_errors", LIBRARY_GIO);
+	Linker.link(g_dtls_connection_get_rehandshake_mode, "g_dtls_connection_get_rehandshake_mode", LIBRARY_GIO);
+	Linker.link(g_dtls_connection_get_require_close_notify, "g_dtls_connection_get_require_close_notify", LIBRARY_GIO);
+	Linker.link(g_dtls_connection_handshake, "g_dtls_connection_handshake", LIBRARY_GIO);
+	Linker.link(g_dtls_connection_handshake_async, "g_dtls_connection_handshake_async", LIBRARY_GIO);
+	Linker.link(g_dtls_connection_handshake_finish, "g_dtls_connection_handshake_finish", LIBRARY_GIO);
+	Linker.link(g_dtls_connection_set_certificate, "g_dtls_connection_set_certificate", LIBRARY_GIO);
+	Linker.link(g_dtls_connection_set_database, "g_dtls_connection_set_database", LIBRARY_GIO);
+	Linker.link(g_dtls_connection_set_interaction, "g_dtls_connection_set_interaction", LIBRARY_GIO);
+	Linker.link(g_dtls_connection_set_rehandshake_mode, "g_dtls_connection_set_rehandshake_mode", LIBRARY_GIO);
+	Linker.link(g_dtls_connection_set_require_close_notify, "g_dtls_connection_set_require_close_notify", LIBRARY_GIO);
+	Linker.link(g_dtls_connection_shutdown, "g_dtls_connection_shutdown", LIBRARY_GIO);
+	Linker.link(g_dtls_connection_shutdown_async, "g_dtls_connection_shutdown_async", LIBRARY_GIO);
+	Linker.link(g_dtls_connection_shutdown_finish, "g_dtls_connection_shutdown_finish", LIBRARY_GIO);
 
 	// gio.DtlsServerConnection
 
-	Linker.link(g_dtls_server_connection_get_type, "g_dtls_server_connection_get_type", LIBRARY.GIO);
-	Linker.link(g_dtls_server_connection_new, "g_dtls_server_connection_new", LIBRARY.GIO);
+	Linker.link(g_dtls_server_connection_get_type, "g_dtls_server_connection_get_type", LIBRARY_GIO);
+	Linker.link(g_dtls_server_connection_new, "g_dtls_server_connection_new", LIBRARY_GIO);
 
 	// gio.Emblem
 
-	Linker.link(g_emblem_get_type, "g_emblem_get_type", LIBRARY.GIO);
-	Linker.link(g_emblem_new, "g_emblem_new", LIBRARY.GIO);
-	Linker.link(g_emblem_new_with_origin, "g_emblem_new_with_origin", LIBRARY.GIO);
-	Linker.link(g_emblem_get_icon, "g_emblem_get_icon", LIBRARY.GIO);
-	Linker.link(g_emblem_get_origin, "g_emblem_get_origin", LIBRARY.GIO);
+	Linker.link(g_emblem_get_type, "g_emblem_get_type", LIBRARY_GIO);
+	Linker.link(g_emblem_new, "g_emblem_new", LIBRARY_GIO);
+	Linker.link(g_emblem_new_with_origin, "g_emblem_new_with_origin", LIBRARY_GIO);
+	Linker.link(g_emblem_get_icon, "g_emblem_get_icon", LIBRARY_GIO);
+	Linker.link(g_emblem_get_origin, "g_emblem_get_origin", LIBRARY_GIO);
 
 	// gio.EmblemedIcon
 
-	Linker.link(g_emblemed_icon_get_type, "g_emblemed_icon_get_type", LIBRARY.GIO);
-	Linker.link(g_emblemed_icon_new, "g_emblemed_icon_new", LIBRARY.GIO);
-	Linker.link(g_emblemed_icon_add_emblem, "g_emblemed_icon_add_emblem", LIBRARY.GIO);
-	Linker.link(g_emblemed_icon_clear_emblems, "g_emblemed_icon_clear_emblems", LIBRARY.GIO);
-	Linker.link(g_emblemed_icon_get_emblems, "g_emblemed_icon_get_emblems", LIBRARY.GIO);
-	Linker.link(g_emblemed_icon_get_icon, "g_emblemed_icon_get_icon", LIBRARY.GIO);
+	Linker.link(g_emblemed_icon_get_type, "g_emblemed_icon_get_type", LIBRARY_GIO);
+	Linker.link(g_emblemed_icon_new, "g_emblemed_icon_new", LIBRARY_GIO);
+	Linker.link(g_emblemed_icon_add_emblem, "g_emblemed_icon_add_emblem", LIBRARY_GIO);
+	Linker.link(g_emblemed_icon_clear_emblems, "g_emblemed_icon_clear_emblems", LIBRARY_GIO);
+	Linker.link(g_emblemed_icon_get_emblems, "g_emblemed_icon_get_emblems", LIBRARY_GIO);
+	Linker.link(g_emblemed_icon_get_icon, "g_emblemed_icon_get_icon", LIBRARY_GIO);
 
 	// gio.File
 
-	Linker.link(g_file_get_type, "g_file_get_type", LIBRARY.GIO);
-	Linker.link(g_file_new_for_commandline_arg, "g_file_new_for_commandline_arg", LIBRARY.GIO);
-	Linker.link(g_file_new_for_commandline_arg_and_cwd, "g_file_new_for_commandline_arg_and_cwd", LIBRARY.GIO);
-	Linker.link(g_file_new_for_path, "g_file_new_for_path", LIBRARY.GIO);
-	Linker.link(g_file_new_for_uri, "g_file_new_for_uri", LIBRARY.GIO);
-	Linker.link(g_file_new_tmp, "g_file_new_tmp", LIBRARY.GIO);
-	Linker.link(g_file_parse_name, "g_file_parse_name", LIBRARY.GIO);
-	Linker.link(g_file_append_to, "g_file_append_to", LIBRARY.GIO);
-	Linker.link(g_file_append_to_async, "g_file_append_to_async", LIBRARY.GIO);
-	Linker.link(g_file_append_to_finish, "g_file_append_to_finish", LIBRARY.GIO);
-	Linker.link(g_file_copy, "g_file_copy", LIBRARY.GIO);
-	Linker.link(g_file_copy_async, "g_file_copy_async", LIBRARY.GIO);
-	Linker.link(g_file_copy_attributes, "g_file_copy_attributes", LIBRARY.GIO);
-	Linker.link(g_file_copy_finish, "g_file_copy_finish", LIBRARY.GIO);
-	Linker.link(g_file_create, "g_file_create", LIBRARY.GIO);
-	Linker.link(g_file_create_async, "g_file_create_async", LIBRARY.GIO);
-	Linker.link(g_file_create_finish, "g_file_create_finish", LIBRARY.GIO);
-	Linker.link(g_file_create_readwrite, "g_file_create_readwrite", LIBRARY.GIO);
-	Linker.link(g_file_create_readwrite_async, "g_file_create_readwrite_async", LIBRARY.GIO);
-	Linker.link(g_file_create_readwrite_finish, "g_file_create_readwrite_finish", LIBRARY.GIO);
-	Linker.link(g_file_delete, "g_file_delete", LIBRARY.GIO);
-	Linker.link(g_file_delete_async, "g_file_delete_async", LIBRARY.GIO);
-	Linker.link(g_file_delete_finish, "g_file_delete_finish", LIBRARY.GIO);
-	Linker.link(g_file_dup, "g_file_dup", LIBRARY.GIO);
-	Linker.link(g_file_eject_mountable, "g_file_eject_mountable", LIBRARY.GIO);
-	Linker.link(g_file_eject_mountable_finish, "g_file_eject_mountable_finish", LIBRARY.GIO);
-	Linker.link(g_file_eject_mountable_with_operation, "g_file_eject_mountable_with_operation", LIBRARY.GIO);
-	Linker.link(g_file_eject_mountable_with_operation_finish, "g_file_eject_mountable_with_operation_finish", LIBRARY.GIO);
-	Linker.link(g_file_enumerate_children, "g_file_enumerate_children", LIBRARY.GIO);
-	Linker.link(g_file_enumerate_children_async, "g_file_enumerate_children_async", LIBRARY.GIO);
-	Linker.link(g_file_enumerate_children_finish, "g_file_enumerate_children_finish", LIBRARY.GIO);
-	Linker.link(g_file_equal, "g_file_equal", LIBRARY.GIO);
-	Linker.link(g_file_find_enclosing_mount, "g_file_find_enclosing_mount", LIBRARY.GIO);
-	Linker.link(g_file_find_enclosing_mount_async, "g_file_find_enclosing_mount_async", LIBRARY.GIO);
-	Linker.link(g_file_find_enclosing_mount_finish, "g_file_find_enclosing_mount_finish", LIBRARY.GIO);
-	Linker.link(g_file_get_basename, "g_file_get_basename", LIBRARY.GIO);
-	Linker.link(g_file_get_child, "g_file_get_child", LIBRARY.GIO);
-	Linker.link(g_file_get_child_for_display_name, "g_file_get_child_for_display_name", LIBRARY.GIO);
-	Linker.link(g_file_get_parent, "g_file_get_parent", LIBRARY.GIO);
-	Linker.link(g_file_get_parse_name, "g_file_get_parse_name", LIBRARY.GIO);
-	Linker.link(g_file_get_path, "g_file_get_path", LIBRARY.GIO);
-	Linker.link(g_file_get_relative_path, "g_file_get_relative_path", LIBRARY.GIO);
-	Linker.link(g_file_get_uri, "g_file_get_uri", LIBRARY.GIO);
-	Linker.link(g_file_get_uri_scheme, "g_file_get_uri_scheme", LIBRARY.GIO);
-	Linker.link(g_file_has_parent, "g_file_has_parent", LIBRARY.GIO);
-	Linker.link(g_file_has_prefix, "g_file_has_prefix", LIBRARY.GIO);
-	Linker.link(g_file_has_uri_scheme, "g_file_has_uri_scheme", LIBRARY.GIO);
-	Linker.link(g_file_hash, "g_file_hash", LIBRARY.GIO);
-	Linker.link(g_file_is_native, "g_file_is_native", LIBRARY.GIO);
-	Linker.link(g_file_load_contents, "g_file_load_contents", LIBRARY.GIO);
-	Linker.link(g_file_load_contents_async, "g_file_load_contents_async", LIBRARY.GIO);
-	Linker.link(g_file_load_contents_finish, "g_file_load_contents_finish", LIBRARY.GIO);
-	Linker.link(g_file_load_partial_contents_async, "g_file_load_partial_contents_async", LIBRARY.GIO);
-	Linker.link(g_file_load_partial_contents_finish, "g_file_load_partial_contents_finish", LIBRARY.GIO);
-	Linker.link(g_file_make_directory, "g_file_make_directory", LIBRARY.GIO);
-	Linker.link(g_file_make_directory_async, "g_file_make_directory_async", LIBRARY.GIO);
-	Linker.link(g_file_make_directory_finish, "g_file_make_directory_finish", LIBRARY.GIO);
-	Linker.link(g_file_make_directory_with_parents, "g_file_make_directory_with_parents", LIBRARY.GIO);
-	Linker.link(g_file_make_symbolic_link, "g_file_make_symbolic_link", LIBRARY.GIO);
-	Linker.link(g_file_measure_disk_usage, "g_file_measure_disk_usage", LIBRARY.GIO);
-	Linker.link(g_file_measure_disk_usage_async, "g_file_measure_disk_usage_async", LIBRARY.GIO);
-	Linker.link(g_file_measure_disk_usage_finish, "g_file_measure_disk_usage_finish", LIBRARY.GIO);
-	Linker.link(g_file_monitor, "g_file_monitor", LIBRARY.GIO);
-	Linker.link(g_file_monitor_directory, "g_file_monitor_directory", LIBRARY.GIO);
-	Linker.link(g_file_monitor_file, "g_file_monitor_file", LIBRARY.GIO);
-	Linker.link(g_file_mount_enclosing_volume, "g_file_mount_enclosing_volume", LIBRARY.GIO);
-	Linker.link(g_file_mount_enclosing_volume_finish, "g_file_mount_enclosing_volume_finish", LIBRARY.GIO);
-	Linker.link(g_file_mount_mountable, "g_file_mount_mountable", LIBRARY.GIO);
-	Linker.link(g_file_mount_mountable_finish, "g_file_mount_mountable_finish", LIBRARY.GIO);
-	Linker.link(g_file_move, "g_file_move", LIBRARY.GIO);
-	Linker.link(g_file_open_readwrite, "g_file_open_readwrite", LIBRARY.GIO);
-	Linker.link(g_file_open_readwrite_async, "g_file_open_readwrite_async", LIBRARY.GIO);
-	Linker.link(g_file_open_readwrite_finish, "g_file_open_readwrite_finish", LIBRARY.GIO);
-	Linker.link(g_file_poll_mountable, "g_file_poll_mountable", LIBRARY.GIO);
-	Linker.link(g_file_poll_mountable_finish, "g_file_poll_mountable_finish", LIBRARY.GIO);
-	Linker.link(g_file_query_default_handler, "g_file_query_default_handler", LIBRARY.GIO);
-	Linker.link(g_file_query_exists, "g_file_query_exists", LIBRARY.GIO);
-	Linker.link(g_file_query_file_type, "g_file_query_file_type", LIBRARY.GIO);
-	Linker.link(g_file_query_filesystem_info, "g_file_query_filesystem_info", LIBRARY.GIO);
-	Linker.link(g_file_query_filesystem_info_async, "g_file_query_filesystem_info_async", LIBRARY.GIO);
-	Linker.link(g_file_query_filesystem_info_finish, "g_file_query_filesystem_info_finish", LIBRARY.GIO);
-	Linker.link(g_file_query_info, "g_file_query_info", LIBRARY.GIO);
-	Linker.link(g_file_query_info_async, "g_file_query_info_async", LIBRARY.GIO);
-	Linker.link(g_file_query_info_finish, "g_file_query_info_finish", LIBRARY.GIO);
-	Linker.link(g_file_query_settable_attributes, "g_file_query_settable_attributes", LIBRARY.GIO);
-	Linker.link(g_file_query_writable_namespaces, "g_file_query_writable_namespaces", LIBRARY.GIO);
-	Linker.link(g_file_read, "g_file_read", LIBRARY.GIO);
-	Linker.link(g_file_read_async, "g_file_read_async", LIBRARY.GIO);
-	Linker.link(g_file_read_finish, "g_file_read_finish", LIBRARY.GIO);
-	Linker.link(g_file_replace, "g_file_replace", LIBRARY.GIO);
-	Linker.link(g_file_replace_async, "g_file_replace_async", LIBRARY.GIO);
-	Linker.link(g_file_replace_contents, "g_file_replace_contents", LIBRARY.GIO);
-	Linker.link(g_file_replace_contents_async, "g_file_replace_contents_async", LIBRARY.GIO);
-	Linker.link(g_file_replace_contents_bytes_async, "g_file_replace_contents_bytes_async", LIBRARY.GIO);
-	Linker.link(g_file_replace_contents_finish, "g_file_replace_contents_finish", LIBRARY.GIO);
-	Linker.link(g_file_replace_finish, "g_file_replace_finish", LIBRARY.GIO);
-	Linker.link(g_file_replace_readwrite, "g_file_replace_readwrite", LIBRARY.GIO);
-	Linker.link(g_file_replace_readwrite_async, "g_file_replace_readwrite_async", LIBRARY.GIO);
-	Linker.link(g_file_replace_readwrite_finish, "g_file_replace_readwrite_finish", LIBRARY.GIO);
-	Linker.link(g_file_resolve_relative_path, "g_file_resolve_relative_path", LIBRARY.GIO);
-	Linker.link(g_file_set_attribute, "g_file_set_attribute", LIBRARY.GIO);
-	Linker.link(g_file_set_attribute_byte_string, "g_file_set_attribute_byte_string", LIBRARY.GIO);
-	Linker.link(g_file_set_attribute_int32, "g_file_set_attribute_int32", LIBRARY.GIO);
-	Linker.link(g_file_set_attribute_int64, "g_file_set_attribute_int64", LIBRARY.GIO);
-	Linker.link(g_file_set_attribute_string, "g_file_set_attribute_string", LIBRARY.GIO);
-	Linker.link(g_file_set_attribute_uint32, "g_file_set_attribute_uint32", LIBRARY.GIO);
-	Linker.link(g_file_set_attribute_uint64, "g_file_set_attribute_uint64", LIBRARY.GIO);
-	Linker.link(g_file_set_attributes_async, "g_file_set_attributes_async", LIBRARY.GIO);
-	Linker.link(g_file_set_attributes_finish, "g_file_set_attributes_finish", LIBRARY.GIO);
-	Linker.link(g_file_set_attributes_from_info, "g_file_set_attributes_from_info", LIBRARY.GIO);
-	Linker.link(g_file_set_display_name, "g_file_set_display_name", LIBRARY.GIO);
-	Linker.link(g_file_set_display_name_async, "g_file_set_display_name_async", LIBRARY.GIO);
-	Linker.link(g_file_set_display_name_finish, "g_file_set_display_name_finish", LIBRARY.GIO);
-	Linker.link(g_file_start_mountable, "g_file_start_mountable", LIBRARY.GIO);
-	Linker.link(g_file_start_mountable_finish, "g_file_start_mountable_finish", LIBRARY.GIO);
-	Linker.link(g_file_stop_mountable, "g_file_stop_mountable", LIBRARY.GIO);
-	Linker.link(g_file_stop_mountable_finish, "g_file_stop_mountable_finish", LIBRARY.GIO);
-	Linker.link(g_file_supports_thread_contexts, "g_file_supports_thread_contexts", LIBRARY.GIO);
-	Linker.link(g_file_trash, "g_file_trash", LIBRARY.GIO);
-	Linker.link(g_file_trash_async, "g_file_trash_async", LIBRARY.GIO);
-	Linker.link(g_file_trash_finish, "g_file_trash_finish", LIBRARY.GIO);
-	Linker.link(g_file_unmount_mountable, "g_file_unmount_mountable", LIBRARY.GIO);
-	Linker.link(g_file_unmount_mountable_finish, "g_file_unmount_mountable_finish", LIBRARY.GIO);
-	Linker.link(g_file_unmount_mountable_with_operation, "g_file_unmount_mountable_with_operation", LIBRARY.GIO);
-	Linker.link(g_file_unmount_mountable_with_operation_finish, "g_file_unmount_mountable_with_operation_finish", LIBRARY.GIO);
+	Linker.link(g_file_get_type, "g_file_get_type", LIBRARY_GIO);
+	Linker.link(g_file_new_for_commandline_arg, "g_file_new_for_commandline_arg", LIBRARY_GIO);
+	Linker.link(g_file_new_for_commandline_arg_and_cwd, "g_file_new_for_commandline_arg_and_cwd", LIBRARY_GIO);
+	Linker.link(g_file_new_for_path, "g_file_new_for_path", LIBRARY_GIO);
+	Linker.link(g_file_new_for_uri, "g_file_new_for_uri", LIBRARY_GIO);
+	Linker.link(g_file_new_tmp, "g_file_new_tmp", LIBRARY_GIO);
+	Linker.link(g_file_parse_name, "g_file_parse_name", LIBRARY_GIO);
+	Linker.link(g_file_append_to, "g_file_append_to", LIBRARY_GIO);
+	Linker.link(g_file_append_to_async, "g_file_append_to_async", LIBRARY_GIO);
+	Linker.link(g_file_append_to_finish, "g_file_append_to_finish", LIBRARY_GIO);
+	Linker.link(g_file_copy, "g_file_copy", LIBRARY_GIO);
+	Linker.link(g_file_copy_async, "g_file_copy_async", LIBRARY_GIO);
+	Linker.link(g_file_copy_attributes, "g_file_copy_attributes", LIBRARY_GIO);
+	Linker.link(g_file_copy_finish, "g_file_copy_finish", LIBRARY_GIO);
+	Linker.link(g_file_create, "g_file_create", LIBRARY_GIO);
+	Linker.link(g_file_create_async, "g_file_create_async", LIBRARY_GIO);
+	Linker.link(g_file_create_finish, "g_file_create_finish", LIBRARY_GIO);
+	Linker.link(g_file_create_readwrite, "g_file_create_readwrite", LIBRARY_GIO);
+	Linker.link(g_file_create_readwrite_async, "g_file_create_readwrite_async", LIBRARY_GIO);
+	Linker.link(g_file_create_readwrite_finish, "g_file_create_readwrite_finish", LIBRARY_GIO);
+	Linker.link(g_file_delete, "g_file_delete", LIBRARY_GIO);
+	Linker.link(g_file_delete_async, "g_file_delete_async", LIBRARY_GIO);
+	Linker.link(g_file_delete_finish, "g_file_delete_finish", LIBRARY_GIO);
+	Linker.link(g_file_dup, "g_file_dup", LIBRARY_GIO);
+	Linker.link(g_file_eject_mountable, "g_file_eject_mountable", LIBRARY_GIO);
+	Linker.link(g_file_eject_mountable_finish, "g_file_eject_mountable_finish", LIBRARY_GIO);
+	Linker.link(g_file_eject_mountable_with_operation, "g_file_eject_mountable_with_operation", LIBRARY_GIO);
+	Linker.link(g_file_eject_mountable_with_operation_finish, "g_file_eject_mountable_with_operation_finish", LIBRARY_GIO);
+	Linker.link(g_file_enumerate_children, "g_file_enumerate_children", LIBRARY_GIO);
+	Linker.link(g_file_enumerate_children_async, "g_file_enumerate_children_async", LIBRARY_GIO);
+	Linker.link(g_file_enumerate_children_finish, "g_file_enumerate_children_finish", LIBRARY_GIO);
+	Linker.link(g_file_equal, "g_file_equal", LIBRARY_GIO);
+	Linker.link(g_file_find_enclosing_mount, "g_file_find_enclosing_mount", LIBRARY_GIO);
+	Linker.link(g_file_find_enclosing_mount_async, "g_file_find_enclosing_mount_async", LIBRARY_GIO);
+	Linker.link(g_file_find_enclosing_mount_finish, "g_file_find_enclosing_mount_finish", LIBRARY_GIO);
+	Linker.link(g_file_get_basename, "g_file_get_basename", LIBRARY_GIO);
+	Linker.link(g_file_get_child, "g_file_get_child", LIBRARY_GIO);
+	Linker.link(g_file_get_child_for_display_name, "g_file_get_child_for_display_name", LIBRARY_GIO);
+	Linker.link(g_file_get_parent, "g_file_get_parent", LIBRARY_GIO);
+	Linker.link(g_file_get_parse_name, "g_file_get_parse_name", LIBRARY_GIO);
+	Linker.link(g_file_get_path, "g_file_get_path", LIBRARY_GIO);
+	Linker.link(g_file_get_relative_path, "g_file_get_relative_path", LIBRARY_GIO);
+	Linker.link(g_file_get_uri, "g_file_get_uri", LIBRARY_GIO);
+	Linker.link(g_file_get_uri_scheme, "g_file_get_uri_scheme", LIBRARY_GIO);
+	Linker.link(g_file_has_parent, "g_file_has_parent", LIBRARY_GIO);
+	Linker.link(g_file_has_prefix, "g_file_has_prefix", LIBRARY_GIO);
+	Linker.link(g_file_has_uri_scheme, "g_file_has_uri_scheme", LIBRARY_GIO);
+	Linker.link(g_file_hash, "g_file_hash", LIBRARY_GIO);
+	Linker.link(g_file_is_native, "g_file_is_native", LIBRARY_GIO);
+	Linker.link(g_file_load_contents, "g_file_load_contents", LIBRARY_GIO);
+	Linker.link(g_file_load_contents_async, "g_file_load_contents_async", LIBRARY_GIO);
+	Linker.link(g_file_load_contents_finish, "g_file_load_contents_finish", LIBRARY_GIO);
+	Linker.link(g_file_load_partial_contents_async, "g_file_load_partial_contents_async", LIBRARY_GIO);
+	Linker.link(g_file_load_partial_contents_finish, "g_file_load_partial_contents_finish", LIBRARY_GIO);
+	Linker.link(g_file_make_directory, "g_file_make_directory", LIBRARY_GIO);
+	Linker.link(g_file_make_directory_async, "g_file_make_directory_async", LIBRARY_GIO);
+	Linker.link(g_file_make_directory_finish, "g_file_make_directory_finish", LIBRARY_GIO);
+	Linker.link(g_file_make_directory_with_parents, "g_file_make_directory_with_parents", LIBRARY_GIO);
+	Linker.link(g_file_make_symbolic_link, "g_file_make_symbolic_link", LIBRARY_GIO);
+	Linker.link(g_file_measure_disk_usage, "g_file_measure_disk_usage", LIBRARY_GIO);
+	Linker.link(g_file_measure_disk_usage_async, "g_file_measure_disk_usage_async", LIBRARY_GIO);
+	Linker.link(g_file_measure_disk_usage_finish, "g_file_measure_disk_usage_finish", LIBRARY_GIO);
+	Linker.link(g_file_monitor, "g_file_monitor", LIBRARY_GIO);
+	Linker.link(g_file_monitor_directory, "g_file_monitor_directory", LIBRARY_GIO);
+	Linker.link(g_file_monitor_file, "g_file_monitor_file", LIBRARY_GIO);
+	Linker.link(g_file_mount_enclosing_volume, "g_file_mount_enclosing_volume", LIBRARY_GIO);
+	Linker.link(g_file_mount_enclosing_volume_finish, "g_file_mount_enclosing_volume_finish", LIBRARY_GIO);
+	Linker.link(g_file_mount_mountable, "g_file_mount_mountable", LIBRARY_GIO);
+	Linker.link(g_file_mount_mountable_finish, "g_file_mount_mountable_finish", LIBRARY_GIO);
+	Linker.link(g_file_move, "g_file_move", LIBRARY_GIO);
+	Linker.link(g_file_open_readwrite, "g_file_open_readwrite", LIBRARY_GIO);
+	Linker.link(g_file_open_readwrite_async, "g_file_open_readwrite_async", LIBRARY_GIO);
+	Linker.link(g_file_open_readwrite_finish, "g_file_open_readwrite_finish", LIBRARY_GIO);
+	Linker.link(g_file_poll_mountable, "g_file_poll_mountable", LIBRARY_GIO);
+	Linker.link(g_file_poll_mountable_finish, "g_file_poll_mountable_finish", LIBRARY_GIO);
+	Linker.link(g_file_query_default_handler, "g_file_query_default_handler", LIBRARY_GIO);
+	Linker.link(g_file_query_exists, "g_file_query_exists", LIBRARY_GIO);
+	Linker.link(g_file_query_file_type, "g_file_query_file_type", LIBRARY_GIO);
+	Linker.link(g_file_query_filesystem_info, "g_file_query_filesystem_info", LIBRARY_GIO);
+	Linker.link(g_file_query_filesystem_info_async, "g_file_query_filesystem_info_async", LIBRARY_GIO);
+	Linker.link(g_file_query_filesystem_info_finish, "g_file_query_filesystem_info_finish", LIBRARY_GIO);
+	Linker.link(g_file_query_info, "g_file_query_info", LIBRARY_GIO);
+	Linker.link(g_file_query_info_async, "g_file_query_info_async", LIBRARY_GIO);
+	Linker.link(g_file_query_info_finish, "g_file_query_info_finish", LIBRARY_GIO);
+	Linker.link(g_file_query_settable_attributes, "g_file_query_settable_attributes", LIBRARY_GIO);
+	Linker.link(g_file_query_writable_namespaces, "g_file_query_writable_namespaces", LIBRARY_GIO);
+	Linker.link(g_file_read, "g_file_read", LIBRARY_GIO);
+	Linker.link(g_file_read_async, "g_file_read_async", LIBRARY_GIO);
+	Linker.link(g_file_read_finish, "g_file_read_finish", LIBRARY_GIO);
+	Linker.link(g_file_replace, "g_file_replace", LIBRARY_GIO);
+	Linker.link(g_file_replace_async, "g_file_replace_async", LIBRARY_GIO);
+	Linker.link(g_file_replace_contents, "g_file_replace_contents", LIBRARY_GIO);
+	Linker.link(g_file_replace_contents_async, "g_file_replace_contents_async", LIBRARY_GIO);
+	Linker.link(g_file_replace_contents_bytes_async, "g_file_replace_contents_bytes_async", LIBRARY_GIO);
+	Linker.link(g_file_replace_contents_finish, "g_file_replace_contents_finish", LIBRARY_GIO);
+	Linker.link(g_file_replace_finish, "g_file_replace_finish", LIBRARY_GIO);
+	Linker.link(g_file_replace_readwrite, "g_file_replace_readwrite", LIBRARY_GIO);
+	Linker.link(g_file_replace_readwrite_async, "g_file_replace_readwrite_async", LIBRARY_GIO);
+	Linker.link(g_file_replace_readwrite_finish, "g_file_replace_readwrite_finish", LIBRARY_GIO);
+	Linker.link(g_file_resolve_relative_path, "g_file_resolve_relative_path", LIBRARY_GIO);
+	Linker.link(g_file_set_attribute, "g_file_set_attribute", LIBRARY_GIO);
+	Linker.link(g_file_set_attribute_byte_string, "g_file_set_attribute_byte_string", LIBRARY_GIO);
+	Linker.link(g_file_set_attribute_int32, "g_file_set_attribute_int32", LIBRARY_GIO);
+	Linker.link(g_file_set_attribute_int64, "g_file_set_attribute_int64", LIBRARY_GIO);
+	Linker.link(g_file_set_attribute_string, "g_file_set_attribute_string", LIBRARY_GIO);
+	Linker.link(g_file_set_attribute_uint32, "g_file_set_attribute_uint32", LIBRARY_GIO);
+	Linker.link(g_file_set_attribute_uint64, "g_file_set_attribute_uint64", LIBRARY_GIO);
+	Linker.link(g_file_set_attributes_async, "g_file_set_attributes_async", LIBRARY_GIO);
+	Linker.link(g_file_set_attributes_finish, "g_file_set_attributes_finish", LIBRARY_GIO);
+	Linker.link(g_file_set_attributes_from_info, "g_file_set_attributes_from_info", LIBRARY_GIO);
+	Linker.link(g_file_set_display_name, "g_file_set_display_name", LIBRARY_GIO);
+	Linker.link(g_file_set_display_name_async, "g_file_set_display_name_async", LIBRARY_GIO);
+	Linker.link(g_file_set_display_name_finish, "g_file_set_display_name_finish", LIBRARY_GIO);
+	Linker.link(g_file_start_mountable, "g_file_start_mountable", LIBRARY_GIO);
+	Linker.link(g_file_start_mountable_finish, "g_file_start_mountable_finish", LIBRARY_GIO);
+	Linker.link(g_file_stop_mountable, "g_file_stop_mountable", LIBRARY_GIO);
+	Linker.link(g_file_stop_mountable_finish, "g_file_stop_mountable_finish", LIBRARY_GIO);
+	Linker.link(g_file_supports_thread_contexts, "g_file_supports_thread_contexts", LIBRARY_GIO);
+	Linker.link(g_file_trash, "g_file_trash", LIBRARY_GIO);
+	Linker.link(g_file_trash_async, "g_file_trash_async", LIBRARY_GIO);
+	Linker.link(g_file_trash_finish, "g_file_trash_finish", LIBRARY_GIO);
+	Linker.link(g_file_unmount_mountable, "g_file_unmount_mountable", LIBRARY_GIO);
+	Linker.link(g_file_unmount_mountable_finish, "g_file_unmount_mountable_finish", LIBRARY_GIO);
+	Linker.link(g_file_unmount_mountable_with_operation, "g_file_unmount_mountable_with_operation", LIBRARY_GIO);
+	Linker.link(g_file_unmount_mountable_with_operation_finish, "g_file_unmount_mountable_with_operation_finish", LIBRARY_GIO);
 
 	// gio.FileAttributeInfoList
 
-	Linker.link(g_file_attribute_info_list_get_type, "g_file_attribute_info_list_get_type", LIBRARY.GIO);
-	Linker.link(g_file_attribute_info_list_new, "g_file_attribute_info_list_new", LIBRARY.GIO);
-	Linker.link(g_file_attribute_info_list_add, "g_file_attribute_info_list_add", LIBRARY.GIO);
-	Linker.link(g_file_attribute_info_list_dup, "g_file_attribute_info_list_dup", LIBRARY.GIO);
-	Linker.link(g_file_attribute_info_list_lookup, "g_file_attribute_info_list_lookup", LIBRARY.GIO);
-	Linker.link(g_file_attribute_info_list_ref, "g_file_attribute_info_list_ref", LIBRARY.GIO);
-	Linker.link(g_file_attribute_info_list_unref, "g_file_attribute_info_list_unref", LIBRARY.GIO);
+	Linker.link(g_file_attribute_info_list_get_type, "g_file_attribute_info_list_get_type", LIBRARY_GIO);
+	Linker.link(g_file_attribute_info_list_new, "g_file_attribute_info_list_new", LIBRARY_GIO);
+	Linker.link(g_file_attribute_info_list_add, "g_file_attribute_info_list_add", LIBRARY_GIO);
+	Linker.link(g_file_attribute_info_list_dup, "g_file_attribute_info_list_dup", LIBRARY_GIO);
+	Linker.link(g_file_attribute_info_list_lookup, "g_file_attribute_info_list_lookup", LIBRARY_GIO);
+	Linker.link(g_file_attribute_info_list_ref, "g_file_attribute_info_list_ref", LIBRARY_GIO);
+	Linker.link(g_file_attribute_info_list_unref, "g_file_attribute_info_list_unref", LIBRARY_GIO);
 
 	// gio.FileAttributeMatcher
 
-	Linker.link(g_file_attribute_matcher_get_type, "g_file_attribute_matcher_get_type", LIBRARY.GIO);
-	Linker.link(g_file_attribute_matcher_new, "g_file_attribute_matcher_new", LIBRARY.GIO);
-	Linker.link(g_file_attribute_matcher_enumerate_namespace, "g_file_attribute_matcher_enumerate_namespace", LIBRARY.GIO);
-	Linker.link(g_file_attribute_matcher_enumerate_next, "g_file_attribute_matcher_enumerate_next", LIBRARY.GIO);
-	Linker.link(g_file_attribute_matcher_matches, "g_file_attribute_matcher_matches", LIBRARY.GIO);
-	Linker.link(g_file_attribute_matcher_matches_only, "g_file_attribute_matcher_matches_only", LIBRARY.GIO);
-	Linker.link(g_file_attribute_matcher_ref, "g_file_attribute_matcher_ref", LIBRARY.GIO);
-	Linker.link(g_file_attribute_matcher_subtract, "g_file_attribute_matcher_subtract", LIBRARY.GIO);
-	Linker.link(g_file_attribute_matcher_to_string, "g_file_attribute_matcher_to_string", LIBRARY.GIO);
-	Linker.link(g_file_attribute_matcher_unref, "g_file_attribute_matcher_unref", LIBRARY.GIO);
+	Linker.link(g_file_attribute_matcher_get_type, "g_file_attribute_matcher_get_type", LIBRARY_GIO);
+	Linker.link(g_file_attribute_matcher_new, "g_file_attribute_matcher_new", LIBRARY_GIO);
+	Linker.link(g_file_attribute_matcher_enumerate_namespace, "g_file_attribute_matcher_enumerate_namespace", LIBRARY_GIO);
+	Linker.link(g_file_attribute_matcher_enumerate_next, "g_file_attribute_matcher_enumerate_next", LIBRARY_GIO);
+	Linker.link(g_file_attribute_matcher_matches, "g_file_attribute_matcher_matches", LIBRARY_GIO);
+	Linker.link(g_file_attribute_matcher_matches_only, "g_file_attribute_matcher_matches_only", LIBRARY_GIO);
+	Linker.link(g_file_attribute_matcher_ref, "g_file_attribute_matcher_ref", LIBRARY_GIO);
+	Linker.link(g_file_attribute_matcher_subtract, "g_file_attribute_matcher_subtract", LIBRARY_GIO);
+	Linker.link(g_file_attribute_matcher_to_string, "g_file_attribute_matcher_to_string", LIBRARY_GIO);
+	Linker.link(g_file_attribute_matcher_unref, "g_file_attribute_matcher_unref", LIBRARY_GIO);
 
 	// gio.FileDescriptorBased
 
-	Linker.link(g_file_descriptor_based_get_type, "g_file_descriptor_based_get_type", LIBRARY.GIO);
-	Linker.link(g_file_descriptor_based_get_fd, "g_file_descriptor_based_get_fd", LIBRARY.GIO);
+	Linker.link(g_file_descriptor_based_get_type, "g_file_descriptor_based_get_type", LIBRARY_GIO);
+	Linker.link(g_file_descriptor_based_get_fd, "g_file_descriptor_based_get_fd", LIBRARY_GIO);
 
 	// gio.FileEnumerator
 
-	Linker.link(g_file_enumerator_get_type, "g_file_enumerator_get_type", LIBRARY.GIO);
-	Linker.link(g_file_enumerator_close, "g_file_enumerator_close", LIBRARY.GIO);
-	Linker.link(g_file_enumerator_close_async, "g_file_enumerator_close_async", LIBRARY.GIO);
-	Linker.link(g_file_enumerator_close_finish, "g_file_enumerator_close_finish", LIBRARY.GIO);
-	Linker.link(g_file_enumerator_get_child, "g_file_enumerator_get_child", LIBRARY.GIO);
-	Linker.link(g_file_enumerator_get_container, "g_file_enumerator_get_container", LIBRARY.GIO);
-	Linker.link(g_file_enumerator_has_pending, "g_file_enumerator_has_pending", LIBRARY.GIO);
-	Linker.link(g_file_enumerator_is_closed, "g_file_enumerator_is_closed", LIBRARY.GIO);
-	Linker.link(g_file_enumerator_iterate, "g_file_enumerator_iterate", LIBRARY.GIO);
-	Linker.link(g_file_enumerator_next_file, "g_file_enumerator_next_file", LIBRARY.GIO);
-	Linker.link(g_file_enumerator_next_files_async, "g_file_enumerator_next_files_async", LIBRARY.GIO);
-	Linker.link(g_file_enumerator_next_files_finish, "g_file_enumerator_next_files_finish", LIBRARY.GIO);
-	Linker.link(g_file_enumerator_set_pending, "g_file_enumerator_set_pending", LIBRARY.GIO);
+	Linker.link(g_file_enumerator_get_type, "g_file_enumerator_get_type", LIBRARY_GIO);
+	Linker.link(g_file_enumerator_close, "g_file_enumerator_close", LIBRARY_GIO);
+	Linker.link(g_file_enumerator_close_async, "g_file_enumerator_close_async", LIBRARY_GIO);
+	Linker.link(g_file_enumerator_close_finish, "g_file_enumerator_close_finish", LIBRARY_GIO);
+	Linker.link(g_file_enumerator_get_child, "g_file_enumerator_get_child", LIBRARY_GIO);
+	Linker.link(g_file_enumerator_get_container, "g_file_enumerator_get_container", LIBRARY_GIO);
+	Linker.link(g_file_enumerator_has_pending, "g_file_enumerator_has_pending", LIBRARY_GIO);
+	Linker.link(g_file_enumerator_is_closed, "g_file_enumerator_is_closed", LIBRARY_GIO);
+	Linker.link(g_file_enumerator_iterate, "g_file_enumerator_iterate", LIBRARY_GIO);
+	Linker.link(g_file_enumerator_next_file, "g_file_enumerator_next_file", LIBRARY_GIO);
+	Linker.link(g_file_enumerator_next_files_async, "g_file_enumerator_next_files_async", LIBRARY_GIO);
+	Linker.link(g_file_enumerator_next_files_finish, "g_file_enumerator_next_files_finish", LIBRARY_GIO);
+	Linker.link(g_file_enumerator_set_pending, "g_file_enumerator_set_pending", LIBRARY_GIO);
 
 	// gio.FileIOStream
 
-	Linker.link(g_file_io_stream_get_type, "g_file_io_stream_get_type", LIBRARY.GIO);
-	Linker.link(g_file_io_stream_get_etag, "g_file_io_stream_get_etag", LIBRARY.GIO);
-	Linker.link(g_file_io_stream_query_info, "g_file_io_stream_query_info", LIBRARY.GIO);
-	Linker.link(g_file_io_stream_query_info_async, "g_file_io_stream_query_info_async", LIBRARY.GIO);
-	Linker.link(g_file_io_stream_query_info_finish, "g_file_io_stream_query_info_finish", LIBRARY.GIO);
+	Linker.link(g_file_io_stream_get_type, "g_file_io_stream_get_type", LIBRARY_GIO);
+	Linker.link(g_file_io_stream_get_etag, "g_file_io_stream_get_etag", LIBRARY_GIO);
+	Linker.link(g_file_io_stream_query_info, "g_file_io_stream_query_info", LIBRARY_GIO);
+	Linker.link(g_file_io_stream_query_info_async, "g_file_io_stream_query_info_async", LIBRARY_GIO);
+	Linker.link(g_file_io_stream_query_info_finish, "g_file_io_stream_query_info_finish", LIBRARY_GIO);
 
 	// gio.FileIcon
 
-	Linker.link(g_file_icon_get_type, "g_file_icon_get_type", LIBRARY.GIO);
-	Linker.link(g_file_icon_new, "g_file_icon_new", LIBRARY.GIO);
-	Linker.link(g_file_icon_get_file, "g_file_icon_get_file", LIBRARY.GIO);
+	Linker.link(g_file_icon_get_type, "g_file_icon_get_type", LIBRARY_GIO);
+	Linker.link(g_file_icon_new, "g_file_icon_new", LIBRARY_GIO);
+	Linker.link(g_file_icon_get_file, "g_file_icon_get_file", LIBRARY_GIO);
 
 	// gio.FileInfo
 
-	Linker.link(g_file_info_get_type, "g_file_info_get_type", LIBRARY.GIO);
-	Linker.link(g_file_info_new, "g_file_info_new", LIBRARY.GIO);
-	Linker.link(g_file_info_clear_status, "g_file_info_clear_status", LIBRARY.GIO);
-	Linker.link(g_file_info_copy_into, "g_file_info_copy_into", LIBRARY.GIO);
-	Linker.link(g_file_info_dup, "g_file_info_dup", LIBRARY.GIO);
-	Linker.link(g_file_info_get_attribute_as_string, "g_file_info_get_attribute_as_string", LIBRARY.GIO);
-	Linker.link(g_file_info_get_attribute_boolean, "g_file_info_get_attribute_boolean", LIBRARY.GIO);
-	Linker.link(g_file_info_get_attribute_byte_string, "g_file_info_get_attribute_byte_string", LIBRARY.GIO);
-	Linker.link(g_file_info_get_attribute_data, "g_file_info_get_attribute_data", LIBRARY.GIO);
-	Linker.link(g_file_info_get_attribute_int32, "g_file_info_get_attribute_int32", LIBRARY.GIO);
-	Linker.link(g_file_info_get_attribute_int64, "g_file_info_get_attribute_int64", LIBRARY.GIO);
-	Linker.link(g_file_info_get_attribute_object, "g_file_info_get_attribute_object", LIBRARY.GIO);
-	Linker.link(g_file_info_get_attribute_status, "g_file_info_get_attribute_status", LIBRARY.GIO);
-	Linker.link(g_file_info_get_attribute_string, "g_file_info_get_attribute_string", LIBRARY.GIO);
-	Linker.link(g_file_info_get_attribute_stringv, "g_file_info_get_attribute_stringv", LIBRARY.GIO);
-	Linker.link(g_file_info_get_attribute_type, "g_file_info_get_attribute_type", LIBRARY.GIO);
-	Linker.link(g_file_info_get_attribute_uint32, "g_file_info_get_attribute_uint32", LIBRARY.GIO);
-	Linker.link(g_file_info_get_attribute_uint64, "g_file_info_get_attribute_uint64", LIBRARY.GIO);
-	Linker.link(g_file_info_get_content_type, "g_file_info_get_content_type", LIBRARY.GIO);
-	Linker.link(g_file_info_get_deletion_date, "g_file_info_get_deletion_date", LIBRARY.GIO);
-	Linker.link(g_file_info_get_display_name, "g_file_info_get_display_name", LIBRARY.GIO);
-	Linker.link(g_file_info_get_edit_name, "g_file_info_get_edit_name", LIBRARY.GIO);
-	Linker.link(g_file_info_get_etag, "g_file_info_get_etag", LIBRARY.GIO);
-	Linker.link(g_file_info_get_file_type, "g_file_info_get_file_type", LIBRARY.GIO);
-	Linker.link(g_file_info_get_icon, "g_file_info_get_icon", LIBRARY.GIO);
-	Linker.link(g_file_info_get_is_backup, "g_file_info_get_is_backup", LIBRARY.GIO);
-	Linker.link(g_file_info_get_is_hidden, "g_file_info_get_is_hidden", LIBRARY.GIO);
-	Linker.link(g_file_info_get_is_symlink, "g_file_info_get_is_symlink", LIBRARY.GIO);
-	Linker.link(g_file_info_get_modification_time, "g_file_info_get_modification_time", LIBRARY.GIO);
-	Linker.link(g_file_info_get_name, "g_file_info_get_name", LIBRARY.GIO);
-	Linker.link(g_file_info_get_size, "g_file_info_get_size", LIBRARY.GIO);
-	Linker.link(g_file_info_get_sort_order, "g_file_info_get_sort_order", LIBRARY.GIO);
-	Linker.link(g_file_info_get_symbolic_icon, "g_file_info_get_symbolic_icon", LIBRARY.GIO);
-	Linker.link(g_file_info_get_symlink_target, "g_file_info_get_symlink_target", LIBRARY.GIO);
-	Linker.link(g_file_info_has_attribute, "g_file_info_has_attribute", LIBRARY.GIO);
-	Linker.link(g_file_info_has_namespace, "g_file_info_has_namespace", LIBRARY.GIO);
-	Linker.link(g_file_info_list_attributes, "g_file_info_list_attributes", LIBRARY.GIO);
-	Linker.link(g_file_info_remove_attribute, "g_file_info_remove_attribute", LIBRARY.GIO);
-	Linker.link(g_file_info_set_attribute, "g_file_info_set_attribute", LIBRARY.GIO);
-	Linker.link(g_file_info_set_attribute_boolean, "g_file_info_set_attribute_boolean", LIBRARY.GIO);
-	Linker.link(g_file_info_set_attribute_byte_string, "g_file_info_set_attribute_byte_string", LIBRARY.GIO);
-	Linker.link(g_file_info_set_attribute_int32, "g_file_info_set_attribute_int32", LIBRARY.GIO);
-	Linker.link(g_file_info_set_attribute_int64, "g_file_info_set_attribute_int64", LIBRARY.GIO);
-	Linker.link(g_file_info_set_attribute_mask, "g_file_info_set_attribute_mask", LIBRARY.GIO);
-	Linker.link(g_file_info_set_attribute_object, "g_file_info_set_attribute_object", LIBRARY.GIO);
-	Linker.link(g_file_info_set_attribute_status, "g_file_info_set_attribute_status", LIBRARY.GIO);
-	Linker.link(g_file_info_set_attribute_string, "g_file_info_set_attribute_string", LIBRARY.GIO);
-	Linker.link(g_file_info_set_attribute_stringv, "g_file_info_set_attribute_stringv", LIBRARY.GIO);
-	Linker.link(g_file_info_set_attribute_uint32, "g_file_info_set_attribute_uint32", LIBRARY.GIO);
-	Linker.link(g_file_info_set_attribute_uint64, "g_file_info_set_attribute_uint64", LIBRARY.GIO);
-	Linker.link(g_file_info_set_content_type, "g_file_info_set_content_type", LIBRARY.GIO);
-	Linker.link(g_file_info_set_display_name, "g_file_info_set_display_name", LIBRARY.GIO);
-	Linker.link(g_file_info_set_edit_name, "g_file_info_set_edit_name", LIBRARY.GIO);
-	Linker.link(g_file_info_set_file_type, "g_file_info_set_file_type", LIBRARY.GIO);
-	Linker.link(g_file_info_set_icon, "g_file_info_set_icon", LIBRARY.GIO);
-	Linker.link(g_file_info_set_is_hidden, "g_file_info_set_is_hidden", LIBRARY.GIO);
-	Linker.link(g_file_info_set_is_symlink, "g_file_info_set_is_symlink", LIBRARY.GIO);
-	Linker.link(g_file_info_set_modification_time, "g_file_info_set_modification_time", LIBRARY.GIO);
-	Linker.link(g_file_info_set_name, "g_file_info_set_name", LIBRARY.GIO);
-	Linker.link(g_file_info_set_size, "g_file_info_set_size", LIBRARY.GIO);
-	Linker.link(g_file_info_set_sort_order, "g_file_info_set_sort_order", LIBRARY.GIO);
-	Linker.link(g_file_info_set_symbolic_icon, "g_file_info_set_symbolic_icon", LIBRARY.GIO);
-	Linker.link(g_file_info_set_symlink_target, "g_file_info_set_symlink_target", LIBRARY.GIO);
-	Linker.link(g_file_info_unset_attribute_mask, "g_file_info_unset_attribute_mask", LIBRARY.GIO);
+	Linker.link(g_file_info_get_type, "g_file_info_get_type", LIBRARY_GIO);
+	Linker.link(g_file_info_new, "g_file_info_new", LIBRARY_GIO);
+	Linker.link(g_file_info_clear_status, "g_file_info_clear_status", LIBRARY_GIO);
+	Linker.link(g_file_info_copy_into, "g_file_info_copy_into", LIBRARY_GIO);
+	Linker.link(g_file_info_dup, "g_file_info_dup", LIBRARY_GIO);
+	Linker.link(g_file_info_get_attribute_as_string, "g_file_info_get_attribute_as_string", LIBRARY_GIO);
+	Linker.link(g_file_info_get_attribute_boolean, "g_file_info_get_attribute_boolean", LIBRARY_GIO);
+	Linker.link(g_file_info_get_attribute_byte_string, "g_file_info_get_attribute_byte_string", LIBRARY_GIO);
+	Linker.link(g_file_info_get_attribute_data, "g_file_info_get_attribute_data", LIBRARY_GIO);
+	Linker.link(g_file_info_get_attribute_int32, "g_file_info_get_attribute_int32", LIBRARY_GIO);
+	Linker.link(g_file_info_get_attribute_int64, "g_file_info_get_attribute_int64", LIBRARY_GIO);
+	Linker.link(g_file_info_get_attribute_object, "g_file_info_get_attribute_object", LIBRARY_GIO);
+	Linker.link(g_file_info_get_attribute_status, "g_file_info_get_attribute_status", LIBRARY_GIO);
+	Linker.link(g_file_info_get_attribute_string, "g_file_info_get_attribute_string", LIBRARY_GIO);
+	Linker.link(g_file_info_get_attribute_stringv, "g_file_info_get_attribute_stringv", LIBRARY_GIO);
+	Linker.link(g_file_info_get_attribute_type, "g_file_info_get_attribute_type", LIBRARY_GIO);
+	Linker.link(g_file_info_get_attribute_uint32, "g_file_info_get_attribute_uint32", LIBRARY_GIO);
+	Linker.link(g_file_info_get_attribute_uint64, "g_file_info_get_attribute_uint64", LIBRARY_GIO);
+	Linker.link(g_file_info_get_content_type, "g_file_info_get_content_type", LIBRARY_GIO);
+	Linker.link(g_file_info_get_deletion_date, "g_file_info_get_deletion_date", LIBRARY_GIO);
+	Linker.link(g_file_info_get_display_name, "g_file_info_get_display_name", LIBRARY_GIO);
+	Linker.link(g_file_info_get_edit_name, "g_file_info_get_edit_name", LIBRARY_GIO);
+	Linker.link(g_file_info_get_etag, "g_file_info_get_etag", LIBRARY_GIO);
+	Linker.link(g_file_info_get_file_type, "g_file_info_get_file_type", LIBRARY_GIO);
+	Linker.link(g_file_info_get_icon, "g_file_info_get_icon", LIBRARY_GIO);
+	Linker.link(g_file_info_get_is_backup, "g_file_info_get_is_backup", LIBRARY_GIO);
+	Linker.link(g_file_info_get_is_hidden, "g_file_info_get_is_hidden", LIBRARY_GIO);
+	Linker.link(g_file_info_get_is_symlink, "g_file_info_get_is_symlink", LIBRARY_GIO);
+	Linker.link(g_file_info_get_modification_time, "g_file_info_get_modification_time", LIBRARY_GIO);
+	Linker.link(g_file_info_get_name, "g_file_info_get_name", LIBRARY_GIO);
+	Linker.link(g_file_info_get_size, "g_file_info_get_size", LIBRARY_GIO);
+	Linker.link(g_file_info_get_sort_order, "g_file_info_get_sort_order", LIBRARY_GIO);
+	Linker.link(g_file_info_get_symbolic_icon, "g_file_info_get_symbolic_icon", LIBRARY_GIO);
+	Linker.link(g_file_info_get_symlink_target, "g_file_info_get_symlink_target", LIBRARY_GIO);
+	Linker.link(g_file_info_has_attribute, "g_file_info_has_attribute", LIBRARY_GIO);
+	Linker.link(g_file_info_has_namespace, "g_file_info_has_namespace", LIBRARY_GIO);
+	Linker.link(g_file_info_list_attributes, "g_file_info_list_attributes", LIBRARY_GIO);
+	Linker.link(g_file_info_remove_attribute, "g_file_info_remove_attribute", LIBRARY_GIO);
+	Linker.link(g_file_info_set_attribute, "g_file_info_set_attribute", LIBRARY_GIO);
+	Linker.link(g_file_info_set_attribute_boolean, "g_file_info_set_attribute_boolean", LIBRARY_GIO);
+	Linker.link(g_file_info_set_attribute_byte_string, "g_file_info_set_attribute_byte_string", LIBRARY_GIO);
+	Linker.link(g_file_info_set_attribute_int32, "g_file_info_set_attribute_int32", LIBRARY_GIO);
+	Linker.link(g_file_info_set_attribute_int64, "g_file_info_set_attribute_int64", LIBRARY_GIO);
+	Linker.link(g_file_info_set_attribute_mask, "g_file_info_set_attribute_mask", LIBRARY_GIO);
+	Linker.link(g_file_info_set_attribute_object, "g_file_info_set_attribute_object", LIBRARY_GIO);
+	Linker.link(g_file_info_set_attribute_status, "g_file_info_set_attribute_status", LIBRARY_GIO);
+	Linker.link(g_file_info_set_attribute_string, "g_file_info_set_attribute_string", LIBRARY_GIO);
+	Linker.link(g_file_info_set_attribute_stringv, "g_file_info_set_attribute_stringv", LIBRARY_GIO);
+	Linker.link(g_file_info_set_attribute_uint32, "g_file_info_set_attribute_uint32", LIBRARY_GIO);
+	Linker.link(g_file_info_set_attribute_uint64, "g_file_info_set_attribute_uint64", LIBRARY_GIO);
+	Linker.link(g_file_info_set_content_type, "g_file_info_set_content_type", LIBRARY_GIO);
+	Linker.link(g_file_info_set_display_name, "g_file_info_set_display_name", LIBRARY_GIO);
+	Linker.link(g_file_info_set_edit_name, "g_file_info_set_edit_name", LIBRARY_GIO);
+	Linker.link(g_file_info_set_file_type, "g_file_info_set_file_type", LIBRARY_GIO);
+	Linker.link(g_file_info_set_icon, "g_file_info_set_icon", LIBRARY_GIO);
+	Linker.link(g_file_info_set_is_hidden, "g_file_info_set_is_hidden", LIBRARY_GIO);
+	Linker.link(g_file_info_set_is_symlink, "g_file_info_set_is_symlink", LIBRARY_GIO);
+	Linker.link(g_file_info_set_modification_time, "g_file_info_set_modification_time", LIBRARY_GIO);
+	Linker.link(g_file_info_set_name, "g_file_info_set_name", LIBRARY_GIO);
+	Linker.link(g_file_info_set_size, "g_file_info_set_size", LIBRARY_GIO);
+	Linker.link(g_file_info_set_sort_order, "g_file_info_set_sort_order", LIBRARY_GIO);
+	Linker.link(g_file_info_set_symbolic_icon, "g_file_info_set_symbolic_icon", LIBRARY_GIO);
+	Linker.link(g_file_info_set_symlink_target, "g_file_info_set_symlink_target", LIBRARY_GIO);
+	Linker.link(g_file_info_unset_attribute_mask, "g_file_info_unset_attribute_mask", LIBRARY_GIO);
 
 	// gio.FileInputStream
 
-	Linker.link(g_file_input_stream_get_type, "g_file_input_stream_get_type", LIBRARY.GIO);
-	Linker.link(g_file_input_stream_query_info, "g_file_input_stream_query_info", LIBRARY.GIO);
-	Linker.link(g_file_input_stream_query_info_async, "g_file_input_stream_query_info_async", LIBRARY.GIO);
-	Linker.link(g_file_input_stream_query_info_finish, "g_file_input_stream_query_info_finish", LIBRARY.GIO);
+	Linker.link(g_file_input_stream_get_type, "g_file_input_stream_get_type", LIBRARY_GIO);
+	Linker.link(g_file_input_stream_query_info, "g_file_input_stream_query_info", LIBRARY_GIO);
+	Linker.link(g_file_input_stream_query_info_async, "g_file_input_stream_query_info_async", LIBRARY_GIO);
+	Linker.link(g_file_input_stream_query_info_finish, "g_file_input_stream_query_info_finish", LIBRARY_GIO);
 
 	// gio.FileMonitor
 
-	Linker.link(g_file_monitor_get_type, "g_file_monitor_get_type", LIBRARY.GIO);
-	Linker.link(g_file_monitor_cancel, "g_file_monitor_cancel", LIBRARY.GIO);
-	Linker.link(g_file_monitor_emit_event, "g_file_monitor_emit_event", LIBRARY.GIO);
-	Linker.link(g_file_monitor_is_cancelled, "g_file_monitor_is_cancelled", LIBRARY.GIO);
-	Linker.link(g_file_monitor_set_rate_limit, "g_file_monitor_set_rate_limit", LIBRARY.GIO);
+	Linker.link(g_file_monitor_get_type, "g_file_monitor_get_type", LIBRARY_GIO);
+	Linker.link(g_file_monitor_cancel, "g_file_monitor_cancel", LIBRARY_GIO);
+	Linker.link(g_file_monitor_emit_event, "g_file_monitor_emit_event", LIBRARY_GIO);
+	Linker.link(g_file_monitor_is_cancelled, "g_file_monitor_is_cancelled", LIBRARY_GIO);
+	Linker.link(g_file_monitor_set_rate_limit, "g_file_monitor_set_rate_limit", LIBRARY_GIO);
 
 	// gio.FileOutputStream
 
-	Linker.link(g_file_output_stream_get_type, "g_file_output_stream_get_type", LIBRARY.GIO);
-	Linker.link(g_file_output_stream_get_etag, "g_file_output_stream_get_etag", LIBRARY.GIO);
-	Linker.link(g_file_output_stream_query_info, "g_file_output_stream_query_info", LIBRARY.GIO);
-	Linker.link(g_file_output_stream_query_info_async, "g_file_output_stream_query_info_async", LIBRARY.GIO);
-	Linker.link(g_file_output_stream_query_info_finish, "g_file_output_stream_query_info_finish", LIBRARY.GIO);
+	Linker.link(g_file_output_stream_get_type, "g_file_output_stream_get_type", LIBRARY_GIO);
+	Linker.link(g_file_output_stream_get_etag, "g_file_output_stream_get_etag", LIBRARY_GIO);
+	Linker.link(g_file_output_stream_query_info, "g_file_output_stream_query_info", LIBRARY_GIO);
+	Linker.link(g_file_output_stream_query_info_async, "g_file_output_stream_query_info_async", LIBRARY_GIO);
+	Linker.link(g_file_output_stream_query_info_finish, "g_file_output_stream_query_info_finish", LIBRARY_GIO);
 
 	// gio.FilenameCompleter
 
-	Linker.link(g_filename_completer_get_type, "g_filename_completer_get_type", LIBRARY.GIO);
-	Linker.link(g_filename_completer_new, "g_filename_completer_new", LIBRARY.GIO);
-	Linker.link(g_filename_completer_get_completion_suffix, "g_filename_completer_get_completion_suffix", LIBRARY.GIO);
-	Linker.link(g_filename_completer_get_completions, "g_filename_completer_get_completions", LIBRARY.GIO);
-	Linker.link(g_filename_completer_set_dirs_only, "g_filename_completer_set_dirs_only", LIBRARY.GIO);
+	Linker.link(g_filename_completer_get_type, "g_filename_completer_get_type", LIBRARY_GIO);
+	Linker.link(g_filename_completer_new, "g_filename_completer_new", LIBRARY_GIO);
+	Linker.link(g_filename_completer_get_completion_suffix, "g_filename_completer_get_completion_suffix", LIBRARY_GIO);
+	Linker.link(g_filename_completer_get_completions, "g_filename_completer_get_completions", LIBRARY_GIO);
+	Linker.link(g_filename_completer_set_dirs_only, "g_filename_completer_set_dirs_only", LIBRARY_GIO);
 
 	// gio.FilterInputStream
 
-	Linker.link(g_filter_input_stream_get_type, "g_filter_input_stream_get_type", LIBRARY.GIO);
-	Linker.link(g_filter_input_stream_get_base_stream, "g_filter_input_stream_get_base_stream", LIBRARY.GIO);
-	Linker.link(g_filter_input_stream_get_close_base_stream, "g_filter_input_stream_get_close_base_stream", LIBRARY.GIO);
-	Linker.link(g_filter_input_stream_set_close_base_stream, "g_filter_input_stream_set_close_base_stream", LIBRARY.GIO);
+	Linker.link(g_filter_input_stream_get_type, "g_filter_input_stream_get_type", LIBRARY_GIO);
+	Linker.link(g_filter_input_stream_get_base_stream, "g_filter_input_stream_get_base_stream", LIBRARY_GIO);
+	Linker.link(g_filter_input_stream_get_close_base_stream, "g_filter_input_stream_get_close_base_stream", LIBRARY_GIO);
+	Linker.link(g_filter_input_stream_set_close_base_stream, "g_filter_input_stream_set_close_base_stream", LIBRARY_GIO);
 
 	// gio.FilterOutputStream
 
-	Linker.link(g_filter_output_stream_get_type, "g_filter_output_stream_get_type", LIBRARY.GIO);
-	Linker.link(g_filter_output_stream_get_base_stream, "g_filter_output_stream_get_base_stream", LIBRARY.GIO);
-	Linker.link(g_filter_output_stream_get_close_base_stream, "g_filter_output_stream_get_close_base_stream", LIBRARY.GIO);
-	Linker.link(g_filter_output_stream_set_close_base_stream, "g_filter_output_stream_set_close_base_stream", LIBRARY.GIO);
+	Linker.link(g_filter_output_stream_get_type, "g_filter_output_stream_get_type", LIBRARY_GIO);
+	Linker.link(g_filter_output_stream_get_base_stream, "g_filter_output_stream_get_base_stream", LIBRARY_GIO);
+	Linker.link(g_filter_output_stream_get_close_base_stream, "g_filter_output_stream_get_close_base_stream", LIBRARY_GIO);
+	Linker.link(g_filter_output_stream_set_close_base_stream, "g_filter_output_stream_set_close_base_stream", LIBRARY_GIO);
 
 	// gio.IOExtension
 
-	Linker.link(g_io_extension_get_name, "g_io_extension_get_name", LIBRARY.GIO);
-	Linker.link(g_io_extension_get_priority, "g_io_extension_get_priority", LIBRARY.GIO);
-	Linker.link(g_io_extension_get_type, "g_io_extension_get_type", LIBRARY.GIO);
-	Linker.link(g_io_extension_ref_class, "g_io_extension_ref_class", LIBRARY.GIO);
+	Linker.link(g_io_extension_get_name, "g_io_extension_get_name", LIBRARY_GIO);
+	Linker.link(g_io_extension_get_priority, "g_io_extension_get_priority", LIBRARY_GIO);
+	Linker.link(g_io_extension_get_type, "g_io_extension_get_type", LIBRARY_GIO);
+	Linker.link(g_io_extension_ref_class, "g_io_extension_ref_class", LIBRARY_GIO);
 
 	// gio.IOExtensionPoint
 
-	Linker.link(g_io_extension_point_get_extension_by_name, "g_io_extension_point_get_extension_by_name", LIBRARY.GIO);
-	Linker.link(g_io_extension_point_get_extensions, "g_io_extension_point_get_extensions", LIBRARY.GIO);
-	Linker.link(g_io_extension_point_get_required_type, "g_io_extension_point_get_required_type", LIBRARY.GIO);
-	Linker.link(g_io_extension_point_set_required_type, "g_io_extension_point_set_required_type", LIBRARY.GIO);
-	Linker.link(g_io_extension_point_implement, "g_io_extension_point_implement", LIBRARY.GIO);
-	Linker.link(g_io_extension_point_lookup, "g_io_extension_point_lookup", LIBRARY.GIO);
-	Linker.link(g_io_extension_point_register, "g_io_extension_point_register", LIBRARY.GIO);
+	Linker.link(g_io_extension_point_get_extension_by_name, "g_io_extension_point_get_extension_by_name", LIBRARY_GIO);
+	Linker.link(g_io_extension_point_get_extensions, "g_io_extension_point_get_extensions", LIBRARY_GIO);
+	Linker.link(g_io_extension_point_get_required_type, "g_io_extension_point_get_required_type", LIBRARY_GIO);
+	Linker.link(g_io_extension_point_set_required_type, "g_io_extension_point_set_required_type", LIBRARY_GIO);
+	Linker.link(g_io_extension_point_implement, "g_io_extension_point_implement", LIBRARY_GIO);
+	Linker.link(g_io_extension_point_lookup, "g_io_extension_point_lookup", LIBRARY_GIO);
+	Linker.link(g_io_extension_point_register, "g_io_extension_point_register", LIBRARY_GIO);
 
 	// gio.IOModule
 
-	Linker.link(g_io_module_get_type, "g_io_module_get_type", LIBRARY.GIO);
-	Linker.link(g_io_module_new, "g_io_module_new", LIBRARY.GIO);
-	Linker.link(g_io_modules_load_all_in_directory, "g_io_modules_load_all_in_directory", LIBRARY.GIO);
-	Linker.link(g_io_modules_load_all_in_directory_with_scope, "g_io_modules_load_all_in_directory_with_scope", LIBRARY.GIO);
-	Linker.link(g_io_modules_scan_all_in_directory, "g_io_modules_scan_all_in_directory", LIBRARY.GIO);
-	Linker.link(g_io_modules_scan_all_in_directory_with_scope, "g_io_modules_scan_all_in_directory_with_scope", LIBRARY.GIO);
+	Linker.link(g_io_module_get_type, "g_io_module_get_type", LIBRARY_GIO);
+	Linker.link(g_io_module_new, "g_io_module_new", LIBRARY_GIO);
+	Linker.link(g_io_modules_load_all_in_directory, "g_io_modules_load_all_in_directory", LIBRARY_GIO);
+	Linker.link(g_io_modules_load_all_in_directory_with_scope, "g_io_modules_load_all_in_directory_with_scope", LIBRARY_GIO);
+	Linker.link(g_io_modules_scan_all_in_directory, "g_io_modules_scan_all_in_directory", LIBRARY_GIO);
+	Linker.link(g_io_modules_scan_all_in_directory_with_scope, "g_io_modules_scan_all_in_directory_with_scope", LIBRARY_GIO);
 
 	// gio.IOModuleScope
 
-	Linker.link(g_io_module_scope_block, "g_io_module_scope_block", LIBRARY.GIO);
-	Linker.link(g_io_module_scope_free, "g_io_module_scope_free", LIBRARY.GIO);
-	Linker.link(g_io_module_scope_new, "g_io_module_scope_new", LIBRARY.GIO);
+	Linker.link(g_io_module_scope_block, "g_io_module_scope_block", LIBRARY_GIO);
+	Linker.link(g_io_module_scope_free, "g_io_module_scope_free", LIBRARY_GIO);
+	Linker.link(g_io_module_scope_new, "g_io_module_scope_new", LIBRARY_GIO);
 
 	// gio.IOSchedulerJob
 
-	Linker.link(g_io_scheduler_job_send_to_mainloop, "g_io_scheduler_job_send_to_mainloop", LIBRARY.GIO);
-	Linker.link(g_io_scheduler_job_send_to_mainloop_async, "g_io_scheduler_job_send_to_mainloop_async", LIBRARY.GIO);
-	Linker.link(g_io_scheduler_cancel_all_jobs, "g_io_scheduler_cancel_all_jobs", LIBRARY.GIO);
-	Linker.link(g_io_scheduler_push_job, "g_io_scheduler_push_job", LIBRARY.GIO);
+	Linker.link(g_io_scheduler_job_send_to_mainloop, "g_io_scheduler_job_send_to_mainloop", LIBRARY_GIO);
+	Linker.link(g_io_scheduler_job_send_to_mainloop_async, "g_io_scheduler_job_send_to_mainloop_async", LIBRARY_GIO);
+	Linker.link(g_io_scheduler_cancel_all_jobs, "g_io_scheduler_cancel_all_jobs", LIBRARY_GIO);
+	Linker.link(g_io_scheduler_push_job, "g_io_scheduler_push_job", LIBRARY_GIO);
 
 	// gio.IOStream
 
-	Linker.link(g_io_stream_get_type, "g_io_stream_get_type", LIBRARY.GIO);
-	Linker.link(g_io_stream_splice_finish, "g_io_stream_splice_finish", LIBRARY.GIO);
-	Linker.link(g_io_stream_clear_pending, "g_io_stream_clear_pending", LIBRARY.GIO);
-	Linker.link(g_io_stream_close, "g_io_stream_close", LIBRARY.GIO);
-	Linker.link(g_io_stream_close_async, "g_io_stream_close_async", LIBRARY.GIO);
-	Linker.link(g_io_stream_close_finish, "g_io_stream_close_finish", LIBRARY.GIO);
-	Linker.link(g_io_stream_get_input_stream, "g_io_stream_get_input_stream", LIBRARY.GIO);
-	Linker.link(g_io_stream_get_output_stream, "g_io_stream_get_output_stream", LIBRARY.GIO);
-	Linker.link(g_io_stream_has_pending, "g_io_stream_has_pending", LIBRARY.GIO);
-	Linker.link(g_io_stream_is_closed, "g_io_stream_is_closed", LIBRARY.GIO);
-	Linker.link(g_io_stream_set_pending, "g_io_stream_set_pending", LIBRARY.GIO);
-	Linker.link(g_io_stream_splice_async, "g_io_stream_splice_async", LIBRARY.GIO);
+	Linker.link(g_io_stream_get_type, "g_io_stream_get_type", LIBRARY_GIO);
+	Linker.link(g_io_stream_splice_finish, "g_io_stream_splice_finish", LIBRARY_GIO);
+	Linker.link(g_io_stream_clear_pending, "g_io_stream_clear_pending", LIBRARY_GIO);
+	Linker.link(g_io_stream_close, "g_io_stream_close", LIBRARY_GIO);
+	Linker.link(g_io_stream_close_async, "g_io_stream_close_async", LIBRARY_GIO);
+	Linker.link(g_io_stream_close_finish, "g_io_stream_close_finish", LIBRARY_GIO);
+	Linker.link(g_io_stream_get_input_stream, "g_io_stream_get_input_stream", LIBRARY_GIO);
+	Linker.link(g_io_stream_get_output_stream, "g_io_stream_get_output_stream", LIBRARY_GIO);
+	Linker.link(g_io_stream_has_pending, "g_io_stream_has_pending", LIBRARY_GIO);
+	Linker.link(g_io_stream_is_closed, "g_io_stream_is_closed", LIBRARY_GIO);
+	Linker.link(g_io_stream_set_pending, "g_io_stream_set_pending", LIBRARY_GIO);
+	Linker.link(g_io_stream_splice_async, "g_io_stream_splice_async", LIBRARY_GIO);
 
 	// gio.Icon
 
-	Linker.link(g_icon_get_type, "g_icon_get_type", LIBRARY.GIO);
-	Linker.link(g_icon_deserialize, "g_icon_deserialize", LIBRARY.GIO);
-	Linker.link(g_icon_hash, "g_icon_hash", LIBRARY.GIO);
-	Linker.link(g_icon_new_for_string, "g_icon_new_for_string", LIBRARY.GIO);
-	Linker.link(g_icon_equal, "g_icon_equal", LIBRARY.GIO);
-	Linker.link(g_icon_serialize, "g_icon_serialize", LIBRARY.GIO);
-	Linker.link(g_icon_to_string, "g_icon_to_string", LIBRARY.GIO);
+	Linker.link(g_icon_get_type, "g_icon_get_type", LIBRARY_GIO);
+	Linker.link(g_icon_deserialize, "g_icon_deserialize", LIBRARY_GIO);
+	Linker.link(g_icon_hash, "g_icon_hash", LIBRARY_GIO);
+	Linker.link(g_icon_new_for_string, "g_icon_new_for_string", LIBRARY_GIO);
+	Linker.link(g_icon_equal, "g_icon_equal", LIBRARY_GIO);
+	Linker.link(g_icon_serialize, "g_icon_serialize", LIBRARY_GIO);
+	Linker.link(g_icon_to_string, "g_icon_to_string", LIBRARY_GIO);
 
 	// gio.InetAddress
 
-	Linker.link(g_inet_address_get_type, "g_inet_address_get_type", LIBRARY.GIO);
-	Linker.link(g_inet_address_new_any, "g_inet_address_new_any", LIBRARY.GIO);
-	Linker.link(g_inet_address_new_from_bytes, "g_inet_address_new_from_bytes", LIBRARY.GIO);
-	Linker.link(g_inet_address_new_from_string, "g_inet_address_new_from_string", LIBRARY.GIO);
-	Linker.link(g_inet_address_new_loopback, "g_inet_address_new_loopback", LIBRARY.GIO);
-	Linker.link(g_inet_address_equal, "g_inet_address_equal", LIBRARY.GIO);
-	Linker.link(g_inet_address_get_family, "g_inet_address_get_family", LIBRARY.GIO);
-	Linker.link(g_inet_address_get_is_any, "g_inet_address_get_is_any", LIBRARY.GIO);
-	Linker.link(g_inet_address_get_is_link_local, "g_inet_address_get_is_link_local", LIBRARY.GIO);
-	Linker.link(g_inet_address_get_is_loopback, "g_inet_address_get_is_loopback", LIBRARY.GIO);
-	Linker.link(g_inet_address_get_is_mc_global, "g_inet_address_get_is_mc_global", LIBRARY.GIO);
-	Linker.link(g_inet_address_get_is_mc_link_local, "g_inet_address_get_is_mc_link_local", LIBRARY.GIO);
-	Linker.link(g_inet_address_get_is_mc_node_local, "g_inet_address_get_is_mc_node_local", LIBRARY.GIO);
-	Linker.link(g_inet_address_get_is_mc_org_local, "g_inet_address_get_is_mc_org_local", LIBRARY.GIO);
-	Linker.link(g_inet_address_get_is_mc_site_local, "g_inet_address_get_is_mc_site_local", LIBRARY.GIO);
-	Linker.link(g_inet_address_get_is_multicast, "g_inet_address_get_is_multicast", LIBRARY.GIO);
-	Linker.link(g_inet_address_get_is_site_local, "g_inet_address_get_is_site_local", LIBRARY.GIO);
-	Linker.link(g_inet_address_get_native_size, "g_inet_address_get_native_size", LIBRARY.GIO);
-	Linker.link(g_inet_address_to_bytes, "g_inet_address_to_bytes", LIBRARY.GIO);
-	Linker.link(g_inet_address_to_string, "g_inet_address_to_string", LIBRARY.GIO);
+	Linker.link(g_inet_address_get_type, "g_inet_address_get_type", LIBRARY_GIO);
+	Linker.link(g_inet_address_new_any, "g_inet_address_new_any", LIBRARY_GIO);
+	Linker.link(g_inet_address_new_from_bytes, "g_inet_address_new_from_bytes", LIBRARY_GIO);
+	Linker.link(g_inet_address_new_from_string, "g_inet_address_new_from_string", LIBRARY_GIO);
+	Linker.link(g_inet_address_new_loopback, "g_inet_address_new_loopback", LIBRARY_GIO);
+	Linker.link(g_inet_address_equal, "g_inet_address_equal", LIBRARY_GIO);
+	Linker.link(g_inet_address_get_family, "g_inet_address_get_family", LIBRARY_GIO);
+	Linker.link(g_inet_address_get_is_any, "g_inet_address_get_is_any", LIBRARY_GIO);
+	Linker.link(g_inet_address_get_is_link_local, "g_inet_address_get_is_link_local", LIBRARY_GIO);
+	Linker.link(g_inet_address_get_is_loopback, "g_inet_address_get_is_loopback", LIBRARY_GIO);
+	Linker.link(g_inet_address_get_is_mc_global, "g_inet_address_get_is_mc_global", LIBRARY_GIO);
+	Linker.link(g_inet_address_get_is_mc_link_local, "g_inet_address_get_is_mc_link_local", LIBRARY_GIO);
+	Linker.link(g_inet_address_get_is_mc_node_local, "g_inet_address_get_is_mc_node_local", LIBRARY_GIO);
+	Linker.link(g_inet_address_get_is_mc_org_local, "g_inet_address_get_is_mc_org_local", LIBRARY_GIO);
+	Linker.link(g_inet_address_get_is_mc_site_local, "g_inet_address_get_is_mc_site_local", LIBRARY_GIO);
+	Linker.link(g_inet_address_get_is_multicast, "g_inet_address_get_is_multicast", LIBRARY_GIO);
+	Linker.link(g_inet_address_get_is_site_local, "g_inet_address_get_is_site_local", LIBRARY_GIO);
+	Linker.link(g_inet_address_get_native_size, "g_inet_address_get_native_size", LIBRARY_GIO);
+	Linker.link(g_inet_address_to_bytes, "g_inet_address_to_bytes", LIBRARY_GIO);
+	Linker.link(g_inet_address_to_string, "g_inet_address_to_string", LIBRARY_GIO);
 
 	// gio.InetAddressMask
 
-	Linker.link(g_inet_address_mask_get_type, "g_inet_address_mask_get_type", LIBRARY.GIO);
-	Linker.link(g_inet_address_mask_new, "g_inet_address_mask_new", LIBRARY.GIO);
-	Linker.link(g_inet_address_mask_new_from_string, "g_inet_address_mask_new_from_string", LIBRARY.GIO);
-	Linker.link(g_inet_address_mask_equal, "g_inet_address_mask_equal", LIBRARY.GIO);
-	Linker.link(g_inet_address_mask_get_address, "g_inet_address_mask_get_address", LIBRARY.GIO);
-	Linker.link(g_inet_address_mask_get_family, "g_inet_address_mask_get_family", LIBRARY.GIO);
-	Linker.link(g_inet_address_mask_get_length, "g_inet_address_mask_get_length", LIBRARY.GIO);
-	Linker.link(g_inet_address_mask_matches, "g_inet_address_mask_matches", LIBRARY.GIO);
-	Linker.link(g_inet_address_mask_to_string, "g_inet_address_mask_to_string", LIBRARY.GIO);
+	Linker.link(g_inet_address_mask_get_type, "g_inet_address_mask_get_type", LIBRARY_GIO);
+	Linker.link(g_inet_address_mask_new, "g_inet_address_mask_new", LIBRARY_GIO);
+	Linker.link(g_inet_address_mask_new_from_string, "g_inet_address_mask_new_from_string", LIBRARY_GIO);
+	Linker.link(g_inet_address_mask_equal, "g_inet_address_mask_equal", LIBRARY_GIO);
+	Linker.link(g_inet_address_mask_get_address, "g_inet_address_mask_get_address", LIBRARY_GIO);
+	Linker.link(g_inet_address_mask_get_family, "g_inet_address_mask_get_family", LIBRARY_GIO);
+	Linker.link(g_inet_address_mask_get_length, "g_inet_address_mask_get_length", LIBRARY_GIO);
+	Linker.link(g_inet_address_mask_matches, "g_inet_address_mask_matches", LIBRARY_GIO);
+	Linker.link(g_inet_address_mask_to_string, "g_inet_address_mask_to_string", LIBRARY_GIO);
 
 	// gio.InetSocketAddress
 
-	Linker.link(g_inet_socket_address_get_type, "g_inet_socket_address_get_type", LIBRARY.GIO);
-	Linker.link(g_inet_socket_address_new, "g_inet_socket_address_new", LIBRARY.GIO);
-	Linker.link(g_inet_socket_address_new_from_string, "g_inet_socket_address_new_from_string", LIBRARY.GIO);
-	Linker.link(g_inet_socket_address_get_address, "g_inet_socket_address_get_address", LIBRARY.GIO);
-	Linker.link(g_inet_socket_address_get_flowinfo, "g_inet_socket_address_get_flowinfo", LIBRARY.GIO);
-	Linker.link(g_inet_socket_address_get_port, "g_inet_socket_address_get_port", LIBRARY.GIO);
-	Linker.link(g_inet_socket_address_get_scope_id, "g_inet_socket_address_get_scope_id", LIBRARY.GIO);
+	Linker.link(g_inet_socket_address_get_type, "g_inet_socket_address_get_type", LIBRARY_GIO);
+	Linker.link(g_inet_socket_address_new, "g_inet_socket_address_new", LIBRARY_GIO);
+	Linker.link(g_inet_socket_address_new_from_string, "g_inet_socket_address_new_from_string", LIBRARY_GIO);
+	Linker.link(g_inet_socket_address_get_address, "g_inet_socket_address_get_address", LIBRARY_GIO);
+	Linker.link(g_inet_socket_address_get_flowinfo, "g_inet_socket_address_get_flowinfo", LIBRARY_GIO);
+	Linker.link(g_inet_socket_address_get_port, "g_inet_socket_address_get_port", LIBRARY_GIO);
+	Linker.link(g_inet_socket_address_get_scope_id, "g_inet_socket_address_get_scope_id", LIBRARY_GIO);
 
 	// gio.Initable
 
-	Linker.link(g_initable_get_type, "g_initable_get_type", LIBRARY.GIO);
-	Linker.link(g_initable_new, "g_initable_new", LIBRARY.GIO);
-	Linker.link(g_initable_new_valist, "g_initable_new_valist", LIBRARY.GIO);
-	Linker.link(g_initable_newv, "g_initable_newv", LIBRARY.GIO);
-	Linker.link(g_initable_init, "g_initable_init", LIBRARY.GIO);
+	Linker.link(g_initable_get_type, "g_initable_get_type", LIBRARY_GIO);
+	Linker.link(g_initable_new, "g_initable_new", LIBRARY_GIO);
+	Linker.link(g_initable_new_valist, "g_initable_new_valist", LIBRARY_GIO);
+	Linker.link(g_initable_newv, "g_initable_newv", LIBRARY_GIO);
+	Linker.link(g_initable_init, "g_initable_init", LIBRARY_GIO);
 
 	// gio.InputStream
 
-	Linker.link(g_input_stream_get_type, "g_input_stream_get_type", LIBRARY.GIO);
-	Linker.link(g_input_stream_clear_pending, "g_input_stream_clear_pending", LIBRARY.GIO);
-	Linker.link(g_input_stream_close, "g_input_stream_close", LIBRARY.GIO);
-	Linker.link(g_input_stream_close_async, "g_input_stream_close_async", LIBRARY.GIO);
-	Linker.link(g_input_stream_close_finish, "g_input_stream_close_finish", LIBRARY.GIO);
-	Linker.link(g_input_stream_has_pending, "g_input_stream_has_pending", LIBRARY.GIO);
-	Linker.link(g_input_stream_is_closed, "g_input_stream_is_closed", LIBRARY.GIO);
-	Linker.link(g_input_stream_read, "g_input_stream_read", LIBRARY.GIO);
-	Linker.link(g_input_stream_read_all, "g_input_stream_read_all", LIBRARY.GIO);
-	Linker.link(g_input_stream_read_all_async, "g_input_stream_read_all_async", LIBRARY.GIO);
-	Linker.link(g_input_stream_read_all_finish, "g_input_stream_read_all_finish", LIBRARY.GIO);
-	Linker.link(g_input_stream_read_async, "g_input_stream_read_async", LIBRARY.GIO);
-	Linker.link(g_input_stream_read_bytes, "g_input_stream_read_bytes", LIBRARY.GIO);
-	Linker.link(g_input_stream_read_bytes_async, "g_input_stream_read_bytes_async", LIBRARY.GIO);
-	Linker.link(g_input_stream_read_bytes_finish, "g_input_stream_read_bytes_finish", LIBRARY.GIO);
-	Linker.link(g_input_stream_read_finish, "g_input_stream_read_finish", LIBRARY.GIO);
-	Linker.link(g_input_stream_set_pending, "g_input_stream_set_pending", LIBRARY.GIO);
-	Linker.link(g_input_stream_skip, "g_input_stream_skip", LIBRARY.GIO);
-	Linker.link(g_input_stream_skip_async, "g_input_stream_skip_async", LIBRARY.GIO);
-	Linker.link(g_input_stream_skip_finish, "g_input_stream_skip_finish", LIBRARY.GIO);
+	Linker.link(g_input_stream_get_type, "g_input_stream_get_type", LIBRARY_GIO);
+	Linker.link(g_input_stream_clear_pending, "g_input_stream_clear_pending", LIBRARY_GIO);
+	Linker.link(g_input_stream_close, "g_input_stream_close", LIBRARY_GIO);
+	Linker.link(g_input_stream_close_async, "g_input_stream_close_async", LIBRARY_GIO);
+	Linker.link(g_input_stream_close_finish, "g_input_stream_close_finish", LIBRARY_GIO);
+	Linker.link(g_input_stream_has_pending, "g_input_stream_has_pending", LIBRARY_GIO);
+	Linker.link(g_input_stream_is_closed, "g_input_stream_is_closed", LIBRARY_GIO);
+	Linker.link(g_input_stream_read, "g_input_stream_read", LIBRARY_GIO);
+	Linker.link(g_input_stream_read_all, "g_input_stream_read_all", LIBRARY_GIO);
+	Linker.link(g_input_stream_read_all_async, "g_input_stream_read_all_async", LIBRARY_GIO);
+	Linker.link(g_input_stream_read_all_finish, "g_input_stream_read_all_finish", LIBRARY_GIO);
+	Linker.link(g_input_stream_read_async, "g_input_stream_read_async", LIBRARY_GIO);
+	Linker.link(g_input_stream_read_bytes, "g_input_stream_read_bytes", LIBRARY_GIO);
+	Linker.link(g_input_stream_read_bytes_async, "g_input_stream_read_bytes_async", LIBRARY_GIO);
+	Linker.link(g_input_stream_read_bytes_finish, "g_input_stream_read_bytes_finish", LIBRARY_GIO);
+	Linker.link(g_input_stream_read_finish, "g_input_stream_read_finish", LIBRARY_GIO);
+	Linker.link(g_input_stream_set_pending, "g_input_stream_set_pending", LIBRARY_GIO);
+	Linker.link(g_input_stream_skip, "g_input_stream_skip", LIBRARY_GIO);
+	Linker.link(g_input_stream_skip_async, "g_input_stream_skip_async", LIBRARY_GIO);
+	Linker.link(g_input_stream_skip_finish, "g_input_stream_skip_finish", LIBRARY_GIO);
 
 	// gio.ListModel
 
-	Linker.link(g_list_model_get_type, "g_list_model_get_type", LIBRARY.GIO);
-	Linker.link(g_list_model_get_item, "g_list_model_get_item", LIBRARY.GIO);
-	Linker.link(g_list_model_get_item_type, "g_list_model_get_item_type", LIBRARY.GIO);
-	Linker.link(g_list_model_get_n_items, "g_list_model_get_n_items", LIBRARY.GIO);
-	Linker.link(g_list_model_get_object, "g_list_model_get_object", LIBRARY.GIO);
-	Linker.link(g_list_model_items_changed, "g_list_model_items_changed", LIBRARY.GIO);
+	Linker.link(g_list_model_get_type, "g_list_model_get_type", LIBRARY_GIO);
+	Linker.link(g_list_model_get_item, "g_list_model_get_item", LIBRARY_GIO);
+	Linker.link(g_list_model_get_item_type, "g_list_model_get_item_type", LIBRARY_GIO);
+	Linker.link(g_list_model_get_n_items, "g_list_model_get_n_items", LIBRARY_GIO);
+	Linker.link(g_list_model_get_object, "g_list_model_get_object", LIBRARY_GIO);
+	Linker.link(g_list_model_items_changed, "g_list_model_items_changed", LIBRARY_GIO);
 
 	// gio.ListStore
 
-	Linker.link(g_list_store_get_type, "g_list_store_get_type", LIBRARY.GIO);
-	Linker.link(g_list_store_new, "g_list_store_new", LIBRARY.GIO);
-	Linker.link(g_list_store_append, "g_list_store_append", LIBRARY.GIO);
-	Linker.link(g_list_store_insert, "g_list_store_insert", LIBRARY.GIO);
-	Linker.link(g_list_store_insert_sorted, "g_list_store_insert_sorted", LIBRARY.GIO);
-	Linker.link(g_list_store_remove, "g_list_store_remove", LIBRARY.GIO);
-	Linker.link(g_list_store_remove_all, "g_list_store_remove_all", LIBRARY.GIO);
-	Linker.link(g_list_store_sort, "g_list_store_sort", LIBRARY.GIO);
-	Linker.link(g_list_store_splice, "g_list_store_splice", LIBRARY.GIO);
+	Linker.link(g_list_store_get_type, "g_list_store_get_type", LIBRARY_GIO);
+	Linker.link(g_list_store_new, "g_list_store_new", LIBRARY_GIO);
+	Linker.link(g_list_store_append, "g_list_store_append", LIBRARY_GIO);
+	Linker.link(g_list_store_insert, "g_list_store_insert", LIBRARY_GIO);
+	Linker.link(g_list_store_insert_sorted, "g_list_store_insert_sorted", LIBRARY_GIO);
+	Linker.link(g_list_store_remove, "g_list_store_remove", LIBRARY_GIO);
+	Linker.link(g_list_store_remove_all, "g_list_store_remove_all", LIBRARY_GIO);
+	Linker.link(g_list_store_sort, "g_list_store_sort", LIBRARY_GIO);
+	Linker.link(g_list_store_splice, "g_list_store_splice", LIBRARY_GIO);
 
 	// gio.LoadableIcon
 
-	Linker.link(g_loadable_icon_get_type, "g_loadable_icon_get_type", LIBRARY.GIO);
-	Linker.link(g_loadable_icon_load, "g_loadable_icon_load", LIBRARY.GIO);
-	Linker.link(g_loadable_icon_load_async, "g_loadable_icon_load_async", LIBRARY.GIO);
-	Linker.link(g_loadable_icon_load_finish, "g_loadable_icon_load_finish", LIBRARY.GIO);
+	Linker.link(g_loadable_icon_get_type, "g_loadable_icon_get_type", LIBRARY_GIO);
+	Linker.link(g_loadable_icon_load, "g_loadable_icon_load", LIBRARY_GIO);
+	Linker.link(g_loadable_icon_load_async, "g_loadable_icon_load_async", LIBRARY_GIO);
+	Linker.link(g_loadable_icon_load_finish, "g_loadable_icon_load_finish", LIBRARY_GIO);
 
 	// gio.MemoryInputStream
 
-	Linker.link(g_memory_input_stream_get_type, "g_memory_input_stream_get_type", LIBRARY.GIO);
-	Linker.link(g_memory_input_stream_new, "g_memory_input_stream_new", LIBRARY.GIO);
-	Linker.link(g_memory_input_stream_new_from_bytes, "g_memory_input_stream_new_from_bytes", LIBRARY.GIO);
-	Linker.link(g_memory_input_stream_new_from_data, "g_memory_input_stream_new_from_data", LIBRARY.GIO);
-	Linker.link(g_memory_input_stream_add_bytes, "g_memory_input_stream_add_bytes", LIBRARY.GIO);
-	Linker.link(g_memory_input_stream_add_data, "g_memory_input_stream_add_data", LIBRARY.GIO);
+	Linker.link(g_memory_input_stream_get_type, "g_memory_input_stream_get_type", LIBRARY_GIO);
+	Linker.link(g_memory_input_stream_new, "g_memory_input_stream_new", LIBRARY_GIO);
+	Linker.link(g_memory_input_stream_new_from_bytes, "g_memory_input_stream_new_from_bytes", LIBRARY_GIO);
+	Linker.link(g_memory_input_stream_new_from_data, "g_memory_input_stream_new_from_data", LIBRARY_GIO);
+	Linker.link(g_memory_input_stream_add_bytes, "g_memory_input_stream_add_bytes", LIBRARY_GIO);
+	Linker.link(g_memory_input_stream_add_data, "g_memory_input_stream_add_data", LIBRARY_GIO);
 
 	// gio.MemoryOutputStream
 
-	Linker.link(g_memory_output_stream_get_type, "g_memory_output_stream_get_type", LIBRARY.GIO);
-	Linker.link(g_memory_output_stream_new, "g_memory_output_stream_new", LIBRARY.GIO);
-	Linker.link(g_memory_output_stream_new_resizable, "g_memory_output_stream_new_resizable", LIBRARY.GIO);
-	Linker.link(g_memory_output_stream_get_data, "g_memory_output_stream_get_data", LIBRARY.GIO);
-	Linker.link(g_memory_output_stream_get_data_size, "g_memory_output_stream_get_data_size", LIBRARY.GIO);
-	Linker.link(g_memory_output_stream_get_size, "g_memory_output_stream_get_size", LIBRARY.GIO);
-	Linker.link(g_memory_output_stream_steal_as_bytes, "g_memory_output_stream_steal_as_bytes", LIBRARY.GIO);
-	Linker.link(g_memory_output_stream_steal_data, "g_memory_output_stream_steal_data", LIBRARY.GIO);
+	Linker.link(g_memory_output_stream_get_type, "g_memory_output_stream_get_type", LIBRARY_GIO);
+	Linker.link(g_memory_output_stream_new, "g_memory_output_stream_new", LIBRARY_GIO);
+	Linker.link(g_memory_output_stream_new_resizable, "g_memory_output_stream_new_resizable", LIBRARY_GIO);
+	Linker.link(g_memory_output_stream_get_data, "g_memory_output_stream_get_data", LIBRARY_GIO);
+	Linker.link(g_memory_output_stream_get_data_size, "g_memory_output_stream_get_data_size", LIBRARY_GIO);
+	Linker.link(g_memory_output_stream_get_size, "g_memory_output_stream_get_size", LIBRARY_GIO);
+	Linker.link(g_memory_output_stream_steal_as_bytes, "g_memory_output_stream_steal_as_bytes", LIBRARY_GIO);
+	Linker.link(g_memory_output_stream_steal_data, "g_memory_output_stream_steal_data", LIBRARY_GIO);
 
 	// gio.Menu
 
-	Linker.link(g_menu_get_type, "g_menu_get_type", LIBRARY.GIO);
-	Linker.link(g_menu_new, "g_menu_new", LIBRARY.GIO);
-	Linker.link(g_menu_append, "g_menu_append", LIBRARY.GIO);
-	Linker.link(g_menu_append_item, "g_menu_append_item", LIBRARY.GIO);
-	Linker.link(g_menu_append_section, "g_menu_append_section", LIBRARY.GIO);
-	Linker.link(g_menu_append_submenu, "g_menu_append_submenu", LIBRARY.GIO);
-	Linker.link(g_menu_freeze, "g_menu_freeze", LIBRARY.GIO);
-	Linker.link(g_menu_insert, "g_menu_insert", LIBRARY.GIO);
-	Linker.link(g_menu_insert_item, "g_menu_insert_item", LIBRARY.GIO);
-	Linker.link(g_menu_insert_section, "g_menu_insert_section", LIBRARY.GIO);
-	Linker.link(g_menu_insert_submenu, "g_menu_insert_submenu", LIBRARY.GIO);
-	Linker.link(g_menu_prepend, "g_menu_prepend", LIBRARY.GIO);
-	Linker.link(g_menu_prepend_item, "g_menu_prepend_item", LIBRARY.GIO);
-	Linker.link(g_menu_prepend_section, "g_menu_prepend_section", LIBRARY.GIO);
-	Linker.link(g_menu_prepend_submenu, "g_menu_prepend_submenu", LIBRARY.GIO);
-	Linker.link(g_menu_remove, "g_menu_remove", LIBRARY.GIO);
-	Linker.link(g_menu_remove_all, "g_menu_remove_all", LIBRARY.GIO);
+	Linker.link(g_menu_get_type, "g_menu_get_type", LIBRARY_GIO);
+	Linker.link(g_menu_new, "g_menu_new", LIBRARY_GIO);
+	Linker.link(g_menu_append, "g_menu_append", LIBRARY_GIO);
+	Linker.link(g_menu_append_item, "g_menu_append_item", LIBRARY_GIO);
+	Linker.link(g_menu_append_section, "g_menu_append_section", LIBRARY_GIO);
+	Linker.link(g_menu_append_submenu, "g_menu_append_submenu", LIBRARY_GIO);
+	Linker.link(g_menu_freeze, "g_menu_freeze", LIBRARY_GIO);
+	Linker.link(g_menu_insert, "g_menu_insert", LIBRARY_GIO);
+	Linker.link(g_menu_insert_item, "g_menu_insert_item", LIBRARY_GIO);
+	Linker.link(g_menu_insert_section, "g_menu_insert_section", LIBRARY_GIO);
+	Linker.link(g_menu_insert_submenu, "g_menu_insert_submenu", LIBRARY_GIO);
+	Linker.link(g_menu_prepend, "g_menu_prepend", LIBRARY_GIO);
+	Linker.link(g_menu_prepend_item, "g_menu_prepend_item", LIBRARY_GIO);
+	Linker.link(g_menu_prepend_section, "g_menu_prepend_section", LIBRARY_GIO);
+	Linker.link(g_menu_prepend_submenu, "g_menu_prepend_submenu", LIBRARY_GIO);
+	Linker.link(g_menu_remove, "g_menu_remove", LIBRARY_GIO);
+	Linker.link(g_menu_remove_all, "g_menu_remove_all", LIBRARY_GIO);
 
 	// gio.MenuAttributeIter
 
-	Linker.link(g_menu_attribute_iter_get_type, "g_menu_attribute_iter_get_type", LIBRARY.GIO);
-	Linker.link(g_menu_attribute_iter_get_name, "g_menu_attribute_iter_get_name", LIBRARY.GIO);
-	Linker.link(g_menu_attribute_iter_get_next, "g_menu_attribute_iter_get_next", LIBRARY.GIO);
-	Linker.link(g_menu_attribute_iter_get_value, "g_menu_attribute_iter_get_value", LIBRARY.GIO);
-	Linker.link(g_menu_attribute_iter_next, "g_menu_attribute_iter_next", LIBRARY.GIO);
+	Linker.link(g_menu_attribute_iter_get_type, "g_menu_attribute_iter_get_type", LIBRARY_GIO);
+	Linker.link(g_menu_attribute_iter_get_name, "g_menu_attribute_iter_get_name", LIBRARY_GIO);
+	Linker.link(g_menu_attribute_iter_get_next, "g_menu_attribute_iter_get_next", LIBRARY_GIO);
+	Linker.link(g_menu_attribute_iter_get_value, "g_menu_attribute_iter_get_value", LIBRARY_GIO);
+	Linker.link(g_menu_attribute_iter_next, "g_menu_attribute_iter_next", LIBRARY_GIO);
 
 	// gio.MenuItem
 
-	Linker.link(g_menu_item_get_type, "g_menu_item_get_type", LIBRARY.GIO);
-	Linker.link(g_menu_item_new, "g_menu_item_new", LIBRARY.GIO);
-	Linker.link(g_menu_item_new_from_model, "g_menu_item_new_from_model", LIBRARY.GIO);
-	Linker.link(g_menu_item_new_section, "g_menu_item_new_section", LIBRARY.GIO);
-	Linker.link(g_menu_item_new_submenu, "g_menu_item_new_submenu", LIBRARY.GIO);
-	Linker.link(g_menu_item_get_attribute, "g_menu_item_get_attribute", LIBRARY.GIO);
-	Linker.link(g_menu_item_get_attribute_value, "g_menu_item_get_attribute_value", LIBRARY.GIO);
-	Linker.link(g_menu_item_get_link, "g_menu_item_get_link", LIBRARY.GIO);
-	Linker.link(g_menu_item_set_action_and_target, "g_menu_item_set_action_and_target", LIBRARY.GIO);
-	Linker.link(g_menu_item_set_action_and_target_value, "g_menu_item_set_action_and_target_value", LIBRARY.GIO);
-	Linker.link(g_menu_item_set_attribute, "g_menu_item_set_attribute", LIBRARY.GIO);
-	Linker.link(g_menu_item_set_attribute_value, "g_menu_item_set_attribute_value", LIBRARY.GIO);
-	Linker.link(g_menu_item_set_detailed_action, "g_menu_item_set_detailed_action", LIBRARY.GIO);
-	Linker.link(g_menu_item_set_icon, "g_menu_item_set_icon", LIBRARY.GIO);
-	Linker.link(g_menu_item_set_label, "g_menu_item_set_label", LIBRARY.GIO);
-	Linker.link(g_menu_item_set_link, "g_menu_item_set_link", LIBRARY.GIO);
-	Linker.link(g_menu_item_set_section, "g_menu_item_set_section", LIBRARY.GIO);
-	Linker.link(g_menu_item_set_submenu, "g_menu_item_set_submenu", LIBRARY.GIO);
+	Linker.link(g_menu_item_get_type, "g_menu_item_get_type", LIBRARY_GIO);
+	Linker.link(g_menu_item_new, "g_menu_item_new", LIBRARY_GIO);
+	Linker.link(g_menu_item_new_from_model, "g_menu_item_new_from_model", LIBRARY_GIO);
+	Linker.link(g_menu_item_new_section, "g_menu_item_new_section", LIBRARY_GIO);
+	Linker.link(g_menu_item_new_submenu, "g_menu_item_new_submenu", LIBRARY_GIO);
+	Linker.link(g_menu_item_get_attribute, "g_menu_item_get_attribute", LIBRARY_GIO);
+	Linker.link(g_menu_item_get_attribute_value, "g_menu_item_get_attribute_value", LIBRARY_GIO);
+	Linker.link(g_menu_item_get_link, "g_menu_item_get_link", LIBRARY_GIO);
+	Linker.link(g_menu_item_set_action_and_target, "g_menu_item_set_action_and_target", LIBRARY_GIO);
+	Linker.link(g_menu_item_set_action_and_target_value, "g_menu_item_set_action_and_target_value", LIBRARY_GIO);
+	Linker.link(g_menu_item_set_attribute, "g_menu_item_set_attribute", LIBRARY_GIO);
+	Linker.link(g_menu_item_set_attribute_value, "g_menu_item_set_attribute_value", LIBRARY_GIO);
+	Linker.link(g_menu_item_set_detailed_action, "g_menu_item_set_detailed_action", LIBRARY_GIO);
+	Linker.link(g_menu_item_set_icon, "g_menu_item_set_icon", LIBRARY_GIO);
+	Linker.link(g_menu_item_set_label, "g_menu_item_set_label", LIBRARY_GIO);
+	Linker.link(g_menu_item_set_link, "g_menu_item_set_link", LIBRARY_GIO);
+	Linker.link(g_menu_item_set_section, "g_menu_item_set_section", LIBRARY_GIO);
+	Linker.link(g_menu_item_set_submenu, "g_menu_item_set_submenu", LIBRARY_GIO);
 
 	// gio.MenuLinkIter
 
-	Linker.link(g_menu_link_iter_get_type, "g_menu_link_iter_get_type", LIBRARY.GIO);
-	Linker.link(g_menu_link_iter_get_name, "g_menu_link_iter_get_name", LIBRARY.GIO);
-	Linker.link(g_menu_link_iter_get_next, "g_menu_link_iter_get_next", LIBRARY.GIO);
-	Linker.link(g_menu_link_iter_get_value, "g_menu_link_iter_get_value", LIBRARY.GIO);
-	Linker.link(g_menu_link_iter_next, "g_menu_link_iter_next", LIBRARY.GIO);
+	Linker.link(g_menu_link_iter_get_type, "g_menu_link_iter_get_type", LIBRARY_GIO);
+	Linker.link(g_menu_link_iter_get_name, "g_menu_link_iter_get_name", LIBRARY_GIO);
+	Linker.link(g_menu_link_iter_get_next, "g_menu_link_iter_get_next", LIBRARY_GIO);
+	Linker.link(g_menu_link_iter_get_value, "g_menu_link_iter_get_value", LIBRARY_GIO);
+	Linker.link(g_menu_link_iter_next, "g_menu_link_iter_next", LIBRARY_GIO);
 
 	// gio.MenuModel
 
-	Linker.link(g_menu_model_get_type, "g_menu_model_get_type", LIBRARY.GIO);
-	Linker.link(g_menu_model_get_item_attribute, "g_menu_model_get_item_attribute", LIBRARY.GIO);
-	Linker.link(g_menu_model_get_item_attribute_value, "g_menu_model_get_item_attribute_value", LIBRARY.GIO);
-	Linker.link(g_menu_model_get_item_link, "g_menu_model_get_item_link", LIBRARY.GIO);
-	Linker.link(g_menu_model_get_n_items, "g_menu_model_get_n_items", LIBRARY.GIO);
-	Linker.link(g_menu_model_is_mutable, "g_menu_model_is_mutable", LIBRARY.GIO);
-	Linker.link(g_menu_model_items_changed, "g_menu_model_items_changed", LIBRARY.GIO);
-	Linker.link(g_menu_model_iterate_item_attributes, "g_menu_model_iterate_item_attributes", LIBRARY.GIO);
-	Linker.link(g_menu_model_iterate_item_links, "g_menu_model_iterate_item_links", LIBRARY.GIO);
+	Linker.link(g_menu_model_get_type, "g_menu_model_get_type", LIBRARY_GIO);
+	Linker.link(g_menu_model_get_item_attribute, "g_menu_model_get_item_attribute", LIBRARY_GIO);
+	Linker.link(g_menu_model_get_item_attribute_value, "g_menu_model_get_item_attribute_value", LIBRARY_GIO);
+	Linker.link(g_menu_model_get_item_link, "g_menu_model_get_item_link", LIBRARY_GIO);
+	Linker.link(g_menu_model_get_n_items, "g_menu_model_get_n_items", LIBRARY_GIO);
+	Linker.link(g_menu_model_is_mutable, "g_menu_model_is_mutable", LIBRARY_GIO);
+	Linker.link(g_menu_model_items_changed, "g_menu_model_items_changed", LIBRARY_GIO);
+	Linker.link(g_menu_model_iterate_item_attributes, "g_menu_model_iterate_item_attributes", LIBRARY_GIO);
+	Linker.link(g_menu_model_iterate_item_links, "g_menu_model_iterate_item_links", LIBRARY_GIO);
 
 	// gio.Mount
 
-	Linker.link(g_mount_get_type, "g_mount_get_type", LIBRARY.GIO);
-	Linker.link(g_mount_can_eject, "g_mount_can_eject", LIBRARY.GIO);
-	Linker.link(g_mount_can_unmount, "g_mount_can_unmount", LIBRARY.GIO);
-	Linker.link(g_mount_eject, "g_mount_eject", LIBRARY.GIO);
-	Linker.link(g_mount_eject_finish, "g_mount_eject_finish", LIBRARY.GIO);
-	Linker.link(g_mount_eject_with_operation, "g_mount_eject_with_operation", LIBRARY.GIO);
-	Linker.link(g_mount_eject_with_operation_finish, "g_mount_eject_with_operation_finish", LIBRARY.GIO);
-	Linker.link(g_mount_get_default_location, "g_mount_get_default_location", LIBRARY.GIO);
-	Linker.link(g_mount_get_drive, "g_mount_get_drive", LIBRARY.GIO);
-	Linker.link(g_mount_get_icon, "g_mount_get_icon", LIBRARY.GIO);
-	Linker.link(g_mount_get_name, "g_mount_get_name", LIBRARY.GIO);
-	Linker.link(g_mount_get_root, "g_mount_get_root", LIBRARY.GIO);
-	Linker.link(g_mount_get_sort_key, "g_mount_get_sort_key", LIBRARY.GIO);
-	Linker.link(g_mount_get_symbolic_icon, "g_mount_get_symbolic_icon", LIBRARY.GIO);
-	Linker.link(g_mount_get_uuid, "g_mount_get_uuid", LIBRARY.GIO);
-	Linker.link(g_mount_get_volume, "g_mount_get_volume", LIBRARY.GIO);
-	Linker.link(g_mount_guess_content_type, "g_mount_guess_content_type", LIBRARY.GIO);
-	Linker.link(g_mount_guess_content_type_finish, "g_mount_guess_content_type_finish", LIBRARY.GIO);
-	Linker.link(g_mount_guess_content_type_sync, "g_mount_guess_content_type_sync", LIBRARY.GIO);
-	Linker.link(g_mount_is_shadowed, "g_mount_is_shadowed", LIBRARY.GIO);
-	Linker.link(g_mount_remount, "g_mount_remount", LIBRARY.GIO);
-	Linker.link(g_mount_remount_finish, "g_mount_remount_finish", LIBRARY.GIO);
-	Linker.link(g_mount_shadow, "g_mount_shadow", LIBRARY.GIO);
-	Linker.link(g_mount_unmount, "g_mount_unmount", LIBRARY.GIO);
-	Linker.link(g_mount_unmount_finish, "g_mount_unmount_finish", LIBRARY.GIO);
-	Linker.link(g_mount_unmount_with_operation, "g_mount_unmount_with_operation", LIBRARY.GIO);
-	Linker.link(g_mount_unmount_with_operation_finish, "g_mount_unmount_with_operation_finish", LIBRARY.GIO);
-	Linker.link(g_mount_unshadow, "g_mount_unshadow", LIBRARY.GIO);
+	Linker.link(g_mount_get_type, "g_mount_get_type", LIBRARY_GIO);
+	Linker.link(g_mount_can_eject, "g_mount_can_eject", LIBRARY_GIO);
+	Linker.link(g_mount_can_unmount, "g_mount_can_unmount", LIBRARY_GIO);
+	Linker.link(g_mount_eject, "g_mount_eject", LIBRARY_GIO);
+	Linker.link(g_mount_eject_finish, "g_mount_eject_finish", LIBRARY_GIO);
+	Linker.link(g_mount_eject_with_operation, "g_mount_eject_with_operation", LIBRARY_GIO);
+	Linker.link(g_mount_eject_with_operation_finish, "g_mount_eject_with_operation_finish", LIBRARY_GIO);
+	Linker.link(g_mount_get_default_location, "g_mount_get_default_location", LIBRARY_GIO);
+	Linker.link(g_mount_get_drive, "g_mount_get_drive", LIBRARY_GIO);
+	Linker.link(g_mount_get_icon, "g_mount_get_icon", LIBRARY_GIO);
+	Linker.link(g_mount_get_name, "g_mount_get_name", LIBRARY_GIO);
+	Linker.link(g_mount_get_root, "g_mount_get_root", LIBRARY_GIO);
+	Linker.link(g_mount_get_sort_key, "g_mount_get_sort_key", LIBRARY_GIO);
+	Linker.link(g_mount_get_symbolic_icon, "g_mount_get_symbolic_icon", LIBRARY_GIO);
+	Linker.link(g_mount_get_uuid, "g_mount_get_uuid", LIBRARY_GIO);
+	Linker.link(g_mount_get_volume, "g_mount_get_volume", LIBRARY_GIO);
+	Linker.link(g_mount_guess_content_type, "g_mount_guess_content_type", LIBRARY_GIO);
+	Linker.link(g_mount_guess_content_type_finish, "g_mount_guess_content_type_finish", LIBRARY_GIO);
+	Linker.link(g_mount_guess_content_type_sync, "g_mount_guess_content_type_sync", LIBRARY_GIO);
+	Linker.link(g_mount_is_shadowed, "g_mount_is_shadowed", LIBRARY_GIO);
+	Linker.link(g_mount_remount, "g_mount_remount", LIBRARY_GIO);
+	Linker.link(g_mount_remount_finish, "g_mount_remount_finish", LIBRARY_GIO);
+	Linker.link(g_mount_shadow, "g_mount_shadow", LIBRARY_GIO);
+	Linker.link(g_mount_unmount, "g_mount_unmount", LIBRARY_GIO);
+	Linker.link(g_mount_unmount_finish, "g_mount_unmount_finish", LIBRARY_GIO);
+	Linker.link(g_mount_unmount_with_operation, "g_mount_unmount_with_operation", LIBRARY_GIO);
+	Linker.link(g_mount_unmount_with_operation_finish, "g_mount_unmount_with_operation_finish", LIBRARY_GIO);
+	Linker.link(g_mount_unshadow, "g_mount_unshadow", LIBRARY_GIO);
 
 	// gio.MountOperation
 
-	Linker.link(g_mount_operation_get_type, "g_mount_operation_get_type", LIBRARY.GIO);
-	Linker.link(g_mount_operation_new, "g_mount_operation_new", LIBRARY.GIO);
-	Linker.link(g_mount_operation_get_anonymous, "g_mount_operation_get_anonymous", LIBRARY.GIO);
-	Linker.link(g_mount_operation_get_choice, "g_mount_operation_get_choice", LIBRARY.GIO);
-	Linker.link(g_mount_operation_get_domain, "g_mount_operation_get_domain", LIBRARY.GIO);
-	Linker.link(g_mount_operation_get_password, "g_mount_operation_get_password", LIBRARY.GIO);
-	Linker.link(g_mount_operation_get_password_save, "g_mount_operation_get_password_save", LIBRARY.GIO);
-	Linker.link(g_mount_operation_get_username, "g_mount_operation_get_username", LIBRARY.GIO);
-	Linker.link(g_mount_operation_reply, "g_mount_operation_reply", LIBRARY.GIO);
-	Linker.link(g_mount_operation_set_anonymous, "g_mount_operation_set_anonymous", LIBRARY.GIO);
-	Linker.link(g_mount_operation_set_choice, "g_mount_operation_set_choice", LIBRARY.GIO);
-	Linker.link(g_mount_operation_set_domain, "g_mount_operation_set_domain", LIBRARY.GIO);
-	Linker.link(g_mount_operation_set_password, "g_mount_operation_set_password", LIBRARY.GIO);
-	Linker.link(g_mount_operation_set_password_save, "g_mount_operation_set_password_save", LIBRARY.GIO);
-	Linker.link(g_mount_operation_set_username, "g_mount_operation_set_username", LIBRARY.GIO);
+	Linker.link(g_mount_operation_get_type, "g_mount_operation_get_type", LIBRARY_GIO);
+	Linker.link(g_mount_operation_new, "g_mount_operation_new", LIBRARY_GIO);
+	Linker.link(g_mount_operation_get_anonymous, "g_mount_operation_get_anonymous", LIBRARY_GIO);
+	Linker.link(g_mount_operation_get_choice, "g_mount_operation_get_choice", LIBRARY_GIO);
+	Linker.link(g_mount_operation_get_domain, "g_mount_operation_get_domain", LIBRARY_GIO);
+	Linker.link(g_mount_operation_get_password, "g_mount_operation_get_password", LIBRARY_GIO);
+	Linker.link(g_mount_operation_get_password_save, "g_mount_operation_get_password_save", LIBRARY_GIO);
+	Linker.link(g_mount_operation_get_username, "g_mount_operation_get_username", LIBRARY_GIO);
+	Linker.link(g_mount_operation_reply, "g_mount_operation_reply", LIBRARY_GIO);
+	Linker.link(g_mount_operation_set_anonymous, "g_mount_operation_set_anonymous", LIBRARY_GIO);
+	Linker.link(g_mount_operation_set_choice, "g_mount_operation_set_choice", LIBRARY_GIO);
+	Linker.link(g_mount_operation_set_domain, "g_mount_operation_set_domain", LIBRARY_GIO);
+	Linker.link(g_mount_operation_set_password, "g_mount_operation_set_password", LIBRARY_GIO);
+	Linker.link(g_mount_operation_set_password_save, "g_mount_operation_set_password_save", LIBRARY_GIO);
+	Linker.link(g_mount_operation_set_username, "g_mount_operation_set_username", LIBRARY_GIO);
 
 	// gio.NativeVolumeMonitor
 
-	Linker.link(g_native_volume_monitor_get_type, "g_native_volume_monitor_get_type", LIBRARY.GIO);
+	Linker.link(g_native_volume_monitor_get_type, "g_native_volume_monitor_get_type", LIBRARY_GIO);
 
 	// gio.NetworkAddress
 
-	Linker.link(g_network_address_get_type, "g_network_address_get_type", LIBRARY.GIO);
-	Linker.link(g_network_address_new, "g_network_address_new", LIBRARY.GIO);
-	Linker.link(g_network_address_new_loopback, "g_network_address_new_loopback", LIBRARY.GIO);
-	Linker.link(g_network_address_parse, "g_network_address_parse", LIBRARY.GIO);
-	Linker.link(g_network_address_parse_uri, "g_network_address_parse_uri", LIBRARY.GIO);
-	Linker.link(g_network_address_get_hostname, "g_network_address_get_hostname", LIBRARY.GIO);
-	Linker.link(g_network_address_get_port, "g_network_address_get_port", LIBRARY.GIO);
-	Linker.link(g_network_address_get_scheme, "g_network_address_get_scheme", LIBRARY.GIO);
+	Linker.link(g_network_address_get_type, "g_network_address_get_type", LIBRARY_GIO);
+	Linker.link(g_network_address_new, "g_network_address_new", LIBRARY_GIO);
+	Linker.link(g_network_address_new_loopback, "g_network_address_new_loopback", LIBRARY_GIO);
+	Linker.link(g_network_address_parse, "g_network_address_parse", LIBRARY_GIO);
+	Linker.link(g_network_address_parse_uri, "g_network_address_parse_uri", LIBRARY_GIO);
+	Linker.link(g_network_address_get_hostname, "g_network_address_get_hostname", LIBRARY_GIO);
+	Linker.link(g_network_address_get_port, "g_network_address_get_port", LIBRARY_GIO);
+	Linker.link(g_network_address_get_scheme, "g_network_address_get_scheme", LIBRARY_GIO);
 
 	// gio.NetworkMonitor
 
-	Linker.link(g_network_monitor_get_type, "g_network_monitor_get_type", LIBRARY.GIO);
-	Linker.link(g_network_monitor_get_default, "g_network_monitor_get_default", LIBRARY.GIO);
-	Linker.link(g_network_monitor_can_reach, "g_network_monitor_can_reach", LIBRARY.GIO);
-	Linker.link(g_network_monitor_can_reach_async, "g_network_monitor_can_reach_async", LIBRARY.GIO);
-	Linker.link(g_network_monitor_can_reach_finish, "g_network_monitor_can_reach_finish", LIBRARY.GIO);
-	Linker.link(g_network_monitor_get_connectivity, "g_network_monitor_get_connectivity", LIBRARY.GIO);
-	Linker.link(g_network_monitor_get_network_available, "g_network_monitor_get_network_available", LIBRARY.GIO);
-	Linker.link(g_network_monitor_get_network_metered, "g_network_monitor_get_network_metered", LIBRARY.GIO);
+	Linker.link(g_network_monitor_get_type, "g_network_monitor_get_type", LIBRARY_GIO);
+	Linker.link(g_network_monitor_get_default, "g_network_monitor_get_default", LIBRARY_GIO);
+	Linker.link(g_network_monitor_can_reach, "g_network_monitor_can_reach", LIBRARY_GIO);
+	Linker.link(g_network_monitor_can_reach_async, "g_network_monitor_can_reach_async", LIBRARY_GIO);
+	Linker.link(g_network_monitor_can_reach_finish, "g_network_monitor_can_reach_finish", LIBRARY_GIO);
+	Linker.link(g_network_monitor_get_connectivity, "g_network_monitor_get_connectivity", LIBRARY_GIO);
+	Linker.link(g_network_monitor_get_network_available, "g_network_monitor_get_network_available", LIBRARY_GIO);
+	Linker.link(g_network_monitor_get_network_metered, "g_network_monitor_get_network_metered", LIBRARY_GIO);
 
 	// gio.NetworkService
 
-	Linker.link(g_network_service_get_type, "g_network_service_get_type", LIBRARY.GIO);
-	Linker.link(g_network_service_new, "g_network_service_new", LIBRARY.GIO);
-	Linker.link(g_network_service_get_domain, "g_network_service_get_domain", LIBRARY.GIO);
-	Linker.link(g_network_service_get_protocol, "g_network_service_get_protocol", LIBRARY.GIO);
-	Linker.link(g_network_service_get_scheme, "g_network_service_get_scheme", LIBRARY.GIO);
-	Linker.link(g_network_service_get_service, "g_network_service_get_service", LIBRARY.GIO);
-	Linker.link(g_network_service_set_scheme, "g_network_service_set_scheme", LIBRARY.GIO);
+	Linker.link(g_network_service_get_type, "g_network_service_get_type", LIBRARY_GIO);
+	Linker.link(g_network_service_new, "g_network_service_new", LIBRARY_GIO);
+	Linker.link(g_network_service_get_domain, "g_network_service_get_domain", LIBRARY_GIO);
+	Linker.link(g_network_service_get_protocol, "g_network_service_get_protocol", LIBRARY_GIO);
+	Linker.link(g_network_service_get_scheme, "g_network_service_get_scheme", LIBRARY_GIO);
+	Linker.link(g_network_service_get_service, "g_network_service_get_service", LIBRARY_GIO);
+	Linker.link(g_network_service_set_scheme, "g_network_service_set_scheme", LIBRARY_GIO);
 
 	// gio.Notification
 
-	Linker.link(g_notification_get_type, "g_notification_get_type", LIBRARY.GIO);
-	Linker.link(g_notification_new, "g_notification_new", LIBRARY.GIO);
-	Linker.link(g_notification_add_button, "g_notification_add_button", LIBRARY.GIO);
-	Linker.link(g_notification_add_button_with_target, "g_notification_add_button_with_target", LIBRARY.GIO);
-	Linker.link(g_notification_add_button_with_target_value, "g_notification_add_button_with_target_value", LIBRARY.GIO);
-	Linker.link(g_notification_set_body, "g_notification_set_body", LIBRARY.GIO);
-	Linker.link(g_notification_set_default_action, "g_notification_set_default_action", LIBRARY.GIO);
-	Linker.link(g_notification_set_default_action_and_target, "g_notification_set_default_action_and_target", LIBRARY.GIO);
-	Linker.link(g_notification_set_default_action_and_target_value, "g_notification_set_default_action_and_target_value", LIBRARY.GIO);
-	Linker.link(g_notification_set_icon, "g_notification_set_icon", LIBRARY.GIO);
-	Linker.link(g_notification_set_priority, "g_notification_set_priority", LIBRARY.GIO);
-	Linker.link(g_notification_set_title, "g_notification_set_title", LIBRARY.GIO);
-	Linker.link(g_notification_set_urgent, "g_notification_set_urgent", LIBRARY.GIO);
+	Linker.link(g_notification_get_type, "g_notification_get_type", LIBRARY_GIO);
+	Linker.link(g_notification_new, "g_notification_new", LIBRARY_GIO);
+	Linker.link(g_notification_add_button, "g_notification_add_button", LIBRARY_GIO);
+	Linker.link(g_notification_add_button_with_target, "g_notification_add_button_with_target", LIBRARY_GIO);
+	Linker.link(g_notification_add_button_with_target_value, "g_notification_add_button_with_target_value", LIBRARY_GIO);
+	Linker.link(g_notification_set_body, "g_notification_set_body", LIBRARY_GIO);
+	Linker.link(g_notification_set_default_action, "g_notification_set_default_action", LIBRARY_GIO);
+	Linker.link(g_notification_set_default_action_and_target, "g_notification_set_default_action_and_target", LIBRARY_GIO);
+	Linker.link(g_notification_set_default_action_and_target_value, "g_notification_set_default_action_and_target_value", LIBRARY_GIO);
+	Linker.link(g_notification_set_icon, "g_notification_set_icon", LIBRARY_GIO);
+	Linker.link(g_notification_set_priority, "g_notification_set_priority", LIBRARY_GIO);
+	Linker.link(g_notification_set_title, "g_notification_set_title", LIBRARY_GIO);
+	Linker.link(g_notification_set_urgent, "g_notification_set_urgent", LIBRARY_GIO);
 
 	// gio.OutputStream
 
-	Linker.link(g_output_stream_get_type, "g_output_stream_get_type", LIBRARY.GIO);
-	Linker.link(g_output_stream_clear_pending, "g_output_stream_clear_pending", LIBRARY.GIO);
-	Linker.link(g_output_stream_close, "g_output_stream_close", LIBRARY.GIO);
-	Linker.link(g_output_stream_close_async, "g_output_stream_close_async", LIBRARY.GIO);
-	Linker.link(g_output_stream_close_finish, "g_output_stream_close_finish", LIBRARY.GIO);
-	Linker.link(g_output_stream_flush, "g_output_stream_flush", LIBRARY.GIO);
-	Linker.link(g_output_stream_flush_async, "g_output_stream_flush_async", LIBRARY.GIO);
-	Linker.link(g_output_stream_flush_finish, "g_output_stream_flush_finish", LIBRARY.GIO);
-	Linker.link(g_output_stream_has_pending, "g_output_stream_has_pending", LIBRARY.GIO);
-	Linker.link(g_output_stream_is_closed, "g_output_stream_is_closed", LIBRARY.GIO);
-	Linker.link(g_output_stream_is_closing, "g_output_stream_is_closing", LIBRARY.GIO);
-	Linker.link(g_output_stream_printf, "g_output_stream_printf", LIBRARY.GIO);
-	Linker.link(g_output_stream_set_pending, "g_output_stream_set_pending", LIBRARY.GIO);
-	Linker.link(g_output_stream_splice, "g_output_stream_splice", LIBRARY.GIO);
-	Linker.link(g_output_stream_splice_async, "g_output_stream_splice_async", LIBRARY.GIO);
-	Linker.link(g_output_stream_splice_finish, "g_output_stream_splice_finish", LIBRARY.GIO);
-	Linker.link(g_output_stream_vprintf, "g_output_stream_vprintf", LIBRARY.GIO);
-	Linker.link(g_output_stream_write, "g_output_stream_write", LIBRARY.GIO);
-	Linker.link(g_output_stream_write_all, "g_output_stream_write_all", LIBRARY.GIO);
-	Linker.link(g_output_stream_write_all_async, "g_output_stream_write_all_async", LIBRARY.GIO);
-	Linker.link(g_output_stream_write_all_finish, "g_output_stream_write_all_finish", LIBRARY.GIO);
-	Linker.link(g_output_stream_write_async, "g_output_stream_write_async", LIBRARY.GIO);
-	Linker.link(g_output_stream_write_bytes, "g_output_stream_write_bytes", LIBRARY.GIO);
-	Linker.link(g_output_stream_write_bytes_async, "g_output_stream_write_bytes_async", LIBRARY.GIO);
-	Linker.link(g_output_stream_write_bytes_finish, "g_output_stream_write_bytes_finish", LIBRARY.GIO);
-	Linker.link(g_output_stream_write_finish, "g_output_stream_write_finish", LIBRARY.GIO);
+	Linker.link(g_output_stream_get_type, "g_output_stream_get_type", LIBRARY_GIO);
+	Linker.link(g_output_stream_clear_pending, "g_output_stream_clear_pending", LIBRARY_GIO);
+	Linker.link(g_output_stream_close, "g_output_stream_close", LIBRARY_GIO);
+	Linker.link(g_output_stream_close_async, "g_output_stream_close_async", LIBRARY_GIO);
+	Linker.link(g_output_stream_close_finish, "g_output_stream_close_finish", LIBRARY_GIO);
+	Linker.link(g_output_stream_flush, "g_output_stream_flush", LIBRARY_GIO);
+	Linker.link(g_output_stream_flush_async, "g_output_stream_flush_async", LIBRARY_GIO);
+	Linker.link(g_output_stream_flush_finish, "g_output_stream_flush_finish", LIBRARY_GIO);
+	Linker.link(g_output_stream_has_pending, "g_output_stream_has_pending", LIBRARY_GIO);
+	Linker.link(g_output_stream_is_closed, "g_output_stream_is_closed", LIBRARY_GIO);
+	Linker.link(g_output_stream_is_closing, "g_output_stream_is_closing", LIBRARY_GIO);
+	Linker.link(g_output_stream_printf, "g_output_stream_printf", LIBRARY_GIO);
+	Linker.link(g_output_stream_set_pending, "g_output_stream_set_pending", LIBRARY_GIO);
+	Linker.link(g_output_stream_splice, "g_output_stream_splice", LIBRARY_GIO);
+	Linker.link(g_output_stream_splice_async, "g_output_stream_splice_async", LIBRARY_GIO);
+	Linker.link(g_output_stream_splice_finish, "g_output_stream_splice_finish", LIBRARY_GIO);
+	Linker.link(g_output_stream_vprintf, "g_output_stream_vprintf", LIBRARY_GIO);
+	Linker.link(g_output_stream_write, "g_output_stream_write", LIBRARY_GIO);
+	Linker.link(g_output_stream_write_all, "g_output_stream_write_all", LIBRARY_GIO);
+	Linker.link(g_output_stream_write_all_async, "g_output_stream_write_all_async", LIBRARY_GIO);
+	Linker.link(g_output_stream_write_all_finish, "g_output_stream_write_all_finish", LIBRARY_GIO);
+	Linker.link(g_output_stream_write_async, "g_output_stream_write_async", LIBRARY_GIO);
+	Linker.link(g_output_stream_write_bytes, "g_output_stream_write_bytes", LIBRARY_GIO);
+	Linker.link(g_output_stream_write_bytes_async, "g_output_stream_write_bytes_async", LIBRARY_GIO);
+	Linker.link(g_output_stream_write_bytes_finish, "g_output_stream_write_bytes_finish", LIBRARY_GIO);
+	Linker.link(g_output_stream_write_finish, "g_output_stream_write_finish", LIBRARY_GIO);
 
 	// gio.Permission
 
-	Linker.link(g_permission_get_type, "g_permission_get_type", LIBRARY.GIO);
-	Linker.link(g_permission_acquire, "g_permission_acquire", LIBRARY.GIO);
-	Linker.link(g_permission_acquire_async, "g_permission_acquire_async", LIBRARY.GIO);
-	Linker.link(g_permission_acquire_finish, "g_permission_acquire_finish", LIBRARY.GIO);
-	Linker.link(g_permission_get_allowed, "g_permission_get_allowed", LIBRARY.GIO);
-	Linker.link(g_permission_get_can_acquire, "g_permission_get_can_acquire", LIBRARY.GIO);
-	Linker.link(g_permission_get_can_release, "g_permission_get_can_release", LIBRARY.GIO);
-	Linker.link(g_permission_impl_update, "g_permission_impl_update", LIBRARY.GIO);
-	Linker.link(g_permission_release, "g_permission_release", LIBRARY.GIO);
-	Linker.link(g_permission_release_async, "g_permission_release_async", LIBRARY.GIO);
-	Linker.link(g_permission_release_finish, "g_permission_release_finish", LIBRARY.GIO);
+	Linker.link(g_permission_get_type, "g_permission_get_type", LIBRARY_GIO);
+	Linker.link(g_permission_acquire, "g_permission_acquire", LIBRARY_GIO);
+	Linker.link(g_permission_acquire_async, "g_permission_acquire_async", LIBRARY_GIO);
+	Linker.link(g_permission_acquire_finish, "g_permission_acquire_finish", LIBRARY_GIO);
+	Linker.link(g_permission_get_allowed, "g_permission_get_allowed", LIBRARY_GIO);
+	Linker.link(g_permission_get_can_acquire, "g_permission_get_can_acquire", LIBRARY_GIO);
+	Linker.link(g_permission_get_can_release, "g_permission_get_can_release", LIBRARY_GIO);
+	Linker.link(g_permission_impl_update, "g_permission_impl_update", LIBRARY_GIO);
+	Linker.link(g_permission_release, "g_permission_release", LIBRARY_GIO);
+	Linker.link(g_permission_release_async, "g_permission_release_async", LIBRARY_GIO);
+	Linker.link(g_permission_release_finish, "g_permission_release_finish", LIBRARY_GIO);
 
 	// gio.PollableInputStream
 
-	Linker.link(g_pollable_input_stream_get_type, "g_pollable_input_stream_get_type", LIBRARY.GIO);
-	Linker.link(g_pollable_input_stream_can_poll, "g_pollable_input_stream_can_poll", LIBRARY.GIO);
-	Linker.link(g_pollable_input_stream_create_source, "g_pollable_input_stream_create_source", LIBRARY.GIO);
-	Linker.link(g_pollable_input_stream_is_readable, "g_pollable_input_stream_is_readable", LIBRARY.GIO);
-	Linker.link(g_pollable_input_stream_read_nonblocking, "g_pollable_input_stream_read_nonblocking", LIBRARY.GIO);
+	Linker.link(g_pollable_input_stream_get_type, "g_pollable_input_stream_get_type", LIBRARY_GIO);
+	Linker.link(g_pollable_input_stream_can_poll, "g_pollable_input_stream_can_poll", LIBRARY_GIO);
+	Linker.link(g_pollable_input_stream_create_source, "g_pollable_input_stream_create_source", LIBRARY_GIO);
+	Linker.link(g_pollable_input_stream_is_readable, "g_pollable_input_stream_is_readable", LIBRARY_GIO);
+	Linker.link(g_pollable_input_stream_read_nonblocking, "g_pollable_input_stream_read_nonblocking", LIBRARY_GIO);
 
 	// gio.PollableOutputStream
 
-	Linker.link(g_pollable_output_stream_get_type, "g_pollable_output_stream_get_type", LIBRARY.GIO);
-	Linker.link(g_pollable_output_stream_can_poll, "g_pollable_output_stream_can_poll", LIBRARY.GIO);
-	Linker.link(g_pollable_output_stream_create_source, "g_pollable_output_stream_create_source", LIBRARY.GIO);
-	Linker.link(g_pollable_output_stream_is_writable, "g_pollable_output_stream_is_writable", LIBRARY.GIO);
-	Linker.link(g_pollable_output_stream_write_nonblocking, "g_pollable_output_stream_write_nonblocking", LIBRARY.GIO);
+	Linker.link(g_pollable_output_stream_get_type, "g_pollable_output_stream_get_type", LIBRARY_GIO);
+	Linker.link(g_pollable_output_stream_can_poll, "g_pollable_output_stream_can_poll", LIBRARY_GIO);
+	Linker.link(g_pollable_output_stream_create_source, "g_pollable_output_stream_create_source", LIBRARY_GIO);
+	Linker.link(g_pollable_output_stream_is_writable, "g_pollable_output_stream_is_writable", LIBRARY_GIO);
+	Linker.link(g_pollable_output_stream_write_nonblocking, "g_pollable_output_stream_write_nonblocking", LIBRARY_GIO);
 
 	// gio.PropertyAction
 
-	Linker.link(g_property_action_get_type, "g_property_action_get_type", LIBRARY.GIO);
-	Linker.link(g_property_action_new, "g_property_action_new", LIBRARY.GIO);
+	Linker.link(g_property_action_get_type, "g_property_action_get_type", LIBRARY_GIO);
+	Linker.link(g_property_action_new, "g_property_action_new", LIBRARY_GIO);
 
 	// gio.Proxy
 
-	Linker.link(g_proxy_get_type, "g_proxy_get_type", LIBRARY.GIO);
-	Linker.link(g_proxy_get_default_for_protocol, "g_proxy_get_default_for_protocol", LIBRARY.GIO);
-	Linker.link(g_proxy_connect, "g_proxy_connect", LIBRARY.GIO);
-	Linker.link(g_proxy_connect_async, "g_proxy_connect_async", LIBRARY.GIO);
-	Linker.link(g_proxy_connect_finish, "g_proxy_connect_finish", LIBRARY.GIO);
-	Linker.link(g_proxy_supports_hostname, "g_proxy_supports_hostname", LIBRARY.GIO);
+	Linker.link(g_proxy_get_type, "g_proxy_get_type", LIBRARY_GIO);
+	Linker.link(g_proxy_get_default_for_protocol, "g_proxy_get_default_for_protocol", LIBRARY_GIO);
+	Linker.link(g_proxy_connect, "g_proxy_connect", LIBRARY_GIO);
+	Linker.link(g_proxy_connect_async, "g_proxy_connect_async", LIBRARY_GIO);
+	Linker.link(g_proxy_connect_finish, "g_proxy_connect_finish", LIBRARY_GIO);
+	Linker.link(g_proxy_supports_hostname, "g_proxy_supports_hostname", LIBRARY_GIO);
 
 	// gio.ProxyAddress
 
-	Linker.link(g_proxy_address_get_type, "g_proxy_address_get_type", LIBRARY.GIO);
-	Linker.link(g_proxy_address_new, "g_proxy_address_new", LIBRARY.GIO);
-	Linker.link(g_proxy_address_get_destination_hostname, "g_proxy_address_get_destination_hostname", LIBRARY.GIO);
-	Linker.link(g_proxy_address_get_destination_port, "g_proxy_address_get_destination_port", LIBRARY.GIO);
-	Linker.link(g_proxy_address_get_destination_protocol, "g_proxy_address_get_destination_protocol", LIBRARY.GIO);
-	Linker.link(g_proxy_address_get_password, "g_proxy_address_get_password", LIBRARY.GIO);
-	Linker.link(g_proxy_address_get_protocol, "g_proxy_address_get_protocol", LIBRARY.GIO);
-	Linker.link(g_proxy_address_get_uri, "g_proxy_address_get_uri", LIBRARY.GIO);
-	Linker.link(g_proxy_address_get_username, "g_proxy_address_get_username", LIBRARY.GIO);
+	Linker.link(g_proxy_address_get_type, "g_proxy_address_get_type", LIBRARY_GIO);
+	Linker.link(g_proxy_address_new, "g_proxy_address_new", LIBRARY_GIO);
+	Linker.link(g_proxy_address_get_destination_hostname, "g_proxy_address_get_destination_hostname", LIBRARY_GIO);
+	Linker.link(g_proxy_address_get_destination_port, "g_proxy_address_get_destination_port", LIBRARY_GIO);
+	Linker.link(g_proxy_address_get_destination_protocol, "g_proxy_address_get_destination_protocol", LIBRARY_GIO);
+	Linker.link(g_proxy_address_get_password, "g_proxy_address_get_password", LIBRARY_GIO);
+	Linker.link(g_proxy_address_get_protocol, "g_proxy_address_get_protocol", LIBRARY_GIO);
+	Linker.link(g_proxy_address_get_uri, "g_proxy_address_get_uri", LIBRARY_GIO);
+	Linker.link(g_proxy_address_get_username, "g_proxy_address_get_username", LIBRARY_GIO);
 
 	// gio.ProxyAddressEnumerator
 
-	Linker.link(g_proxy_address_enumerator_get_type, "g_proxy_address_enumerator_get_type", LIBRARY.GIO);
+	Linker.link(g_proxy_address_enumerator_get_type, "g_proxy_address_enumerator_get_type", LIBRARY_GIO);
 
 	// gio.ProxyResolver
 
-	Linker.link(g_proxy_resolver_get_type, "g_proxy_resolver_get_type", LIBRARY.GIO);
-	Linker.link(g_proxy_resolver_get_default, "g_proxy_resolver_get_default", LIBRARY.GIO);
-	Linker.link(g_proxy_resolver_is_supported, "g_proxy_resolver_is_supported", LIBRARY.GIO);
-	Linker.link(g_proxy_resolver_lookup, "g_proxy_resolver_lookup", LIBRARY.GIO);
-	Linker.link(g_proxy_resolver_lookup_async, "g_proxy_resolver_lookup_async", LIBRARY.GIO);
-	Linker.link(g_proxy_resolver_lookup_finish, "g_proxy_resolver_lookup_finish", LIBRARY.GIO);
+	Linker.link(g_proxy_resolver_get_type, "g_proxy_resolver_get_type", LIBRARY_GIO);
+	Linker.link(g_proxy_resolver_get_default, "g_proxy_resolver_get_default", LIBRARY_GIO);
+	Linker.link(g_proxy_resolver_is_supported, "g_proxy_resolver_is_supported", LIBRARY_GIO);
+	Linker.link(g_proxy_resolver_lookup, "g_proxy_resolver_lookup", LIBRARY_GIO);
+	Linker.link(g_proxy_resolver_lookup_async, "g_proxy_resolver_lookup_async", LIBRARY_GIO);
+	Linker.link(g_proxy_resolver_lookup_finish, "g_proxy_resolver_lookup_finish", LIBRARY_GIO);
 
 	// gio.RemoteActionGroup
 
-	Linker.link(g_remote_action_group_get_type, "g_remote_action_group_get_type", LIBRARY.GIO);
-	Linker.link(g_remote_action_group_activate_action_full, "g_remote_action_group_activate_action_full", LIBRARY.GIO);
-	Linker.link(g_remote_action_group_change_action_state_full, "g_remote_action_group_change_action_state_full", LIBRARY.GIO);
+	Linker.link(g_remote_action_group_get_type, "g_remote_action_group_get_type", LIBRARY_GIO);
+	Linker.link(g_remote_action_group_activate_action_full, "g_remote_action_group_activate_action_full", LIBRARY_GIO);
+	Linker.link(g_remote_action_group_change_action_state_full, "g_remote_action_group_change_action_state_full", LIBRARY_GIO);
 
 	// gio.Resolver
 
-	Linker.link(g_resolver_get_type, "g_resolver_get_type", LIBRARY.GIO);
-	Linker.link(g_resolver_free_addresses, "g_resolver_free_addresses", LIBRARY.GIO);
-	Linker.link(g_resolver_free_targets, "g_resolver_free_targets", LIBRARY.GIO);
-	Linker.link(g_resolver_get_default, "g_resolver_get_default", LIBRARY.GIO);
-	Linker.link(g_resolver_lookup_by_address, "g_resolver_lookup_by_address", LIBRARY.GIO);
-	Linker.link(g_resolver_lookup_by_address_async, "g_resolver_lookup_by_address_async", LIBRARY.GIO);
-	Linker.link(g_resolver_lookup_by_address_finish, "g_resolver_lookup_by_address_finish", LIBRARY.GIO);
-	Linker.link(g_resolver_lookup_by_name, "g_resolver_lookup_by_name", LIBRARY.GIO);
-	Linker.link(g_resolver_lookup_by_name_async, "g_resolver_lookup_by_name_async", LIBRARY.GIO);
-	Linker.link(g_resolver_lookup_by_name_finish, "g_resolver_lookup_by_name_finish", LIBRARY.GIO);
-	Linker.link(g_resolver_lookup_records, "g_resolver_lookup_records", LIBRARY.GIO);
-	Linker.link(g_resolver_lookup_records_async, "g_resolver_lookup_records_async", LIBRARY.GIO);
-	Linker.link(g_resolver_lookup_records_finish, "g_resolver_lookup_records_finish", LIBRARY.GIO);
-	Linker.link(g_resolver_lookup_service, "g_resolver_lookup_service", LIBRARY.GIO);
-	Linker.link(g_resolver_lookup_service_async, "g_resolver_lookup_service_async", LIBRARY.GIO);
-	Linker.link(g_resolver_lookup_service_finish, "g_resolver_lookup_service_finish", LIBRARY.GIO);
-	Linker.link(g_resolver_set_default, "g_resolver_set_default", LIBRARY.GIO);
+	Linker.link(g_resolver_get_type, "g_resolver_get_type", LIBRARY_GIO);
+	Linker.link(g_resolver_free_addresses, "g_resolver_free_addresses", LIBRARY_GIO);
+	Linker.link(g_resolver_free_targets, "g_resolver_free_targets", LIBRARY_GIO);
+	Linker.link(g_resolver_get_default, "g_resolver_get_default", LIBRARY_GIO);
+	Linker.link(g_resolver_lookup_by_address, "g_resolver_lookup_by_address", LIBRARY_GIO);
+	Linker.link(g_resolver_lookup_by_address_async, "g_resolver_lookup_by_address_async", LIBRARY_GIO);
+	Linker.link(g_resolver_lookup_by_address_finish, "g_resolver_lookup_by_address_finish", LIBRARY_GIO);
+	Linker.link(g_resolver_lookup_by_name, "g_resolver_lookup_by_name", LIBRARY_GIO);
+	Linker.link(g_resolver_lookup_by_name_async, "g_resolver_lookup_by_name_async", LIBRARY_GIO);
+	Linker.link(g_resolver_lookup_by_name_finish, "g_resolver_lookup_by_name_finish", LIBRARY_GIO);
+	Linker.link(g_resolver_lookup_records, "g_resolver_lookup_records", LIBRARY_GIO);
+	Linker.link(g_resolver_lookup_records_async, "g_resolver_lookup_records_async", LIBRARY_GIO);
+	Linker.link(g_resolver_lookup_records_finish, "g_resolver_lookup_records_finish", LIBRARY_GIO);
+	Linker.link(g_resolver_lookup_service, "g_resolver_lookup_service", LIBRARY_GIO);
+	Linker.link(g_resolver_lookup_service_async, "g_resolver_lookup_service_async", LIBRARY_GIO);
+	Linker.link(g_resolver_lookup_service_finish, "g_resolver_lookup_service_finish", LIBRARY_GIO);
+	Linker.link(g_resolver_set_default, "g_resolver_set_default", LIBRARY_GIO);
 
 	// gio.Resource
 
-	Linker.link(g_resource_get_type, "g_resource_get_type", LIBRARY.GIO);
-	Linker.link(g_resource_new_from_data, "g_resource_new_from_data", LIBRARY.GIO);
-	Linker.link(g_resources_register, "g_resources_register", LIBRARY.GIO);
-	Linker.link(g_resources_unregister, "g_resources_unregister", LIBRARY.GIO);
-	Linker.link(g_resource_enumerate_children, "g_resource_enumerate_children", LIBRARY.GIO);
-	Linker.link(g_resource_get_info, "g_resource_get_info", LIBRARY.GIO);
-	Linker.link(g_resource_lookup_data, "g_resource_lookup_data", LIBRARY.GIO);
-	Linker.link(g_resource_open_stream, "g_resource_open_stream", LIBRARY.GIO);
-	Linker.link(g_resource_ref, "g_resource_ref", LIBRARY.GIO);
-	Linker.link(g_resource_unref, "g_resource_unref", LIBRARY.GIO);
-	Linker.link(g_resource_load, "g_resource_load", LIBRARY.GIO);
-	Linker.link(g_resources_enumerate_children, "g_resources_enumerate_children", LIBRARY.GIO);
-	Linker.link(g_resources_get_info, "g_resources_get_info", LIBRARY.GIO);
-	Linker.link(g_resources_lookup_data, "g_resources_lookup_data", LIBRARY.GIO);
-	Linker.link(g_resources_open_stream, "g_resources_open_stream", LIBRARY.GIO);
+	Linker.link(g_resource_get_type, "g_resource_get_type", LIBRARY_GIO);
+	Linker.link(g_resource_new_from_data, "g_resource_new_from_data", LIBRARY_GIO);
+	Linker.link(g_resources_register, "g_resources_register", LIBRARY_GIO);
+	Linker.link(g_resources_unregister, "g_resources_unregister", LIBRARY_GIO);
+	Linker.link(g_resource_enumerate_children, "g_resource_enumerate_children", LIBRARY_GIO);
+	Linker.link(g_resource_get_info, "g_resource_get_info", LIBRARY_GIO);
+	Linker.link(g_resource_lookup_data, "g_resource_lookup_data", LIBRARY_GIO);
+	Linker.link(g_resource_open_stream, "g_resource_open_stream", LIBRARY_GIO);
+	Linker.link(g_resource_ref, "g_resource_ref", LIBRARY_GIO);
+	Linker.link(g_resource_unref, "g_resource_unref", LIBRARY_GIO);
+	Linker.link(g_resource_load, "g_resource_load", LIBRARY_GIO);
+	Linker.link(g_resources_enumerate_children, "g_resources_enumerate_children", LIBRARY_GIO);
+	Linker.link(g_resources_get_info, "g_resources_get_info", LIBRARY_GIO);
+	Linker.link(g_resources_lookup_data, "g_resources_lookup_data", LIBRARY_GIO);
+	Linker.link(g_resources_open_stream, "g_resources_open_stream", LIBRARY_GIO);
 
 	// gio.Seekable
 
-	Linker.link(g_seekable_get_type, "g_seekable_get_type", LIBRARY.GIO);
-	Linker.link(g_seekable_can_seek, "g_seekable_can_seek", LIBRARY.GIO);
-	Linker.link(g_seekable_can_truncate, "g_seekable_can_truncate", LIBRARY.GIO);
-	Linker.link(g_seekable_seek, "g_seekable_seek", LIBRARY.GIO);
-	Linker.link(g_seekable_tell, "g_seekable_tell", LIBRARY.GIO);
-	Linker.link(g_seekable_truncate, "g_seekable_truncate", LIBRARY.GIO);
+	Linker.link(g_seekable_get_type, "g_seekable_get_type", LIBRARY_GIO);
+	Linker.link(g_seekable_can_seek, "g_seekable_can_seek", LIBRARY_GIO);
+	Linker.link(g_seekable_can_truncate, "g_seekable_can_truncate", LIBRARY_GIO);
+	Linker.link(g_seekable_seek, "g_seekable_seek", LIBRARY_GIO);
+	Linker.link(g_seekable_tell, "g_seekable_tell", LIBRARY_GIO);
+	Linker.link(g_seekable_truncate, "g_seekable_truncate", LIBRARY_GIO);
 
 	// gio.Settings
 
-	Linker.link(g_settings_get_type, "g_settings_get_type", LIBRARY.GIO);
-	Linker.link(g_settings_new, "g_settings_new", LIBRARY.GIO);
-	Linker.link(g_settings_new_full, "g_settings_new_full", LIBRARY.GIO);
-	Linker.link(g_settings_new_with_backend, "g_settings_new_with_backend", LIBRARY.GIO);
-	Linker.link(g_settings_new_with_backend_and_path, "g_settings_new_with_backend_and_path", LIBRARY.GIO);
-	Linker.link(g_settings_new_with_path, "g_settings_new_with_path", LIBRARY.GIO);
-	Linker.link(g_settings_list_relocatable_schemas, "g_settings_list_relocatable_schemas", LIBRARY.GIO);
-	Linker.link(g_settings_list_schemas, "g_settings_list_schemas", LIBRARY.GIO);
-	Linker.link(g_settings_sync, "g_settings_sync", LIBRARY.GIO);
-	Linker.link(g_settings_unbind, "g_settings_unbind", LIBRARY.GIO);
-	Linker.link(g_settings_apply, "g_settings_apply", LIBRARY.GIO);
-	Linker.link(g_settings_bind, "g_settings_bind", LIBRARY.GIO);
-	Linker.link(g_settings_bind_with_mapping, "g_settings_bind_with_mapping", LIBRARY.GIO);
-	Linker.link(g_settings_bind_writable, "g_settings_bind_writable", LIBRARY.GIO);
-	Linker.link(g_settings_create_action, "g_settings_create_action", LIBRARY.GIO);
-	Linker.link(g_settings_delay, "g_settings_delay", LIBRARY.GIO);
-	Linker.link(g_settings_get, "g_settings_get", LIBRARY.GIO);
-	Linker.link(g_settings_get_boolean, "g_settings_get_boolean", LIBRARY.GIO);
-	Linker.link(g_settings_get_child, "g_settings_get_child", LIBRARY.GIO);
-	Linker.link(g_settings_get_default_value, "g_settings_get_default_value", LIBRARY.GIO);
-	Linker.link(g_settings_get_double, "g_settings_get_double", LIBRARY.GIO);
-	Linker.link(g_settings_get_enum, "g_settings_get_enum", LIBRARY.GIO);
-	Linker.link(g_settings_get_flags, "g_settings_get_flags", LIBRARY.GIO);
-	Linker.link(g_settings_get_has_unapplied, "g_settings_get_has_unapplied", LIBRARY.GIO);
-	Linker.link(g_settings_get_int, "g_settings_get_int", LIBRARY.GIO);
-	Linker.link(g_settings_get_int64, "g_settings_get_int64", LIBRARY.GIO);
-	Linker.link(g_settings_get_mapped, "g_settings_get_mapped", LIBRARY.GIO);
-	Linker.link(g_settings_get_range, "g_settings_get_range", LIBRARY.GIO);
-	Linker.link(g_settings_get_string, "g_settings_get_string", LIBRARY.GIO);
-	Linker.link(g_settings_get_strv, "g_settings_get_strv", LIBRARY.GIO);
-	Linker.link(g_settings_get_uint, "g_settings_get_uint", LIBRARY.GIO);
-	Linker.link(g_settings_get_uint64, "g_settings_get_uint64", LIBRARY.GIO);
-	Linker.link(g_settings_get_user_value, "g_settings_get_user_value", LIBRARY.GIO);
-	Linker.link(g_settings_get_value, "g_settings_get_value", LIBRARY.GIO);
-	Linker.link(g_settings_is_writable, "g_settings_is_writable", LIBRARY.GIO);
-	Linker.link(g_settings_list_children, "g_settings_list_children", LIBRARY.GIO);
-	Linker.link(g_settings_list_keys, "g_settings_list_keys", LIBRARY.GIO);
-	Linker.link(g_settings_range_check, "g_settings_range_check", LIBRARY.GIO);
-	Linker.link(g_settings_reset, "g_settings_reset", LIBRARY.GIO);
-	Linker.link(g_settings_revert, "g_settings_revert", LIBRARY.GIO);
-	Linker.link(g_settings_set, "g_settings_set", LIBRARY.GIO);
-	Linker.link(g_settings_set_boolean, "g_settings_set_boolean", LIBRARY.GIO);
-	Linker.link(g_settings_set_double, "g_settings_set_double", LIBRARY.GIO);
-	Linker.link(g_settings_set_enum, "g_settings_set_enum", LIBRARY.GIO);
-	Linker.link(g_settings_set_flags, "g_settings_set_flags", LIBRARY.GIO);
-	Linker.link(g_settings_set_int, "g_settings_set_int", LIBRARY.GIO);
-	Linker.link(g_settings_set_int64, "g_settings_set_int64", LIBRARY.GIO);
-	Linker.link(g_settings_set_string, "g_settings_set_string", LIBRARY.GIO);
-	Linker.link(g_settings_set_strv, "g_settings_set_strv", LIBRARY.GIO);
-	Linker.link(g_settings_set_uint, "g_settings_set_uint", LIBRARY.GIO);
-	Linker.link(g_settings_set_uint64, "g_settings_set_uint64", LIBRARY.GIO);
-	Linker.link(g_settings_set_value, "g_settings_set_value", LIBRARY.GIO);
+	Linker.link(g_settings_get_type, "g_settings_get_type", LIBRARY_GIO);
+	Linker.link(g_settings_new, "g_settings_new", LIBRARY_GIO);
+	Linker.link(g_settings_new_full, "g_settings_new_full", LIBRARY_GIO);
+	Linker.link(g_settings_new_with_backend, "g_settings_new_with_backend", LIBRARY_GIO);
+	Linker.link(g_settings_new_with_backend_and_path, "g_settings_new_with_backend_and_path", LIBRARY_GIO);
+	Linker.link(g_settings_new_with_path, "g_settings_new_with_path", LIBRARY_GIO);
+	Linker.link(g_settings_list_relocatable_schemas, "g_settings_list_relocatable_schemas", LIBRARY_GIO);
+	Linker.link(g_settings_list_schemas, "g_settings_list_schemas", LIBRARY_GIO);
+	Linker.link(g_settings_sync, "g_settings_sync", LIBRARY_GIO);
+	Linker.link(g_settings_unbind, "g_settings_unbind", LIBRARY_GIO);
+	Linker.link(g_settings_apply, "g_settings_apply", LIBRARY_GIO);
+	Linker.link(g_settings_bind, "g_settings_bind", LIBRARY_GIO);
+	Linker.link(g_settings_bind_with_mapping, "g_settings_bind_with_mapping", LIBRARY_GIO);
+	Linker.link(g_settings_bind_writable, "g_settings_bind_writable", LIBRARY_GIO);
+	Linker.link(g_settings_create_action, "g_settings_create_action", LIBRARY_GIO);
+	Linker.link(g_settings_delay, "g_settings_delay", LIBRARY_GIO);
+	Linker.link(g_settings_get, "g_settings_get", LIBRARY_GIO);
+	Linker.link(g_settings_get_boolean, "g_settings_get_boolean", LIBRARY_GIO);
+	Linker.link(g_settings_get_child, "g_settings_get_child", LIBRARY_GIO);
+	Linker.link(g_settings_get_default_value, "g_settings_get_default_value", LIBRARY_GIO);
+	Linker.link(g_settings_get_double, "g_settings_get_double", LIBRARY_GIO);
+	Linker.link(g_settings_get_enum, "g_settings_get_enum", LIBRARY_GIO);
+	Linker.link(g_settings_get_flags, "g_settings_get_flags", LIBRARY_GIO);
+	Linker.link(g_settings_get_has_unapplied, "g_settings_get_has_unapplied", LIBRARY_GIO);
+	Linker.link(g_settings_get_int, "g_settings_get_int", LIBRARY_GIO);
+	Linker.link(g_settings_get_int64, "g_settings_get_int64", LIBRARY_GIO);
+	Linker.link(g_settings_get_mapped, "g_settings_get_mapped", LIBRARY_GIO);
+	Linker.link(g_settings_get_range, "g_settings_get_range", LIBRARY_GIO);
+	Linker.link(g_settings_get_string, "g_settings_get_string", LIBRARY_GIO);
+	Linker.link(g_settings_get_strv, "g_settings_get_strv", LIBRARY_GIO);
+	Linker.link(g_settings_get_uint, "g_settings_get_uint", LIBRARY_GIO);
+	Linker.link(g_settings_get_uint64, "g_settings_get_uint64", LIBRARY_GIO);
+	Linker.link(g_settings_get_user_value, "g_settings_get_user_value", LIBRARY_GIO);
+	Linker.link(g_settings_get_value, "g_settings_get_value", LIBRARY_GIO);
+	Linker.link(g_settings_is_writable, "g_settings_is_writable", LIBRARY_GIO);
+	Linker.link(g_settings_list_children, "g_settings_list_children", LIBRARY_GIO);
+	Linker.link(g_settings_list_keys, "g_settings_list_keys", LIBRARY_GIO);
+	Linker.link(g_settings_range_check, "g_settings_range_check", LIBRARY_GIO);
+	Linker.link(g_settings_reset, "g_settings_reset", LIBRARY_GIO);
+	Linker.link(g_settings_revert, "g_settings_revert", LIBRARY_GIO);
+	Linker.link(g_settings_set, "g_settings_set", LIBRARY_GIO);
+	Linker.link(g_settings_set_boolean, "g_settings_set_boolean", LIBRARY_GIO);
+	Linker.link(g_settings_set_double, "g_settings_set_double", LIBRARY_GIO);
+	Linker.link(g_settings_set_enum, "g_settings_set_enum", LIBRARY_GIO);
+	Linker.link(g_settings_set_flags, "g_settings_set_flags", LIBRARY_GIO);
+	Linker.link(g_settings_set_int, "g_settings_set_int", LIBRARY_GIO);
+	Linker.link(g_settings_set_int64, "g_settings_set_int64", LIBRARY_GIO);
+	Linker.link(g_settings_set_string, "g_settings_set_string", LIBRARY_GIO);
+	Linker.link(g_settings_set_strv, "g_settings_set_strv", LIBRARY_GIO);
+	Linker.link(g_settings_set_uint, "g_settings_set_uint", LIBRARY_GIO);
+	Linker.link(g_settings_set_uint64, "g_settings_set_uint64", LIBRARY_GIO);
+	Linker.link(g_settings_set_value, "g_settings_set_value", LIBRARY_GIO);
 
 	// gio.SettingsBackend
 
-	Linker.link(g_settings_backend_get_type, "g_settings_backend_get_type", LIBRARY.GIO);
-	Linker.link(g_settings_backend_flatten_tree, "g_settings_backend_flatten_tree", LIBRARY.GIO);
-	Linker.link(g_settings_backend_get_default, "g_settings_backend_get_default", LIBRARY.GIO);
-	Linker.link(g_settings_backend_changed, "g_settings_backend_changed", LIBRARY.GIO);
-	Linker.link(g_settings_backend_changed_tree, "g_settings_backend_changed_tree", LIBRARY.GIO);
-	Linker.link(g_settings_backend_keys_changed, "g_settings_backend_keys_changed", LIBRARY.GIO);
-	Linker.link(g_settings_backend_path_changed, "g_settings_backend_path_changed", LIBRARY.GIO);
-	Linker.link(g_settings_backend_path_writable_changed, "g_settings_backend_path_writable_changed", LIBRARY.GIO);
-	Linker.link(g_settings_backend_writable_changed, "g_settings_backend_writable_changed", LIBRARY.GIO);
-	Linker.link(g_keyfile_settings_backend_new, "g_keyfile_settings_backend_new", LIBRARY.GIO);
-	Linker.link(g_memory_settings_backend_new, "g_memory_settings_backend_new", LIBRARY.GIO);
-	Linker.link(g_null_settings_backend_new, "g_null_settings_backend_new", LIBRARY.GIO);
+	Linker.link(g_settings_backend_get_type, "g_settings_backend_get_type", LIBRARY_GIO);
+	Linker.link(g_settings_backend_flatten_tree, "g_settings_backend_flatten_tree", LIBRARY_GIO);
+	Linker.link(g_settings_backend_get_default, "g_settings_backend_get_default", LIBRARY_GIO);
+	Linker.link(g_settings_backend_changed, "g_settings_backend_changed", LIBRARY_GIO);
+	Linker.link(g_settings_backend_changed_tree, "g_settings_backend_changed_tree", LIBRARY_GIO);
+	Linker.link(g_settings_backend_keys_changed, "g_settings_backend_keys_changed", LIBRARY_GIO);
+	Linker.link(g_settings_backend_path_changed, "g_settings_backend_path_changed", LIBRARY_GIO);
+	Linker.link(g_settings_backend_path_writable_changed, "g_settings_backend_path_writable_changed", LIBRARY_GIO);
+	Linker.link(g_settings_backend_writable_changed, "g_settings_backend_writable_changed", LIBRARY_GIO);
+	Linker.link(g_keyfile_settings_backend_new, "g_keyfile_settings_backend_new", LIBRARY_GIO);
+	Linker.link(g_memory_settings_backend_new, "g_memory_settings_backend_new", LIBRARY_GIO);
+	Linker.link(g_null_settings_backend_new, "g_null_settings_backend_new", LIBRARY_GIO);
 
 	// gio.SettingsSchema
 
-	Linker.link(g_settings_schema_get_type, "g_settings_schema_get_type", LIBRARY.GIO);
-	Linker.link(g_settings_schema_get_id, "g_settings_schema_get_id", LIBRARY.GIO);
-	Linker.link(g_settings_schema_get_key, "g_settings_schema_get_key", LIBRARY.GIO);
-	Linker.link(g_settings_schema_get_path, "g_settings_schema_get_path", LIBRARY.GIO);
-	Linker.link(g_settings_schema_has_key, "g_settings_schema_has_key", LIBRARY.GIO);
-	Linker.link(g_settings_schema_list_children, "g_settings_schema_list_children", LIBRARY.GIO);
-	Linker.link(g_settings_schema_list_keys, "g_settings_schema_list_keys", LIBRARY.GIO);
-	Linker.link(g_settings_schema_ref, "g_settings_schema_ref", LIBRARY.GIO);
-	Linker.link(g_settings_schema_unref, "g_settings_schema_unref", LIBRARY.GIO);
+	Linker.link(g_settings_schema_get_type, "g_settings_schema_get_type", LIBRARY_GIO);
+	Linker.link(g_settings_schema_get_id, "g_settings_schema_get_id", LIBRARY_GIO);
+	Linker.link(g_settings_schema_get_key, "g_settings_schema_get_key", LIBRARY_GIO);
+	Linker.link(g_settings_schema_get_path, "g_settings_schema_get_path", LIBRARY_GIO);
+	Linker.link(g_settings_schema_has_key, "g_settings_schema_has_key", LIBRARY_GIO);
+	Linker.link(g_settings_schema_list_children, "g_settings_schema_list_children", LIBRARY_GIO);
+	Linker.link(g_settings_schema_list_keys, "g_settings_schema_list_keys", LIBRARY_GIO);
+	Linker.link(g_settings_schema_ref, "g_settings_schema_ref", LIBRARY_GIO);
+	Linker.link(g_settings_schema_unref, "g_settings_schema_unref", LIBRARY_GIO);
 
 	// gio.SettingsSchemaKey
 
-	Linker.link(g_settings_schema_key_get_type, "g_settings_schema_key_get_type", LIBRARY.GIO);
-	Linker.link(g_settings_schema_key_get_default_value, "g_settings_schema_key_get_default_value", LIBRARY.GIO);
-	Linker.link(g_settings_schema_key_get_description, "g_settings_schema_key_get_description", LIBRARY.GIO);
-	Linker.link(g_settings_schema_key_get_name, "g_settings_schema_key_get_name", LIBRARY.GIO);
-	Linker.link(g_settings_schema_key_get_range, "g_settings_schema_key_get_range", LIBRARY.GIO);
-	Linker.link(g_settings_schema_key_get_summary, "g_settings_schema_key_get_summary", LIBRARY.GIO);
-	Linker.link(g_settings_schema_key_get_value_type, "g_settings_schema_key_get_value_type", LIBRARY.GIO);
-	Linker.link(g_settings_schema_key_range_check, "g_settings_schema_key_range_check", LIBRARY.GIO);
-	Linker.link(g_settings_schema_key_ref, "g_settings_schema_key_ref", LIBRARY.GIO);
-	Linker.link(g_settings_schema_key_unref, "g_settings_schema_key_unref", LIBRARY.GIO);
+	Linker.link(g_settings_schema_key_get_type, "g_settings_schema_key_get_type", LIBRARY_GIO);
+	Linker.link(g_settings_schema_key_get_default_value, "g_settings_schema_key_get_default_value", LIBRARY_GIO);
+	Linker.link(g_settings_schema_key_get_description, "g_settings_schema_key_get_description", LIBRARY_GIO);
+	Linker.link(g_settings_schema_key_get_name, "g_settings_schema_key_get_name", LIBRARY_GIO);
+	Linker.link(g_settings_schema_key_get_range, "g_settings_schema_key_get_range", LIBRARY_GIO);
+	Linker.link(g_settings_schema_key_get_summary, "g_settings_schema_key_get_summary", LIBRARY_GIO);
+	Linker.link(g_settings_schema_key_get_value_type, "g_settings_schema_key_get_value_type", LIBRARY_GIO);
+	Linker.link(g_settings_schema_key_range_check, "g_settings_schema_key_range_check", LIBRARY_GIO);
+	Linker.link(g_settings_schema_key_ref, "g_settings_schema_key_ref", LIBRARY_GIO);
+	Linker.link(g_settings_schema_key_unref, "g_settings_schema_key_unref", LIBRARY_GIO);
 
 	// gio.SettingsSchemaSource
 
-	Linker.link(g_settings_schema_source_get_type, "g_settings_schema_source_get_type", LIBRARY.GIO);
-	Linker.link(g_settings_schema_source_new_from_directory, "g_settings_schema_source_new_from_directory", LIBRARY.GIO);
-	Linker.link(g_settings_schema_source_list_schemas, "g_settings_schema_source_list_schemas", LIBRARY.GIO);
-	Linker.link(g_settings_schema_source_lookup, "g_settings_schema_source_lookup", LIBRARY.GIO);
-	Linker.link(g_settings_schema_source_ref, "g_settings_schema_source_ref", LIBRARY.GIO);
-	Linker.link(g_settings_schema_source_unref, "g_settings_schema_source_unref", LIBRARY.GIO);
-	Linker.link(g_settings_schema_source_get_default, "g_settings_schema_source_get_default", LIBRARY.GIO);
+	Linker.link(g_settings_schema_source_get_type, "g_settings_schema_source_get_type", LIBRARY_GIO);
+	Linker.link(g_settings_schema_source_new_from_directory, "g_settings_schema_source_new_from_directory", LIBRARY_GIO);
+	Linker.link(g_settings_schema_source_list_schemas, "g_settings_schema_source_list_schemas", LIBRARY_GIO);
+	Linker.link(g_settings_schema_source_lookup, "g_settings_schema_source_lookup", LIBRARY_GIO);
+	Linker.link(g_settings_schema_source_ref, "g_settings_schema_source_ref", LIBRARY_GIO);
+	Linker.link(g_settings_schema_source_unref, "g_settings_schema_source_unref", LIBRARY_GIO);
+	Linker.link(g_settings_schema_source_get_default, "g_settings_schema_source_get_default", LIBRARY_GIO);
 
 	// gio.SimpleAction
 
-	Linker.link(g_simple_action_get_type, "g_simple_action_get_type", LIBRARY.GIO);
-	Linker.link(g_simple_action_new, "g_simple_action_new", LIBRARY.GIO);
-	Linker.link(g_simple_action_new_stateful, "g_simple_action_new_stateful", LIBRARY.GIO);
-	Linker.link(g_simple_action_set_enabled, "g_simple_action_set_enabled", LIBRARY.GIO);
-	Linker.link(g_simple_action_set_state, "g_simple_action_set_state", LIBRARY.GIO);
-	Linker.link(g_simple_action_set_state_hint, "g_simple_action_set_state_hint", LIBRARY.GIO);
+	Linker.link(g_simple_action_get_type, "g_simple_action_get_type", LIBRARY_GIO);
+	Linker.link(g_simple_action_new, "g_simple_action_new", LIBRARY_GIO);
+	Linker.link(g_simple_action_new_stateful, "g_simple_action_new_stateful", LIBRARY_GIO);
+	Linker.link(g_simple_action_set_enabled, "g_simple_action_set_enabled", LIBRARY_GIO);
+	Linker.link(g_simple_action_set_state, "g_simple_action_set_state", LIBRARY_GIO);
+	Linker.link(g_simple_action_set_state_hint, "g_simple_action_set_state_hint", LIBRARY_GIO);
 
 	// gio.SimpleActionGroup
 
-	Linker.link(g_simple_action_group_get_type, "g_simple_action_group_get_type", LIBRARY.GIO);
-	Linker.link(g_simple_action_group_new, "g_simple_action_group_new", LIBRARY.GIO);
-	Linker.link(g_simple_action_group_add_entries, "g_simple_action_group_add_entries", LIBRARY.GIO);
-	Linker.link(g_simple_action_group_insert, "g_simple_action_group_insert", LIBRARY.GIO);
-	Linker.link(g_simple_action_group_lookup, "g_simple_action_group_lookup", LIBRARY.GIO);
-	Linker.link(g_simple_action_group_remove, "g_simple_action_group_remove", LIBRARY.GIO);
+	Linker.link(g_simple_action_group_get_type, "g_simple_action_group_get_type", LIBRARY_GIO);
+	Linker.link(g_simple_action_group_new, "g_simple_action_group_new", LIBRARY_GIO);
+	Linker.link(g_simple_action_group_add_entries, "g_simple_action_group_add_entries", LIBRARY_GIO);
+	Linker.link(g_simple_action_group_insert, "g_simple_action_group_insert", LIBRARY_GIO);
+	Linker.link(g_simple_action_group_lookup, "g_simple_action_group_lookup", LIBRARY_GIO);
+	Linker.link(g_simple_action_group_remove, "g_simple_action_group_remove", LIBRARY_GIO);
 
 	// gio.SimpleAsyncResult
 
-	Linker.link(g_simple_async_result_get_type, "g_simple_async_result_get_type", LIBRARY.GIO);
-	Linker.link(g_simple_async_result_new, "g_simple_async_result_new", LIBRARY.GIO);
-	Linker.link(g_simple_async_result_new_error, "g_simple_async_result_new_error", LIBRARY.GIO);
-	Linker.link(g_simple_async_result_new_from_error, "g_simple_async_result_new_from_error", LIBRARY.GIO);
-	Linker.link(g_simple_async_result_new_take_error, "g_simple_async_result_new_take_error", LIBRARY.GIO);
-	Linker.link(g_simple_async_result_is_valid, "g_simple_async_result_is_valid", LIBRARY.GIO);
-	Linker.link(g_simple_async_result_complete, "g_simple_async_result_complete", LIBRARY.GIO);
-	Linker.link(g_simple_async_result_complete_in_idle, "g_simple_async_result_complete_in_idle", LIBRARY.GIO);
-	Linker.link(g_simple_async_result_get_op_res_gboolean, "g_simple_async_result_get_op_res_gboolean", LIBRARY.GIO);
-	Linker.link(g_simple_async_result_get_op_res_gpointer, "g_simple_async_result_get_op_res_gpointer", LIBRARY.GIO);
-	Linker.link(g_simple_async_result_get_op_res_gssize, "g_simple_async_result_get_op_res_gssize", LIBRARY.GIO);
-	Linker.link(g_simple_async_result_get_source_tag, "g_simple_async_result_get_source_tag", LIBRARY.GIO);
-	Linker.link(g_simple_async_result_propagate_error, "g_simple_async_result_propagate_error", LIBRARY.GIO);
-	Linker.link(g_simple_async_result_run_in_thread, "g_simple_async_result_run_in_thread", LIBRARY.GIO);
-	Linker.link(g_simple_async_result_set_check_cancellable, "g_simple_async_result_set_check_cancellable", LIBRARY.GIO);
-	Linker.link(g_simple_async_result_set_error, "g_simple_async_result_set_error", LIBRARY.GIO);
-	Linker.link(g_simple_async_result_set_error_va, "g_simple_async_result_set_error_va", LIBRARY.GIO);
-	Linker.link(g_simple_async_result_set_from_error, "g_simple_async_result_set_from_error", LIBRARY.GIO);
-	Linker.link(g_simple_async_result_set_handle_cancellation, "g_simple_async_result_set_handle_cancellation", LIBRARY.GIO);
-	Linker.link(g_simple_async_result_set_op_res_gboolean, "g_simple_async_result_set_op_res_gboolean", LIBRARY.GIO);
-	Linker.link(g_simple_async_result_set_op_res_gpointer, "g_simple_async_result_set_op_res_gpointer", LIBRARY.GIO);
-	Linker.link(g_simple_async_result_set_op_res_gssize, "g_simple_async_result_set_op_res_gssize", LIBRARY.GIO);
-	Linker.link(g_simple_async_result_take_error, "g_simple_async_result_take_error", LIBRARY.GIO);
-	Linker.link(g_simple_async_report_error_in_idle, "g_simple_async_report_error_in_idle", LIBRARY.GIO);
-	Linker.link(g_simple_async_report_gerror_in_idle, "g_simple_async_report_gerror_in_idle", LIBRARY.GIO);
-	Linker.link(g_simple_async_report_take_gerror_in_idle, "g_simple_async_report_take_gerror_in_idle", LIBRARY.GIO);
+	Linker.link(g_simple_async_result_get_type, "g_simple_async_result_get_type", LIBRARY_GIO);
+	Linker.link(g_simple_async_result_new, "g_simple_async_result_new", LIBRARY_GIO);
+	Linker.link(g_simple_async_result_new_error, "g_simple_async_result_new_error", LIBRARY_GIO);
+	Linker.link(g_simple_async_result_new_from_error, "g_simple_async_result_new_from_error", LIBRARY_GIO);
+	Linker.link(g_simple_async_result_new_take_error, "g_simple_async_result_new_take_error", LIBRARY_GIO);
+	Linker.link(g_simple_async_result_is_valid, "g_simple_async_result_is_valid", LIBRARY_GIO);
+	Linker.link(g_simple_async_result_complete, "g_simple_async_result_complete", LIBRARY_GIO);
+	Linker.link(g_simple_async_result_complete_in_idle, "g_simple_async_result_complete_in_idle", LIBRARY_GIO);
+	Linker.link(g_simple_async_result_get_op_res_gboolean, "g_simple_async_result_get_op_res_gboolean", LIBRARY_GIO);
+	Linker.link(g_simple_async_result_get_op_res_gpointer, "g_simple_async_result_get_op_res_gpointer", LIBRARY_GIO);
+	Linker.link(g_simple_async_result_get_op_res_gssize, "g_simple_async_result_get_op_res_gssize", LIBRARY_GIO);
+	Linker.link(g_simple_async_result_get_source_tag, "g_simple_async_result_get_source_tag", LIBRARY_GIO);
+	Linker.link(g_simple_async_result_propagate_error, "g_simple_async_result_propagate_error", LIBRARY_GIO);
+	Linker.link(g_simple_async_result_run_in_thread, "g_simple_async_result_run_in_thread", LIBRARY_GIO);
+	Linker.link(g_simple_async_result_set_check_cancellable, "g_simple_async_result_set_check_cancellable", LIBRARY_GIO);
+	Linker.link(g_simple_async_result_set_error, "g_simple_async_result_set_error", LIBRARY_GIO);
+	Linker.link(g_simple_async_result_set_error_va, "g_simple_async_result_set_error_va", LIBRARY_GIO);
+	Linker.link(g_simple_async_result_set_from_error, "g_simple_async_result_set_from_error", LIBRARY_GIO);
+	Linker.link(g_simple_async_result_set_handle_cancellation, "g_simple_async_result_set_handle_cancellation", LIBRARY_GIO);
+	Linker.link(g_simple_async_result_set_op_res_gboolean, "g_simple_async_result_set_op_res_gboolean", LIBRARY_GIO);
+	Linker.link(g_simple_async_result_set_op_res_gpointer, "g_simple_async_result_set_op_res_gpointer", LIBRARY_GIO);
+	Linker.link(g_simple_async_result_set_op_res_gssize, "g_simple_async_result_set_op_res_gssize", LIBRARY_GIO);
+	Linker.link(g_simple_async_result_take_error, "g_simple_async_result_take_error", LIBRARY_GIO);
+	Linker.link(g_simple_async_report_error_in_idle, "g_simple_async_report_error_in_idle", LIBRARY_GIO);
+	Linker.link(g_simple_async_report_gerror_in_idle, "g_simple_async_report_gerror_in_idle", LIBRARY_GIO);
+	Linker.link(g_simple_async_report_take_gerror_in_idle, "g_simple_async_report_take_gerror_in_idle", LIBRARY_GIO);
 
 	// gio.SimpleIOStream
 
-	Linker.link(g_simple_io_stream_get_type, "g_simple_io_stream_get_type", LIBRARY.GIO);
-	Linker.link(g_simple_io_stream_new, "g_simple_io_stream_new", LIBRARY.GIO);
+	Linker.link(g_simple_io_stream_get_type, "g_simple_io_stream_get_type", LIBRARY_GIO);
+	Linker.link(g_simple_io_stream_new, "g_simple_io_stream_new", LIBRARY_GIO);
 
 	// gio.SimplePermission
 
-	Linker.link(g_simple_permission_get_type, "g_simple_permission_get_type", LIBRARY.GIO);
-	Linker.link(g_simple_permission_new, "g_simple_permission_new", LIBRARY.GIO);
+	Linker.link(g_simple_permission_get_type, "g_simple_permission_get_type", LIBRARY_GIO);
+	Linker.link(g_simple_permission_new, "g_simple_permission_new", LIBRARY_GIO);
 
 	// gio.SimpleProxyResolver
 
-	Linker.link(g_simple_proxy_resolver_get_type, "g_simple_proxy_resolver_get_type", LIBRARY.GIO);
-	Linker.link(g_simple_proxy_resolver_new, "g_simple_proxy_resolver_new", LIBRARY.GIO);
-	Linker.link(g_simple_proxy_resolver_set_default_proxy, "g_simple_proxy_resolver_set_default_proxy", LIBRARY.GIO);
-	Linker.link(g_simple_proxy_resolver_set_ignore_hosts, "g_simple_proxy_resolver_set_ignore_hosts", LIBRARY.GIO);
-	Linker.link(g_simple_proxy_resolver_set_uri_proxy, "g_simple_proxy_resolver_set_uri_proxy", LIBRARY.GIO);
+	Linker.link(g_simple_proxy_resolver_get_type, "g_simple_proxy_resolver_get_type", LIBRARY_GIO);
+	Linker.link(g_simple_proxy_resolver_new, "g_simple_proxy_resolver_new", LIBRARY_GIO);
+	Linker.link(g_simple_proxy_resolver_set_default_proxy, "g_simple_proxy_resolver_set_default_proxy", LIBRARY_GIO);
+	Linker.link(g_simple_proxy_resolver_set_ignore_hosts, "g_simple_proxy_resolver_set_ignore_hosts", LIBRARY_GIO);
+	Linker.link(g_simple_proxy_resolver_set_uri_proxy, "g_simple_proxy_resolver_set_uri_proxy", LIBRARY_GIO);
 
 	// gio.Socket
 
-	Linker.link(g_socket_get_type, "g_socket_get_type", LIBRARY.GIO);
-	Linker.link(g_socket_new, "g_socket_new", LIBRARY.GIO);
-	Linker.link(g_socket_new_from_fd, "g_socket_new_from_fd", LIBRARY.GIO);
-	Linker.link(g_socket_accept, "g_socket_accept", LIBRARY.GIO);
-	Linker.link(g_socket_bind, "g_socket_bind", LIBRARY.GIO);
-	Linker.link(g_socket_check_connect_result, "g_socket_check_connect_result", LIBRARY.GIO);
-	Linker.link(g_socket_close, "g_socket_close", LIBRARY.GIO);
-	Linker.link(g_socket_condition_check, "g_socket_condition_check", LIBRARY.GIO);
-	Linker.link(g_socket_condition_timed_wait, "g_socket_condition_timed_wait", LIBRARY.GIO);
-	Linker.link(g_socket_condition_wait, "g_socket_condition_wait", LIBRARY.GIO);
-	Linker.link(g_socket_connect, "g_socket_connect", LIBRARY.GIO);
-	Linker.link(g_socket_connection_factory_create_connection, "g_socket_connection_factory_create_connection", LIBRARY.GIO);
-	Linker.link(g_socket_create_source, "g_socket_create_source", LIBRARY.GIO);
-	Linker.link(g_socket_get_available_bytes, "g_socket_get_available_bytes", LIBRARY.GIO);
-	Linker.link(g_socket_get_blocking, "g_socket_get_blocking", LIBRARY.GIO);
-	Linker.link(g_socket_get_broadcast, "g_socket_get_broadcast", LIBRARY.GIO);
-	Linker.link(g_socket_get_credentials, "g_socket_get_credentials", LIBRARY.GIO);
-	Linker.link(g_socket_get_family, "g_socket_get_family", LIBRARY.GIO);
-	Linker.link(g_socket_get_fd, "g_socket_get_fd", LIBRARY.GIO);
-	Linker.link(g_socket_get_keepalive, "g_socket_get_keepalive", LIBRARY.GIO);
-	Linker.link(g_socket_get_listen_backlog, "g_socket_get_listen_backlog", LIBRARY.GIO);
-	Linker.link(g_socket_get_local_address, "g_socket_get_local_address", LIBRARY.GIO);
-	Linker.link(g_socket_get_multicast_loopback, "g_socket_get_multicast_loopback", LIBRARY.GIO);
-	Linker.link(g_socket_get_multicast_ttl, "g_socket_get_multicast_ttl", LIBRARY.GIO);
-	Linker.link(g_socket_get_option, "g_socket_get_option", LIBRARY.GIO);
-	Linker.link(g_socket_get_protocol, "g_socket_get_protocol", LIBRARY.GIO);
-	Linker.link(g_socket_get_remote_address, "g_socket_get_remote_address", LIBRARY.GIO);
-	Linker.link(g_socket_get_socket_type, "g_socket_get_socket_type", LIBRARY.GIO);
-	Linker.link(g_socket_get_timeout, "g_socket_get_timeout", LIBRARY.GIO);
-	Linker.link(g_socket_get_ttl, "g_socket_get_ttl", LIBRARY.GIO);
-	Linker.link(g_socket_is_closed, "g_socket_is_closed", LIBRARY.GIO);
-	Linker.link(g_socket_is_connected, "g_socket_is_connected", LIBRARY.GIO);
-	Linker.link(g_socket_join_multicast_group, "g_socket_join_multicast_group", LIBRARY.GIO);
-	Linker.link(g_socket_leave_multicast_group, "g_socket_leave_multicast_group", LIBRARY.GIO);
-	Linker.link(g_socket_listen, "g_socket_listen", LIBRARY.GIO);
-	Linker.link(g_socket_receive, "g_socket_receive", LIBRARY.GIO);
-	Linker.link(g_socket_receive_from, "g_socket_receive_from", LIBRARY.GIO);
-	Linker.link(g_socket_receive_message, "g_socket_receive_message", LIBRARY.GIO);
-	Linker.link(g_socket_receive_messages, "g_socket_receive_messages", LIBRARY.GIO);
-	Linker.link(g_socket_receive_with_blocking, "g_socket_receive_with_blocking", LIBRARY.GIO);
-	Linker.link(g_socket_send, "g_socket_send", LIBRARY.GIO);
-	Linker.link(g_socket_send_message, "g_socket_send_message", LIBRARY.GIO);
-	Linker.link(g_socket_send_messages, "g_socket_send_messages", LIBRARY.GIO);
-	Linker.link(g_socket_send_to, "g_socket_send_to", LIBRARY.GIO);
-	Linker.link(g_socket_send_with_blocking, "g_socket_send_with_blocking", LIBRARY.GIO);
-	Linker.link(g_socket_set_blocking, "g_socket_set_blocking", LIBRARY.GIO);
-	Linker.link(g_socket_set_broadcast, "g_socket_set_broadcast", LIBRARY.GIO);
-	Linker.link(g_socket_set_keepalive, "g_socket_set_keepalive", LIBRARY.GIO);
-	Linker.link(g_socket_set_listen_backlog, "g_socket_set_listen_backlog", LIBRARY.GIO);
-	Linker.link(g_socket_set_multicast_loopback, "g_socket_set_multicast_loopback", LIBRARY.GIO);
-	Linker.link(g_socket_set_multicast_ttl, "g_socket_set_multicast_ttl", LIBRARY.GIO);
-	Linker.link(g_socket_set_option, "g_socket_set_option", LIBRARY.GIO);
-	Linker.link(g_socket_set_timeout, "g_socket_set_timeout", LIBRARY.GIO);
-	Linker.link(g_socket_set_ttl, "g_socket_set_ttl", LIBRARY.GIO);
-	Linker.link(g_socket_shutdown, "g_socket_shutdown", LIBRARY.GIO);
-	Linker.link(g_socket_speaks_ipv4, "g_socket_speaks_ipv4", LIBRARY.GIO);
+	Linker.link(g_socket_get_type, "g_socket_get_type", LIBRARY_GIO);
+	Linker.link(g_socket_new, "g_socket_new", LIBRARY_GIO);
+	Linker.link(g_socket_new_from_fd, "g_socket_new_from_fd", LIBRARY_GIO);
+	Linker.link(g_socket_accept, "g_socket_accept", LIBRARY_GIO);
+	Linker.link(g_socket_bind, "g_socket_bind", LIBRARY_GIO);
+	Linker.link(g_socket_check_connect_result, "g_socket_check_connect_result", LIBRARY_GIO);
+	Linker.link(g_socket_close, "g_socket_close", LIBRARY_GIO);
+	Linker.link(g_socket_condition_check, "g_socket_condition_check", LIBRARY_GIO);
+	Linker.link(g_socket_condition_timed_wait, "g_socket_condition_timed_wait", LIBRARY_GIO);
+	Linker.link(g_socket_condition_wait, "g_socket_condition_wait", LIBRARY_GIO);
+	Linker.link(g_socket_connect, "g_socket_connect", LIBRARY_GIO);
+	Linker.link(g_socket_connection_factory_create_connection, "g_socket_connection_factory_create_connection", LIBRARY_GIO);
+	Linker.link(g_socket_create_source, "g_socket_create_source", LIBRARY_GIO);
+	Linker.link(g_socket_get_available_bytes, "g_socket_get_available_bytes", LIBRARY_GIO);
+	Linker.link(g_socket_get_blocking, "g_socket_get_blocking", LIBRARY_GIO);
+	Linker.link(g_socket_get_broadcast, "g_socket_get_broadcast", LIBRARY_GIO);
+	Linker.link(g_socket_get_credentials, "g_socket_get_credentials", LIBRARY_GIO);
+	Linker.link(g_socket_get_family, "g_socket_get_family", LIBRARY_GIO);
+	Linker.link(g_socket_get_fd, "g_socket_get_fd", LIBRARY_GIO);
+	Linker.link(g_socket_get_keepalive, "g_socket_get_keepalive", LIBRARY_GIO);
+	Linker.link(g_socket_get_listen_backlog, "g_socket_get_listen_backlog", LIBRARY_GIO);
+	Linker.link(g_socket_get_local_address, "g_socket_get_local_address", LIBRARY_GIO);
+	Linker.link(g_socket_get_multicast_loopback, "g_socket_get_multicast_loopback", LIBRARY_GIO);
+	Linker.link(g_socket_get_multicast_ttl, "g_socket_get_multicast_ttl", LIBRARY_GIO);
+	Linker.link(g_socket_get_option, "g_socket_get_option", LIBRARY_GIO);
+	Linker.link(g_socket_get_protocol, "g_socket_get_protocol", LIBRARY_GIO);
+	Linker.link(g_socket_get_remote_address, "g_socket_get_remote_address", LIBRARY_GIO);
+	Linker.link(g_socket_get_socket_type, "g_socket_get_socket_type", LIBRARY_GIO);
+	Linker.link(g_socket_get_timeout, "g_socket_get_timeout", LIBRARY_GIO);
+	Linker.link(g_socket_get_ttl, "g_socket_get_ttl", LIBRARY_GIO);
+	Linker.link(g_socket_is_closed, "g_socket_is_closed", LIBRARY_GIO);
+	Linker.link(g_socket_is_connected, "g_socket_is_connected", LIBRARY_GIO);
+	Linker.link(g_socket_join_multicast_group, "g_socket_join_multicast_group", LIBRARY_GIO);
+	Linker.link(g_socket_leave_multicast_group, "g_socket_leave_multicast_group", LIBRARY_GIO);
+	Linker.link(g_socket_listen, "g_socket_listen", LIBRARY_GIO);
+	Linker.link(g_socket_receive, "g_socket_receive", LIBRARY_GIO);
+	Linker.link(g_socket_receive_from, "g_socket_receive_from", LIBRARY_GIO);
+	Linker.link(g_socket_receive_message, "g_socket_receive_message", LIBRARY_GIO);
+	Linker.link(g_socket_receive_messages, "g_socket_receive_messages", LIBRARY_GIO);
+	Linker.link(g_socket_receive_with_blocking, "g_socket_receive_with_blocking", LIBRARY_GIO);
+	Linker.link(g_socket_send, "g_socket_send", LIBRARY_GIO);
+	Linker.link(g_socket_send_message, "g_socket_send_message", LIBRARY_GIO);
+	Linker.link(g_socket_send_messages, "g_socket_send_messages", LIBRARY_GIO);
+	Linker.link(g_socket_send_to, "g_socket_send_to", LIBRARY_GIO);
+	Linker.link(g_socket_send_with_blocking, "g_socket_send_with_blocking", LIBRARY_GIO);
+	Linker.link(g_socket_set_blocking, "g_socket_set_blocking", LIBRARY_GIO);
+	Linker.link(g_socket_set_broadcast, "g_socket_set_broadcast", LIBRARY_GIO);
+	Linker.link(g_socket_set_keepalive, "g_socket_set_keepalive", LIBRARY_GIO);
+	Linker.link(g_socket_set_listen_backlog, "g_socket_set_listen_backlog", LIBRARY_GIO);
+	Linker.link(g_socket_set_multicast_loopback, "g_socket_set_multicast_loopback", LIBRARY_GIO);
+	Linker.link(g_socket_set_multicast_ttl, "g_socket_set_multicast_ttl", LIBRARY_GIO);
+	Linker.link(g_socket_set_option, "g_socket_set_option", LIBRARY_GIO);
+	Linker.link(g_socket_set_timeout, "g_socket_set_timeout", LIBRARY_GIO);
+	Linker.link(g_socket_set_ttl, "g_socket_set_ttl", LIBRARY_GIO);
+	Linker.link(g_socket_shutdown, "g_socket_shutdown", LIBRARY_GIO);
+	Linker.link(g_socket_speaks_ipv4, "g_socket_speaks_ipv4", LIBRARY_GIO);
 
 	// gio.SocketAddress
 
-	Linker.link(g_socket_address_get_type, "g_socket_address_get_type", LIBRARY.GIO);
-	Linker.link(g_socket_address_new_from_native, "g_socket_address_new_from_native", LIBRARY.GIO);
-	Linker.link(g_socket_address_get_family, "g_socket_address_get_family", LIBRARY.GIO);
-	Linker.link(g_socket_address_get_native_size, "g_socket_address_get_native_size", LIBRARY.GIO);
-	Linker.link(g_socket_address_to_native, "g_socket_address_to_native", LIBRARY.GIO);
+	Linker.link(g_socket_address_get_type, "g_socket_address_get_type", LIBRARY_GIO);
+	Linker.link(g_socket_address_new_from_native, "g_socket_address_new_from_native", LIBRARY_GIO);
+	Linker.link(g_socket_address_get_family, "g_socket_address_get_family", LIBRARY_GIO);
+	Linker.link(g_socket_address_get_native_size, "g_socket_address_get_native_size", LIBRARY_GIO);
+	Linker.link(g_socket_address_to_native, "g_socket_address_to_native", LIBRARY_GIO);
 
 	// gio.SocketAddressEnumerator
 
-	Linker.link(g_socket_address_enumerator_get_type, "g_socket_address_enumerator_get_type", LIBRARY.GIO);
-	Linker.link(g_socket_address_enumerator_next, "g_socket_address_enumerator_next", LIBRARY.GIO);
-	Linker.link(g_socket_address_enumerator_next_async, "g_socket_address_enumerator_next_async", LIBRARY.GIO);
-	Linker.link(g_socket_address_enumerator_next_finish, "g_socket_address_enumerator_next_finish", LIBRARY.GIO);
+	Linker.link(g_socket_address_enumerator_get_type, "g_socket_address_enumerator_get_type", LIBRARY_GIO);
+	Linker.link(g_socket_address_enumerator_next, "g_socket_address_enumerator_next", LIBRARY_GIO);
+	Linker.link(g_socket_address_enumerator_next_async, "g_socket_address_enumerator_next_async", LIBRARY_GIO);
+	Linker.link(g_socket_address_enumerator_next_finish, "g_socket_address_enumerator_next_finish", LIBRARY_GIO);
 
 	// gio.SocketClient
 
-	Linker.link(g_socket_client_get_type, "g_socket_client_get_type", LIBRARY.GIO);
-	Linker.link(g_socket_client_new, "g_socket_client_new", LIBRARY.GIO);
-	Linker.link(g_socket_client_add_application_proxy, "g_socket_client_add_application_proxy", LIBRARY.GIO);
-	Linker.link(g_socket_client_connect, "g_socket_client_connect", LIBRARY.GIO);
-	Linker.link(g_socket_client_connect_async, "g_socket_client_connect_async", LIBRARY.GIO);
-	Linker.link(g_socket_client_connect_finish, "g_socket_client_connect_finish", LIBRARY.GIO);
-	Linker.link(g_socket_client_connect_to_host, "g_socket_client_connect_to_host", LIBRARY.GIO);
-	Linker.link(g_socket_client_connect_to_host_async, "g_socket_client_connect_to_host_async", LIBRARY.GIO);
-	Linker.link(g_socket_client_connect_to_host_finish, "g_socket_client_connect_to_host_finish", LIBRARY.GIO);
-	Linker.link(g_socket_client_connect_to_service, "g_socket_client_connect_to_service", LIBRARY.GIO);
-	Linker.link(g_socket_client_connect_to_service_async, "g_socket_client_connect_to_service_async", LIBRARY.GIO);
-	Linker.link(g_socket_client_connect_to_service_finish, "g_socket_client_connect_to_service_finish", LIBRARY.GIO);
-	Linker.link(g_socket_client_connect_to_uri, "g_socket_client_connect_to_uri", LIBRARY.GIO);
-	Linker.link(g_socket_client_connect_to_uri_async, "g_socket_client_connect_to_uri_async", LIBRARY.GIO);
-	Linker.link(g_socket_client_connect_to_uri_finish, "g_socket_client_connect_to_uri_finish", LIBRARY.GIO);
-	Linker.link(g_socket_client_get_enable_proxy, "g_socket_client_get_enable_proxy", LIBRARY.GIO);
-	Linker.link(g_socket_client_get_family, "g_socket_client_get_family", LIBRARY.GIO);
-	Linker.link(g_socket_client_get_local_address, "g_socket_client_get_local_address", LIBRARY.GIO);
-	Linker.link(g_socket_client_get_protocol, "g_socket_client_get_protocol", LIBRARY.GIO);
-	Linker.link(g_socket_client_get_proxy_resolver, "g_socket_client_get_proxy_resolver", LIBRARY.GIO);
-	Linker.link(g_socket_client_get_socket_type, "g_socket_client_get_socket_type", LIBRARY.GIO);
-	Linker.link(g_socket_client_get_timeout, "g_socket_client_get_timeout", LIBRARY.GIO);
-	Linker.link(g_socket_client_get_tls, "g_socket_client_get_tls", LIBRARY.GIO);
-	Linker.link(g_socket_client_get_tls_validation_flags, "g_socket_client_get_tls_validation_flags", LIBRARY.GIO);
-	Linker.link(g_socket_client_set_enable_proxy, "g_socket_client_set_enable_proxy", LIBRARY.GIO);
-	Linker.link(g_socket_client_set_family, "g_socket_client_set_family", LIBRARY.GIO);
-	Linker.link(g_socket_client_set_local_address, "g_socket_client_set_local_address", LIBRARY.GIO);
-	Linker.link(g_socket_client_set_protocol, "g_socket_client_set_protocol", LIBRARY.GIO);
-	Linker.link(g_socket_client_set_proxy_resolver, "g_socket_client_set_proxy_resolver", LIBRARY.GIO);
-	Linker.link(g_socket_client_set_socket_type, "g_socket_client_set_socket_type", LIBRARY.GIO);
-	Linker.link(g_socket_client_set_timeout, "g_socket_client_set_timeout", LIBRARY.GIO);
-	Linker.link(g_socket_client_set_tls, "g_socket_client_set_tls", LIBRARY.GIO);
-	Linker.link(g_socket_client_set_tls_validation_flags, "g_socket_client_set_tls_validation_flags", LIBRARY.GIO);
+	Linker.link(g_socket_client_get_type, "g_socket_client_get_type", LIBRARY_GIO);
+	Linker.link(g_socket_client_new, "g_socket_client_new", LIBRARY_GIO);
+	Linker.link(g_socket_client_add_application_proxy, "g_socket_client_add_application_proxy", LIBRARY_GIO);
+	Linker.link(g_socket_client_connect, "g_socket_client_connect", LIBRARY_GIO);
+	Linker.link(g_socket_client_connect_async, "g_socket_client_connect_async", LIBRARY_GIO);
+	Linker.link(g_socket_client_connect_finish, "g_socket_client_connect_finish", LIBRARY_GIO);
+	Linker.link(g_socket_client_connect_to_host, "g_socket_client_connect_to_host", LIBRARY_GIO);
+	Linker.link(g_socket_client_connect_to_host_async, "g_socket_client_connect_to_host_async", LIBRARY_GIO);
+	Linker.link(g_socket_client_connect_to_host_finish, "g_socket_client_connect_to_host_finish", LIBRARY_GIO);
+	Linker.link(g_socket_client_connect_to_service, "g_socket_client_connect_to_service", LIBRARY_GIO);
+	Linker.link(g_socket_client_connect_to_service_async, "g_socket_client_connect_to_service_async", LIBRARY_GIO);
+	Linker.link(g_socket_client_connect_to_service_finish, "g_socket_client_connect_to_service_finish", LIBRARY_GIO);
+	Linker.link(g_socket_client_connect_to_uri, "g_socket_client_connect_to_uri", LIBRARY_GIO);
+	Linker.link(g_socket_client_connect_to_uri_async, "g_socket_client_connect_to_uri_async", LIBRARY_GIO);
+	Linker.link(g_socket_client_connect_to_uri_finish, "g_socket_client_connect_to_uri_finish", LIBRARY_GIO);
+	Linker.link(g_socket_client_get_enable_proxy, "g_socket_client_get_enable_proxy", LIBRARY_GIO);
+	Linker.link(g_socket_client_get_family, "g_socket_client_get_family", LIBRARY_GIO);
+	Linker.link(g_socket_client_get_local_address, "g_socket_client_get_local_address", LIBRARY_GIO);
+	Linker.link(g_socket_client_get_protocol, "g_socket_client_get_protocol", LIBRARY_GIO);
+	Linker.link(g_socket_client_get_proxy_resolver, "g_socket_client_get_proxy_resolver", LIBRARY_GIO);
+	Linker.link(g_socket_client_get_socket_type, "g_socket_client_get_socket_type", LIBRARY_GIO);
+	Linker.link(g_socket_client_get_timeout, "g_socket_client_get_timeout", LIBRARY_GIO);
+	Linker.link(g_socket_client_get_tls, "g_socket_client_get_tls", LIBRARY_GIO);
+	Linker.link(g_socket_client_get_tls_validation_flags, "g_socket_client_get_tls_validation_flags", LIBRARY_GIO);
+	Linker.link(g_socket_client_set_enable_proxy, "g_socket_client_set_enable_proxy", LIBRARY_GIO);
+	Linker.link(g_socket_client_set_family, "g_socket_client_set_family", LIBRARY_GIO);
+	Linker.link(g_socket_client_set_local_address, "g_socket_client_set_local_address", LIBRARY_GIO);
+	Linker.link(g_socket_client_set_protocol, "g_socket_client_set_protocol", LIBRARY_GIO);
+	Linker.link(g_socket_client_set_proxy_resolver, "g_socket_client_set_proxy_resolver", LIBRARY_GIO);
+	Linker.link(g_socket_client_set_socket_type, "g_socket_client_set_socket_type", LIBRARY_GIO);
+	Linker.link(g_socket_client_set_timeout, "g_socket_client_set_timeout", LIBRARY_GIO);
+	Linker.link(g_socket_client_set_tls, "g_socket_client_set_tls", LIBRARY_GIO);
+	Linker.link(g_socket_client_set_tls_validation_flags, "g_socket_client_set_tls_validation_flags", LIBRARY_GIO);
 
 	// gio.SocketConnectable
 
-	Linker.link(g_socket_connectable_get_type, "g_socket_connectable_get_type", LIBRARY.GIO);
-	Linker.link(g_socket_connectable_enumerate, "g_socket_connectable_enumerate", LIBRARY.GIO);
-	Linker.link(g_socket_connectable_proxy_enumerate, "g_socket_connectable_proxy_enumerate", LIBRARY.GIO);
-	Linker.link(g_socket_connectable_to_string, "g_socket_connectable_to_string", LIBRARY.GIO);
+	Linker.link(g_socket_connectable_get_type, "g_socket_connectable_get_type", LIBRARY_GIO);
+	Linker.link(g_socket_connectable_enumerate, "g_socket_connectable_enumerate", LIBRARY_GIO);
+	Linker.link(g_socket_connectable_proxy_enumerate, "g_socket_connectable_proxy_enumerate", LIBRARY_GIO);
+	Linker.link(g_socket_connectable_to_string, "g_socket_connectable_to_string", LIBRARY_GIO);
 
 	// gio.SocketConnection
 
-	Linker.link(g_socket_connection_get_type, "g_socket_connection_get_type", LIBRARY.GIO);
-	Linker.link(g_socket_connection_factory_lookup_type, "g_socket_connection_factory_lookup_type", LIBRARY.GIO);
-	Linker.link(g_socket_connection_factory_register_type, "g_socket_connection_factory_register_type", LIBRARY.GIO);
-	Linker.link(g_socket_connection_connect, "g_socket_connection_connect", LIBRARY.GIO);
-	Linker.link(g_socket_connection_connect_async, "g_socket_connection_connect_async", LIBRARY.GIO);
-	Linker.link(g_socket_connection_connect_finish, "g_socket_connection_connect_finish", LIBRARY.GIO);
-	Linker.link(g_socket_connection_get_local_address, "g_socket_connection_get_local_address", LIBRARY.GIO);
-	Linker.link(g_socket_connection_get_remote_address, "g_socket_connection_get_remote_address", LIBRARY.GIO);
-	Linker.link(g_socket_connection_get_socket, "g_socket_connection_get_socket", LIBRARY.GIO);
-	Linker.link(g_socket_connection_is_connected, "g_socket_connection_is_connected", LIBRARY.GIO);
+	Linker.link(g_socket_connection_get_type, "g_socket_connection_get_type", LIBRARY_GIO);
+	Linker.link(g_socket_connection_factory_lookup_type, "g_socket_connection_factory_lookup_type", LIBRARY_GIO);
+	Linker.link(g_socket_connection_factory_register_type, "g_socket_connection_factory_register_type", LIBRARY_GIO);
+	Linker.link(g_socket_connection_connect, "g_socket_connection_connect", LIBRARY_GIO);
+	Linker.link(g_socket_connection_connect_async, "g_socket_connection_connect_async", LIBRARY_GIO);
+	Linker.link(g_socket_connection_connect_finish, "g_socket_connection_connect_finish", LIBRARY_GIO);
+	Linker.link(g_socket_connection_get_local_address, "g_socket_connection_get_local_address", LIBRARY_GIO);
+	Linker.link(g_socket_connection_get_remote_address, "g_socket_connection_get_remote_address", LIBRARY_GIO);
+	Linker.link(g_socket_connection_get_socket, "g_socket_connection_get_socket", LIBRARY_GIO);
+	Linker.link(g_socket_connection_is_connected, "g_socket_connection_is_connected", LIBRARY_GIO);
 
 	// gio.SocketControlMessage
 
-	Linker.link(g_socket_control_message_get_type, "g_socket_control_message_get_type", LIBRARY.GIO);
-	Linker.link(g_socket_control_message_deserialize, "g_socket_control_message_deserialize", LIBRARY.GIO);
-	Linker.link(g_socket_control_message_get_level, "g_socket_control_message_get_level", LIBRARY.GIO);
-	Linker.link(g_socket_control_message_get_msg_type, "g_socket_control_message_get_msg_type", LIBRARY.GIO);
-	Linker.link(g_socket_control_message_get_size, "g_socket_control_message_get_size", LIBRARY.GIO);
-	Linker.link(g_socket_control_message_serialize, "g_socket_control_message_serialize", LIBRARY.GIO);
+	Linker.link(g_socket_control_message_get_type, "g_socket_control_message_get_type", LIBRARY_GIO);
+	Linker.link(g_socket_control_message_deserialize, "g_socket_control_message_deserialize", LIBRARY_GIO);
+	Linker.link(g_socket_control_message_get_level, "g_socket_control_message_get_level", LIBRARY_GIO);
+	Linker.link(g_socket_control_message_get_msg_type, "g_socket_control_message_get_msg_type", LIBRARY_GIO);
+	Linker.link(g_socket_control_message_get_size, "g_socket_control_message_get_size", LIBRARY_GIO);
+	Linker.link(g_socket_control_message_serialize, "g_socket_control_message_serialize", LIBRARY_GIO);
 
 	// gio.SocketListener
 
-	Linker.link(g_socket_listener_get_type, "g_socket_listener_get_type", LIBRARY.GIO);
-	Linker.link(g_socket_listener_new, "g_socket_listener_new", LIBRARY.GIO);
-	Linker.link(g_socket_listener_accept, "g_socket_listener_accept", LIBRARY.GIO);
-	Linker.link(g_socket_listener_accept_async, "g_socket_listener_accept_async", LIBRARY.GIO);
-	Linker.link(g_socket_listener_accept_finish, "g_socket_listener_accept_finish", LIBRARY.GIO);
-	Linker.link(g_socket_listener_accept_socket, "g_socket_listener_accept_socket", LIBRARY.GIO);
-	Linker.link(g_socket_listener_accept_socket_async, "g_socket_listener_accept_socket_async", LIBRARY.GIO);
-	Linker.link(g_socket_listener_accept_socket_finish, "g_socket_listener_accept_socket_finish", LIBRARY.GIO);
-	Linker.link(g_socket_listener_add_address, "g_socket_listener_add_address", LIBRARY.GIO);
-	Linker.link(g_socket_listener_add_any_inet_port, "g_socket_listener_add_any_inet_port", LIBRARY.GIO);
-	Linker.link(g_socket_listener_add_inet_port, "g_socket_listener_add_inet_port", LIBRARY.GIO);
-	Linker.link(g_socket_listener_add_socket, "g_socket_listener_add_socket", LIBRARY.GIO);
-	Linker.link(g_socket_listener_close, "g_socket_listener_close", LIBRARY.GIO);
-	Linker.link(g_socket_listener_set_backlog, "g_socket_listener_set_backlog", LIBRARY.GIO);
+	Linker.link(g_socket_listener_get_type, "g_socket_listener_get_type", LIBRARY_GIO);
+	Linker.link(g_socket_listener_new, "g_socket_listener_new", LIBRARY_GIO);
+	Linker.link(g_socket_listener_accept, "g_socket_listener_accept", LIBRARY_GIO);
+	Linker.link(g_socket_listener_accept_async, "g_socket_listener_accept_async", LIBRARY_GIO);
+	Linker.link(g_socket_listener_accept_finish, "g_socket_listener_accept_finish", LIBRARY_GIO);
+	Linker.link(g_socket_listener_accept_socket, "g_socket_listener_accept_socket", LIBRARY_GIO);
+	Linker.link(g_socket_listener_accept_socket_async, "g_socket_listener_accept_socket_async", LIBRARY_GIO);
+	Linker.link(g_socket_listener_accept_socket_finish, "g_socket_listener_accept_socket_finish", LIBRARY_GIO);
+	Linker.link(g_socket_listener_add_address, "g_socket_listener_add_address", LIBRARY_GIO);
+	Linker.link(g_socket_listener_add_any_inet_port, "g_socket_listener_add_any_inet_port", LIBRARY_GIO);
+	Linker.link(g_socket_listener_add_inet_port, "g_socket_listener_add_inet_port", LIBRARY_GIO);
+	Linker.link(g_socket_listener_add_socket, "g_socket_listener_add_socket", LIBRARY_GIO);
+	Linker.link(g_socket_listener_close, "g_socket_listener_close", LIBRARY_GIO);
+	Linker.link(g_socket_listener_set_backlog, "g_socket_listener_set_backlog", LIBRARY_GIO);
 
 	// gio.SocketService
 
-	Linker.link(g_socket_service_get_type, "g_socket_service_get_type", LIBRARY.GIO);
-	Linker.link(g_socket_service_new, "g_socket_service_new", LIBRARY.GIO);
-	Linker.link(g_socket_service_is_active, "g_socket_service_is_active", LIBRARY.GIO);
-	Linker.link(g_socket_service_start, "g_socket_service_start", LIBRARY.GIO);
-	Linker.link(g_socket_service_stop, "g_socket_service_stop", LIBRARY.GIO);
+	Linker.link(g_socket_service_get_type, "g_socket_service_get_type", LIBRARY_GIO);
+	Linker.link(g_socket_service_new, "g_socket_service_new", LIBRARY_GIO);
+	Linker.link(g_socket_service_is_active, "g_socket_service_is_active", LIBRARY_GIO);
+	Linker.link(g_socket_service_start, "g_socket_service_start", LIBRARY_GIO);
+	Linker.link(g_socket_service_stop, "g_socket_service_stop", LIBRARY_GIO);
 
 	// gio.SrvTarget
 
-	Linker.link(g_srv_target_get_type, "g_srv_target_get_type", LIBRARY.GIO);
-	Linker.link(g_srv_target_new, "g_srv_target_new", LIBRARY.GIO);
-	Linker.link(g_srv_target_copy, "g_srv_target_copy", LIBRARY.GIO);
-	Linker.link(g_srv_target_free, "g_srv_target_free", LIBRARY.GIO);
-	Linker.link(g_srv_target_get_hostname, "g_srv_target_get_hostname", LIBRARY.GIO);
-	Linker.link(g_srv_target_get_port, "g_srv_target_get_port", LIBRARY.GIO);
-	Linker.link(g_srv_target_get_priority, "g_srv_target_get_priority", LIBRARY.GIO);
-	Linker.link(g_srv_target_get_weight, "g_srv_target_get_weight", LIBRARY.GIO);
-	Linker.link(g_srv_target_list_sort, "g_srv_target_list_sort", LIBRARY.GIO);
+	Linker.link(g_srv_target_get_type, "g_srv_target_get_type", LIBRARY_GIO);
+	Linker.link(g_srv_target_new, "g_srv_target_new", LIBRARY_GIO);
+	Linker.link(g_srv_target_copy, "g_srv_target_copy", LIBRARY_GIO);
+	Linker.link(g_srv_target_free, "g_srv_target_free", LIBRARY_GIO);
+	Linker.link(g_srv_target_get_hostname, "g_srv_target_get_hostname", LIBRARY_GIO);
+	Linker.link(g_srv_target_get_port, "g_srv_target_get_port", LIBRARY_GIO);
+	Linker.link(g_srv_target_get_priority, "g_srv_target_get_priority", LIBRARY_GIO);
+	Linker.link(g_srv_target_get_weight, "g_srv_target_get_weight", LIBRARY_GIO);
+	Linker.link(g_srv_target_list_sort, "g_srv_target_list_sort", LIBRARY_GIO);
 
 	// gio.StaticResource
 
-	Linker.link(g_static_resource_fini, "g_static_resource_fini", LIBRARY.GIO);
-	Linker.link(g_static_resource_get_resource, "g_static_resource_get_resource", LIBRARY.GIO);
-	Linker.link(g_static_resource_init, "g_static_resource_init", LIBRARY.GIO);
+	Linker.link(g_static_resource_fini, "g_static_resource_fini", LIBRARY_GIO);
+	Linker.link(g_static_resource_get_resource, "g_static_resource_get_resource", LIBRARY_GIO);
+	Linker.link(g_static_resource_init, "g_static_resource_init", LIBRARY_GIO);
 
 	// gio.Subprocess
 
-	Linker.link(g_subprocess_get_type, "g_subprocess_get_type", LIBRARY.GIO);
-	Linker.link(g_subprocess_new, "g_subprocess_new", LIBRARY.GIO);
-	Linker.link(g_subprocess_newv, "g_subprocess_newv", LIBRARY.GIO);
-	Linker.link(g_subprocess_communicate, "g_subprocess_communicate", LIBRARY.GIO);
-	Linker.link(g_subprocess_communicate_async, "g_subprocess_communicate_async", LIBRARY.GIO);
-	Linker.link(g_subprocess_communicate_finish, "g_subprocess_communicate_finish", LIBRARY.GIO);
-	Linker.link(g_subprocess_communicate_utf8, "g_subprocess_communicate_utf8", LIBRARY.GIO);
-	Linker.link(g_subprocess_communicate_utf8_async, "g_subprocess_communicate_utf8_async", LIBRARY.GIO);
-	Linker.link(g_subprocess_communicate_utf8_finish, "g_subprocess_communicate_utf8_finish", LIBRARY.GIO);
-	Linker.link(g_subprocess_force_exit, "g_subprocess_force_exit", LIBRARY.GIO);
-	Linker.link(g_subprocess_get_exit_status, "g_subprocess_get_exit_status", LIBRARY.GIO);
-	Linker.link(g_subprocess_get_identifier, "g_subprocess_get_identifier", LIBRARY.GIO);
-	Linker.link(g_subprocess_get_if_exited, "g_subprocess_get_if_exited", LIBRARY.GIO);
-	Linker.link(g_subprocess_get_if_signaled, "g_subprocess_get_if_signaled", LIBRARY.GIO);
-	Linker.link(g_subprocess_get_status, "g_subprocess_get_status", LIBRARY.GIO);
-	Linker.link(g_subprocess_get_stderr_pipe, "g_subprocess_get_stderr_pipe", LIBRARY.GIO);
-	Linker.link(g_subprocess_get_stdin_pipe, "g_subprocess_get_stdin_pipe", LIBRARY.GIO);
-	Linker.link(g_subprocess_get_stdout_pipe, "g_subprocess_get_stdout_pipe", LIBRARY.GIO);
-	Linker.link(g_subprocess_get_successful, "g_subprocess_get_successful", LIBRARY.GIO);
-	Linker.link(g_subprocess_get_term_sig, "g_subprocess_get_term_sig", LIBRARY.GIO);
-	Linker.link(g_subprocess_send_signal, "g_subprocess_send_signal", LIBRARY.GIO);
-	Linker.link(g_subprocess_wait, "g_subprocess_wait", LIBRARY.GIO);
-	Linker.link(g_subprocess_wait_async, "g_subprocess_wait_async", LIBRARY.GIO);
-	Linker.link(g_subprocess_wait_check, "g_subprocess_wait_check", LIBRARY.GIO);
-	Linker.link(g_subprocess_wait_check_async, "g_subprocess_wait_check_async", LIBRARY.GIO);
-	Linker.link(g_subprocess_wait_check_finish, "g_subprocess_wait_check_finish", LIBRARY.GIO);
-	Linker.link(g_subprocess_wait_finish, "g_subprocess_wait_finish", LIBRARY.GIO);
+	Linker.link(g_subprocess_get_type, "g_subprocess_get_type", LIBRARY_GIO);
+	Linker.link(g_subprocess_new, "g_subprocess_new", LIBRARY_GIO);
+	Linker.link(g_subprocess_newv, "g_subprocess_newv", LIBRARY_GIO);
+	Linker.link(g_subprocess_communicate, "g_subprocess_communicate", LIBRARY_GIO);
+	Linker.link(g_subprocess_communicate_async, "g_subprocess_communicate_async", LIBRARY_GIO);
+	Linker.link(g_subprocess_communicate_finish, "g_subprocess_communicate_finish", LIBRARY_GIO);
+	Linker.link(g_subprocess_communicate_utf8, "g_subprocess_communicate_utf8", LIBRARY_GIO);
+	Linker.link(g_subprocess_communicate_utf8_async, "g_subprocess_communicate_utf8_async", LIBRARY_GIO);
+	Linker.link(g_subprocess_communicate_utf8_finish, "g_subprocess_communicate_utf8_finish", LIBRARY_GIO);
+	Linker.link(g_subprocess_force_exit, "g_subprocess_force_exit", LIBRARY_GIO);
+	Linker.link(g_subprocess_get_exit_status, "g_subprocess_get_exit_status", LIBRARY_GIO);
+	Linker.link(g_subprocess_get_identifier, "g_subprocess_get_identifier", LIBRARY_GIO);
+	Linker.link(g_subprocess_get_if_exited, "g_subprocess_get_if_exited", LIBRARY_GIO);
+	Linker.link(g_subprocess_get_if_signaled, "g_subprocess_get_if_signaled", LIBRARY_GIO);
+	Linker.link(g_subprocess_get_status, "g_subprocess_get_status", LIBRARY_GIO);
+	Linker.link(g_subprocess_get_stderr_pipe, "g_subprocess_get_stderr_pipe", LIBRARY_GIO);
+	Linker.link(g_subprocess_get_stdin_pipe, "g_subprocess_get_stdin_pipe", LIBRARY_GIO);
+	Linker.link(g_subprocess_get_stdout_pipe, "g_subprocess_get_stdout_pipe", LIBRARY_GIO);
+	Linker.link(g_subprocess_get_successful, "g_subprocess_get_successful", LIBRARY_GIO);
+	Linker.link(g_subprocess_get_term_sig, "g_subprocess_get_term_sig", LIBRARY_GIO);
+	Linker.link(g_subprocess_send_signal, "g_subprocess_send_signal", LIBRARY_GIO);
+	Linker.link(g_subprocess_wait, "g_subprocess_wait", LIBRARY_GIO);
+	Linker.link(g_subprocess_wait_async, "g_subprocess_wait_async", LIBRARY_GIO);
+	Linker.link(g_subprocess_wait_check, "g_subprocess_wait_check", LIBRARY_GIO);
+	Linker.link(g_subprocess_wait_check_async, "g_subprocess_wait_check_async", LIBRARY_GIO);
+	Linker.link(g_subprocess_wait_check_finish, "g_subprocess_wait_check_finish", LIBRARY_GIO);
+	Linker.link(g_subprocess_wait_finish, "g_subprocess_wait_finish", LIBRARY_GIO);
 
 	// gio.SubprocessLauncher
 
-	Linker.link(g_subprocess_launcher_get_type, "g_subprocess_launcher_get_type", LIBRARY.GIO);
-	Linker.link(g_subprocess_launcher_new, "g_subprocess_launcher_new", LIBRARY.GIO);
-	Linker.link(g_subprocess_launcher_getenv, "g_subprocess_launcher_getenv", LIBRARY.GIO);
-	Linker.link(g_subprocess_launcher_set_child_setup, "g_subprocess_launcher_set_child_setup", LIBRARY.GIO);
-	Linker.link(g_subprocess_launcher_set_cwd, "g_subprocess_launcher_set_cwd", LIBRARY.GIO);
-	Linker.link(g_subprocess_launcher_set_environ, "g_subprocess_launcher_set_environ", LIBRARY.GIO);
-	Linker.link(g_subprocess_launcher_set_flags, "g_subprocess_launcher_set_flags", LIBRARY.GIO);
-	Linker.link(g_subprocess_launcher_set_stderr_file_path, "g_subprocess_launcher_set_stderr_file_path", LIBRARY.GIO);
-	Linker.link(g_subprocess_launcher_set_stdin_file_path, "g_subprocess_launcher_set_stdin_file_path", LIBRARY.GIO);
-	Linker.link(g_subprocess_launcher_set_stdout_file_path, "g_subprocess_launcher_set_stdout_file_path", LIBRARY.GIO);
-	Linker.link(g_subprocess_launcher_setenv, "g_subprocess_launcher_setenv", LIBRARY.GIO);
-	Linker.link(g_subprocess_launcher_spawn, "g_subprocess_launcher_spawn", LIBRARY.GIO);
-	Linker.link(g_subprocess_launcher_spawnv, "g_subprocess_launcher_spawnv", LIBRARY.GIO);
-	Linker.link(g_subprocess_launcher_take_fd, "g_subprocess_launcher_take_fd", LIBRARY.GIO);
-	Linker.link(g_subprocess_launcher_take_stderr_fd, "g_subprocess_launcher_take_stderr_fd", LIBRARY.GIO);
-	Linker.link(g_subprocess_launcher_take_stdin_fd, "g_subprocess_launcher_take_stdin_fd", LIBRARY.GIO);
-	Linker.link(g_subprocess_launcher_take_stdout_fd, "g_subprocess_launcher_take_stdout_fd", LIBRARY.GIO);
-	Linker.link(g_subprocess_launcher_unsetenv, "g_subprocess_launcher_unsetenv", LIBRARY.GIO);
+	Linker.link(g_subprocess_launcher_get_type, "g_subprocess_launcher_get_type", LIBRARY_GIO);
+	Linker.link(g_subprocess_launcher_new, "g_subprocess_launcher_new", LIBRARY_GIO);
+	Linker.link(g_subprocess_launcher_getenv, "g_subprocess_launcher_getenv", LIBRARY_GIO);
+	Linker.link(g_subprocess_launcher_set_child_setup, "g_subprocess_launcher_set_child_setup", LIBRARY_GIO);
+	Linker.link(g_subprocess_launcher_set_cwd, "g_subprocess_launcher_set_cwd", LIBRARY_GIO);
+	Linker.link(g_subprocess_launcher_set_environ, "g_subprocess_launcher_set_environ", LIBRARY_GIO);
+	Linker.link(g_subprocess_launcher_set_flags, "g_subprocess_launcher_set_flags", LIBRARY_GIO);
+	Linker.link(g_subprocess_launcher_set_stderr_file_path, "g_subprocess_launcher_set_stderr_file_path", LIBRARY_GIO);
+	Linker.link(g_subprocess_launcher_set_stdin_file_path, "g_subprocess_launcher_set_stdin_file_path", LIBRARY_GIO);
+	Linker.link(g_subprocess_launcher_set_stdout_file_path, "g_subprocess_launcher_set_stdout_file_path", LIBRARY_GIO);
+	Linker.link(g_subprocess_launcher_setenv, "g_subprocess_launcher_setenv", LIBRARY_GIO);
+	Linker.link(g_subprocess_launcher_spawn, "g_subprocess_launcher_spawn", LIBRARY_GIO);
+	Linker.link(g_subprocess_launcher_spawnv, "g_subprocess_launcher_spawnv", LIBRARY_GIO);
+	Linker.link(g_subprocess_launcher_take_fd, "g_subprocess_launcher_take_fd", LIBRARY_GIO);
+	Linker.link(g_subprocess_launcher_take_stderr_fd, "g_subprocess_launcher_take_stderr_fd", LIBRARY_GIO);
+	Linker.link(g_subprocess_launcher_take_stdin_fd, "g_subprocess_launcher_take_stdin_fd", LIBRARY_GIO);
+	Linker.link(g_subprocess_launcher_take_stdout_fd, "g_subprocess_launcher_take_stdout_fd", LIBRARY_GIO);
+	Linker.link(g_subprocess_launcher_unsetenv, "g_subprocess_launcher_unsetenv", LIBRARY_GIO);
 
 	// gio.Task
 
-	Linker.link(g_task_get_type, "g_task_get_type", LIBRARY.GIO);
-	Linker.link(g_task_new, "g_task_new", LIBRARY.GIO);
-	Linker.link(g_task_is_valid, "g_task_is_valid", LIBRARY.GIO);
-	Linker.link(g_task_report_error, "g_task_report_error", LIBRARY.GIO);
-	Linker.link(g_task_report_new_error, "g_task_report_new_error", LIBRARY.GIO);
-	Linker.link(g_task_attach_source, "g_task_attach_source", LIBRARY.GIO);
-	Linker.link(g_task_get_cancellable, "g_task_get_cancellable", LIBRARY.GIO);
-	Linker.link(g_task_get_check_cancellable, "g_task_get_check_cancellable", LIBRARY.GIO);
-	Linker.link(g_task_get_completed, "g_task_get_completed", LIBRARY.GIO);
-	Linker.link(g_task_get_context, "g_task_get_context", LIBRARY.GIO);
-	Linker.link(g_task_get_priority, "g_task_get_priority", LIBRARY.GIO);
-	Linker.link(g_task_get_return_on_cancel, "g_task_get_return_on_cancel", LIBRARY.GIO);
-	Linker.link(g_task_get_source_object, "g_task_get_source_object", LIBRARY.GIO);
-	Linker.link(g_task_get_source_tag, "g_task_get_source_tag", LIBRARY.GIO);
-	Linker.link(g_task_get_task_data, "g_task_get_task_data", LIBRARY.GIO);
-	Linker.link(g_task_had_error, "g_task_had_error", LIBRARY.GIO);
-	Linker.link(g_task_propagate_boolean, "g_task_propagate_boolean", LIBRARY.GIO);
-	Linker.link(g_task_propagate_int, "g_task_propagate_int", LIBRARY.GIO);
-	Linker.link(g_task_propagate_pointer, "g_task_propagate_pointer", LIBRARY.GIO);
-	Linker.link(g_task_return_boolean, "g_task_return_boolean", LIBRARY.GIO);
-	Linker.link(g_task_return_error, "g_task_return_error", LIBRARY.GIO);
-	Linker.link(g_task_return_error_if_cancelled, "g_task_return_error_if_cancelled", LIBRARY.GIO);
-	Linker.link(g_task_return_int, "g_task_return_int", LIBRARY.GIO);
-	Linker.link(g_task_return_new_error, "g_task_return_new_error", LIBRARY.GIO);
-	Linker.link(g_task_return_pointer, "g_task_return_pointer", LIBRARY.GIO);
-	Linker.link(g_task_run_in_thread, "g_task_run_in_thread", LIBRARY.GIO);
-	Linker.link(g_task_run_in_thread_sync, "g_task_run_in_thread_sync", LIBRARY.GIO);
-	Linker.link(g_task_set_check_cancellable, "g_task_set_check_cancellable", LIBRARY.GIO);
-	Linker.link(g_task_set_priority, "g_task_set_priority", LIBRARY.GIO);
-	Linker.link(g_task_set_return_on_cancel, "g_task_set_return_on_cancel", LIBRARY.GIO);
-	Linker.link(g_task_set_source_tag, "g_task_set_source_tag", LIBRARY.GIO);
-	Linker.link(g_task_set_task_data, "g_task_set_task_data", LIBRARY.GIO);
+	Linker.link(g_task_get_type, "g_task_get_type", LIBRARY_GIO);
+	Linker.link(g_task_new, "g_task_new", LIBRARY_GIO);
+	Linker.link(g_task_is_valid, "g_task_is_valid", LIBRARY_GIO);
+	Linker.link(g_task_report_error, "g_task_report_error", LIBRARY_GIO);
+	Linker.link(g_task_report_new_error, "g_task_report_new_error", LIBRARY_GIO);
+	Linker.link(g_task_attach_source, "g_task_attach_source", LIBRARY_GIO);
+	Linker.link(g_task_get_cancellable, "g_task_get_cancellable", LIBRARY_GIO);
+	Linker.link(g_task_get_check_cancellable, "g_task_get_check_cancellable", LIBRARY_GIO);
+	Linker.link(g_task_get_completed, "g_task_get_completed", LIBRARY_GIO);
+	Linker.link(g_task_get_context, "g_task_get_context", LIBRARY_GIO);
+	Linker.link(g_task_get_priority, "g_task_get_priority", LIBRARY_GIO);
+	Linker.link(g_task_get_return_on_cancel, "g_task_get_return_on_cancel", LIBRARY_GIO);
+	Linker.link(g_task_get_source_object, "g_task_get_source_object", LIBRARY_GIO);
+	Linker.link(g_task_get_source_tag, "g_task_get_source_tag", LIBRARY_GIO);
+	Linker.link(g_task_get_task_data, "g_task_get_task_data", LIBRARY_GIO);
+	Linker.link(g_task_had_error, "g_task_had_error", LIBRARY_GIO);
+	Linker.link(g_task_propagate_boolean, "g_task_propagate_boolean", LIBRARY_GIO);
+	Linker.link(g_task_propagate_int, "g_task_propagate_int", LIBRARY_GIO);
+	Linker.link(g_task_propagate_pointer, "g_task_propagate_pointer", LIBRARY_GIO);
+	Linker.link(g_task_return_boolean, "g_task_return_boolean", LIBRARY_GIO);
+	Linker.link(g_task_return_error, "g_task_return_error", LIBRARY_GIO);
+	Linker.link(g_task_return_error_if_cancelled, "g_task_return_error_if_cancelled", LIBRARY_GIO);
+	Linker.link(g_task_return_int, "g_task_return_int", LIBRARY_GIO);
+	Linker.link(g_task_return_new_error, "g_task_return_new_error", LIBRARY_GIO);
+	Linker.link(g_task_return_pointer, "g_task_return_pointer", LIBRARY_GIO);
+	Linker.link(g_task_run_in_thread, "g_task_run_in_thread", LIBRARY_GIO);
+	Linker.link(g_task_run_in_thread_sync, "g_task_run_in_thread_sync", LIBRARY_GIO);
+	Linker.link(g_task_set_check_cancellable, "g_task_set_check_cancellable", LIBRARY_GIO);
+	Linker.link(g_task_set_priority, "g_task_set_priority", LIBRARY_GIO);
+	Linker.link(g_task_set_return_on_cancel, "g_task_set_return_on_cancel", LIBRARY_GIO);
+	Linker.link(g_task_set_source_tag, "g_task_set_source_tag", LIBRARY_GIO);
+	Linker.link(g_task_set_task_data, "g_task_set_task_data", LIBRARY_GIO);
 
 	// gio.TcpConnection
 
-	Linker.link(g_tcp_connection_get_type, "g_tcp_connection_get_type", LIBRARY.GIO);
-	Linker.link(g_tcp_connection_get_graceful_disconnect, "g_tcp_connection_get_graceful_disconnect", LIBRARY.GIO);
-	Linker.link(g_tcp_connection_set_graceful_disconnect, "g_tcp_connection_set_graceful_disconnect", LIBRARY.GIO);
+	Linker.link(g_tcp_connection_get_type, "g_tcp_connection_get_type", LIBRARY_GIO);
+	Linker.link(g_tcp_connection_get_graceful_disconnect, "g_tcp_connection_get_graceful_disconnect", LIBRARY_GIO);
+	Linker.link(g_tcp_connection_set_graceful_disconnect, "g_tcp_connection_set_graceful_disconnect", LIBRARY_GIO);
 
 	// gio.TcpWrapperConnection
 
-	Linker.link(g_tcp_wrapper_connection_get_type, "g_tcp_wrapper_connection_get_type", LIBRARY.GIO);
-	Linker.link(g_tcp_wrapper_connection_new, "g_tcp_wrapper_connection_new", LIBRARY.GIO);
-	Linker.link(g_tcp_wrapper_connection_get_base_io_stream, "g_tcp_wrapper_connection_get_base_io_stream", LIBRARY.GIO);
+	Linker.link(g_tcp_wrapper_connection_get_type, "g_tcp_wrapper_connection_get_type", LIBRARY_GIO);
+	Linker.link(g_tcp_wrapper_connection_new, "g_tcp_wrapper_connection_new", LIBRARY_GIO);
+	Linker.link(g_tcp_wrapper_connection_get_base_io_stream, "g_tcp_wrapper_connection_get_base_io_stream", LIBRARY_GIO);
 
 	// gio.TestDBus
 
-	Linker.link(g_test_dbus_get_type, "g_test_dbus_get_type", LIBRARY.GIO);
-	Linker.link(g_test_dbus_new, "g_test_dbus_new", LIBRARY.GIO);
-	Linker.link(g_test_dbus_unset, "g_test_dbus_unset", LIBRARY.GIO);
-	Linker.link(g_test_dbus_add_service_dir, "g_test_dbus_add_service_dir", LIBRARY.GIO);
-	Linker.link(g_test_dbus_down, "g_test_dbus_down", LIBRARY.GIO);
-	Linker.link(g_test_dbus_get_bus_address, "g_test_dbus_get_bus_address", LIBRARY.GIO);
-	Linker.link(g_test_dbus_get_flags, "g_test_dbus_get_flags", LIBRARY.GIO);
-	Linker.link(g_test_dbus_stop, "g_test_dbus_stop", LIBRARY.GIO);
-	Linker.link(g_test_dbus_up, "g_test_dbus_up", LIBRARY.GIO);
+	Linker.link(g_test_dbus_get_type, "g_test_dbus_get_type", LIBRARY_GIO);
+	Linker.link(g_test_dbus_new, "g_test_dbus_new", LIBRARY_GIO);
+	Linker.link(g_test_dbus_unset, "g_test_dbus_unset", LIBRARY_GIO);
+	Linker.link(g_test_dbus_add_service_dir, "g_test_dbus_add_service_dir", LIBRARY_GIO);
+	Linker.link(g_test_dbus_down, "g_test_dbus_down", LIBRARY_GIO);
+	Linker.link(g_test_dbus_get_bus_address, "g_test_dbus_get_bus_address", LIBRARY_GIO);
+	Linker.link(g_test_dbus_get_flags, "g_test_dbus_get_flags", LIBRARY_GIO);
+	Linker.link(g_test_dbus_stop, "g_test_dbus_stop", LIBRARY_GIO);
+	Linker.link(g_test_dbus_up, "g_test_dbus_up", LIBRARY_GIO);
 
 	// gio.ThemedIcon
 
-	Linker.link(g_themed_icon_get_type, "g_themed_icon_get_type", LIBRARY.GIO);
-	Linker.link(g_themed_icon_new, "g_themed_icon_new", LIBRARY.GIO);
-	Linker.link(g_themed_icon_new_from_names, "g_themed_icon_new_from_names", LIBRARY.GIO);
-	Linker.link(g_themed_icon_new_with_default_fallbacks, "g_themed_icon_new_with_default_fallbacks", LIBRARY.GIO);
-	Linker.link(g_themed_icon_append_name, "g_themed_icon_append_name", LIBRARY.GIO);
-	Linker.link(g_themed_icon_get_names, "g_themed_icon_get_names", LIBRARY.GIO);
-	Linker.link(g_themed_icon_prepend_name, "g_themed_icon_prepend_name", LIBRARY.GIO);
+	Linker.link(g_themed_icon_get_type, "g_themed_icon_get_type", LIBRARY_GIO);
+	Linker.link(g_themed_icon_new, "g_themed_icon_new", LIBRARY_GIO);
+	Linker.link(g_themed_icon_new_from_names, "g_themed_icon_new_from_names", LIBRARY_GIO);
+	Linker.link(g_themed_icon_new_with_default_fallbacks, "g_themed_icon_new_with_default_fallbacks", LIBRARY_GIO);
+	Linker.link(g_themed_icon_append_name, "g_themed_icon_append_name", LIBRARY_GIO);
+	Linker.link(g_themed_icon_get_names, "g_themed_icon_get_names", LIBRARY_GIO);
+	Linker.link(g_themed_icon_prepend_name, "g_themed_icon_prepend_name", LIBRARY_GIO);
 
 	// gio.ThreadedSocketService
 
-	Linker.link(g_threaded_socket_service_get_type, "g_threaded_socket_service_get_type", LIBRARY.GIO);
-	Linker.link(g_threaded_socket_service_new, "g_threaded_socket_service_new", LIBRARY.GIO);
+	Linker.link(g_threaded_socket_service_get_type, "g_threaded_socket_service_get_type", LIBRARY_GIO);
+	Linker.link(g_threaded_socket_service_new, "g_threaded_socket_service_new", LIBRARY_GIO);
 
 	// gio.TlsBackend
 
-	Linker.link(g_tls_backend_get_type, "g_tls_backend_get_type", LIBRARY.GIO);
-	Linker.link(g_tls_backend_get_default, "g_tls_backend_get_default", LIBRARY.GIO);
-	Linker.link(g_tls_backend_get_certificate_type, "g_tls_backend_get_certificate_type", LIBRARY.GIO);
-	Linker.link(g_tls_backend_get_client_connection_type, "g_tls_backend_get_client_connection_type", LIBRARY.GIO);
-	Linker.link(g_tls_backend_get_default_database, "g_tls_backend_get_default_database", LIBRARY.GIO);
-	Linker.link(g_tls_backend_get_dtls_client_connection_type, "g_tls_backend_get_dtls_client_connection_type", LIBRARY.GIO);
-	Linker.link(g_tls_backend_get_dtls_server_connection_type, "g_tls_backend_get_dtls_server_connection_type", LIBRARY.GIO);
-	Linker.link(g_tls_backend_get_file_database_type, "g_tls_backend_get_file_database_type", LIBRARY.GIO);
-	Linker.link(g_tls_backend_get_server_connection_type, "g_tls_backend_get_server_connection_type", LIBRARY.GIO);
-	Linker.link(g_tls_backend_supports_dtls, "g_tls_backend_supports_dtls", LIBRARY.GIO);
-	Linker.link(g_tls_backend_supports_tls, "g_tls_backend_supports_tls", LIBRARY.GIO);
+	Linker.link(g_tls_backend_get_type, "g_tls_backend_get_type", LIBRARY_GIO);
+	Linker.link(g_tls_backend_get_default, "g_tls_backend_get_default", LIBRARY_GIO);
+	Linker.link(g_tls_backend_get_certificate_type, "g_tls_backend_get_certificate_type", LIBRARY_GIO);
+	Linker.link(g_tls_backend_get_client_connection_type, "g_tls_backend_get_client_connection_type", LIBRARY_GIO);
+	Linker.link(g_tls_backend_get_default_database, "g_tls_backend_get_default_database", LIBRARY_GIO);
+	Linker.link(g_tls_backend_get_dtls_client_connection_type, "g_tls_backend_get_dtls_client_connection_type", LIBRARY_GIO);
+	Linker.link(g_tls_backend_get_dtls_server_connection_type, "g_tls_backend_get_dtls_server_connection_type", LIBRARY_GIO);
+	Linker.link(g_tls_backend_get_file_database_type, "g_tls_backend_get_file_database_type", LIBRARY_GIO);
+	Linker.link(g_tls_backend_get_server_connection_type, "g_tls_backend_get_server_connection_type", LIBRARY_GIO);
+	Linker.link(g_tls_backend_supports_dtls, "g_tls_backend_supports_dtls", LIBRARY_GIO);
+	Linker.link(g_tls_backend_supports_tls, "g_tls_backend_supports_tls", LIBRARY_GIO);
 
 	// gio.TlsCertificate
 
-	Linker.link(g_tls_certificate_get_type, "g_tls_certificate_get_type", LIBRARY.GIO);
-	Linker.link(g_tls_certificate_new_from_file, "g_tls_certificate_new_from_file", LIBRARY.GIO);
-	Linker.link(g_tls_certificate_new_from_files, "g_tls_certificate_new_from_files", LIBRARY.GIO);
-	Linker.link(g_tls_certificate_new_from_pem, "g_tls_certificate_new_from_pem", LIBRARY.GIO);
-	Linker.link(g_tls_certificate_list_new_from_file, "g_tls_certificate_list_new_from_file", LIBRARY.GIO);
-	Linker.link(g_tls_certificate_get_issuer, "g_tls_certificate_get_issuer", LIBRARY.GIO);
-	Linker.link(g_tls_certificate_is_same, "g_tls_certificate_is_same", LIBRARY.GIO);
-	Linker.link(g_tls_certificate_verify, "g_tls_certificate_verify", LIBRARY.GIO);
+	Linker.link(g_tls_certificate_get_type, "g_tls_certificate_get_type", LIBRARY_GIO);
+	Linker.link(g_tls_certificate_new_from_file, "g_tls_certificate_new_from_file", LIBRARY_GIO);
+	Linker.link(g_tls_certificate_new_from_files, "g_tls_certificate_new_from_files", LIBRARY_GIO);
+	Linker.link(g_tls_certificate_new_from_pem, "g_tls_certificate_new_from_pem", LIBRARY_GIO);
+	Linker.link(g_tls_certificate_list_new_from_file, "g_tls_certificate_list_new_from_file", LIBRARY_GIO);
+	Linker.link(g_tls_certificate_get_issuer, "g_tls_certificate_get_issuer", LIBRARY_GIO);
+	Linker.link(g_tls_certificate_is_same, "g_tls_certificate_is_same", LIBRARY_GIO);
+	Linker.link(g_tls_certificate_verify, "g_tls_certificate_verify", LIBRARY_GIO);
 
 	// gio.TlsClientConnection
 
-	Linker.link(g_tls_client_connection_get_type, "g_tls_client_connection_get_type", LIBRARY.GIO);
-	Linker.link(g_tls_client_connection_new, "g_tls_client_connection_new", LIBRARY.GIO);
-	Linker.link(g_tls_client_connection_copy_session_state, "g_tls_client_connection_copy_session_state", LIBRARY.GIO);
-	Linker.link(g_tls_client_connection_get_accepted_cas, "g_tls_client_connection_get_accepted_cas", LIBRARY.GIO);
-	Linker.link(g_tls_client_connection_get_server_identity, "g_tls_client_connection_get_server_identity", LIBRARY.GIO);
-	Linker.link(g_tls_client_connection_get_use_ssl3, "g_tls_client_connection_get_use_ssl3", LIBRARY.GIO);
-	Linker.link(g_tls_client_connection_get_validation_flags, "g_tls_client_connection_get_validation_flags", LIBRARY.GIO);
-	Linker.link(g_tls_client_connection_set_server_identity, "g_tls_client_connection_set_server_identity", LIBRARY.GIO);
-	Linker.link(g_tls_client_connection_set_use_ssl3, "g_tls_client_connection_set_use_ssl3", LIBRARY.GIO);
-	Linker.link(g_tls_client_connection_set_validation_flags, "g_tls_client_connection_set_validation_flags", LIBRARY.GIO);
+	Linker.link(g_tls_client_connection_get_type, "g_tls_client_connection_get_type", LIBRARY_GIO);
+	Linker.link(g_tls_client_connection_new, "g_tls_client_connection_new", LIBRARY_GIO);
+	Linker.link(g_tls_client_connection_copy_session_state, "g_tls_client_connection_copy_session_state", LIBRARY_GIO);
+	Linker.link(g_tls_client_connection_get_accepted_cas, "g_tls_client_connection_get_accepted_cas", LIBRARY_GIO);
+	Linker.link(g_tls_client_connection_get_server_identity, "g_tls_client_connection_get_server_identity", LIBRARY_GIO);
+	Linker.link(g_tls_client_connection_get_use_ssl3, "g_tls_client_connection_get_use_ssl3", LIBRARY_GIO);
+	Linker.link(g_tls_client_connection_get_validation_flags, "g_tls_client_connection_get_validation_flags", LIBRARY_GIO);
+	Linker.link(g_tls_client_connection_set_server_identity, "g_tls_client_connection_set_server_identity", LIBRARY_GIO);
+	Linker.link(g_tls_client_connection_set_use_ssl3, "g_tls_client_connection_set_use_ssl3", LIBRARY_GIO);
+	Linker.link(g_tls_client_connection_set_validation_flags, "g_tls_client_connection_set_validation_flags", LIBRARY_GIO);
 
 	// gio.TlsConnection
 
-	Linker.link(g_tls_connection_get_type, "g_tls_connection_get_type", LIBRARY.GIO);
-	Linker.link(g_tls_connection_emit_accept_certificate, "g_tls_connection_emit_accept_certificate", LIBRARY.GIO);
-	Linker.link(g_tls_connection_get_certificate, "g_tls_connection_get_certificate", LIBRARY.GIO);
-	Linker.link(g_tls_connection_get_database, "g_tls_connection_get_database", LIBRARY.GIO);
-	Linker.link(g_tls_connection_get_interaction, "g_tls_connection_get_interaction", LIBRARY.GIO);
-	Linker.link(g_tls_connection_get_peer_certificate, "g_tls_connection_get_peer_certificate", LIBRARY.GIO);
-	Linker.link(g_tls_connection_get_peer_certificate_errors, "g_tls_connection_get_peer_certificate_errors", LIBRARY.GIO);
-	Linker.link(g_tls_connection_get_rehandshake_mode, "g_tls_connection_get_rehandshake_mode", LIBRARY.GIO);
-	Linker.link(g_tls_connection_get_require_close_notify, "g_tls_connection_get_require_close_notify", LIBRARY.GIO);
-	Linker.link(g_tls_connection_get_use_system_certdb, "g_tls_connection_get_use_system_certdb", LIBRARY.GIO);
-	Linker.link(g_tls_connection_handshake, "g_tls_connection_handshake", LIBRARY.GIO);
-	Linker.link(g_tls_connection_handshake_async, "g_tls_connection_handshake_async", LIBRARY.GIO);
-	Linker.link(g_tls_connection_handshake_finish, "g_tls_connection_handshake_finish", LIBRARY.GIO);
-	Linker.link(g_tls_connection_set_certificate, "g_tls_connection_set_certificate", LIBRARY.GIO);
-	Linker.link(g_tls_connection_set_database, "g_tls_connection_set_database", LIBRARY.GIO);
-	Linker.link(g_tls_connection_set_interaction, "g_tls_connection_set_interaction", LIBRARY.GIO);
-	Linker.link(g_tls_connection_set_rehandshake_mode, "g_tls_connection_set_rehandshake_mode", LIBRARY.GIO);
-	Linker.link(g_tls_connection_set_require_close_notify, "g_tls_connection_set_require_close_notify", LIBRARY.GIO);
-	Linker.link(g_tls_connection_set_use_system_certdb, "g_tls_connection_set_use_system_certdb", LIBRARY.GIO);
+	Linker.link(g_tls_connection_get_type, "g_tls_connection_get_type", LIBRARY_GIO);
+	Linker.link(g_tls_connection_emit_accept_certificate, "g_tls_connection_emit_accept_certificate", LIBRARY_GIO);
+	Linker.link(g_tls_connection_get_certificate, "g_tls_connection_get_certificate", LIBRARY_GIO);
+	Linker.link(g_tls_connection_get_database, "g_tls_connection_get_database", LIBRARY_GIO);
+	Linker.link(g_tls_connection_get_interaction, "g_tls_connection_get_interaction", LIBRARY_GIO);
+	Linker.link(g_tls_connection_get_peer_certificate, "g_tls_connection_get_peer_certificate", LIBRARY_GIO);
+	Linker.link(g_tls_connection_get_peer_certificate_errors, "g_tls_connection_get_peer_certificate_errors", LIBRARY_GIO);
+	Linker.link(g_tls_connection_get_rehandshake_mode, "g_tls_connection_get_rehandshake_mode", LIBRARY_GIO);
+	Linker.link(g_tls_connection_get_require_close_notify, "g_tls_connection_get_require_close_notify", LIBRARY_GIO);
+	Linker.link(g_tls_connection_get_use_system_certdb, "g_tls_connection_get_use_system_certdb", LIBRARY_GIO);
+	Linker.link(g_tls_connection_handshake, "g_tls_connection_handshake", LIBRARY_GIO);
+	Linker.link(g_tls_connection_handshake_async, "g_tls_connection_handshake_async", LIBRARY_GIO);
+	Linker.link(g_tls_connection_handshake_finish, "g_tls_connection_handshake_finish", LIBRARY_GIO);
+	Linker.link(g_tls_connection_set_certificate, "g_tls_connection_set_certificate", LIBRARY_GIO);
+	Linker.link(g_tls_connection_set_database, "g_tls_connection_set_database", LIBRARY_GIO);
+	Linker.link(g_tls_connection_set_interaction, "g_tls_connection_set_interaction", LIBRARY_GIO);
+	Linker.link(g_tls_connection_set_rehandshake_mode, "g_tls_connection_set_rehandshake_mode", LIBRARY_GIO);
+	Linker.link(g_tls_connection_set_require_close_notify, "g_tls_connection_set_require_close_notify", LIBRARY_GIO);
+	Linker.link(g_tls_connection_set_use_system_certdb, "g_tls_connection_set_use_system_certdb", LIBRARY_GIO);
 
 	// gio.TlsDatabase
 
-	Linker.link(g_tls_database_get_type, "g_tls_database_get_type", LIBRARY.GIO);
-	Linker.link(g_tls_database_create_certificate_handle, "g_tls_database_create_certificate_handle", LIBRARY.GIO);
-	Linker.link(g_tls_database_lookup_certificate_for_handle, "g_tls_database_lookup_certificate_for_handle", LIBRARY.GIO);
-	Linker.link(g_tls_database_lookup_certificate_for_handle_async, "g_tls_database_lookup_certificate_for_handle_async", LIBRARY.GIO);
-	Linker.link(g_tls_database_lookup_certificate_for_handle_finish, "g_tls_database_lookup_certificate_for_handle_finish", LIBRARY.GIO);
-	Linker.link(g_tls_database_lookup_certificate_issuer, "g_tls_database_lookup_certificate_issuer", LIBRARY.GIO);
-	Linker.link(g_tls_database_lookup_certificate_issuer_async, "g_tls_database_lookup_certificate_issuer_async", LIBRARY.GIO);
-	Linker.link(g_tls_database_lookup_certificate_issuer_finish, "g_tls_database_lookup_certificate_issuer_finish", LIBRARY.GIO);
-	Linker.link(g_tls_database_lookup_certificates_issued_by, "g_tls_database_lookup_certificates_issued_by", LIBRARY.GIO);
-	Linker.link(g_tls_database_lookup_certificates_issued_by_async, "g_tls_database_lookup_certificates_issued_by_async", LIBRARY.GIO);
-	Linker.link(g_tls_database_lookup_certificates_issued_by_finish, "g_tls_database_lookup_certificates_issued_by_finish", LIBRARY.GIO);
-	Linker.link(g_tls_database_verify_chain, "g_tls_database_verify_chain", LIBRARY.GIO);
-	Linker.link(g_tls_database_verify_chain_async, "g_tls_database_verify_chain_async", LIBRARY.GIO);
-	Linker.link(g_tls_database_verify_chain_finish, "g_tls_database_verify_chain_finish", LIBRARY.GIO);
+	Linker.link(g_tls_database_get_type, "g_tls_database_get_type", LIBRARY_GIO);
+	Linker.link(g_tls_database_create_certificate_handle, "g_tls_database_create_certificate_handle", LIBRARY_GIO);
+	Linker.link(g_tls_database_lookup_certificate_for_handle, "g_tls_database_lookup_certificate_for_handle", LIBRARY_GIO);
+	Linker.link(g_tls_database_lookup_certificate_for_handle_async, "g_tls_database_lookup_certificate_for_handle_async", LIBRARY_GIO);
+	Linker.link(g_tls_database_lookup_certificate_for_handle_finish, "g_tls_database_lookup_certificate_for_handle_finish", LIBRARY_GIO);
+	Linker.link(g_tls_database_lookup_certificate_issuer, "g_tls_database_lookup_certificate_issuer", LIBRARY_GIO);
+	Linker.link(g_tls_database_lookup_certificate_issuer_async, "g_tls_database_lookup_certificate_issuer_async", LIBRARY_GIO);
+	Linker.link(g_tls_database_lookup_certificate_issuer_finish, "g_tls_database_lookup_certificate_issuer_finish", LIBRARY_GIO);
+	Linker.link(g_tls_database_lookup_certificates_issued_by, "g_tls_database_lookup_certificates_issued_by", LIBRARY_GIO);
+	Linker.link(g_tls_database_lookup_certificates_issued_by_async, "g_tls_database_lookup_certificates_issued_by_async", LIBRARY_GIO);
+	Linker.link(g_tls_database_lookup_certificates_issued_by_finish, "g_tls_database_lookup_certificates_issued_by_finish", LIBRARY_GIO);
+	Linker.link(g_tls_database_verify_chain, "g_tls_database_verify_chain", LIBRARY_GIO);
+	Linker.link(g_tls_database_verify_chain_async, "g_tls_database_verify_chain_async", LIBRARY_GIO);
+	Linker.link(g_tls_database_verify_chain_finish, "g_tls_database_verify_chain_finish", LIBRARY_GIO);
 
 	// gio.TlsFileDatabase
 
-	Linker.link(g_tls_file_database_get_type, "g_tls_file_database_get_type", LIBRARY.GIO);
-	Linker.link(g_tls_file_database_new, "g_tls_file_database_new", LIBRARY.GIO);
+	Linker.link(g_tls_file_database_get_type, "g_tls_file_database_get_type", LIBRARY_GIO);
+	Linker.link(g_tls_file_database_new, "g_tls_file_database_new", LIBRARY_GIO);
 
 	// gio.TlsInteraction
 
-	Linker.link(g_tls_interaction_get_type, "g_tls_interaction_get_type", LIBRARY.GIO);
-	Linker.link(g_tls_interaction_ask_password, "g_tls_interaction_ask_password", LIBRARY.GIO);
-	Linker.link(g_tls_interaction_ask_password_async, "g_tls_interaction_ask_password_async", LIBRARY.GIO);
-	Linker.link(g_tls_interaction_ask_password_finish, "g_tls_interaction_ask_password_finish", LIBRARY.GIO);
-	Linker.link(g_tls_interaction_invoke_ask_password, "g_tls_interaction_invoke_ask_password", LIBRARY.GIO);
-	Linker.link(g_tls_interaction_invoke_request_certificate, "g_tls_interaction_invoke_request_certificate", LIBRARY.GIO);
-	Linker.link(g_tls_interaction_request_certificate, "g_tls_interaction_request_certificate", LIBRARY.GIO);
-	Linker.link(g_tls_interaction_request_certificate_async, "g_tls_interaction_request_certificate_async", LIBRARY.GIO);
-	Linker.link(g_tls_interaction_request_certificate_finish, "g_tls_interaction_request_certificate_finish", LIBRARY.GIO);
+	Linker.link(g_tls_interaction_get_type, "g_tls_interaction_get_type", LIBRARY_GIO);
+	Linker.link(g_tls_interaction_ask_password, "g_tls_interaction_ask_password", LIBRARY_GIO);
+	Linker.link(g_tls_interaction_ask_password_async, "g_tls_interaction_ask_password_async", LIBRARY_GIO);
+	Linker.link(g_tls_interaction_ask_password_finish, "g_tls_interaction_ask_password_finish", LIBRARY_GIO);
+	Linker.link(g_tls_interaction_invoke_ask_password, "g_tls_interaction_invoke_ask_password", LIBRARY_GIO);
+	Linker.link(g_tls_interaction_invoke_request_certificate, "g_tls_interaction_invoke_request_certificate", LIBRARY_GIO);
+	Linker.link(g_tls_interaction_request_certificate, "g_tls_interaction_request_certificate", LIBRARY_GIO);
+	Linker.link(g_tls_interaction_request_certificate_async, "g_tls_interaction_request_certificate_async", LIBRARY_GIO);
+	Linker.link(g_tls_interaction_request_certificate_finish, "g_tls_interaction_request_certificate_finish", LIBRARY_GIO);
 
 	// gio.TlsPassword
 
-	Linker.link(g_tls_password_get_type, "g_tls_password_get_type", LIBRARY.GIO);
-	Linker.link(g_tls_password_new, "g_tls_password_new", LIBRARY.GIO);
-	Linker.link(g_tls_password_get_description, "g_tls_password_get_description", LIBRARY.GIO);
-	Linker.link(g_tls_password_get_flags, "g_tls_password_get_flags", LIBRARY.GIO);
-	Linker.link(g_tls_password_get_value, "g_tls_password_get_value", LIBRARY.GIO);
-	Linker.link(g_tls_password_get_warning, "g_tls_password_get_warning", LIBRARY.GIO);
-	Linker.link(g_tls_password_set_description, "g_tls_password_set_description", LIBRARY.GIO);
-	Linker.link(g_tls_password_set_flags, "g_tls_password_set_flags", LIBRARY.GIO);
-	Linker.link(g_tls_password_set_value, "g_tls_password_set_value", LIBRARY.GIO);
-	Linker.link(g_tls_password_set_value_full, "g_tls_password_set_value_full", LIBRARY.GIO);
-	Linker.link(g_tls_password_set_warning, "g_tls_password_set_warning", LIBRARY.GIO);
+	Linker.link(g_tls_password_get_type, "g_tls_password_get_type", LIBRARY_GIO);
+	Linker.link(g_tls_password_new, "g_tls_password_new", LIBRARY_GIO);
+	Linker.link(g_tls_password_get_description, "g_tls_password_get_description", LIBRARY_GIO);
+	Linker.link(g_tls_password_get_flags, "g_tls_password_get_flags", LIBRARY_GIO);
+	Linker.link(g_tls_password_get_value, "g_tls_password_get_value", LIBRARY_GIO);
+	Linker.link(g_tls_password_get_warning, "g_tls_password_get_warning", LIBRARY_GIO);
+	Linker.link(g_tls_password_set_description, "g_tls_password_set_description", LIBRARY_GIO);
+	Linker.link(g_tls_password_set_flags, "g_tls_password_set_flags", LIBRARY_GIO);
+	Linker.link(g_tls_password_set_value, "g_tls_password_set_value", LIBRARY_GIO);
+	Linker.link(g_tls_password_set_value_full, "g_tls_password_set_value_full", LIBRARY_GIO);
+	Linker.link(g_tls_password_set_warning, "g_tls_password_set_warning", LIBRARY_GIO);
 
 	// gio.TlsServerConnection
 
-	Linker.link(g_tls_server_connection_get_type, "g_tls_server_connection_get_type", LIBRARY.GIO);
-	Linker.link(g_tls_server_connection_new, "g_tls_server_connection_new", LIBRARY.GIO);
+	Linker.link(g_tls_server_connection_get_type, "g_tls_server_connection_get_type", LIBRARY_GIO);
+	Linker.link(g_tls_server_connection_new, "g_tls_server_connection_new", LIBRARY_GIO);
 
 	// gio.UnixConnection
 
-	Linker.link(g_unix_connection_get_type, "g_unix_connection_get_type", LIBRARY.GIO);
-	Linker.link(g_unix_connection_receive_credentials, "g_unix_connection_receive_credentials", LIBRARY.GIO);
-	Linker.link(g_unix_connection_receive_credentials_async, "g_unix_connection_receive_credentials_async", LIBRARY.GIO);
-	Linker.link(g_unix_connection_receive_credentials_finish, "g_unix_connection_receive_credentials_finish", LIBRARY.GIO);
-	Linker.link(g_unix_connection_receive_fd, "g_unix_connection_receive_fd", LIBRARY.GIO);
-	Linker.link(g_unix_connection_send_credentials, "g_unix_connection_send_credentials", LIBRARY.GIO);
-	Linker.link(g_unix_connection_send_credentials_async, "g_unix_connection_send_credentials_async", LIBRARY.GIO);
-	Linker.link(g_unix_connection_send_credentials_finish, "g_unix_connection_send_credentials_finish", LIBRARY.GIO);
-	Linker.link(g_unix_connection_send_fd, "g_unix_connection_send_fd", LIBRARY.GIO);
+	Linker.link(g_unix_connection_get_type, "g_unix_connection_get_type", LIBRARY_GIO);
+	Linker.link(g_unix_connection_receive_credentials, "g_unix_connection_receive_credentials", LIBRARY_GIO);
+	Linker.link(g_unix_connection_receive_credentials_async, "g_unix_connection_receive_credentials_async", LIBRARY_GIO);
+	Linker.link(g_unix_connection_receive_credentials_finish, "g_unix_connection_receive_credentials_finish", LIBRARY_GIO);
+	Linker.link(g_unix_connection_receive_fd, "g_unix_connection_receive_fd", LIBRARY_GIO);
+	Linker.link(g_unix_connection_send_credentials, "g_unix_connection_send_credentials", LIBRARY_GIO);
+	Linker.link(g_unix_connection_send_credentials_async, "g_unix_connection_send_credentials_async", LIBRARY_GIO);
+	Linker.link(g_unix_connection_send_credentials_finish, "g_unix_connection_send_credentials_finish", LIBRARY_GIO);
+	Linker.link(g_unix_connection_send_fd, "g_unix_connection_send_fd", LIBRARY_GIO);
 
 	// gio.UnixCredentialsMessage
 
-	Linker.link(g_unix_credentials_message_get_type, "g_unix_credentials_message_get_type", LIBRARY.GIO);
-	Linker.link(g_unix_credentials_message_new, "g_unix_credentials_message_new", LIBRARY.GIO);
-	Linker.link(g_unix_credentials_message_new_with_credentials, "g_unix_credentials_message_new_with_credentials", LIBRARY.GIO);
-	Linker.link(g_unix_credentials_message_is_supported, "g_unix_credentials_message_is_supported", LIBRARY.GIO);
-	Linker.link(g_unix_credentials_message_get_credentials, "g_unix_credentials_message_get_credentials", LIBRARY.GIO);
+	Linker.link(g_unix_credentials_message_get_type, "g_unix_credentials_message_get_type", LIBRARY_GIO);
+	Linker.link(g_unix_credentials_message_new, "g_unix_credentials_message_new", LIBRARY_GIO);
+	Linker.link(g_unix_credentials_message_new_with_credentials, "g_unix_credentials_message_new_with_credentials", LIBRARY_GIO);
+	Linker.link(g_unix_credentials_message_is_supported, "g_unix_credentials_message_is_supported", LIBRARY_GIO);
+	Linker.link(g_unix_credentials_message_get_credentials, "g_unix_credentials_message_get_credentials", LIBRARY_GIO);
 
 	// gio.UnixFDList
 
-	Linker.link(g_unix_fd_list_get_type, "g_unix_fd_list_get_type", LIBRARY.GIO);
-	Linker.link(g_unix_fd_list_new, "g_unix_fd_list_new", LIBRARY.GIO);
-	Linker.link(g_unix_fd_list_new_from_array, "g_unix_fd_list_new_from_array", LIBRARY.GIO);
-	Linker.link(g_unix_fd_list_append, "g_unix_fd_list_append", LIBRARY.GIO);
-	Linker.link(g_unix_fd_list_get, "g_unix_fd_list_get", LIBRARY.GIO);
-	Linker.link(g_unix_fd_list_get_length, "g_unix_fd_list_get_length", LIBRARY.GIO);
-	Linker.link(g_unix_fd_list_peek_fds, "g_unix_fd_list_peek_fds", LIBRARY.GIO);
-	Linker.link(g_unix_fd_list_steal_fds, "g_unix_fd_list_steal_fds", LIBRARY.GIO);
+	Linker.link(g_unix_fd_list_get_type, "g_unix_fd_list_get_type", LIBRARY_GIO);
+	Linker.link(g_unix_fd_list_new, "g_unix_fd_list_new", LIBRARY_GIO);
+	Linker.link(g_unix_fd_list_new_from_array, "g_unix_fd_list_new_from_array", LIBRARY_GIO);
+	Linker.link(g_unix_fd_list_append, "g_unix_fd_list_append", LIBRARY_GIO);
+	Linker.link(g_unix_fd_list_get, "g_unix_fd_list_get", LIBRARY_GIO);
+	Linker.link(g_unix_fd_list_get_length, "g_unix_fd_list_get_length", LIBRARY_GIO);
+	Linker.link(g_unix_fd_list_peek_fds, "g_unix_fd_list_peek_fds", LIBRARY_GIO);
+	Linker.link(g_unix_fd_list_steal_fds, "g_unix_fd_list_steal_fds", LIBRARY_GIO);
 
 	// gio.UnixFDMessage
 
-	Linker.link(g_unix_fd_message_get_type, "g_unix_fd_message_get_type", LIBRARY.GIO);
-	Linker.link(g_unix_fd_message_new, "g_unix_fd_message_new", LIBRARY.GIO);
-	Linker.link(g_unix_fd_message_new_with_fd_list, "g_unix_fd_message_new_with_fd_list", LIBRARY.GIO);
-	Linker.link(g_unix_fd_message_append_fd, "g_unix_fd_message_append_fd", LIBRARY.GIO);
-	Linker.link(g_unix_fd_message_get_fd_list, "g_unix_fd_message_get_fd_list", LIBRARY.GIO);
-	Linker.link(g_unix_fd_message_steal_fds, "g_unix_fd_message_steal_fds", LIBRARY.GIO);
+	Linker.link(g_unix_fd_message_get_type, "g_unix_fd_message_get_type", LIBRARY_GIO);
+	Linker.link(g_unix_fd_message_new, "g_unix_fd_message_new", LIBRARY_GIO);
+	Linker.link(g_unix_fd_message_new_with_fd_list, "g_unix_fd_message_new_with_fd_list", LIBRARY_GIO);
+	Linker.link(g_unix_fd_message_append_fd, "g_unix_fd_message_append_fd", LIBRARY_GIO);
+	Linker.link(g_unix_fd_message_get_fd_list, "g_unix_fd_message_get_fd_list", LIBRARY_GIO);
+	Linker.link(g_unix_fd_message_steal_fds, "g_unix_fd_message_steal_fds", LIBRARY_GIO);
 
 	// gio.UnixInputStream
 
-	Linker.link(g_unix_input_stream_get_type, "g_unix_input_stream_get_type", LIBRARY.GIO);
-	Linker.link(g_unix_input_stream_new, "g_unix_input_stream_new", LIBRARY.GIO);
-	Linker.link(g_unix_input_stream_get_close_fd, "g_unix_input_stream_get_close_fd", LIBRARY.GIO);
-	Linker.link(g_unix_input_stream_get_fd, "g_unix_input_stream_get_fd", LIBRARY.GIO);
-	Linker.link(g_unix_input_stream_set_close_fd, "g_unix_input_stream_set_close_fd", LIBRARY.GIO);
+	Linker.link(g_unix_input_stream_get_type, "g_unix_input_stream_get_type", LIBRARY_GIO);
+	Linker.link(g_unix_input_stream_new, "g_unix_input_stream_new", LIBRARY_GIO);
+	Linker.link(g_unix_input_stream_get_close_fd, "g_unix_input_stream_get_close_fd", LIBRARY_GIO);
+	Linker.link(g_unix_input_stream_get_fd, "g_unix_input_stream_get_fd", LIBRARY_GIO);
+	Linker.link(g_unix_input_stream_set_close_fd, "g_unix_input_stream_set_close_fd", LIBRARY_GIO);
 
 	// gio.UnixMountEntry
 
-	Linker.link(g_unix_is_mount_path_system_internal, "g_unix_is_mount_path_system_internal", LIBRARY.GIO);
-	Linker.link(g_unix_mount_at, "g_unix_mount_at", LIBRARY.GIO);
-	Linker.link(g_unix_mount_compare, "g_unix_mount_compare", LIBRARY.GIO);
-	Linker.link(g_unix_mount_free, "g_unix_mount_free", LIBRARY.GIO);
-	Linker.link(g_unix_mount_get_device_path, "g_unix_mount_get_device_path", LIBRARY.GIO);
-	Linker.link(g_unix_mount_get_fs_type, "g_unix_mount_get_fs_type", LIBRARY.GIO);
-	Linker.link(g_unix_mount_get_mount_path, "g_unix_mount_get_mount_path", LIBRARY.GIO);
-	Linker.link(g_unix_mount_guess_can_eject, "g_unix_mount_guess_can_eject", LIBRARY.GIO);
-	Linker.link(g_unix_mount_guess_icon, "g_unix_mount_guess_icon", LIBRARY.GIO);
-	Linker.link(g_unix_mount_guess_name, "g_unix_mount_guess_name", LIBRARY.GIO);
-	Linker.link(g_unix_mount_guess_should_display, "g_unix_mount_guess_should_display", LIBRARY.GIO);
-	Linker.link(g_unix_mount_guess_symbolic_icon, "g_unix_mount_guess_symbolic_icon", LIBRARY.GIO);
-	Linker.link(g_unix_mount_is_readonly, "g_unix_mount_is_readonly", LIBRARY.GIO);
-	Linker.link(g_unix_mount_is_system_internal, "g_unix_mount_is_system_internal", LIBRARY.GIO);
-	Linker.link(g_unix_mount_points_changed_since, "g_unix_mount_points_changed_since", LIBRARY.GIO);
-	Linker.link(g_unix_mount_points_get, "g_unix_mount_points_get", LIBRARY.GIO);
-	Linker.link(g_unix_mounts_changed_since, "g_unix_mounts_changed_since", LIBRARY.GIO);
-	Linker.link(g_unix_mounts_get, "g_unix_mounts_get", LIBRARY.GIO);
+	Linker.link(g_unix_is_mount_path_system_internal, "g_unix_is_mount_path_system_internal", LIBRARY_GIO);
+	Linker.link(g_unix_mount_at, "g_unix_mount_at", LIBRARY_GIO);
+	Linker.link(g_unix_mount_compare, "g_unix_mount_compare", LIBRARY_GIO);
+	Linker.link(g_unix_mount_free, "g_unix_mount_free", LIBRARY_GIO);
+	Linker.link(g_unix_mount_get_device_path, "g_unix_mount_get_device_path", LIBRARY_GIO);
+	Linker.link(g_unix_mount_get_fs_type, "g_unix_mount_get_fs_type", LIBRARY_GIO);
+	Linker.link(g_unix_mount_get_mount_path, "g_unix_mount_get_mount_path", LIBRARY_GIO);
+	Linker.link(g_unix_mount_guess_can_eject, "g_unix_mount_guess_can_eject", LIBRARY_GIO);
+	Linker.link(g_unix_mount_guess_icon, "g_unix_mount_guess_icon", LIBRARY_GIO);
+	Linker.link(g_unix_mount_guess_name, "g_unix_mount_guess_name", LIBRARY_GIO);
+	Linker.link(g_unix_mount_guess_should_display, "g_unix_mount_guess_should_display", LIBRARY_GIO);
+	Linker.link(g_unix_mount_guess_symbolic_icon, "g_unix_mount_guess_symbolic_icon", LIBRARY_GIO);
+	Linker.link(g_unix_mount_is_readonly, "g_unix_mount_is_readonly", LIBRARY_GIO);
+	Linker.link(g_unix_mount_is_system_internal, "g_unix_mount_is_system_internal", LIBRARY_GIO);
+	Linker.link(g_unix_mount_points_changed_since, "g_unix_mount_points_changed_since", LIBRARY_GIO);
+	Linker.link(g_unix_mount_points_get, "g_unix_mount_points_get", LIBRARY_GIO);
+	Linker.link(g_unix_mounts_changed_since, "g_unix_mounts_changed_since", LIBRARY_GIO);
+	Linker.link(g_unix_mounts_get, "g_unix_mounts_get", LIBRARY_GIO);
 
 	// gio.UnixMountMonitor
 
-	Linker.link(g_unix_mount_monitor_get_type, "g_unix_mount_monitor_get_type", LIBRARY.GIO);
-	Linker.link(g_unix_mount_monitor_new, "g_unix_mount_monitor_new", LIBRARY.GIO);
-	Linker.link(g_unix_mount_monitor_get, "g_unix_mount_monitor_get", LIBRARY.GIO);
-	Linker.link(g_unix_mount_monitor_set_rate_limit, "g_unix_mount_monitor_set_rate_limit", LIBRARY.GIO);
+	Linker.link(g_unix_mount_monitor_get_type, "g_unix_mount_monitor_get_type", LIBRARY_GIO);
+	Linker.link(g_unix_mount_monitor_new, "g_unix_mount_monitor_new", LIBRARY_GIO);
+	Linker.link(g_unix_mount_monitor_get, "g_unix_mount_monitor_get", LIBRARY_GIO);
+	Linker.link(g_unix_mount_monitor_set_rate_limit, "g_unix_mount_monitor_set_rate_limit", LIBRARY_GIO);
 
 	// gio.UnixMountPoint
 
-	Linker.link(g_unix_mount_point_compare, "g_unix_mount_point_compare", LIBRARY.GIO);
-	Linker.link(g_unix_mount_point_free, "g_unix_mount_point_free", LIBRARY.GIO);
-	Linker.link(g_unix_mount_point_get_device_path, "g_unix_mount_point_get_device_path", LIBRARY.GIO);
-	Linker.link(g_unix_mount_point_get_fs_type, "g_unix_mount_point_get_fs_type", LIBRARY.GIO);
-	Linker.link(g_unix_mount_point_get_mount_path, "g_unix_mount_point_get_mount_path", LIBRARY.GIO);
-	Linker.link(g_unix_mount_point_get_options, "g_unix_mount_point_get_options", LIBRARY.GIO);
-	Linker.link(g_unix_mount_point_guess_can_eject, "g_unix_mount_point_guess_can_eject", LIBRARY.GIO);
-	Linker.link(g_unix_mount_point_guess_icon, "g_unix_mount_point_guess_icon", LIBRARY.GIO);
-	Linker.link(g_unix_mount_point_guess_name, "g_unix_mount_point_guess_name", LIBRARY.GIO);
-	Linker.link(g_unix_mount_point_guess_symbolic_icon, "g_unix_mount_point_guess_symbolic_icon", LIBRARY.GIO);
-	Linker.link(g_unix_mount_point_is_loopback, "g_unix_mount_point_is_loopback", LIBRARY.GIO);
-	Linker.link(g_unix_mount_point_is_readonly, "g_unix_mount_point_is_readonly", LIBRARY.GIO);
-	Linker.link(g_unix_mount_point_is_user_mountable, "g_unix_mount_point_is_user_mountable", LIBRARY.GIO);
+	Linker.link(g_unix_mount_point_compare, "g_unix_mount_point_compare", LIBRARY_GIO);
+	Linker.link(g_unix_mount_point_free, "g_unix_mount_point_free", LIBRARY_GIO);
+	Linker.link(g_unix_mount_point_get_device_path, "g_unix_mount_point_get_device_path", LIBRARY_GIO);
+	Linker.link(g_unix_mount_point_get_fs_type, "g_unix_mount_point_get_fs_type", LIBRARY_GIO);
+	Linker.link(g_unix_mount_point_get_mount_path, "g_unix_mount_point_get_mount_path", LIBRARY_GIO);
+	Linker.link(g_unix_mount_point_get_options, "g_unix_mount_point_get_options", LIBRARY_GIO);
+	Linker.link(g_unix_mount_point_guess_can_eject, "g_unix_mount_point_guess_can_eject", LIBRARY_GIO);
+	Linker.link(g_unix_mount_point_guess_icon, "g_unix_mount_point_guess_icon", LIBRARY_GIO);
+	Linker.link(g_unix_mount_point_guess_name, "g_unix_mount_point_guess_name", LIBRARY_GIO);
+	Linker.link(g_unix_mount_point_guess_symbolic_icon, "g_unix_mount_point_guess_symbolic_icon", LIBRARY_GIO);
+	Linker.link(g_unix_mount_point_is_loopback, "g_unix_mount_point_is_loopback", LIBRARY_GIO);
+	Linker.link(g_unix_mount_point_is_readonly, "g_unix_mount_point_is_readonly", LIBRARY_GIO);
+	Linker.link(g_unix_mount_point_is_user_mountable, "g_unix_mount_point_is_user_mountable", LIBRARY_GIO);
 
 	// gio.UnixOutputStream
 
-	Linker.link(g_unix_output_stream_get_type, "g_unix_output_stream_get_type", LIBRARY.GIO);
-	Linker.link(g_unix_output_stream_new, "g_unix_output_stream_new", LIBRARY.GIO);
-	Linker.link(g_unix_output_stream_get_close_fd, "g_unix_output_stream_get_close_fd", LIBRARY.GIO);
-	Linker.link(g_unix_output_stream_get_fd, "g_unix_output_stream_get_fd", LIBRARY.GIO);
-	Linker.link(g_unix_output_stream_set_close_fd, "g_unix_output_stream_set_close_fd", LIBRARY.GIO);
+	Linker.link(g_unix_output_stream_get_type, "g_unix_output_stream_get_type", LIBRARY_GIO);
+	Linker.link(g_unix_output_stream_new, "g_unix_output_stream_new", LIBRARY_GIO);
+	Linker.link(g_unix_output_stream_get_close_fd, "g_unix_output_stream_get_close_fd", LIBRARY_GIO);
+	Linker.link(g_unix_output_stream_get_fd, "g_unix_output_stream_get_fd", LIBRARY_GIO);
+	Linker.link(g_unix_output_stream_set_close_fd, "g_unix_output_stream_set_close_fd", LIBRARY_GIO);
 
 	// gio.UnixSocketAddress
 
-	Linker.link(g_unix_socket_address_get_type, "g_unix_socket_address_get_type", LIBRARY.GIO);
-	Linker.link(g_unix_socket_address_new, "g_unix_socket_address_new", LIBRARY.GIO);
-	Linker.link(g_unix_socket_address_new_abstract, "g_unix_socket_address_new_abstract", LIBRARY.GIO);
-	Linker.link(g_unix_socket_address_new_with_type, "g_unix_socket_address_new_with_type", LIBRARY.GIO);
-	Linker.link(g_unix_socket_address_abstract_names_supported, "g_unix_socket_address_abstract_names_supported", LIBRARY.GIO);
-	Linker.link(g_unix_socket_address_get_address_type, "g_unix_socket_address_get_address_type", LIBRARY.GIO);
-	Linker.link(g_unix_socket_address_get_is_abstract, "g_unix_socket_address_get_is_abstract", LIBRARY.GIO);
-	Linker.link(g_unix_socket_address_get_path, "g_unix_socket_address_get_path", LIBRARY.GIO);
-	Linker.link(g_unix_socket_address_get_path_len, "g_unix_socket_address_get_path_len", LIBRARY.GIO);
+	Linker.link(g_unix_socket_address_get_type, "g_unix_socket_address_get_type", LIBRARY_GIO);
+	Linker.link(g_unix_socket_address_new, "g_unix_socket_address_new", LIBRARY_GIO);
+	Linker.link(g_unix_socket_address_new_abstract, "g_unix_socket_address_new_abstract", LIBRARY_GIO);
+	Linker.link(g_unix_socket_address_new_with_type, "g_unix_socket_address_new_with_type", LIBRARY_GIO);
+	Linker.link(g_unix_socket_address_abstract_names_supported, "g_unix_socket_address_abstract_names_supported", LIBRARY_GIO);
+	Linker.link(g_unix_socket_address_get_address_type, "g_unix_socket_address_get_address_type", LIBRARY_GIO);
+	Linker.link(g_unix_socket_address_get_is_abstract, "g_unix_socket_address_get_is_abstract", LIBRARY_GIO);
+	Linker.link(g_unix_socket_address_get_path, "g_unix_socket_address_get_path", LIBRARY_GIO);
+	Linker.link(g_unix_socket_address_get_path_len, "g_unix_socket_address_get_path_len", LIBRARY_GIO);
 
 	// gio.Vfs
 
-	Linker.link(g_vfs_get_type, "g_vfs_get_type", LIBRARY.GIO);
-	Linker.link(g_vfs_get_default, "g_vfs_get_default", LIBRARY.GIO);
-	Linker.link(g_vfs_get_local, "g_vfs_get_local", LIBRARY.GIO);
-	Linker.link(g_vfs_get_file_for_path, "g_vfs_get_file_for_path", LIBRARY.GIO);
-	Linker.link(g_vfs_get_file_for_uri, "g_vfs_get_file_for_uri", LIBRARY.GIO);
-	Linker.link(g_vfs_get_supported_uri_schemes, "g_vfs_get_supported_uri_schemes", LIBRARY.GIO);
-	Linker.link(g_vfs_is_active, "g_vfs_is_active", LIBRARY.GIO);
-	Linker.link(g_vfs_parse_name, "g_vfs_parse_name", LIBRARY.GIO);
-	Linker.link(g_vfs_register_uri_scheme, "g_vfs_register_uri_scheme", LIBRARY.GIO);
-	Linker.link(g_vfs_unregister_uri_scheme, "g_vfs_unregister_uri_scheme", LIBRARY.GIO);
+	Linker.link(g_vfs_get_type, "g_vfs_get_type", LIBRARY_GIO);
+	Linker.link(g_vfs_get_default, "g_vfs_get_default", LIBRARY_GIO);
+	Linker.link(g_vfs_get_local, "g_vfs_get_local", LIBRARY_GIO);
+	Linker.link(g_vfs_get_file_for_path, "g_vfs_get_file_for_path", LIBRARY_GIO);
+	Linker.link(g_vfs_get_file_for_uri, "g_vfs_get_file_for_uri", LIBRARY_GIO);
+	Linker.link(g_vfs_get_supported_uri_schemes, "g_vfs_get_supported_uri_schemes", LIBRARY_GIO);
+	Linker.link(g_vfs_is_active, "g_vfs_is_active", LIBRARY_GIO);
+	Linker.link(g_vfs_parse_name, "g_vfs_parse_name", LIBRARY_GIO);
+	Linker.link(g_vfs_register_uri_scheme, "g_vfs_register_uri_scheme", LIBRARY_GIO);
+	Linker.link(g_vfs_unregister_uri_scheme, "g_vfs_unregister_uri_scheme", LIBRARY_GIO);
 
 	// gio.Volume
 
-	Linker.link(g_volume_get_type, "g_volume_get_type", LIBRARY.GIO);
-	Linker.link(g_volume_can_eject, "g_volume_can_eject", LIBRARY.GIO);
-	Linker.link(g_volume_can_mount, "g_volume_can_mount", LIBRARY.GIO);
-	Linker.link(g_volume_eject, "g_volume_eject", LIBRARY.GIO);
-	Linker.link(g_volume_eject_finish, "g_volume_eject_finish", LIBRARY.GIO);
-	Linker.link(g_volume_eject_with_operation, "g_volume_eject_with_operation", LIBRARY.GIO);
-	Linker.link(g_volume_eject_with_operation_finish, "g_volume_eject_with_operation_finish", LIBRARY.GIO);
-	Linker.link(g_volume_enumerate_identifiers, "g_volume_enumerate_identifiers", LIBRARY.GIO);
-	Linker.link(g_volume_get_activation_root, "g_volume_get_activation_root", LIBRARY.GIO);
-	Linker.link(g_volume_get_drive, "g_volume_get_drive", LIBRARY.GIO);
-	Linker.link(g_volume_get_icon, "g_volume_get_icon", LIBRARY.GIO);
-	Linker.link(g_volume_get_identifier, "g_volume_get_identifier", LIBRARY.GIO);
-	Linker.link(g_volume_get_mount, "g_volume_get_mount", LIBRARY.GIO);
-	Linker.link(g_volume_get_name, "g_volume_get_name", LIBRARY.GIO);
-	Linker.link(g_volume_get_sort_key, "g_volume_get_sort_key", LIBRARY.GIO);
-	Linker.link(g_volume_get_symbolic_icon, "g_volume_get_symbolic_icon", LIBRARY.GIO);
-	Linker.link(g_volume_get_uuid, "g_volume_get_uuid", LIBRARY.GIO);
-	Linker.link(g_volume_mount, "g_volume_mount", LIBRARY.GIO);
-	Linker.link(g_volume_mount_finish, "g_volume_mount_finish", LIBRARY.GIO);
-	Linker.link(g_volume_should_automount, "g_volume_should_automount", LIBRARY.GIO);
+	Linker.link(g_volume_get_type, "g_volume_get_type", LIBRARY_GIO);
+	Linker.link(g_volume_can_eject, "g_volume_can_eject", LIBRARY_GIO);
+	Linker.link(g_volume_can_mount, "g_volume_can_mount", LIBRARY_GIO);
+	Linker.link(g_volume_eject, "g_volume_eject", LIBRARY_GIO);
+	Linker.link(g_volume_eject_finish, "g_volume_eject_finish", LIBRARY_GIO);
+	Linker.link(g_volume_eject_with_operation, "g_volume_eject_with_operation", LIBRARY_GIO);
+	Linker.link(g_volume_eject_with_operation_finish, "g_volume_eject_with_operation_finish", LIBRARY_GIO);
+	Linker.link(g_volume_enumerate_identifiers, "g_volume_enumerate_identifiers", LIBRARY_GIO);
+	Linker.link(g_volume_get_activation_root, "g_volume_get_activation_root", LIBRARY_GIO);
+	Linker.link(g_volume_get_drive, "g_volume_get_drive", LIBRARY_GIO);
+	Linker.link(g_volume_get_icon, "g_volume_get_icon", LIBRARY_GIO);
+	Linker.link(g_volume_get_identifier, "g_volume_get_identifier", LIBRARY_GIO);
+	Linker.link(g_volume_get_mount, "g_volume_get_mount", LIBRARY_GIO);
+	Linker.link(g_volume_get_name, "g_volume_get_name", LIBRARY_GIO);
+	Linker.link(g_volume_get_sort_key, "g_volume_get_sort_key", LIBRARY_GIO);
+	Linker.link(g_volume_get_symbolic_icon, "g_volume_get_symbolic_icon", LIBRARY_GIO);
+	Linker.link(g_volume_get_uuid, "g_volume_get_uuid", LIBRARY_GIO);
+	Linker.link(g_volume_mount, "g_volume_mount", LIBRARY_GIO);
+	Linker.link(g_volume_mount_finish, "g_volume_mount_finish", LIBRARY_GIO);
+	Linker.link(g_volume_should_automount, "g_volume_should_automount", LIBRARY_GIO);
 
 	// gio.VolumeMonitor
 
-	Linker.link(g_volume_monitor_get_type, "g_volume_monitor_get_type", LIBRARY.GIO);
-	Linker.link(g_volume_monitor_adopt_orphan_mount, "g_volume_monitor_adopt_orphan_mount", LIBRARY.GIO);
-	Linker.link(g_volume_monitor_get, "g_volume_monitor_get", LIBRARY.GIO);
-	Linker.link(g_volume_monitor_get_connected_drives, "g_volume_monitor_get_connected_drives", LIBRARY.GIO);
-	Linker.link(g_volume_monitor_get_mount_for_uuid, "g_volume_monitor_get_mount_for_uuid", LIBRARY.GIO);
-	Linker.link(g_volume_monitor_get_mounts, "g_volume_monitor_get_mounts", LIBRARY.GIO);
-	Linker.link(g_volume_monitor_get_volume_for_uuid, "g_volume_monitor_get_volume_for_uuid", LIBRARY.GIO);
-	Linker.link(g_volume_monitor_get_volumes, "g_volume_monitor_get_volumes", LIBRARY.GIO);
+	Linker.link(g_volume_monitor_get_type, "g_volume_monitor_get_type", LIBRARY_GIO);
+	Linker.link(g_volume_monitor_adopt_orphan_mount, "g_volume_monitor_adopt_orphan_mount", LIBRARY_GIO);
+	Linker.link(g_volume_monitor_get, "g_volume_monitor_get", LIBRARY_GIO);
+	Linker.link(g_volume_monitor_get_connected_drives, "g_volume_monitor_get_connected_drives", LIBRARY_GIO);
+	Linker.link(g_volume_monitor_get_mount_for_uuid, "g_volume_monitor_get_mount_for_uuid", LIBRARY_GIO);
+	Linker.link(g_volume_monitor_get_mounts, "g_volume_monitor_get_mounts", LIBRARY_GIO);
+	Linker.link(g_volume_monitor_get_volume_for_uuid, "g_volume_monitor_get_volume_for_uuid", LIBRARY_GIO);
+	Linker.link(g_volume_monitor_get_volumes, "g_volume_monitor_get_volumes", LIBRARY_GIO);
 
 	// gio.ZlibCompressor
 
-	Linker.link(g_zlib_compressor_get_type, "g_zlib_compressor_get_type", LIBRARY.GIO);
-	Linker.link(g_zlib_compressor_new, "g_zlib_compressor_new", LIBRARY.GIO);
-	Linker.link(g_zlib_compressor_get_file_info, "g_zlib_compressor_get_file_info", LIBRARY.GIO);
-	Linker.link(g_zlib_compressor_set_file_info, "g_zlib_compressor_set_file_info", LIBRARY.GIO);
+	Linker.link(g_zlib_compressor_get_type, "g_zlib_compressor_get_type", LIBRARY_GIO);
+	Linker.link(g_zlib_compressor_new, "g_zlib_compressor_new", LIBRARY_GIO);
+	Linker.link(g_zlib_compressor_get_file_info, "g_zlib_compressor_get_file_info", LIBRARY_GIO);
+	Linker.link(g_zlib_compressor_set_file_info, "g_zlib_compressor_set_file_info", LIBRARY_GIO);
 
 	// gio.ZlibDecompressor
 
-	Linker.link(g_zlib_decompressor_get_type, "g_zlib_decompressor_get_type", LIBRARY.GIO);
-	Linker.link(g_zlib_decompressor_new, "g_zlib_decompressor_new", LIBRARY.GIO);
-	Linker.link(g_zlib_decompressor_get_file_info, "g_zlib_decompressor_get_file_info", LIBRARY.GIO);
+	Linker.link(g_zlib_decompressor_get_type, "g_zlib_decompressor_get_type", LIBRARY_GIO);
+	Linker.link(g_zlib_decompressor_new, "g_zlib_decompressor_new", LIBRARY_GIO);
+	Linker.link(g_zlib_decompressor_get_file_info, "g_zlib_decompressor_get_file_info", LIBRARY_GIO);
 
 	// gio.PollableUtils
 
-	Linker.link(g_pollable_source_new, "g_pollable_source_new", LIBRARY.GIO);
-	Linker.link(g_pollable_source_new_full, "g_pollable_source_new_full", LIBRARY.GIO);
-	Linker.link(g_pollable_stream_read, "g_pollable_stream_read", LIBRARY.GIO);
-	Linker.link(g_pollable_stream_write, "g_pollable_stream_write", LIBRARY.GIO);
-	Linker.link(g_pollable_stream_write_all, "g_pollable_stream_write_all", LIBRARY.GIO);
+	Linker.link(g_pollable_source_new, "g_pollable_source_new", LIBRARY_GIO);
+	Linker.link(g_pollable_source_new_full, "g_pollable_source_new_full", LIBRARY_GIO);
+	Linker.link(g_pollable_stream_read, "g_pollable_stream_read", LIBRARY_GIO);
+	Linker.link(g_pollable_stream_write, "g_pollable_stream_write", LIBRARY_GIO);
+	Linker.link(g_pollable_stream_write_all, "g_pollable_stream_write_all", LIBRARY_GIO);
 
 	// gio.DBusNames
 
-	Linker.link(g_bus_own_name, "g_bus_own_name", LIBRARY.GIO);
-	Linker.link(g_bus_own_name_on_connection, "g_bus_own_name_on_connection", LIBRARY.GIO);
-	Linker.link(g_bus_own_name_on_connection_with_closures, "g_bus_own_name_on_connection_with_closures", LIBRARY.GIO);
-	Linker.link(g_bus_own_name_with_closures, "g_bus_own_name_with_closures", LIBRARY.GIO);
-	Linker.link(g_bus_unown_name, "g_bus_unown_name", LIBRARY.GIO);
-	Linker.link(g_bus_unwatch_name, "g_bus_unwatch_name", LIBRARY.GIO);
-	Linker.link(g_bus_watch_name, "g_bus_watch_name", LIBRARY.GIO);
-	Linker.link(g_bus_watch_name_on_connection, "g_bus_watch_name_on_connection", LIBRARY.GIO);
-	Linker.link(g_bus_watch_name_on_connection_with_closures, "g_bus_watch_name_on_connection_with_closures", LIBRARY.GIO);
-	Linker.link(g_bus_watch_name_with_closures, "g_bus_watch_name_with_closures", LIBRARY.GIO);
+	Linker.link(g_bus_own_name, "g_bus_own_name", LIBRARY_GIO);
+	Linker.link(g_bus_own_name_on_connection, "g_bus_own_name_on_connection", LIBRARY_GIO);
+	Linker.link(g_bus_own_name_on_connection_with_closures, "g_bus_own_name_on_connection_with_closures", LIBRARY_GIO);
+	Linker.link(g_bus_own_name_with_closures, "g_bus_own_name_with_closures", LIBRARY_GIO);
+	Linker.link(g_bus_unown_name, "g_bus_unown_name", LIBRARY_GIO);
+	Linker.link(g_bus_unwatch_name, "g_bus_unwatch_name", LIBRARY_GIO);
+	Linker.link(g_bus_watch_name, "g_bus_watch_name", LIBRARY_GIO);
+	Linker.link(g_bus_watch_name_on_connection, "g_bus_watch_name_on_connection", LIBRARY_GIO);
+	Linker.link(g_bus_watch_name_on_connection_with_closures, "g_bus_watch_name_on_connection_with_closures", LIBRARY_GIO);
+	Linker.link(g_bus_watch_name_with_closures, "g_bus_watch_name_with_closures", LIBRARY_GIO);
 
 	// gio.ContentType
 
-	Linker.link(g_content_type_can_be_executable, "g_content_type_can_be_executable", LIBRARY.GIO);
-	Linker.link(g_content_type_equals, "g_content_type_equals", LIBRARY.GIO);
-	Linker.link(g_content_type_from_mime_type, "g_content_type_from_mime_type", LIBRARY.GIO);
-	Linker.link(g_content_type_get_description, "g_content_type_get_description", LIBRARY.GIO);
-	Linker.link(g_content_type_get_generic_icon_name, "g_content_type_get_generic_icon_name", LIBRARY.GIO);
-	Linker.link(g_content_type_get_icon, "g_content_type_get_icon", LIBRARY.GIO);
-	Linker.link(g_content_type_get_mime_type, "g_content_type_get_mime_type", LIBRARY.GIO);
-	Linker.link(g_content_type_get_symbolic_icon, "g_content_type_get_symbolic_icon", LIBRARY.GIO);
-	Linker.link(g_content_type_guess, "g_content_type_guess", LIBRARY.GIO);
-	Linker.link(g_content_type_guess_for_tree, "g_content_type_guess_for_tree", LIBRARY.GIO);
-	Linker.link(g_content_type_is_a, "g_content_type_is_a", LIBRARY.GIO);
-	Linker.link(g_content_type_is_unknown, "g_content_type_is_unknown", LIBRARY.GIO);
-	Linker.link(g_content_types_get_registered, "g_content_types_get_registered", LIBRARY.GIO);
-	Linker.link(g_content_type_is_mime_type, "g_content_type_is_mime_type", LIBRARY.GIO);
+	Linker.link(g_content_type_can_be_executable, "g_content_type_can_be_executable", LIBRARY_GIO);
+	Linker.link(g_content_type_equals, "g_content_type_equals", LIBRARY_GIO);
+	Linker.link(g_content_type_from_mime_type, "g_content_type_from_mime_type", LIBRARY_GIO);
+	Linker.link(g_content_type_get_description, "g_content_type_get_description", LIBRARY_GIO);
+	Linker.link(g_content_type_get_generic_icon_name, "g_content_type_get_generic_icon_name", LIBRARY_GIO);
+	Linker.link(g_content_type_get_icon, "g_content_type_get_icon", LIBRARY_GIO);
+	Linker.link(g_content_type_get_mime_type, "g_content_type_get_mime_type", LIBRARY_GIO);
+	Linker.link(g_content_type_get_symbolic_icon, "g_content_type_get_symbolic_icon", LIBRARY_GIO);
+	Linker.link(g_content_type_guess, "g_content_type_guess", LIBRARY_GIO);
+	Linker.link(g_content_type_guess_for_tree, "g_content_type_guess_for_tree", LIBRARY_GIO);
+	Linker.link(g_content_type_is_a, "g_content_type_is_a", LIBRARY_GIO);
+	Linker.link(g_content_type_is_unknown, "g_content_type_is_unknown", LIBRARY_GIO);
+	Linker.link(g_content_types_get_registered, "g_content_types_get_registered", LIBRARY_GIO);
+	Linker.link(g_content_type_is_mime_type, "g_content_type_is_mime_type", LIBRARY_GIO);
 
 	// gio.DBusError
 
-	Linker.link(g_dbus_error_encode_gerror, "g_dbus_error_encode_gerror", LIBRARY.GIO);
-	Linker.link(g_dbus_error_get_remote_error, "g_dbus_error_get_remote_error", LIBRARY.GIO);
-	Linker.link(g_dbus_error_is_remote_error, "g_dbus_error_is_remote_error", LIBRARY.GIO);
-	Linker.link(g_dbus_error_new_for_dbus_error, "g_dbus_error_new_for_dbus_error", LIBRARY.GIO);
-	Linker.link(g_dbus_error_quark, "g_dbus_error_quark", LIBRARY.GIO);
-	Linker.link(g_dbus_error_register_error, "g_dbus_error_register_error", LIBRARY.GIO);
-	Linker.link(g_dbus_error_register_error_domain, "g_dbus_error_register_error_domain", LIBRARY.GIO);
-	Linker.link(g_dbus_error_strip_remote_error, "g_dbus_error_strip_remote_error", LIBRARY.GIO);
-	Linker.link(g_dbus_error_unregister_error, "g_dbus_error_unregister_error", LIBRARY.GIO);
+	Linker.link(g_dbus_error_encode_gerror, "g_dbus_error_encode_gerror", LIBRARY_GIO);
+	Linker.link(g_dbus_error_get_remote_error, "g_dbus_error_get_remote_error", LIBRARY_GIO);
+	Linker.link(g_dbus_error_is_remote_error, "g_dbus_error_is_remote_error", LIBRARY_GIO);
+	Linker.link(g_dbus_error_new_for_dbus_error, "g_dbus_error_new_for_dbus_error", LIBRARY_GIO);
+	Linker.link(g_dbus_error_quark, "g_dbus_error_quark", LIBRARY_GIO);
+	Linker.link(g_dbus_error_register_error, "g_dbus_error_register_error", LIBRARY_GIO);
+	Linker.link(g_dbus_error_register_error_domain, "g_dbus_error_register_error_domain", LIBRARY_GIO);
+	Linker.link(g_dbus_error_strip_remote_error, "g_dbus_error_strip_remote_error", LIBRARY_GIO);
+	Linker.link(g_dbus_error_unregister_error, "g_dbus_error_unregister_error", LIBRARY_GIO);
 
 	// gio.DBusUtilities
 
-	Linker.link(g_dbus_address_escape_value, "g_dbus_address_escape_value", LIBRARY.GIO);
-	Linker.link(g_dbus_address_get_for_bus_sync, "g_dbus_address_get_for_bus_sync", LIBRARY.GIO);
-	Linker.link(g_dbus_address_get_stream, "g_dbus_address_get_stream", LIBRARY.GIO);
-	Linker.link(g_dbus_address_get_stream_finish, "g_dbus_address_get_stream_finish", LIBRARY.GIO);
-	Linker.link(g_dbus_address_get_stream_sync, "g_dbus_address_get_stream_sync", LIBRARY.GIO);
-	Linker.link(g_dbus_generate_guid, "g_dbus_generate_guid", LIBRARY.GIO);
-	Linker.link(g_dbus_gvalue_to_gvariant, "g_dbus_gvalue_to_gvariant", LIBRARY.GIO);
-	Linker.link(g_dbus_gvariant_to_gvalue, "g_dbus_gvariant_to_gvalue", LIBRARY.GIO);
-	Linker.link(g_dbus_is_address, "g_dbus_is_address", LIBRARY.GIO);
-	Linker.link(g_dbus_is_guid, "g_dbus_is_guid", LIBRARY.GIO);
-	Linker.link(g_dbus_is_interface_name, "g_dbus_is_interface_name", LIBRARY.GIO);
-	Linker.link(g_dbus_is_member_name, "g_dbus_is_member_name", LIBRARY.GIO);
-	Linker.link(g_dbus_is_name, "g_dbus_is_name", LIBRARY.GIO);
-	Linker.link(g_dbus_is_supported_address, "g_dbus_is_supported_address", LIBRARY.GIO);
-	Linker.link(g_dbus_is_unique_name, "g_dbus_is_unique_name", LIBRARY.GIO);
+	Linker.link(g_dbus_address_escape_value, "g_dbus_address_escape_value", LIBRARY_GIO);
+	Linker.link(g_dbus_address_get_for_bus_sync, "g_dbus_address_get_for_bus_sync", LIBRARY_GIO);
+	Linker.link(g_dbus_address_get_stream, "g_dbus_address_get_stream", LIBRARY_GIO);
+	Linker.link(g_dbus_address_get_stream_finish, "g_dbus_address_get_stream_finish", LIBRARY_GIO);
+	Linker.link(g_dbus_address_get_stream_sync, "g_dbus_address_get_stream_sync", LIBRARY_GIO);
+	Linker.link(g_dbus_generate_guid, "g_dbus_generate_guid", LIBRARY_GIO);
+	Linker.link(g_dbus_gvalue_to_gvariant, "g_dbus_gvalue_to_gvariant", LIBRARY_GIO);
+	Linker.link(g_dbus_gvariant_to_gvalue, "g_dbus_gvariant_to_gvalue", LIBRARY_GIO);
+	Linker.link(g_dbus_is_address, "g_dbus_is_address", LIBRARY_GIO);
+	Linker.link(g_dbus_is_guid, "g_dbus_is_guid", LIBRARY_GIO);
+	Linker.link(g_dbus_is_interface_name, "g_dbus_is_interface_name", LIBRARY_GIO);
+	Linker.link(g_dbus_is_member_name, "g_dbus_is_member_name", LIBRARY_GIO);
+	Linker.link(g_dbus_is_name, "g_dbus_is_name", LIBRARY_GIO);
+	Linker.link(g_dbus_is_supported_address, "g_dbus_is_supported_address", LIBRARY_GIO);
+	Linker.link(g_dbus_is_unique_name, "g_dbus_is_unique_name", LIBRARY_GIO);
 
 	// gio.ErrorGIO
 
-	Linker.link(g_io_error_from_errno, "g_io_error_from_errno", LIBRARY.GIO);
-	Linker.link(g_io_error_quark, "g_io_error_quark", LIBRARY.GIO);
+	Linker.link(g_io_error_from_errno, "g_io_error_from_errno", LIBRARY_GIO);
+	Linker.link(g_io_error_quark, "g_io_error_quark", LIBRARY_GIO);
 }
 
 __gshared extern(C)

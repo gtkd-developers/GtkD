@@ -27,382 +27,388 @@ module gtkc.atk;
 import std.stdio;
 import gtkc.atktypes;
 import gtkd.Loader;
-import gtkd.paths;
+
+version (Windows)
+	static immutable LIBRARY_ATK = ["libatk-1.0-0.dll"];
+else version (OSX)
+	static immutable LIBRARY_ATK = ["libatk-1.0.0.dylib"];
+else
+	static immutable LIBRARY_ATK = ["libatk-1.0.so.0"];
 
 shared static this()
 {
 	// atk.Action
 
-	Linker.link(atk_action_get_type, "atk_action_get_type", LIBRARY.ATK);
-	Linker.link(atk_action_do_action, "atk_action_do_action", LIBRARY.ATK);
-	Linker.link(atk_action_get_description, "atk_action_get_description", LIBRARY.ATK);
-	Linker.link(atk_action_get_keybinding, "atk_action_get_keybinding", LIBRARY.ATK);
-	Linker.link(atk_action_get_localized_name, "atk_action_get_localized_name", LIBRARY.ATK);
-	Linker.link(atk_action_get_n_actions, "atk_action_get_n_actions", LIBRARY.ATK);
-	Linker.link(atk_action_get_name, "atk_action_get_name", LIBRARY.ATK);
-	Linker.link(atk_action_set_description, "atk_action_set_description", LIBRARY.ATK);
+	Linker.link(atk_action_get_type, "atk_action_get_type", LIBRARY_ATK);
+	Linker.link(atk_action_do_action, "atk_action_do_action", LIBRARY_ATK);
+	Linker.link(atk_action_get_description, "atk_action_get_description", LIBRARY_ATK);
+	Linker.link(atk_action_get_keybinding, "atk_action_get_keybinding", LIBRARY_ATK);
+	Linker.link(atk_action_get_localized_name, "atk_action_get_localized_name", LIBRARY_ATK);
+	Linker.link(atk_action_get_n_actions, "atk_action_get_n_actions", LIBRARY_ATK);
+	Linker.link(atk_action_get_name, "atk_action_get_name", LIBRARY_ATK);
+	Linker.link(atk_action_set_description, "atk_action_set_description", LIBRARY_ATK);
 
 	// atk.Component
 
-	Linker.link(atk_component_get_type, "atk_component_get_type", LIBRARY.ATK);
-	Linker.link(atk_component_add_focus_handler, "atk_component_add_focus_handler", LIBRARY.ATK);
-	Linker.link(atk_component_contains, "atk_component_contains", LIBRARY.ATK);
-	Linker.link(atk_component_get_alpha, "atk_component_get_alpha", LIBRARY.ATK);
-	Linker.link(atk_component_get_extents, "atk_component_get_extents", LIBRARY.ATK);
-	Linker.link(atk_component_get_layer, "atk_component_get_layer", LIBRARY.ATK);
-	Linker.link(atk_component_get_mdi_zorder, "atk_component_get_mdi_zorder", LIBRARY.ATK);
-	Linker.link(atk_component_get_position, "atk_component_get_position", LIBRARY.ATK);
-	Linker.link(atk_component_get_size, "atk_component_get_size", LIBRARY.ATK);
-	Linker.link(atk_component_grab_focus, "atk_component_grab_focus", LIBRARY.ATK);
-	Linker.link(atk_component_ref_accessible_at_point, "atk_component_ref_accessible_at_point", LIBRARY.ATK);
-	Linker.link(atk_component_remove_focus_handler, "atk_component_remove_focus_handler", LIBRARY.ATK);
-	Linker.link(atk_component_set_extents, "atk_component_set_extents", LIBRARY.ATK);
-	Linker.link(atk_component_set_position, "atk_component_set_position", LIBRARY.ATK);
-	Linker.link(atk_component_set_size, "atk_component_set_size", LIBRARY.ATK);
+	Linker.link(atk_component_get_type, "atk_component_get_type", LIBRARY_ATK);
+	Linker.link(atk_component_add_focus_handler, "atk_component_add_focus_handler", LIBRARY_ATK);
+	Linker.link(atk_component_contains, "atk_component_contains", LIBRARY_ATK);
+	Linker.link(atk_component_get_alpha, "atk_component_get_alpha", LIBRARY_ATK);
+	Linker.link(atk_component_get_extents, "atk_component_get_extents", LIBRARY_ATK);
+	Linker.link(atk_component_get_layer, "atk_component_get_layer", LIBRARY_ATK);
+	Linker.link(atk_component_get_mdi_zorder, "atk_component_get_mdi_zorder", LIBRARY_ATK);
+	Linker.link(atk_component_get_position, "atk_component_get_position", LIBRARY_ATK);
+	Linker.link(atk_component_get_size, "atk_component_get_size", LIBRARY_ATK);
+	Linker.link(atk_component_grab_focus, "atk_component_grab_focus", LIBRARY_ATK);
+	Linker.link(atk_component_ref_accessible_at_point, "atk_component_ref_accessible_at_point", LIBRARY_ATK);
+	Linker.link(atk_component_remove_focus_handler, "atk_component_remove_focus_handler", LIBRARY_ATK);
+	Linker.link(atk_component_set_extents, "atk_component_set_extents", LIBRARY_ATK);
+	Linker.link(atk_component_set_position, "atk_component_set_position", LIBRARY_ATK);
+	Linker.link(atk_component_set_size, "atk_component_set_size", LIBRARY_ATK);
 
 	// atk.Document
 
-	Linker.link(atk_document_get_type, "atk_document_get_type", LIBRARY.ATK);
-	Linker.link(atk_document_get_attribute_value, "atk_document_get_attribute_value", LIBRARY.ATK);
-	Linker.link(atk_document_get_attributes, "atk_document_get_attributes", LIBRARY.ATK);
-	Linker.link(atk_document_get_current_page_number, "atk_document_get_current_page_number", LIBRARY.ATK);
-	Linker.link(atk_document_get_document, "atk_document_get_document", LIBRARY.ATK);
-	Linker.link(atk_document_get_document_type, "atk_document_get_document_type", LIBRARY.ATK);
-	Linker.link(atk_document_get_locale, "atk_document_get_locale", LIBRARY.ATK);
-	Linker.link(atk_document_get_page_count, "atk_document_get_page_count", LIBRARY.ATK);
-	Linker.link(atk_document_set_attribute_value, "atk_document_set_attribute_value", LIBRARY.ATK);
+	Linker.link(atk_document_get_type, "atk_document_get_type", LIBRARY_ATK);
+	Linker.link(atk_document_get_attribute_value, "atk_document_get_attribute_value", LIBRARY_ATK);
+	Linker.link(atk_document_get_attributes, "atk_document_get_attributes", LIBRARY_ATK);
+	Linker.link(atk_document_get_current_page_number, "atk_document_get_current_page_number", LIBRARY_ATK);
+	Linker.link(atk_document_get_document, "atk_document_get_document", LIBRARY_ATK);
+	Linker.link(atk_document_get_document_type, "atk_document_get_document_type", LIBRARY_ATK);
+	Linker.link(atk_document_get_locale, "atk_document_get_locale", LIBRARY_ATK);
+	Linker.link(atk_document_get_page_count, "atk_document_get_page_count", LIBRARY_ATK);
+	Linker.link(atk_document_set_attribute_value, "atk_document_set_attribute_value", LIBRARY_ATK);
 
 	// atk.EditableText
 
-	Linker.link(atk_editable_text_get_type, "atk_editable_text_get_type", LIBRARY.ATK);
-	Linker.link(atk_editable_text_copy_text, "atk_editable_text_copy_text", LIBRARY.ATK);
-	Linker.link(atk_editable_text_cut_text, "atk_editable_text_cut_text", LIBRARY.ATK);
-	Linker.link(atk_editable_text_delete_text, "atk_editable_text_delete_text", LIBRARY.ATK);
-	Linker.link(atk_editable_text_insert_text, "atk_editable_text_insert_text", LIBRARY.ATK);
-	Linker.link(atk_editable_text_paste_text, "atk_editable_text_paste_text", LIBRARY.ATK);
-	Linker.link(atk_editable_text_set_run_attributes, "atk_editable_text_set_run_attributes", LIBRARY.ATK);
-	Linker.link(atk_editable_text_set_text_contents, "atk_editable_text_set_text_contents", LIBRARY.ATK);
+	Linker.link(atk_editable_text_get_type, "atk_editable_text_get_type", LIBRARY_ATK);
+	Linker.link(atk_editable_text_copy_text, "atk_editable_text_copy_text", LIBRARY_ATK);
+	Linker.link(atk_editable_text_cut_text, "atk_editable_text_cut_text", LIBRARY_ATK);
+	Linker.link(atk_editable_text_delete_text, "atk_editable_text_delete_text", LIBRARY_ATK);
+	Linker.link(atk_editable_text_insert_text, "atk_editable_text_insert_text", LIBRARY_ATK);
+	Linker.link(atk_editable_text_paste_text, "atk_editable_text_paste_text", LIBRARY_ATK);
+	Linker.link(atk_editable_text_set_run_attributes, "atk_editable_text_set_run_attributes", LIBRARY_ATK);
+	Linker.link(atk_editable_text_set_text_contents, "atk_editable_text_set_text_contents", LIBRARY_ATK);
 
 	// atk.GObjectAccessible
 
-	Linker.link(atk_gobject_accessible_get_type, "atk_gobject_accessible_get_type", LIBRARY.ATK);
-	Linker.link(atk_gobject_accessible_for_object, "atk_gobject_accessible_for_object", LIBRARY.ATK);
-	Linker.link(atk_gobject_accessible_get_object, "atk_gobject_accessible_get_object", LIBRARY.ATK);
+	Linker.link(atk_gobject_accessible_get_type, "atk_gobject_accessible_get_type", LIBRARY_ATK);
+	Linker.link(atk_gobject_accessible_for_object, "atk_gobject_accessible_for_object", LIBRARY_ATK);
+	Linker.link(atk_gobject_accessible_get_object, "atk_gobject_accessible_get_object", LIBRARY_ATK);
 
 	// atk.Hyperlink
 
-	Linker.link(atk_hyperlink_get_type, "atk_hyperlink_get_type", LIBRARY.ATK);
-	Linker.link(atk_hyperlink_get_end_index, "atk_hyperlink_get_end_index", LIBRARY.ATK);
-	Linker.link(atk_hyperlink_get_n_anchors, "atk_hyperlink_get_n_anchors", LIBRARY.ATK);
-	Linker.link(atk_hyperlink_get_object, "atk_hyperlink_get_object", LIBRARY.ATK);
-	Linker.link(atk_hyperlink_get_start_index, "atk_hyperlink_get_start_index", LIBRARY.ATK);
-	Linker.link(atk_hyperlink_get_uri, "atk_hyperlink_get_uri", LIBRARY.ATK);
-	Linker.link(atk_hyperlink_is_inline, "atk_hyperlink_is_inline", LIBRARY.ATK);
-	Linker.link(atk_hyperlink_is_selected_link, "atk_hyperlink_is_selected_link", LIBRARY.ATK);
-	Linker.link(atk_hyperlink_is_valid, "atk_hyperlink_is_valid", LIBRARY.ATK);
+	Linker.link(atk_hyperlink_get_type, "atk_hyperlink_get_type", LIBRARY_ATK);
+	Linker.link(atk_hyperlink_get_end_index, "atk_hyperlink_get_end_index", LIBRARY_ATK);
+	Linker.link(atk_hyperlink_get_n_anchors, "atk_hyperlink_get_n_anchors", LIBRARY_ATK);
+	Linker.link(atk_hyperlink_get_object, "atk_hyperlink_get_object", LIBRARY_ATK);
+	Linker.link(atk_hyperlink_get_start_index, "atk_hyperlink_get_start_index", LIBRARY_ATK);
+	Linker.link(atk_hyperlink_get_uri, "atk_hyperlink_get_uri", LIBRARY_ATK);
+	Linker.link(atk_hyperlink_is_inline, "atk_hyperlink_is_inline", LIBRARY_ATK);
+	Linker.link(atk_hyperlink_is_selected_link, "atk_hyperlink_is_selected_link", LIBRARY_ATK);
+	Linker.link(atk_hyperlink_is_valid, "atk_hyperlink_is_valid", LIBRARY_ATK);
 
 	// atk.HyperlinkImpl
 
-	Linker.link(atk_hyperlink_impl_get_type, "atk_hyperlink_impl_get_type", LIBRARY.ATK);
-	Linker.link(atk_hyperlink_impl_get_hyperlink, "atk_hyperlink_impl_get_hyperlink", LIBRARY.ATK);
+	Linker.link(atk_hyperlink_impl_get_type, "atk_hyperlink_impl_get_type", LIBRARY_ATK);
+	Linker.link(atk_hyperlink_impl_get_hyperlink, "atk_hyperlink_impl_get_hyperlink", LIBRARY_ATK);
 
 	// atk.Hypertext
 
-	Linker.link(atk_hypertext_get_type, "atk_hypertext_get_type", LIBRARY.ATK);
-	Linker.link(atk_hypertext_get_link, "atk_hypertext_get_link", LIBRARY.ATK);
-	Linker.link(atk_hypertext_get_link_index, "atk_hypertext_get_link_index", LIBRARY.ATK);
-	Linker.link(atk_hypertext_get_n_links, "atk_hypertext_get_n_links", LIBRARY.ATK);
+	Linker.link(atk_hypertext_get_type, "atk_hypertext_get_type", LIBRARY_ATK);
+	Linker.link(atk_hypertext_get_link, "atk_hypertext_get_link", LIBRARY_ATK);
+	Linker.link(atk_hypertext_get_link_index, "atk_hypertext_get_link_index", LIBRARY_ATK);
+	Linker.link(atk_hypertext_get_n_links, "atk_hypertext_get_n_links", LIBRARY_ATK);
 
 	// atk.Image
 
-	Linker.link(atk_image_get_type, "atk_image_get_type", LIBRARY.ATK);
-	Linker.link(atk_image_get_image_description, "atk_image_get_image_description", LIBRARY.ATK);
-	Linker.link(atk_image_get_image_locale, "atk_image_get_image_locale", LIBRARY.ATK);
-	Linker.link(atk_image_get_image_position, "atk_image_get_image_position", LIBRARY.ATK);
-	Linker.link(atk_image_get_image_size, "atk_image_get_image_size", LIBRARY.ATK);
-	Linker.link(atk_image_set_image_description, "atk_image_set_image_description", LIBRARY.ATK);
+	Linker.link(atk_image_get_type, "atk_image_get_type", LIBRARY_ATK);
+	Linker.link(atk_image_get_image_description, "atk_image_get_image_description", LIBRARY_ATK);
+	Linker.link(atk_image_get_image_locale, "atk_image_get_image_locale", LIBRARY_ATK);
+	Linker.link(atk_image_get_image_position, "atk_image_get_image_position", LIBRARY_ATK);
+	Linker.link(atk_image_get_image_size, "atk_image_get_image_size", LIBRARY_ATK);
+	Linker.link(atk_image_set_image_description, "atk_image_set_image_description", LIBRARY_ATK);
 
 	// atk.Implementor
 
-	Linker.link(atk_implementor_ref_accessible, "atk_implementor_ref_accessible", LIBRARY.ATK);
-	Linker.link(atk_implementor_get_type, "atk_implementor_get_type", LIBRARY.ATK);
+	Linker.link(atk_implementor_ref_accessible, "atk_implementor_ref_accessible", LIBRARY_ATK);
+	Linker.link(atk_implementor_get_type, "atk_implementor_get_type", LIBRARY_ATK);
 
 	// atk.Misc
 
-	Linker.link(atk_misc_get_type, "atk_misc_get_type", LIBRARY.ATK);
-	Linker.link(atk_misc_get_instance, "atk_misc_get_instance", LIBRARY.ATK);
-	Linker.link(atk_misc_threads_enter, "atk_misc_threads_enter", LIBRARY.ATK);
-	Linker.link(atk_misc_threads_leave, "atk_misc_threads_leave", LIBRARY.ATK);
+	Linker.link(atk_misc_get_type, "atk_misc_get_type", LIBRARY_ATK);
+	Linker.link(atk_misc_get_instance, "atk_misc_get_instance", LIBRARY_ATK);
+	Linker.link(atk_misc_threads_enter, "atk_misc_threads_enter", LIBRARY_ATK);
+	Linker.link(atk_misc_threads_leave, "atk_misc_threads_leave", LIBRARY_ATK);
 
 	// atk.NoOpObject
 
-	Linker.link(atk_no_op_object_get_type, "atk_no_op_object_get_type", LIBRARY.ATK);
-	Linker.link(atk_no_op_object_new, "atk_no_op_object_new", LIBRARY.ATK);
+	Linker.link(atk_no_op_object_get_type, "atk_no_op_object_get_type", LIBRARY_ATK);
+	Linker.link(atk_no_op_object_new, "atk_no_op_object_new", LIBRARY_ATK);
 
 	// atk.NoOpObjectFactory
 
-	Linker.link(atk_no_op_object_factory_get_type, "atk_no_op_object_factory_get_type", LIBRARY.ATK);
-	Linker.link(atk_no_op_object_factory_new, "atk_no_op_object_factory_new", LIBRARY.ATK);
+	Linker.link(atk_no_op_object_factory_get_type, "atk_no_op_object_factory_get_type", LIBRARY_ATK);
+	Linker.link(atk_no_op_object_factory_new, "atk_no_op_object_factory_new", LIBRARY_ATK);
 
 	// atk.ObjectAtk
 
-	Linker.link(atk_object_get_type, "atk_object_get_type", LIBRARY.ATK);
-	Linker.link(atk_object_add_relationship, "atk_object_add_relationship", LIBRARY.ATK);
-	Linker.link(atk_object_connect_property_change_handler, "atk_object_connect_property_change_handler", LIBRARY.ATK);
-	Linker.link(atk_object_get_attributes, "atk_object_get_attributes", LIBRARY.ATK);
-	Linker.link(atk_object_get_description, "atk_object_get_description", LIBRARY.ATK);
-	Linker.link(atk_object_get_index_in_parent, "atk_object_get_index_in_parent", LIBRARY.ATK);
-	Linker.link(atk_object_get_layer, "atk_object_get_layer", LIBRARY.ATK);
-	Linker.link(atk_object_get_mdi_zorder, "atk_object_get_mdi_zorder", LIBRARY.ATK);
-	Linker.link(atk_object_get_n_accessible_children, "atk_object_get_n_accessible_children", LIBRARY.ATK);
-	Linker.link(atk_object_get_name, "atk_object_get_name", LIBRARY.ATK);
-	Linker.link(atk_object_get_object_locale, "atk_object_get_object_locale", LIBRARY.ATK);
-	Linker.link(atk_object_get_parent, "atk_object_get_parent", LIBRARY.ATK);
-	Linker.link(atk_object_get_role, "atk_object_get_role", LIBRARY.ATK);
-	Linker.link(atk_object_initialize, "atk_object_initialize", LIBRARY.ATK);
-	Linker.link(atk_object_notify_state_change, "atk_object_notify_state_change", LIBRARY.ATK);
-	Linker.link(atk_object_peek_parent, "atk_object_peek_parent", LIBRARY.ATK);
-	Linker.link(atk_object_ref_accessible_child, "atk_object_ref_accessible_child", LIBRARY.ATK);
-	Linker.link(atk_object_ref_relation_set, "atk_object_ref_relation_set", LIBRARY.ATK);
-	Linker.link(atk_object_ref_state_set, "atk_object_ref_state_set", LIBRARY.ATK);
-	Linker.link(atk_object_remove_property_change_handler, "atk_object_remove_property_change_handler", LIBRARY.ATK);
-	Linker.link(atk_object_remove_relationship, "atk_object_remove_relationship", LIBRARY.ATK);
-	Linker.link(atk_object_set_description, "atk_object_set_description", LIBRARY.ATK);
-	Linker.link(atk_object_set_name, "atk_object_set_name", LIBRARY.ATK);
-	Linker.link(atk_object_set_parent, "atk_object_set_parent", LIBRARY.ATK);
-	Linker.link(atk_object_set_role, "atk_object_set_role", LIBRARY.ATK);
-	Linker.link(atk_role_for_name, "atk_role_for_name", LIBRARY.ATK);
-	Linker.link(atk_role_get_localized_name, "atk_role_get_localized_name", LIBRARY.ATK);
-	Linker.link(atk_role_get_name, "atk_role_get_name", LIBRARY.ATK);
-	Linker.link(atk_role_register, "atk_role_register", LIBRARY.ATK);
+	Linker.link(atk_object_get_type, "atk_object_get_type", LIBRARY_ATK);
+	Linker.link(atk_object_add_relationship, "atk_object_add_relationship", LIBRARY_ATK);
+	Linker.link(atk_object_connect_property_change_handler, "atk_object_connect_property_change_handler", LIBRARY_ATK);
+	Linker.link(atk_object_get_attributes, "atk_object_get_attributes", LIBRARY_ATK);
+	Linker.link(atk_object_get_description, "atk_object_get_description", LIBRARY_ATK);
+	Linker.link(atk_object_get_index_in_parent, "atk_object_get_index_in_parent", LIBRARY_ATK);
+	Linker.link(atk_object_get_layer, "atk_object_get_layer", LIBRARY_ATK);
+	Linker.link(atk_object_get_mdi_zorder, "atk_object_get_mdi_zorder", LIBRARY_ATK);
+	Linker.link(atk_object_get_n_accessible_children, "atk_object_get_n_accessible_children", LIBRARY_ATK);
+	Linker.link(atk_object_get_name, "atk_object_get_name", LIBRARY_ATK);
+	Linker.link(atk_object_get_object_locale, "atk_object_get_object_locale", LIBRARY_ATK);
+	Linker.link(atk_object_get_parent, "atk_object_get_parent", LIBRARY_ATK);
+	Linker.link(atk_object_get_role, "atk_object_get_role", LIBRARY_ATK);
+	Linker.link(atk_object_initialize, "atk_object_initialize", LIBRARY_ATK);
+	Linker.link(atk_object_notify_state_change, "atk_object_notify_state_change", LIBRARY_ATK);
+	Linker.link(atk_object_peek_parent, "atk_object_peek_parent", LIBRARY_ATK);
+	Linker.link(atk_object_ref_accessible_child, "atk_object_ref_accessible_child", LIBRARY_ATK);
+	Linker.link(atk_object_ref_relation_set, "atk_object_ref_relation_set", LIBRARY_ATK);
+	Linker.link(atk_object_ref_state_set, "atk_object_ref_state_set", LIBRARY_ATK);
+	Linker.link(atk_object_remove_property_change_handler, "atk_object_remove_property_change_handler", LIBRARY_ATK);
+	Linker.link(atk_object_remove_relationship, "atk_object_remove_relationship", LIBRARY_ATK);
+	Linker.link(atk_object_set_description, "atk_object_set_description", LIBRARY_ATK);
+	Linker.link(atk_object_set_name, "atk_object_set_name", LIBRARY_ATK);
+	Linker.link(atk_object_set_parent, "atk_object_set_parent", LIBRARY_ATK);
+	Linker.link(atk_object_set_role, "atk_object_set_role", LIBRARY_ATK);
+	Linker.link(atk_role_for_name, "atk_role_for_name", LIBRARY_ATK);
+	Linker.link(atk_role_get_localized_name, "atk_role_get_localized_name", LIBRARY_ATK);
+	Linker.link(atk_role_get_name, "atk_role_get_name", LIBRARY_ATK);
+	Linker.link(atk_role_register, "atk_role_register", LIBRARY_ATK);
 
 	// atk.ObjectFactory
 
-	Linker.link(atk_object_factory_get_type, "atk_object_factory_get_type", LIBRARY.ATK);
-	Linker.link(atk_object_factory_create_accessible, "atk_object_factory_create_accessible", LIBRARY.ATK);
-	Linker.link(atk_object_factory_get_accessible_type, "atk_object_factory_get_accessible_type", LIBRARY.ATK);
-	Linker.link(atk_object_factory_invalidate, "atk_object_factory_invalidate", LIBRARY.ATK);
+	Linker.link(atk_object_factory_get_type, "atk_object_factory_get_type", LIBRARY_ATK);
+	Linker.link(atk_object_factory_create_accessible, "atk_object_factory_create_accessible", LIBRARY_ATK);
+	Linker.link(atk_object_factory_get_accessible_type, "atk_object_factory_get_accessible_type", LIBRARY_ATK);
+	Linker.link(atk_object_factory_invalidate, "atk_object_factory_invalidate", LIBRARY_ATK);
 
 	// atk.Plug
 
-	Linker.link(atk_plug_get_type, "atk_plug_get_type", LIBRARY.ATK);
-	Linker.link(atk_plug_new, "atk_plug_new", LIBRARY.ATK);
-	Linker.link(atk_plug_get_id, "atk_plug_get_id", LIBRARY.ATK);
+	Linker.link(atk_plug_get_type, "atk_plug_get_type", LIBRARY_ATK);
+	Linker.link(atk_plug_new, "atk_plug_new", LIBRARY_ATK);
+	Linker.link(atk_plug_get_id, "atk_plug_get_id", LIBRARY_ATK);
 
 	// atk.Range
 
-	Linker.link(atk_range_get_type, "atk_range_get_type", LIBRARY.ATK);
-	Linker.link(atk_range_new, "atk_range_new", LIBRARY.ATK);
-	Linker.link(atk_range_copy, "atk_range_copy", LIBRARY.ATK);
-	Linker.link(atk_range_free, "atk_range_free", LIBRARY.ATK);
-	Linker.link(atk_range_get_description, "atk_range_get_description", LIBRARY.ATK);
-	Linker.link(atk_range_get_lower_limit, "atk_range_get_lower_limit", LIBRARY.ATK);
-	Linker.link(atk_range_get_upper_limit, "atk_range_get_upper_limit", LIBRARY.ATK);
+	Linker.link(atk_range_get_type, "atk_range_get_type", LIBRARY_ATK);
+	Linker.link(atk_range_new, "atk_range_new", LIBRARY_ATK);
+	Linker.link(atk_range_copy, "atk_range_copy", LIBRARY_ATK);
+	Linker.link(atk_range_free, "atk_range_free", LIBRARY_ATK);
+	Linker.link(atk_range_get_description, "atk_range_get_description", LIBRARY_ATK);
+	Linker.link(atk_range_get_lower_limit, "atk_range_get_lower_limit", LIBRARY_ATK);
+	Linker.link(atk_range_get_upper_limit, "atk_range_get_upper_limit", LIBRARY_ATK);
 
 	// atk.Rectangle
 
-	Linker.link(atk_rectangle_get_type, "atk_rectangle_get_type", LIBRARY.ATK);
+	Linker.link(atk_rectangle_get_type, "atk_rectangle_get_type", LIBRARY_ATK);
 
 	// atk.Registry
 
-	Linker.link(atk_registry_get_type, "atk_registry_get_type", LIBRARY.ATK);
-	Linker.link(atk_registry_get_factory, "atk_registry_get_factory", LIBRARY.ATK);
-	Linker.link(atk_registry_get_factory_type, "atk_registry_get_factory_type", LIBRARY.ATK);
-	Linker.link(atk_registry_set_factory_type, "atk_registry_set_factory_type", LIBRARY.ATK);
-	Linker.link(atk_get_default_registry, "atk_get_default_registry", LIBRARY.ATK);
+	Linker.link(atk_registry_get_type, "atk_registry_get_type", LIBRARY_ATK);
+	Linker.link(atk_registry_get_factory, "atk_registry_get_factory", LIBRARY_ATK);
+	Linker.link(atk_registry_get_factory_type, "atk_registry_get_factory_type", LIBRARY_ATK);
+	Linker.link(atk_registry_set_factory_type, "atk_registry_set_factory_type", LIBRARY_ATK);
+	Linker.link(atk_get_default_registry, "atk_get_default_registry", LIBRARY_ATK);
 
 	// atk.Relation
 
-	Linker.link(atk_relation_get_type, "atk_relation_get_type", LIBRARY.ATK);
-	Linker.link(atk_relation_new, "atk_relation_new", LIBRARY.ATK);
-	Linker.link(atk_relation_add_target, "atk_relation_add_target", LIBRARY.ATK);
-	Linker.link(atk_relation_get_relation_type, "atk_relation_get_relation_type", LIBRARY.ATK);
-	Linker.link(atk_relation_get_target, "atk_relation_get_target", LIBRARY.ATK);
-	Linker.link(atk_relation_remove_target, "atk_relation_remove_target", LIBRARY.ATK);
-	Linker.link(atk_relation_type_for_name, "atk_relation_type_for_name", LIBRARY.ATK);
-	Linker.link(atk_relation_type_get_name, "atk_relation_type_get_name", LIBRARY.ATK);
-	Linker.link(atk_relation_type_register, "atk_relation_type_register", LIBRARY.ATK);
+	Linker.link(atk_relation_get_type, "atk_relation_get_type", LIBRARY_ATK);
+	Linker.link(atk_relation_new, "atk_relation_new", LIBRARY_ATK);
+	Linker.link(atk_relation_add_target, "atk_relation_add_target", LIBRARY_ATK);
+	Linker.link(atk_relation_get_relation_type, "atk_relation_get_relation_type", LIBRARY_ATK);
+	Linker.link(atk_relation_get_target, "atk_relation_get_target", LIBRARY_ATK);
+	Linker.link(atk_relation_remove_target, "atk_relation_remove_target", LIBRARY_ATK);
+	Linker.link(atk_relation_type_for_name, "atk_relation_type_for_name", LIBRARY_ATK);
+	Linker.link(atk_relation_type_get_name, "atk_relation_type_get_name", LIBRARY_ATK);
+	Linker.link(atk_relation_type_register, "atk_relation_type_register", LIBRARY_ATK);
 
 	// atk.RelationSet
 
-	Linker.link(atk_relation_set_get_type, "atk_relation_set_get_type", LIBRARY.ATK);
-	Linker.link(atk_relation_set_new, "atk_relation_set_new", LIBRARY.ATK);
-	Linker.link(atk_relation_set_add, "atk_relation_set_add", LIBRARY.ATK);
-	Linker.link(atk_relation_set_add_relation_by_type, "atk_relation_set_add_relation_by_type", LIBRARY.ATK);
-	Linker.link(atk_relation_set_contains, "atk_relation_set_contains", LIBRARY.ATK);
-	Linker.link(atk_relation_set_contains_target, "atk_relation_set_contains_target", LIBRARY.ATK);
-	Linker.link(atk_relation_set_get_n_relations, "atk_relation_set_get_n_relations", LIBRARY.ATK);
-	Linker.link(atk_relation_set_get_relation, "atk_relation_set_get_relation", LIBRARY.ATK);
-	Linker.link(atk_relation_set_get_relation_by_type, "atk_relation_set_get_relation_by_type", LIBRARY.ATK);
-	Linker.link(atk_relation_set_remove, "atk_relation_set_remove", LIBRARY.ATK);
+	Linker.link(atk_relation_set_get_type, "atk_relation_set_get_type", LIBRARY_ATK);
+	Linker.link(atk_relation_set_new, "atk_relation_set_new", LIBRARY_ATK);
+	Linker.link(atk_relation_set_add, "atk_relation_set_add", LIBRARY_ATK);
+	Linker.link(atk_relation_set_add_relation_by_type, "atk_relation_set_add_relation_by_type", LIBRARY_ATK);
+	Linker.link(atk_relation_set_contains, "atk_relation_set_contains", LIBRARY_ATK);
+	Linker.link(atk_relation_set_contains_target, "atk_relation_set_contains_target", LIBRARY_ATK);
+	Linker.link(atk_relation_set_get_n_relations, "atk_relation_set_get_n_relations", LIBRARY_ATK);
+	Linker.link(atk_relation_set_get_relation, "atk_relation_set_get_relation", LIBRARY_ATK);
+	Linker.link(atk_relation_set_get_relation_by_type, "atk_relation_set_get_relation_by_type", LIBRARY_ATK);
+	Linker.link(atk_relation_set_remove, "atk_relation_set_remove", LIBRARY_ATK);
 
 	// atk.Selection
 
-	Linker.link(atk_selection_get_type, "atk_selection_get_type", LIBRARY.ATK);
-	Linker.link(atk_selection_add_selection, "atk_selection_add_selection", LIBRARY.ATK);
-	Linker.link(atk_selection_clear_selection, "atk_selection_clear_selection", LIBRARY.ATK);
-	Linker.link(atk_selection_get_selection_count, "atk_selection_get_selection_count", LIBRARY.ATK);
-	Linker.link(atk_selection_is_child_selected, "atk_selection_is_child_selected", LIBRARY.ATK);
-	Linker.link(atk_selection_ref_selection, "atk_selection_ref_selection", LIBRARY.ATK);
-	Linker.link(atk_selection_remove_selection, "atk_selection_remove_selection", LIBRARY.ATK);
-	Linker.link(atk_selection_select_all_selection, "atk_selection_select_all_selection", LIBRARY.ATK);
+	Linker.link(atk_selection_get_type, "atk_selection_get_type", LIBRARY_ATK);
+	Linker.link(atk_selection_add_selection, "atk_selection_add_selection", LIBRARY_ATK);
+	Linker.link(atk_selection_clear_selection, "atk_selection_clear_selection", LIBRARY_ATK);
+	Linker.link(atk_selection_get_selection_count, "atk_selection_get_selection_count", LIBRARY_ATK);
+	Linker.link(atk_selection_is_child_selected, "atk_selection_is_child_selected", LIBRARY_ATK);
+	Linker.link(atk_selection_ref_selection, "atk_selection_ref_selection", LIBRARY_ATK);
+	Linker.link(atk_selection_remove_selection, "atk_selection_remove_selection", LIBRARY_ATK);
+	Linker.link(atk_selection_select_all_selection, "atk_selection_select_all_selection", LIBRARY_ATK);
 
 	// atk.Socket
 
-	Linker.link(atk_socket_get_type, "atk_socket_get_type", LIBRARY.ATK);
-	Linker.link(atk_socket_new, "atk_socket_new", LIBRARY.ATK);
-	Linker.link(atk_socket_embed, "atk_socket_embed", LIBRARY.ATK);
-	Linker.link(atk_socket_is_occupied, "atk_socket_is_occupied", LIBRARY.ATK);
+	Linker.link(atk_socket_get_type, "atk_socket_get_type", LIBRARY_ATK);
+	Linker.link(atk_socket_new, "atk_socket_new", LIBRARY_ATK);
+	Linker.link(atk_socket_embed, "atk_socket_embed", LIBRARY_ATK);
+	Linker.link(atk_socket_is_occupied, "atk_socket_is_occupied", LIBRARY_ATK);
 
 	// atk.StateSet
 
-	Linker.link(atk_state_set_get_type, "atk_state_set_get_type", LIBRARY.ATK);
-	Linker.link(atk_state_set_new, "atk_state_set_new", LIBRARY.ATK);
-	Linker.link(atk_state_set_add_state, "atk_state_set_add_state", LIBRARY.ATK);
-	Linker.link(atk_state_set_add_states, "atk_state_set_add_states", LIBRARY.ATK);
-	Linker.link(atk_state_set_and_sets, "atk_state_set_and_sets", LIBRARY.ATK);
-	Linker.link(atk_state_set_clear_states, "atk_state_set_clear_states", LIBRARY.ATK);
-	Linker.link(atk_state_set_contains_state, "atk_state_set_contains_state", LIBRARY.ATK);
-	Linker.link(atk_state_set_contains_states, "atk_state_set_contains_states", LIBRARY.ATK);
-	Linker.link(atk_state_set_is_empty, "atk_state_set_is_empty", LIBRARY.ATK);
-	Linker.link(atk_state_set_or_sets, "atk_state_set_or_sets", LIBRARY.ATK);
-	Linker.link(atk_state_set_remove_state, "atk_state_set_remove_state", LIBRARY.ATK);
-	Linker.link(atk_state_set_xor_sets, "atk_state_set_xor_sets", LIBRARY.ATK);
+	Linker.link(atk_state_set_get_type, "atk_state_set_get_type", LIBRARY_ATK);
+	Linker.link(atk_state_set_new, "atk_state_set_new", LIBRARY_ATK);
+	Linker.link(atk_state_set_add_state, "atk_state_set_add_state", LIBRARY_ATK);
+	Linker.link(atk_state_set_add_states, "atk_state_set_add_states", LIBRARY_ATK);
+	Linker.link(atk_state_set_and_sets, "atk_state_set_and_sets", LIBRARY_ATK);
+	Linker.link(atk_state_set_clear_states, "atk_state_set_clear_states", LIBRARY_ATK);
+	Linker.link(atk_state_set_contains_state, "atk_state_set_contains_state", LIBRARY_ATK);
+	Linker.link(atk_state_set_contains_states, "atk_state_set_contains_states", LIBRARY_ATK);
+	Linker.link(atk_state_set_is_empty, "atk_state_set_is_empty", LIBRARY_ATK);
+	Linker.link(atk_state_set_or_sets, "atk_state_set_or_sets", LIBRARY_ATK);
+	Linker.link(atk_state_set_remove_state, "atk_state_set_remove_state", LIBRARY_ATK);
+	Linker.link(atk_state_set_xor_sets, "atk_state_set_xor_sets", LIBRARY_ATK);
 
 	// atk.StreamableContent
 
-	Linker.link(atk_streamable_content_get_type, "atk_streamable_content_get_type", LIBRARY.ATK);
-	Linker.link(atk_streamable_content_get_mime_type, "atk_streamable_content_get_mime_type", LIBRARY.ATK);
-	Linker.link(atk_streamable_content_get_n_mime_types, "atk_streamable_content_get_n_mime_types", LIBRARY.ATK);
-	Linker.link(atk_streamable_content_get_stream, "atk_streamable_content_get_stream", LIBRARY.ATK);
-	Linker.link(atk_streamable_content_get_uri, "atk_streamable_content_get_uri", LIBRARY.ATK);
+	Linker.link(atk_streamable_content_get_type, "atk_streamable_content_get_type", LIBRARY_ATK);
+	Linker.link(atk_streamable_content_get_mime_type, "atk_streamable_content_get_mime_type", LIBRARY_ATK);
+	Linker.link(atk_streamable_content_get_n_mime_types, "atk_streamable_content_get_n_mime_types", LIBRARY_ATK);
+	Linker.link(atk_streamable_content_get_stream, "atk_streamable_content_get_stream", LIBRARY_ATK);
+	Linker.link(atk_streamable_content_get_uri, "atk_streamable_content_get_uri", LIBRARY_ATK);
 
 	// atk.Table
 
-	Linker.link(atk_table_get_type, "atk_table_get_type", LIBRARY.ATK);
-	Linker.link(atk_table_add_column_selection, "atk_table_add_column_selection", LIBRARY.ATK);
-	Linker.link(atk_table_add_row_selection, "atk_table_add_row_selection", LIBRARY.ATK);
-	Linker.link(atk_table_get_caption, "atk_table_get_caption", LIBRARY.ATK);
-	Linker.link(atk_table_get_column_at_index, "atk_table_get_column_at_index", LIBRARY.ATK);
-	Linker.link(atk_table_get_column_description, "atk_table_get_column_description", LIBRARY.ATK);
-	Linker.link(atk_table_get_column_extent_at, "atk_table_get_column_extent_at", LIBRARY.ATK);
-	Linker.link(atk_table_get_column_header, "atk_table_get_column_header", LIBRARY.ATK);
-	Linker.link(atk_table_get_index_at, "atk_table_get_index_at", LIBRARY.ATK);
-	Linker.link(atk_table_get_n_columns, "atk_table_get_n_columns", LIBRARY.ATK);
-	Linker.link(atk_table_get_n_rows, "atk_table_get_n_rows", LIBRARY.ATK);
-	Linker.link(atk_table_get_row_at_index, "atk_table_get_row_at_index", LIBRARY.ATK);
-	Linker.link(atk_table_get_row_description, "atk_table_get_row_description", LIBRARY.ATK);
-	Linker.link(atk_table_get_row_extent_at, "atk_table_get_row_extent_at", LIBRARY.ATK);
-	Linker.link(atk_table_get_row_header, "atk_table_get_row_header", LIBRARY.ATK);
-	Linker.link(atk_table_get_selected_columns, "atk_table_get_selected_columns", LIBRARY.ATK);
-	Linker.link(atk_table_get_selected_rows, "atk_table_get_selected_rows", LIBRARY.ATK);
-	Linker.link(atk_table_get_summary, "atk_table_get_summary", LIBRARY.ATK);
-	Linker.link(atk_table_is_column_selected, "atk_table_is_column_selected", LIBRARY.ATK);
-	Linker.link(atk_table_is_row_selected, "atk_table_is_row_selected", LIBRARY.ATK);
-	Linker.link(atk_table_is_selected, "atk_table_is_selected", LIBRARY.ATK);
-	Linker.link(atk_table_ref_at, "atk_table_ref_at", LIBRARY.ATK);
-	Linker.link(atk_table_remove_column_selection, "atk_table_remove_column_selection", LIBRARY.ATK);
-	Linker.link(atk_table_remove_row_selection, "atk_table_remove_row_selection", LIBRARY.ATK);
-	Linker.link(atk_table_set_caption, "atk_table_set_caption", LIBRARY.ATK);
-	Linker.link(atk_table_set_column_description, "atk_table_set_column_description", LIBRARY.ATK);
-	Linker.link(atk_table_set_column_header, "atk_table_set_column_header", LIBRARY.ATK);
-	Linker.link(atk_table_set_row_description, "atk_table_set_row_description", LIBRARY.ATK);
-	Linker.link(atk_table_set_row_header, "atk_table_set_row_header", LIBRARY.ATK);
-	Linker.link(atk_table_set_summary, "atk_table_set_summary", LIBRARY.ATK);
+	Linker.link(atk_table_get_type, "atk_table_get_type", LIBRARY_ATK);
+	Linker.link(atk_table_add_column_selection, "atk_table_add_column_selection", LIBRARY_ATK);
+	Linker.link(atk_table_add_row_selection, "atk_table_add_row_selection", LIBRARY_ATK);
+	Linker.link(atk_table_get_caption, "atk_table_get_caption", LIBRARY_ATK);
+	Linker.link(atk_table_get_column_at_index, "atk_table_get_column_at_index", LIBRARY_ATK);
+	Linker.link(atk_table_get_column_description, "atk_table_get_column_description", LIBRARY_ATK);
+	Linker.link(atk_table_get_column_extent_at, "atk_table_get_column_extent_at", LIBRARY_ATK);
+	Linker.link(atk_table_get_column_header, "atk_table_get_column_header", LIBRARY_ATK);
+	Linker.link(atk_table_get_index_at, "atk_table_get_index_at", LIBRARY_ATK);
+	Linker.link(atk_table_get_n_columns, "atk_table_get_n_columns", LIBRARY_ATK);
+	Linker.link(atk_table_get_n_rows, "atk_table_get_n_rows", LIBRARY_ATK);
+	Linker.link(atk_table_get_row_at_index, "atk_table_get_row_at_index", LIBRARY_ATK);
+	Linker.link(atk_table_get_row_description, "atk_table_get_row_description", LIBRARY_ATK);
+	Linker.link(atk_table_get_row_extent_at, "atk_table_get_row_extent_at", LIBRARY_ATK);
+	Linker.link(atk_table_get_row_header, "atk_table_get_row_header", LIBRARY_ATK);
+	Linker.link(atk_table_get_selected_columns, "atk_table_get_selected_columns", LIBRARY_ATK);
+	Linker.link(atk_table_get_selected_rows, "atk_table_get_selected_rows", LIBRARY_ATK);
+	Linker.link(atk_table_get_summary, "atk_table_get_summary", LIBRARY_ATK);
+	Linker.link(atk_table_is_column_selected, "atk_table_is_column_selected", LIBRARY_ATK);
+	Linker.link(atk_table_is_row_selected, "atk_table_is_row_selected", LIBRARY_ATK);
+	Linker.link(atk_table_is_selected, "atk_table_is_selected", LIBRARY_ATK);
+	Linker.link(atk_table_ref_at, "atk_table_ref_at", LIBRARY_ATK);
+	Linker.link(atk_table_remove_column_selection, "atk_table_remove_column_selection", LIBRARY_ATK);
+	Linker.link(atk_table_remove_row_selection, "atk_table_remove_row_selection", LIBRARY_ATK);
+	Linker.link(atk_table_set_caption, "atk_table_set_caption", LIBRARY_ATK);
+	Linker.link(atk_table_set_column_description, "atk_table_set_column_description", LIBRARY_ATK);
+	Linker.link(atk_table_set_column_header, "atk_table_set_column_header", LIBRARY_ATK);
+	Linker.link(atk_table_set_row_description, "atk_table_set_row_description", LIBRARY_ATK);
+	Linker.link(atk_table_set_row_header, "atk_table_set_row_header", LIBRARY_ATK);
+	Linker.link(atk_table_set_summary, "atk_table_set_summary", LIBRARY_ATK);
 
 	// atk.TableCell
 
-	Linker.link(atk_table_cell_get_type, "atk_table_cell_get_type", LIBRARY.ATK);
-	Linker.link(atk_table_cell_get_column_header_cells, "atk_table_cell_get_column_header_cells", LIBRARY.ATK);
-	Linker.link(atk_table_cell_get_column_span, "atk_table_cell_get_column_span", LIBRARY.ATK);
-	Linker.link(atk_table_cell_get_position, "atk_table_cell_get_position", LIBRARY.ATK);
-	Linker.link(atk_table_cell_get_row_column_span, "atk_table_cell_get_row_column_span", LIBRARY.ATK);
-	Linker.link(atk_table_cell_get_row_header_cells, "atk_table_cell_get_row_header_cells", LIBRARY.ATK);
-	Linker.link(atk_table_cell_get_row_span, "atk_table_cell_get_row_span", LIBRARY.ATK);
-	Linker.link(atk_table_cell_get_table, "atk_table_cell_get_table", LIBRARY.ATK);
+	Linker.link(atk_table_cell_get_type, "atk_table_cell_get_type", LIBRARY_ATK);
+	Linker.link(atk_table_cell_get_column_header_cells, "atk_table_cell_get_column_header_cells", LIBRARY_ATK);
+	Linker.link(atk_table_cell_get_column_span, "atk_table_cell_get_column_span", LIBRARY_ATK);
+	Linker.link(atk_table_cell_get_position, "atk_table_cell_get_position", LIBRARY_ATK);
+	Linker.link(atk_table_cell_get_row_column_span, "atk_table_cell_get_row_column_span", LIBRARY_ATK);
+	Linker.link(atk_table_cell_get_row_header_cells, "atk_table_cell_get_row_header_cells", LIBRARY_ATK);
+	Linker.link(atk_table_cell_get_row_span, "atk_table_cell_get_row_span", LIBRARY_ATK);
+	Linker.link(atk_table_cell_get_table, "atk_table_cell_get_table", LIBRARY_ATK);
 
 	// atk.Text
 
-	Linker.link(atk_text_get_type, "atk_text_get_type", LIBRARY.ATK);
-	Linker.link(atk_text_free_ranges, "atk_text_free_ranges", LIBRARY.ATK);
-	Linker.link(atk_text_add_selection, "atk_text_add_selection", LIBRARY.ATK);
-	Linker.link(atk_text_get_bounded_ranges, "atk_text_get_bounded_ranges", LIBRARY.ATK);
-	Linker.link(atk_text_get_caret_offset, "atk_text_get_caret_offset", LIBRARY.ATK);
-	Linker.link(atk_text_get_character_at_offset, "atk_text_get_character_at_offset", LIBRARY.ATK);
-	Linker.link(atk_text_get_character_count, "atk_text_get_character_count", LIBRARY.ATK);
-	Linker.link(atk_text_get_character_extents, "atk_text_get_character_extents", LIBRARY.ATK);
-	Linker.link(atk_text_get_default_attributes, "atk_text_get_default_attributes", LIBRARY.ATK);
-	Linker.link(atk_text_get_n_selections, "atk_text_get_n_selections", LIBRARY.ATK);
-	Linker.link(atk_text_get_offset_at_point, "atk_text_get_offset_at_point", LIBRARY.ATK);
-	Linker.link(atk_text_get_range_extents, "atk_text_get_range_extents", LIBRARY.ATK);
-	Linker.link(atk_text_get_run_attributes, "atk_text_get_run_attributes", LIBRARY.ATK);
-	Linker.link(atk_text_get_selection, "atk_text_get_selection", LIBRARY.ATK);
-	Linker.link(atk_text_get_string_at_offset, "atk_text_get_string_at_offset", LIBRARY.ATK);
-	Linker.link(atk_text_get_text, "atk_text_get_text", LIBRARY.ATK);
-	Linker.link(atk_text_get_text_after_offset, "atk_text_get_text_after_offset", LIBRARY.ATK);
-	Linker.link(atk_text_get_text_at_offset, "atk_text_get_text_at_offset", LIBRARY.ATK);
-	Linker.link(atk_text_get_text_before_offset, "atk_text_get_text_before_offset", LIBRARY.ATK);
-	Linker.link(atk_text_remove_selection, "atk_text_remove_selection", LIBRARY.ATK);
-	Linker.link(atk_text_set_caret_offset, "atk_text_set_caret_offset", LIBRARY.ATK);
-	Linker.link(atk_text_set_selection, "atk_text_set_selection", LIBRARY.ATK);
-	Linker.link(atk_attribute_set_free, "atk_attribute_set_free", LIBRARY.ATK);
-	Linker.link(atk_text_attribute_for_name, "atk_text_attribute_for_name", LIBRARY.ATK);
-	Linker.link(atk_text_attribute_get_name, "atk_text_attribute_get_name", LIBRARY.ATK);
-	Linker.link(atk_text_attribute_get_value, "atk_text_attribute_get_value", LIBRARY.ATK);
-	Linker.link(atk_text_attribute_register, "atk_text_attribute_register", LIBRARY.ATK);
+	Linker.link(atk_text_get_type, "atk_text_get_type", LIBRARY_ATK);
+	Linker.link(atk_text_free_ranges, "atk_text_free_ranges", LIBRARY_ATK);
+	Linker.link(atk_text_add_selection, "atk_text_add_selection", LIBRARY_ATK);
+	Linker.link(atk_text_get_bounded_ranges, "atk_text_get_bounded_ranges", LIBRARY_ATK);
+	Linker.link(atk_text_get_caret_offset, "atk_text_get_caret_offset", LIBRARY_ATK);
+	Linker.link(atk_text_get_character_at_offset, "atk_text_get_character_at_offset", LIBRARY_ATK);
+	Linker.link(atk_text_get_character_count, "atk_text_get_character_count", LIBRARY_ATK);
+	Linker.link(atk_text_get_character_extents, "atk_text_get_character_extents", LIBRARY_ATK);
+	Linker.link(atk_text_get_default_attributes, "atk_text_get_default_attributes", LIBRARY_ATK);
+	Linker.link(atk_text_get_n_selections, "atk_text_get_n_selections", LIBRARY_ATK);
+	Linker.link(atk_text_get_offset_at_point, "atk_text_get_offset_at_point", LIBRARY_ATK);
+	Linker.link(atk_text_get_range_extents, "atk_text_get_range_extents", LIBRARY_ATK);
+	Linker.link(atk_text_get_run_attributes, "atk_text_get_run_attributes", LIBRARY_ATK);
+	Linker.link(atk_text_get_selection, "atk_text_get_selection", LIBRARY_ATK);
+	Linker.link(atk_text_get_string_at_offset, "atk_text_get_string_at_offset", LIBRARY_ATK);
+	Linker.link(atk_text_get_text, "atk_text_get_text", LIBRARY_ATK);
+	Linker.link(atk_text_get_text_after_offset, "atk_text_get_text_after_offset", LIBRARY_ATK);
+	Linker.link(atk_text_get_text_at_offset, "atk_text_get_text_at_offset", LIBRARY_ATK);
+	Linker.link(atk_text_get_text_before_offset, "atk_text_get_text_before_offset", LIBRARY_ATK);
+	Linker.link(atk_text_remove_selection, "atk_text_remove_selection", LIBRARY_ATK);
+	Linker.link(atk_text_set_caret_offset, "atk_text_set_caret_offset", LIBRARY_ATK);
+	Linker.link(atk_text_set_selection, "atk_text_set_selection", LIBRARY_ATK);
+	Linker.link(atk_attribute_set_free, "atk_attribute_set_free", LIBRARY_ATK);
+	Linker.link(atk_text_attribute_for_name, "atk_text_attribute_for_name", LIBRARY_ATK);
+	Linker.link(atk_text_attribute_get_name, "atk_text_attribute_get_name", LIBRARY_ATK);
+	Linker.link(atk_text_attribute_get_value, "atk_text_attribute_get_value", LIBRARY_ATK);
+	Linker.link(atk_text_attribute_register, "atk_text_attribute_register", LIBRARY_ATK);
 
 	// atk.TextRange
 
-	Linker.link(atk_text_range_get_type, "atk_text_range_get_type", LIBRARY.ATK);
+	Linker.link(atk_text_range_get_type, "atk_text_range_get_type", LIBRARY_ATK);
 
 	// atk.Util
 
-	Linker.link(atk_util_get_type, "atk_util_get_type", LIBRARY.ATK);
-	Linker.link(atk_add_focus_tracker, "atk_add_focus_tracker", LIBRARY.ATK);
-	Linker.link(atk_add_global_event_listener, "atk_add_global_event_listener", LIBRARY.ATK);
-	Linker.link(atk_add_key_event_listener, "atk_add_key_event_listener", LIBRARY.ATK);
-	Linker.link(atk_focus_tracker_init, "atk_focus_tracker_init", LIBRARY.ATK);
-	Linker.link(atk_focus_tracker_notify, "atk_focus_tracker_notify", LIBRARY.ATK);
-	Linker.link(atk_get_focus_object, "atk_get_focus_object", LIBRARY.ATK);
-	Linker.link(atk_get_root, "atk_get_root", LIBRARY.ATK);
-	Linker.link(atk_get_toolkit_name, "atk_get_toolkit_name", LIBRARY.ATK);
-	Linker.link(atk_remove_focus_tracker, "atk_remove_focus_tracker", LIBRARY.ATK);
-	Linker.link(atk_remove_global_event_listener, "atk_remove_global_event_listener", LIBRARY.ATK);
-	Linker.link(atk_remove_key_event_listener, "atk_remove_key_event_listener", LIBRARY.ATK);
+	Linker.link(atk_util_get_type, "atk_util_get_type", LIBRARY_ATK);
+	Linker.link(atk_add_focus_tracker, "atk_add_focus_tracker", LIBRARY_ATK);
+	Linker.link(atk_add_global_event_listener, "atk_add_global_event_listener", LIBRARY_ATK);
+	Linker.link(atk_add_key_event_listener, "atk_add_key_event_listener", LIBRARY_ATK);
+	Linker.link(atk_focus_tracker_init, "atk_focus_tracker_init", LIBRARY_ATK);
+	Linker.link(atk_focus_tracker_notify, "atk_focus_tracker_notify", LIBRARY_ATK);
+	Linker.link(atk_get_focus_object, "atk_get_focus_object", LIBRARY_ATK);
+	Linker.link(atk_get_root, "atk_get_root", LIBRARY_ATK);
+	Linker.link(atk_get_toolkit_name, "atk_get_toolkit_name", LIBRARY_ATK);
+	Linker.link(atk_remove_focus_tracker, "atk_remove_focus_tracker", LIBRARY_ATK);
+	Linker.link(atk_remove_global_event_listener, "atk_remove_global_event_listener", LIBRARY_ATK);
+	Linker.link(atk_remove_key_event_listener, "atk_remove_key_event_listener", LIBRARY_ATK);
 
 	// atk.Value
 
-	Linker.link(atk_value_get_type, "atk_value_get_type", LIBRARY.ATK);
-	Linker.link(atk_value_get_current_value, "atk_value_get_current_value", LIBRARY.ATK);
-	Linker.link(atk_value_get_increment, "atk_value_get_increment", LIBRARY.ATK);
-	Linker.link(atk_value_get_maximum_value, "atk_value_get_maximum_value", LIBRARY.ATK);
-	Linker.link(atk_value_get_minimum_increment, "atk_value_get_minimum_increment", LIBRARY.ATK);
-	Linker.link(atk_value_get_minimum_value, "atk_value_get_minimum_value", LIBRARY.ATK);
-	Linker.link(atk_value_get_range, "atk_value_get_range", LIBRARY.ATK);
-	Linker.link(atk_value_get_sub_ranges, "atk_value_get_sub_ranges", LIBRARY.ATK);
-	Linker.link(atk_value_get_value_and_text, "atk_value_get_value_and_text", LIBRARY.ATK);
-	Linker.link(atk_value_set_current_value, "atk_value_set_current_value", LIBRARY.ATK);
-	Linker.link(atk_value_set_value, "atk_value_set_value", LIBRARY.ATK);
+	Linker.link(atk_value_get_type, "atk_value_get_type", LIBRARY_ATK);
+	Linker.link(atk_value_get_current_value, "atk_value_get_current_value", LIBRARY_ATK);
+	Linker.link(atk_value_get_increment, "atk_value_get_increment", LIBRARY_ATK);
+	Linker.link(atk_value_get_maximum_value, "atk_value_get_maximum_value", LIBRARY_ATK);
+	Linker.link(atk_value_get_minimum_increment, "atk_value_get_minimum_increment", LIBRARY_ATK);
+	Linker.link(atk_value_get_minimum_value, "atk_value_get_minimum_value", LIBRARY_ATK);
+	Linker.link(atk_value_get_range, "atk_value_get_range", LIBRARY_ATK);
+	Linker.link(atk_value_get_sub_ranges, "atk_value_get_sub_ranges", LIBRARY_ATK);
+	Linker.link(atk_value_get_value_and_text, "atk_value_get_value_and_text", LIBRARY_ATK);
+	Linker.link(atk_value_set_current_value, "atk_value_set_current_value", LIBRARY_ATK);
+	Linker.link(atk_value_set_value, "atk_value_set_value", LIBRARY_ATK);
 
 	// atk.Window
 
-	Linker.link(atk_window_get_type, "atk_window_get_type", LIBRARY.ATK);
+	Linker.link(atk_window_get_type, "atk_window_get_type", LIBRARY_ATK);
 
 	// atk.Version
 
-	Linker.link(atk_get_binary_age, "atk_get_binary_age", LIBRARY.ATK);
-	Linker.link(atk_get_interface_age, "atk_get_interface_age", LIBRARY.ATK);
-	Linker.link(atk_get_major_version, "atk_get_major_version", LIBRARY.ATK);
-	Linker.link(atk_get_micro_version, "atk_get_micro_version", LIBRARY.ATK);
-	Linker.link(atk_get_minor_version, "atk_get_minor_version", LIBRARY.ATK);
-	Linker.link(atk_get_toolkit_version, "atk_get_toolkit_version", LIBRARY.ATK);
-	Linker.link(atk_get_version, "atk_get_version", LIBRARY.ATK);
+	Linker.link(atk_get_binary_age, "atk_get_binary_age", LIBRARY_ATK);
+	Linker.link(atk_get_interface_age, "atk_get_interface_age", LIBRARY_ATK);
+	Linker.link(atk_get_major_version, "atk_get_major_version", LIBRARY_ATK);
+	Linker.link(atk_get_micro_version, "atk_get_micro_version", LIBRARY_ATK);
+	Linker.link(atk_get_minor_version, "atk_get_minor_version", LIBRARY_ATK);
+	Linker.link(atk_get_toolkit_version, "atk_get_toolkit_version", LIBRARY_ATK);
+	Linker.link(atk_get_version, "atk_get_version", LIBRARY_ATK);
 
 	// atk.State
 
-	Linker.link(atk_state_type_for_name, "atk_state_type_for_name", LIBRARY.ATK);
-	Linker.link(atk_state_type_get_name, "atk_state_type_get_name", LIBRARY.ATK);
-	Linker.link(atk_state_type_register, "atk_state_type_register", LIBRARY.ATK);
+	Linker.link(atk_state_type_for_name, "atk_state_type_for_name", LIBRARY_ATK);
+	Linker.link(atk_state_type_get_name, "atk_state_type_get_name", LIBRARY_ATK);
+	Linker.link(atk_state_type_register, "atk_state_type_register", LIBRARY_ATK);
 }
 
 __gshared extern(C)

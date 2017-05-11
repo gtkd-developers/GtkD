@@ -27,545 +27,551 @@ module gsvc.gsv;
 import std.stdio;
 import gsvc.gsvtypes;
 import gtkd.Loader;
-import gtkd.paths;
+
+version (Windows)
+	static immutable LIBRARY_GSV = ["libgtksourceview-3.0-1.dll"];
+else version (OSX)
+	static immutable LIBRARY_GSV = ["libgtksourceview-3.0.1.dylib"];
+else
+	static immutable LIBRARY_GSV = ["libgtksourceview-3.0.so.1"];
 
 shared static this()
 {
 	// gsv.SourceBuffer
 
-	Linker.link(gtk_source_buffer_get_type, "gtk_source_buffer_get_type", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_new, "gtk_source_buffer_new", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_new_with_language, "gtk_source_buffer_new_with_language", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_backward_iter_to_source_mark, "gtk_source_buffer_backward_iter_to_source_mark", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_begin_not_undoable_action, "gtk_source_buffer_begin_not_undoable_action", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_can_redo, "gtk_source_buffer_can_redo", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_can_undo, "gtk_source_buffer_can_undo", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_change_case, "gtk_source_buffer_change_case", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_create_source_mark, "gtk_source_buffer_create_source_mark", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_create_source_tag, "gtk_source_buffer_create_source_tag", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_end_not_undoable_action, "gtk_source_buffer_end_not_undoable_action", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_ensure_highlight, "gtk_source_buffer_ensure_highlight", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_forward_iter_to_source_mark, "gtk_source_buffer_forward_iter_to_source_mark", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_get_context_classes_at_iter, "gtk_source_buffer_get_context_classes_at_iter", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_get_highlight_matching_brackets, "gtk_source_buffer_get_highlight_matching_brackets", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_get_highlight_syntax, "gtk_source_buffer_get_highlight_syntax", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_get_implicit_trailing_newline, "gtk_source_buffer_get_implicit_trailing_newline", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_get_language, "gtk_source_buffer_get_language", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_get_max_undo_levels, "gtk_source_buffer_get_max_undo_levels", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_get_source_marks_at_iter, "gtk_source_buffer_get_source_marks_at_iter", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_get_source_marks_at_line, "gtk_source_buffer_get_source_marks_at_line", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_get_style_scheme, "gtk_source_buffer_get_style_scheme", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_get_undo_manager, "gtk_source_buffer_get_undo_manager", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_iter_backward_to_context_class_toggle, "gtk_source_buffer_iter_backward_to_context_class_toggle", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_iter_forward_to_context_class_toggle, "gtk_source_buffer_iter_forward_to_context_class_toggle", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_iter_has_context_class, "gtk_source_buffer_iter_has_context_class", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_join_lines, "gtk_source_buffer_join_lines", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_redo, "gtk_source_buffer_redo", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_remove_source_marks, "gtk_source_buffer_remove_source_marks", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_set_highlight_matching_brackets, "gtk_source_buffer_set_highlight_matching_brackets", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_set_highlight_syntax, "gtk_source_buffer_set_highlight_syntax", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_set_implicit_trailing_newline, "gtk_source_buffer_set_implicit_trailing_newline", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_set_language, "gtk_source_buffer_set_language", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_set_max_undo_levels, "gtk_source_buffer_set_max_undo_levels", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_set_style_scheme, "gtk_source_buffer_set_style_scheme", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_set_undo_manager, "gtk_source_buffer_set_undo_manager", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_sort_lines, "gtk_source_buffer_sort_lines", LIBRARY.GSV);
-	Linker.link(gtk_source_buffer_undo, "gtk_source_buffer_undo", LIBRARY.GSV);
+	Linker.link(gtk_source_buffer_get_type, "gtk_source_buffer_get_type", LIBRARY_GSV);
+	Linker.link(gtk_source_buffer_new, "gtk_source_buffer_new", LIBRARY_GSV);
+	Linker.link(gtk_source_buffer_new_with_language, "gtk_source_buffer_new_with_language", LIBRARY_GSV);
+	Linker.link(gtk_source_buffer_backward_iter_to_source_mark, "gtk_source_buffer_backward_iter_to_source_mark", LIBRARY_GSV);
+	Linker.link(gtk_source_buffer_begin_not_undoable_action, "gtk_source_buffer_begin_not_undoable_action", LIBRARY_GSV);
+	Linker.link(gtk_source_buffer_can_redo, "gtk_source_buffer_can_redo", LIBRARY_GSV);
+	Linker.link(gtk_source_buffer_can_undo, "gtk_source_buffer_can_undo", LIBRARY_GSV);
+	Linker.link(gtk_source_buffer_change_case, "gtk_source_buffer_change_case", LIBRARY_GSV);
+	Linker.link(gtk_source_buffer_create_source_mark, "gtk_source_buffer_create_source_mark", LIBRARY_GSV);
+	Linker.link(gtk_source_buffer_create_source_tag, "gtk_source_buffer_create_source_tag", LIBRARY_GSV);
+	Linker.link(gtk_source_buffer_end_not_undoable_action, "gtk_source_buffer_end_not_undoable_action", LIBRARY_GSV);
+	Linker.link(gtk_source_buffer_ensure_highlight, "gtk_source_buffer_ensure_highlight", LIBRARY_GSV);
+	Linker.link(gtk_source_buffer_forward_iter_to_source_mark, "gtk_source_buffer_forward_iter_to_source_mark", LIBRARY_GSV);
+	Linker.link(gtk_source_buffer_get_context_classes_at_iter, "gtk_source_buffer_get_context_classes_at_iter", LIBRARY_GSV);
+	Linker.link(gtk_source_buffer_get_highlight_matching_brackets, "gtk_source_buffer_get_highlight_matching_brackets", LIBRARY_GSV);
+	Linker.link(gtk_source_buffer_get_highlight_syntax, "gtk_source_buffer_get_highlight_syntax", LIBRARY_GSV);
+	Linker.link(gtk_source_buffer_get_implicit_trailing_newline, "gtk_source_buffer_get_implicit_trailing_newline", LIBRARY_GSV);
+	Linker.link(gtk_source_buffer_get_language, "gtk_source_buffer_get_language", LIBRARY_GSV);
+	Linker.link(gtk_source_buffer_get_max_undo_levels, "gtk_source_buffer_get_max_undo_levels", LIBRARY_GSV);
+	Linker.link(gtk_source_buffer_get_source_marks_at_iter, "gtk_source_buffer_get_source_marks_at_iter", LIBRARY_GSV);
+	Linker.link(gtk_source_buffer_get_source_marks_at_line, "gtk_source_buffer_get_source_marks_at_line", LIBRARY_GSV);
+	Linker.link(gtk_source_buffer_get_style_scheme, "gtk_source_buffer_get_style_scheme", LIBRARY_GSV);
+	Linker.link(gtk_source_buffer_get_undo_manager, "gtk_source_buffer_get_undo_manager", LIBRARY_GSV);
+	Linker.link(gtk_source_buffer_iter_backward_to_context_class_toggle, "gtk_source_buffer_iter_backward_to_context_class_toggle", LIBRARY_GSV);
+	Linker.link(gtk_source_buffer_iter_forward_to_context_class_toggle, "gtk_source_buffer_iter_forward_to_context_class_toggle", LIBRARY_GSV);
+	Linker.link(gtk_source_buffer_iter_has_context_class, "gtk_source_buffer_iter_has_context_class", LIBRARY_GSV);
+	Linker.link(gtk_source_buffer_join_lines, "gtk_source_buffer_join_lines", LIBRARY_GSV);
+	Linker.link(gtk_source_buffer_redo, "gtk_source_buffer_redo", LIBRARY_GSV);
+	Linker.link(gtk_source_buffer_remove_source_marks, "gtk_source_buffer_remove_source_marks", LIBRARY_GSV);
+	Linker.link(gtk_source_buffer_set_highlight_matching_brackets, "gtk_source_buffer_set_highlight_matching_brackets", LIBRARY_GSV);
+	Linker.link(gtk_source_buffer_set_highlight_syntax, "gtk_source_buffer_set_highlight_syntax", LIBRARY_GSV);
+	Linker.link(gtk_source_buffer_set_implicit_trailing_newline, "gtk_source_buffer_set_implicit_trailing_newline", LIBRARY_GSV);
+	Linker.link(gtk_source_buffer_set_language, "gtk_source_buffer_set_language", LIBRARY_GSV);
+	Linker.link(gtk_source_buffer_set_max_undo_levels, "gtk_source_buffer_set_max_undo_levels", LIBRARY_GSV);
+	Linker.link(gtk_source_buffer_set_style_scheme, "gtk_source_buffer_set_style_scheme", LIBRARY_GSV);
+	Linker.link(gtk_source_buffer_set_undo_manager, "gtk_source_buffer_set_undo_manager", LIBRARY_GSV);
+	Linker.link(gtk_source_buffer_sort_lines, "gtk_source_buffer_sort_lines", LIBRARY_GSV);
+	Linker.link(gtk_source_buffer_undo, "gtk_source_buffer_undo", LIBRARY_GSV);
 
 	// gsv.SourceCompletion
 
-	Linker.link(gtk_source_completion_get_type, "gtk_source_completion_get_type", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_add_provider, "gtk_source_completion_add_provider", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_block_interactive, "gtk_source_completion_block_interactive", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_create_context, "gtk_source_completion_create_context", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_get_info_window, "gtk_source_completion_get_info_window", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_get_providers, "gtk_source_completion_get_providers", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_get_view, "gtk_source_completion_get_view", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_hide, "gtk_source_completion_hide", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_move_window, "gtk_source_completion_move_window", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_remove_provider, "gtk_source_completion_remove_provider", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_show, "gtk_source_completion_show", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_unblock_interactive, "gtk_source_completion_unblock_interactive", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_get_type, "gtk_source_completion_get_type", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_add_provider, "gtk_source_completion_add_provider", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_block_interactive, "gtk_source_completion_block_interactive", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_create_context, "gtk_source_completion_create_context", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_get_info_window, "gtk_source_completion_get_info_window", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_get_providers, "gtk_source_completion_get_providers", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_get_view, "gtk_source_completion_get_view", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_hide, "gtk_source_completion_hide", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_move_window, "gtk_source_completion_move_window", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_remove_provider, "gtk_source_completion_remove_provider", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_show, "gtk_source_completion_show", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_unblock_interactive, "gtk_source_completion_unblock_interactive", LIBRARY_GSV);
 
 	// gsv.SourceCompletionContext
 
-	Linker.link(gtk_source_completion_context_get_type, "gtk_source_completion_context_get_type", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_context_add_proposals, "gtk_source_completion_context_add_proposals", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_context_get_activation, "gtk_source_completion_context_get_activation", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_context_get_iter, "gtk_source_completion_context_get_iter", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_context_get_type, "gtk_source_completion_context_get_type", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_context_add_proposals, "gtk_source_completion_context_add_proposals", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_context_get_activation, "gtk_source_completion_context_get_activation", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_context_get_iter, "gtk_source_completion_context_get_iter", LIBRARY_GSV);
 
 	// gsv.SourceCompletionInfo
 
-	Linker.link(gtk_source_completion_info_get_type, "gtk_source_completion_info_get_type", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_info_new, "gtk_source_completion_info_new", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_info_get_widget, "gtk_source_completion_info_get_widget", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_info_move_to_iter, "gtk_source_completion_info_move_to_iter", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_info_set_widget, "gtk_source_completion_info_set_widget", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_info_get_type, "gtk_source_completion_info_get_type", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_info_new, "gtk_source_completion_info_new", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_info_get_widget, "gtk_source_completion_info_get_widget", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_info_move_to_iter, "gtk_source_completion_info_move_to_iter", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_info_set_widget, "gtk_source_completion_info_set_widget", LIBRARY_GSV);
 
 	// gsv.SourceCompletionItem
 
-	Linker.link(gtk_source_completion_item_get_type, "gtk_source_completion_item_get_type", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_item_new, "gtk_source_completion_item_new", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_item_new_from_stock, "gtk_source_completion_item_new_from_stock", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_item_new_with_markup, "gtk_source_completion_item_new_with_markup", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_item_new2, "gtk_source_completion_item_new2", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_item_set_gicon, "gtk_source_completion_item_set_gicon", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_item_set_icon, "gtk_source_completion_item_set_icon", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_item_set_icon_name, "gtk_source_completion_item_set_icon_name", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_item_set_info, "gtk_source_completion_item_set_info", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_item_set_label, "gtk_source_completion_item_set_label", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_item_set_markup, "gtk_source_completion_item_set_markup", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_item_set_text, "gtk_source_completion_item_set_text", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_item_get_type, "gtk_source_completion_item_get_type", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_item_new, "gtk_source_completion_item_new", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_item_new_from_stock, "gtk_source_completion_item_new_from_stock", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_item_new_with_markup, "gtk_source_completion_item_new_with_markup", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_item_new2, "gtk_source_completion_item_new2", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_item_set_gicon, "gtk_source_completion_item_set_gicon", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_item_set_icon, "gtk_source_completion_item_set_icon", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_item_set_icon_name, "gtk_source_completion_item_set_icon_name", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_item_set_info, "gtk_source_completion_item_set_info", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_item_set_label, "gtk_source_completion_item_set_label", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_item_set_markup, "gtk_source_completion_item_set_markup", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_item_set_text, "gtk_source_completion_item_set_text", LIBRARY_GSV);
 
 	// gsv.SourceCompletionProposal
 
-	Linker.link(gtk_source_completion_proposal_get_type, "gtk_source_completion_proposal_get_type", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_proposal_changed, "gtk_source_completion_proposal_changed", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_proposal_equal, "gtk_source_completion_proposal_equal", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_proposal_get_gicon, "gtk_source_completion_proposal_get_gicon", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_proposal_get_icon, "gtk_source_completion_proposal_get_icon", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_proposal_get_icon_name, "gtk_source_completion_proposal_get_icon_name", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_proposal_get_info, "gtk_source_completion_proposal_get_info", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_proposal_get_label, "gtk_source_completion_proposal_get_label", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_proposal_get_markup, "gtk_source_completion_proposal_get_markup", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_proposal_get_text, "gtk_source_completion_proposal_get_text", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_proposal_hash, "gtk_source_completion_proposal_hash", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_proposal_get_type, "gtk_source_completion_proposal_get_type", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_proposal_changed, "gtk_source_completion_proposal_changed", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_proposal_equal, "gtk_source_completion_proposal_equal", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_proposal_get_gicon, "gtk_source_completion_proposal_get_gicon", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_proposal_get_icon, "gtk_source_completion_proposal_get_icon", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_proposal_get_icon_name, "gtk_source_completion_proposal_get_icon_name", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_proposal_get_info, "gtk_source_completion_proposal_get_info", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_proposal_get_label, "gtk_source_completion_proposal_get_label", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_proposal_get_markup, "gtk_source_completion_proposal_get_markup", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_proposal_get_text, "gtk_source_completion_proposal_get_text", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_proposal_hash, "gtk_source_completion_proposal_hash", LIBRARY_GSV);
 
 	// gsv.SourceCompletionProvider
 
-	Linker.link(gtk_source_completion_provider_get_type, "gtk_source_completion_provider_get_type", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_provider_activate_proposal, "gtk_source_completion_provider_activate_proposal", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_provider_get_activation, "gtk_source_completion_provider_get_activation", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_provider_get_gicon, "gtk_source_completion_provider_get_gicon", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_provider_get_icon, "gtk_source_completion_provider_get_icon", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_provider_get_icon_name, "gtk_source_completion_provider_get_icon_name", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_provider_get_info_widget, "gtk_source_completion_provider_get_info_widget", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_provider_get_interactive_delay, "gtk_source_completion_provider_get_interactive_delay", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_provider_get_name, "gtk_source_completion_provider_get_name", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_provider_get_priority, "gtk_source_completion_provider_get_priority", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_provider_get_start_iter, "gtk_source_completion_provider_get_start_iter", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_provider_match, "gtk_source_completion_provider_match", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_provider_populate, "gtk_source_completion_provider_populate", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_provider_update_info, "gtk_source_completion_provider_update_info", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_provider_get_type, "gtk_source_completion_provider_get_type", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_provider_activate_proposal, "gtk_source_completion_provider_activate_proposal", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_provider_get_activation, "gtk_source_completion_provider_get_activation", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_provider_get_gicon, "gtk_source_completion_provider_get_gicon", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_provider_get_icon, "gtk_source_completion_provider_get_icon", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_provider_get_icon_name, "gtk_source_completion_provider_get_icon_name", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_provider_get_info_widget, "gtk_source_completion_provider_get_info_widget", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_provider_get_interactive_delay, "gtk_source_completion_provider_get_interactive_delay", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_provider_get_name, "gtk_source_completion_provider_get_name", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_provider_get_priority, "gtk_source_completion_provider_get_priority", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_provider_get_start_iter, "gtk_source_completion_provider_get_start_iter", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_provider_match, "gtk_source_completion_provider_match", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_provider_populate, "gtk_source_completion_provider_populate", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_provider_update_info, "gtk_source_completion_provider_update_info", LIBRARY_GSV);
 
 	// gsv.SourceCompletionWords
 
-	Linker.link(gtk_source_completion_words_get_type, "gtk_source_completion_words_get_type", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_words_new, "gtk_source_completion_words_new", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_words_register, "gtk_source_completion_words_register", LIBRARY.GSV);
-	Linker.link(gtk_source_completion_words_unregister, "gtk_source_completion_words_unregister", LIBRARY.GSV);
+	Linker.link(gtk_source_completion_words_get_type, "gtk_source_completion_words_get_type", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_words_new, "gtk_source_completion_words_new", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_words_register, "gtk_source_completion_words_register", LIBRARY_GSV);
+	Linker.link(gtk_source_completion_words_unregister, "gtk_source_completion_words_unregister", LIBRARY_GSV);
 
 	// gsv.SourceEncoding
 
-	Linker.link(gtk_source_encoding_get_type, "gtk_source_encoding_get_type", LIBRARY.GSV);
-	Linker.link(gtk_source_encoding_copy, "gtk_source_encoding_copy", LIBRARY.GSV);
-	Linker.link(gtk_source_encoding_free, "gtk_source_encoding_free", LIBRARY.GSV);
-	Linker.link(gtk_source_encoding_get_charset, "gtk_source_encoding_get_charset", LIBRARY.GSV);
-	Linker.link(gtk_source_encoding_get_name, "gtk_source_encoding_get_name", LIBRARY.GSV);
-	Linker.link(gtk_source_encoding_to_string, "gtk_source_encoding_to_string", LIBRARY.GSV);
-	Linker.link(gtk_source_encoding_get_all, "gtk_source_encoding_get_all", LIBRARY.GSV);
-	Linker.link(gtk_source_encoding_get_current, "gtk_source_encoding_get_current", LIBRARY.GSV);
-	Linker.link(gtk_source_encoding_get_default_candidates, "gtk_source_encoding_get_default_candidates", LIBRARY.GSV);
-	Linker.link(gtk_source_encoding_get_from_charset, "gtk_source_encoding_get_from_charset", LIBRARY.GSV);
-	Linker.link(gtk_source_encoding_get_utf8, "gtk_source_encoding_get_utf8", LIBRARY.GSV);
+	Linker.link(gtk_source_encoding_get_type, "gtk_source_encoding_get_type", LIBRARY_GSV);
+	Linker.link(gtk_source_encoding_copy, "gtk_source_encoding_copy", LIBRARY_GSV);
+	Linker.link(gtk_source_encoding_free, "gtk_source_encoding_free", LIBRARY_GSV);
+	Linker.link(gtk_source_encoding_get_charset, "gtk_source_encoding_get_charset", LIBRARY_GSV);
+	Linker.link(gtk_source_encoding_get_name, "gtk_source_encoding_get_name", LIBRARY_GSV);
+	Linker.link(gtk_source_encoding_to_string, "gtk_source_encoding_to_string", LIBRARY_GSV);
+	Linker.link(gtk_source_encoding_get_all, "gtk_source_encoding_get_all", LIBRARY_GSV);
+	Linker.link(gtk_source_encoding_get_current, "gtk_source_encoding_get_current", LIBRARY_GSV);
+	Linker.link(gtk_source_encoding_get_default_candidates, "gtk_source_encoding_get_default_candidates", LIBRARY_GSV);
+	Linker.link(gtk_source_encoding_get_from_charset, "gtk_source_encoding_get_from_charset", LIBRARY_GSV);
+	Linker.link(gtk_source_encoding_get_utf8, "gtk_source_encoding_get_utf8", LIBRARY_GSV);
 
 	// gsv.SourceFile
 
-	Linker.link(gtk_source_file_get_type, "gtk_source_file_get_type", LIBRARY.GSV);
-	Linker.link(gtk_source_file_new, "gtk_source_file_new", LIBRARY.GSV);
-	Linker.link(gtk_source_file_check_file_on_disk, "gtk_source_file_check_file_on_disk", LIBRARY.GSV);
-	Linker.link(gtk_source_file_get_compression_type, "gtk_source_file_get_compression_type", LIBRARY.GSV);
-	Linker.link(gtk_source_file_get_encoding, "gtk_source_file_get_encoding", LIBRARY.GSV);
-	Linker.link(gtk_source_file_get_location, "gtk_source_file_get_location", LIBRARY.GSV);
-	Linker.link(gtk_source_file_get_newline_type, "gtk_source_file_get_newline_type", LIBRARY.GSV);
-	Linker.link(gtk_source_file_is_deleted, "gtk_source_file_is_deleted", LIBRARY.GSV);
-	Linker.link(gtk_source_file_is_externally_modified, "gtk_source_file_is_externally_modified", LIBRARY.GSV);
-	Linker.link(gtk_source_file_is_local, "gtk_source_file_is_local", LIBRARY.GSV);
-	Linker.link(gtk_source_file_is_readonly, "gtk_source_file_is_readonly", LIBRARY.GSV);
-	Linker.link(gtk_source_file_set_location, "gtk_source_file_set_location", LIBRARY.GSV);
-	Linker.link(gtk_source_file_set_mount_operation_factory, "gtk_source_file_set_mount_operation_factory", LIBRARY.GSV);
+	Linker.link(gtk_source_file_get_type, "gtk_source_file_get_type", LIBRARY_GSV);
+	Linker.link(gtk_source_file_new, "gtk_source_file_new", LIBRARY_GSV);
+	Linker.link(gtk_source_file_check_file_on_disk, "gtk_source_file_check_file_on_disk", LIBRARY_GSV);
+	Linker.link(gtk_source_file_get_compression_type, "gtk_source_file_get_compression_type", LIBRARY_GSV);
+	Linker.link(gtk_source_file_get_encoding, "gtk_source_file_get_encoding", LIBRARY_GSV);
+	Linker.link(gtk_source_file_get_location, "gtk_source_file_get_location", LIBRARY_GSV);
+	Linker.link(gtk_source_file_get_newline_type, "gtk_source_file_get_newline_type", LIBRARY_GSV);
+	Linker.link(gtk_source_file_is_deleted, "gtk_source_file_is_deleted", LIBRARY_GSV);
+	Linker.link(gtk_source_file_is_externally_modified, "gtk_source_file_is_externally_modified", LIBRARY_GSV);
+	Linker.link(gtk_source_file_is_local, "gtk_source_file_is_local", LIBRARY_GSV);
+	Linker.link(gtk_source_file_is_readonly, "gtk_source_file_is_readonly", LIBRARY_GSV);
+	Linker.link(gtk_source_file_set_location, "gtk_source_file_set_location", LIBRARY_GSV);
+	Linker.link(gtk_source_file_set_mount_operation_factory, "gtk_source_file_set_mount_operation_factory", LIBRARY_GSV);
 
 	// gsv.SourceFileLoader
 
-	Linker.link(gtk_source_file_loader_get_type, "gtk_source_file_loader_get_type", LIBRARY.GSV);
-	Linker.link(gtk_source_file_loader_new, "gtk_source_file_loader_new", LIBRARY.GSV);
-	Linker.link(gtk_source_file_loader_new_from_stream, "gtk_source_file_loader_new_from_stream", LIBRARY.GSV);
-	Linker.link(gtk_source_file_loader_get_buffer, "gtk_source_file_loader_get_buffer", LIBRARY.GSV);
-	Linker.link(gtk_source_file_loader_get_compression_type, "gtk_source_file_loader_get_compression_type", LIBRARY.GSV);
-	Linker.link(gtk_source_file_loader_get_encoding, "gtk_source_file_loader_get_encoding", LIBRARY.GSV);
-	Linker.link(gtk_source_file_loader_get_file, "gtk_source_file_loader_get_file", LIBRARY.GSV);
-	Linker.link(gtk_source_file_loader_get_input_stream, "gtk_source_file_loader_get_input_stream", LIBRARY.GSV);
-	Linker.link(gtk_source_file_loader_get_location, "gtk_source_file_loader_get_location", LIBRARY.GSV);
-	Linker.link(gtk_source_file_loader_get_newline_type, "gtk_source_file_loader_get_newline_type", LIBRARY.GSV);
-	Linker.link(gtk_source_file_loader_load_async, "gtk_source_file_loader_load_async", LIBRARY.GSV);
-	Linker.link(gtk_source_file_loader_load_finish, "gtk_source_file_loader_load_finish", LIBRARY.GSV);
-	Linker.link(gtk_source_file_loader_set_candidate_encodings, "gtk_source_file_loader_set_candidate_encodings", LIBRARY.GSV);
+	Linker.link(gtk_source_file_loader_get_type, "gtk_source_file_loader_get_type", LIBRARY_GSV);
+	Linker.link(gtk_source_file_loader_new, "gtk_source_file_loader_new", LIBRARY_GSV);
+	Linker.link(gtk_source_file_loader_new_from_stream, "gtk_source_file_loader_new_from_stream", LIBRARY_GSV);
+	Linker.link(gtk_source_file_loader_get_buffer, "gtk_source_file_loader_get_buffer", LIBRARY_GSV);
+	Linker.link(gtk_source_file_loader_get_compression_type, "gtk_source_file_loader_get_compression_type", LIBRARY_GSV);
+	Linker.link(gtk_source_file_loader_get_encoding, "gtk_source_file_loader_get_encoding", LIBRARY_GSV);
+	Linker.link(gtk_source_file_loader_get_file, "gtk_source_file_loader_get_file", LIBRARY_GSV);
+	Linker.link(gtk_source_file_loader_get_input_stream, "gtk_source_file_loader_get_input_stream", LIBRARY_GSV);
+	Linker.link(gtk_source_file_loader_get_location, "gtk_source_file_loader_get_location", LIBRARY_GSV);
+	Linker.link(gtk_source_file_loader_get_newline_type, "gtk_source_file_loader_get_newline_type", LIBRARY_GSV);
+	Linker.link(gtk_source_file_loader_load_async, "gtk_source_file_loader_load_async", LIBRARY_GSV);
+	Linker.link(gtk_source_file_loader_load_finish, "gtk_source_file_loader_load_finish", LIBRARY_GSV);
+	Linker.link(gtk_source_file_loader_set_candidate_encodings, "gtk_source_file_loader_set_candidate_encodings", LIBRARY_GSV);
 
 	// gsv.SourceFileSaver
 
-	Linker.link(gtk_source_file_saver_get_type, "gtk_source_file_saver_get_type", LIBRARY.GSV);
-	Linker.link(gtk_source_file_saver_new, "gtk_source_file_saver_new", LIBRARY.GSV);
-	Linker.link(gtk_source_file_saver_new_with_target, "gtk_source_file_saver_new_with_target", LIBRARY.GSV);
-	Linker.link(gtk_source_file_saver_get_buffer, "gtk_source_file_saver_get_buffer", LIBRARY.GSV);
-	Linker.link(gtk_source_file_saver_get_compression_type, "gtk_source_file_saver_get_compression_type", LIBRARY.GSV);
-	Linker.link(gtk_source_file_saver_get_encoding, "gtk_source_file_saver_get_encoding", LIBRARY.GSV);
-	Linker.link(gtk_source_file_saver_get_file, "gtk_source_file_saver_get_file", LIBRARY.GSV);
-	Linker.link(gtk_source_file_saver_get_flags, "gtk_source_file_saver_get_flags", LIBRARY.GSV);
-	Linker.link(gtk_source_file_saver_get_location, "gtk_source_file_saver_get_location", LIBRARY.GSV);
-	Linker.link(gtk_source_file_saver_get_newline_type, "gtk_source_file_saver_get_newline_type", LIBRARY.GSV);
-	Linker.link(gtk_source_file_saver_save_async, "gtk_source_file_saver_save_async", LIBRARY.GSV);
-	Linker.link(gtk_source_file_saver_save_finish, "gtk_source_file_saver_save_finish", LIBRARY.GSV);
-	Linker.link(gtk_source_file_saver_set_compression_type, "gtk_source_file_saver_set_compression_type", LIBRARY.GSV);
-	Linker.link(gtk_source_file_saver_set_encoding, "gtk_source_file_saver_set_encoding", LIBRARY.GSV);
-	Linker.link(gtk_source_file_saver_set_flags, "gtk_source_file_saver_set_flags", LIBRARY.GSV);
-	Linker.link(gtk_source_file_saver_set_newline_type, "gtk_source_file_saver_set_newline_type", LIBRARY.GSV);
+	Linker.link(gtk_source_file_saver_get_type, "gtk_source_file_saver_get_type", LIBRARY_GSV);
+	Linker.link(gtk_source_file_saver_new, "gtk_source_file_saver_new", LIBRARY_GSV);
+	Linker.link(gtk_source_file_saver_new_with_target, "gtk_source_file_saver_new_with_target", LIBRARY_GSV);
+	Linker.link(gtk_source_file_saver_get_buffer, "gtk_source_file_saver_get_buffer", LIBRARY_GSV);
+	Linker.link(gtk_source_file_saver_get_compression_type, "gtk_source_file_saver_get_compression_type", LIBRARY_GSV);
+	Linker.link(gtk_source_file_saver_get_encoding, "gtk_source_file_saver_get_encoding", LIBRARY_GSV);
+	Linker.link(gtk_source_file_saver_get_file, "gtk_source_file_saver_get_file", LIBRARY_GSV);
+	Linker.link(gtk_source_file_saver_get_flags, "gtk_source_file_saver_get_flags", LIBRARY_GSV);
+	Linker.link(gtk_source_file_saver_get_location, "gtk_source_file_saver_get_location", LIBRARY_GSV);
+	Linker.link(gtk_source_file_saver_get_newline_type, "gtk_source_file_saver_get_newline_type", LIBRARY_GSV);
+	Linker.link(gtk_source_file_saver_save_async, "gtk_source_file_saver_save_async", LIBRARY_GSV);
+	Linker.link(gtk_source_file_saver_save_finish, "gtk_source_file_saver_save_finish", LIBRARY_GSV);
+	Linker.link(gtk_source_file_saver_set_compression_type, "gtk_source_file_saver_set_compression_type", LIBRARY_GSV);
+	Linker.link(gtk_source_file_saver_set_encoding, "gtk_source_file_saver_set_encoding", LIBRARY_GSV);
+	Linker.link(gtk_source_file_saver_set_flags, "gtk_source_file_saver_set_flags", LIBRARY_GSV);
+	Linker.link(gtk_source_file_saver_set_newline_type, "gtk_source_file_saver_set_newline_type", LIBRARY_GSV);
 
 	// gsv.SourceGutter
 
-	Linker.link(gtk_source_gutter_get_type, "gtk_source_gutter_get_type", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_get_padding, "gtk_source_gutter_get_padding", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_get_renderer_at_pos, "gtk_source_gutter_get_renderer_at_pos", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_get_view, "gtk_source_gutter_get_view", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_get_window, "gtk_source_gutter_get_window", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_get_window_type, "gtk_source_gutter_get_window_type", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_insert, "gtk_source_gutter_insert", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_queue_draw, "gtk_source_gutter_queue_draw", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_remove, "gtk_source_gutter_remove", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_reorder, "gtk_source_gutter_reorder", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_set_padding, "gtk_source_gutter_set_padding", LIBRARY.GSV);
+	Linker.link(gtk_source_gutter_get_type, "gtk_source_gutter_get_type", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_get_padding, "gtk_source_gutter_get_padding", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_get_renderer_at_pos, "gtk_source_gutter_get_renderer_at_pos", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_get_view, "gtk_source_gutter_get_view", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_get_window, "gtk_source_gutter_get_window", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_get_window_type, "gtk_source_gutter_get_window_type", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_insert, "gtk_source_gutter_insert", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_queue_draw, "gtk_source_gutter_queue_draw", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_remove, "gtk_source_gutter_remove", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_reorder, "gtk_source_gutter_reorder", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_set_padding, "gtk_source_gutter_set_padding", LIBRARY_GSV);
 
 	// gsv.SourceGutterRenderer
 
-	Linker.link(gtk_source_gutter_renderer_get_type, "gtk_source_gutter_renderer_get_type", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_activate, "gtk_source_gutter_renderer_activate", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_begin, "gtk_source_gutter_renderer_begin", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_draw, "gtk_source_gutter_renderer_draw", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_end, "gtk_source_gutter_renderer_end", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_get_alignment, "gtk_source_gutter_renderer_get_alignment", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_get_alignment_mode, "gtk_source_gutter_renderer_get_alignment_mode", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_get_background, "gtk_source_gutter_renderer_get_background", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_get_padding, "gtk_source_gutter_renderer_get_padding", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_get_size, "gtk_source_gutter_renderer_get_size", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_get_view, "gtk_source_gutter_renderer_get_view", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_get_visible, "gtk_source_gutter_renderer_get_visible", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_get_window_type, "gtk_source_gutter_renderer_get_window_type", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_query_activatable, "gtk_source_gutter_renderer_query_activatable", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_query_data, "gtk_source_gutter_renderer_query_data", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_query_tooltip, "gtk_source_gutter_renderer_query_tooltip", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_queue_draw, "gtk_source_gutter_renderer_queue_draw", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_set_alignment, "gtk_source_gutter_renderer_set_alignment", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_set_alignment_mode, "gtk_source_gutter_renderer_set_alignment_mode", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_set_background, "gtk_source_gutter_renderer_set_background", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_set_padding, "gtk_source_gutter_renderer_set_padding", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_set_size, "gtk_source_gutter_renderer_set_size", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_set_visible, "gtk_source_gutter_renderer_set_visible", LIBRARY.GSV);
+	Linker.link(gtk_source_gutter_renderer_get_type, "gtk_source_gutter_renderer_get_type", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_renderer_activate, "gtk_source_gutter_renderer_activate", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_renderer_begin, "gtk_source_gutter_renderer_begin", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_renderer_draw, "gtk_source_gutter_renderer_draw", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_renderer_end, "gtk_source_gutter_renderer_end", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_renderer_get_alignment, "gtk_source_gutter_renderer_get_alignment", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_renderer_get_alignment_mode, "gtk_source_gutter_renderer_get_alignment_mode", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_renderer_get_background, "gtk_source_gutter_renderer_get_background", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_renderer_get_padding, "gtk_source_gutter_renderer_get_padding", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_renderer_get_size, "gtk_source_gutter_renderer_get_size", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_renderer_get_view, "gtk_source_gutter_renderer_get_view", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_renderer_get_visible, "gtk_source_gutter_renderer_get_visible", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_renderer_get_window_type, "gtk_source_gutter_renderer_get_window_type", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_renderer_query_activatable, "gtk_source_gutter_renderer_query_activatable", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_renderer_query_data, "gtk_source_gutter_renderer_query_data", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_renderer_query_tooltip, "gtk_source_gutter_renderer_query_tooltip", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_renderer_queue_draw, "gtk_source_gutter_renderer_queue_draw", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_renderer_set_alignment, "gtk_source_gutter_renderer_set_alignment", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_renderer_set_alignment_mode, "gtk_source_gutter_renderer_set_alignment_mode", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_renderer_set_background, "gtk_source_gutter_renderer_set_background", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_renderer_set_padding, "gtk_source_gutter_renderer_set_padding", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_renderer_set_size, "gtk_source_gutter_renderer_set_size", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_renderer_set_visible, "gtk_source_gutter_renderer_set_visible", LIBRARY_GSV);
 
 	// gsv.SourceGutterRendererPixbuf
 
-	Linker.link(gtk_source_gutter_renderer_pixbuf_get_type, "gtk_source_gutter_renderer_pixbuf_get_type", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_pixbuf_new, "gtk_source_gutter_renderer_pixbuf_new", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_pixbuf_get_gicon, "gtk_source_gutter_renderer_pixbuf_get_gicon", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_pixbuf_get_icon_name, "gtk_source_gutter_renderer_pixbuf_get_icon_name", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_pixbuf_get_pixbuf, "gtk_source_gutter_renderer_pixbuf_get_pixbuf", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_pixbuf_get_stock_id, "gtk_source_gutter_renderer_pixbuf_get_stock_id", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_pixbuf_set_gicon, "gtk_source_gutter_renderer_pixbuf_set_gicon", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_pixbuf_set_icon_name, "gtk_source_gutter_renderer_pixbuf_set_icon_name", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_pixbuf_set_pixbuf, "gtk_source_gutter_renderer_pixbuf_set_pixbuf", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_pixbuf_set_stock_id, "gtk_source_gutter_renderer_pixbuf_set_stock_id", LIBRARY.GSV);
+	Linker.link(gtk_source_gutter_renderer_pixbuf_get_type, "gtk_source_gutter_renderer_pixbuf_get_type", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_renderer_pixbuf_new, "gtk_source_gutter_renderer_pixbuf_new", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_renderer_pixbuf_get_gicon, "gtk_source_gutter_renderer_pixbuf_get_gicon", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_renderer_pixbuf_get_icon_name, "gtk_source_gutter_renderer_pixbuf_get_icon_name", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_renderer_pixbuf_get_pixbuf, "gtk_source_gutter_renderer_pixbuf_get_pixbuf", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_renderer_pixbuf_get_stock_id, "gtk_source_gutter_renderer_pixbuf_get_stock_id", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_renderer_pixbuf_set_gicon, "gtk_source_gutter_renderer_pixbuf_set_gicon", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_renderer_pixbuf_set_icon_name, "gtk_source_gutter_renderer_pixbuf_set_icon_name", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_renderer_pixbuf_set_pixbuf, "gtk_source_gutter_renderer_pixbuf_set_pixbuf", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_renderer_pixbuf_set_stock_id, "gtk_source_gutter_renderer_pixbuf_set_stock_id", LIBRARY_GSV);
 
 	// gsv.SourceGutterRendererText
 
-	Linker.link(gtk_source_gutter_renderer_text_get_type, "gtk_source_gutter_renderer_text_get_type", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_text_new, "gtk_source_gutter_renderer_text_new", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_text_measure, "gtk_source_gutter_renderer_text_measure", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_text_measure_markup, "gtk_source_gutter_renderer_text_measure_markup", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_text_set_markup, "gtk_source_gutter_renderer_text_set_markup", LIBRARY.GSV);
-	Linker.link(gtk_source_gutter_renderer_text_set_text, "gtk_source_gutter_renderer_text_set_text", LIBRARY.GSV);
+	Linker.link(gtk_source_gutter_renderer_text_get_type, "gtk_source_gutter_renderer_text_get_type", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_renderer_text_new, "gtk_source_gutter_renderer_text_new", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_renderer_text_measure, "gtk_source_gutter_renderer_text_measure", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_renderer_text_measure_markup, "gtk_source_gutter_renderer_text_measure_markup", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_renderer_text_set_markup, "gtk_source_gutter_renderer_text_set_markup", LIBRARY_GSV);
+	Linker.link(gtk_source_gutter_renderer_text_set_text, "gtk_source_gutter_renderer_text_set_text", LIBRARY_GSV);
 
 	// gsv.SourceLanguage
 
-	Linker.link(gtk_source_language_get_type, "gtk_source_language_get_type", LIBRARY.GSV);
-	Linker.link(gtk_source_language_get_globs, "gtk_source_language_get_globs", LIBRARY.GSV);
-	Linker.link(gtk_source_language_get_hidden, "gtk_source_language_get_hidden", LIBRARY.GSV);
-	Linker.link(gtk_source_language_get_id, "gtk_source_language_get_id", LIBRARY.GSV);
-	Linker.link(gtk_source_language_get_metadata, "gtk_source_language_get_metadata", LIBRARY.GSV);
-	Linker.link(gtk_source_language_get_mime_types, "gtk_source_language_get_mime_types", LIBRARY.GSV);
-	Linker.link(gtk_source_language_get_name, "gtk_source_language_get_name", LIBRARY.GSV);
-	Linker.link(gtk_source_language_get_section, "gtk_source_language_get_section", LIBRARY.GSV);
-	Linker.link(gtk_source_language_get_style_fallback, "gtk_source_language_get_style_fallback", LIBRARY.GSV);
-	Linker.link(gtk_source_language_get_style_ids, "gtk_source_language_get_style_ids", LIBRARY.GSV);
-	Linker.link(gtk_source_language_get_style_name, "gtk_source_language_get_style_name", LIBRARY.GSV);
+	Linker.link(gtk_source_language_get_type, "gtk_source_language_get_type", LIBRARY_GSV);
+	Linker.link(gtk_source_language_get_globs, "gtk_source_language_get_globs", LIBRARY_GSV);
+	Linker.link(gtk_source_language_get_hidden, "gtk_source_language_get_hidden", LIBRARY_GSV);
+	Linker.link(gtk_source_language_get_id, "gtk_source_language_get_id", LIBRARY_GSV);
+	Linker.link(gtk_source_language_get_metadata, "gtk_source_language_get_metadata", LIBRARY_GSV);
+	Linker.link(gtk_source_language_get_mime_types, "gtk_source_language_get_mime_types", LIBRARY_GSV);
+	Linker.link(gtk_source_language_get_name, "gtk_source_language_get_name", LIBRARY_GSV);
+	Linker.link(gtk_source_language_get_section, "gtk_source_language_get_section", LIBRARY_GSV);
+	Linker.link(gtk_source_language_get_style_fallback, "gtk_source_language_get_style_fallback", LIBRARY_GSV);
+	Linker.link(gtk_source_language_get_style_ids, "gtk_source_language_get_style_ids", LIBRARY_GSV);
+	Linker.link(gtk_source_language_get_style_name, "gtk_source_language_get_style_name", LIBRARY_GSV);
 
 	// gsv.SourceLanguageManager
 
-	Linker.link(gtk_source_language_manager_get_type, "gtk_source_language_manager_get_type", LIBRARY.GSV);
-	Linker.link(gtk_source_language_manager_new, "gtk_source_language_manager_new", LIBRARY.GSV);
-	Linker.link(gtk_source_language_manager_get_default, "gtk_source_language_manager_get_default", LIBRARY.GSV);
-	Linker.link(gtk_source_language_manager_get_language, "gtk_source_language_manager_get_language", LIBRARY.GSV);
-	Linker.link(gtk_source_language_manager_get_language_ids, "gtk_source_language_manager_get_language_ids", LIBRARY.GSV);
-	Linker.link(gtk_source_language_manager_get_search_path, "gtk_source_language_manager_get_search_path", LIBRARY.GSV);
-	Linker.link(gtk_source_language_manager_guess_language, "gtk_source_language_manager_guess_language", LIBRARY.GSV);
-	Linker.link(gtk_source_language_manager_set_search_path, "gtk_source_language_manager_set_search_path", LIBRARY.GSV);
+	Linker.link(gtk_source_language_manager_get_type, "gtk_source_language_manager_get_type", LIBRARY_GSV);
+	Linker.link(gtk_source_language_manager_new, "gtk_source_language_manager_new", LIBRARY_GSV);
+	Linker.link(gtk_source_language_manager_get_default, "gtk_source_language_manager_get_default", LIBRARY_GSV);
+	Linker.link(gtk_source_language_manager_get_language, "gtk_source_language_manager_get_language", LIBRARY_GSV);
+	Linker.link(gtk_source_language_manager_get_language_ids, "gtk_source_language_manager_get_language_ids", LIBRARY_GSV);
+	Linker.link(gtk_source_language_manager_get_search_path, "gtk_source_language_manager_get_search_path", LIBRARY_GSV);
+	Linker.link(gtk_source_language_manager_guess_language, "gtk_source_language_manager_guess_language", LIBRARY_GSV);
+	Linker.link(gtk_source_language_manager_set_search_path, "gtk_source_language_manager_set_search_path", LIBRARY_GSV);
 
 	// gsv.SourceMap
 
-	Linker.link(gtk_source_map_get_type, "gtk_source_map_get_type", LIBRARY.GSV);
-	Linker.link(gtk_source_map_new, "gtk_source_map_new", LIBRARY.GSV);
-	Linker.link(gtk_source_map_get_view, "gtk_source_map_get_view", LIBRARY.GSV);
-	Linker.link(gtk_source_map_set_view, "gtk_source_map_set_view", LIBRARY.GSV);
+	Linker.link(gtk_source_map_get_type, "gtk_source_map_get_type", LIBRARY_GSV);
+	Linker.link(gtk_source_map_new, "gtk_source_map_new", LIBRARY_GSV);
+	Linker.link(gtk_source_map_get_view, "gtk_source_map_get_view", LIBRARY_GSV);
+	Linker.link(gtk_source_map_set_view, "gtk_source_map_set_view", LIBRARY_GSV);
 
 	// gsv.SourceMark
 
-	Linker.link(gtk_source_mark_get_type, "gtk_source_mark_get_type", LIBRARY.GSV);
-	Linker.link(gtk_source_mark_new, "gtk_source_mark_new", LIBRARY.GSV);
-	Linker.link(gtk_source_mark_get_category, "gtk_source_mark_get_category", LIBRARY.GSV);
-	Linker.link(gtk_source_mark_next, "gtk_source_mark_next", LIBRARY.GSV);
-	Linker.link(gtk_source_mark_prev, "gtk_source_mark_prev", LIBRARY.GSV);
+	Linker.link(gtk_source_mark_get_type, "gtk_source_mark_get_type", LIBRARY_GSV);
+	Linker.link(gtk_source_mark_new, "gtk_source_mark_new", LIBRARY_GSV);
+	Linker.link(gtk_source_mark_get_category, "gtk_source_mark_get_category", LIBRARY_GSV);
+	Linker.link(gtk_source_mark_next, "gtk_source_mark_next", LIBRARY_GSV);
+	Linker.link(gtk_source_mark_prev, "gtk_source_mark_prev", LIBRARY_GSV);
 
 	// gsv.SourceMarkAttributes
 
-	Linker.link(gtk_source_mark_attributes_get_type, "gtk_source_mark_attributes_get_type", LIBRARY.GSV);
-	Linker.link(gtk_source_mark_attributes_new, "gtk_source_mark_attributes_new", LIBRARY.GSV);
-	Linker.link(gtk_source_mark_attributes_get_background, "gtk_source_mark_attributes_get_background", LIBRARY.GSV);
-	Linker.link(gtk_source_mark_attributes_get_gicon, "gtk_source_mark_attributes_get_gicon", LIBRARY.GSV);
-	Linker.link(gtk_source_mark_attributes_get_icon_name, "gtk_source_mark_attributes_get_icon_name", LIBRARY.GSV);
-	Linker.link(gtk_source_mark_attributes_get_pixbuf, "gtk_source_mark_attributes_get_pixbuf", LIBRARY.GSV);
-	Linker.link(gtk_source_mark_attributes_get_stock_id, "gtk_source_mark_attributes_get_stock_id", LIBRARY.GSV);
-	Linker.link(gtk_source_mark_attributes_get_tooltip_markup, "gtk_source_mark_attributes_get_tooltip_markup", LIBRARY.GSV);
-	Linker.link(gtk_source_mark_attributes_get_tooltip_text, "gtk_source_mark_attributes_get_tooltip_text", LIBRARY.GSV);
-	Linker.link(gtk_source_mark_attributes_render_icon, "gtk_source_mark_attributes_render_icon", LIBRARY.GSV);
-	Linker.link(gtk_source_mark_attributes_set_background, "gtk_source_mark_attributes_set_background", LIBRARY.GSV);
-	Linker.link(gtk_source_mark_attributes_set_gicon, "gtk_source_mark_attributes_set_gicon", LIBRARY.GSV);
-	Linker.link(gtk_source_mark_attributes_set_icon_name, "gtk_source_mark_attributes_set_icon_name", LIBRARY.GSV);
-	Linker.link(gtk_source_mark_attributes_set_pixbuf, "gtk_source_mark_attributes_set_pixbuf", LIBRARY.GSV);
-	Linker.link(gtk_source_mark_attributes_set_stock_id, "gtk_source_mark_attributes_set_stock_id", LIBRARY.GSV);
+	Linker.link(gtk_source_mark_attributes_get_type, "gtk_source_mark_attributes_get_type", LIBRARY_GSV);
+	Linker.link(gtk_source_mark_attributes_new, "gtk_source_mark_attributes_new", LIBRARY_GSV);
+	Linker.link(gtk_source_mark_attributes_get_background, "gtk_source_mark_attributes_get_background", LIBRARY_GSV);
+	Linker.link(gtk_source_mark_attributes_get_gicon, "gtk_source_mark_attributes_get_gicon", LIBRARY_GSV);
+	Linker.link(gtk_source_mark_attributes_get_icon_name, "gtk_source_mark_attributes_get_icon_name", LIBRARY_GSV);
+	Linker.link(gtk_source_mark_attributes_get_pixbuf, "gtk_source_mark_attributes_get_pixbuf", LIBRARY_GSV);
+	Linker.link(gtk_source_mark_attributes_get_stock_id, "gtk_source_mark_attributes_get_stock_id", LIBRARY_GSV);
+	Linker.link(gtk_source_mark_attributes_get_tooltip_markup, "gtk_source_mark_attributes_get_tooltip_markup", LIBRARY_GSV);
+	Linker.link(gtk_source_mark_attributes_get_tooltip_text, "gtk_source_mark_attributes_get_tooltip_text", LIBRARY_GSV);
+	Linker.link(gtk_source_mark_attributes_render_icon, "gtk_source_mark_attributes_render_icon", LIBRARY_GSV);
+	Linker.link(gtk_source_mark_attributes_set_background, "gtk_source_mark_attributes_set_background", LIBRARY_GSV);
+	Linker.link(gtk_source_mark_attributes_set_gicon, "gtk_source_mark_attributes_set_gicon", LIBRARY_GSV);
+	Linker.link(gtk_source_mark_attributes_set_icon_name, "gtk_source_mark_attributes_set_icon_name", LIBRARY_GSV);
+	Linker.link(gtk_source_mark_attributes_set_pixbuf, "gtk_source_mark_attributes_set_pixbuf", LIBRARY_GSV);
+	Linker.link(gtk_source_mark_attributes_set_stock_id, "gtk_source_mark_attributes_set_stock_id", LIBRARY_GSV);
 
 	// gsv.SourcePrintCompositor
 
-	Linker.link(gtk_source_print_compositor_get_type, "gtk_source_print_compositor_get_type", LIBRARY.GSV);
-	Linker.link(gtk_source_print_compositor_new, "gtk_source_print_compositor_new", LIBRARY.GSV);
-	Linker.link(gtk_source_print_compositor_new_from_view, "gtk_source_print_compositor_new_from_view", LIBRARY.GSV);
-	Linker.link(gtk_source_print_compositor_draw_page, "gtk_source_print_compositor_draw_page", LIBRARY.GSV);
-	Linker.link(gtk_source_print_compositor_get_body_font_name, "gtk_source_print_compositor_get_body_font_name", LIBRARY.GSV);
-	Linker.link(gtk_source_print_compositor_get_bottom_margin, "gtk_source_print_compositor_get_bottom_margin", LIBRARY.GSV);
-	Linker.link(gtk_source_print_compositor_get_buffer, "gtk_source_print_compositor_get_buffer", LIBRARY.GSV);
-	Linker.link(gtk_source_print_compositor_get_footer_font_name, "gtk_source_print_compositor_get_footer_font_name", LIBRARY.GSV);
-	Linker.link(gtk_source_print_compositor_get_header_font_name, "gtk_source_print_compositor_get_header_font_name", LIBRARY.GSV);
-	Linker.link(gtk_source_print_compositor_get_highlight_syntax, "gtk_source_print_compositor_get_highlight_syntax", LIBRARY.GSV);
-	Linker.link(gtk_source_print_compositor_get_left_margin, "gtk_source_print_compositor_get_left_margin", LIBRARY.GSV);
-	Linker.link(gtk_source_print_compositor_get_line_numbers_font_name, "gtk_source_print_compositor_get_line_numbers_font_name", LIBRARY.GSV);
-	Linker.link(gtk_source_print_compositor_get_n_pages, "gtk_source_print_compositor_get_n_pages", LIBRARY.GSV);
-	Linker.link(gtk_source_print_compositor_get_pagination_progress, "gtk_source_print_compositor_get_pagination_progress", LIBRARY.GSV);
-	Linker.link(gtk_source_print_compositor_get_print_footer, "gtk_source_print_compositor_get_print_footer", LIBRARY.GSV);
-	Linker.link(gtk_source_print_compositor_get_print_header, "gtk_source_print_compositor_get_print_header", LIBRARY.GSV);
-	Linker.link(gtk_source_print_compositor_get_print_line_numbers, "gtk_source_print_compositor_get_print_line_numbers", LIBRARY.GSV);
-	Linker.link(gtk_source_print_compositor_get_right_margin, "gtk_source_print_compositor_get_right_margin", LIBRARY.GSV);
-	Linker.link(gtk_source_print_compositor_get_tab_width, "gtk_source_print_compositor_get_tab_width", LIBRARY.GSV);
-	Linker.link(gtk_source_print_compositor_get_top_margin, "gtk_source_print_compositor_get_top_margin", LIBRARY.GSV);
-	Linker.link(gtk_source_print_compositor_get_wrap_mode, "gtk_source_print_compositor_get_wrap_mode", LIBRARY.GSV);
-	Linker.link(gtk_source_print_compositor_paginate, "gtk_source_print_compositor_paginate", LIBRARY.GSV);
-	Linker.link(gtk_source_print_compositor_set_body_font_name, "gtk_source_print_compositor_set_body_font_name", LIBRARY.GSV);
-	Linker.link(gtk_source_print_compositor_set_bottom_margin, "gtk_source_print_compositor_set_bottom_margin", LIBRARY.GSV);
-	Linker.link(gtk_source_print_compositor_set_footer_font_name, "gtk_source_print_compositor_set_footer_font_name", LIBRARY.GSV);
-	Linker.link(gtk_source_print_compositor_set_footer_format, "gtk_source_print_compositor_set_footer_format", LIBRARY.GSV);
-	Linker.link(gtk_source_print_compositor_set_header_font_name, "gtk_source_print_compositor_set_header_font_name", LIBRARY.GSV);
-	Linker.link(gtk_source_print_compositor_set_header_format, "gtk_source_print_compositor_set_header_format", LIBRARY.GSV);
-	Linker.link(gtk_source_print_compositor_set_highlight_syntax, "gtk_source_print_compositor_set_highlight_syntax", LIBRARY.GSV);
-	Linker.link(gtk_source_print_compositor_set_left_margin, "gtk_source_print_compositor_set_left_margin", LIBRARY.GSV);
-	Linker.link(gtk_source_print_compositor_set_line_numbers_font_name, "gtk_source_print_compositor_set_line_numbers_font_name", LIBRARY.GSV);
-	Linker.link(gtk_source_print_compositor_set_print_footer, "gtk_source_print_compositor_set_print_footer", LIBRARY.GSV);
-	Linker.link(gtk_source_print_compositor_set_print_header, "gtk_source_print_compositor_set_print_header", LIBRARY.GSV);
-	Linker.link(gtk_source_print_compositor_set_print_line_numbers, "gtk_source_print_compositor_set_print_line_numbers", LIBRARY.GSV);
-	Linker.link(gtk_source_print_compositor_set_right_margin, "gtk_source_print_compositor_set_right_margin", LIBRARY.GSV);
-	Linker.link(gtk_source_print_compositor_set_tab_width, "gtk_source_print_compositor_set_tab_width", LIBRARY.GSV);
-	Linker.link(gtk_source_print_compositor_set_top_margin, "gtk_source_print_compositor_set_top_margin", LIBRARY.GSV);
-	Linker.link(gtk_source_print_compositor_set_wrap_mode, "gtk_source_print_compositor_set_wrap_mode", LIBRARY.GSV);
+	Linker.link(gtk_source_print_compositor_get_type, "gtk_source_print_compositor_get_type", LIBRARY_GSV);
+	Linker.link(gtk_source_print_compositor_new, "gtk_source_print_compositor_new", LIBRARY_GSV);
+	Linker.link(gtk_source_print_compositor_new_from_view, "gtk_source_print_compositor_new_from_view", LIBRARY_GSV);
+	Linker.link(gtk_source_print_compositor_draw_page, "gtk_source_print_compositor_draw_page", LIBRARY_GSV);
+	Linker.link(gtk_source_print_compositor_get_body_font_name, "gtk_source_print_compositor_get_body_font_name", LIBRARY_GSV);
+	Linker.link(gtk_source_print_compositor_get_bottom_margin, "gtk_source_print_compositor_get_bottom_margin", LIBRARY_GSV);
+	Linker.link(gtk_source_print_compositor_get_buffer, "gtk_source_print_compositor_get_buffer", LIBRARY_GSV);
+	Linker.link(gtk_source_print_compositor_get_footer_font_name, "gtk_source_print_compositor_get_footer_font_name", LIBRARY_GSV);
+	Linker.link(gtk_source_print_compositor_get_header_font_name, "gtk_source_print_compositor_get_header_font_name", LIBRARY_GSV);
+	Linker.link(gtk_source_print_compositor_get_highlight_syntax, "gtk_source_print_compositor_get_highlight_syntax", LIBRARY_GSV);
+	Linker.link(gtk_source_print_compositor_get_left_margin, "gtk_source_print_compositor_get_left_margin", LIBRARY_GSV);
+	Linker.link(gtk_source_print_compositor_get_line_numbers_font_name, "gtk_source_print_compositor_get_line_numbers_font_name", LIBRARY_GSV);
+	Linker.link(gtk_source_print_compositor_get_n_pages, "gtk_source_print_compositor_get_n_pages", LIBRARY_GSV);
+	Linker.link(gtk_source_print_compositor_get_pagination_progress, "gtk_source_print_compositor_get_pagination_progress", LIBRARY_GSV);
+	Linker.link(gtk_source_print_compositor_get_print_footer, "gtk_source_print_compositor_get_print_footer", LIBRARY_GSV);
+	Linker.link(gtk_source_print_compositor_get_print_header, "gtk_source_print_compositor_get_print_header", LIBRARY_GSV);
+	Linker.link(gtk_source_print_compositor_get_print_line_numbers, "gtk_source_print_compositor_get_print_line_numbers", LIBRARY_GSV);
+	Linker.link(gtk_source_print_compositor_get_right_margin, "gtk_source_print_compositor_get_right_margin", LIBRARY_GSV);
+	Linker.link(gtk_source_print_compositor_get_tab_width, "gtk_source_print_compositor_get_tab_width", LIBRARY_GSV);
+	Linker.link(gtk_source_print_compositor_get_top_margin, "gtk_source_print_compositor_get_top_margin", LIBRARY_GSV);
+	Linker.link(gtk_source_print_compositor_get_wrap_mode, "gtk_source_print_compositor_get_wrap_mode", LIBRARY_GSV);
+	Linker.link(gtk_source_print_compositor_paginate, "gtk_source_print_compositor_paginate", LIBRARY_GSV);
+	Linker.link(gtk_source_print_compositor_set_body_font_name, "gtk_source_print_compositor_set_body_font_name", LIBRARY_GSV);
+	Linker.link(gtk_source_print_compositor_set_bottom_margin, "gtk_source_print_compositor_set_bottom_margin", LIBRARY_GSV);
+	Linker.link(gtk_source_print_compositor_set_footer_font_name, "gtk_source_print_compositor_set_footer_font_name", LIBRARY_GSV);
+	Linker.link(gtk_source_print_compositor_set_footer_format, "gtk_source_print_compositor_set_footer_format", LIBRARY_GSV);
+	Linker.link(gtk_source_print_compositor_set_header_font_name, "gtk_source_print_compositor_set_header_font_name", LIBRARY_GSV);
+	Linker.link(gtk_source_print_compositor_set_header_format, "gtk_source_print_compositor_set_header_format", LIBRARY_GSV);
+	Linker.link(gtk_source_print_compositor_set_highlight_syntax, "gtk_source_print_compositor_set_highlight_syntax", LIBRARY_GSV);
+	Linker.link(gtk_source_print_compositor_set_left_margin, "gtk_source_print_compositor_set_left_margin", LIBRARY_GSV);
+	Linker.link(gtk_source_print_compositor_set_line_numbers_font_name, "gtk_source_print_compositor_set_line_numbers_font_name", LIBRARY_GSV);
+	Linker.link(gtk_source_print_compositor_set_print_footer, "gtk_source_print_compositor_set_print_footer", LIBRARY_GSV);
+	Linker.link(gtk_source_print_compositor_set_print_header, "gtk_source_print_compositor_set_print_header", LIBRARY_GSV);
+	Linker.link(gtk_source_print_compositor_set_print_line_numbers, "gtk_source_print_compositor_set_print_line_numbers", LIBRARY_GSV);
+	Linker.link(gtk_source_print_compositor_set_right_margin, "gtk_source_print_compositor_set_right_margin", LIBRARY_GSV);
+	Linker.link(gtk_source_print_compositor_set_tab_width, "gtk_source_print_compositor_set_tab_width", LIBRARY_GSV);
+	Linker.link(gtk_source_print_compositor_set_top_margin, "gtk_source_print_compositor_set_top_margin", LIBRARY_GSV);
+	Linker.link(gtk_source_print_compositor_set_wrap_mode, "gtk_source_print_compositor_set_wrap_mode", LIBRARY_GSV);
 
 	// gsv.Region
 
-	Linker.link(gtk_source_region_get_type, "gtk_source_region_get_type", LIBRARY.GSV);
-	Linker.link(gtk_source_region_new, "gtk_source_region_new", LIBRARY.GSV);
-	Linker.link(gtk_source_region_add_region, "gtk_source_region_add_region", LIBRARY.GSV);
-	Linker.link(gtk_source_region_add_subregion, "gtk_source_region_add_subregion", LIBRARY.GSV);
-	Linker.link(gtk_source_region_get_bounds, "gtk_source_region_get_bounds", LIBRARY.GSV);
-	Linker.link(gtk_source_region_get_buffer, "gtk_source_region_get_buffer", LIBRARY.GSV);
-	Linker.link(gtk_source_region_get_start_region_iter, "gtk_source_region_get_start_region_iter", LIBRARY.GSV);
-	Linker.link(gtk_source_region_intersect_region, "gtk_source_region_intersect_region", LIBRARY.GSV);
-	Linker.link(gtk_source_region_intersect_subregion, "gtk_source_region_intersect_subregion", LIBRARY.GSV);
-	Linker.link(gtk_source_region_is_empty, "gtk_source_region_is_empty", LIBRARY.GSV);
-	Linker.link(gtk_source_region_subtract_region, "gtk_source_region_subtract_region", LIBRARY.GSV);
-	Linker.link(gtk_source_region_subtract_subregion, "gtk_source_region_subtract_subregion", LIBRARY.GSV);
-	Linker.link(gtk_source_region_to_string, "gtk_source_region_to_string", LIBRARY.GSV);
+	Linker.link(gtk_source_region_get_type, "gtk_source_region_get_type", LIBRARY_GSV);
+	Linker.link(gtk_source_region_new, "gtk_source_region_new", LIBRARY_GSV);
+	Linker.link(gtk_source_region_add_region, "gtk_source_region_add_region", LIBRARY_GSV);
+	Linker.link(gtk_source_region_add_subregion, "gtk_source_region_add_subregion", LIBRARY_GSV);
+	Linker.link(gtk_source_region_get_bounds, "gtk_source_region_get_bounds", LIBRARY_GSV);
+	Linker.link(gtk_source_region_get_buffer, "gtk_source_region_get_buffer", LIBRARY_GSV);
+	Linker.link(gtk_source_region_get_start_region_iter, "gtk_source_region_get_start_region_iter", LIBRARY_GSV);
+	Linker.link(gtk_source_region_intersect_region, "gtk_source_region_intersect_region", LIBRARY_GSV);
+	Linker.link(gtk_source_region_intersect_subregion, "gtk_source_region_intersect_subregion", LIBRARY_GSV);
+	Linker.link(gtk_source_region_is_empty, "gtk_source_region_is_empty", LIBRARY_GSV);
+	Linker.link(gtk_source_region_subtract_region, "gtk_source_region_subtract_region", LIBRARY_GSV);
+	Linker.link(gtk_source_region_subtract_subregion, "gtk_source_region_subtract_subregion", LIBRARY_GSV);
+	Linker.link(gtk_source_region_to_string, "gtk_source_region_to_string", LIBRARY_GSV);
 
 	// gsv.RegionIter
 
-	Linker.link(gtk_source_region_iter_get_subregion, "gtk_source_region_iter_get_subregion", LIBRARY.GSV);
-	Linker.link(gtk_source_region_iter_is_end, "gtk_source_region_iter_is_end", LIBRARY.GSV);
-	Linker.link(gtk_source_region_iter_next, "gtk_source_region_iter_next", LIBRARY.GSV);
+	Linker.link(gtk_source_region_iter_get_subregion, "gtk_source_region_iter_get_subregion", LIBRARY_GSV);
+	Linker.link(gtk_source_region_iter_is_end, "gtk_source_region_iter_is_end", LIBRARY_GSV);
+	Linker.link(gtk_source_region_iter_next, "gtk_source_region_iter_next", LIBRARY_GSV);
 
 	// gsv.SourceSearchContext
 
-	Linker.link(gtk_source_search_context_get_type, "gtk_source_search_context_get_type", LIBRARY.GSV);
-	Linker.link(gtk_source_search_context_new, "gtk_source_search_context_new", LIBRARY.GSV);
-	Linker.link(gtk_source_search_context_backward, "gtk_source_search_context_backward", LIBRARY.GSV);
-	Linker.link(gtk_source_search_context_backward2, "gtk_source_search_context_backward2", LIBRARY.GSV);
-	Linker.link(gtk_source_search_context_backward_async, "gtk_source_search_context_backward_async", LIBRARY.GSV);
-	Linker.link(gtk_source_search_context_backward_finish, "gtk_source_search_context_backward_finish", LIBRARY.GSV);
-	Linker.link(gtk_source_search_context_backward_finish2, "gtk_source_search_context_backward_finish2", LIBRARY.GSV);
-	Linker.link(gtk_source_search_context_forward, "gtk_source_search_context_forward", LIBRARY.GSV);
-	Linker.link(gtk_source_search_context_forward2, "gtk_source_search_context_forward2", LIBRARY.GSV);
-	Linker.link(gtk_source_search_context_forward_async, "gtk_source_search_context_forward_async", LIBRARY.GSV);
-	Linker.link(gtk_source_search_context_forward_finish, "gtk_source_search_context_forward_finish", LIBRARY.GSV);
-	Linker.link(gtk_source_search_context_forward_finish2, "gtk_source_search_context_forward_finish2", LIBRARY.GSV);
-	Linker.link(gtk_source_search_context_get_buffer, "gtk_source_search_context_get_buffer", LIBRARY.GSV);
-	Linker.link(gtk_source_search_context_get_highlight, "gtk_source_search_context_get_highlight", LIBRARY.GSV);
-	Linker.link(gtk_source_search_context_get_match_style, "gtk_source_search_context_get_match_style", LIBRARY.GSV);
-	Linker.link(gtk_source_search_context_get_occurrence_position, "gtk_source_search_context_get_occurrence_position", LIBRARY.GSV);
-	Linker.link(gtk_source_search_context_get_occurrences_count, "gtk_source_search_context_get_occurrences_count", LIBRARY.GSV);
-	Linker.link(gtk_source_search_context_get_regex_error, "gtk_source_search_context_get_regex_error", LIBRARY.GSV);
-	Linker.link(gtk_source_search_context_get_settings, "gtk_source_search_context_get_settings", LIBRARY.GSV);
-	Linker.link(gtk_source_search_context_replace, "gtk_source_search_context_replace", LIBRARY.GSV);
-	Linker.link(gtk_source_search_context_replace2, "gtk_source_search_context_replace2", LIBRARY.GSV);
-	Linker.link(gtk_source_search_context_replace_all, "gtk_source_search_context_replace_all", LIBRARY.GSV);
-	Linker.link(gtk_source_search_context_set_highlight, "gtk_source_search_context_set_highlight", LIBRARY.GSV);
-	Linker.link(gtk_source_search_context_set_match_style, "gtk_source_search_context_set_match_style", LIBRARY.GSV);
-	Linker.link(gtk_source_search_context_set_settings, "gtk_source_search_context_set_settings", LIBRARY.GSV);
+	Linker.link(gtk_source_search_context_get_type, "gtk_source_search_context_get_type", LIBRARY_GSV);
+	Linker.link(gtk_source_search_context_new, "gtk_source_search_context_new", LIBRARY_GSV);
+	Linker.link(gtk_source_search_context_backward, "gtk_source_search_context_backward", LIBRARY_GSV);
+	Linker.link(gtk_source_search_context_backward2, "gtk_source_search_context_backward2", LIBRARY_GSV);
+	Linker.link(gtk_source_search_context_backward_async, "gtk_source_search_context_backward_async", LIBRARY_GSV);
+	Linker.link(gtk_source_search_context_backward_finish, "gtk_source_search_context_backward_finish", LIBRARY_GSV);
+	Linker.link(gtk_source_search_context_backward_finish2, "gtk_source_search_context_backward_finish2", LIBRARY_GSV);
+	Linker.link(gtk_source_search_context_forward, "gtk_source_search_context_forward", LIBRARY_GSV);
+	Linker.link(gtk_source_search_context_forward2, "gtk_source_search_context_forward2", LIBRARY_GSV);
+	Linker.link(gtk_source_search_context_forward_async, "gtk_source_search_context_forward_async", LIBRARY_GSV);
+	Linker.link(gtk_source_search_context_forward_finish, "gtk_source_search_context_forward_finish", LIBRARY_GSV);
+	Linker.link(gtk_source_search_context_forward_finish2, "gtk_source_search_context_forward_finish2", LIBRARY_GSV);
+	Linker.link(gtk_source_search_context_get_buffer, "gtk_source_search_context_get_buffer", LIBRARY_GSV);
+	Linker.link(gtk_source_search_context_get_highlight, "gtk_source_search_context_get_highlight", LIBRARY_GSV);
+	Linker.link(gtk_source_search_context_get_match_style, "gtk_source_search_context_get_match_style", LIBRARY_GSV);
+	Linker.link(gtk_source_search_context_get_occurrence_position, "gtk_source_search_context_get_occurrence_position", LIBRARY_GSV);
+	Linker.link(gtk_source_search_context_get_occurrences_count, "gtk_source_search_context_get_occurrences_count", LIBRARY_GSV);
+	Linker.link(gtk_source_search_context_get_regex_error, "gtk_source_search_context_get_regex_error", LIBRARY_GSV);
+	Linker.link(gtk_source_search_context_get_settings, "gtk_source_search_context_get_settings", LIBRARY_GSV);
+	Linker.link(gtk_source_search_context_replace, "gtk_source_search_context_replace", LIBRARY_GSV);
+	Linker.link(gtk_source_search_context_replace2, "gtk_source_search_context_replace2", LIBRARY_GSV);
+	Linker.link(gtk_source_search_context_replace_all, "gtk_source_search_context_replace_all", LIBRARY_GSV);
+	Linker.link(gtk_source_search_context_set_highlight, "gtk_source_search_context_set_highlight", LIBRARY_GSV);
+	Linker.link(gtk_source_search_context_set_match_style, "gtk_source_search_context_set_match_style", LIBRARY_GSV);
+	Linker.link(gtk_source_search_context_set_settings, "gtk_source_search_context_set_settings", LIBRARY_GSV);
 
 	// gsv.SourceSearchSettings
 
-	Linker.link(gtk_source_search_settings_get_type, "gtk_source_search_settings_get_type", LIBRARY.GSV);
-	Linker.link(gtk_source_search_settings_new, "gtk_source_search_settings_new", LIBRARY.GSV);
-	Linker.link(gtk_source_search_settings_get_at_word_boundaries, "gtk_source_search_settings_get_at_word_boundaries", LIBRARY.GSV);
-	Linker.link(gtk_source_search_settings_get_case_sensitive, "gtk_source_search_settings_get_case_sensitive", LIBRARY.GSV);
-	Linker.link(gtk_source_search_settings_get_regex_enabled, "gtk_source_search_settings_get_regex_enabled", LIBRARY.GSV);
-	Linker.link(gtk_source_search_settings_get_search_text, "gtk_source_search_settings_get_search_text", LIBRARY.GSV);
-	Linker.link(gtk_source_search_settings_get_wrap_around, "gtk_source_search_settings_get_wrap_around", LIBRARY.GSV);
-	Linker.link(gtk_source_search_settings_set_at_word_boundaries, "gtk_source_search_settings_set_at_word_boundaries", LIBRARY.GSV);
-	Linker.link(gtk_source_search_settings_set_case_sensitive, "gtk_source_search_settings_set_case_sensitive", LIBRARY.GSV);
-	Linker.link(gtk_source_search_settings_set_regex_enabled, "gtk_source_search_settings_set_regex_enabled", LIBRARY.GSV);
-	Linker.link(gtk_source_search_settings_set_search_text, "gtk_source_search_settings_set_search_text", LIBRARY.GSV);
-	Linker.link(gtk_source_search_settings_set_wrap_around, "gtk_source_search_settings_set_wrap_around", LIBRARY.GSV);
+	Linker.link(gtk_source_search_settings_get_type, "gtk_source_search_settings_get_type", LIBRARY_GSV);
+	Linker.link(gtk_source_search_settings_new, "gtk_source_search_settings_new", LIBRARY_GSV);
+	Linker.link(gtk_source_search_settings_get_at_word_boundaries, "gtk_source_search_settings_get_at_word_boundaries", LIBRARY_GSV);
+	Linker.link(gtk_source_search_settings_get_case_sensitive, "gtk_source_search_settings_get_case_sensitive", LIBRARY_GSV);
+	Linker.link(gtk_source_search_settings_get_regex_enabled, "gtk_source_search_settings_get_regex_enabled", LIBRARY_GSV);
+	Linker.link(gtk_source_search_settings_get_search_text, "gtk_source_search_settings_get_search_text", LIBRARY_GSV);
+	Linker.link(gtk_source_search_settings_get_wrap_around, "gtk_source_search_settings_get_wrap_around", LIBRARY_GSV);
+	Linker.link(gtk_source_search_settings_set_at_word_boundaries, "gtk_source_search_settings_set_at_word_boundaries", LIBRARY_GSV);
+	Linker.link(gtk_source_search_settings_set_case_sensitive, "gtk_source_search_settings_set_case_sensitive", LIBRARY_GSV);
+	Linker.link(gtk_source_search_settings_set_regex_enabled, "gtk_source_search_settings_set_regex_enabled", LIBRARY_GSV);
+	Linker.link(gtk_source_search_settings_set_search_text, "gtk_source_search_settings_set_search_text", LIBRARY_GSV);
+	Linker.link(gtk_source_search_settings_set_wrap_around, "gtk_source_search_settings_set_wrap_around", LIBRARY_GSV);
 
 	// gsv.SpaceDrawer
 
-	Linker.link(gtk_source_space_drawer_get_type, "gtk_source_space_drawer_get_type", LIBRARY.GSV);
-	Linker.link(gtk_source_space_drawer_new, "gtk_source_space_drawer_new", LIBRARY.GSV);
-	Linker.link(gtk_source_space_drawer_bind_matrix_setting, "gtk_source_space_drawer_bind_matrix_setting", LIBRARY.GSV);
-	Linker.link(gtk_source_space_drawer_get_enable_matrix, "gtk_source_space_drawer_get_enable_matrix", LIBRARY.GSV);
-	Linker.link(gtk_source_space_drawer_get_matrix, "gtk_source_space_drawer_get_matrix", LIBRARY.GSV);
-	Linker.link(gtk_source_space_drawer_get_types_for_locations, "gtk_source_space_drawer_get_types_for_locations", LIBRARY.GSV);
-	Linker.link(gtk_source_space_drawer_set_enable_matrix, "gtk_source_space_drawer_set_enable_matrix", LIBRARY.GSV);
-	Linker.link(gtk_source_space_drawer_set_matrix, "gtk_source_space_drawer_set_matrix", LIBRARY.GSV);
-	Linker.link(gtk_source_space_drawer_set_types_for_locations, "gtk_source_space_drawer_set_types_for_locations", LIBRARY.GSV);
+	Linker.link(gtk_source_space_drawer_get_type, "gtk_source_space_drawer_get_type", LIBRARY_GSV);
+	Linker.link(gtk_source_space_drawer_new, "gtk_source_space_drawer_new", LIBRARY_GSV);
+	Linker.link(gtk_source_space_drawer_bind_matrix_setting, "gtk_source_space_drawer_bind_matrix_setting", LIBRARY_GSV);
+	Linker.link(gtk_source_space_drawer_get_enable_matrix, "gtk_source_space_drawer_get_enable_matrix", LIBRARY_GSV);
+	Linker.link(gtk_source_space_drawer_get_matrix, "gtk_source_space_drawer_get_matrix", LIBRARY_GSV);
+	Linker.link(gtk_source_space_drawer_get_types_for_locations, "gtk_source_space_drawer_get_types_for_locations", LIBRARY_GSV);
+	Linker.link(gtk_source_space_drawer_set_enable_matrix, "gtk_source_space_drawer_set_enable_matrix", LIBRARY_GSV);
+	Linker.link(gtk_source_space_drawer_set_matrix, "gtk_source_space_drawer_set_matrix", LIBRARY_GSV);
+	Linker.link(gtk_source_space_drawer_set_types_for_locations, "gtk_source_space_drawer_set_types_for_locations", LIBRARY_GSV);
 
 	// gsv.SourceStyle
 
-	Linker.link(gtk_source_style_get_type, "gtk_source_style_get_type", LIBRARY.GSV);
-	Linker.link(gtk_source_style_apply, "gtk_source_style_apply", LIBRARY.GSV);
-	Linker.link(gtk_source_style_copy, "gtk_source_style_copy", LIBRARY.GSV);
+	Linker.link(gtk_source_style_get_type, "gtk_source_style_get_type", LIBRARY_GSV);
+	Linker.link(gtk_source_style_apply, "gtk_source_style_apply", LIBRARY_GSV);
+	Linker.link(gtk_source_style_copy, "gtk_source_style_copy", LIBRARY_GSV);
 
 	// gsv.SourceStyleScheme
 
-	Linker.link(gtk_source_style_scheme_get_type, "gtk_source_style_scheme_get_type", LIBRARY.GSV);
-	Linker.link(gtk_source_style_scheme_get_authors, "gtk_source_style_scheme_get_authors", LIBRARY.GSV);
-	Linker.link(gtk_source_style_scheme_get_description, "gtk_source_style_scheme_get_description", LIBRARY.GSV);
-	Linker.link(gtk_source_style_scheme_get_filename, "gtk_source_style_scheme_get_filename", LIBRARY.GSV);
-	Linker.link(gtk_source_style_scheme_get_id, "gtk_source_style_scheme_get_id", LIBRARY.GSV);
-	Linker.link(gtk_source_style_scheme_get_name, "gtk_source_style_scheme_get_name", LIBRARY.GSV);
-	Linker.link(gtk_source_style_scheme_get_style, "gtk_source_style_scheme_get_style", LIBRARY.GSV);
+	Linker.link(gtk_source_style_scheme_get_type, "gtk_source_style_scheme_get_type", LIBRARY_GSV);
+	Linker.link(gtk_source_style_scheme_get_authors, "gtk_source_style_scheme_get_authors", LIBRARY_GSV);
+	Linker.link(gtk_source_style_scheme_get_description, "gtk_source_style_scheme_get_description", LIBRARY_GSV);
+	Linker.link(gtk_source_style_scheme_get_filename, "gtk_source_style_scheme_get_filename", LIBRARY_GSV);
+	Linker.link(gtk_source_style_scheme_get_id, "gtk_source_style_scheme_get_id", LIBRARY_GSV);
+	Linker.link(gtk_source_style_scheme_get_name, "gtk_source_style_scheme_get_name", LIBRARY_GSV);
+	Linker.link(gtk_source_style_scheme_get_style, "gtk_source_style_scheme_get_style", LIBRARY_GSV);
 
 	// gsv.StyleSchemeChooser
 
-	Linker.link(gtk_source_style_scheme_chooser_get_type, "gtk_source_style_scheme_chooser_get_type", LIBRARY.GSV);
-	Linker.link(gtk_source_style_scheme_chooser_get_style_scheme, "gtk_source_style_scheme_chooser_get_style_scheme", LIBRARY.GSV);
-	Linker.link(gtk_source_style_scheme_chooser_set_style_scheme, "gtk_source_style_scheme_chooser_set_style_scheme", LIBRARY.GSV);
+	Linker.link(gtk_source_style_scheme_chooser_get_type, "gtk_source_style_scheme_chooser_get_type", LIBRARY_GSV);
+	Linker.link(gtk_source_style_scheme_chooser_get_style_scheme, "gtk_source_style_scheme_chooser_get_style_scheme", LIBRARY_GSV);
+	Linker.link(gtk_source_style_scheme_chooser_set_style_scheme, "gtk_source_style_scheme_chooser_set_style_scheme", LIBRARY_GSV);
 
 	// gsv.StyleSchemeChooserButton
 
-	Linker.link(gtk_source_style_scheme_chooser_button_get_type, "gtk_source_style_scheme_chooser_button_get_type", LIBRARY.GSV);
-	Linker.link(gtk_source_style_scheme_chooser_button_new, "gtk_source_style_scheme_chooser_button_new", LIBRARY.GSV);
+	Linker.link(gtk_source_style_scheme_chooser_button_get_type, "gtk_source_style_scheme_chooser_button_get_type", LIBRARY_GSV);
+	Linker.link(gtk_source_style_scheme_chooser_button_new, "gtk_source_style_scheme_chooser_button_new", LIBRARY_GSV);
 
 	// gsv.StyleSchemeChooserWidget
 
-	Linker.link(gtk_source_style_scheme_chooser_widget_get_type, "gtk_source_style_scheme_chooser_widget_get_type", LIBRARY.GSV);
-	Linker.link(gtk_source_style_scheme_chooser_widget_new, "gtk_source_style_scheme_chooser_widget_new", LIBRARY.GSV);
+	Linker.link(gtk_source_style_scheme_chooser_widget_get_type, "gtk_source_style_scheme_chooser_widget_get_type", LIBRARY_GSV);
+	Linker.link(gtk_source_style_scheme_chooser_widget_new, "gtk_source_style_scheme_chooser_widget_new", LIBRARY_GSV);
 
 	// gsv.SourceStyleSchemeManager
 
-	Linker.link(gtk_source_style_scheme_manager_get_type, "gtk_source_style_scheme_manager_get_type", LIBRARY.GSV);
-	Linker.link(gtk_source_style_scheme_manager_new, "gtk_source_style_scheme_manager_new", LIBRARY.GSV);
-	Linker.link(gtk_source_style_scheme_manager_get_default, "gtk_source_style_scheme_manager_get_default", LIBRARY.GSV);
-	Linker.link(gtk_source_style_scheme_manager_append_search_path, "gtk_source_style_scheme_manager_append_search_path", LIBRARY.GSV);
-	Linker.link(gtk_source_style_scheme_manager_force_rescan, "gtk_source_style_scheme_manager_force_rescan", LIBRARY.GSV);
-	Linker.link(gtk_source_style_scheme_manager_get_scheme, "gtk_source_style_scheme_manager_get_scheme", LIBRARY.GSV);
-	Linker.link(gtk_source_style_scheme_manager_get_scheme_ids, "gtk_source_style_scheme_manager_get_scheme_ids", LIBRARY.GSV);
-	Linker.link(gtk_source_style_scheme_manager_get_search_path, "gtk_source_style_scheme_manager_get_search_path", LIBRARY.GSV);
-	Linker.link(gtk_source_style_scheme_manager_prepend_search_path, "gtk_source_style_scheme_manager_prepend_search_path", LIBRARY.GSV);
-	Linker.link(gtk_source_style_scheme_manager_set_search_path, "gtk_source_style_scheme_manager_set_search_path", LIBRARY.GSV);
+	Linker.link(gtk_source_style_scheme_manager_get_type, "gtk_source_style_scheme_manager_get_type", LIBRARY_GSV);
+	Linker.link(gtk_source_style_scheme_manager_new, "gtk_source_style_scheme_manager_new", LIBRARY_GSV);
+	Linker.link(gtk_source_style_scheme_manager_get_default, "gtk_source_style_scheme_manager_get_default", LIBRARY_GSV);
+	Linker.link(gtk_source_style_scheme_manager_append_search_path, "gtk_source_style_scheme_manager_append_search_path", LIBRARY_GSV);
+	Linker.link(gtk_source_style_scheme_manager_force_rescan, "gtk_source_style_scheme_manager_force_rescan", LIBRARY_GSV);
+	Linker.link(gtk_source_style_scheme_manager_get_scheme, "gtk_source_style_scheme_manager_get_scheme", LIBRARY_GSV);
+	Linker.link(gtk_source_style_scheme_manager_get_scheme_ids, "gtk_source_style_scheme_manager_get_scheme_ids", LIBRARY_GSV);
+	Linker.link(gtk_source_style_scheme_manager_get_search_path, "gtk_source_style_scheme_manager_get_search_path", LIBRARY_GSV);
+	Linker.link(gtk_source_style_scheme_manager_prepend_search_path, "gtk_source_style_scheme_manager_prepend_search_path", LIBRARY_GSV);
+	Linker.link(gtk_source_style_scheme_manager_set_search_path, "gtk_source_style_scheme_manager_set_search_path", LIBRARY_GSV);
 
 	// gsv.Tag
 
-	Linker.link(gtk_source_tag_get_type, "gtk_source_tag_get_type", LIBRARY.GSV);
-	Linker.link(gtk_source_tag_new, "gtk_source_tag_new", LIBRARY.GSV);
+	Linker.link(gtk_source_tag_get_type, "gtk_source_tag_get_type", LIBRARY_GSV);
+	Linker.link(gtk_source_tag_new, "gtk_source_tag_new", LIBRARY_GSV);
 
 	// gsv.SourceUndoManager
 
-	Linker.link(gtk_source_undo_manager_get_type, "gtk_source_undo_manager_get_type", LIBRARY.GSV);
-	Linker.link(gtk_source_undo_manager_begin_not_undoable_action, "gtk_source_undo_manager_begin_not_undoable_action", LIBRARY.GSV);
-	Linker.link(gtk_source_undo_manager_can_redo, "gtk_source_undo_manager_can_redo", LIBRARY.GSV);
-	Linker.link(gtk_source_undo_manager_can_redo_changed, "gtk_source_undo_manager_can_redo_changed", LIBRARY.GSV);
-	Linker.link(gtk_source_undo_manager_can_undo, "gtk_source_undo_manager_can_undo", LIBRARY.GSV);
-	Linker.link(gtk_source_undo_manager_can_undo_changed, "gtk_source_undo_manager_can_undo_changed", LIBRARY.GSV);
-	Linker.link(gtk_source_undo_manager_end_not_undoable_action, "gtk_source_undo_manager_end_not_undoable_action", LIBRARY.GSV);
-	Linker.link(gtk_source_undo_manager_redo, "gtk_source_undo_manager_redo", LIBRARY.GSV);
-	Linker.link(gtk_source_undo_manager_undo, "gtk_source_undo_manager_undo", LIBRARY.GSV);
+	Linker.link(gtk_source_undo_manager_get_type, "gtk_source_undo_manager_get_type", LIBRARY_GSV);
+	Linker.link(gtk_source_undo_manager_begin_not_undoable_action, "gtk_source_undo_manager_begin_not_undoable_action", LIBRARY_GSV);
+	Linker.link(gtk_source_undo_manager_can_redo, "gtk_source_undo_manager_can_redo", LIBRARY_GSV);
+	Linker.link(gtk_source_undo_manager_can_redo_changed, "gtk_source_undo_manager_can_redo_changed", LIBRARY_GSV);
+	Linker.link(gtk_source_undo_manager_can_undo, "gtk_source_undo_manager_can_undo", LIBRARY_GSV);
+	Linker.link(gtk_source_undo_manager_can_undo_changed, "gtk_source_undo_manager_can_undo_changed", LIBRARY_GSV);
+	Linker.link(gtk_source_undo_manager_end_not_undoable_action, "gtk_source_undo_manager_end_not_undoable_action", LIBRARY_GSV);
+	Linker.link(gtk_source_undo_manager_redo, "gtk_source_undo_manager_redo", LIBRARY_GSV);
+	Linker.link(gtk_source_undo_manager_undo, "gtk_source_undo_manager_undo", LIBRARY_GSV);
 
 	// gsv.SourceView
 
-	Linker.link(gtk_source_view_get_type, "gtk_source_view_get_type", LIBRARY.GSV);
-	Linker.link(gtk_source_view_new, "gtk_source_view_new", LIBRARY.GSV);
-	Linker.link(gtk_source_view_new_with_buffer, "gtk_source_view_new_with_buffer", LIBRARY.GSV);
-	Linker.link(gtk_source_view_get_auto_indent, "gtk_source_view_get_auto_indent", LIBRARY.GSV);
-	Linker.link(gtk_source_view_get_background_pattern, "gtk_source_view_get_background_pattern", LIBRARY.GSV);
-	Linker.link(gtk_source_view_get_completion, "gtk_source_view_get_completion", LIBRARY.GSV);
-	Linker.link(gtk_source_view_get_draw_spaces, "gtk_source_view_get_draw_spaces", LIBRARY.GSV);
-	Linker.link(gtk_source_view_get_gutter, "gtk_source_view_get_gutter", LIBRARY.GSV);
-	Linker.link(gtk_source_view_get_highlight_current_line, "gtk_source_view_get_highlight_current_line", LIBRARY.GSV);
-	Linker.link(gtk_source_view_get_indent_on_tab, "gtk_source_view_get_indent_on_tab", LIBRARY.GSV);
-	Linker.link(gtk_source_view_get_indent_width, "gtk_source_view_get_indent_width", LIBRARY.GSV);
-	Linker.link(gtk_source_view_get_insert_spaces_instead_of_tabs, "gtk_source_view_get_insert_spaces_instead_of_tabs", LIBRARY.GSV);
-	Linker.link(gtk_source_view_get_mark_attributes, "gtk_source_view_get_mark_attributes", LIBRARY.GSV);
-	Linker.link(gtk_source_view_get_right_margin_position, "gtk_source_view_get_right_margin_position", LIBRARY.GSV);
-	Linker.link(gtk_source_view_get_show_line_marks, "gtk_source_view_get_show_line_marks", LIBRARY.GSV);
-	Linker.link(gtk_source_view_get_show_line_numbers, "gtk_source_view_get_show_line_numbers", LIBRARY.GSV);
-	Linker.link(gtk_source_view_get_show_right_margin, "gtk_source_view_get_show_right_margin", LIBRARY.GSV);
-	Linker.link(gtk_source_view_get_smart_backspace, "gtk_source_view_get_smart_backspace", LIBRARY.GSV);
-	Linker.link(gtk_source_view_get_smart_home_end, "gtk_source_view_get_smart_home_end", LIBRARY.GSV);
-	Linker.link(gtk_source_view_get_space_drawer, "gtk_source_view_get_space_drawer", LIBRARY.GSV);
-	Linker.link(gtk_source_view_get_tab_width, "gtk_source_view_get_tab_width", LIBRARY.GSV);
-	Linker.link(gtk_source_view_get_visual_column, "gtk_source_view_get_visual_column", LIBRARY.GSV);
-	Linker.link(gtk_source_view_indent_lines, "gtk_source_view_indent_lines", LIBRARY.GSV);
-	Linker.link(gtk_source_view_set_auto_indent, "gtk_source_view_set_auto_indent", LIBRARY.GSV);
-	Linker.link(gtk_source_view_set_background_pattern, "gtk_source_view_set_background_pattern", LIBRARY.GSV);
-	Linker.link(gtk_source_view_set_draw_spaces, "gtk_source_view_set_draw_spaces", LIBRARY.GSV);
-	Linker.link(gtk_source_view_set_highlight_current_line, "gtk_source_view_set_highlight_current_line", LIBRARY.GSV);
-	Linker.link(gtk_source_view_set_indent_on_tab, "gtk_source_view_set_indent_on_tab", LIBRARY.GSV);
-	Linker.link(gtk_source_view_set_indent_width, "gtk_source_view_set_indent_width", LIBRARY.GSV);
-	Linker.link(gtk_source_view_set_insert_spaces_instead_of_tabs, "gtk_source_view_set_insert_spaces_instead_of_tabs", LIBRARY.GSV);
-	Linker.link(gtk_source_view_set_mark_attributes, "gtk_source_view_set_mark_attributes", LIBRARY.GSV);
-	Linker.link(gtk_source_view_set_right_margin_position, "gtk_source_view_set_right_margin_position", LIBRARY.GSV);
-	Linker.link(gtk_source_view_set_show_line_marks, "gtk_source_view_set_show_line_marks", LIBRARY.GSV);
-	Linker.link(gtk_source_view_set_show_line_numbers, "gtk_source_view_set_show_line_numbers", LIBRARY.GSV);
-	Linker.link(gtk_source_view_set_show_right_margin, "gtk_source_view_set_show_right_margin", LIBRARY.GSV);
-	Linker.link(gtk_source_view_set_smart_backspace, "gtk_source_view_set_smart_backspace", LIBRARY.GSV);
-	Linker.link(gtk_source_view_set_smart_home_end, "gtk_source_view_set_smart_home_end", LIBRARY.GSV);
-	Linker.link(gtk_source_view_set_tab_width, "gtk_source_view_set_tab_width", LIBRARY.GSV);
-	Linker.link(gtk_source_view_unindent_lines, "gtk_source_view_unindent_lines", LIBRARY.GSV);
+	Linker.link(gtk_source_view_get_type, "gtk_source_view_get_type", LIBRARY_GSV);
+	Linker.link(gtk_source_view_new, "gtk_source_view_new", LIBRARY_GSV);
+	Linker.link(gtk_source_view_new_with_buffer, "gtk_source_view_new_with_buffer", LIBRARY_GSV);
+	Linker.link(gtk_source_view_get_auto_indent, "gtk_source_view_get_auto_indent", LIBRARY_GSV);
+	Linker.link(gtk_source_view_get_background_pattern, "gtk_source_view_get_background_pattern", LIBRARY_GSV);
+	Linker.link(gtk_source_view_get_completion, "gtk_source_view_get_completion", LIBRARY_GSV);
+	Linker.link(gtk_source_view_get_draw_spaces, "gtk_source_view_get_draw_spaces", LIBRARY_GSV);
+	Linker.link(gtk_source_view_get_gutter, "gtk_source_view_get_gutter", LIBRARY_GSV);
+	Linker.link(gtk_source_view_get_highlight_current_line, "gtk_source_view_get_highlight_current_line", LIBRARY_GSV);
+	Linker.link(gtk_source_view_get_indent_on_tab, "gtk_source_view_get_indent_on_tab", LIBRARY_GSV);
+	Linker.link(gtk_source_view_get_indent_width, "gtk_source_view_get_indent_width", LIBRARY_GSV);
+	Linker.link(gtk_source_view_get_insert_spaces_instead_of_tabs, "gtk_source_view_get_insert_spaces_instead_of_tabs", LIBRARY_GSV);
+	Linker.link(gtk_source_view_get_mark_attributes, "gtk_source_view_get_mark_attributes", LIBRARY_GSV);
+	Linker.link(gtk_source_view_get_right_margin_position, "gtk_source_view_get_right_margin_position", LIBRARY_GSV);
+	Linker.link(gtk_source_view_get_show_line_marks, "gtk_source_view_get_show_line_marks", LIBRARY_GSV);
+	Linker.link(gtk_source_view_get_show_line_numbers, "gtk_source_view_get_show_line_numbers", LIBRARY_GSV);
+	Linker.link(gtk_source_view_get_show_right_margin, "gtk_source_view_get_show_right_margin", LIBRARY_GSV);
+	Linker.link(gtk_source_view_get_smart_backspace, "gtk_source_view_get_smart_backspace", LIBRARY_GSV);
+	Linker.link(gtk_source_view_get_smart_home_end, "gtk_source_view_get_smart_home_end", LIBRARY_GSV);
+	Linker.link(gtk_source_view_get_space_drawer, "gtk_source_view_get_space_drawer", LIBRARY_GSV);
+	Linker.link(gtk_source_view_get_tab_width, "gtk_source_view_get_tab_width", LIBRARY_GSV);
+	Linker.link(gtk_source_view_get_visual_column, "gtk_source_view_get_visual_column", LIBRARY_GSV);
+	Linker.link(gtk_source_view_indent_lines, "gtk_source_view_indent_lines", LIBRARY_GSV);
+	Linker.link(gtk_source_view_set_auto_indent, "gtk_source_view_set_auto_indent", LIBRARY_GSV);
+	Linker.link(gtk_source_view_set_background_pattern, "gtk_source_view_set_background_pattern", LIBRARY_GSV);
+	Linker.link(gtk_source_view_set_draw_spaces, "gtk_source_view_set_draw_spaces", LIBRARY_GSV);
+	Linker.link(gtk_source_view_set_highlight_current_line, "gtk_source_view_set_highlight_current_line", LIBRARY_GSV);
+	Linker.link(gtk_source_view_set_indent_on_tab, "gtk_source_view_set_indent_on_tab", LIBRARY_GSV);
+	Linker.link(gtk_source_view_set_indent_width, "gtk_source_view_set_indent_width", LIBRARY_GSV);
+	Linker.link(gtk_source_view_set_insert_spaces_instead_of_tabs, "gtk_source_view_set_insert_spaces_instead_of_tabs", LIBRARY_GSV);
+	Linker.link(gtk_source_view_set_mark_attributes, "gtk_source_view_set_mark_attributes", LIBRARY_GSV);
+	Linker.link(gtk_source_view_set_right_margin_position, "gtk_source_view_set_right_margin_position", LIBRARY_GSV);
+	Linker.link(gtk_source_view_set_show_line_marks, "gtk_source_view_set_show_line_marks", LIBRARY_GSV);
+	Linker.link(gtk_source_view_set_show_line_numbers, "gtk_source_view_set_show_line_numbers", LIBRARY_GSV);
+	Linker.link(gtk_source_view_set_show_right_margin, "gtk_source_view_set_show_right_margin", LIBRARY_GSV);
+	Linker.link(gtk_source_view_set_smart_backspace, "gtk_source_view_set_smart_backspace", LIBRARY_GSV);
+	Linker.link(gtk_source_view_set_smart_home_end, "gtk_source_view_set_smart_home_end", LIBRARY_GSV);
+	Linker.link(gtk_source_view_set_tab_width, "gtk_source_view_set_tab_width", LIBRARY_GSV);
+	Linker.link(gtk_source_view_unindent_lines, "gtk_source_view_unindent_lines", LIBRARY_GSV);
 
 	// gsv.Utils
 
-	Linker.link(gtk_source_utils_escape_search_text, "gtk_source_utils_escape_search_text", LIBRARY.GSV);
-	Linker.link(gtk_source_utils_unescape_search_text, "gtk_source_utils_unescape_search_text", LIBRARY.GSV);
+	Linker.link(gtk_source_utils_escape_search_text, "gtk_source_utils_escape_search_text", LIBRARY_GSV);
+	Linker.link(gtk_source_utils_unescape_search_text, "gtk_source_utils_unescape_search_text", LIBRARY_GSV);
 }
 
 __gshared extern(C)

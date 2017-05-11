@@ -27,19 +27,25 @@ module gstreamerc.gstinterfaces;
 import std.stdio;
 import gstreamerc.gstinterfacestypes;
 import gtkd.Loader;
-import gtkd.paths;
+
+version (Windows)
+	static immutable LIBRARY_GSTINTERFACES = ["libgstvideo-1.0-0.dll"];
+else version (OSX)
+	static immutable LIBRARY_GSTINTERFACES = ["libgstvideo-1.0.0.dylib"];
+else
+	static immutable LIBRARY_GSTINTERFACES = ["libgstvideo-1.0.so.0"];
 
 shared static this()
 {
 	// gstinterfaces.VideoOverlay
 
-	Linker.link(gst_video_overlay_get_type, "gst_video_overlay_get_type", LIBRARY.GSTINTERFACES);
-	Linker.link(gst_video_overlay_expose, "gst_video_overlay_expose", LIBRARY.GSTINTERFACES);
-	Linker.link(gst_video_overlay_got_window_handle, "gst_video_overlay_got_window_handle", LIBRARY.GSTINTERFACES);
-	Linker.link(gst_video_overlay_handle_events, "gst_video_overlay_handle_events", LIBRARY.GSTINTERFACES);
-	Linker.link(gst_video_overlay_prepare_window_handle, "gst_video_overlay_prepare_window_handle", LIBRARY.GSTINTERFACES);
-	Linker.link(gst_video_overlay_set_render_rectangle, "gst_video_overlay_set_render_rectangle", LIBRARY.GSTINTERFACES);
-	Linker.link(gst_video_overlay_set_window_handle, "gst_video_overlay_set_window_handle", LIBRARY.GSTINTERFACES);
+	Linker.link(gst_video_overlay_get_type, "gst_video_overlay_get_type", LIBRARY_GSTINTERFACES);
+	Linker.link(gst_video_overlay_expose, "gst_video_overlay_expose", LIBRARY_GSTINTERFACES);
+	Linker.link(gst_video_overlay_got_window_handle, "gst_video_overlay_got_window_handle", LIBRARY_GSTINTERFACES);
+	Linker.link(gst_video_overlay_handle_events, "gst_video_overlay_handle_events", LIBRARY_GSTINTERFACES);
+	Linker.link(gst_video_overlay_prepare_window_handle, "gst_video_overlay_prepare_window_handle", LIBRARY_GSTINTERFACES);
+	Linker.link(gst_video_overlay_set_render_rectangle, "gst_video_overlay_set_render_rectangle", LIBRARY_GSTINTERFACES);
+	Linker.link(gst_video_overlay_set_window_handle, "gst_video_overlay_set_window_handle", LIBRARY_GSTINTERFACES);
 }
 
 __gshared extern(C)

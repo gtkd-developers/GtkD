@@ -27,7 +27,13 @@ module gtkc.gthread;
 import std.stdio;
 import gtkc.gthreadtypes;
 import gtkd.Loader;
-import gtkd.paths;
+
+version (Windows)
+	static immutable LIBRARY_GTHREAD = [];
+else version (OSX)
+	static immutable LIBRARY_GTHREAD = [];
+else
+	static immutable LIBRARY_GTHREAD = [""];
 
 shared static this()
 {}

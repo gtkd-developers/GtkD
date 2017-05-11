@@ -27,112 +27,118 @@ module peasc.peas;
 import std.stdio;
 import peasc.peastypes;
 import gtkd.Loader;
-import gtkd.paths;
+
+version (Windows)
+	static immutable LIBRARY_PEAS = ["libpeas-1.0-0.dll", "gtk-1.0-0.dll"];
+else version (OSX)
+	static immutable LIBRARY_PEAS = ["libpeas-1.0.0.dylib", "gtk-1.0.0.dylib"];
+else
+	static immutable LIBRARY_PEAS = ["libpeas-1.0.so.0", "libpeas-gtk-1.0.so.0"];
 
 shared static this()
 {
 	// peas.Activatable
 
-	Linker.link(peas_activatable_get_type, "peas_activatable_get_type", LIBRARY.PEAS);
-	Linker.link(peas_activatable_activate, "peas_activatable_activate", LIBRARY.PEAS);
-	Linker.link(peas_activatable_deactivate, "peas_activatable_deactivate", LIBRARY.PEAS);
-	Linker.link(peas_activatable_update_state, "peas_activatable_update_state", LIBRARY.PEAS);
+	Linker.link(peas_activatable_get_type, "peas_activatable_get_type", LIBRARY_PEAS);
+	Linker.link(peas_activatable_activate, "peas_activatable_activate", LIBRARY_PEAS);
+	Linker.link(peas_activatable_deactivate, "peas_activatable_deactivate", LIBRARY_PEAS);
+	Linker.link(peas_activatable_update_state, "peas_activatable_update_state", LIBRARY_PEAS);
 
 	// peas.Engine
 
-	Linker.link(peas_engine_get_type, "peas_engine_get_type", LIBRARY.PEAS);
-	Linker.link(peas_engine_new, "peas_engine_new", LIBRARY.PEAS);
-	Linker.link(peas_engine_new_with_nonglobal_loaders, "peas_engine_new_with_nonglobal_loaders", LIBRARY.PEAS);
-	Linker.link(peas_engine_get_default, "peas_engine_get_default", LIBRARY.PEAS);
-	Linker.link(peas_engine_add_search_path, "peas_engine_add_search_path", LIBRARY.PEAS);
-	Linker.link(peas_engine_create_extension, "peas_engine_create_extension", LIBRARY.PEAS);
-	Linker.link(peas_engine_create_extension_valist, "peas_engine_create_extension_valist", LIBRARY.PEAS);
-	Linker.link(peas_engine_create_extensionv, "peas_engine_create_extensionv", LIBRARY.PEAS);
-	Linker.link(peas_engine_enable_loader, "peas_engine_enable_loader", LIBRARY.PEAS);
-	Linker.link(peas_engine_garbage_collect, "peas_engine_garbage_collect", LIBRARY.PEAS);
-	Linker.link(peas_engine_get_loaded_plugins, "peas_engine_get_loaded_plugins", LIBRARY.PEAS);
-	Linker.link(peas_engine_get_plugin_info, "peas_engine_get_plugin_info", LIBRARY.PEAS);
-	Linker.link(peas_engine_get_plugin_list, "peas_engine_get_plugin_list", LIBRARY.PEAS);
-	Linker.link(peas_engine_load_plugin, "peas_engine_load_plugin", LIBRARY.PEAS);
-	Linker.link(peas_engine_prepend_search_path, "peas_engine_prepend_search_path", LIBRARY.PEAS);
-	Linker.link(peas_engine_provides_extension, "peas_engine_provides_extension", LIBRARY.PEAS);
-	Linker.link(peas_engine_rescan_plugins, "peas_engine_rescan_plugins", LIBRARY.PEAS);
-	Linker.link(peas_engine_set_loaded_plugins, "peas_engine_set_loaded_plugins", LIBRARY.PEAS);
-	Linker.link(peas_engine_unload_plugin, "peas_engine_unload_plugin", LIBRARY.PEAS);
+	Linker.link(peas_engine_get_type, "peas_engine_get_type", LIBRARY_PEAS);
+	Linker.link(peas_engine_new, "peas_engine_new", LIBRARY_PEAS);
+	Linker.link(peas_engine_new_with_nonglobal_loaders, "peas_engine_new_with_nonglobal_loaders", LIBRARY_PEAS);
+	Linker.link(peas_engine_get_default, "peas_engine_get_default", LIBRARY_PEAS);
+	Linker.link(peas_engine_add_search_path, "peas_engine_add_search_path", LIBRARY_PEAS);
+	Linker.link(peas_engine_create_extension, "peas_engine_create_extension", LIBRARY_PEAS);
+	Linker.link(peas_engine_create_extension_valist, "peas_engine_create_extension_valist", LIBRARY_PEAS);
+	Linker.link(peas_engine_create_extensionv, "peas_engine_create_extensionv", LIBRARY_PEAS);
+	Linker.link(peas_engine_enable_loader, "peas_engine_enable_loader", LIBRARY_PEAS);
+	Linker.link(peas_engine_garbage_collect, "peas_engine_garbage_collect", LIBRARY_PEAS);
+	Linker.link(peas_engine_get_loaded_plugins, "peas_engine_get_loaded_plugins", LIBRARY_PEAS);
+	Linker.link(peas_engine_get_plugin_info, "peas_engine_get_plugin_info", LIBRARY_PEAS);
+	Linker.link(peas_engine_get_plugin_list, "peas_engine_get_plugin_list", LIBRARY_PEAS);
+	Linker.link(peas_engine_load_plugin, "peas_engine_load_plugin", LIBRARY_PEAS);
+	Linker.link(peas_engine_prepend_search_path, "peas_engine_prepend_search_path", LIBRARY_PEAS);
+	Linker.link(peas_engine_provides_extension, "peas_engine_provides_extension", LIBRARY_PEAS);
+	Linker.link(peas_engine_rescan_plugins, "peas_engine_rescan_plugins", LIBRARY_PEAS);
+	Linker.link(peas_engine_set_loaded_plugins, "peas_engine_set_loaded_plugins", LIBRARY_PEAS);
+	Linker.link(peas_engine_unload_plugin, "peas_engine_unload_plugin", LIBRARY_PEAS);
 
 	// peas.ExtensionBase
 
-	Linker.link(peas_extension_base_get_type, "peas_extension_base_get_type", LIBRARY.PEAS);
-	Linker.link(peas_extension_base_get_data_dir, "peas_extension_base_get_data_dir", LIBRARY.PEAS);
-	Linker.link(peas_extension_base_get_plugin_info, "peas_extension_base_get_plugin_info", LIBRARY.PEAS);
+	Linker.link(peas_extension_base_get_type, "peas_extension_base_get_type", LIBRARY_PEAS);
+	Linker.link(peas_extension_base_get_data_dir, "peas_extension_base_get_data_dir", LIBRARY_PEAS);
+	Linker.link(peas_extension_base_get_plugin_info, "peas_extension_base_get_plugin_info", LIBRARY_PEAS);
 
 	// peas.ExtensionSet
 
-	Linker.link(peas_extension_set_get_type, "peas_extension_set_get_type", LIBRARY.PEAS);
-	Linker.link(peas_extension_set_new, "peas_extension_set_new", LIBRARY.PEAS);
-	Linker.link(peas_extension_set_new_valist, "peas_extension_set_new_valist", LIBRARY.PEAS);
-	Linker.link(peas_extension_set_newv, "peas_extension_set_newv", LIBRARY.PEAS);
-	Linker.link(peas_extension_set_foreach, "peas_extension_set_foreach", LIBRARY.PEAS);
-	Linker.link(peas_extension_set_get_extension, "peas_extension_set_get_extension", LIBRARY.PEAS);
+	Linker.link(peas_extension_set_get_type, "peas_extension_set_get_type", LIBRARY_PEAS);
+	Linker.link(peas_extension_set_new, "peas_extension_set_new", LIBRARY_PEAS);
+	Linker.link(peas_extension_set_new_valist, "peas_extension_set_new_valist", LIBRARY_PEAS);
+	Linker.link(peas_extension_set_newv, "peas_extension_set_newv", LIBRARY_PEAS);
+	Linker.link(peas_extension_set_foreach, "peas_extension_set_foreach", LIBRARY_PEAS);
+	Linker.link(peas_extension_set_get_extension, "peas_extension_set_get_extension", LIBRARY_PEAS);
 
 	// peas.ObjectModule
 
-	Linker.link(peas_object_module_get_type, "peas_object_module_get_type", LIBRARY.PEAS);
-	Linker.link(peas_object_module_new, "peas_object_module_new", LIBRARY.PEAS);
-	Linker.link(peas_object_module_new_embedded, "peas_object_module_new_embedded", LIBRARY.PEAS);
-	Linker.link(peas_object_module_new_full, "peas_object_module_new_full", LIBRARY.PEAS);
-	Linker.link(peas_object_module_create_object, "peas_object_module_create_object", LIBRARY.PEAS);
-	Linker.link(peas_object_module_get_library, "peas_object_module_get_library", LIBRARY.PEAS);
-	Linker.link(peas_object_module_get_module_name, "peas_object_module_get_module_name", LIBRARY.PEAS);
-	Linker.link(peas_object_module_get_path, "peas_object_module_get_path", LIBRARY.PEAS);
-	Linker.link(peas_object_module_get_symbol, "peas_object_module_get_symbol", LIBRARY.PEAS);
-	Linker.link(peas_object_module_provides_object, "peas_object_module_provides_object", LIBRARY.PEAS);
-	Linker.link(peas_object_module_register_extension_factory, "peas_object_module_register_extension_factory", LIBRARY.PEAS);
-	Linker.link(peas_object_module_register_extension_type, "peas_object_module_register_extension_type", LIBRARY.PEAS);
+	Linker.link(peas_object_module_get_type, "peas_object_module_get_type", LIBRARY_PEAS);
+	Linker.link(peas_object_module_new, "peas_object_module_new", LIBRARY_PEAS);
+	Linker.link(peas_object_module_new_embedded, "peas_object_module_new_embedded", LIBRARY_PEAS);
+	Linker.link(peas_object_module_new_full, "peas_object_module_new_full", LIBRARY_PEAS);
+	Linker.link(peas_object_module_create_object, "peas_object_module_create_object", LIBRARY_PEAS);
+	Linker.link(peas_object_module_get_library, "peas_object_module_get_library", LIBRARY_PEAS);
+	Linker.link(peas_object_module_get_module_name, "peas_object_module_get_module_name", LIBRARY_PEAS);
+	Linker.link(peas_object_module_get_path, "peas_object_module_get_path", LIBRARY_PEAS);
+	Linker.link(peas_object_module_get_symbol, "peas_object_module_get_symbol", LIBRARY_PEAS);
+	Linker.link(peas_object_module_provides_object, "peas_object_module_provides_object", LIBRARY_PEAS);
+	Linker.link(peas_object_module_register_extension_factory, "peas_object_module_register_extension_factory", LIBRARY_PEAS);
+	Linker.link(peas_object_module_register_extension_type, "peas_object_module_register_extension_type", LIBRARY_PEAS);
 
 	// peas.PluginInfo
 
-	Linker.link(peas_plugin_info_get_type, "peas_plugin_info_get_type", LIBRARY.PEAS);
-	Linker.link(peas_plugin_info_get_authors, "peas_plugin_info_get_authors", LIBRARY.PEAS);
-	Linker.link(peas_plugin_info_get_copyright, "peas_plugin_info_get_copyright", LIBRARY.PEAS);
-	Linker.link(peas_plugin_info_get_data_dir, "peas_plugin_info_get_data_dir", LIBRARY.PEAS);
-	Linker.link(peas_plugin_info_get_dependencies, "peas_plugin_info_get_dependencies", LIBRARY.PEAS);
-	Linker.link(peas_plugin_info_get_description, "peas_plugin_info_get_description", LIBRARY.PEAS);
-	Linker.link(peas_plugin_info_get_external_data, "peas_plugin_info_get_external_data", LIBRARY.PEAS);
-	Linker.link(peas_plugin_info_get_help_uri, "peas_plugin_info_get_help_uri", LIBRARY.PEAS);
-	Linker.link(peas_plugin_info_get_icon_name, "peas_plugin_info_get_icon_name", LIBRARY.PEAS);
-	Linker.link(peas_plugin_info_get_module_dir, "peas_plugin_info_get_module_dir", LIBRARY.PEAS);
-	Linker.link(peas_plugin_info_get_module_name, "peas_plugin_info_get_module_name", LIBRARY.PEAS);
-	Linker.link(peas_plugin_info_get_name, "peas_plugin_info_get_name", LIBRARY.PEAS);
-	Linker.link(peas_plugin_info_get_settings, "peas_plugin_info_get_settings", LIBRARY.PEAS);
-	Linker.link(peas_plugin_info_get_version, "peas_plugin_info_get_version", LIBRARY.PEAS);
-	Linker.link(peas_plugin_info_get_website, "peas_plugin_info_get_website", LIBRARY.PEAS);
-	Linker.link(peas_plugin_info_has_dependency, "peas_plugin_info_has_dependency", LIBRARY.PEAS);
-	Linker.link(peas_plugin_info_is_available, "peas_plugin_info_is_available", LIBRARY.PEAS);
-	Linker.link(peas_plugin_info_is_builtin, "peas_plugin_info_is_builtin", LIBRARY.PEAS);
-	Linker.link(peas_plugin_info_is_hidden, "peas_plugin_info_is_hidden", LIBRARY.PEAS);
-	Linker.link(peas_plugin_info_is_loaded, "peas_plugin_info_is_loaded", LIBRARY.PEAS);
-	Linker.link(peas_plugin_info_error_quark, "peas_plugin_info_error_quark", LIBRARY.PEAS);
+	Linker.link(peas_plugin_info_get_type, "peas_plugin_info_get_type", LIBRARY_PEAS);
+	Linker.link(peas_plugin_info_get_authors, "peas_plugin_info_get_authors", LIBRARY_PEAS);
+	Linker.link(peas_plugin_info_get_copyright, "peas_plugin_info_get_copyright", LIBRARY_PEAS);
+	Linker.link(peas_plugin_info_get_data_dir, "peas_plugin_info_get_data_dir", LIBRARY_PEAS);
+	Linker.link(peas_plugin_info_get_dependencies, "peas_plugin_info_get_dependencies", LIBRARY_PEAS);
+	Linker.link(peas_plugin_info_get_description, "peas_plugin_info_get_description", LIBRARY_PEAS);
+	Linker.link(peas_plugin_info_get_external_data, "peas_plugin_info_get_external_data", LIBRARY_PEAS);
+	Linker.link(peas_plugin_info_get_help_uri, "peas_plugin_info_get_help_uri", LIBRARY_PEAS);
+	Linker.link(peas_plugin_info_get_icon_name, "peas_plugin_info_get_icon_name", LIBRARY_PEAS);
+	Linker.link(peas_plugin_info_get_module_dir, "peas_plugin_info_get_module_dir", LIBRARY_PEAS);
+	Linker.link(peas_plugin_info_get_module_name, "peas_plugin_info_get_module_name", LIBRARY_PEAS);
+	Linker.link(peas_plugin_info_get_name, "peas_plugin_info_get_name", LIBRARY_PEAS);
+	Linker.link(peas_plugin_info_get_settings, "peas_plugin_info_get_settings", LIBRARY_PEAS);
+	Linker.link(peas_plugin_info_get_version, "peas_plugin_info_get_version", LIBRARY_PEAS);
+	Linker.link(peas_plugin_info_get_website, "peas_plugin_info_get_website", LIBRARY_PEAS);
+	Linker.link(peas_plugin_info_has_dependency, "peas_plugin_info_has_dependency", LIBRARY_PEAS);
+	Linker.link(peas_plugin_info_is_available, "peas_plugin_info_is_available", LIBRARY_PEAS);
+	Linker.link(peas_plugin_info_is_builtin, "peas_plugin_info_is_builtin", LIBRARY_PEAS);
+	Linker.link(peas_plugin_info_is_hidden, "peas_plugin_info_is_hidden", LIBRARY_PEAS);
+	Linker.link(peas_plugin_info_is_loaded, "peas_plugin_info_is_loaded", LIBRARY_PEAS);
+	Linker.link(peas_plugin_info_error_quark, "peas_plugin_info_error_quark", LIBRARY_PEAS);
 
 	// peas.Configurable
 
-	Linker.link(peas_gtk_configurable_get_type, "peas_gtk_configurable_get_type", LIBRARY.PEAS);
-	Linker.link(peas_gtk_configurable_create_configure_widget, "peas_gtk_configurable_create_configure_widget", LIBRARY.PEAS);
+	Linker.link(peas_gtk_configurable_get_type, "peas_gtk_configurable_get_type", LIBRARY_PEAS);
+	Linker.link(peas_gtk_configurable_create_configure_widget, "peas_gtk_configurable_create_configure_widget", LIBRARY_PEAS);
 
 	// peas.PluginManager
 
-	Linker.link(peas_gtk_plugin_manager_get_type, "peas_gtk_plugin_manager_get_type", LIBRARY.PEAS);
-	Linker.link(peas_gtk_plugin_manager_new, "peas_gtk_plugin_manager_new", LIBRARY.PEAS);
-	Linker.link(peas_gtk_plugin_manager_get_view, "peas_gtk_plugin_manager_get_view", LIBRARY.PEAS);
+	Linker.link(peas_gtk_plugin_manager_get_type, "peas_gtk_plugin_manager_get_type", LIBRARY_PEAS);
+	Linker.link(peas_gtk_plugin_manager_new, "peas_gtk_plugin_manager_new", LIBRARY_PEAS);
+	Linker.link(peas_gtk_plugin_manager_get_view, "peas_gtk_plugin_manager_get_view", LIBRARY_PEAS);
 
 	// peas.PluginManagerView
 
-	Linker.link(peas_gtk_plugin_manager_view_get_type, "peas_gtk_plugin_manager_view_get_type", LIBRARY.PEAS);
-	Linker.link(peas_gtk_plugin_manager_view_new, "peas_gtk_plugin_manager_view_new", LIBRARY.PEAS);
-	Linker.link(peas_gtk_plugin_manager_view_get_selected_plugin, "peas_gtk_plugin_manager_view_get_selected_plugin", LIBRARY.PEAS);
-	Linker.link(peas_gtk_plugin_manager_view_get_show_builtin, "peas_gtk_plugin_manager_view_get_show_builtin", LIBRARY.PEAS);
-	Linker.link(peas_gtk_plugin_manager_view_set_selected_plugin, "peas_gtk_plugin_manager_view_set_selected_plugin", LIBRARY.PEAS);
-	Linker.link(peas_gtk_plugin_manager_view_set_show_builtin, "peas_gtk_plugin_manager_view_set_show_builtin", LIBRARY.PEAS);
+	Linker.link(peas_gtk_plugin_manager_view_get_type, "peas_gtk_plugin_manager_view_get_type", LIBRARY_PEAS);
+	Linker.link(peas_gtk_plugin_manager_view_new, "peas_gtk_plugin_manager_view_new", LIBRARY_PEAS);
+	Linker.link(peas_gtk_plugin_manager_view_get_selected_plugin, "peas_gtk_plugin_manager_view_get_selected_plugin", LIBRARY_PEAS);
+	Linker.link(peas_gtk_plugin_manager_view_get_show_builtin, "peas_gtk_plugin_manager_view_get_show_builtin", LIBRARY_PEAS);
+	Linker.link(peas_gtk_plugin_manager_view_set_selected_plugin, "peas_gtk_plugin_manager_view_set_selected_plugin", LIBRARY_PEAS);
+	Linker.link(peas_gtk_plugin_manager_view_set_show_builtin, "peas_gtk_plugin_manager_view_set_show_builtin", LIBRARY_PEAS);
 }
 
 __gshared extern(C)
