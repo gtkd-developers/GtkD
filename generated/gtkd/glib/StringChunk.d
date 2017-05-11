@@ -68,7 +68,7 @@ public class StringChunk
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
-			free();
+			g_string_chunk_free(gStringChunk);
 	}
 
 
@@ -92,6 +92,7 @@ public class StringChunk
 	public void free()
 	{
 		g_string_chunk_free(gStringChunk);
+		ownedRef = false;
 	}
 
 	/**

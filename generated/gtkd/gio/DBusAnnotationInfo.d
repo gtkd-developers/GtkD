@@ -69,7 +69,7 @@ public class DBusAnnotationInfo
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GIO) && ownedRef )
-			unref();
+			g_dbus_annotation_info_unref(gDBusAnnotationInfo);
 	}
 
 	/**

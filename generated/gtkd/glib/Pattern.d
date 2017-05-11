@@ -68,7 +68,7 @@ public class Pattern
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
-			free();
+			g_pattern_spec_free(gPatternSpec);
 	}
 
 
@@ -92,6 +92,7 @@ public class Pattern
 	public void free()
 	{
 		g_pattern_spec_free(gPatternSpec);
+		ownedRef = false;
 	}
 
 	/**

@@ -71,7 +71,7 @@ public class KeyFile
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
-			unref();
+			g_key_file_unref(gKeyFile);
 	}
 
 
@@ -109,6 +109,7 @@ public class KeyFile
 	public void free()
 	{
 		g_key_file_free(gKeyFile);
+		ownedRef = false;
 	}
 
 	/**

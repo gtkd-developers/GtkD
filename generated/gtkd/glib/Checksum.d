@@ -72,7 +72,7 @@ public class Checksum
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
-			free();
+			g_checksum_free(gChecksum);
 	}
 
 	/**
@@ -168,6 +168,7 @@ public class Checksum
 	public void free()
 	{
 		g_checksum_free(gChecksum);
+		ownedRef = false;
 	}
 
 	/**

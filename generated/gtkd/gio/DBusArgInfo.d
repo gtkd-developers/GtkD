@@ -68,7 +68,7 @@ public class DBusArgInfo
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GIO) && ownedRef )
-			unref();
+			g_dbus_arg_info_unref(gDBusArgInfo);
 	}
 
 

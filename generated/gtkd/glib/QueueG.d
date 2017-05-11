@@ -68,7 +68,7 @@ public class QueueG
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
-			free();
+			g_queue_free(gQueue);
 	}
 
 
@@ -195,6 +195,7 @@ public class QueueG
 	public void free()
 	{
 		g_queue_free(gQueue);
+		ownedRef = false;
 	}
 
 	/**

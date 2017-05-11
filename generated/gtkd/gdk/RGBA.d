@@ -68,7 +68,7 @@ public class RGBA
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GDK) && ownedRef )
-			free();
+			gdk_rgba_free(gdkRGBA);
 	}
 
 	/**
@@ -198,6 +198,7 @@ public class RGBA
 	public void free()
 	{
 		gdk_rgba_free(gdkRGBA);
+		ownedRef = false;
 	}
 
 	/**

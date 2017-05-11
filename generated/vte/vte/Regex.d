@@ -68,7 +68,7 @@ public class Regex
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.VTE) && ownedRef )
-			unref();
+			vte_regex_unref(vteRegex);
 	}
 
 	/** */

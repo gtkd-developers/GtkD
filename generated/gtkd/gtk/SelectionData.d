@@ -70,7 +70,7 @@ public class SelectionData
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
-			free();
+			gtk_selection_data_free(gtkSelectionData);
 	}
 
 	/**
@@ -118,6 +118,7 @@ public class SelectionData
 	public void free()
 	{
 		gtk_selection_data_free(gtkSelectionData);
+		ownedRef = false;
 	}
 
 	/**

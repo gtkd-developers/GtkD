@@ -70,7 +70,7 @@ public class Color
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GDK) && ownedRef )
-			free();
+			gdk_color_free(gdkColor);
 	}
 
 	/**
@@ -212,6 +212,7 @@ public class Color
 	public void free()
 	{
 		gdk_color_free(gdkColor);
+		ownedRef = false;
 	}
 
 	/**

@@ -65,7 +65,7 @@ public class TestLogBuffer
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
-			free();
+			g_test_log_buffer_free(gTestLogBuffer);
 	}
 
 
@@ -75,6 +75,7 @@ public class TestLogBuffer
 	public void free()
 	{
 		g_test_log_buffer_free(gTestLogBuffer);
+		ownedRef = false;
 	}
 
 	/**

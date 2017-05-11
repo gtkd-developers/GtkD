@@ -103,7 +103,7 @@ public class Event
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GDK) && ownedRef )
-			free();
+			gdk_event_free(gdkEvent);
 	}
 
 	/**
@@ -355,6 +355,7 @@ public class Event
 	public void free()
 	{
 		gdk_event_free(gdkEvent);
+		ownedRef = false;
 	}
 
 	/**

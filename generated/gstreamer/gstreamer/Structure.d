@@ -105,7 +105,7 @@ public class Structure
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GSTREAMER) && ownedRef )
-			free();
+			gst_structure_free(gstStructure);
 	}
 
 	public static Structure fromString(string name)
@@ -383,6 +383,7 @@ public class Structure
 	public void free()
 	{
 		gst_structure_free(gstStructure);
+		ownedRef = false;
 	}
 
 	/**

@@ -68,7 +68,7 @@ public class ParseContext
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GSTREAMER) && ownedRef )
-			free();
+			gst_parse_context_free(gstParseContext);
 	}
 
 
@@ -107,6 +107,7 @@ public class ParseContext
 	public void free()
 	{
 		gst_parse_context_free(gstParseContext);
+		ownedRef = false;
 	}
 
 	/**

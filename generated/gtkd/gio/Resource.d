@@ -187,7 +187,7 @@ public class Resource
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GIO) && ownedRef )
-			unref();
+			g_resource_unref(gResource);
 	}
 
 

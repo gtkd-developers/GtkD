@@ -68,7 +68,7 @@ public class Sequence
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
-			free();
+			g_sequence_free(gSequence);
 	}
 
 
@@ -119,6 +119,7 @@ public class Sequence
 	public void free()
 	{
 		g_sequence_free(gSequence);
+		ownedRef = false;
 	}
 
 	/**

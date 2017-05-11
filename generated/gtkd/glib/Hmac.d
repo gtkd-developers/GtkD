@@ -71,7 +71,7 @@ public class Hmac
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
-			unref();
+			g_hmac_unref(gHmac);
 	}
 
 	/**

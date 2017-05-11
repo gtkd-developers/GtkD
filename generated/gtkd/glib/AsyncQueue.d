@@ -69,7 +69,7 @@ public class AsyncQueue
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
-			unref();
+			g_async_queue_unref(gAsyncQueue);
 	}
 
 

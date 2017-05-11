@@ -74,7 +74,7 @@ public class SimpleXML
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
-			unref();
+			g_markup_parse_context_unref(gMarkupParseContext);
 	}
 
 
@@ -142,6 +142,7 @@ public class SimpleXML
 	public void free()
 	{
 		g_markup_parse_context_free(gMarkupParseContext);
+		ownedRef = false;
 	}
 
 	/**

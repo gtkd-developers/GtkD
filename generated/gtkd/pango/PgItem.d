@@ -67,7 +67,7 @@ public class PgItem
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.PANGO) && ownedRef )
-			free();
+			pango_item_free(pangoItem);
 	}
 
 
@@ -122,6 +122,7 @@ public class PgItem
 	public void free()
 	{
 		pango_item_free(pangoItem);
+		ownedRef = false;
 	}
 
 	/**

@@ -72,7 +72,7 @@ public class MappedFile
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
-			unref();
+			g_mapped_file_unref(gMappedFile);
 	}
 
 
@@ -181,6 +181,7 @@ public class MappedFile
 	public void free()
 	{
 		g_mapped_file_free(gMappedFile);
+		ownedRef = false;
 	}
 
 	/**

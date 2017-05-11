@@ -73,7 +73,7 @@ public class OptionGroup
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
-			unref();
+			g_option_group_unref(gOptionGroup);
 	}
 
 
@@ -136,6 +136,7 @@ public class OptionGroup
 	public void free()
 	{
 		g_option_group_free(gOptionGroup);
+		ownedRef = false;
 	}
 
 	/**

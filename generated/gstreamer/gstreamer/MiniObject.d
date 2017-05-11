@@ -90,7 +90,7 @@ public class MiniObject
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GSTREAMER) && ownedRef )
-			unref();
+			gst_mini_object_unref(gstMiniObject);
 	}
 
 

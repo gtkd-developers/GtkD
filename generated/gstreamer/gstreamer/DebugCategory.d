@@ -67,7 +67,7 @@ public class DebugCategory
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GSTREAMER) && ownedRef )
-			free();
+			gst_debug_category_free(gstDebugCategory);
 	}
 
 
@@ -77,6 +77,7 @@ public class DebugCategory
 	public void free()
 	{
 		gst_debug_category_free(gstDebugCategory);
+		ownedRef = false;
 	}
 
 	/**

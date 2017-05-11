@@ -73,7 +73,7 @@ public class PgGlyphItem
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.PANGO) && ownedRef )
-			free();
+			pango_glyph_item_free(pangoGlyphItem);
 	}
 
 
@@ -153,6 +153,7 @@ public class PgGlyphItem
 	public void free()
 	{
 		pango_glyph_item_free(pangoGlyphItem);
+		ownedRef = false;
 	}
 
 	/**

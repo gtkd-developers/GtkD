@@ -65,7 +65,7 @@ public class PixbufFormat
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GDKPIXBUF) && ownedRef )
-			free();
+			gdk_pixbuf_format_free(gdkPixbufFormat);
 	}
 
 
@@ -104,6 +104,7 @@ public class PixbufFormat
 	public void free()
 	{
 		gdk_pixbuf_format_free(gdkPixbufFormat);
+		ownedRef = false;
 	}
 
 	/**

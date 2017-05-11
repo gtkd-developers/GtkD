@@ -71,7 +71,7 @@ public class PgFontMetrics
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.PANGO) && ownedRef )
-			unref();
+			pango_font_metrics_unref(pangoFontMetrics);
 	}
 
 

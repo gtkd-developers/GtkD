@@ -66,7 +66,7 @@ public class StockItem
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
-			free();
+			gtk_stock_item_free(gtkStockItem);
 	}
 
 
@@ -95,6 +95,7 @@ public class StockItem
 	public void free()
 	{
 		gtk_stock_item_free(gtkStockItem);
+		ownedRef = false;
 	}
 
 	/**

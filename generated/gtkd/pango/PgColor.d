@@ -68,7 +68,7 @@ public class PgColor
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.PANGO) && ownedRef )
-			free();
+			pango_color_free(pangoColor);
 	}
 
 
@@ -106,6 +106,7 @@ public class PgColor
 	public void free()
 	{
 		pango_color_free(pangoColor);
+		ownedRef = false;
 	}
 
 	/**

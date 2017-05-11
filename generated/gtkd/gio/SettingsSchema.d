@@ -159,7 +159,7 @@ public class SettingsSchema
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GIO) && ownedRef )
-			unref();
+			g_settings_schema_unref(gSettingsSchema);
 	}
 
 

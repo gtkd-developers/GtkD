@@ -72,7 +72,7 @@ public class OptionContext
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
-			free();
+			g_option_context_free(gOptionContext);
 	}
 
 
@@ -120,6 +120,7 @@ public class OptionContext
 	public void free()
 	{
 		g_option_context_free(gOptionContext);
+		ownedRef = false;
 	}
 
 	/**

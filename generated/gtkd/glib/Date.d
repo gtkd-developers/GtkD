@@ -78,7 +78,7 @@ public class Date
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
-			free();
+			g_date_free(gDate);
 	}
 
 
@@ -262,6 +262,7 @@ public class Date
 	public void free()
 	{
 		g_date_free(gDate);
+		ownedRef = false;
 	}
 
 	/**

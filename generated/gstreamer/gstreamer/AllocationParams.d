@@ -66,7 +66,7 @@ public class AllocationParams
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GSTREAMER) && ownedRef )
-			free();
+			gst_allocation_params_free(gstAllocationParams);
 	}
 
 
@@ -102,6 +102,7 @@ public class AllocationParams
 	public void free()
 	{
 		gst_allocation_params_free(gstAllocationParams);
+		ownedRef = false;
 	}
 
 	/**

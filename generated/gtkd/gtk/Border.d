@@ -68,7 +68,7 @@ public class Border
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
-			free();
+			gtk_border_free(gtkBorder);
 	}
 
 
@@ -123,5 +123,6 @@ public class Border
 	public void free()
 	{
 		gtk_border_free(gtkBorder);
+		ownedRef = false;
 	}
 }

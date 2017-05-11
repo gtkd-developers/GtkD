@@ -73,7 +73,7 @@ public class DBusInterfaceInfo
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GIO) && ownedRef )
-			unref();
+			g_dbus_interface_info_unref(gDBusInterfaceInfo);
 	}
 
 

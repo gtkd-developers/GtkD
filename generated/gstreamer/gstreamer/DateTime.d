@@ -74,7 +74,7 @@ public class DateTime
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GSTREAMER) && ownedRef )
-			unref();
+			gst_date_time_unref(gstDateTime);
 	}
 
 	/**

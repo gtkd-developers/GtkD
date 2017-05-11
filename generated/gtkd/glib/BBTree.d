@@ -68,7 +68,7 @@ public class BBTree
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
-			unref();
+			g_tree_unref(gTree);
 	}
 
 

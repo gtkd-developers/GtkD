@@ -70,7 +70,7 @@ public class BookmarkFile
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
-			free();
+			g_bookmark_file_free(gBookmarkFile);
 	}
 
 
@@ -136,6 +136,7 @@ public class BookmarkFile
 	public void free()
 	{
 		g_bookmark_file_free(gBookmarkFile);
+		ownedRef = false;
 	}
 
 	/**

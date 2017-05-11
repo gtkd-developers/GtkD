@@ -316,7 +316,7 @@ public class Variant
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
-			unref();
+			g_variant_unref(gVariant);
 	}
 
 	/**

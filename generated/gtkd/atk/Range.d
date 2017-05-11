@@ -72,7 +72,7 @@ public class Range
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.ATK) && ownedRef )
-			free();
+			atk_range_free(atkRange);
 	}
 
 
@@ -135,6 +135,7 @@ public class Range
 	public void free()
 	{
 		atk_range_free(atkRange);
+		ownedRef = false;
 	}
 
 	/**

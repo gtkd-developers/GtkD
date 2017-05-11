@@ -68,7 +68,7 @@ public class DBusMethodInfo
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GIO) && ownedRef )
-			unref();
+			g_dbus_method_info_unref(gDBusMethodInfo);
 	}
 
 

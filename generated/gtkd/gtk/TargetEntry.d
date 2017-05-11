@@ -70,7 +70,7 @@ public class TargetEntry
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
-			free();
+			gtk_target_entry_free(gtkTargetEntry);
 	}
 
 
@@ -130,5 +130,6 @@ public class TargetEntry
 	public void free()
 	{
 		gtk_target_entry_free(gtkTargetEntry);
+		ownedRef = false;
 	}
 }

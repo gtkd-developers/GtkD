@@ -67,7 +67,7 @@ public class IconSource
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
-			free();
+			gtk_icon_source_free(gtkIconSource);
 	}
 
 
@@ -153,6 +153,7 @@ public class IconSource
 	public void free()
 	{
 		gtk_icon_source_free(gtkIconSource);
+		ownedRef = false;
 	}
 
 	/**

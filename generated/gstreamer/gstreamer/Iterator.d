@@ -107,7 +107,7 @@ public class Iterator
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GSTREAMER) && ownedRef )
-			free();
+			gst_iterator_free(gstIterator);
 	}
 
 
@@ -360,6 +360,7 @@ public class Iterator
 	public void free()
 	{
 		gst_iterator_free(gstIterator);
+		ownedRef = false;
 	}
 
 	/**

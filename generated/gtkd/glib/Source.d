@@ -70,7 +70,7 @@ public class Source
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
-			unref();
+			g_source_unref(gSource);
 	}
 
 

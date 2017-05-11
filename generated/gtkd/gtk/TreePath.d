@@ -66,7 +66,7 @@ public class TreePath
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
-			free();
+			gtk_tree_path_free(gtkTreePath);
 	}
 
 	/**
@@ -207,6 +207,7 @@ public class TreePath
 	public void free()
 	{
 		gtk_tree_path_free(gtkTreePath);
+		ownedRef = false;
 	}
 
 	/**

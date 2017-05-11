@@ -71,7 +71,7 @@ public class FrameTimings
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GDK) && ownedRef )
-			unref();
+			gdk_frame_timings_unref(gdkFrameTimings);
 	}
 
 

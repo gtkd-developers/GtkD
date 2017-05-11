@@ -82,7 +82,7 @@ public class SrvTarget
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GIO) && ownedRef )
-			free();
+			g_srv_target_free(gSrvTarget);
 	}
 
 
@@ -149,6 +149,7 @@ public class SrvTarget
 	public void free()
 	{
 		g_srv_target_free(gSrvTarget);
+		ownedRef = false;
 	}
 
 	/**

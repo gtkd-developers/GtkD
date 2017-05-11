@@ -116,7 +116,7 @@ public class WidgetPath
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
-			unref();
+			gtk_widget_path_unref(gtkWidgetPath);
 	}
 
 
@@ -233,6 +233,7 @@ public class WidgetPath
 	public void free()
 	{
 		gtk_widget_path_free(gtkWidgetPath);
+		ownedRef = false;
 	}
 
 	/**

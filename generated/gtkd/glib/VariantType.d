@@ -210,7 +210,7 @@ public class VariantType
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
-			free();
+			g_variant_type_free(gVariantType);
 	}
 
 	/**
@@ -489,6 +489,7 @@ public class VariantType
 	public void free()
 	{
 		g_variant_type_free(gVariantType);
+		ownedRef = false;
 	}
 
 	/**

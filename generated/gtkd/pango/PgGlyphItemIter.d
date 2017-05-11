@@ -106,7 +106,7 @@ public class PgGlyphItemIter
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.PANGO) && ownedRef )
-			free();
+			pango_glyph_item_iter_free(pangoGlyphItemIter);
 	}
 
 
@@ -145,6 +145,7 @@ public class PgGlyphItemIter
 	public void free()
 	{
 		pango_glyph_item_iter_free(pangoGlyphItemIter);
+		ownedRef = false;
 	}
 
 	/**

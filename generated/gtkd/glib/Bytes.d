@@ -92,7 +92,7 @@ public class Bytes
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
-			unref();
+			g_bytes_unref(gBytes);
 	}
 
 

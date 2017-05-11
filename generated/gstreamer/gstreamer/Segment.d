@@ -112,7 +112,7 @@ public class Segment
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GSTREAMER) && ownedRef )
-			free();
+			gst_segment_free(gstSegment);
 	}
 
 
@@ -263,6 +263,7 @@ public class Segment
 	public void free()
 	{
 		gst_segment_free(gstSegment);
+		ownedRef = false;
 	}
 
 	/**

@@ -69,7 +69,7 @@ public class PgCoverage
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.PANGO) && ownedRef )
-			unref();
+			pango_coverage_unref(pangoCoverage);
 	}
 
 

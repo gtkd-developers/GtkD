@@ -83,7 +83,7 @@ public class PaperSize
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
-			free();
+			gtk_paper_size_free(gtkPaperSize);
 	}
 
 
@@ -306,6 +306,7 @@ public class PaperSize
 	public void free()
 	{
 		gtk_paper_size_free(gtkPaperSize);
+		ownedRef = false;
 	}
 
 	/**

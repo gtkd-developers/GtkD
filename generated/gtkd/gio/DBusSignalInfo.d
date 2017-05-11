@@ -68,7 +68,7 @@ public class DBusSignalInfo
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GIO) && ownedRef )
-			unref();
+			g_dbus_signal_info_unref(gDBusSignalInfo);
 	}
 
 

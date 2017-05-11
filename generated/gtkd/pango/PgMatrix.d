@@ -75,7 +75,7 @@ public class PgMatrix
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.PANGO) && ownedRef )
-			free();
+			pango_matrix_free(pangoMatrix);
 	}
 
 
@@ -129,6 +129,7 @@ public class PgMatrix
 	public void free()
 	{
 		pango_matrix_free(pangoMatrix);
+		ownedRef = false;
 	}
 
 	/**

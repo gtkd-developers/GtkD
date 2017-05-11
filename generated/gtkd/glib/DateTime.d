@@ -72,7 +72,7 @@ public class DateTime
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
-			unref();
+			g_date_time_unref(gDateTime);
 	}
 
 	/**

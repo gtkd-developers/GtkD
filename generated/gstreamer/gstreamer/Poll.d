@@ -90,7 +90,7 @@ public class Poll
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GSTREAMER) && ownedRef )
-			free();
+			gst_poll_free(gstPoll);
 	}
 
 
@@ -213,6 +213,7 @@ public class Poll
 	public void free()
 	{
 		gst_poll_free(gstPoll);
+		ownedRef = false;
 	}
 
 	/**

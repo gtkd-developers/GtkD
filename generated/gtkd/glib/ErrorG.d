@@ -68,7 +68,7 @@ public class ErrorG
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
-			free();
+			g_error_free(gError);
 	}
 
 
@@ -150,6 +150,7 @@ public class ErrorG
 	public void free()
 	{
 		g_error_free(gError);
+		ownedRef = false;
 	}
 
 	/**

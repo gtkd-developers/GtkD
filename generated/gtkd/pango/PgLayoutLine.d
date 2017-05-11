@@ -73,7 +73,7 @@ public class PgLayoutLine
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.PANGO) && ownedRef )
-			unref();
+			pango_layout_line_unref(pangoLayoutLine);
 	}
 
 

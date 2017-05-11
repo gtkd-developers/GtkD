@@ -71,7 +71,7 @@ public class PgFontDescription
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.PANGO) && ownedRef )
-			free();
+			pango_font_description_free(pangoFontDescription);
 	}
 
 	/**
@@ -207,6 +207,7 @@ public class PgFontDescription
 	public void free()
 	{
 		pango_font_description_free(pangoFontDescription);
+		ownedRef = false;
 	}
 
 	/**

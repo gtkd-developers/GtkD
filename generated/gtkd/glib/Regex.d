@@ -136,7 +136,7 @@ public class Regex
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
-			unref();
+			g_regex_unref(gRegex);
 	}
 
 

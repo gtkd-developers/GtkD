@@ -74,7 +74,7 @@ public class DBusNodeInfo
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GIO) && ownedRef )
-			unref();
+			g_dbus_node_info_unref(gDBusNodeInfo);
 	}
 
 

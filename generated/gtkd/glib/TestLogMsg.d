@@ -63,7 +63,7 @@ public class TestLogMsg
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
-			free();
+			g_test_log_msg_free(gTestLogMsg);
 	}
 
 
@@ -73,5 +73,6 @@ public class TestLogMsg
 	public void free()
 	{
 		g_test_log_msg_free(gTestLogMsg);
+		ownedRef = false;
 	}
 }

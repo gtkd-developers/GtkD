@@ -81,7 +81,7 @@ public class Thread
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GLIB) && ownedRef )
-			unref();
+			g_thread_unref(gThread);
 	}
 
 

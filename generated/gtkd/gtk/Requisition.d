@@ -69,7 +69,7 @@ public class Requisition
 	~this ()
 	{
 		if (  Linker.isLoaded(LIBRARY.GTK) && ownedRef )
-			free();
+			gtk_requisition_free(gtkRequisition);
 	}
 
 
@@ -124,5 +124,6 @@ public class Requisition
 	public void free()
 	{
 		gtk_requisition_free(gtkRequisition);
+		ownedRef = false;
 	}
 }
