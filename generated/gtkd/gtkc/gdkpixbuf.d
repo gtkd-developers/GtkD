@@ -29,9 +29,9 @@ import gtkc.gdkpixbuftypes;
 import gtkd.Loader;
 
 version (Windows)
-	static immutable LIBRARY_GDKPIXBUF = ["pixbuf-2.0-0.dll"];
+	static immutable LIBRARY_GDKPIXBUF = ["libgdk_pixbuf-2.0-0.dll"];
 else version (OSX)
-	static immutable LIBRARY_GDKPIXBUF = ["pixbuf-2.0.0.dylib"];
+	static immutable LIBRARY_GDKPIXBUF = ["libgdk_pixbuf-2.0.0.dylib"];
 else
 	static immutable LIBRARY_GDKPIXBUF = ["libgdk_pixbuf-2.0.so.0"];
 
