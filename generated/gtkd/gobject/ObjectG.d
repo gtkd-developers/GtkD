@@ -116,7 +116,9 @@ public class ObjectG
 				obj.isGcRoot = false;
 			}
 			
-			obj.removeToggleRef(cast(GToggleNotify)&toggleNotify, cast(void*)obj);
+			if ( obj.gObject.refCount > 0 )
+				obj.removeToggleRef(cast(GToggleNotify)&toggleNotify, cast(void*)obj);
+			
 			obj.gObject = null;
 		}
 		
