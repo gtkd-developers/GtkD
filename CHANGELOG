@@ -1,6 +1,20 @@
 GtkD ChangeLog
 ==============
 
+Release: 3.6.3
+--------------
+-Fix the destroyNotify error when destroying an object with unref.
+-Retrieve the library names from the gir files instead of gtkd.paths.
+
+Release: 3.6.2
+--------------
+-Fix dub.json.
+-Call free in the destructors of classes not derived from ObjectG.
+
+Release: 3.6.1
+--------------
+-Fix the GNUMakefile. #196
+
 Release: 3.6.0
 --------------
 -Update the libraries to the latest versions.

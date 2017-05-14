@@ -59,7 +59,7 @@ RANLIB=ranlib
 
 #######################################################################
 
-GTKD_VERSION=3.6.2
+GTKD_VERSION=3.6.3
 SO_VERSION=0
 
 MAJOR =  $(word 1,$(subst ., ,$(GTKD_VERSION)))
@@ -68,37 +68,37 @@ BUGFIX = $(word 3,$(subst ., ,$(GTKD_VERSION)))
 
 LIBNAME_GTKD = libgtkd-$(MAJOR).a
 SONAME_GTKD = libgtkd-$(MAJOR).so
-SOURCES_GTKD = $(wildcard generated/gtkd/*/*.d)
+SOURCES_GTKD = $(wildcard generated/gtkd/*/*.d) $(wildcard generated/gtkd/*/c/*.d)
 OBJECTS_GTKD = $(patsubst %.d,%.o,$(SOURCES_GTKD))
 PICOBJECTS_GTKD = $(patsubst %.o,%.pic.o,$(OBJECTS_GTKD))
 
 LIBNAME_GTKDGL = libgtkdgl-$(MAJOR).a
 SONAME_GTKDGL = libgtkdgl-$(MAJOR).so
-SOURCES_GTKDGL = $(wildcard generated/gtkdgl/*/*.d)
+SOURCES_GTKDGL = $(wildcard generated/gtkdgl/*/*.d) $(wildcard generated/gtkdgl/*/c/*.d)
 OBJECTS_GTKDGL = $(patsubst %.d,%.o,$(SOURCES_GTKDGL))
 PICOBJECTS_GTKDGL = $(patsubst %.o,%.pic.o,$(OBJECTS_GTKDGL))
 
 LIBNAME_GTKDSV = libgtkdsv-$(MAJOR).a
 SONAME_GTKDSV = libgtkdsv-$(MAJOR).so
-SOURCES_GTKDSV = $(wildcard generated/sourceview/*/*.d)
+SOURCES_GTKDSV = $(wildcard generated/sourceview/*/*.d) $(wildcard generated/sourceview/*/c/*.d)
 OBJECTS_GTKDSV = $(patsubst %.d,%.o,$(SOURCES_GTKDSV))
 PICOBJECTS_GTKDSV = $(patsubst %.o,%.pic.o,$(OBJECTS_GTKDSV))
 
 LIBNAME_GSTREAMERD = libgstreamerd-$(MAJOR).a
 SONAME_GSTREAMERD = libgstreamerd-$(MAJOR).so
-SOURCES_GSTREAMERD = $(wildcard generated/gstreamer/*/*.d)
+SOURCES_GSTREAMERD = $(wildcard generated/gstreamer/*/*.d) $(wildcard generated/gstreamer/*/c/*.d)
 OBJECTS_GSTREAMERD = $(patsubst %.d,%.o,$(SOURCES_GSTREAMERD))
 PICOBJECTS_GSTREAMERD = $(patsubst %.o,%.pic.o,$(OBJECTS_GSTREAMERD))
 
 LIBNAME_VTED = libvted-$(MAJOR).a
 SONAME_VTED = libvted-$(MAJOR).so
-SOURCES_VTED = $(wildcard generated/vte/*/*.d)
+SOURCES_VTED = $(wildcard generated/vte/*/*.d) $(wildcard generated/vte/*/c/*.d)
 OBJECTS_VTED = $(patsubst %.d,%.o,$(SOURCES_VTED))
 PICOBJECTS_VTED = $(patsubst %.o,%.pic.o,$(OBJECTS_VTED))
 
 LIBNAME_PEASD = libpeasd-$(MAJOR).a
 SONAME_PEASD = libpeasd-$(MAJOR).so
-SOURCES_PEASD = $(wildcard generated/peas/*/*.d)
+SOURCES_PEASD = $(wildcard generated/peas/*/*.d) $(wildcard generated/peas/*/c/*.d)
 OBJECTS_PEASD = $(patsubst %.d,%.o,$(SOURCES_PEASD))
 PICOBJECTS_PEASD = $(patsubst %.o,%.pic.o,$(OBJECTS_PEASD))
 
