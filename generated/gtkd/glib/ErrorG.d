@@ -26,8 +26,8 @@ module glib.ErrorG;
 
 private import glib.ConstructionException;
 private import glib.Str;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 private import gtkd.Loader;
 
 
@@ -89,12 +89,12 @@ public class ErrorG
 	public this(GQuark domain, int code, string message)
 	{
 		auto p = g_error_new_literal(domain, code, Str.toStringz(message));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_literal");
 		}
-		
+
 		this(cast(GError*) p);
 	}
 
@@ -117,12 +117,12 @@ public class ErrorG
 	public this(GQuark domain, int code, string format, void* args)
 	{
 		auto p = g_error_new_valist(domain, code, Str.toStringz(format), args);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_valist");
 		}
-		
+
 		this(cast(GError*) p);
 	}
 
@@ -134,12 +134,12 @@ public class ErrorG
 	public ErrorG copy()
 	{
 		auto p = g_error_copy(gError);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ErrorG(cast(GError*) p, true);
 	}
 
@@ -192,9 +192,9 @@ public class ErrorG
 	public static void propagateError(out ErrorG dest, ErrorG src)
 	{
 		GError* outdest = null;
-		
+
 		g_propagate_error(&outdest, (src is null) ? null : src.getErrorGStruct(true));
-		
+
 		dest = new ErrorG(outdest);
 	}
 
@@ -216,9 +216,9 @@ public class ErrorG
 	public static void setErrorLiteral(out ErrorG err, GQuark domain, int code, string message)
 	{
 		GError* outerr = null;
-		
+
 		g_set_error_literal(&outerr, domain, code, Str.toStringz(message));
-		
+
 		err = new ErrorG(outerr);
 	}
 }

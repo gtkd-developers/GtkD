@@ -30,8 +30,8 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Button;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -113,12 +113,12 @@ public class LinkButton : Button
 	public this(string uri)
 	{
 		auto p = gtk_link_button_new(Str.toStringz(uri));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkLinkButton*) p);
 	}
 
@@ -138,12 +138,12 @@ public class LinkButton : Button
 	public this(string uri, string label)
 	{
 		auto p = gtk_link_button_new_with_label(Str.toStringz(uri), Str.toStringz(label));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_with_label");
 		}
-		
+
 		this(cast(GtkLinkButton*) p);
 	}
 
@@ -209,13 +209,13 @@ public class LinkButton : Button
 		static OnActivateLinkDelegateWrapper[] listeners;
 		bool delegate(LinkButton) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(LinkButton) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnActivateLinkDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -253,12 +253,12 @@ public class LinkButton : Button
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackActivateLink(GtkLinkButton* linkbuttonStruct, OnActivateLinkDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackActivateLinkDestroy(OnActivateLinkDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

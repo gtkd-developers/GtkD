@@ -29,11 +29,11 @@ private import gio.PollableInputStreamIF;
 private import gio.PollableInputStreamT;
 private import gio.SeekableIF;
 private import gio.SeekableT;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.Bytes;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -100,12 +100,12 @@ public class MemoryInputStream : InputStream, PollableInputStreamIF, SeekableIF
 	public this()
 	{
 		auto p = g_memory_input_stream_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GMemoryInputStream*) p, true);
 	}
 
@@ -124,12 +124,12 @@ public class MemoryInputStream : InputStream, PollableInputStreamIF, SeekableIF
 	public this(Bytes bytes)
 	{
 		auto p = g_memory_input_stream_new_from_bytes((bytes is null) ? null : bytes.getBytesStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_bytes");
 		}
-		
+
 		this(cast(GMemoryInputStream*) p, true);
 	}
 
@@ -148,12 +148,12 @@ public class MemoryInputStream : InputStream, PollableInputStreamIF, SeekableIF
 	public this(ubyte[] data, GDestroyNotify destroy)
 	{
 		auto p = g_memory_input_stream_new_from_data(data.ptr, cast(ptrdiff_t)data.length, destroy);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_data");
 		}
-		
+
 		this(cast(GMemoryInputStream*) p, true);
 	}
 

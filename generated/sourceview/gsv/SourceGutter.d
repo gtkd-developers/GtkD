@@ -28,8 +28,8 @@ private import gdk.Window;
 private import gobject.ObjectG;
 private import gsv.SourceGutterRenderer;
 private import gsv.SourceView;
-private import gsvc.gsv;
-public  import gsvc.gsvtypes;
+private import gsv.c.functions;
+public  import gsv.c.types;
 
 
 /** */
@@ -96,12 +96,12 @@ public class SourceGutter : ObjectG
 	public SourceGutterRenderer getRendererAtPos(int x, int y)
 	{
 		auto p = gtk_source_gutter_get_renderer_at_pos(gtkSourceGutter, x, y);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SourceGutterRenderer)(cast(GtkSourceGutterRenderer*) p);
 	}
 
@@ -113,12 +113,12 @@ public class SourceGutter : ObjectG
 	public SourceView getView()
 	{
 		auto p = gtk_source_gutter_get_view(gtkSourceGutter);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SourceView)(cast(GtkSourceView*) p);
 	}
 
@@ -136,12 +136,12 @@ public class SourceGutter : ObjectG
 	public Window getWindow()
 	{
 		auto p = gtk_source_gutter_get_window(gtkSourceGutter);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 

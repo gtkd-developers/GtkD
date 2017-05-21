@@ -27,8 +27,8 @@ module gstreamer.TypeFind;
 private import glib.Str;
 private import gstreamer.Caps;
 private import gstreamer.Plugin;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /**
@@ -78,7 +78,7 @@ public class TypeFind
 	public ubyte[] peek(long offset, uint size)
 	{
 		ubyte* buff = gst_type_find_peek(gstTypeFind, offset, size);
-		
+
 		return buff[0 .. size];
 	}
 

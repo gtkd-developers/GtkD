@@ -26,8 +26,8 @@ module gtk.CellEditableIF;
 
 private import gdk.Event;
 private import gobject.Signals;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 

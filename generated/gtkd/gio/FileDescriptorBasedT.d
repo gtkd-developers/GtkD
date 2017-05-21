@@ -24,8 +24,8 @@
 
 module gio.FileDescriptorBasedT;
 
-public  import gtkc.gio;
-public  import gtkc.giotypes;
+public  import gio.c.functions;
+public  import gio.c.types;
 
 
 /**

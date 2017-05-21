@@ -24,12 +24,12 @@
 
 module gio.ActionGroupT;
 
+public  import gio.c.functions;
+public  import gio.c.types;
 public  import glib.Str;
 public  import glib.Variant;
 public  import glib.VariantType;
 public  import gobject.Signals;
-public  import gtkc.gio;
-public  import gtkc.giotypes;
 public  import std.algorithm;
 
 
@@ -239,12 +239,12 @@ public template ActionGroupT(TStruct)
 	public VariantType getActionParameterType(string actionName)
 	{
 		auto p = g_action_group_get_action_parameter_type(getActionGroupStruct(), Str.toStringz(actionName));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new VariantType(cast(GVariantType*) p);
 	}
 
@@ -268,12 +268,12 @@ public template ActionGroupT(TStruct)
 	public Variant getActionState(string actionName)
 	{
 		auto p = g_action_group_get_action_state(getActionGroupStruct(), Str.toStringz(actionName));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Variant(cast(GVariant*) p, true);
 	}
 
@@ -307,12 +307,12 @@ public template ActionGroupT(TStruct)
 	public Variant getActionStateHint(string actionName)
 	{
 		auto p = g_action_group_get_action_state_hint(getActionGroupStruct(), Str.toStringz(actionName));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Variant(cast(GVariant*) p, true);
 	}
 
@@ -344,12 +344,12 @@ public template ActionGroupT(TStruct)
 	public VariantType getActionStateType(string actionName)
 	{
 		auto p = g_action_group_get_action_state_type(getActionGroupStruct(), Str.toStringz(actionName));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new VariantType(cast(GVariantType*) p);
 	}
 
@@ -382,7 +382,7 @@ public template ActionGroupT(TStruct)
 	public string[] listActions()
 	{
 		auto retStr = g_action_group_list_actions(getActionGroupStruct());
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}
@@ -435,15 +435,15 @@ public template ActionGroupT(TStruct)
 		GVariantType* outstateType = null;
 		GVariant* outstateHint = null;
 		GVariant* outstate = null;
-		
+
 		auto p = g_action_group_query_action(getActionGroupStruct(), Str.toStringz(actionName), &outenabled, &outparameterType, &outstateType, &outstateHint, &outstate) != 0;
-		
+
 		enabled = (outenabled == 1);
 		parameterType = new VariantType(outparameterType);
 		stateType = new VariantType(outstateType);
 		stateHint = new Variant(outstateHint);
 		state = new Variant(outstate);
-		
+
 		return p;
 	}
 
@@ -452,13 +452,13 @@ public template ActionGroupT(TStruct)
 		static OnActionAddedDelegateWrapper[] listeners;
 		void delegate(string, ActionGroupIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(string, ActionGroupIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnActionAddedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -495,12 +495,12 @@ public template ActionGroupT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackActionAdded(GActionGroup* actiongroupStruct, char* actionName, OnActionAddedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(actionName), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackActionAddedDestroy(OnActionAddedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -511,13 +511,13 @@ public template ActionGroupT(TStruct)
 		static OnActionEnabledChangedDelegateWrapper[] listeners;
 		void delegate(string, bool, ActionGroupIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(string, bool, ActionGroupIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnActionEnabledChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -553,12 +553,12 @@ public template ActionGroupT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackActionEnabledChanged(GActionGroup* actiongroupStruct, char* actionName, bool enabled, OnActionEnabledChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(actionName), enabled, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackActionEnabledChangedDestroy(OnActionEnabledChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -569,13 +569,13 @@ public template ActionGroupT(TStruct)
 		static OnActionRemovedDelegateWrapper[] listeners;
 		void delegate(string, ActionGroupIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(string, ActionGroupIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnActionRemovedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -612,12 +612,12 @@ public template ActionGroupT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackActionRemoved(GActionGroup* actiongroupStruct, char* actionName, OnActionRemovedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(actionName), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackActionRemovedDestroy(OnActionRemovedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -628,13 +628,13 @@ public template ActionGroupT(TStruct)
 		static OnActionStateChangedDelegateWrapper[] listeners;
 		void delegate(string, Variant, ActionGroupIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(string, Variant, ActionGroupIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnActionStateChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -670,12 +670,12 @@ public template ActionGroupT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackActionStateChanged(GActionGroup* actiongroupStruct, char* actionName, GVariant* value, OnActionStateChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(actionName), new Variant(value), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackActionStateChangedDestroy(OnActionStateChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

@@ -54,8 +54,8 @@ private import gtk.ToolButton;
 private import gtk.ToolItem;
 private import gtk.Toolbar;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -345,14 +345,14 @@ public class UIManager : ObjectG, BuildableIF
 	{
 		// GtkWidget * gtk_ui_manager_get_widget (GtkUIManager *manager,  const gchar *path);
 		auto p = gtk_ui_manager_get_widget(gtkUIManager, Str.toStringz(path));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		string typeName = Type.name((cast(GTypeInstance*)p).gClass.gType);
-		
+
 		switch(typeName)
 		{
 			case "GtkCheckMenuItem":
@@ -411,12 +411,12 @@ public class UIManager : ObjectG, BuildableIF
 	public this()
 	{
 		auto p = gtk_ui_manager_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkUIManager*) p, true);
 	}
 
@@ -465,14 +465,14 @@ public class UIManager : ObjectG, BuildableIF
 	public uint addUiFromFile(string filename)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_ui_manager_add_ui_from_file(gtkUIManager, Str.toStringz(filename), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -494,14 +494,14 @@ public class UIManager : ObjectG, BuildableIF
 	public uint addUiFromResource(string resourcePath)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_ui_manager_add_ui_from_resource(gtkUIManager, Str.toStringz(resourcePath), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -525,14 +525,14 @@ public class UIManager : ObjectG, BuildableIF
 	public uint addUiFromString(string buffer, ptrdiff_t length)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_ui_manager_add_ui_from_string(gtkUIManager, Str.toStringz(buffer), length, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -570,12 +570,12 @@ public class UIManager : ObjectG, BuildableIF
 	public AccelGroup getAccelGroup()
 	{
 		auto p = gtk_ui_manager_get_accel_group(gtkUIManager);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(AccelGroup)(cast(GtkAccelGroup*) p);
 	}
 
@@ -594,12 +594,12 @@ public class UIManager : ObjectG, BuildableIF
 	public Action getAction(string path)
 	{
 		auto p = gtk_ui_manager_get_action(gtkUIManager, Str.toStringz(path));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Action)(cast(GtkAction*) p);
 	}
 
@@ -615,12 +615,12 @@ public class UIManager : ObjectG, BuildableIF
 	public ListG getActionGroups()
 	{
 		auto p = gtk_ui_manager_get_action_groups(gtkUIManager);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -656,12 +656,12 @@ public class UIManager : ObjectG, BuildableIF
 	public ListSG getToplevels(GtkUIManagerItemType types)
 	{
 		auto p = gtk_ui_manager_get_toplevels(gtkUIManager, types);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -676,7 +676,7 @@ public class UIManager : ObjectG, BuildableIF
 	public string getUi()
 	{
 		auto retStr = gtk_ui_manager_get_ui(gtkUIManager);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -766,13 +766,13 @@ public class UIManager : ObjectG, BuildableIF
 		static OnActionsChangedDelegateWrapper[] listeners;
 		void delegate(UIManager) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(UIManager) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnActionsChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -805,12 +805,12 @@ public class UIManager : ObjectG, BuildableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackActionsChanged(GtkUIManager* uimanagerStruct, OnActionsChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackActionsChangedDestroy(OnActionsChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -821,13 +821,13 @@ public class UIManager : ObjectG, BuildableIF
 		static OnAddWidgetDelegateWrapper[] listeners;
 		void delegate(Widget, UIManager) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Widget, UIManager) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnAddWidgetDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -864,12 +864,12 @@ public class UIManager : ObjectG, BuildableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackAddWidget(GtkUIManager* uimanagerStruct, GtkWidget* widget, OnAddWidgetDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Widget)(widget), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackAddWidgetDestroy(OnAddWidgetDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -880,13 +880,13 @@ public class UIManager : ObjectG, BuildableIF
 		static OnConnectProxyDelegateWrapper[] listeners;
 		void delegate(Action, Widget, UIManager) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Action, Widget, UIManager) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnConnectProxyDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -927,12 +927,12 @@ public class UIManager : ObjectG, BuildableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackConnectProxy(GtkUIManager* uimanagerStruct, GtkAction* action, GtkWidget* proxy, OnConnectProxyDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Action)(action), ObjectG.getDObject!(Widget)(proxy), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackConnectProxyDestroy(OnConnectProxyDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -943,13 +943,13 @@ public class UIManager : ObjectG, BuildableIF
 		static OnDisconnectProxyDelegateWrapper[] listeners;
 		void delegate(Action, Widget, UIManager) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Action, Widget, UIManager) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDisconnectProxyDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -986,12 +986,12 @@ public class UIManager : ObjectG, BuildableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDisconnectProxy(GtkUIManager* uimanagerStruct, GtkAction* action, GtkWidget* proxy, OnDisconnectProxyDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Action)(action), ObjectG.getDObject!(Widget)(proxy), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDisconnectProxyDestroy(OnDisconnectProxyDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1002,13 +1002,13 @@ public class UIManager : ObjectG, BuildableIF
 		static OnPostActivateDelegateWrapper[] listeners;
 		void delegate(Action, UIManager) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Action, UIManager) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPostActivateDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1047,12 +1047,12 @@ public class UIManager : ObjectG, BuildableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPostActivate(GtkUIManager* uimanagerStruct, GtkAction* action, OnPostActivateDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Action)(action), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPostActivateDestroy(OnPostActivateDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1063,13 +1063,13 @@ public class UIManager : ObjectG, BuildableIF
 		static OnPreActivateDelegateWrapper[] listeners;
 		void delegate(Action, UIManager) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Action, UIManager) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPreActivateDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1108,12 +1108,12 @@ public class UIManager : ObjectG, BuildableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPreActivate(GtkUIManager* uimanagerStruct, GtkAction* action, OnPreActivateDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Action)(action), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPreActivateDestroy(OnPreActivateDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

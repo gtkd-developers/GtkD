@@ -30,8 +30,8 @@ public  import gobject.Value;
 public  import gtk.IconFactory;
 public  import gtk.StyleProperties;
 public  import gtk.WidgetPath;
-public  import gtkc.gtk;
-public  import gtkc.gtktypes;
+public  import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -65,12 +65,12 @@ public template StyleProviderT(TStruct)
 	public IconFactory getIconFactory(WidgetPath path)
 	{
 		auto p = gtk_style_provider_get_icon_factory(getStyleProviderStruct(), (path is null) ? null : path.getWidgetPathStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(IconFactory)(cast(GtkIconFactory*) p);
 	}
 
@@ -92,12 +92,12 @@ public template StyleProviderT(TStruct)
 	public StyleProperties getStyle(WidgetPath path)
 	{
 		auto p = gtk_style_provider_get_style(getStyleProviderStruct(), (path is null) ? null : path.getWidgetPathStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(StyleProperties)(cast(GtkStyleProperties*) p, true);
 	}
 
@@ -118,11 +118,11 @@ public template StyleProviderT(TStruct)
 	public bool getStyleProperty(WidgetPath path, GtkStateFlags state, ParamSpec pspec, out Value value)
 	{
 		GValue* outvalue = gMalloc!GValue();
-		
+
 		auto p = gtk_style_provider_get_style_property(getStyleProviderStruct(), (path is null) ? null : path.getWidgetPathStruct(), state, (pspec is null) ? null : pspec.getParamSpecStruct(), outvalue) != 0;
-		
+
 		value = ObjectG.getDObject!(Value)(outvalue, true);
-		
+
 		return p;
 	}
 }

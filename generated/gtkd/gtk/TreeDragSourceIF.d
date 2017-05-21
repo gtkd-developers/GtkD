@@ -29,8 +29,8 @@ private import gtk.SelectionData;
 private import gtk.TreeModel;
 private import gtk.TreeModelIF;
 private import gtk.TreePath;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /** */

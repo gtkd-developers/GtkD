@@ -25,6 +25,8 @@
 module gio.IOModule;
 
 private import gio.IOModuleScope;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.ListG;
 private import glib.Str;
@@ -32,8 +34,6 @@ private import gobject.ObjectG;
 private import gobject.TypeModule;
 private import gobject.TypePluginIF;
 private import gobject.TypePluginT;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -97,12 +97,12 @@ public class IOModule : TypeModule
 	public this(string filename)
 	{
 		auto p = g_io_module_new(Str.toStringz(filename));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GIOModule*) p, true);
 	}
 
@@ -127,12 +127,12 @@ public class IOModule : TypeModule
 	public static ListG loadAllInDirectory(string dirname)
 	{
 		auto p = g_io_modules_load_all_in_directory(Str.toStringz(dirname));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -160,12 +160,12 @@ public class IOModule : TypeModule
 	public static ListG loadAllInDirectoryWithScope(string dirname, IOModuleScope scop)
 	{
 		auto p = g_io_modules_load_all_in_directory_with_scope(Str.toStringz(dirname), (scop is null) ? null : scop.getIOModuleScopeStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 

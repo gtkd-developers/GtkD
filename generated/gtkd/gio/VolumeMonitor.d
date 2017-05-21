@@ -30,13 +30,13 @@ private import gio.Mount;
 private import gio.MountIF;
 private import gio.Volume;
 private import gio.VolumeIF;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.ListG;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -93,12 +93,12 @@ public class VolumeMonitor : ObjectG
 	public this()
 	{
 		auto p = g_volume_monitor_get();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("g_volume_monitor_get()");
 		}
-		
+
 		this(cast(GVolumeMonitor*) p, true);
 	}
 
@@ -156,12 +156,12 @@ public class VolumeMonitor : ObjectG
 	public static VolumeIF adoptOrphanMount(MountIF mount)
 	{
 		auto p = g_volume_monitor_adopt_orphan_mount((mount is null) ? null : mount.getMountStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Volume, VolumeIF)(cast(GVolume*) p, true);
 	}
 
@@ -176,12 +176,12 @@ public class VolumeMonitor : ObjectG
 	public ListG getConnectedDrives()
 	{
 		auto p = g_volume_monitor_get_connected_drives(gVolumeMonitor);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -197,12 +197,12 @@ public class VolumeMonitor : ObjectG
 	public MountIF getMountForUuid(string uuid)
 	{
 		auto p = g_volume_monitor_get_mount_for_uuid(gVolumeMonitor, Str.toStringz(uuid));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Mount, MountIF)(cast(GMount*) p, true);
 	}
 
@@ -217,12 +217,12 @@ public class VolumeMonitor : ObjectG
 	public ListG getMounts()
 	{
 		auto p = g_volume_monitor_get_mounts(gVolumeMonitor);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -238,12 +238,12 @@ public class VolumeMonitor : ObjectG
 	public VolumeIF getVolumeForUuid(string uuid)
 	{
 		auto p = g_volume_monitor_get_volume_for_uuid(gVolumeMonitor, Str.toStringz(uuid));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Volume, VolumeIF)(cast(GVolume*) p, true);
 	}
 
@@ -258,12 +258,12 @@ public class VolumeMonitor : ObjectG
 	public ListG getVolumes()
 	{
 		auto p = g_volume_monitor_get_volumes(gVolumeMonitor);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -272,13 +272,13 @@ public class VolumeMonitor : ObjectG
 		static OnDriveChangedDelegateWrapper[] listeners;
 		void delegate(DriveIF, VolumeMonitor) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(DriveIF, VolumeMonitor) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDriveChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -311,12 +311,12 @@ public class VolumeMonitor : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDriveChanged(GVolumeMonitor* volumemonitorStruct, GDrive* drive, OnDriveChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Drive, DriveIF)(drive), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDriveChangedDestroy(OnDriveChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -327,13 +327,13 @@ public class VolumeMonitor : ObjectG
 		static OnDriveConnectedDelegateWrapper[] listeners;
 		void delegate(DriveIF, VolumeMonitor) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(DriveIF, VolumeMonitor) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDriveConnectedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -366,12 +366,12 @@ public class VolumeMonitor : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDriveConnected(GVolumeMonitor* volumemonitorStruct, GDrive* drive, OnDriveConnectedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Drive, DriveIF)(drive), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDriveConnectedDestroy(OnDriveConnectedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -382,13 +382,13 @@ public class VolumeMonitor : ObjectG
 		static OnDriveDisconnectedDelegateWrapper[] listeners;
 		void delegate(DriveIF, VolumeMonitor) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(DriveIF, VolumeMonitor) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDriveDisconnectedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -421,12 +421,12 @@ public class VolumeMonitor : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDriveDisconnected(GVolumeMonitor* volumemonitorStruct, GDrive* drive, OnDriveDisconnectedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Drive, DriveIF)(drive), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDriveDisconnectedDestroy(OnDriveDisconnectedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -437,13 +437,13 @@ public class VolumeMonitor : ObjectG
 		static OnDriveEjectButtonDelegateWrapper[] listeners;
 		void delegate(DriveIF, VolumeMonitor) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(DriveIF, VolumeMonitor) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDriveEjectButtonDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -478,12 +478,12 @@ public class VolumeMonitor : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDriveEjectButton(GVolumeMonitor* volumemonitorStruct, GDrive* drive, OnDriveEjectButtonDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Drive, DriveIF)(drive), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDriveEjectButtonDestroy(OnDriveEjectButtonDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -494,13 +494,13 @@ public class VolumeMonitor : ObjectG
 		static OnDriveStopButtonDelegateWrapper[] listeners;
 		void delegate(DriveIF, VolumeMonitor) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(DriveIF, VolumeMonitor) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDriveStopButtonDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -535,12 +535,12 @@ public class VolumeMonitor : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDriveStopButton(GVolumeMonitor* volumemonitorStruct, GDrive* drive, OnDriveStopButtonDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Drive, DriveIF)(drive), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDriveStopButtonDestroy(OnDriveStopButtonDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -551,13 +551,13 @@ public class VolumeMonitor : ObjectG
 		static OnMountAddedDelegateWrapper[] listeners;
 		void delegate(MountIF, VolumeMonitor) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(MountIF, VolumeMonitor) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMountAddedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -590,12 +590,12 @@ public class VolumeMonitor : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackMountAdded(GVolumeMonitor* volumemonitorStruct, GMount* mount, OnMountAddedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Mount, MountIF)(mount), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMountAddedDestroy(OnMountAddedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -606,13 +606,13 @@ public class VolumeMonitor : ObjectG
 		static OnMountChangedDelegateWrapper[] listeners;
 		void delegate(MountIF, VolumeMonitor) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(MountIF, VolumeMonitor) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMountChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -645,12 +645,12 @@ public class VolumeMonitor : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackMountChanged(GVolumeMonitor* volumemonitorStruct, GMount* mount, OnMountChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Mount, MountIF)(mount), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMountChangedDestroy(OnMountChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -661,13 +661,13 @@ public class VolumeMonitor : ObjectG
 		static OnMountPreUnmountDelegateWrapper[] listeners;
 		void delegate(MountIF, VolumeMonitor) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(MountIF, VolumeMonitor) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMountPreUnmountDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -700,12 +700,12 @@ public class VolumeMonitor : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackMountPreUnmount(GVolumeMonitor* volumemonitorStruct, GMount* mount, OnMountPreUnmountDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Mount, MountIF)(mount), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMountPreUnmountDestroy(OnMountPreUnmountDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -716,13 +716,13 @@ public class VolumeMonitor : ObjectG
 		static OnMountRemovedDelegateWrapper[] listeners;
 		void delegate(MountIF, VolumeMonitor) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(MountIF, VolumeMonitor) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMountRemovedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -755,12 +755,12 @@ public class VolumeMonitor : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackMountRemoved(GVolumeMonitor* volumemonitorStruct, GMount* mount, OnMountRemovedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Mount, MountIF)(mount), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMountRemovedDestroy(OnMountRemovedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -771,13 +771,13 @@ public class VolumeMonitor : ObjectG
 		static OnVolumeAddedDelegateWrapper[] listeners;
 		void delegate(VolumeIF, VolumeMonitor) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(VolumeIF, VolumeMonitor) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnVolumeAddedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -810,12 +810,12 @@ public class VolumeMonitor : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackVolumeAdded(GVolumeMonitor* volumemonitorStruct, GVolume* volume, OnVolumeAddedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Volume, VolumeIF)(volume), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackVolumeAddedDestroy(OnVolumeAddedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -826,13 +826,13 @@ public class VolumeMonitor : ObjectG
 		static OnVolumeChangedDelegateWrapper[] listeners;
 		void delegate(VolumeIF, VolumeMonitor) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(VolumeIF, VolumeMonitor) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnVolumeChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -865,12 +865,12 @@ public class VolumeMonitor : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackVolumeChanged(GVolumeMonitor* volumemonitorStruct, GVolume* volume, OnVolumeChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Volume, VolumeIF)(volume), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackVolumeChangedDestroy(OnVolumeChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -881,13 +881,13 @@ public class VolumeMonitor : ObjectG
 		static OnVolumeRemovedDelegateWrapper[] listeners;
 		void delegate(VolumeIF, VolumeMonitor) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(VolumeIF, VolumeMonitor) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnVolumeRemovedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -920,12 +920,12 @@ public class VolumeMonitor : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackVolumeRemoved(GVolumeMonitor* volumemonitorStruct, GVolume* volume, OnVolumeRemovedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Volume, VolumeIF)(volume), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackVolumeRemovedDestroy(OnVolumeRemovedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

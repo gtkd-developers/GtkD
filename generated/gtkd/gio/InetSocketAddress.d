@@ -26,11 +26,11 @@ module gio.InetSocketAddress;
 
 private import gio.InetAddress;
 private import gio.SocketAddress;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -94,12 +94,12 @@ public class InetSocketAddress : SocketAddress
 	public this(InetAddress address, ushort port)
 	{
 		auto p = g_inet_socket_address_new((address is null) ? null : address.getInetAddressStruct(), port);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GInetSocketAddress*) p, true);
 	}
 
@@ -123,12 +123,12 @@ public class InetSocketAddress : SocketAddress
 	public this(string address, uint port)
 	{
 		auto p = g_inet_socket_address_new_from_string(Str.toStringz(address), port);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_string");
 		}
-		
+
 		this(cast(GInetSocketAddress*) p, true);
 	}
 
@@ -143,12 +143,12 @@ public class InetSocketAddress : SocketAddress
 	public InetAddress getAddress()
 	{
 		auto p = g_inet_socket_address_get_address(gInetSocketAddress);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(InetAddress)(cast(GInetAddress*) p);
 	}
 

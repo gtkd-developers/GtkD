@@ -29,8 +29,8 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.ListSG;
 private import glib.Str;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 private import gtkd.Loader;
 
 
@@ -98,12 +98,12 @@ public class SimpleXML
 	public this(GMarkupParser* parser, GMarkupParseFlags flags, void* userData, GDestroyNotify userDataDnotify)
 	{
 		auto p = g_markup_parse_context_new(parser, flags, userData, userDataDnotify);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GMarkupParseContext*) p);
 	}
 
@@ -121,14 +121,14 @@ public class SimpleXML
 	public bool endParse()
 	{
 		GError* err = null;
-		
+
 		auto p = g_markup_parse_context_end_parse(gMarkupParseContext, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -180,12 +180,12 @@ public class SimpleXML
 	public ListSG getElementStack()
 	{
 		auto p = g_markup_parse_context_get_element_stack(gMarkupParseContext);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -245,14 +245,14 @@ public class SimpleXML
 	public bool parse(string text, ptrdiff_t textLen)
 	{
 		GError* err = null;
-		
+
 		auto p = g_markup_parse_context_parse(gMarkupParseContext, Str.toStringz(text), textLen, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -417,12 +417,12 @@ public class SimpleXML
 	public SimpleXML doref()
 	{
 		auto p = g_markup_parse_context_ref(gMarkupParseContext);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new SimpleXML(cast(GMarkupParseContext*) p, true);
 	}
 
@@ -468,7 +468,7 @@ public class SimpleXML
 	public static string markupEscapeText(string text, ptrdiff_t length)
 	{
 		auto retStr = g_markup_escape_text(Str.toStringz(text), length);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -490,7 +490,7 @@ public class SimpleXML
 	public static string markupVprintfEscaped(string format, void* args)
 	{
 		auto retStr = g_markup_vprintf_escaped(Str.toStringz(format), args);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}

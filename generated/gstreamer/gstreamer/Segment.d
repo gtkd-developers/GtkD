@@ -26,8 +26,8 @@ module gstreamer.Segment;
 
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 private import gtkd.Loader;
 
 
@@ -134,12 +134,12 @@ public class Segment
 	public this()
 	{
 		auto p = gst_segment_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GstSegment*) p);
 	}
 
@@ -184,12 +184,12 @@ public class Segment
 	public Segment copy()
 	{
 		auto p = gst_segment_copy(gstSegment);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Segment)(cast(GstSegment*) p, true);
 	}
 
@@ -248,11 +248,11 @@ public class Segment
 	public bool doSeek(double rate, GstFormat format, GstSeekFlags flags, GstSeekType startType, ulong start, GstSeekType stopType, ulong stop, ref bool update)
 	{
 		int outupdate = (update ? 1 : 0);
-		
+
 		auto p = gst_segment_do_seek(gstSegment, rate, format, flags, startType, start, stopType, stop, &outupdate) != 0;
-		
+
 		update = (outupdate == 1);
-		
+
 		return p;
 	}
 

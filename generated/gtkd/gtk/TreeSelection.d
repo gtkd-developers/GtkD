@@ -32,8 +32,8 @@ private import gtk.TreeModel;
 private import gtk.TreeModelIF;
 private import gtk.TreePath;
 private import gtk.TreeView;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -106,7 +106,7 @@ public class TreeSelection : ObjectG
 	{
 		TreeModelIF model;
 		TreeIter iter = new TreeIter();
-		
+
 		if ( getSelected(model, iter) )
 		{
 			iter.setModel(model);
@@ -117,7 +117,7 @@ public class TreeSelection : ObjectG
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Creates a list of path of all selected rows. Additionally, if you are
 	 * planning on modifying the model after calling this function, you may
@@ -142,7 +142,7 @@ public class TreeSelection : ObjectG
 			}
 		}
 		model = ObjectG.getDObject!(TreeModel, TreeModelIF)(outmodel);
-		
+
 		return paths;
 	}
 
@@ -207,12 +207,12 @@ public class TreeSelection : ObjectG
 	{
 		GtkTreeModel* outmodel = null;
 		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
-		
+
 		auto p = gtk_tree_selection_get_selected(gtkTreeSelection, &outmodel, outiter) != 0;
-		
+
 		model = ObjectG.getDObject!(TreeModel, TreeModelIF)(outmodel);
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
-		
+
 		return p;
 	}
 
@@ -224,12 +224,12 @@ public class TreeSelection : ObjectG
 	public TreeView getTreeView()
 	{
 		auto p = gtk_tree_selection_get_tree_view(gtkTreeSelection);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TreeView)(cast(GtkTreeView*) p);
 	}
 
@@ -409,13 +409,13 @@ public class TreeSelection : ObjectG
 		static OnChangedDelegateWrapper[] listeners;
 		void delegate(TreeSelection) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TreeSelection) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -448,12 +448,12 @@ public class TreeSelection : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackChanged(GtkTreeSelection* treeselectionStruct, OnChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

@@ -26,8 +26,8 @@ module gtk.TextAttributes;
 
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import gtkd.Loader;
 
 
@@ -91,12 +91,12 @@ public class TextAttributes
 	public this()
 	{
 		auto p = gtk_text_attributes_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkTextAttributes*) p);
 	}
 
@@ -109,12 +109,12 @@ public class TextAttributes
 	public TextAttributes copy()
 	{
 		auto p = gtk_text_attributes_copy(gtkTextAttributes);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TextAttributes)(cast(GtkTextAttributes*) p, true);
 	}
 
@@ -138,12 +138,12 @@ public class TextAttributes
 	public TextAttributes doref()
 	{
 		auto p = gtk_text_attributes_ref(gtkTextAttributes);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TextAttributes)(cast(GtkTextAttributes*) p, true);
 	}
 

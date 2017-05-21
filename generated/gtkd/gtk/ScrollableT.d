@@ -27,8 +27,8 @@ module gtk.ScrollableT;
 public  import gobject.ObjectG;
 public  import gtk.Adjustment;
 public  import gtk.Border;
-public  import gtkc.gtk;
-public  import gtkc.gtktypes;
+public  import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -88,11 +88,11 @@ public template ScrollableT(TStruct)
 	public bool getBorder(out Border border)
 	{
 		GtkBorder* outborder = gMalloc!GtkBorder();
-		
+
 		auto p = gtk_scrollable_get_border(getScrollableStruct(), outborder) != 0;
-		
+
 		border = ObjectG.getDObject!(Border)(outborder, true);
-		
+
 		return p;
 	}
 
@@ -106,12 +106,12 @@ public template ScrollableT(TStruct)
 	public Adjustment getHadjustment()
 	{
 		auto p = gtk_scrollable_get_hadjustment(getScrollableStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
 	}
 
@@ -137,12 +137,12 @@ public template ScrollableT(TStruct)
 	public Adjustment getVadjustment()
 	{
 		auto p = gtk_scrollable_get_vadjustment(getScrollableStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
 	}
 

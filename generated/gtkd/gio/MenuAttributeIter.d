@@ -24,11 +24,11 @@
 
 module gio.MenuAttributeIter;
 
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.Str;
 private import glib.Variant;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -123,12 +123,12 @@ public class MenuAttributeIter : ObjectG
 	{
 		char* outoutName = null;
 		GVariant* outvalue = null;
-		
+
 		auto p = g_menu_attribute_iter_get_next(gMenuAttributeIter, &outoutName, &outvalue) != 0;
-		
+
 		outName = Str.toString(outoutName);
 		value = new Variant(outvalue);
-		
+
 		return p;
 	}
 
@@ -144,12 +144,12 @@ public class MenuAttributeIter : ObjectG
 	public Variant getValue()
 	{
 		auto p = g_menu_attribute_iter_get_value(gMenuAttributeIter);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Variant(cast(GVariant*) p, true);
 	}
 

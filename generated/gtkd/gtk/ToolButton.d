@@ -32,8 +32,8 @@ private import gtk.ActionableIF;
 private import gtk.ActionableT;
 private import gtk.ToolItem;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -130,12 +130,12 @@ public class ToolButton : ToolItem, ActionableIF
 	public this(Widget iconWidget, string label)
 	{
 		auto p = gtk_tool_button_new((iconWidget is null) ? null : iconWidget.getWidgetStruct(), Str.toStringz(label));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkToolButton*) p);
 	}
 
@@ -161,12 +161,12 @@ public class ToolButton : ToolItem, ActionableIF
 	public this(string stockId)
 	{
 		auto p = gtk_tool_button_new_from_stock(Str.toStringz(stockId));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_stock");
 		}
-		
+
 		this(cast(GtkToolButton*) p);
 	}
 
@@ -196,12 +196,12 @@ public class ToolButton : ToolItem, ActionableIF
 	public Widget getIconWidget()
 	{
 		auto p = gtk_tool_button_get_icon_widget(gtkToolButton);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -231,12 +231,12 @@ public class ToolButton : ToolItem, ActionableIF
 	public Widget getLabelWidget()
 	{
 		auto p = gtk_tool_button_get_label_widget(gtkToolButton);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -378,13 +378,13 @@ public class ToolButton : ToolItem, ActionableIF
 		static OnClickedDelegateWrapper[] listeners;
 		void delegate(ToolButton) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(ToolButton) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnClickedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -415,12 +415,12 @@ public class ToolButton : ToolItem, ActionableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackClicked(GtkToolButton* toolbuttonStruct, OnClickedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackClickedDestroy(OnClickedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

@@ -32,8 +32,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.RecentInfo;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -160,12 +160,12 @@ public class RecentManager : ObjectG
 	public this()
 	{
 		auto p = gtk_recent_manager_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkRecentManager*) p, true);
 	}
 
@@ -181,12 +181,12 @@ public class RecentManager : ObjectG
 	public static RecentManager getDefault()
 	{
 		auto p = gtk_recent_manager_get_default();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(RecentManager)(cast(GtkRecentManager*) p);
 	}
 
@@ -262,12 +262,12 @@ public class RecentManager : ObjectG
 	public ListG getItems()
 	{
 		auto p = gtk_recent_manager_get_items(gtkRecentManager);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -307,19 +307,19 @@ public class RecentManager : ObjectG
 	public RecentInfo lookupItem(string uri)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_recent_manager_lookup_item(gtkRecentManager, Str.toStringz(uri), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(RecentInfo)(cast(GtkRecentInfo*) p, true);
 	}
 
@@ -343,14 +343,14 @@ public class RecentManager : ObjectG
 	public bool moveItem(string uri, string newUri)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_recent_manager_move_item(gtkRecentManager, Str.toStringz(uri), Str.toStringz(newUri), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -367,14 +367,14 @@ public class RecentManager : ObjectG
 	public int purgeItems()
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_recent_manager_purge_items(gtkRecentManager, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -395,14 +395,14 @@ public class RecentManager : ObjectG
 	public bool removeItem(string uri)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_recent_manager_remove_item(gtkRecentManager, Str.toStringz(uri), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -411,13 +411,13 @@ public class RecentManager : ObjectG
 		static OnChangedDelegateWrapper[] listeners;
 		void delegate(RecentManager) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(RecentManager) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -451,12 +451,12 @@ public class RecentManager : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackChanged(GtkRecentManager* recentmanagerStruct, OnChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

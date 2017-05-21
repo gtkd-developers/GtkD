@@ -27,10 +27,10 @@ module gio.Emblem;
 private import gio.Icon;
 private import gio.IconIF;
 private import gio.IconT;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -100,12 +100,12 @@ public class Emblem : ObjectG, IconIF
 	public this(IconIF icon)
 	{
 		auto p = g_emblem_new((icon is null) ? null : icon.getIconStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GEmblem*) p, true);
 	}
 
@@ -125,12 +125,12 @@ public class Emblem : ObjectG, IconIF
 	public this(IconIF icon, GEmblemOrigin origin)
 	{
 		auto p = g_emblem_new_with_origin((icon is null) ? null : icon.getIconStruct(), origin);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_with_origin");
 		}
-		
+
 		this(cast(GEmblem*) p, true);
 	}
 
@@ -145,12 +145,12 @@ public class Emblem : ObjectG, IconIF
 	public IconIF getIcon()
 	{
 		auto p = g_emblem_get_icon(gEmblem);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
 	}
 

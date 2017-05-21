@@ -31,8 +31,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gsv.SourceCompletionProposalIF;
 private import gsv.SourceCompletionProposalT;
-private import gsvc.gsv;
-public  import gsvc.gsvtypes;
+private import gsv.c.functions;
+public  import gsv.c.types;
 
 
 /** */
@@ -88,7 +88,7 @@ public class SourceCompletionItem : ObjectG, SourceCompletionProposalIF
 	public this (string label, string text, Pixbuf icon, string info, bool markup = false)
 	{
 		GtkSourceCompletionItem* p;
-		
+
 		if ( markup )
 		{
 			p = gtk_source_completion_item_new_with_markup(Str.toStringz(label), Str.toStringz(text), (icon is null) ? null : icon.getPixbufStruct(), Str.toStringz(info));
@@ -97,7 +97,7 @@ public class SourceCompletionItem : ObjectG, SourceCompletionProposalIF
 		{
 			p = gtk_source_completion_item_new(Str.toStringz(label), Str.toStringz(text), (icon is null) ? null : icon.getPixbufStruct(), Str.toStringz(info));
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gtk_source_completion_item_new(Str.toStringz(label), Str.toStringz(text), (icon is null) ? null : icon.getPixbufStruct(), Str.toStringz(info))");
@@ -133,12 +133,12 @@ public class SourceCompletionItem : ObjectG, SourceCompletionProposalIF
 	public this(string label, string text, string stock, string info)
 	{
 		auto p = gtk_source_completion_item_new_from_stock(Str.toStringz(label), Str.toStringz(text), Str.toStringz(stock), Str.toStringz(info));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_stock");
 		}
-		
+
 		this(cast(GtkSourceCompletionItem*) p, true);
 	}
 
@@ -155,12 +155,12 @@ public class SourceCompletionItem : ObjectG, SourceCompletionProposalIF
 	public this()
 	{
 		auto p = gtk_source_completion_item_new2();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new2");
 		}
-		
+
 		this(cast(GtkSourceCompletionItem*) p, true);
 	}
 

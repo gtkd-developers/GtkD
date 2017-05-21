@@ -34,8 +34,8 @@ private import gsv.SourceMark;
 private import gsv.SourceStyleScheme;
 private import gsv.SourceUndoManager;
 private import gsv.SourceUndoManagerIF;
-private import gsvc.gsv;
-public  import gsvc.gsvtypes;
+private import gsv.c.functions;
+public  import gsv.c.types;
 private import gtk.TextBuffer;
 private import gtk.TextIter;
 private import gtk.TextMark;
@@ -99,12 +99,12 @@ public class SourceBuffer : TextBuffer
 	public this(TextTagTable table)
 	{
 		auto p = gtk_source_buffer_new((table is null) ? null : table.getTextTagTableStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkSourceBuffer*) p, true);
 	}
 
@@ -124,12 +124,12 @@ public class SourceBuffer : TextBuffer
 	public this(SourceLanguage language)
 	{
 		auto p = gtk_source_buffer_new_with_language((language is null) ? null : language.getSourceLanguageStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_with_language");
 		}
-		
+
 		this(cast(GtkSourceBuffer*) p, true);
 	}
 
@@ -228,12 +228,12 @@ public class SourceBuffer : TextBuffer
 	public SourceMark createSourceMark(string name, string category, TextIter where)
 	{
 		auto p = gtk_source_buffer_create_source_mark(gtkSourceBuffer, Str.toStringz(name), Str.toStringz(category), (where is null) ? null : where.getTextIterStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SourceMark)(cast(GtkSourceMark*) p);
 	}
 
@@ -303,7 +303,7 @@ public class SourceBuffer : TextBuffer
 	public string[] getContextClassesAtIter(TextIter iter)
 	{
 		auto retStr = gtk_source_buffer_get_context_classes_at_iter(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct());
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}
@@ -352,12 +352,12 @@ public class SourceBuffer : TextBuffer
 	public SourceLanguage getLanguage()
 	{
 		auto p = gtk_source_buffer_get_language(gtkSourceBuffer);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SourceLanguage)(cast(GtkSourceLanguage*) p);
 	}
 
@@ -386,12 +386,12 @@ public class SourceBuffer : TextBuffer
 	public ListSG getSourceMarksAtIter(TextIter iter, string category)
 	{
 		auto p = gtk_source_buffer_get_source_marks_at_iter(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(category));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -410,12 +410,12 @@ public class SourceBuffer : TextBuffer
 	public ListSG getSourceMarksAtLine(int line, string category)
 	{
 		auto p = gtk_source_buffer_get_source_marks_at_line(gtkSourceBuffer, line, Str.toStringz(category));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -430,12 +430,12 @@ public class SourceBuffer : TextBuffer
 	public SourceStyleScheme getStyleScheme()
 	{
 		auto p = gtk_source_buffer_get_style_scheme(gtkSourceBuffer);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SourceStyleScheme)(cast(GtkSourceStyleScheme*) p);
 	}
 
@@ -450,12 +450,12 @@ public class SourceBuffer : TextBuffer
 	public SourceUndoManagerIF getUndoManager()
 	{
 		auto p = gtk_source_buffer_get_undo_manager(gtkSourceBuffer);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SourceUndoManager, SourceUndoManagerIF)(cast(GtkSourceUndoManager*) p);
 	}
 
@@ -724,13 +724,13 @@ public class SourceBuffer : TextBuffer
 		static OnBracketMatchedDelegateWrapper[] listeners;
 		void delegate(TextIter, GtkSourceBracketMatchType, SourceBuffer) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TextIter, GtkSourceBracketMatchType, SourceBuffer) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnBracketMatchedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -773,12 +773,12 @@ public class SourceBuffer : TextBuffer
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackBracketMatched(GtkSourceBuffer* sourcebufferStruct, GtkTextIter* iter, GtkSourceBracketMatchType state, OnBracketMatchedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(TextIter)(iter), state, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackBracketMatchedDestroy(OnBracketMatchedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -789,13 +789,13 @@ public class SourceBuffer : TextBuffer
 		static OnHighlightUpdatedDelegateWrapper[] listeners;
 		void delegate(TextIter, TextIter, SourceBuffer) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TextIter, TextIter, SourceBuffer) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnHighlightUpdatedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -831,12 +831,12 @@ public class SourceBuffer : TextBuffer
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackHighlightUpdated(GtkSourceBuffer* sourcebufferStruct, GtkTextIter* start, GtkTextIter* end, OnHighlightUpdatedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(TextIter)(start), ObjectG.getDObject!(TextIter)(end), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackHighlightUpdatedDestroy(OnHighlightUpdatedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -847,13 +847,13 @@ public class SourceBuffer : TextBuffer
 		static OnRedoDelegateWrapper[] listeners;
 		void delegate(SourceBuffer) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(SourceBuffer) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnRedoDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -883,12 +883,12 @@ public class SourceBuffer : TextBuffer
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackRedo(GtkSourceBuffer* sourcebufferStruct, OnRedoDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackRedoDestroy(OnRedoDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -899,13 +899,13 @@ public class SourceBuffer : TextBuffer
 		static OnSourceMarkUpdatedDelegateWrapper[] listeners;
 		void delegate(TextMark, SourceBuffer) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TextMark, SourceBuffer) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnSourceMarkUpdatedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -939,12 +939,12 @@ public class SourceBuffer : TextBuffer
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackSourceMarkUpdated(GtkSourceBuffer* sourcebufferStruct, GtkTextMark* mark, OnSourceMarkUpdatedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(TextMark)(mark), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackSourceMarkUpdatedDestroy(OnSourceMarkUpdatedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -955,13 +955,13 @@ public class SourceBuffer : TextBuffer
 		static OnUndoDelegateWrapper[] listeners;
 		void delegate(SourceBuffer) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(SourceBuffer) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnUndoDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -992,12 +992,12 @@ public class SourceBuffer : TextBuffer
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackUndo(GtkSourceBuffer* sourcebufferStruct, OnUndoDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackUndoDestroy(OnUndoDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

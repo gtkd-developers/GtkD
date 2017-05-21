@@ -25,8 +25,8 @@
 module gobject.WeakRef;
 
 private import gobject.ObjectG;
-private import gtkc.gobject;
-public  import gtkc.gobjecttypes;
+private import gobject.c.functions;
+public  import gobject.c.types;
 
 
 /**
@@ -122,12 +122,12 @@ public class WeakRef
 	public ObjectG get()
 	{
 		auto p = g_weak_ref_get(gWeakRef);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p, true);
 	}
 

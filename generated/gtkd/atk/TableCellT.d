@@ -25,10 +25,10 @@
 module atk.TableCellT;
 
 public  import atk.ObjectAtk;
+public  import atk.c.functions;
+public  import atk.c.types;
 public  import glib.PtrArray;
 public  import gobject.ObjectG;
-public  import gtkc.atk;
-public  import gtkc.atktypes;
 
 
 /**
@@ -60,12 +60,12 @@ public template TableCellT(TStruct)
 	public PtrArray getColumnHeaderCells()
 	{
 		auto p = atk_table_cell_get_column_header_cells(getTableCellStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new PtrArray(cast(GPtrArray*) p, true);
 	}
 
@@ -131,12 +131,12 @@ public template TableCellT(TStruct)
 	public PtrArray getRowHeaderCells()
 	{
 		auto p = atk_table_cell_get_row_header_cells(getTableCellStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new PtrArray(cast(GPtrArray*) p, true);
 	}
 
@@ -163,12 +163,12 @@ public template TableCellT(TStruct)
 	public ObjectAtk getTable()
 	{
 		auto p = atk_table_cell_get_table(getTableCellStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p, true);
 	}
 }

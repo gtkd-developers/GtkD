@@ -28,11 +28,11 @@ private import gio.Emblem;
 private import gio.Icon;
 private import gio.IconIF;
 private import gio.IconT;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.ListG;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -103,12 +103,12 @@ public class EmblemedIcon : ObjectG, IconIF
 	public this(IconIF icon, Emblem emblem)
 	{
 		auto p = g_emblemed_icon_new((icon is null) ? null : icon.getIconStruct(), (emblem is null) ? null : emblem.getEmblemStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GEmblemedIcon*) p, true);
 	}
 
@@ -146,12 +146,12 @@ public class EmblemedIcon : ObjectG, IconIF
 	public ListG getEmblems()
 	{
 		auto p = g_emblemed_icon_get_emblems(gEmblemedIcon);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -165,12 +165,12 @@ public class EmblemedIcon : ObjectG, IconIF
 	public IconIF getIcon()
 	{
 		auto p = g_emblemed_icon_get_icon(gEmblemedIcon);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
 	}
 }

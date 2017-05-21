@@ -27,8 +27,8 @@ module gtk.ImageCellAccessible;
 private import atk.ImageIF;
 private import atk.ImageT;
 private import gtk.RendererCellAccessible;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /** */

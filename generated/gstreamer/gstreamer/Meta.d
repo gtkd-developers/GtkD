@@ -25,8 +25,8 @@
 module gstreamer.Meta;
 
 private import glib.Str;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /**

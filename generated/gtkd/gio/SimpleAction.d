@@ -26,14 +26,14 @@ module gio.SimpleAction;
 
 private import gio.ActionIF;
 private import gio.ActionT;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import glib.Variant;
 private import glib.VariantType;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -106,12 +106,12 @@ public class SimpleAction : ObjectG, ActionIF
 	public this(string name, VariantType parameterType)
 	{
 		auto p = g_simple_action_new(Str.toStringz(name), (parameterType is null) ? null : parameterType.getVariantTypeStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GSimpleAction*) p, true);
 	}
 
@@ -137,12 +137,12 @@ public class SimpleAction : ObjectG, ActionIF
 	public this(string name, VariantType parameterType, Variant state)
 	{
 		auto p = g_simple_action_new_stateful(Str.toStringz(name), (parameterType is null) ? null : parameterType.getVariantTypeStruct(), (state is null) ? null : state.getVariantStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_stateful");
 		}
-		
+
 		this(cast(GSimpleAction*) p, true);
 	}
 
@@ -208,13 +208,13 @@ public class SimpleAction : ObjectG, ActionIF
 		static OnActivateDelegateWrapper[] listeners;
 		void delegate(Variant, SimpleAction) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Variant, SimpleAction) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnActivateDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -260,12 +260,12 @@ public class SimpleAction : ObjectG, ActionIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackActivate(GSimpleAction* simpleactionStruct, GVariant* parameter, OnActivateDelegateWrapper wrapper)
 	{
 		wrapper.dlg(new Variant(parameter), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackActivateDestroy(OnActivateDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -276,13 +276,13 @@ public class SimpleAction : ObjectG, ActionIF
 		static OnChangeStateDelegateWrapper[] listeners;
 		void delegate(Variant, SimpleAction) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Variant, SimpleAction) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnChangeStateDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -347,12 +347,12 @@ public class SimpleAction : ObjectG, ActionIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackChangeState(GSimpleAction* simpleactionStruct, GVariant* value, OnChangeStateDelegateWrapper wrapper)
 	{
 		wrapper.dlg(new Variant(value), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackChangeStateDestroy(OnChangeStateDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

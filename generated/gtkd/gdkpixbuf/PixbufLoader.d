@@ -27,6 +27,8 @@ module gdkpixbuf.PixbufLoader;
 private import gdkpixbuf.Pixbuf;
 private import gdkpixbuf.PixbufAnimation;
 private import gdkpixbuf.PixbufFormat;
+private import gdkpixbuf.c.functions;
+public  import gdkpixbuf.c.types;
 private import glib.Bytes;
 private import glib.ConstructionException;
 private import glib.ErrorG;
@@ -34,8 +36,6 @@ private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gdkpixbuf;
-public  import gtkc.gdkpixbuftypes;
 private import std.algorithm;
 
 
@@ -103,7 +103,7 @@ public class PixbufLoader : ObjectG
 	{
 		GError* err = null;
 		GdkPixbufLoader* p;
-		
+
 		if ( isMimeType )
 		{
 			p = cast(GdkPixbufLoader*)gdk_pixbuf_loader_new_with_mime_type(Str.toStringz(type), &err);
@@ -112,12 +112,12 @@ public class PixbufLoader : ObjectG
 		{
 			p = cast(GdkPixbufLoader*)gdk_pixbuf_loader_new_with_type(Str.toStringz(type), &err);
 		}
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		this(cast(GdkPixbufLoader*) p, true);
 	}
 
@@ -140,12 +140,12 @@ public class PixbufLoader : ObjectG
 	public this()
 	{
 		auto p = gdk_pixbuf_loader_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GdkPixbufLoader*) p, true);
 	}
 
@@ -171,14 +171,14 @@ public class PixbufLoader : ObjectG
 	public bool close()
 	{
 		GError* err = null;
-		
+
 		auto p = gdk_pixbuf_loader_close(gdkPixbufLoader, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -195,12 +195,12 @@ public class PixbufLoader : ObjectG
 	public PixbufAnimation getAnimation()
 	{
 		auto p = gdk_pixbuf_loader_get_animation(gdkPixbufLoader);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PixbufAnimation)(cast(GdkPixbufAnimation*) p);
 	}
 
@@ -217,12 +217,12 @@ public class PixbufLoader : ObjectG
 	public PixbufFormat getFormat()
 	{
 		auto p = gdk_pixbuf_loader_get_format(gdkPixbufLoader);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PixbufFormat)(cast(GdkPixbufFormat*) p);
 	}
 
@@ -245,12 +245,12 @@ public class PixbufLoader : ObjectG
 	public Pixbuf getPixbuf()
 	{
 		auto p = gdk_pixbuf_loader_get_pixbuf(gdkPixbufLoader);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 
@@ -294,14 +294,14 @@ public class PixbufLoader : ObjectG
 	public bool write(char[] buf)
 	{
 		GError* err = null;
-		
+
 		auto p = gdk_pixbuf_loader_write(gdkPixbufLoader, buf.ptr, cast(size_t)buf.length, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -328,14 +328,14 @@ public class PixbufLoader : ObjectG
 	public bool writeBytes(Bytes buffer)
 	{
 		GError* err = null;
-		
+
 		auto p = gdk_pixbuf_loader_write_bytes(gdkPixbufLoader, (buffer is null) ? null : buffer.getBytesStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -344,13 +344,13 @@ public class PixbufLoader : ObjectG
 		static OnAreaPreparedDelegateWrapper[] listeners;
 		void delegate(PixbufLoader) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(PixbufLoader) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnAreaPreparedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -383,12 +383,12 @@ public class PixbufLoader : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackAreaPrepared(GdkPixbufLoader* pixbufloaderStruct, OnAreaPreparedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackAreaPreparedDestroy(OnAreaPreparedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -399,13 +399,13 @@ public class PixbufLoader : ObjectG
 		static OnAreaUpdatedDelegateWrapper[] listeners;
 		void delegate(int, int, int, int, PixbufLoader) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(int, int, int, int, PixbufLoader) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnAreaUpdatedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -445,12 +445,12 @@ public class PixbufLoader : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackAreaUpdated(GdkPixbufLoader* pixbufloaderStruct, int x, int y, int width, int height, OnAreaUpdatedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(x, y, width, height, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackAreaUpdatedDestroy(OnAreaUpdatedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -461,13 +461,13 @@ public class PixbufLoader : ObjectG
 		static OnClosedDelegateWrapper[] listeners;
 		void delegate(PixbufLoader) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(PixbufLoader) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnClosedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -500,12 +500,12 @@ public class PixbufLoader : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackClosed(GdkPixbufLoader* pixbufloaderStruct, OnClosedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackClosedDestroy(OnClosedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -516,13 +516,13 @@ public class PixbufLoader : ObjectG
 		static OnSizePreparedDelegateWrapper[] listeners;
 		void delegate(int, int, PixbufLoader) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(int, int, PixbufLoader) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnSizePreparedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -560,12 +560,12 @@ public class PixbufLoader : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackSizePrepared(GdkPixbufLoader* pixbufloaderStruct, int width, int height, OnSizePreparedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(width, height, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackSizePreparedDestroy(OnSizePreparedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

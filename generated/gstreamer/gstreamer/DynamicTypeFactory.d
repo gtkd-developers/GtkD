@@ -26,8 +26,8 @@ module gstreamer.DynamicTypeFactory;
 
 private import glib.Str;
 private import gstreamer.PluginFeature;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /**

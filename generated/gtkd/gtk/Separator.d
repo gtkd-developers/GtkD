@@ -29,8 +29,8 @@ private import gobject.ObjectG;
 private import gtk.OrientableIF;
 private import gtk.OrientableT;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -103,12 +103,12 @@ public class Separator : Widget, OrientableIF
 	public this(GtkOrientation orientation)
 	{
 		auto p = gtk_separator_new(orientation);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkSeparator*) p);
 	}
 }

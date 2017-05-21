@@ -30,8 +30,8 @@ private import glib.Variant;
 private import gobject.ObjectG;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -139,12 +139,12 @@ public class FileFilter : ObjectG, BuildableIF
 	public this()
 	{
 		auto p = gtk_file_filter_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkFileFilter*) p);
 	}
 
@@ -164,12 +164,12 @@ public class FileFilter : ObjectG, BuildableIF
 	public this(Variant variant)
 	{
 		auto p = gtk_file_filter_new_from_gvariant((variant is null) ? null : variant.getVariantStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_gvariant");
 		}
-		
+
 		this(cast(GtkFileFilter*) p, true);
 	}
 
@@ -312,12 +312,12 @@ public class FileFilter : ObjectG, BuildableIF
 	public Variant toGvariant()
 	{
 		auto p = gtk_file_filter_to_gvariant(gtkFileFilter);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Variant(cast(GVariant*) p);
 	}
 }

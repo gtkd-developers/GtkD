@@ -29,14 +29,14 @@ public  import gio.Cancellable;
 public  import gio.Icon;
 public  import gio.IconIF;
 public  import gio.MountOperation;
+public  import gio.c.functions;
+public  import gio.c.types;
 public  import glib.ErrorG;
 public  import glib.GException;
 public  import glib.ListG;
 public  import glib.Str;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
-public  import gtkc.gio;
-public  import gtkc.giotypes;
 public  import std.algorithm;
 
 
@@ -172,14 +172,14 @@ public template DriveT(TStruct)
 	public bool ejectFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_drive_eject_finish(getDriveStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -219,14 +219,14 @@ public template DriveT(TStruct)
 	public bool ejectWithOperationFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_drive_eject_with_operation_finish(getDriveStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -242,7 +242,7 @@ public template DriveT(TStruct)
 	public string[] enumerateIdentifiers()
 	{
 		auto retStr = g_drive_enumerate_identifiers(getDriveStruct());
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}
@@ -256,12 +256,12 @@ public template DriveT(TStruct)
 	public IconIF getIcon()
 	{
 		auto p = g_drive_get_icon(getDriveStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p, true);
 	}
 
@@ -278,7 +278,7 @@ public template DriveT(TStruct)
 	public string getIdentifier(string kind)
 	{
 		auto retStr = g_drive_get_identifier(getDriveStruct(), Str.toStringz(kind));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -292,7 +292,7 @@ public template DriveT(TStruct)
 	public string getName()
 	{
 		auto retStr = g_drive_get_name(getDriveStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -332,12 +332,12 @@ public template DriveT(TStruct)
 	public IconIF getSymbolicIcon()
 	{
 		auto p = g_drive_get_symbolic_icon(getDriveStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p, true);
 	}
 
@@ -352,12 +352,12 @@ public template DriveT(TStruct)
 	public ListG getVolumes()
 	{
 		auto p = g_drive_get_volumes(getDriveStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -448,14 +448,14 @@ public template DriveT(TStruct)
 	public bool pollForMediaFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_drive_poll_for_media_finish(getDriveStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -497,14 +497,14 @@ public template DriveT(TStruct)
 	public bool startFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_drive_start_finish(getDriveStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -546,14 +546,14 @@ public template DriveT(TStruct)
 	public bool stopFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_drive_stop_finish(getDriveStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -562,13 +562,13 @@ public template DriveT(TStruct)
 		static OnChangedDelegateWrapper[] listeners;
 		void delegate(DriveIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(DriveIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -598,12 +598,12 @@ public template DriveT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackChanged(GDrive* driveStruct, OnChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -614,13 +614,13 @@ public template DriveT(TStruct)
 		static OnDisconnectedDelegateWrapper[] listeners;
 		void delegate(DriveIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(DriveIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDisconnectedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -653,12 +653,12 @@ public template DriveT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDisconnected(GDrive* driveStruct, OnDisconnectedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDisconnectedDestroy(OnDisconnectedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -669,13 +669,13 @@ public template DriveT(TStruct)
 		static OnEjectButtonDelegateWrapper[] listeners;
 		void delegate(DriveIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(DriveIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnEjectButtonDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -706,12 +706,12 @@ public template DriveT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackEjectButton(GDrive* driveStruct, OnEjectButtonDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackEjectButtonDestroy(OnEjectButtonDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -722,13 +722,13 @@ public template DriveT(TStruct)
 		static OnStopButtonDelegateWrapper[] listeners;
 		void delegate(DriveIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(DriveIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnStopButtonDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -761,12 +761,12 @@ public template DriveT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackStopButton(GDrive* driveStruct, OnStopButtonDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackStopButtonDestroy(OnStopButtonDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

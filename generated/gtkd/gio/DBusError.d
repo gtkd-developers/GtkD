@@ -24,10 +24,10 @@
 
 module gio.DBusError;
 
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ErrorG;
 private import glib.Str;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /** */
@@ -57,7 +57,7 @@ public struct DBusError
 	public static string encodeGerror(ErrorG error)
 	{
 		auto retStr = g_dbus_error_encode_gerror((error is null) ? null : error.getErrorGStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -81,7 +81,7 @@ public struct DBusError
 	public static string getRemoteError(ErrorG error)
 	{
 		auto retStr = g_dbus_error_get_remote_error((error is null) ? null : error.getErrorGStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -142,12 +142,12 @@ public struct DBusError
 	public static ErrorG newForDbusError(string dbusErrorName, string dbusErrorMessage)
 	{
 		auto p = g_dbus_error_new_for_dbus_error(Str.toStringz(dbusErrorName), Str.toStringz(dbusErrorMessage));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ErrorG(cast(GError*) p, true);
 	}
 

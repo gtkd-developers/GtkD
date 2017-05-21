@@ -28,12 +28,12 @@ private import gio.DBusInterface;
 private import gio.DBusInterfaceIF;
 private import gio.DBusObject;
 private import gio.DBusObjectIF;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ListG;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 

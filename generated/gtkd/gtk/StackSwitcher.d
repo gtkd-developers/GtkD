@@ -29,8 +29,8 @@ private import gobject.ObjectG;
 private import gtk.Box;
 private import gtk.Stack;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -108,12 +108,12 @@ public class StackSwitcher : Box
 	public this()
 	{
 		auto p = gtk_stack_switcher_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkStackSwitcher*) p);
 	}
 
@@ -129,12 +129,12 @@ public class StackSwitcher : Box
 	public Stack getStack()
 	{
 		auto p = gtk_stack_switcher_get_stack(gtkStackSwitcher);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Stack)(cast(GtkStack*) p);
 	}
 

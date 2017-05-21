@@ -27,13 +27,13 @@ module gio.DtlsClientConnectionIF;
 private import gio.DatagramBasedIF;
 private import gio.SocketConnectable;
 private import gio.SocketConnectableIF;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.ListG;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**

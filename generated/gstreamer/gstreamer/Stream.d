@@ -30,8 +30,8 @@ private import gobject.ObjectG;
 private import gstreamer.Caps;
 private import gstreamer.ObjectGst;
 private import gstreamer.TagList;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /**
@@ -109,12 +109,12 @@ public class Stream : ObjectGst
 	public this(string streamId, Caps caps, GstStreamType type, GstStreamFlags flags)
 	{
 		auto p = gst_stream_new(Str.toStringz(streamId), (caps is null) ? null : caps.getCapsStruct(), type, flags);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GstStream*) p);
 	}
 
@@ -128,12 +128,12 @@ public class Stream : ObjectGst
 	public Caps getCaps()
 	{
 		auto p = gst_stream_get_caps(gstStream);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
 	}
 
@@ -184,12 +184,12 @@ public class Stream : ObjectGst
 	public TagList getTags()
 	{
 		auto p = gst_stream_get_tags(gstStream);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TagList)(cast(GstTagList*) p, true);
 	}
 

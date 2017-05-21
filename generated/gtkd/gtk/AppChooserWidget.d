@@ -35,8 +35,8 @@ private import gtk.AppChooserT;
 private import gtk.Box;
 private import gtk.Menu;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -123,12 +123,12 @@ public class AppChooserWidget : Box, AppChooserIF
 	public this(string contentType)
 	{
 		auto p = gtk_app_chooser_widget_new(Str.toStringz(contentType));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkAppChooserWidget*) p);
 	}
 
@@ -297,13 +297,13 @@ public class AppChooserWidget : Box, AppChooserIF
 		static OnApplicationActivatedDelegateWrapper[] listeners;
 		void delegate(AppInfoIF, AppChooserWidget) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(AppInfoIF, AppChooserWidget) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnApplicationActivatedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -340,12 +340,12 @@ public class AppChooserWidget : Box, AppChooserIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackApplicationActivated(GtkAppChooserWidget* appchooserwidgetStruct, GAppInfo* application, OnApplicationActivatedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(AppInfo, AppInfoIF)(application), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackApplicationActivatedDestroy(OnApplicationActivatedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -356,13 +356,13 @@ public class AppChooserWidget : Box, AppChooserIF
 		static OnApplicationSelectedDelegateWrapper[] listeners;
 		void delegate(AppInfoIF, AppChooserWidget) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(AppInfoIF, AppChooserWidget) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnApplicationSelectedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -395,12 +395,12 @@ public class AppChooserWidget : Box, AppChooserIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackApplicationSelected(GtkAppChooserWidget* appchooserwidgetStruct, GAppInfo* application, OnApplicationSelectedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(AppInfo, AppInfoIF)(application), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackApplicationSelectedDestroy(OnApplicationSelectedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -411,13 +411,13 @@ public class AppChooserWidget : Box, AppChooserIF
 		static OnPopulatePopupDelegateWrapper[] listeners;
 		void delegate(Menu, AppInfoIF, AppChooserWidget) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Menu, AppInfoIF, AppChooserWidget) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPopulatePopupDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -454,12 +454,12 @@ public class AppChooserWidget : Box, AppChooserIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPopulatePopup(GtkAppChooserWidget* appchooserwidgetStruct, GtkMenu* menu, GAppInfo* application, OnPopulatePopupDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Menu)(menu), ObjectG.getDObject!(AppInfo, AppInfoIF)(application), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPopulatePopupDestroy(OnPopulatePopupDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

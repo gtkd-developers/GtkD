@@ -25,8 +25,8 @@
 module gtk.TreeSortableT;
 
 public  import gobject.Signals;
-public  import gtkc.gtk;
-public  import gtkc.gtktypes;
+public  import gtk.c.functions;
+public  import gtk.c.types;
 public  import std.algorithm;
 
 
@@ -146,13 +146,13 @@ public template TreeSortableT(TStruct)
 		static OnSortColumnChangedDelegateWrapper[] listeners;
 		void delegate(TreeSortableIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TreeSortableIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnSortColumnChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -184,12 +184,12 @@ public template TreeSortableT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackSortColumnChanged(GtkTreeSortable* treesortableStruct, OnSortColumnChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackSortColumnChangedDestroy(OnSortColumnChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

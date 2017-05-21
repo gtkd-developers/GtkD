@@ -29,8 +29,8 @@ public  import glib.Str;
 public  import gobject.ObjectG;
 public  import gtk.CellArea;
 public  import gtk.CellRenderer;
-public  import gtkc.gtk;
-public  import gtkc.gtktypes;
+public  import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -207,12 +207,12 @@ public template CellLayoutT(TStruct)
 	public CellArea getArea()
 	{
 		auto p = gtk_cell_layout_get_area(getCellLayoutStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(CellArea)(cast(GtkCellArea*) p);
 	}
 
@@ -228,12 +228,12 @@ public template CellLayoutT(TStruct)
 	public ListG getCells()
 	{
 		auto p = gtk_cell_layout_get_cells(getCellLayoutStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 

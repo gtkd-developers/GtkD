@@ -25,9 +25,9 @@
 module gio.StaticResource;
 
 private import gio.Resource;
+private import gio.c.functions;
+public  import gio.c.types;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -92,12 +92,12 @@ public class StaticResource
 	public Resource getResource()
 	{
 		auto p = g_static_resource_get_resource(gStaticResource);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Resource)(cast(GResource*) p);
 	}
 

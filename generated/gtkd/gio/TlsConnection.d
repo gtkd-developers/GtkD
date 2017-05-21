@@ -30,12 +30,12 @@ private import gio.IOStream;
 private import gio.TlsCertificate;
 private import gio.TlsDatabase;
 private import gio.TlsInteraction;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ErrorG;
 private import glib.GException;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -119,12 +119,12 @@ public class TlsConnection : IOStream
 	public TlsCertificate getCertificate()
 	{
 		auto p = g_tls_connection_get_certificate(gTlsConnection);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TlsCertificate)(cast(GTlsCertificate*) p);
 	}
 
@@ -139,12 +139,12 @@ public class TlsConnection : IOStream
 	public TlsDatabase getDatabase()
 	{
 		auto p = g_tls_connection_get_database(gTlsConnection);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TlsDatabase)(cast(GTlsDatabase*) p);
 	}
 
@@ -160,12 +160,12 @@ public class TlsConnection : IOStream
 	public TlsInteraction getInteraction()
 	{
 		auto p = g_tls_connection_get_interaction(gTlsConnection);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TlsInteraction)(cast(GTlsInteraction*) p);
 	}
 
@@ -181,12 +181,12 @@ public class TlsConnection : IOStream
 	public TlsCertificate getPeerCertificate()
 	{
 		auto p = g_tls_connection_get_peer_certificate(gTlsConnection);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TlsCertificate)(cast(GTlsCertificate*) p);
 	}
 
@@ -281,14 +281,14 @@ public class TlsConnection : IOStream
 	public bool handshake(Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_tls_connection_handshake(gTlsConnection, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -326,14 +326,14 @@ public class TlsConnection : IOStream
 	public bool handshakeFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_tls_connection_handshake_finish(gTlsConnection, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -500,13 +500,13 @@ public class TlsConnection : IOStream
 		static OnAcceptCertificateDelegateWrapper[] listeners;
 		bool delegate(TlsCertificate, GTlsCertificateFlags, TlsConnection) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(TlsCertificate, GTlsCertificateFlags, TlsConnection) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnAcceptCertificateDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -579,12 +579,12 @@ public class TlsConnection : IOStream
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackAcceptCertificate(GTlsConnection* tlsconnectionStruct, GTlsCertificate* peerCert, GTlsCertificateFlags errors, OnAcceptCertificateDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(ObjectG.getDObject!(TlsCertificate)(peerCert), errors, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackAcceptCertificateDestroy(OnAcceptCertificateDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

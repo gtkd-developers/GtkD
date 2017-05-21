@@ -30,8 +30,8 @@ public  import gio.IconIF;
 public  import glib.Str;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
-public  import gsvc.gsv;
-public  import gsvc.gsvtypes;
+public  import gsv.c.functions;
+public  import gsv.c.types;
 public  import std.algorithm;
 
 
@@ -82,12 +82,12 @@ public template SourceCompletionProposalT(TStruct)
 	public IconIF getGicon()
 	{
 		auto p = gtk_source_completion_proposal_get_gicon(getSourceCompletionProposalStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
 	}
 
@@ -99,12 +99,12 @@ public template SourceCompletionProposalT(TStruct)
 	public Pixbuf getIcon()
 	{
 		auto p = gtk_source_completion_proposal_get_icon(getSourceCompletionProposalStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 
@@ -132,7 +132,7 @@ public template SourceCompletionProposalT(TStruct)
 	public string getInfo()
 	{
 		auto retStr = gtk_source_completion_proposal_get_info(getSourceCompletionProposalStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -148,7 +148,7 @@ public template SourceCompletionProposalT(TStruct)
 	public string getLabel()
 	{
 		auto retStr = gtk_source_completion_proposal_get_label(getSourceCompletionProposalStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -164,7 +164,7 @@ public template SourceCompletionProposalT(TStruct)
 	public string getMarkup()
 	{
 		auto retStr = gtk_source_completion_proposal_get_markup(getSourceCompletionProposalStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -182,7 +182,7 @@ public template SourceCompletionProposalT(TStruct)
 	public string getText()
 	{
 		auto retStr = gtk_source_completion_proposal_get_text(getSourceCompletionProposalStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -204,13 +204,13 @@ public template SourceCompletionProposalT(TStruct)
 		static OnChangedDelegateWrapper[] listeners;
 		void delegate(SourceCompletionProposalIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(SourceCompletionProposalIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -241,12 +241,12 @@ public template SourceCompletionProposalT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackChanged(GtkSourceCompletionProposal* sourcecompletionproposalStruct, OnChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

@@ -17,28 +17,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
 
-// generated automatically - do not change
-// find conversion definition on APILookup.txt
-// implement new conversion functionalities on the wrap.utils pakage
+module gtkc.cairotypes;
 
-
-module gtkc.gthread;
-
-import std.stdio;
-import gtkc.gthreadtypes;
-import gtkd.Loader;
-
-version (Windows)
-	static immutable LIBRARY_GTHREAD = [];
-else version (OSX)
-	static immutable LIBRARY_GTHREAD = [];
-else
-	static immutable LIBRARY_GTHREAD = [""];
-
-shared static this()
-{}
-
-__gshared extern(C)
-{
-}
-
+public import cairo.c.types;

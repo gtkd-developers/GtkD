@@ -25,10 +25,10 @@
 module gio.DBusNames;
 
 private import gio.DBusConnection;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.Str;
 private import gobject.Closure;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /** */

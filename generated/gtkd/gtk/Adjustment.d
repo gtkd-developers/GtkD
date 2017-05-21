@@ -27,8 +27,8 @@ module gtk.Adjustment;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -100,12 +100,12 @@ public class Adjustment : ObjectG
 	public this(double value, double lower, double upper, double stepIncrement, double pageIncrement, double pageSize)
 	{
 		auto p = gtk_adjustment_new(value, lower, upper, stepIncrement, pageIncrement, pageSize);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkAdjustment*) p);
 	}
 
@@ -376,13 +376,13 @@ public class Adjustment : ObjectG
 		static OnChangedDelegateWrapper[] listeners;
 		void delegate(Adjustment) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Adjustment) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -413,12 +413,12 @@ public class Adjustment : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackChanged(GtkAdjustment* adjustmentStruct, OnChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -429,13 +429,13 @@ public class Adjustment : ObjectG
 		static OnValueChangedDelegateWrapper[] listeners;
 		void delegate(Adjustment) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Adjustment) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnValueChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -465,12 +465,12 @@ public class Adjustment : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackValueChanged(GtkAdjustment* adjustmentStruct, OnValueChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackValueChangedDestroy(OnValueChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

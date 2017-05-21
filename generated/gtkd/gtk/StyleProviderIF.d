@@ -30,8 +30,8 @@ private import gobject.Value;
 private import gtk.IconFactory;
 private import gtk.StyleProperties;
 private import gtk.WidgetPath;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**

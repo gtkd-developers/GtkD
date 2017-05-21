@@ -27,8 +27,8 @@ module gsv.SourceUndoManager;
 private import gobject.ObjectG;
 private import gsv.SourceUndoManagerIF;
 private import gsv.SourceUndoManagerT;
-private import gsvc.gsv;
-public  import gsvc.gsvtypes;
+private import gsv.c.functions;
+public  import gsv.c.types;
 
 
 /** */

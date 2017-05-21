@@ -25,8 +25,8 @@
 module gsv.RegionIter;
 
 private import gobject.ObjectG;
-private import gsvc.gsv;
-public  import gsvc.gsvtypes;
+private import gsv.c.functions;
+public  import gsv.c.types;
 private import gtk.TextIter;
 
 
@@ -82,12 +82,12 @@ public class RegionIter
 	{
 		GtkTextIter* outstart = gMalloc!GtkTextIter();
 		GtkTextIter* outend = gMalloc!GtkTextIter();
-		
+
 		auto p = gtk_source_region_iter_get_subregion(gtkSourceRegionIter, outstart, outend) != 0;
-		
+
 		start = ObjectG.getDObject!(TextIter)(outstart, true);
 		end = ObjectG.getDObject!(TextIter)(outend, true);
-		
+
 		return p;
 	}
 

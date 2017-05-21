@@ -30,14 +30,14 @@ private import gio.InitableIF;
 private import gio.InitableT;
 private import gio.InputStream;
 private import gio.OutputStream;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.Bytes;
 private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -162,19 +162,19 @@ public class Subprocess : ObjectG, InitableIF
 	public this(string[] argv, GSubprocessFlags flags)
 	{
 		GError* err = null;
-		
+
 		auto p = g_subprocess_newv(Str.toStringzArray(argv), flags, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by newv");
 		}
-		
+
 		this(cast(GSubprocess*) p, true);
 	}
 
@@ -238,17 +238,17 @@ public class Subprocess : ObjectG, InitableIF
 		GBytes* outstdoutBuf = null;
 		GBytes* outstderrBuf = null;
 		GError* err = null;
-		
+
 		auto p = g_subprocess_communicate(gSubprocess, (stdinBuf is null) ? null : stdinBuf.getBytesStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &outstdoutBuf, &outstderrBuf, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		stdoutBuf = new Bytes(outstdoutBuf);
 		stderrBuf = new Bytes(outstderrBuf);
-		
+
 		return p;
 	}
 
@@ -282,17 +282,17 @@ public class Subprocess : ObjectG, InitableIF
 		GBytes* outstdoutBuf = null;
 		GBytes* outstderrBuf = null;
 		GError* err = null;
-		
+
 		auto p = g_subprocess_communicate_finish(gSubprocess, (result is null) ? null : result.getAsyncResultStruct(), &outstdoutBuf, &outstderrBuf, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		stdoutBuf = new Bytes(outstdoutBuf);
 		stderrBuf = new Bytes(outstderrBuf);
-		
+
 		return p;
 	}
 
@@ -313,17 +313,17 @@ public class Subprocess : ObjectG, InitableIF
 		char* outstdoutBuf = null;
 		char* outstderrBuf = null;
 		GError* err = null;
-		
+
 		auto p = g_subprocess_communicate_utf8(gSubprocess, Str.toStringz(stdinBuf), (cancellable is null) ? null : cancellable.getCancellableStruct(), &outstdoutBuf, &outstderrBuf, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		stdoutBuf = Str.toString(outstdoutBuf);
 		stderrBuf = Str.toString(outstderrBuf);
-		
+
 		return p;
 	}
 
@@ -357,17 +357,17 @@ public class Subprocess : ObjectG, InitableIF
 		char* outstdoutBuf = null;
 		char* outstderrBuf = null;
 		GError* err = null;
-		
+
 		auto p = g_subprocess_communicate_utf8_finish(gSubprocess, (result is null) ? null : result.getAsyncResultStruct(), &outstdoutBuf, &outstderrBuf, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		stdoutBuf = Str.toString(outstdoutBuf);
 		stderrBuf = Str.toString(outstderrBuf);
-		
+
 		return p;
 	}
 
@@ -486,12 +486,12 @@ public class Subprocess : ObjectG, InitableIF
 	public InputStream getStderrPipe()
 	{
 		auto p = g_subprocess_get_stderr_pipe(gSubprocess);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) p);
 	}
 
@@ -509,12 +509,12 @@ public class Subprocess : ObjectG, InitableIF
 	public OutputStream getStdinPipe()
 	{
 		auto p = g_subprocess_get_stdin_pipe(gSubprocess);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(OutputStream)(cast(GOutputStream*) p);
 	}
 
@@ -532,12 +532,12 @@ public class Subprocess : ObjectG, InitableIF
 	public InputStream getStdoutPipe()
 	{
 		auto p = g_subprocess_get_stdout_pipe(gSubprocess);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) p);
 	}
 
@@ -620,14 +620,14 @@ public class Subprocess : ObjectG, InitableIF
 	public bool wait(Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_subprocess_wait(gSubprocess, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -664,14 +664,14 @@ public class Subprocess : ObjectG, InitableIF
 	public bool waitCheck(Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_subprocess_wait_check(gSubprocess, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -708,14 +708,14 @@ public class Subprocess : ObjectG, InitableIF
 	public bool waitCheckFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_subprocess_wait_check_finish(gSubprocess, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -735,14 +735,14 @@ public class Subprocess : ObjectG, InitableIF
 	public bool waitFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_subprocess_wait_finish(gSubprocess, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 }

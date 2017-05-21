@@ -29,16 +29,16 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.Module;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.ParamSpec;
 private import gobject.Type;
 private import gobject.Value;
+private import gobject.c.functions;
 private import gtk.Application;
 private import gtk.Widget;
-private import gtkc.glib;
-private import gtkc.gobject;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import gtkd.paths;
 private import std.string;
 
@@ -275,11 +275,11 @@ public class Builder : ObjectG
 			throw new ConstructionException("null returned by gtk_builder_new()");
 		}
 		this(cast(GtkBuilder*) p);
-		
+
 		GtkBuilderClass* klass = Type.getInstanceClass!(GtkBuilderClass)( this );
 		klass.getTypeFromName = &gtk_builder_real_get_type_from_name_override;
 	}
-	
+
 	/**
 	 * This function is a modification of _gtk_builder_resolve_type_lazily from "gtk/gtkbuilder.c".
 	 * It is needed because it assumes we are linking at compile time to the gtk libs.
@@ -294,7 +294,7 @@ public class Builder : ObjectG
 		{
 			return gtype;
 		}
-		
+
 		/*
 		 * Try to map a type name to a _get_type function
 		 * and call it, eg:
@@ -306,7 +306,7 @@ public class Builder : ObjectG
 		 */
 		char   c;
 		string symbol_name;
-		
+
 		for (int i = 0; name[i] != '\0'; i++)
 		{
 			c = name[i];
@@ -317,12 +317,12 @@ public class Builder : ObjectG
 			name[i-1] == Str.asciiToupper (name[i-1]) &&
 			name[i-2] == Str.asciiToupper (name[i-2]))
 			)
-			
+
 			symbol_name ~= '_';
 			symbol_name ~= Str.asciiTolower (c);
 		}
 		symbol_name ~=  "_get_type" ;
-		
+
 		/* scan linked librarys for function symbol */
 		foreach ( lib; importLibs )
 		{
@@ -330,14 +330,14 @@ public class Builder : ObjectG
 			Module mod = Module.open( lib, GModuleFlags.LAZY );
 			if( mod is null )
 				continue;
-			
+
 			scope(exit) mod.close();
-			
+
 			if ( mod.symbol( symbol_name, cast(void**)&func ) ) {
 				return func();
 		}
 	}
-	
+
 	return GType.INVALID;
 }
 
@@ -363,18 +363,18 @@ public ObjectG getObject(string name)
 public ObjectG[] getObjects()
 {
 	ObjectG[] objects;
-	
+
 	// GSList* gtk_builder_get_objects (GtkBuilder *builder);
 	GSList* list = gtk_builder_get_objects(gtkBuilder);
-	
+
 	while ( list.next !is null )
 	{
 		objects ~= newFromObject( cast(GObject*)list.data );
 		list = list.next;
 	}
-	
+
 	g_slist_free(list);
-	
+
 	return objects;
 }
 
@@ -387,32 +387,32 @@ public ObjectG newFromObject(GObject* cobj)
 	{
 		return null;
 	}
-	
+
 	void* dObj = g_object_get_data(cobj, Str.toStringz("GObject"));
-	
+
 	if ( dObj !is null )
 	{
 		return cast(ObjectG)dObj;
 	}
-	
+
 	string type = convertClassName(Type.name((cast(GTypeInstance*)cobj).gClass.gType));
 	ClassInfo ci = cast(ClassInfo)ClassInfo.find(type);
-	
+
 	//Gobject and Gio types both start with g, so try both.
 	if(ci is null && startsWith(type, "gobject"))
 	{
 		ci = cast(ClassInfo)ClassInfo.find("gio"~ type[7..$]);
 	}
-	
+
 	if(ci is null)
 	{
 		return null;
 	}
-	
-	ObjectG obj = cast(ObjectG)gtkc.gtktypes._d_newclass(ci);
-	
+
+	ObjectG obj = cast(ObjectG)gtk.c.types._d_newclass(ci);
+
 	obj.__ctor(cobj);
-	
+
 	return obj;
 }
 
@@ -425,7 +425,7 @@ private string convertClassName(string gName)
 {
 	string conv;
 	string prefix;
-	
+
 	if      ( startsWith(gName, "GtkSource" ) ) prefix = "Gsv";
 	else if ( startsWith(gName, "Gtk") )        prefix = "Gtk";
 	else if ( startsWith(gName, "Gdk") )        prefix = "Gdk";
@@ -435,19 +435,19 @@ private string convertClassName(string gName)
 	else if ( startsWith(gName, "G") )          prefix = "G";
 	else if ( startsWith(gName, "Pango") )      prefix = "Pg";
 	else if ( startsWith(gName, "cairo") )      prefix = "cairo";
-	
+
 	conv = gName[prefix.length..gName.length];
-	
+
 	if ( conv == "Object" ) conv ~= prefix;
 	if ( prefix == "Pg" )   conv = "Pg" ~ gName[5..gName.length];
 	if ( prefix == "cairo") conv = toUpper(gName[6..7]) ~ gName[7..gName.length - 2];
-	
+
 	prefix = toLower(prefix);
-	
+
 	if( prefix == "gst") prefix = "gstreamer";
 	if( prefix == "g")   prefix = "gobject";
 	if( prefix == "pg" ) prefix = "pango";
-	
+
 	return prefix ~"."~ conv ~"."~ conv;
 }
 
@@ -485,12 +485,12 @@ public static GType getType()
 public this(string filename)
 {
 	auto p = gtk_builder_new_from_file(Str.toStringz(filename));
-	
+
 	if(p is null)
 	{
 		throw new ConstructionException("null returned by new_from_file");
 	}
-	
+
 	this(cast(GtkBuilder*) p, true);
 }
 
@@ -542,14 +542,14 @@ public void addCallbackSymbol(string callbackName, GCallback callbackSymbol)
 public uint addFromFile(string filename)
 {
 	GError* err = null;
-	
+
 	auto p = gtk_builder_add_from_file(gtkBuilder, Str.toStringz(filename), &err);
-	
+
 	if (err !is null)
 	{
 		throw new GException( new ErrorG(err) );
 	}
-	
+
 	return p;
 }
 
@@ -579,14 +579,14 @@ public uint addFromFile(string filename)
 public uint addFromResource(string resourcePath)
 {
 	GError* err = null;
-	
+
 	auto p = gtk_builder_add_from_resource(gtkBuilder, Str.toStringz(resourcePath), &err);
-	
+
 	if (err !is null)
 	{
 		throw new GException( new ErrorG(err) );
 	}
-	
+
 	return p;
 }
 
@@ -617,14 +617,14 @@ public uint addFromResource(string resourcePath)
 public uint addFromString(string buffer)
 {
 	GError* err = null;
-	
+
 	auto p = gtk_builder_add_from_string(gtkBuilder, Str.toStringz(buffer), cast(size_t)buffer.length, &err);
-	
+
 	if (err !is null)
 	{
 		throw new GException( new ErrorG(err) );
 	}
-	
+
 	return p;
 }
 
@@ -654,14 +654,14 @@ public uint addFromString(string buffer)
 public uint addObjectsFromFile(string filename, string[] objectIds)
 {
 	GError* err = null;
-	
+
 	auto p = gtk_builder_add_objects_from_file(gtkBuilder, Str.toStringz(filename), Str.toStringzArray(objectIds), &err);
-	
+
 	if (err !is null)
 	{
 		throw new GException( new ErrorG(err) );
 	}
-	
+
 	return p;
 }
 
@@ -691,14 +691,14 @@ public uint addObjectsFromFile(string filename, string[] objectIds)
 public uint addObjectsFromResource(string resourcePath, string[] objectIds)
 {
 	GError* err = null;
-	
+
 	auto p = gtk_builder_add_objects_from_resource(gtkBuilder, Str.toStringz(resourcePath), Str.toStringzArray(objectIds), &err);
-	
+
 	if (err !is null)
 	{
 		throw new GException( new ErrorG(err) );
 	}
-	
+
 	return p;
 }
 
@@ -728,14 +728,14 @@ public uint addObjectsFromResource(string resourcePath, string[] objectIds)
 public uint addObjectsFromString(string buffer, size_t length, string[] objectIds)
 {
 	GError* err = null;
-	
+
 	auto p = gtk_builder_add_objects_from_string(gtkBuilder, Str.toStringz(buffer), length, Str.toStringzArray(objectIds), &err);
-	
+
 	if (err !is null)
 	{
 		throw new GException( new ErrorG(err) );
 	}
-	
+
 	return p;
 }
 
@@ -823,14 +823,14 @@ public void exposeObject(string name, ObjectG object)
 public uint extendWithTemplate(Widget widget, GType templateType, string buffer, size_t length)
 {
 	GError* err = null;
-	
+
 	auto p = gtk_builder_extend_with_template(gtkBuilder, (widget is null) ? null : widget.getWidgetStruct(), templateType, Str.toStringz(buffer), length, &err);
-	
+
 	if (err !is null)
 	{
 		throw new GException( new ErrorG(err) );
 	}
-	
+
 	return p;
 }
 
@@ -852,12 +852,12 @@ public uint extendWithTemplate(Widget widget, GType templateType, string buffer,
 public Application getApplication()
 {
 	auto p = gtk_builder_get_application(gtkBuilder);
-	
+
 	if(p is null)
 	{
 		return null;
 	}
-	
+
 	return ObjectG.getDObject!(Application)(cast(GtkApplication*) p);
 }
 
@@ -970,16 +970,16 @@ public bool valueFromString(ParamSpec pspec, string str, out Value value)
 {
 	GValue* outvalue = gMalloc!GValue();
 	GError* err = null;
-	
+
 	auto p = gtk_builder_value_from_string(gtkBuilder, (pspec is null) ? null : pspec.getParamSpecStruct(), Str.toStringz(str), outvalue, &err) != 0;
-	
+
 	if (err !is null)
 	{
 		throw new GException( new ErrorG(err) );
 	}
-	
+
 	value = ObjectG.getDObject!(Value)(outvalue, true);
-	
+
 	return p;
 }
 
@@ -1007,16 +1007,16 @@ public bool valueFromStringType(GType type, string str, out Value value)
 {
 	GValue* outvalue = gMalloc!GValue();
 	GError* err = null;
-	
+
 	auto p = gtk_builder_value_from_string_type(gtkBuilder, type, Str.toStringz(str), outvalue, &err) != 0;
-	
+
 	if (err !is null)
 	{
 		throw new GException( new ErrorG(err) );
 	}
-	
+
 	value = ObjectG.getDObject!(Value)(outvalue, true);
-	
+
 	return p;
 }
 }

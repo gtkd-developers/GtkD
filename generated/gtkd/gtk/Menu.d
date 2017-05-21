@@ -39,8 +39,8 @@ private import gtk.AccelGroup;
 private import gtk.MenuItem;
 private import gtk.MenuShell;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -160,7 +160,7 @@ public class Menu : MenuShell
 	{
 		popup(null, null, null, null, button, activateTime);
 	}
-	
+
 	/**
 	 * Creates and append a submenu to this menu.
 	 * This menu item that actualy has the sub menu is also created.
@@ -176,7 +176,7 @@ public class Menu : MenuShell
 		item.setSubmenu(submenu);
 		return submenu;
 	}
-	
+
 	/** */
 	void appendSubmenu(string label, Menu submenu)
 	{
@@ -184,7 +184,7 @@ public class Menu : MenuShell
 		append(item);
 		item.setSubmenu(submenu);
 	}
-	
+
 	/** */
 	Menu prependSubmenu(string label)
 	{
@@ -214,12 +214,12 @@ public class Menu : MenuShell
 	public this()
 	{
 		auto p = gtk_menu_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkMenu*) p);
 	}
 
@@ -247,12 +247,12 @@ public class Menu : MenuShell
 	public this(MenuModel model)
 	{
 		auto p = gtk_menu_new_from_model((model is null) ? null : model.getMenuModelStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_model");
 		}
-		
+
 		this(cast(GtkMenu*) p);
 	}
 
@@ -271,12 +271,12 @@ public class Menu : MenuShell
 	public static ListG getForAttachWidget(Widget widget)
 	{
 		auto p = gtk_menu_get_for_attach_widget((widget is null) ? null : widget.getWidgetStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -342,12 +342,12 @@ public class Menu : MenuShell
 	public AccelGroup getAccelGroup()
 	{
 		auto p = gtk_menu_get_accel_group(gtkMenu);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(AccelGroup)(cast(GtkAccelGroup*) p);
 	}
 
@@ -374,12 +374,12 @@ public class Menu : MenuShell
 	public Widget getActive()
 	{
 		auto p = gtk_menu_get_active(gtkMenu);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -391,12 +391,12 @@ public class Menu : MenuShell
 	public Widget getAttachWidget()
 	{
 		auto p = gtk_menu_get_attach_widget(gtkMenu);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -827,13 +827,13 @@ public class Menu : MenuShell
 		static OnMoveScrollDelegateWrapper[] listeners;
 		void delegate(GtkScrollType, Menu) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(GtkScrollType, Menu) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMoveScrollDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -861,12 +861,12 @@ public class Menu : MenuShell
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackMoveScroll(GtkMenu* menuStruct, GtkScrollType scrollType, OnMoveScrollDelegateWrapper wrapper)
 	{
 		wrapper.dlg(scrollType, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMoveScrollDestroy(OnMoveScrollDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -877,13 +877,13 @@ public class Menu : MenuShell
 		static OnPoppedUpDelegateWrapper[] listeners;
 		void delegate(void*, void*, bool, bool, Menu) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(void*, void*, bool, bool, Menu) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPoppedUpDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -944,12 +944,12 @@ public class Menu : MenuShell
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPoppedUp(GtkMenu* menuStruct, void* flippedRect, void* finalRect, bool flippedX, bool flippedY, OnPoppedUpDelegateWrapper wrapper)
 	{
 		wrapper.dlg(flippedRect, finalRect, flippedX, flippedY, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPoppedUpDestroy(OnPoppedUpDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

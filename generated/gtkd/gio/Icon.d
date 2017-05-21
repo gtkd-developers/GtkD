@@ -26,9 +26,9 @@ module gio.Icon;
 
 private import gio.IconIF;
 private import gio.IconT;
+private import gio.c.functions;
+public  import gio.c.types;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /** */

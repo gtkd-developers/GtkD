@@ -30,8 +30,8 @@ private import glib.GException;
 private import glib.Source;
 private import glib.Str;
 private import glib.StringG;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 private import gtkd.Loader;
 
 
@@ -96,19 +96,19 @@ public class IOChannel
 	public this(string filename, string mode)
 	{
 		GError* err = null;
-		
+
 		auto p = g_io_channel_new_file(Str.toStringz(filename), Str.toStringz(mode), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_file");
 		}
-		
+
 		this(cast(GIOChannel*) p);
 	}
 
@@ -144,12 +144,12 @@ public class IOChannel
 	public this(int fd)
 	{
 		auto p = g_io_channel_unix_new(fd);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by unix_new");
 		}
-		
+
 		this(cast(GIOChannel*) p);
 	}
 
@@ -177,14 +177,14 @@ public class IOChannel
 	public GIOStatus flush()
 	{
 		GError* err = null;
-		
+
 		auto p = g_io_channel_flush(gIOChannel, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -331,14 +331,14 @@ public class IOChannel
 	public GIOStatus readChars(out char[] buf, out size_t bytesRead)
 	{
 		GError* err = null;
-		
+
 		auto p = g_io_channel_read_chars(gIOChannel, buf.ptr, cast(size_t)buf.length, &bytesRead, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -365,16 +365,16 @@ public class IOChannel
 		char* outstrReturn = null;
 		size_t length;
 		GError* err = null;
-		
+
 		auto p = g_io_channel_read_line(gIOChannel, &outstrReturn, &length, &terminatorPos, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		strReturn = Str.toString(outstrReturn, length);
-		
+
 		return p;
 	}
 
@@ -394,14 +394,14 @@ public class IOChannel
 	public GIOStatus readLineString(StringG buffer, out size_t terminatorPos)
 	{
 		GError* err = null;
-		
+
 		auto p = g_io_channel_read_line_string(gIOChannel, (buffer is null) ? null : buffer.getStringGStruct(), &terminatorPos, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -426,16 +426,16 @@ public class IOChannel
 		char* outstrReturn = null;
 		size_t length;
 		GError* err = null;
-		
+
 		auto p = g_io_channel_read_to_end(gIOChannel, &outstrReturn, &length, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		strReturn = Str.toString(outstrReturn, length);
-		
+
 		return p;
 	}
 
@@ -453,14 +453,14 @@ public class IOChannel
 	public GIOStatus readUnichar(out dchar thechar)
 	{
 		GError* err = null;
-		
+
 		auto p = g_io_channel_read_unichar(gIOChannel, &thechar, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -472,12 +472,12 @@ public class IOChannel
 	public IOChannel doref()
 	{
 		auto p = g_io_channel_ref(gIOChannel);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new IOChannel(cast(GIOChannel*) p, true);
 	}
 
@@ -518,14 +518,14 @@ public class IOChannel
 	public GIOStatus seekPosition(long offset, GSeekType type)
 	{
 		GError* err = null;
-		
+
 		auto p = g_io_channel_seek_position(gIOChannel, offset, type, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -630,14 +630,14 @@ public class IOChannel
 	public GIOStatus setEncoding(string encoding)
 	{
 		GError* err = null;
-		
+
 		auto p = g_io_channel_set_encoding(gIOChannel, Str.toStringz(encoding), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -654,14 +654,14 @@ public class IOChannel
 	public GIOStatus setFlags(GIOFlags flags)
 	{
 		GError* err = null;
-		
+
 		auto p = g_io_channel_set_flags(gIOChannel, flags, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -698,14 +698,14 @@ public class IOChannel
 	public GIOStatus shutdown(bool flush)
 	{
 		GError* err = null;
-		
+
 		auto p = g_io_channel_shutdown(gIOChannel, flush, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -772,14 +772,14 @@ public class IOChannel
 	public GIOStatus writeChars(string buf, out size_t bytesWritten)
 	{
 		GError* err = null;
-		
+
 		auto p = g_io_channel_write_chars(gIOChannel, Str.toStringz(buf), cast(ptrdiff_t)buf.length, &bytesWritten, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -797,14 +797,14 @@ public class IOChannel
 	public GIOStatus writeUnichar(dchar thechar)
 	{
 		GError* err = null;
-		
+
 		auto p = g_io_channel_write_unichar(gIOChannel, thechar, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -890,12 +890,12 @@ public class IOChannel
 	public static Source ioCreateWatch(IOChannel channel, GIOCondition condition)
 	{
 		auto p = g_io_create_watch((channel is null) ? null : channel.getIOChannelStruct(), condition);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Source(cast(GSource*) p, true);
 	}
 }

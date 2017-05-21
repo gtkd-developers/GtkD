@@ -24,9 +24,9 @@
 
 module glib.ListG;
 
+private import glib.c.functions;
+public  import glib.c.types;
 private import gobject.ObjectG;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
 
 
 /**
@@ -66,7 +66,7 @@ public class ListG
 	{
 		return gList.data;
 	}
-	
+
 	/**
 	 * get the next element
 	 * Returns: the next element, or NULL if there are no more elements.
@@ -77,10 +77,10 @@ public class ListG
 		{
 			return null;
 		}
-		
+
 		return new ListG(gList.next);
 	}
-	
+
 	/**
 	 * get the previous element
 	 * Returns: the previous element, or NULL if there are no more elements.
@@ -91,10 +91,10 @@ public class ListG
 		{
 			return null;
 		}
-		
+
 		return new ListG(gList.prev);
 	}
-	
+
 	/**
 	 * Turn the list into a D array of the desiered type.
 	 * Type T wraps should match the type of the data.
@@ -104,26 +104,26 @@ public class ListG
 		T[] arr = new T[length()];
 		ListG list = this;
 		size_t count;
-		
+
 		while(list !is null && count < arr.length)
 		{
 			arr[count] = ObjectG.getDObject!(T)(cast(TC)list.data);
 			list = list.next();
 			count++;
 		}
-		
+
 		return arr;
 	}
-	
+
 	unittest
 	{
 		import gobject.Value;
-		
+
 		auto list = new ListG(null);
 		list = list.append(new Value(0).getValueStruct());
 		list = list.append(new Value(1).getValueStruct());
 		auto arr = list.toArray!Value();
-		
+
 		assert(arr[0].getInt() == 0);
 		assert(arr[1].getInt() == 1);
 	}
@@ -141,12 +141,12 @@ public class ListG
 	public static ListG alloc()
 	{
 		auto p = g_list_alloc();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -182,12 +182,12 @@ public class ListG
 	public ListG append(void* data)
 	{
 		auto p = g_list_append(gList, data);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -212,12 +212,12 @@ public class ListG
 	public ListG concat(ListG list2)
 	{
 		auto p = g_list_concat(gList, (list2 is null) ? null : list2.getListGStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -234,12 +234,12 @@ public class ListG
 	public ListG copy()
 	{
 		auto p = g_list_copy(gList);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -276,12 +276,12 @@ public class ListG
 	public ListG copyDeep(GCopyFunc func, void* userData)
 	{
 		auto p = g_list_copy_deep(gList, func, userData);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -298,12 +298,12 @@ public class ListG
 	public ListG deleteLink(ListG link)
 	{
 		auto p = g_list_delete_link(gList, (link is null) ? null : link.getListGStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -318,12 +318,12 @@ public class ListG
 	public ListG find(void* data)
 	{
 		auto p = g_list_find(gList, data);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -345,12 +345,12 @@ public class ListG
 	public ListG findCustom(void* data, GCompareFunc func)
 	{
 		auto p = g_list_find_custom(gList, data, func);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -363,12 +363,12 @@ public class ListG
 	public ListG first()
 	{
 		auto p = g_list_first(gList);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -451,12 +451,12 @@ public class ListG
 	public ListG insert(void* data, int position)
 	{
 		auto p = g_list_insert(gList, data, position);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -473,12 +473,12 @@ public class ListG
 	public ListG insertBefore(ListG sibling, void* data)
 	{
 		auto p = g_list_insert_before(gList, (sibling is null) ? null : sibling.getListGStruct(), data);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -502,12 +502,12 @@ public class ListG
 	public ListG insertSorted(void* data, GCompareFunc func)
 	{
 		auto p = g_list_insert_sorted(gList, data, func);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -534,12 +534,12 @@ public class ListG
 	public ListG insertSortedWithData(void* data, GCompareDataFunc func, void* userData)
 	{
 		auto p = g_list_insert_sorted_with_data(gList, data, func, userData);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -552,12 +552,12 @@ public class ListG
 	public ListG last()
 	{
 		auto p = g_list_last(gList);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -592,12 +592,12 @@ public class ListG
 	public ListG nth(uint n)
 	{
 		auto p = g_list_nth(gList, n);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -631,12 +631,12 @@ public class ListG
 	public ListG nthPrev(uint n)
 	{
 		auto p = g_list_nth_prev(gList, n);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -681,12 +681,12 @@ public class ListG
 	public ListG prepend(void* data)
 	{
 		auto p = g_list_prepend(gList, data);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -703,12 +703,12 @@ public class ListG
 	public ListG remove(void* data)
 	{
 		auto p = g_list_remove(gList, data);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -726,12 +726,12 @@ public class ListG
 	public ListG removeAll(void* data)
 	{
 		auto p = g_list_remove_all(gList, data);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -757,12 +757,12 @@ public class ListG
 	public ListG removeLink(ListG llink)
 	{
 		auto p = g_list_remove_link(gList, (llink is null) ? null : llink.getListGStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -775,12 +775,12 @@ public class ListG
 	public ListG reverse()
 	{
 		auto p = g_list_reverse(gList);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -800,12 +800,12 @@ public class ListG
 	public ListG sort(GCompareFunc compareFunc)
 	{
 		auto p = g_list_sort(gList, compareFunc);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -822,12 +822,12 @@ public class ListG
 	public ListG sortWithData(GCompareDataFunc compareFunc, void* userData)
 	{
 		auto p = g_list_sort_with_data(gList, compareFunc, userData);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 }

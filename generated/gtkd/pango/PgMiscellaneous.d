@@ -27,8 +27,8 @@ module pango.PgMiscellaneous;
 private import core.stdc.stdio;
 private import glib.Str;
 private import glib.StringG;
-private import gtkc.pango;
-public  import gtkc.pangotypes;
+private import pango.c.functions;
+public  import pango.c.types;
 
 
 /** */
@@ -46,7 +46,7 @@ public struct PgMiscellaneous
 	public static string configKeyGet(string key)
 	{
 		auto retStr = pango_config_key_get(Str.toStringz(key));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -62,7 +62,7 @@ public struct PgMiscellaneous
 	public static string configKeyGetSystem(string key)
 	{
 		auto retStr = pango_config_key_get_system(Str.toStringz(key));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -152,9 +152,9 @@ public struct PgMiscellaneous
 	{
 		char** outfamilies = null;
 		int nFamilies;
-		
+
 		pango_lookup_aliases(Str.toStringz(fontname), &outfamilies, &nFamilies);
-		
+
 		families = Str.toStringArray(outfamilies, nFamilies);
 	}
 
@@ -183,11 +183,11 @@ public struct PgMiscellaneous
 	public static bool parseEnum(GType type, string str, out int value, bool warn, out string possibleValues)
 	{
 		char* outpossibleValues = null;
-		
+
 		auto p = pango_parse_enum(type, Str.toStringz(str), &value, warn, &outpossibleValues) != 0;
-		
+
 		possibleValues = Str.toString(outpossibleValues);
-		
+
 		return p;
 	}
 
@@ -306,11 +306,11 @@ public struct PgMiscellaneous
 	public static int readLine(FILE* stream, out StringG str)
 	{
 		GString* outstr = gMalloc!GString();
-		
+
 		auto p = pango_read_line(stream, outstr);
-		
+
 		str = new StringG(outstr, true);
-		
+
 		return p;
 	}
 
@@ -327,11 +327,11 @@ public struct PgMiscellaneous
 	public static bool scanInt(ref string pos, out int output)
 	{
 		char* outpos = Str.toStringz(pos);
-		
+
 		auto p = pango_scan_int(&outpos, &output) != 0;
-		
+
 		pos = Str.toString(outpos);
-		
+
 		return p;
 	}
 
@@ -351,12 +351,12 @@ public struct PgMiscellaneous
 	{
 		char* outpos = Str.toStringz(pos);
 		GString* outoutput = gMalloc!GString();
-		
+
 		auto p = pango_scan_string(&outpos, outoutput) != 0;
-		
+
 		pos = Str.toString(outpos);
 		output = new StringG(outoutput, true);
-		
+
 		return p;
 	}
 
@@ -375,12 +375,12 @@ public struct PgMiscellaneous
 	{
 		char* outpos = Str.toStringz(pos);
 		GString* outoutput = gMalloc!GString();
-		
+
 		auto p = pango_scan_word(&outpos, outoutput) != 0;
-		
+
 		pos = Str.toString(outpos);
 		output = new StringG(outoutput, true);
-		
+
 		return p;
 	}
 
@@ -396,11 +396,11 @@ public struct PgMiscellaneous
 	public static bool skipSpace(ref string pos)
 	{
 		char* outpos = Str.toStringz(pos);
-		
+
 		auto p = pango_skip_space(&outpos) != 0;
-		
+
 		pos = Str.toString(outpos);
-		
+
 		return p;
 	}
 
@@ -417,7 +417,7 @@ public struct PgMiscellaneous
 	public static string[] splitFileList(string str)
 	{
 		auto retStr = pango_split_file_list(Str.toStringz(str));
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}
@@ -433,7 +433,7 @@ public struct PgMiscellaneous
 	public static string trimString(string str)
 	{
 		auto retStr = pango_trim_string(Str.toStringz(str));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}

@@ -25,9 +25,9 @@
 module atk.ImplementorIF;
 
 private import atk.ObjectAtk;
+private import atk.c.functions;
+public  import atk.c.types;
 private import gobject.ObjectG;
-private import gtkc.atk;
-public  import gtkc.atktypes;
 
 
 /** */

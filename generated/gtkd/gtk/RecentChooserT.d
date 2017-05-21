@@ -33,8 +33,8 @@ public  import gobject.ObjectG;
 public  import gobject.Signals;
 public  import gtk.RecentFilter;
 public  import gtk.RecentInfo;
-public  import gtkc.gtk;
-public  import gtkc.gtktypes;
+public  import gtk.c.functions;
+public  import gtk.c.types;
 public  import std.algorithm;
 
 
@@ -84,12 +84,12 @@ public template RecentChooserT(TStruct)
 	public RecentInfo getCurrentItem()
 	{
 		auto p = gtk_recent_chooser_get_current_item(getRecentChooserStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(RecentInfo)(cast(GtkRecentInfo*) p, true);
 	}
 
@@ -103,7 +103,7 @@ public template RecentChooserT(TStruct)
 	public string getCurrentUri()
 	{
 		auto retStr = gtk_recent_chooser_get_current_uri(getRecentChooserStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -119,12 +119,12 @@ public template RecentChooserT(TStruct)
 	public RecentFilter getFilter()
 	{
 		auto p = gtk_recent_chooser_get_filter(getRecentChooserStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(RecentFilter)(cast(GtkRecentFilter*) p);
 	}
 
@@ -144,12 +144,12 @@ public template RecentChooserT(TStruct)
 	public ListG getItems()
 	{
 		auto p = gtk_recent_chooser_get_items(getRecentChooserStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -274,9 +274,9 @@ public template RecentChooserT(TStruct)
 	public string[] getUris()
 	{
 		size_t length;
-		
+
 		auto retStr = gtk_recent_chooser_get_uris(getRecentChooserStruct(), &length);
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr, length);
 	}
@@ -293,12 +293,12 @@ public template RecentChooserT(TStruct)
 	public ListSG listFilters()
 	{
 		auto p = gtk_recent_chooser_list_filters(getRecentChooserStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -341,14 +341,14 @@ public template RecentChooserT(TStruct)
 	public bool selectUri(string uri)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_recent_chooser_select_uri(getRecentChooserStruct(), Str.toStringz(uri), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -367,14 +367,14 @@ public template RecentChooserT(TStruct)
 	public bool setCurrentUri(string uri)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_recent_chooser_set_current_uri(getRecentChooserStruct(), Str.toStringz(uri), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -554,13 +554,13 @@ public template RecentChooserT(TStruct)
 		static OnItemActivatedDelegateWrapper[] listeners;
 		void delegate(RecentChooserIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(RecentChooserIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnItemActivatedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -595,12 +595,12 @@ public template RecentChooserT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackItemActivated(GtkRecentChooser* recentchooserStruct, OnItemActivatedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackItemActivatedDestroy(OnItemActivatedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -611,13 +611,13 @@ public template RecentChooserT(TStruct)
 		static OnSelectionChangedDelegateWrapper[] listeners;
 		void delegate(RecentChooserIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(RecentChooserIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnSelectionChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -652,12 +652,12 @@ public template RecentChooserT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackSelectionChanged(GtkRecentChooser* recentchooserStruct, OnSelectionChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackSelectionChangedDestroy(OnSelectionChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

@@ -28,12 +28,12 @@ private import gio.DBusInterfaceSkeleton;
 private import gio.DBusMethodInvocation;
 private import gio.DBusObjectIF;
 private import gio.DBusObjectT;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -105,12 +105,12 @@ public class DBusObjectSkeleton : ObjectG, DBusObjectIF
 	public this(string objectPath)
 	{
 		auto p = g_dbus_object_skeleton_new(Str.toStringz(objectPath));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GDBusObjectSkeleton*) p, true);
 	}
 
@@ -192,13 +192,13 @@ public class DBusObjectSkeleton : ObjectG, DBusObjectIF
 		static OnAuthorizeMethodDelegateWrapper[] listeners;
 		bool delegate(DBusInterfaceSkeleton, DBusMethodInvocation, DBusObjectSkeleton) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(DBusInterfaceSkeleton, DBusMethodInvocation, DBusObjectSkeleton) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnAuthorizeMethodDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -243,12 +243,12 @@ public class DBusObjectSkeleton : ObjectG, DBusObjectIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackAuthorizeMethod(GDBusObjectSkeleton* dbusobjectskeletonStruct, GDBusInterfaceSkeleton* iface, GDBusMethodInvocation* invocation, OnAuthorizeMethodDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(ObjectG.getDObject!(DBusInterfaceSkeleton)(iface), ObjectG.getDObject!(DBusMethodInvocation)(invocation), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackAuthorizeMethodDestroy(OnAuthorizeMethodDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

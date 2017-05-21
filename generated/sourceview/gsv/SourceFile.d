@@ -29,8 +29,8 @@ private import gio.FileIF;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gsv.SourceEncoding;
-private import gsvc.gsv;
-public  import gsvc.gsvtypes;
+private import gsv.c.functions;
+public  import gsv.c.types;
 
 
 /** */
@@ -85,12 +85,12 @@ public class SourceFile : ObjectG
 	public this()
 	{
 		auto p = gtk_source_file_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkSourceFile*) p, true);
 	}
 
@@ -133,12 +133,12 @@ public class SourceFile : ObjectG
 	public SourceEncoding getEncoding()
 	{
 		auto p = gtk_source_file_get_encoding(gtkSourceFile);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SourceEncoding)(cast(GtkSourceEncoding*) p);
 	}
 
@@ -150,12 +150,12 @@ public class SourceFile : ObjectG
 	public FileIF getLocation()
 	{
 		auto p = gtk_source_file_get_location(gtkSourceFile);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p);
 	}
 

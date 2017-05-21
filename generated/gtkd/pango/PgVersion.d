@@ -25,8 +25,8 @@
 module pango.PgVersion;
 
 private import glib.Str;
-private import gtkc.pango;
-public  import gtkc.pangotypes;
+private import pango.c.functions;
+public  import pango.c.types;
 
 
 /** */

@@ -26,9 +26,9 @@ module gio.ProxyResolver;
 
 private import gio.ProxyResolverIF;
 private import gio.ProxyResolverT;
+private import gio.c.functions;
+public  import gio.c.types;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /** */

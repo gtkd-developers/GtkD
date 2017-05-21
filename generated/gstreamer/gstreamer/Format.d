@@ -27,8 +27,8 @@ module gstreamer.Format;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gstreamer.Iterator;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /** */
@@ -88,12 +88,12 @@ public struct Format
 	public static Iterator iterateDefinitions()
 	{
 		auto p = gst_format_iterate_definitions();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
 	}
 

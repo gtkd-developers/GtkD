@@ -24,8 +24,8 @@
 
 module gtk.OrientableT;
 
-public  import gtkc.gtk;
-public  import gtkc.gtktypes;
+public  import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**

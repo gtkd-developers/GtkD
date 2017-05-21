@@ -32,8 +32,8 @@ public  import gobject.ObjectG;
 public  import gsv.SourceCompletionContext;
 public  import gsv.SourceCompletionInfo;
 public  import gsv.SourceCompletionProposalIF;
-public  import gsvc.gsv;
-public  import gsvc.gsvtypes;
+public  import gsv.c.functions;
+public  import gsv.c.types;
 public  import gtk.TextIter;
 public  import gtk.Widget;
 
@@ -95,12 +95,12 @@ public template SourceCompletionProviderT(TStruct)
 	public IconIF getGicon()
 	{
 		auto p = gtk_source_completion_provider_get_gicon(getSourceCompletionProviderStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
 	}
 
@@ -113,12 +113,12 @@ public template SourceCompletionProviderT(TStruct)
 	public Pixbuf getIcon()
 	{
 		auto p = gtk_source_completion_provider_get_icon(getSourceCompletionProviderStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 
@@ -162,12 +162,12 @@ public template SourceCompletionProviderT(TStruct)
 	public Widget getInfoWidget(SourceCompletionProposalIF proposal)
 	{
 		auto p = gtk_source_completion_provider_get_info_widget(getSourceCompletionProviderStruct(), (proposal is null) ? null : proposal.getSourceCompletionProposalStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -193,7 +193,7 @@ public template SourceCompletionProviderT(TStruct)
 	public string getName()
 	{
 		auto retStr = gtk_source_completion_provider_get_name(getSourceCompletionProviderStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -234,11 +234,11 @@ public template SourceCompletionProviderT(TStruct)
 	public bool getStartIter(SourceCompletionContext context, SourceCompletionProposalIF proposal, out TextIter iter)
 	{
 		GtkTextIter* outiter = gMalloc!GtkTextIter();
-		
+
 		auto p = gtk_source_completion_provider_get_start_iter(getSourceCompletionProviderStruct(), (context is null) ? null : context.getSourceCompletionContextStruct(), (proposal is null) ? null : proposal.getSourceCompletionProposalStruct(), outiter) != 0;
-		
+
 		iter = ObjectG.getDObject!(TextIter)(outiter, true);
-		
+
 		return p;
 	}
 

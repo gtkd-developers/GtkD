@@ -26,8 +26,8 @@ module glib.VariantType;
 
 private import glib.ConstructionException;
 private import glib.Str;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 private import gtkd.Loader;
 
 
@@ -230,12 +230,12 @@ public class VariantType
 	public static VariantType newMaybe(VariantType element)
 	{
 		auto p = g_variant_type_new_maybe((element is null) ? null : element.getVariantTypeStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_maybe");
 		}
-		
+
 		return new VariantType(cast(GVariantType*) p);
 	}
 
@@ -262,12 +262,12 @@ public class VariantType
 	public this(string typeString)
 	{
 		auto p = g_variant_type_new(Str.toStringz(typeString));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GVariantType*) p);
 	}
 
@@ -289,12 +289,12 @@ public class VariantType
 	public this(VariantType element)
 	{
 		auto p = g_variant_type_new_array((element is null) ? null : element.getVariantTypeStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_array");
 		}
-		
+
 		this(cast(GVariantType*) p);
 	}
 
@@ -317,12 +317,12 @@ public class VariantType
 	public this(VariantType key, VariantType value)
 	{
 		auto p = g_variant_type_new_dict_entry((key is null) ? null : key.getVariantTypeStruct(), (value is null) ? null : value.getVariantTypeStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_dict_entry");
 		}
-		
+
 		this(cast(GVariantType*) p);
 	}
 
@@ -351,14 +351,14 @@ public class VariantType
 		{
 			itemsArray[i] = items[i].getVariantTypeStruct();
 		}
-		
+
 		auto p = g_variant_type_new_tuple(itemsArray.ptr, cast(int)items.length);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_tuple");
 		}
-		
+
 		this(cast(GVariantType*) p);
 	}
 
@@ -373,12 +373,12 @@ public class VariantType
 	public VariantType copy()
 	{
 		auto p = g_variant_type_copy(gVariantType);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new VariantType(cast(GVariantType*) p, true);
 	}
 
@@ -394,7 +394,7 @@ public class VariantType
 	public string dupString()
 	{
 		auto retStr = g_variant_type_dup_string(gVariantType);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -411,12 +411,12 @@ public class VariantType
 	public VariantType element()
 	{
 		auto p = g_variant_type_element(gVariantType);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new VariantType(cast(GVariantType*) p);
 	}
 
@@ -467,12 +467,12 @@ public class VariantType
 	public VariantType first()
 	{
 		auto p = g_variant_type_first(gVariantType);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new VariantType(cast(GVariantType*) p);
 	}
 
@@ -695,12 +695,12 @@ public class VariantType
 	public VariantType key()
 	{
 		auto p = g_variant_type_key(gVariantType);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new VariantType(cast(GVariantType*) p);
 	}
 
@@ -744,12 +744,12 @@ public class VariantType
 	public VariantType next()
 	{
 		auto p = g_variant_type_next(gVariantType);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new VariantType(cast(GVariantType*) p);
 	}
 
@@ -781,12 +781,12 @@ public class VariantType
 	public VariantType value()
 	{
 		auto p = g_variant_type_value(gVariantType);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new VariantType(cast(GVariantType*) p);
 	}
 
@@ -794,12 +794,12 @@ public class VariantType
 	public static VariantType checked(string arg0)
 	{
 		auto p = g_variant_type_checked_(Str.toStringz(arg0));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new VariantType(cast(GVariantType*) p);
 	}
 
@@ -847,11 +847,11 @@ public class VariantType
 	public static bool stringScan(string str, string limit, out string endptr)
 	{
 		char* outendptr = null;
-		
+
 		auto p = g_variant_type_string_scan(Str.toStringz(str), Str.toStringz(limit), &outendptr) != 0;
-		
+
 		endptr = Str.toString(outendptr);
-		
+
 		return p;
 	}
 }

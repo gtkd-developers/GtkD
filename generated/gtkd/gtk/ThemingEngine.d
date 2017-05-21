@@ -32,8 +32,8 @@ private import gobject.ParamSpec;
 private import gobject.Value;
 private import gtk.Border;
 private import gtk.WidgetPath;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import pango.PgFontDescription;
 
 
@@ -102,12 +102,12 @@ public class ThemingEngine : ObjectG
 	public static ThemingEngine load(string name)
 	{
 		auto p = gtk_theming_engine_load(Str.toStringz(name));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ThemingEngine)(cast(GtkThemingEngine*) p);
 	}
 
@@ -166,9 +166,9 @@ public class ThemingEngine : ObjectG
 	public void getBackgroundColor(GtkStateFlags state, out RGBA color)
 	{
 		GdkRGBA* outcolor = gMalloc!GdkRGBA();
-		
+
 		gtk_theming_engine_get_background_color(gtkThemingEngine, state, outcolor);
-		
+
 		color = ObjectG.getDObject!(RGBA)(outcolor, true);
 	}
 
@@ -184,9 +184,9 @@ public class ThemingEngine : ObjectG
 	public void getBorder(GtkStateFlags state, out Border border)
 	{
 		GtkBorder* outborder = gMalloc!GtkBorder();
-		
+
 		gtk_theming_engine_get_border(gtkThemingEngine, state, outborder);
-		
+
 		border = ObjectG.getDObject!(Border)(outborder, true);
 	}
 
@@ -202,9 +202,9 @@ public class ThemingEngine : ObjectG
 	public void getBorderColor(GtkStateFlags state, out RGBA color)
 	{
 		GdkRGBA* outcolor = gMalloc!GdkRGBA();
-		
+
 		gtk_theming_engine_get_border_color(gtkThemingEngine, state, outcolor);
-		
+
 		color = ObjectG.getDObject!(RGBA)(outcolor, true);
 	}
 
@@ -220,9 +220,9 @@ public class ThemingEngine : ObjectG
 	public void getColor(GtkStateFlags state, out RGBA color)
 	{
 		GdkRGBA* outcolor = gMalloc!GdkRGBA();
-		
+
 		gtk_theming_engine_get_color(gtkThemingEngine, state, outcolor);
-		
+
 		color = ObjectG.getDObject!(RGBA)(outcolor, true);
 	}
 
@@ -259,12 +259,12 @@ public class ThemingEngine : ObjectG
 	public PgFontDescription getFont(GtkStateFlags state)
 	{
 		auto p = gtk_theming_engine_get_font(gtkThemingEngine, state);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) p);
 	}
 
@@ -292,9 +292,9 @@ public class ThemingEngine : ObjectG
 	public void getMargin(GtkStateFlags state, out Border margin)
 	{
 		GtkBorder* outmargin = gMalloc!GtkBorder();
-		
+
 		gtk_theming_engine_get_margin(gtkThemingEngine, state, outmargin);
-		
+
 		margin = ObjectG.getDObject!(Border)(outmargin, true);
 	}
 
@@ -310,9 +310,9 @@ public class ThemingEngine : ObjectG
 	public void getPadding(GtkStateFlags state, out Border padding)
 	{
 		GtkBorder* outpadding = gMalloc!GtkBorder();
-		
+
 		gtk_theming_engine_get_padding(gtkThemingEngine, state, outpadding);
-		
+
 		padding = ObjectG.getDObject!(Border)(outpadding, true);
 	}
 
@@ -326,12 +326,12 @@ public class ThemingEngine : ObjectG
 	public WidgetPath getPath()
 	{
 		auto p = gtk_theming_engine_get_path(gtkThemingEngine);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(WidgetPath)(cast(GtkWidgetPath*) p);
 	}
 
@@ -351,9 +351,9 @@ public class ThemingEngine : ObjectG
 	public void getProperty(string property, GtkStateFlags state, out Value value)
 	{
 		GValue* outvalue = gMalloc!GValue();
-		
+
 		gtk_theming_engine_get_property(gtkThemingEngine, Str.toStringz(property), state, outvalue);
-		
+
 		value = ObjectG.getDObject!(Value)(outvalue, true);
 	}
 
@@ -365,12 +365,12 @@ public class ThemingEngine : ObjectG
 	public Screen getScreen()
 	{
 		auto p = gtk_theming_engine_get_screen(gtkThemingEngine);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
 	}
 
@@ -399,9 +399,9 @@ public class ThemingEngine : ObjectG
 	public void getStyleProperty(string propertyName, out Value value)
 	{
 		GValue* outvalue = gMalloc!GValue();
-		
+
 		gtk_theming_engine_get_style_property(gtkThemingEngine, Str.toStringz(propertyName), outvalue);
-		
+
 		value = ObjectG.getDObject!(Value)(outvalue, true);
 	}
 
@@ -482,11 +482,11 @@ public class ThemingEngine : ObjectG
 	public bool lookupColor(string colorName, out RGBA color)
 	{
 		GdkRGBA* outcolor = gMalloc!GdkRGBA();
-		
+
 		auto p = gtk_theming_engine_lookup_color(gtkThemingEngine, Str.toStringz(colorName), outcolor) != 0;
-		
+
 		color = ObjectG.getDObject!(RGBA)(outcolor, true);
-		
+
 		return p;
 	}
 

@@ -39,6 +39,8 @@ private import gdk.GLContext;
 private import gdk.RGBA;
 private import gdk.Screen;
 private import gdk.Visual;
+private import gdk.c.functions;
+public  import gdk.c.types;
 private import gdkpixbuf.Pixbuf;
 private import glib.ConstructionException;
 private import glib.ErrorG;
@@ -47,8 +49,6 @@ private import glib.ListG;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gdk;
-public  import gtkc.gdktypes;
 private import std.algorithm;
 
 
@@ -114,12 +114,12 @@ public class Window : ObjectG
 	public this(Window parent, GdkWindowAttr* attributes, int attributesMask)
 	{
 		auto p = gdk_window_new((parent is null) ? null : parent.getWindowStruct(), attributes, attributesMask);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GdkWindow*) p, true);
 	}
 
@@ -144,12 +144,12 @@ public class Window : ObjectG
 	public static Window atPointer(out int winX, out int winY)
 	{
 		auto p = gdk_window_at_pointer(&winX, &winY);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 
@@ -281,12 +281,12 @@ public class Window : ObjectG
 	public DrawingContext beginDrawFrame(Region region)
 	{
 		auto p = gdk_window_begin_draw_frame(gdkWindow, (region is null) ? null : region.getRegionStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(DrawingContext)(cast(GdkDrawingContext*) p);
 	}
 
@@ -532,19 +532,19 @@ public class Window : ObjectG
 	public GLContext createGlContext()
 	{
 		GError* err = null;
-		
+
 		auto p = gdk_window_create_gl_context(gdkWindow, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(GLContext)(cast(GdkGLContext*) p, true);
 	}
 
@@ -597,12 +597,12 @@ public class Window : ObjectG
 	public Surface createSimilarImageSurface(cairo_format_t format, int width, int height, int scale)
 	{
 		auto p = gdk_window_create_similar_image_surface(gdkWindow, format, width, height, scale);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Surface(cast(cairo_surface_t*) p);
 	}
 
@@ -635,12 +635,12 @@ public class Window : ObjectG
 	public Surface createSimilarSurface(cairo_content_t content, int width, int height)
 	{
 		auto p = gdk_window_create_similar_surface(gdkWindow, content, width, height);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Surface(cast(cairo_surface_t*) p);
 	}
 
@@ -867,12 +867,12 @@ public class Window : ObjectG
 	public Pattern getBackgroundPattern()
 	{
 		auto p = gdk_window_get_background_pattern(gdkWindow);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Pattern(cast(cairo_pattern_t*) p);
 	}
 
@@ -890,12 +890,12 @@ public class Window : ObjectG
 	public ListG getChildren()
 	{
 		auto p = gdk_window_get_children(gdkWindow);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -919,12 +919,12 @@ public class Window : ObjectG
 	public ListG getChildrenWithUserData(void* userData)
 	{
 		auto p = gdk_window_get_children_with_user_data(gdkWindow, userData);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -941,12 +941,12 @@ public class Window : ObjectG
 	public Region getClipRegion()
 	{
 		auto p = gdk_window_get_clip_region(gdkWindow);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Region(cast(cairo_region_t*) p);
 	}
 
@@ -983,12 +983,12 @@ public class Window : ObjectG
 	public Cursor getCursor()
 	{
 		auto p = gdk_window_get_cursor(gdkWindow);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Cursor)(cast(GdkCursor*) p);
 	}
 
@@ -1025,12 +1025,12 @@ public class Window : ObjectG
 	public Cursor getDeviceCursor(Device device)
 	{
 		auto p = gdk_window_get_device_cursor(gdkWindow, (device is null) ? null : device.getDeviceStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Cursor)(cast(GdkCursor*) p);
 	}
 
@@ -1071,12 +1071,12 @@ public class Window : ObjectG
 	public Window getDevicePosition(Device device, out int x, out int y, out GdkModifierType mask)
 	{
 		auto p = gdk_window_get_device_position(gdkWindow, (device is null) ? null : device.getDeviceStruct(), &x, &y, &mask);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 
@@ -1100,12 +1100,12 @@ public class Window : ObjectG
 	public Window getDevicePositionDouble(Device device, out double x, out double y, out GdkModifierType mask)
 	{
 		auto p = gdk_window_get_device_position_double(gdkWindow, (device is null) ? null : device.getDeviceStruct(), &x, &y, &mask);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 
@@ -1119,12 +1119,12 @@ public class Window : ObjectG
 	public Display getDisplay()
 	{
 		auto p = gdk_window_get_display(gdkWindow);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
 	}
 
@@ -1143,11 +1143,11 @@ public class Window : ObjectG
 	public GdkDragProtocol getDragProtocol(out Window target)
 	{
 		GdkWindow* outtarget = null;
-		
+
 		auto p = gdk_window_get_drag_protocol(gdkWindow, &outtarget);
-		
+
 		target = ObjectG.getDObject!(Window)(outtarget);
-		
+
 		return p;
 	}
 
@@ -1165,12 +1165,12 @@ public class Window : ObjectG
 	public Window getEffectiveParent()
 	{
 		auto p = gdk_window_get_effective_parent(gdkWindow);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 
@@ -1189,12 +1189,12 @@ public class Window : ObjectG
 	public Window getEffectiveToplevel()
 	{
 		auto p = gdk_window_get_effective_toplevel(gdkWindow);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 
@@ -1247,12 +1247,12 @@ public class Window : ObjectG
 	public FrameClock getFrameClock()
 	{
 		auto p = gdk_window_get_frame_clock(gdkWindow);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(FrameClock)(cast(GdkFrameClock*) p);
 	}
 
@@ -1325,12 +1325,12 @@ public class Window : ObjectG
 	public Window getGroup()
 	{
 		auto p = gdk_window_get_group(gdkWindow);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 
@@ -1398,12 +1398,12 @@ public class Window : ObjectG
 	public Window getParent()
 	{
 		auto p = gdk_window_get_parent(gdkWindow);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 
@@ -1442,12 +1442,12 @@ public class Window : ObjectG
 	public Window getPointer(out int x, out int y, out GdkModifierType mask)
 	{
 		auto p = gdk_window_get_pointer(gdkWindow, &x, &y, &mask);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 
@@ -1534,12 +1534,12 @@ public class Window : ObjectG
 	public Screen getScreen()
 	{
 		auto p = gdk_window_get_screen(gdkWindow);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
 	}
 
@@ -1598,12 +1598,12 @@ public class Window : ObjectG
 	public Window getToplevel()
 	{
 		auto p = gdk_window_get_toplevel(gdkWindow);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 
@@ -1632,12 +1632,12 @@ public class Window : ObjectG
 	public Region getUpdateArea()
 	{
 		auto p = gdk_window_get_update_area(gdkWindow);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Region(cast(cairo_region_t*) p);
 	}
 
@@ -1665,12 +1665,12 @@ public class Window : ObjectG
 	public Region getVisibleRegion()
 	{
 		auto p = gdk_window_get_visible_region(gdkWindow);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Region(cast(cairo_region_t*) p);
 	}
 
@@ -1684,12 +1684,12 @@ public class Window : ObjectG
 	public Visual getVisual()
 	{
 		auto p = gdk_window_get_visual(gdkWindow);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Visual)(cast(GdkVisual*) p);
 	}
 
@@ -2068,12 +2068,12 @@ public class Window : ObjectG
 	public ListG peekChildren()
 	{
 		auto p = gdk_window_peek_children(gdkWindow);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -3208,13 +3208,13 @@ public class Window : ObjectG
 		static OnCreateSurfaceDelegateWrapper[] listeners;
 		Surface delegate(int, int, Window) dlg;
 		gulong handlerId;
-		
+
 		this(Surface delegate(int, int, Window) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCreateSurfaceDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -3261,13 +3261,13 @@ public class Window : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static cairo_surface_t* callBackCreateSurface(GdkWindow* windowStruct, int width, int height, OnCreateSurfaceDelegateWrapper wrapper)
 	{
 		auto r = wrapper.dlg(width, height, wrapper.outer);
 		return r.getSurfaceStruct();
 	}
-	
+
 	extern(C) static void callBackCreateSurfaceDestroy(OnCreateSurfaceDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -3278,13 +3278,13 @@ public class Window : ObjectG
 		static OnFromEmbedderDelegateWrapper[] listeners;
 		void delegate(double, double, void*, void*, Window) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(double, double, void*, void*, Window) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnFromEmbedderDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -3327,12 +3327,12 @@ public class Window : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackFromEmbedder(GdkWindow* windowStruct, double embedderX, double embedderY, void* offscreenX, void* offscreenY, OnFromEmbedderDelegateWrapper wrapper)
 	{
 		wrapper.dlg(embedderX, embedderY, offscreenX, offscreenY, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackFromEmbedderDestroy(OnFromEmbedderDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -3343,13 +3343,13 @@ public class Window : ObjectG
 		static OnMovedToRectDelegateWrapper[] listeners;
 		void delegate(void*, void*, bool, bool, Window) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(void*, void*, bool, bool, Window) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMovedToRectDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -3399,12 +3399,12 @@ public class Window : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackMovedToRect(GdkWindow* windowStruct, void* flippedRect, void* finalRect, bool flippedX, bool flippedY, OnMovedToRectDelegateWrapper wrapper)
 	{
 		wrapper.dlg(flippedRect, finalRect, flippedX, flippedY, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMovedToRectDestroy(OnMovedToRectDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -3415,13 +3415,13 @@ public class Window : ObjectG
 		static OnPickEmbeddedChildDelegateWrapper[] listeners;
 		Window delegate(double, double, Window) dlg;
 		gulong handlerId;
-		
+
 		this(Window delegate(double, double, Window) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPickEmbeddedChildDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -3461,13 +3461,13 @@ public class Window : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static GdkWindow* callBackPickEmbeddedChild(GdkWindow* windowStruct, double x, double y, OnPickEmbeddedChildDelegateWrapper wrapper)
 	{
 		auto r = wrapper.dlg(x, y, wrapper.outer);
 		return r.getWindowStruct();
 	}
-	
+
 	extern(C) static void callBackPickEmbeddedChildDestroy(OnPickEmbeddedChildDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -3478,13 +3478,13 @@ public class Window : ObjectG
 		static OnToEmbedderDelegateWrapper[] listeners;
 		void delegate(double, double, void*, void*, Window) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(double, double, void*, void*, Window) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnToEmbedderDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -3527,12 +3527,12 @@ public class Window : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackToEmbedder(GdkWindow* windowStruct, double offscreenX, double offscreenY, void* embedderX, void* embedderY, OnToEmbedderDelegateWrapper wrapper)
 	{
 		wrapper.dlg(offscreenX, offscreenY, embedderX, embedderY, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackToEmbedderDestroy(OnToEmbedderDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -3547,12 +3547,12 @@ public class Window : ObjectG
 	public static Window getDefaultRootWindow()
 	{
 		auto p = gdk_get_default_root_window();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 
@@ -3570,12 +3570,12 @@ public class Window : ObjectG
 	public static Window offscreenWindowGetEmbedder(Window window)
 	{
 		auto p = gdk_offscreen_window_get_embedder((window is null) ? null : window.getWindowStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 
@@ -3593,12 +3593,12 @@ public class Window : ObjectG
 	public static Surface offscreenWindowGetSurface(Window window)
 	{
 		auto p = gdk_offscreen_window_get_surface((window is null) ? null : window.getWindowStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Surface(cast(cairo_surface_t*) p);
 	}
 

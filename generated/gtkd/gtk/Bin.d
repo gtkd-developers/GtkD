@@ -27,8 +27,8 @@ module gtk.Bin;
 private import gobject.ObjectG;
 private import gtk.Container;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -90,12 +90,12 @@ public class Bin : Container
 	public Widget getChild()
 	{
 		auto p = gtk_bin_get_child(gtkBin);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 }

@@ -40,8 +40,8 @@ private import gtk.TreeModel;
 private import gtk.TreeModelIF;
 private import gtk.TreePath;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -118,7 +118,7 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 	public this (string text, bool markup=true)
 	{
 		GtkCellView* p;
-		
+
 		if ( markup )
 		{
 			// GtkWidget* gtk_cell_view_new_with_markup (const gchar *markup);
@@ -129,12 +129,12 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 			// GtkWidget* gtk_cell_view_new_with_text (const gchar *text);
 			p = cast(GtkCellView*)gtk_cell_view_new_with_text(Str.toStringz(text));
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gtk_cell_view_new_with_");
 		}
-		
+
 		this(p);
 	}
 
@@ -159,12 +159,12 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 	public this()
 	{
 		auto p = gtk_cell_view_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkCellView*) p);
 	}
 
@@ -190,12 +190,12 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 	public this(CellArea area, CellAreaContext context)
 	{
 		auto p = gtk_cell_view_new_with_context((area is null) ? null : area.getCellAreaStruct(), (context is null) ? null : context.getCellAreaContextStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_with_context");
 		}
-		
+
 		this(cast(GtkCellView*) p);
 	}
 
@@ -215,12 +215,12 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 	public this(Pixbuf pixbuf)
 	{
 		auto p = gtk_cell_view_new_with_pixbuf((pixbuf is null) ? null : pixbuf.getPixbufStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_with_pixbuf");
 		}
-		
+
 		this(cast(GtkCellView*) p);
 	}
 
@@ -236,12 +236,12 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 	public TreePath getDisplayedRow()
 	{
 		auto p = gtk_cell_view_get_displayed_row(gtkCellView);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) p, true);
 	}
 
@@ -284,12 +284,12 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 	public TreeModelIF getModel()
 	{
 		auto p = gtk_cell_view_get_model(gtkCellView);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TreeModel, TreeModelIF)(cast(GtkTreeModel*) p);
 	}
 
@@ -313,11 +313,11 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 	public bool getSizeOfRow(TreePath path, out Requisition requisition)
 	{
 		GtkRequisition* outrequisition = gMalloc!GtkRequisition();
-		
+
 		auto p = gtk_cell_view_get_size_of_row(gtkCellView, (path is null) ? null : path.getTreePathStruct(), outrequisition) != 0;
-		
+
 		requisition = ObjectG.getDObject!(Requisition)(outrequisition, true);
-		
+
 		return p;
 	}
 

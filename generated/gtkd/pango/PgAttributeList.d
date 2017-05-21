@@ -26,11 +26,11 @@ module pango.PgAttributeList;
 
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-private import gtkc.pango;
-public  import gtkc.pangotypes;
 private import gtkd.Loader;
 private import pango.PgAttribute;
 private import pango.PgAttributeIterator;
+private import pango.c.functions;
+public  import pango.c.types;
 
 
 /**
@@ -98,12 +98,12 @@ public class PgAttributeList
 	public this()
 	{
 		auto p = pango_attr_list_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(PangoAttrList*) p);
 	}
 
@@ -138,12 +138,12 @@ public class PgAttributeList
 	public PgAttributeList copy()
 	{
 		auto p = pango_attr_list_copy(pangoAttrList);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgAttributeList)(cast(PangoAttrList*) p, true);
 	}
 
@@ -165,12 +165,12 @@ public class PgAttributeList
 	public PgAttributeList filter(PangoAttrFilterFunc func, void* data)
 	{
 		auto p = pango_attr_list_filter(pangoAttrList, func, data);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgAttributeList)(cast(PangoAttrList*) p, true);
 	}
 
@@ -184,12 +184,12 @@ public class PgAttributeList
 	public PgAttributeIterator getIterator()
 	{
 		auto p = pango_attr_list_get_iterator(pangoAttrList);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgAttributeIterator)(cast(PangoAttrIterator*) p, true);
 	}
 
@@ -231,12 +231,12 @@ public class PgAttributeList
 	public PgAttributeList doref()
 	{
 		auto p = pango_attr_list_ref(pangoAttrList);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgAttributeList)(cast(PangoAttrList*) p, true);
 	}
 

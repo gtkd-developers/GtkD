@@ -24,11 +24,11 @@
 
 module gio.FileAttributeMatcher;
 
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 private import gtkd.Loader;
 
 
@@ -108,12 +108,12 @@ public class FileAttributeMatcher
 	public this(string attributes)
 	{
 		auto p = g_file_attribute_matcher_new(Str.toStringz(attributes));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GFileAttributeMatcher*) p);
 	}
 
@@ -184,12 +184,12 @@ public class FileAttributeMatcher
 	public FileAttributeMatcher doref()
 	{
 		auto p = g_file_attribute_matcher_ref(gFileAttributeMatcher);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(FileAttributeMatcher)(cast(GFileAttributeMatcher*) p, true);
 	}
 
@@ -212,12 +212,12 @@ public class FileAttributeMatcher
 	public FileAttributeMatcher subtract(FileAttributeMatcher subtract)
 	{
 		auto p = g_file_attribute_matcher_subtract(gFileAttributeMatcher, (subtract is null) ? null : subtract.getFileAttributeMatcherStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(FileAttributeMatcher)(cast(GFileAttributeMatcher*) p, true);
 	}
 
@@ -235,7 +235,7 @@ public class FileAttributeMatcher
 	public override string toString()
 	{
 		auto retStr = g_file_attribute_matcher_to_string(gFileAttributeMatcher);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}

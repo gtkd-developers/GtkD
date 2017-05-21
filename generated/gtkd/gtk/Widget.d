@@ -68,8 +68,8 @@ private import gtk.TargetList;
 private import gtk.Tooltip;
 private import gtk.WidgetPath;
 private import gtk.Window;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import pango.PgContext;
 private import pango.PgFontDescription;
 private import pango.PgFontMap;
@@ -497,7 +497,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 	{
 		return Type.getInstanceClass!(GtkWidgetClass)(this);
 	}
-	
+
 	/** */
 	public int getWidth()
 	{
@@ -505,7 +505,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		gtk_widget_get_size_request(gtkWidget, &width, null);
 		return width;
 	}
-	
+
 	/** */
 	public int getHeight()
 	{
@@ -513,7 +513,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		gtk_widget_get_size_request(gtkWidget, null, &height);
 		return height;
 	}
-	
+
 	/**
 	 * Sets  the cursor.
 	 * Params:
@@ -524,7 +524,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 	{
 		getWindow().setCursor(cursor);
 	}
-	
+
 	/**
 	 * Resets the cursor.
 	 * don't know if this is implemented by GTK+. Seems that it's not
@@ -534,7 +534,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 	{
 		getWindow().setCursor(null);
 	}
-	
+
 	/**
 	 * Modifies the font for this widget.
 	 * This just calls modifyFont(new PgFontDescription(PgFontDescription.fromString(family ~ " " ~ size)));
@@ -542,170 +542,170 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 	public void modifyFont(string family, int size)
 	{
 		if ( size < 0 ) size = -size;	// hack to workaround leds bug - TO BE REMOVED
-			
+
 		modifyFont(
 			PgFontDescription.fromString(
 			family ~ " " ~ to!(string)(size)
 			)
 			);
 		}
-		
+
 		/** */
 		public bool onEvent(GdkEvent* event)
 		{
 			return getWidgetClass().event(getWidgetStruct(), event) == 0 ? false : true;
 		}
-		
+
 		/** */
 		public bool onButtonPressEvent(GdkEventButton* event)
 		{
 			return getWidgetClass().buttonPressEvent(getWidgetStruct(), event) == 0 ? false : true;
 		}
-		
+
 		/** */
 		public bool onButtonReleaseEvent(GdkEventButton* event)
 		{
 			return getWidgetClass().buttonReleaseEvent(getWidgetStruct(), event) == 0 ? false : true;
 		}
-		
+
 		/** */
 		public bool onScrollEvent(GdkEventScroll* event)
 		{
 			return getWidgetClass().scrollEvent(getWidgetStruct(), event) == 0 ? false : true;
 		}
-		
+
 		/** */
 		public bool onMotionNotifyEvent(GdkEventMotion* event)
 		{
 			return getWidgetClass().motionNotifyEvent(getWidgetStruct(), event) == 0 ? false : true;
 		}
-		
+
 		/** */
 		public bool onDeleteEvent(GdkEventAny* event)
 		{
 			return getWidgetClass().deleteEvent(getWidgetStruct(), event) == 0 ? false : true;
 		}
-		
+
 		/** */
 		public bool onDestroyEvent(GdkEventAny* event)
 		{
 			return getWidgetClass().destroyEvent(getWidgetStruct(), event) == 0 ? false : true;
 		}
-		
+
 		/** */
 		public bool onKeyPressEvent(GdkEventKey* event)
 		{
 			return getWidgetClass().keyPressEvent(getWidgetStruct(), event) == 0 ? false : true;
 		}
-		
+
 		/** */
 		public bool onKeyReleaseEvent(GdkEventKey* event)
 		{
 			return getWidgetClass().keyReleaseEvent(getWidgetStruct(), event) == 0 ? false : true;
 		}
-		
+
 		/** */
 		public bool onEnterNotifyEvent(GdkEventCrossing* event)
 		{
 			return getWidgetClass().enterNotifyEvent(getWidgetStruct(), event) == 0 ? false : true;
 		}
-		
+
 		/** */
 		public bool onLeaveNotifyEvent(GdkEventCrossing* event)
 		{
 			return getWidgetClass().leaveNotifyEvent(getWidgetStruct(), event) == 0 ? false : true;
 		}
-		
+
 		/** */
 		public bool onConfigureEvent(GdkEventConfigure* event)
 		{
 			return getWidgetClass().configureEvent(getWidgetStruct(), event) == 0 ? false : true;
 		}
-		
+
 		/** */
 		public bool onFocusInEvent(GdkEventFocus* event)
 		{
 			return getWidgetClass().focusInEvent(getWidgetStruct(), event) == 0 ? false : true;
 		}
-		
+
 		/** */
 		public bool onFocusOutEvent(GdkEventFocus* event)
 		{
 			return getWidgetClass().focusOutEvent(getWidgetStruct(), event) == 0 ? false : true;
 		}
-		
+
 		/** */
 		public bool onMapEvent(GdkEventAny* event)
 		{
 			return getWidgetClass().mapEvent(getWidgetStruct(), event) == 0 ? false : true;
 		}
-		
+
 		/** */
 		public bool onUnmapEvent(GdkEventAny* event)
 		{
 			return getWidgetClass().unmapEvent(getWidgetStruct(), event) == 0 ? false : true;
 		}
-		
+
 		/** */
 		public bool onPropertyNotifyEvent(GdkEventProperty* event)
 		{
 			return getWidgetClass().propertyNotifyEvent(getWidgetStruct(), event) == 0 ? false : true;
 		}
-		
+
 		/** */
 		public bool onSelectionClearEvent(GdkEventSelection* event)
 		{
 			return getWidgetClass().selectionClearEvent(getWidgetStruct(), event) == 0 ? false : true;
 		}
-		
+
 		/** */
 		public bool onSelectionRequestEvent(GdkEventSelection* event)
 		{
 			return getWidgetClass().selectionRequestEvent(getWidgetStruct(), event) == 0 ? false : true;
 		}
-		
+
 		/** */
 		public bool onSelectionNotifyEvent(GdkEventSelection* event)
 		{
 			return getWidgetClass().selectionNotifyEvent(getWidgetStruct(), event) == 0 ? false : true;
 		}
-		
+
 		/** */
 		public bool onProximityInEvent(GdkEventProximity* event)
 		{
 			return getWidgetClass().proximityInEvent(getWidgetStruct(), event) == 0 ? false : true;
 		}
-		
+
 		/** */
 		public bool onProximityOutEvent(GdkEventProximity* event)
 		{
 			return getWidgetClass().proximityOutEvent(getWidgetStruct(), event) == 0 ? false : true;
 		}
-		
+
 		/** */
 		public bool onVisibilityNotifyEvent(GdkEventVisibility* event)
 		{
 			return getWidgetClass().visibilityNotifyEvent(getWidgetStruct(), event) == 0 ? false : true;
 		}
-		
+
 		/** */
 		public bool onWindowStateEvent(GdkEventWindowState* event)
 		{
 			return getWidgetClass().windowStateEvent(getWidgetStruct(), event) == 0 ? false : true;
 		}
-		
+
 		/** */
 		public bool onDamageEvent(GdkEventExpose* event)
 		{
 			return getWidgetClass().damageEvent(getWidgetStruct(), event) == 0 ? false : true;
 		}
-		
+
 		/** */
 		public bool onGrabBrokenEvent(GdkEventGrabBroken* event)
 		{
 			return getWidgetClass().grabBrokenEvent(getWidgetStruct(), event) == 0 ? false : true;
 		}
-		
+
 		/**
 		 * Queues an animation frame update and adds a callback to be called
 		 * before each frame. Until the tick callback is removed, it will be
@@ -733,12 +733,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		{
 			tickCallbackListeners ~= callback;
 			static bool connected;
-			
+
 			if ( connected )
 			{
 				return;
 			}
-			
+
 			addTickCallback(cast(GtkTickCallback)&gtkTickCallback, cast(void*)this, null);
 			connected = true;
 		}
@@ -752,19 +752,19 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			}
 			return 0;
 		}
-		
+
 		protected class ScopedOnDrawDelegateWrapper
 		{
 			static ScopedOnDrawDelegateWrapper[] listeners;
 			bool delegate(Scoped!Context, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(Scoped!Context, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(ScopedOnDrawDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -778,7 +778,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				}
 			}
 		}
-		
+
 		/**
 		 * This signal is emitted when a widget is supposed to render itself.
 		 * The @widget's top left corner must be painted at the origin of
@@ -818,29 +818,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackScopedDraw(GtkWidget* widgetStruct, cairo_t* cr, ScopedOnDrawDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(scoped!Context(cr), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackDrawScopedDestroy(ScopedOnDrawDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
 		}
-		
+
 		protected class OnDrawDelegateWrapper
 		{
 			static OnDrawDelegateWrapper[] listeners;
 			bool delegate(Context, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(Context, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnDrawDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -854,7 +854,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				}
 			}
 		}
-		
+
 		/**
 		 * This signal is emitted when a widget is supposed to render itself.
 		 * The @widget's top left corner must be painted at the origin of
@@ -894,12 +894,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackDraw(GtkWidget* widgetStruct, cairo_t* cr,OnDrawDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(new Context(cr), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackDrawDestroy(OnDrawDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -938,12 +938,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public static Style getDefaultStyle()
 		{
 			auto p = gtk_widget_get_default_style();
-			
+
 			if(p is null)
 			{
 				return null;
 			}
-			
+
 			return ObjectG.getDObject!(Style)(cast(GtkStyle*) p);
 		}
 
@@ -1194,9 +1194,9 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		{
 			char* outpath = null;
 			char* outpathReversed = null;
-			
+
 			gtk_widget_class_path(gtkWidget, &pathLength, &outpath, &outpathReversed);
-			
+
 			path = Str.toString(outpath);
 			pathReversed = Str.toString(outpathReversed);
 		}
@@ -1234,12 +1234,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public PgContext createPangoContext()
 		{
 			auto p = gtk_widget_create_pango_context(gtkWidget);
-			
+
 			if(p is null)
 			{
 				return null;
 			}
-			
+
 			return ObjectG.getDObject!(PgContext)(cast(PangoContext*) p, true);
 		}
 
@@ -1261,12 +1261,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public PgLayout createPangoLayout(string text)
 		{
 			auto p = gtk_widget_create_pango_layout(gtkWidget, Str.toStringz(text));
-			
+
 			if(p is null)
 			{
 				return null;
 			}
-			
+
 			return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) p, true);
 		}
 
@@ -1323,9 +1323,9 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public void destroyed(ref Widget widgetPointer)
 		{
 			GtkWidget* outwidgetPointer = widgetPointer.getWidgetStruct();
-			
+
 			gtk_widget_destroyed(gtkWidget, &outwidgetPointer);
-			
+
 			widgetPointer = ObjectG.getDObject!(Widget)(outwidgetPointer);
 		}
 
@@ -1368,12 +1368,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public DragContext dragBegin(TargetList targets, GdkDragAction actions, int button, Event event)
 		{
 			auto p = gtk_drag_begin(gtkWidget, (targets is null) ? null : targets.getTargetListStruct(), actions, button, (event is null) ? null : event.getEventStruct());
-			
+
 			if(p is null)
 			{
 				return null;
 			}
-			
+
 			return ObjectG.getDObject!(DragContext)(cast(GdkDragContext*) p);
 		}
 
@@ -1425,12 +1425,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public DragContext dragBeginWithCoordinates(TargetList targets, GdkDragAction actions, int button, Event event, int x, int y)
 		{
 			auto p = gtk_drag_begin_with_coordinates(gtkWidget, (targets is null) ? null : targets.getTargetListStruct(), actions, button, (event is null) ? null : event.getEventStruct(), x, y);
-			
+
 			if(p is null)
 			{
 				return null;
 			}
-			
+
 			return ObjectG.getDObject!(DragContext)(cast(GdkDragContext*) p);
 		}
 
@@ -1525,12 +1525,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public TargetList dragDestGetTargetList()
 		{
 			auto p = gtk_drag_dest_get_target_list(gtkWidget);
-			
+
 			if(p is null)
 			{
 				return null;
 			}
-			
+
 			return ObjectG.getDObject!(TargetList)(cast(GtkTargetList*) p);
 		}
 
@@ -1605,7 +1605,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			{
 				targetsArray[i] = *(targets[i].getTargetEntryStruct());
 			}
-			
+
 			gtk_drag_dest_set(gtkWidget, flags, targetsArray.ptr, cast(int)targets.length, actions);
 		}
 
@@ -1751,12 +1751,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public TargetList dragSourceGetTargetList()
 		{
 			auto p = gtk_drag_source_get_target_list(gtkWidget);
-			
+
 			if(p is null)
 			{
 				return null;
 			}
-			
+
 			return ObjectG.getDObject!(TargetList)(cast(GtkTargetList*) p);
 		}
 
@@ -1778,7 +1778,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			{
 				targetsArray[i] = *(targets[i].getTargetEntryStruct());
 			}
-			
+
 			gtk_drag_source_set(gtkWidget, startButtonMask, targetsArray.ptr, cast(int)targets.length, actions);
 		}
 
@@ -1980,12 +1980,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public ObjectAtk getAccessible()
 		{
 			auto p = gtk_widget_get_accessible(gtkWidget);
-			
+
 			if(p is null)
 			{
 				return null;
 			}
-			
+
 			return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
 		}
 
@@ -2006,12 +2006,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public ActionGroupIF getActionGroup(string prefix)
 		{
 			auto p = gtk_widget_get_action_group(gtkWidget, Str.toStringz(prefix));
-			
+
 			if(p is null)
 			{
 				return null;
 			}
-			
+
 			return ObjectG.getDObject!(ActionGroup, ActionGroupIF)(cast(GActionGroup*) p);
 		}
 
@@ -2123,12 +2123,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public Widget getAncestor(GType widgetType)
 		{
 			auto p = gtk_widget_get_ancestor(gtkWidget, widgetType);
-			
+
 			if(p is null)
 			{
 				return null;
 			}
-			
+
 			return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 		}
 
@@ -2201,9 +2201,9 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public void getChildRequisition(out Requisition requisition)
 		{
 			GtkRequisition* outrequisition = gMalloc!GtkRequisition();
-			
+
 			gtk_widget_get_child_requisition(gtkWidget, outrequisition);
-			
+
 			requisition = ObjectG.getDObject!(Requisition)(outrequisition, true);
 		}
 
@@ -2264,12 +2264,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public Clipboard getClipboard(GdkAtom selection)
 		{
 			auto p = gtk_widget_get_clipboard(gtkWidget, selection);
-			
+
 			if(p is null)
 			{
 				return null;
 			}
-			
+
 			return ObjectG.getDObject!(Clipboard)(cast(GtkClipboard*) p);
 		}
 
@@ -2285,7 +2285,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public string getCompositeName()
 		{
 			auto retStr = gtk_widget_get_composite_name(gtkWidget);
-			
+
 			scope(exit) Str.freeString(retStr);
 			return Str.toString(retStr);
 		}
@@ -2349,12 +2349,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public Display getDisplay()
 		{
 			auto p = gtk_widget_get_display(gtkWidget);
-			
+
 			if(p is null)
 			{
 				return null;
 			}
-			
+
 			return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
 		}
 
@@ -2412,12 +2412,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public PgFontMap getFontMap()
 		{
 			auto p = gtk_widget_get_font_map(gtkWidget);
-			
+
 			if(p is null)
 			{
 				return null;
 			}
-			
+
 			return ObjectG.getDObject!(PgFontMap)(cast(PangoFontMap*) p);
 		}
 
@@ -2432,12 +2432,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public FontOption getFontOptions()
 		{
 			auto p = gtk_widget_get_font_options(gtkWidget);
-			
+
 			if(p is null)
 			{
 				return null;
 			}
-			
+
 			return new FontOption(cast(cairo_font_options_t*) p);
 		}
 
@@ -2472,12 +2472,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public FrameClock getFrameClock()
 		{
 			auto p = gtk_widget_get_frame_clock(gtkWidget);
-			
+
 			if(p is null)
 			{
 				return null;
 			}
-			
+
 			return ObjectG.getDObject!(FrameClock)(cast(GdkFrameClock*) p);
 		}
 
@@ -2694,12 +2694,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public RcStyle getModifierStyle()
 		{
 			auto p = gtk_widget_get_modifier_style(gtkWidget);
-			
+
 			if(p is null)
 			{
 				return null;
 			}
-			
+
 			return ObjectG.getDObject!(RcStyle)(cast(GtkRcStyle*) p);
 		}
 
@@ -2756,12 +2756,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public PgContext getPangoContext()
 		{
 			auto p = gtk_widget_get_pango_context(gtkWidget);
-			
+
 			if(p is null)
 			{
 				return null;
 			}
-			
+
 			return ObjectG.getDObject!(PgContext)(cast(PangoContext*) p);
 		}
 
@@ -2773,12 +2773,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public Widget getParent()
 		{
 			auto p = gtk_widget_get_parent(gtkWidget);
-			
+
 			if(p is null)
 			{
 				return null;
 			}
-			
+
 			return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 		}
 
@@ -2790,12 +2790,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public GdkWin getParentWindow()
 		{
 			auto p = gtk_widget_get_parent_window(gtkWidget);
-			
+
 			if(p is null)
 			{
 				return null;
 			}
-			
+
 			return ObjectG.getDObject!(GdkWin)(cast(GdkWindow*) p);
 		}
 
@@ -2809,12 +2809,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public WidgetPath getPath()
 		{
 			auto p = gtk_widget_get_path(gtkWidget);
-			
+
 			if(p is null)
 			{
 				return null;
 			}
-			
+
 			return ObjectG.getDObject!(WidgetPath)(cast(GtkWidgetPath*) p);
 		}
 
@@ -2932,9 +2932,9 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		{
 			GtkRequisition* outminimumSize = gMalloc!GtkRequisition();
 			GtkRequisition* outnaturalSize = gMalloc!GtkRequisition();
-			
+
 			gtk_widget_get_preferred_size(gtkWidget, outminimumSize, outnaturalSize);
-			
+
 			minimumSize = ObjectG.getDObject!(Requisition)(outminimumSize, true);
 			naturalSize = ObjectG.getDObject!(Requisition)(outnaturalSize, true);
 		}
@@ -3052,9 +3052,9 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public void getRequisition(out Requisition requisition)
 		{
 			GtkRequisition* outrequisition = gMalloc!GtkRequisition();
-			
+
 			gtk_widget_get_requisition(gtkWidget, outrequisition);
-			
+
 			requisition = ObjectG.getDObject!(Requisition)(outrequisition, true);
 		}
 
@@ -3077,12 +3077,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public GdkWin getRootWindow()
 		{
 			auto p = gtk_widget_get_root_window(gtkWidget);
-			
+
 			if(p is null)
 			{
 				return null;
 			}
-			
+
 			return ObjectG.getDObject!(GdkWin)(cast(GdkWindow*) p);
 		}
 
@@ -3119,12 +3119,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public Screen getScreen()
 		{
 			auto p = gtk_widget_get_screen(gtkWidget);
-			
+
 			if(p is null)
 			{
 				return null;
 			}
-			
+
 			return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
 		}
 
@@ -3156,12 +3156,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public Settings getSettings()
 		{
 			auto p = gtk_widget_get_settings(gtkWidget);
-			
+
 			if(p is null)
 			{
 				return null;
 			}
-			
+
 			return ObjectG.getDObject!(Settings)(cast(GtkSettings*) p);
 		}
 
@@ -3212,12 +3212,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public Style getStyle()
 		{
 			auto p = gtk_widget_get_style(gtkWidget);
-			
+
 			if(p is null)
 			{
 				return null;
 			}
-			
+
 			return ObjectG.getDObject!(Style)(cast(GtkStyle*) p);
 		}
 
@@ -3231,12 +3231,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public StyleContext getStyleContext()
 		{
 			auto p = gtk_widget_get_style_context(gtkWidget);
-			
+
 			if(p is null)
 			{
 				return null;
 			}
-			
+
 			return ObjectG.getDObject!(StyleContext)(cast(GtkStyleContext*) p);
 		}
 
@@ -3271,12 +3271,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public ObjectG getTemplateChild(GType widgetType, string name)
 		{
 			auto p = gtk_widget_get_template_child(gtkWidget, widgetType, Str.toStringz(name));
-			
+
 			if(p is null)
 			{
 				return null;
 			}
-			
+
 			return ObjectG.getDObject!(ObjectG)(cast(GObject*) p);
 		}
 
@@ -3291,7 +3291,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public string getTooltipMarkup()
 		{
 			auto retStr = gtk_widget_get_tooltip_markup(gtkWidget);
-			
+
 			scope(exit) Str.freeString(retStr);
 			return Str.toString(retStr);
 		}
@@ -3307,7 +3307,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public string getTooltipText()
 		{
 			auto retStr = gtk_widget_get_tooltip_text(gtkWidget);
-			
+
 			scope(exit) Str.freeString(retStr);
 			return Str.toString(retStr);
 		}
@@ -3324,12 +3324,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public Window getTooltipWindow()
 		{
 			auto p = gtk_widget_get_tooltip_window(gtkWidget);
-			
+
 			if(p is null)
 			{
 				return null;
 			}
-			
+
 			return ObjectG.getDObject!(Window)(cast(GtkWindow*) p);
 		}
 
@@ -3365,12 +3365,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public Widget getToplevel()
 		{
 			auto p = gtk_widget_get_toplevel(gtkWidget);
-			
+
 			if(p is null)
 			{
 				return null;
 			}
-			
+
 			return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 		}
 
@@ -3456,12 +3456,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public Visual getVisual()
 		{
 			auto p = gtk_widget_get_visual(gtkWidget);
-			
+
 			if(p is null)
 			{
 				return null;
 			}
-			
+
 			return ObjectG.getDObject!(Visual)(cast(GdkVisual*) p);
 		}
 
@@ -3475,12 +3475,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public GdkWin getWindow()
 		{
 			auto p = gtk_widget_get_window(gtkWidget);
-			
+
 			if(p is null)
 			{
 				return null;
 			}
-			
+
 			return ObjectG.getDObject!(GdkWin)(cast(GdkWindow*) p);
 		}
 
@@ -3917,12 +3917,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public ListG listAccelClosures()
 		{
 			auto p = gtk_widget_list_accel_closures(gtkWidget);
-			
+
 			if(p is null)
 			{
 				return null;
 			}
-			
+
 			return new ListG(cast(GList*) p);
 		}
 
@@ -3960,12 +3960,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public ListG listMnemonicLabels()
 		{
 			auto p = gtk_widget_list_mnemonic_labels(gtkWidget);
-			
+
 			if(p is null)
 			{
 				return null;
 			}
-			
+
 			return new ListG(cast(GList*) p);
 		}
 
@@ -4331,9 +4331,9 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		{
 			char* outpath = null;
 			char* outpathReversed = null;
-			
+
 			gtk_widget_path(gtkWidget, &pathLength, &outpath, &outpathReversed);
-			
+
 			path = Str.toString(outpath);
 			pathReversed = Str.toString(outpathReversed);
 		}
@@ -4495,12 +4495,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public Region regionIntersect(Region region)
 		{
 			auto p = gtk_widget_region_intersect(gtkWidget, (region is null) ? null : region.getRegionStruct());
-			
+
 			if(p is null)
 			{
 				return null;
 			}
-			
+
 			return new Region(cast(cairo_region_t*) p);
 		}
 
@@ -4599,12 +4599,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public Pixbuf renderIcon(string stockId, GtkIconSize size, string detail)
 		{
 			auto p = gtk_widget_render_icon(gtkWidget, Str.toStringz(stockId), size, Str.toStringz(detail));
-			
+
 			if(p is null)
 			{
 				return null;
 			}
-			
+
 			return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
 		}
 
@@ -4635,12 +4635,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public Pixbuf renderIconPixbuf(string stockId, GtkIconSize size)
 		{
 			auto p = gtk_widget_render_icon_pixbuf(gtkWidget, Str.toStringz(stockId), size);
-			
+
 			if(p is null)
 			{
 				return null;
 			}
-			
+
 			return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
 		}
 
@@ -5852,9 +5852,9 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		public void sizeRequest(out Requisition requisition)
 		{
 			GtkRequisition* outrequisition = gMalloc!GtkRequisition();
-			
+
 			gtk_widget_size_request(gtkWidget, outrequisition);
-			
+
 			requisition = ObjectG.getDObject!(Requisition)(outrequisition, true);
 		}
 
@@ -6015,13 +6015,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnAccelClosuresChangedDelegateWrapper[] listeners;
 			void delegate(Widget) dlg;
 			gulong handlerId;
-			
+
 			this(void delegate(Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnAccelClosuresChangedDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -6049,12 +6049,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static void callBackAccelClosuresChanged(GtkWidget* widgetStruct, OnAccelClosuresChangedDelegateWrapper wrapper)
 		{
 			wrapper.dlg(wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackAccelClosuresChangedDestroy(OnAccelClosuresChangedDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -6065,13 +6065,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnButtonPressDelegateWrapper[] listeners;
 			bool delegate(GdkEventButton*, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(GdkEventButton*, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnButtonPressDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -6115,12 +6115,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackButtonPress(GtkWidget* widgetStruct, GdkEventButton* event, OnButtonPressDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackButtonPressDestroy(OnButtonPressDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -6131,13 +6131,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnButtonPressEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnButtonPressEventGenericDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -6151,7 +6151,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				}
 			}
 		}
-		
+
 		/**
 		 * The ::button-press-event signal will be emitted when a button
 		 * (typically from a mouse) is pressed.
@@ -6181,12 +6181,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackButtonPressEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnButtonPressEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackButtonPressEventGenericDestroy(OnButtonPressEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -6197,13 +6197,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnButtonReleaseDelegateWrapper[] listeners;
 			bool delegate(GdkEventButton*, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(GdkEventButton*, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnButtonReleaseDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -6247,12 +6247,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackButtonRelease(GtkWidget* widgetStruct, GdkEventButton* event, OnButtonReleaseDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackButtonReleaseDestroy(OnButtonReleaseDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -6263,13 +6263,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnButtonReleaseEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnButtonReleaseEventGenericDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -6283,7 +6283,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				}
 			}
 		}
-		
+
 		/**
 		 * The ::button-release-event signal will be emitted when a button
 		 * (typically from a mouse) is released.
@@ -6313,12 +6313,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackButtonReleaseEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnButtonReleaseEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackButtonReleaseEventGenericDestroy(OnButtonReleaseEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -6329,13 +6329,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnCanActivateAccelDelegateWrapper[] listeners;
 			bool delegate(uint, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(uint, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnCanActivateAccelDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -6374,12 +6374,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackCanActivateAccel(GtkWidget* widgetStruct, uint signalId, OnCanActivateAccelDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(signalId, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackCanActivateAccelDestroy(OnCanActivateAccelDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -6390,13 +6390,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnChildNotifyDelegateWrapper[] listeners;
 			void delegate(ParamSpec, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(void delegate(ParamSpec, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnChildNotifyDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -6431,12 +6431,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static void callBackChildNotify(GtkWidget* widgetStruct, GParamSpec* childProperty, OnChildNotifyDelegateWrapper wrapper)
 		{
 			wrapper.dlg(ObjectG.getDObject!(ParamSpec)(childProperty), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackChildNotifyDestroy(OnChildNotifyDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -6447,13 +6447,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnCompositedChangedDelegateWrapper[] listeners;
 			void delegate(Widget) dlg;
 			gulong handlerId;
-			
+
 			this(void delegate(Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnCompositedChangedDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -6487,12 +6487,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static void callBackCompositedChanged(GtkWidget* widgetStruct, OnCompositedChangedDelegateWrapper wrapper)
 		{
 			wrapper.dlg(wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackCompositedChangedDestroy(OnCompositedChangedDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -6503,13 +6503,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnConfigureDelegateWrapper[] listeners;
 			bool delegate(GdkEventConfigure*, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(GdkEventConfigure*, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnConfigureDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -6551,12 +6551,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackConfigure(GtkWidget* widgetStruct, GdkEventConfigure* event, OnConfigureDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackConfigureDestroy(OnConfigureDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -6567,13 +6567,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnConfigureEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnConfigureEventGenericDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -6587,7 +6587,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				}
 			}
 		}
-		
+
 		/**
 		 * The ::configure-event signal will be emitted when the size, position or
 		 * stacking of the @widget's window has changed.
@@ -6615,12 +6615,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackConfigureEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnConfigureEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackConfigureEventGenericDestroy(OnConfigureEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -6631,13 +6631,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnDamageDelegateWrapper[] listeners;
 			bool delegate(GdkEventExpose*, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(GdkEventExpose*, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnDamageDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -6677,12 +6677,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackDamage(GtkWidget* widgetStruct, GdkEventExpose* event, OnDamageDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackDamageDestroy(OnDamageDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -6693,13 +6693,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnDamageEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnDamageEventGenericDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -6713,7 +6713,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				}
 			}
 		}
-		
+
 		/**
 		 * Emitted when a redirected window belonging to @widget gets drawn into.
 		 * The region/area members of the event shows what area of the redirected
@@ -6739,12 +6739,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackDamageEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnDamageEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackDamageEventGenericDestroy(OnDamageEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -6755,13 +6755,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnDeleteDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnDeleteDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -6801,12 +6801,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackDelete(GtkWidget* widgetStruct, GdkEvent* event, OnDeleteDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackDeleteDestroy(OnDeleteDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -6817,13 +6817,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnDestroyDelegateWrapper[] listeners;
 			void delegate(Widget) dlg;
 			gulong handlerId;
-			
+
 			this(void delegate(Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnDestroyDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -6857,12 +6857,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static void callBackDestroy(GtkWidget* widgetStruct, OnDestroyDelegateWrapper wrapper)
 		{
 			wrapper.dlg(wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackDestroyDestroy(OnDestroyDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -6873,13 +6873,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnDestroyEventDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnDestroyEventDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -6922,12 +6922,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackDestroyEvent(GtkWidget* widgetStruct, GdkEvent* event, OnDestroyEventDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackDestroyEventDestroy(OnDestroyEventDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -6938,13 +6938,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnDirectionChangedDelegateWrapper[] listeners;
 			void delegate(GtkTextDirection, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(void delegate(GtkTextDirection, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnDirectionChangedDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -6978,12 +6978,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static void callBackDirectionChanged(GtkWidget* widgetStruct, GtkTextDirection previousDirection, OnDirectionChangedDelegateWrapper wrapper)
 		{
 			wrapper.dlg(previousDirection, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackDirectionChangedDestroy(OnDirectionChangedDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -6994,13 +6994,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnDragBeginDelegateWrapper[] listeners;
 			void delegate(DragContext, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(void delegate(DragContext, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnDragBeginDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -7039,12 +7039,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static void callBackDragBegin(GtkWidget* widgetStruct, GdkDragContext* context, OnDragBeginDelegateWrapper wrapper)
 		{
 			wrapper.dlg(ObjectG.getDObject!(DragContext)(context), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackDragBeginDestroy(OnDragBeginDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -7055,13 +7055,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnDragDataDeleteDelegateWrapper[] listeners;
 			void delegate(DragContext, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(void delegate(DragContext, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnDragDataDeleteDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -7097,12 +7097,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static void callBackDragDataDelete(GtkWidget* widgetStruct, GdkDragContext* context, OnDragDataDeleteDelegateWrapper wrapper)
 		{
 			wrapper.dlg(ObjectG.getDObject!(DragContext)(context), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackDragDataDeleteDestroy(OnDragDataDeleteDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -7113,13 +7113,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnDragDataGetDelegateWrapper[] listeners;
 			void delegate(DragContext, SelectionData, uint, uint, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(void delegate(DragContext, SelectionData, uint, uint, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnDragDataGetDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -7160,12 +7160,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static void callBackDragDataGet(GtkWidget* widgetStruct, GdkDragContext* context, GtkSelectionData* data, uint info, uint time, OnDragDataGetDelegateWrapper wrapper)
 		{
 			wrapper.dlg(ObjectG.getDObject!(DragContext)(context), ObjectG.getDObject!(SelectionData)(data), info, time, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackDragDataGetDestroy(OnDragDataGetDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -7176,13 +7176,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnDragDataReceivedDelegateWrapper[] listeners;
 			void delegate(DragContext, int, int, SelectionData, uint, uint, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(void delegate(DragContext, int, int, SelectionData, uint, uint, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnDragDataReceivedDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -7280,12 +7280,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static void callBackDragDataReceived(GtkWidget* widgetStruct, GdkDragContext* context, int x, int y, GtkSelectionData* data, uint info, uint time, OnDragDataReceivedDelegateWrapper wrapper)
 		{
 			wrapper.dlg(ObjectG.getDObject!(DragContext)(context), x, y, ObjectG.getDObject!(SelectionData)(data), info, time, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackDragDataReceivedDestroy(OnDragDataReceivedDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -7296,13 +7296,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnDragDropDelegateWrapper[] listeners;
 			bool delegate(DragContext, int, int, uint, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(DragContext, int, int, uint, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnDragDropDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -7349,12 +7349,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackDragDrop(GtkWidget* widgetStruct, GdkDragContext* context, int x, int y, uint time, OnDragDropDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(DragContext)(context), x, y, time, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackDragDropDestroy(OnDragDropDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -7365,13 +7365,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnDragEndDelegateWrapper[] listeners;
 			void delegate(DragContext, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(void delegate(DragContext, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnDragEndDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -7406,12 +7406,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static void callBackDragEnd(GtkWidget* widgetStruct, GdkDragContext* context, OnDragEndDelegateWrapper wrapper)
 		{
 			wrapper.dlg(ObjectG.getDObject!(DragContext)(context), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackDragEndDestroy(OnDragEndDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -7422,13 +7422,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnDragFailedDelegateWrapper[] listeners;
 			bool delegate(DragContext, GtkDragResult, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(DragContext, GtkDragResult, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnDragFailedDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -7470,12 +7470,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackDragFailed(GtkWidget* widgetStruct, GdkDragContext* context, GtkDragResult result, OnDragFailedDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(DragContext)(context), result, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackDragFailedDestroy(OnDragFailedDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -7486,13 +7486,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnDragLeaveDelegateWrapper[] listeners;
 			void delegate(DragContext, uint, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(void delegate(DragContext, uint, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnDragLeaveDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -7534,12 +7534,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static void callBackDragLeave(GtkWidget* widgetStruct, GdkDragContext* context, uint time, OnDragLeaveDelegateWrapper wrapper)
 		{
 			wrapper.dlg(ObjectG.getDObject!(DragContext)(context), time, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackDragLeaveDestroy(OnDragLeaveDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -7550,13 +7550,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnDragMotionDelegateWrapper[] listeners;
 			bool delegate(DragContext, int, int, uint, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(DragContext, int, int, uint, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnDragMotionDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -7679,12 +7679,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackDragMotion(GtkWidget* widgetStruct, GdkDragContext* context, int x, int y, uint time, OnDragMotionDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(DragContext)(context), x, y, time, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackDragMotionDestroy(OnDragMotionDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -7695,13 +7695,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnEnterNotifyDelegateWrapper[] listeners;
 			bool delegate(GdkEventCrossing*, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(GdkEventCrossing*, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnEnterNotifyDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -7745,12 +7745,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackEnterNotify(GtkWidget* widgetStruct, GdkEventCrossing* event, OnEnterNotifyDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackEnterNotifyDestroy(OnEnterNotifyDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -7761,13 +7761,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnEnterNotifyEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnEnterNotifyEventGenericDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -7781,7 +7781,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				}
 			}
 		}
-		
+
 		/**
 		 * The ::enter-notify-event will be emitted when the pointer enters
 		 * the @widget's window.
@@ -7811,12 +7811,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackEnterNotifyEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnEnterNotifyEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackEnterNotifyEventGenericDestroy(OnEnterNotifyEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -7827,13 +7827,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -7876,12 +7876,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBack(GtkWidget* widgetStruct, GdkEvent* event, OnDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackDestroy(OnDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -7892,13 +7892,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnEventAfterDelegateWrapper[] listeners;
 			void delegate(Event, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(void delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnEventAfterDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -7933,12 +7933,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static void callBackEventAfter(GtkWidget* widgetStruct, GdkEvent* event, OnEventAfterDelegateWrapper wrapper)
 		{
 			wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackEventAfterDestroy(OnEventAfterDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -7949,13 +7949,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnFocusDelegateWrapper[] listeners;
 			bool delegate(GtkDirectionType, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(GtkDirectionType, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnFocusDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -7985,12 +7985,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackFocus(GtkWidget* widgetStruct, GtkDirectionType direction, OnFocusDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(direction, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackFocusDestroy(OnFocusDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -8001,13 +8001,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnFocusInDelegateWrapper[] listeners;
 			bool delegate(GdkEventFocus*, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(GdkEventFocus*, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnFocusInDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -8049,12 +8049,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackFocusIn(GtkWidget* widgetStruct, GdkEventFocus* event, OnFocusInDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackFocusInDestroy(OnFocusInDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -8065,13 +8065,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnFocusInEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnFocusInEventGenericDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -8085,7 +8085,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				}
 			}
 		}
-		
+
 		/**
 		 * The ::focus-in-event signal will be emitted when the keyboard focus
 		 * enters the @widget's window.
@@ -8113,12 +8113,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackFocusInEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnFocusInEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackFocusInEventGenericDestroy(OnFocusInEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -8129,13 +8129,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnFocusOutDelegateWrapper[] listeners;
 			bool delegate(GdkEventFocus*, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(GdkEventFocus*, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnFocusOutDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -8177,12 +8177,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackFocusOut(GtkWidget* widgetStruct, GdkEventFocus* event, OnFocusOutDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackFocusOutDestroy(OnFocusOutDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -8193,13 +8193,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnFocusOutEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnFocusOutEventGenericDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -8213,7 +8213,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				}
 			}
 		}
-		
+
 		/**
 		 * The ::focus-out-event signal will be emitted when the keyboard focus
 		 * leaves the @widget's window.
@@ -8241,12 +8241,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackFocusOutEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnFocusOutEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackFocusOutEventGenericDestroy(OnFocusOutEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -8257,13 +8257,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnGrabBrokenDelegateWrapper[] listeners;
 			bool delegate(GdkEventGrabBroken*, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(GdkEventGrabBroken*, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnGrabBrokenDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -8306,12 +8306,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackGrabBroken(GtkWidget* widgetStruct, GdkEventGrabBroken* event, OnGrabBrokenDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackGrabBrokenDestroy(OnGrabBrokenDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -8322,13 +8322,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnGrabBrokenEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnGrabBrokenEventGenericDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -8342,7 +8342,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				}
 			}
 		}
-		
+
 		/**
 		 * Emitted when a pointer or keyboard grab on a window belonging
 		 * to @widget gets broken.
@@ -8371,12 +8371,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackGrabBrokenEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnGrabBrokenEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackGrabBrokenEventGenericDestroy(OnGrabBrokenEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -8387,13 +8387,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnGrabFocusDelegateWrapper[] listeners;
 			void delegate(Widget) dlg;
 			gulong handlerId;
-			
+
 			this(void delegate(Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnGrabFocusDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -8421,12 +8421,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static void callBackGrabFocus(GtkWidget* widgetStruct, OnGrabFocusDelegateWrapper wrapper)
 		{
 			wrapper.dlg(wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackGrabFocusDestroy(OnGrabFocusDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -8437,13 +8437,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnGrabNotifyDelegateWrapper[] listeners;
 			void delegate(bool, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(void delegate(bool, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnGrabNotifyDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -8484,12 +8484,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static void callBackGrabNotify(GtkWidget* widgetStruct, bool wasGrabbed, OnGrabNotifyDelegateWrapper wrapper)
 		{
 			wrapper.dlg(wasGrabbed, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackGrabNotifyDestroy(OnGrabNotifyDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -8500,13 +8500,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnHideDelegateWrapper[] listeners;
 			void delegate(Widget) dlg;
 			gulong handlerId;
-			
+
 			this(void delegate(Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnHideDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -8537,12 +8537,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static void callBackHide(GtkWidget* widgetStruct, OnHideDelegateWrapper wrapper)
 		{
 			wrapper.dlg(wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackHideDestroy(OnHideDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -8553,13 +8553,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnHierarchyChangedDelegateWrapper[] listeners;
 			void delegate(Widget, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(void delegate(Widget, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnHierarchyChangedDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -8597,12 +8597,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static void callBackHierarchyChanged(GtkWidget* widgetStruct, GtkWidget* previousToplevel, OnHierarchyChangedDelegateWrapper wrapper)
 		{
 			wrapper.dlg(ObjectG.getDObject!(Widget)(previousToplevel), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackHierarchyChangedDestroy(OnHierarchyChangedDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -8613,13 +8613,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnKeyPressDelegateWrapper[] listeners;
 			bool delegate(GdkEventKey*, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(GdkEventKey*, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnKeyPressDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -8662,12 +8662,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackKeyPress(GtkWidget* widgetStruct, GdkEventKey* event, OnKeyPressDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackKeyPressDestroy(OnKeyPressDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -8678,13 +8678,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnKeyPressEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnKeyPressEventGenericDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -8698,7 +8698,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				}
 			}
 		}
-		
+
 		/**
 		 * The ::key-press-event signal is emitted when a key is pressed. The signal
 		 * emission will reoccur at the key-repeat rate when the key is kept pressed.
@@ -8727,12 +8727,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackKeyPressEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnKeyPressEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackKeyPressEventGenericDestroy(OnKeyPressEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -8743,13 +8743,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnKeyReleaseDelegateWrapper[] listeners;
 			bool delegate(GdkEventKey*, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(GdkEventKey*, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnKeyReleaseDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -8791,12 +8791,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackKeyRelease(GtkWidget* widgetStruct, GdkEventKey* event, OnKeyReleaseDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackKeyReleaseDestroy(OnKeyReleaseDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -8807,13 +8807,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnKeyReleaseEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnKeyReleaseEventGenericDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -8827,7 +8827,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				}
 			}
 		}
-		
+
 		/**
 		 * The ::key-release-event signal is emitted when a key is released.
 		 *
@@ -8855,12 +8855,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackKeyReleaseEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnKeyReleaseEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackKeyReleaseEventGenericDestroy(OnKeyReleaseEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -8871,13 +8871,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnKeynavFailedDelegateWrapper[] listeners;
 			bool delegate(GtkDirectionType, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(GtkDirectionType, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnKeynavFailedDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -8917,12 +8917,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackKeynavFailed(GtkWidget* widgetStruct, GtkDirectionType direction, OnKeynavFailedDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(direction, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackKeynavFailedDestroy(OnKeynavFailedDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -8933,13 +8933,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnLeaveNotifyDelegateWrapper[] listeners;
 			bool delegate(GdkEventCrossing*, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(GdkEventCrossing*, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnLeaveNotifyDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -8983,12 +8983,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackLeaveNotify(GtkWidget* widgetStruct, GdkEventCrossing* event, OnLeaveNotifyDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackLeaveNotifyDestroy(OnLeaveNotifyDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -8999,13 +8999,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnLeaveNotifyEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnLeaveNotifyEventGenericDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -9019,7 +9019,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				}
 			}
 		}
-		
+
 		/**
 		 * The ::leave-notify-event will be emitted when the pointer leaves
 		 * the @widget's window.
@@ -9049,12 +9049,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackLeaveNotifyEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnLeaveNotifyEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackLeaveNotifyEventGenericDestroy(OnLeaveNotifyEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -9065,13 +9065,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnMapDelegateWrapper[] listeners;
 			void delegate(Widget) dlg;
 			gulong handlerId;
-			
+
 			this(void delegate(Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnMapDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -9109,12 +9109,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static void callBackMap(GtkWidget* widgetStruct, OnMapDelegateWrapper wrapper)
 		{
 			wrapper.dlg(wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackMapDestroy(OnMapDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -9125,13 +9125,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnMapEventDelegateWrapper[] listeners;
 			bool delegate(GdkEventAny*, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(GdkEventAny*, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnMapEventDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -9172,12 +9172,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackMapEvent(GtkWidget* widgetStruct, GdkEventAny* event, OnMapEventDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackMapEventDestroy(OnMapEventDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -9188,13 +9188,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnMapEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnMapEventGenericDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -9208,7 +9208,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				}
 			}
 		}
-		
+
 		/**
 		 * The ::map-event signal will be emitted when the @widget's window is
 		 * mapped. A window is mapped when it becomes visible on the screen.
@@ -9235,12 +9235,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackMapEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnMapEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackMapEventGenericDestroy(OnMapEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -9251,13 +9251,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnMnemonicActivateDelegateWrapper[] listeners;
 			bool delegate(bool, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(bool, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnMnemonicActivateDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -9294,12 +9294,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackMnemonicActivate(GtkWidget* widgetStruct, bool groupCycling, OnMnemonicActivateDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(groupCycling, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackMnemonicActivateDestroy(OnMnemonicActivateDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -9310,13 +9310,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnMotionNotifyDelegateWrapper[] listeners;
 			bool delegate(GdkEventMotion*, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(GdkEventMotion*, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnMotionNotifyDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -9360,12 +9360,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackMotionNotify(GtkWidget* widgetStruct, GdkEventMotion* event, OnMotionNotifyDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackMotionNotifyDestroy(OnMotionNotifyDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -9376,13 +9376,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnMotionNotifyEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnMotionNotifyEventGenericDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -9396,7 +9396,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				}
 			}
 		}
-		
+
 		/**
 		 * The ::motion-notify-event signal is emitted when the pointer moves
 		 * over the widget's #GdkWindow.
@@ -9426,12 +9426,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackMotionNotifyEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnMotionNotifyEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackMotionNotifyEventGenericDestroy(OnMotionNotifyEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -9442,13 +9442,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnMoveFocusDelegateWrapper[] listeners;
 			void delegate(GtkDirectionType, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(void delegate(GtkDirectionType, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnMoveFocusDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -9476,12 +9476,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static void callBackMoveFocus(GtkWidget* widgetStruct, GtkDirectionType direction, OnMoveFocusDelegateWrapper wrapper)
 		{
 			wrapper.dlg(direction, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackMoveFocusDestroy(OnMoveFocusDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -9492,13 +9492,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnParentSetDelegateWrapper[] listeners;
 			void delegate(Widget, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(void delegate(Widget, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnParentSetDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -9533,12 +9533,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static void callBackParentSet(GtkWidget* widgetStruct, GtkWidget* oldParent, OnParentSetDelegateWrapper wrapper)
 		{
 			wrapper.dlg(ObjectG.getDObject!(Widget)(oldParent), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackParentSetDestroy(OnParentSetDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -9549,13 +9549,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnPopupMenuDelegateWrapper[] listeners;
 			bool delegate(Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnPopupMenuDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -9593,12 +9593,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackPopupMenu(GtkWidget* widgetStruct, OnPopupMenuDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackPopupMenuDestroy(OnPopupMenuDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -9609,13 +9609,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnPropertyNotifyDelegateWrapper[] listeners;
 			bool delegate(GdkEventProperty*, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(GdkEventProperty*, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnPropertyNotifyDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -9657,12 +9657,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackPropertyNotify(GtkWidget* widgetStruct, GdkEventProperty* event, OnPropertyNotifyDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackPropertyNotifyDestroy(OnPropertyNotifyDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -9673,13 +9673,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnPropertyNotifyEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnPropertyNotifyEventGenericDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -9693,7 +9693,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				}
 			}
 		}
-		
+
 		/**
 		 * The ::property-notify-event signal will be emitted when a property on
 		 * the @widget's window has been changed or deleted.
@@ -9721,12 +9721,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackPropertyNotifyEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnPropertyNotifyEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackPropertyNotifyEventGenericDestroy(OnPropertyNotifyEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -9737,13 +9737,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnProximityInDelegateWrapper[] listeners;
 			bool delegate(GdkEventProximity*, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(GdkEventProximity*, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnProximityInDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -9784,12 +9784,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackProximityIn(GtkWidget* widgetStruct, GdkEventProximity* event, OnProximityInDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackProximityInDestroy(OnProximityInDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -9800,13 +9800,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnProximityInEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnProximityInEventGenericDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -9820,7 +9820,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				}
 			}
 		}
-		
+
 		/**
 		 * To receive this signal the #GdkWindow associated to the widget needs
 		 * to enable the #GDK_PROXIMITY_IN_MASK mask.
@@ -9847,12 +9847,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackProximityInEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnProximityInEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackProximityInEventGenericDestroy(OnProximityInEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -9863,13 +9863,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnProximityOutDelegateWrapper[] listeners;
 			bool delegate(GdkEventProximity*, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(GdkEventProximity*, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnProximityOutDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -9910,12 +9910,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackProximityOut(GtkWidget* widgetStruct, GdkEventProximity* event, OnProximityOutDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackProximityOutDestroy(OnProximityOutDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -9926,13 +9926,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnProximityOutEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnProximityOutEventGenericDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -9946,7 +9946,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				}
 			}
 		}
-		
+
 		/**
 		 * To receive this signal the #GdkWindow associated to the widget needs
 		 * to enable the #GDK_PROXIMITY_OUT_MASK mask.
@@ -9973,12 +9973,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackProximityOutEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnProximityOutEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackProximityOutEventGenericDestroy(OnProximityOutEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -9989,13 +9989,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnQueryTooltipDelegateWrapper[] listeners;
 			bool delegate(int, int, bool, Tooltip, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(int, int, bool, Tooltip, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnQueryTooltipDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -10048,12 +10048,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackQueryTooltip(GtkWidget* widgetStruct, int x, int y, bool keyboardMode, GtkTooltip* tooltip, OnQueryTooltipDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(x, y, keyboardMode, ObjectG.getDObject!(Tooltip)(tooltip), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackQueryTooltipDestroy(OnQueryTooltipDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -10064,13 +10064,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnRealizeDelegateWrapper[] listeners;
 			void delegate(Widget) dlg;
 			gulong handlerId;
-			
+
 			this(void delegate(Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnRealizeDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -10102,12 +10102,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static void callBackRealize(GtkWidget* widgetStruct, OnRealizeDelegateWrapper wrapper)
 		{
 			wrapper.dlg(wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackRealizeDestroy(OnRealizeDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -10118,13 +10118,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnScreenChangedDelegateWrapper[] listeners;
 			void delegate(Screen, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(void delegate(Screen, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnScreenChangedDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -10159,12 +10159,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static void callBackScreenChanged(GtkWidget* widgetStruct, GdkScreen* previousScreen, OnScreenChangedDelegateWrapper wrapper)
 		{
 			wrapper.dlg(ObjectG.getDObject!(Screen)(previousScreen), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackScreenChangedDestroy(OnScreenChangedDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -10175,13 +10175,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnScrollDelegateWrapper[] listeners;
 			bool delegate(GdkEventScroll*, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(GdkEventScroll*, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnScrollDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -10226,12 +10226,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackScroll(GtkWidget* widgetStruct, GdkEventScroll* event, OnScrollDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackScrollDestroy(OnScrollDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -10242,13 +10242,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnScrollEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnScrollEventGenericDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -10262,7 +10262,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				}
 			}
 		}
-		
+
 		/**
 		 * The ::scroll-event signal is emitted when a button in the 4 to 7
 		 * range is pressed. Wheel mice are usually configured to generate
@@ -10293,12 +10293,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackScrollEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnScrollEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackScrollEventGenericDestroy(OnScrollEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -10309,13 +10309,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnSelectionClearDelegateWrapper[] listeners;
 			bool delegate(GdkEventSelection*, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(GdkEventSelection*, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnSelectionClearDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -10353,12 +10353,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackSelectionClear(GtkWidget* widgetStruct, GdkEventSelection* event, OnSelectionClearDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackSelectionClearDestroy(OnSelectionClearDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -10369,13 +10369,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnSelectionClearEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnSelectionClearEventGenericDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -10389,7 +10389,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				}
 			}
 		}
-		
+
 		/**
 		 * The ::selection-clear-event signal will be emitted when the
 		 * the @widget's window has lost ownership of a selection.
@@ -10413,12 +10413,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackSelectionClearEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnSelectionClearEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackSelectionClearEventGenericDestroy(OnSelectionClearEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -10429,13 +10429,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnSelectionGetDelegateWrapper[] listeners;
 			void delegate(SelectionData, uint, uint, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(void delegate(SelectionData, uint, uint, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnSelectionGetDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -10463,12 +10463,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static void callBackSelectionGet(GtkWidget* widgetStruct, GtkSelectionData* data, uint info, uint time, OnSelectionGetDelegateWrapper wrapper)
 		{
 			wrapper.dlg(ObjectG.getDObject!(SelectionData)(data), info, time, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackSelectionGetDestroy(OnSelectionGetDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -10479,13 +10479,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnSelectionNotifyDelegateWrapper[] listeners;
 			bool delegate(GdkEventSelection*, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(GdkEventSelection*, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnSelectionNotifyDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -10515,12 +10515,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackSelectionNotify(GtkWidget* widgetStruct, GdkEventSelection* event, OnSelectionNotifyDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackSelectionNotifyDestroy(OnSelectionNotifyDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -10531,13 +10531,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnSelectionNotifyEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnSelectionNotifyEventGenericDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -10551,7 +10551,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				}
 			}
 		}
-		
+
 		/**
 		 * Returns: %TRUE to stop other handlers from being invoked for the event. %FALSE to propagate the event further.
 		 */
@@ -10567,12 +10567,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackSelectionNotifyEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnSelectionNotifyEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackSelectionNotifyEventGenericDestroy(OnSelectionNotifyEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -10583,13 +10583,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnSelectionReceivedDelegateWrapper[] listeners;
 			void delegate(SelectionData, uint, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(void delegate(SelectionData, uint, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnSelectionReceivedDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -10617,12 +10617,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static void callBackSelectionReceived(GtkWidget* widgetStruct, GtkSelectionData* data, uint time, OnSelectionReceivedDelegateWrapper wrapper)
 		{
 			wrapper.dlg(ObjectG.getDObject!(SelectionData)(data), time, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackSelectionReceivedDestroy(OnSelectionReceivedDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -10633,13 +10633,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnSelectionRequestDelegateWrapper[] listeners;
 			bool delegate(GdkEventSelection*, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(GdkEventSelection*, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnSelectionRequestDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -10678,12 +10678,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackSelectionRequest(GtkWidget* widgetStruct, GdkEventSelection* event, OnSelectionRequestDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackSelectionRequestDestroy(OnSelectionRequestDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -10694,13 +10694,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnSelectionRequestEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnSelectionRequestEventGenericDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -10714,7 +10714,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				}
 			}
 		}
-		
+
 		/**
 		 * The ::selection-request-event signal will be emitted when
 		 * another client requests ownership of the selection owned by
@@ -10739,12 +10739,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackSelectionRequestEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnSelectionRequestEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackSelectionRequestEventGenericDestroy(OnSelectionRequestEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -10755,13 +10755,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnShowDelegateWrapper[] listeners;
 			void delegate(Widget) dlg;
 			gulong handlerId;
-			
+
 			this(void delegate(Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnShowDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -10792,12 +10792,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static void callBackShow(GtkWidget* widgetStruct, OnShowDelegateWrapper wrapper)
 		{
 			wrapper.dlg(wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackShowDestroy(OnShowDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -10808,13 +10808,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnShowHelpDelegateWrapper[] listeners;
 			bool delegate(GtkWidgetHelpType, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(GtkWidgetHelpType, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnShowHelpDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -10845,12 +10845,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackShowHelp(GtkWidget* widgetStruct, GtkWidgetHelpType helpType, OnShowHelpDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(helpType, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackShowHelpDestroy(OnShowHelpDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -10861,13 +10861,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnSizeAllocateDelegateWrapper[] listeners;
 			void delegate(Allocation, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(void delegate(Allocation, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnSizeAllocateDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -10895,12 +10895,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static void callBackSizeAllocate(GtkWidget* widgetStruct, Allocation allocation, OnSizeAllocateDelegateWrapper wrapper)
 		{
 			wrapper.dlg(allocation, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackSizeAllocateDestroy(OnSizeAllocateDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -10911,13 +10911,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnStateChangedDelegateWrapper[] listeners;
 			void delegate(GtkStateType, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(void delegate(GtkStateType, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnStateChangedDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -10953,12 +10953,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static void callBackStateChanged(GtkWidget* widgetStruct, GtkStateType state, OnStateChangedDelegateWrapper wrapper)
 		{
 			wrapper.dlg(state, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackStateChangedDestroy(OnStateChangedDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -10969,13 +10969,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnStateFlagsChangedDelegateWrapper[] listeners;
 			void delegate(GtkStateFlags, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(void delegate(GtkStateFlags, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnStateFlagsChangedDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -11011,12 +11011,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static void callBackStateFlagsChanged(GtkWidget* widgetStruct, GtkStateFlags flags, OnStateFlagsChangedDelegateWrapper wrapper)
 		{
 			wrapper.dlg(flags, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackStateFlagsChangedDestroy(OnStateFlagsChangedDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -11027,13 +11027,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnStyleSetDelegateWrapper[] listeners;
 			void delegate(Style, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(void delegate(Style, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnStyleSetDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -11075,12 +11075,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static void callBackStyleSet(GtkWidget* widgetStruct, GtkStyle* previousStyle, OnStyleSetDelegateWrapper wrapper)
 		{
 			wrapper.dlg(ObjectG.getDObject!(Style)(previousStyle), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackStyleSetDestroy(OnStyleSetDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -11091,13 +11091,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnStyleUpdatedDelegateWrapper[] listeners;
 			void delegate(Widget) dlg;
 			gulong handlerId;
-			
+
 			this(void delegate(Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnStyleUpdatedDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -11134,12 +11134,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static void callBackStyleUpdated(GtkWidget* widgetStruct, OnStyleUpdatedDelegateWrapper wrapper)
 		{
 			wrapper.dlg(wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackStyleUpdatedDestroy(OnStyleUpdatedDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -11150,13 +11150,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnTouchDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnTouchDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -11184,12 +11184,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackTouch(GtkWidget* widgetStruct, GdkEvent* object, OnTouchDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(object), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackTouchDestroy(OnTouchDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -11200,13 +11200,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnUnmapDelegateWrapper[] listeners;
 			void delegate(Widget) dlg;
 			gulong handlerId;
-			
+
 			this(void delegate(Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnUnmapDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -11241,12 +11241,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static void callBackUnmap(GtkWidget* widgetStruct, OnUnmapDelegateWrapper wrapper)
 		{
 			wrapper.dlg(wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackUnmapDestroy(OnUnmapDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -11257,13 +11257,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnUnmapEventDelegateWrapper[] listeners;
 			bool delegate(GdkEventAny*, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(GdkEventAny*, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnUnmapEventDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -11304,12 +11304,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackUnmapEvent(GtkWidget* widgetStruct, GdkEventAny* event, OnUnmapEventDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackUnmapEventDestroy(OnUnmapEventDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -11320,13 +11320,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnUnmapEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnUnmapEventGenericDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -11340,7 +11340,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				}
 			}
 		}
-		
+
 		/**
 		 * The ::unmap-event signal will be emitted when the @widget's window is
 		 * unmapped. A window is unmapped when it becomes invisible on the screen.
@@ -11367,12 +11367,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackUnmapEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnUnmapEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackUnmapEventGenericDestroy(OnUnmapEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -11383,13 +11383,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnUnrealizeDelegateWrapper[] listeners;
 			void delegate(Widget) dlg;
 			gulong handlerId;
-			
+
 			this(void delegate(Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnUnrealizeDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -11422,12 +11422,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static void callBackUnrealize(GtkWidget* widgetStruct, OnUnrealizeDelegateWrapper wrapper)
 		{
 			wrapper.dlg(wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackUnrealizeDestroy(OnUnrealizeDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -11438,13 +11438,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnVisibilityNotifyDelegateWrapper[] listeners;
 			bool delegate(GdkEventVisibility*, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(GdkEventVisibility*, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnVisibilityNotifyDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -11491,12 +11491,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackVisibilityNotify(GtkWidget* widgetStruct, GdkEventVisibility* event, OnVisibilityNotifyDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackVisibilityNotifyDestroy(OnVisibilityNotifyDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -11507,13 +11507,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnVisibilityNotifyEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnVisibilityNotifyEventGenericDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -11527,7 +11527,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				}
 			}
 		}
-		
+
 		/**
 		 * The ::visibility-notify-event will be emitted when the @widget's
 		 * window is obscured or unobscured.
@@ -11560,12 +11560,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackVisibilityNotifyEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnVisibilityNotifyEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackVisibilityNotifyEventGenericDestroy(OnVisibilityNotifyEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -11576,13 +11576,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnWindowStateDelegateWrapper[] listeners;
 			bool delegate(GdkEventWindowState*, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(GdkEventWindowState*, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnWindowStateDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -11624,12 +11624,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackWindowState(GtkWidget* widgetStruct, GdkEventWindowState* event, OnWindowStateDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(event, wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackWindowStateDestroy(OnWindowStateDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
@@ -11640,13 +11640,13 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			static OnWindowStateEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
-			
+
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
 				this.listeners ~= this;
 			}
-			
+
 			void remove(OnWindowStateEventGenericDelegateWrapper source)
 			{
 				foreach(index, wrapper; listeners)
@@ -11660,7 +11660,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				}
 			}
 		}
-		
+
 		/**
 		 * The ::window-state-event will be emitted when the state of the
 		 * toplevel window associated to the @widget changes.
@@ -11688,12 +11688,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				connectFlags);
 			return wrapper.handlerId;
 		}
-		
+
 		extern(C) static int callBackWindowStateEventGeneric(GtkWidget* widgetStruct, GdkEvent* event, OnWindowStateEventGenericDelegateWrapper wrapper)
 		{
 			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 		}
-		
+
 		extern(C) static void callBackWindowStateEventGenericDestroy(OnWindowStateEventGenericDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);

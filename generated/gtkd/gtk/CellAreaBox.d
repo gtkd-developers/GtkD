@@ -30,8 +30,8 @@ private import gtk.CellArea;
 private import gtk.CellRenderer;
 private import gtk.OrientableIF;
 private import gtk.OrientableT;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -109,12 +109,12 @@ public class CellAreaBox : CellArea, OrientableIF
 	public this()
 	{
 		auto p = gtk_cell_area_box_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkCellAreaBox*) p);
 	}
 

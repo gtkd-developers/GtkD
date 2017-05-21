@@ -24,10 +24,10 @@
 
 module gdk.Color;
 
+private import gdk.c.functions;
+public  import gdk.c.types;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gdk;
-public  import gtkc.gdktypes;
 private import gtkd.Loader;
 
 
@@ -78,34 +78,34 @@ public class Color
 	this()
 	{
 		GdkColor color;
-		
+
 		this(gdk_color_copy(&color));
 	}
-	
+
 	/** ditto */
 	this(ubyte red, ubyte green, ubyte blue)
 	{
 		GdkColor color;
-		
+
 		color.red = cast(ushort)(red * 257);
 		color.green = cast(ushort)(green * 257);
 		color.blue = cast(ushort)(blue * 257);
-		
+
 		this(gdk_color_copy(&color));
 	}
-	
+
 	/** ditto */
 	this(ushort red, ushort green, ushort blue)
 	{
 		GdkColor color;
-		
+
 		color.red = red;
 		color.green = green;
 		color.blue = blue;
-		
+
 		this(gdk_color_copy(&color));
 	}
-	
+
 	/**
 	 * The color values.
 	 */
@@ -113,46 +113,46 @@ public class Color
 	{
 		return gdkColor.red;
 	}
-	
+
 	/** ditto */
 	void red(ushort value)
 	{
 		gdkColor.red = value;
 		updatePixel();
 	}
-	
+
 	/** ditto */
 	ushort green()
 	{
 		return gdkColor.green;
 	}
-	
+
 	/** ditto */
 	void green(ushort value)
 	{
 		gdkColor.green = value;
 		updatePixel();
 	}
-	
+
 	/** ditto */
 	ushort blue()
 	{
 		return gdkColor.blue;
 	}
-	
+
 	/** ditto */
 	void blue(ushort value)
 	{
 		gdkColor.blue = value;
 		updatePixel();
 	}
-	
+
 	/** ditto */
 	uint pixel()
 	{
 		return gdkColor.pixel;
 	}
-	
+
 	private void updatePixel()
 	{
 		gdkColor.pixel = (gdkColor.red&0xFF00 << 8) | (gdkColor.green&0xFF00) | (gdkColor.blue >> 8) ;
@@ -179,12 +179,12 @@ public class Color
 	public Color copy()
 	{
 		auto p = gdk_color_copy(gdkColor);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Color)(cast(GdkColor*) p, true);
 	}
 
@@ -243,7 +243,7 @@ public class Color
 	public override string toString()
 	{
 		auto retStr = gdk_color_to_string(gdkColor);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -271,11 +271,11 @@ public class Color
 	public static bool parse(string spec, out Color color)
 	{
 		GdkColor* outcolor = gMalloc!GdkColor();
-		
+
 		auto p = gdk_color_parse(Str.toStringz(spec), outcolor) != 0;
-		
+
 		color = ObjectG.getDObject!(Color)(outcolor, true);
-		
+
 		return p;
 	}
 }

@@ -26,8 +26,8 @@ module glib.TestLogBuffer;
 
 private import glib.ConstructionException;
 private import glib.TestLogMsg;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 private import gtkd.Loader;
 
 
@@ -83,12 +83,12 @@ public class TestLogBuffer
 	public TestLogMsg pop()
 	{
 		auto p = g_test_log_buffer_pop(gTestLogBuffer);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new TestLogMsg(cast(GTestLogMsg*) p);
 	}
 
@@ -108,12 +108,12 @@ public class TestLogBuffer
 	public this()
 	{
 		auto p = g_test_log_buffer_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GTestLogBuffer*) p);
 	}
 }

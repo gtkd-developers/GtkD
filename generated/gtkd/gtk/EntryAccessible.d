@@ -31,8 +31,8 @@ private import atk.EditableTextT;
 private import atk.TextIF;
 private import atk.TextT;
 private import gtk.WidgetAccessible;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /** */

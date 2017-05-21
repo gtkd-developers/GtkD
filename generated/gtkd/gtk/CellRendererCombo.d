@@ -31,8 +31,8 @@ private import gobject.Signals;
 private import gtk.CellRenderer;
 private import gtk.CellRendererText;
 private import gtk.TreeIter;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -109,12 +109,12 @@ public class CellRendererCombo : CellRendererText
 	public this()
 	{
 		auto p = gtk_cell_renderer_combo_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkCellRendererCombo*) p);
 	}
 
@@ -123,13 +123,13 @@ public class CellRendererCombo : CellRendererText
 		static OnChangedDelegateWrapper[] listeners;
 		void delegate(string, TreeIter, CellRendererCombo) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(string, TreeIter, CellRendererCombo) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -177,12 +177,12 @@ public class CellRendererCombo : CellRendererText
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackChanged(GtkCellRendererCombo* cellrenderercomboStruct, char* pathString, GtkTreeIter* newIter, OnChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(pathString), ObjectG.getDObject!(TreeIter)(newIter), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

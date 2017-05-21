@@ -38,8 +38,8 @@ private import gtk.TreeModelIF;
 private import gtk.TreeModelT;
 private import gtk.TreeSortableIF;
 private import gtk.TreeSortableT;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -238,7 +238,7 @@ public class ListStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 		gtk_list_store_append(getListStoreStruct(), iter);
 		return new TreeIter(iter);
 	}
-	
+
 	/**
 	 * sets the values for one row
 	 * Params:
@@ -257,7 +257,7 @@ public class ListStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 				values[i],-1);
 		}
 	}
-	
+
 	/** ditto */
 	void set(TreeIter iter, int[] columns, string[] values)
 	{
@@ -270,7 +270,7 @@ public class ListStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 				Str.toStringz(values[i]),-1);
 		}
 	}
-	
+
 	/** */
 	void setValue(TreeIter iter, int column, string value)
 	{
@@ -278,7 +278,7 @@ public class ListStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 		gtk_list_store_set_value(gtkListStore, iter.getTreeIterStruct(), column, v.getValueStruct());
 		//gtk_list_store_set_value(obj(), iter.getIter(), column, (GValue*)cChar(value));
 	}
-	
+
 	/** */
 	void setValue(TreeIter iter, int column, int value)
 	{
@@ -309,12 +309,12 @@ public class ListStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	public this(GType[] types)
 	{
 		auto p = gtk_list_store_newv(cast(int)types.length, types.ptr);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by newv");
 		}
-		
+
 		this(cast(GtkListStore*) p, true);
 	}
 
@@ -329,9 +329,9 @@ public class ListStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	public void append(out TreeIter iter)
 	{
 		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
-		
+
 		gtk_list_store_append(gtkListStore, outiter);
-		
+
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 	}
 
@@ -357,9 +357,9 @@ public class ListStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	public void insert(out TreeIter iter, int position)
 	{
 		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
-		
+
 		gtk_list_store_insert(gtkListStore, outiter, position);
-		
+
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 	}
 
@@ -376,9 +376,9 @@ public class ListStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	public void insertAfter(out TreeIter iter, TreeIter sibling)
 	{
 		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
-		
+
 		gtk_list_store_insert_after(gtkListStore, outiter, (sibling is null) ? null : sibling.getTreeIterStruct());
-		
+
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 	}
 
@@ -395,9 +395,9 @@ public class ListStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	public void insertBefore(out TreeIter iter, TreeIter sibling)
 	{
 		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
-		
+
 		gtk_list_store_insert_before(gtkListStore, outiter, (sibling is null) ? null : sibling.getTreeIterStruct());
-		
+
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 	}
 
@@ -419,15 +419,15 @@ public class ListStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	public void insertWithValuesv(out TreeIter iter, int position, int[] columns, Value[] values)
 	{
 		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
-		
+
 		GValue[] valuesArray = new GValue[values.length];
 		for ( int i = 0; i < values.length; i++ )
 		{
 			valuesArray[i] = *(values[i].getValueStruct());
 		}
-		
+
 		gtk_list_store_insert_with_valuesv(gtkListStore, outiter, position, columns.ptr, valuesArray.ptr, cast(int)values.length);
-		
+
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 	}
 
@@ -492,9 +492,9 @@ public class ListStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	public void prepend(out TreeIter iter)
 	{
 		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
-		
+
 		gtk_list_store_prepend(gtkListStore, outiter);
-		
+
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 	}
 
@@ -595,7 +595,7 @@ public class ListStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 		{
 			valuesArray[i] = *(values[i].getValueStruct());
 		}
-		
+
 		gtk_list_store_set_valuesv(gtkListStore, (iter is null) ? null : iter.getTreeIterStruct(), columns.ptr, valuesArray.ptr, cast(int)values.length);
 	}
 

@@ -24,11 +24,11 @@
 
 module gio.AsyncResultT;
 
+public  import gio.c.functions;
+public  import gio.c.types;
 public  import glib.ErrorG;
 public  import glib.GException;
 public  import gobject.ObjectG;
-public  import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -134,12 +134,12 @@ public template AsyncResultT(TStruct)
 	public ObjectG getSourceObject()
 	{
 		auto p = g_async_result_get_source_object(getAsyncResultStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p, true);
 	}
 
@@ -192,14 +192,14 @@ public template AsyncResultT(TStruct)
 	public bool legacyPropagateError()
 	{
 		GError* err = null;
-		
+
 		auto p = g_async_result_legacy_propagate_error(getAsyncResultStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 }

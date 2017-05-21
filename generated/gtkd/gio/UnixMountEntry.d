@@ -26,11 +26,11 @@ module gio.UnixMountEntry;
 
 private import gio.Icon;
 private import gio.IconIF;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ListG;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -162,12 +162,12 @@ public struct UnixMountEntry
 	public static IconIF guessIcon(GUnixMountEntry* mountEntry)
 	{
 		auto p = g_unix_mount_guess_icon(mountEntry);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p, true);
 	}
 
@@ -184,7 +184,7 @@ public struct UnixMountEntry
 	public static string guessName(GUnixMountEntry* mountEntry)
 	{
 		auto retStr = g_unix_mount_guess_name(mountEntry);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -215,12 +215,12 @@ public struct UnixMountEntry
 	public static IconIF guessSymbolicIcon(GUnixMountEntry* mountEntry)
 	{
 		auto p = g_unix_mount_guess_symbolic_icon(mountEntry);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p, true);
 	}
 
@@ -277,12 +277,12 @@ public struct UnixMountEntry
 	public static ListG mountPointsGet(out ulong timeRead)
 	{
 		auto p = g_unix_mount_points_get(&timeRead);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -313,12 +313,12 @@ public struct UnixMountEntry
 	public static ListG mountsGet(out ulong timeRead)
 	{
 		auto p = g_unix_mounts_get(&timeRead);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 }

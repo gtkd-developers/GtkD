@@ -25,14 +25,14 @@
 module gio.DBusNodeInfo;
 
 private import gio.DBusInterfaceInfo;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import glib.StringG;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 private import gtkd.Loader;
 
 
@@ -107,19 +107,19 @@ public class DBusNodeInfo
 	public this(string xmlData)
 	{
 		GError* err = null;
-		
+
 		auto p = g_dbus_node_info_new_for_xml(Str.toStringz(xmlData), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_for_xml");
 		}
-		
+
 		this(cast(GDBusNodeInfo*) p);
 	}
 
@@ -138,9 +138,9 @@ public class DBusNodeInfo
 	public void generateXml(uint indent, out StringG stringBuilder)
 	{
 		GString* outstringBuilder = gMalloc!GString();
-		
+
 		g_dbus_node_info_generate_xml(gDBusNodeInfo, indent, outstringBuilder);
-		
+
 		stringBuilder = new StringG(outstringBuilder, true);
 	}
 
@@ -159,12 +159,12 @@ public class DBusNodeInfo
 	public DBusInterfaceInfo lookupInterface(string name)
 	{
 		auto p = g_dbus_node_info_lookup_interface(gDBusNodeInfo, Str.toStringz(name));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(DBusInterfaceInfo)(cast(GDBusInterfaceInfo*) p);
 	}
 
@@ -179,12 +179,12 @@ public class DBusNodeInfo
 	public DBusNodeInfo doref()
 	{
 		auto p = g_dbus_node_info_ref(gDBusNodeInfo);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(DBusNodeInfo)(cast(GDBusNodeInfo*) p, true);
 	}
 

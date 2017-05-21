@@ -27,11 +27,11 @@ module gio.DBusInterfaceInfo;
 private import gio.DBusMethodInfo;
 private import gio.DBusPropertyInfo;
 private import gio.DBusSignalInfo;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.Str;
 private import glib.StringG;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 private import gtkd.Loader;
 
 
@@ -130,9 +130,9 @@ public class DBusInterfaceInfo
 	public void generateXml(uint indent, out StringG stringBuilder)
 	{
 		GString* outstringBuilder = gMalloc!GString();
-		
+
 		g_dbus_interface_info_generate_xml(gDBusInterfaceInfo, indent, outstringBuilder);
-		
+
 		stringBuilder = new StringG(outstringBuilder, true);
 	}
 
@@ -152,12 +152,12 @@ public class DBusInterfaceInfo
 	public DBusMethodInfo lookupMethod(string name)
 	{
 		auto p = g_dbus_interface_info_lookup_method(gDBusInterfaceInfo, Str.toStringz(name));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(DBusMethodInfo)(cast(GDBusMethodInfo*) p);
 	}
 
@@ -177,12 +177,12 @@ public class DBusInterfaceInfo
 	public DBusPropertyInfo lookupProperty(string name)
 	{
 		auto p = g_dbus_interface_info_lookup_property(gDBusInterfaceInfo, Str.toStringz(name));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(DBusPropertyInfo)(cast(GDBusPropertyInfo*) p);
 	}
 
@@ -202,12 +202,12 @@ public class DBusInterfaceInfo
 	public DBusSignalInfo lookupSignal(string name)
 	{
 		auto p = g_dbus_interface_info_lookup_signal(gDBusInterfaceInfo, Str.toStringz(name));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(DBusSignalInfo)(cast(GDBusSignalInfo*) p);
 	}
 
@@ -222,12 +222,12 @@ public class DBusInterfaceInfo
 	public DBusInterfaceInfo doref()
 	{
 		auto p = g_dbus_interface_info_ref(gDBusInterfaceInfo);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(DBusInterfaceInfo)(cast(GDBusInterfaceInfo*) p, true);
 	}
 

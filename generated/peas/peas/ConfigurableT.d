@@ -26,8 +26,8 @@ module peas.ConfigurableT;
 
 public  import gobject.ObjectG;
 public  import gtk.Widget;
-public  import peasc.peas;
-public  import peasc.peastypes;
+public  import peas.c.functions;
+public  import peas.c.types;
 
 
 /**
@@ -60,12 +60,12 @@ public template ConfigurableT(TStruct)
 	public Widget createConfigureWidget()
 	{
 		auto p = peas_gtk_configurable_create_configure_widget(getConfigurableStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p, true);
 	}
 }

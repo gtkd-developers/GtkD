@@ -31,8 +31,8 @@ private import gobject.Signals;
 private import gstreamer.ObjectGst;
 private import gstreamer.Plugin;
 private import gstreamer.PluginFeature;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 private import std.algorithm;
 
 
@@ -176,12 +176,12 @@ public class Registry : ObjectGst
 	public static Registry get()
 	{
 		auto p = gst_registry_get();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Registry)(cast(GstRegistry*) p);
 	}
 
@@ -255,12 +255,12 @@ public class Registry : ObjectGst
 	public ListG featureFilter(GstPluginFeatureFilter filter, bool first, void* userData)
 	{
 		auto p = gst_registry_feature_filter(gstRegistry, filter, first, userData);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -280,12 +280,12 @@ public class Registry : ObjectGst
 	public PluginFeature findFeature(string name, GType type)
 	{
 		auto p = gst_registry_find_feature(gstRegistry, Str.toStringz(name), type);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PluginFeature)(cast(GstPluginFeature*) p, true);
 	}
 
@@ -305,12 +305,12 @@ public class Registry : ObjectGst
 	public Plugin findPlugin(string name)
 	{
 		auto p = gst_registry_find_plugin(gstRegistry, Str.toStringz(name));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Plugin)(cast(GstPlugin*) p, true);
 	}
 
@@ -328,12 +328,12 @@ public class Registry : ObjectGst
 	public ListG getFeatureList(GType type)
 	{
 		auto p = gst_registry_get_feature_list(gstRegistry, type);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -349,12 +349,12 @@ public class Registry : ObjectGst
 	public ListG getFeatureListByPlugin(string name)
 	{
 		auto p = gst_registry_get_feature_list_by_plugin(gstRegistry, Str.toStringz(name));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -381,12 +381,12 @@ public class Registry : ObjectGst
 	public ListG getPluginList()
 	{
 		auto p = gst_registry_get_plugin_list(gstRegistry);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -403,12 +403,12 @@ public class Registry : ObjectGst
 	public Plugin lookup(string filename)
 	{
 		auto p = gst_registry_lookup(gstRegistry, Str.toStringz(filename));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Plugin)(cast(GstPlugin*) p, true);
 	}
 
@@ -426,12 +426,12 @@ public class Registry : ObjectGst
 	public PluginFeature lookupFeature(string name)
 	{
 		auto p = gst_registry_lookup_feature(gstRegistry, Str.toStringz(name));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PluginFeature)(cast(GstPluginFeature*) p, true);
 	}
 
@@ -455,12 +455,12 @@ public class Registry : ObjectGst
 	public ListG pluginFilter(GstPluginFilter filter, bool first, void* userData)
 	{
 		auto p = gst_registry_plugin_filter(gstRegistry, filter, first, userData);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -509,13 +509,13 @@ public class Registry : ObjectGst
 		static OnFeatureAddedDelegateWrapper[] listeners;
 		void delegate(PluginFeature, Registry) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(PluginFeature, Registry) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnFeatureAddedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -549,12 +549,12 @@ public class Registry : ObjectGst
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackFeatureAdded(GstRegistry* registryStruct, GstPluginFeature* feature, OnFeatureAddedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(PluginFeature)(feature), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackFeatureAddedDestroy(OnFeatureAddedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -565,13 +565,13 @@ public class Registry : ObjectGst
 		static OnPluginAddedDelegateWrapper[] listeners;
 		void delegate(Plugin, Registry) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Plugin, Registry) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPluginAddedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -605,12 +605,12 @@ public class Registry : ObjectGst
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPluginAdded(GstRegistry* registryStruct, GstPlugin* plugin, OnPluginAddedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Plugin)(plugin), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPluginAddedDestroy(OnPluginAddedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

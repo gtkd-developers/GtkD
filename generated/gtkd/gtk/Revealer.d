@@ -28,8 +28,8 @@ private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gtk.Bin;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -101,12 +101,12 @@ public class Revealer : Bin
 	public this()
 	{
 		auto p = gtk_revealer_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkRevealer*) p);
 	}
 

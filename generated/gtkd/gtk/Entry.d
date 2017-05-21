@@ -42,8 +42,8 @@ private import gtk.EntryBuffer;
 private import gtk.EntryCompletion;
 private import gtk.TargetList;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import pango.PgAttributeList;
 private import pango.PgLayout;
 private import pango.PgTabArray;
@@ -170,14 +170,14 @@ public class Entry : Widget, CellEditableIF, EditableIF
 		this();
 		setText(text);
 	}
-	
+
 	/** */
 	public this (string text, int max)
 	{
 		this(text);
 		setMaxLength(max);
 	}
-	
+
 	/**
 	 * Gets the stock id of action.
 	 * Since 2.16
@@ -187,7 +187,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	{
 		return cast(StockID)Str.toString(gtk_entry_get_icon_stock(gtkEntry, iconPos));
 	}
-	
+
 	/**
 	 * Sets the stock id on action
 	 * Since 2.16
@@ -219,12 +219,12 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	public this()
 	{
 		auto p = gtk_entry_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkEntry*) p);
 	}
 
@@ -243,12 +243,12 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	public this(EntryBuffer buffer)
 	{
 		auto p = gtk_entry_new_with_buffer((buffer is null) ? null : buffer.getEntryBufferStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_with_buffer");
 		}
-		
+
 		this(cast(GtkEntry*) p);
 	}
 
@@ -286,12 +286,12 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	public PgAttributeList getAttributes()
 	{
 		auto p = gtk_entry_get_attributes(gtkEntry);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgAttributeList)(cast(PangoAttrList*) p);
 	}
 
@@ -306,12 +306,12 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	public EntryBuffer getBuffer()
 	{
 		auto p = gtk_entry_get_buffer(gtkEntry);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(EntryBuffer)(cast(GtkEntryBuffer*) p);
 	}
 
@@ -326,12 +326,12 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	public EntryCompletion getCompletion()
 	{
 		auto p = gtk_entry_get_completion(gtkEntry);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(EntryCompletion)(cast(GtkEntryCompletion*) p);
 	}
 
@@ -364,12 +364,12 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	public Adjustment getCursorHadjustment()
 	{
 		auto p = gtk_entry_get_cursor_hadjustment(gtkEntry);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
 	}
 
@@ -455,12 +455,12 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	public IconIF getIconGicon(GtkEntryIconPosition iconPos)
 	{
 		auto p = gtk_entry_get_icon_gicon(gtkEntry, iconPos);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
 	}
 
@@ -500,12 +500,12 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	public Pixbuf getIconPixbuf(GtkEntryIconPosition iconPos)
 	{
 		auto p = gtk_entry_get_icon_pixbuf(gtkEntry, iconPos);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 
@@ -576,7 +576,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	public string getIconTooltipMarkup(GtkEntryIconPosition iconPos)
 	{
 		auto retStr = gtk_entry_get_icon_tooltip_markup(gtkEntry, iconPos);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -596,7 +596,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	public string getIconTooltipText(GtkEntryIconPosition iconPos)
 	{
 		auto retStr = gtk_entry_get_icon_tooltip_text(gtkEntry, iconPos);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -617,12 +617,12 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	public Border getInnerBorder()
 	{
 		auto p = gtk_entry_get_inner_border(gtkEntry);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Border)(cast(GtkBorder*) p);
 	}
 
@@ -675,12 +675,12 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	public PgLayout getLayout()
 	{
 		auto p = gtk_entry_get_layout(gtkEntry);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) p);
 	}
 
@@ -808,12 +808,12 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	public PgTabArray getTabs()
 	{
 		auto p = gtk_entry_get_tabs(gtkEntry);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgTabArray)(cast(PangoTabArray*) p);
 	}
 
@@ -1532,13 +1532,13 @@ public class Entry : Widget, CellEditableIF, EditableIF
 		static OnActivateDelegateWrapper[] listeners;
 		void delegate(Entry) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Entry) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnActivateDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1576,12 +1576,12 @@ public class Entry : Widget, CellEditableIF, EditableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackActivate(GtkEntry* entryStruct, OnActivateDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackActivateDestroy(OnActivateDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1592,13 +1592,13 @@ public class Entry : Widget, CellEditableIF, EditableIF
 		static OnBackspaceDelegateWrapper[] listeners;
 		void delegate(Entry) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Entry) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnBackspaceDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1633,12 +1633,12 @@ public class Entry : Widget, CellEditableIF, EditableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackBackspace(GtkEntry* entryStruct, OnBackspaceDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackBackspaceDestroy(OnBackspaceDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1649,13 +1649,13 @@ public class Entry : Widget, CellEditableIF, EditableIF
 		static OnCopyClipboardDelegateWrapper[] listeners;
 		void delegate(Entry) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Entry) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCopyClipboardDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1690,12 +1690,12 @@ public class Entry : Widget, CellEditableIF, EditableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackCopyClipboard(GtkEntry* entryStruct, OnCopyClipboardDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackCopyClipboardDestroy(OnCopyClipboardDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1706,13 +1706,13 @@ public class Entry : Widget, CellEditableIF, EditableIF
 		static OnCutClipboardDelegateWrapper[] listeners;
 		void delegate(Entry) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Entry) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCutClipboardDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1747,12 +1747,12 @@ public class Entry : Widget, CellEditableIF, EditableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackCutClipboard(GtkEntry* entryStruct, OnCutClipboardDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackCutClipboardDestroy(OnCutClipboardDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1763,13 +1763,13 @@ public class Entry : Widget, CellEditableIF, EditableIF
 		static OnDeleteFromCursorDelegateWrapper[] listeners;
 		void delegate(GtkDeleteType, int, Entry) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(GtkDeleteType, int, Entry) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDeleteFromCursorDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1813,12 +1813,12 @@ public class Entry : Widget, CellEditableIF, EditableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDeleteFromCursor(GtkEntry* entryStruct, GtkDeleteType type, int count, OnDeleteFromCursorDelegateWrapper wrapper)
 	{
 		wrapper.dlg(type, count, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDeleteFromCursorDestroy(OnDeleteFromCursorDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1829,13 +1829,13 @@ public class Entry : Widget, CellEditableIF, EditableIF
 		static OnIconPressDelegateWrapper[] listeners;
 		void delegate(GtkEntryIconPosition, GdkEventButton*, Entry) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(GtkEntryIconPosition, GdkEventButton*, Entry) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnIconPressDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1872,12 +1872,12 @@ public class Entry : Widget, CellEditableIF, EditableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackIconPress(GtkEntry* entryStruct, GtkEntryIconPosition iconPos, GdkEventButton* event, OnIconPressDelegateWrapper wrapper)
 	{
 		wrapper.dlg(iconPos, event, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackIconPressDestroy(OnIconPressDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1888,13 +1888,13 @@ public class Entry : Widget, CellEditableIF, EditableIF
 		static OnIconPressGenericDelegateWrapper[] listeners;
 		void delegate(GtkEntryIconPosition, Event, Entry) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(GtkEntryIconPosition, Event, Entry) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnIconPressGenericDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1908,7 +1908,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 			}
 		}
 	}
-	
+
 	/**
 	 * The ::icon-press signal is emitted when an activatable icon
 	 * is clicked.
@@ -1931,12 +1931,12 @@ public class Entry : Widget, CellEditableIF, EditableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackIconPressGeneric(GtkEntry* entryStruct, GtkEntryIconPosition iconPos, GdkEvent* event, OnIconPressGenericDelegateWrapper wrapper)
 	{
 		wrapper.dlg(iconPos, ObjectG.getDObject!(Event)(event), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackIconPressGenericDestroy(OnIconPressGenericDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1947,13 +1947,13 @@ public class Entry : Widget, CellEditableIF, EditableIF
 		static OnIconReleaseDelegateWrapper[] listeners;
 		void delegate(GtkEntryIconPosition, GdkEventButton*, Entry) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(GtkEntryIconPosition, GdkEventButton*, Entry) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnIconReleaseDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1990,12 +1990,12 @@ public class Entry : Widget, CellEditableIF, EditableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackIconRelease(GtkEntry* entryStruct, GtkEntryIconPosition iconPos, GdkEventButton* event, OnIconReleaseDelegateWrapper wrapper)
 	{
 		wrapper.dlg(iconPos, event, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackIconReleaseDestroy(OnIconReleaseDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2006,13 +2006,13 @@ public class Entry : Widget, CellEditableIF, EditableIF
 		static OnIconReleaseGenericDelegateWrapper[] listeners;
 		void delegate(GtkEntryIconPosition, Event, Entry) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(GtkEntryIconPosition, Event, Entry) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnIconReleaseGenericDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2026,7 +2026,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 			}
 		}
 	}
-	
+
 	/**
 	 * The ::icon-release signal is emitted on the button release from a
 	 * mouse click over an activatable icon.
@@ -2049,12 +2049,12 @@ public class Entry : Widget, CellEditableIF, EditableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackIconReleaseGeneric(GtkEntry* entryStruct, GtkEntryIconPosition iconPos, GdkEvent* event, OnIconReleaseGenericDelegateWrapper wrapper)
 	{
 		wrapper.dlg(iconPos, ObjectG.getDObject!(Event)(event), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackIconReleaseGenericDestroy(OnIconReleaseGenericDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2065,13 +2065,13 @@ public class Entry : Widget, CellEditableIF, EditableIF
 		static OnInsertAtCursorDelegateWrapper[] listeners;
 		void delegate(string, Entry) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(string, Entry) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnInsertAtCursorDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2109,12 +2109,12 @@ public class Entry : Widget, CellEditableIF, EditableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackInsertAtCursor(GtkEntry* entryStruct, char* str, OnInsertAtCursorDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(str), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackInsertAtCursorDestroy(OnInsertAtCursorDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2125,13 +2125,13 @@ public class Entry : Widget, CellEditableIF, EditableIF
 		static OnMoveCursorDelegateWrapper[] listeners;
 		void delegate(GtkMovementStep, int, bool, Entry) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(GtkMovementStep, int, bool, Entry) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMoveCursorDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2182,12 +2182,12 @@ public class Entry : Widget, CellEditableIF, EditableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackMoveCursor(GtkEntry* entryStruct, GtkMovementStep step, int count, bool extendSelection, OnMoveCursorDelegateWrapper wrapper)
 	{
 		wrapper.dlg(step, count, extendSelection, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMoveCursorDestroy(OnMoveCursorDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2198,13 +2198,13 @@ public class Entry : Widget, CellEditableIF, EditableIF
 		static OnPasteClipboardDelegateWrapper[] listeners;
 		void delegate(Entry) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Entry) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPasteClipboardDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2240,12 +2240,12 @@ public class Entry : Widget, CellEditableIF, EditableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPasteClipboard(GtkEntry* entryStruct, OnPasteClipboardDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPasteClipboardDestroy(OnPasteClipboardDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2256,13 +2256,13 @@ public class Entry : Widget, CellEditableIF, EditableIF
 		static OnPopulatePopupDelegateWrapper[] listeners;
 		void delegate(Widget, Entry) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Widget, Entry) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPopulatePopupDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2306,12 +2306,12 @@ public class Entry : Widget, CellEditableIF, EditableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPopulatePopup(GtkEntry* entryStruct, GtkWidget* widget, OnPopulatePopupDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Widget)(widget), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPopulatePopupDestroy(OnPopulatePopupDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2322,13 +2322,13 @@ public class Entry : Widget, CellEditableIF, EditableIF
 		static OnPreeditChangedDelegateWrapper[] listeners;
 		void delegate(string, Entry) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(string, Entry) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPreeditChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2365,12 +2365,12 @@ public class Entry : Widget, CellEditableIF, EditableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPreeditChanged(GtkEntry* entryStruct, char* preedit, OnPreeditChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(preedit), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPreeditChangedDestroy(OnPreeditChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2381,13 +2381,13 @@ public class Entry : Widget, CellEditableIF, EditableIF
 		static OnToggleOverwriteDelegateWrapper[] listeners;
 		void delegate(Entry) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Entry) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnToggleOverwriteDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2421,12 +2421,12 @@ public class Entry : Widget, CellEditableIF, EditableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackToggleOverwrite(GtkEntry* entryStruct, OnToggleOverwriteDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackToggleOverwriteDestroy(OnToggleOverwriteDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

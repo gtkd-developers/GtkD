@@ -24,8 +24,8 @@
 
 module peas.ActivatableIF;
 
-private import peasc.peas;
-public  import peasc.peastypes;
+private import peas.c.functions;
+public  import peas.c.types;
 
 
 /**

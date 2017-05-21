@@ -47,8 +47,8 @@ private import pango.PgFontDescription;
 private import std.algorithm;
 private import vte.Pty;
 private import vte.Regex : RegexVte = Regex;
-private import vtec.vte;
-public  import vtec.vtetypes;
+private import vte.c.functions;
+public  import vte.c.types;
 
 
 /** */
@@ -106,12 +106,12 @@ public class Terminal : Widget, ScrollableIF
 	public this()
 	{
 		auto p = vte_terminal_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(VteTerminal*) p);
 	}
 
@@ -156,7 +156,7 @@ public class Terminal : Widget, ScrollableIF
 		{
 			regexesArray[i] = regexes[i].getRegexStruct();
 		}
-		
+
 		return vte_terminal_event_check_gregex_simple(vteTerminal, (event is null) ? null : event.getEventStruct(), regexesArray.ptr, cast(size_t)matches.length, matchFlags, Str.toStringzArray(matches)) != 0;
 	}
 
@@ -184,7 +184,7 @@ public class Terminal : Widget, ScrollableIF
 		{
 			regexesArray[i] = regexes[i].getRegexStruct();
 		}
-		
+
 		return vte_terminal_event_check_regex_simple(vteTerminal, (event is null) ? null : event.getEventStruct(), regexesArray.ptr, cast(size_t)matches.length, matchFlags, Str.toStringzArray(matches)) != 0;
 	}
 
@@ -359,12 +359,12 @@ public class Terminal : Widget, ScrollableIF
 	public PgFontDescription getFont()
 	{
 		auto p = vte_terminal_get_font(vteTerminal);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) p);
 	}
 
@@ -444,12 +444,12 @@ public class Terminal : Widget, ScrollableIF
 	public Pty getPty()
 	{
 		auto p = vte_terminal_get_pty(vteTerminal);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pty)(cast(VtePty*) p);
 	}
 
@@ -488,11 +488,11 @@ public class Terminal : Widget, ScrollableIF
 	public string getText(VteSelectionFunc isSelected, void* userData, out ArrayG attributes)
 	{
 		GArray* outattributes = gMalloc!GArray();
-		
+
 		auto retStr = vte_terminal_get_text(vteTerminal, isSelected, userData, outattributes);
-		
+
 		attributes = new ArrayG(outattributes, true);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -516,11 +516,11 @@ public class Terminal : Widget, ScrollableIF
 	public string getTextIncludeTrailingSpaces(VteSelectionFunc isSelected, void* userData, out ArrayG attributes)
 	{
 		GArray* outattributes = gMalloc!GArray();
-		
+
 		auto retStr = vte_terminal_get_text_include_trailing_spaces(vteTerminal, isSelected, userData, outattributes);
-		
+
 		attributes = new ArrayG(outattributes, true);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -548,11 +548,11 @@ public class Terminal : Widget, ScrollableIF
 	public string getTextRange(glong startRow, glong startCol, glong endRow, glong endCol, VteSelectionFunc isSelected, void* userData, out ArrayG attributes)
 	{
 		GArray* outattributes = gMalloc!GArray();
-		
+
 		auto retStr = vte_terminal_get_text_range(vteTerminal, startRow, startCol, endRow, endCol, isSelected, userData, outattributes);
-		
+
 		attributes = new ArrayG(outattributes, true);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -641,7 +641,7 @@ public class Terminal : Widget, ScrollableIF
 	public string matchCheck(glong column, glong row, out int tag)
 	{
 		auto retStr = vte_terminal_match_check(vteTerminal, column, row, &tag);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -666,7 +666,7 @@ public class Terminal : Widget, ScrollableIF
 	public string matchCheckEvent(Event event, out int tag)
 	{
 		auto retStr = vte_terminal_match_check_event(vteTerminal, (event is null) ? null : event.getEventStruct(), &tag);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -775,19 +775,19 @@ public class Terminal : Widget, ScrollableIF
 	public Pty ptyNewSync(VtePtyFlags flags, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = vte_terminal_pty_new_sync(vteTerminal, flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pty)(cast(VtePty*) p, true);
 	}
 
@@ -838,12 +838,12 @@ public class Terminal : Widget, ScrollableIF
 	public Regex searchGetGregex()
 	{
 		auto p = vte_terminal_search_get_gregex(vteTerminal);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Regex(cast(GRegex*) p);
 	}
 
@@ -855,12 +855,12 @@ public class Terminal : Widget, ScrollableIF
 	public RegexVte searchGetRegex()
 	{
 		auto p = vte_terminal_search_get_regex(vteTerminal);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(RegexVte)(cast(VteRegex*) p);
 	}
 
@@ -1087,7 +1087,7 @@ public class Terminal : Widget, ScrollableIF
 		{
 			paletteArray[i] = *(palette[i].getRGBAStruct());
 		}
-		
+
 		vte_terminal_set_colors(vteTerminal, (foreground is null) ? null : foreground.getRGBAStruct(), (background is null) ? null : background.getRGBAStruct(), paletteArray.ptr, cast(size_t)palette.length);
 	}
 
@@ -1151,14 +1151,14 @@ public class Terminal : Widget, ScrollableIF
 	public bool setEncoding(string codeset)
 	{
 		GError* err = null;
-		
+
 		auto p = vte_terminal_set_encoding(vteTerminal, Str.toStringz(codeset), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -1412,14 +1412,14 @@ public class Terminal : Widget, ScrollableIF
 	public bool spawnSync(VtePtyFlags ptyFlags, string workingDirectory, string[] argv, string[] envv, GSpawnFlags spawnFlags, GSpawnChildSetupFunc childSetup, void* childSetupData, out GPid childPid, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = vte_terminal_spawn_sync(vteTerminal, ptyFlags, Str.toStringz(workingDirectory), Str.toStringzArray(argv), Str.toStringzArray(envv), spawnFlags, childSetup, childSetupData, &childPid, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -1478,14 +1478,14 @@ public class Terminal : Widget, ScrollableIF
 	public bool writeContentsSync(OutputStream stream, VteWriteFlags flags, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = vte_terminal_write_contents_sync(vteTerminal, (stream is null) ? null : stream.getOutputStreamStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -1494,13 +1494,13 @@ public class Terminal : Widget, ScrollableIF
 		static OnBellDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnBellDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1531,12 +1531,12 @@ public class Terminal : Widget, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackBell(VteTerminal* terminalStruct, OnBellDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackBellDestroy(OnBellDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1547,13 +1547,13 @@ public class Terminal : Widget, ScrollableIF
 		static OnCharSizeChangedDelegateWrapper[] listeners;
 		void delegate(uint, uint, Terminal) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(uint, uint, Terminal) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCharSizeChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1588,12 +1588,12 @@ public class Terminal : Widget, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackCharSizeChanged(VteTerminal* terminalStruct, uint width, uint height, OnCharSizeChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(width, height, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackCharSizeChangedDestroy(OnCharSizeChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1604,13 +1604,13 @@ public class Terminal : Widget, ScrollableIF
 		static OnChildExitedDelegateWrapper[] listeners;
 		void delegate(int, Terminal) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(int, Terminal) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnChildExitedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1644,12 +1644,12 @@ public class Terminal : Widget, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackChildExited(VteTerminal* terminalStruct, int status, OnChildExitedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(status, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackChildExitedDestroy(OnChildExitedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1660,13 +1660,13 @@ public class Terminal : Widget, ScrollableIF
 		static OnCommitDelegateWrapper[] listeners;
 		void delegate(string, uint, Terminal) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(string, uint, Terminal) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCommitDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1702,12 +1702,12 @@ public class Terminal : Widget, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackCommit(VteTerminal* terminalStruct, char* text, uint size, OnCommitDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(text), size, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackCommitDestroy(OnCommitDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1718,13 +1718,13 @@ public class Terminal : Widget, ScrollableIF
 		static OnContentsChangedDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnContentsChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1755,12 +1755,12 @@ public class Terminal : Widget, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackContentsChanged(VteTerminal* terminalStruct, OnContentsChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackContentsChangedDestroy(OnContentsChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1771,13 +1771,13 @@ public class Terminal : Widget, ScrollableIF
 		static OnCopyClipboardDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCopyClipboardDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1807,12 +1807,12 @@ public class Terminal : Widget, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackCopyClipboard(VteTerminal* terminalStruct, OnCopyClipboardDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackCopyClipboardDestroy(OnCopyClipboardDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1823,13 +1823,13 @@ public class Terminal : Widget, ScrollableIF
 		static OnCurrentDirectoryUriChangedDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCurrentDirectoryUriChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1859,12 +1859,12 @@ public class Terminal : Widget, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackCurrentDirectoryUriChanged(VteTerminal* terminalStruct, OnCurrentDirectoryUriChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackCurrentDirectoryUriChangedDestroy(OnCurrentDirectoryUriChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1875,13 +1875,13 @@ public class Terminal : Widget, ScrollableIF
 		static OnCurrentFileUriChangedDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCurrentFileUriChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1911,12 +1911,12 @@ public class Terminal : Widget, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackCurrentFileUriChanged(VteTerminal* terminalStruct, OnCurrentFileUriChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackCurrentFileUriChangedDestroy(OnCurrentFileUriChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1927,13 +1927,13 @@ public class Terminal : Widget, ScrollableIF
 		static OnCursorMovedDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCursorMovedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1964,12 +1964,12 @@ public class Terminal : Widget, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackCursorMoved(VteTerminal* terminalStruct, OnCursorMovedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackCursorMovedDestroy(OnCursorMovedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1980,13 +1980,13 @@ public class Terminal : Widget, ScrollableIF
 		static OnDecreaseFontSizeDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDecreaseFontSizeDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2016,12 +2016,12 @@ public class Terminal : Widget, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDecreaseFontSize(VteTerminal* terminalStruct, OnDecreaseFontSizeDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDecreaseFontSizeDestroy(OnDecreaseFontSizeDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2032,13 +2032,13 @@ public class Terminal : Widget, ScrollableIF
 		static OnDeiconifyWindowDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDeiconifyWindowDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2068,12 +2068,12 @@ public class Terminal : Widget, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDeiconifyWindow(VteTerminal* terminalStruct, OnDeiconifyWindowDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDeiconifyWindowDestroy(OnDeiconifyWindowDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2084,13 +2084,13 @@ public class Terminal : Widget, ScrollableIF
 		static OnEncodingChangedDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnEncodingChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2122,12 +2122,12 @@ public class Terminal : Widget, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackEncodingChanged(VteTerminal* terminalStruct, OnEncodingChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackEncodingChangedDestroy(OnEncodingChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2138,13 +2138,13 @@ public class Terminal : Widget, ScrollableIF
 		static OnEofDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnEofDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2176,12 +2176,12 @@ public class Terminal : Widget, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackEof(VteTerminal* terminalStruct, OnEofDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackEofDestroy(OnEofDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2192,13 +2192,13 @@ public class Terminal : Widget, ScrollableIF
 		static OnIconTitleChangedDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnIconTitleChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2228,12 +2228,12 @@ public class Terminal : Widget, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackIconTitleChanged(VteTerminal* terminalStruct, OnIconTitleChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackIconTitleChangedDestroy(OnIconTitleChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2244,13 +2244,13 @@ public class Terminal : Widget, ScrollableIF
 		static OnIconifyWindowDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnIconifyWindowDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2280,12 +2280,12 @@ public class Terminal : Widget, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackIconifyWindow(VteTerminal* terminalStruct, OnIconifyWindowDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackIconifyWindowDestroy(OnIconifyWindowDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2296,13 +2296,13 @@ public class Terminal : Widget, ScrollableIF
 		static OnIncreaseFontSizeDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnIncreaseFontSizeDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2332,12 +2332,12 @@ public class Terminal : Widget, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackIncreaseFontSize(VteTerminal* terminalStruct, OnIncreaseFontSizeDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackIncreaseFontSizeDestroy(OnIncreaseFontSizeDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2348,13 +2348,13 @@ public class Terminal : Widget, ScrollableIF
 		static OnLowerWindowDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnLowerWindowDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2384,12 +2384,12 @@ public class Terminal : Widget, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackLowerWindow(VteTerminal* terminalStruct, OnLowerWindowDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackLowerWindowDestroy(OnLowerWindowDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2400,13 +2400,13 @@ public class Terminal : Widget, ScrollableIF
 		static OnMaximizeWindowDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMaximizeWindowDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2436,12 +2436,12 @@ public class Terminal : Widget, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackMaximizeWindow(VteTerminal* terminalStruct, OnMaximizeWindowDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMaximizeWindowDestroy(OnMaximizeWindowDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2452,13 +2452,13 @@ public class Terminal : Widget, ScrollableIF
 		static OnMoveWindowDelegateWrapper[] listeners;
 		void delegate(uint, uint, Terminal) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(uint, uint, Terminal) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMoveWindowDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2492,12 +2492,12 @@ public class Terminal : Widget, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackMoveWindow(VteTerminal* terminalStruct, uint x, uint y, OnMoveWindowDelegateWrapper wrapper)
 	{
 		wrapper.dlg(x, y, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMoveWindowDestroy(OnMoveWindowDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2508,13 +2508,13 @@ public class Terminal : Widget, ScrollableIF
 		static OnPasteClipboardDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPasteClipboardDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2544,12 +2544,12 @@ public class Terminal : Widget, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPasteClipboard(VteTerminal* terminalStruct, OnPasteClipboardDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPasteClipboardDestroy(OnPasteClipboardDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2560,13 +2560,13 @@ public class Terminal : Widget, ScrollableIF
 		static OnRaiseWindowDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnRaiseWindowDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2596,12 +2596,12 @@ public class Terminal : Widget, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackRaiseWindow(VteTerminal* terminalStruct, OnRaiseWindowDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackRaiseWindowDestroy(OnRaiseWindowDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2612,13 +2612,13 @@ public class Terminal : Widget, ScrollableIF
 		static OnRefreshWindowDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnRefreshWindowDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2648,12 +2648,12 @@ public class Terminal : Widget, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackRefreshWindow(VteTerminal* terminalStruct, OnRefreshWindowDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackRefreshWindowDestroy(OnRefreshWindowDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2664,13 +2664,13 @@ public class Terminal : Widget, ScrollableIF
 		static OnResizeWindowDelegateWrapper[] listeners;
 		void delegate(uint, uint, Terminal) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(uint, uint, Terminal) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnResizeWindowDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2704,12 +2704,12 @@ public class Terminal : Widget, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackResizeWindow(VteTerminal* terminalStruct, uint width, uint height, OnResizeWindowDelegateWrapper wrapper)
 	{
 		wrapper.dlg(width, height, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackResizeWindowDestroy(OnResizeWindowDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2720,13 +2720,13 @@ public class Terminal : Widget, ScrollableIF
 		static OnRestoreWindowDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnRestoreWindowDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2756,12 +2756,12 @@ public class Terminal : Widget, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackRestoreWindow(VteTerminal* terminalStruct, OnRestoreWindowDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackRestoreWindowDestroy(OnRestoreWindowDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2772,13 +2772,13 @@ public class Terminal : Widget, ScrollableIF
 		static OnSelectionChangedDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnSelectionChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2808,12 +2808,12 @@ public class Terminal : Widget, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackSelectionChanged(VteTerminal* terminalStruct, OnSelectionChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackSelectionChangedDestroy(OnSelectionChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2824,13 +2824,13 @@ public class Terminal : Widget, ScrollableIF
 		static OnTextDeletedDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnTextDeletedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2862,12 +2862,12 @@ public class Terminal : Widget, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackTextDeleted(VteTerminal* terminalStruct, OnTextDeletedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackTextDeletedDestroy(OnTextDeletedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2878,13 +2878,13 @@ public class Terminal : Widget, ScrollableIF
 		static OnTextInsertedDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnTextInsertedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2916,12 +2916,12 @@ public class Terminal : Widget, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackTextInserted(VteTerminal* terminalStruct, OnTextInsertedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackTextInsertedDestroy(OnTextInsertedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2932,13 +2932,13 @@ public class Terminal : Widget, ScrollableIF
 		static OnTextModifiedDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnTextModifiedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2970,12 +2970,12 @@ public class Terminal : Widget, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackTextModified(VteTerminal* terminalStruct, OnTextModifiedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackTextModifiedDestroy(OnTextModifiedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2986,13 +2986,13 @@ public class Terminal : Widget, ScrollableIF
 		static OnTextScrolledDelegateWrapper[] listeners;
 		void delegate(int, Terminal) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(int, Terminal) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnTextScrolledDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -3027,12 +3027,12 @@ public class Terminal : Widget, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackTextScrolled(VteTerminal* terminalStruct, int delta, OnTextScrolledDelegateWrapper wrapper)
 	{
 		wrapper.dlg(delta, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackTextScrolledDestroy(OnTextScrolledDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -3043,13 +3043,13 @@ public class Terminal : Widget, ScrollableIF
 		static OnWindowTitleChangedDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnWindowTitleChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -3079,12 +3079,12 @@ public class Terminal : Widget, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackWindowTitleChanged(VteTerminal* terminalStruct, OnWindowTitleChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackWindowTitleChangedDestroy(OnWindowTitleChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -3100,7 +3100,7 @@ public class Terminal : Widget, ScrollableIF
 	public static string getUserShell()
 	{
 		auto retStr = vte_get_user_shell();
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}

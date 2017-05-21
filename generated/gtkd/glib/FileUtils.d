@@ -27,8 +27,8 @@ module glib.FileUtils;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 
 
 /** */
@@ -105,14 +105,14 @@ public struct FileUtils
 	public static bool close(int fd)
 	{
 		GError* err = null;
-		
+
 		auto p = g_close(fd, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -169,16 +169,16 @@ public struct FileUtils
 		char* outcontents = null;
 		size_t length;
 		GError* err = null;
-		
+
 		auto p = g_file_get_contents(Str.toStringz(filename), &outcontents, &length, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		contents = Str.toString(outcontents, length);
-		
+
 		return p;
 	}
 
@@ -217,16 +217,16 @@ public struct FileUtils
 	{
 		char* outnameUsed = null;
 		GError* err = null;
-		
+
 		auto p = g_file_open_tmp(Str.toStringz(tmpl), &outnameUsed, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		nameUsed = Str.toString(outnameUsed);
-		
+
 		return p;
 	}
 
@@ -248,14 +248,14 @@ public struct FileUtils
 	public static string fileReadLink(string filename)
 	{
 		GError* err = null;
-		
+
 		auto retStr = g_file_read_link(Str.toStringz(filename), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -302,14 +302,14 @@ public struct FileUtils
 	public static bool fileSetContents(string filename, string contents)
 	{
 		GError* err = null;
-		
+
 		auto p = g_file_set_contents(Str.toStringz(filename), Str.toStringz(contents), cast(ptrdiff_t)contents.length, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -415,7 +415,7 @@ public struct FileUtils
 	public static string mkdtemp(string tmpl)
 	{
 		auto retStr = g_mkdtemp(Str.toStringz(tmpl));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -450,7 +450,7 @@ public struct FileUtils
 	public static string mkdtempFull(string tmpl, int mode)
 	{
 		auto retStr = g_mkdtemp_full(Str.toStringz(tmpl), mode);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}

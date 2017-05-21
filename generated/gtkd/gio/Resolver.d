@@ -27,14 +27,14 @@ module gio.Resolver;
 private import gio.AsyncResultIF;
 private import gio.Cancellable;
 private import gio.InetAddress;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.ListG;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -133,12 +133,12 @@ public class Resolver : ObjectG
 	public static Resolver getDefault()
 	{
 		auto p = g_resolver_get_default();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Resolver)(cast(GResolver*) p, true);
 	}
 
@@ -167,14 +167,14 @@ public class Resolver : ObjectG
 	public string lookupByAddress(InetAddress address, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto retStr = g_resolver_lookup_by_address(gResolver, (address is null) ? null : address.getInetAddressStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -218,14 +218,14 @@ public class Resolver : ObjectG
 	public string lookupByAddressFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto retStr = g_resolver_lookup_by_address_finish(gResolver, (result is null) ? null : result.getAsyncResultStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -271,19 +271,19 @@ public class Resolver : ObjectG
 	public ListG lookupByName(string hostname, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_resolver_lookup_by_name(gResolver, Str.toStringz(hostname), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -328,19 +328,19 @@ public class Resolver : ObjectG
 	public ListG lookupByNameFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_resolver_lookup_by_name_finish(gResolver, (result is null) ? null : result.getAsyncResultStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -373,19 +373,19 @@ public class Resolver : ObjectG
 	public ListG lookupRecords(string rrname, GResolverRecordType recordType, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_resolver_lookup_records(gResolver, Str.toStringz(rrname), recordType, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -434,19 +434,19 @@ public class Resolver : ObjectG
 	public ListG lookupRecordsFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_resolver_lookup_records_finish(gResolver, (result is null) ? null : result.getAsyncResultStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -491,19 +491,19 @@ public class Resolver : ObjectG
 	public ListG lookupService(string service, string protocol, string domain, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_resolver_lookup_service(gResolver, Str.toStringz(service), Str.toStringz(protocol), Str.toStringz(domain), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -551,19 +551,19 @@ public class Resolver : ObjectG
 	public ListG lookupServiceFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_resolver_lookup_service_finish(gResolver, (result is null) ? null : result.getAsyncResultStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -590,13 +590,13 @@ public class Resolver : ObjectG
 		static OnReloadDelegateWrapper[] listeners;
 		void delegate(Resolver) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Resolver) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnReloadDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -627,12 +627,12 @@ public class Resolver : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackReload(GResolver* resolverStruct, OnReloadDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackReloadDestroy(OnReloadDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

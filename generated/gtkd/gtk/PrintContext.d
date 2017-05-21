@@ -27,8 +27,8 @@ module gtk.PrintContext;
 private import cairo.Context;
 private import gobject.ObjectG;
 private import gtk.PageSetup;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import pango.PgContext;
 private import pango.PgFontMap;
 private import pango.PgLayout;
@@ -155,12 +155,12 @@ public class PrintContext : ObjectG
 	public PgContext createPangoContext()
 	{
 		auto p = gtk_print_context_create_pango_context(gtkPrintContext);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgContext)(cast(PangoContext*) p, true);
 	}
 
@@ -175,12 +175,12 @@ public class PrintContext : ObjectG
 	public PgLayout createPangoLayout()
 	{
 		auto p = gtk_print_context_create_pango_layout(gtkPrintContext);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) p, true);
 	}
 
@@ -195,12 +195,12 @@ public class PrintContext : ObjectG
 	public Context getCairoContext()
 	{
 		auto p = gtk_print_context_get_cairo_context(gtkPrintContext);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Context(cast(cairo_t*) p);
 	}
 
@@ -271,12 +271,12 @@ public class PrintContext : ObjectG
 	public PageSetup getPageSetup()
 	{
 		auto p = gtk_print_context_get_page_setup(gtkPrintContext);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PageSetup)(cast(GtkPageSetup*) p);
 	}
 
@@ -291,12 +291,12 @@ public class PrintContext : ObjectG
 	public PgFontMap getPangoFontmap()
 	{
 		auto p = gtk_print_context_get_pango_fontmap(gtkPrintContext);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgFontMap)(cast(PangoFontMap*) p);
 	}
 

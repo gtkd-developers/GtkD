@@ -29,8 +29,8 @@ private import glib.ListG;
 private import glib.Mutex;
 private import gobject.ObjectG;
 private import gobject.Value;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 private import gtkd.Loader;
 
 
@@ -144,12 +144,12 @@ public class Iterator
 	public this(uint size, GType type, Mutex lock, uint* masterCookie, GstIteratorCopyFunction copy, GstIteratorNextFunction next, GstIteratorItemFunction item, GstIteratorResyncFunction resync, GstIteratorFreeFunction free)
 	{
 		auto p = gst_iterator_new(size, type, (lock is null) ? null : lock.getMutexStruct(), masterCookie, copy, next, item, resync, free);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GstIterator*) p);
 	}
 
@@ -185,16 +185,16 @@ public class Iterator
 	public this(GType type, Mutex lock, uint* masterCookie, ref ListG list, ObjectG owner, GstIteratorItemFunction item)
 	{
 		GList* outlist = list.getListGStruct();
-		
+
 		auto p = gst_iterator_new_list(type, (lock is null) ? null : lock.getMutexStruct(), masterCookie, &outlist, (owner is null) ? null : owner.getObjectGStruct(), item);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_list");
 		}
-		
+
 		list = new ListG(outlist);
-		
+
 		this(cast(GstIterator*) p);
 	}
 
@@ -215,12 +215,12 @@ public class Iterator
 	public this(GType type, Value object)
 	{
 		auto p = gst_iterator_new_single(type, (object is null) ? null : object.getValueStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_single");
 		}
-		
+
 		this(cast(GstIterator*) p);
 	}
 
@@ -232,12 +232,12 @@ public class Iterator
 	public Iterator copy()
 	{
 		auto p = gst_iterator_copy(gstIterator);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
 	}
 
@@ -261,12 +261,12 @@ public class Iterator
 	public Iterator filter(GCompareFunc func, Value userData)
 	{
 		auto p = gst_iterator_filter(gstIterator, func, (userData is null) ? null : userData.getValueStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
 	}
 
@@ -294,11 +294,11 @@ public class Iterator
 	public bool findCustom(GCompareFunc func, out Value elem, void* userData)
 	{
 		GValue* outelem = gMalloc!GValue();
-		
+
 		auto p = gst_iterator_find_custom(gstIterator, func, outelem, userData) != 0;
-		
+
 		elem = ObjectG.getDObject!(Value)(outelem, true);
-		
+
 		return p;
 	}
 
@@ -390,11 +390,11 @@ public class Iterator
 	public GstIteratorResult next(out Value elem)
 	{
 		GValue* outelem = gMalloc!GValue();
-		
+
 		auto p = gst_iterator_next(gstIterator, outelem);
-		
+
 		elem = ObjectG.getDObject!(Value)(outelem, true);
-		
+
 		return p;
 	}
 

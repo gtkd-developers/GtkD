@@ -27,6 +27,8 @@ module gio.DesktopAppInfo;
 private import gio.AppInfoIF;
 private import gio.AppInfoT;
 private import gio.AppLaunchContext;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
@@ -34,8 +36,6 @@ private import glib.KeyFile;
 private import glib.ListG;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -96,12 +96,12 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	public static DesktopAppInfo createFromFilename(string filename)
 	{
 		auto p = g_desktop_app_info_new_from_filename(Str.toStringz(filename));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by g_desktop_app_info_new_from_filename");
 		}
-		
+
 		return new DesktopAppInfo(p, true);
 	}
 
@@ -137,12 +137,12 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	public this(string desktopId)
 	{
 		auto p = g_desktop_app_info_new(Str.toStringz(desktopId));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GDesktopAppInfo*) p, true);
 	}
 
@@ -161,12 +161,12 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	public this(KeyFile keyFile)
 	{
 		auto p = g_desktop_app_info_new_from_keyfile((keyFile is null) ? null : keyFile.getKeyFileStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_keyfile");
 		}
-		
+
 		this(cast(GDesktopAppInfo*) p, true);
 	}
 
@@ -187,12 +187,12 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	public static ListG getImplementations(string iface)
 	{
 		auto p = g_desktop_app_info_get_implementations(Str.toStringz(iface));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -216,7 +216,7 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	public static string[][] search(string searchString)
 	{
 		auto retStr = g_desktop_app_info_search(Str.toStringz(searchString));
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}
@@ -259,7 +259,7 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	public string getActionName(string actionName)
 	{
 		auto retStr = g_desktop_app_info_get_action_name(gDesktopAppInfo, Str.toStringz(actionName));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -413,7 +413,7 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	public string getString(string key)
 	{
 		auto retStr = g_desktop_app_info_get_string(gDesktopAppInfo, Str.toStringz(key));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -496,14 +496,14 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	public bool launchUrisAsManager(ListG uris, AppLaunchContext launchContext, GSpawnFlags spawnFlags, GSpawnChildSetupFunc userSetup, void* userSetupData, GDesktopAppLaunchCallback pidCallback, void* pidCallbackData)
 	{
 		GError* err = null;
-		
+
 		auto p = g_desktop_app_info_launch_uris_as_manager(gDesktopAppInfo, (uris is null) ? null : uris.getListGStruct(), (launchContext is null) ? null : launchContext.getAppLaunchContextStruct(), spawnFlags, userSetup, userSetupData, pidCallback, pidCallbackData, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 

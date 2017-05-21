@@ -24,11 +24,11 @@
 
 module gio.UnixMountMonitor;
 
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -91,12 +91,12 @@ public class UnixMountMonitor : ObjectG
 	public this()
 	{
 		auto p = g_unix_mount_monitor_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GUnixMountMonitor*) p, true);
 	}
 
@@ -118,12 +118,12 @@ public class UnixMountMonitor : ObjectG
 	public static UnixMountMonitor get()
 	{
 		auto p = g_unix_mount_monitor_get();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(UnixMountMonitor)(cast(GUnixMountMonitor*) p, true);
 	}
 
@@ -154,13 +154,13 @@ public class UnixMountMonitor : ObjectG
 		static OnMountpointsChangedDelegateWrapper[] listeners;
 		void delegate(UnixMountMonitor) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(UnixMountMonitor) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMountpointsChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -190,12 +190,12 @@ public class UnixMountMonitor : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackMountpointsChanged(GUnixMountMonitor* unixmountmonitorStruct, OnMountpointsChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMountpointsChangedDestroy(OnMountpointsChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -206,13 +206,13 @@ public class UnixMountMonitor : ObjectG
 		static OnMountsChangedDelegateWrapper[] listeners;
 		void delegate(UnixMountMonitor) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(UnixMountMonitor) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMountsChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -242,12 +242,12 @@ public class UnixMountMonitor : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackMountsChanged(GUnixMountMonitor* unixmountmonitorStruct, OnMountsChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMountsChangedDestroy(OnMountsChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

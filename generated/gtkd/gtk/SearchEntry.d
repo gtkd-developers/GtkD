@@ -30,8 +30,8 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Entry;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -115,12 +115,12 @@ public class SearchEntry : Entry
 	public this()
 	{
 		auto p = gtk_search_entry_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkSearchEntry*) p);
 	}
 
@@ -156,13 +156,13 @@ public class SearchEntry : Entry
 		static OnNextMatchDelegateWrapper[] listeners;
 		void delegate(SearchEntry) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(SearchEntry) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnNextMatchDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -201,12 +201,12 @@ public class SearchEntry : Entry
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackNextMatch(GtkSearchEntry* searchentryStruct, OnNextMatchDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackNextMatchDestroy(OnNextMatchDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -217,13 +217,13 @@ public class SearchEntry : Entry
 		static OnPreviousMatchDelegateWrapper[] listeners;
 		void delegate(SearchEntry) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(SearchEntry) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPreviousMatchDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -262,12 +262,12 @@ public class SearchEntry : Entry
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPreviousMatch(GtkSearchEntry* searchentryStruct, OnPreviousMatchDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPreviousMatchDestroy(OnPreviousMatchDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -278,13 +278,13 @@ public class SearchEntry : Entry
 		static OnSearchChangedDelegateWrapper[] listeners;
 		void delegate(SearchEntry) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(SearchEntry) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnSearchChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -317,12 +317,12 @@ public class SearchEntry : Entry
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackSearchChanged(GtkSearchEntry* searchentryStruct, OnSearchChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackSearchChangedDestroy(OnSearchChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -333,13 +333,13 @@ public class SearchEntry : Entry
 		static OnStopSearchDelegateWrapper[] listeners;
 		void delegate(SearchEntry) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(SearchEntry) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnStopSearchDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -377,12 +377,12 @@ public class SearchEntry : Entry
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackStopSearch(GtkSearchEntry* searchentryStruct, OnStopSearchDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackStopSearchDestroy(OnStopSearchDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

@@ -26,8 +26,8 @@ module gstreamer.ValueArray;
 
 private import gobject.ObjectG;
 private import gobject.Value;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /** */
@@ -119,12 +119,12 @@ public class ValueArray
 	public static Value getValue(Value value, uint index)
 	{
 		auto p = gst_value_array_get_value((value is null) ? null : value.getValueStruct(), index);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Value)(cast(GValue*) p);
 	}
 

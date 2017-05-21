@@ -34,8 +34,8 @@ private import gobject.ParamSpec;
 private import gobject.Signals;
 private import gobject.TypeInterface;
 private import gobject.Value;
-private import gtkc.gobject;
-public  import gtkc.gobjecttypes;
+private import gobject.c.functions;
+public  import gobject.c.types;
 private import gtkd.Loader;
 private import std.algorithm;
 private import std.traits;
@@ -66,7 +66,7 @@ public class ObjectG
 	}
 
 	protected bool isGcRoot;
-	
+
 	/**
 	 * Sets our main struct and passes store it on the gobject.
 	 * Add a gabage collector root to the gtk+ struct so it doesn't get collect
@@ -78,14 +78,14 @@ public class ObjectG
 		{
 			setDataFull("GObject", cast(void*)this, cast(GDestroyNotify)&destroyNotify);
 			addToggleRef(cast(GToggleNotify)&toggleNotify, cast(void*)this);
-			
+
 			//If the refCount is larger then 1 toggleNotify isn't called
 			if (gObject.refCount > 1 && !isGcRoot)
 			{
 				GC.addRoot(cast(void*)this);
 				isGcRoot = true;
 			}
-			
+
 			//Remove the floating reference if there is one.
 			if ( isFloating() )
 			{
@@ -97,7 +97,7 @@ public class ObjectG
 			{
 				unref();
 			}
-			
+
 			//When constructed via GtkBuilder set the structs.
 			if ( getStruct() is null)
 			{
@@ -105,7 +105,7 @@ public class ObjectG
 			}
 		}
 	}
-	
+
 	extern(C)
 	{
 		static void destroyNotify(ObjectG obj)
@@ -115,13 +115,13 @@ public class ObjectG
 				GC.removeRoot(cast(void*)obj);
 				obj.isGcRoot = false;
 			}
-			
+
 			if ( obj.gObject.refCount > 0 )
 				obj.removeToggleRef(cast(GToggleNotify)&toggleNotify, cast(void*)obj);
-			
+
 			obj.gObject = null;
 		}
-		
+
 		static void toggleNotify(ObjectG obj, GObject* object, int isLastRef)
 		{
 			if ( isLastRef && obj.isGcRoot )
@@ -136,30 +136,30 @@ public class ObjectG
 			}
 		}
 	}
-	
+
 	~this()
 	{
 		static if ( isPointer!(typeof(g_object_steal_data)) )
 			bool libLoaded = Linker.isLoaded(LIBRARY_GOBJECT);
 		else
 			enum libLoaded = true;
-		
+
 		if ( libLoaded && gObject !is null )
 		{
 			// Remove the GDestroyNotify callback,
 			// for when the D object is destroyed before the C one.
 			g_object_steal_data(gObject, cast(char*)"GObject");
-			
+
 			if ( isGcRoot )
 			{
 				GC.removeRoot(cast(void*)this);
 				isGcRoot = false;
 			}
-			
+
 			unref();
 		}
 	}
-	
+
 	/**
 	 * Gets a D Object from the objects table of associations.
 	 * Params:
@@ -172,11 +172,11 @@ public class ObjectG
 		{
 			return null;
 		}
-		
+
 		static if ( is(T : ObjectG) )
 		{
 			auto p = g_object_get_data(cast(GObject*)obj, Str.toStringz("GObject"));
-			
+
 			if ( p !is null )
 			{
 				static if ( is(RT == interface ) )
@@ -198,61 +198,61 @@ public class ObjectG
 			return new T(obj);
 		}
 	}
-	
+
 	protected void setStruct(GObject* obj)
 	{
 		gObject = cast(GObject*)obj;
 	}
-	
+
 	/** */
 	public void setProperty(string propertyName, int value)
 	{
 		setProperty(propertyName, new Value(value));
 	}
-	
+
 	/** */
 	public void setProperty(string propertyName, string value)
 	{
 		setProperty(propertyName, new Value(value));
 	}
-	
+
 	/** */
 	public void setProperty(string propertyName, long value)
 	{
 		//We use g_object_set instead of g_object_set_property, because Value doesn't like longs and ulongs for some reason.
 		g_object_set( gObject, Str.toStringz(propertyName), value, null);
 	}
-	
+
 	/** */
 	public void setProperty(string propertyName, ulong value)
 	{
 		g_object_set( gObject, Str.toStringz(propertyName), value, null);
 	}
-	
+
 	deprecated("Use the member function")
 	public static void unref(ObjectG obj)
 	{
 		obj.unref();
 	}
-	
+
 	deprecated("Use the member function")
 	public static ObjectG doref(ObjectG obj)
 	{
 		return obj.doref();
 	}
-	
+
 	protected class OnNotifyDelegateWrapper
 	{
 		static OnNotifyDelegateWrapper[] listeners;
 		void delegate(ParamSpec, ObjectG) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(ParamSpec, ObjectG) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnNotifyDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -266,7 +266,7 @@ public class ObjectG
 			}
 		}
 	}
-	
+
 	/**
 	 * The notify signal is emitted on an object when one of its
 	 * properties has been changed. Note that getting this signal
@@ -288,12 +288,12 @@ public class ObjectG
 	gulong addOnNotify(void delegate(ParamSpec, ObjectG) dlg, string property = "", ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		string signalName;
-		
+
 		if ( property == "" )
 			signalName = "notify";
 		else
 			signalName = "notify::"~ property;
-		
+
 		auto wrapper = new OnNotifyDelegateWrapper(dlg);
 		wrapper.handlerId = Signals.connectData(
 			this,
@@ -304,12 +304,12 @@ public class ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackNotify(GObject* objectgStruct, GParamSpec* pspec,OnNotifyDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(ParamSpec)(pspec), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackNotifyDestroy(OnNotifyDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -343,12 +343,12 @@ public class ObjectG
 	public this(GType objectType, string firstPropertyName, void* varArgs)
 	{
 		auto p = g_object_new_valist(objectType, Str.toStringz(firstPropertyName), varArgs);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_valist");
 		}
-		
+
 		this(cast(GObject*) p, true);
 	}
 
@@ -371,12 +371,12 @@ public class ObjectG
 	public this(GType objectType, GParameter[] parameters)
 	{
 		auto p = g_object_newv(objectType, cast(uint)parameters.length, parameters.ptr);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by newv");
 		}
-		
+
 		this(cast(GObject*) p, true);
 	}
 
@@ -407,12 +407,12 @@ public class ObjectG
 	public static ParamSpec interfaceFindProperty(TypeInterface gIface, string propertyName)
 	{
 		auto p = g_object_interface_find_property((gIface is null) ? null : gIface.getTypeInterfaceStruct(), Str.toStringz(propertyName));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
 	}
 
@@ -466,20 +466,20 @@ public class ObjectG
 	public static ParamSpec[] interfaceListProperties(TypeInterface gIface)
 	{
 		uint nPropertiesP;
-		
+
 		auto p = g_object_interface_list_properties((gIface is null) ? null : gIface.getTypeInterfaceStruct(), &nPropertiesP);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		ParamSpec[] arr = new ParamSpec[nPropertiesP];
 		for(int i = 0; i < nPropertiesP; i++)
 		{
 			arr[i] = ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p[i]);
 		}
-		
+
 		return arr;
 	}
 
@@ -585,12 +585,12 @@ public class ObjectG
 	public Binding bindProperty(string sourceProperty, ObjectG target, string targetProperty, GBindingFlags flags)
 	{
 		auto p = g_object_bind_property(gObject, Str.toStringz(sourceProperty), (target is null) ? null : target.getObjectGStruct(), Str.toStringz(targetProperty), flags);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Binding)(cast(GBinding*) p);
 	}
 
@@ -642,12 +642,12 @@ public class ObjectG
 	public Binding bindPropertyFull(string sourceProperty, ObjectG target, string targetProperty, GBindingFlags flags, GBindingTransformFunc transformTo, GBindingTransformFunc transformFrom, void* userData, GDestroyNotify notify)
 	{
 		auto p = g_object_bind_property_full(gObject, Str.toStringz(sourceProperty), (target is null) ? null : target.getObjectGStruct(), Str.toStringz(targetProperty), flags, transformTo, transformFrom, userData, notify);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Binding)(cast(GBinding*) p);
 	}
 
@@ -679,12 +679,12 @@ public class ObjectG
 	public Binding bindPropertyWithClosures(string sourceProperty, ObjectG target, string targetProperty, GBindingFlags flags, Closure transformTo, Closure transformFrom)
 	{
 		auto p = g_object_bind_property_with_closures(gObject, Str.toStringz(sourceProperty), (target is null) ? null : target.getObjectGStruct(), Str.toStringz(targetProperty), flags, (transformTo is null) ? null : transformTo.getClosureStruct(), (transformFrom is null) ? null : transformFrom.getClosureStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Binding)(cast(GBinding*) p);
 	}
 
@@ -939,12 +939,12 @@ public class ObjectG
 	public ObjectG doref()
 	{
 		auto p = g_object_ref(gObject);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p);
 	}
 
@@ -965,12 +965,12 @@ public class ObjectG
 	public ObjectG refSink()
 	{
 		auto p = g_object_ref_sink(gObject);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p);
 	}
 
@@ -1338,9 +1338,9 @@ public class ObjectG
 	public static void clearObject(ref ObjectG objectPtr)
 	{
 		GObject* outobjectPtr = objectPtr.getObjectGStruct();
-		
+
 		g_clear_object(&outobjectPtr);
-		
+
 		objectPtr = ObjectG.getDObject!(ObjectG)(outobjectPtr);
 	}
 }

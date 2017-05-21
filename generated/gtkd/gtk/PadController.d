@@ -31,8 +31,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gtk.EventController;
 private import gtk.Window;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -145,12 +145,12 @@ public class PadController : EventController
 	public this(Window window, ActionGroupIF group, Device pad)
 	{
 		auto p = gtk_pad_controller_new((window is null) ? null : window.getWindowStruct(), (group is null) ? null : group.getActionGroupStruct(), (pad is null) ? null : pad.getDeviceStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkPadController*) p, true);
 	}
 

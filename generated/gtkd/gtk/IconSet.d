@@ -34,8 +34,8 @@ private import gtk.IconSource;
 private import gtk.Style;
 private import gtk.StyleContext;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import gtkd.Loader;
 
 
@@ -102,12 +102,12 @@ public class IconSet
 	public this()
 	{
 		auto p = gtk_icon_set_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkIconSet*) p);
 	}
 
@@ -130,12 +130,12 @@ public class IconSet
 	public this(Pixbuf pixbuf)
 	{
 		auto p = gtk_icon_set_new_from_pixbuf((pixbuf is null) ? null : pixbuf.getPixbufStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_pixbuf");
 		}
-		
+
 		this(cast(GtkIconSet*) p);
 	}
 
@@ -186,12 +186,12 @@ public class IconSet
 	public IconSet copy()
 	{
 		auto p = gtk_icon_set_copy(gtkIconSet);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(IconSet)(cast(GtkIconSet*) p, true);
 	}
 
@@ -210,9 +210,9 @@ public class IconSet
 	{
 		GtkIconSize* outsizes = null;
 		int nSizes;
-		
+
 		gtk_icon_set_get_sizes(gtkIconSet, &outsizes, &nSizes);
-		
+
 		sizes = outsizes[0 .. nSizes];
 	}
 
@@ -226,12 +226,12 @@ public class IconSet
 	public IconSet doref()
 	{
 		auto p = gtk_icon_set_ref(gtkIconSet);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(IconSet)(cast(GtkIconSet*) p, true);
 	}
 
@@ -263,12 +263,12 @@ public class IconSet
 	public Pixbuf renderIcon(Style style, GtkTextDirection direction, GtkStateType state, GtkIconSize size, Widget widget, string detail)
 	{
 		auto p = gtk_icon_set_render_icon(gtkIconSet, (style is null) ? null : style.getStyleStruct(), direction, state, size, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
 	}
 
@@ -294,12 +294,12 @@ public class IconSet
 	public Pixbuf renderIconPixbuf(StyleContext context, GtkIconSize size)
 	{
 		auto p = gtk_icon_set_render_icon_pixbuf(gtkIconSet, (context is null) ? null : context.getStyleContextStruct(), size);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
 	}
 
@@ -327,12 +327,12 @@ public class IconSet
 	public Surface renderIconSurface(StyleContext context, GtkIconSize size, int scale, Window forWindow)
 	{
 		auto p = gtk_icon_set_render_icon_surface(gtkIconSet, (context is null) ? null : context.getStyleContextStruct(), size, scale, (forWindow is null) ? null : forWindow.getWindowStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Surface(cast(cairo_surface_t*) p);
 	}
 

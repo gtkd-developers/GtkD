@@ -25,8 +25,8 @@
 module gsv.SourceUndoManagerT;
 
 public  import gobject.Signals;
-public  import gsvc.gsv;
-public  import gsvc.gsvtypes;
+public  import gsv.c.functions;
+public  import gsv.c.types;
 public  import std.algorithm;
 
 
@@ -137,13 +137,13 @@ public template SourceUndoManagerT(TStruct)
 		static OnCanRedoChangedDelegateWrapper[] listeners;
 		void delegate(SourceUndoManagerIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(SourceUndoManagerIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCanRedoChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -175,12 +175,12 @@ public template SourceUndoManagerT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackCanRedoChanged(GtkSourceUndoManager* sourceundomanagerStruct, OnCanRedoChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackCanRedoChangedDestroy(OnCanRedoChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -191,13 +191,13 @@ public template SourceUndoManagerT(TStruct)
 		static OnCanUndoChangedDelegateWrapper[] listeners;
 		void delegate(SourceUndoManagerIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(SourceUndoManagerIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCanUndoChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -229,12 +229,12 @@ public template SourceUndoManagerT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackCanUndoChanged(GtkSourceUndoManager* sourceundomanagerStruct, OnCanUndoChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackCanUndoChangedDestroy(OnCanUndoChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

@@ -26,9 +26,9 @@ module pango.PgFontFamily;
 
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.pango;
-public  import gtkc.pangotypes;
 private import pango.PgFontFace;
+private import pango.c.functions;
+public  import pango.c.types;
 
 
 /**
@@ -128,9 +128,9 @@ public class PgFontFamily : ObjectG
 	{
 		PangoFontFace** outfaces = null;
 		int nFaces;
-		
+
 		pango_font_family_list_faces(pangoFontFamily, &outfaces, &nFaces);
-		
+
 		faces = new PgFontFace[nFaces];
 		for(size_t i = 0; i < nFaces; i++)
 		{

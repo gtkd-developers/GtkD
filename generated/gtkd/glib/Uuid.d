@@ -25,8 +25,8 @@
 module glib.Uuid;
 
 private import glib.Str;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 
 
 /** */
@@ -65,7 +65,7 @@ public struct Uuid
 	public static string stringRandom()
 	{
 		auto retStr = g_uuid_string_random();
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}

@@ -31,8 +31,8 @@ private import gobject.ObjectG;
 private import gobject.Value;
 private import gstreamer.DateTime;
 private import gstreamer.Sample;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /**
@@ -96,12 +96,12 @@ public class TagList
 	public this()
 	{
 		auto p = gst_tag_list_new_empty();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_empty");
 		}
-		
+
 		this(cast(GstTagList*) p);
 	}
 
@@ -119,12 +119,12 @@ public class TagList
 	public this(string str)
 	{
 		auto p = gst_tag_list_new_from_string(Str.toStringz(str));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_string");
 		}
-		
+
 		this(cast(GstTagList*) p);
 	}
 
@@ -145,12 +145,12 @@ public class TagList
 	public this(void* varArgs)
 	{
 		auto p = gst_tag_list_new_valist(varArgs);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_valist");
 		}
-		
+
 		this(cast(GstTagList*) p);
 	}
 
@@ -220,11 +220,11 @@ public class TagList
 	public bool getBoolean(string tag, out bool value)
 	{
 		int outvalue;
-		
+
 		auto p = gst_tag_list_get_boolean(gstTagList, Str.toStringz(tag), &outvalue) != 0;
-		
+
 		value = (outvalue == 1);
-		
+
 		return p;
 	}
 
@@ -243,11 +243,11 @@ public class TagList
 	public bool getBooleanIndex(string tag, uint index, out bool value)
 	{
 		int outvalue;
-		
+
 		auto p = gst_tag_list_get_boolean_index(gstTagList, Str.toStringz(tag), index, &outvalue) != 0;
-		
+
 		value = (outvalue == 1);
-		
+
 		return p;
 	}
 
@@ -269,11 +269,11 @@ public class TagList
 	public bool getDate(string tag, out Date value)
 	{
 		GDate* outvalue = null;
-		
+
 		auto p = gst_tag_list_get_date(gstTagList, Str.toStringz(tag), &outvalue) != 0;
-		
+
 		value = new Date(outvalue);
-		
+
 		return p;
 	}
 
@@ -295,11 +295,11 @@ public class TagList
 	public bool getDateIndex(string tag, uint index, out Date value)
 	{
 		GDate* outvalue = null;
-		
+
 		auto p = gst_tag_list_get_date_index(gstTagList, Str.toStringz(tag), index, &outvalue) != 0;
-		
+
 		value = new Date(outvalue);
-		
+
 		return p;
 	}
 
@@ -321,11 +321,11 @@ public class TagList
 	public bool getDateTime(string tag, out DateTime value)
 	{
 		GstDateTime* outvalue = null;
-		
+
 		auto p = gst_tag_list_get_date_time(gstTagList, Str.toStringz(tag), &outvalue) != 0;
-		
+
 		value = ObjectG.getDObject!(DateTime)(outvalue);
-		
+
 		return p;
 	}
 
@@ -347,11 +347,11 @@ public class TagList
 	public bool getDateTimeIndex(string tag, uint index, out DateTime value)
 	{
 		GstDateTime* outvalue = null;
-		
+
 		auto p = gst_tag_list_get_date_time_index(gstTagList, Str.toStringz(tag), index, &outvalue) != 0;
-		
+
 		value = ObjectG.getDObject!(DateTime)(outvalue);
-		
+
 		return p;
 	}
 
@@ -530,11 +530,11 @@ public class TagList
 	public bool getSample(string tag, out Sample sample)
 	{
 		GstSample* outsample = null;
-		
+
 		auto p = gst_tag_list_get_sample(gstTagList, Str.toStringz(tag), &outsample) != 0;
-		
+
 		sample = ObjectG.getDObject!(Sample)(outsample);
-		
+
 		return p;
 	}
 
@@ -559,11 +559,11 @@ public class TagList
 	public bool getSampleIndex(string tag, uint index, out Sample sample)
 	{
 		GstSample* outsample = null;
-		
+
 		auto p = gst_tag_list_get_sample_index(gstTagList, Str.toStringz(tag), index, &outsample) != 0;
-		
+
 		sample = ObjectG.getDObject!(Sample)(outsample);
-		
+
 		return p;
 	}
 
@@ -600,11 +600,11 @@ public class TagList
 	public bool getString(string tag, out string value)
 	{
 		char* outvalue = null;
-		
+
 		auto p = gst_tag_list_get_string(gstTagList, Str.toStringz(tag), &outvalue) != 0;
-		
+
 		value = Str.toString(outvalue);
-		
+
 		return p;
 	}
 
@@ -629,11 +629,11 @@ public class TagList
 	public bool getStringIndex(string tag, uint index, out string value)
 	{
 		char* outvalue = null;
-		
+
 		auto p = gst_tag_list_get_string_index(gstTagList, Str.toStringz(tag), index, &outvalue) != 0;
-		
+
 		value = Str.toString(outvalue);
-		
+
 		return p;
 	}
 
@@ -731,12 +731,12 @@ public class TagList
 	public Value getValueIndex(string tag, uint index)
 	{
 		auto p = gst_tag_list_get_value_index(gstTagList, Str.toStringz(tag), index);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Value)(cast(GValue*) p);
 	}
 
@@ -790,12 +790,12 @@ public class TagList
 	public TagList merge(TagList list2, GstTagMergeMode mode)
 	{
 		auto p = gst_tag_list_merge(gstTagList, (list2 is null) ? null : list2.getTagListStruct(), mode);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TagList)(cast(GstTagList*) p, true);
 	}
 
@@ -841,11 +841,11 @@ public class TagList
 	public bool peekStringIndex(string tag, uint index, out string value)
 	{
 		char* outvalue = null;
-		
+
 		auto p = gst_tag_list_peek_string_index(gstTagList, Str.toStringz(tag), index, &outvalue) != 0;
-		
+
 		value = Str.toString(outvalue);
-		
+
 		return p;
 	}
 
@@ -882,7 +882,7 @@ public class TagList
 	public override string toString()
 	{
 		auto retStr = gst_tag_list_to_string(gstTagList);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -904,11 +904,11 @@ public class TagList
 	public static bool copyValue(out Value dest, TagList list, string tag)
 	{
 		GValue* outdest = gMalloc!GValue();
-		
+
 		auto p = gst_tag_list_copy_value(outdest, (list is null) ? null : list.getTagListStruct(), Str.toStringz(tag)) != 0;
-		
+
 		dest = ObjectG.getDObject!(Value)(outdest, true);
-		
+
 		return p;
 	}
 
@@ -992,9 +992,9 @@ public class TagList
 	public static void mergeStringsWithComma(out Value dest, Value src)
 	{
 		GValue* outdest = gMalloc!GValue();
-		
+
 		gst_tag_merge_strings_with_comma(outdest, (src is null) ? null : src.getValueStruct());
-		
+
 		dest = ObjectG.getDObject!(Value)(outdest, true);
 	}
 
@@ -1009,9 +1009,9 @@ public class TagList
 	public static void mergeUseFirst(out Value dest, Value src)
 	{
 		GValue* outdest = gMalloc!GValue();
-		
+
 		gst_tag_merge_use_first(outdest, (src is null) ? null : src.getValueStruct());
-		
+
 		dest = ObjectG.getDObject!(Value)(outdest, true);
 	}
 

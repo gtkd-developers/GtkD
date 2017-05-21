@@ -24,13 +24,13 @@
 
 module gio.Credentials;
 
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -121,12 +121,12 @@ public class Credentials : ObjectG
 	public this()
 	{
 		auto p = g_credentials_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GCredentials*) p, true);
 	}
 
@@ -170,14 +170,14 @@ public class Credentials : ObjectG
 	public pid_t getUnixPid()
 	{
 		GError* err = null;
-		
+
 		auto p = g_credentials_get_unix_pid(gCredentials, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -198,14 +198,14 @@ public class Credentials : ObjectG
 	public uid_t getUnixUser()
 	{
 		GError* err = null;
-		
+
 		auto p = g_credentials_get_unix_user(gCredentials, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -228,14 +228,14 @@ public class Credentials : ObjectG
 	public bool isSameUser(Credentials otherCredentials)
 	{
 		GError* err = null;
-		
+
 		auto p = g_credentials_is_same_user(gCredentials, (otherCredentials is null) ? null : otherCredentials.getCredentialsStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -279,14 +279,14 @@ public class Credentials : ObjectG
 	public bool setUnixUser(uid_t uid)
 	{
 		GError* err = null;
-		
+
 		auto p = g_credentials_set_unix_user(gCredentials, uid, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -302,7 +302,7 @@ public class Credentials : ObjectG
 	public override string toString()
 	{
 		auto retStr = g_credentials_to_string(gCredentials);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}

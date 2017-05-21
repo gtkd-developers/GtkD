@@ -29,8 +29,8 @@ private import gstreamer.Buffer;
 private import gstreamer.BufferList;
 private import gstreamer.Event;
 private import gstreamer.Query;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /**
@@ -72,12 +72,12 @@ public class PadProbeInfo
 	public Buffer getBuffer()
 	{
 		auto p = gst_pad_probe_info_get_buffer(gstPadProbeInfo);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p);
 	}
 
@@ -87,12 +87,12 @@ public class PadProbeInfo
 	public BufferList getBufferList()
 	{
 		auto p = gst_pad_probe_info_get_buffer_list(gstPadProbeInfo);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(BufferList)(cast(GstBufferList*) p);
 	}
 
@@ -102,12 +102,12 @@ public class PadProbeInfo
 	public Event getEvent()
 	{
 		auto p = gst_pad_probe_info_get_event(gstPadProbeInfo);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Event)(cast(GstEvent*) p);
 	}
 
@@ -117,12 +117,12 @@ public class PadProbeInfo
 	public Query getQuery()
 	{
 		auto p = gst_pad_probe_info_get_query(gstPadProbeInfo);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Query)(cast(GstQuery*) p);
 	}
 }

@@ -32,8 +32,8 @@ private import gtk.Container;
 private import gtk.ScrollableIF;
 private import gtk.ScrollableT;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -109,12 +109,12 @@ public class Layout : Container, ScrollableIF
 	public this(Adjustment hadjustment, Adjustment vadjustment)
 	{
 		auto p = gtk_layout_new((hadjustment is null) ? null : hadjustment.getAdjustmentStruct(), (vadjustment is null) ? null : vadjustment.getAdjustmentStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkLayout*) p);
 	}
 
@@ -128,12 +128,12 @@ public class Layout : Container, ScrollableIF
 	public Window getBinWindow()
 	{
 		auto p = gtk_layout_get_bin_window(gtkLayout);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 
@@ -152,12 +152,12 @@ public class Layout : Container, ScrollableIF
 	public Adjustment getHadjustment()
 	{
 		auto p = gtk_layout_get_hadjustment(gtkLayout);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
 	}
 
@@ -192,12 +192,12 @@ public class Layout : Container, ScrollableIF
 	public Adjustment getVadjustment()
 	{
 		auto p = gtk_layout_get_vadjustment(gtkLayout);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
 	}
 

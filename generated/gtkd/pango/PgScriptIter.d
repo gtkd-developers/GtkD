@@ -27,9 +27,9 @@ module pango.PgScriptIter;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.pango;
-public  import gtkc.pangotypes;
 private import gtkd.Loader;
+private import pango.c.functions;
+public  import pango.c.types;
 
 
 /**
@@ -99,9 +99,9 @@ public class PgScriptIter
 	{
 		char* outstart = null;
 		char* outend = null;
-		
+
 		pango_script_iter_get_range(pangoScriptIter, &outstart, &outend, &script);
-		
+
 		start = Str.toString(outstart);
 		end = Str.toString(outend);
 	}
@@ -142,12 +142,12 @@ public class PgScriptIter
 	public this(string text, int length)
 	{
 		auto p = pango_script_iter_new(Str.toStringz(text), length);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(PangoScriptIter*) p);
 	}
 }

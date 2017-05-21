@@ -26,8 +26,8 @@ module gstreamer.TocSetterT;
 
 public  import gobject.ObjectG;
 public  import gstreamer.Toc;
-public  import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+public  import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /**
@@ -67,12 +67,12 @@ public template TocSetterT(TStruct)
 	public Toc getToc()
 	{
 		auto p = gst_toc_setter_get_toc(getTocSetterStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Toc)(cast(GstToc*) p, true);
 	}
 

@@ -37,8 +37,8 @@ private import gobject.ObjectG;
 private import gsv.SourceBuffer;
 private import gsv.SourceEncoding;
 private import gsv.SourceFile;
-private import gsvc.gsv;
-public  import gsvc.gsvtypes;
+private import gsv.c.functions;
+public  import gsv.c.types;
 
 
 /** */
@@ -103,12 +103,12 @@ public class SourceFileLoader : ObjectG
 	public this(SourceBuffer buffer, SourceFile file)
 	{
 		auto p = gtk_source_file_loader_new((buffer is null) ? null : buffer.getSourceBufferStruct(), (file is null) ? null : file.getSourceFileStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkSourceFileLoader*) p, true);
 	}
 
@@ -129,12 +129,12 @@ public class SourceFileLoader : ObjectG
 	public this(SourceBuffer buffer, SourceFile file, InputStream stream)
 	{
 		auto p = gtk_source_file_loader_new_from_stream((buffer is null) ? null : buffer.getSourceBufferStruct(), (file is null) ? null : file.getSourceFileStruct(), (stream is null) ? null : stream.getInputStreamStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_stream");
 		}
-		
+
 		this(cast(GtkSourceFileLoader*) p, true);
 	}
 
@@ -146,12 +146,12 @@ public class SourceFileLoader : ObjectG
 	public SourceBuffer getBuffer()
 	{
 		auto p = gtk_source_file_loader_get_buffer(gtkSourceFileLoader);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SourceBuffer)(cast(GtkSourceBuffer*) p);
 	}
 
@@ -173,12 +173,12 @@ public class SourceFileLoader : ObjectG
 	public SourceEncoding getEncoding()
 	{
 		auto p = gtk_source_file_loader_get_encoding(gtkSourceFileLoader);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SourceEncoding)(cast(GtkSourceEncoding*) p);
 	}
 
@@ -190,12 +190,12 @@ public class SourceFileLoader : ObjectG
 	public SourceFile getFile()
 	{
 		auto p = gtk_source_file_loader_get_file(gtkSourceFileLoader);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SourceFile)(cast(GtkSourceFile*) p);
 	}
 
@@ -208,12 +208,12 @@ public class SourceFileLoader : ObjectG
 	public InputStream getInputStream()
 	{
 		auto p = gtk_source_file_loader_get_input_stream(gtkSourceFileLoader);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) p);
 	}
 
@@ -226,12 +226,12 @@ public class SourceFileLoader : ObjectG
 	public FileIF getLocation()
 	{
 		auto p = gtk_source_file_loader_get_location(gtkSourceFileLoader);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p);
 	}
 
@@ -290,14 +290,14 @@ public class SourceFileLoader : ObjectG
 	public bool loadFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_source_file_loader_load_finish(gtkSourceFileLoader, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 

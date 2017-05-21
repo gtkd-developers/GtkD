@@ -27,8 +27,8 @@ module gtk.SeparatorToolItem;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gtk.ToolItem;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -99,12 +99,12 @@ public class SeparatorToolItem : ToolItem
 	public this()
 	{
 		auto p = gtk_separator_tool_item_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkSeparatorToolItem*) p);
 	}
 

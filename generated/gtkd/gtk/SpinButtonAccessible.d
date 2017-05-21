@@ -27,8 +27,8 @@ module gtk.SpinButtonAccessible;
 private import atk.ValueIF;
 private import atk.ValueT;
 private import gtk.EntryAccessible;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /** */

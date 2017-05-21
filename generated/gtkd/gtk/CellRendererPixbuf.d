@@ -27,8 +27,8 @@ module gtk.CellRendererPixbuf;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gtk.CellRenderer;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -102,12 +102,12 @@ public class CellRendererPixbuf : CellRenderer
 	public this()
 	{
 		auto p = gtk_cell_renderer_pixbuf_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkCellRendererPixbuf*) p);
 	}
 }

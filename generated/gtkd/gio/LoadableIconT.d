@@ -27,12 +27,12 @@ module gio.LoadableIconT;
 public  import gio.AsyncResultIF;
 public  import gio.Cancellable;
 public  import gio.InputStream;
+public  import gio.c.functions;
+public  import gio.c.types;
 public  import glib.ErrorG;
 public  import glib.GException;
 public  import glib.Str;
 public  import gobject.ObjectG;
-public  import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -69,21 +69,21 @@ public template LoadableIconT(TStruct)
 	{
 		char* outtype = null;
 		GError* err = null;
-		
+
 		auto p = g_loadable_icon_load(getLoadableIconStruct(), size, &outtype, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		type = Str.toString(outtype);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) p, true);
 	}
 
@@ -120,21 +120,21 @@ public template LoadableIconT(TStruct)
 	{
 		char* outtype = null;
 		GError* err = null;
-		
+
 		auto p = g_loadable_icon_load_finish(getLoadableIconStruct(), (res is null) ? null : res.getAsyncResultStruct(), &outtype, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		type = Str.toString(outtype);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) p, true);
 	}
 }

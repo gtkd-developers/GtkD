@@ -33,8 +33,8 @@ private import gtk.Button;
 private import gtk.HBox;
 private import gtk.VButtonBox;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -147,37 +147,37 @@ public class InfoBar : Box
 	public this(string[] buttonsText, ResponseType[] responses)
 	{
 		this();
-		
+
 		for ( int i=0 ; i<buttonsText.length && i<responses.length ; i++)
 		{
 			addButton(buttonsText[i], responses[i]);
 		}
 	}
-	
+
 	/** */
 	public this(StockID[] stockIDs, ResponseType[] responses)
 	{
 		this();
-		
+
 		for ( int i=0 ; i<stockIDs.length && i<responses.length ; i++)
 		{
 			addButton(stockIDs[i], responses[i]);
 		}
 	}
-	
+
 	/** */
 	public Button addButton(StockID stockID, int responseId)
 	{
 		auto p = gtk_info_bar_add_button(gtkInfoBar, Str.toStringz(stockID), responseId);
-		
+
 		if ( p is null )
 		{
 			return null;
 		}
-		
+
 		return new Button(cast(GtkButton*)p);
 	}
-	
+
 	/** */
 	public void addButtons(string[] buttonsText, ResponseType[] responses)
 	{
@@ -186,7 +186,7 @@ public class InfoBar : Box
 			addButton(buttonsText[i], responses[i]);
 		}
 	}
-	
+
 	/** */
 	public void addButtons(StockID[] stockIDs, ResponseType[] responses)
 	{
@@ -195,7 +195,7 @@ public class InfoBar : Box
 			addButton(stockIDs[i], responses[i]);
 		}
 	}
-	
+
 	/**
 	 * Returns the action area of info_bar.
 	 * Since 2.18
@@ -211,7 +211,7 @@ public class InfoBar : Box
 		}
 		return new VButtonBox(cast(GtkVButtonBox*) p);
 	}
-	
+
 	/**
 	 * Returns the content area of info_bar.
 	 * Since 2.18
@@ -249,12 +249,12 @@ public class InfoBar : Box
 	public this()
 	{
 		auto p = gtk_info_bar_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkInfoBar*) p);
 	}
 
@@ -294,12 +294,12 @@ public class InfoBar : Box
 	public Button addButton(string buttonText, int responseId)
 	{
 		auto p = gtk_info_bar_add_button(gtkInfoBar, Str.toStringz(buttonText), responseId);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Button)(cast(GtkButton*) p);
 	}
 
@@ -408,13 +408,13 @@ public class InfoBar : Box
 		static OnCloseDelegateWrapper[] listeners;
 		void delegate(InfoBar) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(InfoBar) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCloseDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -451,12 +451,12 @@ public class InfoBar : Box
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackClose(GtkInfoBar* infobarStruct, OnCloseDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackCloseDestroy(OnCloseDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -467,13 +467,13 @@ public class InfoBar : Box
 		static OnResponseDelegateWrapper[] listeners;
 		void delegate(int, InfoBar) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(int, InfoBar) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnResponseDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -510,12 +510,12 @@ public class InfoBar : Box
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackResponse(GtkInfoBar* infobarStruct, int responseId, OnResponseDelegateWrapper wrapper)
 	{
 		wrapper.dlg(responseId, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackResponseDestroy(OnResponseDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

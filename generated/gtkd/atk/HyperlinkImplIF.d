@@ -25,9 +25,9 @@
 module atk.HyperlinkImplIF;
 
 private import atk.Hyperlink;
+private import atk.c.functions;
+public  import atk.c.types;
 private import gobject.ObjectG;
-private import gtkc.atk;
-public  import gtkc.atktypes;
 
 
 /**

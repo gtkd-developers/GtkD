@@ -30,8 +30,8 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import peas.Engine;
 private import peas.PluginInfo;
-private import peasc.peas;
-public  import peasc.peastypes;
+private import peas.c.functions;
+public  import peas.c.types;
 private import std.algorithm;
 
 
@@ -101,12 +101,12 @@ public class ExtensionSet : ObjectG
 	public this(Engine engine, GType extenType, string firstProperty, void* varArgs)
 	{
 		auto p = peas_extension_set_new_valist((engine is null) ? null : engine.getEngineStruct(), extenType, Str.toStringz(firstProperty), varArgs);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_valist");
 		}
-		
+
 		this(cast(PeasExtensionSet*) p, true);
 	}
 
@@ -130,12 +130,12 @@ public class ExtensionSet : ObjectG
 	public this(Engine engine, GType extenType, GParameter[] parameters)
 	{
 		auto p = peas_extension_set_newv((engine is null) ? null : engine.getEngineStruct(), extenType, cast(uint)parameters.length, parameters.ptr);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by newv");
 		}
-		
+
 		this(cast(PeasExtensionSet*) p, true);
 	}
 
@@ -172,13 +172,13 @@ public class ExtensionSet : ObjectG
 		static OnExtensionAddedDelegateWrapper[] listeners;
 		void delegate(PluginInfo, ObjectG, ExtensionSet) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(PluginInfo, ObjectG, ExtensionSet) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnExtensionAddedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -219,12 +219,12 @@ public class ExtensionSet : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackExtensionAdded(PeasExtensionSet* extensionsetStruct, PeasPluginInfo* info, GObject* exten, OnExtensionAddedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(PluginInfo)(info), ObjectG.getDObject!(ObjectG)(exten), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackExtensionAddedDestroy(OnExtensionAddedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -235,13 +235,13 @@ public class ExtensionSet : ObjectG
 		static OnExtensionRemovedDelegateWrapper[] listeners;
 		void delegate(PluginInfo, ObjectG, ExtensionSet) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(PluginInfo, ObjectG, ExtensionSet) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnExtensionRemovedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -283,12 +283,12 @@ public class ExtensionSet : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackExtensionRemoved(PeasExtensionSet* extensionsetStruct, PeasPluginInfo* info, GObject* exten, OnExtensionRemovedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(PluginInfo)(info), ObjectG.getDObject!(ObjectG)(exten), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackExtensionRemovedDestroy(OnExtensionRemovedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

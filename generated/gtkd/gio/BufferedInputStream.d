@@ -30,12 +30,12 @@ private import gio.FilterInputStream;
 private import gio.InputStream;
 private import gio.SeekableIF;
 private import gio.SeekableT;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -104,9 +104,9 @@ public class BufferedInputStream : FilterInputStream, SeekableIF
 	public ubyte[] peekBuffer()
 	{
 		size_t count;
-		
+
 		auto p = g_buffered_input_stream_peek_buffer(gBufferedInputStream, &count);
-		
+
 		return (cast(ubyte*)p)[0 .. count];
 	}
 
@@ -133,12 +133,12 @@ public class BufferedInputStream : FilterInputStream, SeekableIF
 	public this(InputStream baseStream)
 	{
 		auto p = g_buffered_input_stream_new((baseStream is null) ? null : baseStream.getInputStreamStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GBufferedInputStream*) p, true);
 	}
 
@@ -157,12 +157,12 @@ public class BufferedInputStream : FilterInputStream, SeekableIF
 	public this(InputStream baseStream, size_t size)
 	{
 		auto p = g_buffered_input_stream_new_sized((baseStream is null) ? null : baseStream.getInputStreamStruct(), size);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_sized");
 		}
-		
+
 		this(cast(GBufferedInputStream*) p, true);
 	}
 
@@ -204,14 +204,14 @@ public class BufferedInputStream : FilterInputStream, SeekableIF
 	public ptrdiff_t fill(ptrdiff_t count, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_buffered_input_stream_fill(gBufferedInputStream, count, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -248,14 +248,14 @@ public class BufferedInputStream : FilterInputStream, SeekableIF
 	public ptrdiff_t fillFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_buffered_input_stream_fill_finish(gBufferedInputStream, (result is null) ? null : result.getAsyncResultStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -321,14 +321,14 @@ public class BufferedInputStream : FilterInputStream, SeekableIF
 	public int readByte(Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_buffered_input_stream_read_byte(gBufferedInputStream, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 

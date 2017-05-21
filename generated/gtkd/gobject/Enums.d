@@ -25,8 +25,8 @@
 module gobject.Enums;
 
 private import glib.Str;
-private import gtkc.gobject;
-public  import gtkc.gobjecttypes;
+private import gobject.c.functions;
+public  import gobject.c.types;
 
 
 /** */

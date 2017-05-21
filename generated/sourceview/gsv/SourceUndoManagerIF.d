@@ -25,8 +25,8 @@
 module gsv.SourceUndoManagerIF;
 
 private import gobject.Signals;
-private import gsvc.gsv;
-public  import gsvc.gsvtypes;
+private import gsv.c.functions;
+public  import gsv.c.types;
 private import std.algorithm;
 
 

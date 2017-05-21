@@ -26,10 +26,10 @@ module gdk.Selection;
 
 private import gdk.Display;
 private import gdk.Window;
+private import gdk.c.functions;
+public  import gdk.c.types;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gdk;
-public  import gtkc.gdktypes;
 
 
 /** */
@@ -71,12 +71,12 @@ public struct Selection
 	public static Window ownerGet(GdkAtom selection)
 	{
 		auto p = gdk_selection_owner_get(selection);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 
@@ -101,12 +101,12 @@ public struct Selection
 	public static Window ownerGetForDisplay(Display display, GdkAtom selection)
 	{
 		auto p = gdk_selection_owner_get_for_display((display is null) ? null : display.getDisplayStruct(), selection);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 

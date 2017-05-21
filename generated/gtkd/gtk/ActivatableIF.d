@@ -26,8 +26,8 @@ module gtk.ActivatableIF;
 
 private import gobject.ObjectG;
 private import gtk.Action;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**

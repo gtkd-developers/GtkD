@@ -26,14 +26,14 @@ module pango.PgFontMap;
 
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.pango;
-public  import gtkc.pangotypes;
 private import pango.PgContext;
 private import pango.PgFont;
 private import pango.PgFontDescription;
 private import pango.PgFontFamily;
 private import pango.PgFontset;
 private import pango.PgLanguage;
+private import pango.c.functions;
+public  import pango.c.types;
 
 
 /**
@@ -124,12 +124,12 @@ public class PgFontMap : ObjectG
 	public PgContext createContext()
 	{
 		auto p = pango_font_map_create_context(pangoFontMap);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgContext)(cast(PangoContext*) p, true);
 	}
 
@@ -183,9 +183,9 @@ public class PgFontMap : ObjectG
 	{
 		PangoFontFamily** outfamilies = null;
 		int nFamilies;
-		
+
 		pango_font_map_list_families(pangoFontMap, &outfamilies, &nFamilies);
-		
+
 		families = new PgFontFamily[nFamilies];
 		for(size_t i = 0; i < nFamilies; i++)
 		{
@@ -206,12 +206,12 @@ public class PgFontMap : ObjectG
 	public PgFont loadFont(PgContext context, PgFontDescription desc)
 	{
 		auto p = pango_font_map_load_font(pangoFontMap, (context is null) ? null : context.getPgContextStruct(), (desc is null) ? null : desc.getPgFontDescriptionStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgFont)(cast(PangoFont*) p, true);
 	}
 
@@ -230,12 +230,12 @@ public class PgFontMap : ObjectG
 	public PgFontset loadFontset(PgContext context, PgFontDescription desc, PgLanguage language)
 	{
 		auto p = pango_font_map_load_fontset(pangoFontMap, (context is null) ? null : context.getPgContextStruct(), (desc is null) ? null : desc.getPgFontDescriptionStruct(), (language is null) ? null : language.getPgLanguageStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgFontset)(cast(PangoFontset*) p, true);
 	}
 }

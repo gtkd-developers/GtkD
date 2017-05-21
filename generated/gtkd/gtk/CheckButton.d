@@ -30,8 +30,8 @@ private import gobject.ObjectG;
 private import gtk.Button;
 private import gtk.ToggleButton;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -111,7 +111,7 @@ public class CheckButton : ToggleButton
 	public this (string label, bool mnemonic=true)
 	{
 		GtkCheckButton* p;
-		
+
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_check_button_new_with_mnemonic  (const gchar *label);
@@ -122,15 +122,15 @@ public class CheckButton : ToggleButton
 			// GtkWidget* gtk_check_button_new_with_label (const gchar *label);
 			p = cast(GtkCheckButton*)gtk_check_button_new_with_label(Str.toStringz(label));
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gtk_check_button_new_");
 		}
-		
+
 		this(p);
 	}
-	
+
 	/** */
 	public this(string label, void delegate(CheckButton) onClicked, bool mnemonic=true)
 	{
@@ -157,12 +157,12 @@ public class CheckButton : ToggleButton
 	public this()
 	{
 		auto p = gtk_check_button_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkCheckButton*) p);
 	}
 }

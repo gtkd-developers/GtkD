@@ -25,8 +25,8 @@
 module gstreamer.AllocationParams;
 
 private import gobject.ObjectG;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 private import gtkd.Loader;
 
 
@@ -86,12 +86,12 @@ public class AllocationParams
 	public AllocationParams copy()
 	{
 		auto p = gst_allocation_params_copy(gstAllocationParams);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(AllocationParams)(cast(GstAllocationParams*) p, true);
 	}
 

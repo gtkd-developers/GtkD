@@ -27,11 +27,11 @@ module gio.ProxyAddress;
 private import gio.InetAddress;
 private import gio.InetSocketAddress;
 private import gio.SocketAddress;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -108,12 +108,12 @@ public class ProxyAddress : InetSocketAddress
 	public this(InetAddress inetaddr, ushort port, string protocol, string destHostname, ushort destPort, string username, string password)
 	{
 		auto p = g_proxy_address_new((inetaddr is null) ? null : inetaddr.getInetAddressStruct(), port, Str.toStringz(protocol), Str.toStringz(destHostname), destPort, Str.toStringz(username), Str.toStringz(password));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GProxyAddress*) p, true);
 	}
 

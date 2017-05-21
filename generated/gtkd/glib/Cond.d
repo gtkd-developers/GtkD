@@ -25,8 +25,8 @@
 module glib.Cond;
 
 private import glib.Mutex;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 
 
 /**

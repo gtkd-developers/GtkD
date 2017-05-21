@@ -29,8 +29,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gstreamer.Bin;
 private import gstreamer.DebugCategory;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /** */
@@ -55,7 +55,7 @@ public struct Debug
 	public static string binToDotData(Bin bin, GstDebugGraphDetails details)
 	{
 		auto retStr = gst_debug_bin_to_dot_data((bin is null) ? null : bin.getBinStruct(), details);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -86,7 +86,7 @@ public struct Debug
 	public static string constructTermColor(uint colorinfo)
 	{
 		auto retStr = gst_debug_construct_term_color(colorinfo);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -119,12 +119,12 @@ public struct Debug
 	public static ListSG getAllCategories()
 	{
 		auto p = gst_debug_get_all_categories();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 

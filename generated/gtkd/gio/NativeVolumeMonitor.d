@@ -25,8 +25,8 @@
 module gio.NativeVolumeMonitor;
 
 private import gio.VolumeMonitor;
-private import gtkc.gio;
-public  import gtkc.giotypes;
+private import gio.c.functions;
+public  import gio.c.types;
 
 
 /** */

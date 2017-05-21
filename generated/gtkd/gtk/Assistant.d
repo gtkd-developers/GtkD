@@ -31,8 +31,8 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Widget;
 private import gtk.Window;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -119,12 +119,12 @@ public class Assistant : Window
 	public this()
 	{
 		auto p = gtk_assistant_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkAssistant*) p);
 	}
 
@@ -215,12 +215,12 @@ public class Assistant : Window
 	public Widget getNthPage(int pageNum)
 	{
 		auto p = gtk_assistant_get_nth_page(gtkAssistant, pageNum);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -271,12 +271,12 @@ public class Assistant : Window
 	public Pixbuf getPageHeaderImage(Widget page)
 	{
 		auto p = gtk_assistant_get_page_header_image(gtkAssistant, (page is null) ? null : page.getWidgetStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 
@@ -297,12 +297,12 @@ public class Assistant : Window
 	public Pixbuf getPageSideImage(Widget page)
 	{
 		auto p = gtk_assistant_get_page_side_image(gtkAssistant, (page is null) ? null : page.getWidgetStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 
@@ -594,13 +594,13 @@ public class Assistant : Window
 		static OnApplyDelegateWrapper[] listeners;
 		void delegate(Assistant) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Assistant) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnApplyDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -642,12 +642,12 @@ public class Assistant : Window
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackApply(GtkAssistant* assistantStruct, OnApplyDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackApplyDestroy(OnApplyDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -658,13 +658,13 @@ public class Assistant : Window
 		static OnCancelDelegateWrapper[] listeners;
 		void delegate(Assistant) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Assistant) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCancelDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -696,12 +696,12 @@ public class Assistant : Window
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackCancel(GtkAssistant* assistantStruct, OnCancelDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackCancelDestroy(OnCancelDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -712,13 +712,13 @@ public class Assistant : Window
 		static OnCloseDelegateWrapper[] listeners;
 		void delegate(Assistant) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Assistant) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCloseDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -752,12 +752,12 @@ public class Assistant : Window
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackClose(GtkAssistant* assistantStruct, OnCloseDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackCloseDestroy(OnCloseDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -768,13 +768,13 @@ public class Assistant : Window
 		static OnEscapeDelegateWrapper[] listeners;
 		void delegate(Assistant) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Assistant) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnEscapeDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -802,12 +802,12 @@ public class Assistant : Window
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackEscape(GtkAssistant* assistantStruct, OnEscapeDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackEscapeDestroy(OnEscapeDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -818,13 +818,13 @@ public class Assistant : Window
 		static OnPrepareDelegateWrapper[] listeners;
 		void delegate(Widget, Assistant) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Widget, Assistant) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPrepareDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -863,12 +863,12 @@ public class Assistant : Window
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPrepare(GtkAssistant* assistantStruct, GtkWidget* page, OnPrepareDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Widget)(page), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPrepareDestroy(OnPrepareDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

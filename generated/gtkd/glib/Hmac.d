@@ -26,8 +26,8 @@ module glib.Hmac;
 
 private import glib.ConstructionException;
 private import glib.Str;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 private import gtkd.Loader;
 
 
@@ -88,9 +88,9 @@ public class Hmac
 	public void getDigest(ref ubyte[] buffer)
 	{
 		size_t digestLen = buffer.length;
-		
+
 		g_hmac_get_digest(gHmac, buffer.ptr, &digestLen);
-		
+
 		buffer = buffer[0 .. digestLen];
 	}
 
@@ -110,12 +110,12 @@ public class Hmac
 	public Hmac copy()
 	{
 		auto p = g_hmac_copy(gHmac);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Hmac(cast(GHmac*) p);
 	}
 
@@ -150,12 +150,12 @@ public class Hmac
 	public Hmac doref()
 	{
 		auto p = g_hmac_ref(gHmac);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Hmac(cast(GHmac*) p);
 	}
 
@@ -224,12 +224,12 @@ public class Hmac
 	public this(GChecksumType digestType, char[] key)
 	{
 		auto p = g_hmac_new(digestType, key.ptr, cast(size_t)key.length);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GHmac*) p);
 	}
 
@@ -255,7 +255,7 @@ public class Hmac
 	public static string computeHmacForData(GChecksumType digestType, char[] key, char[] data)
 	{
 		auto retStr = g_compute_hmac_for_data(digestType, key.ptr, cast(size_t)key.length, data.ptr, cast(size_t)data.length);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -281,7 +281,7 @@ public class Hmac
 	public static string computeHmacForString(GChecksumType digestType, char[] key, string str)
 	{
 		auto retStr = g_compute_hmac_for_string(digestType, key.ptr, cast(size_t)key.length, Str.toStringz(str), cast(ptrdiff_t)str.length);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}

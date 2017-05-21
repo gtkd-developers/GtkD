@@ -32,8 +32,8 @@ private import gtk.Container;
 private import gtk.OrientableIF;
 private import gtk.OrientableT;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -171,12 +171,12 @@ public class Paned : Container, OrientableIF
 	public this(GtkOrientation orientation)
 	{
 		auto p = gtk_paned_new(orientation);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkPaned*) p);
 	}
 
@@ -216,12 +216,12 @@ public class Paned : Container, OrientableIF
 	public Widget getChild1()
 	{
 		auto p = gtk_paned_get_child1(gtkPaned);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -235,12 +235,12 @@ public class Paned : Container, OrientableIF
 	public Widget getChild2()
 	{
 		auto p = gtk_paned_get_child2(gtkPaned);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -257,12 +257,12 @@ public class Paned : Container, OrientableIF
 	public Window getHandleWindow()
 	{
 		auto p = gtk_paned_get_handle_window(gtkPaned);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 
@@ -344,13 +344,13 @@ public class Paned : Container, OrientableIF
 		static OnAcceptPositionDelegateWrapper[] listeners;
 		bool delegate(Paned) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(Paned) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnAcceptPositionDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -387,12 +387,12 @@ public class Paned : Container, OrientableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackAcceptPosition(GtkPaned* panedStruct, OnAcceptPositionDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackAcceptPositionDestroy(OnAcceptPositionDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -403,13 +403,13 @@ public class Paned : Container, OrientableIF
 		static OnCancelPositionDelegateWrapper[] listeners;
 		bool delegate(Paned) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(Paned) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCancelPositionDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -447,12 +447,12 @@ public class Paned : Container, OrientableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackCancelPosition(GtkPaned* panedStruct, OnCancelPositionDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackCancelPositionDestroy(OnCancelPositionDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -463,13 +463,13 @@ public class Paned : Container, OrientableIF
 		static OnCycleChildFocusDelegateWrapper[] listeners;
 		bool delegate(bool, Paned) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(bool, Paned) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCycleChildFocusDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -508,12 +508,12 @@ public class Paned : Container, OrientableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackCycleChildFocus(GtkPaned* panedStruct, bool reversed, OnCycleChildFocusDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(reversed, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackCycleChildFocusDestroy(OnCycleChildFocusDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -524,13 +524,13 @@ public class Paned : Container, OrientableIF
 		static OnCycleHandleFocusDelegateWrapper[] listeners;
 		bool delegate(bool, Paned) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(bool, Paned) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCycleHandleFocusDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -570,12 +570,12 @@ public class Paned : Container, OrientableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackCycleHandleFocus(GtkPaned* panedStruct, bool reversed, OnCycleHandleFocusDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(reversed, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackCycleHandleFocusDestroy(OnCycleHandleFocusDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -586,13 +586,13 @@ public class Paned : Container, OrientableIF
 		static OnMoveHandleDelegateWrapper[] listeners;
 		bool delegate(GtkScrollType, Paned) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(GtkScrollType, Paned) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMoveHandleDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -630,12 +630,12 @@ public class Paned : Container, OrientableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackMoveHandle(GtkPaned* panedStruct, GtkScrollType scrollType, OnMoveHandleDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(scrollType, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMoveHandleDestroy(OnMoveHandleDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -646,13 +646,13 @@ public class Paned : Container, OrientableIF
 		static OnToggleHandleFocusDelegateWrapper[] listeners;
 		bool delegate(Paned) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(Paned) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnToggleHandleFocusDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -689,12 +689,12 @@ public class Paned : Container, OrientableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackToggleHandleFocus(GtkPaned* panedStruct, OnToggleHandleFocusDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackToggleHandleFocusDestroy(OnToggleHandleFocusDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

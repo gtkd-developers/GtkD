@@ -27,8 +27,8 @@ module gtk.WindowAccessible;
 private import atk.WindowIF;
 private import atk.WindowT;
 private import gtk.ContainerAccessible;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /** */

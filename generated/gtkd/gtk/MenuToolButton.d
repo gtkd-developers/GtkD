@@ -32,8 +32,8 @@ private import gtk.Menu;
 private import gtk.ToolButton;
 private import gtk.ToolItem;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -107,7 +107,7 @@ public class MenuToolButton : ToolButton
 	{
 		this(cast(string)stockId);
 	}
-	
+
 	/**
 	 * Gets the GtkMenu associated with GtkMenuToolButton.
 	 * Since: 2.6
@@ -152,12 +152,12 @@ public class MenuToolButton : ToolButton
 	public this(Widget iconWidget, string label)
 	{
 		auto p = gtk_menu_tool_button_new((iconWidget is null) ? null : iconWidget.getWidgetStruct(), Str.toStringz(label));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkMenuToolButton*) p);
 	}
 
@@ -180,12 +180,12 @@ public class MenuToolButton : ToolButton
 	public this(string stockId)
 	{
 		auto p = gtk_menu_tool_button_new_from_stock(Str.toStringz(stockId));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_stock");
 		}
-		
+
 		this(cast(GtkMenuToolButton*) p);
 	}
 
@@ -238,13 +238,13 @@ public class MenuToolButton : ToolButton
 		static OnShowMenuDelegateWrapper[] listeners;
 		void delegate(MenuToolButton) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(MenuToolButton) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnShowMenuDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -281,12 +281,12 @@ public class MenuToolButton : ToolButton
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackShowMenu(GtkMenuToolButton* menutoolbuttonStruct, OnShowMenuDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackShowMenuDestroy(OnShowMenuDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

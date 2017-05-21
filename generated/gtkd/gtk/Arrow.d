@@ -28,8 +28,8 @@ private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gtk.Misc;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -111,12 +111,12 @@ public class Arrow : Misc
 	public this(GtkArrowType arrowType, GtkShadowType shadowType)
 	{
 		auto p = gtk_arrow_new(arrowType, shadowType);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkArrow*) p);
 	}
 

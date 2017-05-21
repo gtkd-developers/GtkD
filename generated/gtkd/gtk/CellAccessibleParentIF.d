@@ -26,8 +26,8 @@ module gtk.CellAccessibleParentIF;
 
 private import atk.RelationSet;
 private import gtk.CellAccessible;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /** */

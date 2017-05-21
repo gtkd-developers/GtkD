@@ -29,14 +29,14 @@ private import gio.Cancellable;
 private import gio.Icon;
 private import gio.IconIF;
 private import gio.MountOperation;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.ListG;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 

@@ -29,14 +29,14 @@ private import gio.DBusAuthObserver;
 private import gio.DBusConnection;
 private import gio.InitableIF;
 private import gio.InitableT;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -135,19 +135,19 @@ public class DBusServer : ObjectG, InitableIF
 	public this(string address, GDBusServerFlags flags, string guid, DBusAuthObserver observer, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_dbus_server_new_sync(Str.toStringz(address), flags, Str.toStringz(guid), (observer is null) ? null : observer.getDBusAuthObserverStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_sync");
 		}
-		
+
 		this(cast(GDBusServer*) p, true);
 	}
 
@@ -227,13 +227,13 @@ public class DBusServer : ObjectG, InitableIF
 		static OnNewConnectionDelegateWrapper[] listeners;
 		bool delegate(DBusConnection, DBusServer) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(DBusConnection, DBusServer) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnNewConnectionDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -291,12 +291,12 @@ public class DBusServer : ObjectG, InitableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackNewConnection(GDBusServer* dbusserverStruct, GDBusConnection* connection, OnNewConnectionDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(ObjectG.getDObject!(DBusConnection)(connection), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackNewConnectionDestroy(OnNewConnectionDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

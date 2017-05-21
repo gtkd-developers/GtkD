@@ -21,10 +21,10 @@
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-module gtkc.cairotypes;
+module cairo.c.types;
 
 
-public import gtkc.glibtypes;
+public import glib.c.types;
 
 //public import std.c.windows.windows;
 private alias void* HDC;

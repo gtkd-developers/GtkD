@@ -33,8 +33,8 @@ private import gtk.TreeModel;
 private import gtk.TreeModelIF;
 private import gtk.TreeModelT;
 private import gtk.TreePath;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -183,11 +183,11 @@ public class TreeModelFilter : ObjectG, TreeDragSourceIF, TreeModelIF
 	public bool convertChildIterToIter(out TreeIter filterIter, TreeIter childIter)
 	{
 		GtkTreeIter* outfilterIter = gMalloc!GtkTreeIter();
-		
+
 		auto p = gtk_tree_model_filter_convert_child_iter_to_iter(gtkTreeModelFilter, outfilterIter, (childIter is null) ? null : childIter.getTreeIterStruct()) != 0;
-		
+
 		filterIter = ObjectG.getDObject!(TreeIter)(outfilterIter, true);
-		
+
 		return p;
 	}
 
@@ -208,12 +208,12 @@ public class TreeModelFilter : ObjectG, TreeDragSourceIF, TreeModelIF
 	public TreePath convertChildPathToPath(TreePath childPath)
 	{
 		auto p = gtk_tree_model_filter_convert_child_path_to_path(gtkTreeModelFilter, (childPath is null) ? null : childPath.getTreePathStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) p, true);
 	}
 
@@ -229,9 +229,9 @@ public class TreeModelFilter : ObjectG, TreeDragSourceIF, TreeModelIF
 	public void convertIterToChildIter(out TreeIter childIter, TreeIter filterIter)
 	{
 		GtkTreeIter* outchildIter = gMalloc!GtkTreeIter();
-		
+
 		gtk_tree_model_filter_convert_iter_to_child_iter(gtkTreeModelFilter, outchildIter, (filterIter is null) ? null : filterIter.getTreeIterStruct());
-		
+
 		childIter = ObjectG.getDObject!(TreeIter)(outchildIter, true);
 	}
 
@@ -251,12 +251,12 @@ public class TreeModelFilter : ObjectG, TreeDragSourceIF, TreeModelIF
 	public TreePath convertPathToChildPath(TreePath filterPath)
 	{
 		auto p = gtk_tree_model_filter_convert_path_to_child_path(gtkTreeModelFilter, (filterPath is null) ? null : filterPath.getTreePathStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) p, true);
 	}
 
@@ -270,12 +270,12 @@ public class TreeModelFilter : ObjectG, TreeDragSourceIF, TreeModelIF
 	public TreeModelIF getModel()
 	{
 		auto p = gtk_tree_model_filter_get_model(gtkTreeModelFilter);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TreeModel, TreeModelIF)(cast(GtkTreeModel*) p);
 	}
 
@@ -402,12 +402,12 @@ public class TreeModelFilter : ObjectG, TreeDragSourceIF, TreeModelIF
 	public this(TreeModelIF childModel, TreePath root)
 	{
 		auto p = gtk_tree_model_filter_new((childModel is null) ? null : childModel.getTreeModelStruct(), (root is null) ? null : root.getTreePathStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkTreeModelFilter*) p, true);
 	}
 }

@@ -32,8 +32,8 @@ private import gtk.ToolItem;
 private import gtk.ToolShellIF;
 private import gtk.ToolShellT;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -118,12 +118,12 @@ public class ToolItemGroup : Container, ToolShellIF
 	public this(string label)
 	{
 		auto p = gtk_tool_item_group_new(Str.toStringz(label));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkToolItemGroup*) p);
 	}
 
@@ -153,12 +153,12 @@ public class ToolItemGroup : Container, ToolShellIF
 	public ToolItem getDropItem(int x, int y)
 	{
 		auto p = gtk_tool_item_group_get_drop_item(gtkToolItemGroup, x, y);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ToolItem)(cast(GtkToolItem*) p);
 	}
 
@@ -226,12 +226,12 @@ public class ToolItemGroup : Container, ToolShellIF
 	public Widget getLabelWidget()
 	{
 		auto p = gtk_tool_item_group_get_label_widget(gtkToolItemGroup);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -260,12 +260,12 @@ public class ToolItemGroup : Container, ToolShellIF
 	public ToolItem getNthItem(uint index)
 	{
 		auto p = gtk_tool_item_group_get_nth_item(gtkToolItemGroup, index);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ToolItem)(cast(GtkToolItem*) p);
 	}
 

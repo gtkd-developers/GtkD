@@ -30,8 +30,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.TextIter;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -107,12 +107,12 @@ public class TextTag : ObjectG
 	public this(string name)
 	{
 		auto p = gtk_text_tag_new(Str.toStringz(name));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkTextTag*) p, true);
 	}
 
@@ -184,13 +184,13 @@ public class TextTag : ObjectG
 		static OnDelegateWrapper[] listeners;
 		bool delegate(ObjectG, Event, TextIter, TextTag) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(ObjectG, Event, TextIter, TextTag) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -229,12 +229,12 @@ public class TextTag : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBack(GtkTextTag* texttagStruct, GObject* object, GdkEvent* event, GtkTextIter* iter, OnDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(ObjectG.getDObject!(ObjectG)(object), ObjectG.getDObject!(Event)(event), ObjectG.getDObject!(TextIter)(iter), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDestroy(OnDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

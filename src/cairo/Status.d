@@ -53,9 +53,9 @@
 
 module cairo.Status;
 
-public  import gtkc.cairotypes;
+public  import cairo.c.types;
 
-private import gtkc.cairo;
+private import cairo.c.functions;
 private import glib.ConstructionException;
 
 private import glib.Str;

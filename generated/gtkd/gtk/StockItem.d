@@ -27,8 +27,8 @@ module gtk.StockItem;
 private import glib.ListSG;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import gtkd.Loader;
 
 
@@ -77,12 +77,12 @@ public class StockItem
 	public StockItem copy()
 	{
 		auto p = gtk_stock_item_copy(gtkStockItem);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(StockItem)(cast(GtkStockItem*) p);
 	}
 
@@ -116,7 +116,7 @@ public class StockItem
 		{
 			itemsArray[i] = *(items[i].getStockItemStruct());
 		}
-		
+
 		gtk_stock_add(itemsArray.ptr, cast(uint)items.length);
 	}
 
@@ -135,7 +135,7 @@ public class StockItem
 		{
 			itemsArray[i] = *(items[i].getStockItemStruct());
 		}
-		
+
 		gtk_stock_add_static(itemsArray.ptr, cast(uint)items.length);
 	}
 
@@ -149,12 +149,12 @@ public class StockItem
 	public static ListSG stockListIds()
 	{
 		auto p = gtk_stock_list_ids();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p, true);
 	}
 
@@ -171,11 +171,11 @@ public class StockItem
 	public static bool stockLookup(string stockId, out StockItem item)
 	{
 		GtkStockItem* outitem = gMalloc!GtkStockItem();
-		
+
 		auto p = gtk_stock_lookup(Str.toStringz(stockId), outitem) != 0;
-		
+
 		item = ObjectG.getDObject!(StockItem)(outitem, true);
-		
+
 		return p;
 	}
 

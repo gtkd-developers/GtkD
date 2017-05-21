@@ -29,8 +29,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.CellRenderer;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -97,12 +97,12 @@ public class CellRendererToggle : CellRenderer
 	public this()
 	{
 		auto p = gtk_cell_renderer_toggle_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkCellRendererToggle*) p);
 	}
 
@@ -186,13 +186,13 @@ public class CellRendererToggle : CellRenderer
 		static OnToggledDelegateWrapper[] listeners;
 		void delegate(string, CellRendererToggle) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(string, CellRendererToggle) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnToggledDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -230,12 +230,12 @@ public class CellRendererToggle : CellRenderer
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackToggled(GtkCellRendererToggle* cellrenderertoggleStruct, char* path, OnToggledDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(path), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackToggledDestroy(OnToggledDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

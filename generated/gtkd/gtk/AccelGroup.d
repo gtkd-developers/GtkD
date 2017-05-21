@@ -31,8 +31,8 @@ private import glib.Str;
 private import gobject.Closure;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -104,12 +104,12 @@ public class AccelGroup : ObjectG
 	public this()
 	{
 		auto p = gtk_accel_group_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkAccelGroup*) p, true);
 	}
 
@@ -126,12 +126,12 @@ public class AccelGroup : ObjectG
 	public static AccelGroup fromAccelClosure(Closure closure)
 	{
 		auto p = gtk_accel_group_from_accel_closure((closure is null) ? null : closure.getClosureStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(AccelGroup)(cast(GtkAccelGroup*) p);
 	}
 
@@ -307,9 +307,9 @@ public class AccelGroup : ObjectG
 	public GtkAccelGroupEntry[] query(uint accelKey, GdkModifierType accelMods)
 	{
 		uint nEntries;
-		
+
 		auto p = gtk_accel_group_query(gtkAccelGroup, accelKey, accelMods, &nEntries);
-		
+
 		return p[0 .. nEntries];
 	}
 
@@ -326,13 +326,13 @@ public class AccelGroup : ObjectG
 		static OnAccelActivateDelegateWrapper[] listeners;
 		bool delegate(ObjectG, uint, GdkModifierType, AccelGroup) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(ObjectG, uint, GdkModifierType, AccelGroup) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnAccelActivateDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -370,12 +370,12 @@ public class AccelGroup : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackAccelActivate(GtkAccelGroup* accelgroupStruct, GObject* acceleratable, uint keyval, GdkModifierType modifier, OnAccelActivateDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(ObjectG.getDObject!(ObjectG)(acceleratable), keyval, modifier, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackAccelActivateDestroy(OnAccelActivateDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -386,13 +386,13 @@ public class AccelGroup : ObjectG
 		static OnAccelChangedDelegateWrapper[] listeners;
 		void delegate(uint, GdkModifierType, Closure, AccelGroup) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(uint, GdkModifierType, Closure, AccelGroup) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnAccelChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -432,12 +432,12 @@ public class AccelGroup : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackAccelChanged(GtkAccelGroup* accelgroupStruct, uint keyval, GdkModifierType modifier, GClosure* accelClosure, OnAccelChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(keyval, modifier, ObjectG.getDObject!(Closure)(accelClosure), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackAccelChangedDestroy(OnAccelChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -474,12 +474,12 @@ public class AccelGroup : ObjectG
 	public static ListSG accelGroupsFromObject(ObjectG object)
 	{
 		auto p = gtk_accel_groups_from_object((object is null) ? null : object.getObjectGStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -511,7 +511,7 @@ public class AccelGroup : ObjectG
 	public static string acceleratorGetLabel(uint acceleratorKey, GdkModifierType acceleratorMods)
 	{
 		auto retStr = gtk_accelerator_get_label(acceleratorKey, acceleratorMods);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -538,7 +538,7 @@ public class AccelGroup : ObjectG
 	public static string acceleratorGetLabelWithKeycode(Display display, uint acceleratorKey, uint keycode, GdkModifierType acceleratorMods)
 	{
 		auto retStr = gtk_accelerator_get_label_with_keycode((display is null) ? null : display.getDisplayStruct(), acceleratorKey, keycode, acceleratorMods);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -560,7 +560,7 @@ public class AccelGroup : ObjectG
 	public static string acceleratorName(uint acceleratorKey, GdkModifierType acceleratorMods)
 	{
 		auto retStr = gtk_accelerator_name(acceleratorKey, acceleratorMods);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -585,7 +585,7 @@ public class AccelGroup : ObjectG
 	public static string acceleratorNameWithKeycode(Display display, uint acceleratorKey, uint keycode, GdkModifierType acceleratorMods)
 	{
 		auto retStr = gtk_accelerator_name_with_keycode((display is null) ? null : display.getDisplayStruct(), acceleratorKey, keycode, acceleratorMods);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -644,9 +644,9 @@ public class AccelGroup : ObjectG
 	public static void acceleratorParseWithKeycode(string accelerator, out uint acceleratorKey, out uint[] acceleratorCodes, out GdkModifierType acceleratorMods)
 	{
 		uint* outacceleratorCodes = null;
-		
+
 		gtk_accelerator_parse_with_keycode(Str.toStringz(accelerator), &acceleratorKey, &outacceleratorCodes, &acceleratorMods);
-		
+
 		acceleratorCodes = outacceleratorCodes[0 .. getArrayLength(outacceleratorCodes)];
 	}
 

@@ -30,8 +30,8 @@ private import gobject.Signals;
 private import gtk.Gesture;
 private import gtk.GestureSingle;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -103,12 +103,12 @@ public class GestureSwipe : GestureSingle
 	public this(Widget widget)
 	{
 		auto p = gtk_gesture_swipe_new((widget is null) ? null : widget.getWidgetStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkGestureSwipe*) p, true);
 	}
 
@@ -135,13 +135,13 @@ public class GestureSwipe : GestureSingle
 		static OnSwipeDelegateWrapper[] listeners;
 		void delegate(double, double, GestureSwipe) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(double, double, GestureSwipe) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnSwipeDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -178,12 +178,12 @@ public class GestureSwipe : GestureSingle
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackSwipe(GtkGestureSwipe* gestureswipeStruct, double velocityX, double velocityY, OnSwipeDelegateWrapper wrapper)
 	{
 		wrapper.dlg(velocityX, velocityY, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackSwipeDestroy(OnSwipeDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

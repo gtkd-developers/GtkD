@@ -29,8 +29,8 @@ private import atk.HypertextT;
 private import atk.TextIF;
 private import atk.TextT;
 private import gtk.WidgetAccessible;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /** */

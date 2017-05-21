@@ -29,8 +29,8 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import glib.Variant;
 private import gobject.ObjectG;
-private import gsvc.gsv;
-public  import gsvc.gsvtypes;
+private import gsv.c.functions;
+public  import gsv.c.types;
 
 
 /** */
@@ -88,12 +88,12 @@ public class SpaceDrawer : ObjectG
 	public this()
 	{
 		auto p = gtk_source_space_drawer_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkSourceSpaceDrawer*) p, true);
 	}
 
@@ -145,12 +145,12 @@ public class SpaceDrawer : ObjectG
 	public Variant getMatrix()
 	{
 		auto p = gtk_source_space_drawer_get_matrix(gtkSourceSpaceDrawer);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Variant(cast(GVariant*) p, true);
 	}
 

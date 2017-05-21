@@ -30,8 +30,8 @@ private import gstreamer.BufferList;
 private import gstreamer.Iterator;
 private import gstreamer.ObjectGst;
 private import gstreamer.Pad;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /** */
@@ -124,11 +124,11 @@ public class ProxyPad : Pad
 	public static GstFlowReturn getrangeDefault(Pad pad, ObjectGst parent, ulong offset, uint size, out Buffer buffer)
 	{
 		GstBuffer* outbuffer = null;
-		
+
 		auto p = gst_proxy_pad_getrange_default((pad is null) ? null : pad.getPadStruct(), (parent is null) ? null : parent.getObjectGstStruct(), offset, size, &outbuffer);
-		
+
 		buffer = ObjectG.getDObject!(Buffer)(outbuffer);
-		
+
 		return p;
 	}
 
@@ -145,12 +145,12 @@ public class ProxyPad : Pad
 	public static Iterator iterateInternalLinksDefault(Pad pad, ObjectGst parent)
 	{
 		auto p = gst_proxy_pad_iterate_internal_links_default((pad is null) ? null : pad.getPadStruct(), (parent is null) ? null : parent.getObjectGstStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
 	}
 
@@ -166,12 +166,12 @@ public class ProxyPad : Pad
 	public ProxyPad getInternal()
 	{
 		auto p = gst_proxy_pad_get_internal(gstProxyPad);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ProxyPad)(cast(GstProxyPad*) p, true);
 	}
 }

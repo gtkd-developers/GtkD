@@ -30,8 +30,8 @@ private import gtk.RecentChooserIF;
 private import gtk.RecentChooserT;
 private import gtk.RecentManager;
 private import gtk.Window;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -138,7 +138,7 @@ public class RecentChooserDialog : Dialog, RecentChooserIF
 		this(cast(GtkRecentChooserDialog*) p);
 		addButtons(buttonsText, responses);
 	}
-	
+
 	/**
 	 * Creates a new GtkRecentChooserDialog with a specified recent manager.
 	 * This is useful if you have implemented your own recent manager, or if you

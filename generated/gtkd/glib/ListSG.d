@@ -24,9 +24,9 @@
 
 module glib.ListSG;
 
+private import glib.c.functions;
+public  import glib.c.types;
 private import gobject.ObjectG;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
 
 
 /**
@@ -67,7 +67,7 @@ public class ListSG
 	{
 		return gSList.data;
 	}
-	
+
 	/**
 	 * get the next element
 	 * Returns: the next element, or NULL if there are no more elements.
@@ -78,10 +78,10 @@ public class ListSG
 		{
 			return null;
 		}
-		
+
 		return new ListSG(gSList.next);
 	}
-	
+
 	/**
 	 * Turn the list into a D array of the desiered type.
 	 * Type T wraps should match the type of the data.
@@ -91,26 +91,26 @@ public class ListSG
 		T[] arr = new T[length()];
 		ListSG list = this;
 		size_t count;
-		
+
 		while(list !is null && count < arr.length)
 		{
 			arr[count] = ObjectG.getDObject!(T)(cast(TC)list.data);
 			list = list.next();
 			count++;
 		}
-		
+
 		return arr;
 	}
-	
+
 	unittest
 	{
 		import gobject.Value;
-		
+
 		auto list = new ListSG(null);
 		list = list.append(new Value(0).getValueStruct());
 		list = list.append(new Value(1).getValueStruct());
 		auto arr = list.toArray!Value();
-		
+
 		assert(arr[0].getInt() == 0);
 		assert(arr[1].getInt() == 1);
 	}
@@ -128,12 +128,12 @@ public class ListSG
 	public static ListSG alloc()
 	{
 		auto p = g_slist_alloc();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -169,12 +169,12 @@ public class ListSG
 	public ListSG append(void* data)
 	{
 		auto p = g_slist_append(gSList, data);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -191,12 +191,12 @@ public class ListSG
 	public ListSG concat(ListSG list2)
 	{
 		auto p = g_slist_concat(gSList, (list2 is null) ? null : list2.getListSGStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -213,12 +213,12 @@ public class ListSG
 	public ListSG copy()
 	{
 		auto p = g_slist_copy(gSList);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -253,12 +253,12 @@ public class ListSG
 	public ListSG copyDeep(GCopyFunc func, void* userData)
 	{
 		auto p = g_slist_copy_deep(gSList, func, userData);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -281,12 +281,12 @@ public class ListSG
 	public ListSG deleteLink(ListSG link)
 	{
 		auto p = g_slist_delete_link(gSList, (link is null) ? null : link.getListSGStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -303,12 +303,12 @@ public class ListSG
 	public ListSG find(void* data)
 	{
 		auto p = g_slist_find(gSList, data);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -330,12 +330,12 @@ public class ListSG
 	public ListSG findCustom(void* data, GCompareFunc func)
 	{
 		auto p = g_slist_find_custom(gSList, data, func);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -417,12 +417,12 @@ public class ListSG
 	public ListSG insert(void* data, int position)
 	{
 		auto p = g_slist_insert(gSList, data, position);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -438,12 +438,12 @@ public class ListSG
 	public ListSG insertBefore(ListSG sibling, void* data)
 	{
 		auto p = g_slist_insert_before(gSList, (sibling is null) ? null : sibling.getListSGStruct(), data);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -462,12 +462,12 @@ public class ListSG
 	public ListSG insertSorted(void* data, GCompareFunc func)
 	{
 		auto p = g_slist_insert_sorted(gSList, data, func);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -489,12 +489,12 @@ public class ListSG
 	public ListSG insertSortedWithData(void* data, GCompareDataFunc func, void* userData)
 	{
 		auto p = g_slist_insert_sorted_with_data(gSList, data, func, userData);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -509,12 +509,12 @@ public class ListSG
 	public ListSG last()
 	{
 		auto p = g_slist_last(gSList);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -544,12 +544,12 @@ public class ListSG
 	public ListSG nth(uint n)
 	{
 		auto p = g_slist_nth(gSList, n);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -603,12 +603,12 @@ public class ListSG
 	public ListSG prepend(void* data)
 	{
 		auto p = g_slist_prepend(gSList, data);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -625,12 +625,12 @@ public class ListSG
 	public ListSG remove(void* data)
 	{
 		auto p = g_slist_remove(gSList, data);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -648,12 +648,12 @@ public class ListSG
 	public ListSG removeAll(void* data)
 	{
 		auto p = g_slist_remove_all(gSList, data);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -677,12 +677,12 @@ public class ListSG
 	public ListSG removeLink(ListSG link)
 	{
 		auto p = g_slist_remove_link(gSList, (link is null) ? null : link.getListSGStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -694,12 +694,12 @@ public class ListSG
 	public ListSG reverse()
 	{
 		auto p = g_slist_reverse(gSList);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -718,12 +718,12 @@ public class ListSG
 	public ListSG sort(GCompareFunc compareFunc)
 	{
 		auto p = g_slist_sort(gSList, compareFunc);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -739,12 +739,12 @@ public class ListSG
 	public ListSG sortWithData(GCompareDataFunc compareFunc, void* userData)
 	{
 		auto p = g_slist_sort_with_data(gSList, compareFunc, userData);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 }

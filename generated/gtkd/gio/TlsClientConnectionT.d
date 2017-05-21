@@ -27,13 +27,13 @@ module gio.TlsClientConnectionT;
 public  import gio.IOStream;
 public  import gio.SocketConnectable;
 public  import gio.SocketConnectableIF;
+public  import gio.c.functions;
+public  import gio.c.types;
 public  import glib.ConstructionException;
 public  import glib.ErrorG;
 public  import glib.GException;
 public  import glib.ListG;
 public  import gobject.ObjectG;
-public  import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -89,12 +89,12 @@ public template TlsClientConnectionT(TStruct)
 	public ListG getAcceptedCas()
 	{
 		auto p = g_tls_client_connection_get_accepted_cas(getTlsClientConnectionStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -110,12 +110,12 @@ public template TlsClientConnectionT(TStruct)
 	public SocketConnectableIF getServerIdentity()
 	{
 		auto p = g_tls_client_connection_get_server_identity(getTlsClientConnectionStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SocketConnectable, SocketConnectableIF)(cast(GSocketConnectable*) p);
 	}
 

@@ -26,12 +26,12 @@ module gio.SocketAddress;
 
 private import gio.SocketConnectableIF;
 private import gio.SocketConnectableT;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -101,12 +101,12 @@ public class SocketAddress : ObjectG, SocketConnectableIF
 	public this(void* native, size_t len)
 	{
 		auto p = g_socket_address_new_from_native(native, len);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_native");
 		}
-		
+
 		this(cast(GSocketAddress*) p, true);
 	}
 
@@ -160,14 +160,14 @@ public class SocketAddress : ObjectG, SocketConnectableIF
 	public bool toNative(void* dest, size_t destlen)
 	{
 		GError* err = null;
-		
+
 		auto p = g_socket_address_to_native(gSocketAddress, dest, destlen, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 }

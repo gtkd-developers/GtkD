@@ -29,8 +29,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Action;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -123,12 +123,12 @@ public class ToggleAction : Action
 	public this(string name, string label, string tooltip, string stockId)
 	{
 		auto p = gtk_toggle_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkToggleAction*) p, true);
 	}
 
@@ -198,13 +198,13 @@ public class ToggleAction : Action
 		static OnToggledDelegateWrapper[] listeners;
 		void delegate(ToggleAction) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(ToggleAction) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnToggledDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -235,12 +235,12 @@ public class ToggleAction : Action
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackToggled(GtkToggleAction* toggleactionStruct, OnToggledDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackToggledDestroy(OnToggledDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

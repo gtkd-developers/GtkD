@@ -28,8 +28,8 @@ private import glib.ConstructionException;
 private import glib.MainContext;
 private import glib.Str;
 private import glib.TimeVal;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 private import gtkd.Loader;
 
 
@@ -95,12 +95,12 @@ public class Source
 	public this(GSourceFuncs* sourceFuncs, uint structSize)
 	{
 		auto p = g_source_new(sourceFuncs, structSize);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GSource*) p);
 	}
 
@@ -238,12 +238,12 @@ public class Source
 	public MainContext getContext()
 	{
 		auto p = g_source_get_context(gSource);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new MainContext(cast(GMainContext*) p);
 	}
 
@@ -462,12 +462,12 @@ public class Source
 	public Source doref()
 	{
 		auto p = g_source_ref(gSource);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Source(cast(GSource*) p, true);
 	}
 

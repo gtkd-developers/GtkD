@@ -36,8 +36,8 @@ private import gobject.Value;
 private import gtk.IconSet;
 private import gtk.IconSource;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import pango.PgLayout;
 private import std.algorithm;
 
@@ -118,12 +118,12 @@ public class Style : ObjectG
 	public this()
 	{
 		auto p = gtk_style_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkStyle*) p, true);
 	}
 
@@ -161,12 +161,12 @@ public class Style : ObjectG
 	public Style attach(Window window)
 	{
 		auto p = gtk_style_attach(gtkStyle, (window is null) ? null : window.getWindowStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Style)(cast(GtkStyle*) p);
 	}
 
@@ -180,12 +180,12 @@ public class Style : ObjectG
 	public Style copy()
 	{
 		auto p = gtk_style_copy(gtkStyle);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Style)(cast(GtkStyle*) p, true);
 	}
 
@@ -215,9 +215,9 @@ public class Style : ObjectG
 	public void getStyleProperty(GType widgetType, string propertyName, out Value value)
 	{
 		GValue* outvalue = gMalloc!GValue();
-		
+
 		gtk_style_get_style_property(gtkStyle, widgetType, Str.toStringz(propertyName), outvalue);
-		
+
 		value = ObjectG.getDObject!(Value)(outvalue, true);
 	}
 
@@ -271,11 +271,11 @@ public class Style : ObjectG
 	public bool lookupColor(string colorName, out Color color)
 	{
 		GdkColor* outcolor = gMalloc!GdkColor();
-		
+
 		auto p = gtk_style_lookup_color(gtkStyle, Str.toStringz(colorName), outcolor) != 0;
-		
+
 		color = ObjectG.getDObject!(Color)(outcolor, true);
-		
+
 		return p;
 	}
 
@@ -294,12 +294,12 @@ public class Style : ObjectG
 	public IconSet lookupIconSet(string stockId)
 	{
 		auto p = gtk_style_lookup_icon_set(gtkStyle, Str.toStringz(stockId));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(IconSet)(cast(GtkIconSet*) p);
 	}
 
@@ -326,12 +326,12 @@ public class Style : ObjectG
 	public Pixbuf renderIcon(IconSource source, GtkTextDirection direction, GtkStateType state, GtkIconSize size, Widget widget, string detail)
 	{
 		auto p = gtk_style_render_icon(gtkStyle, (source is null) ? null : source.getIconSourceStruct(), direction, state, size, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
 	}
 
@@ -355,13 +355,13 @@ public class Style : ObjectG
 		static OnRealizeDelegateWrapper[] listeners;
 		void delegate(Style) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Style) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnRealizeDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -396,12 +396,12 @@ public class Style : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackRealize(GtkStyle* styleStruct, OnRealizeDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackRealizeDestroy(OnRealizeDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -412,13 +412,13 @@ public class Style : ObjectG
 		static OnUnrealizeDelegateWrapper[] listeners;
 		void delegate(Style) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Style) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnUnrealizeDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -453,12 +453,12 @@ public class Style : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackUnrealize(GtkStyle* styleStruct, OnUnrealizeDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackUnrealizeDestroy(OnUnrealizeDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

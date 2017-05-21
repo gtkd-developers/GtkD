@@ -25,11 +25,11 @@
 module gdk.Keymap;
 
 private import gdk.Display;
+private import gdk.c.functions;
+public  import gdk.c.types;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gdk;
-public  import gtkc.gdktypes;
 private import std.algorithm;
 
 
@@ -90,12 +90,12 @@ public class Keymap : ObjectG
 	public static Keymap getDefault()
 	{
 		auto p = gdk_keymap_get_default();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Keymap)(cast(GdkKeymap*) p);
 	}
 
@@ -112,12 +112,12 @@ public class Keymap : ObjectG
 	public static Keymap getForDisplay(Display display)
 	{
 		auto p = gdk_keymap_get_for_display((display is null) ? null : display.getDisplayStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Keymap)(cast(GdkKeymap*) p);
 	}
 
@@ -190,12 +190,12 @@ public class Keymap : ObjectG
 		GdkKeymapKey* outkeys = null;
 		uint* outkeyvals = null;
 		int nEntries;
-		
+
 		auto p = gdk_keymap_get_entries_for_keycode(gdkKeymap, hardwareKeycode, &outkeys, &outkeyvals, &nEntries) != 0;
-		
+
 		keys = outkeys[0 .. nEntries];
 		keyvals = outkeyvals[0 .. nEntries];
-		
+
 		return p;
 	}
 
@@ -224,11 +224,11 @@ public class Keymap : ObjectG
 	{
 		GdkKeymapKey* outkeys = null;
 		int nKeys;
-		
+
 		auto p = gdk_keymap_get_entries_for_keyval(gdkKeymap, keyval, &outkeys, &nKeys) != 0;
-		
+
 		keys = outkeys[0 .. nKeys];
-		
+
 		return p;
 	}
 
@@ -416,13 +416,13 @@ public class Keymap : ObjectG
 		static OnDirectionChangedDelegateWrapper[] listeners;
 		void delegate(Keymap) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Keymap) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDirectionChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -455,12 +455,12 @@ public class Keymap : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDirectionChanged(GdkKeymap* keymapStruct, OnDirectionChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDirectionChangedDestroy(OnDirectionChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -471,13 +471,13 @@ public class Keymap : ObjectG
 		static OnKeysChangedDelegateWrapper[] listeners;
 		void delegate(Keymap) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Keymap) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnKeysChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -510,12 +510,12 @@ public class Keymap : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackKeysChanged(GdkKeymap* keymapStruct, OnKeysChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackKeysChangedDestroy(OnKeysChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -526,13 +526,13 @@ public class Keymap : ObjectG
 		static OnStateChangedDelegateWrapper[] listeners;
 		void delegate(Keymap) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Keymap) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnStateChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -566,12 +566,12 @@ public class Keymap : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackStateChanged(GdkKeymap* keymapStruct, OnStateChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackStateChangedDestroy(OnStateChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

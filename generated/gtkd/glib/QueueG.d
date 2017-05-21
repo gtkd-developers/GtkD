@@ -26,8 +26,8 @@ module glib.QueueG;
 
 private import glib.ConstructionException;
 private import glib.ListG;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 private import gtkd.Loader;
 
 
@@ -94,12 +94,12 @@ public class QueueG
 	public QueueG copy()
 	{
 		auto p = g_queue_copy(gQueue);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new QueueG(cast(GQueue*) p);
 	}
 
@@ -131,12 +131,12 @@ public class QueueG
 	public ListG find(void* data)
 	{
 		auto p = g_queue_find(gQueue, data);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -159,12 +159,12 @@ public class QueueG
 	public ListG findCustom(void* data, GCompareFunc func)
 	{
 		auto p = g_queue_find_custom(gQueue, data, func);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -354,12 +354,12 @@ public class QueueG
 	public ListG peekHeadLink()
 	{
 		auto p = g_queue_peek_head_link(gQueue);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -393,12 +393,12 @@ public class QueueG
 	public ListG peekNthLink(uint n)
 	{
 		auto p = g_queue_peek_nth_link(gQueue, n);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -423,12 +423,12 @@ public class QueueG
 	public ListG peekTailLink()
 	{
 		auto p = g_queue_peek_tail_link(gQueue);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -452,12 +452,12 @@ public class QueueG
 	public ListG popHeadLink()
 	{
 		auto p = g_queue_pop_head_link(gQueue);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -489,12 +489,12 @@ public class QueueG
 	public ListG popNthLink(uint n)
 	{
 		auto p = g_queue_pop_nth_link(gQueue, n);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -518,12 +518,12 @@ public class QueueG
 	public ListG popTailLink()
 	{
 		auto p = g_queue_pop_tail_link(gQueue);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -686,12 +686,12 @@ public class QueueG
 	public this()
 	{
 		auto p = g_queue_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GQueue*) p);
 	}
 }

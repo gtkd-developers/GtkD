@@ -31,8 +31,8 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Bin;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -155,12 +155,12 @@ public class Popover : Bin
 	public this(Widget relativeTo)
 	{
 		auto p = gtk_popover_new((relativeTo is null) ? null : relativeTo.getWidgetStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkPopover*) p);
 	}
 
@@ -189,12 +189,12 @@ public class Popover : Bin
 	public this(Widget relativeTo, MenuModel model)
 	{
 		auto p = gtk_popover_new_from_model((relativeTo is null) ? null : relativeTo.getWidgetStruct(), (model is null) ? null : model.getMenuModelStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_model");
 		}
-		
+
 		this(cast(GtkPopover*) p);
 	}
 
@@ -261,12 +261,12 @@ public class Popover : Bin
 	public Widget getDefaultWidget()
 	{
 		auto p = gtk_popover_get_default_widget(gtkPopover);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -319,12 +319,12 @@ public class Popover : Bin
 	public Widget getRelativeTo()
 	{
 		auto p = gtk_popover_get_relative_to(gtkPopover);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -491,13 +491,13 @@ public class Popover : Bin
 		static OnClosedDelegateWrapper[] listeners;
 		void delegate(Popover) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Popover) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnClosedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -525,12 +525,12 @@ public class Popover : Bin
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackClosed(GtkPopover* popoverStruct, OnClosedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackClosedDestroy(OnClosedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

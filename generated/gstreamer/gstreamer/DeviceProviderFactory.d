@@ -29,8 +29,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gstreamer.DeviceProvider;
 private import gstreamer.PluginFeature;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /**
@@ -101,12 +101,12 @@ public class DeviceProviderFactory : PluginFeature
 	public static DeviceProviderFactory find(string name)
 	{
 		auto p = gst_device_provider_factory_find(Str.toStringz(name));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(DeviceProviderFactory)(cast(GstDeviceProviderFactory*) p, true);
 	}
 
@@ -125,12 +125,12 @@ public class DeviceProviderFactory : PluginFeature
 	public static DeviceProvider getByName(string factoryname)
 	{
 		auto p = gst_device_provider_factory_get_by_name(Str.toStringz(factoryname));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(DeviceProvider)(cast(GstDeviceProvider*) p, true);
 	}
 
@@ -149,12 +149,12 @@ public class DeviceProviderFactory : PluginFeature
 	public static ListG listGetDeviceProviders(GstRank minrank)
 	{
 		auto p = gst_device_provider_factory_list_get_device_providers(minrank);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -170,12 +170,12 @@ public class DeviceProviderFactory : PluginFeature
 	public DeviceProvider get()
 	{
 		auto p = gst_device_provider_factory_get(gstDeviceProviderFactory);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(DeviceProvider)(cast(GstDeviceProvider*) p, true);
 	}
 
@@ -220,7 +220,7 @@ public class DeviceProviderFactory : PluginFeature
 	public string[] getMetadataKeys()
 	{
 		auto retStr = gst_device_provider_factory_get_metadata_keys(gstDeviceProviderFactory);
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}

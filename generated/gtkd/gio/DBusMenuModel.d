@@ -26,11 +26,11 @@ module gio.DBusMenuModel;
 
 private import gio.DBusConnection;
 private import gio.MenuModel;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -78,12 +78,12 @@ public class DBusMenuModel : MenuModel
 	this(DBusConnection connection, string busName, string objectPath)
 	{
 		auto p =  g_dbus_menu_model_get((connection is null) ? null : connection.getDBusConnectionStruct(), Str.toStringz(busName), Str.toStringz(objectPath));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by g_dbus_menu_model_get");
 		}
-		
+
 		this(cast(GDBusMenuModel*) p, true);
 	}
 
@@ -119,12 +119,12 @@ public class DBusMenuModel : MenuModel
 	public static DBusMenuModel get(DBusConnection connection, string busName, string objectPath)
 	{
 		auto p = g_dbus_menu_model_get((connection is null) ? null : connection.getDBusConnectionStruct(), Str.toStringz(busName), Str.toStringz(objectPath));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(DBusMenuModel)(cast(GDBusMenuModel*) p, true);
 	}
 }

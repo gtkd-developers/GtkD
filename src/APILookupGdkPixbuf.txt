@@ -24,10 +24,10 @@ wrap: gdkpixbuf
 file: GdkPixbuf-2.0.gir
 
 addAliases: start
-	public  import gtkc.glibtypes;
-	public  import gtkc.gobjecttypes;
-	public  import gtkc.gdktypes;
-	public  import gtkc.atktypes;
+	public  import glib.c.types;
+	public  import gobject.c.types;
+	public  import gdk.c.types;
+	public  import atk.c.types;
 	private import std.stdio;
 addAliases: start
 

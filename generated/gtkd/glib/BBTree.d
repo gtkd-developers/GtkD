@@ -25,8 +25,8 @@
 module glib.BBTree;
 
 private import glib.ConstructionException;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 private import gtkd.Loader;
 
 
@@ -195,12 +195,12 @@ public class BBTree
 	public BBTree doref()
 	{
 		auto p = g_tree_ref(gTree);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new BBTree(cast(GTree*) p);
 	}
 
@@ -335,12 +335,12 @@ public class BBTree
 	public this(GCompareFunc keyCompareFunc)
 	{
 		auto p = g_tree_new(keyCompareFunc);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GTree*) p);
 	}
 
@@ -366,12 +366,12 @@ public class BBTree
 	public this(GCompareDataFunc keyCompareFunc, void* keyCompareData, GDestroyNotify keyDestroyFunc, GDestroyNotify valueDestroyFunc)
 	{
 		auto p = g_tree_new_full(keyCompareFunc, keyCompareData, keyDestroyFunc, valueDestroyFunc);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_full");
 		}
-		
+
 		this(cast(GTree*) p);
 	}
 
@@ -390,12 +390,12 @@ public class BBTree
 	public this(GCompareDataFunc keyCompareFunc, void* keyCompareData)
 	{
 		auto p = g_tree_new_with_data(keyCompareFunc, keyCompareData);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_with_data");
 		}
-		
+
 		this(cast(GTree*) p);
 	}
 }

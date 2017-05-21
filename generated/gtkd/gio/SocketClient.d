@@ -33,14 +33,14 @@ private import gio.SocketAddress;
 private import gio.SocketConnectable;
 private import gio.SocketConnectableIF;
 private import gio.SocketConnection;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -115,12 +115,12 @@ public class SocketClient : ObjectG
 	public this()
 	{
 		auto p = g_socket_client_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GSocketClient*) p, true);
 	}
 
@@ -186,19 +186,19 @@ public class SocketClient : ObjectG
 	public SocketConnection connect(SocketConnectableIF connectable, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_socket_client_connect(gSocketClient, (connectable is null) ? null : connectable.getSocketConnectableStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) p, true);
 	}
 
@@ -237,19 +237,19 @@ public class SocketClient : ObjectG
 	public SocketConnection connectFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_socket_client_connect_finish(gSocketClient, (result is null) ? null : result.getAsyncResultStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) p, true);
 	}
 
@@ -299,19 +299,19 @@ public class SocketClient : ObjectG
 	public SocketConnection connectToHost(string hostAndPort, ushort defaultPort, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_socket_client_connect_to_host(gSocketClient, Str.toStringz(hostAndPort), defaultPort, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) p, true);
 	}
 
@@ -351,19 +351,19 @@ public class SocketClient : ObjectG
 	public SocketConnection connectToHostFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_socket_client_connect_to_host_finish(gSocketClient, (result is null) ? null : result.getAsyncResultStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) p, true);
 	}
 
@@ -395,19 +395,19 @@ public class SocketClient : ObjectG
 	public SocketConnection connectToService(string domain, string service, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_socket_client_connect_to_service(gSocketClient, Str.toStringz(domain), Str.toStringz(service), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) p, true);
 	}
 
@@ -444,19 +444,19 @@ public class SocketClient : ObjectG
 	public SocketConnection connectToServiceFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_socket_client_connect_to_service_finish(gSocketClient, (result is null) ? null : result.getAsyncResultStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) p, true);
 	}
 
@@ -497,19 +497,19 @@ public class SocketClient : ObjectG
 	public SocketConnection connectToUri(string uri, ushort defaultPort, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_socket_client_connect_to_uri(gSocketClient, Str.toStringz(uri), defaultPort, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) p, true);
 	}
 
@@ -549,19 +549,19 @@ public class SocketClient : ObjectG
 	public SocketConnection connectToUriFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_socket_client_connect_to_uri_finish(gSocketClient, (result is null) ? null : result.getAsyncResultStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) p, true);
 	}
 
@@ -603,12 +603,12 @@ public class SocketClient : ObjectG
 	public SocketAddress getLocalAddress()
 	{
 		auto p = g_socket_client_get_local_address(gSocketClient);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SocketAddress)(cast(GSocketAddress*) p);
 	}
 
@@ -639,12 +639,12 @@ public class SocketClient : ObjectG
 	public ProxyResolverIF getProxyResolver()
 	{
 		auto p = g_socket_client_get_proxy_resolver(gSocketClient);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ProxyResolver, ProxyResolverIF)(cast(GProxyResolver*) p);
 	}
 
@@ -882,13 +882,13 @@ public class SocketClient : ObjectG
 		static OnDelegateWrapper[] listeners;
 		void delegate(GSocketClientEvent, SocketConnectableIF, IOStream, SocketClient) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(GSocketClientEvent, SocketConnectableIF, IOStream, SocketClient) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -973,12 +973,12 @@ public class SocketClient : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBack(GSocketClient* socketclientStruct, GSocketClientEvent event, GSocketConnectable* connectable, GIOStream* connection, OnDelegateWrapper wrapper)
 	{
 		wrapper.dlg(event, ObjectG.getDObject!(SocketConnectable, SocketConnectableIF)(connectable), ObjectG.getDObject!(IOStream)(connection), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDestroy(OnDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

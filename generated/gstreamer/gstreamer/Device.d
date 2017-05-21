@@ -31,8 +31,8 @@ private import gstreamer.Caps;
 private import gstreamer.Element;
 private import gstreamer.ObjectGst;
 private import gstreamer.Structure;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 private import std.algorithm;
 
 
@@ -102,12 +102,12 @@ public class Device : ObjectGst
 	public Element createElement(string name)
 	{
 		auto p = gst_device_create_element(gstDevice, Str.toStringz(name));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Element)(cast(GstElement*) p, true);
 	}
 
@@ -122,12 +122,12 @@ public class Device : ObjectGst
 	public Caps getCaps()
 	{
 		auto p = gst_device_get_caps(gstDevice);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
 	}
 
@@ -143,7 +143,7 @@ public class Device : ObjectGst
 	public string getDeviceClass()
 	{
 		auto retStr = gst_device_get_device_class(gstDevice);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -158,7 +158,7 @@ public class Device : ObjectGst
 	public string getDisplayName()
 	{
 		auto retStr = gst_device_get_display_name(gstDevice);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -174,12 +174,12 @@ public class Device : ObjectGst
 	public Structure getProperties()
 	{
 		auto p = gst_device_get_properties(gstDevice);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p, true);
 	}
 
@@ -241,13 +241,13 @@ public class Device : ObjectGst
 		static OnRemovedDelegateWrapper[] listeners;
 		void delegate(Device) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Device) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnRemovedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -275,12 +275,12 @@ public class Device : ObjectGst
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackRemoved(GstDevice* deviceStruct, OnRemovedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackRemovedDestroy(OnRemovedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

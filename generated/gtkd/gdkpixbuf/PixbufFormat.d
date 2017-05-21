@@ -24,10 +24,10 @@
 
 module gdkpixbuf.PixbufFormat;
 
+private import gdkpixbuf.c.functions;
+public  import gdkpixbuf.c.types;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gdkpixbuf;
-public  import gtkc.gdkpixbuftypes;
 private import gtkd.Loader;
 
 
@@ -85,12 +85,12 @@ public class PixbufFormat
 	public PixbufFormat copy()
 	{
 		auto p = gdk_pixbuf_format_copy(gdkPixbufFormat);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PixbufFormat)(cast(GdkPixbufFormat*) p, true);
 	}
 
@@ -116,7 +116,7 @@ public class PixbufFormat
 	public string getDescription()
 	{
 		auto retStr = gdk_pixbuf_format_get_description(gdkPixbufFormat);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -133,7 +133,7 @@ public class PixbufFormat
 	public string[] getExtensions()
 	{
 		auto retStr = gdk_pixbuf_format_get_extensions(gdkPixbufFormat);
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}
@@ -151,7 +151,7 @@ public class PixbufFormat
 	public string getLicense()
 	{
 		auto retStr = gdk_pixbuf_format_get_license(gdkPixbufFormat);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -167,7 +167,7 @@ public class PixbufFormat
 	public string[] getMimeTypes()
 	{
 		auto retStr = gdk_pixbuf_format_get_mime_types(gdkPixbufFormat);
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}
@@ -182,7 +182,7 @@ public class PixbufFormat
 	public string getName()
 	{
 		auto retStr = gdk_pixbuf_format_get_name(gdkPixbufFormat);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}

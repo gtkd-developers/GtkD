@@ -30,8 +30,8 @@ private import glib.ErrorG;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -191,12 +191,12 @@ public class GLArea : Widget
 	public this()
 	{
 		auto p = gtk_gl_area_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkGLArea*) p, true);
 	}
 
@@ -238,12 +238,12 @@ public class GLArea : Widget
 	public GLContext getContext()
 	{
 		auto p = gtk_gl_area_get_context(gtkGLArea);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(GLContext)(cast(GdkGLContext*) p);
 	}
 
@@ -257,12 +257,12 @@ public class GLArea : Widget
 	public ErrorG getError()
 	{
 		auto p = gtk_gl_area_get_error(gtkGLArea);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ErrorG(cast(GError*) p);
 	}
 
@@ -483,13 +483,13 @@ public class GLArea : Widget
 		static OnCreateContextDelegateWrapper[] listeners;
 		GLContext delegate(GLArea) dlg;
 		gulong handlerId;
-		
+
 		this(GLContext delegate(GLArea) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCreateContextDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -532,13 +532,13 @@ public class GLArea : Widget
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static GdkGLContext* callBackCreateContext(GtkGLArea* glareaStruct, OnCreateContextDelegateWrapper wrapper)
 	{
 		auto r = wrapper.dlg(wrapper.outer);
 		return r.getGLContextStruct();
 	}
-	
+
 	extern(C) static void callBackCreateContextDestroy(OnCreateContextDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -549,13 +549,13 @@ public class GLArea : Widget
 		static OnRenderDelegateWrapper[] listeners;
 		bool delegate(GLContext, GLArea) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(GLContext, GLArea) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnRenderDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -597,12 +597,12 @@ public class GLArea : Widget
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackRender(GtkGLArea* glareaStruct, GdkGLContext* context, OnRenderDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(ObjectG.getDObject!(GLContext)(context), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackRenderDestroy(OnRenderDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -613,13 +613,13 @@ public class GLArea : Widget
 		static OnResizeDelegateWrapper[] listeners;
 		void delegate(int, int, GLArea) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(int, int, GLArea) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnResizeDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -663,12 +663,12 @@ public class GLArea : Widget
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackResize(GtkGLArea* glareaStruct, int width, int height, OnResizeDelegateWrapper wrapper)
 	{
 		wrapper.dlg(width, height, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackResizeDestroy(OnResizeDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

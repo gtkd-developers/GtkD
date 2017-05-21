@@ -29,8 +29,8 @@ private import gobject.Closure;
 private import gobject.ObjectG;
 private import gobject.TypeInstance;
 private import gobject.Value;
-private import gtkc.gobject;
-public  import gtkc.gobjecttypes;
+private import gobject.c.functions;
+public  import gobject.c.types;
 
 
 /** */
@@ -134,7 +134,7 @@ public struct Signals
 		{
 			instanceAndParamsArray[i] = *(instanceAndParams[i].getValueStruct());
 		}
-		
+
 		g_signal_chain_from_overridden(instanceAndParamsArray.ptr, (returnValue is null) ? null : returnValue.getValueStruct());
 	}
 
@@ -263,7 +263,7 @@ public struct Signals
 		{
 			instanceAndParamsArray[i] = *(instanceAndParams[i].getValueStruct());
 		}
-		
+
 		g_signal_emitv(instanceAndParamsArray.ptr, signalId, detail, (returnValue is null) ? null : returnValue.getValueStruct());
 	}
 
@@ -516,9 +516,9 @@ public struct Signals
 	public static uint[] listIds(GType itype)
 	{
 		uint nIds;
-		
+
 		auto p = g_signal_list_ids(itype, &nIds);
-		
+
 		return p[0 .. nIds];
 	}
 
@@ -783,12 +783,12 @@ public struct Signals
 	public static Closure typeCclosureNew(GType itype, uint structOffset)
 	{
 		auto p = g_signal_type_cclosure_new(itype, structOffset);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Closure)(cast(GClosure*) p, true);
 	}
 }

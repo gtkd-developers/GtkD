@@ -25,9 +25,9 @@ file: Pango-1.0.gir
 file: PangoCairo-1.0.gir
 
 addAliases: start
-	public import gtkc.cairotypes;
-	public import gtkc.glibtypes;
-	public import gtkc.gobjecttypes;
+	public import cairo.c.types;
+	public import glib.c.types;
+	public import gobject.c.types;
 
 	alias void* FTLibrary;
 addAliases: end

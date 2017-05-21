@@ -31,8 +31,8 @@ private import gobject.ParamSpec;
 private import gobject.Signals;
 private import gstreamer.ObjectGst;
 private import gstreamer.Stream;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 private import std.algorithm;
 
 
@@ -112,12 +112,12 @@ public class StreamCollection : ObjectGst
 	public this(string upstreamId)
 	{
 		auto p = gst_stream_collection_new(Str.toStringz(upstreamId));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GstStreamCollection*) p);
 	}
 
@@ -163,12 +163,12 @@ public class StreamCollection : ObjectGst
 	public Stream getStream(uint index)
 	{
 		auto p = gst_stream_collection_get_stream(gstStreamCollection, index);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Stream)(cast(GstStream*) p);
 	}
 
@@ -189,13 +189,13 @@ public class StreamCollection : ObjectGst
 		static OnStreamNotifyDelegateWrapper[] listeners;
 		void delegate(Stream, ParamSpec, StreamCollection) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Stream, ParamSpec, StreamCollection) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnStreamNotifyDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -223,12 +223,12 @@ public class StreamCollection : ObjectGst
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackStreamNotify(GstStreamCollection* streamcollectionStruct, GstStream* object, GParamSpec* p0, OnStreamNotifyDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Stream)(object), ObjectG.getDObject!(ParamSpec)(p0), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackStreamNotifyDestroy(OnStreamNotifyDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

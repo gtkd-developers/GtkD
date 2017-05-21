@@ -27,9 +27,9 @@ module gdk.DrawingContext;
 private import cairo.Context;
 private import cairo.Region;
 private import gdk.Window;
+private import gdk.c.functions;
+public  import gdk.c.types;
 private import gobject.ObjectG;
-private import gtkc.gdk;
-public  import gtkc.gdktypes;
 
 
 /**
@@ -102,12 +102,12 @@ public class DrawingContext : ObjectG
 	public Context getCairoContext()
 	{
 		auto p = gdk_drawing_context_get_cairo_context(gdkDrawingContext);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Context(cast(cairo_t*) p);
 	}
 
@@ -121,12 +121,12 @@ public class DrawingContext : ObjectG
 	public Region getClip()
 	{
 		auto p = gdk_drawing_context_get_clip(gdkDrawingContext);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Region(cast(cairo_region_t*) p);
 	}
 
@@ -140,12 +140,12 @@ public class DrawingContext : ObjectG
 	public Window getWindow()
 	{
 		auto p = gdk_drawing_context_get_window(gdkDrawingContext);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 

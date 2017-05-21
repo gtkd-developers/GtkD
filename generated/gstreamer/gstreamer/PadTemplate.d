@@ -31,8 +31,8 @@ private import gobject.Signals;
 private import gstreamer.Caps;
 private import gstreamer.ObjectGst;
 private import gstreamer.Pad;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 private import std.algorithm;
 
 
@@ -156,12 +156,12 @@ public class PadTemplate : ObjectGst
 	public this(string nameTemplate, GstPadDirection direction, GstPadPresence presence, Caps caps)
 	{
 		auto p = gst_pad_template_new(Str.toStringz(nameTemplate), direction, presence, (caps is null) ? null : caps.getCapsStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GstPadTemplate*) p);
 	}
 
@@ -174,12 +174,12 @@ public class PadTemplate : ObjectGst
 	public Caps getCaps()
 	{
 		auto p = gst_pad_template_get_caps(gstPadTemplate);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
 	}
 
@@ -199,13 +199,13 @@ public class PadTemplate : ObjectGst
 		static OnPadCreatedDelegateWrapper[] listeners;
 		void delegate(Pad, PadTemplate) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Pad, PadTemplate) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPadCreatedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -238,12 +238,12 @@ public class PadTemplate : ObjectGst
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPadCreated(GstPadTemplate* padtemplateStruct, GstPad* pad, OnPadCreatedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Pad)(pad), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPadCreatedDestroy(OnPadCreatedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

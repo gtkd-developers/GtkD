@@ -34,8 +34,8 @@ private import gtk.HButtonBox;
 private import gtk.VBox;
 private import gtk.Widget;
 private import gtk.Window;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -202,12 +202,12 @@ public class Dialog : Window
 		{
 			throw new ConstructionException("null returned by gtk_dialog_new_with_buttons");
 		}
-		
+
 		this(cast(GtkDialog*)p);
-		
+
 		addButtons(buttonsText[1 .. $], responses[1 .. $]);
 	}
-	
+
 	/** ditto */
 	this(string title, Window parent, GtkDialogFlags flags, StockID[] stockIDs, ResponseType[] responses)
 	{
@@ -216,25 +216,25 @@ public class Dialog : Window
 		{
 			throw new ConstructionException("null returned by gtk_dialog_new_with_buttons");
 		}
-		
+
 		this(cast(GtkDialog*)p);
-		
+
 		addButtons(stockIDs[1 .. $], responses[1 .. $]);
 	}
-	
+
 	/** */
 	public Button addButton(StockID stockID, int responseId)
 	{
 		auto p = gtk_dialog_add_button(gtkDialog, Str.toStringz(stockID), responseId);
-		
+
 		if ( p is null )
 		{
 			return null;
 		}
-		
+
 		return new Button(cast(GtkButton*)p);
 	}
-	
+
 	/** */
 	public void addButtons(string[] buttonsText, ResponseType[] responses)
 	{
@@ -243,7 +243,7 @@ public class Dialog : Window
 			addButton(buttonsText[i], responses[i]);
 		}
 	}
-	
+
 	/** */
 	public void addButtons(StockID[] stockIDs, ResponseType[] responses)
 	{
@@ -252,7 +252,7 @@ public class Dialog : Window
 			addButton(stockIDs[i], responses[i]);
 		}
 	}
-	
+
 	//Return the corect class instead of Widget
 	/**
 	 * Returns the action area of dialog.
@@ -268,7 +268,7 @@ public class Dialog : Window
 		}
 		return new HButtonBox(cast(GtkHButtonBox*) p);
 	}
-	
+
 	//Return the corect class instead of Widget
 	/**
 	 * Returns the content area of dialog.
@@ -307,12 +307,12 @@ public class Dialog : Window
 	public this()
 	{
 		auto p = gtk_dialog_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkDialog*) p);
 	}
 
@@ -349,12 +349,12 @@ public class Dialog : Window
 	public Widget addButton(string buttonText, int responseId)
 	{
 		auto p = gtk_dialog_add_button(gtkDialog, Str.toStringz(buttonText), responseId);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -370,12 +370,12 @@ public class Dialog : Window
 	public Widget getHeaderBar()
 	{
 		auto p = gtk_dialog_get_header_bar(gtkDialog);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -411,12 +411,12 @@ public class Dialog : Window
 	public Widget getWidgetForResponse(int responseId)
 	{
 		auto p = gtk_dialog_get_widget_for_response(gtkDialog, responseId);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -541,13 +541,13 @@ public class Dialog : Window
 		static OnCloseDelegateWrapper[] listeners;
 		void delegate(Dialog) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Dialog) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCloseDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -582,12 +582,12 @@ public class Dialog : Window
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackClose(GtkDialog* dialogStruct, OnCloseDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackCloseDestroy(OnCloseDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -598,13 +598,13 @@ public class Dialog : Window
 		static OnResponseDelegateWrapper[] listeners;
 		void delegate(int, Dialog) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(int, Dialog) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnResponseDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -640,12 +640,12 @@ public class Dialog : Window
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackResponse(GtkDialog* dialogStruct, int responseId, OnResponseDelegateWrapper wrapper)
 	{
 		wrapper.dlg(responseId, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackResponseDestroy(OnResponseDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

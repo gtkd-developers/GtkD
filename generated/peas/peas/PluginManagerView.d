@@ -36,8 +36,8 @@ private import gtk.TreeView;
 private import gtk.Widget;
 private import peas.Engine;
 private import peas.PluginInfo;
-private import peasc.peas;
-public  import peasc.peastypes;
+private import peas.c.functions;
+public  import peas.c.types;
 private import std.algorithm;
 
 
@@ -101,12 +101,12 @@ public class PluginManagerView : TreeView
 	public this(Engine engine)
 	{
 		auto p = peas_gtk_plugin_manager_view_new((engine is null) ? null : engine.getEngineStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(PeasGtkPluginManagerView*) p);
 	}
 
@@ -118,12 +118,12 @@ public class PluginManagerView : TreeView
 	public PluginInfo getSelectedPlugin()
 	{
 		auto p = peas_gtk_plugin_manager_view_get_selected_plugin(peasGtkPluginManagerView);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PluginInfo)(cast(PeasPluginInfo*) p);
 	}
 
@@ -168,13 +168,13 @@ public class PluginManagerView : TreeView
 		static OnPopulatePopupDelegateWrapper[] listeners;
 		void delegate(Menu, PluginManagerView) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Menu, PluginManagerView) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPopulatePopupDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -209,12 +209,12 @@ public class PluginManagerView : TreeView
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPopulatePopup(PeasGtkPluginManagerView* pluginmanagerviewStruct, GtkMenu* menu, OnPopulatePopupDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Menu)(menu), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPopulatePopupDestroy(OnPopulatePopupDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

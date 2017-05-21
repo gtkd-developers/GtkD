@@ -24,10 +24,10 @@
 
 module gio.ListModelT;
 
+public  import gio.c.functions;
+public  import gio.c.types;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
-public  import gtkc.gio;
-public  import gtkc.giotypes;
 public  import std.algorithm;
 
 
@@ -108,12 +108,12 @@ public template ListModelT(TStruct)
 	public ObjectG getItem(uint position)
 	{
 		auto p = g_list_model_get_item(getListModelStruct(), position);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p, true);
 	}
 
@@ -167,12 +167,12 @@ public template ListModelT(TStruct)
 	public ObjectG getObject(uint position)
 	{
 		auto p = g_list_model_get_object(getListModelStruct(), position);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p, true);
 	}
 
@@ -215,13 +215,13 @@ public template ListModelT(TStruct)
 		static OnItemsChangedDelegateWrapper[] listeners;
 		void delegate(uint, uint, uint, ListModelIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(uint, uint, uint, ListModelIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnItemsChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -260,12 +260,12 @@ public template ListModelT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackItemsChanged(GListModel* listmodelStruct, uint position, uint removed, uint added, OnItemsChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(position, removed, added, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackItemsChangedDestroy(OnItemsChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

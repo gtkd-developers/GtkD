@@ -30,8 +30,8 @@ private import gtk.Box;
 private import gtk.ColorChooserIF;
 private import gtk.ColorChooserT;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -112,12 +112,12 @@ public class ColorChooserWidget : Box, ColorChooserIF
 	public this()
 	{
 		auto p = gtk_color_chooser_widget_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkColorChooserWidget*) p);
 	}
 }

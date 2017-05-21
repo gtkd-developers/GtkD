@@ -31,8 +31,8 @@ private import gobject.Signals;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
 private import gtk.TextTag;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -112,12 +112,12 @@ public class TextTagTable : ObjectG, BuildableIF
 	public this()
 	{
 		auto p = gtk_text_tag_table_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkTextTagTable*) p, true);
 	}
 
@@ -174,12 +174,12 @@ public class TextTagTable : ObjectG, BuildableIF
 	public TextTag lookup(string name)
 	{
 		auto p = gtk_text_tag_table_lookup(gtkTextTagTable, Str.toStringz(name));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TextTag)(cast(GtkTextTag*) p);
 	}
 
@@ -202,13 +202,13 @@ public class TextTagTable : ObjectG, BuildableIF
 		static OnTagAddedDelegateWrapper[] listeners;
 		void delegate(TextTag, TextTagTable) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TextTag, TextTagTable) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnTagAddedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -236,12 +236,12 @@ public class TextTagTable : ObjectG, BuildableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackTagAdded(GtkTextTagTable* texttagtableStruct, GtkTextTag* tag, OnTagAddedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(TextTag)(tag), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackTagAddedDestroy(OnTagAddedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -252,13 +252,13 @@ public class TextTagTable : ObjectG, BuildableIF
 		static OnTagChangedDelegateWrapper[] listeners;
 		void delegate(TextTag, bool, TextTagTable) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TextTag, bool, TextTagTable) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnTagChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -286,12 +286,12 @@ public class TextTagTable : ObjectG, BuildableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackTagChanged(GtkTextTagTable* texttagtableStruct, GtkTextTag* tag, bool sizeChanged, OnTagChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(TextTag)(tag), sizeChanged, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackTagChangedDestroy(OnTagChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -302,13 +302,13 @@ public class TextTagTable : ObjectG, BuildableIF
 		static OnTagRemovedDelegateWrapper[] listeners;
 		void delegate(TextTag, TextTagTable) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TextTag, TextTagTable) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnTagRemovedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -336,12 +336,12 @@ public class TextTagTable : ObjectG, BuildableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackTagRemoved(GtkTextTagTable* texttagtableStruct, GtkTextTag* tag, OnTagRemovedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(TextTag)(tag), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackTagRemovedDestroy(OnTagRemovedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

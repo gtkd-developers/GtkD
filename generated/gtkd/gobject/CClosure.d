@@ -29,8 +29,8 @@ private import gobject.Closure;
 private import gobject.ObjectG;
 private import gobject.TypeInstance;
 private import gobject.Value;
-private import gtkc.gobject;
-public  import gtkc.gobjecttypes;
+private import gobject.c.functions;
+public  import gobject.c.types;
 
 
 /**
@@ -80,20 +80,20 @@ public class CClosure
 	public this(GCallback callbackFunc, void* userData, GClosureNotify destroyData, bool swap)
 	{
 		GClosure* p;
-		
+
 		if ( swap )
 			p = g_cclosure_new_swap(callbackFunc, userData, destroyData);
 		else
 			p = g_cclosure_new(callbackFunc, userData, destroyData);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GCClosure*) p);
 	}
-	
+
 	/**
 	 * A variant of this() which uses object as userData and
 	 * calls ObjectG.watchClosure() on object and the created
@@ -111,17 +111,17 @@ public class CClosure
 	public this(GCallback callbackFunc, ObjectG object, bool swap)
 	{
 		GClosure* p;
-		
+
 		if ( swap )
 			p = g_cclosure_new_object_swap(callbackFunc, (object is null) ? null : object.getObjectGStruct());
 		else
 			p = g_cclosure_new_object(callbackFunc, (object is null) ? null : object.getObjectGStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_object");
 		}
-		
+
 		this(cast(GCClosure*) p);
 	}
 

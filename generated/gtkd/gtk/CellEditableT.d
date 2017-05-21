@@ -26,8 +26,8 @@ module gtk.CellEditableT;
 
 public  import gdk.Event;
 public  import gobject.Signals;
-public  import gtkc.gtk;
-public  import gtkc.gtktypes;
+public  import gtk.c.functions;
+public  import gtk.c.types;
 public  import std.algorithm;
 
 
@@ -80,13 +80,13 @@ public template CellEditableT(TStruct)
 		static OnEditingDoneDelegateWrapper[] listeners;
 		void delegate(CellEditableIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(CellEditableIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnEditingDoneDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -124,12 +124,12 @@ public template CellEditableT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackEditingDone(GtkCellEditable* celleditableStruct, OnEditingDoneDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackEditingDoneDestroy(OnEditingDoneDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -140,13 +140,13 @@ public template CellEditableT(TStruct)
 		static OnRemoveWidgetDelegateWrapper[] listeners;
 		void delegate(CellEditableIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(CellEditableIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnRemoveWidgetDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -186,12 +186,12 @@ public template CellEditableT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackRemoveWidget(GtkCellEditable* celleditableStruct, OnRemoveWidgetDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackRemoveWidgetDestroy(OnRemoveWidgetDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

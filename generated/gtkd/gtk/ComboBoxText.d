@@ -24,15 +24,15 @@
 
 module gtk.ComboBoxText;
 
+public  import gdk.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.Signals;
 private import gtk.ComboBox;
 private import gtk.TreeIter;
 private import gtk.TreeModelIF;
-public  import gtkc.gdktypes;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -142,15 +142,15 @@ public class ComboBoxText : ComboBox
 			// GtkWidget* gtk_combo_box_text_new (void);
 			p = cast(GtkComboBoxText*)gtk_combo_box_text_new();
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gtk_combo_box_new");
 		}
-		
+
 		this(p);
 	}
-	
+
 	/** */
 	public void setActiveText(string text, bool insert=false)
 	{
@@ -169,7 +169,7 @@ public class ComboBoxText : ComboBox
 			setActive(active);
 		}
 	}
-	
+
 	/** */
 	int getIndex(string text)
 	{
@@ -197,7 +197,7 @@ public class ComboBoxText : ComboBox
 		}
 		return end ? -1 : index;
 	}
-	
+
 	/** */
 	void prependOrReplaceText(string text)
 	{
@@ -212,19 +212,19 @@ public class ComboBoxText : ComboBox
 			prepend("", text);
 		}
 	}
-	
+
 	protected class OnChangedDelegateWrapper
 	{
 		static OnChangedDelegateWrapper[] listeners;
 		void delegate(ComboBoxText) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(ComboBoxText) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -238,7 +238,7 @@ public class ComboBoxText : ComboBox
 			}
 		}
 	}
-	
+
 	/**
 	 * The changed signal is emitted when the active
 	 * item is changed. The can be due to the user selecting
@@ -261,29 +261,29 @@ public class ComboBoxText : ComboBox
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackChanged(GtkComboBoxText* comboboxTextStruct, OnChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
 	}
-	
+
 	protected class OnFormatEntryTextDelegateWrapper
 	{
 		static OnFormatEntryTextDelegateWrapper[] listeners;
 		string delegate(string, ComboBoxText) dlg;
 		gulong handlerId;
-		
+
 		this(string delegate(string, ComboBoxText) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnFormatEntryTextDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -297,7 +297,7 @@ public class ComboBoxText : ComboBox
 			}
 		}
 	}
-	
+
 	/**
 	 * For combo boxes that are created with an entry (See GtkComboBox:has-entry).
 	 *
@@ -352,29 +352,29 @@ public class ComboBoxText : ComboBox
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static string callBackFormatEntryText(GtkComboBoxText* comboboxStructText, char* path,OnFormatEntryTextDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(Str.toString(path), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackFormatEntryTextDestroy(OnFormatEntryTextDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
 	}
-	
+
 	protected class OnMoveActiveDelegateWrapper
 	{
 		static OnMoveActiveDelegateWrapper[] listeners;
 		void delegate(GtkScrollType, ComboBoxText) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(GtkScrollType, ComboBoxText) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMoveActiveDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -388,7 +388,7 @@ public class ComboBoxText : ComboBox
 			}
 		}
 	}
-	
+
 	/**
 	 * The ::move-active signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -411,29 +411,29 @@ public class ComboBoxText : ComboBox
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackMoveActive(GtkComboBoxText* comboboxTextStruct, GtkScrollType scrollType,OnMoveActiveDelegateWrapper wrapper)
 	{
 		wrapper.dlg(scrollType, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMoveActiveDestroy(OnMoveActiveDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
 	}
-	
+
 	protected class OnPopdownDelegateWrapper
 	{
 		static OnPopdownDelegateWrapper[] listeners;
 		bool delegate(ComboBoxText) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(ComboBoxText) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPopdownDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -447,7 +447,7 @@ public class ComboBoxText : ComboBox
 			}
 		}
 	}
-	
+
 	/**
 	 * The ::popdown signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -469,29 +469,29 @@ public class ComboBoxText : ComboBox
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackPopdown(GtkComboBoxText* comboboxTextStruct,OnPopdownDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPopdownDestroy(OnPopdownDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
 	}
-	
+
 	protected class OnPopupDelegateWrapper
 	{
 		static OnPopupDelegateWrapper[] listeners;
 		void delegate(ComboBoxText) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(ComboBoxText) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPopupDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -505,7 +505,7 @@ public class ComboBoxText : ComboBox
 			}
 		}
 	}
-	
+
 	/**
 	 * The ::popup signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -527,12 +527,12 @@ public class ComboBoxText : ComboBox
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPopup(GtkComboBoxText* comboboxTextStruct,OnPopupDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPopupDestroy(OnPopupDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -595,7 +595,7 @@ public class ComboBoxText : ComboBox
 	public string getActiveText()
 	{
 		auto retStr = gtk_combo_box_text_get_active_text(gtkComboBoxText);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}

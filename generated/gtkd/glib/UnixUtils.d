@@ -27,8 +27,8 @@ module glib.UnixUtils;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Source;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 
 
 /** */
@@ -113,12 +113,12 @@ public struct UnixUtils
 	public static Source fdSourceNew(int fd, GIOCondition condition)
 	{
 		auto p = g_unix_fd_source_new(fd, condition);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Source(cast(GSource*) p, true);
 	}
 
@@ -145,14 +145,14 @@ public struct UnixUtils
 	public static bool openPipe(int* fds, int flags)
 	{
 		GError* err = null;
-		
+
 		auto p = g_unix_open_pipe(fds, flags, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -174,14 +174,14 @@ public struct UnixUtils
 	public static bool setFdNonblocking(int fd, bool nonblock)
 	{
 		GError* err = null;
-		
+
 		auto p = g_unix_set_fd_nonblocking(fd, nonblock, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -261,12 +261,12 @@ public struct UnixUtils
 	public static Source signalSourceNew(int signum)
 	{
 		auto p = g_unix_signal_source_new(signum);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Source(cast(GSource*) p, true);
 	}
 }

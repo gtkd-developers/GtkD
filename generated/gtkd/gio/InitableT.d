@@ -25,13 +25,13 @@
 module gio.InitableT;
 
 public  import gio.Cancellable;
+public  import gio.c.functions;
+public  import gio.c.types;
 public  import glib.ConstructionException;
 public  import glib.ErrorG;
 public  import glib.GException;
 public  import glib.Str;
 public  import gobject.ObjectG;
-public  import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -110,14 +110,14 @@ public template InitableT(TStruct)
 	public bool init(Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_initable_init(getInitableStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 }

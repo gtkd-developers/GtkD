@@ -31,8 +31,8 @@ private import gobject.ObjectG;
 private import gstreamer.Bin;
 private import gstreamer.Element;
 private import gstreamer.ParseContext;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /** */
@@ -63,19 +63,19 @@ public struct Parse
 	public static Bin binFromDescription(string binDescription, bool ghostUnlinkedPads)
 	{
 		GError* err = null;
-		
+
 		auto p = gst_parse_bin_from_description(Str.toStringz(binDescription), ghostUnlinkedPads, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Bin)(cast(GstBin*) p);
 	}
 
@@ -108,19 +108,19 @@ public struct Parse
 	public static Element binFromDescriptionFull(string binDescription, bool ghostUnlinkedPads, ParseContext context, GstParseFlags flags)
 	{
 		GError* err = null;
-		
+
 		auto p = gst_parse_bin_from_description_full(Str.toStringz(binDescription), ghostUnlinkedPads, (context is null) ? null : context.getParseContextStruct(), flags, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Element)(cast(GstElement*) p);
 	}
 
@@ -152,19 +152,19 @@ public struct Parse
 	public static Element launch(string pipelineDescription)
 	{
 		GError* err = null;
-		
+
 		auto p = gst_parse_launch(Str.toStringz(pipelineDescription), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Element)(cast(GstElement*) p);
 	}
 
@@ -191,19 +191,19 @@ public struct Parse
 	public static Element launchFull(string pipelineDescription, ParseContext context, GstParseFlags flags)
 	{
 		GError* err = null;
-		
+
 		auto p = gst_parse_launch_full(Str.toStringz(pipelineDescription), (context is null) ? null : context.getParseContextStruct(), flags, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Element)(cast(GstElement*) p);
 	}
 
@@ -222,19 +222,19 @@ public struct Parse
 	public static Element launchv(string[] argv)
 	{
 		GError* err = null;
-		
+
 		auto p = gst_parse_launchv(Str.toStringzArray(argv), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Element)(cast(GstElement*) p);
 	}
 
@@ -259,19 +259,19 @@ public struct Parse
 	public static Element launchvFull(string[] argv, ParseContext context, GstParseFlags flags)
 	{
 		GError* err = null;
-		
+
 		auto p = gst_parse_launchv_full(Str.toStringzArray(argv), (context is null) ? null : context.getParseContextStruct(), flags, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Element)(cast(GstElement*) p);
 	}
 }

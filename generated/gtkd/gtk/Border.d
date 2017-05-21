@@ -26,8 +26,8 @@ module gtk.Border;
 
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import gtkd.Loader;
 
 
@@ -90,12 +90,12 @@ public class Border
 	public this()
 	{
 		auto p = gtk_border_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkBorder*) p);
 	}
 
@@ -107,12 +107,12 @@ public class Border
 	public Border copy()
 	{
 		auto p = gtk_border_copy(gtkBorder);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Border)(cast(GtkBorder*) p, true);
 	}
 

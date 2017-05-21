@@ -36,8 +36,8 @@ private import gtk.ActivatableT;
 private import gtk.Bin;
 private import gtk.Menu;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -129,7 +129,7 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 
 	/** store the action code passed in by the applcation */
 	private string actionLabel;
-	
+
 	/** Gets the application set action code */
 	public string getActionName()
 	{
@@ -139,7 +139,7 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 		}
 		return actionLabel;
 	}
-	
+
 	/**
 	 * Creates a new menu item with a label and a listener and a action.
 	 * used for backward compatibily with DUI.
@@ -150,7 +150,7 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 		this.actionLabel = action;
 		addOnActivate(dlg);
 	}
-	
+
 	/**
 	 * Creates a new Item associated with a "activate" delegate and with a action code
 	 * and optionally accelGroup
@@ -171,7 +171,7 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 			addAccelerator("activate",accelGroup,accelKey,modifierType,accelFlags);
 		}
 	}
-	
+
 	/**
 	 * Creates a new Item associated with a "activate" delegate
 	 */
@@ -180,7 +180,7 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 		this(label, mnemonic);
 		addOnActivate(dlg);
 	}
-	
+
 	/**
 	 * Creates a new GtkMenuItem whose child is a GtkLabel.
 	 * Params:
@@ -193,7 +193,7 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 	public this (string label, bool mnemonic=true)
 	{
 		GtkMenuItem* p;
-		
+
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_menu_item_new_with_mnemonic (const gchar *label);
@@ -204,14 +204,14 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 			// GtkWidget* gtk_menu_item_new_with_label (const gchar *label);
 			p = cast(GtkMenuItem*)gtk_menu_item_new_with_label(Str.toStringz(label));
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gtk_menu_item_new_with_");
 		}
-		
+
 		this(p);
-		
+
 		setName(label);
 	}
 
@@ -234,12 +234,12 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 	public this()
 	{
 		auto p = gtk_menu_item_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkMenuItem*) p);
 	}
 
@@ -325,12 +325,12 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 	public Widget getSubmenu()
 	{
 		auto p = gtk_menu_item_get_submenu(gtkMenuItem);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -489,13 +489,13 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 		static OnActivateDelegateWrapper[] listeners;
 		void delegate(MenuItem) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(MenuItem) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnActivateDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -525,12 +525,12 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackActivate(GtkMenuItem* menuitemStruct, OnActivateDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackActivateDestroy(OnActivateDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -541,13 +541,13 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 		static OnActivateItemDelegateWrapper[] listeners;
 		void delegate(MenuItem) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(MenuItem) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnActivateItemDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -579,12 +579,12 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackActivateItem(GtkMenuItem* menuitemStruct, OnActivateItemDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackActivateItemDestroy(OnActivateItemDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -595,13 +595,13 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 		static OnDeselectDelegateWrapper[] listeners;
 		void delegate(MenuItem) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(MenuItem) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDeselectDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -629,12 +629,12 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDeselect(GtkMenuItem* menuitemStruct, OnDeselectDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDeselectDestroy(OnDeselectDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -645,13 +645,13 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 		static OnSelectDelegateWrapper[] listeners;
 		void delegate(MenuItem) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(MenuItem) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnSelectDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -679,12 +679,12 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackSelect(GtkMenuItem* menuitemStruct, OnSelectDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackSelectDestroy(OnSelectDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -695,13 +695,13 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 		static OnToggleSizeAllocateDelegateWrapper[] listeners;
 		void delegate(int, MenuItem) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(int, MenuItem) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnToggleSizeAllocateDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -729,12 +729,12 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackToggleSizeAllocate(GtkMenuItem* menuitemStruct, int object, OnToggleSizeAllocateDelegateWrapper wrapper)
 	{
 		wrapper.dlg(object, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackToggleSizeAllocateDestroy(OnToggleSizeAllocateDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -745,13 +745,13 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 		static OnToggleSizeRequestDelegateWrapper[] listeners;
 		void delegate(void*, MenuItem) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(void*, MenuItem) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnToggleSizeRequestDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -779,12 +779,12 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackToggleSizeRequest(GtkMenuItem* menuitemStruct, void* object, OnToggleSizeRequestDelegateWrapper wrapper)
 	{
 		wrapper.dlg(object, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackToggleSizeRequestDestroy(OnToggleSizeRequestDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

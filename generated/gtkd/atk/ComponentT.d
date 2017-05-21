@@ -25,10 +25,10 @@
 module atk.ComponentT;
 
 public  import atk.ObjectAtk;
+public  import atk.c.functions;
+public  import atk.c.types;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
-public  import gtkc.atk;
-public  import gtkc.atktypes;
 public  import std.algorithm;
 
 
@@ -205,12 +205,12 @@ public template ComponentT(TStruct)
 	public ObjectAtk refAccessibleAtPoint(int x, int y, AtkCoordType coordType)
 	{
 		auto p = atk_component_ref_accessible_at_point(getComponentStruct(), x, y, coordType);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p, true);
 	}
 
@@ -284,13 +284,13 @@ public template ComponentT(TStruct)
 		static OnBoundsChangedDelegateWrapper[] listeners;
 		void delegate(AtkRectangle*, ComponentIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(AtkRectangle*, ComponentIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnBoundsChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -324,12 +324,12 @@ public template ComponentT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackBoundsChanged(AtkComponent* componentStruct, AtkRectangle* arg1, OnBoundsChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(arg1, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackBoundsChangedDestroy(OnBoundsChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

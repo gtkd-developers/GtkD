@@ -27,8 +27,8 @@ module glib.Unicode;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 
 
 /** */
@@ -59,14 +59,14 @@ public struct Unicode
 	public static wchar* ucs4ToUtf16(dchar* str, glong len, out glong itemsRead, out glong itemsWritten)
 	{
 		GError* err = null;
-		
+
 		auto p = g_ucs4_to_utf16(str, len, &itemsRead, &itemsWritten, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -94,14 +94,14 @@ public struct Unicode
 	public static string ucs4ToUtf8(dchar* str, glong len, out glong itemsRead, out glong itemsWritten)
 	{
 		GError* err = null;
-		
+
 		auto retStr = g_ucs4_to_utf8(str, len, &itemsRead, &itemsWritten, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -802,14 +802,14 @@ public struct Unicode
 	public static dchar* utf16ToUcs4(wchar* str, glong len, out glong itemsRead, out glong itemsWritten)
 	{
 		GError* err = null;
-		
+
 		auto p = g_utf16_to_ucs4(str, len, &itemsRead, &itemsWritten, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -849,14 +849,14 @@ public struct Unicode
 	public static string utf16ToUtf8(wchar* str, glong len, out glong itemsRead, out glong itemsWritten)
 	{
 		GError* err = null;
-		
+
 		auto retStr = g_utf16_to_utf8(str, len, &itemsRead, &itemsWritten, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -884,7 +884,7 @@ public struct Unicode
 	public static string utf8Casefold(string str, ptrdiff_t len)
 	{
 		auto retStr = g_utf8_casefold(Str.toStringz(str), len);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -930,7 +930,7 @@ public struct Unicode
 	public static string utf8CollateKey(string str, ptrdiff_t len)
 	{
 		auto retStr = g_utf8_collate_key(Str.toStringz(str), len);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -960,7 +960,7 @@ public struct Unicode
 	public static string utf8CollateKeyForFilename(string str, ptrdiff_t len)
 	{
 		auto retStr = g_utf8_collate_key_for_filename(Str.toStringz(str), len);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -982,7 +982,7 @@ public struct Unicode
 	public static string utf8FindNextChar(string p, string end)
 	{
 		auto retStr = g_utf8_find_next_char(Str.toStringz(p), Str.toStringz(end));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -1005,7 +1005,7 @@ public struct Unicode
 	public static string utf8FindPrevChar(string str, string p)
 	{
 		auto retStr = g_utf8_find_prev_char(Str.toStringz(str), Str.toStringz(p));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -1088,7 +1088,7 @@ public struct Unicode
 	public static string utf8Normalize(string str, ptrdiff_t len, GNormalizeMode mode)
 	{
 		auto retStr = g_utf8_normalize(Str.toStringz(str), len, mode);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -1117,7 +1117,7 @@ public struct Unicode
 	public static string utf8OffsetToPointer(string str, glong offset)
 	{
 		auto retStr = g_utf8_offset_to_pointer(Str.toStringz(str), offset);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -1156,7 +1156,7 @@ public struct Unicode
 	public static string utf8PrevChar(string p)
 	{
 		auto retStr = g_utf8_prev_char(Str.toStringz(p));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -1178,7 +1178,7 @@ public struct Unicode
 	public static string utf8Strchr(string p, ptrdiff_t len, dchar c)
 	{
 		auto retStr = g_utf8_strchr(Str.toStringz(p), len, c);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -1199,7 +1199,7 @@ public struct Unicode
 	public static string utf8Strdown(string str, ptrdiff_t len)
 	{
 		auto retStr = g_utf8_strdown(Str.toStringz(str), len);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -1240,7 +1240,7 @@ public struct Unicode
 	public static string utf8Strncpy(string dest, string src, size_t n)
 	{
 		auto retStr = g_utf8_strncpy(Str.toStringz(dest), Str.toStringz(src), n);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -1262,7 +1262,7 @@ public struct Unicode
 	public static string utf8Strrchr(string p, ptrdiff_t len, dchar c)
 	{
 		auto retStr = g_utf8_strrchr(Str.toStringz(p), len, c);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -1294,7 +1294,7 @@ public struct Unicode
 	public static string utf8Strreverse(string str, ptrdiff_t len)
 	{
 		auto retStr = g_utf8_strreverse(Str.toStringz(str), len);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -1316,7 +1316,7 @@ public struct Unicode
 	public static string utf8Strup(string str, ptrdiff_t len)
 	{
 		auto retStr = g_utf8_strup(Str.toStringz(str), len);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -1338,7 +1338,7 @@ public struct Unicode
 	public static string utf8Substring(string str, glong startPos, glong endPos)
 	{
 		auto retStr = g_utf8_substring(Str.toStringz(str), startPos, endPos);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -1371,14 +1371,14 @@ public struct Unicode
 	public static dchar* utf8ToUcs4(string str, glong len, out glong itemsRead, out glong itemsWritten)
 	{
 		GError* err = null;
-		
+
 		auto p = g_utf8_to_ucs4(Str.toStringz(str), len, &itemsRead, &itemsWritten, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -1429,14 +1429,14 @@ public struct Unicode
 	public static wchar* utf8ToUtf16(string str, glong len, out glong itemsRead, out glong itemsWritten)
 	{
 		GError* err = null;
-		
+
 		auto p = g_utf8_to_utf16(Str.toStringz(str), len, &itemsRead, &itemsWritten, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -1467,11 +1467,11 @@ public struct Unicode
 	public static bool utf8Validate(string str, out string end)
 	{
 		char* outend = null;
-		
+
 		auto p = g_utf8_validate(Str.toStringz(str), cast(ptrdiff_t)str.length, &outend) != 0;
-		
+
 		end = Str.toString(outend);
-		
+
 		return p;
 	}
 
@@ -1498,7 +1498,7 @@ public struct Unicode
 	public static string utf8MakeValid(string str, ptrdiff_t len)
 	{
 		auto retStr = g_utf8_make_valid(Str.toStringz(str), len);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}

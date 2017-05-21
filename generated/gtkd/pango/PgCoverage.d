@@ -27,9 +27,9 @@ module pango.PgCoverage;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.pango;
-public  import gtkc.pangotypes;
 private import gtkd.Loader;
+private import pango.c.functions;
+public  import pango.c.types;
 
 
 /**
@@ -83,12 +83,12 @@ public class PgCoverage
 	public PgCoverage copy()
 	{
 		auto p = pango_coverage_copy(pangoCoverage);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgCoverage)(cast(PangoCoverage*) p, true);
 	}
 
@@ -126,12 +126,12 @@ public class PgCoverage
 	public PgCoverage doref()
 	{
 		auto p = pango_coverage_ref(pangoCoverage);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgCoverage)(cast(PangoCoverage*) p);
 	}
 
@@ -158,9 +158,9 @@ public class PgCoverage
 	{
 		ubyte* outbytes = null;
 		int nBytes;
-		
+
 		pango_coverage_to_bytes(pangoCoverage, cast(char**)&outbytes, &nBytes);
-		
+
 		bytes = outbytes[0 .. nBytes];
 	}
 
@@ -188,12 +188,12 @@ public class PgCoverage
 	public static PgCoverage fromBytes(char[] bytes)
 	{
 		auto p = pango_coverage_from_bytes(bytes.ptr, cast(int)bytes.length);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgCoverage)(cast(PangoCoverage*) p, true);
 	}
 
@@ -210,12 +210,12 @@ public class PgCoverage
 	public this()
 	{
 		auto p = pango_coverage_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(PangoCoverage*) p);
 	}
 }

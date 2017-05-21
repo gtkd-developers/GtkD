@@ -36,8 +36,8 @@ private import gtk.ActivatableT;
 private import gtk.Bin;
 private import gtk.Image;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -106,19 +106,19 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	mixin ActivatableT!(GtkButton);
 
 	private static IconSize currentIconSize = IconSize.BUTTON;
-	
+
 	/** */
 	public static void setIconSize(IconSize iconSize)
 	{
 		currentIconSize = iconSize;
 	}
-	
+
 	/** */
 	public static IconSize getIconSize()
 	{
 		return currentIconSize;
 	}
-	
+
 	/**
 	 * Creates a new GtkButton containing a label.
 	 * If characters in label are preceded by an underscore, they are underlined.
@@ -137,7 +137,7 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	public this (string label, bool mnemonic=true)
 	{
 		GtkButton* p;
-		
+
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_button_new_with_mnemonic (const gchar *label);
@@ -148,15 +148,15 @@ public class Button : Bin, ActionableIF, ActivatableIF
 			// GtkWidget* gtk_button_new_with_label (const gchar *label);
 			p = cast(GtkButton*)gtk_button_new_with_label(Str.toStringz(label));
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gtk_button_new_with_label");
 		}
-		
+
 		this(p);
 	}
-	
+
 	/**
 	 * Creates a new GtkButton containing the image and text from a stock item.
 	 * Some stock ids have preprocessor macros like GTK_STOCK_OK and
@@ -179,30 +179,30 @@ public class Button : Bin, ActionableIF, ActivatableIF
 		else
 		{
 			auto p = gtk_button_new_from_stock(Str.toStringz(stockID));
-			
+
 			if(p is null)
 			{
 				throw new ConstructionException("null returned by gtk_button_new_from_stock");
 			}
-			
+
 			this(cast(GtkButton*) p);
 		}
 	}
-	
+
 	/** */
 	public this(StockID stockID, void delegate(Button) dlg, bool hideLabel=false)
 	{
 		this(stockID, hideLabel);
 		addOnClicked(dlg);
 	}
-	
+
 	/** */
 	public this(string label, void delegate(Button) dlg, bool mnemonic=true)
 	{
 		this(label, mnemonic);
 		addOnClicked(dlg);
 	}
-	
+
 	/** */
 	public this(string label, void delegate(Button) dlg, string action)
 	{
@@ -231,12 +231,12 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	public this()
 	{
 		auto p = gtk_button_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkButton*) p);
 	}
 
@@ -263,12 +263,12 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	public this(string iconName, GtkIconSize size)
 	{
 		auto p = gtk_button_new_from_icon_name(Str.toStringz(iconName), size);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_icon_name");
 		}
-		
+
 		this(cast(GtkButton*) p);
 	}
 
@@ -331,12 +331,12 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	public Window getEventWindow()
 	{
 		auto p = gtk_button_get_event_window(gtkButton);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 
@@ -369,12 +369,12 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	public Widget getImage()
 	{
 		auto p = gtk_button_get_image(gtkButton);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -614,13 +614,13 @@ public class Button : Bin, ActionableIF, ActivatableIF
 		static OnActivateDelegateWrapper[] listeners;
 		void delegate(Button) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Button) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnActivateDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -653,12 +653,12 @@ public class Button : Bin, ActionableIF, ActivatableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackActivate(GtkButton* buttonStruct, OnActivateDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackActivateDestroy(OnActivateDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -669,13 +669,13 @@ public class Button : Bin, ActionableIF, ActivatableIF
 		static OnClickedDelegateWrapper[] listeners;
 		void delegate(Button) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Button) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnClickedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -705,12 +705,12 @@ public class Button : Bin, ActionableIF, ActivatableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackClicked(GtkButton* buttonStruct, OnClickedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackClickedDestroy(OnClickedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -721,13 +721,13 @@ public class Button : Bin, ActionableIF, ActivatableIF
 		static OnEnterDelegateWrapper[] listeners;
 		void delegate(Button) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Button) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnEnterDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -759,12 +759,12 @@ public class Button : Bin, ActionableIF, ActivatableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackEnter(GtkButton* buttonStruct, OnEnterDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackEnterDestroy(OnEnterDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -775,13 +775,13 @@ public class Button : Bin, ActionableIF, ActivatableIF
 		static OnLeaveDelegateWrapper[] listeners;
 		void delegate(Button) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Button) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnLeaveDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -813,12 +813,12 @@ public class Button : Bin, ActionableIF, ActivatableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackLeave(GtkButton* buttonStruct, OnLeaveDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackLeaveDestroy(OnLeaveDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -829,13 +829,13 @@ public class Button : Bin, ActionableIF, ActivatableIF
 		static OnPressedDelegateWrapper[] listeners;
 		void delegate(Button) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Button) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPressedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -867,12 +867,12 @@ public class Button : Bin, ActionableIF, ActivatableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPressed(GtkButton* buttonStruct, OnPressedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPressedDestroy(OnPressedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -883,13 +883,13 @@ public class Button : Bin, ActionableIF, ActivatableIF
 		static OnReleasedDelegateWrapper[] listeners;
 		void delegate(Button) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Button) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnReleasedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -921,12 +921,12 @@ public class Button : Bin, ActionableIF, ActivatableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackReleased(GtkButton* buttonStruct, OnReleasedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackReleasedDestroy(OnReleasedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

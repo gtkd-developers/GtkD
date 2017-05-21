@@ -27,8 +27,8 @@ module gtk.ColorChooserT;
 public  import gdk.RGBA;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
-public  import gtkc.gtk;
-public  import gtkc.gtktypes;
+public  import gtk.c.functions;
+public  import gtk.c.types;
 public  import std.algorithm;
 
 
@@ -86,7 +86,7 @@ public template ColorChooserT(TStruct)
 		{
 			colorsArray[i] = *(colors[i].getRGBAStruct());
 		}
-		
+
 		gtk_color_chooser_add_palette(getColorChooserStruct(), orientation, colorsPerLine, cast(int)colors.length, colorsArray.ptr);
 	}
 
@@ -101,9 +101,9 @@ public template ColorChooserT(TStruct)
 	public void getRgba(out RGBA color)
 	{
 		GdkRGBA* outcolor = gMalloc!GdkRGBA();
-		
+
 		gtk_color_chooser_get_rgba(getColorChooserStruct(), outcolor);
-		
+
 		color = ObjectG.getDObject!(RGBA)(outcolor, true);
 	}
 
@@ -151,13 +151,13 @@ public template ColorChooserT(TStruct)
 		static OnColorActivatedDelegateWrapper[] listeners;
 		void delegate(RGBA, ColorChooserIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(RGBA, ColorChooserIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnColorActivatedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -195,12 +195,12 @@ public template ColorChooserT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackColorActivated(GtkColorChooser* colorchooserStruct, GdkRGBA* color, OnColorActivatedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(RGBA)(color), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackColorActivatedDestroy(OnColorActivatedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

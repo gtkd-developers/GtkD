@@ -26,8 +26,8 @@ module pango.PgLanguage;
 
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.pango;
-public  import gtkc.pangotypes;
+private import pango.c.functions;
+public  import pango.c.types;
 
 
 /**
@@ -133,9 +133,9 @@ public class PgLanguage
 	public PangoScript[] getScripts()
 	{
 		int numScripts;
-		
+
 		auto p = pango_language_get_scripts(pangoLanguage, &numScripts);
-		
+
 		return p[0 .. numScripts];
 	}
 
@@ -223,12 +223,12 @@ public class PgLanguage
 	public static PgLanguage fromString(string language)
 	{
 		auto p = pango_language_from_string(Str.toStringz(language));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgLanguage)(cast(PangoLanguage*) p);
 	}
 
@@ -268,12 +268,12 @@ public class PgLanguage
 	public static PgLanguage getDefault()
 	{
 		auto p = pango_language_get_default();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgLanguage)(cast(PangoLanguage*) p);
 	}
 }

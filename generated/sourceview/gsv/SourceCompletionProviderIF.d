@@ -32,8 +32,8 @@ private import gobject.ObjectG;
 private import gsv.SourceCompletionContext;
 private import gsv.SourceCompletionInfo;
 private import gsv.SourceCompletionProposalIF;
-private import gsvc.gsv;
-public  import gsvc.gsvtypes;
+private import gsv.c.functions;
+public  import gsv.c.types;
 private import gtk.TextIter;
 private import gtk.Widget;
 

@@ -26,10 +26,10 @@ module gio.Vfs;
 
 private import gio.File;
 private import gio.FileIF;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -84,12 +84,12 @@ public class Vfs : ObjectG
 	public static Vfs getDefault()
 	{
 		auto p = g_vfs_get_default();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Vfs)(cast(GVfs*) p);
 	}
 
@@ -101,12 +101,12 @@ public class Vfs : ObjectG
 	public static Vfs getLocal()
 	{
 		auto p = g_vfs_get_local();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Vfs)(cast(GVfs*) p);
 	}
 
@@ -122,12 +122,12 @@ public class Vfs : ObjectG
 	public FileIF getFileForPath(string path)
 	{
 		auto p = g_vfs_get_file_for_path(gVfs, Str.toStringz(path));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
 	}
 
@@ -147,12 +147,12 @@ public class Vfs : ObjectG
 	public FileIF getFileForUri(string uri)
 	{
 		auto p = g_vfs_get_file_for_uri(gVfs, Str.toStringz(uri));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
 	}
 
@@ -193,12 +193,12 @@ public class Vfs : ObjectG
 	public FileIF parseName(string parseName)
 	{
 		auto p = g_vfs_parse_name(gVfs, Str.toStringz(parseName));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
 	}
 

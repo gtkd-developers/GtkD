@@ -28,8 +28,8 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gsv.SourceStyleScheme;
-private import gsvc.gsv;
-public  import gsvc.gsvtypes;
+private import gsv.c.functions;
+public  import gsv.c.types;
 
 
 /** */
@@ -85,12 +85,12 @@ public class SourceStyleSchemeManager : ObjectG
 	public this()
 	{
 		auto p = gtk_source_style_scheme_manager_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkSourceStyleSchemeManager*) p, true);
 	}
 
@@ -103,12 +103,12 @@ public class SourceStyleSchemeManager : ObjectG
 	public static SourceStyleSchemeManager getDefault()
 	{
 		auto p = gtk_source_style_scheme_manager_get_default();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SourceStyleSchemeManager)(cast(GtkSourceStyleSchemeManager*) p);
 	}
 
@@ -147,12 +147,12 @@ public class SourceStyleSchemeManager : ObjectG
 	public SourceStyleScheme getScheme(string schemeId)
 	{
 		auto p = gtk_source_style_scheme_manager_get_scheme(gtkSourceStyleSchemeManager, Str.toStringz(schemeId));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SourceStyleScheme)(cast(GtkSourceStyleScheme*) p);
 	}
 

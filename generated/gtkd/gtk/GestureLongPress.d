@@ -30,8 +30,8 @@ private import gobject.Signals;
 private import gtk.Gesture;
 private import gtk.GestureSingle;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -100,12 +100,12 @@ public class GestureLongPress : GestureSingle
 	public this(Widget widget)
 	{
 		auto p = gtk_gesture_long_press_new((widget is null) ? null : widget.getWidgetStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkGestureLongPress*) p, true);
 	}
 
@@ -114,13 +114,13 @@ public class GestureLongPress : GestureSingle
 		static OnCancelledDelegateWrapper[] listeners;
 		void delegate(GestureLongPress) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(GestureLongPress) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCancelledDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -153,12 +153,12 @@ public class GestureLongPress : GestureSingle
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackCancelled(GtkGestureLongPress* gesturelongpressStruct, OnCancelledDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackCancelledDestroy(OnCancelledDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -169,13 +169,13 @@ public class GestureLongPress : GestureSingle
 		static OnPressedDelegateWrapper[] listeners;
 		void delegate(double, double, GestureLongPress) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(double, double, GestureLongPress) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPressedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -212,12 +212,12 @@ public class GestureLongPress : GestureSingle
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPressed(GtkGestureLongPress* gesturelongpressStruct, double x, double y, OnPressedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(x, y, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPressedDestroy(OnPressedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

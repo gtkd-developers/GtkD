@@ -29,13 +29,13 @@ private import gio.Cancellable;
 private import gio.Socket;
 private import gio.SocketAddress;
 private import gio.SocketConnection;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -105,12 +105,12 @@ public class SocketListener : ObjectG
 	public this()
 	{
 		auto p = g_socket_listener_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GSocketListener*) p, true);
 	}
 
@@ -141,21 +141,21 @@ public class SocketListener : ObjectG
 	{
 		GObject* outsourceObject = null;
 		GError* err = null;
-		
+
 		auto p = g_socket_listener_accept(gSocketListener, &outsourceObject, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		sourceObject = ObjectG.getDObject!(ObjectG)(outsourceObject);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) p, true);
 	}
 
@@ -195,21 +195,21 @@ public class SocketListener : ObjectG
 	{
 		GObject* outsourceObject = null;
 		GError* err = null;
-		
+
 		auto p = g_socket_listener_accept_finish(gSocketListener, (result is null) ? null : result.getAsyncResultStruct(), &outsourceObject, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		sourceObject = ObjectG.getDObject!(ObjectG)(outsourceObject);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) p, true);
 	}
 
@@ -243,21 +243,21 @@ public class SocketListener : ObjectG
 	{
 		GObject* outsourceObject = null;
 		GError* err = null;
-		
+
 		auto p = g_socket_listener_accept_socket(gSocketListener, &outsourceObject, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		sourceObject = ObjectG.getDObject!(ObjectG)(outsourceObject);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Socket)(cast(GSocket*) p, true);
 	}
 
@@ -297,21 +297,21 @@ public class SocketListener : ObjectG
 	{
 		GObject* outsourceObject = null;
 		GError* err = null;
-		
+
 		auto p = g_socket_listener_accept_socket_finish(gSocketListener, (result is null) ? null : result.getAsyncResultStruct(), &outsourceObject, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		sourceObject = ObjectG.getDObject!(ObjectG)(outsourceObject);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Socket)(cast(GSocket*) p, true);
 	}
 
@@ -353,16 +353,16 @@ public class SocketListener : ObjectG
 	{
 		GSocketAddress* outeffectiveAddress = null;
 		GError* err = null;
-		
+
 		auto p = g_socket_listener_add_address(gSocketListener, (address is null) ? null : address.getSocketAddressStruct(), type, protocol, (sourceObject is null) ? null : sourceObject.getObjectGStruct(), &outeffectiveAddress, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		effectiveAddress = ObjectG.getDObject!(SocketAddress)(outeffectiveAddress);
-		
+
 		return p;
 	}
 
@@ -390,14 +390,14 @@ public class SocketListener : ObjectG
 	public ushort addAnyInetPort(ObjectG sourceObject)
 	{
 		GError* err = null;
-		
+
 		auto p = g_socket_listener_add_any_inet_port(gSocketListener, (sourceObject is null) ? null : sourceObject.getObjectGStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -424,14 +424,14 @@ public class SocketListener : ObjectG
 	public bool addInetPort(ushort port, ObjectG sourceObject)
 	{
 		GError* err = null;
-		
+
 		auto p = g_socket_listener_add_inet_port(gSocketListener, port, (sourceObject is null) ? null : sourceObject.getObjectGStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -463,14 +463,14 @@ public class SocketListener : ObjectG
 	public bool addSocket(Socket socket, ObjectG sourceObject)
 	{
 		GError* err = null;
-		
+
 		auto p = g_socket_listener_add_socket(gSocketListener, (socket is null) ? null : socket.getSocketStruct(), (sourceObject is null) ? null : sourceObject.getObjectGStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -504,13 +504,13 @@ public class SocketListener : ObjectG
 		static OnDelegateWrapper[] listeners;
 		void delegate(GSocketListenerEvent, Socket, SocketListener) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(GSocketListenerEvent, Socket, SocketListener) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -549,12 +549,12 @@ public class SocketListener : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBack(GSocketListener* socketlistenerStruct, GSocketListenerEvent event, GSocket* socket, OnDelegateWrapper wrapper)
 	{
 		wrapper.dlg(event, ObjectG.getDObject!(Socket)(socket), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDestroy(OnDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

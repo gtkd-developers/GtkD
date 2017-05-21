@@ -29,8 +29,8 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.OptionGroup;
 private import glib.Str;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 private import gtkd.Loader;
 
 
@@ -154,7 +154,7 @@ public class OptionContext
 	public string getHelp(bool mainHelp, OptionGroup group)
 	{
 		auto retStr = g_option_context_get_help(gOptionContext, mainHelp, (group is null) ? null : group.getOptionGroupStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -197,12 +197,12 @@ public class OptionContext
 	public OptionGroup getMainGroup()
 	{
 		auto p = g_option_context_get_main_group(gOptionContext);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new OptionGroup(cast(GOptionGroup*) p);
 	}
 
@@ -271,16 +271,16 @@ public class OptionContext
 		int argc = cast(int)argv.length;
 		char** outargv = Str.toStringzArray(argv);
 		GError* err = null;
-		
+
 		auto p = g_option_context_parse(gOptionContext, &argc, &outargv, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		argv = Str.toStringArray(outargv, argc);
-		
+
 		return p;
 	}
 
@@ -317,16 +317,16 @@ public class OptionContext
 	{
 		char** outarguments = Str.toStringzArray(arguments);
 		GError* err = null;
-		
+
 		auto p = g_option_context_parse_strv(gOptionContext, &outarguments, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		arguments = Str.toStringArray(outarguments);
-		
+
 		return p;
 	}
 
@@ -530,12 +530,12 @@ public class OptionContext
 	public this(string parameterString)
 	{
 		auto p = g_option_context_new(Str.toStringz(parameterString));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GOptionContext*) p);
 	}
 

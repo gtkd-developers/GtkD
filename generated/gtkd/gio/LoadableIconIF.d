@@ -27,12 +27,12 @@ module gio.LoadableIconIF;
 private import gio.AsyncResultIF;
 private import gio.Cancellable;
 private import gio.InputStream;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**

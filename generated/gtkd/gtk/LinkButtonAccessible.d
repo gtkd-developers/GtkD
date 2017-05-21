@@ -27,8 +27,8 @@ module gtk.LinkButtonAccessible;
 private import atk.HyperlinkImplIF;
 private import atk.HyperlinkImplT;
 private import gtk.ButtonAccessible;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /** */

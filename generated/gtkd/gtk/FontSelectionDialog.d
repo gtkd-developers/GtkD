@@ -30,8 +30,8 @@ private import gobject.ObjectG;
 private import gtk.Dialog;
 private import gtk.FontSelection;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /** */
@@ -81,12 +81,12 @@ public class FontSelectionDialog : Dialog
 	public FontSelection getFontSelection()
 	{
 		auto p = gtk_font_selection_dialog_get_font_selection(gtkFontSelectionDialog);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(FontSelection)(cast(GtkFontSelection*) p);
 	}
 
@@ -114,12 +114,12 @@ public class FontSelectionDialog : Dialog
 	public this(string title)
 	{
 		auto p = gtk_font_selection_dialog_new(Str.toStringz(title));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkFontSelectionDialog*) p);
 	}
 
@@ -136,12 +136,12 @@ public class FontSelectionDialog : Dialog
 	public Widget getCancelButton()
 	{
 		auto p = gtk_font_selection_dialog_get_cancel_button(gtkFontSelectionDialog);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -163,7 +163,7 @@ public class FontSelectionDialog : Dialog
 	public string getFontName()
 	{
 		auto retStr = gtk_font_selection_dialog_get_font_name(gtkFontSelectionDialog);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -181,12 +181,12 @@ public class FontSelectionDialog : Dialog
 	public Widget getOkButton()
 	{
 		auto p = gtk_font_selection_dialog_get_ok_button(gtkFontSelectionDialog);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 

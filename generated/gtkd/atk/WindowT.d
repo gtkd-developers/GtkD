@@ -24,9 +24,9 @@
 
 module atk.WindowT;
 
+public  import atk.c.functions;
+public  import atk.c.types;
 public  import gobject.Signals;
-public  import gtkc.atk;
-public  import gtkc.atktypes;
 public  import std.algorithm;
 
 
@@ -51,13 +51,13 @@ public template WindowT(TStruct)
 		static OnActivateDelegateWrapper[] listeners;
 		void delegate(WindowIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(WindowIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnActivateDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -90,12 +90,12 @@ public template WindowT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackActivate(AtkWindow* windowStruct, OnActivateDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackActivateDestroy(OnActivateDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -106,13 +106,13 @@ public template WindowT(TStruct)
 		static OnCreateDelegateWrapper[] listeners;
 		void delegate(WindowIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(WindowIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCreateDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -145,12 +145,12 @@ public template WindowT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackCreate(AtkWindow* windowStruct, OnCreateDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackCreateDestroy(OnCreateDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -161,13 +161,13 @@ public template WindowT(TStruct)
 		static OnDeactivateDelegateWrapper[] listeners;
 		void delegate(WindowIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(WindowIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDeactivateDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -200,12 +200,12 @@ public template WindowT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDeactivate(AtkWindow* windowStruct, OnDeactivateDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDeactivateDestroy(OnDeactivateDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -216,13 +216,13 @@ public template WindowT(TStruct)
 		static OnDestroyDelegateWrapper[] listeners;
 		void delegate(WindowIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(WindowIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDestroyDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -255,12 +255,12 @@ public template WindowT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDestroy(AtkWindow* windowStruct, OnDestroyDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDestroyDestroy(OnDestroyDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -271,13 +271,13 @@ public template WindowT(TStruct)
 		static OnMaximizeDelegateWrapper[] listeners;
 		void delegate(WindowIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(WindowIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMaximizeDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -310,12 +310,12 @@ public template WindowT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackMaximize(AtkWindow* windowStruct, OnMaximizeDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMaximizeDestroy(OnMaximizeDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -326,13 +326,13 @@ public template WindowT(TStruct)
 		static OnMinimizeDelegateWrapper[] listeners;
 		void delegate(WindowIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(WindowIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMinimizeDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -365,12 +365,12 @@ public template WindowT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackMinimize(AtkWindow* windowStruct, OnMinimizeDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMinimizeDestroy(OnMinimizeDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -381,13 +381,13 @@ public template WindowT(TStruct)
 		static OnMoveDelegateWrapper[] listeners;
 		void delegate(WindowIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(WindowIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMoveDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -420,12 +420,12 @@ public template WindowT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackMove(AtkWindow* windowStruct, OnMoveDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMoveDestroy(OnMoveDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -436,13 +436,13 @@ public template WindowT(TStruct)
 		static OnResizeDelegateWrapper[] listeners;
 		void delegate(WindowIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(WindowIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnResizeDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -475,12 +475,12 @@ public template WindowT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackResize(AtkWindow* windowStruct, OnResizeDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackResizeDestroy(OnResizeDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -491,13 +491,13 @@ public template WindowT(TStruct)
 		static OnRestoreDelegateWrapper[] listeners;
 		void delegate(WindowIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(WindowIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnRestoreDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -530,12 +530,12 @@ public template WindowT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackRestore(AtkWindow* windowStruct, OnRestoreDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackRestoreDestroy(OnRestoreDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

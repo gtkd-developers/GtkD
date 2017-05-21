@@ -30,11 +30,11 @@ private import gdk.DeviceTool;
 private import gdk.Display;
 private import gdk.Event;
 private import gdk.Window;
+private import gdk.c.functions;
+public  import gdk.c.types;
 private import glib.ListG;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gdk;
-public  import gtkc.gdktypes;
 private import std.algorithm;
 
 
@@ -104,12 +104,12 @@ public class Seat : ObjectG
 	public Display getDisplay()
 	{
 		auto p = gdk_seat_get_display(gdkSeat);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
 	}
 
@@ -124,12 +124,12 @@ public class Seat : ObjectG
 	public Device getKeyboard()
 	{
 		auto p = gdk_seat_get_keyboard(gdkSeat);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Device)(cast(GdkDevice*) p);
 	}
 
@@ -144,12 +144,12 @@ public class Seat : ObjectG
 	public Device getPointer()
 	{
 		auto p = gdk_seat_get_pointer(gdkSeat);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Device)(cast(GdkDevice*) p);
 	}
 
@@ -168,12 +168,12 @@ public class Seat : ObjectG
 	public ListG getSlaves(GdkSeatCapabilities capabilities)
 	{
 		auto p = gdk_seat_get_slaves(gdkSeat, capabilities);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -247,13 +247,13 @@ public class Seat : ObjectG
 		static OnDeviceAddedDelegateWrapper[] listeners;
 		void delegate(Device, Seat) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Device, Seat) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDeviceAddedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -289,12 +289,12 @@ public class Seat : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDeviceAdded(GdkSeat* seatStruct, GdkDevice* device, OnDeviceAddedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Device)(device), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDeviceAddedDestroy(OnDeviceAddedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -305,13 +305,13 @@ public class Seat : ObjectG
 		static OnDeviceRemovedDelegateWrapper[] listeners;
 		void delegate(Device, Seat) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Device, Seat) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDeviceRemovedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -347,12 +347,12 @@ public class Seat : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDeviceRemoved(GdkSeat* seatStruct, GdkDevice* device, OnDeviceRemovedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Device)(device), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDeviceRemovedDestroy(OnDeviceRemovedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -363,13 +363,13 @@ public class Seat : ObjectG
 		static OnToolAddedDelegateWrapper[] listeners;
 		void delegate(DeviceTool, Seat) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(DeviceTool, Seat) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnToolAddedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -409,12 +409,12 @@ public class Seat : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackToolAdded(GdkSeat* seatStruct, GdkDeviceTool* tool, OnToolAddedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(DeviceTool)(tool), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackToolAddedDestroy(OnToolAddedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -425,13 +425,13 @@ public class Seat : ObjectG
 		static OnToolRemovedDelegateWrapper[] listeners;
 		void delegate(DeviceTool, Seat) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(DeviceTool, Seat) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnToolRemovedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -467,12 +467,12 @@ public class Seat : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackToolRemoved(GdkSeat* seatStruct, GdkDeviceTool* tool, OnToolRemovedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(DeviceTool)(tool), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackToolRemovedDestroy(OnToolRemovedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

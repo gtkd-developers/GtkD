@@ -27,8 +27,8 @@ module glib.Date;
 private import glib.ConstructionException;
 private import glib.Str;
 private import glib.TimeVal;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 private import gtkd.Loader;
 
 
@@ -94,12 +94,12 @@ public class Date
 	public this()
 	{
 		auto p = g_date_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GDate*) p);
 	}
 
@@ -120,12 +120,12 @@ public class Date
 	public this(GDateDay day, GDateMonth month, GDateYear year)
 	{
 		auto p = g_date_new_dmy(day, month, year);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_dmy");
 		}
-		
+
 		this(cast(GDate*) p);
 	}
 
@@ -144,12 +144,12 @@ public class Date
 	public this(uint julianDay)
 	{
 		auto p = g_date_new_julian(julianDay);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_julian");
 		}
-		
+
 		this(cast(GDate*) p);
 	}
 

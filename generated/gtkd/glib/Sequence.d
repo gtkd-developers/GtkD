@@ -26,8 +26,8 @@ module glib.Sequence;
 
 private import glib.ConstructionException;
 private import glib.SequenceIter;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 private import gtkd.Loader;
 
 
@@ -84,12 +84,12 @@ public class Sequence
 	public SequenceIter append(void* data)
 	{
 		auto p = g_sequence_append(gSequence, data);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new SequenceIter(cast(GSequenceIter*) p);
 	}
 
@@ -131,12 +131,12 @@ public class Sequence
 	public SequenceIter getBeginIter()
 	{
 		auto p = g_sequence_get_begin_iter(gSequence);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new SequenceIter(cast(GSequenceIter*) p);
 	}
 
@@ -150,12 +150,12 @@ public class Sequence
 	public SequenceIter getEndIter()
 	{
 		auto p = g_sequence_get_end_iter(gSequence);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new SequenceIter(cast(GSequenceIter*) p);
 	}
 
@@ -173,12 +173,12 @@ public class Sequence
 	public SequenceIter getIterAtPos(int pos)
 	{
 		auto p = g_sequence_get_iter_at_pos(gSequence, pos);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new SequenceIter(cast(GSequenceIter*) p);
 	}
 
@@ -218,12 +218,12 @@ public class Sequence
 	public SequenceIter insertSorted(void* data, GCompareDataFunc cmpFunc, void* cmpData)
 	{
 		auto p = g_sequence_insert_sorted(gSequence, data, cmpFunc, cmpData);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new SequenceIter(cast(GSequenceIter*) p);
 	}
 
@@ -254,12 +254,12 @@ public class Sequence
 	public SequenceIter insertSortedIter(void* data, GSequenceIterCompareFunc iterCmp, void* cmpData)
 	{
 		auto p = g_sequence_insert_sorted_iter(gSequence, data, iterCmp, cmpData);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new SequenceIter(cast(GSequenceIter*) p);
 	}
 
@@ -311,12 +311,12 @@ public class Sequence
 	public SequenceIter lookup(void* data, GCompareDataFunc cmpFunc, void* cmpData)
 	{
 		auto p = g_sequence_lookup(gSequence, data, cmpFunc, cmpData);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new SequenceIter(cast(GSequenceIter*) p);
 	}
 
@@ -349,12 +349,12 @@ public class Sequence
 	public SequenceIter lookupIter(void* data, GSequenceIterCompareFunc iterCmp, void* cmpData)
 	{
 		auto p = g_sequence_lookup_iter(gSequence, data, iterCmp, cmpData);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new SequenceIter(cast(GSequenceIter*) p);
 	}
 
@@ -371,12 +371,12 @@ public class Sequence
 	public SequenceIter prepend(void* data)
 	{
 		auto p = g_sequence_prepend(gSequence, data);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new SequenceIter(cast(GSequenceIter*) p);
 	}
 
@@ -411,12 +411,12 @@ public class Sequence
 	public SequenceIter search(void* data, GCompareDataFunc cmpFunc, void* cmpData)
 	{
 		auto p = g_sequence_search(gSequence, data, cmpFunc, cmpData);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new SequenceIter(cast(GSequenceIter*) p);
 	}
 
@@ -452,12 +452,12 @@ public class Sequence
 	public SequenceIter searchIter(void* data, GSequenceIterCompareFunc iterCmp, void* cmpData)
 	{
 		auto p = g_sequence_search_iter(gSequence, data, iterCmp, cmpData);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new SequenceIter(cast(GSequenceIter*) p);
 	}
 
@@ -546,12 +546,12 @@ public class Sequence
 	public static SequenceIter insertBefore(SequenceIter iter, void* data)
 	{
 		auto p = g_sequence_insert_before((iter is null) ? null : iter.getSequenceIterStruct(), data);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new SequenceIter(cast(GSequenceIter*) p);
 	}
 
@@ -612,12 +612,12 @@ public class Sequence
 	public this(GDestroyNotify dataDestroy)
 	{
 		auto p = g_sequence_new(dataDestroy);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GSequence*) p);
 	}
 
@@ -641,12 +641,12 @@ public class Sequence
 	public static SequenceIter rangeGetMidpoint(SequenceIter begin, SequenceIter end)
 	{
 		auto p = g_sequence_range_get_midpoint((begin is null) ? null : begin.getSequenceIterStruct(), (end is null) ? null : end.getSequenceIterStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new SequenceIter(cast(GSequenceIter*) p);
 	}
 

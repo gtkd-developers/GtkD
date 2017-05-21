@@ -29,8 +29,8 @@ public  import gtk.SelectionData;
 public  import gtk.TreeModel;
 public  import gtk.TreeModelIF;
 public  import gtk.TreePath;
-public  import gtkc.gtk;
-public  import gtkc.gtktypes;
+public  import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /** */
@@ -118,12 +118,12 @@ public template TreeDragSourceT(TStruct)
 	{
 		GtkTreeModel* outtreeModel = null;
 		GtkTreePath* outpath = null;
-		
+
 		auto p = gtk_tree_get_row_drag_data((selectionData is null) ? null : selectionData.getSelectionDataStruct(), &outtreeModel, &outpath) != 0;
-		
+
 		treeModel = ObjectG.getDObject!(TreeModel, TreeModelIF)(outtreeModel);
 		path = ObjectG.getDObject!(TreePath)(outpath);
-		
+
 		return p;
 	}
 

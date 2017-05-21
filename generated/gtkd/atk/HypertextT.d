@@ -25,10 +25,10 @@
 module atk.HypertextT;
 
 public  import atk.Hyperlink;
+public  import atk.c.functions;
+public  import atk.c.types;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
-public  import gtkc.atk;
-public  import gtkc.atktypes;
 public  import std.algorithm;
 
 
@@ -66,12 +66,12 @@ public template HypertextT(TStruct)
 	public Hyperlink getLink(int linkIndex)
 	{
 		auto p = atk_hypertext_get_link(getHypertextStruct(), linkIndex);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Hyperlink)(cast(AtkHyperlink*) p);
 	}
 
@@ -105,13 +105,13 @@ public template HypertextT(TStruct)
 		static OnLinkSelectedDelegateWrapper[] listeners;
 		void delegate(int, HypertextIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(int, HypertextIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnLinkSelectedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -146,12 +146,12 @@ public template HypertextT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackLinkSelected(AtkHypertext* hypertextStruct, int arg1, OnLinkSelectedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(arg1, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackLinkSelectedDestroy(OnLinkSelectedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

@@ -25,12 +25,12 @@
 module gdk.DisplayManager;
 
 private import gdk.Display;
+private import gdk.c.functions;
+public  import gdk.c.types;
 private import glib.ListSG;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gdk;
-public  import gtkc.gdktypes;
 private import std.algorithm;
 
 
@@ -134,12 +134,12 @@ public class DisplayManager : ObjectG
 	public static DisplayManager get()
 	{
 		auto p = gdk_display_manager_get();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(DisplayManager)(cast(GdkDisplayManager*) p);
 	}
 
@@ -154,12 +154,12 @@ public class DisplayManager : ObjectG
 	public Display getDefaultDisplay()
 	{
 		auto p = gdk_display_manager_get_default_display(gdkDisplayManager);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
 	}
 
@@ -175,12 +175,12 @@ public class DisplayManager : ObjectG
 	public ListSG listDisplays()
 	{
 		auto p = gdk_display_manager_list_displays(gdkDisplayManager);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -198,12 +198,12 @@ public class DisplayManager : ObjectG
 	public Display openDisplay(string name)
 	{
 		auto p = gdk_display_manager_open_display(gdkDisplayManager, Str.toStringz(name));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
 	}
 
@@ -225,13 +225,13 @@ public class DisplayManager : ObjectG
 		static OnDisplayOpenedDelegateWrapper[] listeners;
 		void delegate(Display, DisplayManager) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Display, DisplayManager) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDisplayOpenedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -266,12 +266,12 @@ public class DisplayManager : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDisplayOpened(GdkDisplayManager* displaymanagerStruct, GdkDisplay* display, OnDisplayOpenedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Display)(display), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDisplayOpenedDestroy(OnDisplayOpenedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

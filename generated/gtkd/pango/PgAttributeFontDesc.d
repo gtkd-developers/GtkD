@@ -26,10 +26,10 @@ module pango.PgAttributeFontDesc;
 
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-private import gtkc.pango;
-public  import gtkc.pangotypes;
 private import pango.PgAttribute;
 private import pango.PgFontDescription;
+private import pango.c.functions;
+public  import pango.c.types;
 
 
 /**
@@ -87,12 +87,12 @@ public class PgAttributeFontDesc : PgAttribute
 	public this(PgFontDescription desc)
 	{
 		auto p = pango_attr_font_desc_new((desc is null) ? null : desc.getPgFontDescriptionStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(PangoAttrFontDesc*) p);
 	}
 }

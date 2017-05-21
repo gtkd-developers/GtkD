@@ -26,10 +26,10 @@ module atk.RelationSet;
 
 private import atk.ObjectAtk;
 private import atk.Relation;
+private import atk.c.functions;
+public  import atk.c.types;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-private import gtkc.atk;
-public  import gtkc.atktypes;
 
 
 /**
@@ -93,12 +93,12 @@ public class RelationSet : ObjectG
 	public this()
 	{
 		auto p = atk_relation_set_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(AtkRelationSet*) p, true);
 	}
 
@@ -188,12 +188,12 @@ public class RelationSet : ObjectG
 	public Relation getRelation(int i)
 	{
 		auto p = atk_relation_set_get_relation(atkRelationSet, i);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Relation)(cast(AtkRelation*) p);
 	}
 
@@ -209,12 +209,12 @@ public class RelationSet : ObjectG
 	public Relation getRelationByType(AtkRelationType relationship)
 	{
 		auto p = atk_relation_set_get_relation_by_type(atkRelationSet, relationship);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Relation)(cast(AtkRelation*) p);
 	}
 

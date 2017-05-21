@@ -31,8 +31,8 @@ private import gobject.Signals;
 private import gtk.OrientableIF;
 private import gtk.OrientableT;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -187,12 +187,12 @@ public class LevelBar : Widget, OrientableIF
 	public this()
 	{
 		auto p = gtk_level_bar_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkLevelBar*) p);
 	}
 
@@ -213,12 +213,12 @@ public class LevelBar : Widget, OrientableIF
 	public this(double minValue, double maxValue)
 	{
 		auto p = gtk_level_bar_new_for_interval(minValue, maxValue);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_for_interval");
 		}
-		
+
 		this(cast(GtkLevelBar*) p);
 	}
 
@@ -411,13 +411,13 @@ public class LevelBar : Widget, OrientableIF
 		static OnOffsetChangedDelegateWrapper[] listeners;
 		void delegate(string, LevelBar) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(string, LevelBar) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnOffsetChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -457,12 +457,12 @@ public class LevelBar : Widget, OrientableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackOffsetChanged(GtkLevelBar* levelbarStruct, char* name, OnOffsetChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(name), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackOffsetChangedDestroy(OnOffsetChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

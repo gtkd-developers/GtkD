@@ -31,8 +31,8 @@ private import gtk.Button;
 private import gtk.HButtonBox;
 private import gtk.VButtonBox;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /** */
@@ -87,7 +87,7 @@ public class ButtonBox : Box
 		{
 			bBox = HButtonBox.createActionBox();
 		}
-		
+
 		Button button;
 		for( int i=0 ; i<stocks.length && i<actions.length ; i++)
 		{
@@ -98,7 +98,7 @@ public class ButtonBox : Box
 		}
 		return bBox;
 	}
-	
+
 	/** */
 	static ButtonBox createOkBox(void delegate(Button) onClicked)
 	{
@@ -107,7 +107,7 @@ public class ButtonBox : Box
 		actions ~= "action.ok";
 		return createActionBox(onClicked, stocks, actions);
 	}
-	
+
 	/** */
 	static ButtonBox createOkCancelBox(void delegate(Button) onClicked)
 	{
@@ -117,7 +117,7 @@ public class ButtonBox : Box
 		actions ~= "action.cancel";
 		return createActionBox(onClicked, stocks, actions);
 	}
-	
+
 
 	/**
 	 */
@@ -143,12 +143,12 @@ public class ButtonBox : Box
 	public this(GtkOrientation orientation)
 	{
 		auto p = gtk_button_box_new(orientation);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkButtonBox*) p);
 	}
 

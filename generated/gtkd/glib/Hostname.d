@@ -25,8 +25,8 @@
 module glib.Hostname;
 
 private import glib.Str;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 
 
 /** */
@@ -109,7 +109,7 @@ public struct Hostname
 	public static string toAscii(string hostname)
 	{
 		auto retStr = g_hostname_to_ascii(Str.toStringz(hostname));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -134,7 +134,7 @@ public struct Hostname
 	public static string toUnicode(string hostname)
 	{
 		auto retStr = g_hostname_to_unicode(Str.toStringz(hostname));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}

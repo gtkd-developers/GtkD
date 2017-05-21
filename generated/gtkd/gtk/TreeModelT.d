@@ -30,8 +30,8 @@ public  import gobject.Signals;
 public  import gobject.Value;
 public  import gtk.TreeIter;
 public  import gtk.TreePath;
-public  import gtkc.gtk;
-public  import gtkc.gtktypes;
+public  import gtk.c.functions;
+public  import gtk.c.types;
 public  import std.algorithm;
 
 
@@ -250,7 +250,7 @@ public template TreeModelT(TStruct)
 		Value value = getValue(iter, column);
 		return value.getString();
 	}
-	
+
 	/**
 	 * Get the value of a column as a char array.
 	 * this is the same calling getValue and get the int from the value object
@@ -260,7 +260,7 @@ public template TreeModelT(TStruct)
 		Value value = getValue(iter, column);
 		return value.getInt();
 	}
-	
+
 	/**
 	 * Sets iter to a valid iterator pointing to path.
 	 * Params:
@@ -277,7 +277,7 @@ public template TreeModelT(TStruct)
 			(iter is null) ? null : iter.getTreeIterStruct(),
 		(path is null) ? null : path.getTreePathStruct());
 	}
-	
+
 	/**
 	 * Initializes and sets value to that at column.
 	 * When done with value, g_value_unset() needs to be called
@@ -291,9 +291,9 @@ public template TreeModelT(TStruct)
 	{
 		if ( value is null )
 			value = new Value();
-		
+
 		gtk_tree_model_get_value(getTreeModelStruct(), (iter is null) ? null : iter.getTreeIterStruct(), column, (value is null) ? null : value.getValueStruct());
-		
+
 		return value;
 	}
 
@@ -355,11 +355,11 @@ public template TreeModelT(TStruct)
 	public bool getIterFirst(out TreeIter iter)
 	{
 		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
-		
+
 		auto p = gtk_tree_model_get_iter_first(getTreeModelStruct(), outiter) != 0;
-		
+
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
-		
+
 		return p;
 	}
 
@@ -376,11 +376,11 @@ public template TreeModelT(TStruct)
 	public bool getIterFromString(out TreeIter iter, string pathString)
 	{
 		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
-		
+
 		auto p = gtk_tree_model_get_iter_from_string(getTreeModelStruct(), outiter, Str.toStringz(pathString)) != 0;
-		
+
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
-		
+
 		return p;
 	}
 
@@ -407,12 +407,12 @@ public template TreeModelT(TStruct)
 	public TreePath getPath(TreeIter iter)
 	{
 		auto p = gtk_tree_model_get_path(getTreeModelStruct(), (iter is null) ? null : iter.getTreeIterStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) p, true);
 	}
 
@@ -434,7 +434,7 @@ public template TreeModelT(TStruct)
 	public string getStringFromIter(TreeIter iter)
 	{
 		auto retStr = gtk_tree_model_get_string_from_iter(getTreeModelStruct(), (iter is null) ? null : iter.getTreeIterStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -471,11 +471,11 @@ public template TreeModelT(TStruct)
 	public bool iterChildren(out TreeIter iter, TreeIter parent)
 	{
 		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
-		
+
 		auto p = gtk_tree_model_iter_children(getTreeModelStruct(), outiter, (parent is null) ? null : parent.getTreeIterStruct()) != 0;
-		
+
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
-		
+
 		return p;
 	}
 
@@ -543,11 +543,11 @@ public template TreeModelT(TStruct)
 	public bool iterNthChild(out TreeIter iter, TreeIter parent, int n)
 	{
 		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
-		
+
 		auto p = gtk_tree_model_iter_nth_child(getTreeModelStruct(), outiter, (parent is null) ? null : parent.getTreeIterStruct(), n) != 0;
-		
+
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
-		
+
 		return p;
 	}
 
@@ -571,11 +571,11 @@ public template TreeModelT(TStruct)
 	public bool iterParent(out TreeIter iter, TreeIter child)
 	{
 		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
-		
+
 		auto p = gtk_tree_model_iter_parent(getTreeModelStruct(), outiter, (child is null) ? null : child.getTreeIterStruct()) != 0;
-		
+
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
-		
+
 		return p;
 	}
 
@@ -749,13 +749,13 @@ public template TreeModelT(TStruct)
 		static OnRowChangedDelegateWrapper[] listeners;
 		void delegate(TreePath, TreeIter, TreeModelIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TreePath, TreeIter, TreeModelIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnRowChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -789,12 +789,12 @@ public template TreeModelT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackRowChanged(GtkTreeModel* treemodelStruct, GtkTreePath* path, GtkTreeIter* iter, OnRowChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(TreePath)(path), ObjectG.getDObject!(TreeIter)(iter), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackRowChangedDestroy(OnRowChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -805,13 +805,13 @@ public template TreeModelT(TStruct)
 		static OnRowDeletedDelegateWrapper[] listeners;
 		void delegate(TreePath, TreeModelIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TreePath, TreeModelIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnRowDeletedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -851,12 +851,12 @@ public template TreeModelT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackRowDeleted(GtkTreeModel* treemodelStruct, GtkTreePath* path, OnRowDeletedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(TreePath)(path), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackRowDeletedDestroy(OnRowDeletedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -867,13 +867,13 @@ public template TreeModelT(TStruct)
 		static OnRowHasChildToggledDelegateWrapper[] listeners;
 		void delegate(TreePath, TreeIter, TreeModelIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TreePath, TreeIter, TreeModelIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnRowHasChildToggledDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -908,12 +908,12 @@ public template TreeModelT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackRowHasChildToggled(GtkTreeModel* treemodelStruct, GtkTreePath* path, GtkTreeIter* iter, OnRowHasChildToggledDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(TreePath)(path), ObjectG.getDObject!(TreeIter)(iter), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackRowHasChildToggledDestroy(OnRowHasChildToggledDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -924,13 +924,13 @@ public template TreeModelT(TStruct)
 		static OnRowInsertedDelegateWrapper[] listeners;
 		void delegate(TreePath, TreeIter, TreeModelIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TreePath, TreeIter, TreeModelIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnRowInsertedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -969,12 +969,12 @@ public template TreeModelT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackRowInserted(GtkTreeModel* treemodelStruct, GtkTreePath* path, GtkTreeIter* iter, OnRowInsertedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(TreePath)(path), ObjectG.getDObject!(TreeIter)(iter), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackRowInsertedDestroy(OnRowInsertedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -985,13 +985,13 @@ public template TreeModelT(TStruct)
 		static OnRowsReorderedDelegateWrapper[] listeners;
 		void delegate(TreePath, TreeIter, void*, TreeModelIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TreePath, TreeIter, void*, TreeModelIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnRowsReorderedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1035,12 +1035,12 @@ public template TreeModelT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackRowsReordered(GtkTreeModel* treemodelStruct, GtkTreePath* path, GtkTreeIter* iter, void* newOrder, OnRowsReorderedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(TreePath)(path), ObjectG.getDObject!(TreeIter)(iter), newOrder, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackRowsReorderedDestroy(OnRowsReorderedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

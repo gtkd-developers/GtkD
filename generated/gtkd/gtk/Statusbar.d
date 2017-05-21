@@ -30,8 +30,8 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Box;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -138,12 +138,12 @@ public class Statusbar : Box
 	public this()
 	{
 		auto p = gtk_statusbar_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkStatusbar*) p);
 	}
 
@@ -227,13 +227,13 @@ public class Statusbar : Box
 		static OnTextPoppedDelegateWrapper[] listeners;
 		void delegate(uint, string, Statusbar) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(uint, string, Statusbar) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnTextPoppedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -267,12 +267,12 @@ public class Statusbar : Box
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackTextPopped(GtkStatusbar* statusbarStruct, uint contextId, char* text, OnTextPoppedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(contextId, Str.toString(text), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackTextPoppedDestroy(OnTextPoppedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -283,13 +283,13 @@ public class Statusbar : Box
 		static OnTextPushedDelegateWrapper[] listeners;
 		void delegate(uint, string, Statusbar) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(uint, string, Statusbar) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnTextPushedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -323,12 +323,12 @@ public class Statusbar : Box
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackTextPushed(GtkStatusbar* statusbarStruct, uint contextId, char* text, OnTextPushedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(contextId, Str.toString(text), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackTextPushedDestroy(OnTextPushedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

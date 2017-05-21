@@ -24,13 +24,13 @@
 
 module gio.TlsFileDatabaseT;
 
+public  import gio.c.functions;
+public  import gio.c.types;
 public  import glib.ConstructionException;
 public  import glib.ErrorG;
 public  import glib.GException;
 public  import glib.Str;
 public  import gobject.ObjectG;
-public  import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**

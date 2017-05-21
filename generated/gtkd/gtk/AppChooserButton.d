@@ -33,8 +33,8 @@ private import gtk.AppChooserIF;
 private import gtk.AppChooserT;
 private import gtk.ComboBox;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -122,12 +122,12 @@ public class AppChooserButton : ComboBox, AppChooserIF
 	public this(string contentType)
 	{
 		auto p = gtk_app_chooser_button_new(Str.toStringz(contentType));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkAppChooserButton*) p);
 	}
 
@@ -261,13 +261,13 @@ public class AppChooserButton : ComboBox, AppChooserIF
 		static OnCustomItemActivatedDelegateWrapper[] listeners;
 		void delegate(string, AppChooserButton) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(string, AppChooserButton) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCustomItemActivatedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -302,12 +302,12 @@ public class AppChooserButton : ComboBox, AppChooserIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackCustomItemActivated(GtkAppChooserButton* appchooserbuttonStruct, char* itemName, OnCustomItemActivatedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(itemName), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackCustomItemActivatedDestroy(OnCustomItemActivatedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

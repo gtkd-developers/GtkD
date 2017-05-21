@@ -28,8 +28,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Window;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -147,12 +147,12 @@ public class NativeDialog : ObjectG
 	public Window getTransientFor()
 	{
 		auto p = gtk_native_dialog_get_transient_for(gtkNativeDialog);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Window)(cast(GtkWindow*) p);
 	}
 
@@ -292,13 +292,13 @@ public class NativeDialog : ObjectG
 		static OnResponseDelegateWrapper[] listeners;
 		void delegate(int, NativeDialog) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(int, NativeDialog) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnResponseDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -338,12 +338,12 @@ public class NativeDialog : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackResponse(GtkNativeDialog* nativedialogStruct, int responseId, OnResponseDelegateWrapper wrapper)
 	{
 		wrapper.dlg(responseId, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackResponseDestroy(OnResponseDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

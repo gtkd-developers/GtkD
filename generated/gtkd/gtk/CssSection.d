@@ -27,8 +27,8 @@ module gtk.CssSection;
 private import gio.File;
 private import gio.FileIF;
 private import gobject.ObjectG;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import gtkd.Loader;
 
 
@@ -133,12 +133,12 @@ public class CssSection
 	public FileIF getFile()
 	{
 		auto p = gtk_css_section_get_file(gtkCssSection);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p);
 	}
 
@@ -158,12 +158,12 @@ public class CssSection
 	public CssSection getParent()
 	{
 		auto p = gtk_css_section_get_parent(gtkCssSection);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(CssSection)(cast(GtkCssSection*) p);
 	}
 
@@ -216,12 +216,12 @@ public class CssSection
 	public CssSection doref()
 	{
 		auto p = gtk_css_section_ref(gtkCssSection);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(CssSection)(cast(GtkCssSection*) p, true);
 	}
 

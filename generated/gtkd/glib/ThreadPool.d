@@ -27,8 +27,8 @@ module glib.ThreadPool;
 private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 
 
 /**
@@ -153,14 +153,14 @@ public class ThreadPool
 	public bool push(void* data)
 	{
 		GError* err = null;
-		
+
 		auto p = g_thread_pool_push(gThreadPool, data, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -197,14 +197,14 @@ public class ThreadPool
 	public bool setMaxThreads(int maxThreads)
 	{
 		GError* err = null;
-		
+
 		auto p = g_thread_pool_set_max_threads(gThreadPool, maxThreads, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -329,19 +329,19 @@ public class ThreadPool
 	public this(GFunc func, void* userData, int maxThreads, bool exclusive)
 	{
 		GError* err = null;
-		
+
 		auto p = g_thread_pool_new(func, userData, maxThreads, exclusive, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GThreadPool*) p);
 	}
 

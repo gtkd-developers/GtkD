@@ -29,8 +29,8 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gsv.SourceCompletionProposalIF;
 private import gsv.SourceCompletionProviderIF;
-private import gsvc.gsv;
-public  import gsvc.gsvtypes;
+private import gsv.c.functions;
+public  import gsv.c.types;
 private import gtk.TextIter;
 private import std.algorithm;
 
@@ -117,11 +117,11 @@ public class SourceCompletionContext : ObjectG
 	public bool getIter(out TextIter iter)
 	{
 		GtkTextIter* outiter = gMalloc!GtkTextIter();
-		
+
 		auto p = gtk_source_completion_context_get_iter(gtkSourceCompletionContext, outiter) != 0;
-		
+
 		iter = ObjectG.getDObject!(TextIter)(outiter, true);
-		
+
 		return p;
 	}
 
@@ -130,13 +130,13 @@ public class SourceCompletionContext : ObjectG
 		static OnCancelledDelegateWrapper[] listeners;
 		void delegate(SourceCompletionContext) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(SourceCompletionContext) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCancelledDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -168,12 +168,12 @@ public class SourceCompletionContext : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackCancelled(GtkSourceCompletionContext* sourcecompletioncontextStruct, OnCancelledDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackCancelledDestroy(OnCancelledDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

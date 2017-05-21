@@ -24,9 +24,9 @@
 
 module gio.SocketControlMessage;
 
+private import gio.c.functions;
+public  import gio.c.types;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -114,12 +114,12 @@ public class SocketControlMessage : ObjectG
 	public static SocketControlMessage deserialize(int level, int type, ubyte[] data)
 	{
 		auto p = g_socket_control_message_deserialize(level, type, cast(size_t)data.length, data.ptr);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SocketControlMessage)(cast(GSocketControlMessage*) p, true);
 	}
 

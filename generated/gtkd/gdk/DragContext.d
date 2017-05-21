@@ -27,11 +27,11 @@ module gdk.DragContext;
 private import gdk.Device;
 private import gdk.Screen;
 private import gdk.Window;
+private import gdk.c.functions;
+public  import gdk.c.types;
 private import glib.ListG;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gdk;
-public  import gtkc.gdktypes;
 private import std.algorithm;
 
 
@@ -100,12 +100,12 @@ public class DragContext : ObjectG
 	public Window getDestWindow()
 	{
 		auto p = gdk_drag_context_get_dest_window(gdkDragContext);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 
@@ -117,12 +117,12 @@ public class DragContext : ObjectG
 	public Device getDevice()
 	{
 		auto p = gdk_drag_context_get_device(gdkDragContext);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Device)(cast(GdkDevice*) p);
 	}
 
@@ -141,12 +141,12 @@ public class DragContext : ObjectG
 	public Window getDragWindow()
 	{
 		auto p = gdk_drag_context_get_drag_window(gdkDragContext);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 
@@ -184,12 +184,12 @@ public class DragContext : ObjectG
 	public Window getSourceWindow()
 	{
 		auto p = gdk_drag_context_get_source_window(gdkDragContext);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 
@@ -215,12 +215,12 @@ public class DragContext : ObjectG
 	public ListG listTargets()
 	{
 		auto p = gdk_drag_context_list_targets(gdkDragContext);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -288,13 +288,13 @@ public class DragContext : ObjectG
 		static OnActionChangedDelegateWrapper[] listeners;
 		void delegate(GdkDragAction, DragContext) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(GdkDragAction, DragContext) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnActionChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -333,12 +333,12 @@ public class DragContext : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackActionChanged(GdkDragContext* dragcontextStruct, GdkDragAction action, OnActionChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(action, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackActionChangedDestroy(OnActionChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -349,13 +349,13 @@ public class DragContext : ObjectG
 		static OnCancelDelegateWrapper[] listeners;
 		void delegate(GdkDragCancelReason, DragContext) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(GdkDragCancelReason, DragContext) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCancelDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -394,12 +394,12 @@ public class DragContext : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackCancel(GdkDragContext* dragcontextStruct, GdkDragCancelReason reason, OnCancelDelegateWrapper wrapper)
 	{
 		wrapper.dlg(reason, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackCancelDestroy(OnCancelDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -410,13 +410,13 @@ public class DragContext : ObjectG
 		static OnDndFinishedDelegateWrapper[] listeners;
 		void delegate(DragContext) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(DragContext) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDndFinishedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -454,12 +454,12 @@ public class DragContext : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDndFinished(GdkDragContext* dragcontextStruct, OnDndFinishedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDndFinishedDestroy(OnDndFinishedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -470,13 +470,13 @@ public class DragContext : ObjectG
 		static OnDropPerformedDelegateWrapper[] listeners;
 		void delegate(int, DragContext) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(int, DragContext) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDropPerformedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -515,12 +515,12 @@ public class DragContext : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDropPerformed(GdkDragContext* dragcontextStruct, int time, OnDropPerformedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(time, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDropPerformedDestroy(OnDropPerformedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -561,12 +561,12 @@ public class DragContext : ObjectG
 	public static DragContext dragBegin(Window window, ListG targets)
 	{
 		auto p = gdk_drag_begin((window is null) ? null : window.getWindowStruct(), (targets is null) ? null : targets.getListGStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(DragContext)(cast(GdkDragContext*) p, true);
 	}
 
@@ -586,12 +586,12 @@ public class DragContext : ObjectG
 	public static DragContext dragBeginForDevice(Window window, Device device, ListG targets)
 	{
 		auto p = gdk_drag_begin_for_device((window is null) ? null : window.getWindowStruct(), (device is null) ? null : device.getDeviceStruct(), (targets is null) ? null : targets.getListGStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(DragContext)(cast(GdkDragContext*) p, true);
 	}
 
@@ -615,12 +615,12 @@ public class DragContext : ObjectG
 	public static DragContext dragBeginFromPoint(Window window, Device device, ListG targets, int xRoot, int yRoot)
 	{
 		auto p = gdk_drag_begin_from_point((window is null) ? null : window.getWindowStruct(), (device is null) ? null : device.getDeviceStruct(), (targets is null) ? null : targets.getListGStruct(), xRoot, yRoot);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(DragContext)(cast(GdkDragContext*) p, true);
 	}
 
@@ -704,9 +704,9 @@ public class DragContext : ObjectG
 	public static void dragFindWindowForScreen(DragContext context, Window dragWindow, Screen screen, int xRoot, int yRoot, out Window destWindow, out GdkDragProtocol protocol)
 	{
 		GdkWindow* outdestWindow = null;
-		
+
 		gdk_drag_find_window_for_screen((context is null) ? null : context.getDragContextStruct(), (dragWindow is null) ? null : dragWindow.getWindowStruct(), (screen is null) ? null : screen.getScreenStruct(), xRoot, yRoot, &outdestWindow, &protocol);
-		
+
 		destWindow = ObjectG.getDObject!(Window)(outdestWindow);
 	}
 

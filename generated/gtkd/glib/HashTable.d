@@ -26,8 +26,8 @@ module glib.HashTable;
 
 private import glib.ConstructionException;
 private import glib.ListG;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 
 
 /**
@@ -223,12 +223,12 @@ public class HashTable
 	public ListG getKeys()
 	{
 		auto p = g_hash_table_get_keys(gHashTable);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -259,9 +259,9 @@ public class HashTable
 	public void*[] getKeysAsArray()
 	{
 		uint length;
-		
+
 		auto p = g_hash_table_get_keys_as_array(gHashTable, &length);
-		
+
 		return p[0 .. length];
 	}
 
@@ -283,12 +283,12 @@ public class HashTable
 	public ListG getValues()
 	{
 		auto p = g_hash_table_get_values(gHashTable);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -381,12 +381,12 @@ public class HashTable
 	public this(GHashFunc hashFunc, GEqualFunc keyEqualFunc)
 	{
 		auto p = g_hash_table_new(hashFunc, keyEqualFunc);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GHashTable*) p);
 	}
 
@@ -420,12 +420,12 @@ public class HashTable
 	public this(GHashFunc hashFunc, GEqualFunc keyEqualFunc, GDestroyNotify keyDestroyFunc, GDestroyNotify valueDestroyFunc)
 	{
 		auto p = g_hash_table_new_full(hashFunc, keyEqualFunc, keyDestroyFunc, valueDestroyFunc);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_full");
 		}
-		
+
 		this(cast(GHashTable*) p);
 	}
 
@@ -440,12 +440,12 @@ public class HashTable
 	public HashTable doref()
 	{
 		auto p = g_hash_table_ref(gHashTable);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new HashTable(cast(GHashTable*) p);
 	}
 

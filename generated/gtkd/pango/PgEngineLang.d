@@ -24,9 +24,9 @@
 
 module pango.PgEngineLang;
 
-private import gtkc.pango;
-public  import gtkc.pangotypes;
 private import pango.PgEngine;
+private import pango.c.functions;
+public  import pango.c.types;
 
 
 /**

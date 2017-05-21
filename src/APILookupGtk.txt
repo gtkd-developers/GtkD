@@ -25,14 +25,14 @@ wrap: gtk
 file: Gtk-3.0.gir
 
 addAliases: start
-	public import gtkc.cairotypes;
-	public import gtkc.glibtypes;
-	public import gtkc.gobjecttypes;
-	public import gtkc.giotypes;
-	public import gtkc.pangotypes;
-	public import gtkc.atktypes;
-	public import gtkc.gdkpixbuftypes;
-	public import gtkc.gdktypes;
+	public import cairo.c.types;
+	public import glib.c.types;
+	public import gobject.c.types;
+	public import gio.c.types;
+	public import pango.c.types;
+	public import atk.c.types;
+	public import gdkpixbuf.c.types;
+	public import gdk.c.types;
 
 	extern(C) Object _d_newclass(ClassInfo ci);
 
@@ -331,11 +331,11 @@ noCode: new_from_string
 
 array: add_from_string buffer length
 
-import: gtkc.glib
+import: glib.c.functions
 import: std.string
 
 #imports for gtk_builder_real_get_type_from_name_override
-import: gtkc.gobject
+import: gobject.c.functions
 import: gtkd.paths
 import: glib.Module
 import: gobject.Type
@@ -489,7 +489,7 @@ code: start
 			return null;
 		}
 
-		ObjectG obj = cast(ObjectG)gtkc.gtktypes._d_newclass(ci);
+		ObjectG obj = cast(ObjectG)gtk.c.types._d_newclass(ci);
 
 		obj.__ctor(cobj);
 
@@ -966,7 +966,7 @@ import: glib.ConstructionException
 import: gobject.Signals
 import: gtk.TreeIter
 import: gtk.TreeModelIF
-import: gtkc.gdktypes
+import: gdk.c.types
 import: std.algorithm
 override: remove_all
 noCode: new
@@ -3202,7 +3202,7 @@ code: end
 struct: TextBuffer
 import: core.vararg
 import: gdk.Color
-import: gtkc.gobject
+import: gobject.c.functions
 import: pango.PgFontDescription
 import: pango.PgTabArray
 import: std.stdio
@@ -4063,9 +4063,7 @@ import: gtk.TreeIter
 import: gtk.TreePath
 import: gtk.TreeModelT
 import: gtk.TreeModelIF
-import: gtkc.gobject
-import: gtkd.Loader
-import: gtkd.paths
+import: gobject.c.functions
 code: start
 struct CustomTreeModelClass
 {

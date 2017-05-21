@@ -26,11 +26,11 @@ module gio.SimpleProxyResolver;
 
 private import gio.ProxyResolverIF;
 private import gio.ProxyResolverT;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -108,12 +108,12 @@ public class SimpleProxyResolver : ObjectG, ProxyResolverIF
 	public this(string defaultProxy, string[] ignoreHosts)
 	{
 		auto p = g_simple_proxy_resolver_new(Str.toStringz(defaultProxy), Str.toStringzArray(ignoreHosts));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GSimpleProxyResolver*) p, true);
 	}
 

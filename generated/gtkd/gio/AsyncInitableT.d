@@ -26,12 +26,12 @@ module gio.AsyncInitableT;
 
 public  import gio.AsyncResultIF;
 public  import gio.Cancellable;
+public  import gio.c.functions;
+public  import gio.c.types;
 public  import glib.ErrorG;
 public  import glib.GException;
 public  import glib.Str;
 public  import gobject.ObjectG;
-public  import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -264,14 +264,14 @@ public template AsyncInitableT(TStruct)
 	public bool initFinish(AsyncResultIF res)
 	{
 		GError* err = null;
-		
+
 		auto p = g_async_initable_init_finish(getAsyncInitableStruct(), (res is null) ? null : res.getAsyncResultStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -292,19 +292,19 @@ public template AsyncInitableT(TStruct)
 	public ObjectG newFinish(AsyncResultIF res)
 	{
 		GError* err = null;
-		
+
 		auto p = g_async_initable_new_finish(getAsyncInitableStruct(), (res is null) ? null : res.getAsyncResultStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p, true);
 	}
 }

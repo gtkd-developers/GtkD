@@ -27,8 +27,8 @@ module gtk.FontChooserT;
 public  import glib.Str;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
-public  import gtkc.gtk;
-public  import gtkc.gtktypes;
+public  import gtk.c.functions;
+public  import gtk.c.types;
 public  import pango.PgFontDescription;
 public  import pango.PgFontFace;
 public  import pango.PgFontFamily;
@@ -75,7 +75,7 @@ public template FontChooserT(TStruct)
 	public string getFont()
 	{
 		auto retStr = gtk_font_chooser_get_font(getFontChooserStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -100,12 +100,12 @@ public template FontChooserT(TStruct)
 	public PgFontDescription getFontDesc()
 	{
 		auto p = gtk_font_chooser_get_font_desc(getFontChooserStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) p, true);
 	}
 
@@ -124,12 +124,12 @@ public template FontChooserT(TStruct)
 	public PgFontFace getFontFace()
 	{
 		auto p = gtk_font_chooser_get_font_face(getFontChooserStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgFontFace)(cast(PangoFontFace*) p);
 	}
 
@@ -148,12 +148,12 @@ public template FontChooserT(TStruct)
 	public PgFontFamily getFontFamily()
 	{
 		auto p = gtk_font_chooser_get_font_family(getFontChooserStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgFontFamily)(cast(PangoFontFamily*) p);
 	}
 
@@ -168,12 +168,12 @@ public template FontChooserT(TStruct)
 	public override PgFontMap getFontMap()
 	{
 		auto p = gtk_font_chooser_get_font_map(getFontChooserStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgFontMap)(cast(PangoFontMap*) p, true);
 	}
 
@@ -201,7 +201,7 @@ public template FontChooserT(TStruct)
 	public string getPreviewText()
 	{
 		auto retStr = gtk_font_chooser_get_preview_text(getFontChooserStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -329,13 +329,13 @@ public template FontChooserT(TStruct)
 		static OnFontActivatedDelegateWrapper[] listeners;
 		void delegate(string, FontChooserIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(string, FontChooserIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnFontActivatedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -371,12 +371,12 @@ public template FontChooserT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackFontActivated(GtkFontChooser* fontchooserStruct, char* fontname, OnFontActivatedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(fontname), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackFontActivatedDestroy(OnFontActivatedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

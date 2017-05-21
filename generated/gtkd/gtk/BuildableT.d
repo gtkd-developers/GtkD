@@ -28,8 +28,8 @@ public  import glib.Str;
 public  import gobject.ObjectG;
 public  import gobject.Value;
 public  import gtk.Builder;
-public  import gtkc.gtk;
-public  import gtkc.gtktypes;
+public  import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -90,12 +90,12 @@ public template BuildableT(TStruct)
 	public ObjectG constructChild(Builder builder, string name)
 	{
 		auto p = gtk_buildable_construct_child(getBuildableStruct(), (builder is null) ? null : builder.getBuilderStruct(), Str.toStringz(name));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p, true);
 	}
 
@@ -168,12 +168,12 @@ public template BuildableT(TStruct)
 	public ObjectG getInternalChild(Builder builder, string childname)
 	{
 		auto p = gtk_buildable_get_internal_child(getBuildableStruct(), (builder is null) ? null : builder.getBuilderStruct(), Str.toStringz(childname));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p);
 	}
 

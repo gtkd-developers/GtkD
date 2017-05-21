@@ -33,8 +33,8 @@ private import gobject.Signals;
 private import gtk.SelectionData;
 private import gtk.TargetEntry;
 private import gtk.TextBuffer;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -153,12 +153,12 @@ public class Clipboard : ObjectG
 	public static Clipboard get(GdkAtom selection)
 	{
 		auto p = gtk_clipboard_get(selection);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Clipboard)(cast(GtkClipboard*) p);
 	}
 
@@ -176,12 +176,12 @@ public class Clipboard : ObjectG
 	public static Clipboard getDefault(Display display)
 	{
 		auto p = gtk_clipboard_get_default((display is null) ? null : display.getDisplayStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Clipboard)(cast(GtkClipboard*) p);
 	}
 
@@ -227,12 +227,12 @@ public class Clipboard : ObjectG
 	public static Clipboard getForDisplay(Display display, GdkAtom selection)
 	{
 		auto p = gtk_clipboard_get_for_display((display is null) ? null : display.getDisplayStruct(), selection);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Clipboard)(cast(GtkClipboard*) p);
 	}
 
@@ -258,12 +258,12 @@ public class Clipboard : ObjectG
 	public Display getDisplay()
 	{
 		auto p = gtk_clipboard_get_display(gtkClipboard);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
 	}
 
@@ -279,12 +279,12 @@ public class Clipboard : ObjectG
 	public ObjectG getOwner()
 	{
 		auto p = gtk_clipboard_get_owner(gtkClipboard);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p);
 	}
 
@@ -448,7 +448,7 @@ public class Clipboard : ObjectG
 		{
 			targetsArray[i] = *(targets[i].getTargetEntryStruct());
 		}
-		
+
 		gtk_clipboard_set_can_store(gtkClipboard, targetsArray.ptr, cast(int)targets.length);
 	}
 
@@ -510,7 +510,7 @@ public class Clipboard : ObjectG
 		{
 			targetsArray[i] = *(targets[i].getTargetEntryStruct());
 		}
-		
+
 		return gtk_clipboard_set_with_data(gtkClipboard, targetsArray.ptr, cast(uint)targets.length, getFunc, clearFunc, userData) != 0;
 	}
 
@@ -545,7 +545,7 @@ public class Clipboard : ObjectG
 		{
 			targetsArray[i] = *(targets[i].getTargetEntryStruct());
 		}
-		
+
 		return gtk_clipboard_set_with_owner(gtkClipboard, targetsArray.ptr, cast(uint)targets.length, getFunc, clearFunc, (owner is null) ? null : owner.getObjectGStruct()) != 0;
 	}
 
@@ -577,12 +577,12 @@ public class Clipboard : ObjectG
 	public SelectionData waitForContents(GdkAtom target)
 	{
 		auto p = gtk_clipboard_wait_for_contents(gtkClipboard, target);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SelectionData)(cast(GtkSelectionData*) p, true);
 	}
 
@@ -604,12 +604,12 @@ public class Clipboard : ObjectG
 	public Pixbuf waitForImage()
 	{
 		auto p = gtk_clipboard_wait_for_image(gtkClipboard);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
 	}
 
@@ -635,9 +635,9 @@ public class Clipboard : ObjectG
 	public ubyte[] waitForRichText(TextBuffer buffer, out GdkAtom format)
 	{
 		size_t length;
-		
+
 		auto p = gtk_clipboard_wait_for_rich_text(gtkClipboard, (buffer is null) ? null : buffer.getTextBufferStruct(), &format, &length);
-		
+
 		return p[0 .. length];
 	}
 
@@ -663,11 +663,11 @@ public class Clipboard : ObjectG
 	{
 		GdkAtom* outtargets = null;
 		int nTargets;
-		
+
 		auto p = gtk_clipboard_wait_for_targets(gtkClipboard, &outtargets, &nTargets) != 0;
-		
+
 		targets = outtargets[0 .. nTargets];
-		
+
 		return p;
 	}
 
@@ -687,7 +687,7 @@ public class Clipboard : ObjectG
 	public string waitForText()
 	{
 		auto retStr = gtk_clipboard_wait_for_text(gtkClipboard);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -708,7 +708,7 @@ public class Clipboard : ObjectG
 	public string[] waitForUris()
 	{
 		auto retStr = gtk_clipboard_wait_for_uris(gtkClipboard);
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}
@@ -819,13 +819,13 @@ public class Clipboard : ObjectG
 		static OnOwnerChangeDelegateWrapper[] listeners;
 		void delegate(GdkEventOwnerChange*, Clipboard) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(GdkEventOwnerChange*, Clipboard) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnOwnerChangeDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -862,12 +862,12 @@ public class Clipboard : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackOwnerChange(GtkClipboard* clipboardStruct, GdkEventOwnerChange* event, OnOwnerChangeDelegateWrapper wrapper)
 	{
 		wrapper.dlg(event, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackOwnerChangeDestroy(OnOwnerChangeDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -878,13 +878,13 @@ public class Clipboard : ObjectG
 		static OnOwnerChangeGenericDelegateWrapper[] listeners;
 		void delegate(Event, Clipboard) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Event, Clipboard) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnOwnerChangeGenericDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -898,7 +898,7 @@ public class Clipboard : ObjectG
 			}
 		}
 	}
-	
+
 	/**
 	 * The ::owner-change signal is emitted when GTK+ receives an
 	 * event that indicates that the ownership of the selection
@@ -921,12 +921,12 @@ public class Clipboard : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackOwnerChangeGeneric(GtkClipboard* clipboardStruct, GdkEvent* event, OnOwnerChangeGenericDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackOwnerChangeGenericDestroy(OnOwnerChangeGenericDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

@@ -26,8 +26,8 @@ module gtk.EditableT;
 
 public  import glib.Str;
 public  import gobject.Signals;
-public  import gtkc.gtk;
-public  import gtkc.gtktypes;
+public  import gtk.c.functions;
+public  import gtk.c.types;
 public  import std.algorithm;
 
 
@@ -142,7 +142,7 @@ public template EditableT(TStruct)
 	public string getChars(int startPos, int endPos)
 	{
 		auto retStr = gtk_editable_get_chars(getEditableStruct(), startPos, endPos);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -268,13 +268,13 @@ public template EditableT(TStruct)
 		static OnChangedDelegateWrapper[] listeners;
 		void delegate(EditableIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(EditableIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -311,12 +311,12 @@ public template EditableT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackChanged(GtkEditable* editableStruct, OnChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -327,13 +327,13 @@ public template EditableT(TStruct)
 		static OnDeleteTextDelegateWrapper[] listeners;
 		void delegate(int, int, EditableIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(int, int, EditableIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDeleteTextDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -375,12 +375,12 @@ public template EditableT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDeleteText(GtkEditable* editableStruct, int startPos, int endPos, OnDeleteTextDelegateWrapper wrapper)
 	{
 		wrapper.dlg(startPos, endPos, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDeleteTextDestroy(OnDeleteTextDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -391,13 +391,13 @@ public template EditableT(TStruct)
 		static OnInsertTextDelegateWrapper[] listeners;
 		void delegate(string, int, void*, EditableIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(string, int, void*, EditableIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnInsertTextDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -442,12 +442,12 @@ public template EditableT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackInsertText(GtkEditable* editableStruct, char* newText, int newTextLength, void* position, OnInsertTextDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(newText), newTextLength, position, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackInsertTextDestroy(OnInsertTextDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

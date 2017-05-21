@@ -32,8 +32,8 @@ private import gtk.TextAttributes;
 private import gtk.TextBuffer;
 private import gtk.TextChildAnchor;
 private import gtk.TextTag;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import gtkd.Loader;
 private import pango.PgLanguage;
 
@@ -234,12 +234,12 @@ public class TextIter
 	{
 		GtkTextIter* outmatchStart = gMalloc!GtkTextIter();
 		GtkTextIter* outmatchEnd = gMalloc!GtkTextIter();
-		
+
 		auto p = gtk_text_iter_backward_search(gtkTextIter, Str.toStringz(str), flags, outmatchStart, outmatchEnd, (limit is null) ? null : limit.getTextIterStruct()) != 0;
-		
+
 		matchStart = ObjectG.getDObject!(TextIter)(outmatchStart, true);
 		matchEnd = ObjectG.getDObject!(TextIter)(outmatchEnd, true);
-		
+
 		return p;
 	}
 
@@ -485,12 +485,12 @@ public class TextIter
 	public TextIter copy()
 	{
 		auto p = gtk_text_iter_copy(gtkTextIter);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TextIter)(cast(GtkTextIter*) p, true);
 	}
 
@@ -739,12 +739,12 @@ public class TextIter
 	{
 		GtkTextIter* outmatchStart = gMalloc!GtkTextIter();
 		GtkTextIter* outmatchEnd = gMalloc!GtkTextIter();
-		
+
 		auto p = gtk_text_iter_forward_search(gtkTextIter, Str.toStringz(str), flags, outmatchStart, outmatchEnd, (limit is null) ? null : limit.getTextIterStruct()) != 0;
-		
+
 		matchStart = ObjectG.getDObject!(TextIter)(outmatchStart, true);
 		matchEnd = ObjectG.getDObject!(TextIter)(outmatchEnd, true);
-		
+
 		return p;
 	}
 
@@ -976,11 +976,11 @@ public class TextIter
 	public bool getAttributes(out TextAttributes values)
 	{
 		GtkTextAttributes* outvalues = gMalloc!GtkTextAttributes();
-		
+
 		auto p = gtk_text_iter_get_attributes(gtkTextIter, outvalues) != 0;
-		
+
 		values = ObjectG.getDObject!(TextAttributes)(outvalues, true);
-		
+
 		return p;
 	}
 
@@ -992,12 +992,12 @@ public class TextIter
 	public TextBuffer getBuffer()
 	{
 		auto p = gtk_text_iter_get_buffer(gtkTextIter);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TextBuffer)(cast(GtkTextBuffer*) p);
 	}
 
@@ -1049,12 +1049,12 @@ public class TextIter
 	public TextChildAnchor getChildAnchor()
 	{
 		auto p = gtk_text_iter_get_child_anchor(gtkTextIter);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TextChildAnchor)(cast(GtkTextChildAnchor*) p);
 	}
 
@@ -1069,12 +1069,12 @@ public class TextIter
 	public PgLanguage getLanguage()
 	{
 		auto p = gtk_text_iter_get_language(gtkTextIter);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgLanguage)(cast(PangoLanguage*) p, true);
 	}
 
@@ -1128,12 +1128,12 @@ public class TextIter
 	public ListSG getMarks()
 	{
 		auto p = gtk_text_iter_get_marks(gtkTextIter);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -1161,12 +1161,12 @@ public class TextIter
 	public Pixbuf getPixbuf()
 	{
 		auto p = gtk_text_iter_get_pixbuf(gtkTextIter);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 
@@ -1188,7 +1188,7 @@ public class TextIter
 	public string getSlice(TextIter end)
 	{
 		auto retStr = gtk_text_iter_get_slice(gtkTextIter, (end is null) ? null : end.getTextIterStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -1204,12 +1204,12 @@ public class TextIter
 	public ListSG getTags()
 	{
 		auto p = gtk_text_iter_get_tags(gtkTextIter);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -1228,7 +1228,7 @@ public class TextIter
 	public string getText(TextIter end)
 	{
 		auto retStr = gtk_text_iter_get_text(gtkTextIter, (end is null) ? null : end.getTextIterStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -1249,12 +1249,12 @@ public class TextIter
 	public ListSG getToggledTags(bool toggledOn)
 	{
 		auto p = gtk_text_iter_get_toggled_tags(gtkTextIter, toggledOn);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -1297,7 +1297,7 @@ public class TextIter
 	public string getVisibleSlice(TextIter end)
 	{
 		auto retStr = gtk_text_iter_get_visible_slice(gtkTextIter, (end is null) ? null : end.getTextIterStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -1316,7 +1316,7 @@ public class TextIter
 	public string getVisibleText(TextIter end)
 	{
 		auto retStr = gtk_text_iter_get_visible_text(gtkTextIter, (end is null) ? null : end.getTextIterStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}

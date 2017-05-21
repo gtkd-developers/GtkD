@@ -31,8 +31,8 @@ private import gobject.Signals;
 private import gtk.Container;
 private import gtk.MenuItem;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -223,12 +223,12 @@ public class MenuShell : Container
 	public Widget getParentShell()
 	{
 		auto p = gtk_menu_shell_get_parent_shell(gtkMenuShell);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -242,12 +242,12 @@ public class MenuShell : Container
 	public Widget getSelectedItem()
 	{
 		auto p = gtk_menu_shell_get_selected_item(gtkMenuShell);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -363,13 +363,13 @@ public class MenuShell : Container
 		static OnActivateCurrentDelegateWrapper[] listeners;
 		void delegate(bool, MenuShell) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(bool, MenuShell) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnActivateCurrentDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -403,12 +403,12 @@ public class MenuShell : Container
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackActivateCurrent(GtkMenuShell* menushellStruct, bool forceHide, OnActivateCurrentDelegateWrapper wrapper)
 	{
 		wrapper.dlg(forceHide, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackActivateCurrentDestroy(OnActivateCurrentDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -419,13 +419,13 @@ public class MenuShell : Container
 		static OnCancelDelegateWrapper[] listeners;
 		void delegate(MenuShell) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(MenuShell) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCancelDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -456,12 +456,12 @@ public class MenuShell : Container
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackCancel(GtkMenuShell* menushellStruct, OnCancelDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackCancelDestroy(OnCancelDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -472,13 +472,13 @@ public class MenuShell : Container
 		static OnCycleFocusDelegateWrapper[] listeners;
 		void delegate(GtkDirectionType, MenuShell) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(GtkDirectionType, MenuShell) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCycleFocusDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -512,12 +512,12 @@ public class MenuShell : Container
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackCycleFocus(GtkMenuShell* menushellStruct, GtkDirectionType direction, OnCycleFocusDelegateWrapper wrapper)
 	{
 		wrapper.dlg(direction, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackCycleFocusDestroy(OnCycleFocusDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -528,13 +528,13 @@ public class MenuShell : Container
 		static OnDeactivateDelegateWrapper[] listeners;
 		void delegate(MenuShell) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(MenuShell) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDeactivateDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -564,12 +564,12 @@ public class MenuShell : Container
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDeactivate(GtkMenuShell* menushellStruct, OnDeactivateDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDeactivateDestroy(OnDeactivateDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -580,13 +580,13 @@ public class MenuShell : Container
 		static OnInsertDelegateWrapper[] listeners;
 		void delegate(Widget, int, MenuShell) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Widget, int, MenuShell) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnInsertDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -627,12 +627,12 @@ public class MenuShell : Container
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackInsert(GtkMenuShell* menushellStruct, GtkWidget* child, int position, OnInsertDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Widget)(child), position, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackInsertDestroy(OnInsertDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -643,13 +643,13 @@ public class MenuShell : Container
 		static OnMoveCurrentDelegateWrapper[] listeners;
 		void delegate(GtkMenuDirectionType, MenuShell) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(GtkMenuDirectionType, MenuShell) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMoveCurrentDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -683,12 +683,12 @@ public class MenuShell : Container
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackMoveCurrent(GtkMenuShell* menushellStruct, GtkMenuDirectionType direction, OnMoveCurrentDelegateWrapper wrapper)
 	{
 		wrapper.dlg(direction, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMoveCurrentDestroy(OnMoveCurrentDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -699,13 +699,13 @@ public class MenuShell : Container
 		static OnMoveSelectedDelegateWrapper[] listeners;
 		bool delegate(int, MenuShell) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(int, MenuShell) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMoveSelectedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -743,12 +743,12 @@ public class MenuShell : Container
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackMoveSelected(GtkMenuShell* menushellStruct, int distance, OnMoveSelectedDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(distance, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMoveSelectedDestroy(OnMoveSelectedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -759,13 +759,13 @@ public class MenuShell : Container
 		static OnSelectionDoneDelegateWrapper[] listeners;
 		void delegate(MenuShell) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(MenuShell) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnSelectionDoneDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -796,12 +796,12 @@ public class MenuShell : Container
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackSelectionDone(GtkMenuShell* menushellStruct, OnSelectionDoneDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackSelectionDoneDestroy(OnSelectionDoneDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

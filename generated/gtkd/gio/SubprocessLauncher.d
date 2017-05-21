@@ -25,13 +25,13 @@
 module gio.SubprocessLauncher;
 
 private import gio.Subprocess;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -104,12 +104,12 @@ public class SubprocessLauncher : ObjectG
 	public this(GSubprocessFlags flags)
 	{
 		auto p = g_subprocess_launcher_new(flags);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GSubprocessLauncher*) p, true);
 	}
 
@@ -330,19 +330,19 @@ public class SubprocessLauncher : ObjectG
 	public Subprocess spawnv(string[] argv)
 	{
 		GError* err = null;
-		
+
 		auto p = g_subprocess_launcher_spawnv(gSubprocessLauncher, Str.toStringzArray(argv), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Subprocess)(cast(GSubprocess*) p, true);
 	}
 

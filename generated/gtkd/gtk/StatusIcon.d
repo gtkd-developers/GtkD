@@ -35,8 +35,8 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Menu;
 private import gtk.Tooltip;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -123,7 +123,7 @@ public class StatusIcon : ObjectG
 		}
 		this(cast(GtkStatusIcon*)p);
 	}
-	
+
 	/**
 	 * Creates a status icon displaying an icon from the current icon theme.
 	 * If the current icon theme is changed, the icon will be updated
@@ -139,7 +139,7 @@ public class StatusIcon : ObjectG
 	{
 		//TODO: look at a better way to do this.
 		GtkStatusIcon* p;
-		
+
 		if(loadFromFile)
 		{
 			p = cast(GtkStatusIcon*)gtk_status_icon_new_from_file(Str.toStringz(iconName));
@@ -148,12 +148,12 @@ public class StatusIcon : ObjectG
 		{
 			p = cast(GtkStatusIcon*)gtk_status_icon_new_from_icon_name(Str.toStringz(iconName));
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gtk_status_icon_new_from_");
 		}
-		
+
 		this(p);
 	}
 
@@ -180,12 +180,12 @@ public class StatusIcon : ObjectG
 	public this()
 	{
 		auto p = gtk_status_icon_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkStatusIcon*) p, true);
 	}
 
@@ -207,12 +207,12 @@ public class StatusIcon : ObjectG
 	public this(IconIF icon)
 	{
 		auto p = gtk_status_icon_new_from_gicon((icon is null) ? null : icon.getIconStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_gicon");
 		}
-		
+
 		this(cast(GtkStatusIcon*) p, true);
 	}
 
@@ -236,12 +236,12 @@ public class StatusIcon : ObjectG
 	public this(Pixbuf pixbuf)
 	{
 		auto p = gtk_status_icon_new_from_pixbuf((pixbuf is null) ? null : pixbuf.getPixbufStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_pixbuf");
 		}
-		
+
 		this(cast(GtkStatusIcon*) p, true);
 	}
 
@@ -265,9 +265,9 @@ public class StatusIcon : ObjectG
 	public static void positionMenu(Menu menu, ref int x, ref int y, out bool pushIn, StatusIcon userData)
 	{
 		int outpushIn;
-		
+
 		gtk_status_icon_position_menu((menu is null) ? null : menu.getMenuStruct(), &x, &y, &outpushIn, (userData is null) ? null : userData.getStatusIconStruct());
-		
+
 		pushIn = (outpushIn == 1);
 	}
 
@@ -305,11 +305,11 @@ public class StatusIcon : ObjectG
 	public bool getGeometry(out Screen screen, out GdkRectangle area, out GtkOrientation orientation)
 	{
 		GdkScreen* outscreen = null;
-		
+
 		auto p = gtk_status_icon_get_geometry(gtkStatusIcon, &outscreen, &area, &orientation) != 0;
-		
+
 		screen = ObjectG.getDObject!(Screen)(outscreen);
-		
+
 		return p;
 	}
 
@@ -331,12 +331,12 @@ public class StatusIcon : ObjectG
 	public IconIF getGicon()
 	{
 		auto p = gtk_status_icon_get_gicon(gtkStatusIcon);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
 	}
 
@@ -390,12 +390,12 @@ public class StatusIcon : ObjectG
 	public Pixbuf getPixbuf()
 	{
 		auto p = gtk_status_icon_get_pixbuf(gtkStatusIcon);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 
@@ -411,12 +411,12 @@ public class StatusIcon : ObjectG
 	public Screen getScreen()
 	{
 		auto p = gtk_status_icon_get_screen(gtkStatusIcon);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
 	}
 
@@ -503,7 +503,7 @@ public class StatusIcon : ObjectG
 	public string getTooltipMarkup()
 	{
 		auto retStr = gtk_status_icon_get_tooltip_markup(gtkStatusIcon);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -521,7 +521,7 @@ public class StatusIcon : ObjectG
 	public string getTooltipText()
 	{
 		auto retStr = gtk_status_icon_get_tooltip_text(gtkStatusIcon);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -797,13 +797,13 @@ public class StatusIcon : ObjectG
 		static OnActivateDelegateWrapper[] listeners;
 		void delegate(StatusIcon) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(StatusIcon) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnActivateDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -839,12 +839,12 @@ public class StatusIcon : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackActivate(GtkStatusIcon* statusiconStruct, OnActivateDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackActivateDestroy(OnActivateDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -855,13 +855,13 @@ public class StatusIcon : ObjectG
 		static OnButtonPressDelegateWrapper[] listeners;
 		bool delegate(GdkEventButton*, StatusIcon) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(GdkEventButton*, StatusIcon) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnButtonPressDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -904,12 +904,12 @@ public class StatusIcon : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackButtonPress(GtkStatusIcon* statusiconStruct, GdkEventButton* event, OnButtonPressDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(event, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackButtonPressDestroy(OnButtonPressDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -920,13 +920,13 @@ public class StatusIcon : ObjectG
 		static OnButtonPressEventGenericDelegateWrapper[] listeners;
 		bool delegate(Event, StatusIcon) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(Event, StatusIcon) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnButtonPressEventGenericDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -940,7 +940,7 @@ public class StatusIcon : ObjectG
 			}
 		}
 	}
-	
+
 	/**
 	 * The ::button-press-event signal will be emitted when a button
 	 * (typically from a mouse) is pressed.
@@ -969,12 +969,12 @@ public class StatusIcon : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackButtonPressEventGeneric(GtkStatusIcon* statusiconStruct, GdkEvent* event, OnButtonPressEventGenericDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackButtonPressEventGenericDestroy(OnButtonPressEventGenericDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -985,13 +985,13 @@ public class StatusIcon : ObjectG
 		static OnButtonReleaseDelegateWrapper[] listeners;
 		bool delegate(GdkEventButton*, StatusIcon) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(GdkEventButton*, StatusIcon) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnButtonReleaseDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1034,12 +1034,12 @@ public class StatusIcon : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackButtonRelease(GtkStatusIcon* statusiconStruct, GdkEventButton* event, OnButtonReleaseDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(event, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackButtonReleaseDestroy(OnButtonReleaseDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1050,13 +1050,13 @@ public class StatusIcon : ObjectG
 		static OnButtonReleaseEventGenericDelegateWrapper[] listeners;
 		bool delegate(Event, StatusIcon) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(Event, StatusIcon) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnButtonReleaseEventGenericDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1070,7 +1070,7 @@ public class StatusIcon : ObjectG
 			}
 		}
 	}
-	
+
 	/**
 	 * The ::button-release-event signal will be emitted when a button
 	 * (typically from a mouse) is released.
@@ -1099,12 +1099,12 @@ public class StatusIcon : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackButtonReleaseEventGeneric(GtkStatusIcon* statusiconStruct, GdkEvent* event, OnButtonReleaseEventGenericDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackButtonReleaseEventGenericDestroy(OnButtonReleaseEventGenericDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1115,13 +1115,13 @@ public class StatusIcon : ObjectG
 		static OnPopupMenuDelegateWrapper[] listeners;
 		void delegate(uint, uint, StatusIcon) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(uint, uint, StatusIcon) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPopupMenuDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1167,12 +1167,12 @@ public class StatusIcon : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPopupMenu(GtkStatusIcon* statusiconStruct, uint button, uint activateTime, OnPopupMenuDelegateWrapper wrapper)
 	{
 		wrapper.dlg(button, activateTime, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPopupMenuDestroy(OnPopupMenuDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1183,13 +1183,13 @@ public class StatusIcon : ObjectG
 		static OnQueryTooltipDelegateWrapper[] listeners;
 		bool delegate(int, int, bool, Tooltip, StatusIcon) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(int, int, bool, Tooltip, StatusIcon) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnQueryTooltipDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1245,12 +1245,12 @@ public class StatusIcon : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackQueryTooltip(GtkStatusIcon* statusiconStruct, int x, int y, bool keyboardMode, GtkTooltip* tooltip, OnQueryTooltipDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(x, y, keyboardMode, ObjectG.getDObject!(Tooltip)(tooltip), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackQueryTooltipDestroy(OnQueryTooltipDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1261,13 +1261,13 @@ public class StatusIcon : ObjectG
 		static OnScrollDelegateWrapper[] listeners;
 		bool delegate(GdkEventScroll*, StatusIcon) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(GdkEventScroll*, StatusIcon) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnScrollDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1310,12 +1310,12 @@ public class StatusIcon : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackScroll(GtkStatusIcon* statusiconStruct, GdkEventScroll* event, OnScrollDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(event, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackScrollDestroy(OnScrollDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1326,13 +1326,13 @@ public class StatusIcon : ObjectG
 		static OnScrollEventGenericDelegateWrapper[] listeners;
 		bool delegate(Event, StatusIcon) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(Event, StatusIcon) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnScrollEventGenericDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1346,7 +1346,7 @@ public class StatusIcon : ObjectG
 			}
 		}
 	}
-	
+
 	/**
 	 * The ::scroll-event signal is emitted when a button in the 4 to 7
 	 * range is pressed. Wheel mice are usually configured to generate
@@ -1375,12 +1375,12 @@ public class StatusIcon : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackScrollEventGeneric(GtkStatusIcon* statusiconStruct, GdkEvent* event, OnScrollEventGenericDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackScrollEventGenericDestroy(OnScrollEventGenericDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1391,13 +1391,13 @@ public class StatusIcon : ObjectG
 		static OnSizeChangedDelegateWrapper[] listeners;
 		bool delegate(int, StatusIcon) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(int, StatusIcon) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnSizeChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1436,12 +1436,12 @@ public class StatusIcon : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackSizeChanged(GtkStatusIcon* statusiconStruct, int size, OnSizeChangedDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(size, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackSizeChangedDestroy(OnSizeChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

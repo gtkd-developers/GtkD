@@ -28,8 +28,8 @@ private import glib.ScannerG;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -244,12 +244,12 @@ public class AccelMap : ObjectG
 	public static AccelMap get()
 	{
 		auto p = gtk_accel_map_get();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(AccelMap)(cast(GtkAccelMap*) p);
 	}
 
@@ -379,13 +379,13 @@ public class AccelMap : ObjectG
 		static OnChangedDelegateWrapper[] listeners;
 		void delegate(string, uint, GdkModifierType, AccelMap) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(string, uint, GdkModifierType, AccelMap) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -425,12 +425,12 @@ public class AccelMap : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackChanged(GtkAccelMap* accelmapStruct, char* accelPath, uint accelKey, GdkModifierType accelMods, OnChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(accelPath), accelKey, accelMods, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

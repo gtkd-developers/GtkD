@@ -26,8 +26,6 @@ module pango.PgRenderer;
 
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.pango;
-public  import gtkc.pangotypes;
 private import pango.PgColor;
 private import pango.PgFont;
 private import pango.PgGlyphItem;
@@ -35,6 +33,8 @@ private import pango.PgGlyphString;
 private import pango.PgLayout;
 private import pango.PgLayoutLine;
 private import pango.PgMatrix;
+private import pango.c.functions;
+public  import pango.c.types;
 
 
 /**
@@ -304,12 +304,12 @@ public class PgRenderer : ObjectG
 	public PgColor getColor(PangoRenderPart part)
 	{
 		auto p = pango_renderer_get_color(pangoRenderer, part);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgColor)(cast(PangoColor*) p);
 	}
 
@@ -329,12 +329,12 @@ public class PgRenderer : ObjectG
 	public PgLayout getLayout()
 	{
 		auto p = pango_renderer_get_layout(pangoRenderer);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) p);
 	}
 
@@ -354,12 +354,12 @@ public class PgRenderer : ObjectG
 	public PgLayoutLine getLayoutLine()
 	{
 		auto p = pango_renderer_get_layout_line(pangoRenderer);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgLayoutLine)(cast(PangoLayoutLine*) p);
 	}
 
@@ -376,12 +376,12 @@ public class PgRenderer : ObjectG
 	public PgMatrix getMatrix()
 	{
 		auto p = pango_renderer_get_matrix(pangoRenderer);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgMatrix)(cast(PangoMatrix*) p);
 	}
 

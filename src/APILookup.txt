@@ -53,14 +53,10 @@ outputRoot: generated
 ### predifined: lib
 ###########################################################
 
-srcDir: gtkd/gtkc
-copy: paths.d
-copy: Loader.d
-
 srcDir: gtkd
-bindDir: gtkc
 copy: cairo
 copy: gtkd
+copy: gtkc
 lookup: APILookupGLib.txt
 lookup: APILookupGThread.txt
 lookup: APILookupGObject.txt
@@ -79,18 +75,18 @@ lookup: APILookupGtk.txt
 #lookup: APILookupGLt.txt
 
 srcDir: sourceview
-bindDir: gsvc
+copy: gsvc
 lookup: APILookupSourceView.txt
 
 srcDir: gstreamer
-bindDir: gstreamerc
+copy: gstreamerc
 lookup: APILookupGStreamer.txt
 lookup: APILookupGstInterfaces.txt
 
 srcDir: vte
-bindDir: vtec
+copy: vtec
 lookup: APILookupVte.txt
 
 srcDir: peas
-bindDir: peasc
+copy: peasc
 lookup: APILookupPeas.txt

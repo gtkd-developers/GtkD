@@ -60,16 +60,16 @@
 
 module cairo.Surface;
 
-public  import gtkc.cairotypes;
+public  import cairo.c.types;
 
-private import gtkc.cairo;
+private import cairo.c.functions;
 private import glib.ConstructionException;
 
 private import glib.Str;
 private import cairo.Device;
 private import cairo.FontOption;
 private import gdk.Window;
-private import gtkc.gdk;
+private import gdk.c.functions;
 
 
 

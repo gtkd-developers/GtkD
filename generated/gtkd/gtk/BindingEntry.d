@@ -27,8 +27,8 @@ module gtk.BindingEntry;
 private import glib.ListSG;
 private import glib.Str;
 private import gtk.BindingSet;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**

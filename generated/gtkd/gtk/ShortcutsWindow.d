@@ -26,8 +26,8 @@ module gtk.ShortcutsWindow;
 
 private import gobject.Signals;
 private import gtk.Window;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -119,13 +119,13 @@ public class ShortcutsWindow : Window
 		static OnCloseDelegateWrapper[] listeners;
 		void delegate(ShortcutsWindow) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(ShortcutsWindow) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCloseDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -160,12 +160,12 @@ public class ShortcutsWindow : Window
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackClose(GtkShortcutsWindow* shortcutswindowStruct, OnCloseDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackCloseDestroy(OnCloseDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -176,13 +176,13 @@ public class ShortcutsWindow : Window
 		static OnSearchDelegateWrapper[] listeners;
 		void delegate(ShortcutsWindow) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(ShortcutsWindow) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnSearchDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -216,12 +216,12 @@ public class ShortcutsWindow : Window
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackSearch(GtkShortcutsWindow* shortcutswindowStruct, OnSearchDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackSearchDestroy(OnSearchDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

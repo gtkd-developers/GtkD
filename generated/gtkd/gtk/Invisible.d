@@ -28,8 +28,8 @@ private import gdk.Screen;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -90,12 +90,12 @@ public class Invisible : Widget
 	public this()
 	{
 		auto p = gtk_invisible_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkInvisible*) p);
 	}
 
@@ -115,12 +115,12 @@ public class Invisible : Widget
 	public this(Screen screen)
 	{
 		auto p = gtk_invisible_new_for_screen((screen is null) ? null : screen.getScreenStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_for_screen");
 		}
-		
+
 		this(cast(GtkInvisible*) p);
 	}
 
@@ -134,12 +134,12 @@ public class Invisible : Widget
 	public override Screen getScreen()
 	{
 		auto p = gtk_invisible_get_screen(gtkInvisible);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
 	}
 

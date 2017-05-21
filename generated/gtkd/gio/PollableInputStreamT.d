@@ -25,11 +25,11 @@
 module gio.PollableInputStreamT;
 
 public  import gio.Cancellable;
+public  import gio.c.functions;
+public  import gio.c.types;
 public  import glib.ErrorG;
 public  import glib.GException;
 public  import glib.Source;
-public  import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -89,12 +89,12 @@ public template PollableInputStreamT(TStruct)
 	public Source createSource(Cancellable cancellable)
 	{
 		auto p = g_pollable_input_stream_create_source(getPollableInputStreamStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Source(cast(GSource*) p, true);
 	}
 
@@ -147,14 +147,14 @@ public template PollableInputStreamT(TStruct)
 	public ptrdiff_t readNonblocking(ubyte[] buffer, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_pollable_input_stream_read_nonblocking(getPollableInputStreamStruct(), buffer.ptr, cast(size_t)buffer.length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 }

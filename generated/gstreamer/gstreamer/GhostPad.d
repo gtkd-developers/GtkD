@@ -31,8 +31,8 @@ private import gstreamer.ObjectGst;
 private import gstreamer.Pad;
 private import gstreamer.PadTemplate;
 private import gstreamer.ProxyPad;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /**
@@ -109,12 +109,12 @@ public class GhostPad : ProxyPad
 	public this(string name, Pad target)
 	{
 		auto p = gst_ghost_pad_new(Str.toStringz(name), (target is null) ? null : target.getPadStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GstGhostPad*) p);
 	}
 
@@ -137,12 +137,12 @@ public class GhostPad : ProxyPad
 	public this(string name, Pad target, PadTemplate templ)
 	{
 		auto p = gst_ghost_pad_new_from_template(Str.toStringz(name), (target is null) ? null : target.getPadStruct(), (templ is null) ? null : templ.getPadTemplateStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_template");
 		}
-		
+
 		this(cast(GstGhostPad*) p, true);
 	}
 
@@ -165,12 +165,12 @@ public class GhostPad : ProxyPad
 	public this(string name, GstPadDirection dir)
 	{
 		auto p = gst_ghost_pad_new_no_target(Str.toStringz(name), dir);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_no_target");
 		}
-		
+
 		this(cast(GstGhostPad*) p, true);
 	}
 
@@ -190,12 +190,12 @@ public class GhostPad : ProxyPad
 	public this(string name, PadTemplate templ)
 	{
 		auto p = gst_ghost_pad_new_no_target_from_template(Str.toStringz(name), (templ is null) ? null : templ.getPadTemplateStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_no_target_from_template");
 		}
-		
+
 		this(cast(GstGhostPad*) p, true);
 	}
 
@@ -257,12 +257,12 @@ public class GhostPad : ProxyPad
 	public Pad getTarget()
 	{
 		auto p = gst_ghost_pad_get_target(gstGhostPad);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pad)(cast(GstPad*) p, true);
 	}
 

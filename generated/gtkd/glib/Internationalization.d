@@ -25,8 +25,8 @@
 module glib.Internationalization;
 
 private import glib.Str;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 
 
 /** */
@@ -231,7 +231,7 @@ public struct Internationalization
 	public static string[] getLocaleVariants(string locale)
 	{
 		auto retStr = g_get_locale_variants(Str.toStringz(locale));
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}

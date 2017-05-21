@@ -33,8 +33,8 @@ private import gtk.ActivatableT;
 private import gtk.Bin;
 private import gtk.SizeGroup;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -106,12 +106,12 @@ public class ToolItem : Bin, ActivatableIF
 	public this()
 	{
 		auto p = gtk_tool_item_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkToolItem*) p);
 	}
 
@@ -221,12 +221,12 @@ public class ToolItem : Bin, ActivatableIF
 	public Widget getProxyMenuItem(string menuItemId)
 	{
 		auto p = gtk_tool_item_get_proxy_menu_item(gtkToolItem, Str.toStringz(menuItemId));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -288,12 +288,12 @@ public class ToolItem : Bin, ActivatableIF
 	public SizeGroup getTextSizeGroup()
 	{
 		auto p = gtk_tool_item_get_text_size_group(gtkToolItem);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SizeGroup)(cast(GtkSizeGroup*) p);
 	}
 
@@ -390,12 +390,12 @@ public class ToolItem : Bin, ActivatableIF
 	public Widget retrieveProxyMenuItem()
 	{
 		auto p = gtk_tool_item_retrieve_proxy_menu_item(gtkToolItem);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -554,13 +554,13 @@ public class ToolItem : Bin, ActivatableIF
 		static OnCreateMenuProxyDelegateWrapper[] listeners;
 		bool delegate(ToolItem) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(ToolItem) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCreateMenuProxyDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -610,12 +610,12 @@ public class ToolItem : Bin, ActivatableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackCreateMenuProxy(GtkToolItem* toolitemStruct, OnCreateMenuProxyDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackCreateMenuProxyDestroy(OnCreateMenuProxyDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -626,13 +626,13 @@ public class ToolItem : Bin, ActivatableIF
 		static OnToolbarReconfiguredDelegateWrapper[] listeners;
 		void delegate(ToolItem) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(ToolItem) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnToolbarReconfiguredDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -670,12 +670,12 @@ public class ToolItem : Bin, ActivatableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackToolbarReconfigured(GtkToolItem* toolitemStruct, OnToolbarReconfiguredDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackToolbarReconfiguredDestroy(OnToolbarReconfiguredDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

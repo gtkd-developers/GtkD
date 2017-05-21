@@ -32,8 +32,8 @@ private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gtk.Window;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -95,12 +95,12 @@ public class MountOperation : GioMountOperation
 	public this(Window parent)
 	{
 		auto p = gtk_mount_operation_new((parent is null) ? null : parent.getWindowStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkMountOperation*) p, true);
 	}
 
@@ -114,12 +114,12 @@ public class MountOperation : GioMountOperation
 	public Window getParent()
 	{
 		auto p = gtk_mount_operation_get_parent(gtkMountOperation);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Window)(cast(GtkWindow*) p);
 	}
 
@@ -134,12 +134,12 @@ public class MountOperation : GioMountOperation
 	public Screen getScreen()
 	{
 		auto p = gtk_mount_operation_get_screen(gtkMountOperation);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
 	}
 
@@ -207,14 +207,14 @@ public class MountOperation : GioMountOperation
 	public static bool showUri(Screen screen, string uri, uint timestamp)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_show_uri((screen is null) ? null : screen.getScreenStruct(), Str.toStringz(uri), timestamp, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 }

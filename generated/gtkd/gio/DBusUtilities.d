@@ -27,6 +27,8 @@ module gio.DBusUtilities;
 private import gio.AsyncResultIF;
 private import gio.Cancellable;
 private import gio.IOStream;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
@@ -34,8 +36,6 @@ private import glib.Variant;
 private import glib.VariantType;
 private import gobject.ObjectG;
 private import gobject.Value;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /** */
@@ -63,7 +63,7 @@ public struct DBusUtilities
 	public static string addressEscapeValue(string str)
 	{
 		auto retStr = g_dbus_address_escape_value(Str.toStringz(str));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -90,14 +90,14 @@ public struct DBusUtilities
 	public static string addressGetForBusSync(GBusType busType, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto retStr = g_dbus_address_get_for_bus_sync(busType, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -145,21 +145,21 @@ public struct DBusUtilities
 	{
 		char* outoutGuid = null;
 		GError* err = null;
-		
+
 		auto p = g_dbus_address_get_stream_finish((res is null) ? null : res.getAsyncResultStruct(), &outoutGuid, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		outGuid = Str.toString(outoutGuid);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(IOStream)(cast(GIOStream*) p, true);
 	}
 
@@ -187,21 +187,21 @@ public struct DBusUtilities
 	{
 		char* outoutGuid = null;
 		GError* err = null;
-		
+
 		auto p = g_dbus_address_get_stream_sync(Str.toStringz(address), &outoutGuid, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		outGuid = Str.toString(outoutGuid);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(IOStream)(cast(GIOStream*) p, true);
 	}
 
@@ -219,7 +219,7 @@ public struct DBusUtilities
 	public static string generateGuid()
 	{
 		auto retStr = g_dbus_generate_guid();
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -267,12 +267,12 @@ public struct DBusUtilities
 	public static Variant gvalueToGvariant(Value gvalue, VariantType type)
 	{
 		auto p = g_dbus_gvalue_to_gvariant((gvalue is null) ? null : gvalue.getValueStruct(), (type is null) ? null : type.getVariantTypeStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Variant(cast(GVariant*) p, true);
 	}
 
@@ -294,9 +294,9 @@ public struct DBusUtilities
 	public static void gvariantToGvalue(Variant value, out Value outGvalue)
 	{
 		GValue* outoutGvalue = gMalloc!GValue();
-		
+
 		g_dbus_gvariant_to_gvalue((value is null) ? null : value.getVariantStruct(), outoutGvalue);
-		
+
 		outGvalue = ObjectG.getDObject!(Value)(outoutGvalue, true);
 	}
 
@@ -402,14 +402,14 @@ public struct DBusUtilities
 	public static bool isSupportedAddress(string str)
 	{
 		GError* err = null;
-		
+
 		auto p = g_dbus_is_supported_address(Str.toStringz(str), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 

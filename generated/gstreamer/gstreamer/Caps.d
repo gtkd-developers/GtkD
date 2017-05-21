@@ -30,8 +30,8 @@ private import gobject.ObjectG;
 private import gobject.Value;
 private import gstreamer.CapsFeatures;
 private import gstreamer.Structure;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /**
@@ -109,12 +109,12 @@ public class Caps
 	{
 		// GstCaps* gst_caps_new_any (void);
 		auto p = cast(GstCaps*)gst_caps_new_any();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gst_caps_new_any");
 		}
-		
+
 		return new Caps(cast(GstCaps*)p); //, true);
 	}
 
@@ -140,12 +140,12 @@ public class Caps
 	public this()
 	{
 		auto p = gst_caps_new_empty();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_empty");
 		}
-		
+
 		this(cast(GstCaps*) p);
 	}
 
@@ -164,12 +164,12 @@ public class Caps
 	public this(string mediaType)
 	{
 		auto p = gst_caps_new_empty_simple(Str.toStringz(mediaType));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_empty_simple");
 		}
-		
+
 		this(cast(GstCaps*) p);
 	}
 
@@ -189,12 +189,12 @@ public class Caps
 	public this(Structure structure, void* varArgs)
 	{
 		auto p = gst_caps_new_full_valist((structure is null) ? null : structure.getStructureStruct(), varArgs);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_full_valist");
 		}
-		
+
 		this(cast(GstCaps*) p);
 	}
 
@@ -264,12 +264,12 @@ public class Caps
 	public Caps copyNth(uint nth)
 	{
 		auto p = gst_caps_copy_nth(gstCaps, nth);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
 	}
 
@@ -306,12 +306,12 @@ public class Caps
 	public Caps fixate()
 	{
 		auto p = gst_caps_fixate(gstCaps);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
 	}
 
@@ -361,12 +361,12 @@ public class Caps
 	public CapsFeatures getFeatures(uint index)
 	{
 		auto p = gst_caps_get_features(gstCaps, index);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(CapsFeatures)(cast(GstCapsFeatures*) p);
 	}
 
@@ -405,12 +405,12 @@ public class Caps
 	public Structure getStructure(uint index)
 	{
 		auto p = gst_caps_get_structure(gstCaps, index);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
 	}
 
@@ -426,12 +426,12 @@ public class Caps
 	public Caps intersect(Caps caps2)
 	{
 		auto p = gst_caps_intersect(gstCaps, (caps2 is null) ? null : caps2.getCapsStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
 	}
 
@@ -449,12 +449,12 @@ public class Caps
 	public Caps intersectFull(Caps caps2, GstCapsIntersectMode mode)
 	{
 		auto p = gst_caps_intersect_full(gstCaps, (caps2 is null) ? null : caps2.getCapsStruct(), mode);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
 	}
 
@@ -622,12 +622,12 @@ public class Caps
 	public Caps merge(Caps caps2)
 	{
 		auto p = gst_caps_merge(gstCaps, (caps2 is null) ? null : caps2.getCapsStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
 	}
 
@@ -642,12 +642,12 @@ public class Caps
 	public Caps mergeStructure(Structure structure)
 	{
 		auto p = gst_caps_merge_structure(gstCaps, (structure is null) ? null : structure.getStructureStruct(true));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
 	}
 
@@ -665,12 +665,12 @@ public class Caps
 	public Caps mergeStructureFull(Structure structure, CapsFeatures features)
 	{
 		auto p = gst_caps_merge_structure_full(gstCaps, (structure is null) ? null : structure.getStructureStruct(true), (features is null) ? null : features.getCapsFeaturesStruct(true));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
 	}
 
@@ -688,12 +688,12 @@ public class Caps
 	public Caps normalize()
 	{
 		auto p = gst_caps_normalize(gstCaps);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
 	}
 
@@ -767,12 +767,12 @@ public class Caps
 	public Caps simplify()
 	{
 		auto p = gst_caps_simplify(gstCaps);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
 	}
 
@@ -789,12 +789,12 @@ public class Caps
 	public Structure stealStructure(uint index)
 	{
 		auto p = gst_caps_steal_structure(gstCaps, index);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p, true);
 	}
 
@@ -811,12 +811,12 @@ public class Caps
 	public Caps subtract(Caps subtrahend)
 	{
 		auto p = gst_caps_subtract(gstCaps, (subtrahend is null) ? null : subtrahend.getCapsStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
 	}
 
@@ -838,7 +838,7 @@ public class Caps
 	public override string toString()
 	{
 		auto retStr = gst_caps_to_string(gstCaps);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -856,12 +856,12 @@ public class Caps
 	public Caps truncate()
 	{
 		auto p = gst_caps_truncate(gstCaps);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
 	}
 
@@ -879,12 +879,12 @@ public class Caps
 	public static Caps fromString(string str)
 	{
 		auto p = gst_caps_from_string(Str.toStringz(str));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
 	}
 }

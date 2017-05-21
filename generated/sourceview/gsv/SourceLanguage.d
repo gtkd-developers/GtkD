@@ -26,8 +26,8 @@ module gsv.SourceLanguage;
 
 private import glib.Str;
 private import gobject.ObjectG;
-private import gsvc.gsv;
-public  import gsvc.gsvtypes;
+private import gsv.c.functions;
+public  import gsv.c.types;
 
 
 /** */
@@ -84,7 +84,7 @@ public class SourceLanguage : ObjectG
 	public string[] getGlobs()
 	{
 		auto retStr = gtk_source_language_get_globs(gtkSourceLanguage);
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}
@@ -139,7 +139,7 @@ public class SourceLanguage : ObjectG
 	public string[] getMimeTypes()
 	{
 		auto retStr = gtk_source_language_get_mime_types(gtkSourceLanguage);
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}
@@ -199,7 +199,7 @@ public class SourceLanguage : ObjectG
 	public string[] getStyleIds()
 	{
 		auto retStr = gtk_source_language_get_style_ids(gtkSourceLanguage);
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}

@@ -27,12 +27,12 @@ module gio.ApplicationCommandLine;
 private import gio.File;
 private import gio.FileIF;
 private import gio.InputStream;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.Str;
 private import glib.Variant;
 private import glib.VariantDict;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -250,12 +250,12 @@ public class ApplicationCommandLine : ObjectG
 	public FileIF createFileForArg(string arg)
 	{
 		auto p = g_application_command_line_create_file_for_arg(gApplicationCommandLine, Str.toStringz(arg));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
 	}
 
@@ -280,9 +280,9 @@ public class ApplicationCommandLine : ObjectG
 	public string[] getArguments()
 	{
 		int argc;
-		
+
 		auto retStr = g_application_command_line_get_arguments(gApplicationCommandLine, &argc);
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr, argc);
 	}
@@ -376,12 +376,12 @@ public class ApplicationCommandLine : ObjectG
 	public VariantDict getOptionsDict()
 	{
 		auto p = g_application_command_line_get_options_dict(gApplicationCommandLine);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new VariantDict(cast(GVariantDict*) p);
 	}
 
@@ -402,12 +402,12 @@ public class ApplicationCommandLine : ObjectG
 	public Variant getPlatformData()
 	{
 		auto p = g_application_command_line_get_platform_data(gApplicationCommandLine);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Variant(cast(GVariant*) p, true);
 	}
 
@@ -430,12 +430,12 @@ public class ApplicationCommandLine : ObjectG
 	public InputStream getStdin()
 	{
 		auto p = g_application_command_line_get_stdin(gApplicationCommandLine);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) p, true);
 	}
 

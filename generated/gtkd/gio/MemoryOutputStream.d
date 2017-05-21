@@ -29,11 +29,11 @@ private import gio.PollableOutputStreamIF;
 private import gio.PollableOutputStreamT;
 private import gio.SeekableIF;
 private import gio.SeekableT;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.Bytes;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -148,12 +148,12 @@ public class MemoryOutputStream : OutputStream, PollableOutputStreamIF, Seekable
 	public this(void* data, size_t size, GReallocFunc reallocFunction, GDestroyNotify destroyFunction)
 	{
 		auto p = g_memory_output_stream_new(data, size, reallocFunction, destroyFunction);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GMemoryOutputStream*) p, true);
 	}
 
@@ -168,12 +168,12 @@ public class MemoryOutputStream : OutputStream, PollableOutputStreamIF, Seekable
 	public this()
 	{
 		auto p = g_memory_output_stream_new_resizable();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_resizable");
 		}
-		
+
 		this(cast(GMemoryOutputStream*) p, true);
 	}
 
@@ -239,12 +239,12 @@ public class MemoryOutputStream : OutputStream, PollableOutputStreamIF, Seekable
 	public Bytes stealAsBytes()
 	{
 		auto p = g_memory_output_stream_steal_as_bytes(gMemoryOutputStream);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Bytes(cast(GBytes*) p, true);
 	}
 

@@ -31,8 +31,8 @@ private import glib.HashTable;
 private import glib.ListG;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /**
@@ -102,12 +102,12 @@ public class Uri
 	public this(string scheme, string userinfo, string host, uint port, string path, string query, string fragment)
 	{
 		auto p = gst_uri_new(Str.toStringz(scheme), Str.toStringz(userinfo), Str.toStringz(host), port, Str.toStringz(path), Str.toStringz(query), Str.toStringz(fragment));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GstUri*) p);
 	}
 
@@ -171,12 +171,12 @@ public class Uri
 	public Uri fromStringWithBase(string uri)
 	{
 		auto p = gst_uri_from_string_with_base(gstUri, Str.toStringz(uri));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Uri)(cast(GstUri*) p, true);
 	}
 
@@ -227,12 +227,12 @@ public class Uri
 	public HashTable getMediaFragmentTable()
 	{
 		auto p = gst_uri_get_media_fragment_table(gstUri);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new HashTable(cast(GHashTable*) p, true);
 	}
 
@@ -247,7 +247,7 @@ public class Uri
 	public string getPath()
 	{
 		auto retStr = gst_uri_get_path(gstUri);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -264,12 +264,12 @@ public class Uri
 	public ListG getPathSegments()
 	{
 		auto p = gst_uri_get_path_segments(gstUri);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -284,7 +284,7 @@ public class Uri
 	public string getPathString()
 	{
 		auto retStr = gst_uri_get_path_string(gstUri);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -313,12 +313,12 @@ public class Uri
 	public ListG getQueryKeys()
 	{
 		auto p = gst_uri_get_query_keys(gstUri);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -333,7 +333,7 @@ public class Uri
 	public string getQueryString()
 	{
 		auto retStr = gst_uri_get_query_string(gstUri);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -354,12 +354,12 @@ public class Uri
 	public HashTable getQueryTable()
 	{
 		auto p = gst_uri_get_query_table(gstUri);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new HashTable(cast(GHashTable*) p, true);
 	}
 
@@ -454,12 +454,12 @@ public class Uri
 	public Uri join(Uri refUri)
 	{
 		auto p = gst_uri_join(gstUri, (refUri is null) ? null : refUri.getUriStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Uri)(cast(GstUri*) p, true);
 	}
 
@@ -478,12 +478,12 @@ public class Uri
 	public Uri makeWritable()
 	{
 		auto p = gst_uri_make_writable(gstUri);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Uri)(cast(GstUri*) p, true);
 	}
 
@@ -509,12 +509,12 @@ public class Uri
 	public Uri newWithBase(string scheme, string userinfo, string host, uint port, string path, string query, string fragment)
 	{
 		auto p = gst_uri_new_with_base(gstUri, Str.toStringz(scheme), Str.toStringz(userinfo), Str.toStringz(host), port, Str.toStringz(path), Str.toStringz(query), Str.toStringz(fragment));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Uri)(cast(GstUri*) p, true);
 	}
 
@@ -755,7 +755,7 @@ public class Uri
 	public override string toString()
 	{
 		auto retStr = gst_uri_to_string(gstUri);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -775,7 +775,7 @@ public class Uri
 	public static string construct(string protocol, string location)
 	{
 		auto retStr = gst_uri_construct(Str.toStringz(protocol), Str.toStringz(location));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -794,12 +794,12 @@ public class Uri
 	public static Uri fromString(string uri)
 	{
 		auto p = gst_uri_from_string(Str.toStringz(uri));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Uri)(cast(GstUri*) p, true);
 	}
 
@@ -821,7 +821,7 @@ public class Uri
 	public static string getLocation(string uri)
 	{
 		auto retStr = gst_uri_get_location(Str.toStringz(uri));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -838,7 +838,7 @@ public class Uri
 	public static string getProtocol(string uri)
 	{
 		auto retStr = gst_uri_get_protocol(Str.toStringz(uri));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -887,7 +887,7 @@ public class Uri
 	public static string joinStrings(string baseUri, string refUri)
 	{
 		auto retStr = gst_uri_join_strings(Str.toStringz(baseUri), Str.toStringz(refUri));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -942,14 +942,14 @@ public class Uri
 	public static string filenameToUri(string filename)
 	{
 		GError* err = null;
-		
+
 		auto retStr = gst_filename_to_uri(Str.toStringz(filename), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}

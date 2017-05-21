@@ -30,8 +30,8 @@ private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gtkd.Loader;
-private import vtec.vte;
-public  import vtec.vtetypes;
+private import vte.c.functions;
+public  import vte.c.types;
 
 
 /** */
@@ -74,39 +74,39 @@ public class Regex
 	public static Regex newMatch(string pattern, ptrdiff_t patternLength, uint flags)
 	{
 		GError* err = null;
-		
+
 		auto p = vte_regex_new_for_match(Str.toStringz(pattern), patternLength, flags, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_for_match");
 		}
-		
+
 		return new Regex(cast(VteRegex*) p);
 	}
-	
+
 	/** */
 	public static Regex newSearch(string pattern, ptrdiff_t patternLength, uint flags)
 	{
 		GError* err = null;
-		
+
 		auto p = vte_regex_new_for_search(Str.toStringz(pattern), patternLength, flags, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_for_search");
 		}
-		
+
 		return new Regex(cast(VteRegex*) p);
 	}
 
@@ -123,14 +123,14 @@ public class Regex
 	public bool jit(uint flags)
 	{
 		GError* err = null;
-		
+
 		auto p = vte_regex_jit(vteRegex, flags, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -138,12 +138,12 @@ public class Regex
 	public Regex doref()
 	{
 		auto p = vte_regex_ref(vteRegex);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Regex)(cast(VteRegex*) p, true);
 	}
 
@@ -151,12 +151,12 @@ public class Regex
 	public Regex unref()
 	{
 		auto p = vte_regex_unref(vteRegex);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Regex)(cast(VteRegex*) p, true);
 	}
 }

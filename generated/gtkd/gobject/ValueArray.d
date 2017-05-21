@@ -27,8 +27,8 @@ module gobject.ValueArray;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gobject.Value;
-private import gtkc.gobject;
-public  import gtkc.gobjecttypes;
+private import gobject.c.functions;
+public  import gobject.c.types;
 private import gtkd.Loader;
 
 
@@ -94,12 +94,12 @@ public class ValueArray
 	public this(uint nPrealloced)
 	{
 		auto p = g_value_array_new(nPrealloced);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GValueArray*) p);
 	}
 
@@ -117,12 +117,12 @@ public class ValueArray
 	public ValueArray append(Value value)
 	{
 		auto p = g_value_array_append(gValueArray, (value is null) ? null : value.getValueStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ValueArray)(cast(GValueArray*) p);
 	}
 
@@ -137,12 +137,12 @@ public class ValueArray
 	public ValueArray copy()
 	{
 		auto p = g_value_array_copy(gValueArray);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ValueArray)(cast(GValueArray*) p, true);
 	}
 
@@ -170,12 +170,12 @@ public class ValueArray
 	public Value getNth(uint index)
 	{
 		auto p = g_value_array_get_nth(gValueArray, index);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Value)(cast(GValue*) p);
 	}
 
@@ -194,12 +194,12 @@ public class ValueArray
 	public ValueArray insert(uint index, Value value)
 	{
 		auto p = g_value_array_insert(gValueArray, index, (value is null) ? null : value.getValueStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ValueArray)(cast(GValueArray*) p);
 	}
 
@@ -217,12 +217,12 @@ public class ValueArray
 	public ValueArray prepend(Value value)
 	{
 		auto p = g_value_array_prepend(gValueArray, (value is null) ? null : value.getValueStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ValueArray)(cast(GValueArray*) p);
 	}
 
@@ -240,12 +240,12 @@ public class ValueArray
 	public ValueArray remove(uint index)
 	{
 		auto p = g_value_array_remove(gValueArray, index);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ValueArray)(cast(GValueArray*) p);
 	}
 
@@ -266,12 +266,12 @@ public class ValueArray
 	public ValueArray sort(GCompareFunc compareFunc)
 	{
 		auto p = g_value_array_sort(gValueArray, compareFunc);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ValueArray)(cast(GValueArray*) p);
 	}
 
@@ -293,12 +293,12 @@ public class ValueArray
 	public ValueArray sortWithData(GCompareDataFunc compareFunc, void* userData)
 	{
 		auto p = g_value_array_sort_with_data(gValueArray, compareFunc, userData);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ValueArray)(cast(GValueArray*) p);
 	}
 }

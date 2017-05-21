@@ -27,8 +27,8 @@ module gsv.SourceMark;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gsvc.gsv;
-public  import gsvc.gsvtypes;
+private import gsv.c.functions;
+public  import gsv.c.types;
 private import gtk.TextMark;
 
 
@@ -97,12 +97,12 @@ public class SourceMark : TextMark
 	public this(string name, string category)
 	{
 		auto p = gtk_source_mark_new(Str.toStringz(name), Str.toStringz(category));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkSourceMark*) p, true);
 	}
 
@@ -134,12 +134,12 @@ public class SourceMark : TextMark
 	public SourceMark next(string category)
 	{
 		auto p = gtk_source_mark_next(gtkSourceMark, Str.toStringz(category));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SourceMark)(cast(GtkSourceMark*) p);
 	}
 
@@ -159,12 +159,12 @@ public class SourceMark : TextMark
 	public SourceMark prev(string category)
 	{
 		auto p = gtk_source_mark_prev(gtkSourceMark, Str.toStringz(category));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SourceMark)(cast(GtkSourceMark*) p);
 	}
 }

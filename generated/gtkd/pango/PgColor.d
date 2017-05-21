@@ -26,9 +26,9 @@ module pango.PgColor;
 
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.pango;
-public  import gtkc.pangotypes;
 private import gtkd.Loader;
+private import pango.c.functions;
+public  import pango.c.types;
 
 
 /**
@@ -90,12 +90,12 @@ public class PgColor
 	public PgColor copy()
 	{
 		auto p = pango_color_copy(pangoColor);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgColor)(cast(PangoColor*) p, true);
 	}
 
@@ -142,7 +142,7 @@ public class PgColor
 	public override string toString()
 	{
 		auto retStr = pango_color_to_string(pangoColor);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}

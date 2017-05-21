@@ -27,8 +27,8 @@ module gtk.BindingSet;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -115,12 +115,12 @@ public class BindingSet
 	public static BindingSet byClass(void* objectClass)
 	{
 		auto p = gtk_binding_set_by_class(objectClass);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(BindingSet)(cast(GtkBindingSet*) p);
 	}
 
@@ -138,12 +138,12 @@ public class BindingSet
 	public static BindingSet find(string setName)
 	{
 		auto p = gtk_binding_set_find(Str.toStringz(setName));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(BindingSet)(cast(GtkBindingSet*) p);
 	}
 
@@ -161,12 +161,12 @@ public class BindingSet
 	public this(string setName)
 	{
 		auto p = gtk_binding_set_new(Str.toStringz(setName));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkBindingSet*) p);
 	}
 

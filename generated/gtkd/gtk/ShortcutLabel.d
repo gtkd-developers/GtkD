@@ -29,8 +29,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gtk.Box;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -93,12 +93,12 @@ public class ShortcutLabel : Box
 	public this(string accelerator)
 	{
 		auto p = gtk_shortcut_label_new(Str.toStringz(accelerator));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkShortcutLabel*) p, true);
 	}
 

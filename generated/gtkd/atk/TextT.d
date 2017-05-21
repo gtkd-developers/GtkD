@@ -24,10 +24,10 @@
 
 module atk.TextT;
 
+public  import atk.c.functions;
+public  import atk.c.types;
 public  import glib.Str;
 public  import gobject.Signals;
-public  import gtkc.atk;
-public  import gtkc.atktypes;
 public  import std.algorithm;
 
 
@@ -110,7 +110,7 @@ public template TextT(TStruct)
 	public AtkTextRange*[] getBoundedRanges(AtkTextRectangle* rect, AtkCoordType coordType, AtkTextClipType xClipType, AtkTextClipType yClipType)
 	{
 		auto p = atk_text_get_bounded_ranges(getTextStruct(), rect, coordType, xClipType, yClipType);
-		
+
 		return p[0 .. getArrayLength(p)];
 	}
 
@@ -270,7 +270,7 @@ public template TextT(TStruct)
 	public string getSelection(int selectionNum, out int startOffset, out int endOffset)
 	{
 		auto retStr = atk_text_get_selection(getTextStruct(), selectionNum, &startOffset, &endOffset);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -325,7 +325,7 @@ public template TextT(TStruct)
 	public string getStringAtOffset(int offset, AtkTextGranularity granularity, out int startOffset, out int endOffset)
 	{
 		auto retStr = atk_text_get_string_at_offset(getTextStruct(), offset, granularity, &startOffset, &endOffset);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -343,7 +343,7 @@ public template TextT(TStruct)
 	public string getText(int startOffset, int endOffset)
 	{
 		auto retStr = atk_text_get_text(getTextStruct(), startOffset, endOffset);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -366,7 +366,7 @@ public template TextT(TStruct)
 	public string getTextAfterOffset(int offset, AtkTextBoundary boundaryType, out int startOffset, out int endOffset)
 	{
 		auto retStr = atk_text_get_text_after_offset(getTextStruct(), offset, boundaryType, &startOffset, &endOffset);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -413,7 +413,7 @@ public template TextT(TStruct)
 	public string getTextAtOffset(int offset, AtkTextBoundary boundaryType, out int startOffset, out int endOffset)
 	{
 		auto retStr = atk_text_get_text_at_offset(getTextStruct(), offset, boundaryType, &startOffset, &endOffset);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -436,7 +436,7 @@ public template TextT(TStruct)
 	public string getTextBeforeOffset(int offset, AtkTextBoundary boundaryType, out int startOffset, out int endOffset)
 	{
 		auto retStr = atk_text_get_text_before_offset(getTextStruct(), offset, boundaryType, &startOffset, &endOffset);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -496,13 +496,13 @@ public template TextT(TStruct)
 		static OnTextAttributesChangedDelegateWrapper[] listeners;
 		void delegate(TextIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TextIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnTextAttributesChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -534,12 +534,12 @@ public template TextT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackTextAttributesChanged(AtkText* textStruct, OnTextAttributesChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackTextAttributesChangedDestroy(OnTextAttributesChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -550,13 +550,13 @@ public template TextT(TStruct)
 		static OnTextCaretMovedDelegateWrapper[] listeners;
 		void delegate(int, TextIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(int, TextIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnTextCaretMovedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -591,12 +591,12 @@ public template TextT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackTextCaretMoved(AtkText* textStruct, int arg1, OnTextCaretMovedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(arg1, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackTextCaretMovedDestroy(OnTextCaretMovedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -607,13 +607,13 @@ public template TextT(TStruct)
 		static OnTextChangedDelegateWrapper[] listeners;
 		void delegate(int, int, TextIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(int, int, TextIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnTextChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -654,12 +654,12 @@ public template TextT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackTextChanged(AtkText* textStruct, int arg1, int arg2, OnTextChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(arg1, arg2, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackTextChangedDestroy(OnTextChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -670,13 +670,13 @@ public template TextT(TStruct)
 		static OnTextInsertDelegateWrapper[] listeners;
 		void delegate(int, int, string, TextIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(int, int, string, TextIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnTextInsertDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -714,12 +714,12 @@ public template TextT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackTextInsert(AtkText* textStruct, int arg1, int arg2, char* arg3, OnTextInsertDelegateWrapper wrapper)
 	{
 		wrapper.dlg(arg1, arg2, Str.toString(arg3), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackTextInsertDestroy(OnTextInsertDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -730,13 +730,13 @@ public template TextT(TStruct)
 		static OnTextRemoveDelegateWrapper[] listeners;
 		void delegate(int, int, string, TextIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(int, int, string, TextIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnTextRemoveDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -774,12 +774,12 @@ public template TextT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackTextRemove(AtkText* textStruct, int arg1, int arg2, char* arg3, OnTextRemoveDelegateWrapper wrapper)
 	{
 		wrapper.dlg(arg1, arg2, Str.toString(arg3), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackTextRemoveDestroy(OnTextRemoveDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -790,13 +790,13 @@ public template TextT(TStruct)
 		static OnTextSelectionChangedDelegateWrapper[] listeners;
 		void delegate(TextIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TextIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnTextSelectionChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -827,12 +827,12 @@ public template TextT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackTextSelectionChanged(AtkText* textStruct, OnTextSelectionChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackTextSelectionChangedDestroy(OnTextSelectionChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

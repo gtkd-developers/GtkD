@@ -25,8 +25,8 @@
 module glib.Timeout;
 
 private import glib.Source;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 
 
 /** */
@@ -36,8 +36,8 @@ public class Timeout
 	bool delegate()[] timeoutListeners;
 	/** our gtk timeout ID */
 	uint timeoutID;
-	
-	
+
+
 	/**
 	 * Creates a new timeout cycle with the default priority, GPriority.DEFAULT.
 	 *
@@ -63,7 +63,7 @@ public class Timeout
 			}
 		}
 	}
-	
+
 	/**
 	 * Creates a new timeout cycle.
 	 * Params:
@@ -84,7 +84,7 @@ public class Timeout
 			}
 		}
 	}
-	
+
 	/**
 	 * Creates a new timeout cycle with the default priority, GPriority.DEFAULT.
 	 * Params:
@@ -104,7 +104,7 @@ public class Timeout
 			}
 		}
 	}
-	
+
 	/**
 	 * Creates a new timeout cycle.
 	 * Params:
@@ -125,7 +125,7 @@ public class Timeout
 			}
 		}
 	}
-	
+
 	/** */
 	public void stop()
 	{
@@ -136,7 +136,7 @@ public class Timeout
 		timeoutID = 0;
 		timeoutListeners.length = 0;
 	}
-	
+
 	/**
 	 * Removes the timeout from gtk
 	 */
@@ -144,7 +144,7 @@ public class Timeout
 	{
 		stop();
 	}
-	
+
 	/**
 	 * Adds a new delegate to this timeout cycle
 	 * Params:
@@ -162,7 +162,7 @@ public class Timeout
 			}
 		}
 	}
-	
+
 	/**
 	 * The callback execution from glib
 	 * Params:
@@ -173,7 +173,7 @@ public class Timeout
 	{
 		return timeout.callAllListeners();
 	}
-	
+
 	/**
 	 * Executes all delegates on the execution list
 	 * Returns:
@@ -181,9 +181,9 @@ public class Timeout
 	private bool callAllListeners()
 	{
 		bool runAgain = false;
-		
+
 		int i = 0;
-		
+
 		while ( i<timeoutListeners.length )
 		{
 			if ( !timeoutListeners[i]() )
@@ -196,11 +196,11 @@ public class Timeout
 				++i;
 			}
 		}
-		
+
 		// Set timeoutID to 0 if all delegates are removed
 		if (timeoutListeners.length == 0)
 			timeoutID = 0;
-		
+
 		return runAgain;
 	}
 
@@ -400,12 +400,12 @@ public class Timeout
 	public static Source sourceNew(uint interval)
 	{
 		auto p = g_timeout_source_new(interval);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Source(cast(GSource*) p, true);
 	}
 
@@ -432,12 +432,12 @@ public class Timeout
 	public static Source sourceNewSeconds(uint interval)
 	{
 		auto p = g_timeout_source_new_seconds(interval);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Source(cast(GSource*) p, true);
 	}
 }

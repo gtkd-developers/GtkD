@@ -26,8 +26,8 @@ module glib.ArrayG;
 
 private import glib.ConstructionException;
 private import glib.Str;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 
 
 /**
@@ -75,12 +75,12 @@ public class ArrayG
 	public ArrayG appendVals(void* data, uint len)
 	{
 		auto p = g_array_append_vals(gArray, data, len);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ArrayG(cast(GArray*) p);
 	}
 
@@ -105,7 +105,7 @@ public class ArrayG
 	public string free(bool freeSegment)
 	{
 		auto retStr = g_array_free(gArray, freeSegment);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -135,12 +135,12 @@ public class ArrayG
 	public ArrayG insertVals(uint index, void* data, uint len)
 	{
 		auto p = g_array_insert_vals(gArray, index, data, len);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ArrayG(cast(GArray*) p);
 	}
 
@@ -161,12 +161,12 @@ public class ArrayG
 	public this(bool zeroTerminated, bool clear, uint elementSize)
 	{
 		auto p = g_array_new(zeroTerminated, clear, elementSize);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GArray*) p);
 	}
 
@@ -186,12 +186,12 @@ public class ArrayG
 	public ArrayG prependVals(void* data, uint len)
 	{
 		auto p = g_array_prepend_vals(gArray, data, len);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ArrayG(cast(GArray*) p);
 	}
 
@@ -206,12 +206,12 @@ public class ArrayG
 	public ArrayG doref()
 	{
 		auto p = g_array_ref(gArray);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ArrayG(cast(GArray*) p);
 	}
 
@@ -227,12 +227,12 @@ public class ArrayG
 	public ArrayG removeIndex(uint index)
 	{
 		auto p = g_array_remove_index(gArray, index);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ArrayG(cast(GArray*) p);
 	}
 
@@ -250,12 +250,12 @@ public class ArrayG
 	public ArrayG removeIndexFast(uint index)
 	{
 		auto p = g_array_remove_index_fast(gArray, index);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ArrayG(cast(GArray*) p);
 	}
 
@@ -274,12 +274,12 @@ public class ArrayG
 	public ArrayG removeRange(uint index, uint length)
 	{
 		auto p = g_array_remove_range(gArray, index, length);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ArrayG(cast(GArray*) p);
 	}
 
@@ -316,12 +316,12 @@ public class ArrayG
 	public ArrayG setSize(uint length)
 	{
 		auto p = g_array_set_size(gArray, length);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ArrayG(cast(GArray*) p);
 	}
 
@@ -344,12 +344,12 @@ public class ArrayG
 	public static ArrayG sizedNew(bool zeroTerminated, bool clear, uint elementSize, uint reservedSize)
 	{
 		auto p = g_array_sized_new(zeroTerminated, clear, elementSize, reservedSize);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ArrayG(cast(GArray*) p);
 	}
 

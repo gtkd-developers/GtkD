@@ -38,8 +38,8 @@ private import gtk.PrintOperationPreviewT;
 private import gtk.PrintSettings;
 private import gtk.Widget;
 private import gtk.Window;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -162,12 +162,12 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	public this()
 	{
 		auto p = gtk_print_operation_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkPrintOperation*) p, true);
 	}
 
@@ -212,12 +212,12 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	public PageSetup getDefaultPageSetup()
 	{
 		auto p = gtk_print_operation_get_default_page_setup(gtkPrintOperation);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PageSetup)(cast(GtkPageSetup*) p);
 	}
 
@@ -246,9 +246,9 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	public void getError()
 	{
 		GError* err = null;
-		
+
 		gtk_print_operation_get_error(gtkPrintOperation, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
@@ -301,12 +301,12 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	public PrintSettings getPrintSettings()
 	{
 		auto p = gtk_print_operation_get_print_settings(gtkPrintOperation);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PrintSettings)(cast(GtkPrintSettings*) p);
 	}
 
@@ -448,14 +448,14 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	public GtkPrintOperationResult run(GtkPrintOperationAction action, Window parent)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_print_operation_run(gtkPrintOperation, action, (parent is null) ? null : parent.getWindowStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -726,13 +726,13 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		static OnBeginPrintDelegateWrapper[] listeners;
 		void delegate(PrintContext, PrintOperation) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(PrintContext, PrintOperation) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnBeginPrintDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -772,12 +772,12 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackBeginPrint(GtkPrintOperation* printoperationStruct, GtkPrintContext* context, OnBeginPrintDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(PrintContext)(context), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackBeginPrintDestroy(OnBeginPrintDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -788,13 +788,13 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		static OnCreateCustomWidgetDelegateWrapper[] listeners;
 		ObjectG delegate(PrintOperation) dlg;
 		gulong handlerId;
-		
+
 		this(ObjectG delegate(PrintOperation) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCreateCustomWidgetDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -838,13 +838,13 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static GObject* callBackCreateCustomWidget(GtkPrintOperation* printoperationStruct, OnCreateCustomWidgetDelegateWrapper wrapper)
 	{
 		auto r = wrapper.dlg(wrapper.outer);
 		return r.getObjectGStruct();
 	}
-	
+
 	extern(C) static void callBackCreateCustomWidgetDestroy(OnCreateCustomWidgetDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -855,13 +855,13 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		static OnCustomWidgetApplyDelegateWrapper[] listeners;
 		void delegate(Widget, PrintOperation) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Widget, PrintOperation) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCustomWidgetApplyDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -900,12 +900,12 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackCustomWidgetApply(GtkPrintOperation* printoperationStruct, GtkWidget* widget, OnCustomWidgetApplyDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Widget)(widget), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackCustomWidgetApplyDestroy(OnCustomWidgetApplyDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -916,13 +916,13 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		static OnDoneDelegateWrapper[] listeners;
 		void delegate(GtkPrintOperationResult, PrintOperation) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(GtkPrintOperationResult, PrintOperation) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDoneDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -966,12 +966,12 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDone(GtkPrintOperation* printoperationStruct, GtkPrintOperationResult result, OnDoneDelegateWrapper wrapper)
 	{
 		wrapper.dlg(result, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDoneDestroy(OnDoneDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -982,13 +982,13 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		static OnDrawPageDelegateWrapper[] listeners;
 		void delegate(PrintContext, int, PrintOperation) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(PrintContext, int, PrintOperation) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDrawPageDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1071,12 +1071,12 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDrawPage(GtkPrintOperation* printoperationStruct, GtkPrintContext* context, int pageNr, OnDrawPageDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(PrintContext)(context), pageNr, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDrawPageDestroy(OnDrawPageDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1087,13 +1087,13 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		static OnEndPrintDelegateWrapper[] listeners;
 		void delegate(PrintContext, PrintOperation) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(PrintContext, PrintOperation) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnEndPrintDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1130,12 +1130,12 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackEndPrint(GtkPrintOperation* printoperationStruct, GtkPrintContext* context, OnEndPrintDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(PrintContext)(context), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackEndPrintDestroy(OnEndPrintDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1146,13 +1146,13 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		static OnPaginateDelegateWrapper[] listeners;
 		bool delegate(PrintContext, PrintOperation) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(PrintContext, PrintOperation) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPaginateDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1201,12 +1201,12 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackPaginate(GtkPrintOperation* printoperationStruct, GtkPrintContext* context, OnPaginateDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(ObjectG.getDObject!(PrintContext)(context), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPaginateDestroy(OnPaginateDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1217,13 +1217,13 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		static OnPreviewDelegateWrapper[] listeners;
 		bool delegate(PrintOperationPreviewIF, PrintContext, Window, PrintOperation) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(PrintOperationPreviewIF, PrintContext, Window, PrintOperation) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPreviewDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1277,12 +1277,12 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackPreview(GtkPrintOperation* printoperationStruct, GtkPrintOperationPreview* preview, GtkPrintContext* context, GtkWindow* parent, OnPreviewDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(ObjectG.getDObject!(PrintOperationPreview, PrintOperationPreviewIF)(preview), ObjectG.getDObject!(PrintContext)(context), ObjectG.getDObject!(Window)(parent), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPreviewDestroy(OnPreviewDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1293,13 +1293,13 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		static OnRequestPageSetupDelegateWrapper[] listeners;
 		void delegate(PrintContext, int, PageSetup, PrintOperation) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(PrintContext, int, PageSetup, PrintOperation) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnRequestPageSetupDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1338,12 +1338,12 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackRequestPageSetup(GtkPrintOperation* printoperationStruct, GtkPrintContext* context, int pageNr, GtkPageSetup* setup, OnRequestPageSetupDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(PrintContext)(context), pageNr, ObjectG.getDObject!(PageSetup)(setup), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackRequestPageSetupDestroy(OnRequestPageSetupDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1354,13 +1354,13 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		static OnStatusChangedDelegateWrapper[] listeners;
 		void delegate(PrintOperation) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(PrintOperation) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnStatusChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1395,12 +1395,12 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackStatusChanged(GtkPrintOperation* printoperationStruct, OnStatusChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackStatusChangedDestroy(OnStatusChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1411,13 +1411,13 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		static OnUpdateCustomWidgetDelegateWrapper[] listeners;
 		void delegate(Widget, PageSetup, PrintSettings, PrintOperation) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Widget, PageSetup, PrintSettings, PrintOperation) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnUpdateCustomWidgetDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1456,12 +1456,12 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackUpdateCustomWidget(GtkPrintOperation* printoperationStruct, GtkWidget* widget, GtkPageSetup* setup, GtkPrintSettings* settings, OnUpdateCustomWidgetDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Widget)(widget), ObjectG.getDObject!(PageSetup)(setup), ObjectG.getDObject!(PrintSettings)(settings), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackUpdateCustomWidgetDestroy(OnUpdateCustomWidgetDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1489,12 +1489,12 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	public static PageSetup printRunPageSetupDialog(Window parent, PageSetup pageSetup, PrintSettings settings)
 	{
 		auto p = gtk_print_run_page_setup_dialog((parent is null) ? null : parent.getWindowStruct(), (pageSetup is null) ? null : pageSetup.getPageSetupStruct(), (settings is null) ? null : settings.getPrintSettingsStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PageSetup)(cast(GtkPageSetup*) p, true);
 	}
 

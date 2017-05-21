@@ -27,9 +27,9 @@ module gio.DBusInterfaceT;
 public  import gio.DBusInterfaceInfo;
 public  import gio.DBusObject;
 public  import gio.DBusObjectIF;
+public  import gio.c.functions;
+public  import gio.c.types;
 public  import gobject.ObjectG;
-public  import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -61,12 +61,12 @@ public template DBusInterfaceT(TStruct)
 	public DBusObjectIF dupObject()
 	{
 		auto p = g_dbus_interface_dup_object(getDBusInterfaceStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(DBusObject, DBusObjectIF)(cast(GDBusObject*) p, true);
 	}
 
@@ -81,12 +81,12 @@ public template DBusInterfaceT(TStruct)
 	public DBusInterfaceInfo getInfo()
 	{
 		auto p = g_dbus_interface_get_info(getDBusInterfaceStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(DBusInterfaceInfo)(cast(GDBusInterfaceInfo*) p);
 	}
 
@@ -105,12 +105,12 @@ public template DBusInterfaceT(TStruct)
 	public DBusObjectIF getObject()
 	{
 		auto p = g_dbus_interface_get_object(getDBusInterfaceStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(DBusObject, DBusObjectIF)(cast(GDBusObject*) p);
 	}
 

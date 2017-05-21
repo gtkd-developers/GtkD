@@ -26,8 +26,8 @@ module peas.ConfigurableIF;
 
 private import gobject.ObjectG;
 private import gtk.Widget;
-private import peasc.peas;
-public  import peasc.peastypes;
+private import peas.c.functions;
+public  import peas.c.types;
 
 
 /**

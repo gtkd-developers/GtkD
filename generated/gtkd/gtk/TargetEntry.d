@@ -27,8 +27,8 @@ module gtk.TargetEntry;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import gtkd.Loader;
 
 
@@ -95,12 +95,12 @@ public class TargetEntry
 	public this(string target, uint flags, uint info)
 	{
 		auto p = gtk_target_entry_new(Str.toStringz(target), flags, info);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkTargetEntry*) p);
 	}
 
@@ -113,12 +113,12 @@ public class TargetEntry
 	public TargetEntry copy()
 	{
 		auto p = gtk_target_entry_copy(gtkTargetEntry);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TargetEntry)(cast(GtkTargetEntry*) p, true);
 	}
 

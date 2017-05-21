@@ -27,8 +27,8 @@ module gtk.PrintOperationPreviewIF;
 private import gobject.Signals;
 private import gtk.PageSetup;
 private import gtk.PrintContext;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 

@@ -30,8 +30,8 @@ private import gobject.Signals;
 private import gobject.Value;
 private import gtk.TreeIter;
 private import gtk.TreePath;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -243,13 +243,13 @@ public interface TreeModelIF{
 	 * this is the same calling getValue and get the string from the value object
 	 */
 	string getValueString(TreeIter iter, int column);
-	
+
 	/**
 	 * Get the value of a column as a char array.
 	 * this is the same calling getValue and get the int from the value object
 	 */
 	int getValueInt(TreeIter iter, int column);
-	
+
 	/**
 	 * Sets iter to a valid iterator pointing to path.
 	 * Params:
@@ -259,7 +259,7 @@ public interface TreeModelIF{
 	 *  TRUE, if iter was set.
 	 */
 	public int getIter(TreeIter iter, TreePath path);
-	
+
 	/**
 	 * Initializes and sets value to that at column.
 	 * When done with value, g_value_unset() needs to be called

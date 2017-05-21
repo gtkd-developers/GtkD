@@ -27,8 +27,8 @@ module glib.CharacterSet;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 
 
 /** */
@@ -79,14 +79,14 @@ public struct CharacterSet
 	public static string convert(string str, ptrdiff_t len, string toCodeset, string fromCodeset, out size_t bytesRead, out size_t bytesWritten)
 	{
 		GError* err = null;
-		
+
 		auto retStr = g_convert(Str.toStringz(str), len, Str.toStringz(toCodeset), Str.toStringz(fromCodeset), &bytesRead, &bytesWritten, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -146,14 +146,14 @@ public struct CharacterSet
 	public static string convertWithFallback(string str, ptrdiff_t len, string toCodeset, string fromCodeset, string fallback, size_t* bytesRead, size_t* bytesWritten)
 	{
 		GError* err = null;
-		
+
 		auto retStr = g_convert_with_fallback(Str.toStringz(str), len, Str.toStringz(toCodeset), Str.toStringz(fromCodeset), Str.toStringz(fallback), bytesRead, bytesWritten, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -198,14 +198,14 @@ public struct CharacterSet
 	public static string convertWithIconv(string str, ptrdiff_t len, GIConv converter, size_t* bytesRead, size_t* bytesWritten)
 	{
 		GError* err = null;
-		
+
 		auto retStr = g_convert_with_iconv(Str.toStringz(str), len, converter, bytesRead, bytesWritten, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -240,7 +240,7 @@ public struct CharacterSet
 	public static string filenameDisplayBasename(string filename)
 	{
 		auto retStr = g_filename_display_basename(Str.toStringz(filename));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -274,7 +274,7 @@ public struct CharacterSet
 	public static string filenameDisplayName(string filename)
 	{
 		auto retStr = g_filename_display_name(Str.toStringz(filename));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -306,14 +306,14 @@ public struct CharacterSet
 	{
 		size_t bytesWritten;
 		GError* err = null;
-		
+
 		auto retStr = g_filename_from_utf8(Str.toStringz(utf8string), len, &bytesRead, &bytesWritten, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr, bytesWritten);
 	}
@@ -348,14 +348,14 @@ public struct CharacterSet
 	public static string filenameToUtf8(string opsysstring, ptrdiff_t len, out size_t bytesRead, out size_t bytesWritten)
 	{
 		GError* err = null;
-		
+
 		auto retStr = g_filename_to_utf8(Str.toStringz(opsysstring), len, &bytesRead, &bytesWritten, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -387,11 +387,11 @@ public struct CharacterSet
 	public static bool getCharset(out string charset)
 	{
 		char* outcharset = null;
-		
+
 		auto p = g_get_charset(&outcharset) != 0;
-		
+
 		charset = Str.toString(outcharset);
-		
+
 		return p;
 	}
 
@@ -404,7 +404,7 @@ public struct CharacterSet
 	public static string getCodeset()
 	{
 		auto retStr = g_get_codeset();
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -478,14 +478,14 @@ public struct CharacterSet
 	public static string localeFromUtf8(string utf8string, ptrdiff_t len, out size_t bytesRead, out size_t bytesWritten)
 	{
 		GError* err = null;
-		
+
 		auto retStr = g_locale_from_utf8(Str.toStringz(utf8string), len, &bytesRead, &bytesWritten, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -521,14 +521,14 @@ public struct CharacterSet
 	public static string localeToUtf8(string opsysstring, ptrdiff_t len, out size_t bytesRead, out size_t bytesWritten)
 	{
 		GError* err = null;
-		
+
 		auto retStr = g_locale_to_utf8(Str.toStringz(opsysstring), len, &bytesRead, &bytesWritten, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}

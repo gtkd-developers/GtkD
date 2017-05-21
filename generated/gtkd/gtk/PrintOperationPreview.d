@@ -27,8 +27,8 @@ module gtk.PrintOperationPreview;
 private import gobject.ObjectG;
 private import gtk.PrintOperationPreviewIF;
 private import gtk.PrintOperationPreviewT;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /** */

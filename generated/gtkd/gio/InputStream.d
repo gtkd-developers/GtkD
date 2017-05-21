@@ -26,12 +26,12 @@ module gio.InputStream;
 
 private import gio.AsyncResultIF;
 private import gio.Cancellable;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.Bytes;
 private import glib.ErrorG;
 private import glib.GException;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -131,14 +131,14 @@ public class InputStream : ObjectG
 	public bool close(Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_input_stream_close(gInputStream, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -178,14 +178,14 @@ public class InputStream : ObjectG
 	public bool closeFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_input_stream_close_finish(gInputStream, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -245,14 +245,14 @@ public class InputStream : ObjectG
 	public ptrdiff_t read(ubyte[] buffer, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_input_stream_read(gInputStream, buffer.ptr, cast(size_t)buffer.length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -291,14 +291,14 @@ public class InputStream : ObjectG
 	public bool readAll(ubyte[] buffer, out size_t bytesRead, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_input_stream_read_all(gInputStream, buffer.ptr, cast(size_t)buffer.length, &bytesRead, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -354,14 +354,14 @@ public class InputStream : ObjectG
 	public bool readAllFinish(AsyncResultIF result, out size_t bytesRead)
 	{
 		GError* err = null;
-		
+
 		auto p = g_input_stream_read_all_finish(gInputStream, (result is null) ? null : result.getAsyncResultStruct(), &bytesRead, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -444,19 +444,19 @@ public class InputStream : ObjectG
 	public Bytes readBytes(size_t count, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_input_stream_read_bytes(gInputStream, count, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Bytes(cast(GBytes*) p, true);
 	}
 
@@ -511,19 +511,19 @@ public class InputStream : ObjectG
 	public Bytes readBytesFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_input_stream_read_bytes_finish(gInputStream, (result is null) ? null : result.getAsyncResultStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Bytes(cast(GBytes*) p, true);
 	}
 
@@ -540,14 +540,14 @@ public class InputStream : ObjectG
 	public ptrdiff_t readFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_input_stream_read_finish(gInputStream, (result is null) ? null : result.getAsyncResultStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -563,14 +563,14 @@ public class InputStream : ObjectG
 	public bool setPending()
 	{
 		GError* err = null;
-		
+
 		auto p = g_input_stream_set_pending(gInputStream, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -601,14 +601,14 @@ public class InputStream : ObjectG
 	public ptrdiff_t skip(size_t count, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_input_stream_skip(gInputStream, count, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -662,14 +662,14 @@ public class InputStream : ObjectG
 	public ptrdiff_t skipFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_input_stream_skip_finish(gInputStream, (result is null) ? null : result.getAsyncResultStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 }

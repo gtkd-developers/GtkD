@@ -26,9 +26,9 @@ module gdk.Gdk;
 
 private import gdk.Cursor;
 private import gdk.Window;
+private import gdk.c.functions;
+public  import gdk.c.types;
 private import glib.Str;
-private import gtkc.gdk;
-public  import gtkc.gdktypes;
 
 
 /** */
@@ -133,7 +133,7 @@ public struct Gdk
 	public static string getDisplay()
 	{
 		auto retStr = gdk_get_display();
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -185,9 +185,9 @@ public struct Gdk
 	{
 		int argc = cast(int)argv.length;
 		char** outargv = Str.toStringzArray(argv);
-		
+
 		gdk_init(&argc, &outargv);
-		
+
 		argv = Str.toStringArray(outargv, argc);
 	}
 
@@ -211,11 +211,11 @@ public struct Gdk
 	{
 		int argc = cast(int)argv.length;
 		char** outargv = Str.toStringzArray(argv);
-		
+
 		auto p = gdk_init_check(&argc, &outargv) != 0;
-		
+
 		argv = Str.toStringArray(outargv, argc);
-		
+
 		return p;
 	}
 
@@ -321,9 +321,9 @@ public struct Gdk
 	{
 		int argc = cast(int)argv.length;
 		char** outargv = Str.toStringzArray(argv);
-		
+
 		gdk_parse_args(&argc, &outargv);
-		
+
 		argv = Str.toStringArray(outargv, argc);
 	}
 

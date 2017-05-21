@@ -28,11 +28,11 @@ private import gio.AsyncResultIF;
 private import gio.Cancellable;
 private import gio.TlsConnection;
 private import gio.TlsPassword;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ErrorG;
 private import glib.GException;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -128,14 +128,14 @@ public class TlsInteraction : ObjectG
 	public GTlsInteractionResult askPassword(TlsPassword password, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_tls_interaction_ask_password(gTlsInteraction, (password is null) ? null : password.getTlsPasswordStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -192,14 +192,14 @@ public class TlsInteraction : ObjectG
 	public GTlsInteractionResult askPasswordFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_tls_interaction_ask_password_finish(gTlsInteraction, (result is null) ? null : result.getAsyncResultStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -237,14 +237,14 @@ public class TlsInteraction : ObjectG
 	public GTlsInteractionResult invokeAskPassword(TlsPassword password, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_tls_interaction_invoke_ask_password(gTlsInteraction, (password is null) ? null : password.getTlsPasswordStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -284,14 +284,14 @@ public class TlsInteraction : ObjectG
 	public GTlsInteractionResult invokeRequestCertificate(TlsConnection connection, GTlsCertificateRequestFlags flags, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_tls_interaction_invoke_request_certificate(gTlsInteraction, (connection is null) ? null : connection.getTlsConnectionStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -327,14 +327,14 @@ public class TlsInteraction : ObjectG
 	public GTlsInteractionResult requestCertificate(TlsConnection connection, GTlsCertificateRequestFlags flags, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_tls_interaction_request_certificate(gTlsInteraction, (connection is null) ? null : connection.getTlsConnectionStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -386,14 +386,14 @@ public class TlsInteraction : ObjectG
 	public GTlsInteractionResult requestCertificateFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_tls_interaction_request_certificate_finish(gTlsInteraction, (result is null) ? null : result.getAsyncResultStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 }

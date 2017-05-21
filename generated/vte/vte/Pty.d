@@ -33,8 +33,8 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import vtec.vte;
-public  import vtec.vtetypes;
+private import vte.c.functions;
+public  import vte.c.types;
 
 
 /** */
@@ -102,19 +102,19 @@ public class Pty : ObjectG, InitableIF
 	public this(int fd, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = vte_pty_new_foreign_sync(fd, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_foreign_sync");
 		}
-		
+
 		this(cast(VtePty*) p, true);
 	}
 
@@ -148,19 +148,19 @@ public class Pty : ObjectG, InitableIF
 	public this(VtePtyFlags flags, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = vte_pty_new_sync(flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_sync");
 		}
-		
+
 		this(cast(VtePty*) p, true);
 	}
 
@@ -205,14 +205,14 @@ public class Pty : ObjectG, InitableIF
 	public bool getSize(out int rows, out int columns)
 	{
 		GError* err = null;
-		
+
 		auto p = vte_pty_get_size(vtePty, &rows, &columns, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -233,14 +233,14 @@ public class Pty : ObjectG, InitableIF
 	public bool setSize(int rows, int columns)
 	{
 		GError* err = null;
-		
+
 		auto p = vte_pty_set_size(vtePty, rows, columns, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -259,14 +259,14 @@ public class Pty : ObjectG, InitableIF
 	public bool setUtf8(bool utf8)
 	{
 		GError* err = null;
-		
+
 		auto p = vte_pty_set_utf8(vtePty, utf8, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -320,14 +320,14 @@ public class Pty : ObjectG, InitableIF
 	public bool spawnFinish(AsyncResultIF result, out GPid childPid)
 	{
 		GError* err = null;
-		
+
 		auto p = vte_pty_spawn_finish(vtePty, (result is null) ? null : result.getAsyncResultStruct(), &childPid, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 }

@@ -29,8 +29,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gtk.Container;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -104,12 +104,12 @@ public class Stack : Container
 	public this()
 	{
 		auto p = gtk_stack_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkStack*) p);
 	}
 
@@ -161,12 +161,12 @@ public class Stack : Container
 	public Widget getChildByName(string name)
 	{
 		auto p = gtk_stack_get_child_by_name(gtkStack, Str.toStringz(name));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -272,12 +272,12 @@ public class Stack : Container
 	public Widget getVisibleChild()
 	{
 		auto p = gtk_stack_get_visible_child(gtkStack);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 

@@ -27,14 +27,14 @@ module gio.AppLaunchContext;
 private import gio.AppInfo;
 private import gio.AppInfoIF;
 private import gio.FileIF;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.ListG;
 private import glib.Str;
 private import glib.Variant;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -95,12 +95,12 @@ public class AppLaunchContext : ObjectG
 	public this()
 	{
 		auto p = g_app_launch_context_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GAppLaunchContext*) p, true);
 	}
 
@@ -118,7 +118,7 @@ public class AppLaunchContext : ObjectG
 	public string getDisplay(AppInfoIF info, ListG files)
 	{
 		auto retStr = g_app_launch_context_get_display(gAppLaunchContext, (info is null) ? null : info.getAppInfoStruct(), (files is null) ? null : files.getListGStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -137,7 +137,7 @@ public class AppLaunchContext : ObjectG
 	public string[] getEnvironment()
 	{
 		auto retStr = g_app_launch_context_get_environment(gAppLaunchContext);
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}
@@ -159,7 +159,7 @@ public class AppLaunchContext : ObjectG
 	public string getStartupNotifyId(AppInfoIF info, ListG files)
 	{
 		auto retStr = g_app_launch_context_get_startup_notify_id(gAppLaunchContext, (info is null) ? null : info.getAppInfoStruct(), (files is null) ? null : files.getListGStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -210,13 +210,13 @@ public class AppLaunchContext : ObjectG
 		static OnLaunchFailedDelegateWrapper[] listeners;
 		void delegate(string, AppLaunchContext) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(string, AppLaunchContext) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnLaunchFailedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -253,12 +253,12 @@ public class AppLaunchContext : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackLaunchFailed(GAppLaunchContext* applaunchcontextStruct, char* startupNotifyId, OnLaunchFailedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(startupNotifyId), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackLaunchFailedDestroy(OnLaunchFailedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -269,13 +269,13 @@ public class AppLaunchContext : ObjectG
 		static OnLaunchedDelegateWrapper[] listeners;
 		void delegate(AppInfoIF, Variant, AppLaunchContext) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(AppInfoIF, Variant, AppLaunchContext) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnLaunchedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -315,12 +315,12 @@ public class AppLaunchContext : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackLaunched(GAppLaunchContext* applaunchcontextStruct, GAppInfo* info, GVariant* platformData, OnLaunchedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(AppInfo, AppInfoIF)(info), new Variant(platformData), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackLaunchedDestroy(OnLaunchedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

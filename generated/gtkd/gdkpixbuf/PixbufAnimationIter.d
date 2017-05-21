@@ -25,10 +25,10 @@
 module gdkpixbuf.PixbufAnimationIter;
 
 private import gdkpixbuf.Pixbuf;
+private import gdkpixbuf.c.functions;
+public  import gdkpixbuf.c.types;
 private import glib.TimeVal;
 private import gobject.ObjectG;
-private import gtkc.gdkpixbuf;
-public  import gtkc.gdkpixbuftypes;
 
 
 /**
@@ -142,12 +142,12 @@ public class PixbufAnimationIter : ObjectG
 	public Pixbuf getPixbuf()
 	{
 		auto p = gdk_pixbuf_animation_iter_get_pixbuf(gdkPixbufAnimationIter);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 

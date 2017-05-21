@@ -26,11 +26,11 @@ module atk.ObjectAtk;
 
 private import atk.RelationSet;
 private import atk.StateSet;
+private import atk.c.functions;
+public  import atk.c.types;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.atk;
-public  import gtkc.atktypes;
 private import std.algorithm;
 
 
@@ -247,12 +247,12 @@ public class ObjectAtk : ObjectG
 	public ObjectAtk getParent()
 	{
 		auto p = atk_object_get_parent(atkObject);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
 	}
 
@@ -310,12 +310,12 @@ public class ObjectAtk : ObjectG
 	public ObjectAtk peekParent()
 	{
 		auto p = atk_object_peek_parent(atkObject);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
 	}
 
@@ -333,12 +333,12 @@ public class ObjectAtk : ObjectG
 	public ObjectAtk refAccessibleChild(int i)
 	{
 		auto p = atk_object_ref_accessible_child(atkObject, i);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p, true);
 	}
 
@@ -351,12 +351,12 @@ public class ObjectAtk : ObjectG
 	public RelationSet refRelationSet()
 	{
 		auto p = atk_object_ref_relation_set(atkObject);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(RelationSet)(cast(AtkRelationSet*) p, true);
 	}
 
@@ -370,12 +370,12 @@ public class ObjectAtk : ObjectG
 	public StateSet refStateSet()
 	{
 		auto p = atk_object_ref_state_set(atkObject);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(StateSet)(cast(AtkStateSet*) p, true);
 	}
 
@@ -463,13 +463,13 @@ public class ObjectAtk : ObjectG
 		static OnActiveDescendantChangedDelegateWrapper[] listeners;
 		void delegate(void*, ObjectAtk) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(void*, ObjectAtk) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnActiveDescendantChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -505,12 +505,12 @@ public class ObjectAtk : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackActiveDescendantChanged(AtkObject* objectatkStruct, void* arg1, OnActiveDescendantChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(arg1, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackActiveDescendantChangedDestroy(OnActiveDescendantChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -521,13 +521,13 @@ public class ObjectAtk : ObjectG
 		static OnChildrenChangedDelegateWrapper[] listeners;
 		void delegate(uint, void*, ObjectAtk) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(uint, void*, ObjectAtk) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnChildrenChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -568,12 +568,12 @@ public class ObjectAtk : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackChildrenChanged(AtkObject* objectatkStruct, uint arg1, void* arg2, OnChildrenChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(arg1, arg2, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackChildrenChangedDestroy(OnChildrenChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -584,13 +584,13 @@ public class ObjectAtk : ObjectG
 		static OnFocusDelegateWrapper[] listeners;
 		void delegate(bool, ObjectAtk) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(bool, ObjectAtk) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnFocusDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -627,12 +627,12 @@ public class ObjectAtk : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackFocus(AtkObject* objectatkStruct, bool arg1, OnFocusDelegateWrapper wrapper)
 	{
 		wrapper.dlg(arg1, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackFocusDestroy(OnFocusDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -643,13 +643,13 @@ public class ObjectAtk : ObjectG
 		static OnPropertyChangeDelegateWrapper[] listeners;
 		void delegate(void*, ObjectAtk) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(void*, ObjectAtk) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPropertyChangeDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -695,12 +695,12 @@ public class ObjectAtk : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPropertyChange(AtkObject* objectatkStruct, void* arg1, OnPropertyChangeDelegateWrapper wrapper)
 	{
 		wrapper.dlg(arg1, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPropertyChangeDestroy(OnPropertyChangeDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -711,13 +711,13 @@ public class ObjectAtk : ObjectG
 		static OnStateChangeDelegateWrapper[] listeners;
 		void delegate(string, bool, ObjectAtk) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(string, bool, ObjectAtk) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnStateChangeDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -753,12 +753,12 @@ public class ObjectAtk : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackStateChange(AtkObject* objectatkStruct, char* arg1, bool arg2, OnStateChangeDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(arg1), arg2, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackStateChangeDestroy(OnStateChangeDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -769,13 +769,13 @@ public class ObjectAtk : ObjectG
 		static OnVisibleDataChangedDelegateWrapper[] listeners;
 		void delegate(ObjectAtk) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(ObjectAtk) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnVisibleDataChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -806,12 +806,12 @@ public class ObjectAtk : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackVisibleDataChanged(AtkObject* objectatkStruct, OnVisibleDataChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackVisibleDataChangedDestroy(OnVisibleDataChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

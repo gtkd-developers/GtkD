@@ -24,8 +24,8 @@
 
 module gdk.EventSequence;
 
-private import gtkc.gdk;
-public  import gtkc.gdktypes;
+private import gdk.c.functions;
+public  import gdk.c.types;
 
 
 /** */

@@ -26,10 +26,10 @@ module gio.FileMonitor;
 
 private import gio.File;
 private import gio.FileIF;
+private import gio.c.functions;
+public  import gio.c.types;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -147,13 +147,13 @@ public class FileMonitor : ObjectG
 		static OnChangedDelegateWrapper[] listeners;
 		void delegate(FileIF, FileIF, GFileMonitorEvent, FileMonitor) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(FileIF, FileIF, GFileMonitorEvent, FileMonitor) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -215,12 +215,12 @@ public class FileMonitor : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackChanged(GFileMonitor* filemonitorStruct, GFile* file, GFile* otherFile, GFileMonitorEvent eventType, OnChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(File, FileIF)(file), ObjectG.getDObject!(File, FileIF)(otherFile), eventType, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

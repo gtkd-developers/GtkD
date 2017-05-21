@@ -26,8 +26,8 @@ module gsv.StyleSchemeChooserIF;
 
 private import gobject.ObjectG;
 private import gsv.SourceStyleScheme;
-private import gsvc.gsv;
-public  import gsvc.gsvtypes;
+private import gsv.c.functions;
+public  import gsv.c.types;
 
 
 /** */

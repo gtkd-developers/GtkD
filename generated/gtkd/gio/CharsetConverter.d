@@ -28,13 +28,13 @@ private import gio.ConverterIF;
 private import gio.ConverterT;
 private import gio.InitableIF;
 private import gio.InitableT;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -105,19 +105,19 @@ public class CharsetConverter : ObjectG, ConverterIF, InitableIF
 	public this(string toCharset, string fromCharset)
 	{
 		GError* err = null;
-		
+
 		auto p = g_charset_converter_new(Str.toStringz(toCharset), Str.toStringz(fromCharset), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GCharsetConverter*) p, true);
 	}
 

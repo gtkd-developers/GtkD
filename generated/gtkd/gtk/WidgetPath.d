@@ -29,8 +29,8 @@ private import glib.ListSG;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import gtkd.Loader;
 
 
@@ -137,12 +137,12 @@ public class WidgetPath
 	public this()
 	{
 		auto p = gtk_widget_path_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkWidgetPath*) p);
 	}
 
@@ -214,12 +214,12 @@ public class WidgetPath
 	public WidgetPath copy()
 	{
 		auto p = gtk_widget_path_copy(gtkWidgetPath);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(WidgetPath)(cast(GtkWidgetPath*) p, true);
 	}
 
@@ -423,12 +423,12 @@ public class WidgetPath
 	public WidgetPath iterGetSiblings(int pos)
 	{
 		auto p = gtk_widget_path_iter_get_siblings(gtkWidgetPath, pos);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(WidgetPath)(cast(GtkWidgetPath*) p);
 	}
 
@@ -574,12 +574,12 @@ public class WidgetPath
 	public ListSG iterListClasses(int pos)
 	{
 		auto p = gtk_widget_path_iter_list_classes(gtkWidgetPath, pos);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -602,12 +602,12 @@ public class WidgetPath
 	public ListSG iterListRegions(int pos)
 	{
 		auto p = gtk_widget_path_iter_list_regions(gtkWidgetPath, pos);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -757,12 +757,12 @@ public class WidgetPath
 	public WidgetPath doref()
 	{
 		auto p = gtk_widget_path_ref(gtkWidgetPath);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(WidgetPath)(cast(GtkWidgetPath*) p, true);
 	}
 
@@ -781,7 +781,7 @@ public class WidgetPath
 	public override string toString()
 	{
 		auto retStr = gtk_widget_path_to_string(gtkWidgetPath);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}

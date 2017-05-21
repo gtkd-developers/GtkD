@@ -29,8 +29,8 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Bin;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -114,12 +114,12 @@ public class HandleBox : Bin
 	public this()
 	{
 		auto p = gtk_handle_box_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkHandleBox*) p);
 	}
 
@@ -237,13 +237,13 @@ public class HandleBox : Bin
 		static OnChildAttachedDelegateWrapper[] listeners;
 		void delegate(Widget, HandleBox) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Widget, HandleBox) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnChildAttachedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -281,12 +281,12 @@ public class HandleBox : Bin
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackChildAttached(GtkHandleBox* handleboxStruct, GtkWidget* widget, OnChildAttachedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Widget)(widget), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackChildAttachedDestroy(OnChildAttachedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -297,13 +297,13 @@ public class HandleBox : Bin
 		static OnChildDetachedDelegateWrapper[] listeners;
 		void delegate(Widget, HandleBox) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Widget, HandleBox) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnChildDetachedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -341,12 +341,12 @@ public class HandleBox : Bin
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackChildDetached(GtkHandleBox* handleboxStruct, GtkWidget* widget, OnChildDetachedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Widget)(widget), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackChildDetachedDestroy(OnChildDetachedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

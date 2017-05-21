@@ -30,8 +30,8 @@ private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gtk.Widget;
 private import gtk.Window;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -107,12 +107,12 @@ public class OffscreenWindow : Window
 	public this()
 	{
 		auto p = gtk_offscreen_window_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkOffscreenWindow*) p);
 	}
 
@@ -129,12 +129,12 @@ public class OffscreenWindow : Window
 	public Pixbuf getPixbuf()
 	{
 		auto p = gtk_offscreen_window_get_pixbuf(gtkOffscreenWindow);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
 	}
 
@@ -151,12 +151,12 @@ public class OffscreenWindow : Window
 	public Surface getSurface()
 	{
 		auto p = gtk_offscreen_window_get_surface(gtkOffscreenWindow);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Surface(cast(cairo_surface_t*) p);
 	}
 }

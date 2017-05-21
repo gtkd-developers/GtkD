@@ -29,10 +29,10 @@ private import gio.FileDescriptorBasedT;
 private import gio.InputStream;
 private import gio.PollableInputStreamIF;
 private import gio.PollableInputStreamT;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -110,12 +110,12 @@ public class UnixInputStream : InputStream, FileDescriptorBasedIF, PollableInput
 	public this(int fd, bool closeFd)
 	{
 		auto p = g_unix_input_stream_new(fd, closeFd);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GUnixInputStream*) p, true);
 	}
 

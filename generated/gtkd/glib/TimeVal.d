@@ -25,8 +25,8 @@
 module glib.TimeVal;
 
 private import glib.Str;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 
 
 /**
@@ -109,7 +109,7 @@ public class TimeVal
 	public string toIso8601()
 	{
 		auto retStr = g_time_val_to_iso8601(gTimeVal);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -134,11 +134,11 @@ public class TimeVal
 	public static bool fromIso8601(string isoDate, out TimeVal time)
 	{
 		GTimeVal* outtime = gMalloc!GTimeVal();
-		
+
 		auto p = g_time_val_from_iso8601(Str.toStringz(isoDate), outtime) != 0;
-		
+
 		time = new TimeVal(outtime, true);
-		
+
 		return p;
 	}
 

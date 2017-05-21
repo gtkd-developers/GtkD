@@ -25,10 +25,10 @@
 module gio.SeekableT;
 
 public  import gio.Cancellable;
+public  import gio.c.functions;
+public  import gio.c.types;
 public  import glib.ErrorG;
 public  import glib.GException;
-public  import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -108,14 +108,14 @@ public template SeekableT(TStruct)
 	public bool seek(long offset, GSeekType type, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_seekable_seek(getSeekableStruct(), offset, type, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -151,14 +151,14 @@ public template SeekableT(TStruct)
 	public bool truncate(long offset, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_seekable_truncate(getSeekableStruct(), offset, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 }

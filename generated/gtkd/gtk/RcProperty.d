@@ -27,8 +27,8 @@ module gtk.RcProperty;
 private import glib.StringG;
 private import gobject.ParamSpec;
 private import gobject.Value;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**

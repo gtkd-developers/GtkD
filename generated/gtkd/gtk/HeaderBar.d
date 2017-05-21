@@ -29,8 +29,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gtk.Container;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -99,12 +99,12 @@ public class HeaderBar : Container
 	public this()
 	{
 		auto p = gtk_header_bar_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkHeaderBar*) p);
 	}
 
@@ -120,12 +120,12 @@ public class HeaderBar : Container
 	public Widget getCustomTitle()
 	{
 		auto p = gtk_header_bar_get_custom_title(gtkHeaderBar);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 

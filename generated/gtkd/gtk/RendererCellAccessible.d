@@ -29,8 +29,8 @@ private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gtk.CellAccessible;
 private import gtk.CellRenderer;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /** */
@@ -79,12 +79,12 @@ public class RendererCellAccessible : CellAccessible
 	public this(CellRenderer renderer)
 	{
 		auto p = gtk_renderer_cell_accessible_new((renderer is null) ? null : renderer.getCellRendererStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkRendererCellAccessible*) p, true);
 	}
 }

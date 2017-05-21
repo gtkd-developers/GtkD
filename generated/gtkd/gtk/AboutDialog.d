@@ -32,8 +32,8 @@ private import gobject.Signals;
 private import gtk.Dialog;
 private import gtk.Widget;
 private import gtk.Window;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -128,12 +128,12 @@ public class AboutDialog : Dialog
 	public this()
 	{
 		auto p = gtk_about_dialog_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkAboutDialog*) p);
 	}
 
@@ -259,12 +259,12 @@ public class AboutDialog : Dialog
 	public Pixbuf getLogo()
 	{
 		auto p = gtk_about_dialog_get_logo(gtkAboutDialog);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 
@@ -592,13 +592,13 @@ public class AboutDialog : Dialog
 		static OnActivateLinkDelegateWrapper[] listeners;
 		bool delegate(string, AboutDialog) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(string, AboutDialog) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnActivateLinkDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -637,12 +637,12 @@ public class AboutDialog : Dialog
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackActivateLink(GtkAboutDialog* aboutdialogStruct, char* uri, OnActivateLinkDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(Str.toString(uri), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackActivateLinkDestroy(OnActivateLinkDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

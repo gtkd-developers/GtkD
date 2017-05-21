@@ -38,8 +38,8 @@ private import gtk.CellLayoutT;
 private import gtk.TreeIter;
 private import gtk.TreeModel;
 private import gtk.TreeModelIF;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -158,15 +158,15 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 			// GtkWidget* gtk_combo_box_new (void);
 			p = cast(GtkComboBox*)gtk_combo_box_new();
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gtk_combo_box_new");
 		}
-		
+
 		this(p);
 	}
-	
+
 	/**
 	 * Creates a new GtkComboBox with the model initialized to model.
 	 * Params:
@@ -187,15 +187,15 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 			// GtkWidget* gtk_combo_box_new_with_model (GtkTreeModel *model);
 			p = cast(GtkComboBox*)gtk_combo_box_new_with_model((model is null) ? null : model.getTreeModelStruct());
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gtk_combo_box_new");
 		}
-		
+
 		this(p);
 	}
-	
+
 	/**
 	 * Creates a new empty GtkComboBox using area to layout cells.
 	 * Params:
@@ -216,12 +216,12 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 			// GtkWidget* gtk_combo_box_new_with_area (GtkCellArea* area);
 			p = cast(GtkComboBox*)gtk_combo_box_new_with_area((area is null) ? null : area.getCellAreaStruct());
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gtk_combo_box_new");
 		}
-		
+
 		this(p);
 	}
 
@@ -286,11 +286,11 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 	public bool getActiveIter(out TreeIter iter)
 	{
 		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
-		
+
 		auto p = gtk_combo_box_get_active_iter(gtkComboBox, outiter) != 0;
-		
+
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
-		
+
 		return p;
 	}
 
@@ -398,12 +398,12 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 	public TreeModelIF getModel()
 	{
 		auto p = gtk_combo_box_get_model(gtkComboBox);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TreeModel, TreeModelIF)(cast(GtkTreeModel*) p);
 	}
 
@@ -421,12 +421,12 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 	public ObjectAtk getPopupAccessible()
 	{
 		auto p = gtk_combo_box_get_popup_accessible(gtkComboBox);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
 	}
 
@@ -782,13 +782,13 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 		static OnChangedDelegateWrapper[] listeners;
 		void delegate(ComboBox) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(ComboBox) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -825,12 +825,12 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackChanged(GtkComboBox* comboboxStruct, OnChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -841,13 +841,13 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 		static OnFormatEntryTextDelegateWrapper[] listeners;
 		string delegate(string, ComboBox) dlg;
 		gulong handlerId;
-		
+
 		this(string delegate(string, ComboBox) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnFormatEntryTextDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -916,12 +916,12 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static string callBackFormatEntryText(GtkComboBox* comboboxStruct, char* path, OnFormatEntryTextDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(Str.toString(path), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackFormatEntryTextDestroy(OnFormatEntryTextDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -932,13 +932,13 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 		static OnMoveActiveDelegateWrapper[] listeners;
 		void delegate(GtkScrollType, ComboBox) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(GtkScrollType, ComboBox) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMoveActiveDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -975,12 +975,12 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackMoveActive(GtkComboBox* comboboxStruct, GtkScrollType scrollType, OnMoveActiveDelegateWrapper wrapper)
 	{
 		wrapper.dlg(scrollType, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMoveActiveDestroy(OnMoveActiveDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -991,13 +991,13 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 		static OnPopdownDelegateWrapper[] listeners;
 		bool delegate(ComboBox) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(ComboBox) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPopdownDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1033,12 +1033,12 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackPopdown(GtkComboBox* comboboxStruct, OnPopdownDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPopdownDestroy(OnPopdownDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1049,13 +1049,13 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 		static OnPopupDelegateWrapper[] listeners;
 		void delegate(ComboBox) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(ComboBox) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPopupDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1091,12 +1091,12 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPopup(GtkComboBox* comboboxStruct, OnPopupDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPopupDestroy(OnPopupDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

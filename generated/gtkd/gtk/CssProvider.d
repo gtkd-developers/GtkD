@@ -34,8 +34,8 @@ private import gobject.Signals;
 private import gtk.CssSection;
 private import gtk.StyleProviderIF;
 private import gtk.StyleProviderT;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -118,12 +118,12 @@ public class CssProvider : ObjectG, StyleProviderIF
 	public this()
 	{
 		auto p = gtk_css_provider_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkCssProvider*) p, true);
 	}
 
@@ -137,12 +137,12 @@ public class CssProvider : ObjectG, StyleProviderIF
 	public static CssProvider getDefault()
 	{
 		auto p = gtk_css_provider_get_default();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(CssProvider)(cast(GtkCssProvider*) p);
 	}
 
@@ -160,12 +160,12 @@ public class CssProvider : ObjectG, StyleProviderIF
 	public static CssProvider getNamed(string name, string variant)
 	{
 		auto p = gtk_css_provider_get_named(Str.toStringz(name), Str.toStringz(variant));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(CssProvider)(cast(GtkCssProvider*) p);
 	}
 
@@ -189,14 +189,14 @@ public class CssProvider : ObjectG, StyleProviderIF
 	public bool loadFromData(string data)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_css_provider_load_from_data(gtkCssProvider, Str.toStringz(data), cast(ptrdiff_t)data.length, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -217,14 +217,14 @@ public class CssProvider : ObjectG, StyleProviderIF
 	public bool loadFromFile(FileIF file)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_css_provider_load_from_file(gtkCssProvider, (file is null) ? null : file.getFileStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -245,14 +245,14 @@ public class CssProvider : ObjectG, StyleProviderIF
 	public bool loadFromPath(string path)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_css_provider_load_from_path(gtkCssProvider, Str.toStringz(path), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -289,7 +289,7 @@ public class CssProvider : ObjectG, StyleProviderIF
 	public override string toString()
 	{
 		auto retStr = gtk_css_provider_to_string(gtkCssProvider);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -299,13 +299,13 @@ public class CssProvider : ObjectG, StyleProviderIF
 		static OnParsingErrorDelegateWrapper[] listeners;
 		void delegate(CssSection, ErrorG, CssProvider) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(CssSection, ErrorG, CssProvider) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnParsingErrorDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -349,12 +349,12 @@ public class CssProvider : ObjectG, StyleProviderIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackParsingError(GtkCssProvider* cssproviderStruct, GtkCssSection* section, GError* error, OnParsingErrorDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(CssSection)(section), new ErrorG(error), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackParsingErrorDestroy(OnParsingErrorDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

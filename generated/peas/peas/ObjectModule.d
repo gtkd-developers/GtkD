@@ -31,8 +31,8 @@ private import gobject.ObjectG;
 private import gobject.TypeModule;
 private import gobject.TypePluginIF;
 private import gobject.TypePluginT;
-private import peasc.peas;
-public  import peasc.peastypes;
+private import peas.c.functions;
+public  import peas.c.types;
 
 
 /**
@@ -95,12 +95,12 @@ public class ObjectModule : TypeModule
 	public this(string moduleName, string path, bool resident)
 	{
 		auto p = peas_object_module_new(Str.toStringz(moduleName), Str.toStringz(path), resident);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(PeasObjectModule*) p, true);
 	}
 
@@ -119,12 +119,12 @@ public class ObjectModule : TypeModule
 	public this(string moduleName, string symbol)
 	{
 		auto p = peas_object_module_new_embedded(Str.toStringz(moduleName), Str.toStringz(symbol));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_embedded");
 		}
-		
+
 		this(cast(PeasObjectModule*) p, true);
 	}
 
@@ -146,12 +146,12 @@ public class ObjectModule : TypeModule
 	public this(string moduleName, string path, bool resident, bool localLinkage)
 	{
 		auto p = peas_object_module_new_full(Str.toStringz(moduleName), Str.toStringz(path), resident, localLinkage);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_full");
 		}
-		
+
 		this(cast(PeasObjectModule*) p, true);
 	}
 
@@ -171,12 +171,12 @@ public class ObjectModule : TypeModule
 	public ObjectG createObject(GType iface, GParameter[] parameters)
 	{
 		auto p = peas_object_module_create_object(peasObjectModule, iface, cast(uint)parameters.length, parameters.ptr);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p, true);
 	}
 
@@ -188,12 +188,12 @@ public class ObjectModule : TypeModule
 	public Module getLibrary()
 	{
 		auto p = peas_object_module_get_library(peasObjectModule);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Module(cast(GModule*) p);
 	}
 

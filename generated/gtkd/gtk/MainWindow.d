@@ -28,8 +28,8 @@ private import gdk.Event;
 private import gtk.Main;
 private import gtk.Widget;
 private import gtk.Window;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /** */
@@ -41,7 +41,7 @@ public  import gtkc.gtktypes;
 public class MainWindow : Window
 {
 	private static int countTotalMainWindows = 0;
-	
+
 	/**
 	 * Creates a new MainWindow with a title
 	 */
@@ -52,7 +52,7 @@ public class MainWindow : Window
 		//printf("MainWindows.this count = %d\n", countTotalMainWindows);
 		addOnDelete(&windowDelete);
 	}
-	
+
 	/**
 	 * Executed when the user tries to close the window
 	 * Returns: true to refuse to close the window
@@ -68,7 +68,7 @@ public class MainWindow : Window
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Allows the application to close and decide if it can exit
 	 * Params:

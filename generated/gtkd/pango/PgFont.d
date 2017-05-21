@@ -25,14 +25,14 @@
 module pango.PgFont;
 
 private import gobject.ObjectG;
-private import gtkc.pango;
-public  import gtkc.pangotypes;
 private import pango.PgCoverage;
 private import pango.PgEngineShape;
 private import pango.PgFontDescription;
 private import pango.PgFontMap;
 private import pango.PgFontMetrics;
 private import pango.PgLanguage;
+private import pango.c.functions;
+public  import pango.c.types;
 
 
 /**
@@ -105,7 +105,7 @@ public class PgFont : ObjectG
 		{
 			descsArray[i] = descs[i].getPgFontDescriptionStruct();
 		}
-		
+
 		pango_font_descriptions_free(descsArray.ptr, cast(int)descs.length);
 	}
 
@@ -119,12 +119,12 @@ public class PgFont : ObjectG
 	public PgFontDescription describe()
 	{
 		auto p = pango_font_describe(pangoFont);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) p, true);
 	}
 
@@ -140,12 +140,12 @@ public class PgFont : ObjectG
 	public PgFontDescription describeWithAbsoluteSize()
 	{
 		auto p = pango_font_describe_with_absolute_size(pangoFont);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) p, true);
 	}
 
@@ -162,12 +162,12 @@ public class PgFont : ObjectG
 	public PgEngineShape findShaper(PgLanguage language, uint ch)
 	{
 		auto p = pango_font_find_shaper(pangoFont, (language is null) ? null : language.getPgLanguageStruct(), ch);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgEngineShape)(cast(PangoEngineShape*) p);
 	}
 
@@ -183,12 +183,12 @@ public class PgFont : ObjectG
 	public PgCoverage getCoverage(PgLanguage language)
 	{
 		auto p = pango_font_get_coverage(pangoFont, (language is null) ? null : language.getPgLanguageStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgCoverage)(cast(PangoCoverage*) p, true);
 	}
 
@@ -211,12 +211,12 @@ public class PgFont : ObjectG
 	public PgFontMap getFontMap()
 	{
 		auto p = pango_font_get_font_map(pangoFont);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgFontMap)(cast(PangoFontMap*) p);
 	}
 
@@ -263,12 +263,12 @@ public class PgFont : ObjectG
 	public PgFontMetrics getMetrics(PgLanguage language)
 	{
 		auto p = pango_font_get_metrics(pangoFont, (language is null) ? null : language.getPgLanguageStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgFontMetrics)(cast(PangoFontMetrics*) p, true);
 	}
 }

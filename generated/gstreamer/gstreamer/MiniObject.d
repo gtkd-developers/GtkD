@@ -25,8 +25,8 @@
 module gstreamer.MiniObject;
 
 private import gobject.ObjectG;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 private import gtkd.Loader;
 
 
@@ -103,12 +103,12 @@ public class MiniObject
 	public MiniObject copy()
 	{
 		auto p = gst_mini_object_copy(gstMiniObject);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(MiniObject)(cast(GstMiniObject*) p, true);
 	}
 
@@ -188,12 +188,12 @@ public class MiniObject
 	public MiniObject makeWritable()
 	{
 		auto p = gst_mini_object_make_writable(gstMiniObject);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(MiniObject)(cast(GstMiniObject*) p, true);
 	}
 
@@ -212,12 +212,12 @@ public class MiniObject
 	public MiniObject doref()
 	{
 		auto p = gst_mini_object_ref(gstMiniObject);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(MiniObject)(cast(GstMiniObject*) p, true);
 	}
 
@@ -328,11 +328,11 @@ public class MiniObject
 	public static bool replace(ref MiniObject olddata, MiniObject newdata)
 	{
 		GstMiniObject* outolddata = olddata.getMiniObjectStruct();
-		
+
 		auto p = gst_mini_object_replace(&outolddata, (newdata is null) ? null : newdata.getMiniObjectStruct()) != 0;
-		
+
 		olddata = ObjectG.getDObject!(MiniObject)(outolddata);
-		
+
 		return p;
 	}
 
@@ -349,16 +349,16 @@ public class MiniObject
 	public static MiniObject steal(ref MiniObject olddata)
 	{
 		GstMiniObject* outolddata = olddata.getMiniObjectStruct();
-		
+
 		auto p = gst_mini_object_steal(&outolddata);
-		
+
 		olddata = ObjectG.getDObject!(MiniObject)(outolddata);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(MiniObject)(cast(GstMiniObject*) p);
 	}
 
@@ -380,11 +380,11 @@ public class MiniObject
 	public static bool take(ref MiniObject olddata, MiniObject newdata)
 	{
 		GstMiniObject* outolddata = olddata.getMiniObjectStruct();
-		
+
 		auto p = gst_mini_object_take(&outolddata, (newdata is null) ? null : newdata.getMiniObjectStruct()) != 0;
-		
+
 		olddata = ObjectG.getDObject!(MiniObject)(outolddata);
-		
+
 		return p;
 	}
 }

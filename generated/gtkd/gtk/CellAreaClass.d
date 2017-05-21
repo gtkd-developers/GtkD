@@ -27,8 +27,8 @@ module gtk.CellAreaClass;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.ParamSpec;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /** */
@@ -76,12 +76,12 @@ public class CellAreaClass
 	public ParamSpec findCellProperty(string propertyName)
 	{
 		auto p = gtk_cell_area_class_find_cell_property(gtkCellAreaClass, Str.toStringz(propertyName));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
 	}
 
@@ -111,20 +111,20 @@ public class CellAreaClass
 	public ParamSpec[] listCellProperties()
 	{
 		uint nProperties;
-		
+
 		auto p = gtk_cell_area_class_list_cell_properties(gtkCellAreaClass, &nProperties);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		ParamSpec[] arr = new ParamSpec[nProperties];
 		for(int i = 0; i < nProperties; i++)
 		{
 			arr[i] = ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p[i]);
 		}
-		
+
 		return arr;
 	}
 }

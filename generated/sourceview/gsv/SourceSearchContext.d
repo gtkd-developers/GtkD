@@ -34,8 +34,8 @@ private import gobject.ObjectG;
 private import gsv.SourceBuffer;
 private import gsv.SourceSearchSettings;
 private import gsv.SourceStyle;
-private import gsvc.gsv;
-public  import gsvc.gsvtypes;
+private import gsv.c.functions;
+public  import gsv.c.types;
 private import gtk.TextIter;
 
 
@@ -100,12 +100,12 @@ public class SourceSearchContext : ObjectG
 	public this(SourceBuffer buffer, SourceSearchSettings settings)
 	{
 		auto p = gtk_source_search_context_new((buffer is null) ? null : buffer.getSourceBufferStruct(), (settings is null) ? null : settings.getSourceSearchSettingsStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkSourceSearchContext*) p, true);
 	}
 
@@ -129,12 +129,12 @@ public class SourceSearchContext : ObjectG
 	{
 		GtkTextIter* outmatchStart = gMalloc!GtkTextIter();
 		GtkTextIter* outmatchEnd = gMalloc!GtkTextIter();
-		
+
 		auto p = gtk_source_search_context_backward(gtkSourceSearchContext, (iter is null) ? null : iter.getTextIterStruct(), outmatchStart, outmatchEnd) != 0;
-		
+
 		matchStart = ObjectG.getDObject!(TextIter)(outmatchStart, true);
 		matchEnd = ObjectG.getDObject!(TextIter)(outmatchEnd, true);
-		
+
 		return p;
 	}
 
@@ -169,13 +169,13 @@ public class SourceSearchContext : ObjectG
 		GtkTextIter* outmatchStart = gMalloc!GtkTextIter();
 		GtkTextIter* outmatchEnd = gMalloc!GtkTextIter();
 		int outhasWrappedAround;
-		
+
 		auto p = gtk_source_search_context_backward2(gtkSourceSearchContext, (iter is null) ? null : iter.getTextIterStruct(), outmatchStart, outmatchEnd, &outhasWrappedAround) != 0;
-		
+
 		matchStart = ObjectG.getDObject!(TextIter)(outmatchStart, true);
 		matchEnd = ObjectG.getDObject!(TextIter)(outmatchEnd, true);
 		hasWrappedAround = (outhasWrappedAround == 1);
-		
+
 		return p;
 	}
 
@@ -226,17 +226,17 @@ public class SourceSearchContext : ObjectG
 		GtkTextIter* outmatchStart = gMalloc!GtkTextIter();
 		GtkTextIter* outmatchEnd = gMalloc!GtkTextIter();
 		GError* err = null;
-		
+
 		auto p = gtk_source_search_context_backward_finish(gtkSourceSearchContext, (result is null) ? null : result.getAsyncResultStruct(), outmatchStart, outmatchEnd, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		matchStart = ObjectG.getDObject!(TextIter)(outmatchStart, true);
 		matchEnd = ObjectG.getDObject!(TextIter)(outmatchEnd, true);
-		
+
 		return p;
 	}
 
@@ -266,18 +266,18 @@ public class SourceSearchContext : ObjectG
 		GtkTextIter* outmatchEnd = gMalloc!GtkTextIter();
 		int outhasWrappedAround;
 		GError* err = null;
-		
+
 		auto p = gtk_source_search_context_backward_finish2(gtkSourceSearchContext, (result is null) ? null : result.getAsyncResultStruct(), outmatchStart, outmatchEnd, &outhasWrappedAround, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		matchStart = ObjectG.getDObject!(TextIter)(outmatchStart, true);
 		matchEnd = ObjectG.getDObject!(TextIter)(outmatchEnd, true);
 		hasWrappedAround = (outhasWrappedAround == 1);
-		
+
 		return p;
 	}
 
@@ -301,12 +301,12 @@ public class SourceSearchContext : ObjectG
 	{
 		GtkTextIter* outmatchStart = gMalloc!GtkTextIter();
 		GtkTextIter* outmatchEnd = gMalloc!GtkTextIter();
-		
+
 		auto p = gtk_source_search_context_forward(gtkSourceSearchContext, (iter is null) ? null : iter.getTextIterStruct(), outmatchStart, outmatchEnd) != 0;
-		
+
 		matchStart = ObjectG.getDObject!(TextIter)(outmatchStart, true);
 		matchEnd = ObjectG.getDObject!(TextIter)(outmatchEnd, true);
-		
+
 		return p;
 	}
 
@@ -341,13 +341,13 @@ public class SourceSearchContext : ObjectG
 		GtkTextIter* outmatchStart = gMalloc!GtkTextIter();
 		GtkTextIter* outmatchEnd = gMalloc!GtkTextIter();
 		int outhasWrappedAround;
-		
+
 		auto p = gtk_source_search_context_forward2(gtkSourceSearchContext, (iter is null) ? null : iter.getTextIterStruct(), outmatchStart, outmatchEnd, &outhasWrappedAround) != 0;
-		
+
 		matchStart = ObjectG.getDObject!(TextIter)(outmatchStart, true);
 		matchEnd = ObjectG.getDObject!(TextIter)(outmatchEnd, true);
 		hasWrappedAround = (outhasWrappedAround == 1);
-		
+
 		return p;
 	}
 
@@ -398,17 +398,17 @@ public class SourceSearchContext : ObjectG
 		GtkTextIter* outmatchStart = gMalloc!GtkTextIter();
 		GtkTextIter* outmatchEnd = gMalloc!GtkTextIter();
 		GError* err = null;
-		
+
 		auto p = gtk_source_search_context_forward_finish(gtkSourceSearchContext, (result is null) ? null : result.getAsyncResultStruct(), outmatchStart, outmatchEnd, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		matchStart = ObjectG.getDObject!(TextIter)(outmatchStart, true);
 		matchEnd = ObjectG.getDObject!(TextIter)(outmatchEnd, true);
-		
+
 		return p;
 	}
 
@@ -438,18 +438,18 @@ public class SourceSearchContext : ObjectG
 		GtkTextIter* outmatchEnd = gMalloc!GtkTextIter();
 		int outhasWrappedAround;
 		GError* err = null;
-		
+
 		auto p = gtk_source_search_context_forward_finish2(gtkSourceSearchContext, (result is null) ? null : result.getAsyncResultStruct(), outmatchStart, outmatchEnd, &outhasWrappedAround, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		matchStart = ObjectG.getDObject!(TextIter)(outmatchStart, true);
 		matchEnd = ObjectG.getDObject!(TextIter)(outmatchEnd, true);
 		hasWrappedAround = (outhasWrappedAround == 1);
-		
+
 		return p;
 	}
 
@@ -461,12 +461,12 @@ public class SourceSearchContext : ObjectG
 	public SourceBuffer getBuffer()
 	{
 		auto p = gtk_source_search_context_get_buffer(gtkSourceSearchContext);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SourceBuffer)(cast(GtkSourceBuffer*) p);
 	}
 
@@ -488,12 +488,12 @@ public class SourceSearchContext : ObjectG
 	public SourceStyle getMatchStyle()
 	{
 		auto p = gtk_source_search_context_get_match_style(gtkSourceSearchContext);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SourceStyle)(cast(GtkSourceStyle*) p);
 	}
 
@@ -546,12 +546,12 @@ public class SourceSearchContext : ObjectG
 	public ErrorG getRegexError()
 	{
 		auto p = gtk_source_search_context_get_regex_error(gtkSourceSearchContext);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ErrorG(cast(GError*) p, true);
 	}
 
@@ -563,12 +563,12 @@ public class SourceSearchContext : ObjectG
 	public SourceSearchSettings getSettings()
 	{
 		auto p = gtk_source_search_context_get_settings(gtkSourceSearchContext);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SourceSearchSettings)(cast(GtkSourceSearchSettings*) p);
 	}
 
@@ -597,14 +597,14 @@ public class SourceSearchContext : ObjectG
 	public bool replace(TextIter matchStart, TextIter matchEnd, string replace, int replaceLength)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_source_search_context_replace(gtkSourceSearchContext, (matchStart is null) ? null : matchStart.getTextIterStruct(), (matchEnd is null) ? null : matchEnd.getTextIterStruct(), Str.toStringz(replace), replaceLength, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -634,14 +634,14 @@ public class SourceSearchContext : ObjectG
 	public bool replace2(TextIter matchStart, TextIter matchEnd, string replace, int replaceLength)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_source_search_context_replace2(gtkSourceSearchContext, (matchStart is null) ? null : matchStart.getTextIterStruct(), (matchEnd is null) ? null : matchEnd.getTextIterStruct(), Str.toStringz(replace), replaceLength, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -666,14 +666,14 @@ public class SourceSearchContext : ObjectG
 	public uint replaceAll(string replace, int replaceLength)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_source_search_context_replace_all(gtkSourceSearchContext, Str.toStringz(replace), replaceLength, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 

@@ -29,8 +29,8 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Bin;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -88,12 +88,12 @@ public class ListBoxRow : Bin
 	public this()
 	{
 		auto p = gtk_list_box_row_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkListBoxRow*) p);
 	}
 
@@ -147,12 +147,12 @@ public class ListBoxRow : Bin
 	public Widget getHeader()
 	{
 		auto p = gtk_list_box_row_get_header(gtkListBoxRow);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -240,13 +240,13 @@ public class ListBoxRow : Bin
 		static OnActivateDelegateWrapper[] listeners;
 		void delegate(ListBoxRow) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(ListBoxRow) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnActivateDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -274,12 +274,12 @@ public class ListBoxRow : Bin
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackActivate(GtkListBoxRow* listboxrowStruct, OnActivateDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackActivateDestroy(OnActivateDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

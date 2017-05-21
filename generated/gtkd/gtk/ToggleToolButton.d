@@ -30,8 +30,8 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.ToolButton;
 private import gtk.ToolItem;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -109,12 +109,12 @@ public class ToggleToolButton : ToolButton
 	public this()
 	{
 		auto p = gtk_toggle_tool_button_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkToggleToolButton*) p);
 	}
 
@@ -139,12 +139,12 @@ public class ToggleToolButton : ToolButton
 	public this(string stockId)
 	{
 		auto p = gtk_toggle_tool_button_new_from_stock(Str.toStringz(stockId));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_stock");
 		}
-		
+
 		this(cast(GtkToggleToolButton*) p);
 	}
 
@@ -181,13 +181,13 @@ public class ToggleToolButton : ToolButton
 		static OnToggledDelegateWrapper[] listeners;
 		void delegate(ToggleToolButton) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(ToggleToolButton) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnToggledDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -217,12 +217,12 @@ public class ToggleToolButton : ToolButton
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackToggled(GtkToggleToolButton* toggletoolbuttonStruct, OnToggledDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackToggledDestroy(OnToggledDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

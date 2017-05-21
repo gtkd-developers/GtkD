@@ -34,8 +34,8 @@ private import gobject.Value;
 private import gtk.Adjustment;
 private import gtk.Widget;
 private import gtk.WidgetPath;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -495,12 +495,12 @@ public class Container : Widget
 	public ListG getChildren()
 	{
 		auto p = gtk_container_get_children(gtkContainer);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -525,11 +525,11 @@ public class Container : Widget
 	public bool getFocusChain(out ListG focusableWidgets)
 	{
 		GList* outfocusableWidgets = null;
-		
+
 		auto p = gtk_container_get_focus_chain(gtkContainer, &outfocusableWidgets) != 0;
-		
+
 		focusableWidgets = new ListG(outfocusableWidgets);
-		
+
 		return p;
 	}
 
@@ -547,12 +547,12 @@ public class Container : Widget
 	public Widget getFocusChild()
 	{
 		auto p = gtk_container_get_focus_child(gtkContainer);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -566,12 +566,12 @@ public class Container : Widget
 	public Adjustment getFocusHadjustment()
 	{
 		auto p = gtk_container_get_focus_hadjustment(gtkContainer);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
 	}
 
@@ -585,12 +585,12 @@ public class Container : Widget
 	public Adjustment getFocusVadjustment()
 	{
 		auto p = gtk_container_get_focus_vadjustment(gtkContainer);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
 	}
 
@@ -606,12 +606,12 @@ public class Container : Widget
 	public WidgetPath getPathForChild(Widget child)
 	{
 		auto p = gtk_container_get_path_for_child(gtkContainer, (child is null) ? null : child.getWidgetStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(WidgetPath)(cast(GtkWidgetPath*) p, true);
 	}
 
@@ -826,13 +826,13 @@ public class Container : Widget
 		static OnAddDelegateWrapper[] listeners;
 		void delegate(Widget, Container) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Widget, Container) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnAddDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -860,12 +860,12 @@ public class Container : Widget
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackAdd(GtkContainer* containerStruct, GtkWidget* object, OnAddDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Widget)(object), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackAddDestroy(OnAddDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -876,13 +876,13 @@ public class Container : Widget
 		static OnCheckResizeDelegateWrapper[] listeners;
 		void delegate(Container) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Container) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCheckResizeDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -910,12 +910,12 @@ public class Container : Widget
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackCheckResize(GtkContainer* containerStruct, OnCheckResizeDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackCheckResizeDestroy(OnCheckResizeDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -926,13 +926,13 @@ public class Container : Widget
 		static OnRemoveDelegateWrapper[] listeners;
 		void delegate(Widget, Container) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Widget, Container) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnRemoveDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -960,12 +960,12 @@ public class Container : Widget
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackRemove(GtkContainer* containerStruct, GtkWidget* object, OnRemoveDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Widget)(object), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackRemoveDestroy(OnRemoveDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -976,13 +976,13 @@ public class Container : Widget
 		static OnSetFocusChildDelegateWrapper[] listeners;
 		void delegate(Widget, Container) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Widget, Container) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnSetFocusChildDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1010,12 +1010,12 @@ public class Container : Widget
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackSetFocusChild(GtkContainer* containerStruct, GtkWidget* object, OnSetFocusChildDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Widget)(object), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackSetFocusChildDestroy(OnSetFocusChildDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

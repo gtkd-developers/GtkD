@@ -31,8 +31,8 @@ private import gtk.Menu;
 private import gtk.Popover;
 private import gtk.ToggleButton;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -175,12 +175,12 @@ public class MenuButton : ToggleButton
 	public this()
 	{
 		auto p = gtk_menu_button_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkMenuButton*) p);
 	}
 
@@ -194,12 +194,12 @@ public class MenuButton : ToggleButton
 	public Widget getAlignWidget()
 	{
 		auto p = gtk_menu_button_get_align_widget(gtkMenuButton);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -225,12 +225,12 @@ public class MenuButton : ToggleButton
 	public MenuModel getMenuModel()
 	{
 		auto p = gtk_menu_button_get_menu_model(gtkMenuButton);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(MenuModel)(cast(GMenuModel*) p);
 	}
 
@@ -246,12 +246,12 @@ public class MenuButton : ToggleButton
 	public Popover getPopover()
 	{
 		auto p = gtk_menu_button_get_popover(gtkMenuButton);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Popover)(cast(GtkPopover*) p);
 	}
 
@@ -267,12 +267,12 @@ public class MenuButton : ToggleButton
 	public Menu getPopup()
 	{
 		auto p = gtk_menu_button_get_popup(gtkMenuButton);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Menu)(cast(GtkMenu*) p);
 	}
 

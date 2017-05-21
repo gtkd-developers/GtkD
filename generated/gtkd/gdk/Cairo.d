@@ -31,10 +31,10 @@ private import gdk.Color;
 private import gdk.DrawingContext;
 private import gdk.RGBA;
 private import gdk.Window;
+private import gdk.c.functions;
+public  import gdk.c.types;
 private import gdkpixbuf.Pixbuf;
 private import gobject.ObjectG;
-private import gtkc.gdk;
-public  import gtkc.gdktypes;
 
 
 /** */
@@ -67,12 +67,12 @@ public  import gtkc.gdktypes;
 public Context createContext(Window window)
 {
 	auto p = gdk_cairo_create((window is null) ? null : window.getWindowStruct());
-	
+
 	if(p is null)
 	{
 		return null;
 	}
-	
+
 	return new Context(cast(cairo_t*) p);
 }
 
@@ -172,12 +172,12 @@ public void region(Context cr, Region region)
 public Region regionCreateFromSurface(Surface surface)
 {
 	auto p = gdk_cairo_region_create_from_surface((surface is null) ? null : surface.getSurfaceStruct());
-	
+
 	if(p is null)
 	{
 		return null;
 	}
-	
+
 	return new Region(cast(cairo_region_t*) p);
 }
 
@@ -269,12 +269,12 @@ public void setSourceWindow(Context cr, Window window, double x, double y)
 public Surface surfaceCreateFromPixbuf(Pixbuf pixbuf, int scale, Window forWindow)
 {
 	auto p = gdk_cairo_surface_create_from_pixbuf((pixbuf is null) ? null : pixbuf.getPixbufStruct(), scale, (forWindow is null) ? null : forWindow.getWindowStruct());
-	
+
 	if(p is null)
 	{
 		return null;
 	}
-	
+
 	return new Surface(cast(cairo_surface_t*) p);
 }
 
@@ -292,11 +292,11 @@ public Surface surfaceCreateFromPixbuf(Pixbuf pixbuf, int scale, Window forWindo
 public DrawingContext getDrawingContext(Context cr)
 {
 	auto p = gdk_cairo_get_drawing_context((cr is null) ? null : cr.getContextStruct());
-	
+
 	if(p is null)
 	{
 		return null;
 	}
-	
+
 	return ObjectG.getDObject!(DrawingContext)(cast(GdkDrawingContext*) p);
 }

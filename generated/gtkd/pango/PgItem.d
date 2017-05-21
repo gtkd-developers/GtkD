@@ -26,9 +26,9 @@ module pango.PgItem;
 
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-private import gtkc.pango;
-public  import gtkc.pangotypes;
 private import gtkd.Loader;
+private import pango.c.functions;
+public  import pango.c.types;
 
 
 /**
@@ -87,12 +87,12 @@ public class PgItem
 	public this()
 	{
 		auto p = pango_item_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(PangoItem*) p);
 	}
 
@@ -106,12 +106,12 @@ public class PgItem
 	public PgItem copy()
 	{
 		auto p = pango_item_copy(pangoItem);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgItem)(cast(PangoItem*) p, true);
 	}
 
@@ -146,12 +146,12 @@ public class PgItem
 	public PgItem split(int splitIndex, int splitOffset)
 	{
 		auto p = pango_item_split(pangoItem, splitIndex, splitOffset);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgItem)(cast(PangoItem*) p, true);
 	}
 }

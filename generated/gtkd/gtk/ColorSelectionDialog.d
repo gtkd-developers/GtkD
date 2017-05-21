@@ -30,8 +30,8 @@ private import gobject.ObjectG;
 private import gtk.ColorSelection;
 private import gtk.Dialog;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /** */
@@ -79,12 +79,12 @@ public class ColorSelectionDialog : Dialog
 	public ColorSelection getColorSelection()
 	{
 		auto p = gtk_color_selection_dialog_get_color_selection(gtkColorSelectionDialog);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ColorSelection)(cast(GtkColorSelection*) p);
 	}
 
@@ -110,12 +110,12 @@ public class ColorSelectionDialog : Dialog
 	public this(string title)
 	{
 		auto p = gtk_color_selection_dialog_new(Str.toStringz(title));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkColorSelectionDialog*) p);
 	}
 }

@@ -25,10 +25,10 @@
 module atk.TableCellIF;
 
 private import atk.ObjectAtk;
+private import atk.c.functions;
+public  import atk.c.types;
 private import glib.PtrArray;
 private import gobject.ObjectG;
-private import gtkc.atk;
-public  import gtkc.atktypes;
 
 
 /**

@@ -32,8 +32,8 @@ private import gtk.FontChooserIF;
 private import gtk.FontChooserT;
 private import gtk.Widget;
 private import gtk.Window;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -106,12 +106,12 @@ public class FontChooserDialog : Dialog, FontChooserIF
 	public this(string title, Window parent)
 	{
 		auto p = gtk_font_chooser_dialog_new(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkFontChooserDialog*) p);
 	}
 }

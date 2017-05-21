@@ -26,11 +26,11 @@ module gio.ThreadedSocketService;
 
 private import gio.SocketConnection;
 private import gio.SocketService;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -111,12 +111,12 @@ public class ThreadedSocketService : SocketService
 	public this(int maxThreads)
 	{
 		auto p = g_threaded_socket_service_new(maxThreads);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GThreadedSocketService*) p, true);
 	}
 
@@ -125,13 +125,13 @@ public class ThreadedSocketService : SocketService
 		static OnRunDelegateWrapper[] listeners;
 		bool delegate(SocketConnection, ObjectG, ThreadedSocketService) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(SocketConnection, ObjectG, ThreadedSocketService) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnRunDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -170,12 +170,12 @@ public class ThreadedSocketService : SocketService
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackRun(GThreadedSocketService* threadedsocketserviceStruct, GSocketConnection* connection, GObject* sourceObject, OnRunDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(ObjectG.getDObject!(SocketConnection)(connection), ObjectG.getDObject!(ObjectG)(sourceObject), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackRunDestroy(OnRunDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

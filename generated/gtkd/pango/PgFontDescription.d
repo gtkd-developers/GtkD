@@ -27,9 +27,9 @@ module pango.PgFontDescription;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.pango;
-public  import gtkc.pangotypes;
 private import gtkd.Loader;
+private import pango.c.functions;
+public  import pango.c.types;
 
 
 /**
@@ -106,12 +106,12 @@ public class PgFontDescription
 	public this()
 	{
 		auto p = pango_font_description_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(PangoFontDescription*) p);
 	}
 
@@ -150,12 +150,12 @@ public class PgFontDescription
 	public PgFontDescription copy()
 	{
 		auto p = pango_font_description_copy(pangoFontDescription);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) p, true);
 	}
 
@@ -173,12 +173,12 @@ public class PgFontDescription
 	public PgFontDescription copyStatic()
 	{
 		auto p = pango_font_description_copy_static(pangoFontDescription);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) p, true);
 	}
 
@@ -532,7 +532,7 @@ public class PgFontDescription
 	public string toFilename()
 	{
 		auto retStr = pango_font_description_to_filename(pangoFontDescription);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -549,7 +549,7 @@ public class PgFontDescription
 	public override string toString()
 	{
 		auto retStr = pango_font_description_to_string(pangoFontDescription);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -588,12 +588,12 @@ public class PgFontDescription
 	public static PgFontDescription fromString(string str)
 	{
 		auto p = pango_font_description_from_string(Str.toStringz(str));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) p, true);
 	}
 }

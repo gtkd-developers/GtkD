@@ -25,9 +25,9 @@
 module pango.PgAttributeSize;
 
 private import glib.ConstructionException;
-private import gtkc.pango;
-public  import gtkc.pangotypes;
 private import pango.PgAttribute;
+private import pango.c.functions;
+public  import pango.c.types;
 
 
 /**
@@ -83,17 +83,17 @@ public class PgAttributeSize : PgAttribute
 	public this(int size, bool absolute)
 	{
 		PangoAttribute* p;
-		
+
 		if ( absolute )
 			p = pango_attr_size_new_absolute(size);
 		else
 			p = pango_attr_size_new(size);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(PangoAttrSize*) p);
 	}
 

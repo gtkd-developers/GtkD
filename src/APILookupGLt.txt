@@ -24,9 +24,9 @@ wrap: glgtk
 file: GtkGLExt-3.0.gir
 
 addAliases: start
-	public import gtkc.glibtypes;
-	public import gtkglc.glgdktypes;
-	public import gtkc.gtktypes;
+	public import glib.c.types;
+	public import glgdk.c.types;
+	public import gtk.c.types;
 addAliases: end
 
 struct: GLCapability

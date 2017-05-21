@@ -26,11 +26,11 @@ file: Gdk-3.0.gir
 file: GdkX11-3.0.gir
 
 addAliases: start
-	public import gtkc.glibtypes;
-	public import gtkc.gobjecttypes;
-	public import gtkc.giotypes;
-	public import gtkc.pangotypes;
-	public import gtkc.gdkpixbuftypes;
+	public import glib.c.types;
+	public import gobject.c.types;
+	public import gio.c.types;
+	public import pango.c.types;
+	public import gdkpixbuf.c.types;
 addAliases: end
 
 addStructs: start

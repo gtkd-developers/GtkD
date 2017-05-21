@@ -26,11 +26,11 @@ module gio.NetworkService;
 
 private import gio.SocketConnectableIF;
 private import gio.SocketConnectableT;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -107,12 +107,12 @@ public class NetworkService : ObjectG, SocketConnectableIF
 	public this(string service, string protocol, string domain)
 	{
 		auto p = g_network_service_new(Str.toStringz(service), Str.toStringz(protocol), Str.toStringz(domain));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GNetworkService*) p, true);
 	}
 

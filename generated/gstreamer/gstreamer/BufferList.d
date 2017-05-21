@@ -27,8 +27,8 @@ module gstreamer.BufferList;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gstreamer.Buffer;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /**
@@ -91,12 +91,12 @@ public class BufferList
 	public this()
 	{
 		auto p = gst_buffer_list_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GstBufferList*) p);
 	}
 
@@ -118,12 +118,12 @@ public class BufferList
 	public this(uint size)
 	{
 		auto p = gst_buffer_list_new_sized(size);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_sized");
 		}
-		
+
 		this(cast(GstBufferList*) p);
 	}
 
@@ -138,12 +138,12 @@ public class BufferList
 	public BufferList copyDeep()
 	{
 		auto p = gst_buffer_list_copy_deep(gstBufferList);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(BufferList)(cast(GstBufferList*) p, true);
 	}
 
@@ -179,12 +179,12 @@ public class BufferList
 	public Buffer get(uint idx)
 	{
 		auto p = gst_buffer_list_get(gstBufferList, idx);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p);
 	}
 

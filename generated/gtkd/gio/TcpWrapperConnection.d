@@ -28,10 +28,10 @@ private import gio.IOStream;
 private import gio.Socket;
 private import gio.SocketConnection;
 private import gio.TcpConnection;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -98,12 +98,12 @@ public class TcpWrapperConnection : TcpConnection
 	public this(IOStream baseIoStream, Socket socket)
 	{
 		auto p = g_tcp_wrapper_connection_new((baseIoStream is null) ? null : baseIoStream.getIOStreamStruct(), (socket is null) ? null : socket.getSocketStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GTcpWrapperConnection*) p, true);
 	}
 
@@ -115,12 +115,12 @@ public class TcpWrapperConnection : TcpConnection
 	public IOStream getBaseIoStream()
 	{
 		auto p = g_tcp_wrapper_connection_get_base_io_stream(gTcpWrapperConnection);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(IOStream)(cast(GIOStream*) p);
 	}
 }

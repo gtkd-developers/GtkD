@@ -31,8 +31,8 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Widget;
 private import gtk.Window;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -112,12 +112,12 @@ public class Plug : Window
 	public this(ulong socketId)
 	{
 		auto p = gtk_plug_new(socketId);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkPlug*) p);
 	}
 
@@ -137,12 +137,12 @@ public class Plug : Window
 	public this(Display display, ulong socketId)
 	{
 		auto p = gtk_plug_new_for_display((display is null) ? null : display.getDisplayStruct(), socketId);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_for_display");
 		}
-		
+
 		this(cast(GtkPlug*) p);
 	}
 
@@ -209,12 +209,12 @@ public class Plug : Window
 	public GdkWin getSocketWindow()
 	{
 		auto p = gtk_plug_get_socket_window(gtkPlug);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(GdkWin)(cast(GdkWindow*) p);
 	}
 
@@ -223,13 +223,13 @@ public class Plug : Window
 		static OnEmbeddedDelegateWrapper[] listeners;
 		void delegate(Plug) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Plug) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnEmbeddedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -259,12 +259,12 @@ public class Plug : Window
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackEmbedded(GtkPlug* plugStruct, OnEmbeddedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackEmbeddedDestroy(OnEmbeddedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

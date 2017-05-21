@@ -28,8 +28,8 @@ private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gtk.Box;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -115,12 +115,12 @@ public class VBox : Box
 	public this(bool homogeneous, int spacing)
 	{
 		auto p = gtk_vbox_new(homogeneous, spacing);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkVBox*) p);
 	}
 }

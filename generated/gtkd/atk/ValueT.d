@@ -25,13 +25,13 @@
 module atk.ValueT;
 
 public  import atk.Range;
+public  import atk.c.functions;
+public  import atk.c.types;
 public  import glib.ListSG;
 public  import glib.Str;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
 public  import gobject.Value;
-public  import gtkc.atk;
-public  import gtkc.atktypes;
 public  import std.algorithm;
 
 
@@ -200,9 +200,9 @@ public template ValueT(TStruct)
 	public void getCurrentValue(out Value value)
 	{
 		GValue* outvalue = gMalloc!GValue();
-		
+
 		atk_value_get_current_value(getValueStruct(), outvalue);
-		
+
 		value = ObjectG.getDObject!(Value)(outvalue, true);
 	}
 
@@ -233,9 +233,9 @@ public template ValueT(TStruct)
 	public void getMaximumValue(out Value value)
 	{
 		GValue* outvalue = gMalloc!GValue();
-		
+
 		atk_value_get_maximum_value(getValueStruct(), outvalue);
-		
+
 		value = ObjectG.getDObject!(Value)(outvalue, true);
 	}
 
@@ -254,9 +254,9 @@ public template ValueT(TStruct)
 	public void getMinimumIncrement(out Value value)
 	{
 		GValue* outvalue = gMalloc!GValue();
-		
+
 		atk_value_get_minimum_increment(getValueStruct(), outvalue);
-		
+
 		value = ObjectG.getDObject!(Value)(outvalue, true);
 	}
 
@@ -271,9 +271,9 @@ public template ValueT(TStruct)
 	public void getMinimumValue(out Value value)
 	{
 		GValue* outvalue = gMalloc!GValue();
-		
+
 		atk_value_get_minimum_value(getValueStruct(), outvalue);
-		
+
 		value = ObjectG.getDObject!(Value)(outvalue, true);
 	}
 
@@ -289,12 +289,12 @@ public template ValueT(TStruct)
 	public Range getRange()
 	{
 		auto p = atk_value_get_range(getValueStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Range)(cast(AtkRange*) p, true);
 	}
 
@@ -311,12 +311,12 @@ public template ValueT(TStruct)
 	public ListSG getSubRanges()
 	{
 		auto p = atk_value_get_sub_ranges(getValueStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p, true);
 	}
 
@@ -335,9 +335,9 @@ public template ValueT(TStruct)
 	public void getValueAndText(out double value, out string text)
 	{
 		char* outtext = null;
-		
+
 		atk_value_get_value_and_text(getValueStruct(), &value, &outtext);
-		
+
 		text = Str.toString(outtext);
 	}
 
@@ -387,13 +387,13 @@ public template ValueT(TStruct)
 		static OnValueChangedDelegateWrapper[] listeners;
 		void delegate(double, string, ValueIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(double, string, ValueIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnValueChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -441,12 +441,12 @@ public template ValueT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackValueChanged(AtkValue* valueStruct, double value, char* text, OnValueChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(value, Str.toString(text), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackValueChangedDestroy(OnValueChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

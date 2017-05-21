@@ -27,8 +27,8 @@ module gstreamer.CapsFeatures;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 private import gtkd.Loader;
 
 
@@ -103,12 +103,12 @@ public class CapsFeatures
 	public static newAny()
 	{
 		auto p = gst_caps_features_new_any();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_any");
 		}
-		
+
 		return new CapsFeatures(cast(GstCapsFeatures*)p);
 	}
 
@@ -135,12 +135,12 @@ public class CapsFeatures
 	public this()
 	{
 		auto p = gst_caps_features_new_empty();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_empty");
 		}
-		
+
 		this(cast(GstCapsFeatures*) p);
 	}
 
@@ -162,12 +162,12 @@ public class CapsFeatures
 	public this(GQuark feature1, void* varargs)
 	{
 		auto p = gst_caps_features_new_id_valist(feature1, varargs);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_id_valist");
 		}
-		
+
 		this(cast(GstCapsFeatures*) p);
 	}
 
@@ -189,12 +189,12 @@ public class CapsFeatures
 	public this(string feature1, void* varargs)
 	{
 		auto p = gst_caps_features_new_valist(Str.toStringz(feature1), varargs);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_valist");
 		}
-		
+
 		this(cast(GstCapsFeatures*) p);
 	}
 
@@ -266,12 +266,12 @@ public class CapsFeatures
 	public CapsFeatures copy()
 	{
 		auto p = gst_caps_features_copy(gstCapsFeatures);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(CapsFeatures)(cast(GstCapsFeatures*) p, true);
 	}
 
@@ -419,7 +419,7 @@ public class CapsFeatures
 	public override string toString()
 	{
 		auto retStr = gst_caps_features_to_string(gstCapsFeatures);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -441,12 +441,12 @@ public class CapsFeatures
 	public static CapsFeatures fromString(string features)
 	{
 		auto p = gst_caps_features_from_string(Str.toStringz(features));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(CapsFeatures)(cast(GstCapsFeatures*) p, true);
 	}
 }

@@ -45,8 +45,8 @@ private import gtk.TreePath;
 private import gtk.TreeSelection;
 private import gtk.TreeViewColumn;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -173,7 +173,7 @@ public class TreeView : Container, ScrollableIF
 	{
 		return expandRow(model.getPath(iter), openAll);
 	}
-	
+
 	/**
 	 * gets the first selected iter or null if no rows are selected
 	 */
@@ -190,12 +190,12 @@ public class TreeView : Container, ScrollableIF
 		}
 		return iter;
 	}
-	
+
 	/** */
 	TreeIter[] getSelectedIters()
 	{
 		TreeIter[] iters;
-		
+
 		TreeIter iter = new TreeIter();
 		TreeSelection selection = getSelection();
 		TreeModelIF model = getModel();
@@ -208,10 +208,10 @@ public class TreeView : Container, ScrollableIF
 				iter = new TreeIter();
 			}
 		}
-		
+
 		return iters;
 	}
-	
+
 	/**
 	 * Inserts a column and sets it's attributes
 	 * Params:
@@ -257,12 +257,12 @@ public class TreeView : Container, ScrollableIF
 	public this()
 	{
 		auto p = gtk_tree_view_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkTreeView*) p);
 	}
 
@@ -279,12 +279,12 @@ public class TreeView : Container, ScrollableIF
 	public this(TreeModelIF model)
 	{
 		auto p = gtk_tree_view_new_with_model((model is null) ? null : model.getTreeModelStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_with_model");
 		}
-		
+
 		this(cast(GtkTreeView*) p);
 	}
 
@@ -447,12 +447,12 @@ public class TreeView : Container, ScrollableIF
 	public Surface createRowDragIcon(TreePath path)
 	{
 		auto p = gtk_tree_view_create_row_drag_icon(gtkTreeView, (path is null) ? null : path.getTreePathStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Surface(cast(cairo_surface_t*) p);
 	}
 
@@ -474,7 +474,7 @@ public class TreeView : Container, ScrollableIF
 		{
 			targetsArray[i] = *(targets[i].getTargetEntryStruct());
 		}
-		
+
 		gtk_tree_view_enable_model_drag_dest(gtkTreeView, targetsArray.ptr, cast(int)targets.length, actions);
 	}
 
@@ -496,7 +496,7 @@ public class TreeView : Container, ScrollableIF
 		{
 			targetsArray[i] = *(targets[i].getTargetEntryStruct());
 		}
-		
+
 		gtk_tree_view_enable_model_drag_source(gtkTreeView, startButtonMask, targetsArray.ptr, cast(int)targets.length, actions);
 	}
 
@@ -580,12 +580,12 @@ public class TreeView : Container, ScrollableIF
 	public Window getBinWindow()
 	{
 		auto p = gtk_tree_view_get_bin_window(gtkTreeView);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 
@@ -622,12 +622,12 @@ public class TreeView : Container, ScrollableIF
 	public TreeViewColumn getColumn(int n)
 	{
 		auto p = gtk_tree_view_get_column(gtkTreeView, n);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TreeViewColumn)(cast(GtkTreeViewColumn*) p);
 	}
 
@@ -640,12 +640,12 @@ public class TreeView : Container, ScrollableIF
 	public ListG getColumns()
 	{
 		auto p = gtk_tree_view_get_columns(gtkTreeView);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -667,9 +667,9 @@ public class TreeView : Container, ScrollableIF
 	{
 		GtkTreePath* outpath = null;
 		GtkTreeViewColumn* outfocusColumn = null;
-		
+
 		gtk_tree_view_get_cursor(gtkTreeView, &outpath, &outfocusColumn);
-		
+
 		path = ObjectG.getDObject!(TreePath)(outpath);
 		focusColumn = ObjectG.getDObject!(TreeViewColumn)(outfocusColumn);
 	}
@@ -694,11 +694,11 @@ public class TreeView : Container, ScrollableIF
 	public bool getDestRowAtPos(int dragX, int dragY, out TreePath path, out GtkTreeViewDropPosition pos)
 	{
 		GtkTreePath* outpath = null;
-		
+
 		auto p = gtk_tree_view_get_dest_row_at_pos(gtkTreeView, dragX, dragY, &outpath, &pos) != 0;
-		
+
 		path = ObjectG.getDObject!(TreePath)(outpath);
-		
+
 		return p;
 	}
 
@@ -712,9 +712,9 @@ public class TreeView : Container, ScrollableIF
 	public void getDragDestRow(out TreePath path, out GtkTreeViewDropPosition pos)
 	{
 		GtkTreePath* outpath = null;
-		
+
 		gtk_tree_view_get_drag_dest_row(gtkTreeView, &outpath, &pos);
-		
+
 		path = ObjectG.getDObject!(TreePath)(outpath);
 	}
 
@@ -751,12 +751,12 @@ public class TreeView : Container, ScrollableIF
 	public TreeViewColumn getExpanderColumn()
 	{
 		auto p = gtk_tree_view_get_expander_column(gtkTreeView);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TreeViewColumn)(cast(GtkTreeViewColumn*) p);
 	}
 
@@ -855,12 +855,12 @@ public class TreeView : Container, ScrollableIF
 	public TreeModelIF getModel()
 	{
 		auto p = gtk_tree_view_get_model(gtkTreeView);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TreeModel, TreeModelIF)(cast(GtkTreeModel*) p);
 	}
 
@@ -913,12 +913,12 @@ public class TreeView : Container, ScrollableIF
 	{
 		GtkTreePath* outpath = null;
 		GtkTreeViewColumn* outcolumn = null;
-		
+
 		auto p = gtk_tree_view_get_path_at_pos(gtkTreeView, x, y, &outpath, &outcolumn, &cellX, &cellY) != 0;
-		
+
 		path = ObjectG.getDObject!(TreePath)(outpath);
 		column = ObjectG.getDObject!(TreeViewColumn)(outcolumn);
-		
+
 		return p;
 	}
 
@@ -991,12 +991,12 @@ public class TreeView : Container, ScrollableIF
 	public Entry getSearchEntry()
 	{
 		auto p = gtk_tree_view_get_search_entry(gtkTreeView);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Entry)(cast(GtkEntry*) p);
 	}
 
@@ -1030,12 +1030,12 @@ public class TreeView : Container, ScrollableIF
 	public TreeSelection getSelection()
 	{
 		auto p = gtk_tree_view_get_selection(gtkTreeView);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TreeSelection)(cast(GtkTreeSelection*) p);
 	}
 
@@ -1097,13 +1097,13 @@ public class TreeView : Container, ScrollableIF
 		GtkTreeModel* outmodel = null;
 		GtkTreePath* outpath = null;
 		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
-		
+
 		auto p = gtk_tree_view_get_tooltip_context(gtkTreeView, &x, &y, keyboardTip, &outmodel, &outpath, outiter) != 0;
-		
+
 		model = ObjectG.getDObject!(TreeModel, TreeModelIF)(outmodel);
 		path = ObjectG.getDObject!(TreePath)(outpath);
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
-		
+
 		return p;
 	}
 
@@ -1126,12 +1126,12 @@ public class TreeView : Container, ScrollableIF
 	{
 		GtkTreePath* outstartPath = null;
 		GtkTreePath* outendPath = null;
-		
+
 		auto p = gtk_tree_view_get_visible_range(gtkTreeView, &outstartPath, &outendPath) != 0;
-		
+
 		startPath = ObjectG.getDObject!(TreePath)(outstartPath);
 		endPath = ObjectG.getDObject!(TreePath)(outendPath);
-		
+
 		return p;
 	}
 
@@ -1226,12 +1226,12 @@ public class TreeView : Container, ScrollableIF
 	{
 		GtkTreePath* outpath = null;
 		GtkTreeViewColumn* outcolumn = null;
-		
+
 		auto p = gtk_tree_view_is_blank_at_pos(gtkTreeView, x, y, &outpath, &outcolumn, &cellX, &cellY) != 0;
-		
+
 		path = ObjectG.getDObject!(TreePath)(outpath);
 		column = ObjectG.getDObject!(TreeViewColumn)(outcolumn);
-		
+
 		return p;
 	}
 
@@ -1892,13 +1892,13 @@ public class TreeView : Container, ScrollableIF
 		static OnColumnsChangedDelegateWrapper[] listeners;
 		void delegate(TreeView) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TreeView) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnColumnsChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1928,12 +1928,12 @@ public class TreeView : Container, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackColumnsChanged(GtkTreeView* treeviewStruct, OnColumnsChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackColumnsChangedDestroy(OnColumnsChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1944,13 +1944,13 @@ public class TreeView : Container, ScrollableIF
 		static OnCursorChangedDelegateWrapper[] listeners;
 		void delegate(TreeView) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TreeView) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCursorChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1980,12 +1980,12 @@ public class TreeView : Container, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackCursorChanged(GtkTreeView* treeviewStruct, OnCursorChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackCursorChangedDestroy(OnCursorChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1996,13 +1996,13 @@ public class TreeView : Container, ScrollableIF
 		static OnExpandCollapseCursorRowDelegateWrapper[] listeners;
 		bool delegate(bool, bool, bool, TreeView) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(bool, bool, bool, TreeView) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnExpandCollapseCursorRowDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2030,12 +2030,12 @@ public class TreeView : Container, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackExpandCollapseCursorRow(GtkTreeView* treeviewStruct, bool object, bool p0, bool p1, OnExpandCollapseCursorRowDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(object, p0, p1, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackExpandCollapseCursorRowDestroy(OnExpandCollapseCursorRowDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2046,13 +2046,13 @@ public class TreeView : Container, ScrollableIF
 		static OnMoveCursorDelegateWrapper[] listeners;
 		bool delegate(GtkMovementStep, int, TreeView) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(GtkMovementStep, int, TreeView) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMoveCursorDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2103,12 +2103,12 @@ public class TreeView : Container, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackMoveCursor(GtkTreeView* treeviewStruct, GtkMovementStep step, int direction, OnMoveCursorDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(step, direction, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMoveCursorDestroy(OnMoveCursorDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2119,13 +2119,13 @@ public class TreeView : Container, ScrollableIF
 		static OnRowActivatedDelegateWrapper[] listeners;
 		void delegate(TreePath, TreeViewColumn, TreeView) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TreePath, TreeViewColumn, TreeView) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnRowActivatedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2169,12 +2169,12 @@ public class TreeView : Container, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackRowActivated(GtkTreeView* treeviewStruct, GtkTreePath* path, GtkTreeViewColumn* column, OnRowActivatedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(TreePath)(path), ObjectG.getDObject!(TreeViewColumn)(column), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackRowActivatedDestroy(OnRowActivatedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2185,13 +2185,13 @@ public class TreeView : Container, ScrollableIF
 		static OnRowCollapsedDelegateWrapper[] listeners;
 		void delegate(TreeIter, TreePath, TreeView) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TreeIter, TreePath, TreeView) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnRowCollapsedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2225,12 +2225,12 @@ public class TreeView : Container, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackRowCollapsed(GtkTreeView* treeviewStruct, GtkTreeIter* iter, GtkTreePath* path, OnRowCollapsedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(TreeIter)(iter), ObjectG.getDObject!(TreePath)(path), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackRowCollapsedDestroy(OnRowCollapsedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2241,13 +2241,13 @@ public class TreeView : Container, ScrollableIF
 		static OnRowExpandedDelegateWrapper[] listeners;
 		void delegate(TreeIter, TreePath, TreeView) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TreeIter, TreePath, TreeView) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnRowExpandedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2281,12 +2281,12 @@ public class TreeView : Container, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackRowExpanded(GtkTreeView* treeviewStruct, GtkTreeIter* iter, GtkTreePath* path, OnRowExpandedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(TreeIter)(iter), ObjectG.getDObject!(TreePath)(path), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackRowExpandedDestroy(OnRowExpandedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2297,13 +2297,13 @@ public class TreeView : Container, ScrollableIF
 		static OnSelectAllDelegateWrapper[] listeners;
 		bool delegate(TreeView) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(TreeView) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnSelectAllDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2331,12 +2331,12 @@ public class TreeView : Container, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackSelectAll(GtkTreeView* treeviewStruct, OnSelectAllDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackSelectAllDestroy(OnSelectAllDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2347,13 +2347,13 @@ public class TreeView : Container, ScrollableIF
 		static OnSelectCursorParentDelegateWrapper[] listeners;
 		bool delegate(TreeView) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(TreeView) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnSelectCursorParentDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2381,12 +2381,12 @@ public class TreeView : Container, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackSelectCursorParent(GtkTreeView* treeviewStruct, OnSelectCursorParentDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackSelectCursorParentDestroy(OnSelectCursorParentDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2397,13 +2397,13 @@ public class TreeView : Container, ScrollableIF
 		static OnSelectCursorRowDelegateWrapper[] listeners;
 		bool delegate(bool, TreeView) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(bool, TreeView) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnSelectCursorRowDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2431,12 +2431,12 @@ public class TreeView : Container, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackSelectCursorRow(GtkTreeView* treeviewStruct, bool object, OnSelectCursorRowDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(object, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackSelectCursorRowDestroy(OnSelectCursorRowDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2447,13 +2447,13 @@ public class TreeView : Container, ScrollableIF
 		static OnStartInteractiveSearchDelegateWrapper[] listeners;
 		bool delegate(TreeView) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(TreeView) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnStartInteractiveSearchDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2481,12 +2481,12 @@ public class TreeView : Container, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackStartInteractiveSearch(GtkTreeView* treeviewStruct, OnStartInteractiveSearchDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackStartInteractiveSearchDestroy(OnStartInteractiveSearchDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2497,13 +2497,13 @@ public class TreeView : Container, ScrollableIF
 		static OnTestCollapseRowDelegateWrapper[] listeners;
 		bool delegate(TreeIter, TreePath, TreeView) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(TreeIter, TreePath, TreeView) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnTestCollapseRowDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2540,12 +2540,12 @@ public class TreeView : Container, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackTestCollapseRow(GtkTreeView* treeviewStruct, GtkTreeIter* iter, GtkTreePath* path, OnTestCollapseRowDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(ObjectG.getDObject!(TreeIter)(iter), ObjectG.getDObject!(TreePath)(path), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackTestCollapseRowDestroy(OnTestCollapseRowDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2556,13 +2556,13 @@ public class TreeView : Container, ScrollableIF
 		static OnTestExpandRowDelegateWrapper[] listeners;
 		bool delegate(TreeIter, TreePath, TreeView) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(TreeIter, TreePath, TreeView) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnTestExpandRowDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2599,12 +2599,12 @@ public class TreeView : Container, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackTestExpandRow(GtkTreeView* treeviewStruct, GtkTreeIter* iter, GtkTreePath* path, OnTestExpandRowDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(ObjectG.getDObject!(TreeIter)(iter), ObjectG.getDObject!(TreePath)(path), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackTestExpandRowDestroy(OnTestExpandRowDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2615,13 +2615,13 @@ public class TreeView : Container, ScrollableIF
 		static OnToggleCursorRowDelegateWrapper[] listeners;
 		bool delegate(TreeView) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(TreeView) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnToggleCursorRowDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2649,12 +2649,12 @@ public class TreeView : Container, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackToggleCursorRow(GtkTreeView* treeviewStruct, OnToggleCursorRowDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackToggleCursorRowDestroy(OnToggleCursorRowDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2665,13 +2665,13 @@ public class TreeView : Container, ScrollableIF
 		static OnUnselectAllDelegateWrapper[] listeners;
 		bool delegate(TreeView) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(TreeView) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnUnselectAllDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2699,12 +2699,12 @@ public class TreeView : Container, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackUnselectAll(GtkTreeView* treeviewStruct, OnUnselectAllDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackUnselectAllDestroy(OnUnselectAllDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

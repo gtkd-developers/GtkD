@@ -30,8 +30,8 @@ private import gobject.ObjectG;
 private import gstreamer.Caps;
 private import gstreamer.PluginFeature;
 private import gstreamer.TypeFind;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /**
@@ -141,12 +141,12 @@ public class TypeFindFactory : PluginFeature
 	public static ListG getList()
 	{
 		auto p = gst_type_find_factory_get_list();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -170,12 +170,12 @@ public class TypeFindFactory : PluginFeature
 	public Caps getCaps()
 	{
 		auto p = gst_type_find_factory_get_caps(gstTypeFindFactory);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
 	}
 

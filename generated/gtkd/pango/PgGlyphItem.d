@@ -27,10 +27,10 @@ module pango.PgGlyphItem;
 private import glib.ListSG;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.pango;
-public  import gtkc.pangotypes;
 private import gtkd.Loader;
 private import pango.PgAttributeList;
+private import pango.c.functions;
+public  import pango.c.types;
 
 
 /**
@@ -114,12 +114,12 @@ public class PgGlyphItem
 	public ListSG applyAttrs(string text, PgAttributeList list)
 	{
 		auto p = pango_glyph_item_apply_attrs(pangoGlyphItem, Str.toStringz(text), (list is null) ? null : list.getPgAttributeListStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p, true);
 	}
 
@@ -135,12 +135,12 @@ public class PgGlyphItem
 	public PgGlyphItem copy()
 	{
 		auto p = pango_glyph_item_copy(pangoGlyphItem);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgGlyphItem)(cast(PangoGlyphItem*) p, true);
 	}
 
@@ -226,12 +226,12 @@ public class PgGlyphItem
 	public PgGlyphItem split(string text, int splitIndex)
 	{
 		auto p = pango_glyph_item_split(pangoGlyphItem, Str.toStringz(text), splitIndex);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgGlyphItem)(cast(PangoGlyphItem*) p, true);
 	}
 }

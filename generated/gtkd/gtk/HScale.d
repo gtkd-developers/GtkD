@@ -29,8 +29,8 @@ private import gobject.ObjectG;
 private import gtk.Adjustment;
 private import gtk.Scale;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -99,12 +99,12 @@ public class HScale : Scale
 	public this(Adjustment adjustment)
 	{
 		auto p = gtk_hscale_new((adjustment is null) ? null : adjustment.getAdjustmentStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkHScale*) p);
 	}
 
@@ -132,12 +132,12 @@ public class HScale : Scale
 	public this(double min, double max, double step)
 	{
 		auto p = gtk_hscale_new_with_range(min, max, step);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_with_range");
 		}
-		
+
 		this(cast(GtkHScale*) p);
 	}
 }

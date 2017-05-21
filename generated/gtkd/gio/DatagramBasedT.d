@@ -25,11 +25,11 @@
 module gio.DatagramBasedT;
 
 public  import gio.Cancellable;
+public  import gio.c.functions;
+public  import gio.c.types;
 public  import glib.ErrorG;
 public  import glib.GException;
 public  import glib.Source;
-public  import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -167,14 +167,14 @@ public template DatagramBasedT(TStruct)
 	public bool conditionWait(GIOCondition condition, long timeout, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_datagram_based_condition_wait(getDatagramBasedStruct(), condition, timeout, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -205,12 +205,12 @@ public template DatagramBasedT(TStruct)
 	public Source createSource(GIOCondition condition, Cancellable cancellable)
 	{
 		auto p = g_datagram_based_create_source(getDatagramBasedStruct(), condition, (cancellable is null) ? null : cancellable.getCancellableStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Source(cast(GSource*) p, true);
 	}
 
@@ -287,14 +287,14 @@ public template DatagramBasedT(TStruct)
 	public int receiveMessages(GInputMessage[] messages, int flags, long timeout, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_datagram_based_receive_messages(getDatagramBasedStruct(), messages.ptr, cast(uint)messages.length, flags, timeout, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -361,14 +361,14 @@ public template DatagramBasedT(TStruct)
 	public int sendMessages(GOutputMessage[] messages, int flags, long timeout, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_datagram_based_send_messages(getDatagramBasedStruct(), messages.ptr, cast(uint)messages.length, flags, timeout, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 }

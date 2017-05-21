@@ -38,8 +38,8 @@ private import gtk.Application;
 private import gtk.Bin;
 private import gtk.Widget;
 private import gtk.WindowGroup;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -143,7 +143,7 @@ public class Window : Bin
 		this(GtkWindowType.TOPLEVEL);
 		setTitle(title);
 	}
-	
+
 	/**
 	 * Move the window to an absolute position.
 	 * just calls move(int, int).
@@ -195,12 +195,12 @@ public class Window : Bin
 	public this(GtkWindowType type)
 	{
 		auto p = gtk_window_new(type);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkWindow*) p);
 	}
 
@@ -215,12 +215,12 @@ public class Window : Bin
 	public static ListG getDefaultIconList()
 	{
 		auto p = gtk_window_get_default_icon_list();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -253,12 +253,12 @@ public class Window : Bin
 	public static ListG listToplevels()
 	{
 		auto p = gtk_window_list_toplevels();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -314,14 +314,14 @@ public class Window : Bin
 	public static bool setDefaultIconFromFile(string filename)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_window_set_default_icon_from_file(Str.toStringz(filename), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -564,12 +564,12 @@ public class Window : Bin
 	public Application getApplication()
 	{
 		auto p = gtk_window_get_application(gtkWindow);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Application)(cast(GtkApplication*) p);
 	}
 
@@ -585,12 +585,12 @@ public class Window : Bin
 	public Widget getAttachedTo()
 	{
 		auto p = gtk_window_get_attached_to(gtkWindow);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -632,12 +632,12 @@ public class Window : Bin
 	public Widget getDefaultWidget()
 	{
 		auto p = gtk_window_get_default_widget(gtkWindow);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -678,12 +678,12 @@ public class Window : Bin
 	public Widget getFocus()
 	{
 		auto p = gtk_window_get_focus(gtkWindow);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -735,12 +735,12 @@ public class Window : Bin
 	public WindowGroup getGroup()
 	{
 		auto p = gtk_window_get_group(gtkWindow);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(WindowGroup)(cast(GtkWindowGroup*) p);
 	}
 
@@ -782,12 +782,12 @@ public class Window : Bin
 	public Pixbuf getIcon()
 	{
 		auto p = gtk_window_get_icon(gtkWindow);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 
@@ -801,12 +801,12 @@ public class Window : Bin
 	public ListG getIconList()
 	{
 		auto p = gtk_window_get_icon_list(gtkWindow);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -975,12 +975,12 @@ public class Window : Bin
 	public override Screen getScreen()
 	{
 		auto p = gtk_window_get_screen(gtkWindow);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
 	}
 
@@ -1114,12 +1114,12 @@ public class Window : Bin
 	public Widget getTitlebar()
 	{
 		auto p = gtk_window_get_titlebar(gtkWindow);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -1133,12 +1133,12 @@ public class Window : Bin
 	public Window getTransientFor()
 	{
 		auto p = gtk_window_get_transient_for(gtkWindow);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Window)(cast(GtkWindow*) p);
 	}
 
@@ -1972,14 +1972,14 @@ public class Window : Bin
 	public bool setIconFromFile(string filename)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_window_set_icon_from_file(gtkWindow, Str.toStringz(filename), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -2470,13 +2470,13 @@ public class Window : Bin
 		static OnActivateDefaultDelegateWrapper[] listeners;
 		void delegate(Window) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Window) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnActivateDefaultDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2509,12 +2509,12 @@ public class Window : Bin
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackActivateDefault(GtkWindow* windowStruct, OnActivateDefaultDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackActivateDefaultDestroy(OnActivateDefaultDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2525,13 +2525,13 @@ public class Window : Bin
 		static OnActivateFocusDelegateWrapper[] listeners;
 		void delegate(Window) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Window) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnActivateFocusDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2564,12 +2564,12 @@ public class Window : Bin
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackActivateFocus(GtkWindow* windowStruct, OnActivateFocusDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackActivateFocusDestroy(OnActivateFocusDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2580,13 +2580,13 @@ public class Window : Bin
 		static OnEnableDebuggingDelegateWrapper[] listeners;
 		bool delegate(bool, Window) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(bool, Window) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnEnableDebuggingDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2628,12 +2628,12 @@ public class Window : Bin
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackEnableDebugging(GtkWindow* windowStruct, bool toggle, OnEnableDebuggingDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(toggle, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackEnableDebuggingDestroy(OnEnableDebuggingDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2644,13 +2644,13 @@ public class Window : Bin
 		static OnKeysChangedDelegateWrapper[] listeners;
 		void delegate(Window) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Window) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnKeysChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2681,12 +2681,12 @@ public class Window : Bin
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackKeysChanged(GtkWindow* windowStruct, OnKeysChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackKeysChangedDestroy(OnKeysChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2697,13 +2697,13 @@ public class Window : Bin
 		static OnSetFocusDelegateWrapper[] listeners;
 		void delegate(Widget, Window) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Widget, Window) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnSetFocusDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2731,12 +2731,12 @@ public class Window : Bin
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackSetFocus(GtkWindow* windowStruct, GtkWidget* object, OnSetFocusDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Widget)(object), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackSetFocusDestroy(OnSetFocusDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2773,14 +2773,14 @@ public class Window : Bin
 	public static bool showUriOnWindow(Window parent, string uri, uint timestamp)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_show_uri_on_window((parent is null) ? null : parent.getWindowStruct(), Str.toStringz(uri), timestamp, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 }

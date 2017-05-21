@@ -33,8 +33,8 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.RecentFilter;
 private import gtk.RecentInfo;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 

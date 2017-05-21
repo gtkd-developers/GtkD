@@ -26,8 +26,8 @@ module gstreamer.AtomicQueue;
 
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 private import gtkd.Loader;
 
 
@@ -91,12 +91,12 @@ public class AtomicQueue
 	public this(uint initialSize)
 	{
 		auto p = gst_atomic_queue_new(initialSize);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GstAtomicQueue*) p);
 	}
 

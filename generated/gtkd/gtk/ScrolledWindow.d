@@ -30,8 +30,8 @@ private import gobject.Signals;
 private import gtk.Adjustment;
 private import gtk.Bin;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -143,14 +143,14 @@ public class ScrolledWindow : Bin
 	{
 		this(null, null);
 	}
-	
+
 	/** */
 	public this(Widget widget)
 	{
 		this();
 		add(widget);
 	}
-	
+
 	/**
 	 * Creates a new Scrolled window and set the policy type
 	 * Params:
@@ -191,12 +191,12 @@ public class ScrolledWindow : Bin
 	public this(Adjustment hadjustment, Adjustment vadjustment)
 	{
 		auto p = gtk_scrolled_window_new((hadjustment is null) ? null : hadjustment.getAdjustmentStruct(), (vadjustment is null) ? null : vadjustment.getAdjustmentStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkScrolledWindow*) p);
 	}
 
@@ -252,12 +252,12 @@ public class ScrolledWindow : Bin
 	public Adjustment getHadjustment()
 	{
 		auto p = gtk_scrolled_window_get_hadjustment(gtkScrolledWindow);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
 	}
 
@@ -271,12 +271,12 @@ public class ScrolledWindow : Bin
 	public Widget getHscrollbar()
 	{
 		auto p = gtk_scrolled_window_get_hscrollbar(gtkScrolledWindow);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -427,12 +427,12 @@ public class ScrolledWindow : Bin
 	public Adjustment getVadjustment()
 	{
 		auto p = gtk_scrolled_window_get_vadjustment(gtkScrolledWindow);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
 	}
 
@@ -446,12 +446,12 @@ public class ScrolledWindow : Bin
 	public Widget getVscrollbar()
 	{
 		auto p = gtk_scrolled_window_get_vscrollbar(gtkScrolledWindow);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -699,13 +699,13 @@ public class ScrolledWindow : Bin
 		static OnEdgeOvershotDelegateWrapper[] listeners;
 		void delegate(GtkPositionType, ScrolledWindow) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(GtkPositionType, ScrolledWindow) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnEdgeOvershotDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -748,12 +748,12 @@ public class ScrolledWindow : Bin
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackEdgeOvershot(GtkScrolledWindow* scrolledwindowStruct, GtkPositionType pos, OnEdgeOvershotDelegateWrapper wrapper)
 	{
 		wrapper.dlg(pos, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackEdgeOvershotDestroy(OnEdgeOvershotDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -764,13 +764,13 @@ public class ScrolledWindow : Bin
 		static OnEdgeReachedDelegateWrapper[] listeners;
 		void delegate(GtkPositionType, ScrolledWindow) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(GtkPositionType, ScrolledWindow) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnEdgeReachedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -813,12 +813,12 @@ public class ScrolledWindow : Bin
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackEdgeReached(GtkScrolledWindow* scrolledwindowStruct, GtkPositionType pos, OnEdgeReachedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(pos, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackEdgeReachedDestroy(OnEdgeReachedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -829,13 +829,13 @@ public class ScrolledWindow : Bin
 		static OnMoveFocusOutDelegateWrapper[] listeners;
 		void delegate(GtkDirectionType, ScrolledWindow) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(GtkDirectionType, ScrolledWindow) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMoveFocusOutDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -875,12 +875,12 @@ public class ScrolledWindow : Bin
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackMoveFocusOut(GtkScrolledWindow* scrolledwindowStruct, GtkDirectionType directionType, OnMoveFocusOutDelegateWrapper wrapper)
 	{
 		wrapper.dlg(directionType, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMoveFocusOutDestroy(OnMoveFocusOutDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -891,13 +891,13 @@ public class ScrolledWindow : Bin
 		static OnScrollChildDelegateWrapper[] listeners;
 		bool delegate(GtkScrollType, bool, ScrolledWindow) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(GtkScrollType, bool, ScrolledWindow) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnScrollChildDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -936,12 +936,12 @@ public class ScrolledWindow : Bin
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackScrollChild(GtkScrolledWindow* scrolledwindowStruct, GtkScrollType scroll, bool horizontal, OnScrollChildDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(scroll, horizontal, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackScrollChildDestroy(OnScrollChildDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

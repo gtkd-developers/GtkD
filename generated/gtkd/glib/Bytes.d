@@ -26,8 +26,8 @@ module glib.Bytes;
 
 private import glib.ByteArray;
 private import glib.ConstructionException;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 private import gtkd.Loader;
 
 
@@ -113,12 +113,12 @@ public class Bytes
 	public this(ubyte[] data)
 	{
 		auto p = g_bytes_new(data.ptr, cast(size_t)data.length);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GBytes*) p);
 	}
 
@@ -148,12 +148,12 @@ public class Bytes
 	public this(ubyte[] data, GDestroyNotify freeFunc, void* userData)
 	{
 		auto p = g_bytes_new_with_free_func(data.ptr, cast(size_t)data.length, freeFunc, userData);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_with_free_func");
 		}
-		
+
 		this(cast(GBytes*) p);
 	}
 
@@ -210,9 +210,9 @@ public class Bytes
 	public ubyte[] getData()
 	{
 		size_t size;
-		
+
 		auto p = g_bytes_get_data(gBytes, &size);
-		
+
 		return cast(ubyte[])p[0 .. size];
 	}
 
@@ -263,12 +263,12 @@ public class Bytes
 	public Bytes newFromBytes(size_t offset, size_t length)
 	{
 		auto p = g_bytes_new_from_bytes(gBytes, offset, length);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Bytes(cast(GBytes*) p, true);
 	}
 
@@ -282,12 +282,12 @@ public class Bytes
 	public Bytes doref()
 	{
 		auto p = g_bytes_ref(gBytes);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Bytes(cast(GBytes*) p, true);
 	}
 
@@ -318,12 +318,12 @@ public class Bytes
 	public ByteArray unrefToArray()
 	{
 		auto p = g_bytes_unref_to_array(gBytes);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ByteArray(cast(GByteArray*) p, true);
 	}
 
@@ -344,9 +344,9 @@ public class Bytes
 	public ubyte[] unrefToData()
 	{
 		size_t size;
-		
+
 		auto p = g_bytes_unref_to_data(gBytes, &size);
-		
+
 		return cast(ubyte[])p[0 .. size];
 	}
 }

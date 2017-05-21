@@ -26,8 +26,8 @@ module gtk.CellAreaContext;
 
 private import gobject.ObjectG;
 private import gtk.CellArea;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -145,12 +145,12 @@ public class CellAreaContext : ObjectG
 	public CellArea getArea()
 	{
 		auto p = gtk_cell_area_context_get_area(gtkCellAreaContext);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(CellArea)(cast(GtkCellArea*) p);
 	}
 

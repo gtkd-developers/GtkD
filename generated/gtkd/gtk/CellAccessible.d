@@ -29,8 +29,8 @@ private import atk.ActionT;
 private import atk.ComponentIF;
 private import atk.ComponentT;
 private import gtk.Accessible;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /** */

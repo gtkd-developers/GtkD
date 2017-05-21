@@ -25,10 +25,10 @@
 module gio.MenuLinkIter;
 
 private import gio.MenuModel;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -120,12 +120,12 @@ public class MenuLinkIter : ObjectG
 	{
 		char* outoutLink = null;
 		GMenuModel* outvalue = null;
-		
+
 		auto p = g_menu_link_iter_get_next(gMenuLinkIter, &outoutLink, &outvalue) != 0;
-		
+
 		outLink = Str.toString(outoutLink);
 		value = ObjectG.getDObject!(MenuModel)(outvalue);
-		
+
 		return p;
 	}
 
@@ -141,12 +141,12 @@ public class MenuLinkIter : ObjectG
 	public MenuModel getValue()
 	{
 		auto p = g_menu_link_iter_get_value(gMenuLinkIter);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(MenuModel)(cast(GMenuModel*) p, true);
 	}
 

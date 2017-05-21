@@ -25,8 +25,8 @@
 module glib.Child;
 
 private import glib.Source;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 
 
 /** */
@@ -146,12 +146,12 @@ public struct Child
 	public static Source childWatchSourceNew(GPid pid)
 	{
 		auto p = g_child_watch_source_new(pid);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Source(cast(GSource*) p, true);
 	}
 }

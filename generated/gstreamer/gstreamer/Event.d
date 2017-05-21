@@ -37,8 +37,8 @@ private import gstreamer.StreamCollection;
 private import gstreamer.Structure;
 private import gstreamer.TagList;
 private import gstreamer.Toc;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /**
@@ -130,15 +130,15 @@ public class Event
 	{
 		// GstEvent* gst_event_new_eos (void);
 		auto p = gst_event_new_eos();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gst_event_new_eos");
 		}
-		
+
 		return new Event(cast(GstEvent*)p );
 	}
-	
+
 	/**
 	 * Allocate a new flush start event. The flush start event can be send
 	 * upstream and downstream and travels out-of-bounds with the dataflow.
@@ -154,15 +154,15 @@ public class Event
 	{
 		// GstEvent* gst_event_new_flush_start (void);
 		auto p = gst_event_new_flush_start();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gst_event_new_flush_start");
 		}
-		
+
 		return new Event(cast(GstEvent*)p );
 	}
-	
+
 	/**
 	 * Generate a TOC select event with the given uid. The purpose of the
 	 * TOC select event is to start playback based on the TOC's entry with
@@ -172,12 +172,12 @@ public class Event
 	{
 		// GstEvent* gst_event_new_toc_select (const gchar *uid);
 		auto p = gst_event_new_toc_select(cast(char*)uid.ptr);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gst_event_new_toc_select");
 		}
-		
+
 		return new Event(cast(GstEvent*)p );
 	}
 
@@ -209,12 +209,12 @@ public class Event
 	public this(GstFormat format, long minsize, long maxsize, bool async)
 	{
 		auto p = gst_event_new_buffer_size(format, minsize, maxsize, async);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_buffer_size");
 		}
-		
+
 		this(cast(GstEvent*) p);
 	}
 
@@ -233,12 +233,12 @@ public class Event
 	public this(Caps caps)
 	{
 		auto p = gst_event_new_caps((caps is null) ? null : caps.getCapsStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_caps");
 		}
-		
+
 		this(cast(GstEvent*) p);
 	}
 
@@ -266,12 +266,12 @@ public class Event
 	public this(GstEventType type, Structure structure)
 	{
 		auto p = gst_event_new_custom(type, (structure is null) ? null : structure.getStructureStruct(true));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_custom");
 		}
-		
+
 		this(cast(GstEvent*) p);
 	}
 
@@ -297,12 +297,12 @@ public class Event
 	public this(bool resetTime)
 	{
 		auto p = gst_event_new_flush_stop(resetTime);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_flush_stop");
 		}
-		
+
 		this(cast(GstEvent*) p);
 	}
 
@@ -324,12 +324,12 @@ public class Event
 	public this(GstClockTime timestamp, GstClockTime duration)
 	{
 		auto p = gst_event_new_gap(timestamp, duration);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_gap");
 		}
-		
+
 		this(cast(GstEvent*) p);
 	}
 
@@ -351,12 +351,12 @@ public class Event
 	public this(GstClockTime latency)
 	{
 		auto p = gst_event_new_latency(latency);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_latency");
 		}
-		
+
 		this(cast(GstEvent*) p);
 	}
 
@@ -374,12 +374,12 @@ public class Event
 	public this(Structure structure)
 	{
 		auto p = gst_event_new_navigation((structure is null) ? null : structure.getStructureStruct(true));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_navigation");
 		}
-		
+
 		this(cast(GstEvent*) p);
 	}
 
@@ -433,12 +433,12 @@ public class Event
 	public this(string systemId, Buffer data, string origin)
 	{
 		auto p = gst_event_new_protection(Str.toStringz(systemId), (data is null) ? null : data.getBufferStruct(), Str.toStringz(origin));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_protection");
 		}
-		
+
 		this(cast(GstEvent*) p);
 	}
 
@@ -499,12 +499,12 @@ public class Event
 	public this(GstQOSType type, double proportion, GstClockTimeDiff diff, GstClockTime timestamp)
 	{
 		auto p = gst_event_new_qos(type, proportion, diff, timestamp);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_qos");
 		}
-		
+
 		this(cast(GstEvent*) p);
 	}
 
@@ -521,12 +521,12 @@ public class Event
 	public this()
 	{
 		auto p = gst_event_new_reconfigure();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_reconfigure");
 		}
-		
+
 		this(cast(GstEvent*) p);
 	}
 
@@ -579,12 +579,12 @@ public class Event
 	public this(double rate, GstFormat format, GstSeekFlags flags, GstSeekType startType, long start, GstSeekType stopType, long stop)
 	{
 		auto p = gst_event_new_seek(rate, format, flags, startType, start, stopType, stop);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_seek");
 		}
-		
+
 		this(cast(GstEvent*) p);
 	}
 
@@ -631,12 +631,12 @@ public class Event
 	public this(Segment segment)
 	{
 		auto p = gst_event_new_segment((segment is null) ? null : segment.getSegmentStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_segment");
 		}
-		
+
 		this(cast(GstEvent*) p);
 	}
 
@@ -655,12 +655,12 @@ public class Event
 	public this(GstFormat format, long position)
 	{
 		auto p = gst_event_new_segment_done(format, position);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_segment_done");
 		}
-		
+
 		this(cast(GstEvent*) p);
 	}
 
@@ -687,12 +687,12 @@ public class Event
 	public this(ListG streams)
 	{
 		auto p = gst_event_new_select_streams((streams is null) ? null : streams.getListGStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_select_streams");
 		}
-		
+
 		this(cast(GstEvent*) p);
 	}
 
@@ -714,12 +714,12 @@ public class Event
 	public this(string name, Message msg)
 	{
 		auto p = gst_event_new_sink_message(Str.toStringz(name), (msg is null) ? null : msg.getMessageStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_sink_message");
 		}
-		
+
 		this(cast(GstEvent*) p);
 	}
 
@@ -752,12 +752,12 @@ public class Event
 	public this(GstFormat format, ulong amount, double rate, bool flush, bool intermediate)
 	{
 		auto p = gst_event_new_step(format, amount, rate, flush, intermediate);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_step");
 		}
-		
+
 		this(cast(GstEvent*) p);
 	}
 
@@ -783,12 +783,12 @@ public class Event
 	public this(StreamCollection collection)
 	{
 		auto p = gst_event_new_stream_collection((collection is null) ? null : collection.getStreamCollectionStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_stream_collection");
 		}
-		
+
 		this(cast(GstEvent*) p);
 	}
 
@@ -815,12 +815,12 @@ public class Event
 	public this(uint groupId)
 	{
 		auto p = gst_event_new_stream_group_done(groupId);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_stream_group_done");
 		}
-		
+
 		this(cast(GstEvent*) p);
 	}
 
@@ -857,12 +857,12 @@ public class Event
 	public this(string streamId)
 	{
 		auto p = gst_event_new_stream_start(Str.toStringz(streamId));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_stream_start");
 		}
-		
+
 		this(cast(GstEvent*) p);
 	}
 
@@ -886,12 +886,12 @@ public class Event
 	public this(TagList taglist)
 	{
 		auto p = gst_event_new_tag((taglist is null) ? null : taglist.getTagListStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_tag");
 		}
-		
+
 		this(cast(GstEvent*) p);
 	}
 
@@ -910,12 +910,12 @@ public class Event
 	public this(Toc toc, bool updated)
 	{
 		auto p = gst_event_new_toc((toc is null) ? null : toc.getTocStruct(), updated);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_toc");
 		}
-		
+
 		this(cast(GstEvent*) p);
 	}
 
@@ -988,12 +988,12 @@ public class Event
 	public Structure getStructure()
 	{
 		auto p = gst_event_get_structure(gstEvent);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
 	}
 
@@ -1023,9 +1023,9 @@ public class Event
 	public void parseBufferSize(out GstFormat format, out long minsize, out long maxsize, out bool async)
 	{
 		int outasync;
-		
+
 		gst_event_parse_buffer_size(gstEvent, &format, &minsize, &maxsize, &outasync);
-		
+
 		async = (outasync == 1);
 	}
 
@@ -1039,9 +1039,9 @@ public class Event
 	public void parseCaps(out Caps caps)
 	{
 		GstCaps* outcaps = null;
-		
+
 		gst_event_parse_caps(gstEvent, &outcaps);
-		
+
 		caps = ObjectG.getDObject!(Caps)(outcaps);
 	}
 
@@ -1054,9 +1054,9 @@ public class Event
 	public void parseFlushStop(out bool resetTime)
 	{
 		int outresetTime;
-		
+
 		gst_event_parse_flush_stop(gstEvent, &outresetTime);
-		
+
 		resetTime = (outresetTime == 1);
 	}
 
@@ -1119,9 +1119,9 @@ public class Event
 	{
 		char* outsystemId = null;
 		GstBuffer* outdata = null;
-		
+
 		gst_event_parse_protection(gstEvent, &outsystemId, &outdata, Str.toStringzArray(origin));
-		
+
 		systemId = Str.toString(outsystemId);
 		data = ObjectG.getDObject!(Buffer)(outdata);
 	}
@@ -1171,9 +1171,9 @@ public class Event
 	public void parseSegment(out Segment segment)
 	{
 		GstSegment* outsegment = null;
-		
+
 		gst_event_parse_segment(gstEvent, &outsegment);
-		
+
 		segment = ObjectG.getDObject!(Segment)(outsegment);
 	}
 
@@ -1200,9 +1200,9 @@ public class Event
 	public void parseSelectStreams(out ListG streams)
 	{
 		GList* outstreams = null;
-		
+
 		gst_event_parse_select_streams(gstEvent, &outstreams);
-		
+
 		streams = new ListG(outstreams);
 	}
 
@@ -1215,9 +1215,9 @@ public class Event
 	public void parseSinkMessage(out Message msg)
 	{
 		GstMessage* outmsg = null;
-		
+
 		gst_event_parse_sink_message(gstEvent, &outmsg);
-		
+
 		msg = ObjectG.getDObject!(Message)(outmsg);
 	}
 
@@ -1236,9 +1236,9 @@ public class Event
 	{
 		int outflush;
 		int outintermediate;
-		
+
 		gst_event_parse_step(gstEvent, &format, &amount, &rate, &outflush, &outintermediate);
-		
+
 		flush = (outflush == 1);
 		intermediate = (outintermediate == 1);
 	}
@@ -1254,9 +1254,9 @@ public class Event
 	public void parseStream(out Stream stream)
 	{
 		GstStream* outstream = null;
-		
+
 		gst_event_parse_stream(gstEvent, &outstream);
-		
+
 		stream = ObjectG.getDObject!(Stream)(outstream);
 	}
 
@@ -1271,9 +1271,9 @@ public class Event
 	public void parseStreamCollection(out StreamCollection collection)
 	{
 		GstStreamCollection* outcollection = null;
-		
+
 		gst_event_parse_stream_collection(gstEvent, &outcollection);
-		
+
 		collection = ObjectG.getDObject!(StreamCollection)(outcollection);
 	}
 
@@ -1309,9 +1309,9 @@ public class Event
 	public void parseStreamStart(out string streamId)
 	{
 		char* outstreamId = null;
-		
+
 		gst_event_parse_stream_start(gstEvent, &outstreamId);
-		
+
 		streamId = Str.toString(outstreamId);
 	}
 
@@ -1327,9 +1327,9 @@ public class Event
 	public void parseTag(out TagList taglist)
 	{
 		GstTagList* outtaglist = null;
-		
+
 		gst_event_parse_tag(gstEvent, &outtaglist);
-		
+
 		taglist = ObjectG.getDObject!(TagList)(outtaglist);
 	}
 
@@ -1344,9 +1344,9 @@ public class Event
 	{
 		GstToc* outtoc = null;
 		int outupdated;
-		
+
 		gst_event_parse_toc(gstEvent, &outtoc, &outupdated);
-		
+
 		toc = ObjectG.getDObject!(Toc)(outtoc);
 		updated = (outupdated == 1);
 	}
@@ -1360,9 +1360,9 @@ public class Event
 	public void parseTocSelect(out string uid)
 	{
 		char* outuid = null;
-		
+
 		gst_event_parse_toc_select(gstEvent, &outuid);
-		
+
 		uid = Str.toString(outuid);
 	}
 
@@ -1451,12 +1451,12 @@ public class Event
 	public Structure writableStructure()
 	{
 		auto p = gst_event_writable_structure(gstEvent);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
 	}
 

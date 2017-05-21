@@ -27,8 +27,8 @@ module gobject.ObjectClass;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.ParamSpec;
-private import gtkc.gobject;
-public  import gtkc.gobjecttypes;
+private import gobject.c.functions;
+public  import gobject.c.types;
 
 
 /**
@@ -102,12 +102,12 @@ public class ObjectClass
 	public ParamSpec findProperty(string propertyName)
 	{
 		auto p = g_object_class_find_property(gObjectClass, Str.toStringz(propertyName));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
 	}
 
@@ -188,7 +188,7 @@ public class ObjectClass
 		{
 			pspecsArray[i] = pspecs[i].getParamSpecStruct();
 		}
-		
+
 		g_object_class_install_properties(gObjectClass, cast(uint)pspecs.length, pspecsArray.ptr);
 	}
 
@@ -222,20 +222,20 @@ public class ObjectClass
 	public ParamSpec[] listProperties()
 	{
 		uint nProperties;
-		
+
 		auto p = g_object_class_list_properties(gObjectClass, &nProperties);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		ParamSpec[] arr = new ParamSpec[nProperties];
 		for(int i = 0; i < nProperties; i++)
 		{
 			arr[i] = ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p[i]);
 		}
-		
+
 		return arr;
 	}
 

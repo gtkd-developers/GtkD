@@ -33,8 +33,8 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import gtkd.Loader;
 
 
@@ -106,19 +106,19 @@ public class RecentInfo
 	public AppInfoIF createAppInfo(string appName)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_recent_info_create_app_info(gtkRecentInfo, Str.toStringz(appName), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(AppInfo, AppInfoIF)(cast(GAppInfo*) p, true);
 	}
 
@@ -189,11 +189,11 @@ public class RecentInfo
 	public bool getApplicationInfo(string appName, out string appExec, out uint count, out uint time)
 	{
 		char* outappExec = null;
-		
+
 		auto p = gtk_recent_info_get_application_info(gtkRecentInfo, Str.toStringz(appName), &outappExec, &count, &time) != 0;
-		
+
 		appExec = Str.toString(outappExec);
-		
+
 		return p;
 	}
 
@@ -208,9 +208,9 @@ public class RecentInfo
 	public string[] getApplications()
 	{
 		size_t length;
-		
+
 		auto retStr = gtk_recent_info_get_applications(gtkRecentInfo, &length);
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr, length);
 	}
@@ -253,12 +253,12 @@ public class RecentInfo
 	public IconIF getGicon()
 	{
 		auto p = gtk_recent_info_get_gicon(gtkRecentInfo);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p, true);
 	}
 
@@ -275,9 +275,9 @@ public class RecentInfo
 	public string[] getGroups()
 	{
 		size_t length;
-		
+
 		auto retStr = gtk_recent_info_get_groups(gtkRecentInfo, &length);
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr, length);
 	}
@@ -296,12 +296,12 @@ public class RecentInfo
 	public Pixbuf getIcon(int size)
 	{
 		auto p = gtk_recent_info_get_icon(gtkRecentInfo, size);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
 	}
 
@@ -360,7 +360,7 @@ public class RecentInfo
 	public string getShortName()
 	{
 		auto retStr = gtk_recent_info_get_short_name(gtkRecentInfo);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -391,7 +391,7 @@ public class RecentInfo
 	public string getUriDisplay()
 	{
 		auto retStr = gtk_recent_info_get_uri_display(gtkRecentInfo);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -466,7 +466,7 @@ public class RecentInfo
 	public string lastApplication()
 	{
 		auto retStr = gtk_recent_info_last_application(gtkRecentInfo);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -499,12 +499,12 @@ public class RecentInfo
 	public RecentInfo doref()
 	{
 		auto p = gtk_recent_info_ref(gtkRecentInfo);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(RecentInfo)(cast(GtkRecentInfo*) p, true);
 	}
 

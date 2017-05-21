@@ -35,8 +35,8 @@ private import gobject.ObjectG;
 private import gsv.SourceBuffer;
 private import gsv.SourceEncoding;
 private import gsv.SourceFile;
-private import gsvc.gsv;
-public  import gsvc.gsvtypes;
+private import gsv.c.functions;
+public  import gsv.c.types;
 
 
 /** */
@@ -101,12 +101,12 @@ public class SourceFileSaver : ObjectG
 	public this(SourceBuffer buffer, SourceFile file)
 	{
 		auto p = gtk_source_file_saver_new((buffer is null) ? null : buffer.getSourceBufferStruct(), (file is null) ? null : file.getSourceFileStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkSourceFileSaver*) p, true);
 	}
 
@@ -133,12 +133,12 @@ public class SourceFileSaver : ObjectG
 	public this(SourceBuffer buffer, SourceFile file, FileIF targetLocation)
 	{
 		auto p = gtk_source_file_saver_new_with_target((buffer is null) ? null : buffer.getSourceBufferStruct(), (file is null) ? null : file.getSourceFileStruct(), (targetLocation is null) ? null : targetLocation.getFileStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_with_target");
 		}
-		
+
 		this(cast(GtkSourceFileSaver*) p, true);
 	}
 
@@ -150,12 +150,12 @@ public class SourceFileSaver : ObjectG
 	public SourceBuffer getBuffer()
 	{
 		auto p = gtk_source_file_saver_get_buffer(gtkSourceFileSaver);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SourceBuffer)(cast(GtkSourceBuffer*) p);
 	}
 
@@ -177,12 +177,12 @@ public class SourceFileSaver : ObjectG
 	public SourceEncoding getEncoding()
 	{
 		auto p = gtk_source_file_saver_get_encoding(gtkSourceFileSaver);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SourceEncoding)(cast(GtkSourceEncoding*) p);
 	}
 
@@ -194,12 +194,12 @@ public class SourceFileSaver : ObjectG
 	public SourceFile getFile()
 	{
 		auto p = gtk_source_file_saver_get_file(gtkSourceFileSaver);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SourceFile)(cast(GtkSourceFile*) p);
 	}
 
@@ -221,12 +221,12 @@ public class SourceFileSaver : ObjectG
 	public FileIF getLocation()
 	{
 		auto p = gtk_source_file_saver_get_location(gtkSourceFileSaver);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p);
 	}
 
@@ -287,14 +287,14 @@ public class SourceFileSaver : ObjectG
 	public bool saveFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_source_file_saver_save_finish(gtkSourceFileSaver, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 

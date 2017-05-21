@@ -28,10 +28,10 @@ private import gio.FilterOutputStream;
 private import gio.OutputStream;
 private import gio.SeekableIF;
 private import gio.SeekableT;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -107,12 +107,12 @@ public class BufferedOutputStream : FilterOutputStream, SeekableIF
 	public this(OutputStream baseStream)
 	{
 		auto p = g_buffered_output_stream_new((baseStream is null) ? null : baseStream.getOutputStreamStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GBufferedOutputStream*) p, true);
 	}
 
@@ -130,12 +130,12 @@ public class BufferedOutputStream : FilterOutputStream, SeekableIF
 	public this(OutputStream baseStream, size_t size)
 	{
 		auto p = g_buffered_output_stream_new_sized((baseStream is null) ? null : baseStream.getOutputStreamStruct(), size);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_sized");
 		}
-		
+
 		this(cast(GBufferedOutputStream*) p, true);
 	}
 

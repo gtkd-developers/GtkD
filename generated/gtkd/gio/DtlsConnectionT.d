@@ -29,12 +29,12 @@ public  import gio.Cancellable;
 public  import gio.TlsCertificate;
 public  import gio.TlsDatabase;
 public  import gio.TlsInteraction;
+public  import gio.c.functions;
+public  import gio.c.types;
 public  import glib.ErrorG;
 public  import glib.GException;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
-public  import gtkc.gio;
-public  import gtkc.giotypes;
 public  import std.algorithm;
 
 
@@ -105,14 +105,14 @@ public template DtlsConnectionT(TStruct)
 	public bool close(Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_dtls_connection_close(getDtlsConnectionStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -150,14 +150,14 @@ public template DtlsConnectionT(TStruct)
 	public bool closeFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_dtls_connection_close_finish(getDtlsConnectionStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -190,12 +190,12 @@ public template DtlsConnectionT(TStruct)
 	public TlsCertificate getCertificate()
 	{
 		auto p = g_dtls_connection_get_certificate(getDtlsConnectionStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TlsCertificate)(cast(GTlsCertificate*) p);
 	}
 
@@ -210,12 +210,12 @@ public template DtlsConnectionT(TStruct)
 	public TlsDatabase getDatabase()
 	{
 		auto p = g_dtls_connection_get_database(getDtlsConnectionStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TlsDatabase)(cast(GTlsDatabase*) p);
 	}
 
@@ -231,12 +231,12 @@ public template DtlsConnectionT(TStruct)
 	public TlsInteraction getInteraction()
 	{
 		auto p = g_dtls_connection_get_interaction(getDtlsConnectionStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TlsInteraction)(cast(GTlsInteraction*) p);
 	}
 
@@ -252,12 +252,12 @@ public template DtlsConnectionT(TStruct)
 	public TlsCertificate getPeerCertificate()
 	{
 		auto p = g_dtls_connection_get_peer_certificate(getDtlsConnectionStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TlsCertificate)(cast(GTlsCertificate*) p);
 	}
 
@@ -338,14 +338,14 @@ public template DtlsConnectionT(TStruct)
 	public bool handshake(Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_dtls_connection_handshake(getDtlsConnectionStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -383,14 +383,14 @@ public template DtlsConnectionT(TStruct)
 	public bool handshakeFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_dtls_connection_handshake_finish(getDtlsConnectionStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -563,14 +563,14 @@ public template DtlsConnectionT(TStruct)
 	public bool shutdown(bool shutdownRead, bool shutdownWrite, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_dtls_connection_shutdown(getDtlsConnectionStruct(), shutdownRead, shutdownWrite, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -610,14 +610,14 @@ public template DtlsConnectionT(TStruct)
 	public bool shutdownFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_dtls_connection_shutdown_finish(getDtlsConnectionStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -626,13 +626,13 @@ public template DtlsConnectionT(TStruct)
 		static OnAcceptCertificateDelegateWrapper[] listeners;
 		bool delegate(TlsCertificate, GTlsCertificateFlags, DtlsConnectionIF) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(TlsCertificate, GTlsCertificateFlags, DtlsConnectionIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnAcceptCertificateDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -705,12 +705,12 @@ public template DtlsConnectionT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackAcceptCertificate(GDtlsConnection* dtlsconnectionStruct, GTlsCertificate* peerCert, GTlsCertificateFlags errors, OnAcceptCertificateDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(ObjectG.getDObject!(TlsCertificate)(peerCert), errors, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackAcceptCertificateDestroy(OnAcceptCertificateDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

@@ -27,10 +27,10 @@ module gio.SimpleIOStream;
 private import gio.IOStream;
 private import gio.InputStream;
 private import gio.OutputStream;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -103,12 +103,12 @@ public class SimpleIOStream : IOStream
 	public this(InputStream inputStream, OutputStream outputStream)
 	{
 		auto p = g_simple_io_stream_new((inputStream is null) ? null : inputStream.getInputStreamStruct(), (outputStream is null) ? null : outputStream.getOutputStreamStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GSimpleIOStream*) p, true);
 	}
 }

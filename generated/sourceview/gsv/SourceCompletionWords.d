@@ -30,8 +30,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gsv.SourceCompletionProviderIF;
 private import gsv.SourceCompletionProviderT;
-private import gsvc.gsv;
-public  import gsvc.gsvtypes;
+private import gsv.c.functions;
+public  import gsv.c.types;
 private import gtk.TextBuffer;
 
 
@@ -92,12 +92,12 @@ public class SourceCompletionWords : ObjectG, SourceCompletionProviderIF
 	public this(string name, Pixbuf icon)
 	{
 		auto p = gtk_source_completion_words_new(Str.toStringz(name), (icon is null) ? null : icon.getPixbufStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkSourceCompletionWords*) p, true);
 	}
 

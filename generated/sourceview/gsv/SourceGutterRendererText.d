@@ -28,8 +28,8 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gsv.SourceGutterRenderer;
-private import gsvc.gsv;
-public  import gsvc.gsvtypes;
+private import gsv.c.functions;
+public  import gsv.c.types;
 
 
 /** */
@@ -84,12 +84,12 @@ public class SourceGutterRendererText : SourceGutterRenderer
 	public this()
 	{
 		auto p = gtk_source_gutter_renderer_text_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkSourceGutterRendererText*) p, true);
 	}
 

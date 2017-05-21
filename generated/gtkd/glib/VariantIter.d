@@ -26,8 +26,8 @@ module glib.VariantIter;
 
 private import glib.Str;
 private import glib.Variant;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 private import gtkd.Loader;
 
 
@@ -90,12 +90,12 @@ public class VariantIter
 	public VariantIter copy()
 	{
 		auto p = g_variant_iter_copy(gVariantIter);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new VariantIter(cast(GVariantIter*) p, true);
 	}
 
@@ -184,12 +184,12 @@ public class VariantIter
 	public Variant nextValue()
 	{
 		auto p = g_variant_iter_next_value(gVariantIter);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Variant(cast(GVariant*) p, true);
 	}
 }

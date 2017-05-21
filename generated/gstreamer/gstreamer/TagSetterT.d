@@ -28,8 +28,8 @@ public  import glib.Str;
 public  import gobject.ObjectG;
 public  import gobject.Value;
 public  import gstreamer.TagList;
-public  import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+public  import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /**
@@ -138,12 +138,12 @@ public template TagSetterT(TStruct)
 	public TagList getTagList()
 	{
 		auto p = gst_tag_setter_get_tag_list(getTagSetterStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TagList)(cast(GstTagList*) p);
 	}
 

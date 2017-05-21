@@ -28,8 +28,8 @@ private import glib.ConstructionException;
 private import glib.DateTime : GLibDateTime = DateTime;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 private import gtkd.Loader;
 
 
@@ -86,7 +86,7 @@ public class DateTime
 	public this (bool utc)
 	{
 		GstDateTime* p;
-		
+
 		if ( utc )
 		{
 			p = gst_date_time_new_now_utc();
@@ -95,14 +95,14 @@ public class DateTime
 		{
 			p = gst_date_time_new_now_local_time();
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gst_date_time_new_now_local_time()");
 		}
 		this(p); //, true);
 	}
-	
+
 	/**
 	 * Creates a new GstDateTime using the time since Jan 1, 1970 specified by
 	 * secs.
@@ -115,7 +115,7 @@ public class DateTime
 	public this (long secs, bool utc)
 	{
 		GstDateTime* p;
-		
+
 		if ( utc )
 		{
 			p = gst_date_time_new_from_unix_epoch_utc(secs);
@@ -124,7 +124,7 @@ public class DateTime
 		{
 			p = gst_date_time_new_from_unix_epoch_local_time(secs);
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gst_date_time_new_from_unix_epoch_local_time(secs)");
@@ -175,12 +175,12 @@ public class DateTime
 	public this(float tzoffset, int year, int month, int day, int hour, int minute, double seconds)
 	{
 		auto p = gst_date_time_new(tzoffset, year, month, day, hour, minute, seconds);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GstDateTime*) p);
 	}
 
@@ -200,12 +200,12 @@ public class DateTime
 	public this(GLibDateTime dt)
 	{
 		auto p = gst_date_time_new_from_g_date_time((dt is null) ? null : dt.getDateTimeStruct(true));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_g_date_time");
 		}
-		
+
 		this(cast(GstDateTime*) p);
 	}
 
@@ -232,12 +232,12 @@ public class DateTime
 	public this(string str)
 	{
 		auto p = gst_date_time_new_from_iso8601_string(Str.toStringz(str));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_iso8601_string");
 		}
-		
+
 		this(cast(GstDateTime*) p);
 	}
 
@@ -275,12 +275,12 @@ public class DateTime
 	public this(int year, int month, int day, int hour, int minute, double seconds)
 	{
 		auto p = gst_date_time_new_local_time(year, month, day, hour, minute, seconds);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_local_time");
 		}
-		
+
 		this(cast(GstDateTime*) p);
 	}
 
@@ -302,12 +302,12 @@ public class DateTime
 	public this(int year)
 	{
 		auto p = gst_date_time_new_y(year);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_y");
 		}
-		
+
 		this(cast(GstDateTime*) p);
 	}
 
@@ -333,12 +333,12 @@ public class DateTime
 	public this(int year, int month)
 	{
 		auto p = gst_date_time_new_ym(year, month);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_ym");
 		}
-		
+
 		this(cast(GstDateTime*) p);
 	}
 
@@ -368,12 +368,12 @@ public class DateTime
 	public this(int year, int month, int day)
 	{
 		auto p = gst_date_time_new_ymd(year, month, day);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_ymd");
 		}
-		
+
 		this(cast(GstDateTime*) p);
 	}
 
@@ -520,12 +520,12 @@ public class DateTime
 	public DateTime doref()
 	{
 		auto p = gst_date_time_ref(gstDateTime);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(DateTime)(cast(GstDateTime*) p, true);
 	}
 
@@ -540,12 +540,12 @@ public class DateTime
 	public GLibDateTime toGDateTime()
 	{
 		auto p = gst_date_time_to_g_date_time(gstDateTime);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new GLibDateTime(cast(GDateTime*) p, true);
 	}
 
@@ -562,7 +562,7 @@ public class DateTime
 	public string toIso8601String()
 	{
 		auto retStr = gst_date_time_to_iso8601_string(gstDateTime);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}

@@ -28,12 +28,12 @@ public  import gio.AsyncResultIF;
 public  import gio.Cancellable;
 public  import gio.ProxyResolver;
 public  import gio.ProxyResolverIF;
+public  import gio.c.functions;
+public  import gio.c.types;
 public  import glib.ErrorG;
 public  import glib.GException;
 public  import glib.Str;
 public  import gobject.ObjectG;
-public  import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -64,12 +64,12 @@ public template ProxyResolverT(TStruct)
 	public static ProxyResolverIF getDefault()
 	{
 		auto p = g_proxy_resolver_get_default();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ProxyResolver, ProxyResolverIF)(cast(GProxyResolver*) p);
 	}
 
@@ -119,14 +119,14 @@ public template ProxyResolverT(TStruct)
 	public string[] lookup(string uri, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto retStr = g_proxy_resolver_lookup(getProxyResolverStruct(), Str.toStringz(uri), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}
@@ -167,14 +167,14 @@ public template ProxyResolverT(TStruct)
 	public string[] lookupFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto retStr = g_proxy_resolver_lookup_finish(getProxyResolverStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}

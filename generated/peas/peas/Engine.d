@@ -30,8 +30,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import peas.PluginInfo;
-private import peasc.peas;
-public  import peasc.peastypes;
+private import peas.c.functions;
+public  import peas.c.types;
 private import std.algorithm;
 
 
@@ -89,17 +89,17 @@ public class Engine : ObjectG
 	public this(bool global = true)
 	{
 		PeasEngine* p;
-		
+
 		if (global)
 			p = peas_engine_new();
 		else
 			p = peas_engine_new_with_nonglobal_loaders();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(p, true);
 	}
 
@@ -125,12 +125,12 @@ public class Engine : ObjectG
 	public static Engine getDefault()
 	{
 		auto p = peas_engine_get_default();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Engine)(cast(PeasEngine*) p);
 	}
 
@@ -252,7 +252,7 @@ public class Engine : ObjectG
 	public string[] getLoadedPlugins()
 	{
 		auto retStr = peas_engine_get_loaded_plugins(peasEngine);
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}
@@ -270,12 +270,12 @@ public class Engine : ObjectG
 	public PluginInfo getPluginInfo(string pluginName)
 	{
 		auto p = peas_engine_get_plugin_info(peasEngine, Str.toStringz(pluginName));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PluginInfo)(cast(PeasPluginInfo*) p);
 	}
 
@@ -289,12 +289,12 @@ public class Engine : ObjectG
 	public ListG getPluginList()
 	{
 		auto p = peas_engine_get_plugin_list(peasEngine);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -393,13 +393,13 @@ public class Engine : ObjectG
 		static OnLoadPluginDelegateWrapper[] listeners;
 		void delegate(PluginInfo, Engine) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(PluginInfo, Engine) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnLoadPluginDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -438,12 +438,12 @@ public class Engine : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackLoadPlugin(PeasEngine* engineStruct, PeasPluginInfo* info, OnLoadPluginDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(PluginInfo)(info), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackLoadPluginDestroy(OnLoadPluginDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -454,13 +454,13 @@ public class Engine : ObjectG
 		static OnUnloadPluginDelegateWrapper[] listeners;
 		void delegate(PluginInfo, Engine) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(PluginInfo, Engine) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnUnloadPluginDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -499,12 +499,12 @@ public class Engine : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackUnloadPlugin(PeasEngine* engineStruct, PeasPluginInfo* info, OnUnloadPluginDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(PluginInfo)(info), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackUnloadPluginDestroy(OnUnloadPluginDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

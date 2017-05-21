@@ -24,11 +24,11 @@
 
 module gio.IOModuleScope;
 
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 private import gtkd.Loader;
 
 
@@ -123,12 +123,12 @@ public class IOModuleScope
 	public this(GIOModuleScopeFlags flags)
 	{
 		auto p = g_io_module_scope_new(flags);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GIOModuleScope*) p);
 	}
 }

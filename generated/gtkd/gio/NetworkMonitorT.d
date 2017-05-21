@@ -29,12 +29,12 @@ public  import gio.Cancellable;
 public  import gio.NetworkMonitor;
 public  import gio.NetworkMonitorIF;
 public  import gio.SocketConnectableIF;
+public  import gio.c.functions;
+public  import gio.c.types;
 public  import glib.ErrorG;
 public  import glib.GException;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
-public  import gtkc.gio;
-public  import gtkc.giotypes;
 public  import std.algorithm;
 
 
@@ -66,12 +66,12 @@ public template NetworkMonitorT(TStruct)
 	public static NetworkMonitorIF getDefault()
 	{
 		auto p = g_network_monitor_get_default();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(NetworkMonitor, NetworkMonitorIF)(cast(GNetworkMonitor*) p);
 	}
 
@@ -107,14 +107,14 @@ public template NetworkMonitorT(TStruct)
 	public bool canReach(SocketConnectableIF connectable, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_network_monitor_can_reach(getNetworkMonitorStruct(), (connectable is null) ? null : connectable.getSocketConnectableStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -155,14 +155,14 @@ public template NetworkMonitorT(TStruct)
 	public bool canReachFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_network_monitor_can_reach_finish(getNetworkMonitorStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -229,13 +229,13 @@ public template NetworkMonitorT(TStruct)
 		static OnNetworkChangedDelegateWrapper[] listeners;
 		void delegate(bool, NetworkMonitorIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(bool, NetworkMonitorIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnNetworkChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -274,12 +274,12 @@ public template NetworkMonitorT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackNetworkChanged(GNetworkMonitor* networkmonitorStruct, bool available, OnNetworkChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(available, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackNetworkChangedDestroy(OnNetworkChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

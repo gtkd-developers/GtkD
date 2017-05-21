@@ -24,13 +24,13 @@
 
 module gio.MountOperation;
 
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ArrayG;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -102,12 +102,12 @@ public class MountOperation : ObjectG
 	public this()
 	{
 		auto p = g_mount_operation_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GMountOperation*) p, true);
 	}
 
@@ -255,13 +255,13 @@ public class MountOperation : ObjectG
 		static OnAbortedDelegateWrapper[] listeners;
 		void delegate(MountOperation) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(MountOperation) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnAbortedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -297,12 +297,12 @@ public class MountOperation : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackAborted(GMountOperation* mountoperationStruct, OnAbortedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackAbortedDestroy(OnAbortedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -313,13 +313,13 @@ public class MountOperation : ObjectG
 		static OnAskPasswordDelegateWrapper[] listeners;
 		void delegate(string, string, string, GAskPasswordFlags, MountOperation) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(string, string, string, GAskPasswordFlags, MountOperation) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnAskPasswordDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -359,12 +359,12 @@ public class MountOperation : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackAskPassword(GMountOperation* mountoperationStruct, char* message, char* defaultUser, char* defaultDomain, GAskPasswordFlags flags, OnAskPasswordDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(message), Str.toString(defaultUser), Str.toString(defaultDomain), flags, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackAskPasswordDestroy(OnAskPasswordDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -375,13 +375,13 @@ public class MountOperation : ObjectG
 		static OnAskQuestionDelegateWrapper[] listeners;
 		void delegate(string, string[], MountOperation) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(string, string[], MountOperation) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnAskQuestionDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -420,12 +420,12 @@ public class MountOperation : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackAskQuestion(GMountOperation* mountoperationStruct, char* message, char** choices, OnAskQuestionDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(message), Str.toStringArray(choices), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackAskQuestionDestroy(OnAskQuestionDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -436,13 +436,13 @@ public class MountOperation : ObjectG
 		static OnReplyDelegateWrapper[] listeners;
 		void delegate(GMountOperationResult, MountOperation) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(GMountOperationResult, MountOperation) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnReplyDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -475,12 +475,12 @@ public class MountOperation : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackReply(GMountOperation* mountoperationStruct, GMountOperationResult result, OnReplyDelegateWrapper wrapper)
 	{
 		wrapper.dlg(result, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackReplyDestroy(OnReplyDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -491,13 +491,13 @@ public class MountOperation : ObjectG
 		static OnShowProcessesDelegateWrapper[] listeners;
 		void delegate(string, ArrayG, string[], MountOperation) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(string, ArrayG, string[], MountOperation) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnShowProcessesDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -546,12 +546,12 @@ public class MountOperation : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackShowProcesses(GMountOperation* mountoperationStruct, char* message, GArray* processes, char** choices, OnShowProcessesDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(message), new ArrayG(processes), Str.toStringArray(choices), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackShowProcessesDestroy(OnShowProcessesDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -562,13 +562,13 @@ public class MountOperation : ObjectG
 		static OnShowUnmountProgressDelegateWrapper[] listeners;
 		void delegate(string, long, long, MountOperation) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(string, long, long, MountOperation) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnShowUnmountProgressDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -623,12 +623,12 @@ public class MountOperation : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackShowUnmountProgress(GMountOperation* mountoperationStruct, char* message, long timeLeft, long bytesLeft, OnShowUnmountProgressDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(message), timeLeft, bytesLeft, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackShowUnmountProgressDestroy(OnShowUnmountProgressDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

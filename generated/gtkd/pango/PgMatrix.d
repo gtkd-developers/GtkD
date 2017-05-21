@@ -25,9 +25,9 @@
 module pango.PgMatrix;
 
 private import gobject.ObjectG;
-private import gtkc.pango;
-public  import gtkc.pangotypes;
 private import gtkd.Loader;
+private import pango.c.functions;
+public  import pango.c.types;
 
 
 /**
@@ -111,12 +111,12 @@ public class PgMatrix
 	public PgMatrix copy()
 	{
 		auto p = pango_matrix_copy(pangoMatrix);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgMatrix)(cast(PangoMatrix*) p, true);
 	}
 

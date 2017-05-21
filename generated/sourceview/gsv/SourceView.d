@@ -34,8 +34,8 @@ private import gsv.SourceCompletion;
 private import gsv.SourceGutter;
 private import gsv.SourceMarkAttributes;
 private import gsv.SpaceDrawer;
-private import gsvc.gsv;
-public  import gsvc.gsvtypes;
+private import gsv.c.functions;
+public  import gsv.c.types;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
 private import gtk.ScrollableIF;
@@ -92,7 +92,7 @@ public class SourceView : TextView
 	public override SourceBuffer getBuffer()
 	{
 		auto p = gtk_text_view_get_buffer(cast(GtkTextView*)gtkSourceView);
-		
+
 		return ObjectG.getDObject!(SourceBuffer)(cast(GtkSourceBuffer*) p);
 	}
 
@@ -122,12 +122,12 @@ public class SourceView : TextView
 	public this()
 	{
 		auto p = gtk_source_view_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkSourceView*) p);
 	}
 
@@ -145,12 +145,12 @@ public class SourceView : TextView
 	public this(SourceBuffer buffer)
 	{
 		auto p = gtk_source_view_new_with_buffer((buffer is null) ? null : buffer.getSourceBufferStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_with_buffer");
 		}
-		
+
 		this(cast(GtkSourceView*) p);
 	}
 
@@ -187,12 +187,12 @@ public class SourceView : TextView
 	public SourceCompletion getCompletion()
 	{
 		auto p = gtk_source_view_get_completion(gtkSourceView);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SourceCompletion)(cast(GtkSourceCompletion*) p);
 	}
 
@@ -226,12 +226,12 @@ public class SourceView : TextView
 	public SourceGutter getGutter(GtkTextWindowType windowType)
 	{
 		auto p = gtk_source_view_get_gutter(gtkSourceView, windowType);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SourceGutter)(cast(GtkSourceGutter*) p);
 	}
 
@@ -291,12 +291,12 @@ public class SourceView : TextView
 	public SourceMarkAttributes getMarkAttributes(string category, int* priority)
 	{
 		auto p = gtk_source_view_get_mark_attributes(gtkSourceView, Str.toStringz(category), priority);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SourceMarkAttributes)(cast(GtkSourceMarkAttributes*) p);
 	}
 
@@ -378,12 +378,12 @@ public class SourceView : TextView
 	public SpaceDrawer getSpaceDrawer()
 	{
 		auto p = gtk_source_view_get_space_drawer(gtkSourceView);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SpaceDrawer)(cast(GtkSourceSpaceDrawer*) p);
 	}
 
@@ -665,13 +665,13 @@ public class SourceView : TextView
 		static OnChangeCaseDelegateWrapper[] listeners;
 		void delegate(GtkSourceChangeCaseType, SourceView) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(GtkSourceChangeCaseType, SourceView) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnChangeCaseDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -706,12 +706,12 @@ public class SourceView : TextView
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackChangeCase(GtkSourceView* sourceviewStruct, GtkSourceChangeCaseType caseType, OnChangeCaseDelegateWrapper wrapper)
 	{
 		wrapper.dlg(caseType, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackChangeCaseDestroy(OnChangeCaseDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -722,13 +722,13 @@ public class SourceView : TextView
 		static OnChangeNumberDelegateWrapper[] listeners;
 		void delegate(int, SourceView) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(int, SourceView) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnChangeNumberDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -763,12 +763,12 @@ public class SourceView : TextView
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackChangeNumber(GtkSourceView* sourceviewStruct, int count, OnChangeNumberDelegateWrapper wrapper)
 	{
 		wrapper.dlg(count, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackChangeNumberDestroy(OnChangeNumberDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -779,13 +779,13 @@ public class SourceView : TextView
 		static OnJoinLinesDelegateWrapper[] listeners;
 		void delegate(SourceView) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(SourceView) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnJoinLinesDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -817,12 +817,12 @@ public class SourceView : TextView
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackJoinLines(GtkSourceView* sourceviewStruct, OnJoinLinesDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackJoinLinesDestroy(OnJoinLinesDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -833,13 +833,13 @@ public class SourceView : TextView
 		static OnLineMarkActivatedDelegateWrapper[] listeners;
 		void delegate(TextIter, Event, SourceView) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TextIter, Event, SourceView) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnLineMarkActivatedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -875,12 +875,12 @@ public class SourceView : TextView
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackLineMarkActivated(GtkSourceView* sourceviewStruct, GtkTextIter* iter, GdkEvent* event, OnLineMarkActivatedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(TextIter)(iter), ObjectG.getDObject!(Event)(event), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackLineMarkActivatedDestroy(OnLineMarkActivatedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -891,13 +891,13 @@ public class SourceView : TextView
 		static OnMoveLinesDelegateWrapper[] listeners;
 		void delegate(bool, int, SourceView) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(bool, int, SourceView) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMoveLinesDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -943,12 +943,12 @@ public class SourceView : TextView
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackMoveLines(GtkSourceView* sourceviewStruct, bool copy, int count, OnMoveLinesDelegateWrapper wrapper)
 	{
 		wrapper.dlg(copy, count, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMoveLinesDestroy(OnMoveLinesDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -959,13 +959,13 @@ public class SourceView : TextView
 		static OnMoveToMatchingBracketDelegateWrapper[] listeners;
 		void delegate(bool, SourceView) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(bool, SourceView) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMoveToMatchingBracketDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1000,12 +1000,12 @@ public class SourceView : TextView
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackMoveToMatchingBracket(GtkSourceView* sourceviewStruct, bool extendSelection, OnMoveToMatchingBracketDelegateWrapper wrapper)
 	{
 		wrapper.dlg(extendSelection, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMoveToMatchingBracketDestroy(OnMoveToMatchingBracketDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1016,13 +1016,13 @@ public class SourceView : TextView
 		static OnMoveWordsDelegateWrapper[] listeners;
 		void delegate(int, SourceView) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(int, SourceView) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMoveWordsDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1060,12 +1060,12 @@ public class SourceView : TextView
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackMoveWords(GtkSourceView* sourceviewStruct, int count, OnMoveWordsDelegateWrapper wrapper)
 	{
 		wrapper.dlg(count, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMoveWordsDestroy(OnMoveWordsDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1076,13 +1076,13 @@ public class SourceView : TextView
 		static OnRedoDelegateWrapper[] listeners;
 		void delegate(SourceView) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(SourceView) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnRedoDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1110,12 +1110,12 @@ public class SourceView : TextView
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackRedo(GtkSourceView* sourceviewStruct, OnRedoDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackRedoDestroy(OnRedoDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1126,13 +1126,13 @@ public class SourceView : TextView
 		static OnShowCompletionDelegateWrapper[] listeners;
 		void delegate(SourceView) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(SourceView) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnShowCompletionDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1171,12 +1171,12 @@ public class SourceView : TextView
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackShowCompletion(GtkSourceView* sourceviewStruct, OnShowCompletionDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackShowCompletionDestroy(OnShowCompletionDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1187,13 +1187,13 @@ public class SourceView : TextView
 		static OnSmartHomeEndDelegateWrapper[] listeners;
 		void delegate(TextIter, int, SourceView) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TextIter, int, SourceView) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnSmartHomeEndDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1233,12 +1233,12 @@ public class SourceView : TextView
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackSmartHomeEnd(GtkSourceView* sourceviewStruct, GtkTextIter* iter, int count, OnSmartHomeEndDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(TextIter)(iter), count, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackSmartHomeEndDestroy(OnSmartHomeEndDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1249,13 +1249,13 @@ public class SourceView : TextView
 		static OnUndoDelegateWrapper[] listeners;
 		void delegate(SourceView) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(SourceView) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnUndoDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1283,12 +1283,12 @@ public class SourceView : TextView
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackUndo(GtkSourceView* sourceviewStruct, OnUndoDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackUndoDestroy(OnUndoDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

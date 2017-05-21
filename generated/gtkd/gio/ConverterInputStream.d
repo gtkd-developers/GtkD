@@ -30,10 +30,10 @@ private import gio.FilterInputStream;
 private import gio.InputStream;
 private import gio.PollableInputStreamIF;
 private import gio.PollableInputStreamT;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -101,12 +101,12 @@ public class ConverterInputStream : FilterInputStream, PollableInputStreamIF
 	public this(InputStream baseStream, ConverterIF converter)
 	{
 		auto p = g_converter_input_stream_new((baseStream is null) ? null : baseStream.getInputStreamStruct(), (converter is null) ? null : converter.getConverterStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GConverterInputStream*) p, true);
 	}
 
@@ -120,12 +120,12 @@ public class ConverterInputStream : FilterInputStream, PollableInputStreamIF
 	public ConverterIF getConverter()
 	{
 		auto p = g_converter_input_stream_get_converter(gConverterInputStream);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Converter, ConverterIF)(cast(GConverter*) p);
 	}
 }

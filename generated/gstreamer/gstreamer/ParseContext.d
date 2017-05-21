@@ -27,8 +27,8 @@ module gstreamer.ParseContext;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 private import gtkd.Loader;
 
 
@@ -91,12 +91,12 @@ public class ParseContext
 	public this()
 	{
 		auto p = gst_parse_context_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GstParseContext*) p);
 	}
 
@@ -121,7 +121,7 @@ public class ParseContext
 	public string[] getMissingElements()
 	{
 		auto retStr = gst_parse_context_get_missing_elements(gstParseContext);
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}

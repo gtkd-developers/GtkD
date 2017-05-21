@@ -27,8 +27,8 @@ module gtk.PrintOperationPreviewT;
 public  import gobject.Signals;
 public  import gtk.PageSetup;
 public  import gtk.PrintContext;
-public  import gtkc.gtk;
-public  import gtkc.gtktypes;
+public  import gtk.c.functions;
+public  import gtk.c.types;
 public  import std.algorithm;
 
 
@@ -98,13 +98,13 @@ public template PrintOperationPreviewT(TStruct)
 		static OnGotPageSizeDelegateWrapper[] listeners;
 		void delegate(PrintContext, PageSetup, PrintOperationPreviewIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(PrintContext, PageSetup, PrintOperationPreviewIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnGotPageSizeDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -143,12 +143,12 @@ public template PrintOperationPreviewT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackGotPageSize(GtkPrintOperationPreview* printoperationpreviewStruct, GtkPrintContext* context, GtkPageSetup* pageSetup, OnGotPageSizeDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(PrintContext)(context), ObjectG.getDObject!(PageSetup)(pageSetup), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackGotPageSizeDestroy(OnGotPageSizeDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -159,13 +159,13 @@ public template PrintOperationPreviewT(TStruct)
 		static OnReadyDelegateWrapper[] listeners;
 		void delegate(PrintContext, PrintOperationPreviewIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(PrintContext, PrintOperationPreviewIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnReadyDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -201,12 +201,12 @@ public template PrintOperationPreviewT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackReady(GtkPrintOperationPreview* printoperationpreviewStruct, GtkPrintContext* context, OnReadyDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(PrintContext)(context), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackReadyDestroy(OnReadyDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

@@ -28,8 +28,8 @@ private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -96,12 +96,12 @@ public class HSV : Widget
 	public this()
 	{
 		auto p = gtk_hsv_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkHSV*) p);
 	}
 
@@ -208,13 +208,13 @@ public class HSV : Widget
 		static OnChangedDelegateWrapper[] listeners;
 		void delegate(HSV) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(HSV) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -242,12 +242,12 @@ public class HSV : Widget
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackChanged(GtkHSV* hsvStruct, OnChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -258,13 +258,13 @@ public class HSV : Widget
 		static OnMoveDelegateWrapper[] listeners;
 		void delegate(GtkDirectionType, HSV) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(GtkDirectionType, HSV) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMoveDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -292,12 +292,12 @@ public class HSV : Widget
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackMove(GtkHSV* hsvStruct, GtkDirectionType object, OnMoveDelegateWrapper wrapper)
 	{
 		wrapper.dlg(object, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMoveDestroy(OnMoveDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

@@ -31,8 +31,8 @@ private import gstreamer.Bin;
 private import gstreamer.Bus;
 private import gstreamer.Clock;
 private import gstreamer.Element;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /**
@@ -138,12 +138,12 @@ public class Pipeline : Bin
 	public this(string name)
 	{
 		auto p = gst_pipeline_new(Str.toStringz(name));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GstPipeline*) p);
 	}
 
@@ -187,12 +187,12 @@ public class Pipeline : Bin
 	public override Bus getBus()
 	{
 		auto p = gst_pipeline_get_bus(gstPipeline);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Bus)(cast(GstBus*) p, true);
 	}
 
@@ -209,12 +209,12 @@ public class Pipeline : Bin
 	public override Clock getClock()
 	{
 		auto p = gst_pipeline_get_clock(gstPipeline);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Clock)(cast(GstClock*) p, true);
 	}
 
@@ -256,12 +256,12 @@ public class Pipeline : Bin
 	public Clock getPipelineClock()
 	{
 		auto p = gst_pipeline_get_pipeline_clock(gstPipeline);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Clock)(cast(GstClock*) p, true);
 	}
 

@@ -30,8 +30,8 @@ private import gobject.ObjectG;
 private import gtk.AccelGroup;
 private import gtk.MenuItem;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -143,7 +143,7 @@ public class ImageMenuItem : MenuItem
 	public this (string label, bool mnemonic=true)
 	{
 		GtkImageMenuItem* p;
-		
+
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_image_menu_item_new_with_mnemonic  (const gchar *label);
@@ -154,15 +154,15 @@ public class ImageMenuItem : MenuItem
 			// GtkWidget* gtk_image_menu_item_new_with_label  (const gchar *label);
 			p = cast(GtkImageMenuItem*)gtk_image_menu_item_new_with_label(Str.toStringz(label));
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gtk_image_menu_item_new_with_");
 		}
-		
+
 		this(p);
 	}
-	
+
 	/**
 	 * Creates a new GtkImageMenuItem containing the image and text from a
 	 * stock item.
@@ -208,12 +208,12 @@ public class ImageMenuItem : MenuItem
 	public this()
 	{
 		auto p = gtk_image_menu_item_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkImageMenuItem*) p);
 	}
 
@@ -239,12 +239,12 @@ public class ImageMenuItem : MenuItem
 	public Widget getImage()
 	{
 		auto p = gtk_image_menu_item_get_image(gtkImageMenuItem);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 

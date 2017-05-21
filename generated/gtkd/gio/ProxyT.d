@@ -30,12 +30,12 @@ public  import gio.IOStream;
 public  import gio.Proxy;
 public  import gio.ProxyAddress;
 public  import gio.ProxyIF;
+public  import gio.c.functions;
+public  import gio.c.types;
 public  import glib.ErrorG;
 public  import glib.GException;
 public  import glib.Str;
 public  import gobject.ObjectG;
-public  import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -74,12 +74,12 @@ public template ProxyT(TStruct)
 	public static ProxyIF getDefaultForProtocol(string protocol)
 	{
 		auto p = g_proxy_get_default_for_protocol(Str.toStringz(protocol));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Proxy, ProxyIF)(cast(GProxy*) p, true);
 	}
 
@@ -105,19 +105,19 @@ public template ProxyT(TStruct)
 	public IOStream connect(IOStream connection, ProxyAddress proxyAddress, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_proxy_connect(getProxyStruct(), (connection is null) ? null : connection.getIOStreamStruct(), (proxyAddress is null) ? null : proxyAddress.getProxyAddressStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(IOStream)(cast(GIOStream*) p, true);
 	}
 
@@ -153,19 +153,19 @@ public template ProxyT(TStruct)
 	public IOStream connectFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_proxy_connect_finish(getProxyStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(IOStream)(cast(GIOStream*) p, true);
 	}
 

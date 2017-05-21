@@ -28,8 +28,8 @@ private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gtk.MenuItem;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -92,12 +92,12 @@ public class SeparatorMenuItem : MenuItem
 	public this()
 	{
 		auto p = gtk_separator_menu_item_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkSeparatorMenuItem*) p);
 	}
 }

@@ -26,9 +26,9 @@ module pango.PgFontMetrics;
 
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-private import gtkc.pango;
-public  import gtkc.pangotypes;
 private import gtkd.Loader;
+private import pango.c.functions;
+public  import pango.c.types;
 
 
 /**
@@ -93,12 +93,12 @@ public class PgFontMetrics
 	public this()
 	{
 		auto p = pango_font_metrics_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(PangoFontMetrics*) p);
 	}
 
@@ -220,12 +220,12 @@ public class PgFontMetrics
 	public PgFontMetrics doref()
 	{
 		auto p = pango_font_metrics_ref(pangoFontMetrics);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgFontMetrics)(cast(PangoFontMetrics*) p, true);
 	}
 

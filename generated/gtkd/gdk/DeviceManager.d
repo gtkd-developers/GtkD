@@ -26,11 +26,11 @@ module gdk.DeviceManager;
 
 private import gdk.Device;
 private import gdk.Display;
+private import gdk.c.functions;
+public  import gdk.c.types;
 private import glib.ListG;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gdk;
-public  import gtkc.gdktypes;
 private import std.algorithm;
 
 
@@ -209,12 +209,12 @@ public class DeviceManager : ObjectG
 	public Device getClientPointer()
 	{
 		auto p = gdk_device_manager_get_client_pointer(gdkDeviceManager);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Device)(cast(GdkDevice*) p);
 	}
 
@@ -230,12 +230,12 @@ public class DeviceManager : ObjectG
 	public Display getDisplay()
 	{
 		auto p = gdk_device_manager_get_display(gdkDeviceManager);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
 	}
 
@@ -259,12 +259,12 @@ public class DeviceManager : ObjectG
 	public ListG listDevices(GdkDeviceType type)
 	{
 		auto p = gdk_device_manager_list_devices(gdkDeviceManager, type);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -273,13 +273,13 @@ public class DeviceManager : ObjectG
 		static OnDeviceAddedDelegateWrapper[] listeners;
 		void delegate(Device, DeviceManager) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Device, DeviceManager) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDeviceAddedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -314,12 +314,12 @@ public class DeviceManager : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDeviceAdded(GdkDeviceManager* devicemanagerStruct, GdkDevice* device, OnDeviceAddedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Device)(device), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDeviceAddedDestroy(OnDeviceAddedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -330,13 +330,13 @@ public class DeviceManager : ObjectG
 		static OnDeviceChangedDelegateWrapper[] listeners;
 		void delegate(Device, DeviceManager) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Device, DeviceManager) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDeviceChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -378,12 +378,12 @@ public class DeviceManager : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDeviceChanged(GdkDeviceManager* devicemanagerStruct, GdkDevice* device, OnDeviceChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Device)(device), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDeviceChangedDestroy(OnDeviceChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -394,13 +394,13 @@ public class DeviceManager : ObjectG
 		static OnDeviceRemovedDelegateWrapper[] listeners;
 		void delegate(Device, DeviceManager) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Device, DeviceManager) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDeviceRemovedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -435,12 +435,12 @@ public class DeviceManager : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDeviceRemoved(GdkDeviceManager* devicemanagerStruct, GdkDevice* device, OnDeviceRemovedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Device)(device), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDeviceRemovedDestroy(OnDeviceRemovedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

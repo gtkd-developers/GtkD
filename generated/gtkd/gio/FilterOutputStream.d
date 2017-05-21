@@ -25,9 +25,9 @@
 module gio.FilterOutputStream;
 
 private import gio.OutputStream;
+private import gio.c.functions;
+public  import gio.c.types;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -85,12 +85,12 @@ public class FilterOutputStream : OutputStream
 	public OutputStream getBaseStream()
 	{
 		auto p = g_filter_output_stream_get_base_stream(gFilterOutputStream);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(OutputStream)(cast(GOutputStream*) p);
 	}
 

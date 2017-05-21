@@ -27,13 +27,13 @@ module gio.SimpleAsyncResult;
 private import gio.AsyncResultIF;
 private import gio.AsyncResultT;
 private import gio.Cancellable;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -273,12 +273,12 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	public this(ObjectG sourceObject, GAsyncReadyCallback callback, void* userData, void* sourceTag)
 	{
 		auto p = g_simple_async_result_new((sourceObject is null) ? null : sourceObject.getObjectGStruct(), callback, userData, sourceTag);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GSimpleAsyncResult*) p, true);
 	}
 
@@ -300,12 +300,12 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	public this(ObjectG sourceObject, GAsyncReadyCallback callback, void* userData, ErrorG error)
 	{
 		auto p = g_simple_async_result_new_from_error((sourceObject is null) ? null : sourceObject.getObjectGStruct(), callback, userData, (error is null) ? null : error.getErrorGStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_error");
 		}
-		
+
 		this(cast(GSimpleAsyncResult*) p, true);
 	}
 
@@ -437,14 +437,14 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	public bool propagateError()
 	{
 		GError* err = null;
-		
+
 		auto p = g_simple_async_result_propagate_error(gSimpleAsyncResult, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 

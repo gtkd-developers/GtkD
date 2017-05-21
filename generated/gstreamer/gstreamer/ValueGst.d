@@ -30,8 +30,8 @@ private import gobject.Value;
 private import gstreamer.Caps;
 private import gstreamer.CapsFeatures;
 private import gstreamer.Structure;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /** */
@@ -135,11 +135,11 @@ public struct ValueGst
 	public static bool deserialize(out Value dest, string src)
 	{
 		GValue* outdest = gMalloc!GValue();
-		
+
 		auto p = gst_value_deserialize(outdest, Str.toStringz(src)) != 0;
-		
+
 		dest = ObjectG.getDObject!(Value)(outdest, true);
-		
+
 		return p;
 	}
 
@@ -217,12 +217,12 @@ public struct ValueGst
 	public static Caps getCaps(Value value)
 	{
 		auto p = gst_value_get_caps((value is null) ? null : value.getValueStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
 	}
 
@@ -237,12 +237,12 @@ public struct ValueGst
 	public static CapsFeatures getCapsFeatures(Value value)
 	{
 		auto p = gst_value_get_caps_features((value is null) ? null : value.getValueStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(CapsFeatures)(cast(GstCapsFeatures*) p);
 	}
 
@@ -356,12 +356,12 @@ public struct ValueGst
 	public static Value getFractionRangeMax(Value value)
 	{
 		auto p = gst_value_get_fraction_range_max((value is null) ? null : value.getValueStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Value)(cast(GValue*) p);
 	}
 
@@ -376,12 +376,12 @@ public struct ValueGst
 	public static Value getFractionRangeMin(Value value)
 	{
 		auto p = gst_value_get_fraction_range_min((value is null) ? null : value.getValueStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Value)(cast(GValue*) p);
 	}
 
@@ -474,12 +474,12 @@ public struct ValueGst
 	public static Structure getStructure(Value value)
 	{
 		auto p = gst_value_get_structure((value is null) ? null : value.getValueStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
 	}
 
@@ -494,9 +494,9 @@ public struct ValueGst
 	public static void initAndCopy(out Value dest, Value src)
 	{
 		GValue* outdest = gMalloc!GValue();
-		
+
 		gst_value_init_and_copy(outdest, (src is null) ? null : src.getValueStruct());
-		
+
 		dest = ObjectG.getDObject!(Value)(outdest, true);
 	}
 
@@ -518,11 +518,11 @@ public struct ValueGst
 	public static bool intersect(out Value dest, Value value1, Value value2)
 	{
 		GValue* outdest = gMalloc!GValue();
-		
+
 		auto p = gst_value_intersect(outdest, (value1 is null) ? null : value1.getValueStruct(), (value2 is null) ? null : value2.getValueStruct()) != 0;
-		
+
 		dest = ObjectG.getDObject!(Value)(outdest, true);
-		
+
 		return p;
 	}
 
@@ -583,7 +583,7 @@ public struct ValueGst
 	public static string serialize(Value value)
 	{
 		auto retStr = gst_value_serialize((value is null) ? null : value.getValueStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -765,11 +765,11 @@ public struct ValueGst
 	public static bool subtract(out Value dest, Value minuend, Value subtrahend)
 	{
 		GValue* outdest = gMalloc!GValue();
-		
+
 		auto p = gst_value_subtract(outdest, (minuend is null) ? null : minuend.getValueStruct(), (subtrahend is null) ? null : subtrahend.getValueStruct()) != 0;
-		
+
 		dest = ObjectG.getDObject!(Value)(outdest, true);
-		
+
 		return p;
 	}
 
@@ -786,11 +786,11 @@ public struct ValueGst
 	public static bool unio(out Value dest, Value value1, Value value2)
 	{
 		GValue* outdest = gMalloc!GValue();
-		
+
 		auto p = gst_value_union(outdest, (value1 is null) ? null : value1.getValueStruct(), (value2 is null) ? null : value2.getValueStruct()) != 0;
-		
+
 		dest = ObjectG.getDObject!(Value)(outdest, true);
-		
+
 		return p;
 	}
 }

@@ -25,10 +25,10 @@
 module atk.NoOpObjectFactory;
 
 private import atk.ObjectFactory;
+private import atk.c.functions;
+public  import atk.c.types;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-private import gtkc.atk;
-public  import gtkc.atktypes;
 
 
 /**
@@ -88,12 +88,12 @@ public class NoOpObjectFactory : ObjectFactory
 	public this()
 	{
 		auto p = atk_no_op_object_factory_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(AtkNoOpObjectFactory*) p, true);
 	}
 }

@@ -28,8 +28,8 @@ private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gtk.Bin;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -99,12 +99,12 @@ public class ActionBar : Bin
 	public this()
 	{
 		auto p = gtk_action_bar_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkActionBar*) p);
 	}
 
@@ -118,12 +118,12 @@ public class ActionBar : Bin
 	public Widget getCenterWidget()
 	{
 		auto p = gtk_action_bar_get_center_widget(gtkActionBar);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 

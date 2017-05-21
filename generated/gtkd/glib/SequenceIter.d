@@ -25,8 +25,8 @@
 module glib.SequenceIter;
 
 private import glib.Sequence;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 
 
 /**
@@ -104,12 +104,12 @@ public class SequenceIter
 	public Sequence getSequence()
 	{
 		auto p = g_sequence_iter_get_sequence(gSequenceIter);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Sequence(cast(GSequence*) p);
 	}
 
@@ -154,12 +154,12 @@ public class SequenceIter
 	public SequenceIter move(int delta)
 	{
 		auto p = g_sequence_iter_move(gSequenceIter, delta);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new SequenceIter(cast(GSequenceIter*) p);
 	}
 
@@ -174,12 +174,12 @@ public class SequenceIter
 	public SequenceIter next()
 	{
 		auto p = g_sequence_iter_next(gSequenceIter);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new SequenceIter(cast(GSequenceIter*) p);
 	}
 
@@ -195,12 +195,12 @@ public class SequenceIter
 	public SequenceIter prev()
 	{
 		auto p = g_sequence_iter_prev(gSequenceIter);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new SequenceIter(cast(GSequenceIter*) p);
 	}
 }

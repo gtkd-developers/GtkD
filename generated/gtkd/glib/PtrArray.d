@@ -25,8 +25,8 @@
 module glib.PtrArray;
 
 private import glib.ConstructionException;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 
 
 /**
@@ -136,12 +136,12 @@ public class PtrArray
 	public this()
 	{
 		auto p = g_ptr_array_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GPtrArray*) p);
 	}
 
@@ -168,12 +168,12 @@ public class PtrArray
 	public this(uint reservedSize, GDestroyNotify elementFreeFunc)
 	{
 		auto p = g_ptr_array_new_full(reservedSize, elementFreeFunc);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_full");
 		}
-		
+
 		this(cast(GPtrArray*) p);
 	}
 
@@ -196,12 +196,12 @@ public class PtrArray
 	public this(GDestroyNotify elementFreeFunc)
 	{
 		auto p = g_ptr_array_new_with_free_func(elementFreeFunc);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_with_free_func");
 		}
-		
+
 		this(cast(GPtrArray*) p);
 	}
 
@@ -216,12 +216,12 @@ public class PtrArray
 	public PtrArray doref()
 	{
 		auto p = g_ptr_array_ref(gPtrArray);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new PtrArray(cast(GPtrArray*) p);
 	}
 
@@ -315,12 +315,12 @@ public class PtrArray
 	public PtrArray removeRange(uint index, uint length)
 	{
 		auto p = g_ptr_array_remove_range(gPtrArray, index, length);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new PtrArray(cast(GPtrArray*) p);
 	}
 
@@ -368,12 +368,12 @@ public class PtrArray
 	public static PtrArray sizedNew(uint reservedSize)
 	{
 		auto p = g_ptr_array_sized_new(reservedSize);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new PtrArray(cast(GPtrArray*) p);
 	}
 

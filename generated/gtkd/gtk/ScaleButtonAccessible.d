@@ -27,8 +27,8 @@ module gtk.ScaleButtonAccessible;
 private import atk.ValueIF;
 private import atk.ValueT;
 private import gtk.ButtonAccessible;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /** */

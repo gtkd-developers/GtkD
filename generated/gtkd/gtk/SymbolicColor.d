@@ -29,8 +29,8 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gtk.StyleProperties;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import gtkd.Loader;
 
 
@@ -102,7 +102,7 @@ public class SymbolicColor
 	public this (SymbolicColor color, double factor, bool useAlpha = true)
 	{
 		GtkSymbolicColor* p;
-		
+
 		if ( useAlpha )
 		{
 			p = gtk_symbolic_color_new_alpha((color is null) ? null : color.getSymbolicColorStruct(), factor);
@@ -111,12 +111,12 @@ public class SymbolicColor
 		{
 			p = gtk_symbolic_color_new_shade((color is null) ? null : color.getSymbolicColorStruct(), factor);
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gtk_symbolic_color_new_shade((color is null) ? null : color.getSymbolicColorStruct(), factor)");
 		}
-		
+
 		this(cast(GtkSymbolicColor*) p);
 	}
 
@@ -146,12 +146,12 @@ public class SymbolicColor
 	public this(RGBA color)
 	{
 		auto p = gtk_symbolic_color_new_literal((color is null) ? null : color.getRGBAStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_literal");
 		}
-		
+
 		this(cast(GtkSymbolicColor*) p);
 	}
 
@@ -176,12 +176,12 @@ public class SymbolicColor
 	public this(SymbolicColor color1, SymbolicColor color2, double factor)
 	{
 		auto p = gtk_symbolic_color_new_mix((color1 is null) ? null : color1.getSymbolicColorStruct(), (color2 is null) ? null : color2.getSymbolicColorStruct(), factor);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_mix");
 		}
-		
+
 		this(cast(GtkSymbolicColor*) p);
 	}
 
@@ -204,12 +204,12 @@ public class SymbolicColor
 	public this(string name)
 	{
 		auto p = gtk_symbolic_color_new_name(Str.toStringz(name));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_name");
 		}
-		
+
 		this(cast(GtkSymbolicColor*) p);
 	}
 
@@ -236,12 +236,12 @@ public class SymbolicColor
 	public this(string themeClass, int id)
 	{
 		auto p = gtk_symbolic_color_new_win32(Str.toStringz(themeClass), id);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_win32");
 		}
-		
+
 		this(cast(GtkSymbolicColor*) p);
 	}
 
@@ -257,12 +257,12 @@ public class SymbolicColor
 	public SymbolicColor doref()
 	{
 		auto p = gtk_symbolic_color_ref(gtkSymbolicColor);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SymbolicColor)(cast(GtkSymbolicColor*) p, true);
 	}
 
@@ -290,11 +290,11 @@ public class SymbolicColor
 	public bool resolve(StyleProperties props, out RGBA resolvedColor)
 	{
 		GdkRGBA* outresolvedColor = gMalloc!GdkRGBA();
-		
+
 		auto p = gtk_symbolic_color_resolve(gtkSymbolicColor, (props is null) ? null : props.getStylePropertiesStruct(), outresolvedColor) != 0;
-		
+
 		resolvedColor = ObjectG.getDObject!(RGBA)(outresolvedColor, true);
-		
+
 		return p;
 	}
 
@@ -312,7 +312,7 @@ public class SymbolicColor
 	public override string toString()
 	{
 		auto retStr = gtk_symbolic_color_to_string(gtkSymbolicColor);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}

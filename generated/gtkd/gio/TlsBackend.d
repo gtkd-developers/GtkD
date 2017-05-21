@@ -26,9 +26,9 @@ module gio.TlsBackend;
 
 private import gio.TlsBackendIF;
 private import gio.TlsBackendT;
+private import gio.c.functions;
+public  import gio.c.types;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /** */

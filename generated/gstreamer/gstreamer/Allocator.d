@@ -29,8 +29,8 @@ private import gobject.ObjectG;
 private import gstreamer.AllocationParams;
 private import gstreamer.Memory;
 private import gstreamer.ObjectGst;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /**
@@ -101,12 +101,12 @@ public class Allocator : ObjectGst
 	public static Allocator find(string name)
 	{
 		auto p = gst_allocator_find(Str.toStringz(name));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Allocator)(cast(GstAllocator*) p, true);
 	}
 
@@ -149,12 +149,12 @@ public class Allocator : ObjectGst
 	public Memory alloc(size_t size, AllocationParams params)
 	{
 		auto p = gst_allocator_alloc(gstAllocator, size, (params is null) ? null : params.getAllocationParamsStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Memory)(cast(GstMemory*) p, true);
 	}
 

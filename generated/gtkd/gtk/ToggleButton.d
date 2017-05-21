@@ -30,8 +30,8 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Button;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -140,7 +140,7 @@ public class ToggleButton : Button
 	public this (string label, bool mnemonic=true)
 	{
 		GtkToggleButton* p;
-		
+
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_toggle_button_new_with_mnemonic  (const gchar *label);
@@ -151,12 +151,12 @@ public class ToggleButton : Button
 			// GtkWidget* gtk_toggle_button_new_with_label  (const gchar *label);
 			p = cast(GtkToggleButton*)gtk_toggle_button_new_with_label(Str.toStringz(label));
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gtk_toggle_button_new_");
 		}
-		
+
 		this(p);
 	}
 
@@ -179,12 +179,12 @@ public class ToggleButton : Button
 	public this()
 	{
 		auto p = gtk_toggle_button_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkToggleButton*) p);
 	}
 
@@ -289,13 +289,13 @@ public class ToggleButton : Button
 		static OnToggledDelegateWrapper[] listeners;
 		void delegate(ToggleButton) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(ToggleButton) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnToggledDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -326,12 +326,12 @@ public class ToggleButton : Button
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackToggled(GtkToggleButton* togglebuttonStruct, OnToggledDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackToggledDestroy(OnToggledDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

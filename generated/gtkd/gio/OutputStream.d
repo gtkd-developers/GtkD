@@ -27,13 +27,13 @@ module gio.OutputStream;
 private import gio.AsyncResultIF;
 private import gio.Cancellable;
 private import gio.InputStream;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.Bytes;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -139,14 +139,14 @@ public class OutputStream : ObjectG
 	public bool close(Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_output_stream_close(gOutputStream, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -186,14 +186,14 @@ public class OutputStream : ObjectG
 	public bool closeFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_output_stream_close_finish(gOutputStream, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -218,14 +218,14 @@ public class OutputStream : ObjectG
 	public bool flush(Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_output_stream_flush(gOutputStream, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -262,14 +262,14 @@ public class OutputStream : ObjectG
 	public bool flushFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_output_stream_flush_finish(gOutputStream, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -320,14 +320,14 @@ public class OutputStream : ObjectG
 	public bool setPending()
 	{
 		GError* err = null;
-		
+
 		auto p = g_output_stream_set_pending(gOutputStream, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -350,14 +350,14 @@ public class OutputStream : ObjectG
 	public ptrdiff_t splice(InputStream source, GOutputStreamSpliceFlags flags, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_output_stream_splice(gOutputStream, (source is null) ? null : source.getInputStreamStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -399,14 +399,14 @@ public class OutputStream : ObjectG
 	public ptrdiff_t spliceFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_output_stream_splice_finish(gOutputStream, (result is null) ? null : result.getAsyncResultStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -439,11 +439,11 @@ public class OutputStream : ObjectG
 	public bool vprintf(out size_t bytesWritten, Cancellable cancellable, out ErrorG error, string format, void* args)
 	{
 		GError* outerror = null;
-		
+
 		auto p = g_output_stream_vprintf(gOutputStream, &bytesWritten, (cancellable is null) ? null : cancellable.getCancellableStruct(), &outerror, Str.toStringz(format), args) != 0;
-		
+
 		error = new ErrorG(outerror);
-		
+
 		return p;
 	}
 
@@ -481,14 +481,14 @@ public class OutputStream : ObjectG
 	public ptrdiff_t write(ubyte[] buffer, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_output_stream_write(gOutputStream, buffer.ptr, cast(size_t)buffer.length, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -527,14 +527,14 @@ public class OutputStream : ObjectG
 	public bool writeAll(ubyte[] buffer, out size_t bytesWritten, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_output_stream_write_all(gOutputStream, buffer.ptr, cast(size_t)buffer.length, &bytesWritten, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -595,14 +595,14 @@ public class OutputStream : ObjectG
 	public bool writeAllFinish(AsyncResultIF result, out size_t bytesWritten)
 	{
 		GError* err = null;
-		
+
 		auto p = g_output_stream_write_all_finish(gOutputStream, (result is null) ? null : result.getAsyncResultStruct(), &bytesWritten, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -680,14 +680,14 @@ public class OutputStream : ObjectG
 	public ptrdiff_t writeBytes(Bytes bytes, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_output_stream_write_bytes(gOutputStream, (bytes is null) ? null : bytes.getBytesStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -731,14 +731,14 @@ public class OutputStream : ObjectG
 	public ptrdiff_t writeBytesFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_output_stream_write_bytes_finish(gOutputStream, (result is null) ? null : result.getAsyncResultStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -755,14 +755,14 @@ public class OutputStream : ObjectG
 	public ptrdiff_t writeFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_output_stream_write_finish(gOutputStream, (result is null) ? null : result.getAsyncResultStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 }

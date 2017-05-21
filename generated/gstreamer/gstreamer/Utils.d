@@ -29,8 +29,8 @@ private import gobject.ObjectG;
 private import gobject.Value;
 private import gobject.ValueArray;
 private import gstreamer.Plugin;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /** */
@@ -289,9 +289,9 @@ public struct Utils
 	public static void setValueFromString(out Value value, string valueStr)
 	{
 		GValue* outvalue = gMalloc!GValue();
-		
+
 		gst_util_set_value_from_string(outvalue, Str.toStringz(valueStr));
-		
+
 		value = ObjectG.getDObject!(Value)(outvalue, true);
 	}
 
@@ -491,11 +491,11 @@ public struct Utils
 	public static bool getObjectArray(ObjectG object, string name, out ValueArray array)
 	{
 		GValueArray* outarray = null;
-		
+
 		auto p = gst_util_get_object_array((object is null) ? null : object.getObjectGStruct(), Str.toStringz(name), &outarray) != 0;
-		
+
 		array = ObjectG.getDObject!(ValueArray)(outarray);
-		
+
 		return p;
 	}
 

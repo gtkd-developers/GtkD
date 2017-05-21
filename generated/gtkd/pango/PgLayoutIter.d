@@ -25,11 +25,11 @@
 module pango.PgLayoutIter;
 
 private import gobject.ObjectG;
-private import gtkc.pango;
-public  import gtkc.pangotypes;
 private import gtkd.Loader;
 private import pango.PgLayout;
 private import pango.PgLayoutLine;
+private import pango.c.functions;
+public  import pango.c.types;
 
 
 /**
@@ -103,12 +103,12 @@ public class PgLayoutIter
 	public PgLayoutIter copy()
 	{
 		auto p = pango_layout_iter_copy(pangoLayoutIter);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgLayoutIter)(cast(PangoLayoutIter*) p, true);
 	}
 
@@ -183,12 +183,12 @@ public class PgLayoutIter
 	public PgLayout getLayout()
 	{
 		auto p = pango_layout_iter_get_layout(pangoLayoutIter);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) p);
 	}
 
@@ -219,12 +219,12 @@ public class PgLayoutIter
 	public PgLayoutLine getLine()
 	{
 		auto p = pango_layout_iter_get_line(pangoLayoutIter);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgLayoutLine)(cast(PangoLayoutLine*) p, true);
 	}
 
@@ -260,12 +260,12 @@ public class PgLayoutIter
 	public PgLayoutLine getLineReadonly()
 	{
 		auto p = pango_layout_iter_get_line_readonly(pangoLayoutIter);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgLayoutLine)(cast(PangoLayoutLine*) p);
 	}
 

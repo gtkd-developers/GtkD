@@ -39,8 +39,8 @@ private import gstreamer.PadTemplate;
 private import gstreamer.Query;
 private import gstreamer.StaticPadTemplate;
 private import gstreamer.Stream;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 private import std.algorithm;
 
 
@@ -149,7 +149,7 @@ public class Pad : ObjectGst
 		super(cast(GstObject*)gstPad);
 		this.gstPad = cast(GstPad*) gstPad;
 	}
-	
+
 	/**
 	 * Queries a pad for the stream position.
 	 * This is a convenience function for gstreamerD.
@@ -162,7 +162,7 @@ public class Pad : ObjectGst
 		queryPosition( GstFormat.TIME, cur_pos );
 		return cur_pos;
 	}
-	
+
 	/**
 	 * Queries a pad for the stream duration.
 	 * This is a convenience function for gstreamerD.
@@ -205,12 +205,12 @@ public class Pad : ObjectGst
 	public this(string name, GstPadDirection direction)
 	{
 		auto p = gst_pad_new(Str.toStringz(name), direction);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GstPad*) p);
 	}
 
@@ -232,12 +232,12 @@ public class Pad : ObjectGst
 	public this(StaticPadTemplate templ, string name)
 	{
 		auto p = gst_pad_new_from_static_template((templ is null) ? null : templ.getStaticPadTemplateStruct(), Str.toStringz(name));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_static_template");
 		}
-		
+
 		this(cast(GstPad*) p);
 	}
 
@@ -259,12 +259,12 @@ public class Pad : ObjectGst
 	public this(PadTemplate templ, string name)
 	{
 		auto p = gst_pad_new_from_template((templ is null) ? null : templ.getPadTemplateStruct(), Str.toStringz(name));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_template");
 		}
-		
+
 		this(cast(GstPad*) p);
 	}
 
@@ -444,7 +444,7 @@ public class Pad : ObjectGst
 	public string createStreamId(Element parent, string streamId)
 	{
 		auto retStr = gst_pad_create_stream_id(gstPad, (parent is null) ? null : parent.getElementStruct(), Str.toStringz(streamId));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -474,7 +474,7 @@ public class Pad : ObjectGst
 	public string createStreamIdPrintfValist(Element parent, string streamId, void* varArgs)
 	{
 		auto retStr = gst_pad_create_stream_id_printf_valist(gstPad, (parent is null) ? null : parent.getElementStruct(), Str.toStringz(streamId), varArgs);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -534,12 +534,12 @@ public class Pad : ObjectGst
 	public Caps getAllowedCaps()
 	{
 		auto p = gst_pad_get_allowed_caps(gstPad);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
 	}
 
@@ -553,12 +553,12 @@ public class Pad : ObjectGst
 	public Caps getCurrentCaps()
 	{
 		auto p = gst_pad_get_current_caps(gstPad);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
 	}
 
@@ -618,12 +618,12 @@ public class Pad : ObjectGst
 	public PadTemplate getPadTemplate()
 	{
 		auto p = gst_pad_get_pad_template(gstPad);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PadTemplate)(cast(GstPadTemplate*) p, true);
 	}
 
@@ -636,12 +636,12 @@ public class Pad : ObjectGst
 	public Caps getPadTemplateCaps()
 	{
 		auto p = gst_pad_get_pad_template_caps(gstPad);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
 	}
 
@@ -658,12 +658,12 @@ public class Pad : ObjectGst
 	public Element getParentElement()
 	{
 		auto p = gst_pad_get_parent_element(gstPad);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Element)(cast(GstElement*) p, true);
 	}
 
@@ -678,12 +678,12 @@ public class Pad : ObjectGst
 	public Pad getPeer()
 	{
 		auto p = gst_pad_get_peer(gstPad);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pad)(cast(GstPad*) p, true);
 	}
 
@@ -728,11 +728,11 @@ public class Pad : ObjectGst
 	public GstFlowReturn getRange(ulong offset, uint size, out Buffer buffer)
 	{
 		GstBuffer* outbuffer = null;
-		
+
 		auto p = gst_pad_get_range(gstPad, offset, size, &outbuffer);
-		
+
 		buffer = ObjectG.getDObject!(Buffer)(outbuffer);
-		
+
 		return p;
 	}
 
@@ -751,12 +751,12 @@ public class Pad : ObjectGst
 	public Event getStickyEvent(GstEventType eventType, uint idx)
 	{
 		auto p = gst_pad_get_sticky_event(gstPad, eventType, idx);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Event)(cast(GstEvent*) p, true);
 	}
 
@@ -775,12 +775,12 @@ public class Pad : ObjectGst
 	public Stream getStream()
 	{
 		auto p = gst_pad_get_stream(gstPad);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Stream)(cast(GstStream*) p, true);
 	}
 
@@ -803,7 +803,7 @@ public class Pad : ObjectGst
 	public string getStreamId()
 	{
 		auto retStr = gst_pad_get_stream_id(gstPad);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -898,12 +898,12 @@ public class Pad : ObjectGst
 	public Iterator iterateInternalLinks()
 	{
 		auto p = gst_pad_iterate_internal_links(gstPad);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
 	}
 
@@ -924,12 +924,12 @@ public class Pad : ObjectGst
 	public Iterator iterateInternalLinksDefault(ObjectGst parent)
 	{
 		auto p = gst_pad_iterate_internal_links_default(gstPad, (parent is null) ? null : parent.getObjectGstStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
 	}
 
@@ -1103,12 +1103,12 @@ public class Pad : ObjectGst
 	public Caps peerQueryCaps(Caps filter)
 	{
 		auto p = gst_pad_peer_query_caps(gstPad, (filter is null) ? null : filter.getCapsStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
 	}
 
@@ -1235,11 +1235,11 @@ public class Pad : ObjectGst
 	public GstFlowReturn pullRange(ulong offset, uint size, out Buffer buffer)
 	{
 		GstBuffer* outbuffer = null;
-		
+
 		auto p = gst_pad_pull_range(gstPad, offset, size, &outbuffer);
-		
+
 		buffer = ObjectG.getDObject!(Buffer)(outbuffer);
-		
+
 		return p;
 	}
 
@@ -1377,12 +1377,12 @@ public class Pad : ObjectGst
 	public Caps queryCaps(Caps filter)
 	{
 		auto p = gst_pad_query_caps(gstPad, (filter is null) ? null : filter.getCapsStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
 	}
 
@@ -1809,13 +1809,13 @@ public class Pad : ObjectGst
 		static OnLinkedDelegateWrapper[] listeners;
 		void delegate(Pad, Pad) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Pad, Pad) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnLinkedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1848,12 +1848,12 @@ public class Pad : ObjectGst
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackLinked(GstPad* padStruct, GstPad* peer, OnLinkedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Pad)(peer), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackLinkedDestroy(OnLinkedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1864,13 +1864,13 @@ public class Pad : ObjectGst
 		static OnUnlinkedDelegateWrapper[] listeners;
 		void delegate(Pad, Pad) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Pad, Pad) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnUnlinkedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1903,12 +1903,12 @@ public class Pad : ObjectGst
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackUnlinked(GstPad* padStruct, GstPad* peer, OnUnlinkedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Pad)(peer), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackUnlinkedDestroy(OnUnlinkedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

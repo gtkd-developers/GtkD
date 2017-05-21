@@ -30,8 +30,8 @@ private import gobject.Closure;
 private import gobject.ObjectG;
 private import gtk.Label;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -148,12 +148,12 @@ public class AccelLabel : Label
 	public this(string str)
 	{
 		auto p = gtk_accel_label_new(Str.toStringz(str));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkAccelLabel*) p);
 	}
 
@@ -181,12 +181,12 @@ public class AccelLabel : Label
 	public Widget getAccelWidget()
 	{
 		auto p = gtk_accel_label_get_accel_widget(gtkAccelLabel);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 

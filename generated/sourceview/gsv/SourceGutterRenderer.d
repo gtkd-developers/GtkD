@@ -29,8 +29,8 @@ private import gdk.Event;
 private import gdk.RGBA;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gsvc.gsv;
-public  import gsvc.gsvtypes;
+private import gsv.c.functions;
+public  import gsv.c.types;
 private import gtk.TextIter;
 private import gtk.TextView;
 private import gtk.Tooltip;
@@ -182,11 +182,11 @@ public class SourceGutterRenderer : ObjectG
 	public bool getBackground(out RGBA color)
 	{
 		GdkRGBA* outcolor = gMalloc!GdkRGBA();
-		
+
 		auto p = gtk_source_gutter_renderer_get_background(gtkSourceGutterRenderer, outcolor) != 0;
-		
+
 		color = ObjectG.getDObject!(RGBA)(outcolor, true);
-		
+
 		return p;
 	}
 
@@ -222,12 +222,12 @@ public class SourceGutterRenderer : ObjectG
 	public TextView getView()
 	{
 		auto p = gtk_source_gutter_renderer_get_view(gtkSourceGutterRenderer);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TextView)(cast(GtkTextView*) p);
 	}
 
@@ -400,13 +400,13 @@ public class SourceGutterRenderer : ObjectG
 		static OnActivateDelegateWrapper[] listeners;
 		void delegate(TextIter, GdkRectangle*, Event, SourceGutterRenderer) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TextIter, GdkRectangle*, Event, SourceGutterRenderer) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnActivateDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -442,12 +442,12 @@ public class SourceGutterRenderer : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackActivate(GtkSourceGutterRenderer* sourcegutterrendererStruct, GtkTextIter* iter, GdkRectangle* area, GdkEvent* event, OnActivateDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(TextIter)(iter), area, ObjectG.getDObject!(Event)(event), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackActivateDestroy(OnActivateDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -458,13 +458,13 @@ public class SourceGutterRenderer : ObjectG
 		static OnQueryActivatableDelegateWrapper[] listeners;
 		bool delegate(TextIter, GdkRectangle*, Event, SourceGutterRenderer) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(TextIter, GdkRectangle*, Event, SourceGutterRenderer) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnQueryActivatableDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -500,12 +500,12 @@ public class SourceGutterRenderer : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackQueryActivatable(GtkSourceGutterRenderer* sourcegutterrendererStruct, GtkTextIter* iter, GdkRectangle* area, GdkEvent* event, OnQueryActivatableDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(ObjectG.getDObject!(TextIter)(iter), area, ObjectG.getDObject!(Event)(event), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackQueryActivatableDestroy(OnQueryActivatableDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -516,13 +516,13 @@ public class SourceGutterRenderer : ObjectG
 		static OnQueryDataDelegateWrapper[] listeners;
 		void delegate(TextIter, TextIter, GtkSourceGutterRendererState, SourceGutterRenderer) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TextIter, TextIter, GtkSourceGutterRendererState, SourceGutterRenderer) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnQueryDataDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -560,12 +560,12 @@ public class SourceGutterRenderer : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackQueryData(GtkSourceGutterRenderer* sourcegutterrendererStruct, GtkTextIter* start, GtkTextIter* end, GtkSourceGutterRendererState state, OnQueryDataDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(TextIter)(start), ObjectG.getDObject!(TextIter)(end), state, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackQueryDataDestroy(OnQueryDataDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -576,13 +576,13 @@ public class SourceGutterRenderer : ObjectG
 		static OnQueryTooltipDelegateWrapper[] listeners;
 		bool delegate(TextIter, GdkRectangle*, int, int, Tooltip, SourceGutterRenderer) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(TextIter, GdkRectangle*, int, int, Tooltip, SourceGutterRenderer) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnQueryTooltipDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -620,12 +620,12 @@ public class SourceGutterRenderer : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackQueryTooltip(GtkSourceGutterRenderer* sourcegutterrendererStruct, GtkTextIter* iter, GdkRectangle* area, int x, int y, GtkTooltip* tooltip, OnQueryTooltipDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(ObjectG.getDObject!(TextIter)(iter), area, x, y, ObjectG.getDObject!(Tooltip)(tooltip), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackQueryTooltipDestroy(OnQueryTooltipDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -636,13 +636,13 @@ public class SourceGutterRenderer : ObjectG
 		static OnQueueDrawDelegateWrapper[] listeners;
 		void delegate(SourceGutterRenderer) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(SourceGutterRenderer) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnQueueDrawDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -675,12 +675,12 @@ public class SourceGutterRenderer : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackQueueDraw(GtkSourceGutterRenderer* sourcegutterrendererStruct, OnQueueDrawDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackQueueDrawDestroy(OnQueueDrawDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

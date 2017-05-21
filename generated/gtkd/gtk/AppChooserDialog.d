@@ -33,8 +33,8 @@ private import gtk.AppChooserT;
 private import gtk.Dialog;
 private import gtk.Widget;
 private import gtk.Window;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -110,12 +110,12 @@ public class AppChooserDialog : Dialog, AppChooserIF
 	public this(Window parent, GtkDialogFlags flags, FileIF file)
 	{
 		auto p = gtk_app_chooser_dialog_new((parent is null) ? null : parent.getWindowStruct(), flags, (file is null) ? null : file.getFileStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkAppChooserDialog*) p);
 	}
 
@@ -137,12 +137,12 @@ public class AppChooserDialog : Dialog, AppChooserIF
 	public this(Window parent, GtkDialogFlags flags, string contentType)
 	{
 		auto p = gtk_app_chooser_dialog_new_for_content_type((parent is null) ? null : parent.getWindowStruct(), flags, Str.toStringz(contentType));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_for_content_type");
 		}
-		
+
 		this(cast(GtkAppChooserDialog*) p);
 	}
 
@@ -167,12 +167,12 @@ public class AppChooserDialog : Dialog, AppChooserIF
 	public Widget getWidget()
 	{
 		auto p = gtk_app_chooser_dialog_get_widget(gtkAppChooserDialog);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 

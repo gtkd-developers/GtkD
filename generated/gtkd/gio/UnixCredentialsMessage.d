@@ -26,10 +26,10 @@ module gio.UnixCredentialsMessage;
 
 private import gio.Credentials;
 private import gio.SocketControlMessage;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -100,12 +100,12 @@ public class UnixCredentialsMessage : SocketControlMessage
 	public this()
 	{
 		auto p = g_unix_credentials_message_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GUnixCredentialsMessage*) p, true);
 	}
 
@@ -124,12 +124,12 @@ public class UnixCredentialsMessage : SocketControlMessage
 	public this(Credentials credentials)
 	{
 		auto p = g_unix_credentials_message_new_with_credentials((credentials is null) ? null : credentials.getCredentialsStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_with_credentials");
 		}
-		
+
 		this(cast(GUnixCredentialsMessage*) p, true);
 	}
 
@@ -155,12 +155,12 @@ public class UnixCredentialsMessage : SocketControlMessage
 	public Credentials getCredentials()
 	{
 		auto p = g_unix_credentials_message_get_credentials(gUnixCredentialsMessage);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Credentials)(cast(GCredentials*) p);
 	}
 }

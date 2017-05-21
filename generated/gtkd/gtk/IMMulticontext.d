@@ -29,8 +29,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gtk.IMContext;
 private import gtk.MenuShell;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /** */
@@ -85,12 +85,12 @@ public class IMMulticontext : IMContext
 	public this()
 	{
 		auto p = gtk_im_multicontext_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkIMMulticontext*) p, true);
 	}
 

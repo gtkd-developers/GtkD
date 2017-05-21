@@ -26,9 +26,9 @@ module gdk.Atom;
 
 private import gdk.Display;
 private import gdk.Window;
+private import gdk.c.functions;
+public  import gdk.c.types;
 private import glib.Str;
-private import gtkc.gdk;
-public  import gtkc.gdktypes;
 
 
 /**
@@ -46,7 +46,7 @@ public  import gtkc.gdktypes;
 public string name(GdkAtom atom)
 {
 	auto retStr = gdk_atom_name(atom);
-	
+
 	scope(exit) Str.freeString(retStr);
 	return Str.toString(retStr);
 }
@@ -181,11 +181,11 @@ public bool propertyGet(Window window, GdkAtom property, GdkAtom type, gulong of
 {
 	int actualLength;
 	char* outdata = null;
-	
+
 	auto p = gdk_property_get((window is null) ? null : window.getWindowStruct(), property, type, offset, length, pdelete, &actualPropertyType, &actualFormat, &actualLength, &outdata) != 0;
-	
+
 	data = outdata[0 .. actualLength];
-	
+
 	return p;
 }
 
@@ -210,11 +210,11 @@ public bool propertyGet(Window window, GdkAtom property, GdkAtom type, gulong of
 public int textPropertyToUtf8ListForDisplay(Display display, GdkAtom encoding, int format, char[] text, out string[] list)
 {
 	char** outlist = null;
-	
+
 	auto p = gdk_text_property_to_utf8_list_for_display((display is null) ? null : display.getDisplayStruct(), encoding, format, text.ptr, cast(int)text.length, &outlist);
-	
+
 	list = Str.toStringArray(outlist);
-	
+
 	return p;
 }
 
@@ -235,7 +235,7 @@ public int textPropertyToUtf8ListForDisplay(Display display, GdkAtom encoding, i
 public string utf8ToStringTarget(string str)
 {
 	auto retStr = gdk_utf8_to_string_target(Str.toStringz(str));
-	
+
 	scope(exit) Str.freeString(retStr);
 	return Str.toString(retStr);
 }

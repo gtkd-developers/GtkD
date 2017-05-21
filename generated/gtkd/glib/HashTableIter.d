@@ -25,8 +25,8 @@
 module glib.HashTableIter;
 
 private import glib.HashTable;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 
 
 /**
@@ -75,12 +75,12 @@ public class HashTableIter
 	public HashTable getHashTable()
 	{
 		auto p = g_hash_table_iter_get_hash_table(gHashTableIter);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new HashTable(cast(GHashTable*) p);
 	}
 

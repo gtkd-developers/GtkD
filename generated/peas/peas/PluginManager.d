@@ -33,8 +33,8 @@ private import gtk.OrientableIF;
 private import gtk.OrientableT;
 private import gtk.Widget;
 private import peas.Engine;
-private import peasc.peas;
-public  import peasc.peastypes;
+private import peas.c.functions;
+public  import peas.c.types;
 
 
 /**
@@ -97,12 +97,12 @@ public class PluginManager : Box
 	public this(Engine engine)
 	{
 		auto p = peas_gtk_plugin_manager_new((engine is null) ? null : engine.getEngineStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(PeasGtkPluginManager*) p);
 	}
 
@@ -114,12 +114,12 @@ public class PluginManager : Box
 	public Widget getView()
 	{
 		auto p = peas_gtk_plugin_manager_get_view(peasGtkPluginManager);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 }

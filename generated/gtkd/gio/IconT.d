@@ -26,14 +26,14 @@ module gio.IconT;
 
 public  import gio.Icon;
 public  import gio.IconIF;
+public  import gio.c.functions;
+public  import gio.c.types;
 public  import glib.ConstructionException;
 public  import glib.ErrorG;
 public  import glib.GException;
 public  import glib.Str;
 public  import glib.Variant;
 public  import gobject.ObjectG;
-public  import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -90,12 +90,12 @@ public template IconT(TStruct)
 	public static IconIF deserialize(Variant value)
 	{
 		auto p = g_icon_deserialize((value is null) ? null : value.getVariantStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p, true);
 	}
 
@@ -140,12 +140,12 @@ public template IconT(TStruct)
 	public Variant serialize()
 	{
 		auto p = g_icon_serialize(getIconStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Variant(cast(GVariant*) p, true);
 	}
 
@@ -175,7 +175,7 @@ public template IconT(TStruct)
 	public override string toString()
 	{
 		auto retStr = g_icon_to_string(getIconStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}

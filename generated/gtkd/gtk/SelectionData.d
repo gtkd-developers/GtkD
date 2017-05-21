@@ -31,8 +31,8 @@ private import gobject.ObjectG;
 private import gtk.TargetEntry;
 private import gtk.TextBuffer;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import gtkd.Loader;
 
 
@@ -101,12 +101,12 @@ public class SelectionData
 	public SelectionData copy()
 	{
 		auto p = gtk_selection_data_copy(gtkSelectionData);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SelectionData)(cast(GtkSelectionData*) p, true);
 	}
 
@@ -142,9 +142,9 @@ public class SelectionData
 	public char[] getDataWithLength()
 	{
 		int length;
-		
+
 		auto p = gtk_selection_data_get_data_with_length(gtkSelectionData, &length);
-		
+
 		return p[0 .. length];
 	}
 
@@ -158,12 +158,12 @@ public class SelectionData
 	public Display getDisplay()
 	{
 		auto p = gtk_selection_data_get_display(gtkSelectionData);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
 	}
 
@@ -205,12 +205,12 @@ public class SelectionData
 	public Pixbuf getPixbuf()
 	{
 		auto p = gtk_selection_data_get_pixbuf(gtkSelectionData);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
 	}
 
@@ -256,11 +256,11 @@ public class SelectionData
 	{
 		GdkAtom* outtargets = null;
 		int nAtoms;
-		
+
 		auto p = gtk_selection_data_get_targets(gtkSelectionData, &outtargets, &nAtoms) != 0;
-		
+
 		targets = outtargets[0 .. nAtoms];
-		
+
 		return p;
 	}
 
@@ -275,7 +275,7 @@ public class SelectionData
 	public string getText()
 	{
 		auto retStr = gtk_selection_data_get_text(gtkSelectionData);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -294,7 +294,7 @@ public class SelectionData
 	public string[] getUris()
 	{
 		auto retStr = gtk_selection_data_get_uris(gtkSelectionData);
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}
@@ -467,7 +467,7 @@ public class SelectionData
 		{
 			targetsArray[i] = *(targets[i].getTargetEntryStruct());
 		}
-		
+
 		gtk_selection_add_targets((widget is null) ? null : widget.getWidgetStruct(), selection, targetsArray.ptr, cast(uint)targets.length);
 	}
 

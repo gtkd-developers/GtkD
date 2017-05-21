@@ -30,8 +30,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gstreamer.TagList;
 private import gstreamer.Toc;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /** */
@@ -85,12 +85,12 @@ public class TocEntry
 	public this(GstTocEntryType type, string uid)
 	{
 		auto p = gst_toc_entry_new(type, Str.toStringz(uid));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GstTocEntry*) p);
 	}
 
@@ -143,12 +143,12 @@ public class TocEntry
 	public TocEntry getParent()
 	{
 		auto p = gst_toc_entry_get_parent(gstTocEntry);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TocEntry)(cast(GstTocEntry*) p);
 	}
 
@@ -178,12 +178,12 @@ public class TocEntry
 	public ListG getSubEntries()
 	{
 		auto p = gst_toc_entry_get_sub_entries(gstTocEntry);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -195,12 +195,12 @@ public class TocEntry
 	public TagList getTags()
 	{
 		auto p = gst_toc_entry_get_tags(gstTocEntry);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TagList)(cast(GstTagList*) p);
 	}
 
@@ -212,12 +212,12 @@ public class TocEntry
 	public Toc getToc()
 	{
 		auto p = gst_toc_entry_get_toc(gstTocEntry);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Toc)(cast(GstToc*) p);
 	}
 

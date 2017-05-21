@@ -26,10 +26,10 @@ module pango.PgMap;
 
 private import glib.ListSG;
 private import gobject.ObjectG;
-private import gtkc.pango;
-public  import gtkc.pangotypes;
 private import pango.PgEngine;
 private import pango.PgLanguage;
+private import pango.c.functions;
+public  import pango.c.types;
 
 
 /** */
@@ -74,12 +74,12 @@ public class PgMap
 	public PgEngine getEngine(PangoScript script)
 	{
 		auto p = pango_map_get_engine(pangoMap, script);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgEngine)(cast(PangoEngine*) p);
 	}
 
@@ -99,9 +99,9 @@ public class PgMap
 	{
 		GSList* outexactEngines = null;
 		GSList* outfallbackEngines = null;
-		
+
 		pango_map_get_engines(pangoMap, script, &outexactEngines, &outfallbackEngines);
-		
+
 		exactEngines = new ListSG(outexactEngines);
 		fallbackEngines = new ListSG(outfallbackEngines);
 	}
@@ -119,12 +119,12 @@ public class PgMap
 	public static PgMap findMap(PgLanguage language, uint engineTypeId, uint renderTypeId)
 	{
 		auto p = pango_find_map((language is null) ? null : language.getPgLanguageStruct(), engineTypeId, renderTypeId);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgMap)(cast(PangoMap*) p);
 	}
 

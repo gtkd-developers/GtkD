@@ -30,8 +30,8 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.CellRenderer;
 private import gtk.CellRendererText;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -95,12 +95,12 @@ public class CellRendererAccel : CellRendererText
 	public this()
 	{
 		auto p = gtk_cell_renderer_accel_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkCellRendererAccel*) p);
 	}
 
@@ -109,13 +109,13 @@ public class CellRendererAccel : CellRendererText
 		static OnAccelClearedDelegateWrapper[] listeners;
 		void delegate(string, CellRendererAccel) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(string, CellRendererAccel) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnAccelClearedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -150,12 +150,12 @@ public class CellRendererAccel : CellRendererText
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackAccelCleared(GtkCellRendererAccel* cellrendereraccelStruct, char* pathString, OnAccelClearedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(pathString), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackAccelClearedDestroy(OnAccelClearedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -166,13 +166,13 @@ public class CellRendererAccel : CellRendererText
 		static OnAccelEditedDelegateWrapper[] listeners;
 		void delegate(string, uint, GdkModifierType, uint, CellRendererAccel) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(string, uint, GdkModifierType, uint, CellRendererAccel) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnAccelEditedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -210,12 +210,12 @@ public class CellRendererAccel : CellRendererText
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackAccelEdited(GtkCellRendererAccel* cellrendereraccelStruct, char* pathString, uint accelKey, GdkModifierType accelMods, uint hardwareKeycode, OnAccelEditedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(pathString), accelKey, accelMods, hardwareKeycode, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackAccelEditedDestroy(OnAccelEditedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

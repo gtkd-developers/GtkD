@@ -30,8 +30,8 @@ private import gobject.Signals;
 private import gtk.Gesture;
 private import gtk.GestureSingle;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -104,12 +104,12 @@ public class GestureMultiPress : GestureSingle
 	public this(Widget widget)
 	{
 		auto p = gtk_gesture_multi_press_new((widget is null) ? null : widget.getWidgetStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkGestureMultiPress*) p, true);
 	}
 
@@ -157,13 +157,13 @@ public class GestureMultiPress : GestureSingle
 		static OnPressedDelegateWrapper[] listeners;
 		void delegate(int, double, double, GestureMultiPress) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(int, double, double, GestureMultiPress) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPressedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -200,12 +200,12 @@ public class GestureMultiPress : GestureSingle
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPressed(GtkGestureMultiPress* gesturemultipressStruct, int nPress, double x, double y, OnPressedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(nPress, x, y, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPressedDestroy(OnPressedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -216,13 +216,13 @@ public class GestureMultiPress : GestureSingle
 		static OnReleasedDelegateWrapper[] listeners;
 		void delegate(int, double, double, GestureMultiPress) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(int, double, double, GestureMultiPress) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnReleasedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -262,12 +262,12 @@ public class GestureMultiPress : GestureSingle
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackReleased(GtkGestureMultiPress* gesturemultipressStruct, int nPress, double x, double y, OnReleasedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(nPress, x, y, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackReleasedDestroy(OnReleasedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -278,13 +278,13 @@ public class GestureMultiPress : GestureSingle
 		static OnStoppedDelegateWrapper[] listeners;
 		void delegate(GestureMultiPress) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(GestureMultiPress) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnStoppedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -317,12 +317,12 @@ public class GestureMultiPress : GestureSingle
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackStopped(GtkGestureMultiPress* gesturemultipressStruct, OnStoppedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackStoppedDestroy(OnStoppedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

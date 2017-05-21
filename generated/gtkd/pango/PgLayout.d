@@ -28,14 +28,14 @@ private import glib.ConstructionException;
 private import glib.ListSG;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.pango;
-public  import gtkc.pangotypes;
 private import pango.PgAttributeList;
 private import pango.PgContext;
 private import pango.PgFontDescription;
 private import pango.PgLayoutIter;
 private import pango.PgLayoutLine;
 private import pango.PgTabArray;
+private import pango.c.functions;
+public  import pango.c.types;
 
 
 /**
@@ -117,12 +117,12 @@ public class PgLayout : ObjectG
 	public this(PgContext context)
 	{
 		auto p = pango_layout_new((context is null) ? null : context.getPgContextStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(PangoLayout*) p, true);
 	}
 
@@ -149,12 +149,12 @@ public class PgLayout : ObjectG
 	public PgLayout copy()
 	{
 		auto p = pango_layout_copy(pangoLayout);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) p, true);
 	}
 
@@ -177,12 +177,12 @@ public class PgLayout : ObjectG
 	public PgAttributeList getAttributes()
 	{
 		auto p = pango_layout_get_attributes(pangoLayout);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgAttributeList)(cast(PangoAttrList*) p);
 	}
 
@@ -237,12 +237,12 @@ public class PgLayout : ObjectG
 	public PgContext getContext()
 	{
 		auto p = pango_layout_get_context(pangoLayout);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgContext)(cast(PangoContext*) p);
 	}
 
@@ -320,12 +320,12 @@ public class PgLayout : ObjectG
 	public PgFontDescription getFontDescription()
 	{
 		auto p = pango_layout_get_font_description(pangoLayout);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) p);
 	}
 
@@ -363,12 +363,12 @@ public class PgLayout : ObjectG
 	public PgLayoutIter getIter()
 	{
 		auto p = pango_layout_get_iter(pangoLayout);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgLayoutIter)(cast(PangoLayoutIter*) p, true);
 	}
 
@@ -402,12 +402,12 @@ public class PgLayout : ObjectG
 	public PgLayoutLine getLine(int line)
 	{
 		auto p = pango_layout_get_line(pangoLayout, line);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgLayoutLine)(cast(PangoLayoutLine*) p);
 	}
 
@@ -443,12 +443,12 @@ public class PgLayout : ObjectG
 	public PgLayoutLine getLineReadonly(int line)
 	{
 		auto p = pango_layout_get_line_readonly(pangoLayout, line);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgLayoutLine)(cast(PangoLayoutLine*) p);
 	}
 
@@ -466,12 +466,12 @@ public class PgLayout : ObjectG
 	public ListSG getLines()
 	{
 		auto p = pango_layout_get_lines(pangoLayout);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -492,12 +492,12 @@ public class PgLayout : ObjectG
 	public ListSG getLinesReadonly()
 	{
 		auto p = pango_layout_get_lines_readonly(pangoLayout);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -518,9 +518,9 @@ public class PgLayout : ObjectG
 	{
 		PangoLogAttr* outattrs = null;
 		int nAttrs;
-		
+
 		pango_layout_get_log_attrs(pangoLayout, &outattrs, &nAttrs);
-		
+
 		attrs = outattrs[0 .. nAttrs];
 	}
 
@@ -544,9 +544,9 @@ public class PgLayout : ObjectG
 	public PangoLogAttr[] getLogAttrsReadonly()
 	{
 		int nAttrs;
-		
+
 		auto p = pango_layout_get_log_attrs_readonly(pangoLayout, &nAttrs);
-		
+
 		return p[0 .. nAttrs];
 	}
 
@@ -654,12 +654,12 @@ public class PgLayout : ObjectG
 	public PgTabArray getTabs()
 	{
 		auto p = pango_layout_get_tabs(pangoLayout);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgTabArray)(cast(PangoTabArray*) p, true);
 	}
 

@@ -25,12 +25,12 @@
 module gio.Notification;
 
 private import gio.IconIF;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import glib.Variant;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -119,12 +119,12 @@ public class Notification : ObjectG
 	public this(string title)
 	{
 		auto p = g_notification_new(Str.toStringz(title));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GNotification*) p, true);
 	}
 

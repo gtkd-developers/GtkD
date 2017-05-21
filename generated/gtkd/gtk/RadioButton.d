@@ -31,8 +31,8 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.CheckButton;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -169,7 +169,7 @@ public class RadioButton : CheckButton
 	public this (ListSG group, string label, bool mnemonic=true)
 	{
 		GtkRadioButton* p;
-		
+
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_radio_button_new_with_mnemonic  (GSList *group,  const gchar *label);
@@ -184,15 +184,15 @@ public class RadioButton : CheckButton
 				group is null ? null : group.getListSGStruct(),
 			Str.toStringz(label));
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gtk_radio_button_new_");
 		}
-		
+
 		this(p);
 	}
-	
+
 	/**
 	 * Creates a new RadioButton with a text label, adding it to the same group
 	 * as group.
@@ -207,7 +207,7 @@ public class RadioButton : CheckButton
 	public this (RadioButton radioButton, string label, bool mnemonic=true)
 	{
 		GtkRadioButton* p;
-		
+
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_radio_button_new_with_mnemonic_from_widget  (GtkRadioButton *group,  const gchar *label);
@@ -222,15 +222,15 @@ public class RadioButton : CheckButton
 				radioButton.getRadioButtonStruct(),
 			Str.toStringz(label));
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gtk_radio_button_new_");
 		}
-		
+
 		this(p);
 	}
-	
+
 	/**
 	 * Creates a new RadioButton with a text label,
 	 * and creates a new group.
@@ -270,12 +270,12 @@ public class RadioButton : CheckButton
 	public this(ListSG group)
 	{
 		auto p = gtk_radio_button_new((group is null) ? null : group.getListSGStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkRadioButton*) p);
 	}
 
@@ -294,12 +294,12 @@ public class RadioButton : CheckButton
 	public this(RadioButton radioGroupMember)
 	{
 		auto p = gtk_radio_button_new_from_widget((radioGroupMember is null) ? null : radioGroupMember.getRadioButtonStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_widget");
 		}
-		
+
 		this(cast(GtkRadioButton*) p);
 	}
 
@@ -314,12 +314,12 @@ public class RadioButton : CheckButton
 	public ListSG getGroup()
 	{
 		auto p = gtk_radio_button_get_group(gtkRadioButton);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -374,13 +374,13 @@ public class RadioButton : CheckButton
 		static OnGroupChangedDelegateWrapper[] listeners;
 		void delegate(RadioButton) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(RadioButton) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnGroupChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -417,12 +417,12 @@ public class RadioButton : CheckButton
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackGroupChanged(GtkRadioButton* radiobuttonStruct, OnGroupChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackGroupChangedDestroy(OnGroupChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

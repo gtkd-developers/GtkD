@@ -24,11 +24,11 @@
 
 module gio.InetAddress;
 
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -92,7 +92,7 @@ public class InetAddress : ObjectG
 	public this (GSocketFamily family, bool loopback = false)
 	{
 		GInetAddress* p;
-		
+
 		if ( loopback )
 		{
 			p = g_inet_address_new_loopback(family);
@@ -101,7 +101,7 @@ public class InetAddress : ObjectG
 		{
 			p = g_inet_address_new_any(family);
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by g_inet_address_new_any(family)");
@@ -137,12 +137,12 @@ public class InetAddress : ObjectG
 	public this(ubyte[] bytes, GSocketFamily family)
 	{
 		auto p = g_inet_address_new_from_bytes(bytes.ptr, family);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_bytes");
 		}
-		
+
 		this(cast(GInetAddress*) p, true);
 	}
 
@@ -163,12 +163,12 @@ public class InetAddress : ObjectG
 	public this(string str)
 	{
 		auto p = g_inet_address_new_from_string(Str.toStringz(str));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_string");
 		}
-		
+
 		this(cast(GInetAddress*) p, true);
 	}
 
@@ -362,7 +362,7 @@ public class InetAddress : ObjectG
 	public override string toString()
 	{
 		auto retStr = g_inet_address_to_string(gInetAddress);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}

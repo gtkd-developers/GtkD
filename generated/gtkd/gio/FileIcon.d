@@ -30,10 +30,10 @@ private import gio.IconIF;
 private import gio.IconT;
 private import gio.LoadableIconIF;
 private import gio.LoadableIconT;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -101,12 +101,12 @@ public class FileIcon : ObjectG, IconIF, LoadableIconIF
 	public this(FileIF file)
 	{
 		auto p = g_file_icon_new((file is null) ? null : file.getFileStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GFileIcon*) p, true);
 	}
 
@@ -118,12 +118,12 @@ public class FileIcon : ObjectG, IconIF, LoadableIconIF
 	public FileIF getFile()
 	{
 		auto p = g_file_icon_get_file(gFileIcon);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p);
 	}
 }

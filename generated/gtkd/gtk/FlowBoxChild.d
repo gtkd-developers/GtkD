@@ -29,8 +29,8 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Bin;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -89,12 +89,12 @@ public class FlowBoxChild : Bin
 	public this()
 	{
 		auto p = gtk_flow_box_child_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkFlowBoxChild*) p);
 	}
 
@@ -154,13 +154,13 @@ public class FlowBoxChild : Bin
 		static OnActivateDelegateWrapper[] listeners;
 		void delegate(FlowBoxChild) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(FlowBoxChild) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnActivateDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -196,12 +196,12 @@ public class FlowBoxChild : Bin
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackActivate(GtkFlowBoxChild* flowboxchildStruct, OnActivateDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackActivateDestroy(OnActivateDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

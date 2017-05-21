@@ -27,8 +27,8 @@ module gstreamer.URIHandlerIF;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /**

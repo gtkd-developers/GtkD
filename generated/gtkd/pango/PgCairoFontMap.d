@@ -27,9 +27,9 @@ module pango.PgCairoFontMap;
 private import cairo.ScaledFont;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-private import gtkc.pango;
-public  import gtkc.pangotypes;
 private import pango.PgFontMap;
+private import pango.c.functions;
+public  import pango.c.types;
 
 
 /** */
@@ -81,12 +81,12 @@ public class PgCairoFontMap : PgFontMap
 	public ScaledFont getScaledFont()
 	{
 		auto p = pango_cairo_font_get_scaled_font(cast(PangoCairoFont*)pangoCairoFcFontMap);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ScaledFont(cast(cairo_scaled_font_t*) p);
 	}
 
@@ -115,12 +115,12 @@ public class PgCairoFontMap : PgFontMap
 	public static PgFontMap getDefault()
 	{
 		auto p = pango_cairo_font_map_get_default();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgFontMap)(cast(PangoFontMap*) p);
 	}
 
@@ -153,12 +153,12 @@ public class PgCairoFontMap : PgFontMap
 	public this()
 	{
 		auto p = pango_cairo_font_map_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(PangoCairoFcFontMap*) p, true);
 	}
 
@@ -185,12 +185,12 @@ public class PgCairoFontMap : PgFontMap
 	public this(cairo_font_type_t fonttype)
 	{
 		auto p = pango_cairo_font_map_new_for_font_type(fonttype);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_for_font_type");
 		}
-		
+
 		this(cast(PangoCairoFcFontMap*) p, true);
 	}
 

@@ -27,9 +27,9 @@ module gdk.Pango;
 private import cairo.Region;
 private import gdk.Display;
 private import gdk.Screen;
+private import gdk.c.functions;
+public  import gdk.c.types;
 private import gobject.ObjectG;
-private import gtkc.gdk;
-public  import gtkc.gdktypes;
 private import pango.PgContext;
 private import pango.PgLayout;
 private import pango.PgLayoutLine;
@@ -57,12 +57,12 @@ private import pango.PgLayoutLine;
 public PgContext contextGet()
 {
 	auto p = gdk_pango_context_get();
-	
+
 	if(p is null)
 	{
 		return null;
 	}
-	
+
 	return ObjectG.getDObject!(PgContext)(cast(PangoContext*) p, true);
 }
 
@@ -91,12 +91,12 @@ public PgContext contextGet()
 public PgContext contextGetForScreen(Screen screen)
 {
 	auto p = gdk_pango_context_get_for_screen((screen is null) ? null : screen.getScreenStruct());
-	
+
 	if(p is null)
 	{
 		return null;
 	}
-	
+
 	return ObjectG.getDObject!(PgContext)(cast(PangoContext*) p, true);
 }
 
@@ -123,12 +123,12 @@ public PgContext contextGetForScreen(Screen screen)
 public Region layoutGetClipRegion(PgLayout layout, int xOrigin, int yOrigin, int* indexRanges, int nRanges)
 {
 	auto p = gdk_pango_layout_get_clip_region((layout is null) ? null : layout.getPgLayoutStruct(), xOrigin, yOrigin, indexRanges, nRanges);
-	
+
 	if(p is null)
 	{
 		return null;
 	}
-	
+
 	return new Region(cast(cairo_region_t*) p);
 }
 
@@ -162,12 +162,12 @@ public Region layoutGetClipRegion(PgLayout layout, int xOrigin, int yOrigin, int
 public Region layoutLineGetClipRegion(PgLayoutLine line, int xOrigin, int yOrigin, int[] indexRanges, int nRanges)
 {
 	auto p = gdk_pango_layout_line_get_clip_region((line is null) ? null : line.getPgLayoutLineStruct(), xOrigin, yOrigin, indexRanges.ptr, nRanges);
-	
+
 	if(p is null)
 	{
 		return null;
 	}
-	
+
 	return new Region(cast(cairo_region_t*) p);
 }
 
@@ -196,11 +196,11 @@ public Region layoutLineGetClipRegion(PgLayoutLine line, int xOrigin, int yOrigi
 public PgContext contextGetForDisplay(Display display)
 {
 	auto p = gdk_pango_context_get_for_display((display is null) ? null : display.getDisplayStruct());
-	
+
 	if(p is null)
 	{
 		return null;
 	}
-	
+
 	return ObjectG.getDObject!(PgContext)(cast(PangoContext*) p, true);
 }

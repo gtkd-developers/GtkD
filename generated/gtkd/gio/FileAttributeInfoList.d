@@ -24,11 +24,11 @@
 
 module gio.FileAttributeInfoList;
 
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 private import gtkd.Loader;
 
 
@@ -88,12 +88,12 @@ public class FileAttributeInfoList
 	public this()
 	{
 		auto p = g_file_attribute_info_list_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GFileAttributeInfoList*) p);
 	}
 
@@ -119,12 +119,12 @@ public class FileAttributeInfoList
 	public FileAttributeInfoList dup()
 	{
 		auto p = g_file_attribute_info_list_dup(gFileAttributeInfoList);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(FileAttributeInfoList)(cast(GFileAttributeInfoList*) p, true);
 	}
 
@@ -150,12 +150,12 @@ public class FileAttributeInfoList
 	public FileAttributeInfoList doref()
 	{
 		auto p = g_file_attribute_info_list_ref(gFileAttributeInfoList);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(FileAttributeInfoList)(cast(GFileAttributeInfoList*) p, true);
 	}
 

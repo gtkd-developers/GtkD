@@ -32,8 +32,8 @@ private import gio.IconIF;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /** */
@@ -93,12 +93,12 @@ public struct DragAndDrop
 	public static Widget dragGetSourceWidget(DragContext context)
 	{
 		auto p = gtk_drag_get_source_widget((context is null) ? null : context.getDragContextStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 

@@ -27,8 +27,8 @@ module glib.MainLoop;
 private import glib.ConstructionException;
 private import glib.MainContext;
 private import glib.Source;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 private import gtkd.Loader;
 
 
@@ -88,12 +88,12 @@ public class MainLoop
 	public this(MainContext context, bool isRunning)
 	{
 		auto p = g_main_loop_new((context is null) ? null : context.getMainContextStruct(), isRunning);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GMainLoop*) p);
 	}
 
@@ -105,12 +105,12 @@ public class MainLoop
 	public MainContext getContext()
 	{
 		auto p = g_main_loop_get_context(gMainLoop);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new MainContext(cast(GMainContext*) p);
 	}
 
@@ -144,12 +144,12 @@ public class MainLoop
 	public MainLoop doref()
 	{
 		auto p = g_main_loop_ref(gMainLoop);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new MainLoop(cast(GMainLoop*) p, true);
 	}
 
@@ -183,12 +183,12 @@ public class MainLoop
 	public static Source mainCurrentSource()
 	{
 		auto p = g_main_current_source();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Source(cast(GSource*) p);
 	}
 

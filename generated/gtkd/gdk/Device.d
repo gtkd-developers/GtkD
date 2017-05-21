@@ -30,12 +30,12 @@ private import gdk.Display;
 private import gdk.Screen;
 private import gdk.Seat;
 private import gdk.Window;
+private import gdk.c.functions;
+public  import gdk.c.types;
 private import glib.ListG;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gdk;
-public  import gtkc.gdktypes;
 private import std.algorithm;
 
 
@@ -122,12 +122,12 @@ public class Device : ObjectG
 	{
 		GdkWindow* outgrabWindow = null;
 		int outownerEvents;
-		
+
 		auto p = gdk_device_grab_info_libgtk_only((display is null) ? null : display.getDisplayStruct(), (device is null) ? null : device.getDeviceStruct(), &outgrabWindow, &outownerEvents) != 0;
-		
+
 		grabWindow = ObjectG.getDObject!(Window)(outgrabWindow);
 		ownerEvents = (outownerEvents == 1);
-		
+
 		return p;
 	}
 
@@ -150,12 +150,12 @@ public class Device : ObjectG
 	public Device getAssociatedDevice()
 	{
 		auto p = gdk_device_get_associated_device(gdkDevice);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Device)(cast(GdkDevice*) p);
 	}
 
@@ -242,12 +242,12 @@ public class Device : ObjectG
 	public Display getDisplay()
 	{
 		auto p = gdk_device_get_display(gdkDevice);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
 	}
 
@@ -292,11 +292,11 @@ public class Device : ObjectG
 	{
 		GdkTimeCoord** outevents = null;
 		int nEvents;
-		
+
 		auto p = gdk_device_get_history(gdkDevice, (window is null) ? null : window.getWindowStruct(), start, stop, &outevents, &nEvents) != 0;
-		
+
 		events = outevents[0 .. nEvents];
-		
+
 		return p;
 	}
 
@@ -332,12 +332,12 @@ public class Device : ObjectG
 	public Window getLastEventWindow()
 	{
 		auto p = gdk_device_get_last_event_window(gdkDevice);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 
@@ -406,9 +406,9 @@ public class Device : ObjectG
 	public void getPosition(out Screen screen, out int x, out int y)
 	{
 		GdkScreen* outscreen = null;
-		
+
 		gdk_device_get_position(gdkDevice, &outscreen, &x, &y);
-		
+
 		screen = ObjectG.getDObject!(Screen)(outscreen);
 	}
 
@@ -429,9 +429,9 @@ public class Device : ObjectG
 	public void getPositionDouble(out Screen screen, out double x, out double y)
 	{
 		GdkScreen* outscreen = null;
-		
+
 		gdk_device_get_position_double(gdkDevice, &outscreen, &x, &y);
-		
+
 		screen = ObjectG.getDObject!(Screen)(outscreen);
 	}
 
@@ -460,12 +460,12 @@ public class Device : ObjectG
 	public Seat getSeat()
 	{
 		auto p = gdk_device_get_seat(gdkDevice);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Seat)(cast(GdkSeat*) p);
 	}
 
@@ -557,12 +557,12 @@ public class Device : ObjectG
 	public Window getWindowAtPosition(out int winX, out int winY)
 	{
 		auto p = gdk_device_get_window_at_position(gdkDevice, &winX, &winY);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 
@@ -589,12 +589,12 @@ public class Device : ObjectG
 	public Window getWindowAtPositionDouble(out double winX, out double winY)
 	{
 		auto p = gdk_device_get_window_at_position_double(gdkDevice, &winX, &winY);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 
@@ -662,12 +662,12 @@ public class Device : ObjectG
 	public ListG listAxes()
 	{
 		auto p = gdk_device_list_axes(gdkDevice);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -683,12 +683,12 @@ public class Device : ObjectG
 	public ListG listSlaveDevices()
 	{
 		auto p = gdk_device_list_slave_devices(gdkDevice);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -782,13 +782,13 @@ public class Device : ObjectG
 		static OnChangedDelegateWrapper[] listeners;
 		void delegate(Device) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Device) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -824,12 +824,12 @@ public class Device : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackChanged(GdkDevice* deviceStruct, OnChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -840,13 +840,13 @@ public class Device : ObjectG
 		static OnToolChangedDelegateWrapper[] listeners;
 		void delegate(DeviceTool, Device) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(DeviceTool, Device) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnToolChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -882,12 +882,12 @@ public class Device : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackToolChanged(GdkDevice* deviceStruct, GdkDeviceTool* tool, OnToolChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(DeviceTool)(tool), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackToolChangedDestroy(OnToolChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

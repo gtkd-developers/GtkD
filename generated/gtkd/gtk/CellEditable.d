@@ -27,8 +27,8 @@ module gtk.CellEditable;
 private import gobject.ObjectG;
 private import gtk.CellEditableIF;
 private import gtk.CellEditableT;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /** */

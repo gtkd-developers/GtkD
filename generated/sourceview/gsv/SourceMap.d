@@ -27,8 +27,8 @@ module gsv.SourceMap;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gsv.SourceView;
-private import gsvc.gsv;
-public  import gsvc.gsvtypes;
+private import gsv.c.functions;
+public  import gsv.c.types;
 private import gtk.Widget;
 
 
@@ -86,12 +86,12 @@ public class SourceMap : SourceView
 	public this()
 	{
 		auto p = gtk_source_map_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkSourceMap*) p);
 	}
 
@@ -105,12 +105,12 @@ public class SourceMap : SourceView
 	public SourceView getView()
 	{
 		auto p = gtk_source_map_get_view(gtkSourceMap);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SourceView)(cast(GtkSourceView*) p);
 	}
 

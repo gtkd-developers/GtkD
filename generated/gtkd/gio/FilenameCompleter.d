@@ -24,12 +24,12 @@
 
 module gio.FilenameCompleter;
 
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -89,12 +89,12 @@ public class FilenameCompleter : ObjectG
 	public this()
 	{
 		auto p = g_filename_completer_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GFilenameCompleter*) p, true);
 	}
 
@@ -111,7 +111,7 @@ public class FilenameCompleter : ObjectG
 	public string getCompletionSuffix(string initialText)
 	{
 		auto retStr = g_filename_completer_get_completion_suffix(gFilenameCompleter, Str.toStringz(initialText));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -128,7 +128,7 @@ public class FilenameCompleter : ObjectG
 	public string[] getCompletions(string initialText)
 	{
 		auto retStr = g_filename_completer_get_completions(gFilenameCompleter, Str.toStringz(initialText));
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}
@@ -150,13 +150,13 @@ public class FilenameCompleter : ObjectG
 		static OnGotCompletionDataDelegateWrapper[] listeners;
 		void delegate(FilenameCompleter) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(FilenameCompleter) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnGotCompletionDataDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -186,12 +186,12 @@ public class FilenameCompleter : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackGotCompletionData(GFilenameCompleter* filenamecompleterStruct, OnGotCompletionDataDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackGotCompletionDataDestroy(OnGotCompletionDataDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

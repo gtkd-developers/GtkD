@@ -26,8 +26,8 @@ module gstreamer.SystemClock;
 
 private import gobject.ObjectG;
 private import gstreamer.Clock;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /**
@@ -94,12 +94,12 @@ public class SystemClock : Clock
 	public static Clock obtain()
 	{
 		auto p = gst_system_clock_obtain();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Clock)(cast(GstClock*) p, true);
 	}
 

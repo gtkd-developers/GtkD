@@ -25,8 +25,8 @@
 module glib.Base64;
 
 private import glib.Str;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 
 
 /** */
@@ -56,7 +56,7 @@ public struct Base64
 	public static size_t decodeStep(string inn, ref ubyte[] output, ref int state, ref uint save)
 	{
 		auto p = g_base64_decode_step(Str.toStringz(inn), cast(int)inn.length, cast(char*)output.ptr, &state, &save);
-		
+
 		return p;
 	}
 
@@ -79,11 +79,11 @@ public struct Base64
 	public static char[] decodeInplace(ref char[] text)
 	{
 		size_t outLen = cast(size_t)text.length;
-		
+
 		auto p = g_base64_decode_inplace(text.ptr, &outLen);
-		
+
 		text = text[0..outLen];
-		
+
 		return p[0 .. outLen];
 	}
 
@@ -104,9 +104,9 @@ public struct Base64
 	public static char[] decode(string text)
 	{
 		size_t outLen;
-		
+
 		auto p = g_base64_decode(Str.toStringz(text), &outLen);
-		
+
 		return cast(char[])p[0 .. outLen];
 	}
 
@@ -127,7 +127,7 @@ public struct Base64
 	public static string encode(char[] data)
 	{
 		auto retStr = g_base64_encode(data.ptr, cast(size_t)data.length);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}

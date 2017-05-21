@@ -28,14 +28,14 @@ private import cairo.Context;
 private import cairo.FontOption;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.pango;
-public  import gtkc.pangotypes;
 private import pango.PgContext;
 private import pango.PgFont;
 private import pango.PgGlyphItem;
 private import pango.PgGlyphString;
 private import pango.PgLayout;
 private import pango.PgLayoutLine;
+private import pango.c.functions;
+public  import pango.c.types;
 
 
 /** */
@@ -59,12 +59,12 @@ public struct PgCairo
 	public static FontOption contextGetFontOptions(PgContext context)
 	{
 		auto p = pango_cairo_context_get_font_options((context is null) ? null : context.getPgContextStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new FontOption(cast(cairo_font_options_t*) p);
 	}
 
@@ -185,12 +185,12 @@ public struct PgCairo
 	public static PgContext createContext(Context cr)
 	{
 		auto p = pango_cairo_create_context((cr is null) ? null : cr.getContextStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgContext)(cast(PangoContext*) p, true);
 	}
 
@@ -218,12 +218,12 @@ public struct PgCairo
 	public static PgLayout createLayout(Context cr)
 	{
 		auto p = pango_cairo_create_layout((cr is null) ? null : cr.getContextStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) p, true);
 	}
 

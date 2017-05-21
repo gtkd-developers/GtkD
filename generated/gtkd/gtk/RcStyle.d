@@ -32,8 +32,8 @@ private import gobject.ObjectG;
 private import gtk.Settings;
 private import gtk.Style;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -100,12 +100,12 @@ public class RcStyle : ObjectG
 	public this()
 	{
 		auto p = gtk_rc_style_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkRcStyle*) p, true);
 	}
 
@@ -121,12 +121,12 @@ public class RcStyle : ObjectG
 	public RcStyle copy()
 	{
 		auto p = gtk_rc_style_copy(gtkRcStyle);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(RcStyle)(cast(GtkRcStyle*) p, true);
 	}
 
@@ -160,7 +160,7 @@ public class RcStyle : ObjectG
 	public static string findModuleInPath(string moduleFile)
 	{
 		auto retStr = gtk_rc_find_module_in_path(Str.toStringz(moduleFile));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -183,7 +183,7 @@ public class RcStyle : ObjectG
 	public static string findPixmapInPath(Settings settings, ScannerG scanner, string pixmapFile)
 	{
 		auto retStr = gtk_rc_find_pixmap_in_path((settings is null) ? null : settings.getSettingsStruct(), (scanner is null) ? null : scanner.getScannerGStruct(), Str.toStringz(pixmapFile));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -216,7 +216,7 @@ public class RcStyle : ObjectG
 	public static string getImModuleFile()
 	{
 		auto retStr = gtk_rc_get_im_module_file();
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -236,7 +236,7 @@ public class RcStyle : ObjectG
 	public static string getImModulePath()
 	{
 		auto retStr = gtk_rc_get_im_module_path();
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -253,7 +253,7 @@ public class RcStyle : ObjectG
 	public static string getModuleDir()
 	{
 		auto retStr = gtk_rc_get_module_dir();
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -278,12 +278,12 @@ public class RcStyle : ObjectG
 	public static Style getStyle(Widget widget)
 	{
 		auto p = gtk_rc_get_style((widget is null) ? null : widget.getWidgetStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Style)(cast(GtkStyle*) p);
 	}
 
@@ -324,12 +324,12 @@ public class RcStyle : ObjectG
 	public static Style getStyleByPath(Settings settings, string widgetPath, string classPath, GType type)
 	{
 		auto p = gtk_rc_get_style_by_paths((settings is null) ? null : settings.getSettingsStruct(), Str.toStringz(widgetPath), Str.toStringz(classPath), type);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Style)(cast(GtkStyle*) p);
 	}
 
@@ -345,7 +345,7 @@ public class RcStyle : ObjectG
 	public static string getThemeDir()
 	{
 		auto retStr = gtk_rc_get_theme_dir();
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -384,11 +384,11 @@ public class RcStyle : ObjectG
 	public static uint parseColor(ScannerG scanner, out Color color)
 	{
 		GdkColor* outcolor = gMalloc!GdkColor();
-		
+
 		auto p = gtk_rc_parse_color((scanner is null) ? null : scanner.getScannerGStruct(), outcolor);
-		
+
 		color = ObjectG.getDObject!(Color)(outcolor, true);
-		
+
 		return p;
 	}
 
@@ -413,11 +413,11 @@ public class RcStyle : ObjectG
 	public static uint parseColorFull(ScannerG scanner, RcStyle style, out Color color)
 	{
 		GdkColor* outcolor = gMalloc!GdkColor();
-		
+
 		auto p = gtk_rc_parse_color_full((scanner is null) ? null : scanner.getScannerGStruct(), (style is null) ? null : style.getRcStyleStruct(), outcolor);
-		
+
 		color = ObjectG.getDObject!(Color)(outcolor, true);
-		
+
 		return p;
 	}
 
@@ -536,12 +536,12 @@ public class RcStyle : ObjectG
 	public static ScannerG scannerNew()
 	{
 		auto p = gtk_rc_scanner_new();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ScannerG(cast(GScanner*) p);
 	}
 

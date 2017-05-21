@@ -31,8 +31,8 @@ private import gtk.Dialog;
 private import gtk.VBox;
 private import gtk.Widget;
 private import gtk.Window;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -144,7 +144,7 @@ public class MessageDialog : Dialog
 	{
 		this(parent, flags, type, buttons, false, messageFormat, message );
 	}
-	
+
 	/**
 	 * Creates a new message dialog, which is a simple dialog with an icon
 	 * indicating the dialog type (error, warning, etc.) and some text which
@@ -185,7 +185,7 @@ public class MessageDialog : Dialog
 	public this (Window parent, GtkDialogFlags flags, GtkMessageType type, GtkButtonsType buttons, bool markup, string messageFormat, string message=null )
 	{
 		GtkMessageDialog* p;
-		
+
 		if ( markup )
 		{
 			// GtkWidget* gtk_message_dialog_new_with_markup  (GtkWindow *parent,  GtkDialogFlags flags,  GtkMessageType type,  GtkButtonsType buttons,  const gchar *message_format,  ...);
@@ -212,15 +212,15 @@ public class MessageDialog : Dialog
 				null
 			);
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gtk_button_new()");
 		}
-		
+
 		this(p);
 	}
-	
+
 	/**
 	 * Since 2.22
 	 * Returns: A GtkVBox corresponding to the "message area" in the message_dialog. This is the box where the dialog's primary and secondary labels are packed. You can add your own extra content to that box and it will appear below those labels, on the right side of the dialog's image (or on the left for right-to-left languages). See gtk_dialog_get_content_area() for the corresponding function in the parent GtkDialog.
@@ -257,12 +257,12 @@ public class MessageDialog : Dialog
 	public Widget getImage()
 	{
 		auto p = gtk_message_dialog_get_image(gtkMessageDialog);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 

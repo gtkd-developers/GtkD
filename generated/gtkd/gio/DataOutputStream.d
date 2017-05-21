@@ -29,13 +29,13 @@ private import gio.FilterOutputStream;
 private import gio.OutputStream;
 private import gio.SeekableIF;
 private import gio.SeekableT;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -99,12 +99,12 @@ public class DataOutputStream : FilterOutputStream, SeekableIF
 	public this(OutputStream baseStream)
 	{
 		auto p = g_data_output_stream_new((baseStream is null) ? null : baseStream.getOutputStreamStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GDataOutputStream*) p, true);
 	}
 
@@ -132,14 +132,14 @@ public class DataOutputStream : FilterOutputStream, SeekableIF
 	public bool putByte(char data, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_data_output_stream_put_byte(gDataOutputStream, data, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -157,14 +157,14 @@ public class DataOutputStream : FilterOutputStream, SeekableIF
 	public bool putInt16(short data, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_data_output_stream_put_int16(gDataOutputStream, data, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -182,14 +182,14 @@ public class DataOutputStream : FilterOutputStream, SeekableIF
 	public bool putInt32(int data, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_data_output_stream_put_int32(gDataOutputStream, data, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -207,14 +207,14 @@ public class DataOutputStream : FilterOutputStream, SeekableIF
 	public bool putInt64(long data, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_data_output_stream_put_int64(gDataOutputStream, data, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -232,14 +232,14 @@ public class DataOutputStream : FilterOutputStream, SeekableIF
 	public bool putString(string str, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_data_output_stream_put_string(gDataOutputStream, Str.toStringz(str), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -257,14 +257,14 @@ public class DataOutputStream : FilterOutputStream, SeekableIF
 	public bool putUint16(ushort data, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_data_output_stream_put_uint16(gDataOutputStream, data, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -282,14 +282,14 @@ public class DataOutputStream : FilterOutputStream, SeekableIF
 	public bool putUint32(uint data, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_data_output_stream_put_uint32(gDataOutputStream, data, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -307,14 +307,14 @@ public class DataOutputStream : FilterOutputStream, SeekableIF
 	public bool putUint64(ulong data, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_data_output_stream_put_uint64(gDataOutputStream, data, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 

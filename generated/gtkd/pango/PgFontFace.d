@@ -26,9 +26,9 @@ module pango.PgFontFace;
 
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.pango;
-public  import gtkc.pangotypes;
 private import pango.PgFontDescription;
+private import pango.c.functions;
+public  import pango.c.types;
 
 
 /**
@@ -88,12 +88,12 @@ public class PgFontFace : ObjectG
 	public PgFontDescription describe()
 	{
 		auto p = pango_font_face_describe(pangoFontFace);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) p, true);
 	}
 
@@ -142,9 +142,9 @@ public class PgFontFace : ObjectG
 	{
 		int* outsizes = null;
 		int nSizes;
-		
+
 		pango_font_face_list_sizes(pangoFontFace, &outsizes, &nSizes);
-		
+
 		sizes = outsizes[0 .. nSizes];
 	}
 }

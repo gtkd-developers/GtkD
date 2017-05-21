@@ -26,9 +26,9 @@ module pango.PgAttributeShape;
 
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-private import gtkc.pango;
-public  import gtkc.pangotypes;
 private import pango.PgAttribute;
+private import pango.c.functions;
+public  import pango.c.types;
 
 
 /**
@@ -88,12 +88,12 @@ public class PgAttributeShape : PgAttribute
 	public this(PangoRectangle* inkRect, PangoRectangle* logicalRect)
 	{
 		auto p = pango_attr_shape_new(inkRect, logicalRect);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(PangoAttrShape*) p);
 	}
 
@@ -122,12 +122,12 @@ public class PgAttributeShape : PgAttribute
 	public this(PangoRectangle* inkRect, PangoRectangle* logicalRect, void* data, PangoAttrDataCopyFunc copyFunc, GDestroyNotify destroyFunc)
 	{
 		auto p = pango_attr_shape_new_with_data(inkRect, logicalRect, data, copyFunc, destroyFunc);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_with_data");
 		}
-		
+
 		this(cast(PangoAttrShape*) p);
 	}
 }

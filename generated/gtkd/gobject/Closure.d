@@ -28,8 +28,8 @@ private import glib.ConstructionException;
 private import glib.Source;
 private import gobject.ObjectG;
 private import gobject.Value;
-private import gtkc.gobject;
-public  import gtkc.gobjecttypes;
+private import gobject.c.functions;
+public  import gobject.c.types;
 private import gtkd.Loader;
 
 
@@ -137,12 +137,12 @@ public class Closure
 	public this(uint sizeofClosure, ObjectG object)
 	{
 		auto p = g_closure_new_object(sizeofClosure, (object is null) ? null : object.getObjectGStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_object");
 		}
-		
+
 		this(cast(GClosure*) p);
 	}
 
@@ -196,12 +196,12 @@ public class Closure
 	public this(uint sizeofClosure, void* data)
 	{
 		auto p = g_closure_new_simple(sizeofClosure, data);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_simple");
 		}
-		
+
 		this(cast(GClosure*) p);
 	}
 
@@ -292,15 +292,15 @@ public class Closure
 	public void invoke(out Value returnValue, Value[] paramValues, void* invocationHint)
 	{
 		GValue* outreturnValue = gMalloc!GValue();
-		
+
 		GValue[] paramValuesArray = new GValue[paramValues.length];
 		for ( int i = 0; i < paramValues.length; i++ )
 		{
 			paramValuesArray[i] = *(paramValues[i].getValueStruct());
 		}
-		
+
 		g_closure_invoke(gClosure, outreturnValue, cast(uint)paramValues.length, paramValuesArray.ptr, invocationHint);
-		
+
 		returnValue = ObjectG.getDObject!(Value)(outreturnValue, true);
 	}
 
@@ -313,12 +313,12 @@ public class Closure
 	public Closure doref()
 	{
 		auto p = g_closure_ref(gClosure);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Closure)(cast(GClosure*) p);
 	}
 

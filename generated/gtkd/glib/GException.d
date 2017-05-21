@@ -26,15 +26,15 @@ module glib.GException;
 
 private import glib.ErrorG;
 private import glib.Str;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 
 
 /** */
 class GException : Exception
 {
 	ErrorG error;
-	
+
 	this(ErrorG error)
 	{
 		super( Str.toString(error.getErrorGStruct().message) );

@@ -27,8 +27,8 @@ module glib.Directory;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 
 
 /**
@@ -134,14 +134,14 @@ public class Directory
 	public static string makeTmp(string tmpl)
 	{
 		GError* err = null;
-		
+
 		auto retStr = g_dir_make_tmp(Str.toStringz(tmpl), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -165,19 +165,19 @@ public class Directory
 	public static Directory open(string path, uint flags)
 	{
 		GError* err = null;
-		
+
 		auto p = g_dir_open(Str.toStringz(path), flags, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Directory(cast(GDir*) p);
 	}
 }

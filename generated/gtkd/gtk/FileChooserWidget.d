@@ -32,8 +32,8 @@ private import gtk.Box;
 private import gtk.FileChooserIF;
 private import gtk.FileChooserT;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -108,12 +108,12 @@ public class FileChooserWidget : Box, FileChooserIF
 	public this(GtkFileChooserAction action)
 	{
 		auto p = gtk_file_chooser_widget_new(action);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkFileChooserWidget*) p);
 	}
 
@@ -122,13 +122,13 @@ public class FileChooserWidget : Box, FileChooserIF
 		static OnDesktopFolderDelegateWrapper[] listeners;
 		void delegate(FileChooserWidget) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(FileChooserWidget) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDesktopFolderDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -164,12 +164,12 @@ public class FileChooserWidget : Box, FileChooserIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDesktopFolder(GtkFileChooserWidget* filechooserwidgetStruct, OnDesktopFolderDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDesktopFolderDestroy(OnDesktopFolderDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -180,13 +180,13 @@ public class FileChooserWidget : Box, FileChooserIF
 		static OnDownFolderDelegateWrapper[] listeners;
 		void delegate(FileChooserWidget) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(FileChooserWidget) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDownFolderDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -225,12 +225,12 @@ public class FileChooserWidget : Box, FileChooserIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDownFolder(GtkFileChooserWidget* filechooserwidgetStruct, OnDownFolderDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDownFolderDestroy(OnDownFolderDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -241,13 +241,13 @@ public class FileChooserWidget : Box, FileChooserIF
 		static OnHomeFolderDelegateWrapper[] listeners;
 		void delegate(FileChooserWidget) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(FileChooserWidget) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnHomeFolderDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -283,12 +283,12 @@ public class FileChooserWidget : Box, FileChooserIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackHomeFolder(GtkFileChooserWidget* filechooserwidgetStruct, OnHomeFolderDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackHomeFolderDestroy(OnHomeFolderDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -299,13 +299,13 @@ public class FileChooserWidget : Box, FileChooserIF
 		static OnLocationPopupDelegateWrapper[] listeners;
 		void delegate(string, FileChooserWidget) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(string, FileChooserWidget) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnLocationPopupDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -348,12 +348,12 @@ public class FileChooserWidget : Box, FileChooserIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackLocationPopup(GtkFileChooserWidget* filechooserwidgetStruct, char* path, OnLocationPopupDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(path), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackLocationPopupDestroy(OnLocationPopupDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -364,13 +364,13 @@ public class FileChooserWidget : Box, FileChooserIF
 		static OnLocationPopupOnPasteDelegateWrapper[] listeners;
 		void delegate(FileChooserWidget) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(FileChooserWidget) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnLocationPopupOnPasteDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -406,12 +406,12 @@ public class FileChooserWidget : Box, FileChooserIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackLocationPopupOnPaste(GtkFileChooserWidget* filechooserwidgetStruct, OnLocationPopupOnPasteDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackLocationPopupOnPasteDestroy(OnLocationPopupOnPasteDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -422,13 +422,13 @@ public class FileChooserWidget : Box, FileChooserIF
 		static OnLocationTogglePopupDelegateWrapper[] listeners;
 		void delegate(FileChooserWidget) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(FileChooserWidget) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnLocationTogglePopupDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -464,12 +464,12 @@ public class FileChooserWidget : Box, FileChooserIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackLocationTogglePopup(GtkFileChooserWidget* filechooserwidgetStruct, OnLocationTogglePopupDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackLocationTogglePopupDestroy(OnLocationTogglePopupDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -480,13 +480,13 @@ public class FileChooserWidget : Box, FileChooserIF
 		static OnPlacesShortcutDelegateWrapper[] listeners;
 		void delegate(FileChooserWidget) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(FileChooserWidget) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPlacesShortcutDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -521,12 +521,12 @@ public class FileChooserWidget : Box, FileChooserIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPlacesShortcut(GtkFileChooserWidget* filechooserwidgetStruct, OnPlacesShortcutDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPlacesShortcutDestroy(OnPlacesShortcutDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -537,13 +537,13 @@ public class FileChooserWidget : Box, FileChooserIF
 		static OnQuickBookmarkDelegateWrapper[] listeners;
 		void delegate(int, FileChooserWidget) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(int, FileChooserWidget) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnQuickBookmarkDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -587,12 +587,12 @@ public class FileChooserWidget : Box, FileChooserIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackQuickBookmark(GtkFileChooserWidget* filechooserwidgetStruct, int bookmarkIndex, OnQuickBookmarkDelegateWrapper wrapper)
 	{
 		wrapper.dlg(bookmarkIndex, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackQuickBookmarkDestroy(OnQuickBookmarkDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -603,13 +603,13 @@ public class FileChooserWidget : Box, FileChooserIF
 		static OnRecentShortcutDelegateWrapper[] listeners;
 		void delegate(FileChooserWidget) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(FileChooserWidget) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnRecentShortcutDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -644,12 +644,12 @@ public class FileChooserWidget : Box, FileChooserIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackRecentShortcut(GtkFileChooserWidget* filechooserwidgetStruct, OnRecentShortcutDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackRecentShortcutDestroy(OnRecentShortcutDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -660,13 +660,13 @@ public class FileChooserWidget : Box, FileChooserIF
 		static OnSearchShortcutDelegateWrapper[] listeners;
 		void delegate(FileChooserWidget) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(FileChooserWidget) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnSearchShortcutDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -701,12 +701,12 @@ public class FileChooserWidget : Box, FileChooserIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackSearchShortcut(GtkFileChooserWidget* filechooserwidgetStruct, OnSearchShortcutDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackSearchShortcutDestroy(OnSearchShortcutDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -717,13 +717,13 @@ public class FileChooserWidget : Box, FileChooserIF
 		static OnShowHiddenDelegateWrapper[] listeners;
 		void delegate(FileChooserWidget) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(FileChooserWidget) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnShowHiddenDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -758,12 +758,12 @@ public class FileChooserWidget : Box, FileChooserIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackShowHidden(GtkFileChooserWidget* filechooserwidgetStruct, OnShowHiddenDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackShowHiddenDestroy(OnShowHiddenDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -774,13 +774,13 @@ public class FileChooserWidget : Box, FileChooserIF
 		static OnUpFolderDelegateWrapper[] listeners;
 		void delegate(FileChooserWidget) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(FileChooserWidget) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnUpFolderDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -816,12 +816,12 @@ public class FileChooserWidget : Box, FileChooserIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackUpFolder(GtkFileChooserWidget* filechooserwidgetStruct, OnUpFolderDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackUpFolderDestroy(OnUpFolderDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

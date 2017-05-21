@@ -27,8 +27,8 @@ module gtk.EventController;
 private import gdk.Event;
 private import gobject.ObjectG;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -99,12 +99,12 @@ public class EventController : ObjectG
 	public Widget getWidget()
 	{
 		auto p = gtk_event_controller_get_widget(gtkEventController);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 

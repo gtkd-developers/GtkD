@@ -28,8 +28,8 @@ private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gsv.StyleSchemeChooserIF;
 private import gsv.StyleSchemeChooserT;
-private import gsvc.gsv;
-public  import gsvc.gsvtypes;
+private import gsv.c.functions;
+public  import gsv.c.types;
 private import gtk.ActionableIF;
 private import gtk.ActionableT;
 private import gtk.ActivatableIF;
@@ -97,12 +97,12 @@ public class StyleSchemeChooserButton : Button, StyleSchemeChooserIF
 	public this()
 	{
 		auto p = gtk_source_style_scheme_chooser_button_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkSourceStyleSchemeChooserButton*) p);
 	}
 }

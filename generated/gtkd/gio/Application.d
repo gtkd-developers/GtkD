@@ -34,6 +34,8 @@ private import gio.DBusConnection;
 private import gio.File;
 private import gio.FileIF;
 private import gio.Notification;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
@@ -42,8 +44,6 @@ private import glib.Str;
 private import glib.VariantDict;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -209,13 +209,13 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 		static ScopedOnCommandLineDelegateWrapper[] listeners;
 		int delegate(Scoped!ApplicationCommandLine, Application) dlg;
 		gulong handlerId;
-		
+
 		this(int delegate(Scoped!ApplicationCommandLine, Application) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(ScopedOnCommandLineDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -229,7 +229,7 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 			}
 		}
 	}
-	
+
 	/**
 	 * The ::command-line signal is emitted on the primary instance when
 	 * a commandline is not handled locally. See g_application_run() and
@@ -254,12 +254,12 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackScopedCommandLine(GApplication* applicationStruct, GApplicationCommandLine* commandLine, ScopedOnCommandLineDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(scoped!ApplicationCommandLine(commandLine), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackScopedCommandLineDestroy(ScopedOnCommandLineDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -294,12 +294,12 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	public this(string applicationId, GApplicationFlags flags)
 	{
 		auto p = g_application_new(Str.toStringz(applicationId), flags);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GApplication*) p, true);
 	}
 
@@ -319,12 +319,12 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	public static Application getDefault()
 	{
 		auto p = g_application_get_default();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Application)(cast(GApplication*) p);
 	}
 
@@ -564,12 +564,12 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	public DBusConnection getDbusConnection()
 	{
 		auto p = g_application_get_dbus_connection(gApplication);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(DBusConnection)(cast(GDBusConnection*) p);
 	}
 
@@ -753,7 +753,7 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 		{
 			filesArray[i] = files[i].getFileStruct();
 		}
-		
+
 		g_application_open(gApplication, filesArray.ptr, cast(int)files.length, Str.toStringz(hint));
 	}
 
@@ -819,14 +819,14 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	public bool register(Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_application_register(gApplication, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -1171,13 +1171,13 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 		static OnActivateDelegateWrapper[] listeners;
 		void delegate(Application) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Application) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnActivateDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1208,12 +1208,12 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackActivate(GApplication* applicationStruct, OnActivateDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackActivateDestroy(OnActivateDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1224,13 +1224,13 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 		static OnCommandLineDelegateWrapper[] listeners;
 		int delegate(ApplicationCommandLine, Application) dlg;
 		gulong handlerId;
-		
+
 		this(int delegate(ApplicationCommandLine, Application) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCommandLineDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1269,12 +1269,12 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackCommandLine(GApplication* applicationStruct, GApplicationCommandLine* commandLine, OnCommandLineDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(ObjectG.getDObject!(ApplicationCommandLine)(commandLine), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackCommandLineDestroy(OnCommandLineDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1285,13 +1285,13 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 		static OnHandleLocalOptionsDelegateWrapper[] listeners;
 		int delegate(VariantDict, Application) dlg;
 		gulong handlerId;
-		
+
 		this(int delegate(VariantDict, Application) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnHandleLocalOptionsDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1371,12 +1371,12 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackHandleLocalOptions(GApplication* applicationStruct, GVariantDict* options, OnHandleLocalOptionsDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(new VariantDict(options), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackHandleLocalOptionsDestroy(OnHandleLocalOptionsDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1387,13 +1387,13 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 		static OnOpenDelegateWrapper[] listeners;
 		void delegate(void*, int, string, Application) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(void*, int, string, Application) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnOpenDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1429,12 +1429,12 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackOpen(GApplication* applicationStruct, void* files, int nFiles, char* hint, OnOpenDelegateWrapper wrapper)
 	{
 		wrapper.dlg(files, nFiles, Str.toString(hint), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackOpenDestroy(OnOpenDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1445,13 +1445,13 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 		static OnShutdownDelegateWrapper[] listeners;
 		void delegate(Application) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Application) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnShutdownDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1482,12 +1482,12 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackShutdown(GApplication* applicationStruct, OnShutdownDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackShutdownDestroy(OnShutdownDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1498,13 +1498,13 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 		static OnStartupDelegateWrapper[] listeners;
 		void delegate(Application) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Application) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnStartupDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1535,12 +1535,12 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackStartup(GApplication* applicationStruct, OnStartupDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackStartupDestroy(OnStartupDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

@@ -43,8 +43,8 @@ private import gtk.TreeModel;
 private import gtk.TreeModelIF;
 private import gtk.TreePath;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -130,12 +130,12 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	public this()
 	{
 		auto p = gtk_icon_view_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkIconView*) p);
 	}
 
@@ -155,12 +155,12 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	public this(CellArea area)
 	{
 		auto p = gtk_icon_view_new_with_area((area is null) ? null : area.getCellAreaStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_with_area");
 		}
-		
+
 		this(cast(GtkIconView*) p);
 	}
 
@@ -179,12 +179,12 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	public this(TreeModelIF model)
 	{
 		auto p = gtk_icon_view_new_with_model((model is null) ? null : model.getTreeModelStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_with_model");
 		}
-		
+
 		this(cast(GtkIconView*) p);
 	}
 
@@ -219,12 +219,12 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	public Surface createDragIcon(TreePath path)
 	{
 		auto p = gtk_icon_view_create_drag_icon(gtkIconView, (path is null) ? null : path.getTreePathStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Surface(cast(cairo_surface_t*) p);
 	}
 
@@ -248,7 +248,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 		{
 			targetsArray[i] = *(targets[i].getTargetEntryStruct());
 		}
-		
+
 		gtk_icon_view_enable_model_drag_dest(gtkIconView, targetsArray.ptr, cast(int)targets.length, actions);
 	}
 
@@ -273,7 +273,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 		{
 			targetsArray[i] = *(targets[i].getTargetEntryStruct());
 		}
-		
+
 		gtk_icon_view_enable_model_drag_source(gtkIconView, startButtonMask, targetsArray.ptr, cast(int)targets.length, actions);
 	}
 
@@ -354,12 +354,12 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	{
 		GtkTreePath* outpath = null;
 		GtkCellRenderer* outcell = null;
-		
+
 		auto p = gtk_icon_view_get_cursor(gtkIconView, &outpath, &outcell) != 0;
-		
+
 		path = ObjectG.getDObject!(TreePath)(outpath);
 		cell = ObjectG.getDObject!(CellRenderer)(outcell);
-		
+
 		return p;
 	}
 
@@ -380,11 +380,11 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	public bool getDestItemAtPos(int dragX, int dragY, out TreePath path, out GtkIconViewDropPosition pos)
 	{
 		GtkTreePath* outpath = null;
-		
+
 		auto p = gtk_icon_view_get_dest_item_at_pos(gtkIconView, dragX, dragY, &outpath, &pos) != 0;
-		
+
 		path = ObjectG.getDObject!(TreePath)(outpath);
-		
+
 		return p;
 	}
 
@@ -401,9 +401,9 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	public void getDragDestItem(out TreePath path, out GtkIconViewDropPosition pos)
 	{
 		GtkTreePath* outpath = null;
-		
+
 		gtk_icon_view_get_drag_dest_item(gtkIconView, &outpath, &pos);
-		
+
 		path = ObjectG.getDObject!(TreePath)(outpath);
 	}
 
@@ -430,12 +430,12 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	{
 		GtkTreePath* outpath = null;
 		GtkCellRenderer* outcell = null;
-		
+
 		auto p = gtk_icon_view_get_item_at_pos(gtkIconView, x, y, &outpath, &outcell) != 0;
-		
+
 		path = ObjectG.getDObject!(TreePath)(outpath);
 		cell = ObjectG.getDObject!(CellRenderer)(outcell);
-		
+
 		return p;
 	}
 
@@ -544,12 +544,12 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	public TreeModelIF getModel()
 	{
 		auto p = gtk_icon_view_get_model(gtkIconView);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TreeModel, TreeModelIF)(cast(GtkTreeModel*) p);
 	}
 
@@ -572,12 +572,12 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	public TreePath getPathAtPos(int x, int y)
 	{
 		auto p = gtk_icon_view_get_path_at_pos(gtkIconView, x, y);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) p, true);
 	}
 
@@ -636,12 +636,12 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	public ListG getSelectedItems()
 	{
 		auto p = gtk_icon_view_get_selected_items(gtkIconView);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -726,13 +726,13 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 		GtkTreeModel* outmodel = null;
 		GtkTreePath* outpath = null;
 		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
-		
+
 		auto p = gtk_icon_view_get_tooltip_context(gtkIconView, &x, &y, keyboardTip, &outmodel, &outpath, outiter) != 0;
-		
+
 		model = ObjectG.getDObject!(TreeModel, TreeModelIF)(outmodel);
 		path = ObjectG.getDObject!(TreePath)(outpath);
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
-		
+
 		return p;
 	}
 
@@ -755,12 +755,12 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	{
 		GtkTreePath* outstartPath = null;
 		GtkTreePath* outendPath = null;
-		
+
 		auto p = gtk_icon_view_get_visible_range(gtkIconView, &outstartPath, &outendPath) != 0;
-		
+
 		startPath = ObjectG.getDObject!(TreePath)(outstartPath);
 		endPath = ObjectG.getDObject!(TreePath)(outendPath);
-		
+
 		return p;
 	}
 
@@ -1232,13 +1232,13 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 		static OnActivateCursorItemDelegateWrapper[] listeners;
 		bool delegate(IconView) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(IconView) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnActivateCursorItemDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1276,12 +1276,12 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackActivateCursorItem(GtkIconView* iconviewStruct, OnActivateCursorItemDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackActivateCursorItemDestroy(OnActivateCursorItemDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1292,13 +1292,13 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 		static OnItemActivatedDelegateWrapper[] listeners;
 		void delegate(TreePath, IconView) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TreePath, IconView) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnItemActivatedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1337,12 +1337,12 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackItemActivated(GtkIconView* iconviewStruct, GtkTreePath* path, OnItemActivatedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(TreePath)(path), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackItemActivatedDestroy(OnItemActivatedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1353,13 +1353,13 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 		static OnMoveCursorDelegateWrapper[] listeners;
 		bool delegate(GtkMovementStep, int, IconView) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(GtkMovementStep, int, IconView) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMoveCursorDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1406,12 +1406,12 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackMoveCursor(GtkIconView* iconviewStruct, GtkMovementStep step, int count, OnMoveCursorDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(step, count, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMoveCursorDestroy(OnMoveCursorDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1422,13 +1422,13 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 		static OnSelectAllDelegateWrapper[] listeners;
 		void delegate(IconView) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(IconView) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnSelectAllDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1465,12 +1465,12 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackSelectAll(GtkIconView* iconviewStruct, OnSelectAllDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackSelectAllDestroy(OnSelectAllDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1481,13 +1481,13 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 		static OnSelectCursorItemDelegateWrapper[] listeners;
 		void delegate(IconView) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(IconView) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnSelectCursorItemDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1525,12 +1525,12 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackSelectCursorItem(GtkIconView* iconviewStruct, OnSelectCursorItemDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackSelectCursorItemDestroy(OnSelectCursorItemDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1541,13 +1541,13 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 		static OnSelectionChangedDelegateWrapper[] listeners;
 		void delegate(IconView) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(IconView) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnSelectionChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1578,12 +1578,12 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackSelectionChanged(GtkIconView* iconviewStruct, OnSelectionChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackSelectionChangedDestroy(OnSelectionChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1594,13 +1594,13 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 		static OnToggleCursorItemDelegateWrapper[] listeners;
 		void delegate(IconView) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(IconView) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnToggleCursorItemDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1639,12 +1639,12 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackToggleCursorItem(GtkIconView* iconviewStruct, OnToggleCursorItemDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackToggleCursorItemDestroy(OnToggleCursorItemDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1655,13 +1655,13 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 		static OnUnselectAllDelegateWrapper[] listeners;
 		void delegate(IconView) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(IconView) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnUnselectAllDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1698,12 +1698,12 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackUnselectAll(GtkIconView* iconviewStruct, OnUnselectAllDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackUnselectAllDestroy(OnUnselectAllDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

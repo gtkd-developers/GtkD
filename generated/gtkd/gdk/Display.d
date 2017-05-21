@@ -32,12 +32,12 @@ private import gdk.MonitorG;
 private import gdk.Screen;
 private import gdk.Seat;
 private import gdk.Window;
+private import gdk.c.functions;
+public  import gdk.c.types;
 private import glib.ListG;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gdk;
-public  import gtkc.gdktypes;
 private import std.algorithm;
 
 
@@ -115,12 +115,12 @@ public class Display : ObjectG
 	public static Display getDefault()
 	{
 		auto p = gdk_display_get_default();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
 	}
 
@@ -138,12 +138,12 @@ public class Display : ObjectG
 	public static Display open(string displayName)
 	{
 		auto p = gdk_display_open(Str.toStringz(displayName));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
 	}
 
@@ -163,12 +163,12 @@ public class Display : ObjectG
 	public static Display openDefaultLibgtkOnly()
 	{
 		auto p = gdk_display_open_default_libgtk_only();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
 	}
 
@@ -236,12 +236,12 @@ public class Display : ObjectG
 	public AppLaunchContext getAppLaunchContext()
 	{
 		auto p = gdk_display_get_app_launch_context(gdkDisplay);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(AppLaunchContext)(cast(GdkAppLaunchContext*) p, true);
 	}
 
@@ -270,12 +270,12 @@ public class Display : ObjectG
 	public Window getDefaultGroup()
 	{
 		auto p = gdk_display_get_default_group(gdkDisplay);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 
@@ -289,12 +289,12 @@ public class Display : ObjectG
 	public Screen getDefaultScreen()
 	{
 		auto p = gdk_display_get_default_screen(gdkDisplay);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
 	}
 
@@ -308,12 +308,12 @@ public class Display : ObjectG
 	public Seat getDefaultSeat()
 	{
 		auto p = gdk_display_get_default_seat(gdkDisplay);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Seat)(cast(GdkSeat*) p);
 	}
 
@@ -331,12 +331,12 @@ public class Display : ObjectG
 	public DeviceManager getDeviceManager()
 	{
 		auto p = gdk_display_get_device_manager(gdkDisplay);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(DeviceManager)(cast(GdkDeviceManager*) p);
 	}
 
@@ -353,12 +353,12 @@ public class Display : ObjectG
 	public Event getEvent()
 	{
 		auto p = gdk_display_get_event(gdkDisplay);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Event)(cast(GdkEvent*) p, true);
 	}
 
@@ -390,12 +390,12 @@ public class Display : ObjectG
 	public MonitorG getMonitor(int monitorNum)
 	{
 		auto p = gdk_display_get_monitor(gdkDisplay, monitorNum);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(MonitorG)(cast(GdkMonitor*) p);
 	}
 
@@ -414,12 +414,12 @@ public class Display : ObjectG
 	public MonitorG getMonitorAtPoint(int x, int y)
 	{
 		auto p = gdk_display_get_monitor_at_point(gdkDisplay, x, y);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(MonitorG)(cast(GdkMonitor*) p);
 	}
 
@@ -438,12 +438,12 @@ public class Display : ObjectG
 	public MonitorG getMonitorAtWindow(Window window)
 	{
 		auto p = gdk_display_get_monitor_at_window(gdkDisplay, (window is null) ? null : window.getWindowStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(MonitorG)(cast(GdkMonitor*) p);
 	}
 
@@ -507,9 +507,9 @@ public class Display : ObjectG
 	public void getPointer(out Screen screen, out int x, out int y, out GdkModifierType mask)
 	{
 		GdkScreen* outscreen = null;
-		
+
 		gdk_display_get_pointer(gdkDisplay, &outscreen, &x, &y, &mask);
-		
+
 		screen = ObjectG.getDObject!(Screen)(outscreen);
 	}
 
@@ -529,12 +529,12 @@ public class Display : ObjectG
 	public MonitorG getPrimaryMonitor()
 	{
 		auto p = gdk_display_get_primary_monitor(gdkDisplay);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(MonitorG)(cast(GdkMonitor*) p);
 	}
 
@@ -553,12 +553,12 @@ public class Display : ObjectG
 	public Screen getScreen(int screenNum)
 	{
 		auto p = gdk_display_get_screen(gdkDisplay, screenNum);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
 	}
 
@@ -584,12 +584,12 @@ public class Display : ObjectG
 	public Window getWindowAtPointer(out int winX, out int winY)
 	{
 		auto p = gdk_display_get_window_at_pointer(gdkDisplay, &winX, &winY);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 
@@ -647,12 +647,12 @@ public class Display : ObjectG
 	public ListG listDevices()
 	{
 		auto p = gdk_display_list_devices(gdkDisplay);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -667,12 +667,12 @@ public class Display : ObjectG
 	public ListG listSeats()
 	{
 		auto p = gdk_display_list_seats(gdkDisplay);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -711,12 +711,12 @@ public class Display : ObjectG
 	public Event peekEvent()
 	{
 		auto p = gdk_display_peek_event(gdkDisplay);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Event)(cast(GdkEvent*) p, true);
 	}
 
@@ -988,13 +988,13 @@ public class Display : ObjectG
 		static OnClosedDelegateWrapper[] listeners;
 		void delegate(bool, Display) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(bool, Display) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnClosedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1030,12 +1030,12 @@ public class Display : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackClosed(GdkDisplay* displayStruct, bool isError, OnClosedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(isError, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackClosedDestroy(OnClosedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1046,13 +1046,13 @@ public class Display : ObjectG
 		static OnMonitorAddedDelegateWrapper[] listeners;
 		void delegate(MonitorG, Display) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(MonitorG, Display) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMonitorAddedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1088,12 +1088,12 @@ public class Display : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackMonitorAdded(GdkDisplay* displayStruct, GdkMonitor* monitor, OnMonitorAddedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(MonitorG)(monitor), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMonitorAddedDestroy(OnMonitorAddedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1104,13 +1104,13 @@ public class Display : ObjectG
 		static OnMonitorRemovedDelegateWrapper[] listeners;
 		void delegate(MonitorG, Display) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(MonitorG, Display) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMonitorRemovedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1146,12 +1146,12 @@ public class Display : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackMonitorRemoved(GdkDisplay* displayStruct, GdkMonitor* monitor, OnMonitorRemovedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(MonitorG)(monitor), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMonitorRemovedDestroy(OnMonitorRemovedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1162,13 +1162,13 @@ public class Display : ObjectG
 		static OnOpenedDelegateWrapper[] listeners;
 		void delegate(Display) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Display) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnOpenedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1199,12 +1199,12 @@ public class Display : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackOpened(GdkDisplay* displayStruct, OnOpenedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackOpenedDestroy(OnOpenedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1215,13 +1215,13 @@ public class Display : ObjectG
 		static OnSeatAddedDelegateWrapper[] listeners;
 		void delegate(Seat, Display) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Seat, Display) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnSeatAddedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1257,12 +1257,12 @@ public class Display : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackSeatAdded(GdkDisplay* displayStruct, GdkSeat* seat, OnSeatAddedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Seat)(seat), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackSeatAddedDestroy(OnSeatAddedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1273,13 +1273,13 @@ public class Display : ObjectG
 		static OnSeatRemovedDelegateWrapper[] listeners;
 		void delegate(Seat, Display) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Seat, Display) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnSeatRemovedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1315,12 +1315,12 @@ public class Display : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackSeatRemoved(GdkDisplay* displayStruct, GdkSeat* seat, OnSeatRemovedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Seat)(seat), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackSeatRemovedDestroy(OnSeatRemovedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

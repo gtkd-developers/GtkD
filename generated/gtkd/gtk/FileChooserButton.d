@@ -33,8 +33,8 @@ private import gtk.Dialog;
 private import gtk.FileChooserIF;
 private import gtk.FileChooserT;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -129,12 +129,12 @@ public class FileChooserButton : Box, FileChooserIF
 	public this(string title, GtkFileChooserAction action)
 	{
 		auto p = gtk_file_chooser_button_new(Str.toStringz(title), action);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkFileChooserButton*) p);
 	}
 
@@ -162,12 +162,12 @@ public class FileChooserButton : Box, FileChooserIF
 	public this(Dialog dialog)
 	{
 		auto p = gtk_file_chooser_button_new_with_dialog((dialog is null) ? null : cast(GtkWidget*)dialog.getDialogStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_with_dialog");
 		}
-		
+
 		this(cast(GtkFileChooserButton*) p);
 	}
 
@@ -261,13 +261,13 @@ public class FileChooserButton : Box, FileChooserIF
 		static OnFileSetDelegateWrapper[] listeners;
 		void delegate(FileChooserButton) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(FileChooserButton) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnFileSetDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -302,12 +302,12 @@ public class FileChooserButton : Box, FileChooserIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackFileSet(GtkFileChooserButton* filechooserbuttonStruct, OnFileSetDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackFileSetDestroy(OnFileSetDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

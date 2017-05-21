@@ -32,8 +32,8 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Box;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -89,12 +89,12 @@ public class ColorSelection : Box
 	public this()
 	{
 		auto p = gtk_color_selection_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkColorSelection*) p);
 	}
 
@@ -114,15 +114,15 @@ public class ColorSelection : Box
 	{
 		GdkColor* outcolors = null;
 		int nColors;
-		
+
 		auto p = gtk_color_selection_palette_from_string(Str.toStringz(str), &outcolors, &nColors) != 0;
-		
+
 		colors = new Color[nColors];
 		for(size_t i = 0; i < nColors; i++)
 		{
 			colors[i] = ObjectG.getDObject!(Color)(cast(GdkColor*) &outcolors[i]);
 		}
-		
+
 		return p;
 	}
 
@@ -142,9 +142,9 @@ public class ColorSelection : Box
 		{
 			colorsArray[i] = *(colors[i].getColorStruct());
 		}
-		
+
 		auto retStr = gtk_color_selection_palette_to_string(colorsArray.ptr, cast(int)colors.length);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -190,9 +190,9 @@ public class ColorSelection : Box
 	public void getCurrentColor(out Color color)
 	{
 		GdkColor* outcolor = gMalloc!GdkColor();
-		
+
 		gtk_color_selection_get_current_color(gtkColorSelection, outcolor);
-		
+
 		color = ObjectG.getDObject!(Color)(outcolor, true);
 	}
 
@@ -207,9 +207,9 @@ public class ColorSelection : Box
 	public void getCurrentRgba(out RGBA rgba)
 	{
 		GdkRGBA* outrgba = gMalloc!GdkRGBA();
-		
+
 		gtk_color_selection_get_current_rgba(gtkColorSelection, outrgba);
-		
+
 		rgba = ObjectG.getDObject!(RGBA)(outrgba, true);
 	}
 
@@ -255,9 +255,9 @@ public class ColorSelection : Box
 	public void getPreviousColor(out Color color)
 	{
 		GdkColor* outcolor = gMalloc!GdkColor();
-		
+
 		gtk_color_selection_get_previous_color(gtkColorSelection, outcolor);
-		
+
 		color = ObjectG.getDObject!(Color)(outcolor, true);
 	}
 
@@ -272,9 +272,9 @@ public class ColorSelection : Box
 	public void getPreviousRgba(out RGBA rgba)
 	{
 		GdkRGBA* outrgba = gMalloc!GdkRGBA();
-		
+
 		gtk_color_selection_get_previous_rgba(gtkColorSelection, outrgba);
-		
+
 		rgba = ObjectG.getDObject!(RGBA)(outrgba, true);
 	}
 
@@ -412,13 +412,13 @@ public class ColorSelection : Box
 		static OnColorChangedDelegateWrapper[] listeners;
 		void delegate(ColorSelection) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(ColorSelection) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnColorChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -449,12 +449,12 @@ public class ColorSelection : Box
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackColorChanged(GtkColorSelection* colorselectionStruct, OnColorChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackColorChangedDestroy(OnColorChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

@@ -26,8 +26,8 @@ module gstreamer.TracerFactory;
 
 private import glib.ListG;
 private import gstreamer.PluginFeature;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /**
@@ -93,12 +93,12 @@ public class TracerFactory : PluginFeature
 	public static ListG getList()
 	{
 		auto p = gst_tracer_factory_get_list();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 }

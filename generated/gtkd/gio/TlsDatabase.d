@@ -29,14 +29,14 @@ private import gio.Cancellable;
 private import gio.SocketConnectableIF;
 private import gio.TlsCertificate;
 private import gio.TlsInteraction;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ByteArray;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.ListG;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -111,7 +111,7 @@ public class TlsDatabase : ObjectG
 	public string createCertificateHandle(TlsCertificate certificate)
 	{
 		auto retStr = g_tls_database_create_certificate_handle(gTlsDatabase, (certificate is null) ? null : certificate.getTlsCertificateStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -146,19 +146,19 @@ public class TlsDatabase : ObjectG
 	public TlsCertificate lookupCertificateForHandle(string handle, TlsInteraction interaction, GTlsDatabaseLookupFlags flags, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_tls_database_lookup_certificate_for_handle(gTlsDatabase, Str.toStringz(handle), (interaction is null) ? null : interaction.getTlsInteractionStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TlsCertificate)(cast(GTlsCertificate*) p, true);
 	}
 
@@ -201,19 +201,19 @@ public class TlsDatabase : ObjectG
 	public TlsCertificate lookupCertificateForHandleFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_tls_database_lookup_certificate_for_handle_finish(gTlsDatabase, (result is null) ? null : result.getAsyncResultStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TlsCertificate)(cast(GTlsCertificate*) p, true);
 	}
 
@@ -243,19 +243,19 @@ public class TlsDatabase : ObjectG
 	public TlsCertificate lookupCertificateIssuer(TlsCertificate certificate, TlsInteraction interaction, GTlsDatabaseLookupFlags flags, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_tls_database_lookup_certificate_issuer(gTlsDatabase, (certificate is null) ? null : certificate.getTlsCertificateStruct(), (interaction is null) ? null : interaction.getTlsInteractionStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TlsCertificate)(cast(GTlsCertificate*) p, true);
 	}
 
@@ -295,19 +295,19 @@ public class TlsDatabase : ObjectG
 	public TlsCertificate lookupCertificateIssuerFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_tls_database_lookup_certificate_issuer_finish(gTlsDatabase, (result is null) ? null : result.getAsyncResultStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TlsCertificate)(cast(GTlsCertificate*) p, true);
 	}
 
@@ -333,19 +333,19 @@ public class TlsDatabase : ObjectG
 	public ListG lookupCertificatesIssuedBy(ByteArray issuerRawDn, TlsInteraction interaction, GTlsDatabaseLookupFlags flags, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_tls_database_lookup_certificates_issued_by(gTlsDatabase, (issuerRawDn is null) ? null : issuerRawDn.getByteArrayStruct(), (interaction is null) ? null : interaction.getTlsInteractionStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -389,19 +389,19 @@ public class TlsDatabase : ObjectG
 	public ListG lookupCertificatesIssuedByFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_tls_database_lookup_certificates_issued_by_finish(gTlsDatabase, (result is null) ? null : result.getAsyncResultStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -458,14 +458,14 @@ public class TlsDatabase : ObjectG
 	public GTlsCertificateFlags verifyChain(TlsCertificate chain, string purpose, SocketConnectableIF identity, TlsInteraction interaction, GTlsDatabaseVerifyFlags flags, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_tls_database_verify_chain(gTlsDatabase, (chain is null) ? null : chain.getTlsCertificateStruct(), Str.toStringz(purpose), (identity is null) ? null : identity.getSocketConnectableStruct(), (interaction is null) ? null : interaction.getTlsInteractionStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -517,14 +517,14 @@ public class TlsDatabase : ObjectG
 	public GTlsCertificateFlags verifyChainFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_tls_database_verify_chain_finish(gTlsDatabase, (result is null) ? null : result.getAsyncResultStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 }

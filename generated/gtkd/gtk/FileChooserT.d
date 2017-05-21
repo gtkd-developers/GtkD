@@ -34,8 +34,8 @@ public  import gobject.ObjectG;
 public  import gobject.Signals;
 public  import gtk.FileFilter;
 public  import gtk.Widget;
-public  import gtkc.gtk;
-public  import gtkc.gtktypes;
+public  import gtk.c.functions;
+public  import gtk.c.types;
 public  import std.algorithm;
 
 
@@ -235,14 +235,14 @@ public template FileChooserT(TStruct)
 	public bool addShortcutFolder(string folder)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_file_chooser_add_shortcut_folder(getFileChooserStruct(), Str.toStringz(folder), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -265,14 +265,14 @@ public template FileChooserT(TStruct)
 	public bool addShortcutFolderUri(string uri)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_file_chooser_add_shortcut_folder_uri(getFileChooserStruct(), Str.toStringz(uri), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -341,7 +341,7 @@ public template FileChooserT(TStruct)
 	public string getCurrentFolder()
 	{
 		auto retStr = gtk_file_chooser_get_current_folder(getFileChooserStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -357,12 +357,12 @@ public template FileChooserT(TStruct)
 	public FileIF getCurrentFolderFile()
 	{
 		auto p = gtk_file_chooser_get_current_folder_file(getFileChooserStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
 	}
 
@@ -389,7 +389,7 @@ public template FileChooserT(TStruct)
 	public string getCurrentFolderUri()
 	{
 		auto retStr = gtk_file_chooser_get_current_folder_uri(getFileChooserStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -414,7 +414,7 @@ public template FileChooserT(TStruct)
 	public string getCurrentName()
 	{
 		auto retStr = gtk_file_chooser_get_current_name(getFileChooserStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -444,12 +444,12 @@ public template FileChooserT(TStruct)
 	public Widget getExtraWidget()
 	{
 		auto p = gtk_file_chooser_get_extra_widget(getFileChooserStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -469,12 +469,12 @@ public template FileChooserT(TStruct)
 	public FileIF getFile()
 	{
 		auto p = gtk_file_chooser_get_file(getFileChooserStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
 	}
 
@@ -496,7 +496,7 @@ public template FileChooserT(TStruct)
 	public string getFilename()
 	{
 		auto retStr = gtk_file_chooser_get_filename(getFileChooserStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -517,12 +517,12 @@ public template FileChooserT(TStruct)
 	public ListSG getFilenames()
 	{
 		auto p = gtk_file_chooser_get_filenames(getFileChooserStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p, true);
 	}
 
@@ -540,12 +540,12 @@ public template FileChooserT(TStruct)
 	public ListSG getFiles()
 	{
 		auto p = gtk_file_chooser_get_files(getFileChooserStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p, true);
 	}
 
@@ -559,12 +559,12 @@ public template FileChooserT(TStruct)
 	public FileFilter getFilter()
 	{
 		auto p = gtk_file_chooser_get_filter(getFileChooserStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(FileFilter)(cast(GtkFileFilter*) p);
 	}
 
@@ -593,12 +593,12 @@ public template FileChooserT(TStruct)
 	public FileIF getPreviewFile()
 	{
 		auto p = gtk_file_chooser_get_preview_file(getFileChooserStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
 	}
 
@@ -615,7 +615,7 @@ public template FileChooserT(TStruct)
 	public string getPreviewFilename()
 	{
 		auto retStr = gtk_file_chooser_get_preview_filename(getFileChooserStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -632,7 +632,7 @@ public template FileChooserT(TStruct)
 	public string getPreviewUri()
 	{
 		auto retStr = gtk_file_chooser_get_preview_uri(getFileChooserStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -648,12 +648,12 @@ public template FileChooserT(TStruct)
 	public Widget getPreviewWidget()
 	{
 		auto p = gtk_file_chooser_get_preview_widget(getFileChooserStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -715,7 +715,7 @@ public template FileChooserT(TStruct)
 	public string getUri()
 	{
 		auto retStr = gtk_file_chooser_get_uri(getFileChooserStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -733,12 +733,12 @@ public template FileChooserT(TStruct)
 	public ListSG getUris()
 	{
 		auto p = gtk_file_chooser_get_uris(getFileChooserStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p, true);
 	}
 
@@ -768,12 +768,12 @@ public template FileChooserT(TStruct)
 	public ListSG listFilters()
 	{
 		auto p = gtk_file_chooser_list_filters(getFileChooserStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -790,12 +790,12 @@ public template FileChooserT(TStruct)
 	public ListSG listShortcutFolderUris()
 	{
 		auto p = gtk_file_chooser_list_shortcut_folder_uris(getFileChooserStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p, true);
 	}
 
@@ -813,12 +813,12 @@ public template FileChooserT(TStruct)
 	public ListSG listShortcutFolders()
 	{
 		auto p = gtk_file_chooser_list_shortcut_folders(getFileChooserStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p, true);
 	}
 
@@ -866,14 +866,14 @@ public template FileChooserT(TStruct)
 	public bool removeShortcutFolder(string folder)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_file_chooser_remove_shortcut_folder(getFileChooserStruct(), Str.toStringz(folder), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -895,14 +895,14 @@ public template FileChooserT(TStruct)
 	public bool removeShortcutFolderUri(string uri)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_file_chooser_remove_shortcut_folder_uri(getFileChooserStruct(), Str.toStringz(uri), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -932,14 +932,14 @@ public template FileChooserT(TStruct)
 	public bool selectFile(FileIF file)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_file_chooser_select_file(getFileChooserStruct(), (file is null) ? null : file.getFileStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -1065,14 +1065,14 @@ public template FileChooserT(TStruct)
 	public bool setCurrentFolderFile(FileIF file)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_file_chooser_set_current_folder_file(getFileChooserStruct(), (file is null) ? null : file.getFileStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -1203,14 +1203,14 @@ public template FileChooserT(TStruct)
 	public bool setFile(FileIF file)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_file_chooser_set_file(getFileChooserStruct(), (file is null) ? null : file.getFileStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -1496,13 +1496,13 @@ public template FileChooserT(TStruct)
 		static OnConfirmOverwriteDelegateWrapper[] listeners;
 		GtkFileChooserConfirmation delegate(FileChooserIF) dlg;
 		gulong handlerId;
-		
+
 		this(GtkFileChooserConfirmation delegate(FileChooserIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnConfirmOverwriteDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1594,12 +1594,12 @@ public template FileChooserT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static GtkFileChooserConfirmation callBackConfirmOverwrite(GtkFileChooser* filechooserStruct, OnConfirmOverwriteDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackConfirmOverwriteDestroy(OnConfirmOverwriteDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1610,13 +1610,13 @@ public template FileChooserT(TStruct)
 		static OnCurrentFolderChangedDelegateWrapper[] listeners;
 		void delegate(FileChooserIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(FileChooserIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCurrentFolderChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1658,12 +1658,12 @@ public template FileChooserT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackCurrentFolderChanged(GtkFileChooser* filechooserStruct, OnCurrentFolderChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackCurrentFolderChangedDestroy(OnCurrentFolderChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1674,13 +1674,13 @@ public template FileChooserT(TStruct)
 		static OnFileActivatedDelegateWrapper[] listeners;
 		void delegate(FileChooserIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(FileChooserIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnFileActivatedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1720,12 +1720,12 @@ public template FileChooserT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackFileActivated(GtkFileChooser* filechooserStruct, OnFileActivatedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackFileActivatedDestroy(OnFileActivatedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1736,13 +1736,13 @@ public template FileChooserT(TStruct)
 		static OnSelectionChangedDelegateWrapper[] listeners;
 		void delegate(FileChooserIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(FileChooserIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnSelectionChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1785,12 +1785,12 @@ public template FileChooserT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackSelectionChanged(GtkFileChooser* filechooserStruct, OnSelectionChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackSelectionChangedDestroy(OnSelectionChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1801,13 +1801,13 @@ public template FileChooserT(TStruct)
 		static OnUpdatePreviewDelegateWrapper[] listeners;
 		void delegate(FileChooserIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(FileChooserIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnUpdatePreviewDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1858,12 +1858,12 @@ public template FileChooserT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackUpdatePreview(GtkFileChooser* filechooserStruct, OnUpdatePreviewDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackUpdatePreviewDestroy(OnUpdatePreviewDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

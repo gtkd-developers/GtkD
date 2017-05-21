@@ -25,8 +25,8 @@
 module glib.IConv;
 
 private import glib.Str;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 
 
 /**
@@ -56,12 +56,12 @@ public size_t iconv(GIConv converter, ref string inbuf, ref string outbuf)
 	size_t inbytesLeft;
 	char* outoutbuf = Str.toStringz(outbuf);
 	size_t outbytesLeft;
-	
+
 	auto p = g_iconv(converter, &outinbuf, &inbytesLeft, &outoutbuf, &outbytesLeft);
-	
+
 	inbuf = Str.toString(outinbuf, inbytesLeft);
 	outbuf = Str.toString(outoutbuf, outbytesLeft);
-	
+
 	return p;
 }
 

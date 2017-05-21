@@ -28,8 +28,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Value;
 private import gstreamer.TagList;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /**

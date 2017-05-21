@@ -29,6 +29,8 @@ private import gio.DBusInterfaceIF;
 private import gio.DBusInterfaceInfo;
 private import gio.DBusInterfaceT;
 private import gio.DBusMethodInvocation;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.ListG;
@@ -36,8 +38,6 @@ private import glib.Str;
 private import glib.Variant;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -113,14 +113,14 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 	public bool expor(DBusConnection connection, string objectPath)
 	{
 		GError* err = null;
-		
+
 		auto p = g_dbus_interface_skeleton_export(gDBusInterfaceSkeleton, (connection is null) ? null : connection.getDBusConnectionStruct(), Str.toStringz(objectPath), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -152,12 +152,12 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 	public DBusConnection getConnection()
 	{
 		auto p = g_dbus_interface_skeleton_get_connection(gDBusInterfaceSkeleton);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(DBusConnection)(cast(GDBusConnection*) p);
 	}
 
@@ -174,12 +174,12 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 	public ListG getConnections()
 	{
 		auto p = g_dbus_interface_skeleton_get_connections(gDBusInterfaceSkeleton);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -207,12 +207,12 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 	public DBusInterfaceInfo getInfo()
 	{
 		auto p = g_dbus_interface_skeleton_get_info(gDBusInterfaceSkeleton);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(DBusInterfaceInfo)(cast(GDBusInterfaceInfo*) p);
 	}
 
@@ -241,12 +241,12 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 	public Variant getProperties()
 	{
 		auto p = g_dbus_interface_skeleton_get_properties(gDBusInterfaceSkeleton);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Variant(cast(GVariant*) p, true);
 	}
 
@@ -326,13 +326,13 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 		static OnGAuthorizeMethodDelegateWrapper[] listeners;
 		bool delegate(DBusMethodInvocation, DBusInterfaceSkeleton) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(DBusMethodInvocation, DBusInterfaceSkeleton) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnGAuthorizeMethodDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -401,12 +401,12 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackGAuthorizeMethod(GDBusInterfaceSkeleton* dbusinterfaceskeletonStruct, GDBusMethodInvocation* invocation, OnGAuthorizeMethodDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(ObjectG.getDObject!(DBusMethodInvocation)(invocation), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackGAuthorizeMethodDestroy(OnGAuthorizeMethodDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

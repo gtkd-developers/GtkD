@@ -27,8 +27,8 @@ module peas.ExtensionBase;
 private import glib.Str;
 private import gobject.ObjectG;
 private import peas.PluginInfo;
-private import peasc.peas;
-public  import peasc.peastypes;
+private import peas.c.functions;
+public  import peas.c.types;
 
 
 /**
@@ -85,7 +85,7 @@ public class ExtensionBase : ObjectG
 	public string getDataDir()
 	{
 		auto retStr = peas_extension_base_get_data_dir(peasExtensionBase);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -99,12 +99,12 @@ public class ExtensionBase : ObjectG
 	public PluginInfo getPluginInfo()
 	{
 		auto p = peas_extension_base_get_plugin_info(peasExtensionBase);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PluginInfo)(cast(PeasPluginInfo*) p);
 	}
 }

@@ -31,8 +31,8 @@ private import gobject.ObjectG;
 private import gstreamer.Bus;
 private import gstreamer.Caps;
 private import gstreamer.ObjectGst;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /**
@@ -153,12 +153,12 @@ public class DeviceMonitor : ObjectGst
 	public this()
 	{
 		auto p = gst_device_monitor_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GstDeviceMonitor*) p, true);
 	}
 
@@ -199,12 +199,12 @@ public class DeviceMonitor : ObjectGst
 	public Bus getBus()
 	{
 		auto p = gst_device_monitor_get_bus(gstDeviceMonitor);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Bus)(cast(GstBus*) p, true);
 	}
 
@@ -220,12 +220,12 @@ public class DeviceMonitor : ObjectGst
 	public ListG getDevices()
 	{
 		auto p = gst_device_monitor_get_devices(gstDeviceMonitor);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -242,7 +242,7 @@ public class DeviceMonitor : ObjectGst
 	public string[] getProviders()
 	{
 		auto retStr = gst_device_monitor_get_providers(gstDeviceMonitor);
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}

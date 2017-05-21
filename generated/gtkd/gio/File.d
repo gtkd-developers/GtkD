@@ -26,9 +26,9 @@ module gio.File;
 
 private import gio.FileIF;
 private import gio.FileT;
+private import gio.c.functions;
+public  import gio.c.types;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /** */

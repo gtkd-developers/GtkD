@@ -35,13 +35,13 @@ public  import gio.IconIF;
 public  import gio.MountOperation;
 public  import gio.Volume;
 public  import gio.VolumeIF;
+public  import gio.c.functions;
+public  import gio.c.types;
 public  import glib.ErrorG;
 public  import glib.GException;
 public  import glib.Str;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
-public  import gtkc.gio;
-public  import gtkc.giotypes;
 public  import std.algorithm;
 
 
@@ -131,14 +131,14 @@ public template MountT(TStruct)
 	public bool ejectFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_mount_eject_finish(getMountStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -178,14 +178,14 @@ public template MountT(TStruct)
 	public bool ejectWithOperationFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_mount_eject_with_operation_finish(getMountStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -201,12 +201,12 @@ public template MountT(TStruct)
 	public FileIF getDefaultLocation()
 	{
 		auto p = g_mount_get_default_location(getMountStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
 	}
 
@@ -223,12 +223,12 @@ public template MountT(TStruct)
 	public DriveIF getDrive()
 	{
 		auto p = g_mount_get_drive(getMountStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Drive, DriveIF)(cast(GDrive*) p, true);
 	}
 
@@ -242,12 +242,12 @@ public template MountT(TStruct)
 	public IconIF getIcon()
 	{
 		auto p = g_mount_get_icon(getMountStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p, true);
 	}
 
@@ -261,7 +261,7 @@ public template MountT(TStruct)
 	public string getName()
 	{
 		auto retStr = g_mount_get_name(getMountStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -276,12 +276,12 @@ public template MountT(TStruct)
 	public FileIF getRoot()
 	{
 		auto p = g_mount_get_root(getMountStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
 	}
 
@@ -309,12 +309,12 @@ public template MountT(TStruct)
 	public IconIF getSymbolicIcon()
 	{
 		auto p = g_mount_get_symbolic_icon(getMountStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p, true);
 	}
 
@@ -331,7 +331,7 @@ public template MountT(TStruct)
 	public string getUuid()
 	{
 		auto retStr = g_mount_get_uuid(getMountStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -346,12 +346,12 @@ public template MountT(TStruct)
 	public VolumeIF getVolume()
 	{
 		auto p = g_mount_get_volume(getMountStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Volume, VolumeIF)(cast(GVolume*) p, true);
 	}
 
@@ -402,14 +402,14 @@ public template MountT(TStruct)
 	public string[] guessContentTypeFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto retStr = g_mount_guess_content_type_finish(getMountStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}
@@ -440,14 +440,14 @@ public template MountT(TStruct)
 	public string[] guessContentTypeSync(bool forceRescan, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto retStr = g_mount_guess_content_type_sync(getMountStruct(), forceRescan, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}
@@ -524,14 +524,14 @@ public template MountT(TStruct)
 	public bool remountFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_mount_remount_finish(getMountStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -582,14 +582,14 @@ public template MountT(TStruct)
 	public bool unmountFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_mount_unmount_finish(getMountStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -629,14 +629,14 @@ public template MountT(TStruct)
 	public bool unmountWithOperationFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_mount_unmount_with_operation_finish(getMountStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -658,13 +658,13 @@ public template MountT(TStruct)
 		static OnChangedDelegateWrapper[] listeners;
 		void delegate(MountIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(MountIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -694,12 +694,12 @@ public template MountT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackChanged(GMount* mountStruct, OnChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -710,13 +710,13 @@ public template MountT(TStruct)
 		static OnPreUnmountDelegateWrapper[] listeners;
 		void delegate(MountIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(MountIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPreUnmountDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -749,12 +749,12 @@ public template MountT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPreUnmount(GMount* mountStruct, OnPreUnmountDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPreUnmountDestroy(OnPreUnmountDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -765,13 +765,13 @@ public template MountT(TStruct)
 		static OnUnmountedDelegateWrapper[] listeners;
 		void delegate(MountIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(MountIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnUnmountedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -804,12 +804,12 @@ public template MountT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackUnmounted(GMount* mountStruct, OnUnmountedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackUnmountedDestroy(OnUnmountedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

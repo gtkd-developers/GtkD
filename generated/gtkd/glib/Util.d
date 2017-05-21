@@ -25,8 +25,8 @@
 module glib.Util;
 
 private import glib.Str;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 
 
 /** */
@@ -48,7 +48,7 @@ public struct Util
 	{
 		return Str.toString(g_build_filenamev(Str.toStringzArray(firstElement)));
 	}
-	
+
 	/**
 	 * Behaves exactly like g_build_path(), but takes the path elements
 	 * as a string array, instead of varargs. This function is mainly
@@ -227,7 +227,7 @@ public struct Util
 	public static string[] environSetenv(string[] envp, string variable, string value, bool overwrite)
 	{
 		auto retStr = g_environ_setenv(Str.toStringzArray(envp), Str.toStringz(variable), Str.toStringz(value), overwrite);
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}
@@ -250,7 +250,7 @@ public struct Util
 	public static string[] environUnsetenv(string[] envp, string variable)
 	{
 		auto retStr = g_environ_unsetenv(Str.toStringzArray(envp), Str.toStringz(variable));
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}
@@ -283,7 +283,7 @@ public struct Util
 	public static string findProgramInPath(string program)
 	{
 		auto retStr = g_find_program_in_path(Str.toStringz(program));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -312,7 +312,7 @@ public struct Util
 	public static string formatSize(ulong size)
 	{
 		auto retStr = g_format_size(size);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -342,7 +342,7 @@ public struct Util
 	public static string formatSizeForDisplay(long size)
 	{
 		auto retStr = g_format_size_for_display(size);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -365,7 +365,7 @@ public struct Util
 	public static string formatSizeFull(ulong size, GFormatSizeFlags flags)
 	{
 		auto retStr = g_format_size_full(size, flags);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -408,7 +408,7 @@ public struct Util
 	public static string[] getEnviron()
 	{
 		auto retStr = g_get_environ();
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}
@@ -430,7 +430,7 @@ public struct Util
 	public static string getCurrentDir()
 	{
 		auto retStr = g_get_current_dir();
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -785,7 +785,7 @@ public struct Util
 	public static string[] listenv()
 	{
 		auto retStr = g_listenv();
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}
@@ -846,7 +846,7 @@ public struct Util
 	public static string pathGetBasename(string fileName)
 	{
 		auto retStr = g_path_get_basename(Str.toStringz(fileName));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -865,7 +865,7 @@ public struct Util
 	public static string pathGetDirname(string fileName)
 	{
 		auto retStr = g_path_get_dirname(Str.toStringz(fileName));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}

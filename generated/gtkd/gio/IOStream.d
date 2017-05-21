@@ -28,11 +28,11 @@ private import gio.AsyncResultIF;
 private import gio.Cancellable;
 private import gio.InputStream;
 private import gio.OutputStream;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ErrorG;
 private import glib.GException;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -139,14 +139,14 @@ public class IOStream : ObjectG
 	public static bool spliceFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_io_stream_splice_finish((result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -207,14 +207,14 @@ public class IOStream : ObjectG
 	public bool close(Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_io_stream_close(gIOStream, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -258,14 +258,14 @@ public class IOStream : ObjectG
 	public bool closeFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_io_stream_close_finish(gIOStream, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -281,12 +281,12 @@ public class IOStream : ObjectG
 	public InputStream getInputStream()
 	{
 		auto p = g_io_stream_get_input_stream(gIOStream);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) p);
 	}
 
@@ -302,12 +302,12 @@ public class IOStream : ObjectG
 	public OutputStream getOutputStream()
 	{
 		auto p = g_io_stream_get_output_stream(gIOStream);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(OutputStream)(cast(GOutputStream*) p);
 	}
 
@@ -349,14 +349,14 @@ public class IOStream : ObjectG
 	public bool setPending()
 	{
 		GError* err = null;
-		
+
 		auto p = g_io_stream_set_pending(gIOStream, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 

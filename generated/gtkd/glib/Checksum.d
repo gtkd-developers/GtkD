@@ -27,8 +27,8 @@ module glib.Checksum;
 private import glib.Bytes;
 private import glib.ConstructionException;
 private import glib.Str;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 private import gtkd.Loader;
 
 
@@ -91,9 +91,9 @@ public class Checksum
 	public void getDigest(ref ubyte[] buffer)
 	{
 		size_t digestLen = buffer.length;
-		
+
 		g_checksum_get_digest(gChecksum, buffer.ptr, &digestLen);
-		
+
 		buffer = buffer[0 .. digestLen];
 	}
 
@@ -128,12 +128,12 @@ public class Checksum
 	public this(GChecksumType checksumType)
 	{
 		auto p = g_checksum_new(checksumType);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GChecksum*) p);
 	}
 
@@ -150,12 +150,12 @@ public class Checksum
 	public Checksum copy()
 	{
 		auto p = g_checksum_copy(gChecksum);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Checksum(cast(GChecksum*) p, true);
 	}
 
@@ -250,7 +250,7 @@ public class Checksum
 	public static string computeChecksumForBytes(GChecksumType checksumType, Bytes data)
 	{
 		auto retStr = g_compute_checksum_for_bytes(checksumType, (data is null) ? null : data.getBytesStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -275,7 +275,7 @@ public class Checksum
 	public static string computeChecksumForData(GChecksumType checksumType, char[] data)
 	{
 		auto retStr = g_compute_checksum_for_data(checksumType, data.ptr, cast(size_t)data.length);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -298,7 +298,7 @@ public class Checksum
 	public static string computeChecksumForString(GChecksumType checksumType, string str, ptrdiff_t length)
 	{
 		auto retStr = g_compute_checksum_for_string(checksumType, Str.toStringz(str), length);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}

@@ -26,8 +26,8 @@ module glib.OptionGroup;
 
 private import glib.ConstructionException;
 private import glib.Str;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 private import gtkd.Loader;
 
 
@@ -102,12 +102,12 @@ public class OptionGroup
 	public this(string name, string description, string helpDescription, void* userData, GDestroyNotify destroy)
 	{
 		auto p = g_option_group_new(Str.toStringz(name), Str.toStringz(description), Str.toStringz(helpDescription), userData, destroy);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GOptionGroup*) p);
 	}
 
@@ -148,12 +148,12 @@ public class OptionGroup
 	public OptionGroup doref()
 	{
 		auto p = g_option_group_ref(gOptionGroup);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new OptionGroup(cast(GOptionGroup*) p, true);
 	}
 

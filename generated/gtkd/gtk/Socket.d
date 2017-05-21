@@ -30,8 +30,8 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Container;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -139,12 +139,12 @@ public class Socket : Container
 	public this()
 	{
 		auto p = gtk_socket_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkSocket*) p);
 	}
 
@@ -197,12 +197,12 @@ public class Socket : Container
 	public Window getPlugWindow()
 	{
 		auto p = gtk_socket_get_plug_window(gtkSocket);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 
@@ -211,13 +211,13 @@ public class Socket : Container
 		static OnPlugAddedDelegateWrapper[] listeners;
 		void delegate(Socket) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Socket) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPlugAddedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -248,12 +248,12 @@ public class Socket : Container
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPlugAdded(GtkSocket* socketStruct, OnPlugAddedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPlugAddedDestroy(OnPlugAddedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -264,13 +264,13 @@ public class Socket : Container
 		static OnPlugRemovedDelegateWrapper[] listeners;
 		bool delegate(Socket) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(Socket) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPlugRemovedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -304,12 +304,12 @@ public class Socket : Container
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackPlugRemoved(GtkSocket* socketStruct, OnPlugRemovedDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPlugRemovedDestroy(OnPlugRemovedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

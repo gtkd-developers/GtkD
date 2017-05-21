@@ -34,6 +34,8 @@ private import gio.DBusObjectProxy;
 private import gio.DBusProxy;
 private import gio.InitableIF;
 private import gio.InitableT;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
@@ -41,8 +43,6 @@ private import glib.Str;
 private import glib.Variant;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -184,7 +184,7 @@ public class DBusObjectManagerClient : ObjectG, AsyncInitableIF, DBusObjectManag
 	{
 		GError* err = null;
 		GDBusObjectManager* p;
-		
+
 		if ( forBus )
 		{
 			p = g_dbus_object_manager_client_new_for_bus_finish((res is null) ? null : res.getAsyncResultStruct(), &err);
@@ -193,12 +193,12 @@ public class DBusObjectManagerClient : ObjectG, AsyncInitableIF, DBusObjectManag
 		{
 			p = g_dbus_object_manager_client_new_finish((res is null) ? null : res.getAsyncResultStruct(), &err);
 		}
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by g_dbus_object_manager_client_new_finish((res is null) ? null : res.getAsyncResultStruct(), &err)");
@@ -245,19 +245,19 @@ public class DBusObjectManagerClient : ObjectG, AsyncInitableIF, DBusObjectManag
 	public this(GBusType busType, GDBusObjectManagerClientFlags flags, string name, string objectPath, GDBusProxyTypeFunc getProxyTypeFunc, void* getProxyTypeUserData, GDestroyNotify getProxyTypeDestroyNotify, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_dbus_object_manager_client_new_for_bus_sync(busType, flags, Str.toStringz(name), Str.toStringz(objectPath), getProxyTypeFunc, getProxyTypeUserData, getProxyTypeDestroyNotify, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_for_bus_sync");
 		}
-		
+
 		this(cast(GDBusObjectManagerClient*) p, true);
 	}
 
@@ -290,19 +290,19 @@ public class DBusObjectManagerClient : ObjectG, AsyncInitableIF, DBusObjectManag
 	public this(DBusConnection connection, GDBusObjectManagerClientFlags flags, string name, string objectPath, GDBusProxyTypeFunc getProxyTypeFunc, void* getProxyTypeUserData, GDestroyNotify getProxyTypeDestroyNotify, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_dbus_object_manager_client_new_sync((connection is null) ? null : connection.getDBusConnectionStruct(), flags, Str.toStringz(name), Str.toStringz(objectPath), getProxyTypeFunc, getProxyTypeUserData, getProxyTypeDestroyNotify, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_sync");
 		}
-		
+
 		this(cast(GDBusObjectManagerClient*) p, true);
 	}
 
@@ -376,12 +376,12 @@ public class DBusObjectManagerClient : ObjectG, AsyncInitableIF, DBusObjectManag
 	public DBusConnection getConnection()
 	{
 		auto p = g_dbus_object_manager_client_get_connection(gDBusObjectManagerClient);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(DBusConnection)(cast(GDBusConnection*) p);
 	}
 
@@ -426,7 +426,7 @@ public class DBusObjectManagerClient : ObjectG, AsyncInitableIF, DBusObjectManag
 	public string getNameOwner()
 	{
 		auto retStr = g_dbus_object_manager_client_get_name_owner(gDBusObjectManagerClient);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -436,13 +436,13 @@ public class DBusObjectManagerClient : ObjectG, AsyncInitableIF, DBusObjectManag
 		static OnInterfaceProxyPropertiesChangedDelegateWrapper[] listeners;
 		void delegate(DBusObjectProxy, DBusProxy, Variant, string[], DBusObjectManagerClient) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(DBusObjectProxy, DBusProxy, Variant, string[], DBusObjectManagerClient) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnInterfaceProxyPropertiesChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -490,12 +490,12 @@ public class DBusObjectManagerClient : ObjectG, AsyncInitableIF, DBusObjectManag
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackInterfaceProxyPropertiesChanged(GDBusObjectManagerClient* dbusobjectmanagerclientStruct, GDBusObjectProxy* objectProxy, GDBusProxy* interfaceProxy, GVariant* changedProperties, char** invalidatedProperties, OnInterfaceProxyPropertiesChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(DBusObjectProxy)(objectProxy), ObjectG.getDObject!(DBusProxy)(interfaceProxy), new Variant(changedProperties), Str.toStringArray(invalidatedProperties), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackInterfaceProxyPropertiesChangedDestroy(OnInterfaceProxyPropertiesChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -506,13 +506,13 @@ public class DBusObjectManagerClient : ObjectG, AsyncInitableIF, DBusObjectManag
 		static OnInterfaceProxySignalDelegateWrapper[] listeners;
 		void delegate(DBusObjectProxy, DBusProxy, string, string, Variant, DBusObjectManagerClient) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(DBusObjectProxy, DBusProxy, string, string, Variant, DBusObjectManagerClient) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnInterfaceProxySignalDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -558,12 +558,12 @@ public class DBusObjectManagerClient : ObjectG, AsyncInitableIF, DBusObjectManag
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackInterfaceProxySignal(GDBusObjectManagerClient* dbusobjectmanagerclientStruct, GDBusObjectProxy* objectProxy, GDBusProxy* interfaceProxy, char* senderName, char* signalName, GVariant* parameters, OnInterfaceProxySignalDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(DBusObjectProxy)(objectProxy), ObjectG.getDObject!(DBusProxy)(interfaceProxy), Str.toString(senderName), Str.toString(signalName), new Variant(parameters), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackInterfaceProxySignalDestroy(OnInterfaceProxySignalDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

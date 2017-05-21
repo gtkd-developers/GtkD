@@ -32,8 +32,8 @@ private import gobject.Value;
 private import gtk.StyleProviderIF;
 private import gtk.StyleProviderT;
 private import gtk.SymbolicColor;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -110,12 +110,12 @@ public class StyleProperties : ObjectG, StyleProviderIF
 	public this()
 	{
 		auto p = gtk_style_properties_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkStyleProperties*) p, true);
 	}
 
@@ -139,11 +139,11 @@ public class StyleProperties : ObjectG, StyleProviderIF
 	public static bool lookupProperty(string propertyName, out GtkStylePropertyParser parseFunc, out ParamSpec pspec)
 	{
 		GParamSpec* outpspec = null;
-		
+
 		auto p = gtk_style_properties_lookup_property(Str.toStringz(propertyName), &parseFunc, &outpspec) != 0;
-		
+
 		pspec = ObjectG.getDObject!(ParamSpec)(outpspec);
-		
+
 		return p;
 	}
 
@@ -194,11 +194,11 @@ public class StyleProperties : ObjectG, StyleProviderIF
 	public bool getStyleProperty(string property, GtkStateFlags state, out Value value)
 	{
 		GValue* outvalue = gMalloc!GValue();
-		
+
 		auto p = gtk_style_properties_get_property(gtkStyleProperties, Str.toStringz(property), state, outvalue) != 0;
-		
+
 		value = ObjectG.getDObject!(Value)(outvalue, true);
-		
+
 		return p;
 	}
 
@@ -234,12 +234,12 @@ public class StyleProperties : ObjectG, StyleProviderIF
 	public SymbolicColor lookupColor(string name)
 	{
 		auto p = gtk_style_properties_lookup_color(gtkStyleProperties, Str.toStringz(name));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SymbolicColor)(cast(GtkSymbolicColor*) p);
 	}
 

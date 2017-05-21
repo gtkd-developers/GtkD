@@ -24,13 +24,13 @@
 
 module gio.ActionIF;
 
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import glib.Variant;
 private import glib.VariantType;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**

@@ -26,10 +26,10 @@ module gio.ActionMapT;
 
 public  import gio.Action;
 public  import gio.ActionIF;
+public  import gio.c.functions;
+public  import gio.c.types;
 public  import glib.Str;
 public  import gobject.ObjectG;
-public  import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -139,12 +139,12 @@ public template ActionMapT(TStruct)
 	public ActionIF lookupAction(string actionName)
 	{
 		auto p = g_action_map_lookup_action(getActionMapStruct(), Str.toStringz(actionName));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Action, ActionIF)(cast(GAction*) p);
 	}
 

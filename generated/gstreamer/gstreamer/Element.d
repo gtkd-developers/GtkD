@@ -31,6 +31,7 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gobject.Type;
+private import gobject.c.functions;
 private import gstreamer.Bus;
 private import gstreamer.Caps;
 private import gstreamer.Clock;
@@ -45,9 +46,8 @@ private import gstreamer.PadTemplate;
 private import gstreamer.Plugin;
 private import gstreamer.Query;
 private import gstreamer.Structure;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
-private import gtkc.gobject;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 private import std.algorithm;
 
 
@@ -149,7 +149,7 @@ public class Element : ObjectGst
 		queryPosition( form, cur_pos );
 		return cur_pos;
 	}
-	
+
 	/**
 	 * Queries an element for the stream duration.
 	 * This is a convenience function for gstreamerD.
@@ -163,7 +163,7 @@ public class Element : ObjectGst
 		queryDuration( form, cur_dur );
 		return cur_dur;
 	}
-	
+
 	/**
 	 *	This set's the filename for a filesrc element.
 	 */
@@ -172,7 +172,7 @@ public class Element : ObjectGst
 		//g_object_set( G_OBJECT(getElementStruct()), "location", set, NULL);
 		setProperty("location", set);
 	}
-	
+
 	/**
 	 * Set the caps property of an Element.
 	 */
@@ -180,7 +180,7 @@ public class Element : ObjectGst
 	{
 		g_object_set( getElementStruct(), Str.toStringz("caps"), cp.getCapsStruct(), null );
 	}
-	
+
 	/**
 	 * For your convenience in gstreamerD: you can seek to the
 	 * position of the pipeline measured in time_nanoseconds.
@@ -191,7 +191,7 @@ public class Element : ObjectGst
 		GstSeekType.SET, time_nanoseconds,
 		GstSeekType.NONE, GST_CLOCK_TIME_NONE);
 	}
-	
+
 	/**
 	 * Get's all the pads from an element in a Pad[].
 	 */
@@ -200,15 +200,15 @@ public class Element : ObjectGst
 		Pad[] result;
 		GValue* pad = g_value_init(new GValue(), Type.fromName("GstPad"));
 		GstIterator* iter = gst_element_iterate_pads(gstElement);
-		
+
 		while ( gst_iterator_next(iter, pad) == GstIteratorResult.OK )
 		{
 			result ~= new Pad(cast(GstPad*)g_value_get_object(pad));
 			g_value_reset(pad);
 		}
-		
+
 		g_value_unset(pad);
-		
+
 		return result;
 	}
 
@@ -236,19 +236,19 @@ public class Element : ObjectGst
 	public static Element makeFromUri(GstURIType type, string uri, string elementname)
 	{
 		GError* err = null;
-		
+
 		auto p = gst_element_make_from_uri(type, Str.toStringz(uri), Str.toStringz(elementname), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Element)(cast(GstElement*) p);
 	}
 
@@ -470,12 +470,12 @@ public class Element : ObjectGst
 	public Bus getBus()
 	{
 		auto p = gst_element_get_bus(gstElement);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Bus)(cast(GstBus*) p, true);
 	}
 
@@ -493,12 +493,12 @@ public class Element : ObjectGst
 	public Clock getClock()
 	{
 		auto p = gst_element_get_clock(gstElement);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Clock)(cast(GstClock*) p, true);
 	}
 
@@ -522,12 +522,12 @@ public class Element : ObjectGst
 	public Pad getCompatiblePad(Pad pad, Caps caps)
 	{
 		auto p = gst_element_get_compatible_pad(gstElement, (pad is null) ? null : pad.getPadStruct(), (caps is null) ? null : caps.getCapsStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pad)(cast(GstPad*) p, true);
 	}
 
@@ -545,12 +545,12 @@ public class Element : ObjectGst
 	public PadTemplate getCompatiblePadTemplate(PadTemplate compattempl)
 	{
 		auto p = gst_element_get_compatible_pad_template(gstElement, (compattempl is null) ? null : compattempl.getPadTemplateStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PadTemplate)(cast(GstPadTemplate*) p);
 	}
 
@@ -569,12 +569,12 @@ public class Element : ObjectGst
 	public Context getContext(string contextType)
 	{
 		auto p = gst_element_get_context(gstElement, Str.toStringz(contextType));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Context)(cast(GstContext*) p, true);
 	}
 
@@ -591,12 +591,12 @@ public class Element : ObjectGst
 	public Context getContextUnlocked(string contextType)
 	{
 		auto p = gst_element_get_context_unlocked(gstElement, Str.toStringz(contextType));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Context)(cast(GstContext*) p, true);
 	}
 
@@ -612,12 +612,12 @@ public class Element : ObjectGst
 	public ListG getContexts()
 	{
 		auto p = gst_element_get_contexts(gstElement);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -630,12 +630,12 @@ public class Element : ObjectGst
 	public ElementFactory getFactory()
 	{
 		auto p = gst_element_get_factory(gstElement);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ElementFactory)(cast(GstElementFactory*) p);
 	}
 
@@ -657,12 +657,12 @@ public class Element : ObjectGst
 	public Pad getRequestPad(string name)
 	{
 		auto p = gst_element_get_request_pad(gstElement, Str.toStringz(name));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pad)(cast(GstPad*) p, true);
 	}
 
@@ -739,12 +739,12 @@ public class Element : ObjectGst
 	public Pad getStaticPad(string name)
 	{
 		auto p = gst_element_get_static_pad(gstElement, Str.toStringz(name));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pad)(cast(GstPad*) p, true);
 	}
 
@@ -779,12 +779,12 @@ public class Element : ObjectGst
 	public Iterator iteratePads()
 	{
 		auto p = gst_element_iterate_pads(gstElement);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
 	}
 
@@ -801,12 +801,12 @@ public class Element : ObjectGst
 	public Iterator iterateSinkPads()
 	{
 		auto p = gst_element_iterate_sink_pads(gstElement);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
 	}
 
@@ -823,12 +823,12 @@ public class Element : ObjectGst
 	public Iterator iterateSrcPads()
 	{
 		auto p = gst_element_iterate_src_pads(gstElement);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
 	}
 
@@ -1068,12 +1068,12 @@ public class Element : ObjectGst
 	public Clock provideClock()
 	{
 		auto p = gst_element_provide_clock(gstElement);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Clock)(cast(GstClock*) p, true);
 	}
 
@@ -1233,12 +1233,12 @@ public class Element : ObjectGst
 	public Pad requestPad(PadTemplate templ, string name, Caps caps)
 	{
 		auto p = gst_element_request_pad(gstElement, (templ is null) ? null : templ.getPadTemplateStruct(), Str.toStringz(name), (caps is null) ? null : caps.getCapsStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pad)(cast(GstPad*) p, true);
 	}
 
@@ -1493,13 +1493,13 @@ public class Element : ObjectGst
 		static OnNoMorePadsDelegateWrapper[] listeners;
 		void delegate(Element) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Element) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnNoMorePadsDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1531,12 +1531,12 @@ public class Element : ObjectGst
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackNoMorePads(GstElement* elementStruct, OnNoMorePadsDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackNoMorePadsDestroy(OnNoMorePadsDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1547,13 +1547,13 @@ public class Element : ObjectGst
 		static OnPadAddedDelegateWrapper[] listeners;
 		void delegate(Pad, Element) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Pad, Element) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPadAddedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1590,12 +1590,12 @@ public class Element : ObjectGst
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPadAdded(GstElement* elementStruct, GstPad* newPad, OnPadAddedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Pad)(newPad), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPadAddedDestroy(OnPadAddedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1606,13 +1606,13 @@ public class Element : ObjectGst
 		static OnPadRemovedDelegateWrapper[] listeners;
 		void delegate(Pad, Element) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Pad, Element) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPadRemovedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1645,12 +1645,12 @@ public class Element : ObjectGst
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPadRemoved(GstElement* elementStruct, GstPad* oldPad, OnPadRemovedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Pad)(oldPad), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPadRemovedDestroy(OnPadRemovedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

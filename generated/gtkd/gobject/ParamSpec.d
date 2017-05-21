@@ -27,8 +27,8 @@ module gobject.ParamSpec;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Value;
-private import gtkc.gobject;
-public  import gtkc.gobjecttypes;
+private import gobject.c.functions;
+public  import gobject.c.types;
 private import gtkd.Loader;
 
 
@@ -111,12 +111,12 @@ public class ParamSpec
 	public static ParamSpec internal(GType paramType, string name, string nick, string blurb, GParamFlags flags)
 	{
 		auto p = g_param_spec_internal(paramType, Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), flags);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
 	}
 
@@ -142,12 +142,12 @@ public class ParamSpec
 	public Value getDefaultValue()
 	{
 		auto p = g_param_spec_get_default_value(gParamSpec);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Value)(cast(GValue*) p);
 	}
 
@@ -216,12 +216,12 @@ public class ParamSpec
 	public ParamSpec getRedirectTarget()
 	{
 		auto p = g_param_spec_get_redirect_target(gParamSpec);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
 	}
 
@@ -233,12 +233,12 @@ public class ParamSpec
 	public ParamSpec doref()
 	{
 		auto p = g_param_spec_ref(gParamSpec);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
 	}
 
@@ -252,12 +252,12 @@ public class ParamSpec
 	public ParamSpec refSink()
 	{
 		auto p = g_param_spec_ref_sink(gParamSpec);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
 	}
 

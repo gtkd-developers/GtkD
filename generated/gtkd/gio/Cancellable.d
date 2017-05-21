@@ -24,14 +24,14 @@
 
 module gio.Cancellable;
 
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Source;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -98,12 +98,12 @@ public class Cancellable : ObjectG
 	public this()
 	{
 		auto p = g_cancellable_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GCancellable*) p, true);
 	}
 
@@ -116,12 +116,12 @@ public class Cancellable : ObjectG
 	public static Cancellable getCurrent()
 	{
 		auto p = g_cancellable_get_current();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Cancellable)(cast(GCancellable*) p);
 	}
 
@@ -347,14 +347,14 @@ public class Cancellable : ObjectG
 	public bool setErrorIfCancelled()
 	{
 		GError* err = null;
-		
+
 		auto p = g_cancellable_set_error_if_cancelled(gCancellable, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -376,12 +376,12 @@ public class Cancellable : ObjectG
 	public Source sourceNew()
 	{
 		auto p = g_cancellable_source_new(gCancellable);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Source(cast(GSource*) p, true);
 	}
 
@@ -390,13 +390,13 @@ public class Cancellable : ObjectG
 		static OnCancelledDelegateWrapper[] listeners;
 		void delegate(Cancellable) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Cancellable) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCancelledDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -476,12 +476,12 @@ public class Cancellable : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackCancelled(GCancellable* cancellableStruct, OnCancelledDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackCancelledDestroy(OnCancelledDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

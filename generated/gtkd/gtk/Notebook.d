@@ -31,8 +31,8 @@ private import gobject.Signals;
 private import gtk.Container;
 private import gtk.Label;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -159,7 +159,7 @@ public class Notebook : Container
 	{
 		return appendPage(child, new Label(tabLabel));
 	}
-	
+
 	/** */
 	void setCurrentPage(Widget child)
 	{
@@ -185,12 +185,12 @@ public class Notebook : Container
 	public this()
 	{
 		auto p = gtk_notebook_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkNotebook*) p);
 	}
 
@@ -265,12 +265,12 @@ public class Notebook : Container
 	public Widget getActionWidget(GtkPackType packType)
 	{
 		auto p = gtk_notebook_get_action_widget(gtkNotebook, packType);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -311,12 +311,12 @@ public class Notebook : Container
 	public Widget getMenuLabel(Widget child)
 	{
 		auto p = gtk_notebook_get_menu_label(gtkNotebook, (child is null) ? null : child.getWidgetStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -362,12 +362,12 @@ public class Notebook : Container
 	public Widget getNthPage(int pageNum)
 	{
 		auto p = gtk_notebook_get_nth_page(gtkNotebook, pageNum);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -446,12 +446,12 @@ public class Notebook : Container
 	public Widget getTabLabel(Widget child)
 	{
 		auto p = gtk_notebook_get_tab_label(gtkNotebook, (child is null) ? null : child.getWidgetStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -905,13 +905,13 @@ public class Notebook : Container
 		static OnChangeCurrentPageDelegateWrapper[] listeners;
 		bool delegate(int, Notebook) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(int, Notebook) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnChangeCurrentPageDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -939,12 +939,12 @@ public class Notebook : Container
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackChangeCurrentPage(GtkNotebook* notebookStruct, int object, OnChangeCurrentPageDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(object, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackChangeCurrentPageDestroy(OnChangeCurrentPageDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -955,13 +955,13 @@ public class Notebook : Container
 		static OnCreateWindowDelegateWrapper[] listeners;
 		Notebook delegate(Widget, int, int, Notebook) dlg;
 		gulong handlerId;
-		
+
 		this(Notebook delegate(Widget, int, int, Notebook) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCreateWindowDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1008,13 +1008,13 @@ public class Notebook : Container
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static GtkNotebook* callBackCreateWindow(GtkNotebook* notebookStruct, GtkWidget* page, int x, int y, OnCreateWindowDelegateWrapper wrapper)
 	{
 		auto r = wrapper.dlg(ObjectG.getDObject!(Widget)(page), x, y, wrapper.outer);
 		return r.getNotebookStruct();
 	}
-	
+
 	extern(C) static void callBackCreateWindowDestroy(OnCreateWindowDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1025,13 +1025,13 @@ public class Notebook : Container
 		static OnFocusTabDelegateWrapper[] listeners;
 		bool delegate(GtkNotebookTab, Notebook) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(GtkNotebookTab, Notebook) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnFocusTabDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1059,12 +1059,12 @@ public class Notebook : Container
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackFocusTab(GtkNotebook* notebookStruct, GtkNotebookTab object, OnFocusTabDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(object, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackFocusTabDestroy(OnFocusTabDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1075,13 +1075,13 @@ public class Notebook : Container
 		static OnMoveFocusOutDelegateWrapper[] listeners;
 		void delegate(GtkDirectionType, Notebook) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(GtkDirectionType, Notebook) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMoveFocusOutDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1109,12 +1109,12 @@ public class Notebook : Container
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackMoveFocusOut(GtkNotebook* notebookStruct, GtkDirectionType object, OnMoveFocusOutDelegateWrapper wrapper)
 	{
 		wrapper.dlg(object, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMoveFocusOutDestroy(OnMoveFocusOutDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1125,13 +1125,13 @@ public class Notebook : Container
 		static OnPageAddedDelegateWrapper[] listeners;
 		void delegate(Widget, uint, Notebook) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Widget, uint, Notebook) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPageAddedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1168,12 +1168,12 @@ public class Notebook : Container
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPageAdded(GtkNotebook* notebookStruct, GtkWidget* child, uint pageNum, OnPageAddedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Widget)(child), pageNum, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPageAddedDestroy(OnPageAddedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1184,13 +1184,13 @@ public class Notebook : Container
 		static OnPageRemovedDelegateWrapper[] listeners;
 		void delegate(Widget, uint, Notebook) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Widget, uint, Notebook) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPageRemovedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1227,12 +1227,12 @@ public class Notebook : Container
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPageRemoved(GtkNotebook* notebookStruct, GtkWidget* child, uint pageNum, OnPageRemovedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Widget)(child), pageNum, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPageRemovedDestroy(OnPageRemovedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1243,13 +1243,13 @@ public class Notebook : Container
 		static OnPageReorderedDelegateWrapper[] listeners;
 		void delegate(Widget, uint, Notebook) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Widget, uint, Notebook) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPageReorderedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1286,12 +1286,12 @@ public class Notebook : Container
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPageReordered(GtkNotebook* notebookStruct, GtkWidget* child, uint pageNum, OnPageReorderedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Widget)(child), pageNum, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPageReorderedDestroy(OnPageReorderedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1302,13 +1302,13 @@ public class Notebook : Container
 		static OnReorderTabDelegateWrapper[] listeners;
 		bool delegate(GtkDirectionType, bool, Notebook) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(GtkDirectionType, bool, Notebook) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnReorderTabDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1336,12 +1336,12 @@ public class Notebook : Container
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackReorderTab(GtkNotebook* notebookStruct, GtkDirectionType object, bool p0, OnReorderTabDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(object, p0, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackReorderTabDestroy(OnReorderTabDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1352,13 +1352,13 @@ public class Notebook : Container
 		static OnSelectPageDelegateWrapper[] listeners;
 		bool delegate(bool, Notebook) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(bool, Notebook) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnSelectPageDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1386,12 +1386,12 @@ public class Notebook : Container
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackSelectPage(GtkNotebook* notebookStruct, bool object, OnSelectPageDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(object, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackSelectPageDestroy(OnSelectPageDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1402,13 +1402,13 @@ public class Notebook : Container
 		static OnSwitchPageDelegateWrapper[] listeners;
 		void delegate(Widget, uint, Notebook) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Widget, uint, Notebook) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnSwitchPageDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1442,12 +1442,12 @@ public class Notebook : Container
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackSwitchPage(GtkNotebook* notebookStruct, GtkWidget* page, uint pageNum, OnSwitchPageDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Widget)(page), pageNum, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackSwitchPageDestroy(OnSwitchPageDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

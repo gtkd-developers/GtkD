@@ -27,8 +27,8 @@ module gstreamer.Clock;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gstreamer.ObjectGst;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 private import std.algorithm;
 
 
@@ -423,12 +423,12 @@ public class Clock : ObjectGst
 	public Clock getMaster()
 	{
 		auto p = gst_clock_get_master(gstClock);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Clock)(cast(GstClock*) p, true);
 	}
 
@@ -738,13 +738,13 @@ public class Clock : ObjectGst
 		static OnSyncedDelegateWrapper[] listeners;
 		void delegate(bool, Clock) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(bool, Clock) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnSyncedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -784,12 +784,12 @@ public class Clock : ObjectGst
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackSynced(GstClock* clockStruct, bool synced, OnSyncedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(synced, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackSyncedDestroy(OnSyncedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

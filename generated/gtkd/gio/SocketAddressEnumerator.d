@@ -27,11 +27,11 @@ module gio.SocketAddressEnumerator;
 private import gio.AsyncResultIF;
 private import gio.Cancellable;
 private import gio.SocketAddress;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ErrorG;
 private import glib.GException;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -106,19 +106,19 @@ public class SocketAddressEnumerator : ObjectG
 	public SocketAddress next(Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_socket_address_enumerator_next(gSocketAddressEnumerator, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SocketAddress)(cast(GSocketAddress*) p, true);
 	}
 
@@ -156,19 +156,19 @@ public class SocketAddressEnumerator : ObjectG
 	public SocketAddress nextFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_socket_address_enumerator_next_finish(gSocketAddressEnumerator, (result is null) ? null : result.getAsyncResultStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SocketAddress)(cast(GSocketAddress*) p, true);
 	}
 }

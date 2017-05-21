@@ -118,7 +118,7 @@ addAliases: start
 
 	Type* gMalloc(Type)()
 	{
-		import gtkc.glib;
+		import glib.c.functions;
 		return cast(Type*)g_malloc0(Type.sizeof);
 	}
 
@@ -772,7 +772,7 @@ code: start
 	{
 		private import core.sys.posix.stdio;
 	}
-	//fdopen for Windows is defined in gtkc.glibtypes.
+	//fdopen for Windows is defined in glib.c.types.
 
 	string workingDirectory = ".";
 	string[] argv;
@@ -1057,7 +1057,7 @@ code: end
 struct: Str
 import: core.stdc.stdio
 import: core.stdc.string
-import: gtkc.gobjecttypes
+import: gobject.c.types
 code: start
 	/*
 	 * Convert C-style 0 terminated string s to char[] string.

@@ -26,8 +26,8 @@ module glib.Pattern;
 
 private import glib.ConstructionException;
 private import glib.Str;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 private import gtkd.Loader;
 
 
@@ -107,12 +107,12 @@ public class Pattern
 	public this(string pattern)
 	{
 		auto p = g_pattern_spec_new(Str.toStringz(pattern));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GPatternSpec*) p);
 	}
 

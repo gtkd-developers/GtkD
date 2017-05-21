@@ -27,8 +27,8 @@ module gtk.ContainerClass;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.ParamSpec;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -77,12 +77,12 @@ public class ContainerClass
 	public ParamSpec findChildProperty(string propertyName)
 	{
 		auto p = gtk_container_class_find_child_property(cast(GObjectClass*)gtkContainerClass, Str.toStringz(propertyName));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
 	}
 
@@ -120,7 +120,7 @@ public class ContainerClass
 		{
 			pspecsArray[i] = pspecs[i].getParamSpecStruct();
 		}
-		
+
 		gtk_container_class_install_child_properties(gtkContainerClass, cast(uint)pspecs.length, pspecsArray.ptr);
 	}
 
@@ -145,20 +145,20 @@ public class ContainerClass
 	public ParamSpec[] listChildProperties()
 	{
 		uint nProperties;
-		
+
 		auto p = gtk_container_class_list_child_properties(cast(GObjectClass*)gtkContainerClass, &nProperties);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		ParamSpec[] arr = new ParamSpec[nProperties];
 		for(int i = 0; i < nProperties; i++)
 		{
 			arr[i] = ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p[i]);
 		}
-		
+
 		return arr;
 	}
 }

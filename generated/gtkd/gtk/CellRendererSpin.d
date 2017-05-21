@@ -28,8 +28,8 @@ private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gtk.CellRenderer;
 private import gtk.CellRendererText;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -100,12 +100,12 @@ public class CellRendererSpin : CellRendererText
 	public this()
 	{
 		auto p = gtk_cell_renderer_spin_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkCellRendererSpin*) p);
 	}
 }

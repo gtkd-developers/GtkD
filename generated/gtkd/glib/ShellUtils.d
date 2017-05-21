@@ -27,8 +27,8 @@ module glib.ShellUtils;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 
 
 /** */
@@ -67,16 +67,16 @@ public struct ShellUtils
 		int argcp;
 		char** outargvp = null;
 		GError* err = null;
-		
+
 		auto p = g_shell_parse_argv(Str.toStringz(commandLine), &argcp, &outargvp, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		argvp = Str.toStringArray(outargvp, argcp);
-		
+
 		return p;
 	}
 
@@ -96,7 +96,7 @@ public struct ShellUtils
 	public static string shellQuote(string unquotedString)
 	{
 		auto retStr = g_shell_quote(Str.toStringz(unquotedString));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -134,14 +134,14 @@ public struct ShellUtils
 	public static string shellUnquote(string quotedString)
 	{
 		GError* err = null;
-		
+
 		auto retStr = g_shell_unquote(Str.toStringz(quotedString), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}

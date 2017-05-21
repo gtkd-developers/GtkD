@@ -30,8 +30,8 @@ private import core.thread;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 private import std.string;
 
 
@@ -43,8 +43,8 @@ public class Spawn
 	{
 		private import core.sys.posix.stdio;
 	}
-	//fdopen for Windows is defined in gtkc.glibtypes.
-	
+	//fdopen for Windows is defined in glib.c.types.
+
 	string workingDirectory = ".";
 	string[] argv;
 	string[] envp;
@@ -59,15 +59,15 @@ public class Spawn
 	int stdIn;
 	int stdOut;
 	int stdErr;
-	
+
 	// for commandLineSync
 	int exitStatus;
 	char* strOutput;
 	char* strError;
-	
+
 	alias bool delegate(Spawn) ChildWatch;
 	ChildWatch externalWatch;
-	
+
 	/**
 	 * Creates a Spawn for execution.
 	 */
@@ -76,7 +76,7 @@ public class Spawn
 		argv ~= program;
 		this.envp = envp;
 	}
-	
+
 	/**
 	 * Creates a Spawn for execution.
 	 */
@@ -85,7 +85,7 @@ public class Spawn
 		argv = program;
 		this.envp = envp;
 	}
-	
+
 	/**
 	 * Adds a delegate to be notified on the end of the child process.
 	 * Params:
@@ -95,7 +95,7 @@ public class Spawn
 	{
 		externalWatch = dlg;
 	}
-	
+
 	/**
 	 * Closes all open streams and child process.
 	 */
@@ -122,7 +122,7 @@ public class Spawn
 			childPid = 0;
 		}
 	}
-	
+
 	/**
 	 * Adds a parameter to the execution program
 	 */
@@ -130,7 +130,7 @@ public class Spawn
 	{
 		argv ~= parm;
 	}
-	
+
 	/**
 	 * Gets the last error message
 	 */
@@ -142,7 +142,7 @@ public class Spawn
 		}
 		return "";
 	}
-	
+
 	/**
 	 * Executes the prepared process
 	 */
@@ -164,7 +164,7 @@ public class Spawn
 			&stdErr,
 			&error
 		);
-		
+
 		if ( result != 0 )
 		{
 			this.externalWatch = externalWatch;
@@ -172,7 +172,7 @@ public class Spawn
 			standardInput = fdopen(stdIn, Str.toStringz("w"));
 			standardOutput = fdopen(stdOut, Str.toStringz("r"));
 			standardError = fdopen(stdErr, Str.toStringz("r"));
-			
+
 			if ( readOutput !is null )
 			{
 				(new ReadFile(standardOutput, readOutput)).start();
@@ -182,25 +182,25 @@ public class Spawn
 				(new ReadFile(standardError, readError)).start();
 			}
 		}
-		
+
 		return result;
 	}
-	
+
 	class ReadFile : Thread
 	{
 		bool delegate(string) read;
 		FILE* file;
-		
+
 		int lineCount;
-		
+
 		this(FILE* file, bool delegate (string) read )
 		{
 			this.file = file;
 			this.read = read;
-			
+
 			super(&run);
 		}
-		
+
 		public void run()
 		{
 			string line = readLine(file);
@@ -215,7 +215,7 @@ public class Spawn
 			}
 		}
 	}
-	
+
 	private string readLine(FILE* stream, int max=4096)
 	{
 		if ( feof(stream) )
@@ -235,10 +235,10 @@ public class Spawn
 		}
 		size_t l = strlen(line.ptr);
 		if ( l > 0 ) --l;
-		
+
 		return line[0..l];
 	}
-	
+
 	extern(C) static void childWatchCallback(int pid, int status, Spawn spawn)
 	{
 		//writefln("Spawn.childWatchCallback %s %s", pid, status);
@@ -249,35 +249,35 @@ public class Spawn
 		}
 		spawn.close();
 	}
-	
-	
+
+
 	public bool endOfOutput()
 	{
 		if ( standardOutput is null ) return true;
 		return feof(standardOutput) != 0;
 	}
-	
+
 	public bool endOfError()
 	{
 		if ( standardError is null ) return true;
 		return feof(standardError) != 0;
 	}
-	
+
 	string getOutputString()
 	{
 		return Str.toString(strOutput);
 	}
-	
+
 	string getErrorString()
 	{
 		return Str.toString(strError);
 	}
-	
+
 	int getExitStatus()
 	{
 		return exitStatus;
 	}
-	
+
 	/**
 	 * Executes a command synchronasly and
 	 * optionally calls delegates for sysout, syserr and end of job
@@ -359,14 +359,14 @@ public class Spawn
 	public static bool async(string workingDirectory, string[] argv, string[] envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, out GPid childPid)
 	{
 		GError* err = null;
-		
+
 		auto p = g_spawn_async(Str.toStringz(workingDirectory), Str.toStringzArray(argv), Str.toStringzArray(envp), flags, childSetup, userData, &childPid, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -421,14 +421,14 @@ public class Spawn
 	public static bool checkExitStatus(int exitStatus)
 	{
 		GError* err = null;
-		
+
 		auto p = g_spawn_check_exit_status(exitStatus, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -467,14 +467,14 @@ public class Spawn
 	public static bool commandLineAsync(string commandLine)
 	{
 		GError* err = null;
-		
+
 		auto p = g_spawn_command_line_async(Str.toStringz(commandLine), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -517,17 +517,17 @@ public class Spawn
 		char* outstandardOutput = null;
 		char* outstandardError = null;
 		GError* err = null;
-		
+
 		auto p = g_spawn_command_line_sync(Str.toStringz(commandLine), &outstandardOutput, &outstandardError, &exitStatus, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		standardOutput = Str.toString(outstandardOutput);
 		standardError = Str.toString(outstandardError);
-		
+
 		return p;
 	}
 
@@ -583,17 +583,17 @@ public class Spawn
 		char* outstandardOutput = null;
 		char* outstandardError = null;
 		GError* err = null;
-		
+
 		auto p = g_spawn_sync(Str.toStringz(workingDirectory), Str.toStringzArray(argv), Str.toStringzArray(envp), flags, childSetup, userData, &outstandardOutput, &outstandardError, &exitStatus, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		standardOutput = Str.toString(outstandardOutput);
 		standardError = Str.toString(outstandardError);
-		
+
 		return p;
 	}
 }

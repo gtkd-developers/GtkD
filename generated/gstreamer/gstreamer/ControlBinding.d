@@ -27,8 +27,8 @@ module gstreamer.ControlBinding;
 private import gobject.ObjectG;
 private import gobject.Value;
 private import gstreamer.ObjectGst;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /**
@@ -101,7 +101,7 @@ public class ControlBinding : ObjectGst
 		{
 			valuesArray[i] = *(values[i].getValueStruct());
 		}
-		
+
 		return gst_control_binding_get_g_value_array(gstControlBinding, timestamp, interval, cast(uint)values.length, valuesArray.ptr) != 0;
 	}
 
@@ -117,12 +117,12 @@ public class ControlBinding : ObjectGst
 	public Value getValue(GstClockTime timestamp)
 	{
 		auto p = gst_control_binding_get_value(gstControlBinding, timestamp);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Value)(cast(GValue*) p, true);
 	}
 

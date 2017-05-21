@@ -25,9 +25,9 @@
 module atk.ObjectFactory;
 
 private import atk.ObjectAtk;
+private import atk.c.functions;
+public  import atk.c.types;
 private import gobject.ObjectG;
-private import gtkc.atk;
-public  import gtkc.atktypes;
 
 
 /**
@@ -91,12 +91,12 @@ public class ObjectFactory : ObjectG
 	public ObjectAtk createAccessible(ObjectG obj)
 	{
 		auto p = atk_object_factory_create_accessible(atkObjectFactory, (obj is null) ? null : obj.getObjectGStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p, true);
 	}
 

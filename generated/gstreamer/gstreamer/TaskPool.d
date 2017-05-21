@@ -29,8 +29,8 @@ private import glib.ErrorG;
 private import glib.GException;
 private import gobject.ObjectG;
 private import gstreamer.ObjectGst;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /**
@@ -91,12 +91,12 @@ public class TaskPool : ObjectGst
 	public this()
 	{
 		auto p = gst_task_pool_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GstTaskPool*) p, true);
 	}
 
@@ -133,9 +133,9 @@ public class TaskPool : ObjectGst
 	public void prepare()
 	{
 		GError* err = null;
-		
+
 		gst_task_pool_prepare(gstTaskPool, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
@@ -158,14 +158,14 @@ public class TaskPool : ObjectGst
 	public void* push(GstTaskPoolFunction func, void* userData)
 	{
 		GError* err = null;
-		
+
 		auto p = gst_task_pool_push(gstTaskPool, func, userData, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 }

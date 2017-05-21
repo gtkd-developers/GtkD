@@ -38,8 +38,8 @@ private import glib.Variant;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Window;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -174,12 +174,12 @@ public class Application : GioApplication
 	public void setAccelsForAction(string detailedActionName, string[] accels)
 	{
 		char** accel;
-		
+
 		if (accels)
 			accel = Str.toStringzArray(accels);
 		else
 			accel = [cast(char*)null].ptr;
-		
+
 		gtk_application_set_accels_for_action(gtkApplication, Str.toStringz(detailedActionName), accel);
 	}
 
@@ -231,12 +231,12 @@ public class Application : GioApplication
 	public this(string applicationId, GApplicationFlags flags)
 	{
 		auto p = gtk_application_new(Str.toStringz(applicationId), flags);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkApplication*) p, true);
 	}
 
@@ -316,7 +316,7 @@ public class Application : GioApplication
 	public string[] getAccelsForAction(string detailedActionName)
 	{
 		auto retStr = gtk_application_get_accels_for_action(gtkApplication, Str.toStringz(detailedActionName));
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}
@@ -348,7 +348,7 @@ public class Application : GioApplication
 	public string[] getActionsForAccel(string accel)
 	{
 		auto retStr = gtk_application_get_actions_for_accel(gtkApplication, Str.toStringz(accel));
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}
@@ -368,12 +368,12 @@ public class Application : GioApplication
 	public Window getActiveWindow()
 	{
 		auto p = gtk_application_get_active_window(gtkApplication);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Window)(cast(GtkWindow*) p);
 	}
 
@@ -389,12 +389,12 @@ public class Application : GioApplication
 	public MenuModel getAppMenu()
 	{
 		auto p = gtk_application_get_app_menu(gtkApplication);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(MenuModel)(cast(GMenuModel*) p);
 	}
 
@@ -414,12 +414,12 @@ public class Application : GioApplication
 	public Menu getMenuById(string id)
 	{
 		auto p = gtk_application_get_menu_by_id(gtkApplication, Str.toStringz(id));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Menu)(cast(GMenu*) p);
 	}
 
@@ -434,12 +434,12 @@ public class Application : GioApplication
 	public MenuModel getMenubar()
 	{
 		auto p = gtk_application_get_menubar(gtkApplication);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(MenuModel)(cast(GMenuModel*) p);
 	}
 
@@ -460,12 +460,12 @@ public class Application : GioApplication
 	public Window getWindowById(uint id)
 	{
 		auto p = gtk_application_get_window_by_id(gtkApplication, id);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Window)(cast(GtkWindow*) p);
 	}
 
@@ -487,12 +487,12 @@ public class Application : GioApplication
 	public ListG getWindows()
 	{
 		auto p = gtk_application_get_windows(gtkApplication);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -565,7 +565,7 @@ public class Application : GioApplication
 	public string[] listActionDescriptions()
 	{
 		auto retStr = gtk_application_list_action_descriptions(gtkApplication);
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}
@@ -731,13 +731,13 @@ public class Application : GioApplication
 		static OnWindowAddedDelegateWrapper[] listeners;
 		void delegate(Window, Application) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Window, Application) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnWindowAddedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -773,12 +773,12 @@ public class Application : GioApplication
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackWindowAdded(GtkApplication* applicationStruct, GtkWindow* window, OnWindowAddedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Window)(window), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackWindowAddedDestroy(OnWindowAddedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -789,13 +789,13 @@ public class Application : GioApplication
 		static OnWindowRemovedDelegateWrapper[] listeners;
 		void delegate(Window, Application) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Window, Application) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnWindowRemovedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -832,12 +832,12 @@ public class Application : GioApplication
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackWindowRemoved(GtkApplication* applicationStruct, GtkWindow* window, OnWindowRemovedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Window)(window), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackWindowRemovedDestroy(OnWindowRemovedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

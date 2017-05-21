@@ -27,12 +27,12 @@ module gio.PollableUtils;
 private import gio.Cancellable;
 private import gio.InputStream;
 private import gio.OutputStream;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Source;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /** */
@@ -54,12 +54,12 @@ public  import gtkc.giotypes;
 public Source pollableSourceNew(ObjectG pollableStream)
 {
 	auto p = g_pollable_source_new((pollableStream is null) ? null : pollableStream.getObjectGStruct());
-	
+
 	if(p is null)
 	{
 		return null;
 	}
-	
+
 	return new Source(cast(GSource*) p, true);
 }
 
@@ -82,12 +82,12 @@ public Source pollableSourceNew(ObjectG pollableStream)
 public Source pollableSourceNewFull(ObjectG pollableStream, Source childSource, Cancellable cancellable)
 {
 	auto p = g_pollable_source_new_full((pollableStream is null) ? null : pollableStream.getObjectGStruct(), (childSource is null) ? null : childSource.getSourceStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct());
-	
+
 	if(p is null)
 	{
 		return null;
 	}
-	
+
 	return new Source(cast(GSource*) p, true);
 }
 
@@ -119,14 +119,14 @@ public Source pollableSourceNewFull(ObjectG pollableStream, Source childSource, 
 public ptrdiff_t pollableStreamRead(InputStream stream, ubyte[] buffer, bool blocking, Cancellable cancellable)
 {
 	GError* err = null;
-	
+
 	auto p = g_pollable_stream_read((stream is null) ? null : stream.getInputStreamStruct(), buffer.ptr, cast(size_t)buffer.length, blocking, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-	
+
 	if (err !is null)
 	{
 		throw new GException( new ErrorG(err) );
 	}
-	
+
 	return p;
 }
 
@@ -159,14 +159,14 @@ public ptrdiff_t pollableStreamRead(InputStream stream, ubyte[] buffer, bool blo
 public ptrdiff_t pollableStreamWrite(OutputStream stream, ubyte[] buffer, bool blocking, Cancellable cancellable)
 {
 	GError* err = null;
-	
+
 	auto p = g_pollable_stream_write((stream is null) ? null : stream.getOutputStreamStruct(), buffer.ptr, cast(size_t)buffer.length, blocking, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-	
+
 	if (err !is null)
 	{
 		throw new GException( new ErrorG(err) );
 	}
-	
+
 	return p;
 }
 
@@ -209,13 +209,13 @@ public ptrdiff_t pollableStreamWrite(OutputStream stream, ubyte[] buffer, bool b
 public bool pollableStreamWriteAll(OutputStream stream, ubyte[] buffer, bool blocking, out size_t bytesWritten, Cancellable cancellable)
 {
 	GError* err = null;
-	
+
 	auto p = g_pollable_stream_write_all((stream is null) ? null : stream.getOutputStreamStruct(), buffer.ptr, cast(size_t)buffer.length, blocking, &bytesWritten, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
-	
+
 	if (err !is null)
 	{
 		throw new GException( new ErrorG(err) );
 	}
-	
+
 	return p;
 }

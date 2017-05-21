@@ -30,8 +30,8 @@ private import gtk.Adjustment;
 private import gtk.OrientableIF;
 private import gtk.OrientableT;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -99,12 +99,12 @@ public class Range : Widget, OrientableIF
 	public Adjustment getAdjustment()
 	{
 		auto p = gtk_range_get_adjustment(gtkRange);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
 	}
 
@@ -511,13 +511,13 @@ public class Range : Widget, OrientableIF
 		static OnAdjustBoundsDelegateWrapper[] listeners;
 		void delegate(double, Range) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(double, Range) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnAdjustBoundsDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -551,12 +551,12 @@ public class Range : Widget, OrientableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackAdjustBounds(GtkRange* rangeStruct, double value, OnAdjustBoundsDelegateWrapper wrapper)
 	{
 		wrapper.dlg(value, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackAdjustBoundsDestroy(OnAdjustBoundsDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -567,13 +567,13 @@ public class Range : Widget, OrientableIF
 		static OnChangeValueDelegateWrapper[] listeners;
 		bool delegate(GtkScrollType, double, Range) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(GtkScrollType, double, Range) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnChangeValueDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -623,12 +623,12 @@ public class Range : Widget, OrientableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackChangeValue(GtkRange* rangeStruct, GtkScrollType scroll, double value, OnChangeValueDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(scroll, value, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackChangeValueDestroy(OnChangeValueDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -639,13 +639,13 @@ public class Range : Widget, OrientableIF
 		static OnMoveSliderDelegateWrapper[] listeners;
 		void delegate(GtkScrollType, Range) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(GtkScrollType, Range) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMoveSliderDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -678,12 +678,12 @@ public class Range : Widget, OrientableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackMoveSlider(GtkRange* rangeStruct, GtkScrollType step, OnMoveSliderDelegateWrapper wrapper)
 	{
 		wrapper.dlg(step, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMoveSliderDestroy(OnMoveSliderDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -694,13 +694,13 @@ public class Range : Widget, OrientableIF
 		static OnValueChangedDelegateWrapper[] listeners;
 		void delegate(Range) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Range) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnValueChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -730,12 +730,12 @@ public class Range : Widget, OrientableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackValueChanged(GtkRange* rangeStruct, OnValueChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackValueChangedDestroy(OnValueChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

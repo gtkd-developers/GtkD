@@ -25,10 +25,10 @@
 module gio.SimplePermission;
 
 private import gio.Permission;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -95,12 +95,12 @@ public class SimplePermission : Permission
 	public this(bool allowed)
 	{
 		auto p = g_simple_permission_new(allowed);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GSimplePermission*) p, true);
 	}
 }

@@ -31,8 +31,8 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gsv.SourceGutterRenderer;
-private import gsvc.gsv;
-public  import gsvc.gsvtypes;
+private import gsv.c.functions;
+public  import gsv.c.types;
 
 
 /** */
@@ -95,12 +95,12 @@ public class SourceGutterRendererPixbuf : SourceGutterRenderer
 	public this()
 	{
 		auto p = gtk_source_gutter_renderer_pixbuf_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkSourceGutterRendererPixbuf*) p, true);
 	}
 
@@ -112,12 +112,12 @@ public class SourceGutterRendererPixbuf : SourceGutterRenderer
 	public IconIF getGicon()
 	{
 		auto p = gtk_source_gutter_renderer_pixbuf_get_gicon(gtkSourceGutterRendererPixbuf);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
 	}
 
@@ -135,12 +135,12 @@ public class SourceGutterRendererPixbuf : SourceGutterRenderer
 	public Pixbuf getPixbuf()
 	{
 		auto p = gtk_source_gutter_renderer_pixbuf_get_pixbuf(gtkSourceGutterRendererPixbuf);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 

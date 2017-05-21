@@ -26,8 +26,8 @@ module gstreamer.ValueList;
 
 private import gobject.ObjectG;
 private import gobject.Value;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /** */
@@ -79,9 +79,9 @@ public class ValueList
 	public static void concat(out Value dest, Value value1, Value value2)
 	{
 		GValue* outdest = gMalloc!GValue();
-		
+
 		gst_value_list_concat(outdest, (value1 is null) ? null : value1.getValueStruct(), (value2 is null) ? null : value2.getValueStruct());
-		
+
 		dest = ObjectG.getDObject!(Value)(outdest, true);
 	}
 
@@ -111,12 +111,12 @@ public class ValueList
 	public static Value getValue(Value value, uint index)
 	{
 		auto p = gst_value_list_get_value((value is null) ? null : value.getValueStruct(), index);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Value)(cast(GValue*) p);
 	}
 
@@ -136,9 +136,9 @@ public class ValueList
 	public static void merge(out Value dest, Value value1, Value value2)
 	{
 		GValue* outdest = gMalloc!GValue();
-		
+
 		gst_value_list_merge(outdest, (value1 is null) ? null : value1.getValueStruct(), (value2 is null) ? null : value2.getValueStruct());
-		
+
 		dest = ObjectG.getDObject!(Value)(outdest, true);
 	}
 

@@ -25,8 +25,8 @@
 module gsv.SourceStyle;
 
 private import gobject.ObjectG;
-private import gsvc.gsv;
-public  import gsvc.gsvtypes;
+private import gsv.c.functions;
+public  import gsv.c.types;
 private import gtk.TextTag;
 
 
@@ -103,12 +103,12 @@ public class SourceStyle : ObjectG
 	public SourceStyle copy()
 	{
 		auto p = gtk_source_style_copy(gtkSourceStyle);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SourceStyle)(cast(GtkSourceStyle*) p, true);
 	}
 }

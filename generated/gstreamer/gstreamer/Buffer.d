@@ -31,8 +31,8 @@ private import gstreamer.Allocator;
 private import gstreamer.Memory;
 private import gstreamer.ProtectionMeta;
 private import gstreamer.Structure;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /**
@@ -173,12 +173,12 @@ public class Buffer
 	public this()
 	{
 		auto p = gst_buffer_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GstBuffer*) p);
 	}
 
@@ -207,12 +207,12 @@ public class Buffer
 	public this(Allocator allocator, size_t size, AllocationParams params)
 	{
 		auto p = gst_buffer_new_allocate((allocator is null) ? null : allocator.getAllocatorStruct(), size, (params is null) ? null : params.getAllocationParamsStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_allocate");
 		}
-		
+
 		this(cast(GstBuffer*) p);
 	}
 
@@ -233,12 +233,12 @@ public class Buffer
 	public this(ubyte[] data)
 	{
 		auto p = gst_buffer_new_wrapped(data.ptr, cast(size_t)data.length);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_wrapped");
 		}
-		
+
 		this(cast(GstBuffer*) p);
 	}
 
@@ -268,12 +268,12 @@ public class Buffer
 	public this(GstMemoryFlags flags, ubyte[] data, size_t maxsize, size_t offset, void* userData, GDestroyNotify notify)
 	{
 		auto p = gst_buffer_new_wrapped_full(flags, data.ptr, maxsize, offset, cast(size_t)data.length, userData, notify);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_wrapped_full");
 		}
-		
+
 		this(cast(GstBuffer*) p);
 	}
 
@@ -323,12 +323,12 @@ public class Buffer
 	public ProtectionMeta addProtectionMeta(Structure info)
 	{
 		auto p = gst_buffer_add_protection_meta(gstBuffer, (info is null) ? null : info.getStructureStruct(true));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ProtectionMeta)(cast(GstProtectionMeta*) p);
 	}
 
@@ -345,12 +345,12 @@ public class Buffer
 	public Buffer append(Buffer buf2)
 	{
 		auto p = gst_buffer_append(gstBuffer, (buf2 is null) ? null : buf2.getBufferStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p, true);
 	}
 
@@ -385,12 +385,12 @@ public class Buffer
 	public Buffer appendRegion(Buffer buf2, ptrdiff_t offset, ptrdiff_t size)
 	{
 		auto p = gst_buffer_append_region(gstBuffer, (buf2 is null) ? null : buf2.getBufferStruct(), offset, size);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p, true);
 	}
 
@@ -405,12 +405,12 @@ public class Buffer
 	public Buffer copyDeep()
 	{
 		auto p = gst_buffer_copy_deep(gstBuffer);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p, true);
 	}
 
@@ -460,12 +460,12 @@ public class Buffer
 	public Buffer copyRegion(GstBufferCopyFlags flags, size_t offset, size_t size)
 	{
 		auto p = gst_buffer_copy_region(gstBuffer, flags, offset, size);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p, true);
 	}
 
@@ -502,9 +502,9 @@ public class Buffer
 	{
 		ubyte* outdest = null;
 		size_t destSize;
-		
+
 		gst_buffer_extract_dup(gstBuffer, offset, size, cast(void**)&outdest, &destSize);
-		
+
 		dest = outdest[0 .. destSize];
 	}
 
@@ -579,12 +579,12 @@ public class Buffer
 	public Memory getAllMemory()
 	{
 		auto p = gst_buffer_get_all_memory(gstBuffer);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Memory)(cast(GstMemory*) p, true);
 	}
 
@@ -612,12 +612,12 @@ public class Buffer
 	public Memory getMemory(uint idx)
 	{
 		auto p = gst_buffer_get_memory(gstBuffer, idx);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Memory)(cast(GstMemory*) p, true);
 	}
 
@@ -637,12 +637,12 @@ public class Buffer
 	public Memory getMemoryRange(uint idx, int length)
 	{
 		auto p = gst_buffer_get_memory_range(gstBuffer, idx, length);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Memory)(cast(GstMemory*) p, true);
 	}
 
@@ -924,12 +924,12 @@ public class Buffer
 	public Memory peekMemory(uint idx)
 	{
 		auto p = gst_buffer_peek_memory(gstBuffer, idx);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Memory)(cast(GstMemory*) p);
 	}
 

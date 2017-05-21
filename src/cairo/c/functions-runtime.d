@@ -22,10 +22,10 @@
 // implement new conversion functionalities on the wrap.utils pakage
 
 
-module gtkc.cairo;
+module cairo.c.functions;
 
 private import std.stdio;
-private import gtkc.cairotypes;
+private import cairo.c.types;
 private import gtkd.Loader;
 
 version (Windows)

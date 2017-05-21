@@ -35,13 +35,13 @@ public  import gio.IconIF;
 public  import gio.Mount;
 public  import gio.MountIF;
 public  import gio.MountOperation;
+public  import gio.c.functions;
+public  import gio.c.types;
 public  import glib.ErrorG;
 public  import glib.GException;
 public  import glib.Str;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
-public  import gtkc.gio;
-public  import gtkc.giotypes;
 public  import std.algorithm;
 
 
@@ -153,14 +153,14 @@ public template VolumeT(TStruct)
 	public bool ejectFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_volume_eject_finish(getVolumeStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -200,14 +200,14 @@ public template VolumeT(TStruct)
 	public bool ejectWithOperationFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_volume_eject_with_operation_finish(getVolumeStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -221,7 +221,7 @@ public template VolumeT(TStruct)
 	public string[] enumerateIdentifiers()
 	{
 		auto retStr = g_volume_enumerate_identifiers(getVolumeStruct());
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}
@@ -262,12 +262,12 @@ public template VolumeT(TStruct)
 	public FileIF getActivationRoot()
 	{
 		auto p = g_volume_get_activation_root(getVolumeStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
 	}
 
@@ -281,12 +281,12 @@ public template VolumeT(TStruct)
 	public DriveIF getDrive()
 	{
 		auto p = g_volume_get_drive(getVolumeStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Drive, DriveIF)(cast(GDrive*) p, true);
 	}
 
@@ -300,12 +300,12 @@ public template VolumeT(TStruct)
 	public IconIF getIcon()
 	{
 		auto p = g_volume_get_icon(getVolumeStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p, true);
 	}
 
@@ -324,7 +324,7 @@ public template VolumeT(TStruct)
 	public string getIdentifier(string kind)
 	{
 		auto retStr = g_volume_get_identifier(getVolumeStruct(), Str.toStringz(kind));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -339,12 +339,12 @@ public template VolumeT(TStruct)
 	public MountIF getMount()
 	{
 		auto p = g_volume_get_mount(getVolumeStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Mount, MountIF)(cast(GMount*) p, true);
 	}
 
@@ -357,7 +357,7 @@ public template VolumeT(TStruct)
 	public string getName()
 	{
 		auto retStr = g_volume_get_name(getVolumeStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -386,12 +386,12 @@ public template VolumeT(TStruct)
 	public IconIF getSymbolicIcon()
 	{
 		auto p = g_volume_get_symbolic_icon(getVolumeStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p, true);
 	}
 
@@ -408,7 +408,7 @@ public template VolumeT(TStruct)
 	public string getUuid()
 	{
 		auto retStr = g_volume_get_uuid(getVolumeStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -449,14 +449,14 @@ public template VolumeT(TStruct)
 	public bool mountFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_volume_mount_finish(getVolumeStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -475,13 +475,13 @@ public template VolumeT(TStruct)
 		static OnChangedDelegateWrapper[] listeners;
 		void delegate(VolumeIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(VolumeIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -511,12 +511,12 @@ public template VolumeT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackChanged(GVolume* volumeStruct, OnChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -527,13 +527,13 @@ public template VolumeT(TStruct)
 		static OnRemovedDelegateWrapper[] listeners;
 		void delegate(VolumeIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(VolumeIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnRemovedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -565,12 +565,12 @@ public template VolumeT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackRemoved(GVolume* volumeStruct, OnRemovedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackRemovedDestroy(OnRemovedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

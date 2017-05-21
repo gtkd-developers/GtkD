@@ -27,8 +27,8 @@ module gsv.SourceCompletionProvider;
 private import gobject.ObjectG;
 private import gsv.SourceCompletionProviderIF;
 private import gsv.SourceCompletionProviderT;
-private import gsvc.gsv;
-public  import gsvc.gsvtypes;
+private import gsv.c.functions;
+public  import gsv.c.types;
 
 
 /** */

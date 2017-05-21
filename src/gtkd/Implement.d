@@ -26,7 +26,7 @@ import std.range;
 import std.string;
 import std.uni;
 import std.conv;
-import gtkc.gobjecttypes;
+import gobject.c.types;
 
 /**
  * This template generates the boilerplate needed to override
@@ -37,7 +37,7 @@ import gtkc.gobjecttypes;
  * class MyApplication : Application
  * {
  *   import gtkd.Implement;
- *   import gtkc.gobject : g_object_newv;
+ *   import gobject.c.functions : g_object_newv;
  *
  *   mixin ImplementClass!GtkApplication;
  *
@@ -88,9 +88,9 @@ template ImplementClassImpl(Klass, Impl)
 
 		result ~= "import glib.Str;\n"~
 		          "import gobject.Type : Type;\n"~
-		          "import gtkc.gobject : g_type_class_peek_parent, g_object_get_data;\n";
+		          "import gobject.c.functions : g_type_class_peek_parent, g_object_get_data;\n";
 
-		if ( !is(Klass == gtkc.gobjecttypes.GObject) )
+		if ( !is(Klass == gobject.c.types.GObject) )
 			result ~= "import "~ getTypeImport!Klass() ~": "~ getTypeFunction!Klass()[0..$-2] ~";\n";
 
 		if ( !hasMember!(Impl, toCamelCase!Impl()) )
@@ -225,9 +225,9 @@ template ImplementInterfaceImpl(Base, Klass, Impl)
 
 		result ~= "import glib.Str;\n"~
 		          "import gobject.Type : Type;\n"~
-		          "import gtkc.gobject : g_type_class_peek_parent, g_object_get_data;\n";
+		          "import gobject.c.functions : g_type_class_peek_parent, g_object_get_data;\n";
 
-		if ( !is(Base == gtkc.gobjecttypes.GObject) )
+		if ( !is(Base == gobject.c.types.GObject) )
 			result ~= "import "~ getTypeImport!Base() ~": "~ getTypeFunction!Base()[0..$-2] ~";\n";
 
 		result ~= "import "~ getTypeImport!Klass() ~" : "~ getTypeFunction!Klass()[0..$-2] ~";\n\n";
@@ -252,7 +252,7 @@ template ImplementInterfaceImpl(Base, Klass, Impl)
 			          "\treturn cast(void*)gObject;\n"~
 			          "}\n\n";
 
-			if ( is(Base == gtkc.gobjecttypes.GObject) )
+			if ( is(Base == gobject.c.types.GObject) )
 			{
 				result ~= "public this()\n"~
 				          "{\n"~
@@ -345,7 +345,7 @@ private string getTypeFunction(Iface)()
 {
 	string result;
 
-	if ( is(Iface == gtkc.gobjecttypes.GObject) )
+	if ( is(Iface == gobject.c.types.GObject) )
 		return "GType.OBJECT";
 
 	foreach ( i, char c; Iface.stringof )
@@ -361,7 +361,7 @@ private string getTypeFunction(Iface)()
 
 private string getTypeImport(Iface)()
 {
-	return fullyQualifiedName!Iface.replace("types."~ Iface.stringof, "");
+	return fullyQualifiedName!Iface.replace("types."~ Iface.stringof, "functions");
 }
 
 private string getWrapFunction(Impl, Member, string name)()

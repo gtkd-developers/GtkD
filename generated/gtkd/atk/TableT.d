@@ -25,11 +25,11 @@
 module atk.TableT;
 
 public  import atk.ObjectAtk;
+public  import atk.c.functions;
+public  import atk.c.types;
 public  import glib.Str;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
-public  import gtkc.atk;
-public  import gtkc.atktypes;
 public  import std.algorithm;
 
 
@@ -111,12 +111,12 @@ public template TableT(TStruct)
 	public ObjectAtk getCaption()
 	{
 		auto p = atk_table_get_caption(getTableStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
 	}
 
@@ -179,12 +179,12 @@ public template TableT(TStruct)
 	public ObjectAtk getColumnHeader(int column)
 	{
 		auto p = atk_table_get_column_header(getTableStruct(), column);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
 	}
 
@@ -289,12 +289,12 @@ public template TableT(TStruct)
 	public ObjectAtk getRowHeader(int row)
 	{
 		auto p = atk_table_get_row_header(getTableStruct(), row);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
 	}
 
@@ -337,12 +337,12 @@ public template TableT(TStruct)
 	public ObjectAtk getSummary()
 	{
 		auto p = atk_table_get_summary(getTableStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p, true);
 	}
 
@@ -406,12 +406,12 @@ public template TableT(TStruct)
 	public ObjectAtk refAt(int row, int column)
 	{
 		auto p = atk_table_ref_at(getTableStruct(), row, column);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p, true);
 	}
 
@@ -521,13 +521,13 @@ public template TableT(TStruct)
 		static OnColumnDeletedDelegateWrapper[] listeners;
 		void delegate(int, int, TableIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(int, int, TableIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnColumnDeletedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -562,12 +562,12 @@ public template TableT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackColumnDeleted(AtkTable* tableStruct, int arg1, int arg2, OnColumnDeletedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(arg1, arg2, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackColumnDeletedDestroy(OnColumnDeletedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -578,13 +578,13 @@ public template TableT(TStruct)
 		static OnColumnInsertedDelegateWrapper[] listeners;
 		void delegate(int, int, TableIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(int, int, TableIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnColumnInsertedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -619,12 +619,12 @@ public template TableT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackColumnInserted(AtkTable* tableStruct, int arg1, int arg2, OnColumnInsertedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(arg1, arg2, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackColumnInsertedDestroy(OnColumnInsertedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -635,13 +635,13 @@ public template TableT(TStruct)
 		static OnColumnReorderedDelegateWrapper[] listeners;
 		void delegate(TableIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TableIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnColumnReorderedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -673,12 +673,12 @@ public template TableT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackColumnReordered(AtkTable* tableStruct, OnColumnReorderedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackColumnReorderedDestroy(OnColumnReorderedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -689,13 +689,13 @@ public template TableT(TStruct)
 		static OnModelChangedDelegateWrapper[] listeners;
 		void delegate(TableIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TableIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnModelChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -727,12 +727,12 @@ public template TableT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackModelChanged(AtkTable* tableStruct, OnModelChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackModelChangedDestroy(OnModelChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -743,13 +743,13 @@ public template TableT(TStruct)
 		static OnRowDeletedDelegateWrapper[] listeners;
 		void delegate(int, int, TableIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(int, int, TableIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnRowDeletedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -784,12 +784,12 @@ public template TableT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackRowDeleted(AtkTable* tableStruct, int arg1, int arg2, OnRowDeletedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(arg1, arg2, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackRowDeletedDestroy(OnRowDeletedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -800,13 +800,13 @@ public template TableT(TStruct)
 		static OnRowInsertedDelegateWrapper[] listeners;
 		void delegate(int, int, TableIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(int, int, TableIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnRowInsertedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -841,12 +841,12 @@ public template TableT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackRowInserted(AtkTable* tableStruct, int arg1, int arg2, OnRowInsertedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(arg1, arg2, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackRowInsertedDestroy(OnRowInsertedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -857,13 +857,13 @@ public template TableT(TStruct)
 		static OnRowReorderedDelegateWrapper[] listeners;
 		void delegate(TableIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TableIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnRowReorderedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -895,12 +895,12 @@ public template TableT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackRowReordered(AtkTable* tableStruct, OnRowReorderedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackRowReorderedDestroy(OnRowReorderedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

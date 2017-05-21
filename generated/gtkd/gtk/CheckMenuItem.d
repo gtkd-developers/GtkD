@@ -30,8 +30,8 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.MenuItem;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -101,7 +101,7 @@ public class CheckMenuItem : MenuItem
 	public this (string label, bool mnemonic=true)
 	{
 		GtkCheckMenuItem* p;
-		
+
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_check_menu_item_new_with_mnemonic  (const gchar *label);
@@ -112,12 +112,12 @@ public class CheckMenuItem : MenuItem
 			// GtkWidget* gtk_check_menu_item_new_with_label  (const gchar *label);
 			p = cast(GtkCheckMenuItem*)gtk_check_menu_item_new_with_label(Str.toStringz(label));
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gtk_check_menu_item_new_with_");
 		}
-		
+
 		this(p);
 	}
 
@@ -140,12 +140,12 @@ public class CheckMenuItem : MenuItem
 	public this()
 	{
 		auto p = gtk_check_menu_item_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkCheckMenuItem*) p);
 	}
 
@@ -237,13 +237,13 @@ public class CheckMenuItem : MenuItem
 		static OnToggledDelegateWrapper[] listeners;
 		void delegate(CheckMenuItem) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(CheckMenuItem) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnToggledDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -276,12 +276,12 @@ public class CheckMenuItem : MenuItem
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackToggled(GtkCheckMenuItem* checkmenuitemStruct, OnToggledDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackToggledDestroy(OnToggledDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

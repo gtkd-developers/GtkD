@@ -26,14 +26,14 @@ module gio.IconIF;
 
 private import gio.Icon;
 private import gio.IconIF;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import glib.Variant;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**

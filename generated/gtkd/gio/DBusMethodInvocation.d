@@ -29,12 +29,12 @@ private import gio.DBusMessage;
 private import gio.DBusMethodInfo;
 private import gio.DBusPropertyInfo;
 private import gio.UnixFDList;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ErrorG;
 private import glib.Str;
 private import glib.Variant;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -99,12 +99,12 @@ public class DBusMethodInvocation : ObjectG
 	public DBusConnection getConnection()
 	{
 		auto p = g_dbus_method_invocation_get_connection(gDBusMethodInvocation);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(DBusConnection)(cast(GDBusConnection*) p);
 	}
 
@@ -142,12 +142,12 @@ public class DBusMethodInvocation : ObjectG
 	public DBusMessage getMessage()
 	{
 		auto p = g_dbus_method_invocation_get_message(gDBusMethodInvocation);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(DBusMessage)(cast(GDBusMessage*) p);
 	}
 
@@ -166,12 +166,12 @@ public class DBusMethodInvocation : ObjectG
 	public DBusMethodInfo getMethodInfo()
 	{
 		auto p = g_dbus_method_invocation_get_method_info(gDBusMethodInvocation);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(DBusMethodInfo)(cast(GDBusMethodInfo*) p);
 	}
 
@@ -210,12 +210,12 @@ public class DBusMethodInvocation : ObjectG
 	public Variant getParameters()
 	{
 		auto p = g_dbus_method_invocation_get_parameters(gDBusMethodInvocation);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Variant(cast(GVariant*) p);
 	}
 
@@ -239,12 +239,12 @@ public class DBusMethodInvocation : ObjectG
 	public DBusPropertyInfo getPropertyInfo()
 	{
 		auto p = g_dbus_method_invocation_get_property_info(gDBusMethodInvocation);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(DBusPropertyInfo)(cast(GDBusPropertyInfo*) p);
 	}
 

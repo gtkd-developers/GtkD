@@ -33,8 +33,8 @@ private import gstreamer.Buffer;
 private import gstreamer.Caps;
 private import gstreamer.ObjectGst;
 private import gstreamer.Structure;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /**
@@ -127,12 +127,12 @@ public class BufferPool : ObjectGst
 	public this()
 	{
 		auto p = gst_buffer_pool_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GstBufferPool*) p);
 	}
 
@@ -165,12 +165,12 @@ public class BufferPool : ObjectGst
 	{
 		GstAllocator* outallocator = allocator.getAllocatorStruct();
 		GstAllocationParams* outparams = gMalloc!GstAllocationParams();
-		
+
 		auto p = gst_buffer_pool_config_get_allocator((config is null) ? null : config.getStructureStruct(), &outallocator, outparams) != 0;
-		
+
 		allocator = ObjectG.getDObject!(Allocator)(outallocator);
 		params = ObjectG.getDObject!(AllocationParams)(outparams, true);
-		
+
 		return p;
 	}
 
@@ -204,11 +204,11 @@ public class BufferPool : ObjectGst
 	public static bool configGetParams(Structure config, out Caps caps, out uint size, out uint minBuffers, out uint maxBuffers)
 	{
 		GstCaps* outcaps = null;
-		
+
 		auto p = gst_buffer_pool_config_get_params((config is null) ? null : config.getStructureStruct(), &outcaps, &size, &minBuffers, &maxBuffers) != 0;
-		
+
 		caps = ObjectG.getDObject!(Caps)(outcaps);
-		
+
 		return p;
 	}
 
@@ -322,11 +322,11 @@ public class BufferPool : ObjectGst
 	public GstFlowReturn acquireBuffer(out Buffer buffer, GstBufferPoolAcquireParams* params)
 	{
 		GstBuffer* outbuffer = null;
-		
+
 		auto p = gst_buffer_pool_acquire_buffer(gstBufferPool, &outbuffer, params);
-		
+
 		buffer = ObjectG.getDObject!(Buffer)(outbuffer);
-		
+
 		return p;
 	}
 
@@ -341,12 +341,12 @@ public class BufferPool : ObjectGst
 	public Structure getConfig()
 	{
 		auto p = gst_buffer_pool_get_config(gstBufferPool);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p, true);
 	}
 

@@ -28,8 +28,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gtk.SpinButton;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /** */
@@ -50,9 +50,9 @@ public struct Testing
 		// void gtk_test_init(int *argcp, char ***argvp, ...);
 		char** outargv = Str.toStringzArray(argv);
 		int argc = cast(int) argv.length;
-		
+
 		gtk_test_init(&argc, &outargv, null);
-		
+
 		argv = Str.toStringArray(outargv);
 	}
 
@@ -78,12 +78,12 @@ public struct Testing
 	public static Widget createSimpleWindow(string windowTitle, string dialogText)
 	{
 		auto p = gtk_test_create_simple_window(Str.toStringz(windowTitle), Str.toStringz(dialogText));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -107,12 +107,12 @@ public struct Testing
 	public static Widget findLabel(Widget widget, string labelPattern)
 	{
 		auto p = gtk_test_find_label((widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(labelPattern));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -136,12 +136,12 @@ public struct Testing
 	public static Widget findSibling(Widget baseWidget, GType widgetType)
 	{
 		auto p = gtk_test_find_sibling((baseWidget is null) ? null : baseWidget.getWidgetStruct(), widgetType);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -166,12 +166,12 @@ public struct Testing
 	public static Widget findWidget(Widget widget, string labelPattern, GType widgetType)
 	{
 		auto p = gtk_test_find_widget((widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(labelPattern), widgetType);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -186,9 +186,9 @@ public struct Testing
 	public static GType[] listAllTypes()
 	{
 		uint nTypes;
-		
+
 		auto p = gtk_test_list_all_types(&nTypes);
-		
+
 		return p[0 .. nTypes];
 	}
 
@@ -282,7 +282,7 @@ public struct Testing
 	public static string textGet(Widget widget)
 	{
 		auto retStr = gtk_test_text_get((widget is null) ? null : widget.getWidgetStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}

@@ -26,8 +26,8 @@ module glib.StringG;
 
 private import glib.Bytes;
 private import glib.Str;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 
 
 /**
@@ -75,12 +75,12 @@ public class StringG
 	public StringG append(string val)
 	{
 		auto p = g_string_append(gString, Str.toStringz(val));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new StringG(cast(GString*) p);
 	}
 
@@ -96,12 +96,12 @@ public class StringG
 	public StringG appendC(char c)
 	{
 		auto p = g_string_append_c(gString, c);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new StringG(cast(GString*) p);
 	}
 
@@ -123,12 +123,12 @@ public class StringG
 	public StringG appendLen(string val, ptrdiff_t len)
 	{
 		auto p = g_string_append_len(gString, Str.toStringz(val), len);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new StringG(cast(GString*) p);
 	}
 
@@ -144,12 +144,12 @@ public class StringG
 	public StringG appendUnichar(dchar wc)
 	{
 		auto p = g_string_append_unichar(gString, wc);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new StringG(cast(GString*) p);
 	}
 
@@ -170,12 +170,12 @@ public class StringG
 	public StringG appendUriEscaped(string unescaped, string reservedCharsAllowed, bool allowUtf8)
 	{
 		auto p = g_string_append_uri_escaped(gString, Str.toStringz(unescaped), Str.toStringz(reservedCharsAllowed), allowUtf8);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new StringG(cast(GString*) p);
 	}
 
@@ -206,12 +206,12 @@ public class StringG
 	public StringG asciiDown()
 	{
 		auto p = g_string_ascii_down(gString);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new StringG(cast(GString*) p);
 	}
 
@@ -225,12 +225,12 @@ public class StringG
 	public StringG asciiUp()
 	{
 		auto p = g_string_ascii_up(gString);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new StringG(cast(GString*) p);
 	}
 
@@ -248,12 +248,12 @@ public class StringG
 	public StringG assign(string rval)
 	{
 		auto p = g_string_assign(gString, Str.toStringz(rval));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new StringG(cast(GString*) p);
 	}
 
@@ -269,12 +269,12 @@ public class StringG
 	public StringG down()
 	{
 		auto p = g_string_down(gString);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new StringG(cast(GString*) p);
 	}
 
@@ -307,12 +307,12 @@ public class StringG
 	public StringG erase(ptrdiff_t pos, ptrdiff_t len)
 	{
 		auto p = g_string_erase(gString, pos, len);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new StringG(cast(GString*) p);
 	}
 
@@ -331,7 +331,7 @@ public class StringG
 	public string free(bool freeSegment)
 	{
 		auto retStr = g_string_free(gString, freeSegment);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -353,12 +353,12 @@ public class StringG
 	public Bytes freeToBytes()
 	{
 		auto p = g_string_free_to_bytes(gString);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Bytes(cast(GBytes*) p, true);
 	}
 
@@ -385,12 +385,12 @@ public class StringG
 	public StringG insert(ptrdiff_t pos, string val)
 	{
 		auto p = g_string_insert(gString, pos, Str.toStringz(val));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new StringG(cast(GString*) p);
 	}
 
@@ -406,12 +406,12 @@ public class StringG
 	public StringG insertC(ptrdiff_t pos, char c)
 	{
 		auto p = g_string_insert_c(gString, pos, c);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new StringG(cast(GString*) p);
 	}
 
@@ -436,12 +436,12 @@ public class StringG
 	public StringG insertLen(ptrdiff_t pos, string val, ptrdiff_t len)
 	{
 		auto p = g_string_insert_len(gString, pos, Str.toStringz(val), len);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new StringG(cast(GString*) p);
 	}
 
@@ -459,12 +459,12 @@ public class StringG
 	public StringG insertUnichar(ptrdiff_t pos, dchar wc)
 	{
 		auto p = g_string_insert_unichar(gString, pos, wc);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new StringG(cast(GString*) p);
 	}
 
@@ -482,12 +482,12 @@ public class StringG
 	public StringG overwrite(size_t pos, string val)
 	{
 		auto p = g_string_overwrite(gString, pos, Str.toStringz(val));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new StringG(cast(GString*) p);
 	}
 
@@ -507,12 +507,12 @@ public class StringG
 	public StringG overwriteLen(size_t pos, string val, ptrdiff_t len)
 	{
 		auto p = g_string_overwrite_len(gString, pos, Str.toStringz(val), len);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new StringG(cast(GString*) p);
 	}
 
@@ -528,12 +528,12 @@ public class StringG
 	public StringG prepend(string val)
 	{
 		auto p = g_string_prepend(gString, Str.toStringz(val));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new StringG(cast(GString*) p);
 	}
 
@@ -549,12 +549,12 @@ public class StringG
 	public StringG prependC(char c)
 	{
 		auto p = g_string_prepend_c(gString, c);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new StringG(cast(GString*) p);
 	}
 
@@ -576,12 +576,12 @@ public class StringG
 	public StringG prependLen(string val, ptrdiff_t len)
 	{
 		auto p = g_string_prepend_len(gString, Str.toStringz(val), len);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new StringG(cast(GString*) p);
 	}
 
@@ -597,12 +597,12 @@ public class StringG
 	public StringG prependUnichar(dchar wc)
 	{
 		auto p = g_string_prepend_unichar(gString, wc);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new StringG(cast(GString*) p);
 	}
 
@@ -621,12 +621,12 @@ public class StringG
 	public StringG setSize(size_t len)
 	{
 		auto p = g_string_set_size(gString, len);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new StringG(cast(GString*) p);
 	}
 
@@ -641,12 +641,12 @@ public class StringG
 	public StringG truncate(size_t len)
 	{
 		auto p = g_string_truncate(gString, len);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new StringG(cast(GString*) p);
 	}
 
@@ -662,12 +662,12 @@ public class StringG
 	public StringG up()
 	{
 		auto p = g_string_up(gString);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new StringG(cast(GString*) p);
 	}
 
@@ -699,12 +699,12 @@ public class StringG
 	public static StringG stringNew(string init)
 	{
 		auto p = g_string_new(Str.toStringz(init));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new StringG(cast(GString*) p, true);
 	}
 
@@ -726,12 +726,12 @@ public class StringG
 	public static StringG stringNewLen(string init, ptrdiff_t len)
 	{
 		auto p = g_string_new_len(Str.toStringz(init), len);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new StringG(cast(GString*) p, true);
 	}
 
@@ -750,12 +750,12 @@ public class StringG
 	public static StringG stringSizedNew(size_t dflSize)
 	{
 		auto p = g_string_sized_new(dflSize);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new StringG(cast(GString*) p, true);
 	}
 }

@@ -26,8 +26,8 @@ module glib.TimeZone;
 
 private import glib.ConstructionException;
 private import glib.Str;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 private import gtkd.Loader;
 
 
@@ -150,12 +150,12 @@ public class TimeZone
 	public this(string identifier)
 	{
 		auto p = g_time_zone_new(Str.toStringz(identifier));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GTimeZone*) p);
 	}
 
@@ -290,12 +290,12 @@ public class TimeZone
 	public TimeZone doref()
 	{
 		auto p = g_time_zone_ref(gTimeZone);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new TimeZone(cast(GTimeZone*) p, true);
 	}
 

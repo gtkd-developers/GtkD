@@ -30,8 +30,8 @@ private import gtk.Container;
 private import gtk.OrientableIF;
 private import gtk.OrientableT;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -147,12 +147,12 @@ public class Box : Container, OrientableIF
 	public this(GtkOrientation orientation, int spacing)
 	{
 		auto p = gtk_box_new(orientation, spacing);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkBox*) p);
 	}
 
@@ -179,12 +179,12 @@ public class Box : Container, OrientableIF
 	public Widget getCenterWidget()
 	{
 		auto p = gtk_box_get_center_widget(gtkBox);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -279,9 +279,9 @@ public class Box : Container, OrientableIF
 	{
 		int outexpand;
 		int outfill;
-		
+
 		gtk_box_query_child_packing(gtkBox, (child is null) ? null : child.getWidgetStruct(), &outexpand, &outfill, &padding, &packType);
-		
+
 		expand = (outexpand == 1);
 		fill = (outfill == 1);
 	}

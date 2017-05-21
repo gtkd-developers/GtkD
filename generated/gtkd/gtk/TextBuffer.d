@@ -33,6 +33,7 @@ private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
+private import gobject.c.functions;
 private import gtk.Clipboard;
 private import gtk.TargetList;
 private import gtk.TextChildAnchor;
@@ -40,9 +41,8 @@ private import gtk.TextIter;
 private import gtk.TextMark;
 private import gtk.TextTag;
 private import gtk.TextTagTable;
-private import gtkc.gobject;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import pango.PgFontDescription;
 private import pango.PgTabArray;
 private import std.algorithm;
@@ -103,21 +103,21 @@ public class TextBuffer : ObjectG
 	public void insertWithTags(TextIter iter, string text, TextTag[] tags ... )
 	{
 		int startOffset = iter.getOffset();
-		
+
 		insert(iter, text);
-		
+
 		if ( tags.length == 0 )
 			return;
-		
+
 		TextIter start = new TextIter();
 		getIterAtOffset(start, startOffset);
-		
+
 		foreach( tag; tags )
 		{
 			applyTag(tag, start, iter);
 		}
 	}
-	
+
 	/**
 	 * Same as gtk_text_buffer_insert_with_tags(), but allows you
 	 * to pass in tag names instead of tag objects.
@@ -129,21 +129,21 @@ public class TextBuffer : ObjectG
 	public void insertWithTagsByName(TextIter iter, string text, string[] tags ... )
 	{
 		int startOffset = iter.getOffset();
-		
+
 		insert(iter, text);
-		
+
 		if ( tags.length == 0 )
 			return;
-		
+
 		TextIter start = new TextIter();
 		getIterAtOffset(start, startOffset);
-		
+
 		foreach( tag; tags )
 		{
 			applyTagByName(tag, start, iter);
 		}
 	}
-	
+
 	/**
 	 * Creates a tag and adds it to the tag table for buffer. Equivalent to
 	 * adding a new tag to the buffer's tag table.
@@ -160,15 +160,15 @@ public class TextBuffer : ObjectG
 	TextTag createTag(string tagName, ...)
 	{
 		TextTag tag = new TextTag(gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName), null, null));
-		
+
 		for (size_t i = 0; i < _arguments.length; i+=2)
 		{
 			//TODO: Add a proper eception type for this.
 			if ( _arguments[i] != typeid(string) )
 				throw new Exception("TextBuffer.CreateTag: The property name must be a string.");
-			
+
 			string name = va_arg!(string)(_argptr);
-			
+
 			if ( _arguments[i+1] == typeid(bool) ||
 				_arguments[i+1] == typeid(int) ||
 			_arguments[i+1] == typeid(GtkJustification) ||
@@ -180,7 +180,7 @@ public class TextBuffer : ObjectG
 			_arguments[i+1] == typeid(PangoVariant) ||
 			_arguments[i+1] == typeid(PangoWeight) )
 			{
-				
+
 				g_object_set(tag.getObjectGStruct(), Str.toStringz(name), va_arg!(int)(_argptr), null);
 			}
 			else if ( _arguments[i+1] == typeid(Color) )
@@ -210,15 +210,15 @@ public class TextBuffer : ObjectG
 			else
 			{
 				stderr.writefln("TextBuffer.CreateTag: Unsupported type: \"%s\" for property: \"%s\"", _arguments[i+1], name);
-				
+
 				//TODO: throw segfaults, druntime bug?
 				throw new Exception("TextBuffer.CreateTag: Unsupported type: \""~_arguments[i+1].toString()~"\" for property: \""~name~"\"");
 			}
 		}
-		
+
 		return tag;
 	}
-	
+
 	/**
 	 * Obtain the entire text
 	 * Returns: The text string
@@ -253,12 +253,12 @@ public class TextBuffer : ObjectG
 	public this(TextTagTable table)
 	{
 		auto p = gtk_text_buffer_new((table is null) ? null : table.getTextTagTableStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkTextBuffer*) p, true);
 	}
 
@@ -399,12 +399,12 @@ public class TextBuffer : ObjectG
 	public TextChildAnchor createChildAnchor(TextIter iter)
 	{
 		auto p = gtk_text_buffer_create_child_anchor(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TextChildAnchor)(cast(GtkTextChildAnchor*) p);
 	}
 
@@ -437,12 +437,12 @@ public class TextBuffer : ObjectG
 	public TextMark createMark(string markName, TextIter where, bool leftGravity)
 	{
 		auto p = gtk_text_buffer_create_mark(gtkTextBuffer, Str.toStringz(markName), (where is null) ? null : where.getTextIterStruct(), leftGravity);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TextMark)(cast(GtkTextMark*) p);
 	}
 
@@ -568,14 +568,14 @@ public class TextBuffer : ObjectG
 	public bool deserialize(TextBuffer contentBuffer, GdkAtom format, TextIter iter, ubyte[] data)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_text_buffer_deserialize(gtkTextBuffer, (contentBuffer is null) ? null : contentBuffer.getTextBufferStruct(), format, (iter is null) ? null : iter.getTextIterStruct(), data.ptr, cast(size_t)data.length, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -646,9 +646,9 @@ public class TextBuffer : ObjectG
 	{
 		GtkTextIter* outstart = gMalloc!GtkTextIter();
 		GtkTextIter* outend = gMalloc!GtkTextIter();
-		
+
 		gtk_text_buffer_get_bounds(gtkTextBuffer, outstart, outend);
-		
+
 		start = ObjectG.getDObject!(TextIter)(outstart, true);
 		end = ObjectG.getDObject!(TextIter)(outend, true);
 	}
@@ -680,12 +680,12 @@ public class TextBuffer : ObjectG
 	public TargetList getCopyTargetList()
 	{
 		auto p = gtk_text_buffer_get_copy_target_list(gtkTextBuffer);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TargetList)(cast(GtkTargetList*) p);
 	}
 
@@ -702,9 +702,9 @@ public class TextBuffer : ObjectG
 	public GdkAtom[] getDeserializeFormats()
 	{
 		int nFormats;
-		
+
 		auto p = gtk_text_buffer_get_deserialize_formats(gtkTextBuffer, &nFormats);
-		
+
 		return p[0 .. nFormats];
 	}
 
@@ -722,9 +722,9 @@ public class TextBuffer : ObjectG
 	public void getEndIter(out TextIter iter)
 	{
 		GtkTextIter* outiter = gMalloc!GtkTextIter();
-		
+
 		gtk_text_buffer_get_end_iter(gtkTextBuffer, outiter);
-		
+
 		iter = ObjectG.getDObject!(TextIter)(outiter, true);
 	}
 
@@ -751,12 +751,12 @@ public class TextBuffer : ObjectG
 	public TextMark getInsert()
 	{
 		auto p = gtk_text_buffer_get_insert(gtkTextBuffer);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TextMark)(cast(GtkTextMark*) p);
 	}
 
@@ -770,9 +770,9 @@ public class TextBuffer : ObjectG
 	public void getIterAtChildAnchor(out TextIter iter, TextChildAnchor anchor)
 	{
 		GtkTextIter* outiter = gMalloc!GtkTextIter();
-		
+
 		gtk_text_buffer_get_iter_at_child_anchor(gtkTextBuffer, outiter, (anchor is null) ? null : anchor.getTextChildAnchorStruct());
-		
+
 		iter = ObjectG.getDObject!(TextIter)(outiter, true);
 	}
 
@@ -787,9 +787,9 @@ public class TextBuffer : ObjectG
 	public void getIterAtLine(out TextIter iter, int lineNumber)
 	{
 		GtkTextIter* outiter = gMalloc!GtkTextIter();
-		
+
 		gtk_text_buffer_get_iter_at_line(gtkTextBuffer, outiter, lineNumber);
-		
+
 		iter = ObjectG.getDObject!(TextIter)(outiter, true);
 	}
 
@@ -812,9 +812,9 @@ public class TextBuffer : ObjectG
 	public void getIterAtLineIndex(out TextIter iter, int lineNumber, int byteIndex)
 	{
 		GtkTextIter* outiter = gMalloc!GtkTextIter();
-		
+
 		gtk_text_buffer_get_iter_at_line_index(gtkTextBuffer, outiter, lineNumber, byteIndex);
-		
+
 		iter = ObjectG.getDObject!(TextIter)(outiter, true);
 	}
 
@@ -836,9 +836,9 @@ public class TextBuffer : ObjectG
 	public void getIterAtLineOffset(out TextIter iter, int lineNumber, int charOffset)
 	{
 		GtkTextIter* outiter = gMalloc!GtkTextIter();
-		
+
 		gtk_text_buffer_get_iter_at_line_offset(gtkTextBuffer, outiter, lineNumber, charOffset);
-		
+
 		iter = ObjectG.getDObject!(TextIter)(outiter, true);
 	}
 
@@ -852,9 +852,9 @@ public class TextBuffer : ObjectG
 	public void getIterAtMark(out TextIter iter, TextMark mark)
 	{
 		GtkTextIter* outiter = gMalloc!GtkTextIter();
-		
+
 		gtk_text_buffer_get_iter_at_mark(gtkTextBuffer, outiter, (mark is null) ? null : mark.getTextMarkStruct());
-		
+
 		iter = ObjectG.getDObject!(TextIter)(outiter, true);
 	}
 
@@ -871,9 +871,9 @@ public class TextBuffer : ObjectG
 	public void getIterAtOffset(out TextIter iter, int charOffset)
 	{
 		GtkTextIter* outiter = gMalloc!GtkTextIter();
-		
+
 		gtk_text_buffer_get_iter_at_offset(gtkTextBuffer, outiter, charOffset);
-		
+
 		iter = ObjectG.getDObject!(TextIter)(outiter, true);
 	}
 
@@ -900,12 +900,12 @@ public class TextBuffer : ObjectG
 	public TextMark getMark(string name)
 	{
 		auto p = gtk_text_buffer_get_mark(gtkTextBuffer, Str.toStringz(name));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TextMark)(cast(GtkTextMark*) p);
 	}
 
@@ -936,12 +936,12 @@ public class TextBuffer : ObjectG
 	public TargetList getPasteTargetList()
 	{
 		auto p = gtk_text_buffer_get_paste_target_list(gtkTextBuffer);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TargetList)(cast(GtkTargetList*) p);
 	}
 
@@ -963,12 +963,12 @@ public class TextBuffer : ObjectG
 	public TextMark getSelectionBound()
 	{
 		auto p = gtk_text_buffer_get_selection_bound(gtkTextBuffer);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TextMark)(cast(GtkTextMark*) p);
 	}
 
@@ -990,12 +990,12 @@ public class TextBuffer : ObjectG
 	{
 		GtkTextIter* outstart = gMalloc!GtkTextIter();
 		GtkTextIter* outend = gMalloc!GtkTextIter();
-		
+
 		auto p = gtk_text_buffer_get_selection_bounds(gtkTextBuffer, outstart, outend) != 0;
-		
+
 		start = ObjectG.getDObject!(TextIter)(outstart, true);
 		end = ObjectG.getDObject!(TextIter)(outend, true);
-		
+
 		return p;
 	}
 
@@ -1012,9 +1012,9 @@ public class TextBuffer : ObjectG
 	public GdkAtom[] getSerializeFormats()
 	{
 		int nFormats;
-		
+
 		auto p = gtk_text_buffer_get_serialize_formats(gtkTextBuffer, &nFormats);
-		
+
 		return p[0 .. nFormats];
 	}
 
@@ -1040,7 +1040,7 @@ public class TextBuffer : ObjectG
 	public string getSlice(TextIter start, TextIter end, bool includeHiddenChars)
 	{
 		auto retStr = gtk_text_buffer_get_slice(gtkTextBuffer, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct(), includeHiddenChars);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -1056,9 +1056,9 @@ public class TextBuffer : ObjectG
 	public void getStartIter(out TextIter iter)
 	{
 		GtkTextIter* outiter = gMalloc!GtkTextIter();
-		
+
 		gtk_text_buffer_get_start_iter(gtkTextBuffer, outiter);
-		
+
 		iter = ObjectG.getDObject!(TextIter)(outiter, true);
 	}
 
@@ -1070,12 +1070,12 @@ public class TextBuffer : ObjectG
 	public TextTagTable getTagTable()
 	{
 		auto p = gtk_text_buffer_get_tag_table(gtkTextBuffer);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TextTagTable)(cast(GtkTextTagTable*) p);
 	}
 
@@ -1098,7 +1098,7 @@ public class TextBuffer : ObjectG
 	public string getText(TextIter start, TextIter end, bool includeHiddenChars)
 	{
 		auto retStr = gtk_text_buffer_get_text(gtkTextBuffer, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct(), includeHiddenChars);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -1530,9 +1530,9 @@ public class TextBuffer : ObjectG
 	public ubyte[] serialize(TextBuffer contentBuffer, GdkAtom format, TextIter start, TextIter end)
 	{
 		size_t length;
-		
+
 		auto p = gtk_text_buffer_serialize(gtkTextBuffer, (contentBuffer is null) ? null : contentBuffer.getTextBufferStruct(), format, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct(), &length);
-		
+
 		return p[0 .. length];
 	}
 
@@ -1599,13 +1599,13 @@ public class TextBuffer : ObjectG
 		static OnApplyTagDelegateWrapper[] listeners;
 		void delegate(TextTag, TextIter, TextIter, TextBuffer) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TextTag, TextIter, TextIter, TextBuffer) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnApplyTagDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1650,12 +1650,12 @@ public class TextBuffer : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackApplyTag(GtkTextBuffer* textbufferStruct, GtkTextTag* tag, GtkTextIter* start, GtkTextIter* end, OnApplyTagDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(TextTag)(tag), ObjectG.getDObject!(TextIter)(start), ObjectG.getDObject!(TextIter)(end), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackApplyTagDestroy(OnApplyTagDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1666,13 +1666,13 @@ public class TextBuffer : ObjectG
 		static OnBeginUserActionDelegateWrapper[] listeners;
 		void delegate(TextBuffer) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TextBuffer) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnBeginUserActionDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1711,12 +1711,12 @@ public class TextBuffer : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackBeginUserAction(GtkTextBuffer* textbufferStruct, OnBeginUserActionDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackBeginUserActionDestroy(OnBeginUserActionDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1727,13 +1727,13 @@ public class TextBuffer : ObjectG
 		static OnChangedDelegateWrapper[] listeners;
 		void delegate(TextBuffer) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TextBuffer) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1764,12 +1764,12 @@ public class TextBuffer : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackChanged(GtkTextBuffer* textbufferStruct, OnChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1780,13 +1780,13 @@ public class TextBuffer : ObjectG
 		static OnDeleteRangeDelegateWrapper[] listeners;
 		void delegate(TextIter, TextIter, TextBuffer) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TextIter, TextIter, TextBuffer) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDeleteRangeDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1830,12 +1830,12 @@ public class TextBuffer : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDeleteRange(GtkTextBuffer* textbufferStruct, GtkTextIter* start, GtkTextIter* end, OnDeleteRangeDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(TextIter)(start), ObjectG.getDObject!(TextIter)(end), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDeleteRangeDestroy(OnDeleteRangeDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1846,13 +1846,13 @@ public class TextBuffer : ObjectG
 		static OnEndUserActionDelegateWrapper[] listeners;
 		void delegate(TextBuffer) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TextBuffer) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnEndUserActionDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1892,12 +1892,12 @@ public class TextBuffer : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackEndUserAction(GtkTextBuffer* textbufferStruct, OnEndUserActionDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackEndUserActionDestroy(OnEndUserActionDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1908,13 +1908,13 @@ public class TextBuffer : ObjectG
 		static OnInsertChildAnchorDelegateWrapper[] listeners;
 		void delegate(TextIter, TextChildAnchor, TextBuffer) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TextIter, TextChildAnchor, TextBuffer) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnInsertChildAnchorDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1957,12 +1957,12 @@ public class TextBuffer : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackInsertChildAnchor(GtkTextBuffer* textbufferStruct, GtkTextIter* location, GtkTextChildAnchor* anchor, OnInsertChildAnchorDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(TextIter)(location), ObjectG.getDObject!(TextChildAnchor)(anchor), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackInsertChildAnchorDestroy(OnInsertChildAnchorDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1973,13 +1973,13 @@ public class TextBuffer : ObjectG
 		static OnInsertPixbufDelegateWrapper[] listeners;
 		void delegate(TextIter, Pixbuf, TextBuffer) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TextIter, Pixbuf, TextBuffer) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnInsertPixbufDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2021,12 +2021,12 @@ public class TextBuffer : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackInsertPixbuf(GtkTextBuffer* textbufferStruct, GtkTextIter* location, GdkPixbuf* pixbuf, OnInsertPixbufDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(TextIter)(location), ObjectG.getDObject!(Pixbuf)(pixbuf), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackInsertPixbufDestroy(OnInsertPixbufDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2037,13 +2037,13 @@ public class TextBuffer : ObjectG
 		static OnInsertTextDelegateWrapper[] listeners;
 		void delegate(TextIter, string, int, TextBuffer) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TextIter, string, int, TextBuffer) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnInsertTextDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2088,12 +2088,12 @@ public class TextBuffer : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackInsertText(GtkTextBuffer* textbufferStruct, GtkTextIter* location, char* text, int len, OnInsertTextDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(TextIter)(location), Str.toString(text), len, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackInsertTextDestroy(OnInsertTextDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2104,13 +2104,13 @@ public class TextBuffer : ObjectG
 		static OnMarkDeletedDelegateWrapper[] listeners;
 		void delegate(TextMark, TextBuffer) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TextMark, TextBuffer) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMarkDeletedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2147,12 +2147,12 @@ public class TextBuffer : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackMarkDeleted(GtkTextBuffer* textbufferStruct, GtkTextMark* mark, OnMarkDeletedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(TextMark)(mark), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMarkDeletedDestroy(OnMarkDeletedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2163,13 +2163,13 @@ public class TextBuffer : ObjectG
 		static OnMarkSetDelegateWrapper[] listeners;
 		void delegate(TextIter, TextMark, TextBuffer) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TextIter, TextMark, TextBuffer) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMarkSetDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2208,12 +2208,12 @@ public class TextBuffer : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackMarkSet(GtkTextBuffer* textbufferStruct, GtkTextIter* location, GtkTextMark* mark, OnMarkSetDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(TextIter)(location), ObjectG.getDObject!(TextMark)(mark), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMarkSetDestroy(OnMarkSetDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2224,13 +2224,13 @@ public class TextBuffer : ObjectG
 		static OnModifiedChangedDelegateWrapper[] listeners;
 		void delegate(TextBuffer) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TextBuffer) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnModifiedChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2264,12 +2264,12 @@ public class TextBuffer : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackModifiedChanged(GtkTextBuffer* textbufferStruct, OnModifiedChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackModifiedChangedDestroy(OnModifiedChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2280,13 +2280,13 @@ public class TextBuffer : ObjectG
 		static OnPasteDoneDelegateWrapper[] listeners;
 		void delegate(Clipboard, TextBuffer) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Clipboard, TextBuffer) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPasteDoneDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2323,12 +2323,12 @@ public class TextBuffer : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPasteDone(GtkTextBuffer* textbufferStruct, GtkClipboard* clipboard, OnPasteDoneDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Clipboard)(clipboard), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPasteDoneDestroy(OnPasteDoneDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -2339,13 +2339,13 @@ public class TextBuffer : ObjectG
 		static OnRemoveTagDelegateWrapper[] listeners;
 		void delegate(TextTag, TextIter, TextIter, TextBuffer) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TextTag, TextIter, TextIter, TextBuffer) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnRemoveTagDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -2388,12 +2388,12 @@ public class TextBuffer : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackRemoveTag(GtkTextBuffer* textbufferStruct, GtkTextTag* tag, GtkTextIter* start, GtkTextIter* end, OnRemoveTagDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(TextTag)(tag), ObjectG.getDObject!(TextIter)(start), ObjectG.getDObject!(TextIter)(end), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackRemoveTagDestroy(OnRemoveTagDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

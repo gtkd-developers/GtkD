@@ -32,13 +32,13 @@ public  import gio.Cancellable;
 public  import gio.FileIF;
 public  import gio.Icon;
 public  import gio.IconIF;
+public  import gio.c.functions;
+public  import gio.c.types;
 public  import glib.ErrorG;
 public  import glib.GException;
 public  import glib.ListG;
 public  import glib.Str;
 public  import gobject.ObjectG;
-public  import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -123,19 +123,19 @@ public template AppInfoT(TStruct)
 	public static AppInfoIF createFromCommandline(string commandline, string applicationName, GAppInfoCreateFlags flags)
 	{
 		GError* err = null;
-		
+
 		auto p = g_app_info_create_from_commandline(Str.toStringz(commandline), Str.toStringz(applicationName), flags, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(AppInfo, AppInfoIF)(cast(GAppInfo*) p, true);
 	}
 
@@ -154,12 +154,12 @@ public template AppInfoT(TStruct)
 	public static ListG getAll()
 	{
 		auto p = g_app_info_get_all();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -178,12 +178,12 @@ public template AppInfoT(TStruct)
 	public static ListG getAllForType(string contentType)
 	{
 		auto p = g_app_info_get_all_for_type(Str.toStringz(contentType));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -201,12 +201,12 @@ public template AppInfoT(TStruct)
 	public static AppInfoIF getDefaultForType(string contentType, bool mustSupportUris)
 	{
 		auto p = g_app_info_get_default_for_type(Str.toStringz(contentType), mustSupportUris);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(AppInfo, AppInfoIF)(cast(GAppInfo*) p, true);
 	}
 
@@ -224,12 +224,12 @@ public template AppInfoT(TStruct)
 	public static AppInfoIF getDefaultForUriScheme(string uriScheme)
 	{
 		auto p = g_app_info_get_default_for_uri_scheme(Str.toStringz(uriScheme));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(AppInfo, AppInfoIF)(cast(GAppInfo*) p, true);
 	}
 
@@ -249,12 +249,12 @@ public template AppInfoT(TStruct)
 	public static ListG getFallbackForType(string contentType)
 	{
 		auto p = g_app_info_get_fallback_for_type(Str.toStringz(contentType));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -277,12 +277,12 @@ public template AppInfoT(TStruct)
 	public static ListG getRecommendedForType(string contentType)
 	{
 		auto p = g_app_info_get_recommended_for_type(Str.toStringz(contentType));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -303,14 +303,14 @@ public template AppInfoT(TStruct)
 	public static bool launchDefaultForUri(string uri, AppLaunchContext launchContext)
 	{
 		GError* err = null;
-		
+
 		auto p = g_app_info_launch_default_for_uri(Str.toStringz(uri), (launchContext is null) ? null : launchContext.getAppLaunchContextStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -349,14 +349,14 @@ public template AppInfoT(TStruct)
 	public static bool launchDefaultForUriFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_app_info_launch_default_for_uri_finish((result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -391,14 +391,14 @@ public template AppInfoT(TStruct)
 	public bool addSupportsType(string contentType)
 	{
 		GError* err = null;
-		
+
 		auto p = g_app_info_add_supports_type(getAppInfoStruct(), Str.toStringz(contentType), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -450,12 +450,12 @@ public template AppInfoT(TStruct)
 	public AppInfoIF dup()
 	{
 		auto p = g_app_info_dup(getAppInfoStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(AppInfo, AppInfoIF)(cast(GAppInfo*) p, true);
 	}
 
@@ -535,12 +535,12 @@ public template AppInfoT(TStruct)
 	public IconIF getIcon()
 	{
 		auto p = g_app_info_get_icon(getAppInfoStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
 	}
 
@@ -627,14 +627,14 @@ public template AppInfoT(TStruct)
 	public bool launch(ListG files, AppLaunchContext launchContext)
 	{
 		GError* err = null;
-		
+
 		auto p = g_app_info_launch(getAppInfoStruct(), (files is null) ? null : files.getListGStruct(), (launchContext is null) ? null : launchContext.getAppLaunchContextStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -661,14 +661,14 @@ public template AppInfoT(TStruct)
 	public bool launchUris(ListG uris, AppLaunchContext launchContext)
 	{
 		GError* err = null;
-		
+
 		auto p = g_app_info_launch_uris(getAppInfoStruct(), (uris is null) ? null : uris.getListGStruct(), (launchContext is null) ? null : launchContext.getAppLaunchContextStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -685,14 +685,14 @@ public template AppInfoT(TStruct)
 	public bool removeSupportsType(string contentType)
 	{
 		GError* err = null;
-		
+
 		auto p = g_app_info_remove_supports_type(getAppInfoStruct(), Str.toStringz(contentType), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -710,14 +710,14 @@ public template AppInfoT(TStruct)
 	public bool setAsDefaultForExtension(string extension)
 	{
 		GError* err = null;
-		
+
 		auto p = g_app_info_set_as_default_for_extension(getAppInfoStruct(), Str.toStringz(extension), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -734,14 +734,14 @@ public template AppInfoT(TStruct)
 	public bool setAsDefaultForType(string contentType)
 	{
 		GError* err = null;
-		
+
 		auto p = g_app_info_set_as_default_for_type(getAppInfoStruct(), Str.toStringz(contentType), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -761,14 +761,14 @@ public template AppInfoT(TStruct)
 	public bool setAsLastUsedForType(string contentType)
 	{
 		GError* err = null;
-		
+
 		auto p = g_app_info_set_as_last_used_for_type(getAppInfoStruct(), Str.toStringz(contentType), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 

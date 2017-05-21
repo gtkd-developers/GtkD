@@ -25,8 +25,8 @@
 module gtk.ContainerAccessible;
 
 private import gtk.WidgetAccessible;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /** */

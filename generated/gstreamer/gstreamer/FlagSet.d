@@ -24,8 +24,8 @@
 
 module gstreamer.FlagSet;
 
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /** */

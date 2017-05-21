@@ -39,8 +39,8 @@ private import gtk.Image;
 private import gtk.Menu;
 private import gtk.MenuItem;
 private import gtk.ToolItem;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -149,7 +149,7 @@ public class Action : ObjectG, BuildableIF
 	{
 		this(name, label, tooltip, cast(string)stockId);
 	}
-	
+
 	/**
 	 * Gets the stock id of action.
 	 * Since 2.16
@@ -159,7 +159,7 @@ public class Action : ObjectG, BuildableIF
 	{
 		return cast(StockID)Str.toString(gtk_action_get_stock_id(gtkAction));
 	}
-	
+
 	/**
 	 * Sets the stock id on action
 	 * Since 2.16
@@ -170,7 +170,7 @@ public class Action : ObjectG, BuildableIF
 	{
 		setStockId(stockId);
 	}
-	
+
 	/**
 	 * This function is intended for use by action implementations to
 	 * create icons displayed in the proxy widgets.
@@ -189,7 +189,7 @@ public class Action : ObjectG, BuildableIF
 		}
 		return new Image(cast(GtkImage*) p);
 	}
-	
+
 	/**
 	 * Creates a menu item widget that proxies for the given action.
 	 * Since 2.4
@@ -205,7 +205,7 @@ public class Action : ObjectG, BuildableIF
 		}
 		return new MenuItem(cast(GtkMenuItem*) p);
 	}
-	
+
 	/**
 	 * Creates a toolbar item widget that proxies for the given action.
 	 * Since 2.4
@@ -221,7 +221,7 @@ public class Action : ObjectG, BuildableIF
 		}
 		return new ToolItem(cast(GtkToolItem*) p);
 	}
-	
+
 	/**
 	 * If action provides a GtkMenu widget as a submenu for the menu
 	 * item or the toolbar item it creates, this function returns an
@@ -276,12 +276,12 @@ public class Action : ObjectG, BuildableIF
 	public this(string name, string label, string tooltip, string stockId)
 	{
 		auto p = gtk_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkAction*) p, true);
 	}
 
@@ -367,12 +367,12 @@ public class Action : ObjectG, BuildableIF
 	public Closure getAccelClosure()
 	{
 		auto p = gtk_action_get_accel_closure(gtkAction);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Closure)(cast(GClosure*) p);
 	}
 
@@ -423,12 +423,12 @@ public class Action : ObjectG, BuildableIF
 	public IconIF getGicon()
 	{
 		auto p = gtk_action_get_gicon(gtkAction);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
 	}
 
@@ -506,12 +506,12 @@ public class Action : ObjectG, BuildableIF
 	public ListSG getProxies()
 	{
 		auto p = gtk_action_get_proxies(gtkAction);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -905,13 +905,13 @@ public class Action : ObjectG, BuildableIF
 		static OnActivateDelegateWrapper[] listeners;
 		void delegate(Action) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Action) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnActivateDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -945,12 +945,12 @@ public class Action : ObjectG, BuildableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackActivate(GtkAction* actionStruct, OnActivateDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackActivateDestroy(OnActivateDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

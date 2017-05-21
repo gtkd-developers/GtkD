@@ -29,8 +29,8 @@ public  import gobject.ObjectG;
 public  import gobject.ParamSpec;
 public  import gobject.Signals;
 public  import gobject.Value;
-public  import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+public  import gstreamer.c.functions;
+public  import gstreamer.c.types;
 public  import std.algorithm;
 
 
@@ -98,12 +98,12 @@ public template ChildProxyT(TStruct)
 	public ObjectG getChildByIndex(uint index)
 	{
 		auto p = gst_child_proxy_get_child_by_index(getChildProxyStruct(), index);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p, true);
 	}
 
@@ -125,12 +125,12 @@ public template ChildProxyT(TStruct)
 	public ObjectG getChildByName(string name)
 	{
 		auto p = gst_child_proxy_get_child_by_name(getChildProxyStruct(), Str.toStringz(name));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p, true);
 	}
 
@@ -157,9 +157,9 @@ public template ChildProxyT(TStruct)
 	public void childGetProperty(string name, out Value value)
 	{
 		GValue* outvalue = gMalloc!GValue();
-		
+
 		gst_child_proxy_get_property(getChildProxyStruct(), Str.toStringz(name), outvalue);
-		
+
 		value = ObjectG.getDObject!(Value)(outvalue, true);
 	}
 
@@ -195,12 +195,12 @@ public template ChildProxyT(TStruct)
 	{
 		GObject* outtarget = null;
 		GParamSpec* outpspec = null;
-		
+
 		auto p = gst_child_proxy_lookup(getChildProxyStruct(), Str.toStringz(name), &outtarget, &outpspec) != 0;
-		
+
 		target = ObjectG.getDObject!(ObjectG)(outtarget);
 		pspec = ObjectG.getDObject!(ParamSpec)(outpspec);
-		
+
 		return p;
 	}
 
@@ -233,13 +233,13 @@ public template ChildProxyT(TStruct)
 		static OnChildAddedDelegateWrapper[] listeners;
 		void delegate(ObjectG, string, ChildProxyIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(ObjectG, string, ChildProxyIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnChildAddedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -273,12 +273,12 @@ public template ChildProxyT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackChildAdded(GstChildProxy* childproxyStruct, GObject* object, char* name, OnChildAddedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(ObjectG)(object), Str.toString(name), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackChildAddedDestroy(OnChildAddedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -289,13 +289,13 @@ public template ChildProxyT(TStruct)
 		static OnChildRemovedDelegateWrapper[] listeners;
 		void delegate(ObjectG, string, ChildProxyIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(ObjectG, string, ChildProxyIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnChildRemovedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -329,12 +329,12 @@ public template ChildProxyT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackChildRemoved(GstChildProxy* childproxyStruct, GObject* object, char* name, OnChildRemovedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(ObjectG)(object), Str.toString(name), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackChildRemovedDestroy(OnChildRemovedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

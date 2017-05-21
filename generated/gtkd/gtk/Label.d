@@ -31,8 +31,8 @@ private import gobject.Signals;
 private import gtk.Menu;
 private import gtk.Misc;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import pango.PgAttributeList;
 private import pango.PgLayout;
 private import std.algorithm;
@@ -272,7 +272,7 @@ public class Label : Misc
 	public this (string str, bool mnemonic=true)
 	{
 		GtkLabel* p;
-		
+
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_label_new_with_mnemonic (const gchar *str);
@@ -283,12 +283,12 @@ public class Label : Misc
 			// GtkWidget* gtk_label_new (const gchar *str);
 			p = cast(GtkLabel*)gtk_label_new(Str.toStringz(str));
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gtk_label_new");
 		}
-		
+
 		this(p);
 	}
 
@@ -328,12 +328,12 @@ public class Label : Misc
 	public PgAttributeList getAttributes()
 	{
 		auto p = gtk_label_get_attributes(gtkLabel);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgAttributeList)(cast(PangoAttrList*) p);
 	}
 
@@ -404,12 +404,12 @@ public class Label : Misc
 	public PgLayout getLayout()
 	{
 		auto p = gtk_label_get_layout(gtkLabel);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) p);
 	}
 
@@ -504,12 +504,12 @@ public class Label : Misc
 	public Widget getMnemonicWidget()
 	{
 		auto p = gtk_label_get_mnemonic_widget(gtkLabel);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -1029,13 +1029,13 @@ public class Label : Misc
 		static OnActivateCurrentLinkDelegateWrapper[] listeners;
 		void delegate(Label) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Label) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnActivateCurrentLinkDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1073,12 +1073,12 @@ public class Label : Misc
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackActivateCurrentLink(GtkLabel* labelStruct, OnActivateCurrentLinkDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackActivateCurrentLinkDestroy(OnActivateCurrentLinkDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1089,13 +1089,13 @@ public class Label : Misc
 		static OnActivateLinkDelegateWrapper[] listeners;
 		bool delegate(string, Label) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(string, Label) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnActivateLinkDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1134,12 +1134,12 @@ public class Label : Misc
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackActivateLink(GtkLabel* labelStruct, char* uri, OnActivateLinkDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(Str.toString(uri), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackActivateLinkDestroy(OnActivateLinkDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1150,13 +1150,13 @@ public class Label : Misc
 		static OnCopyClipboardDelegateWrapper[] listeners;
 		void delegate(Label) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Label) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCopyClipboardDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1190,12 +1190,12 @@ public class Label : Misc
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackCopyClipboard(GtkLabel* labelStruct, OnCopyClipboardDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackCopyClipboardDestroy(OnCopyClipboardDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1206,13 +1206,13 @@ public class Label : Misc
 		static OnMoveCursorDelegateWrapper[] listeners;
 		void delegate(GtkMovementStep, int, bool, Label) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(GtkMovementStep, int, bool, Label) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMoveCursorDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1263,12 +1263,12 @@ public class Label : Misc
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackMoveCursor(GtkLabel* labelStruct, GtkMovementStep step, int count, bool extendSelection, OnMoveCursorDelegateWrapper wrapper)
 	{
 		wrapper.dlg(step, count, extendSelection, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMoveCursorDestroy(OnMoveCursorDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1279,13 +1279,13 @@ public class Label : Misc
 		static OnPopulatePopupDelegateWrapper[] listeners;
 		void delegate(Menu, Label) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Menu, Label) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPopulatePopupDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1323,12 +1323,12 @@ public class Label : Misc
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPopulatePopup(GtkLabel* labelStruct, GtkMenu* menu, OnPopulatePopupDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Menu)(menu), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPopulatePopupDestroy(OnPopulatePopupDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

@@ -29,8 +29,8 @@ private import gtk.Dialog;
 private import gtk.FileChooserIF;
 private import gtk.FileChooserT;
 private import gtk.Window;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -251,21 +251,21 @@ public class FileChooserDialog : Dialog, FileChooserIF
 			responses ~= ResponseType.OK;
 			responses ~= ResponseType.CANCEL;
 		}
-		
+
 		auto p = gtk_file_chooser_dialog_new(
 			Str.toStringz(title),
 			(parent is null) ? null : parent.getWindowStruct(),
 			action,
 			null,
 			0);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gtk_file_chooser_dialog_new");
 		}
-		
+
 		this(cast(GtkFileChooserDialog*) p);
-		
+
 		addButtons(buttonsText, responses);
 	}
 

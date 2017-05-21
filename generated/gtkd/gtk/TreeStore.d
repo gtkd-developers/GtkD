@@ -40,8 +40,8 @@ private import gtk.TreeModelT;
 private import gtk.TreeNode;
 private import gtk.TreeSortableIF;
 private import gtk.TreeSortableT;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -130,7 +130,7 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 		gtk_tree_store_append(getTreeStoreStruct(), iter, (parent is null) ? null : parent.getTreeIterStruct());
 		return new TreeIter(iter);
 	}
-	
+
 	/**
 	 * Sets one value into one cells.
 	 * \todo confirm we need to destroy the Value instance
@@ -143,13 +143,13 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	{
 		gtk_tree_store_set(gtkTreeStore, iter.getTreeIterStruct(), column, Str.toStringz(value) , -1);
 	}
-	
+
 	/** ditto */
 	void setValue(TreeIter iter, int column, int value)
 	{
 		gtk_tree_store_set(gtkTreeStore, iter.getTreeIterStruct(), column, value, -1);
 	}
-	
+
 	/** ditto */
 	//TODO: confirm we need to destroy the Value instance
 	void setValue(TreeIter iter, int column, Pixbuf pixbuf)
@@ -157,7 +157,7 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 		Value v = new Value(pixbuf);
 		gtk_tree_store_set_value(gtkTreeStore, iter.getTreeIterStruct(), column, v.getValueStruct());
 	}
-	
+
 	/**
 	 * sets the values for one row
 	 * Params:
@@ -176,7 +176,7 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 				values[i],-1);
 		}
 	}
-	
+
 	/** ditto */
 	void set(TreeIter iter, int[] columns, string[] values)
 	{
@@ -189,7 +189,7 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 				Str.toStringz(values[i]),-1);
 		}
 	}
-	
+
 	/**
 	 * Sets an iteractor values from a tree node.
 	 * This is the way to add a new row to the tree,
@@ -220,8 +220,8 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 		}
 		set(iter, cols, vals);
 	}
-	
-	
+
+
 	/**
 	 * Creates and prepends a new row to tree_store. If parent is non-NULL, then it will prepend
 	 * the new row before the first child of parent, otherwise it will prepend a row
@@ -238,7 +238,7 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 		gtk_tree_store_prepend(gtkTreeStore, iter.getTreeIterStruct(), (parent is null) ? null : parent.getTreeIterStruct());
 		return iter;
 	}
-	
+
 	/**
 	 * Creates and appends a new row to tree_store. If parent is non-NULL, then it will append the
 	 * new row after the last child of parent, otherwise it will append a row to
@@ -281,12 +281,12 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	public this(GType[] types)
 	{
 		auto p = gtk_tree_store_newv(cast(int)types.length, types.ptr);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by newv");
 		}
-		
+
 		this(cast(GtkTreeStore*) p, true);
 	}
 
@@ -304,9 +304,9 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	public void append(out TreeIter iter, TreeIter parent)
 	{
 		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
-		
+
 		gtk_tree_store_append(gtkTreeStore, outiter, (parent is null) ? null : parent.getTreeIterStruct());
-		
+
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 	}
 
@@ -335,9 +335,9 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	public void insert(out TreeIter iter, TreeIter parent, int position)
 	{
 		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
-		
+
 		gtk_tree_store_insert(gtkTreeStore, outiter, (parent is null) ? null : parent.getTreeIterStruct(), position);
-		
+
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 	}
 
@@ -360,9 +360,9 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	public void insertAfter(out TreeIter iter, TreeIter parent, TreeIter sibling)
 	{
 		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
-		
+
 		gtk_tree_store_insert_after(gtkTreeStore, outiter, (parent is null) ? null : parent.getTreeIterStruct(), (sibling is null) ? null : sibling.getTreeIterStruct());
-		
+
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 	}
 
@@ -385,9 +385,9 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	public void insertBefore(out TreeIter iter, TreeIter parent, TreeIter sibling)
 	{
 		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
-		
+
 		gtk_tree_store_insert_before(gtkTreeStore, outiter, (parent is null) ? null : parent.getTreeIterStruct(), (sibling is null) ? null : sibling.getTreeIterStruct());
-		
+
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 	}
 
@@ -409,15 +409,15 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	public void insertWithValuesv(out TreeIter iter, TreeIter parent, int position, int[] columns, Value[] values)
 	{
 		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
-		
+
 		GValue[] valuesArray = new GValue[values.length];
 		for ( int i = 0; i < values.length; i++ )
 		{
 			valuesArray[i] = *(values[i].getValueStruct());
 		}
-		
+
 		gtk_tree_store_insert_with_valuesv(gtkTreeStore, outiter, (parent is null) ? null : parent.getTreeIterStruct(), position, columns.ptr, valuesArray.ptr, cast(int)values.length);
-		
+
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 	}
 
@@ -516,9 +516,9 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	public void prepend(out TreeIter iter, TreeIter parent)
 	{
 		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
-		
+
 		gtk_tree_store_prepend(gtkTreeStore, outiter, (parent is null) ? null : parent.getTreeIterStruct());
-		
+
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 	}
 
@@ -619,7 +619,7 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 		{
 			valuesArray[i] = *(values[i].getValueStruct());
 		}
-		
+
 		gtk_tree_store_set_valuesv(gtkTreeStore, (iter is null) ? null : iter.getTreeIterStruct(), columns.ptr, valuesArray.ptr, cast(int)values.length);
 	}
 

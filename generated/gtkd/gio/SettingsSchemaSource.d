@@ -25,13 +25,13 @@
 module gio.SettingsSchemaSource;
 
 private import gio.SettingsSchema;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 private import gtkd.Loader;
 
 
@@ -125,19 +125,19 @@ public class SettingsSchemaSource
 	public this(string directory, SettingsSchemaSource parent, bool trusted)
 	{
 		GError* err = null;
-		
+
 		auto p = g_settings_schema_source_new_from_directory(Str.toStringz(directory), (parent is null) ? null : parent.getSettingsSchemaSourceStruct(), trusted, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_directory");
 		}
-		
+
 		this(cast(GSettingsSchemaSource*) p);
 	}
 
@@ -168,9 +168,9 @@ public class SettingsSchemaSource
 	{
 		char** outnonRelocatable = null;
 		char** outrelocatable = null;
-		
+
 		g_settings_schema_source_list_schemas(gSettingsSchemaSource, recursive, &outnonRelocatable, &outrelocatable);
-		
+
 		nonRelocatable = Str.toStringArray(outnonRelocatable);
 		relocatable = Str.toStringArray(outrelocatable);
 	}
@@ -198,12 +198,12 @@ public class SettingsSchemaSource
 	public SettingsSchema lookup(string schemaId, bool recursive)
 	{
 		auto p = g_settings_schema_source_lookup(gSettingsSchemaSource, Str.toStringz(schemaId), recursive);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SettingsSchema)(cast(GSettingsSchema*) p, true);
 	}
 
@@ -217,12 +217,12 @@ public class SettingsSchemaSource
 	public SettingsSchemaSource doref()
 	{
 		auto p = g_settings_schema_source_ref(gSettingsSchemaSource);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SettingsSchemaSource)(cast(GSettingsSchemaSource*) p, true);
 	}
 
@@ -258,12 +258,12 @@ public class SettingsSchemaSource
 	public static SettingsSchemaSource getDefault()
 	{
 		auto p = g_settings_schema_source_get_default();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SettingsSchemaSource)(cast(GSettingsSchemaSource*) p);
 	}
 }

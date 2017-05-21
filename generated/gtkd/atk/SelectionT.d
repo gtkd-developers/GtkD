@@ -25,10 +25,10 @@
 module atk.SelectionT;
 
 public  import atk.ObjectAtk;
+public  import atk.c.functions;
+public  import atk.c.types;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
-public  import gtkc.atk;
-public  import gtkc.atktypes;
 public  import std.algorithm;
 
 
@@ -132,12 +132,12 @@ public template SelectionT(TStruct)
 	public ObjectAtk refSelection(int i)
 	{
 		auto p = atk_selection_ref_selection(getSelectionStruct(), i);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p, true);
 	}
 
@@ -171,13 +171,13 @@ public template SelectionT(TStruct)
 		static OnSelectionChangedDelegateWrapper[] listeners;
 		void delegate(SelectionIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(SelectionIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnSelectionChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -208,12 +208,12 @@ public template SelectionT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackSelectionChanged(AtkSelection* selectionStruct, OnSelectionChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackSelectionChangedDestroy(OnSelectionChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

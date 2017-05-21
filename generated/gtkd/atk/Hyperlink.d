@@ -27,11 +27,11 @@ module atk.Hyperlink;
 private import atk.ActionIF;
 private import atk.ActionT;
 private import atk.ObjectAtk;
+private import atk.c.functions;
+public  import atk.c.types;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.atk;
-public  import gtkc.atktypes;
 private import std.algorithm;
 
 
@@ -124,12 +124,12 @@ public class Hyperlink : ObjectG, ActionIF
 	public ObjectAtk getObject(int i)
 	{
 		auto p = atk_hyperlink_get_object(atkHyperlink, i);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
 	}
 
@@ -157,7 +157,7 @@ public class Hyperlink : ObjectG, ActionIF
 	public string getUri(int i)
 	{
 		auto retStr = atk_hyperlink_get_uri(atkHyperlink, i);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -207,13 +207,13 @@ public class Hyperlink : ObjectG, ActionIF
 		static OnLinkActivatedDelegateWrapper[] listeners;
 		void delegate(Hyperlink) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Hyperlink) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnLinkActivatedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -243,12 +243,12 @@ public class Hyperlink : ObjectG, ActionIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackLinkActivated(AtkHyperlink* hyperlinkStruct, OnLinkActivatedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackLinkActivatedDestroy(OnLinkActivatedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

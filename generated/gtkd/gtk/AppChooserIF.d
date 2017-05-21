@@ -28,8 +28,8 @@ private import gio.AppInfo;
 private import gio.AppInfoIF;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**

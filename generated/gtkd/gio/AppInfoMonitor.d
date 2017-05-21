@@ -24,10 +24,10 @@
 
 module gio.AppInfoMonitor;
 
+private import gio.c.functions;
+public  import gio.c.types;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -111,12 +111,12 @@ public class AppInfoMonitor : ObjectG
 	public static AppInfoMonitor get()
 	{
 		auto p = g_app_info_monitor_get();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(AppInfoMonitor)(cast(GAppInfoMonitor*) p, true);
 	}
 
@@ -125,13 +125,13 @@ public class AppInfoMonitor : ObjectG
 		static OnChangedDelegateWrapper[] listeners;
 		void delegate(AppInfoMonitor) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(AppInfoMonitor) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -162,12 +162,12 @@ public class AppInfoMonitor : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackChanged(GAppInfoMonitor* appinfomonitorStruct, OnChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

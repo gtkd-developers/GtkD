@@ -26,8 +26,8 @@ module gtk.ShortcutsSection;
 
 private import gobject.Signals;
 private import gtk.Box;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -89,13 +89,13 @@ public class ShortcutsSection : Box
 		static OnChangeCurrentPageDelegateWrapper[] listeners;
 		bool delegate(int, ShortcutsSection) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(int, ShortcutsSection) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnChangeCurrentPageDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -123,12 +123,12 @@ public class ShortcutsSection : Box
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackChangeCurrentPage(GtkShortcutsSection* shortcutssectionStruct, int object, OnChangeCurrentPageDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(object, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackChangeCurrentPageDestroy(OnChangeCurrentPageDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

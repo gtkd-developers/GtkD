@@ -30,12 +30,12 @@ private import gio.IOStream;
 private import gio.Proxy;
 private import gio.ProxyAddress;
 private import gio.ProxyIF;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**

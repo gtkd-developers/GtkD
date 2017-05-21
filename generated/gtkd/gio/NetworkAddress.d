@@ -26,13 +26,13 @@ module gio.NetworkAddress;
 
 private import gio.SocketConnectableIF;
 private import gio.SocketConnectableT;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -110,12 +110,12 @@ public class NetworkAddress : ObjectG, SocketConnectableIF
 	public this(string hostname, ushort port)
 	{
 		auto p = g_network_address_new(Str.toStringz(hostname), port);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GNetworkAddress*) p, true);
 	}
 
@@ -145,12 +145,12 @@ public class NetworkAddress : ObjectG, SocketConnectableIF
 	public this(ushort port)
 	{
 		auto p = g_network_address_new_loopback(port);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_loopback");
 		}
-		
+
 		this(cast(GNetworkAddress*) p, true);
 	}
 
@@ -191,19 +191,19 @@ public class NetworkAddress : ObjectG, SocketConnectableIF
 	public static NetworkAddress parse(string hostAndPort, ushort defaultPort)
 	{
 		GError* err = null;
-		
+
 		auto p = g_network_address_parse(Str.toStringz(hostAndPort), defaultPort, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(NetworkAddress)(cast(GNetworkAddress*) p, true);
 	}
 
@@ -229,19 +229,19 @@ public class NetworkAddress : ObjectG, SocketConnectableIF
 	public static NetworkAddress parseUri(string uri, ushort defaultPort)
 	{
 		GError* err = null;
-		
+
 		auto p = g_network_address_parse_uri(Str.toStringz(uri), defaultPort, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(NetworkAddress)(cast(GNetworkAddress*) p, true);
 	}
 

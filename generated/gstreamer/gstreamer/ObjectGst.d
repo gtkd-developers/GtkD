@@ -32,8 +32,8 @@ private import gobject.ParamSpec;
 private import gobject.Signals;
 private import gobject.Value;
 private import gstreamer.ControlBinding;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 private import std.algorithm;
 
 
@@ -207,11 +207,11 @@ public class ObjectGst : ObjectG
 	public static bool replace(ref ObjectGst oldobj, ObjectGst newobj)
 	{
 		GstObject* outoldobj = oldobj.getObjectGstStruct();
-		
+
 		auto p = gst_object_replace(&outoldobj, (newobj is null) ? null : newobj.getObjectGstStruct()) != 0;
-		
+
 		oldobj = ObjectG.getDObject!(ObjectGst)(outoldobj);
-		
+
 		return p;
 	}
 
@@ -260,12 +260,12 @@ public class ObjectGst : ObjectG
 	public ControlBinding getControlBinding(string propertyName)
 	{
 		auto p = gst_object_get_control_binding(gstObject, Str.toStringz(propertyName));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ControlBinding)(cast(GstControlBinding*) p, true);
 	}
 
@@ -326,7 +326,7 @@ public class ObjectGst : ObjectG
 	public string getName()
 	{
 		auto retStr = gst_object_get_name(gstObject);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -343,12 +343,12 @@ public class ObjectGst : ObjectG
 	public ObjectGst getParent()
 	{
 		auto p = gst_object_get_parent(gstObject);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ObjectGst)(cast(GstObject*) p, true);
 	}
 
@@ -367,7 +367,7 @@ public class ObjectGst : ObjectG
 	public string getPathString()
 	{
 		auto retStr = gst_object_get_path_string(gstObject);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -385,12 +385,12 @@ public class ObjectGst : ObjectG
 	public Value getValue(string propertyName, GstClockTime timestamp)
 	{
 		auto p = gst_object_get_value(gstObject, Str.toStringz(propertyName), timestamp);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Value)(cast(GValue*) p, true);
 	}
 
@@ -497,12 +497,12 @@ public class ObjectGst : ObjectG
 	public override ObjectGst doref()
 	{
 		auto p = gst_object_ref(gstObject);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ObjectGst)(cast(GstObject*) p, true);
 	}
 
@@ -661,13 +661,13 @@ public class ObjectGst : ObjectG
 		static OnDeepNotifyDelegateWrapper[] listeners;
 		void delegate(ObjectGst, ParamSpec, ObjectGst) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(ObjectGst, ParamSpec, ObjectGst) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDeepNotifyDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -703,12 +703,12 @@ public class ObjectGst : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDeepNotify(GstObject* objectgstStruct, GstObject* propObject, GParamSpec* prop, OnDeepNotifyDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(ObjectGst)(propObject), ObjectG.getDObject!(ParamSpec)(prop), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDeepNotifyDestroy(OnDeepNotifyDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

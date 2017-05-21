@@ -24,8 +24,8 @@
 
 module glib.TestLogMsg;
 
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 private import gtkd.Loader;
 
 

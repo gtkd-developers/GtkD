@@ -25,10 +25,10 @@
 module gio.SettingsSchema;
 
 private import gio.SettingsSchemaKey;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 private import gtkd.Loader;
 
 
@@ -194,12 +194,12 @@ public class SettingsSchema
 	public SettingsSchemaKey getKey(string name)
 	{
 		auto p = g_settings_schema_get_key(gSettingsSchema, Str.toStringz(name));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SettingsSchemaKey)(cast(GSettingsSchemaKey*) p, true);
 	}
 
@@ -251,7 +251,7 @@ public class SettingsSchema
 	public string[] listChildren()
 	{
 		auto retStr = g_settings_schema_list_children(gSettingsSchema);
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}
@@ -271,7 +271,7 @@ public class SettingsSchema
 	public string[] listKeys()
 	{
 		auto retStr = g_settings_schema_list_keys(gSettingsSchema);
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}
@@ -286,12 +286,12 @@ public class SettingsSchema
 	public SettingsSchema doref()
 	{
 		auto p = g_settings_schema_ref(gSettingsSchema);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SettingsSchema)(cast(GSettingsSchema*) p, true);
 	}
 

@@ -28,8 +28,8 @@ private import glib.Bytes;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.ParamSpec;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /** */
@@ -133,12 +133,12 @@ public class WidgetClass
 	public ParamSpec findStyleProperty(string propertyName)
 	{
 		auto p = gtk_widget_class_find_style_property(gtkWidgetClass, Str.toStringz(propertyName));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
 	}
 
@@ -191,20 +191,20 @@ public class WidgetClass
 	public ParamSpec[] listStyleProperties()
 	{
 		uint nProperties;
-		
+
 		auto p = gtk_widget_class_list_style_properties(gtkWidgetClass, &nProperties);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		ParamSpec[] arr = new ParamSpec[nProperties];
 		for(int i = 0; i < nProperties; i++)
 		{
 			arr[i] = ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p[i]);
 		}
-		
+
 		return arr;
 	}
 

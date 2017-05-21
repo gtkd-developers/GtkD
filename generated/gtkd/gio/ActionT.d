@@ -24,13 +24,13 @@
 
 module gio.ActionT;
 
+public  import gio.c.functions;
+public  import gio.c.types;
 public  import glib.ErrorG;
 public  import glib.GException;
 public  import glib.Str;
 public  import glib.Variant;
 public  import glib.VariantType;
-public  import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -138,17 +138,17 @@ public template ActionT(TStruct)
 		char* outactionName = null;
 		GVariant* outtargetValue = null;
 		GError* err = null;
-		
+
 		auto p = g_action_parse_detailed_name(Str.toStringz(detailedName), &outactionName, &outtargetValue, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		actionName = Str.toString(outactionName);
 		targetValue = new Variant(outtargetValue);
-		
+
 		return p;
 	}
 
@@ -175,7 +175,7 @@ public template ActionT(TStruct)
 	public static string printDetailedName(string actionName, Variant targetValue)
 	{
 		auto retStr = g_action_print_detailed_name(Str.toStringz(actionName), (targetValue is null) ? null : targetValue.getVariantStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -265,12 +265,12 @@ public template ActionT(TStruct)
 	public VariantType getParameterType()
 	{
 		auto p = g_action_get_parameter_type(getActionStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new VariantType(cast(GVariantType*) p);
 	}
 
@@ -291,12 +291,12 @@ public template ActionT(TStruct)
 	public Variant getState()
 	{
 		auto p = g_action_get_state(getActionStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Variant(cast(GVariant*) p, true);
 	}
 
@@ -327,12 +327,12 @@ public template ActionT(TStruct)
 	public Variant getStateHint()
 	{
 		auto p = g_action_get_state_hint(getActionStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Variant(cast(GVariant*) p, true);
 	}
 
@@ -357,12 +357,12 @@ public template ActionT(TStruct)
 	public VariantType getStateType()
 	{
 		auto p = g_action_get_state_type(getActionStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new VariantType(cast(GVariantType*) p);
 	}
 }

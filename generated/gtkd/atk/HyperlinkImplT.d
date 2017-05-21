@@ -25,9 +25,9 @@
 module atk.HyperlinkImplT;
 
 public  import atk.Hyperlink;
+public  import atk.c.functions;
+public  import atk.c.types;
 public  import gobject.ObjectG;
-public  import gtkc.atk;
-public  import gtkc.atktypes;
 
 
 /**
@@ -82,12 +82,12 @@ public template HyperlinkImplT(TStruct)
 	public Hyperlink getHyperlink()
 	{
 		auto p = atk_hyperlink_impl_get_hyperlink(getHyperlinkImplStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Hyperlink)(cast(AtkHyperlink*) p, true);
 	}
 }

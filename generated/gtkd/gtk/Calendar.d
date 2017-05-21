@@ -28,8 +28,8 @@ private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -107,12 +107,12 @@ public class Calendar : Widget
 	public this()
 	{
 		auto p = gtk_calendar_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkCalendar*) p);
 	}
 
@@ -310,13 +310,13 @@ public class Calendar : Widget
 		static OnDaySelectedDelegateWrapper[] listeners;
 		void delegate(Calendar) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Calendar) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDaySelectedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -346,12 +346,12 @@ public class Calendar : Widget
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDaySelected(GtkCalendar* calendarStruct, OnDaySelectedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDaySelectedDestroy(OnDaySelectedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -362,13 +362,13 @@ public class Calendar : Widget
 		static OnDaySelectedDoubleClickDelegateWrapper[] listeners;
 		void delegate(Calendar) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Calendar) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDaySelectedDoubleClickDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -398,12 +398,12 @@ public class Calendar : Widget
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDaySelectedDoubleClick(GtkCalendar* calendarStruct, OnDaySelectedDoubleClickDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDaySelectedDoubleClickDestroy(OnDaySelectedDoubleClickDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -414,13 +414,13 @@ public class Calendar : Widget
 		static OnMonthChangedDelegateWrapper[] listeners;
 		void delegate(Calendar) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Calendar) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMonthChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -451,12 +451,12 @@ public class Calendar : Widget
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackMonthChanged(GtkCalendar* calendarStruct, OnMonthChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMonthChangedDestroy(OnMonthChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -467,13 +467,13 @@ public class Calendar : Widget
 		static OnNextMonthDelegateWrapper[] listeners;
 		void delegate(Calendar) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Calendar) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnNextMonthDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -503,12 +503,12 @@ public class Calendar : Widget
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackNextMonth(GtkCalendar* calendarStruct, OnNextMonthDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackNextMonthDestroy(OnNextMonthDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -519,13 +519,13 @@ public class Calendar : Widget
 		static OnNextYearDelegateWrapper[] listeners;
 		void delegate(Calendar) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Calendar) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnNextYearDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -555,12 +555,12 @@ public class Calendar : Widget
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackNextYear(GtkCalendar* calendarStruct, OnNextYearDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackNextYearDestroy(OnNextYearDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -571,13 +571,13 @@ public class Calendar : Widget
 		static OnPrevMonthDelegateWrapper[] listeners;
 		void delegate(Calendar) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Calendar) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPrevMonthDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -607,12 +607,12 @@ public class Calendar : Widget
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPrevMonth(GtkCalendar* calendarStruct, OnPrevMonthDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPrevMonthDestroy(OnPrevMonthDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -623,13 +623,13 @@ public class Calendar : Widget
 		static OnPrevYearDelegateWrapper[] listeners;
 		void delegate(Calendar) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Calendar) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPrevYearDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -659,12 +659,12 @@ public class Calendar : Widget
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPrevYear(GtkCalendar* calendarStruct, OnPrevYearDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPrevYearDestroy(OnPrevYearDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

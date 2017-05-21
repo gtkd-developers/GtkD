@@ -30,8 +30,8 @@ private import gtk.Container;
 private import gtk.OrientableIF;
 private import gtk.OrientableT;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -108,12 +108,12 @@ public class Grid : Container, OrientableIF
 	public this()
 	{
 		auto p = gtk_grid_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkGrid*) p);
 	}
 
@@ -187,12 +187,12 @@ public class Grid : Container, OrientableIF
 	public Widget getChildAt(int left, int top)
 	{
 		auto p = gtk_grid_get_child_at(gtkGrid, left, top);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 

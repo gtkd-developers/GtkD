@@ -30,8 +30,8 @@ private import gtk.Box;
 private import gtk.FontChooserIF;
 private import gtk.FontChooserT;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -109,12 +109,12 @@ public class FontChooserWidget : Box, FontChooserIF
 	public this()
 	{
 		auto p = gtk_font_chooser_widget_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkFontChooserWidget*) p);
 	}
 }

@@ -26,11 +26,11 @@ module gdk.X11;
 
 private import gdk.Display;
 private import gdk.Window;
+private import gdk.c.functions;
+public  import gdk.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gdk;
-public  import gtkc.gdktypes;
 
 
 /** */
@@ -50,12 +50,12 @@ public  import gtkc.gdktypes;
 public Window lookupForDisplay(Display display, uint window)
 {
 	auto p = gdk_x11_window_lookup_for_display((display is null) ? null : display.getDisplayStruct(), window);
-	
+
 	if(p is null)
 	{
 		return null;
 	}
-	
+
 	return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 }
 

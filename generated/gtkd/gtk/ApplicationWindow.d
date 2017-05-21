@@ -34,8 +34,8 @@ private import gtk.Application;
 private import gtk.ShortcutsWindow;
 private import gtk.Widget;
 private import gtk.Window;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -205,12 +205,12 @@ public class ApplicationWindow : Window, ActionGroupIF, ActionMapIF
 	public this(Application application)
 	{
 		auto p = gtk_application_window_new((application is null) ? null : application.getGtkApplicationStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkApplicationWindow*) p);
 	}
 
@@ -225,12 +225,12 @@ public class ApplicationWindow : Window, ActionGroupIF, ActionMapIF
 	public ShortcutsWindow getHelpOverlay()
 	{
 		auto p = gtk_application_window_get_help_overlay(gtkApplicationWindow);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ShortcutsWindow)(cast(GtkShortcutsWindow*) p);
 	}
 

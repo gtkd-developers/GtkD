@@ -32,8 +32,8 @@ private import glib.Str;
 private import glib.Variant;
 private import gobject.ObjectG;
 private import gtk.PaperSize;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -103,12 +103,12 @@ public class PrintSettings : ObjectG
 	public this()
 	{
 		auto p = gtk_print_settings_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkPrintSettings*) p, true);
 	}
 
@@ -131,19 +131,19 @@ public class PrintSettings : ObjectG
 	public this(string fileName)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_print_settings_new_from_file(Str.toStringz(fileName), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_file");
 		}
-		
+
 		this(cast(GtkPrintSettings*) p, true);
 	}
 
@@ -163,12 +163,12 @@ public class PrintSettings : ObjectG
 	public this(Variant variant)
 	{
 		auto p = gtk_print_settings_new_from_gvariant((variant is null) ? null : variant.getVariantStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_gvariant");
 		}
-		
+
 		this(cast(GtkPrintSettings*) p, true);
 	}
 
@@ -193,19 +193,19 @@ public class PrintSettings : ObjectG
 	public this(KeyFile keyFile, string groupName)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_print_settings_new_from_key_file((keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_key_file");
 		}
-		
+
 		this(cast(GtkPrintSettings*) p, true);
 	}
 
@@ -219,12 +219,12 @@ public class PrintSettings : ObjectG
 	public PrintSettings copy()
 	{
 		auto p = gtk_print_settings_copy(gtkPrintSettings);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PrintSettings)(cast(GtkPrintSettings*) p, true);
 	}
 
@@ -507,9 +507,9 @@ public class PrintSettings : ObjectG
 	public GtkPageRange[] getPageRanges()
 	{
 		int numRanges;
-		
+
 		auto p = gtk_print_settings_get_page_ranges(gtkPrintSettings, &numRanges);
-		
+
 		return p[0 .. numRanges];
 	}
 
@@ -552,12 +552,12 @@ public class PrintSettings : ObjectG
 	public PaperSize getPaperSize()
 	{
 		auto p = gtk_print_settings_get_paper_size(gtkPrintSettings);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PaperSize)(cast(GtkPaperSize*) p, true);
 	}
 
@@ -730,14 +730,14 @@ public class PrintSettings : ObjectG
 	public bool loadFile(string fileName)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_print_settings_load_file(gtkPrintSettings, Str.toStringz(fileName), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -760,14 +760,14 @@ public class PrintSettings : ObjectG
 	public bool loadKeyFile(KeyFile keyFile, string groupName)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_print_settings_load_key_file(gtkPrintSettings, (keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -1197,14 +1197,14 @@ public class PrintSettings : ObjectG
 	public bool toFile(string fileName)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_print_settings_to_file(gtkPrintSettings, Str.toStringz(fileName), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -1218,12 +1218,12 @@ public class PrintSettings : ObjectG
 	public Variant toGvariant()
 	{
 		auto p = gtk_print_settings_to_gvariant(gtkPrintSettings);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Variant(cast(GVariant*) p);
 	}
 

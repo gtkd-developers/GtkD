@@ -31,8 +31,8 @@ private import gobject.Signals;
 private import gtk.Adjustment;
 private import gtk.Range;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import pango.PgLayout;
 private import std.algorithm;
 
@@ -169,12 +169,12 @@ public class Scale : Range
 	public this(GtkOrientation orientation, Adjustment adjustment)
 	{
 		auto p = gtk_scale_new(orientation, (adjustment is null) ? null : adjustment.getAdjustmentStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkScale*) p);
 	}
 
@@ -204,12 +204,12 @@ public class Scale : Range
 	public this(GtkOrientation orientation, double min, double max, double step)
 	{
 		auto p = gtk_scale_new_with_range(orientation, min, max, step);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_with_range");
 		}
-		
+
 		this(cast(GtkScale*) p);
 	}
 
@@ -297,12 +297,12 @@ public class Scale : Range
 	public PgLayout getLayout()
 	{
 		auto p = gtk_scale_get_layout(gtkScale);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) p);
 	}
 
@@ -398,13 +398,13 @@ public class Scale : Range
 		static OnFormatValueDelegateWrapper[] listeners;
 		string delegate(double, Scale) dlg;
 		gulong handlerId;
-		
+
 		this(string delegate(double, Scale) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnFormatValueDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -456,12 +456,12 @@ public class Scale : Range
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static string callBackFormatValue(GtkScale* scaleStruct, double value, OnFormatValueDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(value, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackFormatValueDestroy(OnFormatValueDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

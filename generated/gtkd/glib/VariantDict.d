@@ -28,8 +28,8 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import glib.Variant;
 private import glib.VariantType;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 private import gtkd.Loader;
 
 
@@ -187,12 +187,12 @@ public class VariantDict
 	public this(Variant fromAsv)
 	{
 		auto p = g_variant_dict_new((fromAsv is null) ? null : fromAsv.getVariantStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GVariantDict*) p);
 	}
 
@@ -250,12 +250,12 @@ public class VariantDict
 	public Variant end()
 	{
 		auto p = g_variant_dict_end(gVariantDict);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Variant(cast(GVariant*) p);
 	}
 
@@ -327,12 +327,12 @@ public class VariantDict
 	public Variant lookupValue(string key, VariantType expectedType)
 	{
 		auto p = g_variant_dict_lookup_value(gVariantDict, Str.toStringz(key), (expectedType is null) ? null : expectedType.getVariantTypeStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Variant(cast(GVariant*) p, true);
 	}
 
@@ -349,12 +349,12 @@ public class VariantDict
 	public VariantDict doref()
 	{
 		auto p = g_variant_dict_ref(gVariantDict);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new VariantDict(cast(GVariantDict*) p, true);
 	}
 

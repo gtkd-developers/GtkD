@@ -24,8 +24,8 @@ wrap: glgdk
 file: GdkGLExt-3.0.gir
 
 addAliases: start
-	public import gtkc.glibtypes;
-	public import gtkc.gdktypes;
+	public import glib.c.types;
+	public import gdk.c.types;
 addAliases: end
 
 addStructs: start

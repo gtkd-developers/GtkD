@@ -25,14 +25,14 @@
 module gio.Resource;
 
 private import gio.InputStream;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.Bytes;
 private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 private import gtkd.Loader;
 
 
@@ -217,19 +217,19 @@ public class Resource
 	public this(Bytes data)
 	{
 		GError* err = null;
-		
+
 		auto p = g_resource_new_from_data((data is null) ? null : data.getBytesStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_data");
 		}
-		
+
 		this(cast(GResource*) p);
 	}
 
@@ -284,14 +284,14 @@ public class Resource
 	public string[] enumerateChildren(string path, GResourceLookupFlags lookupFlags)
 	{
 		GError* err = null;
-		
+
 		auto retStr = g_resource_enumerate_children(gResource, Str.toStringz(path), lookupFlags, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}
@@ -319,14 +319,14 @@ public class Resource
 	public bool getInfo(string path, GResourceLookupFlags lookupFlags, out size_t size, out uint flags)
 	{
 		GError* err = null;
-		
+
 		auto p = g_resource_get_info(gResource, Str.toStringz(path), lookupFlags, &size, &flags, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -360,19 +360,19 @@ public class Resource
 	public Bytes lookupData(string path, GResourceLookupFlags lookupFlags)
 	{
 		GError* err = null;
-		
+
 		auto p = g_resource_lookup_data(gResource, Str.toStringz(path), lookupFlags, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Bytes(cast(GBytes*) p, true);
 	}
 
@@ -396,19 +396,19 @@ public class Resource
 	public InputStream openStream(string path, GResourceLookupFlags lookupFlags)
 	{
 		GError* err = null;
-		
+
 		auto p = g_resource_open_stream(gResource, Str.toStringz(path), lookupFlags, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) p, true);
 	}
 
@@ -423,12 +423,12 @@ public class Resource
 	public Resource doref()
 	{
 		auto p = g_resource_ref(gResource);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Resource)(cast(GResource*) p, true);
 	}
 
@@ -464,19 +464,19 @@ public class Resource
 	public static Resource load(string filename)
 	{
 		GError* err = null;
-		
+
 		auto p = g_resource_load(Str.toStringz(filename), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Resource)(cast(GResource*) p, true);
 	}
 
@@ -501,14 +501,14 @@ public class Resource
 	public static string[] resourcesEnumerateChildren(string path, GResourceLookupFlags lookupFlags)
 	{
 		GError* err = null;
-		
+
 		auto retStr = g_resources_enumerate_children(Str.toStringz(path), lookupFlags, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}
@@ -536,14 +536,14 @@ public class Resource
 	public static bool resourcesGetInfo(string path, GResourceLookupFlags lookupFlags, out size_t size, out uint flags)
 	{
 		GError* err = null;
-		
+
 		auto p = g_resources_get_info(Str.toStringz(path), lookupFlags, &size, &flags, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -577,19 +577,19 @@ public class Resource
 	public static Bytes resourcesLookupData(string path, GResourceLookupFlags lookupFlags)
 	{
 		GError* err = null;
-		
+
 		auto p = g_resources_lookup_data(Str.toStringz(path), lookupFlags, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Bytes(cast(GBytes*) p, true);
 	}
 
@@ -614,19 +614,19 @@ public class Resource
 	public static InputStream resourcesOpenStream(string path, GResourceLookupFlags lookupFlags)
 	{
 		GError* err = null;
-		
+
 		auto p = g_resources_open_stream(Str.toStringz(path), lookupFlags, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) p, true);
 	}
 }

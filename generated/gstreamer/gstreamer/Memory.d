@@ -28,8 +28,8 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gstreamer.Allocator;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /**
@@ -129,12 +129,12 @@ public class Memory
 	public this(GstMemoryFlags flags, ubyte[] data, size_t maxsize, size_t offset, void* userData, GDestroyNotify notify)
 	{
 		auto p = gst_memory_new_wrapped(flags, data.ptr, maxsize, offset, cast(size_t)data.length, userData, notify);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_wrapped");
 		}
-		
+
 		this(cast(GstMemory*) p);
 	}
 
@@ -152,12 +152,12 @@ public class Memory
 	public Memory copy(ptrdiff_t offset, ptrdiff_t size)
 	{
 		auto p = gst_memory_copy(gstMemory, offset, size);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Memory)(cast(GstMemory*) p, true);
 	}
 
@@ -245,12 +245,12 @@ public class Memory
 	public Memory makeMapped(out GstMapInfo info, GstMapFlags flags)
 	{
 		auto p = gst_memory_make_mapped(gstMemory, &info, flags);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Memory)(cast(GstMemory*) p, true);
 	}
 
@@ -310,12 +310,12 @@ public class Memory
 	public Memory share(ptrdiff_t offset, ptrdiff_t size)
 	{
 		auto p = gst_memory_share(gstMemory, offset, size);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Memory)(cast(GstMemory*) p, true);
 	}
 

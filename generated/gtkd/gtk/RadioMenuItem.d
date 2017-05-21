@@ -31,8 +31,8 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.CheckMenuItem;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -122,7 +122,7 @@ public class RadioMenuItem : CheckMenuItem
 	public this (RadioMenuItem radioMenuItem, string label, bool mnemonic=true)
 	{
 		GtkRadioMenuItem* p;
-		
+
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_radio_menu_item_new_with_mnemonic_from_widget  (GtkRadioMenuItem *group,  const gchar *label);
@@ -135,15 +135,15 @@ public class RadioMenuItem : CheckMenuItem
 			p = cast(GtkRadioMenuItem*)gtk_radio_menu_item_new_with_label_from_widget(
 			radioMenuItem.getRadioMenuItemStruct(), Str.toStringz(label));
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gtk_radio_menu_item_new_with_");
 		}
-		
+
 		this(p);
 	}
-	
+
 	/**
 	 * Creates a new GtkRadioMenuItem whose child is a simple GtkLabel.
 	 * Params:
@@ -157,7 +157,7 @@ public class RadioMenuItem : CheckMenuItem
 	public this (ListSG group, string label, bool mnemonic=true)
 	{
 		GtkRadioMenuItem* p;
-		
+
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_radio_menu_item_new_with_mnemonic  (GSList *group,  const gchar *label);
@@ -170,12 +170,12 @@ public class RadioMenuItem : CheckMenuItem
 			p = cast(GtkRadioMenuItem*)gtk_radio_menu_item_new_with_label(
 			group is null ? null : group.getListSGStruct(), Str.toStringz(label));
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gtk_radio_menu_item_new_with_");
 		}
-		
+
 		this(p);
 	}
 
@@ -202,12 +202,12 @@ public class RadioMenuItem : CheckMenuItem
 	public this(ListSG group)
 	{
 		auto p = gtk_radio_menu_item_new((group is null) ? null : group.getListSGStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkRadioMenuItem*) p);
 	}
 
@@ -226,12 +226,12 @@ public class RadioMenuItem : CheckMenuItem
 	public this(RadioMenuItem group)
 	{
 		auto p = gtk_radio_menu_item_new_from_widget((group is null) ? null : group.getRadioMenuItemStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_widget");
 		}
-		
+
 		this(cast(GtkRadioMenuItem*) p);
 	}
 
@@ -245,12 +245,12 @@ public class RadioMenuItem : CheckMenuItem
 	public ListSG getGroup()
 	{
 		auto p = gtk_radio_menu_item_get_group(gtkRadioMenuItem);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -306,13 +306,13 @@ public class RadioMenuItem : CheckMenuItem
 		static OnGroupChangedDelegateWrapper[] listeners;
 		void delegate(RadioMenuItem) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(RadioMenuItem) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnGroupChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -340,12 +340,12 @@ public class RadioMenuItem : CheckMenuItem
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackGroupChanged(GtkRadioMenuItem* radiomenuitemStruct, OnGroupChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackGroupChangedDestroy(OnGroupChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

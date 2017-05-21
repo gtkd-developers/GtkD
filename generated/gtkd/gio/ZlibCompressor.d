@@ -27,10 +27,10 @@ module gio.ZlibCompressor;
 private import gio.ConverterIF;
 private import gio.ConverterT;
 private import gio.FileInfo;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -96,12 +96,12 @@ public class ZlibCompressor : ObjectG, ConverterIF
 	public this(GZlibCompressorFormat format, int level)
 	{
 		auto p = g_zlib_compressor_new(format, level);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GZlibCompressor*) p, true);
 	}
 
@@ -115,12 +115,12 @@ public class ZlibCompressor : ObjectG, ConverterIF
 	public FileInfo getFileInfo()
 	{
 		auto p = g_zlib_compressor_get_file_info(gZlibCompressor);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(FileInfo)(cast(GFileInfo*) p);
 	}
 

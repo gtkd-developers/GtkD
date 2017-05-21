@@ -27,8 +27,8 @@ module gstreamer.Poll;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gstreamer.PollFD;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 private import gtkd.Loader;
 
 
@@ -369,12 +369,12 @@ public class Poll
 	public this(bool controllable)
 	{
 		auto p = gst_poll_new(controllable);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GstPoll*) p);
 	}
 
@@ -395,12 +395,12 @@ public class Poll
 	public this()
 	{
 		auto p = gst_poll_new_timer();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_timer");
 		}
-		
+
 		this(cast(GstPoll*) p);
 	}
 }

@@ -25,10 +25,10 @@
 module pango.PgFontset;
 
 private import gobject.ObjectG;
-private import gtkc.pango;
-public  import gtkc.pangotypes;
 private import pango.PgFont;
 private import pango.PgFontMetrics;
+private import pango.c.functions;
+public  import pango.c.types;
 
 
 /**
@@ -108,12 +108,12 @@ public class PgFontset : ObjectG
 	public PgFont getFont(uint wc)
 	{
 		auto p = pango_fontset_get_font(pangoFontset, wc);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgFont)(cast(PangoFont*) p, true);
 	}
 
@@ -126,12 +126,12 @@ public class PgFontset : ObjectG
 	public PgFontMetrics getMetrics()
 	{
 		auto p = pango_fontset_get_metrics(pangoFontset);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgFontMetrics)(cast(PangoFontMetrics*) p, true);
 	}
 }

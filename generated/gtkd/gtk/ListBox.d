@@ -33,8 +33,8 @@ private import gtk.Adjustment;
 private import gtk.Container;
 private import gtk.ListBoxRow;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -125,12 +125,12 @@ public class ListBox : Container
 	public this()
 	{
 		auto p = gtk_list_box_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkListBox*) p);
 	}
 
@@ -218,12 +218,12 @@ public class ListBox : Container
 	public Adjustment getAdjustment()
 	{
 		auto p = gtk_list_box_get_adjustment(gtkListBox);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
 	}
 
@@ -242,12 +242,12 @@ public class ListBox : Container
 	public ListBoxRow getRowAtIndex(int index)
 	{
 		auto p = gtk_list_box_get_row_at_index(gtkListBox, index);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ListBoxRow)(cast(GtkListBoxRow*) p);
 	}
 
@@ -265,12 +265,12 @@ public class ListBox : Container
 	public ListBoxRow getRowAtY(int y)
 	{
 		auto p = gtk_list_box_get_row_at_y(gtkListBox, y);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ListBoxRow)(cast(GtkListBoxRow*) p);
 	}
 
@@ -288,12 +288,12 @@ public class ListBox : Container
 	public ListBoxRow getSelectedRow()
 	{
 		auto p = gtk_list_box_get_selected_row(gtkListBox);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ListBoxRow)(cast(GtkListBoxRow*) p);
 	}
 
@@ -308,12 +308,12 @@ public class ListBox : Container
 	public ListG getSelectedRows()
 	{
 		auto p = gtk_list_box_get_selected_rows(gtkListBox);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -609,13 +609,13 @@ public class ListBox : Container
 		static OnActivateCursorRowDelegateWrapper[] listeners;
 		void delegate(ListBox) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(ListBox) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnActivateCursorRowDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -643,12 +643,12 @@ public class ListBox : Container
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackActivateCursorRow(GtkListBox* listboxStruct, OnActivateCursorRowDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackActivateCursorRowDestroy(OnActivateCursorRowDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -659,13 +659,13 @@ public class ListBox : Container
 		static OnMoveCursorDelegateWrapper[] listeners;
 		void delegate(GtkMovementStep, int, ListBox) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(GtkMovementStep, int, ListBox) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMoveCursorDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -693,12 +693,12 @@ public class ListBox : Container
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackMoveCursor(GtkListBox* listboxStruct, GtkMovementStep object, int p0, OnMoveCursorDelegateWrapper wrapper)
 	{
 		wrapper.dlg(object, p0, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMoveCursorDestroy(OnMoveCursorDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -709,13 +709,13 @@ public class ListBox : Container
 		static OnRowActivatedDelegateWrapper[] listeners;
 		void delegate(ListBoxRow, ListBox) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(ListBoxRow, ListBox) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnRowActivatedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -750,12 +750,12 @@ public class ListBox : Container
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackRowActivated(GtkListBox* listboxStruct, GtkListBoxRow* row, OnRowActivatedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(ListBoxRow)(row), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackRowActivatedDestroy(OnRowActivatedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -766,13 +766,13 @@ public class ListBox : Container
 		static OnRowSelectedDelegateWrapper[] listeners;
 		void delegate(ListBoxRow, ListBox) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(ListBoxRow, ListBox) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnRowSelectedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -812,12 +812,12 @@ public class ListBox : Container
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackRowSelected(GtkListBox* listboxStruct, GtkListBoxRow* row, OnRowSelectedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(ListBoxRow)(row), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackRowSelectedDestroy(OnRowSelectedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -828,13 +828,13 @@ public class ListBox : Container
 		static OnSelectAllDelegateWrapper[] listeners;
 		void delegate(ListBox) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(ListBox) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnSelectAllDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -870,12 +870,12 @@ public class ListBox : Container
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackSelectAll(GtkListBox* listboxStruct, OnSelectAllDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackSelectAllDestroy(OnSelectAllDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -886,13 +886,13 @@ public class ListBox : Container
 		static OnSelectedRowsChangedDelegateWrapper[] listeners;
 		void delegate(ListBox) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(ListBox) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnSelectedRowsChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -925,12 +925,12 @@ public class ListBox : Container
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackSelectedRowsChanged(GtkListBox* listboxStruct, OnSelectedRowsChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackSelectedRowsChangedDestroy(OnSelectedRowsChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -941,13 +941,13 @@ public class ListBox : Container
 		static OnToggleCursorRowDelegateWrapper[] listeners;
 		void delegate(ListBox) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(ListBox) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnToggleCursorRowDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -975,12 +975,12 @@ public class ListBox : Container
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackToggleCursorRow(GtkListBox* listboxStruct, OnToggleCursorRowDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackToggleCursorRowDestroy(OnToggleCursorRowDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -991,13 +991,13 @@ public class ListBox : Container
 		static OnUnselectAllDelegateWrapper[] listeners;
 		void delegate(ListBox) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(ListBox) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnUnselectAllDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1033,12 +1033,12 @@ public class ListBox : Container
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackUnselectAll(GtkListBox* listboxStruct, OnUnselectAllDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackUnselectAllDestroy(OnUnselectAllDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

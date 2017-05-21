@@ -26,8 +26,8 @@ module gtk.Requisition;
 
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import gtkd.Loader;
 
 
@@ -91,12 +91,12 @@ public class Requisition
 	public this()
 	{
 		auto p = gtk_requisition_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkRequisition*) p);
 	}
 
@@ -108,12 +108,12 @@ public class Requisition
 	public Requisition copy()
 	{
 		auto p = gtk_requisition_copy(gtkRequisition);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Requisition)(cast(GtkRequisition*) p, true);
 	}
 

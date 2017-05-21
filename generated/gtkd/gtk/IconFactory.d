@@ -30,8 +30,8 @@ private import gobject.ObjectG;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
 private import gtk.IconSet;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -174,12 +174,12 @@ public class IconFactory : ObjectG, BuildableIF
 	public this()
 	{
 		auto p = gtk_icon_factory_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkIconFactory*) p, true);
 	}
 
@@ -200,12 +200,12 @@ public class IconFactory : ObjectG, BuildableIF
 	public static IconSet lookupDefault(string stockId)
 	{
 		auto p = gtk_icon_factory_lookup_default(Str.toStringz(stockId));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(IconSet)(cast(GtkIconSet*) p);
 	}
 
@@ -264,12 +264,12 @@ public class IconFactory : ObjectG, BuildableIF
 	public IconSet lookup(string stockId)
 	{
 		auto p = gtk_icon_factory_lookup(gtkIconFactory, Str.toStringz(stockId));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(IconSet)(cast(GtkIconSet*) p);
 	}
 

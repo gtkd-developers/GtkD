@@ -27,11 +27,11 @@ module atk.Plug;
 private import atk.ComponentIF;
 private import atk.ComponentT;
 private import atk.ObjectAtk;
+private import atk.c.functions;
+public  import atk.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.atk;
-public  import gtkc.atktypes;
 
 
 /**
@@ -85,12 +85,12 @@ public class Plug : ObjectAtk, ComponentIF
 	public this()
 	{
 		auto p = atk_plug_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(AtkPlug*) p, true);
 	}
 
@@ -111,7 +111,7 @@ public class Plug : ObjectAtk, ComponentIF
 	public string getId()
 	{
 		auto retStr = atk_plug_get_id(atkPlug);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}

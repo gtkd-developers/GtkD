@@ -26,8 +26,8 @@ module glib.StringChunk;
 
 private import glib.ConstructionException;
 private import glib.Str;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 private import gtkd.Loader;
 
 
@@ -116,7 +116,7 @@ public class StringChunk
 	public string insert(string str)
 	{
 		auto retStr = g_string_chunk_insert(gStringChunk, Str.toStringz(str));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -145,7 +145,7 @@ public class StringChunk
 	public string insertConst(string str)
 	{
 		auto retStr = g_string_chunk_insert_const(gStringChunk, Str.toStringz(str));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -173,7 +173,7 @@ public class StringChunk
 	public string insertLen(string str, ptrdiff_t len)
 	{
 		auto retStr = g_string_chunk_insert_len(gStringChunk, Str.toStringz(str), len);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -194,12 +194,12 @@ public class StringChunk
 	public this(size_t size)
 	{
 		auto p = g_string_chunk_new(size);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GStringChunk*) p);
 	}
 }

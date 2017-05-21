@@ -26,12 +26,12 @@ module gio.DBusAuthObserver;
 
 private import gio.Credentials;
 private import gio.IOStream;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -126,12 +126,12 @@ public class DBusAuthObserver : ObjectG
 	public this()
 	{
 		auto p = g_dbus_auth_observer_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GDBusAuthObserver*) p, true);
 	}
 
@@ -171,13 +171,13 @@ public class DBusAuthObserver : ObjectG
 		static OnAllowMechanismDelegateWrapper[] listeners;
 		bool delegate(string, DBusAuthObserver) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(string, DBusAuthObserver) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnAllowMechanismDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -214,12 +214,12 @@ public class DBusAuthObserver : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackAllowMechanism(GDBusAuthObserver* dbusauthobserverStruct, char* mechanism, OnAllowMechanismDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(Str.toString(mechanism), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackAllowMechanismDestroy(OnAllowMechanismDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -230,13 +230,13 @@ public class DBusAuthObserver : ObjectG
 		static OnAuthorizeAuthenticatedPeerDelegateWrapper[] listeners;
 		bool delegate(IOStream, Credentials, DBusAuthObserver) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(IOStream, Credentials, DBusAuthObserver) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnAuthorizeAuthenticatedPeerDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -275,12 +275,12 @@ public class DBusAuthObserver : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackAuthorizeAuthenticatedPeer(GDBusAuthObserver* dbusauthobserverStruct, GIOStream* stream, GCredentials* credentials, OnAuthorizeAuthenticatedPeerDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(ObjectG.getDObject!(IOStream)(stream), ObjectG.getDObject!(Credentials)(credentials), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackAuthorizeAuthenticatedPeerDestroy(OnAuthorizeAuthenticatedPeerDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

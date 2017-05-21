@@ -27,6 +27,8 @@ module gio.Task;
 private import gio.AsyncResultIF;
 private import gio.AsyncResultT;
 private import gio.Cancellable;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
@@ -34,8 +36,6 @@ private import glib.MainContext;
 private import glib.Source;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -610,12 +610,12 @@ public class Task : ObjectG, AsyncResultIF
 	public this(ObjectG sourceObject, Cancellable cancellable, GAsyncReadyCallback callback, void* callbackData)
 	{
 		auto p = g_task_new((sourceObject is null) ? null : sourceObject.getObjectGStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, callbackData);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GTask*) p, true);
 	}
 
@@ -693,12 +693,12 @@ public class Task : ObjectG, AsyncResultIF
 	public Cancellable getCancellable()
 	{
 		auto p = g_task_get_cancellable(gTask);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Cancellable)(cast(GCancellable*) p);
 	}
 
@@ -743,12 +743,12 @@ public class Task : ObjectG, AsyncResultIF
 	public MainContext getContext()
 	{
 		auto p = g_task_get_context(gTask);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new MainContext(cast(GMainContext*) p);
 	}
 
@@ -786,12 +786,12 @@ public class Task : ObjectG, AsyncResultIF
 	public ObjectG getSourceObject()
 	{
 		auto p = g_task_get_source_object(gTask);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p);
 	}
 
@@ -849,14 +849,14 @@ public class Task : ObjectG, AsyncResultIF
 	public bool propagateBoolean()
 	{
 		GError* err = null;
-		
+
 		auto p = g_task_propagate_boolean(gTask, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -878,14 +878,14 @@ public class Task : ObjectG, AsyncResultIF
 	public ptrdiff_t propagateInt()
 	{
 		GError* err = null;
-		
+
 		auto p = g_task_propagate_int(gTask, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -908,14 +908,14 @@ public class Task : ObjectG, AsyncResultIF
 	public void* propagatePointer()
 	{
 		GError* err = null;
-		
+
 		auto p = g_task_propagate_pointer(gTask, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 

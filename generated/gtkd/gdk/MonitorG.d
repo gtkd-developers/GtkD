@@ -25,11 +25,11 @@
 module gdk.MonitorG;
 
 private import gdk.Display;
+private import gdk.c.functions;
+public  import gdk.c.types;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gdk;
-public  import gtkc.gdktypes;
 private import std.algorithm;
 
 
@@ -94,12 +94,12 @@ public class MonitorG : ObjectG
 	public Display getDisplay()
 	{
 		auto p = gdk_monitor_get_display(gdkMonitor);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
 	}
 
@@ -251,13 +251,13 @@ public class MonitorG : ObjectG
 		static OnInvalidateDelegateWrapper[] listeners;
 		void delegate(MonitorG) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(MonitorG) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnInvalidateDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -285,12 +285,12 @@ public class MonitorG : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackInvalidate(GdkMonitor* monitorgStruct, OnInvalidateDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackInvalidateDestroy(OnInvalidateDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

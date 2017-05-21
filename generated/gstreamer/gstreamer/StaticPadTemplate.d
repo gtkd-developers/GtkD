@@ -27,8 +27,8 @@ module gstreamer.StaticPadTemplate;
 private import gobject.ObjectG;
 private import gstreamer.Caps;
 private import gstreamer.PadTemplate;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /**
@@ -72,12 +72,12 @@ public class StaticPadTemplate
 	public PadTemplate get()
 	{
 		auto p = gst_static_pad_template_get(gstStaticPadTemplate);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PadTemplate)(cast(GstPadTemplate*) p, true);
 	}
 
@@ -92,12 +92,12 @@ public class StaticPadTemplate
 	public Caps getCaps()
 	{
 		auto p = gst_static_pad_template_get_caps(gstStaticPadTemplate);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
 	}
 }

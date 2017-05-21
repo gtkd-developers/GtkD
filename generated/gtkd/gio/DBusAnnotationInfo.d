@@ -24,10 +24,10 @@
 
 module gio.DBusAnnotationInfo;
 
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 private import gtkd.Loader;
 
 
@@ -92,7 +92,7 @@ public class DBusAnnotationInfo
 			annotationsArray[i] = annotations[i].getDBusAnnotationInfoStruct();
 		}
 		annotationsArray[$-1] = null;
-		
+
 		return Str.toString(g_dbus_annotation_info_lookup(annotationsArray.ptr, Str.toStringz(name)));
 	}
 
@@ -116,12 +116,12 @@ public class DBusAnnotationInfo
 	public DBusAnnotationInfo doref()
 	{
 		auto p = g_dbus_annotation_info_ref(gDBusAnnotationInfo);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(DBusAnnotationInfo)(cast(GDBusAnnotationInfo*) p, true);
 	}
 

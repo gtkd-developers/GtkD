@@ -24,8 +24,8 @@
 
 module glib.MemorySlice;
 
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 
 
 /** */
@@ -35,17 +35,17 @@ public struct MemorySlice
 	{
 		return cast(T*)g_slice_alloc(T.sizeof);
 	}
-	
+
 	T* mewSlice0(T)()
 	{
 		return cast(T*)g_slice_alloc0(T.sizeof);
 	}
-	
+
 	T* dup(T)(T* memBlock)
 	{
 		return cast(T*)g_slice_copy(T.sizeof, memBlock);
 	}
-	
+
 	void free(T)(T* memBlock)
 	{
 		g_slice_free1(T.sizeof, memBlock);

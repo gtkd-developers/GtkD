@@ -29,8 +29,8 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Gesture;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -96,12 +96,12 @@ public class GestureRotate : Gesture
 	public this(Widget widget)
 	{
 		auto p = gtk_gesture_rotate_new((widget is null) ? null : widget.getWidgetStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkGestureRotate*) p, true);
 	}
 
@@ -124,13 +124,13 @@ public class GestureRotate : Gesture
 		static OnAngleChangedDelegateWrapper[] listeners;
 		void delegate(double, double, GestureRotate) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(double, double, GestureRotate) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnAngleChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -167,12 +167,12 @@ public class GestureRotate : Gesture
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackAngleChanged(GtkGestureRotate* gesturerotateStruct, double angle, double angleDelta, OnAngleChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(angle, angleDelta, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackAngleChangedDestroy(OnAngleChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

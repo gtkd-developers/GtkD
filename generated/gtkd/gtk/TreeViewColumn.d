@@ -39,8 +39,8 @@ private import gtk.TreeIter;
 private import gtk.TreeModelIF;
 private import gtk.TreeView;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -110,15 +110,15 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 			Str.toStringz(type),
 			column,
 			null);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gtk_tree_view_column_new_with_attributes");
 		}
-		
+
 		this(p);
 	}
-	
+
 	/**
 	 * Returns the button used in the treeview column header
 	 * Returns: The button for the column header. [transfer none] Since 3.0
@@ -133,7 +133,7 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 		}
 		return new Button(cast(GtkButton*) p);
 	}
-	
+
 	/**
 	 * Returns the GtkTreeView wherein tree_column has been inserted.
 	 * If column is currently not inserted in any tree view, NULL is
@@ -171,12 +171,12 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	public this()
 	{
 		auto p = gtk_tree_view_column_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkTreeViewColumn*) p);
 	}
 
@@ -195,12 +195,12 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	public this(CellArea area)
 	{
 		auto p = gtk_tree_view_column_new_with_area((area is null) ? null : area.getCellAreaStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_with_area");
 		}
-		
+
 		this(cast(GtkTreeViewColumn*) p);
 	}
 
@@ -462,12 +462,12 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	public Widget getWidget()
 	{
 		auto p = gtk_tree_view_column_get_widget(gtkTreeViewColumn);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -749,13 +749,13 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 		static OnClickedDelegateWrapper[] listeners;
 		void delegate(TreeViewColumn) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TreeViewColumn) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnClickedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -783,12 +783,12 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackClicked(GtkTreeViewColumn* treeviewcolumnStruct, OnClickedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackClickedDestroy(OnClickedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

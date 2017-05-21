@@ -25,8 +25,8 @@
 module glib.RandG;
 
 private import glib.ConstructionException;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 private import gtkd.Loader;
 
 
@@ -82,12 +82,12 @@ public class RandG
 	public RandG copy()
 	{
 		auto p = g_rand_copy(gRand);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new RandG(cast(GRand*) p);
 	}
 
@@ -195,12 +195,12 @@ public class RandG
 	public this()
 	{
 		auto p = g_rand_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GRand*) p);
 	}
 
@@ -217,12 +217,12 @@ public class RandG
 	public this(uint seed)
 	{
 		auto p = g_rand_new_with_seed(seed);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_with_seed");
 		}
-		
+
 		this(cast(GRand*) p);
 	}
 
@@ -243,12 +243,12 @@ public class RandG
 	public this(uint[] seed)
 	{
 		auto p = g_rand_new_with_seed_array(seed.ptr, cast(uint)seed.length);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_with_seed_array");
 		}
-		
+
 		this(cast(GRand*) p);
 	}
 

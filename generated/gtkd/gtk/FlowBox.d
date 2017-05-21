@@ -35,8 +35,8 @@ private import gtk.FlowBoxChild;
 private import gtk.OrientableIF;
 private import gtk.OrientableT;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -137,12 +137,12 @@ public class FlowBox : Container, OrientableIF
 	public this()
 	{
 		auto p = gtk_flow_box_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkFlowBox*) p);
 	}
 
@@ -205,12 +205,12 @@ public class FlowBox : Container, OrientableIF
 	public FlowBoxChild getChildAtIndex(int idx)
 	{
 		auto p = gtk_flow_box_get_child_at_index(gtkFlowBox, idx);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(FlowBoxChild)(cast(GtkFlowBoxChild*) p);
 	}
 
@@ -230,12 +230,12 @@ public class FlowBox : Container, OrientableIF
 	public FlowBoxChild getChildAtPos(int x, int y)
 	{
 		auto p = gtk_flow_box_get_child_at_pos(gtkFlowBox, x, y);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(FlowBoxChild)(cast(GtkFlowBoxChild*) p);
 	}
 
@@ -311,12 +311,12 @@ public class FlowBox : Container, OrientableIF
 	public ListG getSelectedChildren()
 	{
 		auto p = gtk_flow_box_get_selected_children(gtkFlowBox);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -655,13 +655,13 @@ public class FlowBox : Container, OrientableIF
 		static OnActivateCursorChildDelegateWrapper[] listeners;
 		void delegate(FlowBox) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(FlowBox) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnActivateCursorChildDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -693,12 +693,12 @@ public class FlowBox : Container, OrientableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackActivateCursorChild(GtkFlowBox* flowboxStruct, OnActivateCursorChildDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackActivateCursorChildDestroy(OnActivateCursorChildDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -709,13 +709,13 @@ public class FlowBox : Container, OrientableIF
 		static OnChildActivatedDelegateWrapper[] listeners;
 		void delegate(FlowBoxChild, FlowBox) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(FlowBoxChild, FlowBox) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnChildActivatedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -749,12 +749,12 @@ public class FlowBox : Container, OrientableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackChildActivated(GtkFlowBox* flowboxStruct, GtkFlowBoxChild* child, OnChildActivatedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(FlowBoxChild)(child), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackChildActivatedDestroy(OnChildActivatedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -765,13 +765,13 @@ public class FlowBox : Container, OrientableIF
 		static OnMoveCursorDelegateWrapper[] listeners;
 		bool delegate(GtkMovementStep, int, FlowBox) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(GtkMovementStep, int, FlowBox) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMoveCursorDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -822,12 +822,12 @@ public class FlowBox : Container, OrientableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackMoveCursor(GtkFlowBox* flowboxStruct, GtkMovementStep step, int count, OnMoveCursorDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(step, count, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMoveCursorDestroy(OnMoveCursorDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -838,13 +838,13 @@ public class FlowBox : Container, OrientableIF
 		static OnSelectAllDelegateWrapper[] listeners;
 		void delegate(FlowBox) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(FlowBox) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnSelectAllDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -879,12 +879,12 @@ public class FlowBox : Container, OrientableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackSelectAll(GtkFlowBox* flowboxStruct, OnSelectAllDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackSelectAllDestroy(OnSelectAllDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -895,13 +895,13 @@ public class FlowBox : Container, OrientableIF
 		static OnSelectedChildrenChangedDelegateWrapper[] listeners;
 		void delegate(FlowBox) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(FlowBox) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnSelectedChildrenChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -936,12 +936,12 @@ public class FlowBox : Container, OrientableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackSelectedChildrenChanged(GtkFlowBox* flowboxStruct, OnSelectedChildrenChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackSelectedChildrenChangedDestroy(OnSelectedChildrenChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -952,13 +952,13 @@ public class FlowBox : Container, OrientableIF
 		static OnToggleCursorChildDelegateWrapper[] listeners;
 		void delegate(FlowBox) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(FlowBox) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnToggleCursorChildDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -992,12 +992,12 @@ public class FlowBox : Container, OrientableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackToggleCursorChild(GtkFlowBox* flowboxStruct, OnToggleCursorChildDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackToggleCursorChildDestroy(OnToggleCursorChildDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1008,13 +1008,13 @@ public class FlowBox : Container, OrientableIF
 		static OnUnselectAllDelegateWrapper[] listeners;
 		void delegate(FlowBox) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(FlowBox) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnUnselectAllDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1049,12 +1049,12 @@ public class FlowBox : Container, OrientableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackUnselectAll(GtkFlowBox* flowboxStruct, OnUnselectAllDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackUnselectAllDestroy(OnUnselectAllDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

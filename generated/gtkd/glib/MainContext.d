@@ -28,8 +28,8 @@ private import glib.Cond;
 private import glib.ConstructionException;
 private import glib.Mutex;
 private import glib.Source;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 private import gtkd.Loader;
 
 
@@ -83,12 +83,12 @@ public class MainContext
 	public this()
 	{
 		auto p = g_main_context_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GMainContext*) p);
 	}
 
@@ -173,12 +173,12 @@ public class MainContext
 	public Source findSourceByFuncsUserData(GSourceFuncs* funcs, void* userData)
 	{
 		auto p = g_main_context_find_source_by_funcs_user_data(gMainContext, funcs, userData);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Source(cast(GSource*) p);
 	}
 
@@ -204,12 +204,12 @@ public class MainContext
 	public Source findSourceById(uint sourceId)
 	{
 		auto p = g_main_context_find_source_by_id(gMainContext, sourceId);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Source(cast(GSource*) p);
 	}
 
@@ -226,12 +226,12 @@ public class MainContext
 	public Source findSourceByUserData(void* userData)
 	{
 		auto p = g_main_context_find_source_by_user_data(gMainContext, userData);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Source(cast(GSource*) p);
 	}
 
@@ -459,12 +459,12 @@ public class MainContext
 	public MainContext doref()
 	{
 		auto p = g_main_context_ref(gMainContext);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new MainContext(cast(GMainContext*) p, true);
 	}
 
@@ -582,12 +582,12 @@ public class MainContext
 	public static MainContext defaulx()
 	{
 		auto p = g_main_context_default();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new MainContext(cast(GMainContext*) p);
 	}
 
@@ -612,12 +612,12 @@ public class MainContext
 	public static MainContext getThreadDefault()
 	{
 		auto p = g_main_context_get_thread_default();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new MainContext(cast(GMainContext*) p);
 	}
 
@@ -637,12 +637,12 @@ public class MainContext
 	public static MainContext refThreadDefault()
 	{
 		auto p = g_main_context_ref_thread_default();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new MainContext(cast(GMainContext*) p, true);
 	}
 }

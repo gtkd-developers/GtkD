@@ -25,10 +25,10 @@
 module gio.SocketConnectableIF;
 
 private import gio.SocketAddressEnumerator;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**

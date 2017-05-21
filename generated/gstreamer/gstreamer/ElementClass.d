@@ -29,8 +29,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gstreamer.PadTemplate;
 private import gstreamer.StaticPadTemplate;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /**
@@ -154,12 +154,12 @@ public class ElementClass
 	public PadTemplate getPadTemplate(string name)
 	{
 		auto p = gst_element_class_get_pad_template(gstElementClass, Str.toStringz(name));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PadTemplate)(cast(GstPadTemplate*) p);
 	}
 
@@ -176,12 +176,12 @@ public class ElementClass
 	public ListG getPadTemplateList()
 	{
 		auto p = gst_element_class_get_pad_template_list(gstElementClass);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 

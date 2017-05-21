@@ -26,10 +26,10 @@ module gio.UnixMountPoint;
 
 private import gio.Icon;
 private import gio.IconIF;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 private import gtkd.Loader;
 
 
@@ -156,12 +156,12 @@ public class UnixMountPoint
 	public IconIF guessIcon()
 	{
 		auto p = g_unix_mount_point_guess_icon(gUnixMountPoint);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p, true);
 	}
 
@@ -175,7 +175,7 @@ public class UnixMountPoint
 	public string guessName()
 	{
 		auto retStr = g_unix_mount_point_guess_name(gUnixMountPoint);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -190,12 +190,12 @@ public class UnixMountPoint
 	public IconIF guessSymbolicIcon()
 	{
 		auto p = g_unix_mount_point_guess_symbolic_icon(gUnixMountPoint);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p, true);
 	}
 

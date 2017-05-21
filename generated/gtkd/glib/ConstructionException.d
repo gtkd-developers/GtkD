@@ -24,8 +24,8 @@
 
 module glib.ConstructionException;
 
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 
 
 /** */
@@ -35,7 +35,7 @@ class ConstructionException : Exception
 	{
 		super(message);
 	}
-	
+
 	override string toString()
 	{
 		return "Construction failure, " ~ msg;

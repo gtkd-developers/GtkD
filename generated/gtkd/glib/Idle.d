@@ -25,8 +25,8 @@
 module glib.Idle;
 
 private import glib.Source;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 
 
 /** */
@@ -36,7 +36,7 @@ public class Idle
 	bool delegate()[] idleListeners;
 	/** our idle ID */
 	uint idleID;
-	
+
 	/**
 	 * Creates a new idle cycle.
 	 * Params:
@@ -56,7 +56,7 @@ public class Idle
 			}
 		}
 	}
-	
+
 	/**
 	 * Creates a new idle cycle.
 	 * Params:
@@ -76,7 +76,7 @@ public class Idle
 			}
 		}
 	}
-	
+
 	/** */
 	public void stop()
 	{
@@ -86,7 +86,7 @@ public class Idle
 		}
 		idleListeners.length = 0;
 	}
-	
+
 	/**
 	 * Removes the idle from gtk
 	 */
@@ -94,7 +94,7 @@ public class Idle
 	{
 		stop();
 	}
-	
+
 	/**
 	 * Adds a new delegate to this idle cycle
 	 * Params:
@@ -112,7 +112,7 @@ public class Idle
 			}
 		}
 	}
-	
+
 	/**
 	 * The callback execution from glib
 	 * Params:
@@ -123,7 +123,7 @@ public class Idle
 	{
 		return idle.callAllListeners();
 	}
-	
+
 	/**
 	 * Executes all delegates on the execution list
 	 * Returns:
@@ -131,9 +131,9 @@ public class Idle
 	private bool callAllListeners()
 	{
 		bool runAgain = false;
-		
+
 		int i = 0;
-		
+
 		while ( i<idleListeners.length )
 		{
 			if ( !idleListeners[i]() )
@@ -146,11 +146,11 @@ public class Idle
 				++i;
 			}
 		}
-		
+
 		// Set idleID to 0 if all delegates are removed
 		if (idleListeners.length == 0)
 			idleID = 0;
-		
+
 		return runAgain;
 	}
 
@@ -239,12 +239,12 @@ public class Idle
 	public static Source sourceNew()
 	{
 		auto p = g_idle_source_new();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Source(cast(GSource*) p, true);
 	}
 }

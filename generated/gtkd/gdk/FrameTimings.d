@@ -24,9 +24,9 @@
 
 module gdk.FrameTimings;
 
+private import gdk.c.functions;
+public  import gdk.c.types;
 private import gobject.ObjectG;
-private import gtkc.gdk;
-public  import gtkc.gdktypes;
 private import gtkd.Loader;
 
 
@@ -190,12 +190,12 @@ public class FrameTimings
 	public FrameTimings doref()
 	{
 		auto p = gdk_frame_timings_ref(gdkFrameTimings);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(FrameTimings)(cast(GdkFrameTimings*) p, true);
 	}
 

@@ -26,13 +26,13 @@ module gdk.AppLaunchContext;
 
 private import gdk.Display;
 private import gdk.Screen;
+private import gdk.c.functions;
+public  import gdk.c.types;
 private import gio.AppLaunchContext : GioAppLaunchContext = AppLaunchContext;
 private import gio.IconIF;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gdk;
-public  import gtkc.gdktypes;
 
 
 /**
@@ -112,12 +112,12 @@ public class AppLaunchContext : GioAppLaunchContext
 	public this()
 	{
 		auto p = gdk_app_launch_context_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GdkAppLaunchContext*) p, true);
 	}
 

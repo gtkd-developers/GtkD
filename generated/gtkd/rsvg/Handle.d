@@ -34,8 +34,8 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.rsvg;
-public  import gtkc.rsvgtypes;
+private import rsvg.c.functions;
+public  import rsvg.c.types;
 
 
 /**
@@ -97,12 +97,12 @@ public class Handle : ObjectG
 	public this()
 	{
 		auto p = rsvg_handle_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(RsvgHandle*) p, true);
 	}
 
@@ -123,19 +123,19 @@ public class Handle : ObjectG
 	public this(ubyte[] data)
 	{
 		GError* err = null;
-		
+
 		auto p = rsvg_handle_new_from_data(data.ptr, cast(size_t)data.length, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_data");
 		}
-		
+
 		this(cast(RsvgHandle*) p, true);
 	}
 
@@ -155,19 +155,19 @@ public class Handle : ObjectG
 	public this(string fileName)
 	{
 		GError* err = null;
-		
+
 		auto p = rsvg_handle_new_from_file(Str.toStringz(fileName), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_file");
 		}
-		
+
 		this(cast(RsvgHandle*) p, true);
 	}
 
@@ -194,19 +194,19 @@ public class Handle : ObjectG
 	public this(FileIF file, RsvgHandleFlags flags, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = rsvg_handle_new_from_gfile_sync((file is null) ? null : file.getFileStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_gfile_sync");
 		}
-		
+
 		this(cast(RsvgHandle*) p, true);
 	}
 
@@ -234,19 +234,19 @@ public class Handle : ObjectG
 	public this(InputStream inputStream, FileIF baseFile, RsvgHandleFlags flags, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = rsvg_handle_new_from_stream_sync((inputStream is null) ? null : inputStream.getInputStreamStruct(), (baseFile is null) ? null : baseFile.getFileStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_stream_sync");
 		}
-		
+
 		this(cast(RsvgHandle*) p, true);
 	}
 
@@ -265,12 +265,12 @@ public class Handle : ObjectG
 	public this(RsvgHandleFlags flags)
 	{
 		auto p = rsvg_handle_new_with_flags(flags);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_with_flags");
 		}
-		
+
 		this(cast(RsvgHandle*) p, true);
 	}
 
@@ -286,14 +286,14 @@ public class Handle : ObjectG
 	public bool close()
 	{
 		GError* err = null;
-		
+
 		auto p = rsvg_handle_close(rsvgHandle, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -351,12 +351,12 @@ public class Handle : ObjectG
 	public Pixbuf getPixbuf()
 	{
 		auto p = rsvg_handle_get_pixbuf(rsvgHandle);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
 	}
 
@@ -379,12 +379,12 @@ public class Handle : ObjectG
 	public Pixbuf getPixbufSub(string id)
 	{
 		auto p = rsvg_handle_get_pixbuf_sub(rsvgHandle, Str.toStringz(id));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
 	}
 
@@ -442,14 +442,14 @@ public class Handle : ObjectG
 	public bool readStreamSync(InputStream stream, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = rsvg_handle_read_stream_sync(rsvgHandle, (stream is null) ? null : stream.getInputStreamStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -564,14 +564,14 @@ public class Handle : ObjectG
 	public bool write(char[] buf)
 	{
 		GError* err = null;
-		
+
 		auto p = rsvg_handle_write(rsvgHandle, buf.ptr, cast(size_t)buf.length, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 }

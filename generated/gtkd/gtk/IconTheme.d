@@ -37,8 +37,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.IconInfo;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -169,12 +169,12 @@ public class IconTheme : ObjectG
 	public this()
 	{
 		auto p = gtk_icon_theme_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkIconTheme*) p, true);
 	}
 
@@ -223,12 +223,12 @@ public class IconTheme : ObjectG
 	public static IconTheme getDefault()
 	{
 		auto p = gtk_icon_theme_get_default();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(IconTheme)(cast(GtkIconTheme*) p);
 	}
 
@@ -255,12 +255,12 @@ public class IconTheme : ObjectG
 	public static IconTheme getForScreen(Screen screen)
 	{
 		auto p = gtk_icon_theme_get_for_screen((screen is null) ? null : screen.getScreenStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(IconTheme)(cast(GtkIconTheme*) p);
 	}
 
@@ -327,12 +327,12 @@ public class IconTheme : ObjectG
 	public IconInfo chooseIcon(string iconNames, int size, GtkIconLookupFlags flags)
 	{
 		auto p = gtk_icon_theme_choose_icon(gtkIconTheme, Str.toStringz(iconNames), size, flags);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(IconInfo)(cast(GtkIconInfo*) p, true);
 	}
 
@@ -363,12 +363,12 @@ public class IconTheme : ObjectG
 	public IconInfo chooseIconForScale(string iconNames, int size, int scale, GtkIconLookupFlags flags)
 	{
 		auto p = gtk_icon_theme_choose_icon_for_scale(gtkIconTheme, Str.toStringz(iconNames), size, scale, flags);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(IconInfo)(cast(GtkIconInfo*) p, true);
 	}
 
@@ -385,7 +385,7 @@ public class IconTheme : ObjectG
 	public string getExampleIconName()
 	{
 		auto retStr = gtk_icon_theme_get_example_icon_name(gtkIconTheme);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -409,7 +409,7 @@ public class IconTheme : ObjectG
 	public int[] getIconSizes(string iconName)
 	{
 		auto p = gtk_icon_theme_get_icon_sizes(gtkIconTheme, Str.toStringz(iconName));
-		
+
 		return p[0 .. getArrayLength(p)];
 	}
 
@@ -427,9 +427,9 @@ public class IconTheme : ObjectG
 	{
 		char* outpath = null;
 		int nElements;
-		
+
 		gtk_icon_theme_get_search_path(gtkIconTheme, &outpath, &nElements);
-		
+
 		path = Str.toString(outpath, nElements);
 	}
 
@@ -465,12 +465,12 @@ public class IconTheme : ObjectG
 	public ListG listContexts()
 	{
 		auto p = gtk_icon_theme_list_contexts(gtkIconTheme);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -499,12 +499,12 @@ public class IconTheme : ObjectG
 	public ListG listIcons(string context)
 	{
 		auto p = gtk_icon_theme_list_icons(gtkIconTheme, Str.toStringz(context));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -540,19 +540,19 @@ public class IconTheme : ObjectG
 	public Pixbuf loadIcon(string iconName, int size, GtkIconLookupFlags flags)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_icon_theme_load_icon(gtkIconTheme, Str.toStringz(iconName), size, flags, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
 	}
 
@@ -590,19 +590,19 @@ public class IconTheme : ObjectG
 	public Pixbuf loadIconForScale(string iconName, int size, int scale, GtkIconLookupFlags flags)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_icon_theme_load_icon_for_scale(gtkIconTheme, Str.toStringz(iconName), size, scale, flags, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
 	}
 
@@ -638,19 +638,19 @@ public class IconTheme : ObjectG
 	public Surface loadSurface(string iconName, int size, int scale, Window forWindow, GtkIconLookupFlags flags)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_icon_theme_load_surface(gtkIconTheme, Str.toStringz(iconName), size, scale, (forWindow is null) ? null : forWindow.getWindowStruct(), flags, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Surface(cast(cairo_surface_t*) p);
 	}
 
@@ -679,12 +679,12 @@ public class IconTheme : ObjectG
 	public IconInfo lookupByGicon(IconIF icon, int size, GtkIconLookupFlags flags)
 	{
 		auto p = gtk_icon_theme_lookup_by_gicon(gtkIconTheme, (icon is null) ? null : icon.getIconStruct(), size, flags);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(IconInfo)(cast(GtkIconInfo*) p, true);
 	}
 
@@ -708,12 +708,12 @@ public class IconTheme : ObjectG
 	public IconInfo lookupByGiconForScale(IconIF icon, int size, int scale, GtkIconLookupFlags flags)
 	{
 		auto p = gtk_icon_theme_lookup_by_gicon_for_scale(gtkIconTheme, (icon is null) ? null : icon.getIconStruct(), size, scale, flags);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(IconInfo)(cast(GtkIconInfo*) p, true);
 	}
 
@@ -744,12 +744,12 @@ public class IconTheme : ObjectG
 	public IconInfo lookupIcon(string iconName, int size, GtkIconLookupFlags flags)
 	{
 		auto p = gtk_icon_theme_lookup_icon(gtkIconTheme, Str.toStringz(iconName), size, flags);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(IconInfo)(cast(GtkIconInfo*) p, true);
 	}
 
@@ -775,12 +775,12 @@ public class IconTheme : ObjectG
 	public IconInfo lookupIconForScale(string iconName, int size, int scale, GtkIconLookupFlags flags)
 	{
 		auto p = gtk_icon_theme_lookup_icon_for_scale(gtkIconTheme, Str.toStringz(iconName), size, scale, flags);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(IconInfo)(cast(GtkIconInfo*) p, true);
 	}
 
@@ -878,13 +878,13 @@ public class IconTheme : ObjectG
 		static OnChangedDelegateWrapper[] listeners;
 		void delegate(IconTheme) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(IconTheme) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -916,12 +916,12 @@ public class IconTheme : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackChanged(GtkIconTheme* iconthemeStruct, OnChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

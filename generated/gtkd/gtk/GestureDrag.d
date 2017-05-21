@@ -30,8 +30,8 @@ private import gobject.Signals;
 private import gtk.Gesture;
 private import gtk.GestureSingle;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -99,12 +99,12 @@ public class GestureDrag : GestureSingle
 	public this(Widget widget)
 	{
 		auto p = gtk_gesture_drag_new((widget is null) ? null : widget.getWidgetStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkGestureDrag*) p, true);
 	}
 
@@ -149,13 +149,13 @@ public class GestureDrag : GestureSingle
 		static OnDragBeginDelegateWrapper[] listeners;
 		void delegate(double, double, GestureDrag) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(double, double, GestureDrag) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDragBeginDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -191,12 +191,12 @@ public class GestureDrag : GestureSingle
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDragBegin(GtkGestureDrag* gesturedragStruct, double startX, double startY, OnDragBeginDelegateWrapper wrapper)
 	{
 		wrapper.dlg(startX, startY, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDragBeginDestroy(OnDragBeginDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -207,13 +207,13 @@ public class GestureDrag : GestureSingle
 		static OnDragEndDelegateWrapper[] listeners;
 		void delegate(double, double, GestureDrag) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(double, double, GestureDrag) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDragEndDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -249,12 +249,12 @@ public class GestureDrag : GestureSingle
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDragEnd(GtkGestureDrag* gesturedragStruct, double offsetX, double offsetY, OnDragEndDelegateWrapper wrapper)
 	{
 		wrapper.dlg(offsetX, offsetY, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDragEndDestroy(OnDragEndDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -265,13 +265,13 @@ public class GestureDrag : GestureSingle
 		static OnDragUpdateDelegateWrapper[] listeners;
 		void delegate(double, double, GestureDrag) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(double, double, GestureDrag) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDragUpdateDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -307,12 +307,12 @@ public class GestureDrag : GestureSingle
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDragUpdate(GtkGestureDrag* gesturedragStruct, double offsetX, double offsetY, OnDragUpdateDelegateWrapper wrapper)
 	{
 		wrapper.dlg(offsetX, offsetY, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDragUpdateDestroy(OnDragUpdateDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

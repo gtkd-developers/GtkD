@@ -28,8 +28,8 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import glib.TimeVal;
 private import glib.TimeZone;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 private import gtkd.Loader;
 
 
@@ -95,7 +95,7 @@ public class DateTime
 	public this (long t, bool utc = true)
 	{
 		GDateTime* p;
-		
+
 		if ( utc )
 		{
 			p = g_date_time_new_from_unix_utc(t);
@@ -104,14 +104,14 @@ public class DateTime
 		{
 			p = g_date_time_new_from_unix_local(t);
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by g_date_time_new_from_unix_local(t)");
 		}
 		this(cast(GDateTime*) p);
 	}
-	
+
 	/**
 	 * Creates a DateTime corresponding to the given TimeVal tv.
 	 * The time contained in a TimeVal is always stored in the form of
@@ -134,7 +134,7 @@ public class DateTime
 	public this (ref GTimeVal tv, bool utc = true)
 	{
 		GDateTime* p;
-		
+
 		if ( utc )
 		{
 			p = g_date_time_new_from_timeval_utc(&tv);
@@ -143,42 +143,42 @@ public class DateTime
 		{
 			p = g_date_time_new_from_timeval_local(&tv);
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by g_date_time_new_from_timeval_local((tv is null) ? null : tv.getTimeValStruct())");
 		}
 		this(cast(GDateTime*) p);
 	}
-	
+
 	/** */
 	override bool opEquals(Object rhs)
 	{
 		DateTime date = cast(DateTime)rhs;
-		
+
 		if ( date is null )
 			return false;
-		
+
 		return equal(this, date) != 0;
 	}
-	
+
 	/** */
 	override int opCmp(Object rhs)
 	{
 		DateTime date = cast(DateTime)rhs;
-		
+
 		if ( date is null )
 			return int.min;
-		
+
 		return compare(this, date);
 	}
-	
+
 	/** */
 	override nothrow @trusted hash_t toHash()
 	{
 		return hash();
 	}
-	
+
 	/**
 	 * Hashes datetime into a guint, suitable for use within GHashTable.
 	 * Since 2.26
@@ -249,12 +249,12 @@ public class DateTime
 	public this(TimeZone tz, int year, int month, int day, int hour, int minute, double seconds)
 	{
 		auto p = g_date_time_new((tz is null) ? null : tz.getTimeZoneStruct(), year, month, day, hour, minute, seconds);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GDateTime*) p);
 	}
 
@@ -282,12 +282,12 @@ public class DateTime
 	public this(TimeZone tz)
 	{
 		auto p = g_date_time_new_now((tz is null) ? null : tz.getTimeZoneStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_now");
 		}
-		
+
 		this(cast(GDateTime*) p);
 	}
 
@@ -305,12 +305,12 @@ public class DateTime
 	public DateTime add(GTimeSpan timespan)
 	{
 		auto p = g_date_time_add(gDateTime, timespan);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new DateTime(cast(GDateTime*) p, true);
 	}
 
@@ -329,12 +329,12 @@ public class DateTime
 	public DateTime addDays(int days)
 	{
 		auto p = g_date_time_add_days(gDateTime, days);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new DateTime(cast(GDateTime*) p, true);
 	}
 
@@ -358,12 +358,12 @@ public class DateTime
 	public DateTime addFull(int years, int months, int days, int hours, int minutes, double seconds)
 	{
 		auto p = g_date_time_add_full(gDateTime, years, months, days, hours, minutes, seconds);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new DateTime(cast(GDateTime*) p, true);
 	}
 
@@ -382,12 +382,12 @@ public class DateTime
 	public DateTime addHours(int hours)
 	{
 		auto p = g_date_time_add_hours(gDateTime, hours);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new DateTime(cast(GDateTime*) p, true);
 	}
 
@@ -406,12 +406,12 @@ public class DateTime
 	public DateTime addMinutes(int minutes)
 	{
 		auto p = g_date_time_add_minutes(gDateTime, minutes);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new DateTime(cast(GDateTime*) p, true);
 	}
 
@@ -430,12 +430,12 @@ public class DateTime
 	public DateTime addMonths(int months)
 	{
 		auto p = g_date_time_add_months(gDateTime, months);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new DateTime(cast(GDateTime*) p, true);
 	}
 
@@ -454,12 +454,12 @@ public class DateTime
 	public DateTime addSeconds(double seconds)
 	{
 		auto p = g_date_time_add_seconds(gDateTime, seconds);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new DateTime(cast(GDateTime*) p, true);
 	}
 
@@ -478,12 +478,12 @@ public class DateTime
 	public DateTime addWeeks(int weeks)
 	{
 		auto p = g_date_time_add_weeks(gDateTime, weeks);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new DateTime(cast(GDateTime*) p, true);
 	}
 
@@ -502,12 +502,12 @@ public class DateTime
 	public DateTime addYears(int years)
 	{
 		auto p = g_date_time_add_years(gDateTime, years);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new DateTime(cast(GDateTime*) p, true);
 	}
 
@@ -630,7 +630,7 @@ public class DateTime
 	public string format(string format)
 	{
 		auto retStr = g_date_time_format(gDateTime, Str.toStringz(format));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -905,12 +905,12 @@ public class DateTime
 	public DateTime doref()
 	{
 		auto p = g_date_time_ref(gDateTime);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new DateTime(cast(GDateTime*) p, true);
 	}
 
@@ -928,12 +928,12 @@ public class DateTime
 	public DateTime toLocal()
 	{
 		auto p = g_date_time_to_local(gDateTime);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new DateTime(cast(GDateTime*) p, true);
 	}
 
@@ -985,12 +985,12 @@ public class DateTime
 	public DateTime toTimezone(TimeZone tz)
 	{
 		auto p = g_date_time_to_timezone(gDateTime, (tz is null) ? null : tz.getTimeZoneStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new DateTime(cast(GDateTime*) p, true);
 	}
 
@@ -1024,12 +1024,12 @@ public class DateTime
 	public DateTime toUtc()
 	{
 		auto p = g_date_time_to_utc(gDateTime);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new DateTime(cast(GDateTime*) p, true);
 	}
 

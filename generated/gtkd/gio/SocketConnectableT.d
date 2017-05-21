@@ -25,10 +25,10 @@
 module gio.SocketConnectableT;
 
 public  import gio.SocketAddressEnumerator;
+public  import gio.c.functions;
+public  import gio.c.types;
 public  import glib.Str;
 public  import gobject.ObjectG;
-public  import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -111,12 +111,12 @@ public template SocketConnectableT(TStruct)
 	public SocketAddressEnumerator enumerate()
 	{
 		auto p = g_socket_connectable_enumerate(getSocketConnectableStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SocketAddressEnumerator)(cast(GSocketAddressEnumerator*) p, true);
 	}
 
@@ -136,12 +136,12 @@ public template SocketConnectableT(TStruct)
 	public SocketAddressEnumerator proxyEnumerate()
 	{
 		auto p = g_socket_connectable_proxy_enumerate(getSocketConnectableStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SocketAddressEnumerator)(cast(GSocketAddressEnumerator*) p, true);
 	}
 
@@ -161,7 +161,7 @@ public template SocketConnectableT(TStruct)
 	public override string toString()
 	{
 		auto retStr = g_socket_connectable_to_string(getSocketConnectableStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}

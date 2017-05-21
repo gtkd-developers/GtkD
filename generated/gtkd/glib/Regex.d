@@ -29,8 +29,8 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.MatchInfo;
 private import glib.Str;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 private import gtkd.Loader;
 
 
@@ -159,19 +159,19 @@ public class Regex
 	public this(string pattern, GRegexCompileFlags compileOptions, GRegexMatchFlags matchOptions)
 	{
 		GError* err = null;
-		
+
 		auto p = g_regex_new(Str.toStringz(pattern), compileOptions, matchOptions, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GRegex*) p);
 	}
 
@@ -337,11 +337,11 @@ public class Regex
 	public bool match(string str, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
 	{
 		GMatchInfo* outmatchInfo = null;
-		
+
 		auto p = g_regex_match(gRegex, Str.toStringz(str), matchOptions, &outmatchInfo) != 0;
-		
+
 		matchInfo = new MatchInfo(outmatchInfo);
-		
+
 		return p;
 	}
 
@@ -374,11 +374,11 @@ public class Regex
 	public bool matchAll(string str, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
 	{
 		GMatchInfo* outmatchInfo = null;
-		
+
 		auto p = g_regex_match_all(gRegex, Str.toStringz(str), matchOptions, &outmatchInfo) != 0;
-		
+
 		matchInfo = new MatchInfo(outmatchInfo);
-		
+
 		return p;
 	}
 
@@ -438,16 +438,16 @@ public class Regex
 	{
 		GMatchInfo* outmatchInfo = null;
 		GError* err = null;
-		
+
 		auto p = g_regex_match_all_full(gRegex, Str.toStringz(str), cast(ptrdiff_t)str.length, startPosition, matchOptions, &outmatchInfo, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		matchInfo = new MatchInfo(outmatchInfo);
-		
+
 		return p;
 	}
 
@@ -520,16 +520,16 @@ public class Regex
 	{
 		GMatchInfo* outmatchInfo = null;
 		GError* err = null;
-		
+
 		auto p = g_regex_match_full(gRegex, Str.toStringz(str), cast(ptrdiff_t)str.length, startPosition, matchOptions, &outmatchInfo, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		matchInfo = new MatchInfo(outmatchInfo);
-		
+
 		return p;
 	}
 
@@ -543,12 +543,12 @@ public class Regex
 	public Regex doref()
 	{
 		auto p = g_regex_ref(gRegex);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Regex(cast(GRegex*) p, true);
 	}
 
@@ -596,14 +596,14 @@ public class Regex
 	public string replace(string str, int startPosition, string replacement, GRegexMatchFlags matchOptions)
 	{
 		GError* err = null;
-		
+
 		auto retStr = g_regex_replace(gRegex, Str.toStringz(str), cast(ptrdiff_t)str.length, startPosition, Str.toStringz(replacement), matchOptions, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -672,14 +672,14 @@ public class Regex
 	public string replaceEval(string str, int startPosition, GRegexMatchFlags matchOptions, GRegexEvalCallback eval, void* userData)
 	{
 		GError* err = null;
-		
+
 		auto retStr = g_regex_replace_eval(gRegex, Str.toStringz(str), cast(ptrdiff_t)str.length, startPosition, matchOptions, eval, userData, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -710,14 +710,14 @@ public class Regex
 	public string replaceLiteral(string str, int startPosition, string replacement, GRegexMatchFlags matchOptions)
 	{
 		GError* err = null;
-		
+
 		auto retStr = g_regex_replace_literal(gRegex, Str.toStringz(str), cast(ptrdiff_t)str.length, startPosition, Str.toStringz(replacement), matchOptions, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -753,7 +753,7 @@ public class Regex
 	public string[] split(string str, GRegexMatchFlags matchOptions)
 	{
 		auto retStr = g_regex_split(gRegex, Str.toStringz(str), matchOptions);
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}
@@ -799,14 +799,14 @@ public class Regex
 	public string[] splitFull(string str, int startPosition, GRegexMatchFlags matchOptions, int maxTokens)
 	{
 		GError* err = null;
-		
+
 		auto retStr = g_regex_split_full(gRegex, Str.toStringz(str), cast(ptrdiff_t)str.length, startPosition, matchOptions, maxTokens, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}
@@ -848,16 +848,16 @@ public class Regex
 	{
 		int outhasReferences;
 		GError* err = null;
-		
+
 		auto p = g_regex_check_replacement(Str.toStringz(replacement), &outhasReferences, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		hasReferences = (outhasReferences == 1);
-		
+
 		return p;
 	}
 
@@ -885,7 +885,7 @@ public class Regex
 	public static string escapeNul(string str, int length)
 	{
 		auto retStr = g_regex_escape_nul(Str.toStringz(str), length);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -910,7 +910,7 @@ public class Regex
 	public static string escapeString(string str)
 	{
 		auto retStr = g_regex_escape_string(Str.toStringz(str), cast(int)str.length);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -985,7 +985,7 @@ public class Regex
 	public static string[] splitSimple(string pattern, string str, GRegexCompileFlags compileOptions, GRegexMatchFlags matchOptions)
 	{
 		auto retStr = g_regex_split_simple(Str.toStringz(pattern), Str.toStringz(str), compileOptions, matchOptions);
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}

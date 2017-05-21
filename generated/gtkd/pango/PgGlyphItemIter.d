@@ -26,10 +26,10 @@ module pango.PgGlyphItemIter;
 
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.pango;
-public  import gtkc.pangotypes;
 private import gtkd.Loader;
 private import pango.PgGlyphItem;
+private import pango.c.functions;
+public  import pango.c.types;
 
 
 /**
@@ -127,12 +127,12 @@ public class PgGlyphItemIter
 	public PgGlyphItemIter copy()
 	{
 		auto p = pango_glyph_item_iter_copy(pangoGlyphItemIter);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgGlyphItemIter)(cast(PangoGlyphItemIter*) p, true);
 	}
 

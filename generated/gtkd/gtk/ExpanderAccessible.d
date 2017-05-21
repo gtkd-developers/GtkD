@@ -27,8 +27,8 @@ module gtk.ExpanderAccessible;
 private import atk.ActionIF;
 private import atk.ActionT;
 private import gtk.ContainerAccessible;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /** */

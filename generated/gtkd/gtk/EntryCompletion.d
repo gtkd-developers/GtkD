@@ -37,8 +37,8 @@ private import gtk.TreeIter;
 private import gtk.TreeModel;
 private import gtk.TreeModelIF;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -143,12 +143,12 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	public this()
 	{
 		auto p = gtk_entry_completion_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkEntryCompletion*) p, true);
 	}
 
@@ -169,12 +169,12 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	public this(CellArea area)
 	{
 		auto p = gtk_entry_completion_new_with_area((area is null) ? null : area.getCellAreaStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_with_area");
 		}
-		
+
 		this(cast(GtkEntryCompletion*) p, true);
 	}
 
@@ -207,7 +207,7 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	public string computePrefix(string key)
 	{
 		auto retStr = gtk_entry_completion_compute_prefix(gtkEntryCompletion, Str.toStringz(key));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -251,12 +251,12 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	public Widget getEntry()
 	{
 		auto p = gtk_entry_completion_get_entry(gtkEntryCompletion);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -309,12 +309,12 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	public TreeModelIF getModel()
 	{
 		auto p = gtk_entry_completion_get_model(gtkEntryCompletion);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TreeModel, TreeModelIF)(cast(GtkTreeModel*) p);
 	}
 
@@ -559,13 +559,13 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 		static OnActionActivatedDelegateWrapper[] listeners;
 		void delegate(int, EntryCompletion) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(int, EntryCompletion) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnActionActivatedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -600,12 +600,12 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackActionActivated(GtkEntryCompletion* entrycompletionStruct, int index, OnActionActivatedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(index, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackActionActivatedDestroy(OnActionActivatedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -616,13 +616,13 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 		static OnCursorOnMatchDelegateWrapper[] listeners;
 		bool delegate(TreeModelIF, TreeIter, EntryCompletion) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(TreeModelIF, TreeIter, EntryCompletion) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCursorOnMatchDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -666,12 +666,12 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackCursorOnMatch(GtkEntryCompletion* entrycompletionStruct, GtkTreeModel* model, GtkTreeIter* iter, OnCursorOnMatchDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(ObjectG.getDObject!(TreeModel, TreeModelIF)(model), ObjectG.getDObject!(TreeIter)(iter), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackCursorOnMatchDestroy(OnCursorOnMatchDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -682,13 +682,13 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 		static OnInsertPrefixDelegateWrapper[] listeners;
 		bool delegate(string, EntryCompletion) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(string, EntryCompletion) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnInsertPrefixDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -732,12 +732,12 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackInsertPrefix(GtkEntryCompletion* entrycompletionStruct, char* prefix, OnInsertPrefixDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(Str.toString(prefix), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackInsertPrefixDestroy(OnInsertPrefixDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -748,13 +748,13 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 		static OnMatchSelectedDelegateWrapper[] listeners;
 		bool delegate(TreeModelIF, TreeIter, EntryCompletion) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(TreeModelIF, TreeIter, EntryCompletion) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMatchSelectedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -798,12 +798,12 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackMatchSelected(GtkEntryCompletion* entrycompletionStruct, GtkTreeModel* model, GtkTreeIter* iter, OnMatchSelectedDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(ObjectG.getDObject!(TreeModel, TreeModelIF)(model), ObjectG.getDObject!(TreeIter)(iter), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMatchSelectedDestroy(OnMatchSelectedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -814,13 +814,13 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 		static OnNoMatchesDelegateWrapper[] listeners;
 		void delegate(EntryCompletion) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(EntryCompletion) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnNoMatchesDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -855,12 +855,12 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackNoMatches(GtkEntryCompletion* entrycompletionStruct, OnNoMatchesDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackNoMatchesDestroy(OnNoMatchesDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

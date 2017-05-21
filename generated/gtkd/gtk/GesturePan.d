@@ -30,8 +30,8 @@ private import gobject.Signals;
 private import gtk.Gesture;
 private import gtk.GestureDrag;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -108,12 +108,12 @@ public class GesturePan : GestureDrag
 	public this(Widget widget, GtkOrientation orientation)
 	{
 		auto p = gtk_gesture_pan_new((widget is null) ? null : widget.getWidgetStruct(), orientation);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkGesturePan*) p, true);
 	}
 
@@ -147,13 +147,13 @@ public class GesturePan : GestureDrag
 		static OnPanDelegateWrapper[] listeners;
 		void delegate(GtkPanDirection, double, GesturePan) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(GtkPanDirection, double, GesturePan) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPanDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -190,12 +190,12 @@ public class GesturePan : GestureDrag
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPan(GtkGesturePan* gesturepanStruct, GtkPanDirection direction, double offset, OnPanDelegateWrapper wrapper)
 	{
 		wrapper.dlg(direction, offset, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPanDestroy(OnPanDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

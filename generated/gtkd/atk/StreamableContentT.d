@@ -24,10 +24,10 @@
 
 module atk.StreamableContentT;
 
+public  import atk.c.functions;
+public  import atk.c.types;
 public  import glib.IOChannel;
 public  import glib.Str;
-public  import gtkc.atk;
-public  import gtkc.atktypes;
 
 
 /**
@@ -96,12 +96,12 @@ public template StreamableContentT(TStruct)
 	public IOChannel getStream(string mimeType)
 	{
 		auto p = atk_streamable_content_get_stream(getStreamableContentStruct(), Str.toStringz(mimeType));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new IOChannel(cast(GIOChannel*) p, true);
 	}
 

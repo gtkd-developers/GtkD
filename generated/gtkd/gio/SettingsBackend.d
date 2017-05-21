@@ -24,12 +24,12 @@
 
 module gio.SettingsBackend;
 
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.BBTree;
 private import glib.Str;
 private import glib.Variant;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -122,12 +122,12 @@ public class SettingsBackend : ObjectG
 		char* outpath = null;
 		char** outkeys = null;
 		GVariant** outvalues = null;
-		
+
 		g_settings_backend_flatten_tree((tree is null) ? null : tree.getBBTreeStruct(), &outpath, &outkeys, &outvalues);
-		
+
 		path = Str.toString(outpath);
 		keys = Str.toStringArray(outkeys);
-		
+
 		values = new Variant[getArrayLength(outvalues)];
 		for(size_t i = 0; i < getArrayLength(outvalues); i++)
 		{
@@ -149,12 +149,12 @@ public class SettingsBackend : ObjectG
 	public static SettingsBackend getDefault()
 	{
 		auto p = g_settings_backend_get_default();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SettingsBackend)(cast(GSettingsBackend*) p, true);
 	}
 
@@ -368,12 +368,12 @@ public class SettingsBackend : ObjectG
 	public static SettingsBackend keyfileSettingsBackendNew(string filename, string rootPath, string rootGroup)
 	{
 		auto p = g_keyfile_settings_backend_new(Str.toStringz(filename), Str.toStringz(rootPath), Str.toStringz(rootGroup));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SettingsBackend)(cast(GSettingsBackend*) p, true);
 	}
 
@@ -391,12 +391,12 @@ public class SettingsBackend : ObjectG
 	public static SettingsBackend memorySettingsBackendNew()
 	{
 		auto p = g_memory_settings_backend_new();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SettingsBackend)(cast(GSettingsBackend*) p, true);
 	}
 
@@ -413,12 +413,12 @@ public class SettingsBackend : ObjectG
 	public static SettingsBackend nullSettingsBackendNew()
 	{
 		auto p = g_null_settings_backend_new();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SettingsBackend)(cast(GSettingsBackend*) p, true);
 	}
 }

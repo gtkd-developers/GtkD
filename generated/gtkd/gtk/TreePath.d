@@ -27,8 +27,8 @@ module gtk.TreePath;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import gtkd.Loader;
 
 
@@ -77,7 +77,7 @@ public class TreePath
 	public this (bool firstRow=false)
 	{
 		GtkTreePath* p;
-		
+
 		if ( firstRow )
 		{
 			// GtkTreePath* gtk_tree_path_new_first (void);
@@ -88,22 +88,22 @@ public class TreePath
 			// GtkTreePath* gtk_tree_path_new (void);
 			p = cast(GtkTreePath*)gtk_tree_path_new();
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gtk_tree_path_new()");
 		}
-		
+
 		this(p);
 	}
-	
+
 	/**
 	 * Creates a new path with "indices" as indices.
 	 */
 	this (int[] indices ... )
 	{
 		this(false);
-		
+
 		foreach( index; indices )
 		appendIndex(index);
 	}
@@ -136,12 +136,12 @@ public class TreePath
 	public this(string path)
 	{
 		auto p = gtk_tree_path_new_from_string(Str.toStringz(path));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_string");
 		}
-		
+
 		this(cast(GtkTreePath*) p);
 	}
 
@@ -183,12 +183,12 @@ public class TreePath
 	public TreePath copy()
 	{
 		auto p = gtk_tree_path_copy(gtkTreePath);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) p, true);
 	}
 
@@ -234,9 +234,9 @@ public class TreePath
 	public int[] getIndices()
 	{
 		int depth;
-		
+
 		auto p = gtk_tree_path_get_indices_with_depth(gtkTreePath, &depth);
-		
+
 		return p[0 .. depth];
 	}
 
@@ -312,7 +312,7 @@ public class TreePath
 	public override string toString()
 	{
 		auto retStr = gtk_tree_path_to_string(gtkTreePath);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}

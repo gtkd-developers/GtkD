@@ -25,10 +25,10 @@
 module atk.Util;
 
 private import atk.ObjectAtk;
+private import atk.c.functions;
+public  import atk.c.types;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.atk;
-public  import gtkc.atktypes;
 
 
 /**
@@ -174,12 +174,12 @@ public struct Util
 	public static ObjectAtk getFocusObject()
 	{
 		auto p = atk_get_focus_object();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
 	}
 
@@ -192,12 +192,12 @@ public struct Util
 	public static ObjectAtk getRoot()
 	{
 		auto p = atk_get_root();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
 	}
 

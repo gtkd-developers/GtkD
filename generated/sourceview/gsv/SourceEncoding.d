@@ -27,8 +27,8 @@ module gsv.SourceEncoding;
 private import glib.ListSG;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gsvc.gsv;
-public  import gsvc.gsvtypes;
+private import gsv.c.functions;
+public  import gsv.c.types;
 private import gtkd.Loader;
 
 
@@ -85,12 +85,12 @@ public class SourceEncoding
 	public SourceEncoding copy()
 	{
 		auto p = gtk_source_encoding_copy(gtkSourceEncoding);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SourceEncoding)(cast(GtkSourceEncoding*) p, true);
 	}
 
@@ -138,7 +138,7 @@ public class SourceEncoding
 	public override string toString()
 	{
 		auto retStr = gtk_source_encoding_to_string(gtkSourceEncoding);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -154,12 +154,12 @@ public class SourceEncoding
 	public static ListSG getAll()
 	{
 		auto p = gtk_source_encoding_get_all();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -173,12 +173,12 @@ public class SourceEncoding
 	public static SourceEncoding getCurrent()
 	{
 		auto p = gtk_source_encoding_get_current();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SourceEncoding)(cast(GtkSourceEncoding*) p);
 	}
 
@@ -198,12 +198,12 @@ public class SourceEncoding
 	public static ListSG getDefaultCandidates()
 	{
 		auto p = gtk_source_encoding_get_default_candidates();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -222,12 +222,12 @@ public class SourceEncoding
 	public static SourceEncoding getFromCharset(string charset)
 	{
 		auto p = gtk_source_encoding_get_from_charset(Str.toStringz(charset));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SourceEncoding)(cast(GtkSourceEncoding*) p);
 	}
 
@@ -239,12 +239,12 @@ public class SourceEncoding
 	public static SourceEncoding getUtf8()
 	{
 		auto p = gtk_source_encoding_get_utf8();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SourceEncoding)(cast(GtkSourceEncoding*) p);
 	}
 }

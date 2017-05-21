@@ -25,10 +25,10 @@
 module gdk.FrameClock;
 
 private import gdk.FrameTimings;
+private import gdk.c.functions;
+public  import gdk.c.types;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gdk;
-public  import gtkc.gdktypes;
 private import std.algorithm;
 
 
@@ -147,12 +147,12 @@ public class FrameClock : ObjectG
 	public FrameTimings getCurrentTimings()
 	{
 		auto p = gdk_frame_clock_get_current_timings(gdkFrameClock);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(FrameTimings)(cast(GdkFrameTimings*) p, true);
 	}
 
@@ -249,12 +249,12 @@ public class FrameClock : ObjectG
 	public FrameTimings getTimings(long frameCounter)
 	{
 		auto p = gdk_frame_clock_get_timings(gdkFrameClock, frameCounter);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(FrameTimings)(cast(GdkFrameTimings*) p, true);
 	}
 
@@ -285,13 +285,13 @@ public class FrameClock : ObjectG
 		static OnAfterPaintDelegateWrapper[] listeners;
 		void delegate(FrameClock) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(FrameClock) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnAfterPaintDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -322,12 +322,12 @@ public class FrameClock : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackAfterPaint(GdkFrameClock* frameclockStruct, OnAfterPaintDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackAfterPaintDestroy(OnAfterPaintDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -338,13 +338,13 @@ public class FrameClock : ObjectG
 		static OnBeforePaintDelegateWrapper[] listeners;
 		void delegate(FrameClock) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(FrameClock) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnBeforePaintDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -375,12 +375,12 @@ public class FrameClock : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackBeforePaint(GdkFrameClock* frameclockStruct, OnBeforePaintDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackBeforePaintDestroy(OnBeforePaintDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -391,13 +391,13 @@ public class FrameClock : ObjectG
 		static OnFlushEventsDelegateWrapper[] listeners;
 		void delegate(FrameClock) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(FrameClock) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnFlushEventsDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -429,12 +429,12 @@ public class FrameClock : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackFlushEvents(GdkFrameClock* frameclockStruct, OnFlushEventsDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackFlushEventsDestroy(OnFlushEventsDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -445,13 +445,13 @@ public class FrameClock : ObjectG
 		static OnLayoutDelegateWrapper[] listeners;
 		void delegate(FrameClock) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(FrameClock) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnLayoutDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -484,12 +484,12 @@ public class FrameClock : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackLayout(GdkFrameClock* frameclockStruct, OnLayoutDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackLayoutDestroy(OnLayoutDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -500,13 +500,13 @@ public class FrameClock : ObjectG
 		static OnPaintDelegateWrapper[] listeners;
 		void delegate(FrameClock) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(FrameClock) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPaintDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -540,12 +540,12 @@ public class FrameClock : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPaint(GdkFrameClock* frameclockStruct, OnPaintDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPaintDestroy(OnPaintDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -556,13 +556,13 @@ public class FrameClock : ObjectG
 		static OnResumeEventsDelegateWrapper[] listeners;
 		void delegate(FrameClock) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(FrameClock) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnResumeEventsDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -594,12 +594,12 @@ public class FrameClock : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackResumeEvents(GdkFrameClock* frameclockStruct, OnResumeEventsDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackResumeEventsDestroy(OnResumeEventsDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -610,13 +610,13 @@ public class FrameClock : ObjectG
 		static OnUpdateDelegateWrapper[] listeners;
 		void delegate(FrameClock) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(FrameClock) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnUpdateDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -651,12 +651,12 @@ public class FrameClock : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackUpdate(GdkFrameClock* frameclockStruct, OnUpdateDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackUpdateDestroy(OnUpdateDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

@@ -24,10 +24,10 @@
 
 module gdk.RGBA;
 
+private import gdk.c.functions;
+public  import gdk.c.types;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gdk;
-public  import gtkc.gdktypes;
 private import gtkd.Loader;
 
 
@@ -76,23 +76,23 @@ public class RGBA
 	this()
 	{
 		GdkRGBA rgba = GdkRGBA(0, 0, 0, 0);
-		
+
 		this(gdk_rgba_copy(&rgba), true);
 	}
-	
+
 	/** ditto */
 	this(double red, double green, double blue, double alpha = 1.0)
 	{
 		GdkRGBA rgba;
-		
+
 		rgba.red = red;
 		rgba.green = green;
 		rgba.blue = blue;
 		rgba.alpha = alpha;
-		
+
 		this(gdk_rgba_copy(&rgba), true);
 	}
-	
+
 	/**
 	 * The color values.
 	 * All values are in the range from 0.0 to 1.0 inclusive.
@@ -101,43 +101,43 @@ public class RGBA
 	{
 		return gdkRGBA.red;
 	}
-	
+
 	/** ditto */
 	void red(double value)
 	{
 		gdkRGBA.red = value;
 	}
-	
+
 	/** ditto */
 	double green()
 	{
 		return gdkRGBA.green;
 	}
-	
+
 	/** ditto */
 	void green(double value)
 	{
 		gdkRGBA.green = value;
 	}
-	
+
 	/** ditto */
 	double blue()
 	{
 		return gdkRGBA.blue;
 	}
-	
+
 	/** ditto */
 	void blue(double value)
 	{
 		gdkRGBA.blue = value;
 	}
-	
+
 	/** ditto */
 	double alpha()
 	{
 		return gdkRGBA.alpha;
 	}
-	
+
 	/** ditto */
 	void alpha(double value)
 	{
@@ -165,12 +165,12 @@ public class RGBA
 	public RGBA copy()
 	{
 		auto p = gdk_rgba_copy(gdkRGBA);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(RGBA)(cast(GdkRGBA*) p, true);
 	}
 
@@ -266,7 +266,7 @@ public class RGBA
 	public override string toString()
 	{
 		auto retStr = gdk_rgba_to_string(gdkRGBA);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}

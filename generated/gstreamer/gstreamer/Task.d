@@ -29,8 +29,8 @@ private import glib.RecMutex;
 private import gobject.ObjectG;
 private import gstreamer.ObjectGst;
 private import gstreamer.TaskPool;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /**
@@ -144,12 +144,12 @@ public class Task : ObjectGst
 	public this(GstTaskFunction func, void* userData, GDestroyNotify notify)
 	{
 		auto p = gst_task_new(func, userData, notify);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GstTask*) p, true);
 	}
 
@@ -176,12 +176,12 @@ public class Task : ObjectGst
 	public TaskPool getPool()
 	{
 		auto p = gst_task_get_pool(gstTask);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TaskPool)(cast(GstTaskPool*) p, true);
 	}
 

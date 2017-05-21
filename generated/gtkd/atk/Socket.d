@@ -27,11 +27,11 @@ module atk.Socket;
 private import atk.ComponentIF;
 private import atk.ComponentT;
 private import atk.ObjectAtk;
+private import atk.c.functions;
+public  import atk.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.atk;
-public  import gtkc.atktypes;
 
 
 /**
@@ -106,12 +106,12 @@ public class Socket : ObjectAtk, ComponentIF
 	public this()
 	{
 		auto p = atk_socket_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(AtkSocket*) p, true);
 	}
 

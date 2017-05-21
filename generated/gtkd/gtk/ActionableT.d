@@ -26,8 +26,8 @@ module gtk.ActionableT;
 
 public  import glib.Str;
 public  import glib.Variant;
-public  import gtkc.gtk;
-public  import gtkc.gtktypes;
+public  import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -81,12 +81,12 @@ public template ActionableT(TStruct)
 	public Variant getActionTargetValue()
 	{
 		auto p = gtk_actionable_get_action_target_value(getActionableStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Variant(cast(GVariant*) p);
 	}
 

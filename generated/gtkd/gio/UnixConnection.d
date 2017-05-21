@@ -28,11 +28,11 @@ private import gio.AsyncResultIF;
 private import gio.Cancellable;
 private import gio.Credentials;
 private import gio.SocketConnection;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ErrorG;
 private import glib.GException;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -112,19 +112,19 @@ public class UnixConnection : SocketConnection
 	public Credentials receiveCredentials(Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_unix_connection_receive_credentials(gUnixConnection, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Credentials)(cast(GCredentials*) p, true);
 	}
 
@@ -166,19 +166,19 @@ public class UnixConnection : SocketConnection
 	public Credentials receiveCredentialsFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_unix_connection_receive_credentials_finish(gUnixConnection, (result is null) ? null : result.getAsyncResultStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Credentials)(cast(GCredentials*) p, true);
 	}
 
@@ -203,14 +203,14 @@ public class UnixConnection : SocketConnection
 	public int receiveFd(Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_unix_connection_receive_fd(gUnixConnection, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -239,14 +239,14 @@ public class UnixConnection : SocketConnection
 	public bool sendCredentials(Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_unix_connection_send_credentials(gUnixConnection, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -287,14 +287,14 @@ public class UnixConnection : SocketConnection
 	public bool sendCredentialsFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_unix_connection_send_credentials_finish(gUnixConnection, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -320,14 +320,14 @@ public class UnixConnection : SocketConnection
 	public bool sendFd(int fd, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_unix_connection_send_fd(gUnixConnection, fd, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 }

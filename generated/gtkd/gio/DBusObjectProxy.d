@@ -27,11 +27,11 @@ module gio.DBusObjectProxy;
 private import gio.DBusConnection;
 private import gio.DBusObjectIF;
 private import gio.DBusObjectT;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -103,12 +103,12 @@ public class DBusObjectProxy : ObjectG, DBusObjectIF
 	public this(DBusConnection connection, string objectPath)
 	{
 		auto p = g_dbus_object_proxy_new((connection is null) ? null : connection.getDBusConnectionStruct(), Str.toStringz(objectPath));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GDBusObjectProxy*) p, true);
 	}
 
@@ -123,12 +123,12 @@ public class DBusObjectProxy : ObjectG, DBusObjectIF
 	public DBusConnection getConnection()
 	{
 		auto p = g_dbus_object_proxy_get_connection(gDBusObjectProxy);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(DBusConnection)(cast(GDBusConnection*) p);
 	}
 }

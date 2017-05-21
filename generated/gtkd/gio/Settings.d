@@ -28,13 +28,13 @@ private import gio.Action;
 private import gio.ActionIF;
 private import gio.SettingsBackend;
 private import gio.SettingsSchema;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import glib.Variant;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -384,12 +384,12 @@ public class Settings : ObjectG
 	public this(string schemaId)
 	{
 		auto p = g_settings_new(Str.toStringz(schemaId));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GSettings*) p, true);
 	}
 
@@ -432,12 +432,12 @@ public class Settings : ObjectG
 	public this(SettingsSchema schema, SettingsBackend backend, string path)
 	{
 		auto p = g_settings_new_full((schema is null) ? null : schema.getSettingsSchemaStruct(), (backend is null) ? null : backend.getSettingsBackendStruct(), Str.toStringz(path));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_full");
 		}
-		
+
 		this(cast(GSettings*) p, true);
 	}
 
@@ -464,12 +464,12 @@ public class Settings : ObjectG
 	public this(string schemaId, SettingsBackend backend)
 	{
 		auto p = g_settings_new_with_backend(Str.toStringz(schemaId), (backend is null) ? null : backend.getSettingsBackendStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_with_backend");
 		}
-		
+
 		this(cast(GSettings*) p, true);
 	}
 
@@ -494,12 +494,12 @@ public class Settings : ObjectG
 	public this(string schemaId, SettingsBackend backend, string path)
 	{
 		auto p = g_settings_new_with_backend_and_path(Str.toStringz(schemaId), (backend is null) ? null : backend.getSettingsBackendStruct(), Str.toStringz(path));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_with_backend_and_path");
 		}
-		
+
 		this(cast(GSettings*) p, true);
 	}
 
@@ -531,12 +531,12 @@ public class Settings : ObjectG
 	public this(string schemaId, string path)
 	{
 		auto p = g_settings_new_with_path(Str.toStringz(schemaId), Str.toStringz(path));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_with_path");
 		}
-		
+
 		this(cast(GSettings*) p, true);
 	}
 
@@ -746,12 +746,12 @@ public class Settings : ObjectG
 	public ActionIF createAction(string key)
 	{
 		auto p = g_settings_create_action(gSettings, Str.toStringz(key));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Action, ActionIF)(cast(GAction*) p, true);
 	}
 
@@ -805,12 +805,12 @@ public class Settings : ObjectG
 	public Settings getChild(string name)
 	{
 		auto p = g_settings_get_child(gSettings, Str.toStringz(name));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Settings)(cast(GSettings*) p, true);
 	}
 
@@ -847,12 +847,12 @@ public class Settings : ObjectG
 	public Variant getDefaultValue(string key)
 	{
 		auto p = g_settings_get_default_value(gSettings, Str.toStringz(key));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Variant(cast(GVariant*) p, true);
 	}
 
@@ -1036,12 +1036,12 @@ public class Settings : ObjectG
 	public Variant getRange(string key)
 	{
 		auto p = g_settings_get_range(gSettings, Str.toStringz(key));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Variant(cast(GVariant*) p, true);
 	}
 
@@ -1063,7 +1063,7 @@ public class Settings : ObjectG
 	public string getString(string key)
 	{
 		auto retStr = g_settings_get_string(gSettings, Str.toStringz(key));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -1086,7 +1086,7 @@ public class Settings : ObjectG
 	public string[] getStrv(string key)
 	{
 		auto retStr = g_settings_get_strv(gSettings, Str.toStringz(key));
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}
@@ -1163,12 +1163,12 @@ public class Settings : ObjectG
 	public Variant getUserValue(string key)
 	{
 		auto p = g_settings_get_user_value(gSettings, Str.toStringz(key));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Variant(cast(GVariant*) p, true);
 	}
 
@@ -1188,12 +1188,12 @@ public class Settings : ObjectG
 	public Variant getValue(string key)
 	{
 		auto p = g_settings_get_value(gSettings, Str.toStringz(key));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Variant(cast(GVariant*) p, true);
 	}
 
@@ -1238,7 +1238,7 @@ public class Settings : ObjectG
 	public string[] listChildren()
 	{
 		auto retStr = g_settings_list_children(gSettings);
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}
@@ -1258,7 +1258,7 @@ public class Settings : ObjectG
 	public string[] listKeys()
 	{
 		auto retStr = g_settings_list_keys(gSettings);
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}
@@ -1564,13 +1564,13 @@ public class Settings : ObjectG
 		static OnChangeDelegateWrapper[] listeners;
 		bool delegate(void*, int, Settings) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(void*, int, Settings) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnChangeDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1621,12 +1621,12 @@ public class Settings : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackChange(GSettings* settingsStruct, void* keys, int nKeys, OnChangeDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(keys, nKeys, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackChangeDestroy(OnChangeDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1637,13 +1637,13 @@ public class Settings : ObjectG
 		static OnChangedDelegateWrapper[] listeners;
 		void delegate(string, Settings) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(string, Settings) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1685,12 +1685,12 @@ public class Settings : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackChanged(GSettings* settingsStruct, char* key, OnChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(key), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1701,13 +1701,13 @@ public class Settings : ObjectG
 		static OnWritableChangeDelegateWrapper[] listeners;
 		bool delegate(uint, Settings) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(uint, Settings) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnWritableChangeDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1760,12 +1760,12 @@ public class Settings : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackWritableChange(GSettings* settingsStruct, uint key, OnWritableChangeDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(key, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackWritableChangeDestroy(OnWritableChangeDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1776,13 +1776,13 @@ public class Settings : ObjectG
 		static OnWritableChangedDelegateWrapper[] listeners;
 		void delegate(string, Settings) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(string, Settings) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnWritableChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1821,12 +1821,12 @@ public class Settings : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackWritableChanged(GSettings* settingsStruct, char* key, OnWritableChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(key), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackWritableChangedDestroy(OnWritableChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

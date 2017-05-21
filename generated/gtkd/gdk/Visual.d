@@ -25,10 +25,10 @@
 module gdk.Visual;
 
 private import gdk.Screen;
+private import gdk.c.functions;
+public  import gdk.c.types;
 private import glib.ListG;
 private import gobject.ObjectG;
-private import gtkc.gdk;
-public  import gtkc.gdktypes;
 
 
 /**
@@ -88,12 +88,12 @@ public class Visual : ObjectG
 	public static Visual getBest()
 	{
 		auto p = gdk_visual_get_best();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Visual)(cast(GdkVisual*) p);
 	}
 
@@ -142,12 +142,12 @@ public class Visual : ObjectG
 	public static Visual getBestWithBoth(int depth, GdkVisualType visualType)
 	{
 		auto p = gdk_visual_get_best_with_both(depth, visualType);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Visual)(cast(GdkVisual*) p);
 	}
 
@@ -168,12 +168,12 @@ public class Visual : ObjectG
 	public static Visual getBestWithDepth(int depth)
 	{
 		auto p = gdk_visual_get_best_with_depth(depth);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Visual)(cast(GdkVisual*) p);
 	}
 
@@ -194,12 +194,12 @@ public class Visual : ObjectG
 	public static Visual getBestWithType(GdkVisualType visualType)
 	{
 		auto p = gdk_visual_get_best_with_type(visualType);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Visual)(cast(GdkVisual*) p);
 	}
 
@@ -215,12 +215,12 @@ public class Visual : ObjectG
 	public static Visual getSystem()
 	{
 		auto p = gdk_visual_get_system();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Visual)(cast(GdkVisual*) p);
 	}
 
@@ -355,12 +355,12 @@ public class Visual : ObjectG
 	public Screen getScreen()
 	{
 		auto p = gdk_visual_get_screen(gdkVisual);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
 	}
 
@@ -392,12 +392,12 @@ public class Visual : ObjectG
 	public static ListG listVisuals()
 	{
 		auto p = gdk_list_visuals();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -421,9 +421,9 @@ public class Visual : ObjectG
 	{
 		int* outdepths = null;
 		int count;
-		
+
 		gdk_query_depths(&outdepths, &count);
-		
+
 		depths = outdepths[0 .. count];
 	}
 
@@ -447,9 +447,9 @@ public class Visual : ObjectG
 	{
 		GdkVisualType* outvisualTypes = null;
 		int count;
-		
+
 		gdk_query_visual_types(&outvisualTypes, &count);
-		
+
 		visualTypes = outvisualTypes[0 .. count];
 	}
 }

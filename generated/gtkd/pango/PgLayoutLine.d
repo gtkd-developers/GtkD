@@ -25,9 +25,9 @@
 module pango.PgLayoutLine;
 
 private import gobject.ObjectG;
-private import gtkc.pango;
-public  import gtkc.pangotypes;
 private import gtkd.Loader;
+private import pango.c.functions;
+public  import pango.c.types;
 
 
 /**
@@ -146,9 +146,9 @@ public class PgLayoutLine
 	{
 		int* outranges = null;
 		int nRanges;
-		
+
 		pango_layout_line_get_x_ranges(pangoLayoutLine, startIndex, endIndex, &outranges, &nRanges);
-		
+
 		ranges = outranges[0 .. nRanges];
 	}
 
@@ -177,12 +177,12 @@ public class PgLayoutLine
 	public PgLayoutLine doref()
 	{
 		auto p = pango_layout_line_ref(pangoLayoutLine);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgLayoutLine)(cast(PangoLayoutLine*) p, true);
 	}
 

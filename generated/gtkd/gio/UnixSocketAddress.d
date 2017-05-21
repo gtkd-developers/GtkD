@@ -25,11 +25,11 @@
 module gio.UnixSocketAddress;
 
 private import gio.SocketAddress;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -107,12 +107,12 @@ public class UnixSocketAddress : SocketAddress
 	public this(string path)
 	{
 		auto p = g_unix_socket_address_new(Str.toStringz(path));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GUnixSocketAddress*) p, true);
 	}
 
@@ -163,12 +163,12 @@ public class UnixSocketAddress : SocketAddress
 	public this(string path, GUnixSocketAddressType type)
 	{
 		auto p = g_unix_socket_address_new_with_type(Str.toStringz(path), cast(int)path.length, type);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_with_type");
 		}
-		
+
 		this(cast(GUnixSocketAddress*) p, true);
 	}
 

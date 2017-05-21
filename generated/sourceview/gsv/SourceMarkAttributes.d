@@ -33,8 +33,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gsv.SourceMark;
-private import gsvc.gsv;
-public  import gsvc.gsvtypes;
+private import gsv.c.functions;
+public  import gsv.c.types;
 private import gtk.Widget;
 private import std.algorithm;
 
@@ -99,12 +99,12 @@ public class SourceMarkAttributes : ObjectG
 	public this()
 	{
 		auto p = gtk_source_mark_attributes_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkSourceMarkAttributes*) p, true);
 	}
 
@@ -119,11 +119,11 @@ public class SourceMarkAttributes : ObjectG
 	public bool getBackground(out RGBA background)
 	{
 		GdkRGBA* outbackground = gMalloc!GdkRGBA();
-		
+
 		auto p = gtk_source_mark_attributes_get_background(gtkSourceMarkAttributes, outbackground) != 0;
-		
+
 		background = ObjectG.getDObject!(RGBA)(outbackground, true);
-		
+
 		return p;
 	}
 
@@ -137,12 +137,12 @@ public class SourceMarkAttributes : ObjectG
 	public IconIF getGicon()
 	{
 		auto p = gtk_source_mark_attributes_get_gicon(gtkSourceMarkAttributes);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
 	}
 
@@ -168,12 +168,12 @@ public class SourceMarkAttributes : ObjectG
 	public Pixbuf getPixbuf()
 	{
 		auto p = gtk_source_mark_attributes_get_pixbuf(gtkSourceMarkAttributes);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 
@@ -205,7 +205,7 @@ public class SourceMarkAttributes : ObjectG
 	public string getTooltipMarkup(SourceMark mark)
 	{
 		auto retStr = gtk_source_mark_attributes_get_tooltip_markup(gtkSourceMarkAttributes, (mark is null) ? null : mark.getSourceMarkStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -224,7 +224,7 @@ public class SourceMarkAttributes : ObjectG
 	public string getTooltipText(SourceMark mark)
 	{
 		auto retStr = gtk_source_mark_attributes_get_tooltip_text(gtkSourceMarkAttributes, (mark is null) ? null : mark.getSourceMarkStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -246,12 +246,12 @@ public class SourceMarkAttributes : ObjectG
 	public Pixbuf renderIcon(Widget widget, int size)
 	{
 		auto p = gtk_source_mark_attributes_render_icon(gtkSourceMarkAttributes, (widget is null) ? null : widget.getWidgetStruct(), size);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 
@@ -317,13 +317,13 @@ public class SourceMarkAttributes : ObjectG
 		static OnQueryTooltipMarkupDelegateWrapper[] listeners;
 		string delegate(SourceMark, SourceMarkAttributes) dlg;
 		gulong handlerId;
-		
+
 		this(string delegate(SourceMark, SourceMarkAttributes) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnQueryTooltipMarkupDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -360,12 +360,12 @@ public class SourceMarkAttributes : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static string callBackQueryTooltipMarkup(GtkSourceMarkAttributes* sourcemarkattributesStruct, GtkSourceMark* mark, OnQueryTooltipMarkupDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(ObjectG.getDObject!(SourceMark)(mark), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackQueryTooltipMarkupDestroy(OnQueryTooltipMarkupDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -376,13 +376,13 @@ public class SourceMarkAttributes : ObjectG
 		static OnQueryTooltipTextDelegateWrapper[] listeners;
 		string delegate(SourceMark, SourceMarkAttributes) dlg;
 		gulong handlerId;
-		
+
 		this(string delegate(SourceMark, SourceMarkAttributes) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnQueryTooltipTextDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -419,12 +419,12 @@ public class SourceMarkAttributes : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static string callBackQueryTooltipText(GtkSourceMarkAttributes* sourcemarkattributesStruct, GtkSourceMark* mark, OnQueryTooltipTextDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(ObjectG.getDObject!(SourceMark)(mark), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackQueryTooltipTextDestroy(OnQueryTooltipTextDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

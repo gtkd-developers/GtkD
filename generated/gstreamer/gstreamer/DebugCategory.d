@@ -25,8 +25,8 @@
 module gstreamer.DebugCategory;
 
 private import glib.Str;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 private import gtkd.Loader;
 
 

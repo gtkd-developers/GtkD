@@ -31,8 +31,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gstreamer.ObjectGst;
 private import gstreamer.Structure;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /**
@@ -119,12 +119,12 @@ public class Plugin : ObjectGst
 	public static Plugin loadByName(string name)
 	{
 		auto p = gst_plugin_load_by_name(Str.toStringz(name));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Plugin)(cast(GstPlugin*) p, true);
 	}
 
@@ -142,19 +142,19 @@ public class Plugin : ObjectGst
 	public static Plugin loadFile(string filename)
 	{
 		GError* err = null;
-		
+
 		auto p = gst_plugin_load_file(Str.toStringz(filename), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Plugin)(cast(GstPlugin*) p, true);
 	}
 
@@ -298,12 +298,12 @@ public class Plugin : ObjectGst
 	public Structure getCacheData()
 	{
 		auto p = gst_plugin_get_cache_data(gstPlugin);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
 	}
 
@@ -432,12 +432,12 @@ public class Plugin : ObjectGst
 	public Plugin load()
 	{
 		auto p = gst_plugin_load(gstPlugin);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Plugin)(cast(GstPlugin*) p, true);
 	}
 

@@ -26,11 +26,11 @@ module gio.PropertyAction;
 
 private import gio.ActionIF;
 private import gio.ActionT;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -157,12 +157,12 @@ public class PropertyAction : ObjectG, ActionIF
 	public this(string name, ObjectG object, string propertyName)
 	{
 		auto p = g_property_action_new(Str.toStringz(name), (object is null) ? null : object.getObjectGStruct(), Str.toStringz(propertyName));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GPropertyAction*) p, true);
 	}
 }

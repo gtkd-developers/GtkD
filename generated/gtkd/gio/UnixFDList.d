@@ -24,12 +24,12 @@
 
 module gio.UnixFDList;
 
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -97,12 +97,12 @@ public class UnixFDList : ObjectG
 	public this()
 	{
 		auto p = g_unix_fd_list_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GUnixFDList*) p, true);
 	}
 
@@ -129,12 +129,12 @@ public class UnixFDList : ObjectG
 	public this(int[] fds)
 	{
 		auto p = g_unix_fd_list_new_from_array(fds.ptr, cast(int)fds.length);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_array");
 		}
-		
+
 		this(cast(GUnixFDList*) p, true);
 	}
 
@@ -165,14 +165,14 @@ public class UnixFDList : ObjectG
 	public int append(int fd)
 	{
 		GError* err = null;
-		
+
 		auto p = g_unix_fd_list_append(gUnixFDList, fd, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -202,14 +202,14 @@ public class UnixFDList : ObjectG
 	public int get(int index)
 	{
 		GError* err = null;
-		
+
 		auto p = g_unix_fd_list_get(gUnixFDList, index, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -249,9 +249,9 @@ public class UnixFDList : ObjectG
 	public int[] peekFds()
 	{
 		int length;
-		
+
 		auto p = g_unix_fd_list_peek_fds(gUnixFDList, &length);
-		
+
 		return p[0 .. length];
 	}
 
@@ -283,9 +283,9 @@ public class UnixFDList : ObjectG
 	public int[] stealFds()
 	{
 		int length;
-		
+
 		auto p = g_unix_fd_list_steal_fds(gUnixFDList, &length);
-		
+
 		return p[0 .. length];
 	}
 }

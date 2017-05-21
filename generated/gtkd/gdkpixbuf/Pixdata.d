@@ -25,12 +25,12 @@
 module gdkpixbuf.Pixdata;
 
 private import gdkpixbuf.Pixbuf;
+private import gdkpixbuf.c.functions;
+public  import gdkpixbuf.c.types;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import glib.StringG;
-private import gtkc.gdkpixbuf;
-public  import gtkc.gdkpixbuftypes;
 
 
 /**
@@ -91,14 +91,14 @@ public class Pixdata
 	public bool deserialize(ubyte[] stream)
 	{
 		GError* err = null;
-		
+
 		auto p = gdk_pixdata_deserialize(gdkPixdata, cast(uint)stream.length, stream.ptr, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -137,9 +137,9 @@ public class Pixdata
 	public ubyte[] serialize()
 	{
 		uint streamLengthP;
-		
+
 		auto p = gdk_pixdata_serialize(gdkPixdata, &streamLengthP);
-		
+
 		return p[0 .. streamLengthP];
 	}
 
@@ -164,12 +164,12 @@ public class Pixdata
 	public StringG toCsource(string name, GdkPixdataDumpType dumpType)
 	{
 		auto p = gdk_pixdata_to_csource(gdkPixdata, Str.toStringz(name), dumpType);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new StringG(cast(GString*) p, true);
 	}
 }

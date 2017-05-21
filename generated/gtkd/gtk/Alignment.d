@@ -28,8 +28,8 @@ private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gtk.Bin;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -92,7 +92,7 @@ public class Alignment : Bin
 		a.add(widget);
 		return a;
 	}
-	
+
 	/** */
 	public static Alignment north(Widget widget)
 	{
@@ -100,7 +100,7 @@ public class Alignment : Bin
 		a.add(widget);
 		return a;
 	}
-	
+
 	/** */
 	public static Alignment south(Widget widget)
 	{
@@ -108,7 +108,7 @@ public class Alignment : Bin
 		a.add(widget);
 		return a;
 	}
-	
+
 	/** */
 	public static Alignment east(Widget widget)
 	{
@@ -116,7 +116,7 @@ public class Alignment : Bin
 		a.add(widget);
 		return a;
 	}
-	
+
 	/** */
 	public static Alignment west(Widget widget)
 	{
@@ -124,7 +124,7 @@ public class Alignment : Bin
 		a.add(widget);
 		return a;
 	}
-	
+
 	/** */
 	public static Alignment northWest(Widget widget)
 	{
@@ -132,7 +132,7 @@ public class Alignment : Bin
 		a.add(widget);
 		return a;
 	}
-	
+
 	/** */
 	public static Alignment southWest(Widget widget)
 	{
@@ -140,7 +140,7 @@ public class Alignment : Bin
 		a.add(widget);
 		return a;
 	}
-	
+
 	/** */
 	public static Alignment northEast(Widget widget)
 	{
@@ -148,7 +148,7 @@ public class Alignment : Bin
 		a.add(widget);
 		return a;
 	}
-	
+
 	/** */
 	public static Alignment southEast(Widget widget)
 	{
@@ -191,12 +191,12 @@ public class Alignment : Bin
 	public this(float xalign, float yalign, float xscale, float yscale)
 	{
 		auto p = gtk_alignment_new(xalign, yalign, xscale, yscale);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkAlignment*) p);
 	}
 

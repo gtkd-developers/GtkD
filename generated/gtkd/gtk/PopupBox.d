@@ -26,8 +26,8 @@ module gtk.PopupBox;
 
 private import gtk.MessageDialog;
 private import gtk.Window;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /** */
@@ -43,7 +43,7 @@ public struct PopupBox
 	{
 		information(null, message, title);
 	}
-	
+
 	/**
 	 * Create an information popup dialog.
 	 * Params:
@@ -62,8 +62,8 @@ public struct PopupBox
 		d.run();
 		d.destroy();
 	}
-	
-	
+
+
 	/**
 	 * Create an error popup dialog.
 	 * Params:
@@ -74,7 +74,7 @@ public struct PopupBox
 	{
 		error(null, message, title);
 	}
-	
+
 	/**
 	 * Create an error popup dialog.
 	 * Params:
@@ -93,9 +93,9 @@ public struct PopupBox
 		d.run();
 		d.destroy();
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Create an 'yes' or 'no' popup dialog.
 	 * Params:
@@ -106,7 +106,7 @@ public struct PopupBox
 	{
 		return yesNo(null, message, title);
 	}
-	
+
 	/**
 	 * Create an 'yes' or 'no' popup dialog.
 	 * Params:
@@ -128,8 +128,8 @@ public struct PopupBox
 		d.destroy();
 		return responce == ResponseType.YES;
 	}
-	
-	
+
+
 	/**
 	 * Create an 'yes', 'no' or 'cancel' popup dialog.
 	 * Params:
@@ -140,7 +140,7 @@ public struct PopupBox
 	{
 		return yesNoCancel(null, message, title);
 	}
-	
+
 	/**
 	 * Create an 'yes', 'no' or 'cancel' popup dialog.
 	 * Params:

@@ -24,10 +24,10 @@
 
 module atk.DocumentT;
 
+public  import atk.c.functions;
+public  import atk.c.types;
 public  import glib.Str;
 public  import gobject.Signals;
-public  import gtkc.atk;
-public  import gtkc.atktypes;
 public  import std.algorithm;
 
 
@@ -173,13 +173,13 @@ public template DocumentT(TStruct)
 		static OnLoadCompleteDelegateWrapper[] listeners;
 		void delegate(DocumentIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(DocumentIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnLoadCompleteDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -217,12 +217,12 @@ public template DocumentT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackLoadComplete(AtkDocument* documentStruct, OnLoadCompleteDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackLoadCompleteDestroy(OnLoadCompleteDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -233,13 +233,13 @@ public template DocumentT(TStruct)
 		static OnLoadStoppedDelegateWrapper[] listeners;
 		void delegate(DocumentIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(DocumentIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnLoadStoppedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -274,12 +274,12 @@ public template DocumentT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackLoadStopped(AtkDocument* documentStruct, OnLoadStoppedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackLoadStoppedDestroy(OnLoadStoppedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -290,13 +290,13 @@ public template DocumentT(TStruct)
 		static OnPageChangedDelegateWrapper[] listeners;
 		void delegate(int, DocumentIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(int, DocumentIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPageChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -334,12 +334,12 @@ public template DocumentT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPageChanged(AtkDocument* documentStruct, int pageNumber, OnPageChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(pageNumber, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPageChangedDestroy(OnPageChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -350,13 +350,13 @@ public template DocumentT(TStruct)
 		static OnReloadDelegateWrapper[] listeners;
 		void delegate(DocumentIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(DocumentIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnReloadDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -390,12 +390,12 @@ public template DocumentT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackReload(AtkDocument* documentStruct, OnReloadDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackReloadDestroy(OnReloadDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

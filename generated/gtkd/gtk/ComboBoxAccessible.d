@@ -29,8 +29,8 @@ private import atk.ActionT;
 private import atk.SelectionIF;
 private import atk.SelectionT;
 private import gtk.ContainerAccessible;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /** */

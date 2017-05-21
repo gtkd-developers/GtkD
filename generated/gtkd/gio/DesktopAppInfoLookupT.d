@@ -26,10 +26,10 @@ module gio.DesktopAppInfoLookupT;
 
 public  import gio.AppInfo;
 public  import gio.AppInfoIF;
+public  import gio.c.functions;
+public  import gio.c.types;
 public  import glib.Str;
 public  import gobject.ObjectG;
-public  import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -67,12 +67,12 @@ public template DesktopAppInfoLookupT(TStruct)
 	public AppInfoIF getDefaultForUriScheme(string uriScheme)
 	{
 		auto p = g_desktop_app_info_lookup_get_default_for_uri_scheme(getDesktopAppInfoLookupStruct(), Str.toStringz(uriScheme));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(AppInfo, AppInfoIF)(cast(GAppInfo*) p, true);
 	}
 }

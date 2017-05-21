@@ -35,8 +35,8 @@ private import gobject.ObjectG;
 private import gtk.IconSet;
 private import gtk.Misc;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -201,12 +201,12 @@ public class Image : Misc
 	public this()
 	{
 		auto p = gtk_image_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkImage*) p);
 	}
 
@@ -231,12 +231,12 @@ public class Image : Misc
 	public this(PixbufAnimation animation)
 	{
 		auto p = gtk_image_new_from_animation((animation is null) ? null : animation.getPixbufAnimationStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_animation");
 		}
-		
+
 		this(cast(GtkImage*) p);
 	}
 
@@ -268,12 +268,12 @@ public class Image : Misc
 	public this(string filename)
 	{
 		auto p = gtk_image_new_from_file(Str.toStringz(filename));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_file");
 		}
-		
+
 		this(cast(GtkImage*) p);
 	}
 
@@ -296,12 +296,12 @@ public class Image : Misc
 	public this(IconIF icon, GtkIconSize size)
 	{
 		auto p = gtk_image_new_from_gicon((icon is null) ? null : icon.getIconStruct(), size);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_gicon");
 		}
-		
+
 		this(cast(GtkImage*) p);
 	}
 
@@ -324,12 +324,12 @@ public class Image : Misc
 	public this(string iconName, GtkIconSize size)
 	{
 		auto p = gtk_image_new_from_icon_name(Str.toStringz(iconName), size);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_icon_name");
 		}
-		
+
 		this(cast(GtkImage*) p);
 	}
 
@@ -359,12 +359,12 @@ public class Image : Misc
 	public this(IconSet iconSet, GtkIconSize size)
 	{
 		auto p = gtk_image_new_from_icon_set((iconSet is null) ? null : iconSet.getIconSetStruct(), size);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_icon_set");
 		}
-		
+
 		this(cast(GtkImage*) p);
 	}
 
@@ -388,12 +388,12 @@ public class Image : Misc
 	public this(Pixbuf pixbuf)
 	{
 		auto p = gtk_image_new_from_pixbuf((pixbuf is null) ? null : pixbuf.getPixbufStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_pixbuf");
 		}
-		
+
 		this(cast(GtkImage*) p);
 	}
 
@@ -415,12 +415,12 @@ public class Image : Misc
 	public this(Surface surface)
 	{
 		auto p = gtk_image_new_from_surface((surface is null) ? null : surface.getSurfaceStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_surface");
 		}
-		
+
 		this(cast(GtkImage*) p);
 	}
 
@@ -447,12 +447,12 @@ public class Image : Misc
 	public PixbufAnimation getAnimation()
 	{
 		auto p = gtk_image_get_animation(gtkImage);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PixbufAnimation)(cast(GdkPixbufAnimation*) p);
 	}
 
@@ -474,9 +474,9 @@ public class Image : Misc
 	public void getGicon(out IconIF gicon, out GtkIconSize size)
 	{
 		GIcon* outgicon = null;
-		
+
 		gtk_image_get_gicon(gtkImage, &outgicon, &size);
-		
+
 		gicon = ObjectG.getDObject!(Icon, IconIF)(outgicon);
 	}
 
@@ -498,9 +498,9 @@ public class Image : Misc
 	public void getIconName(out string iconName, out GtkIconSize size)
 	{
 		char* outiconName = null;
-		
+
 		gtk_image_get_icon_name(gtkImage, &outiconName, &size);
-		
+
 		iconName = Str.toString(outiconName);
 	}
 
@@ -520,9 +520,9 @@ public class Image : Misc
 	public void getIconSet(out IconSet iconSet, out GtkIconSize size)
 	{
 		GtkIconSet* outiconSet = null;
-		
+
 		gtk_image_get_icon_set(gtkImage, &outiconSet, &size);
-		
+
 		iconSet = ObjectG.getDObject!(IconSet)(outiconSet);
 	}
 
@@ -539,12 +539,12 @@ public class Image : Misc
 	public Pixbuf getPixbuf()
 	{
 		auto p = gtk_image_get_pixbuf(gtkImage);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 
@@ -578,9 +578,9 @@ public class Image : Misc
 	public void getStock(out string stockId, out GtkIconSize size)
 	{
 		char* outstockId = null;
-		
+
 		gtk_image_get_stock(gtkImage, &outstockId, &size);
-		
+
 		stockId = Str.toString(outstockId);
 	}
 

@@ -28,8 +28,8 @@ private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 private import gtkd.Loader;
 
 
@@ -106,19 +106,19 @@ public class Thread
 	public this(string name, GThreadFunc func, void* data)
 	{
 		GError* err = null;
-		
+
 		auto p = g_thread_try_new(Str.toStringz(name), func, data, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by try_new");
 		}
-		
+
 		this(cast(GThread*) p);
 	}
 
@@ -157,12 +157,12 @@ public class Thread
 	public Thread doref()
 	{
 		auto p = g_thread_ref(gThread);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Thread(cast(GThread*) p, true);
 	}
 
@@ -226,12 +226,12 @@ public class Thread
 	public static Thread self()
 	{
 		auto p = g_thread_self();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Thread(cast(GThread*) p, true);
 	}
 

@@ -24,9 +24,9 @@
 
 module atk.Version;
 
+private import atk.c.functions;
+public  import atk.c.types;
 private import glib.Str;
-private import gtkc.atk;
-public  import gtkc.atktypes;
 
 
 /** */

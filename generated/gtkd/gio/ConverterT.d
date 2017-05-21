@@ -24,10 +24,10 @@
 
 module gio.ConverterT;
 
+public  import gio.c.functions;
+public  import gio.c.types;
 public  import glib.ErrorG;
 public  import glib.GException;
-public  import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -156,14 +156,14 @@ public template ConverterT(TStruct)
 	public GConverterResult convert(ubyte[] inbuf, ubyte[] outbuf, GConverterFlags flags, out size_t bytesRead, out size_t bytesWritten)
 	{
 		GError* err = null;
-		
+
 		auto p = g_converter_convert(getConverterStruct(), inbuf.ptr, cast(size_t)inbuf.length, outbuf.ptr, cast(size_t)outbuf.length, flags, &bytesRead, &bytesWritten, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 

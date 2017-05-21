@@ -29,8 +29,8 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Gesture;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -97,12 +97,12 @@ public class GestureZoom : Gesture
 	public this(Widget widget)
 	{
 		auto p = gtk_gesture_zoom_new((widget is null) ? null : widget.getWidgetStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkGestureZoom*) p, true);
 	}
 
@@ -125,13 +125,13 @@ public class GestureZoom : Gesture
 		static OnScaleChangedDelegateWrapper[] listeners;
 		void delegate(double, GestureZoom) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(double, GestureZoom) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnScaleChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -167,12 +167,12 @@ public class GestureZoom : Gesture
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackScaleChanged(GtkGestureZoom* gesturezoomStruct, double scale, OnScaleChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(scale, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackScaleChangedDestroy(OnScaleChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

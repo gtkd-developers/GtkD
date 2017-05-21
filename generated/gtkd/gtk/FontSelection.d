@@ -29,8 +29,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gtk.Box;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import pango.PgFontFace;
 private import pango.PgFontFamily;
 
@@ -89,12 +89,12 @@ public class FontSelection : Box
 	public this()
 	{
 		auto p = gtk_font_selection_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkFontSelection*) p);
 	}
 
@@ -113,12 +113,12 @@ public class FontSelection : Box
 	public PgFontFace getFace()
 	{
 		auto p = gtk_font_selection_get_face(gtkFontSelection);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgFontFace)(cast(PangoFontFace*) p);
 	}
 
@@ -135,12 +135,12 @@ public class FontSelection : Box
 	public Widget getFaceList()
 	{
 		auto p = gtk_font_selection_get_face_list(gtkFontSelection);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -159,12 +159,12 @@ public class FontSelection : Box
 	public PgFontFamily getFamily()
 	{
 		auto p = gtk_font_selection_get_family(gtkFontSelection);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgFontFamily)(cast(PangoFontFamily*) p);
 	}
 
@@ -181,12 +181,12 @@ public class FontSelection : Box
 	public Widget getFamilyList()
 	{
 		auto p = gtk_font_selection_get_family_list(gtkFontSelection);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -208,7 +208,7 @@ public class FontSelection : Box
 	public string getFontName()
 	{
 		auto retStr = gtk_font_selection_get_font_name(gtkFontSelection);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -225,12 +225,12 @@ public class FontSelection : Box
 	public Widget getPreviewEntry()
 	{
 		auto p = gtk_font_selection_get_preview_entry(gtkFontSelection);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -276,12 +276,12 @@ public class FontSelection : Box
 	public Widget getSizeEntry()
 	{
 		auto p = gtk_font_selection_get_size_entry(gtkFontSelection);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -297,12 +297,12 @@ public class FontSelection : Box
 	public Widget getSizeList()
 	{
 		auto p = gtk_font_selection_get_size_list(gtkFontSelection);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 

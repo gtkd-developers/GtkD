@@ -26,12 +26,12 @@ module gdk.Cursor;
 
 private import cairo.Surface;
 private import gdk.Display;
+private import gdk.c.functions;
+public  import gdk.c.types;
 private import gdkpixbuf.Pixbuf;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gdk;
-public  import gtkc.gdktypes;
 
 
 /**
@@ -96,12 +96,12 @@ public class Cursor : ObjectG
 	public this(GdkCursorType cursorType)
 	{
 		auto p = gdk_cursor_new(cursorType);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GdkCursor*) p, true);
 	}
 
@@ -121,12 +121,12 @@ public class Cursor : ObjectG
 	public this(Display display, GdkCursorType cursorType)
 	{
 		auto p = gdk_cursor_new_for_display((display is null) ? null : display.getDisplayStruct(), cursorType);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_for_display");
 		}
-		
+
 		this(cast(GdkCursor*) p, true);
 	}
 
@@ -186,12 +186,12 @@ public class Cursor : ObjectG
 	public this(Display display, string name)
 	{
 		auto p = gdk_cursor_new_from_name((display is null) ? null : display.getDisplayStruct(), Str.toStringz(name));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_name");
 		}
-		
+
 		this(cast(GdkCursor*) p, true);
 	}
 
@@ -230,12 +230,12 @@ public class Cursor : ObjectG
 	public this(Display display, Pixbuf pixbuf, int x, int y)
 	{
 		auto p = gdk_cursor_new_from_pixbuf((display is null) ? null : display.getDisplayStruct(), (pixbuf is null) ? null : pixbuf.getPixbufStruct(), x, y);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_pixbuf");
 		}
-		
+
 		this(cast(GdkCursor*) p, true);
 	}
 
@@ -269,12 +269,12 @@ public class Cursor : ObjectG
 	public this(Display display, Surface surface, double x, double y)
 	{
 		auto p = gdk_cursor_new_from_surface((display is null) ? null : display.getDisplayStruct(), (surface is null) ? null : surface.getSurfaceStruct(), x, y);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_surface");
 		}
-		
+
 		this(cast(GdkCursor*) p, true);
 	}
 
@@ -300,12 +300,12 @@ public class Cursor : ObjectG
 	public Display getDisplay()
 	{
 		auto p = gdk_cursor_get_display(gdkCursor);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
 	}
 
@@ -324,12 +324,12 @@ public class Cursor : ObjectG
 	public Pixbuf getImage()
 	{
 		auto p = gdk_cursor_get_image(gdkCursor);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
 	}
 
@@ -354,12 +354,12 @@ public class Cursor : ObjectG
 	public Surface getSurface(out double xHot, out double yHot)
 	{
 		auto p = gdk_cursor_get_surface(gdkCursor, &xHot, &yHot);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Surface(cast(cairo_surface_t*) p);
 	}
 
@@ -373,12 +373,12 @@ public class Cursor : ObjectG
 	public override Cursor doref()
 	{
 		auto p = gdk_cursor_ref(gdkCursor);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Cursor)(cast(GdkCursor*) p, true);
 	}
 

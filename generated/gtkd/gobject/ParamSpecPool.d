@@ -29,8 +29,8 @@ private import glib.ListG;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.ParamSpec;
-private import gtkc.gobject;
-public  import gtkc.gobjecttypes;
+private import gobject.c.functions;
+public  import gobject.c.types;
 
 
 /**
@@ -95,20 +95,20 @@ public class ParamSpecPool
 	public ParamSpec[] list(GType ownerType)
 	{
 		uint nPspecsP;
-		
+
 		auto p = g_param_spec_pool_list(gParamSpecPool, ownerType, &nPspecsP);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		ParamSpec[] arr = new ParamSpec[nPspecsP];
 		for(int i = 0; i < nPspecsP; i++)
 		{
 			arr[i] = ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p[i]);
 		}
-		
+
 		return arr;
 	}
 
@@ -126,12 +126,12 @@ public class ParamSpecPool
 	public ListG listOwned(GType ownerType)
 	{
 		auto p = g_param_spec_pool_list_owned(gParamSpecPool, ownerType);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -150,12 +150,12 @@ public class ParamSpecPool
 	public ParamSpec lookup(string paramName, GType ownerType, bool walkAncestors)
 	{
 		auto p = g_param_spec_pool_lookup(gParamSpecPool, Str.toStringz(paramName), ownerType, walkAncestors);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
 	}
 
@@ -188,12 +188,12 @@ public class ParamSpecPool
 	public this(bool typePrefixing)
 	{
 		auto p = g_param_spec_pool_new(typePrefixing);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GParamSpecPool*) p);
 	}
 }

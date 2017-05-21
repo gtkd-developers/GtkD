@@ -28,13 +28,13 @@ private import cairo.FontOption;
 private import gdk.Display;
 private import gdk.Visual;
 private import gdk.Window;
+private import gdk.c.functions;
+public  import gdk.c.types;
 private import glib.ListG;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gobject.Value;
-private import gtkc.gdk;
-public  import gtkc.gdktypes;
 private import std.algorithm;
 
 
@@ -104,12 +104,12 @@ public class Screen : ObjectG
 	public static Screen getDefault()
 	{
 		auto p = gdk_screen_get_default();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
 	}
 
@@ -193,12 +193,12 @@ public class Screen : ObjectG
 	public Window getActiveWindow()
 	{
 		auto p = gdk_screen_get_active_window(gdkScreen);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p, true);
 	}
 
@@ -212,12 +212,12 @@ public class Screen : ObjectG
 	public Display getDisplay()
 	{
 		auto p = gdk_screen_get_display(gdkScreen);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
 	}
 
@@ -232,12 +232,12 @@ public class Screen : ObjectG
 	public FontOption getFontOptions()
 	{
 		auto p = gdk_screen_get_font_options(gdkScreen);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new FontOption(cast(cairo_font_options_t*) p);
 	}
 
@@ -375,7 +375,7 @@ public class Screen : ObjectG
 	public string getMonitorPlugName(int monitorNum)
 	{
 		auto retStr = gdk_screen_get_monitor_plug_name(gdkScreen, monitorNum);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -537,12 +537,12 @@ public class Screen : ObjectG
 	public Visual getRgbaVisual()
 	{
 		auto p = gdk_screen_get_rgba_visual(gdkScreen);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Visual)(cast(GdkVisual*) p);
 	}
 
@@ -556,12 +556,12 @@ public class Screen : ObjectG
 	public Window getRootWindow()
 	{
 		auto p = gdk_screen_get_root_window(gdkScreen);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 
@@ -598,12 +598,12 @@ public class Screen : ObjectG
 	public Visual getSystemVisual()
 	{
 		auto p = gdk_screen_get_system_visual(gdkScreen);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Visual)(cast(GdkVisual*) p);
 	}
 
@@ -622,12 +622,12 @@ public class Screen : ObjectG
 	public ListG getToplevelWindows()
 	{
 		auto p = gdk_screen_get_toplevel_windows(gdkScreen);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -690,12 +690,12 @@ public class Screen : ObjectG
 	public ListG getWindowStack()
 	{
 		auto p = gdk_screen_get_window_stack(gdkScreen);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -732,12 +732,12 @@ public class Screen : ObjectG
 	public ListG listVisuals()
 	{
 		auto p = gdk_screen_list_visuals(gdkScreen);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -752,7 +752,7 @@ public class Screen : ObjectG
 	public string makeDisplayName()
 	{
 		auto retStr = gdk_screen_make_display_name(gdkScreen);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -797,13 +797,13 @@ public class Screen : ObjectG
 		static OnCompositedChangedDelegateWrapper[] listeners;
 		void delegate(Screen) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Screen) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCompositedChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -836,12 +836,12 @@ public class Screen : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackCompositedChanged(GdkScreen* screenStruct, OnCompositedChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackCompositedChangedDestroy(OnCompositedChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -852,13 +852,13 @@ public class Screen : ObjectG
 		static OnMonitorsChangedDelegateWrapper[] listeners;
 		void delegate(Screen) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Screen) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMonitorsChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -894,12 +894,12 @@ public class Screen : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackMonitorsChanged(GdkScreen* screenStruct, OnMonitorsChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMonitorsChangedDestroy(OnMonitorsChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -910,13 +910,13 @@ public class Screen : ObjectG
 		static OnSizeChangedDelegateWrapper[] listeners;
 		void delegate(Screen) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Screen) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnSizeChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -949,12 +949,12 @@ public class Screen : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackSizeChanged(GdkScreen* screenStruct, OnSizeChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackSizeChangedDestroy(OnSizeChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

@@ -25,14 +25,14 @@
 module gio.TlsCertificate;
 
 private import gio.SocketConnectableIF;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.ListG;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -113,19 +113,19 @@ public class TlsCertificate : ObjectG
 	public this(string file)
 	{
 		GError* err = null;
-		
+
 		auto p = g_tls_certificate_new_from_file(Str.toStringz(file), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_file");
 		}
-		
+
 		this(cast(GTlsCertificate*) p, true);
 	}
 
@@ -161,19 +161,19 @@ public class TlsCertificate : ObjectG
 	public this(string certFile, string keyFile)
 	{
 		GError* err = null;
-		
+
 		auto p = g_tls_certificate_new_from_files(Str.toStringz(certFile), Str.toStringz(keyFile), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_files");
 		}
-		
+
 		this(cast(GTlsCertificate*) p, true);
 	}
 
@@ -207,19 +207,19 @@ public class TlsCertificate : ObjectG
 	public this(string data, ptrdiff_t length)
 	{
 		GError* err = null;
-		
+
 		auto p = g_tls_certificate_new_from_pem(Str.toStringz(data), length, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_pem");
 		}
-		
+
 		this(cast(GTlsCertificate*) p, true);
 	}
 
@@ -244,19 +244,19 @@ public class TlsCertificate : ObjectG
 	public static ListG listNewFromFile(string file)
 	{
 		GError* err = null;
-		
+
 		auto p = g_tls_certificate_list_new_from_file(Str.toStringz(file), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -272,12 +272,12 @@ public class TlsCertificate : ObjectG
 	public TlsCertificate getIssuer()
 	{
 		auto p = g_tls_certificate_get_issuer(gTlsCertificate);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TlsCertificate)(cast(GTlsCertificate*) p);
 	}
 

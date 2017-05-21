@@ -26,8 +26,8 @@ module gobject.Binding;
 
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gobject;
-public  import gtkc.gobjecttypes;
+private import gobject.c.functions;
+public  import gobject.c.types;
 
 
 /**
@@ -174,12 +174,12 @@ public class Binding : ObjectG
 	public ObjectG getSource()
 	{
 		auto p = g_binding_get_source(gBinding);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p);
 	}
 
@@ -206,12 +206,12 @@ public class Binding : ObjectG
 	public ObjectG getTarget()
 	{
 		auto p = g_binding_get_target(gBinding);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p);
 	}
 

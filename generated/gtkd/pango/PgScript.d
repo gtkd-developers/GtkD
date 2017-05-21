@@ -25,9 +25,9 @@
 module pango.PgScript;
 
 private import gobject.ObjectG;
-private import gtkc.pango;
-public  import gtkc.pangotypes;
 private import pango.PgLanguage;
+private import pango.c.functions;
+public  import pango.c.types;
 
 
 /** */
@@ -98,12 +98,12 @@ public struct PgScript
 	public static PgLanguage scriptGetSampleLanguage(PangoScript script)
 	{
 		auto p = pango_script_get_sample_language(script);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgLanguage)(cast(PangoLanguage*) p, true);
 	}
 }

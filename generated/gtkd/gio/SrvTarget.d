@@ -24,12 +24,12 @@
 
 module gio.SrvTarget;
 
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.ListG;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 private import gtkd.Loader;
 
 
@@ -112,12 +112,12 @@ public class SrvTarget
 	public this(string hostname, ushort port, ushort priority, ushort weight)
 	{
 		auto p = g_srv_target_new(Str.toStringz(hostname), port, priority, weight);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GSrvTarget*) p);
 	}
 
@@ -131,12 +131,12 @@ public class SrvTarget
 	public SrvTarget copy()
 	{
 		auto p = g_srv_target_copy(gSrvTarget);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SrvTarget)(cast(GSrvTarget*) p, true);
 	}
 
@@ -219,12 +219,12 @@ public class SrvTarget
 	public static ListG listSort(ListG targets)
 	{
 		auto p = g_srv_target_list_sort((targets is null) ? null : targets.getListGStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 }

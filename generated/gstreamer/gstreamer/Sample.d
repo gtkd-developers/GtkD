@@ -31,8 +31,8 @@ private import gstreamer.BufferList;
 private import gstreamer.Caps;
 private import gstreamer.Segment;
 private import gstreamer.Structure;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /**
@@ -94,12 +94,12 @@ public class Sample
 	public this(Buffer buffer, Caps caps, Segment segment, Structure info)
 	{
 		auto p = gst_sample_new((buffer is null) ? null : buffer.getBufferStruct(), (caps is null) ? null : caps.getCapsStruct(), (segment is null) ? null : segment.getSegmentStruct(), (info is null) ? null : info.getStructureStruct(true));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GstSample*) p);
 	}
 
@@ -114,12 +114,12 @@ public class Sample
 	public Buffer getBuffer()
 	{
 		auto p = gst_sample_get_buffer(gstSample);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p);
 	}
 
@@ -136,12 +136,12 @@ public class Sample
 	public BufferList getBufferList()
 	{
 		auto p = gst_sample_get_buffer_list(gstSample);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(BufferList)(cast(GstBufferList*) p);
 	}
 
@@ -156,12 +156,12 @@ public class Sample
 	public Caps getCaps()
 	{
 		auto p = gst_sample_get_caps(gstSample);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p);
 	}
 
@@ -174,12 +174,12 @@ public class Sample
 	public Structure getInfo()
 	{
 		auto p = gst_sample_get_info(gstSample);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
 	}
 
@@ -192,12 +192,12 @@ public class Sample
 	public Segment getSegment()
 	{
 		auto p = gst_sample_get_segment(gstSample);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Segment)(cast(GstSegment*) p);
 	}
 

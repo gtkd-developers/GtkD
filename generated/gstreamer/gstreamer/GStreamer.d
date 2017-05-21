@@ -28,8 +28,8 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.OptionGroup;
 private import glib.Str;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /** */
@@ -79,9 +79,9 @@ public struct GStreamer
 	{
 		int argc = cast(int)argv.length;
 		char** outargv = Str.toStringzArray(argv);
-		
+
 		gst_init(&argc, &outargv);
-		
+
 		argv = Str.toStringArray(outargv, argc);
 	}
 
@@ -106,16 +106,16 @@ public struct GStreamer
 		int argc = cast(int)argv.length;
 		char** outargv = Str.toStringzArray(argv);
 		GError* err = null;
-		
+
 		auto p = gst_init_check(&argc, &outargv, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		argv = Str.toStringArray(outargv, argc);
-		
+
 		return p;
 	}
 
@@ -137,12 +137,12 @@ public struct GStreamer
 	public static OptionGroup initGetOptionGroup()
 	{
 		auto p = gst_init_get_option_group();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new OptionGroup(cast(GOptionGroup*) p, true);
 	}
 
@@ -235,7 +235,7 @@ public struct GStreamer
 	public static string versionString()
 	{
 		auto retStr = gst_version_string();
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}

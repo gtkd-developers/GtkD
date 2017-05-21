@@ -26,8 +26,8 @@ module glib.AsyncQueue;
 
 private import glib.ConstructionException;
 private import glib.TimeVal;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 private import gtkd.Loader;
 
 
@@ -268,12 +268,12 @@ public class AsyncQueue
 	public AsyncQueue doref()
 	{
 		auto p = g_async_queue_ref(gAsyncQueue);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new AsyncQueue(cast(GAsyncQueue*) p);
 	}
 
@@ -536,12 +536,12 @@ public class AsyncQueue
 	public this()
 	{
 		auto p = g_async_queue_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GAsyncQueue*) p);
 	}
 
@@ -562,12 +562,12 @@ public class AsyncQueue
 	public this(GDestroyNotify itemFreeFunc)
 	{
 		auto p = g_async_queue_new_full(itemFreeFunc);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_full");
 		}
-		
+
 		this(cast(GAsyncQueue*) p);
 	}
 }

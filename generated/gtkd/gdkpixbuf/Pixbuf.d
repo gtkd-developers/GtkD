@@ -26,6 +26,8 @@ module gdkpixbuf.Pixbuf;
 
 private import gdkpixbuf.PixbufFormat;
 private import gdkpixbuf.Pixdata;
+private import gdkpixbuf.c.functions;
+public  import gdkpixbuf.c.types;
 private import gio.AsyncResultIF;
 private import gio.Cancellable;
 private import gio.IconIF;
@@ -42,8 +44,6 @@ private import glib.HashTable;
 private import glib.ListSG;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gdkpixbuf;
-public  import gtkc.gdkpixbuftypes;
 
 
 /**
@@ -116,19 +116,19 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 		char* outbuffer = null;
 		size_t bufferSize;
 		GError* err = null;
-		
+
 		auto p = gdk_pixbuf_save_to_bufferv(gdkPixbuf, &outbuffer, &bufferSize, Str.toStringz(type), Str.toStringzArray(optionKeys), Str.toStringzArray(optionValues), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		buffer = (cast(ubyte*)outbuffer)[0 .. bufferSize];
-		
+
 		return p;
 	}
-	
+
 	/**
 	 * Creates a new pixbuf by loading an image from an resource.
 	 *
@@ -149,17 +149,17 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	public static Pixbuf newFromResource(string resourcePath)
 	{
 		GError* err = null;
-		
+
 		auto p = gdk_pixbuf_new_from_resource(Str.toStringz(resourcePath), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return new Pixbuf(cast(GdkPixbuf*) p, true);
 	}
-	
+
 	/**
 	 * Creates a new pixbuf by loading an image from an resource.
 	 *
@@ -192,17 +192,17 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	public static Pixbuf newFromResource(string resourcePath, int width, int height, bool preserveAspectRatio)
 	{
 		GError* err = null;
-		
+
 		auto p = gdk_pixbuf_new_from_resource_at_scale(Str.toStringz(resourcePath), width, height, preserveAspectRatio, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return new Pixbuf(cast(GdkPixbuf*) p, true);
 	}
-	
+
 	/**
 	 * Queries a pointer to the pixel data of a pixbuf.
 	 *
@@ -247,12 +247,12 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	public this(GdkColorspace colorspace, bool hasAlpha, int bitsPerSample, int width, int height)
 	{
 		auto p = gdk_pixbuf_new(colorspace, hasAlpha, bitsPerSample, width, height);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GdkPixbuf*) p, true);
 	}
 
@@ -279,12 +279,12 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	public this(Bytes data, GdkColorspace colorspace, bool hasAlpha, int bitsPerSample, int width, int height, int rowstride)
 	{
 		auto p = gdk_pixbuf_new_from_bytes((data is null) ? null : data.getBytesStruct(), colorspace, hasAlpha, bitsPerSample, width, height, rowstride);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_bytes");
 		}
-		
+
 		this(cast(GdkPixbuf*) p, true);
 	}
 
@@ -319,12 +319,12 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	public this(char[] data, GdkColorspace colorspace, bool hasAlpha, int bitsPerSample, int width, int height, int rowstride, GdkPixbufDestroyNotify destroyFn, void* destroyFnData)
 	{
 		auto p = gdk_pixbuf_new_from_data(data.ptr, colorspace, hasAlpha, bitsPerSample, width, height, rowstride, destroyFn, destroyFnData);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_data");
 		}
-		
+
 		this(cast(GdkPixbuf*) p, true);
 	}
 
@@ -347,19 +347,19 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	public this(string filename)
 	{
 		GError* err = null;
-		
+
 		auto p = gdk_pixbuf_new_from_file(Str.toStringz(filename), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_file");
 		}
-		
+
 		this(cast(GdkPixbuf*) p, true);
 	}
 
@@ -396,19 +396,19 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	public this(string filename, int width, int height, bool preserveAspectRatio)
 	{
 		GError* err = null;
-		
+
 		auto p = gdk_pixbuf_new_from_file_at_scale(Str.toStringz(filename), width, height, preserveAspectRatio, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_file_at_scale");
 		}
-		
+
 		this(cast(GdkPixbuf*) p, true);
 	}
 
@@ -443,19 +443,19 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	public this(string filename, int width, int height)
 	{
 		GError* err = null;
-		
+
 		auto p = gdk_pixbuf_new_from_file_at_size(Str.toStringz(filename), width, height, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_file_at_size");
 		}
-		
+
 		this(cast(GdkPixbuf*) p, true);
 	}
 
@@ -510,19 +510,19 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	public this(ubyte[] data, bool copyPixels)
 	{
 		GError* err = null;
-		
+
 		auto p = gdk_pixbuf_new_from_inline(cast(int)data.length, data.ptr, copyPixels, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_inline");
 		}
-		
+
 		this(cast(GdkPixbuf*) p, true);
 	}
 
@@ -554,19 +554,19 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	public this(InputStream stream, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = gdk_pixbuf_new_from_stream((stream is null) ? null : stream.getInputStreamStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_stream");
 		}
-		
+
 		this(cast(GdkPixbuf*) p, true);
 	}
 
@@ -613,19 +613,19 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	public this(InputStream stream, int width, int height, bool preserveAspectRatio, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = gdk_pixbuf_new_from_stream_at_scale((stream is null) ? null : stream.getInputStreamStruct(), width, height, preserveAspectRatio, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_stream_at_scale");
 		}
-		
+
 		this(cast(GdkPixbuf*) p, true);
 	}
 
@@ -647,19 +647,19 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	public this(AsyncResultIF asyncResult)
 	{
 		GError* err = null;
-		
+
 		auto p = gdk_pixbuf_new_from_stream_finish((asyncResult is null) ? null : asyncResult.getAsyncResultStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_stream_finish");
 		}
-		
+
 		this(cast(GdkPixbuf*) p, true);
 	}
 
@@ -677,12 +677,12 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	public this(string[] data)
 	{
 		auto p = gdk_pixbuf_new_from_xpm_data(Str.toStringzArray(data));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_xpm_data");
 		}
-		
+
 		this(cast(GdkPixbuf*) p, true);
 	}
 
@@ -705,19 +705,19 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	public static Pixbuf fromPixdata(Pixdata pixdata, bool copyPixels)
 	{
 		GError* err = null;
-		
+
 		auto p = gdk_pixbuf_from_pixdata((pixdata is null) ? null : pixdata.getPixdataStruct(), copyPixels, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
 	}
 
@@ -741,12 +741,12 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	public static PixbufFormat getFileInfo(string filename, out int width, out int height)
 	{
 		auto p = gdk_pixbuf_get_file_info(Str.toStringz(filename), &width, &height);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PixbufFormat)(cast(GdkPixbufFormat*) p);
 	}
 
@@ -795,19 +795,19 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	public static PixbufFormat getFileInfoFinish(AsyncResultIF asyncResult, out int width, out int height)
 	{
 		GError* err = null;
-		
+
 		auto p = gdk_pixbuf_get_file_info_finish((asyncResult is null) ? null : asyncResult.getAsyncResultStruct(), &width, &height, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PixbufFormat)(cast(GdkPixbufFormat*) p);
 	}
 
@@ -825,12 +825,12 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	public static ListSG getFormats()
 	{
 		auto p = gdk_pixbuf_get_formats();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -897,14 +897,14 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	public static bool saveToStreamFinish(AsyncResultIF asyncResult)
 	{
 		GError* err = null;
-		
+
 		auto p = gdk_pixbuf_save_to_stream_finish((asyncResult is null) ? null : asyncResult.getAsyncResultStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -930,12 +930,12 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	public Pixbuf addAlpha(bool substituteColor, char r, char g, char b)
 	{
 		auto p = gdk_pixbuf_add_alpha(gdkPixbuf, substituteColor, r, g, b);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
 	}
 
@@ -958,12 +958,12 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	public Pixbuf applyEmbeddedOrientation()
 	{
 		auto p = gdk_pixbuf_apply_embedded_orientation(gdkPixbuf);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
 	}
 
@@ -1056,12 +1056,12 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	public Pixbuf compositeColorSimple(int destWidth, int destHeight, GdkInterpType interpType, int overallAlpha, int checkSize, uint color1, uint color2)
 	{
 		auto p = gdk_pixbuf_composite_color_simple(gdkPixbuf, destWidth, destHeight, interpType, overallAlpha, checkSize, color1, color2);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
 	}
 
@@ -1076,12 +1076,12 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	public Pixbuf copy()
 	{
 		auto p = gdk_pixbuf_copy(gdkPixbuf);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
 	}
 
@@ -1154,12 +1154,12 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	public Pixbuf flip(bool horizontal)
 	{
 		auto p = gdk_pixbuf_flip(gdkPixbuf, horizontal);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
 	}
 
@@ -1267,12 +1267,12 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	public HashTable getOptions()
 	{
 		auto p = gdk_pixbuf_get_options(gdkPixbuf);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new HashTable(cast(GHashTable*) p);
 	}
 
@@ -1291,9 +1291,9 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	public char[] getPixelsWithLength()
 	{
 		uint length;
-		
+
 		auto p = gdk_pixbuf_get_pixels_with_length(gdkPixbuf, &length);
-		
+
 		return p[0 .. length];
 	}
 
@@ -1339,12 +1339,12 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	public Pixbuf newSubpixbuf(int srcX, int srcY, int width, int height)
 	{
 		auto p = gdk_pixbuf_new_subpixbuf(gdkPixbuf, srcX, srcY, width, height);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
 	}
 
@@ -1359,12 +1359,12 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	public Bytes readPixelBytes()
 	{
 		auto p = gdk_pixbuf_read_pixel_bytes(gdkPixbuf);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Bytes(cast(GBytes*) p, true);
 	}
 
@@ -1413,12 +1413,12 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	public Pixbuf rotateSimple(GdkPixbufRotation angle)
 	{
 		auto p = gdk_pixbuf_rotate_simple(gdkPixbuf, angle);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
 	}
 
@@ -1464,14 +1464,14 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	public bool saveToCallbackv(GdkPixbufSaveFunc saveFunc, void* userData, string type, string[] optionKeys, string[] optionValues)
 	{
 		GError* err = null;
-		
+
 		auto p = gdk_pixbuf_save_to_callbackv(gdkPixbuf, saveFunc, userData, Str.toStringz(type), Str.toStringzArray(optionKeys), Str.toStringzArray(optionValues), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -1498,14 +1498,14 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	public bool saveToStreamv(OutputStream stream, string type, string[] optionKeys, string[] optionValues, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = gdk_pixbuf_save_to_streamv(gdkPixbuf, (stream is null) ? null : stream.getOutputStreamStruct(), Str.toStringz(type), Str.toStringzArray(optionKeys), Str.toStringzArray(optionValues), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -1552,14 +1552,14 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	public bool savev(string filename, string type, string[] optionKeys, string[] optionValues)
 	{
 		GError* err = null;
-		
+
 		auto p = gdk_pixbuf_savev(gdkPixbuf, Str.toStringz(filename), Str.toStringz(type), Str.toStringzArray(optionKeys), Str.toStringzArray(optionValues), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -1623,12 +1623,12 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	public Pixbuf scaleSimple(int destWidth, int destHeight, GdkInterpType interpType)
 	{
 		auto p = gdk_pixbuf_scale_simple(gdkPixbuf, destWidth, destHeight, interpType);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
 	}
 

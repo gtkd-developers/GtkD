@@ -26,11 +26,11 @@ module gdk.GLContext;
 
 private import gdk.Display;
 private import gdk.Window;
+private import gdk.c.functions;
+public  import gdk.c.types;
 private import glib.ErrorG;
 private import glib.GException;
 private import gobject.ObjectG;
-private import gtkc.gdk;
-public  import gtkc.gdktypes;
 
 
 /**
@@ -150,12 +150,12 @@ public class GLContext : ObjectG
 	public static GLContext getCurrent()
 	{
 		auto p = gdk_gl_context_get_current();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(GLContext)(cast(GdkGLContext*) p);
 	}
 
@@ -181,12 +181,12 @@ public class GLContext : ObjectG
 	public Display getDisplay()
 	{
 		auto p = gdk_gl_context_get_display(gdkGLContext);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
 	}
 
@@ -227,12 +227,12 @@ public class GLContext : ObjectG
 	public GLContext getSharedContext()
 	{
 		auto p = gdk_gl_context_get_shared_context(gdkGLContext);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(GLContext)(cast(GdkGLContext*) p);
 	}
 
@@ -274,12 +274,12 @@ public class GLContext : ObjectG
 	public Window getWindow()
 	{
 		auto p = gdk_gl_context_get_window(gdkGLContext);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 
@@ -334,14 +334,14 @@ public class GLContext : ObjectG
 	public bool realize()
 	{
 		GError* err = null;
-		
+
 		auto p = gdk_gl_context_realize(gdkGLContext, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 

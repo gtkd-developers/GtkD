@@ -43,8 +43,8 @@ private import gtk.IconSet;
 private import gtk.IconSource;
 private import gtk.StyleProviderIF;
 private import gtk.WidgetPath;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import pango.PgFontDescription;
 private import pango.PgLayout;
 private import std.algorithm;
@@ -166,12 +166,12 @@ public class StyleContext : ObjectG
 	public this()
 	{
 		auto p = gtk_style_context_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkStyleContext*) p, true);
 	}
 
@@ -370,9 +370,9 @@ public class StyleContext : ObjectG
 	public void getBackgroundColor(GtkStateFlags state, out RGBA color)
 	{
 		GdkRGBA* outcolor = gMalloc!GdkRGBA();
-		
+
 		gtk_style_context_get_background_color(gtkStyleContext, state, outcolor);
-		
+
 		color = ObjectG.getDObject!(RGBA)(outcolor, true);
 	}
 
@@ -391,9 +391,9 @@ public class StyleContext : ObjectG
 	public void getBorder(GtkStateFlags state, out Border border)
 	{
 		GtkBorder* outborder = gMalloc!GtkBorder();
-		
+
 		gtk_style_context_get_border(gtkStyleContext, state, outborder);
-		
+
 		border = ObjectG.getDObject!(Border)(outborder, true);
 	}
 
@@ -411,9 +411,9 @@ public class StyleContext : ObjectG
 	public void getBorderColor(GtkStateFlags state, out RGBA color)
 	{
 		GdkRGBA* outcolor = gMalloc!GdkRGBA();
-		
+
 		gtk_style_context_get_border_color(gtkStyleContext, state, outcolor);
-		
+
 		color = ObjectG.getDObject!(RGBA)(outcolor, true);
 	}
 
@@ -432,9 +432,9 @@ public class StyleContext : ObjectG
 	public void getColor(GtkStateFlags state, out RGBA color)
 	{
 		GdkRGBA* outcolor = gMalloc!GdkRGBA();
-		
+
 		gtk_style_context_get_color(gtkStyleContext, state, outcolor);
-		
+
 		color = ObjectG.getDObject!(RGBA)(outcolor, true);
 	}
 
@@ -474,12 +474,12 @@ public class StyleContext : ObjectG
 	public PgFontDescription getFont(GtkStateFlags state)
 	{
 		auto p = gtk_style_context_get_font(gtkStyleContext, state);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) p);
 	}
 
@@ -494,12 +494,12 @@ public class StyleContext : ObjectG
 	public FrameClock getFrameClock()
 	{
 		auto p = gtk_style_context_get_frame_clock(gtkStyleContext);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(FrameClock)(cast(GdkFrameClock*) p);
 	}
 
@@ -529,9 +529,9 @@ public class StyleContext : ObjectG
 	public void getMargin(GtkStateFlags state, out Border margin)
 	{
 		GtkBorder* outmargin = gMalloc!GtkBorder();
-		
+
 		gtk_style_context_get_margin(gtkStyleContext, state, outmargin);
-		
+
 		margin = ObjectG.getDObject!(Border)(outmargin, true);
 	}
 
@@ -549,9 +549,9 @@ public class StyleContext : ObjectG
 	public void getPadding(GtkStateFlags state, out Border padding)
 	{
 		GtkBorder* outpadding = gMalloc!GtkBorder();
-		
+
 		gtk_style_context_get_padding(gtkStyleContext, state, outpadding);
-		
+
 		padding = ObjectG.getDObject!(Border)(outpadding, true);
 	}
 
@@ -566,12 +566,12 @@ public class StyleContext : ObjectG
 	public StyleContext getParent()
 	{
 		auto p = gtk_style_context_get_parent(gtkStyleContext);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(StyleContext)(cast(GtkStyleContext*) p);
 	}
 
@@ -585,12 +585,12 @@ public class StyleContext : ObjectG
 	public WidgetPath getPath()
 	{
 		auto p = gtk_style_context_get_path(gtkStyleContext);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(WidgetPath)(cast(GtkWidgetPath*) p);
 	}
 
@@ -619,9 +619,9 @@ public class StyleContext : ObjectG
 	public void getProperty(string property, GtkStateFlags state, out Value value)
 	{
 		GValue* outvalue = gMalloc!GValue();
-		
+
 		gtk_style_context_get_property(gtkStyleContext, Str.toStringz(property), state, outvalue);
-		
+
 		value = ObjectG.getDObject!(Value)(outvalue, true);
 	}
 
@@ -645,12 +645,12 @@ public class StyleContext : ObjectG
 	public Screen getScreen()
 	{
 		auto p = gtk_style_context_get_screen(gtkStyleContext);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
 	}
 
@@ -677,12 +677,12 @@ public class StyleContext : ObjectG
 	public CssSection getSection(string property)
 	{
 		auto p = gtk_style_context_get_section(gtkStyleContext, Str.toStringz(property));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(CssSection)(cast(GtkCssSection*) p);
 	}
 
@@ -809,12 +809,12 @@ public class StyleContext : ObjectG
 	public ListG listClasses()
 	{
 		auto p = gtk_style_context_list_classes(gtkStyleContext);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -831,12 +831,12 @@ public class StyleContext : ObjectG
 	public ListG listRegions()
 	{
 		auto p = gtk_style_context_list_regions(gtkStyleContext);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -852,11 +852,11 @@ public class StyleContext : ObjectG
 	public bool lookupColor(string colorName, out RGBA color)
 	{
 		GdkRGBA* outcolor = gMalloc!GdkRGBA();
-		
+
 		auto p = gtk_style_context_lookup_color(gtkStyleContext, Str.toStringz(colorName), outcolor) != 0;
-		
+
 		color = ObjectG.getDObject!(RGBA)(outcolor, true);
-		
+
 		return p;
 	}
 
@@ -875,12 +875,12 @@ public class StyleContext : ObjectG
 	public IconSet lookupIconSet(string stockId)
 	{
 		auto p = gtk_style_context_lookup_icon_set(gtkStyleContext, Str.toStringz(stockId));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(IconSet)(cast(GtkIconSet*) p);
 	}
 
@@ -1277,7 +1277,7 @@ public class StyleContext : ObjectG
 	public string toString(GtkStyleContextPrintFlags flags)
 	{
 		auto retStr = gtk_style_context_to_string(gtkStyleContext, flags);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -1287,13 +1287,13 @@ public class StyleContext : ObjectG
 		static OnChangedDelegateWrapper[] listeners;
 		void delegate(StyleContext) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(StyleContext) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1331,12 +1331,12 @@ public class StyleContext : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackChanged(GtkStyleContext* stylecontextStruct, OnChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1643,12 +1643,12 @@ public class StyleContext : ObjectG
 	public static Pixbuf renderIconPixbuf(StyleContext context, IconSource source, GtkIconSize size)
 	{
 		auto p = gtk_render_icon_pixbuf((context is null) ? null : context.getStyleContextStruct(), (source is null) ? null : source.getIconSourceStruct(), size);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
 	}
 

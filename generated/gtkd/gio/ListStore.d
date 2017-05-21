@@ -26,10 +26,10 @@ module gio.ListStore;
 
 private import gio.ListModelIF;
 private import gio.ListModelT;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -99,12 +99,12 @@ public class ListStore : ObjectG, ListModelIF
 	public this(GType itemType)
 	{
 		auto p = g_list_store_new(itemType);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GListStore*) p, true);
 	}
 
@@ -242,7 +242,7 @@ public class ListStore : ObjectG, ListModelIF
 		{
 			additionsArray[i] = additions[i].getObjectGStruct();
 		}
-		
+
 		g_list_store_splice(gListStore, position, nRemovals, additionsArray.ptr, cast(uint)additions.length);
 	}
 }

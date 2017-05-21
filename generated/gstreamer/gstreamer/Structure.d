@@ -31,8 +31,8 @@ private import gobject.ObjectG;
 private import gobject.Value;
 private import gobject.ValueArray;
 private import gstreamer.DateTime;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 private import gtkd.Loader;
 
 
@@ -110,12 +110,12 @@ public class Structure
 	public static Structure fromString(string name)
 	{
 		auto p = gst_structure_new_from_string(Str.toStringz(name));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gst_structure_new_from_string(Str.toStringz(name))");
 		}
-		
+
 		return new Structure(cast(GstStructure*)p); //, true);
 	}
 
@@ -145,12 +145,12 @@ public class Structure
 	public this(string name)
 	{
 		auto p = gst_structure_new_empty(Str.toStringz(name));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_empty");
 		}
-		
+
 		this(cast(GstStructure*) p);
 	}
 
@@ -169,12 +169,12 @@ public class Structure
 	public this(GQuark quark)
 	{
 		auto p = gst_structure_new_id_empty(quark);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_id_empty");
 		}
-		
+
 		this(cast(GstStructure*) p);
 	}
 
@@ -199,12 +199,12 @@ public class Structure
 	public this(string name, string firstfield, void* varargs)
 	{
 		auto p = gst_structure_new_valist(Str.toStringz(name), Str.toStringz(firstfield), varargs);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_valist");
 		}
-		
+
 		this(cast(GstStructure*) p);
 	}
 
@@ -232,12 +232,12 @@ public class Structure
 	public Structure copy()
 	{
 		auto p = gst_structure_copy(gstStructure);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p, true);
 	}
 
@@ -402,11 +402,11 @@ public class Structure
 	public bool getArray(string fieldname, out ValueArray array)
 	{
 		GValueArray* outarray = null;
-		
+
 		auto p = gst_structure_get_array(gstStructure, Str.toStringz(fieldname), &outarray) != 0;
-		
+
 		array = ObjectG.getDObject!(ValueArray)(outarray);
-		
+
 		return p;
 	}
 
@@ -426,11 +426,11 @@ public class Structure
 	public bool getBoolean(string fieldname, out bool value)
 	{
 		int outvalue;
-		
+
 		auto p = gst_structure_get_boolean(gstStructure, Str.toStringz(fieldname), &outvalue) != 0;
-		
+
 		value = (outvalue == 1);
-		
+
 		return p;
 	}
 
@@ -473,11 +473,11 @@ public class Structure
 	public bool getDate(string fieldname, out Date value)
 	{
 		GDate* outvalue = null;
-		
+
 		auto p = gst_structure_get_date(gstStructure, Str.toStringz(fieldname), &outvalue) != 0;
-		
+
 		value = new Date(outvalue);
-		
+
 		return p;
 	}
 
@@ -502,11 +502,11 @@ public class Structure
 	public bool getDateTime(string fieldname, out DateTime value)
 	{
 		GstDateTime* outvalue = null;
-		
+
 		auto p = gst_structure_get_date_time(gstStructure, Str.toStringz(fieldname), &outvalue) != 0;
-		
+
 		value = ObjectG.getDObject!(DateTime)(outvalue);
-		
+
 		return p;
 	}
 
@@ -658,11 +658,11 @@ public class Structure
 	public bool getList(string fieldname, out ValueArray array)
 	{
 		GValueArray* outarray = null;
-		
+
 		auto p = gst_structure_get_list(gstStructure, Str.toStringz(fieldname), &outarray) != 0;
-		
+
 		array = ObjectG.getDObject!(ValueArray)(outarray);
-		
+
 		return p;
 	}
 
@@ -770,12 +770,12 @@ public class Structure
 	public Value getValue(string fieldname)
 	{
 		auto p = gst_structure_get_value(gstStructure, Str.toStringz(fieldname));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Value)(cast(GValue*) p);
 	}
 
@@ -847,12 +847,12 @@ public class Structure
 	public Value idGetValue(GQuark field)
 	{
 		auto p = gst_structure_id_get_value(gstStructure, field);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Value)(cast(GValue*) p);
 	}
 
@@ -934,12 +934,12 @@ public class Structure
 	public Structure intersect(Structure struct2)
 	{
 		auto p = gst_structure_intersect(gstStructure, (struct2 is null) ? null : struct2.getStructureStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p, true);
 	}
 
@@ -1166,7 +1166,7 @@ public class Structure
 	public override string toString()
 	{
 		auto retStr = gst_structure_to_string(gstStructure);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -1189,16 +1189,16 @@ public class Structure
 	public static Structure fromString(string str, out string end)
 	{
 		char* outend = null;
-		
+
 		auto p = gst_structure_from_string(Str.toStringz(str), &outend);
-		
+
 		end = Str.toString(outend);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p, true);
 	}
 }

@@ -27,8 +27,8 @@ module gtk.Accessible;
 private import atk.ObjectAtk;
 private import gobject.ObjectG;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -109,12 +109,12 @@ public class Accessible : ObjectAtk
 	public Widget getWidget()
 	{
 		auto p = gtk_accessible_get_widget(gtkAccessible);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 

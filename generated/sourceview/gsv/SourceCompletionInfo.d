@@ -27,8 +27,8 @@ module gsv.SourceCompletionInfo;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gsvc.gsv;
-public  import gsvc.gsvtypes;
+private import gsv.c.functions;
+public  import gsv.c.types;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
 private import gtk.TextIter;
@@ -88,12 +88,12 @@ public class SourceCompletionInfo : Window
 	public this()
 	{
 		auto p = gtk_source_completion_info_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkSourceCompletionInfo*) p);
 	}
 
@@ -107,12 +107,12 @@ public class SourceCompletionInfo : Window
 	public Widget getWidget()
 	{
 		auto p = gtk_source_completion_info_get_widget(gtkSourceCompletionInfo);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -152,13 +152,13 @@ public class SourceCompletionInfo : Window
 		static OnBeforeShowDelegateWrapper[] listeners;
 		void delegate(SourceCompletionInfo) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(SourceCompletionInfo) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnBeforeShowDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -192,12 +192,12 @@ public class SourceCompletionInfo : Window
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackBeforeShow(GtkSourceCompletionInfo* sourcecompletioninfoStruct, OnBeforeShowDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackBeforeShowDestroy(OnBeforeShowDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

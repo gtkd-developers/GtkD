@@ -27,8 +27,8 @@ module gtk.ScrollableIF;
 private import gobject.ObjectG;
 private import gtk.Adjustment;
 private import gtk.Border;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**

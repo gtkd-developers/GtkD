@@ -25,8 +25,8 @@
 module gobject.TypeClass;
 
 private import gobject.ObjectG;
-private import gtkc.gobject;
-public  import gtkc.gobjecttypes;
+private import gobject.c.functions;
+public  import gobject.c.types;
 private import gtkd.Loader;
 
 
@@ -184,12 +184,12 @@ public class TypeClass
 	public TypeClass peekParent()
 	{
 		auto p = g_type_class_peek_parent(gTypeClass);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TypeClass)(cast(GTypeClass*) p);
 	}
 
@@ -238,12 +238,12 @@ public class TypeClass
 	public static TypeClass peek(GType type)
 	{
 		auto p = g_type_class_peek(type);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TypeClass)(cast(GTypeClass*) p);
 	}
 
@@ -263,12 +263,12 @@ public class TypeClass
 	public static TypeClass peekStatic(GType type)
 	{
 		auto p = g_type_class_peek_static(type);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TypeClass)(cast(GTypeClass*) p);
 	}
 
@@ -286,12 +286,12 @@ public class TypeClass
 	public static TypeClass doref(GType type)
 	{
 		auto p = g_type_class_ref(type);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TypeClass)(cast(GTypeClass*) p);
 	}
 }

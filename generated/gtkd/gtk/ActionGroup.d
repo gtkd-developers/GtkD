@@ -34,8 +34,8 @@ private import gtk.Action;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -151,12 +151,12 @@ public class ActionGroup : ObjectG, BuildableIF
 	public this(string name)
 	{
 		auto p = gtk_action_group_new(Str.toStringz(name));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkActionGroup*) p, true);
 	}
 
@@ -325,12 +325,12 @@ public class ActionGroup : ObjectG, BuildableIF
 	public AccelGroup getAccelGroup()
 	{
 		auto p = gtk_action_group_get_accel_group(gtkActionGroup);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(AccelGroup)(cast(GtkAccelGroup*) p);
 	}
 
@@ -347,12 +347,12 @@ public class ActionGroup : ObjectG, BuildableIF
 	public Action getAction(string actionName)
 	{
 		auto p = gtk_action_group_get_action(gtkActionGroup, Str.toStringz(actionName));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Action)(cast(GtkAction*) p);
 	}
 
@@ -408,12 +408,12 @@ public class ActionGroup : ObjectG, BuildableIF
 	public ListG listActions()
 	{
 		auto p = gtk_action_group_list_actions(gtkActionGroup);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -530,13 +530,13 @@ public class ActionGroup : ObjectG, BuildableIF
 		static OnConnectProxyDelegateWrapper[] listeners;
 		void delegate(Action, Widget, ActionGroup) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Action, Widget, ActionGroup) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnConnectProxyDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -582,12 +582,12 @@ public class ActionGroup : ObjectG, BuildableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackConnectProxy(GtkActionGroup* actiongroupStruct, GtkAction* action, GtkWidget* proxy, OnConnectProxyDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Action)(action), ObjectG.getDObject!(Widget)(proxy), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackConnectProxyDestroy(OnConnectProxyDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -598,13 +598,13 @@ public class ActionGroup : ObjectG, BuildableIF
 		static OnDisconnectProxyDelegateWrapper[] listeners;
 		void delegate(Action, Widget, ActionGroup) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Action, Widget, ActionGroup) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDisconnectProxyDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -645,12 +645,12 @@ public class ActionGroup : ObjectG, BuildableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDisconnectProxy(GtkActionGroup* actiongroupStruct, GtkAction* action, GtkWidget* proxy, OnDisconnectProxyDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Action)(action), ObjectG.getDObject!(Widget)(proxy), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDisconnectProxyDestroy(OnDisconnectProxyDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -661,13 +661,13 @@ public class ActionGroup : ObjectG, BuildableIF
 		static OnPostActivateDelegateWrapper[] listeners;
 		void delegate(Action, ActionGroup) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Action, ActionGroup) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPostActivateDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -706,12 +706,12 @@ public class ActionGroup : ObjectG, BuildableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPostActivate(GtkActionGroup* actiongroupStruct, GtkAction* action, OnPostActivateDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Action)(action), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPostActivateDestroy(OnPostActivateDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -722,13 +722,13 @@ public class ActionGroup : ObjectG, BuildableIF
 		static OnPreActivateDelegateWrapper[] listeners;
 		void delegate(Action, ActionGroup) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Action, ActionGroup) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPreActivateDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -767,12 +767,12 @@ public class ActionGroup : ObjectG, BuildableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPreActivate(GtkActionGroup* actiongroupStruct, GtkAction* action, OnPreActivateDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Action)(action), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPreActivateDestroy(OnPreActivateDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

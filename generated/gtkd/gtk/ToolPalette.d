@@ -36,8 +36,8 @@ private import gtk.TargetEntry;
 private import gtk.ToolItem;
 private import gtk.ToolItemGroup;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -170,12 +170,12 @@ public class ToolPalette : Container, OrientableIF, ScrollableIF
 	public this()
 	{
 		auto p = gtk_tool_palette_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkToolPalette*) p);
 	}
 
@@ -189,12 +189,12 @@ public class ToolPalette : Container, OrientableIF, ScrollableIF
 	public static TargetEntry getDragTargetGroup()
 	{
 		auto p = gtk_tool_palette_get_drag_target_group();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TargetEntry)(cast(GtkTargetEntry*) p);
 	}
 
@@ -208,12 +208,12 @@ public class ToolPalette : Container, OrientableIF, ScrollableIF
 	public static TargetEntry getDragTargetItem()
 	{
 		auto p = gtk_tool_palette_get_drag_target_item();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TargetEntry)(cast(GtkTargetEntry*) p);
 	}
 
@@ -251,12 +251,12 @@ public class ToolPalette : Container, OrientableIF, ScrollableIF
 	public Widget getDragItem(SelectionData selection)
 	{
 		auto p = gtk_tool_palette_get_drag_item(gtkToolPalette, (selection is null) ? null : selection.getSelectionDataStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -275,12 +275,12 @@ public class ToolPalette : Container, OrientableIF, ScrollableIF
 	public ToolItemGroup getDropGroup(int x, int y)
 	{
 		auto p = gtk_tool_palette_get_drop_group(gtkToolPalette, x, y);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ToolItemGroup)(cast(GtkToolItemGroup*) p);
 	}
 
@@ -299,12 +299,12 @@ public class ToolPalette : Container, OrientableIF, ScrollableIF
 	public ToolItem getDropItem(int x, int y)
 	{
 		auto p = gtk_tool_palette_get_drop_item(gtkToolPalette, x, y);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ToolItem)(cast(GtkToolItem*) p);
 	}
 

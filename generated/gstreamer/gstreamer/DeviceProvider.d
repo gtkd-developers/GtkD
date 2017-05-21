@@ -33,8 +33,8 @@ private import gstreamer.Device;
 private import gstreamer.DeviceProviderFactory;
 private import gstreamer.ObjectGst;
 private import gstreamer.Plugin;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 private import std.algorithm;
 
 
@@ -160,12 +160,12 @@ public class DeviceProvider : ObjectGst
 	public Bus getBus()
 	{
 		auto p = gst_device_provider_get_bus(gstDeviceProvider);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Bus)(cast(GstBus*) p, true);
 	}
 
@@ -181,12 +181,12 @@ public class DeviceProvider : ObjectGst
 	public ListG getDevices()
 	{
 		auto p = gst_device_provider_get_devices(gstDeviceProvider);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -201,12 +201,12 @@ public class DeviceProvider : ObjectGst
 	public DeviceProviderFactory getFactory()
 	{
 		auto p = gst_device_provider_get_factory(gstDeviceProvider);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(DeviceProviderFactory)(cast(GstDeviceProviderFactory*) p);
 	}
 
@@ -222,7 +222,7 @@ public class DeviceProvider : ObjectGst
 	public string[] getHiddenProviders()
 	{
 		auto retStr = gst_device_provider_get_hidden_providers(gstDeviceProvider);
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}
@@ -298,13 +298,13 @@ public class DeviceProvider : ObjectGst
 		static OnProviderHiddenDelegateWrapper[] listeners;
 		void delegate(string, DeviceProvider) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(string, DeviceProvider) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnProviderHiddenDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -332,12 +332,12 @@ public class DeviceProvider : ObjectGst
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackProviderHidden(GstDeviceProvider* deviceproviderStruct, char* object, OnProviderHiddenDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(object), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackProviderHiddenDestroy(OnProviderHiddenDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -348,13 +348,13 @@ public class DeviceProvider : ObjectGst
 		static OnProviderUnhiddenDelegateWrapper[] listeners;
 		void delegate(string, DeviceProvider) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(string, DeviceProvider) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnProviderUnhiddenDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -382,12 +382,12 @@ public class DeviceProvider : ObjectGst
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackProviderUnhidden(GstDeviceProvider* deviceproviderStruct, char* object, OnProviderUnhiddenDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(object), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackProviderUnhiddenDestroy(OnProviderUnhiddenDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

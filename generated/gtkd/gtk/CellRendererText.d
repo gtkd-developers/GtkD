@@ -29,8 +29,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.CellRenderer;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -99,12 +99,12 @@ public class CellRendererText : CellRenderer
 	public this()
 	{
 		auto p = gtk_cell_renderer_text_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkCellRendererText*) p);
 	}
 
@@ -130,13 +130,13 @@ public class CellRendererText : CellRenderer
 		static OnEditedDelegateWrapper[] listeners;
 		void delegate(string, string, CellRendererText) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(string, string, CellRendererText) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnEditedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -173,12 +173,12 @@ public class CellRendererText : CellRenderer
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackEdited(GtkCellRendererText* cellrenderertextStruct, char* path, char* newText, OnEditedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(path), Str.toString(newText), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackEditedDestroy(OnEditedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

@@ -29,11 +29,11 @@ private import gio.ActionGroupT;
 private import gio.DBusConnection;
 private import gio.RemoteActionGroupIF;
 private import gio.RemoteActionGroupT;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -87,7 +87,7 @@ public class DBusActionGroup : ObjectG, ActionGroupIF, RemoteActionGroupIF
 	this(DBusConnection connection, string busName, string objectPath)
 	{
 		auto p =  g_dbus_action_group_get((connection is null) ? null : connection.getDBusConnectionStruct(), Str.toStringz(busName), Str.toStringz(objectPath));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by g_dbus_action_group_get");
@@ -131,12 +131,12 @@ public class DBusActionGroup : ObjectG, ActionGroupIF, RemoteActionGroupIF
 	public static DBusActionGroup get(DBusConnection connection, string busName, string objectPath)
 	{
 		auto p = g_dbus_action_group_get((connection is null) ? null : connection.getDBusConnectionStruct(), Str.toStringz(busName), Str.toStringz(objectPath));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(DBusActionGroup)(cast(GDBusActionGroup*) p, true);
 	}
 }

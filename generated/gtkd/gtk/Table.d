@@ -27,8 +27,8 @@ module gtk.Table;
 private import glib.ConstructionException;
 private import gtk.Container;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -95,10 +95,10 @@ public class Table : Container
 	int col;
 	int maxRows;
 	int maxCols;
-	
+
 	public AttachOptions defaultXOption = AttachOptions.SHRINK;
 	public AttachOptions defaultYOption = AttachOptions.SHRINK;
-	
+
 	/**
 	 * Removes all children and resizes the table to 1,1
 	 */
@@ -106,13 +106,13 @@ public class Table : Container
 	{
 		super.removeAll();
 		resize(1,1);
-		
+
 		row = 0;
 		col = 0;
 		maxRows = 1;
 		maxCols = 1;
 	}
-	
+
 	/**
 	 * Used to create a new table widget. An initial size must be given by
 	 * specifying how many rows and columns the table should have, although
@@ -128,21 +128,21 @@ public class Table : Container
 	public this (uint rows, uint columns, int homogeneous)
 	{
 		auto p = gtk_table_new(rows, columns, homogeneous);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gtk_table_new");
 		}
-		
+
 		this(cast(GtkTable*) p);
-		
+
 		row = 0;
 		col = 0;
 		maxRows = rows;
 		maxCols = columns;
 	}
-	
-	
+
+
 	/**
 	 * Attach a new widget creating a new row if necessary
 	 */

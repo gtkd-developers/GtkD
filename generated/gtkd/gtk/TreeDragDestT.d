@@ -26,8 +26,8 @@ module gtk.TreeDragDestT;
 
 public  import gtk.SelectionData;
 public  import gtk.TreePath;
-public  import gtkc.gtk;
-public  import gtkc.gtktypes;
+public  import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /** */

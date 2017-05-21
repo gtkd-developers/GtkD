@@ -29,8 +29,8 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Bin;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -107,12 +107,12 @@ public class Overlay : Bin
 	public this()
 	{
 		auto p = gtk_overlay_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkOverlay*) p);
 	}
 
@@ -193,13 +193,13 @@ public class Overlay : Bin
 		static OnGetChildPositionDelegateWrapper[] listeners;
 		bool delegate(Widget, GdkRectangle*, Overlay) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(Widget, GdkRectangle*, Overlay) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnGetChildPositionDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -248,12 +248,12 @@ public class Overlay : Bin
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackGetChildPosition(GtkOverlay* overlayStruct, GtkWidget* widget, GdkRectangle* allocation, OnGetChildPositionDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(ObjectG.getDObject!(Widget)(widget), allocation, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackGetChildPositionDestroy(OnGetChildPositionDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

@@ -28,8 +28,8 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gsv.SourceLanguage;
-private import gsvc.gsv;
-public  import gsvc.gsvtypes;
+private import gsv.c.functions;
+public  import gsv.c.types;
 
 
 /** */
@@ -86,12 +86,12 @@ public class SourceLanguageManager : ObjectG
 	public this()
 	{
 		auto p = gtk_source_language_manager_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkSourceLanguageManager*) p, true);
 	}
 
@@ -104,12 +104,12 @@ public class SourceLanguageManager : ObjectG
 	public static SourceLanguageManager getDefault()
 	{
 		auto p = gtk_source_language_manager_get_default();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SourceLanguageManager)(cast(GtkSourceLanguageManager*) p);
 	}
 
@@ -127,12 +127,12 @@ public class SourceLanguageManager : ObjectG
 	public SourceLanguage getLanguage(string id)
 	{
 		auto p = gtk_source_language_manager_get_language(gtkSourceLanguageManager, Str.toStringz(id));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SourceLanguage)(cast(GtkSourceLanguage*) p);
 	}
 
@@ -208,12 +208,12 @@ public class SourceLanguageManager : ObjectG
 	public SourceLanguage guessLanguage(string filename, string contentType)
 	{
 		auto p = gtk_source_language_manager_guess_language(gtkSourceLanguageManager, Str.toStringz(filename), Str.toStringz(contentType));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SourceLanguage)(cast(GtkSourceLanguage*) p);
 	}
 

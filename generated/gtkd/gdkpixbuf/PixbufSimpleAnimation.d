@@ -26,10 +26,10 @@ module gdkpixbuf.PixbufSimpleAnimation;
 
 private import gdkpixbuf.Pixbuf;
 private import gdkpixbuf.PixbufAnimation;
+private import gdkpixbuf.c.functions;
+public  import gdkpixbuf.c.types;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-private import gtkc.gdkpixbuf;
-public  import gtkc.gdkpixbuftypes;
 
 
 /**
@@ -93,12 +93,12 @@ public class PixbufSimpleAnimation : PixbufAnimation
 	public this(int width, int height, float rate)
 	{
 		auto p = gdk_pixbuf_simple_anim_new(width, height, rate);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GdkPixbufSimpleAnim*) p, true);
 	}
 

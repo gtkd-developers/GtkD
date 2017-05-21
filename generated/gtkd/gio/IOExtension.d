@@ -24,11 +24,11 @@
 
 module gio.IOExtension;
 
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.TypeClass;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -107,12 +107,12 @@ public class IOExtension
 	public TypeClass refClass()
 	{
 		auto p = g_io_extension_ref_class(gIOExtension);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TypeClass)(cast(GTypeClass*) p, true);
 	}
 }

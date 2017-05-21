@@ -26,10 +26,10 @@ module gio.DesktopAppInfoLookupIF;
 
 private import gio.AppInfo;
 private import gio.AppInfoIF;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**

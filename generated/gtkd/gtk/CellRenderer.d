@@ -33,8 +33,8 @@ private import gtk.CellEditable;
 private import gtk.CellEditableIF;
 private import gtk.Requisition;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -241,9 +241,9 @@ public class CellRenderer : ObjectG
 	{
 		GtkRequisition* outminimumSize = gMalloc!GtkRequisition();
 		GtkRequisition* outnaturalSize = gMalloc!GtkRequisition();
-		
+
 		gtk_cell_renderer_get_preferred_size(gtkCellRenderer, (widget is null) ? null : widget.getWidgetStruct(), outminimumSize, outnaturalSize);
-		
+
 		minimumSize = ObjectG.getDObject!(Requisition)(outminimumSize, true);
 		naturalSize = ObjectG.getDObject!(Requisition)(outnaturalSize, true);
 	}
@@ -476,12 +476,12 @@ public class CellRenderer : ObjectG
 	public CellEditableIF startEditing(Event event, Widget widget, string path, GdkRectangle* backgroundArea, GdkRectangle* cellArea, GtkCellRendererState flags)
 	{
 		auto p = gtk_cell_renderer_start_editing(gtkCellRenderer, (event is null) ? null : event.getEventStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(path), backgroundArea, cellArea, flags);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(CellEditable, CellEditableIF)(cast(GtkCellEditable*) p);
 	}
 
@@ -509,13 +509,13 @@ public class CellRenderer : ObjectG
 		static OnEditingCanceledDelegateWrapper[] listeners;
 		void delegate(CellRenderer) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(CellRenderer) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnEditingCanceledDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -551,12 +551,12 @@ public class CellRenderer : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackEditingCanceled(GtkCellRenderer* cellrendererStruct, OnEditingCanceledDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackEditingCanceledDestroy(OnEditingCanceledDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -567,13 +567,13 @@ public class CellRenderer : ObjectG
 		static OnEditingStartedDelegateWrapper[] listeners;
 		void delegate(CellEditableIF, string, CellRenderer) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(CellEditableIF, string, CellRenderer) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnEditingStartedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -634,12 +634,12 @@ public class CellRenderer : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackEditingStarted(GtkCellRenderer* cellrendererStruct, GtkCellEditable* editable, char* path, OnEditingStartedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(CellEditable, CellEditableIF)(editable), Str.toString(path), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackEditingStartedDestroy(OnEditingStartedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

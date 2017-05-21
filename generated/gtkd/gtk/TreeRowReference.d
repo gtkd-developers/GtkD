@@ -30,8 +30,8 @@ private import gtk.TreeIter;
 private import gtk.TreeModel;
 private import gtk.TreeModelIF;
 private import gtk.TreePath;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import gtkd.Loader;
 
 
@@ -101,12 +101,12 @@ public class TreeRowReference
 	public this(TreeModelIF model, TreePath path)
 	{
 		auto p = gtk_tree_row_reference_new((model is null) ? null : model.getTreeModelStruct(), (path is null) ? null : path.getTreePathStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkTreeRowReference*) p);
 	}
 
@@ -148,12 +148,12 @@ public class TreeRowReference
 	public this(ObjectG proxy, TreeModelIF model, TreePath path)
 	{
 		auto p = gtk_tree_row_reference_new_proxy((proxy is null) ? null : proxy.getObjectGStruct(), (model is null) ? null : model.getTreeModelStruct(), (path is null) ? null : path.getTreePathStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_proxy");
 		}
-		
+
 		this(cast(GtkTreeRowReference*) p);
 	}
 
@@ -167,12 +167,12 @@ public class TreeRowReference
 	public TreeRowReference copy()
 	{
 		auto p = gtk_tree_row_reference_copy(gtkTreeRowReference);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TreeRowReference)(cast(GtkTreeRowReference*) p, true);
 	}
 
@@ -195,12 +195,12 @@ public class TreeRowReference
 	public TreeModelIF getModel()
 	{
 		auto p = gtk_tree_row_reference_get_model(gtkTreeRowReference);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TreeModel, TreeModelIF)(cast(GtkTreeModel*) p);
 	}
 
@@ -213,12 +213,12 @@ public class TreeRowReference
 	public TreePath getPath()
 	{
 		auto p = gtk_tree_row_reference_get_path(gtkTreeRowReference);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) p, true);
 	}
 

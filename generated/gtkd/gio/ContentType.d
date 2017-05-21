@@ -27,11 +27,11 @@ module gio.ContentType;
 private import gio.FileIF;
 private import gio.Icon;
 private import gio.IconIF;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ListG;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /** */
@@ -82,7 +82,7 @@ public struct ContentType
 	public static string fromMimeType(string mimeType)
 	{
 		auto retStr = g_content_type_from_mime_type(Str.toStringz(mimeType));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -99,7 +99,7 @@ public struct ContentType
 	public static string getDescription(string type)
 	{
 		auto retStr = g_content_type_get_description(Str.toStringz(type));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -122,7 +122,7 @@ public struct ContentType
 	public static string getGenericIconName(string type)
 	{
 		auto retStr = g_content_type_get_generic_icon_name(Str.toStringz(type));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -139,12 +139,12 @@ public struct ContentType
 	public static IconIF getIcon(string type)
 	{
 		auto p = g_content_type_get_icon(Str.toStringz(type));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p, true);
 	}
 
@@ -160,7 +160,7 @@ public struct ContentType
 	public static string getMimeType(string type)
 	{
 		auto retStr = g_content_type_get_mime_type(Str.toStringz(type));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -179,12 +179,12 @@ public struct ContentType
 	public static IconIF getSymbolicIcon(string type)
 	{
 		auto p = g_content_type_get_symbolic_icon(Str.toStringz(type));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p, true);
 	}
 
@@ -207,11 +207,11 @@ public struct ContentType
 	public static string typeGuess(string filename, char[] data, out bool resultUncertain)
 	{
 		int outresultUncertain;
-		
+
 		auto retStr = g_content_type_guess(Str.toStringz(filename), data.ptr, cast(size_t)data.length, &outresultUncertain);
-		
+
 		resultUncertain = (outresultUncertain == 1);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -241,7 +241,7 @@ public struct ContentType
 	public static string[] guessForTree(FileIF root)
 	{
 		auto retStr = g_content_type_guess_for_tree((root is null) ? null : root.getFileStruct());
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}
@@ -288,12 +288,12 @@ public struct ContentType
 	public static ListG contentTypesGetRegistered()
 	{
 		auto p = g_content_types_get_registered();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 

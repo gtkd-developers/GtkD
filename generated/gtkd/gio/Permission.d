@@ -26,11 +26,11 @@ module gio.Permission;
 
 private import gio.AsyncResultIF;
 private import gio.Cancellable;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ErrorG;
 private import glib.GException;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -120,14 +120,14 @@ public class Permission : ObjectG
 	public bool acquire(Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_permission_acquire(gPermission, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -168,14 +168,14 @@ public class Permission : ObjectG
 	public bool acquireFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_permission_acquire_finish(gPermission, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -269,14 +269,14 @@ public class Permission : ObjectG
 	public bool release(Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_permission_release(gPermission, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -317,14 +317,14 @@ public class Permission : ObjectG
 	public bool releaseFinish(AsyncResultIF result)
 	{
 		GError* err = null;
-		
+
 		auto p = g_permission_release_finish(gPermission, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 }

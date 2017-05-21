@@ -32,8 +32,8 @@ private import gtk.ActionableT;
 private import gtk.ActivatableIF;
 private import gtk.ActivatableT;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -114,12 +114,12 @@ public class Switch : Widget, ActionableIF, ActivatableIF
 	public this()
 	{
 		auto p = gtk_switch_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkSwitch*) p);
 	}
 
@@ -184,13 +184,13 @@ public class Switch : Widget, ActionableIF, ActivatableIF
 		static OnActivateDelegateWrapper[] listeners;
 		void delegate(Switch) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Switch) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnActivateDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -223,12 +223,12 @@ public class Switch : Widget, ActionableIF, ActivatableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackActivate(GtkSwitch* switchStruct, OnActivateDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackActivateDestroy(OnActivateDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -239,13 +239,13 @@ public class Switch : Widget, ActionableIF, ActivatableIF
 		static OnStateSetDelegateWrapper[] listeners;
 		bool delegate(bool, Switch) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(bool, Switch) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnStateSetDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -294,12 +294,12 @@ public class Switch : Widget, ActionableIF, ActivatableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackStateSet(GtkSwitch* switchStruct, bool state, OnStateSetDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(state, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackStateSetDestroy(OnStateSetDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

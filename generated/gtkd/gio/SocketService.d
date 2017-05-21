@@ -26,11 +26,11 @@ module gio.SocketService;
 
 private import gio.SocketConnection;
 private import gio.SocketListener;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -123,12 +123,12 @@ public class SocketService : SocketListener
 	public this()
 	{
 		auto p = g_socket_service_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GSocketService*) p, true);
 	}
 
@@ -192,13 +192,13 @@ public class SocketService : SocketListener
 		static OnIncomingDelegateWrapper[] listeners;
 		bool delegate(SocketConnection, ObjectG, SocketService) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(SocketConnection, ObjectG, SocketService) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnIncomingDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -243,12 +243,12 @@ public class SocketService : SocketListener
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackIncoming(GSocketService* socketserviceStruct, GSocketConnection* connection, GObject* sourceObject, OnIncomingDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(ObjectG.getDObject!(SocketConnection)(connection), ObjectG.getDObject!(ObjectG)(sourceObject), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackIncomingDestroy(OnIncomingDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

@@ -26,12 +26,12 @@ module gio.DBusObjectT;
 
 public  import gio.DBusInterface;
 public  import gio.DBusInterfaceIF;
+public  import gio.c.functions;
+public  import gio.c.types;
 public  import glib.ListG;
 public  import glib.Str;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
-public  import gtkc.gio;
-public  import gtkc.giotypes;
 public  import std.algorithm;
 
 
@@ -67,12 +67,12 @@ public template DBusObjectT(TStruct)
 	public DBusInterfaceIF getInterface(string interfaceName)
 	{
 		auto p = g_dbus_object_get_interface(getDBusObjectStruct(), Str.toStringz(interfaceName));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(DBusInterface, DBusInterfaceIF)(cast(GDBusInterface*) p, true);
 	}
 
@@ -88,12 +88,12 @@ public template DBusObjectT(TStruct)
 	public ListG getInterfaces()
 	{
 		auto p = g_dbus_object_get_interfaces(getDBusObjectStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p, true);
 	}
 
@@ -114,13 +114,13 @@ public template DBusObjectT(TStruct)
 		static OnInterfaceAddedDelegateWrapper[] listeners;
 		void delegate(DBusInterfaceIF, DBusObjectIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(DBusInterfaceIF, DBusObjectIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnInterfaceAddedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -155,12 +155,12 @@ public template DBusObjectT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackInterfaceAdded(GDBusObject* dbusobjectStruct, GDBusInterface* iface, OnInterfaceAddedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(DBusInterface, DBusInterfaceIF)(iface), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackInterfaceAddedDestroy(OnInterfaceAddedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -171,13 +171,13 @@ public template DBusObjectT(TStruct)
 		static OnInterfaceRemovedDelegateWrapper[] listeners;
 		void delegate(DBusInterfaceIF, DBusObjectIF) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(DBusInterfaceIF, DBusObjectIF) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnInterfaceRemovedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -212,12 +212,12 @@ public template DBusObjectT(TStruct)
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackInterfaceRemoved(GDBusObject* dbusobjectStruct, GDBusInterface* iface, OnInterfaceRemovedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(DBusInterface, DBusInterfaceIF)(iface), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackInterfaceRemovedDestroy(OnInterfaceRemovedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

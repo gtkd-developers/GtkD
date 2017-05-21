@@ -33,8 +33,8 @@ private import gtk.Button;
 private import gtk.OrientableIF;
 private import gtk.OrientableT;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -116,12 +116,12 @@ public class ScaleButton : Button, OrientableIF
 	public this(GtkIconSize size, double min, double max, double step, string[] icons)
 	{
 		auto p = gtk_scale_button_new(size, min, max, step, Str.toStringzArray(icons));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkScaleButton*) p);
 	}
 
@@ -136,12 +136,12 @@ public class ScaleButton : Button, OrientableIF
 	public Adjustment getAdjustment()
 	{
 		auto p = gtk_scale_button_get_adjustment(gtkScaleButton);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
 	}
 
@@ -155,12 +155,12 @@ public class ScaleButton : Button, OrientableIF
 	public Button getMinusButton()
 	{
 		auto p = gtk_scale_button_get_minus_button(gtkScaleButton);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Button)(cast(GtkButton*) p);
 	}
 
@@ -174,12 +174,12 @@ public class ScaleButton : Button, OrientableIF
 	public Button getPlusButton()
 	{
 		auto p = gtk_scale_button_get_plus_button(gtkScaleButton);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Button)(cast(GtkButton*) p);
 	}
 
@@ -193,12 +193,12 @@ public class ScaleButton : Button, OrientableIF
 	public Widget getPopup()
 	{
 		auto p = gtk_scale_button_get_popup(gtkScaleButton);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -264,13 +264,13 @@ public class ScaleButton : Button, OrientableIF
 		static OnPopdownDelegateWrapper[] listeners;
 		void delegate(ScaleButton) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(ScaleButton) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPopdownDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -306,12 +306,12 @@ public class ScaleButton : Button, OrientableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPopdown(GtkScaleButton* scalebuttonStruct, OnPopdownDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPopdownDestroy(OnPopdownDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -322,13 +322,13 @@ public class ScaleButton : Button, OrientableIF
 		static OnPopupDelegateWrapper[] listeners;
 		void delegate(ScaleButton) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(ScaleButton) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPopupDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -364,12 +364,12 @@ public class ScaleButton : Button, OrientableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPopup(GtkScaleButton* scalebuttonStruct, OnPopupDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPopupDestroy(OnPopupDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -380,13 +380,13 @@ public class ScaleButton : Button, OrientableIF
 		static OnValueChangedDelegateWrapper[] listeners;
 		void delegate(double, ScaleButton) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(double, ScaleButton) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnValueChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -422,12 +422,12 @@ public class ScaleButton : Button, OrientableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackValueChanged(GtkScaleButton* scalebuttonStruct, double value, OnValueChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(value, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackValueChangedDestroy(OnValueChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

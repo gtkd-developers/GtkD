@@ -30,8 +30,8 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.Bin;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -163,7 +163,7 @@ public class Expander : Bin
 	public this (string label, bool mnemonic=true)
 	{
 		GtkExpander* p;
-		
+
 		if ( mnemonic )
 		{
 			p = cast(GtkExpander*)gtk_expander_new_with_mnemonic(Str.toStringz(label));
@@ -172,12 +172,12 @@ public class Expander : Bin
 		{
 			p = cast(GtkExpander*)gtk_expander_new(Str.toStringz(label));
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gtk_expander_new");
 		}
-		
+
 		this(p);
 	}
 
@@ -254,12 +254,12 @@ public class Expander : Bin
 	public Widget getLabelWidget()
 	{
 		auto p = gtk_expander_get_label_widget(gtkExpander);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
@@ -441,13 +441,13 @@ public class Expander : Bin
 		static OnActivateDelegateWrapper[] listeners;
 		void delegate(Expander) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Expander) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnActivateDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -475,12 +475,12 @@ public class Expander : Bin
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackActivate(GtkExpander* expanderStruct, OnActivateDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackActivateDestroy(OnActivateDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

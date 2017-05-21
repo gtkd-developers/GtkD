@@ -32,8 +32,8 @@ private import gtk.Button;
 private import gtk.FontChooserIF;
 private import gtk.FontChooserT;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -102,12 +102,12 @@ public class FontButton : Button, FontChooserIF
 	public this()
 	{
 		auto p = gtk_font_button_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkFontButton*) p);
 	}
 
@@ -126,12 +126,12 @@ public class FontButton : Button, FontChooserIF
 	public this(string fontname)
 	{
 		auto p = gtk_font_button_new_with_font(Str.toStringz(fontname));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_with_font");
 		}
-		
+
 		this(cast(GtkFontButton*) p);
 	}
 
@@ -297,13 +297,13 @@ public class FontButton : Button, FontChooserIF
 		static OnFontSetDelegateWrapper[] listeners;
 		void delegate(FontButton) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(FontButton) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnFontSetDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -341,12 +341,12 @@ public class FontButton : Button, FontChooserIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackFontSet(GtkFontButton* fontbuttonStruct, OnFontSetDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackFontSetDestroy(OnFontSetDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

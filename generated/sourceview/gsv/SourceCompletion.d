@@ -33,8 +33,8 @@ private import gsv.SourceCompletionContext;
 private import gsv.SourceCompletionInfo;
 private import gsv.SourceCompletionProviderIF;
 private import gsv.SourceView;
-private import gsvc.gsv;
-public  import gsvc.gsvtypes;
+private import gsv.c.functions;
+public  import gsv.c.types;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
 private import gtk.TextIter;
@@ -102,14 +102,14 @@ public class SourceCompletion : ObjectG, BuildableIF
 	public bool addProvider(SourceCompletionProviderIF provider)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_source_completion_add_provider(gtkSourceCompletion, (provider is null) ? null : provider.getSourceCompletionProviderStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -144,12 +144,12 @@ public class SourceCompletion : ObjectG, BuildableIF
 	public SourceCompletionContext createContext(TextIter position)
 	{
 		auto p = gtk_source_completion_create_context(gtkSourceCompletion, (position is null) ? null : position.getTextIterStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SourceCompletionContext)(cast(GtkSourceCompletionContext*) p);
 	}
 
@@ -163,12 +163,12 @@ public class SourceCompletion : ObjectG, BuildableIF
 	public SourceCompletionInfo getInfoWindow()
 	{
 		auto p = gtk_source_completion_get_info_window(gtkSourceCompletion);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SourceCompletionInfo)(cast(GtkSourceCompletionInfo*) p);
 	}
 
@@ -181,12 +181,12 @@ public class SourceCompletion : ObjectG, BuildableIF
 	public ListG getProviders()
 	{
 		auto p = gtk_source_completion_get_providers(gtkSourceCompletion);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -200,12 +200,12 @@ public class SourceCompletion : ObjectG, BuildableIF
 	public SourceView getView()
 	{
 		auto p = gtk_source_completion_get_view(gtkSourceCompletion);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(SourceView)(cast(GtkSourceView*) p);
 	}
 
@@ -244,14 +244,14 @@ public class SourceCompletion : ObjectG, BuildableIF
 	public bool removeProvider(SourceCompletionProviderIF provider)
 	{
 		GError* err = null;
-		
+
 		auto p = gtk_source_completion_remove_provider(gtkSourceCompletion, (provider is null) ? null : provider.getSourceCompletionProviderStruct(), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -293,13 +293,13 @@ public class SourceCompletion : ObjectG, BuildableIF
 		static OnActivateProposalDelegateWrapper[] listeners;
 		void delegate(SourceCompletion) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(SourceCompletion) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnActivateProposalDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -335,12 +335,12 @@ public class SourceCompletion : ObjectG, BuildableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackActivateProposal(GtkSourceCompletion* sourcecompletionStruct, OnActivateProposalDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackActivateProposalDestroy(OnActivateProposalDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -351,13 +351,13 @@ public class SourceCompletion : ObjectG, BuildableIF
 		static OnHideDelegateWrapper[] listeners;
 		void delegate(SourceCompletion) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(SourceCompletion) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnHideDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -388,12 +388,12 @@ public class SourceCompletion : ObjectG, BuildableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackHide(GtkSourceCompletion* sourcecompletionStruct, OnHideDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackHideDestroy(OnHideDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -404,13 +404,13 @@ public class SourceCompletion : ObjectG, BuildableIF
 		static OnMoveCursorDelegateWrapper[] listeners;
 		void delegate(GtkScrollStep, int, SourceCompletion) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(GtkScrollStep, int, SourceCompletion) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMoveCursorDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -459,12 +459,12 @@ public class SourceCompletion : ObjectG, BuildableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackMoveCursor(GtkSourceCompletion* sourcecompletionStruct, GtkScrollStep step, int num, OnMoveCursorDelegateWrapper wrapper)
 	{
 		wrapper.dlg(step, num, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMoveCursorDestroy(OnMoveCursorDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -475,13 +475,13 @@ public class SourceCompletion : ObjectG, BuildableIF
 		static OnMovePageDelegateWrapper[] listeners;
 		void delegate(GtkScrollStep, int, SourceCompletion) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(GtkScrollStep, int, SourceCompletion) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMovePageDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -533,12 +533,12 @@ public class SourceCompletion : ObjectG, BuildableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackMovePage(GtkSourceCompletion* sourcecompletionStruct, GtkScrollStep step, int num, OnMovePageDelegateWrapper wrapper)
 	{
 		wrapper.dlg(step, num, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMovePageDestroy(OnMovePageDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -549,13 +549,13 @@ public class SourceCompletion : ObjectG, BuildableIF
 		static OnPopulateContextDelegateWrapper[] listeners;
 		void delegate(SourceCompletionContext, SourceCompletion) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(SourceCompletionContext, SourceCompletion) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPopulateContextDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -589,12 +589,12 @@ public class SourceCompletion : ObjectG, BuildableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPopulateContext(GtkSourceCompletion* sourcecompletionStruct, GtkSourceCompletionContext* context, OnPopulateContextDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(SourceCompletionContext)(context), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPopulateContextDestroy(OnPopulateContextDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -605,13 +605,13 @@ public class SourceCompletion : ObjectG, BuildableIF
 		static OnShowDelegateWrapper[] listeners;
 		void delegate(SourceCompletion) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(SourceCompletion) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnShowDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -642,12 +642,12 @@ public class SourceCompletion : ObjectG, BuildableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackShow(GtkSourceCompletion* sourcecompletionStruct, OnShowDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackShowDestroy(OnShowDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

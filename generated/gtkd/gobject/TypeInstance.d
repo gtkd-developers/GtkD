@@ -24,8 +24,8 @@
 
 module gobject.TypeInstance;
 
-private import gtkc.gobject;
-public  import gtkc.gobjecttypes;
+private import gobject.c.functions;
+public  import gobject.c.types;
 
 
 /**

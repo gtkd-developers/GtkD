@@ -27,13 +27,13 @@ module gio.FileInfo;
 private import gio.FileAttributeMatcher;
 private import gio.Icon;
 private import gio.IconIF;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.DateTime;
 private import glib.Str;
 private import glib.TimeVal;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -113,12 +113,12 @@ public class FileInfo : ObjectG
 	public this()
 	{
 		auto p = g_file_info_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GFileInfo*) p, true);
 	}
 
@@ -150,12 +150,12 @@ public class FileInfo : ObjectG
 	public FileInfo dup()
 	{
 		auto p = g_file_info_dup(gFileInfo);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(FileInfo)(cast(GFileInfo*) p, true);
 	}
 
@@ -173,7 +173,7 @@ public class FileInfo : ObjectG
 	public string getAttributeAsString(string attribute)
 	{
 		auto retStr = g_file_info_get_attribute_as_string(gFileInfo, Str.toStringz(attribute));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -268,12 +268,12 @@ public class FileInfo : ObjectG
 	public ObjectG getAttributeObject(string attribute)
 	{
 		auto p = g_file_info_get_attribute_object(gFileInfo, Str.toStringz(attribute));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p);
 	}
 
@@ -389,12 +389,12 @@ public class FileInfo : ObjectG
 	public DateTime getDeletionDate()
 	{
 		auto p = g_file_info_get_deletion_date(gFileInfo);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new DateTime(cast(GDateTime*) p, true);
 	}
 
@@ -448,12 +448,12 @@ public class FileInfo : ObjectG
 	public IconIF getIcon()
 	{
 		auto p = g_file_info_get_icon(gFileInfo);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
 	}
 
@@ -497,9 +497,9 @@ public class FileInfo : ObjectG
 	public void getModificationTime(out TimeVal result)
 	{
 		GTimeVal* outresult = gMalloc!GTimeVal();
-		
+
 		g_file_info_get_modification_time(gFileInfo, outresult);
-		
+
 		result = new TimeVal(outresult, true);
 	}
 
@@ -544,12 +544,12 @@ public class FileInfo : ObjectG
 	public IconIF getSymbolicIcon()
 	{
 		auto p = g_file_info_get_symbolic_icon(gFileInfo);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
 	}
 
@@ -608,7 +608,7 @@ public class FileInfo : ObjectG
 	public string[] listAttributes(string nameSpace)
 	{
 		auto retStr = g_file_info_list_attributes(gFileInfo, Str.toStringz(nameSpace));
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}

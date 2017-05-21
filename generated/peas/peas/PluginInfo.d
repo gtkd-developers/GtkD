@@ -29,8 +29,8 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import peasc.peas;
-public  import peasc.peastypes;
+private import peas.c.functions;
+public  import peas.c.types;
 
 
 /**
@@ -258,12 +258,12 @@ public class PluginInfo
 	public Settings getSettings(string schemaId)
 	{
 		auto p = peas_plugin_info_get_settings(peasPluginInfo, Str.toStringz(schemaId));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Settings)(cast(GSettings*) p, true);
 	}
 
@@ -318,14 +318,14 @@ public class PluginInfo
 	public bool isAvailable()
 	{
 		GError* err = null;
-		
+
 		auto p = peas_plugin_info_is_available(peasPluginInfo, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 

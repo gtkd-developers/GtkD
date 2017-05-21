@@ -28,8 +28,8 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gstreamer.Structure;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /**
@@ -114,12 +114,12 @@ public class Context
 	public this(string contextType, bool persistent)
 	{
 		auto p = gst_context_new(Str.toStringz(contextType), persistent);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GstContext*) p);
 	}
 
@@ -147,12 +147,12 @@ public class Context
 	public Structure getStructure()
 	{
 		auto p = gst_context_get_structure(gstContext);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
 	}
 
@@ -196,12 +196,12 @@ public class Context
 	public Structure writableStructure()
 	{
 		auto p = gst_context_writable_structure(gstContext);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p, true);
 	}
 }

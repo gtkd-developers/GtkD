@@ -32,8 +32,8 @@ private import gtk.Entry;
 private import gtk.OrientableIF;
 private import gtk.OrientableT;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -203,12 +203,12 @@ public class SpinButton : Entry, OrientableIF
 	public this(Adjustment adjustment, double climbRate, uint digits)
 	{
 		auto p = gtk_spin_button_new((adjustment is null) ? null : adjustment.getAdjustmentStruct(), climbRate, digits);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkSpinButton*) p);
 	}
 
@@ -235,12 +235,12 @@ public class SpinButton : Entry, OrientableIF
 	public this(double min, double max, double step)
 	{
 		auto p = gtk_spin_button_new_with_range(min, max, step);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_with_range");
 		}
-		
+
 		this(cast(GtkSpinButton*) p);
 	}
 
@@ -267,12 +267,12 @@ public class SpinButton : Entry, OrientableIF
 	public Adjustment getAdjustment()
 	{
 		auto p = gtk_spin_button_get_adjustment(gtkSpinButton);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
 	}
 
@@ -516,13 +516,13 @@ public class SpinButton : Entry, OrientableIF
 		static OnChangeValueDelegateWrapper[] listeners;
 		void delegate(GtkScrollType, SpinButton) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(GtkScrollType, SpinButton) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnChangeValueDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -562,12 +562,12 @@ public class SpinButton : Entry, OrientableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackChangeValue(GtkSpinButton* spinbuttonStruct, GtkScrollType scroll, OnChangeValueDelegateWrapper wrapper)
 	{
 		wrapper.dlg(scroll, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackChangeValueDestroy(OnChangeValueDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -578,13 +578,13 @@ public class SpinButton : Entry, OrientableIF
 		static OnInputDelegateWrapper[] listeners;
 		int delegate(void*, SpinButton) dlg;
 		gulong handlerId;
-		
+
 		this(int delegate(void*, SpinButton) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnInputDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -625,12 +625,12 @@ public class SpinButton : Entry, OrientableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackInput(GtkSpinButton* spinbuttonStruct, void* newValue, OnInputDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(newValue, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackInputDestroy(OnInputDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -641,13 +641,13 @@ public class SpinButton : Entry, OrientableIF
 		static OnOutputDelegateWrapper[] listeners;
 		bool delegate(SpinButton) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(SpinButton) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnOutputDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -699,12 +699,12 @@ public class SpinButton : Entry, OrientableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackOutput(GtkSpinButton* spinbuttonStruct, OnOutputDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackOutputDestroy(OnOutputDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -715,13 +715,13 @@ public class SpinButton : Entry, OrientableIF
 		static OnValueChangedDelegateWrapper[] listeners;
 		void delegate(SpinButton) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(SpinButton) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnValueChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -752,12 +752,12 @@ public class SpinButton : Entry, OrientableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackValueChanged(GtkSpinButton* spinbuttonStruct, OnValueChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackValueChangedDestroy(OnValueChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -768,13 +768,13 @@ public class SpinButton : Entry, OrientableIF
 		static OnWrappedDelegateWrapper[] listeners;
 		void delegate(SpinButton) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(SpinButton) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnWrappedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -807,12 +807,12 @@ public class SpinButton : Entry, OrientableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackWrapped(GtkSpinButton* spinbuttonStruct, OnWrappedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackWrappedDestroy(OnWrappedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

@@ -26,11 +26,11 @@ module gio.Menu;
 
 private import gio.MenuItem;
 private import gio.MenuModel;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -100,12 +100,12 @@ public class Menu : MenuModel
 	public this()
 	{
 		auto p = g_menu_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GMenu*) p, true);
 	}
 

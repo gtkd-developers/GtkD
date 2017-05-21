@@ -30,8 +30,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.ToggleAction;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -129,12 +129,12 @@ public class RadioAction : ToggleAction
 	public this(string name, string label, string tooltip, string stockId, int value)
 	{
 		auto p = gtk_radio_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId), value);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkRadioAction*) p, true);
 	}
 
@@ -177,12 +177,12 @@ public class RadioAction : ToggleAction
 	public ListSG getGroup()
 	{
 		auto p = gtk_radio_action_get_group(gtkRadioAction);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListSG(cast(GSList*) p);
 	}
 
@@ -249,13 +249,13 @@ public class RadioAction : ToggleAction
 		static OnChangedDelegateWrapper[] listeners;
 		void delegate(RadioAction, RadioAction) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(RadioAction, RadioAction) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -292,12 +292,12 @@ public class RadioAction : ToggleAction
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackChanged(GtkRadioAction* radioactionStruct, GtkRadioAction* current, OnChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(RadioAction)(current), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

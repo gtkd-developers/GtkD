@@ -27,8 +27,8 @@ module gtk.TextChildAnchor;
 private import glib.ConstructionException;
 private import glib.ListG;
 private import gobject.ObjectG;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -90,12 +90,12 @@ public class TextChildAnchor : ObjectG
 	public this()
 	{
 		auto p = gtk_text_child_anchor_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkTextChildAnchor*) p, true);
 	}
 
@@ -123,12 +123,12 @@ public class TextChildAnchor : ObjectG
 	public ListG getWidgets()
 	{
 		auto p = gtk_text_child_anchor_get_widgets(gtkTextChildAnchor);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 }

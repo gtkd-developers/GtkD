@@ -30,8 +30,8 @@ private import gobject.Value;
 private import gtk.TreeIterError;
 private import gtk.TreeModelIF;
 private import gtk.TreePath;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -75,19 +75,19 @@ public class TreeIter
 	 * is created from the model.
 	 */
 	GtkTreeModel* gtkTreeModel;
-	
+
 	/** */
 	public void setModel(GtkTreeModel* gtkTreeModel)
 	{
 		this.gtkTreeModel = gtkTreeModel;
 	}
-	
+
 	/** */
 	public void setModel(TreeModelIF treeModel)
 	{
 		this.gtkTreeModel = treeModel.getTreeModelStruct();
 	}
-	
+
 	/**
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -95,7 +95,7 @@ public class TreeIter
 	{
 		this(treeModel, new TreePath(treePath));
 	}
-	
+
 	/**
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -110,7 +110,7 @@ public class TreeIter
 			throw new ConstructionException("null returned by gtk_tree_model_get_iter_from_string");
 		}
 	}
-	
+
 	/**
 	 * creates a new tree iteractor.
 	 * used TreeView.createIter and TreeView.append() to create iteractor for a tree or list
@@ -119,7 +119,7 @@ public class TreeIter
 	{
 		this(new GtkTreeIter);
 	}
-	
+
 	/**
 	 * Creates a dynamically allocated tree iterator as a copy of iter.
 	 */
@@ -127,10 +127,10 @@ public class TreeIter
 	{
 		TreeIter cp = new TreeIter();
 		 *(cp.gtkTreeIter) = *(iter.gtkTreeIter);
-		
+
 		return cp;
 	}
-	
+
 	/**
 	 * Get Value
 	 * Params:
@@ -145,7 +145,7 @@ public class TreeIter
 		}
 		gtk_tree_model_get_value(gtkTreeModel, gtkTreeIter, column, value.getValueStruct());
 	}
-	
+
 	/**
 	 * Get the value of a column as a string
 	 * Params:
@@ -163,7 +163,7 @@ public class TreeIter
 		//printf("TreeIter.getValuaString = %.*s\n", value.getString().toString());
 		return value.getString();
 	}
-	
+
 	/**
 	 * Get the value of a column as an int
 	 * Params:
@@ -180,7 +180,7 @@ public class TreeIter
 		gtk_tree_model_get_value(gtkTreeModel, gtkTreeIter, column, value.getValueStruct());
 		return value.getInt();
 	}
-	
+
 	/** */
 	TreePath getTreePath()
 	{
@@ -190,7 +190,7 @@ public class TreeIter
 		}
 		return new TreePath(gtk_tree_model_get_path(gtkTreeModel, gtkTreeIter));
 	}
-	
+
 	/**
 	 * This return the path visible to the user.
 	 */
@@ -201,7 +201,7 @@ public class TreeIter
 		{
 			throw new TreeIterError("getVisiblePath", "Tree model not set");
 		}
-		
+
 		vPath = getValueString(0);
 		TreeIter parent = getParent();
 		while ( parent !is  null )
@@ -210,12 +210,12 @@ public class TreeIter
 			vPath = parent.getValueString(0) ~ separator ~ vPath;
 			parent = parent.getParent();
 		}
-		
+
 		//printf("TreeIter.getVisiblePath = %.*s\n", vPath.toString());
-		
+
 		return vPath;
 	}
-	
+
 	/**
 	 * Gets the parent of this iter
 	 * Returns: the parent iter or null if can't get parent or an error occured
@@ -235,7 +235,7 @@ public class TreeIter
 		parent.setModel(gtkTreeModel);
 		return parent;
 	}
-	
+
 	/** */
 	TreeIter getGrandParent()
 	{
@@ -250,34 +250,34 @@ public class TreeIter
 			grandParent = parent;
 			parent = grandParent.getParent();
 		}
-		
+
 		return grandParent;
 	}
-	
+
 	/** A unique stamp to catch invalid iterators */
 	public int stamp()
 	{
 		return gtkTreeIter.stamp;
 	}
-	
+
 	/** Ditto */
 	public void stamp(int stamp)
 	{
 		gtkTreeIter.stamp = stamp;
 	}
-	
+
 	/** Model specific data */
 	public void* userData()
 	{
 		return gtkTreeIter.userData;
 	}
-	
+
 	/** Ditto */
 	public void userData(void* data)
 	{
 		gtkTreeIter.userData = data;
 	}
-	
+
 	public struct IterData
 	{
 		/// Data fields.
@@ -288,13 +288,13 @@ public class TreeIter
 			double  dataFloat;
 			double  dataDouble;
 			string  dataString;
-			
+
 			void*   dataUser;
 		}
-		
+
 		TypeInfo type = typeid(void);
 	}
-	
+
 	/**
 	 * setUserData and getUserData provide simple boxing
 	 * around the userData field in the TreeIter struct.
@@ -311,7 +311,7 @@ public class TreeIter
 	{
 		IterData* itData = new IterData;
 		itData.type = typeid(T);
-		
+
 		static if(is(T == int))
 		{
 			itData.dataInt = data;
@@ -339,18 +339,18 @@ public class TreeIter
 		else
 		{
 			pragma(msg, "IterData Type not Supported");
-			
+
 			throw new TreeIterError("getUserData", "IterData Type not Supported");
 		}
-		
+
 		gtkTreeIter.userData = itData;
 	}
-	
+
 	/** Ditto */
 	public T getUserData(T)()
 	{
 		IterData* itData = cast(IterData*)gtkTreeIter.userData;
-		
+
 		static if(is(T == int))
 		{
 			if(itData.type is typeid(T))
@@ -420,7 +420,7 @@ public class TreeIter
 		else
 		{
 			pragma(msg, "IterData Type not Supported");
-			
+
 			throw new TreeIterError("getUserData", "IterData Type not Supported");
 		}
 	}

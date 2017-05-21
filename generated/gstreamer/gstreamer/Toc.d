@@ -30,8 +30,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gstreamer.TagList;
 private import gstreamer.TocEntry;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /**
@@ -131,12 +131,12 @@ public class Toc
 	public this(GstTocScope scop)
 	{
 		auto p = gst_toc_new(scop);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GstToc*) p);
 	}
 
@@ -169,12 +169,12 @@ public class Toc
 	public TocEntry findEntry(string uid)
 	{
 		auto p = gst_toc_find_entry(gstToc, Str.toStringz(uid));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TocEntry)(cast(GstTocEntry*) p);
 	}
 
@@ -186,12 +186,12 @@ public class Toc
 	public ListG getEntries()
 	{
 		auto p = gst_toc_get_entries(gstToc);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -211,12 +211,12 @@ public class Toc
 	public TagList getTags()
 	{
 		auto p = gst_toc_get_tags(gstToc);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TagList)(cast(GstTagList*) p);
 	}
 

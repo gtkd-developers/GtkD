@@ -27,9 +27,9 @@ module gio.TlsBackendT;
 public  import gio.TlsBackend;
 public  import gio.TlsBackendIF;
 public  import gio.TlsDatabase;
+public  import gio.c.functions;
+public  import gio.c.types;
 public  import gobject.ObjectG;
-public  import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**
@@ -58,12 +58,12 @@ public template TlsBackendT(TStruct)
 	public static TlsBackendIF getDefault()
 	{
 		auto p = g_tls_backend_get_default();
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TlsBackend, TlsBackendIF)(cast(GTlsBackend*) p);
 	}
 
@@ -104,12 +104,12 @@ public template TlsBackendT(TStruct)
 	public TlsDatabase getDefaultDatabase()
 	{
 		auto p = g_tls_backend_get_default_database(getTlsBackendStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TlsDatabase)(cast(GTlsDatabase*) p, true);
 	}
 

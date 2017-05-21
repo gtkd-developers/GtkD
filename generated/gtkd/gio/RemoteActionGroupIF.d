@@ -24,10 +24,10 @@
 
 module gio.RemoteActionGroupIF;
 
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.Str;
 private import glib.Variant;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 
 
 /**

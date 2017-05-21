@@ -35,6 +35,8 @@ private import gio.DBusInterfaceT;
 private import gio.InitableIF;
 private import gio.InitableT;
 private import gio.UnixFDList;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
@@ -42,8 +44,6 @@ private import glib.Str;
 private import glib.Variant;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -149,7 +149,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	{
 		GError* err = null;
 		GDBusProxy* p;
-		
+
 		if ( forBus )
 		{
 			p = g_dbus_proxy_new_for_bus_finish((res is null) ? null : res.getAsyncResultStruct(), &err);
@@ -158,12 +158,12 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 		{
 			p = g_dbus_proxy_new_finish((res is null) ? null : res.getAsyncResultStruct(), &err);
 		}
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by g_dbus_proxy_new_finish((res is null) ? null : res.getAsyncResultStruct(), &err)");
@@ -205,19 +205,19 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	public this(GBusType busType, GDBusProxyFlags flags, DBusInterfaceInfo info, string name, string objectPath, string interfaceName, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_dbus_proxy_new_for_bus_sync(busType, flags, (info is null) ? null : info.getDBusInterfaceInfoStruct(), Str.toStringz(name), Str.toStringz(objectPath), Str.toStringz(interfaceName), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_for_bus_sync");
 		}
-		
+
 		this(cast(GDBusProxy*) p, true);
 	}
 
@@ -260,19 +260,19 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	public this(DBusConnection connection, GDBusProxyFlags flags, DBusInterfaceInfo info, string name, string objectPath, string interfaceName, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_dbus_proxy_new_sync((connection is null) ? null : connection.getDBusConnectionStruct(), flags, (info is null) ? null : info.getDBusInterfaceInfoStruct(), Str.toStringz(name), Str.toStringz(objectPath), Str.toStringz(interfaceName), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_sync");
 		}
-		
+
 		this(cast(GDBusProxy*) p, true);
 	}
 
@@ -420,19 +420,19 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	public Variant callFinish(AsyncResultIF res)
 	{
 		GError* err = null;
-		
+
 		auto p = g_dbus_proxy_call_finish(gDBusProxy, (res is null) ? null : res.getAsyncResultStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Variant(cast(GVariant*) p, true);
 	}
 
@@ -491,19 +491,19 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	public Variant callSync(string methodName, Variant parameters, GDBusCallFlags flags, int timeoutMsec, Cancellable cancellable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_dbus_proxy_call_sync(gDBusProxy, Str.toStringz(methodName), (parameters is null) ? null : parameters.getVariantStruct(), flags, timeoutMsec, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Variant(cast(GVariant*) p, true);
 	}
 
@@ -549,21 +549,21 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	{
 		GUnixFDList* outoutFdList = null;
 		GError* err = null;
-		
+
 		auto p = g_dbus_proxy_call_with_unix_fd_list_finish(gDBusProxy, &outoutFdList, (res is null) ? null : res.getAsyncResultStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		outFdList = ObjectG.getDObject!(UnixFDList)(outoutFdList);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Variant(cast(GVariant*) p, true);
 	}
 
@@ -594,21 +594,21 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	{
 		GUnixFDList* outoutFdList = null;
 		GError* err = null;
-		
+
 		auto p = g_dbus_proxy_call_with_unix_fd_list_sync(gDBusProxy, Str.toStringz(methodName), (parameters is null) ? null : parameters.getVariantStruct(), flags, timeoutMsec, (fdList is null) ? null : fdList.getUnixFDListStruct(), &outoutFdList, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		outFdList = ObjectG.getDObject!(UnixFDList)(outoutFdList);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Variant(cast(GVariant*) p, true);
 	}
 
@@ -632,12 +632,12 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	public Variant getCachedProperty(string propertyName)
 	{
 		auto p = g_dbus_proxy_get_cached_property(gDBusProxy, Str.toStringz(propertyName));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Variant(cast(GVariant*) p, true);
 	}
 
@@ -653,7 +653,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	public string[] getCachedPropertyNames()
 	{
 		auto retStr = g_dbus_proxy_get_cached_property_names(gDBusProxy);
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}
@@ -668,12 +668,12 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	public DBusConnection getConnection()
 	{
 		auto p = g_dbus_proxy_get_connection(gDBusProxy);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(DBusConnection)(cast(GDBusConnection*) p);
 	}
 
@@ -718,12 +718,12 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	public DBusInterfaceInfo getInterfaceInfo()
 	{
 		auto p = g_dbus_proxy_get_interface_info(gDBusProxy);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(DBusInterfaceInfo)(cast(GDBusInterfaceInfo*) p, true);
 	}
 
@@ -764,7 +764,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	public string getNameOwner()
 	{
 		auto retStr = g_dbus_proxy_get_name_owner(gDBusProxy);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -864,13 +864,13 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 		static OnGPropertiesChangedDelegateWrapper[] listeners;
 		void delegate(Variant, string[], DBusProxy) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Variant, string[], DBusProxy) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnGPropertiesChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -917,12 +917,12 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackGPropertiesChanged(GDBusProxy* dbusproxyStruct, GVariant* changedProperties, char** invalidatedProperties, OnGPropertiesChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(new Variant(changedProperties), Str.toStringArray(invalidatedProperties), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackGPropertiesChangedDestroy(OnGPropertiesChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -933,13 +933,13 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 		static OnGSignalDelegateWrapper[] listeners;
 		void delegate(string, string, Variant, DBusProxy) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(string, string, Variant, DBusProxy) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnGSignalDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -976,12 +976,12 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackGSignal(GDBusProxy* dbusproxyStruct, char* senderName, char* signalName, GVariant* parameters, OnGSignalDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(senderName), Str.toString(signalName), new Variant(parameters), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackGSignalDestroy(OnGSignalDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

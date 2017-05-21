@@ -28,8 +28,8 @@ private import gobject.ObjectG;
 private import gobject.TypeClass;
 private import gobject.TypePlugin;
 private import gobject.TypePluginIF;
-private import gtkc.gobject;
-public  import gtkc.gobjecttypes;
+private import gobject.c.functions;
+public  import gobject.c.types;
 
 
 /**
@@ -79,12 +79,12 @@ public class TypeInterface
 	public TypeInterface peekParent()
 	{
 		auto p = g_type_interface_peek_parent(gTypeInterface);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TypeInterface)(cast(GTypeInterface*) p);
 	}
 
@@ -120,12 +120,12 @@ public class TypeInterface
 	public static TypePluginIF getPlugin(GType instanceType, GType interfaceType)
 	{
 		auto p = g_type_interface_get_plugin(instanceType, interfaceType);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TypePlugin, TypePluginIF)(cast(GTypePlugin*) p);
 	}
 
@@ -144,12 +144,12 @@ public class TypeInterface
 	public static TypeInterface peek(TypeClass instanceClass, GType ifaceType)
 	{
 		auto p = g_type_interface_peek((instanceClass is null) ? null : instanceClass.getTypeClassStruct(), ifaceType);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(TypeInterface)(cast(GTypeInterface*) p);
 	}
 
@@ -168,9 +168,9 @@ public class TypeInterface
 	public static GType[] prerequisites(GType interfaceType)
 	{
 		uint nPrerequisites;
-		
+
 		auto p = g_type_interface_prerequisites(interfaceType, &nPrerequisites);
-		
+
 		return p[0 .. nPrerequisites];
 	}
 }

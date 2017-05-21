@@ -28,8 +28,8 @@ private import gdk.Window;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import pango.PgAttributeList;
 private import std.algorithm;
 
@@ -229,9 +229,9 @@ public class IMContext : ObjectG
 	{
 		char* outstr = null;
 		PangoAttrList* outattrs = null;
-		
+
 		gtk_im_context_get_preedit_string(gtkIMContext, &outstr, &outattrs, &cursorPos);
-		
+
 		str = Str.toString(outstr);
 		attrs = ObjectG.getDObject!(PgAttributeList)(outattrs);
 	}
@@ -264,11 +264,11 @@ public class IMContext : ObjectG
 	public bool getSurrounding(out string text, out int cursorIndex)
 	{
 		char* outtext = null;
-		
+
 		auto p = gtk_im_context_get_surrounding(gtkIMContext, &outtext, &cursorIndex) != 0;
-		
+
 		text = Str.toString(outtext);
-		
+
 		return p;
 	}
 
@@ -347,13 +347,13 @@ public class IMContext : ObjectG
 		static OnCommitDelegateWrapper[] listeners;
 		void delegate(string, IMContext) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(string, IMContext) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnCommitDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -388,12 +388,12 @@ public class IMContext : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackCommit(GtkIMContext* imcontextStruct, char* str, OnCommitDelegateWrapper wrapper)
 	{
 		wrapper.dlg(Str.toString(str), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackCommitDestroy(OnCommitDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -404,13 +404,13 @@ public class IMContext : ObjectG
 		static OnDeleteSurroundingDelegateWrapper[] listeners;
 		bool delegate(int, int, IMContext) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(int, int, IMContext) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDeleteSurroundingDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -449,12 +449,12 @@ public class IMContext : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackDeleteSurrounding(GtkIMContext* imcontextStruct, int offset, int nChars, OnDeleteSurroundingDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(offset, nChars, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDeleteSurroundingDestroy(OnDeleteSurroundingDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -465,13 +465,13 @@ public class IMContext : ObjectG
 		static OnPreeditChangedDelegateWrapper[] listeners;
 		void delegate(IMContext) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(IMContext) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPreeditChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -504,12 +504,12 @@ public class IMContext : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPreeditChanged(GtkIMContext* imcontextStruct, OnPreeditChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPreeditChangedDestroy(OnPreeditChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -520,13 +520,13 @@ public class IMContext : ObjectG
 		static OnPreeditEndDelegateWrapper[] listeners;
 		void delegate(IMContext) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(IMContext) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPreeditEndDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -557,12 +557,12 @@ public class IMContext : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPreeditEnd(GtkIMContext* imcontextStruct, OnPreeditEndDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPreeditEndDestroy(OnPreeditEndDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -573,13 +573,13 @@ public class IMContext : ObjectG
 		static OnPreeditStartDelegateWrapper[] listeners;
 		void delegate(IMContext) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(IMContext) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnPreeditStartDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -610,12 +610,12 @@ public class IMContext : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackPreeditStart(GtkIMContext* imcontextStruct, OnPreeditStartDelegateWrapper wrapper)
 	{
 		wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackPreeditStartDestroy(OnPreeditStartDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -626,13 +626,13 @@ public class IMContext : ObjectG
 		static OnRetrieveSurroundingDelegateWrapper[] listeners;
 		bool delegate(IMContext) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(IMContext) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnRetrieveSurroundingDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -667,12 +667,12 @@ public class IMContext : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackRetrieveSurrounding(GtkIMContext* imcontextStruct, OnRetrieveSurroundingDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackRetrieveSurroundingDestroy(OnRetrieveSurroundingDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

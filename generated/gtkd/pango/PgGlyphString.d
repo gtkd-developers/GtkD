@@ -27,10 +27,10 @@ module pango.PgGlyphString;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-private import gtkc.pango;
-public  import gtkc.pangotypes;
 private import gtkd.Loader;
 private import pango.PgFont;
+private import pango.c.functions;
+public  import pango.c.types;
 
 
 /**
@@ -92,12 +92,12 @@ public class PgGlyphString
 	public this()
 	{
 		auto p = pango_glyph_string_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(PangoGlyphString*) p);
 	}
 
@@ -111,12 +111,12 @@ public class PgGlyphString
 	public PgGlyphString copy()
 	{
 		auto p = pango_glyph_string_copy(pangoGlyphString);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(PgGlyphString)(cast(PangoGlyphString*) p, true);
 	}
 

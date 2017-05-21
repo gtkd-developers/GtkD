@@ -24,9 +24,9 @@
 
 module gio.DBusMethodInfo;
 
+private import gio.c.functions;
+public  import gio.c.types;
 private import gobject.ObjectG;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 private import gtkd.Loader;
 
 
@@ -88,12 +88,12 @@ public class DBusMethodInfo
 	public DBusMethodInfo doref()
 	{
 		auto p = g_dbus_method_info_ref(gDBusMethodInfo);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(DBusMethodInfo)(cast(GDBusMethodInfo*) p, true);
 	}
 

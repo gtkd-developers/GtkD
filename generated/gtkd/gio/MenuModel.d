@@ -26,13 +26,13 @@ module gio.MenuModel;
 
 private import gio.MenuAttributeIter;
 private import gio.MenuLinkIter;
+private import gio.c.functions;
+public  import gio.c.types;
 private import glib.Str;
 private import glib.Variant;
 private import glib.VariantType;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gio;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -220,12 +220,12 @@ public class MenuModel : ObjectG
 	public Variant getItemAttributeValue(int itemIndex, string attribute, VariantType expectedType)
 	{
 		auto p = g_menu_model_get_item_attribute_value(gMenuModel, itemIndex, Str.toStringz(attribute), (expectedType is null) ? null : expectedType.getVariantTypeStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Variant(cast(GVariant*) p, true);
 	}
 
@@ -247,12 +247,12 @@ public class MenuModel : ObjectG
 	public MenuModel getItemLink(int itemIndex, string link)
 	{
 		auto p = g_menu_model_get_item_link(gMenuModel, itemIndex, Str.toStringz(link));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(MenuModel)(cast(GMenuModel*) p, true);
 	}
 
@@ -329,12 +329,12 @@ public class MenuModel : ObjectG
 	public MenuAttributeIter iterateItemAttributes(int itemIndex)
 	{
 		auto p = g_menu_model_iterate_item_attributes(gMenuModel, itemIndex);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(MenuAttributeIter)(cast(GMenuAttributeIter*) p, true);
 	}
 
@@ -354,12 +354,12 @@ public class MenuModel : ObjectG
 	public MenuLinkIter iterateItemLinks(int itemIndex)
 	{
 		auto p = g_menu_model_iterate_item_links(gMenuModel, itemIndex);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(MenuLinkIter)(cast(GMenuLinkIter*) p, true);
 	}
 
@@ -368,13 +368,13 @@ public class MenuModel : ObjectG
 		static OnItemsChangedDelegateWrapper[] listeners;
 		void delegate(int, int, int, MenuModel) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(int, int, int, MenuModel) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnItemsChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -428,12 +428,12 @@ public class MenuModel : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackItemsChanged(GMenuModel* menumodelStruct, int position, int removed, int added, OnItemsChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(position, removed, added, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackItemsChangedDestroy(OnItemsChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

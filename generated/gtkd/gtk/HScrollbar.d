@@ -29,8 +29,8 @@ private import gobject.ObjectG;
 private import gtk.Adjustment;
 private import gtk.Scrollbar;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -99,12 +99,12 @@ public class HScrollbar : Scrollbar
 	public this(Adjustment adjustment)
 	{
 		auto p = gtk_hscrollbar_new((adjustment is null) ? null : adjustment.getAdjustmentStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkHScrollbar*) p);
 	}
 }

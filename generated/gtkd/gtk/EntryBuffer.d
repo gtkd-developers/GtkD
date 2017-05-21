@@ -28,8 +28,8 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -105,12 +105,12 @@ public class EntryBuffer : ObjectG
 	public this(string initialChars, int nInitialChars)
 	{
 		auto p = gtk_entry_buffer_new(Str.toStringz(initialChars), nInitialChars);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkEntryBuffer*) p, true);
 	}
 
@@ -289,13 +289,13 @@ public class EntryBuffer : ObjectG
 		static OnDeletedTextDelegateWrapper[] listeners;
 		void delegate(uint, uint, EntryBuffer) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(uint, uint, EntryBuffer) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDeletedTextDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -331,12 +331,12 @@ public class EntryBuffer : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDeletedText(GtkEntryBuffer* entrybufferStruct, uint position, uint nChars, OnDeletedTextDelegateWrapper wrapper)
 	{
 		wrapper.dlg(position, nChars, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDeletedTextDestroy(OnDeletedTextDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -347,13 +347,13 @@ public class EntryBuffer : ObjectG
 		static OnInsertedTextDelegateWrapper[] listeners;
 		void delegate(uint, string, uint, EntryBuffer) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(uint, string, uint, EntryBuffer) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnInsertedTextDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -390,12 +390,12 @@ public class EntryBuffer : ObjectG
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackInsertedText(GtkEntryBuffer* entrybufferStruct, uint position, char* chars, uint nChars, OnInsertedTextDelegateWrapper wrapper)
 	{
 		wrapper.dlg(position, Str.toString(chars), nChars, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackInsertedTextDestroy(OnInsertedTextDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

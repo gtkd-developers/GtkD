@@ -30,8 +30,8 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gstreamer.Message;
 private import gstreamer.ObjectGst;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 private import std.algorithm;
 
 
@@ -126,16 +126,16 @@ public class Bus : ObjectGst
 		onWatchListener = dlg;
 		return gst_bus_add_watch(gstBus, cast(GstBusFunc)&watchCallBack, cast(void*)this);
 	}
-	
+
 	bool delegate(Message) onWatchListener;
-	
+
 	extern(C) static int watchCallBack(GstBus* bus, GstMessage* msg, Bus bus_d )//gpointer data)
 	{
 		Message msg_d = new Message( msg );
-		
+
 		return bus_d.onWatchListener( msg_d );
 	}
-	
+
 	/**
 	 * Use this for making an XOverlay.
 	 * Sets the synchronous handler on the bus. The function will be called
@@ -154,13 +154,13 @@ public class Bus : ObjectGst
 		onSyncHandlerListener = dlg;
 		gst_bus_set_sync_handler(gstBus, cast(GstBusSyncHandler)&syncHandlerCallBack, cast(void*)this, null);
 	}
-	
+
 	GstBusSyncReply delegate(Message) onSyncHandlerListener;
-	
+
 	extern(C) static GstBusSyncReply syncHandlerCallBack(GstBus* bus, GstMessage* msg, Bus bus_d)
 	{
 		Message msg_d = new Message( msg );
-		
+
 		return bus_d.onSyncHandlerListener( msg_d );
 	}
 
@@ -183,12 +183,12 @@ public class Bus : ObjectGst
 	public this()
 	{
 		auto p = gst_bus_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GstBus*) p, true);
 	}
 
@@ -300,12 +300,12 @@ public class Bus : ObjectGst
 	public Source createWatch()
 	{
 		auto p = gst_bus_create_watch(gstBus);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Source(cast(GSource*) p, true);
 	}
 
@@ -378,12 +378,12 @@ public class Bus : ObjectGst
 	public Message peek()
 	{
 		auto p = gst_bus_peek(gstBus);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Message)(cast(GstMessage*) p, true);
 	}
 
@@ -436,12 +436,12 @@ public class Bus : ObjectGst
 	public Message poll(GstMessageType events, GstClockTime timeout)
 	{
 		auto p = gst_bus_poll(gstBus, events, timeout);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Message)(cast(GstMessage*) p, true);
 	}
 
@@ -458,12 +458,12 @@ public class Bus : ObjectGst
 	public Message pop()
 	{
 		auto p = gst_bus_pop(gstBus);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Message)(cast(GstMessage*) p, true);
 	}
 
@@ -487,12 +487,12 @@ public class Bus : ObjectGst
 	public Message popFiltered(GstMessageType types)
 	{
 		auto p = gst_bus_pop_filtered(gstBus, types);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Message)(cast(GstMessage*) p, true);
 	}
 
@@ -584,12 +584,12 @@ public class Bus : ObjectGst
 	public Message timedPop(GstClockTime timeout)
 	{
 		auto p = gst_bus_timed_pop(gstBus, timeout);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Message)(cast(GstMessage*) p, true);
 	}
 
@@ -617,12 +617,12 @@ public class Bus : ObjectGst
 	public Message timedPopFiltered(GstClockTime timeout, GstMessageType types)
 	{
 		auto p = gst_bus_timed_pop_filtered(gstBus, timeout, types);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Message)(cast(GstMessage*) p, true);
 	}
 
@@ -631,13 +631,13 @@ public class Bus : ObjectGst
 		static OnMessageDelegateWrapper[] listeners;
 		void delegate(Message, Bus) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Message, Bus) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnMessageDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -672,12 +672,12 @@ public class Bus : ObjectGst
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackMessage(GstBus* busStruct, GstMessage* message, OnMessageDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Message)(message), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackMessageDestroy(OnMessageDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -688,13 +688,13 @@ public class Bus : ObjectGst
 		static OnSyncMessageDelegateWrapper[] listeners;
 		void delegate(Message, Bus) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Message, Bus) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnSyncMessageDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -731,12 +731,12 @@ public class Bus : ObjectGst
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackSyncMessage(GstBus* busStruct, GstMessage* message, OnSyncMessageDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Message)(message), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackSyncMessageDestroy(OnSyncMessageDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

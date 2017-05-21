@@ -28,8 +28,8 @@ public  import gio.AppInfo;
 public  import gio.AppInfoIF;
 public  import glib.Str;
 public  import gobject.ObjectG;
-public  import gtkc.gtk;
-public  import gtkc.gtktypes;
+public  import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -73,12 +73,12 @@ public template AppChooserT(TStruct)
 	public AppInfoIF getAppInfo()
 	{
 		auto p = gtk_app_chooser_get_app_info(getAppChooserStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(AppInfo, AppInfoIF)(cast(GAppInfo*) p, true);
 	}
 
@@ -92,7 +92,7 @@ public template AppChooserT(TStruct)
 	public string getContentType()
 	{
 		auto retStr = gtk_app_chooser_get_content_type(getAppChooserStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}

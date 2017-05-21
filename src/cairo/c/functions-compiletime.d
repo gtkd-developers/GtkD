@@ -22,10 +22,10 @@
 // implement new conversion alities on the wrap.utils pakage
 
 
-module gtkc.cairo;
+module cairo.c.functions;
 
 private import std.stdio;
-private import gtkc.cairotypes;
+private import cairo.c.types;
 
 version (Windows)
 	static immutable LIBRARY_CAIRO = ["libcairo-2.dll"];

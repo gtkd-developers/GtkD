@@ -32,8 +32,8 @@ private import glib.Str;
 private import glib.StringG;
 private import glib.VariantIter;
 private import glib.VariantType;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 private import gtkd.Loader;
 
 
@@ -336,7 +336,7 @@ public class Variant
 		}
 		return new Variant(cast(GVariant*) p);
 	}
-	
+
 	/**
 	 * Creates a DBus type signature GVariant with the contents of string.
 	 * string must be a valid DBus type signature.
@@ -355,7 +355,7 @@ public class Variant
 		}
 		return new Variant(cast(GVariant*) p);
 	}
-	
+
 	/**
 	 * Creates an array-of-bytes GVariant with the contents of string.
 	 * This function is just like new Variant(string) except that the string
@@ -375,7 +375,7 @@ public class Variant
 		}
 		return new Variant(cast(GVariant*) p);
 	}
-	
+
 	/**
 	 * Constructs an array of object paths Variant from the given array
 	 * of strings.
@@ -399,7 +399,7 @@ public class Variant
 		}
 		return new Variant(cast(GVariant*) p);
 	}
-	
+
 	/**
 	 * Constructs an array of bytestring GVariant from the given array of
 	 * strings. If length is -1 then strv is null-terminated.
@@ -460,14 +460,14 @@ public class Variant
 		{
 			childrenArray[i] = children[i].getVariantStruct();
 		}
-		
+
 		auto p = g_variant_new_array((childType is null) ? null : childType.getVariantTypeStruct(), childrenArray.ptr, cast(size_t)children.length);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_array");
 		}
-		
+
 		this(cast(GVariant*) p);
 	}
 
@@ -486,12 +486,12 @@ public class Variant
 	public this(bool value)
 	{
 		auto p = g_variant_new_boolean(value);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_boolean");
 		}
-		
+
 		this(cast(GVariant*) p);
 	}
 
@@ -510,12 +510,12 @@ public class Variant
 	public this(char value)
 	{
 		auto p = g_variant_new_byte(value);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_byte");
 		}
-		
+
 		this(cast(GVariant*) p);
 	}
 
@@ -539,12 +539,12 @@ public class Variant
 	public this(Variant key, Variant value)
 	{
 		auto p = g_variant_new_dict_entry((key is null) ? null : key.getVariantStruct(), (value is null) ? null : value.getVariantStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_dict_entry");
 		}
-		
+
 		this(cast(GVariant*) p);
 	}
 
@@ -563,12 +563,12 @@ public class Variant
 	public this(double value)
 	{
 		auto p = g_variant_new_double(value);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_double");
 		}
-		
+
 		this(cast(GVariant*) p);
 	}
 
@@ -603,12 +603,12 @@ public class Variant
 	public this(VariantType elementType, void* elements, size_t nElements, size_t elementSize)
 	{
 		auto p = g_variant_new_fixed_array((elementType is null) ? null : elementType.getVariantTypeStruct(), elements, nElements, elementSize);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_fixed_array");
 		}
-		
+
 		this(cast(GVariant*) p);
 	}
 
@@ -633,12 +633,12 @@ public class Variant
 	public this(VariantType type, Bytes bytes, bool trusted)
 	{
 		auto p = g_variant_new_from_bytes((type is null) ? null : type.getVariantTypeStruct(), (bytes is null) ? null : bytes.getBytesStruct(), trusted);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_bytes");
 		}
-		
+
 		this(cast(GVariant*) p);
 	}
 
@@ -685,12 +685,12 @@ public class Variant
 	public this(VariantType type, ubyte[] data, bool trusted, GDestroyNotify notify, void* userData)
 	{
 		auto p = g_variant_new_from_data((type is null) ? null : type.getVariantTypeStruct(), data.ptr, cast(size_t)data.length, trusted, notify, userData);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_data");
 		}
-		
+
 		this(cast(GVariant*) p);
 	}
 
@@ -709,12 +709,12 @@ public class Variant
 	public this(short value)
 	{
 		auto p = g_variant_new_int16(value);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_int16");
 		}
-		
+
 		this(cast(GVariant*) p);
 	}
 
@@ -733,12 +733,12 @@ public class Variant
 	public this(int value)
 	{
 		auto p = g_variant_new_int32(value);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_int32");
 		}
-		
+
 		this(cast(GVariant*) p);
 	}
 
@@ -757,12 +757,12 @@ public class Variant
 	public this(long value)
 	{
 		auto p = g_variant_new_int64(value);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_int64");
 		}
-		
+
 		this(cast(GVariant*) p);
 	}
 
@@ -791,12 +791,12 @@ public class Variant
 	public this(VariantType childType, Variant child)
 	{
 		auto p = g_variant_new_maybe((childType is null) ? null : childType.getVariantTypeStruct(), (child is null) ? null : child.getVariantStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_maybe");
 		}
-		
+
 		this(cast(GVariant*) p);
 	}
 
@@ -834,12 +834,12 @@ public class Variant
 	public this(string format, void** app)
 	{
 		auto p = g_variant_new_parsed_va(Str.toStringz(format), app);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_parsed_va");
 		}
-		
+
 		this(cast(GVariant*) p);
 	}
 
@@ -862,12 +862,12 @@ public class Variant
 	public this(string str)
 	{
 		auto p = g_variant_new_string(Str.toStringz(str));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_string");
 		}
-		
+
 		this(cast(GVariant*) p);
 	}
 
@@ -890,12 +890,12 @@ public class Variant
 	public this(string[] strv)
 	{
 		auto p = g_variant_new_strv(Str.toStringzArray(strv), cast(ptrdiff_t)strv.length);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_strv");
 		}
-		
+
 		this(cast(GVariant*) p);
 	}
 
@@ -926,14 +926,14 @@ public class Variant
 		{
 			childrenArray[i] = children[i].getVariantStruct();
 		}
-		
+
 		auto p = g_variant_new_tuple(childrenArray.ptr, cast(size_t)children.length);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_tuple");
 		}
-		
+
 		this(cast(GVariant*) p);
 	}
 
@@ -952,12 +952,12 @@ public class Variant
 	public this(ushort value)
 	{
 		auto p = g_variant_new_uint16(value);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_uint16");
 		}
-		
+
 		this(cast(GVariant*) p);
 	}
 
@@ -976,12 +976,12 @@ public class Variant
 	public this(uint value)
 	{
 		auto p = g_variant_new_uint32(value);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_uint32");
 		}
-		
+
 		this(cast(GVariant*) p);
 	}
 
@@ -1000,12 +1000,12 @@ public class Variant
 	public this(ulong value)
 	{
 		auto p = g_variant_new_uint64(value);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_uint64");
 		}
-		
+
 		this(cast(GVariant*) p);
 	}
 
@@ -1062,12 +1062,12 @@ public class Variant
 	public this(string formatString, string[] endptr, void** app)
 	{
 		auto p = g_variant_new_va(Str.toStringz(formatString), Str.toStringzArray(endptr), app);
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_va");
 		}
-		
+
 		this(cast(GVariant*) p);
 	}
 
@@ -1090,12 +1090,12 @@ public class Variant
 	public this(Variant value)
 	{
 		auto p = g_variant_new_variant((value is null) ? null : value.getVariantStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_variant");
 		}
-		
+
 		this(cast(GVariant*) p);
 	}
 
@@ -1119,12 +1119,12 @@ public class Variant
 	public Variant byteswap()
 	{
 		auto p = g_variant_byteswap(gVariant);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Variant(cast(GVariant*) p, true);
 	}
 
@@ -1217,9 +1217,9 @@ public class Variant
 	public string dupBytestring()
 	{
 		size_t length;
-		
+
 		auto retStr = g_variant_dup_bytestring(gVariant, &length);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr, length);
 	}
@@ -1243,9 +1243,9 @@ public class Variant
 	public string[] dupBytestringArray()
 	{
 		size_t length;
-		
+
 		auto retStr = g_variant_dup_bytestring_array(gVariant, &length);
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr, length);
 	}
@@ -1269,9 +1269,9 @@ public class Variant
 	public string[] dupObjv()
 	{
 		size_t length;
-		
+
 		auto retStr = g_variant_dup_objv(gVariant, &length);
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr, length);
 	}
@@ -1294,7 +1294,7 @@ public class Variant
 	public string dupString(out size_t length)
 	{
 		auto retStr = g_variant_dup_string(gVariant, &length);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -1318,9 +1318,9 @@ public class Variant
 	public string[] dupStrv()
 	{
 		size_t length;
-		
+
 		auto retStr = g_variant_dup_strv(gVariant, &length);
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr, length);
 	}
@@ -1421,7 +1421,7 @@ public class Variant
 	public string[] getBytestringArray()
 	{
 		size_t length;
-		
+
 		return Str.toStringArray(g_variant_get_bytestring_array(gVariant, &length));
 	}
 
@@ -1449,12 +1449,12 @@ public class Variant
 	public Variant getChildValue(size_t index)
 	{
 		auto p = g_variant_get_child_value(gVariant, index);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Variant(cast(GVariant*) p, true);
 	}
 
@@ -1507,12 +1507,12 @@ public class Variant
 	public Bytes getDataAsBytes()
 	{
 		auto p = g_variant_get_data_as_bytes(gVariant);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Bytes(cast(GBytes*) p, true);
 	}
 
@@ -1570,9 +1570,9 @@ public class Variant
 	public void[] getFixedArray(size_t elementSize)
 	{
 		size_t nElements;
-		
+
 		auto p = g_variant_get_fixed_array(gVariant, &nElements, elementSize);
-		
+
 		return p[0 .. nElements];
 	}
 
@@ -1651,12 +1651,12 @@ public class Variant
 	public Variant getMaybe()
 	{
 		auto p = g_variant_get_maybe(gVariant);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Variant(cast(GVariant*) p, true);
 	}
 
@@ -1685,12 +1685,12 @@ public class Variant
 	public Variant getNormalForm()
 	{
 		auto p = g_variant_get_normal_form(gVariant);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Variant(cast(GVariant*) p, true);
 	}
 
@@ -1713,7 +1713,7 @@ public class Variant
 	public string[] getObjv()
 	{
 		size_t length;
-		
+
 		return Str.toStringArray(g_variant_get_objv(gVariant, &length));
 	}
 
@@ -1787,7 +1787,7 @@ public class Variant
 	public string[] getStrv()
 	{
 		size_t length;
-		
+
 		return Str.toStringArray(g_variant_get_strv(gVariant, &length));
 	}
 
@@ -1804,12 +1804,12 @@ public class Variant
 	public VariantType getType()
 	{
 		auto p = g_variant_get_type(gVariant);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new VariantType(cast(GVariantType*) p);
 	}
 
@@ -1922,12 +1922,12 @@ public class Variant
 	public Variant getVariant()
 	{
 		auto p = g_variant_get_variant(gVariant);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Variant(cast(GVariant*) p, true);
 	}
 
@@ -2036,12 +2036,12 @@ public class Variant
 	public VariantIter iterNew()
 	{
 		auto p = g_variant_iter_new(gVariant);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new VariantIter(cast(GVariantIter*) p, true);
 	}
 
@@ -2079,12 +2079,12 @@ public class Variant
 	public Variant lookupValue(string key, VariantType expectedType)
 	{
 		auto p = g_variant_lookup_value(gVariant, Str.toStringz(key), (expectedType is null) ? null : expectedType.getVariantTypeStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Variant(cast(GVariant*) p, true);
 	}
 
@@ -2129,7 +2129,7 @@ public class Variant
 	public string print(bool typeAnnotate)
 	{
 		auto retStr = g_variant_print(gVariant, typeAnnotate);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -2152,12 +2152,12 @@ public class Variant
 	public StringG printString(StringG str, bool typeAnnotate)
 	{
 		auto p = g_variant_print_string(gVariant, (str is null) ? null : str.getStringGStruct(), typeAnnotate);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new StringG(cast(GString*) p, true);
 	}
 
@@ -2171,12 +2171,12 @@ public class Variant
 	public Variant doref()
 	{
 		auto p = g_variant_ref(gVariant);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Variant(cast(GVariant*) p, true);
 	}
 
@@ -2211,12 +2211,12 @@ public class Variant
 	public Variant refSink()
 	{
 		auto p = g_variant_ref_sink(gVariant);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Variant(cast(GVariant*) p, true);
 	}
 
@@ -2283,12 +2283,12 @@ public class Variant
 	public Variant takeRef()
 	{
 		auto p = g_variant_take_ref(gVariant);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Variant(cast(GVariant*) p, true);
 	}
 
@@ -2391,19 +2391,19 @@ public class Variant
 	public static Variant parse(VariantType type, string text, string limit, string[] endptr)
 	{
 		GError* err = null;
-		
+
 		auto p = g_variant_parse((type is null) ? null : type.getVariantTypeStruct(), Str.toStringz(text), Str.toStringz(limit), Str.toStringzArray(endptr), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Variant(cast(GVariant*) p, true);
 	}
 
@@ -2449,7 +2449,7 @@ public class Variant
 	public static string parseErrorPrintContext(ErrorG error, string sourceStr)
 	{
 		auto retStr = g_variant_parse_error_print_context((error is null) ? null : error.getErrorGStruct(), Str.toStringz(sourceStr));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}

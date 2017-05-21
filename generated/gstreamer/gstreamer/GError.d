@@ -25,8 +25,8 @@
 module gstreamer.GError;
 
 private import glib.Str;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /** */
@@ -46,7 +46,7 @@ public struct GError
 	public static string errorGetMessage(GQuark domain, int code)
 	{
 		auto retStr = gst_error_get_message(domain, code);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}

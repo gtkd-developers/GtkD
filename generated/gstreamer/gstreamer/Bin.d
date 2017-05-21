@@ -33,8 +33,8 @@ private import gstreamer.ChildProxyT;
 private import gstreamer.Element;
 private import gstreamer.Iterator;
 private import gstreamer.Pad;
-private import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+private import gstreamer.c.functions;
+public  import gstreamer.c.types;
 private import std.algorithm;
 
 
@@ -179,7 +179,7 @@ public class Bin : Element, ChildProxyIF
 		super( elem.getElementStruct(), true );
 		this.gstBin = cast(GstBin*)elem.getElementStruct();
 	}
-	
+
 	/**
 	 * Adds a list of elements to a bin.
 	 * This function is equivalent to calling add() for each member of the list.
@@ -189,7 +189,7 @@ public class Bin : Element, ChildProxyIF
 	{
 		foreach( e; elems ) add( e );
 	}
-	
+
 	/**
 	 * Remove a list of elements from a bin.
 	 * This function is equivalent to calling remove() with each member of the list.
@@ -221,12 +221,12 @@ public class Bin : Element, ChildProxyIF
 	public this(string name)
 	{
 		auto p = gst_bin_new(Str.toStringz(name));
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GstBin*) p);
 	}
 
@@ -272,12 +272,12 @@ public class Bin : Element, ChildProxyIF
 	public Pad findUnlinkedPad(GstPadDirection direction)
 	{
 		auto p = gst_bin_find_unlinked_pad(gstBin, direction);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Pad)(cast(GstPad*) p, true);
 	}
 
@@ -298,12 +298,12 @@ public class Bin : Element, ChildProxyIF
 	public Element getByInterface(GType iface)
 	{
 		auto p = gst_bin_get_by_interface(gstBin, iface);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Element)(cast(GstElement*) p, true);
 	}
 
@@ -324,12 +324,12 @@ public class Bin : Element, ChildProxyIF
 	public Element getByName(string name)
 	{
 		auto p = gst_bin_get_by_name(gstBin, Str.toStringz(name));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Element)(cast(GstElement*) p, true);
 	}
 
@@ -351,12 +351,12 @@ public class Bin : Element, ChildProxyIF
 	public Element getByNameRecurseUp(string name)
 	{
 		auto p = gst_bin_get_by_name_recurse_up(gstBin, Str.toStringz(name));
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Element)(cast(GstElement*) p, true);
 	}
 
@@ -392,12 +392,12 @@ public class Bin : Element, ChildProxyIF
 	public Iterator iterateAllByInterface(GType iface)
 	{
 		auto p = gst_bin_iterate_all_by_interface(gstBin, iface);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
 	}
 
@@ -412,12 +412,12 @@ public class Bin : Element, ChildProxyIF
 	public Iterator iterateElements()
 	{
 		auto p = gst_bin_iterate_elements(gstBin);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
 	}
 
@@ -433,12 +433,12 @@ public class Bin : Element, ChildProxyIF
 	public Iterator iterateRecurse()
 	{
 		auto p = gst_bin_iterate_recurse(gstBin);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
 	}
 
@@ -454,12 +454,12 @@ public class Bin : Element, ChildProxyIF
 	public Iterator iterateSinks()
 	{
 		auto p = gst_bin_iterate_sinks(gstBin);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
 	}
 
@@ -479,12 +479,12 @@ public class Bin : Element, ChildProxyIF
 	public Iterator iterateSorted()
 	{
 		auto p = gst_bin_iterate_sorted(gstBin);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
 	}
 
@@ -500,12 +500,12 @@ public class Bin : Element, ChildProxyIF
 	public Iterator iterateSources()
 	{
 		auto p = gst_bin_iterate_sources(gstBin);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Iterator)(cast(GstIterator*) p, true);
 	}
 
@@ -587,13 +587,13 @@ public class Bin : Element, ChildProxyIF
 		static OnDeepElementAddedDelegateWrapper[] listeners;
 		void delegate(Bin, Element, Bin) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Bin, Element, Bin) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDeepElementAddedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -629,12 +629,12 @@ public class Bin : Element, ChildProxyIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDeepElementAdded(GstBin* binStruct, GstBin* subBin, GstElement* element, OnDeepElementAddedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Bin)(subBin), ObjectG.getDObject!(Element)(element), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDeepElementAddedDestroy(OnDeepElementAddedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -645,13 +645,13 @@ public class Bin : Element, ChildProxyIF
 		static OnDeepElementRemovedDelegateWrapper[] listeners;
 		void delegate(Bin, Element, Bin) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Bin, Element, Bin) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDeepElementRemovedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -687,12 +687,12 @@ public class Bin : Element, ChildProxyIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackDeepElementRemoved(GstBin* binStruct, GstBin* subBin, GstElement* element, OnDeepElementRemovedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Bin)(subBin), ObjectG.getDObject!(Element)(element), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDeepElementRemovedDestroy(OnDeepElementRemovedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -703,13 +703,13 @@ public class Bin : Element, ChildProxyIF
 		static OnDoLatencyDelegateWrapper[] listeners;
 		bool delegate(Bin) dlg;
 		gulong handlerId;
-		
+
 		this(bool delegate(Bin) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnDoLatencyDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -749,12 +749,12 @@ public class Bin : Element, ChildProxyIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static int callBackDoLatency(GstBin* binStruct, OnDoLatencyDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackDoLatencyDestroy(OnDoLatencyDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -765,13 +765,13 @@ public class Bin : Element, ChildProxyIF
 		static OnElementAddedDelegateWrapper[] listeners;
 		void delegate(Element, Bin) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Element, Bin) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnElementAddedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -804,12 +804,12 @@ public class Bin : Element, ChildProxyIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackElementAdded(GstBin* binStruct, GstElement* element, OnElementAddedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Element)(element), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackElementAddedDestroy(OnElementAddedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -820,13 +820,13 @@ public class Bin : Element, ChildProxyIF
 		static OnElementRemovedDelegateWrapper[] listeners;
 		void delegate(Element, Bin) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(Element, Bin) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnElementRemovedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -859,12 +859,12 @@ public class Bin : Element, ChildProxyIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackElementRemoved(GstBin* binStruct, GstElement* element, OnElementRemovedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(Element)(element), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackElementRemovedDestroy(OnElementRemovedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

@@ -43,8 +43,8 @@ private import gtk.TreeIter;
 private import gtk.TreeModel;
 private import gtk.TreeModelIF;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 private import std.algorithm;
 
 
@@ -639,12 +639,12 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	public CellAreaContext copyContext(CellAreaContext context)
 	{
 		auto p = gtk_cell_area_copy_context(gtkCellArea, (context is null) ? null : context.getCellAreaContextStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(CellAreaContext)(cast(GtkCellAreaContext*) p, true);
 	}
 
@@ -663,12 +663,12 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	public CellAreaContext createContext()
 	{
 		auto p = gtk_cell_area_create_context(gtkCellArea);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(CellAreaContext)(cast(GtkCellAreaContext*) p, true);
 	}
 
@@ -785,12 +785,12 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	public CellRenderer getCellAtPosition(CellAreaContext context, Widget widget, GdkRectangle* cellArea, int x, int y, out GdkRectangle allocArea)
 	{
 		auto p = gtk_cell_area_get_cell_at_position(gtkCellArea, (context is null) ? null : context.getCellAreaContextStruct(), (widget is null) ? null : widget.getWidgetStruct(), cellArea, x, y, &allocArea);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(CellRenderer)(cast(GtkCellRenderer*) p);
 	}
 
@@ -823,12 +823,12 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	public CellEditableIF getEditWidget()
 	{
 		auto p = gtk_cell_area_get_edit_widget(gtkCellArea);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(CellEditable, CellEditableIF)(cast(GtkCellEditable*) p);
 	}
 
@@ -843,12 +843,12 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	public CellRenderer getEditedCell()
 	{
 		auto p = gtk_cell_area_get_edited_cell(gtkCellArea);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(CellRenderer)(cast(GtkCellRenderer*) p);
 	}
 
@@ -862,12 +862,12 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	public CellRenderer getFocusCell()
 	{
 		auto p = gtk_cell_area_get_focus_cell(gtkCellArea);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(CellRenderer)(cast(GtkCellRenderer*) p);
 	}
 
@@ -891,12 +891,12 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	public CellRenderer getFocusFromSibling(CellRenderer renderer)
 	{
 		auto p = gtk_cell_area_get_focus_from_sibling(gtkCellArea, (renderer is null) ? null : renderer.getCellRendererStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(CellRenderer)(cast(GtkCellRenderer*) p);
 	}
 
@@ -914,12 +914,12 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	public ListG getFocusSiblings(CellRenderer renderer)
 	{
 		auto p = gtk_cell_area_get_focus_siblings(gtkCellArea, (renderer is null) ? null : renderer.getCellRendererStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 
@@ -1217,13 +1217,13 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 		static OnAddEditableDelegateWrapper[] listeners;
 		void delegate(CellRenderer, CellEditableIF, GdkRectangle*, string, CellArea) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(CellRenderer, CellEditableIF, GdkRectangle*, string, CellArea) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnAddEditableDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1263,12 +1263,12 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackAddEditable(GtkCellArea* cellareaStruct, GtkCellRenderer* renderer, GtkCellEditable* editable, GdkRectangle* cellArea, char* path, OnAddEditableDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(CellRenderer)(renderer), ObjectG.getDObject!(CellEditable, CellEditableIF)(editable), cellArea, Str.toString(path), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackAddEditableDestroy(OnAddEditableDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1279,13 +1279,13 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 		static OnApplyAttributesDelegateWrapper[] listeners;
 		void delegate(TreeModelIF, TreeIter, bool, bool, CellArea) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(TreeModelIF, TreeIter, bool, bool, CellArea) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnApplyAttributesDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1323,12 +1323,12 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackApplyAttributes(GtkCellArea* cellareaStruct, GtkTreeModel* model, GtkTreeIter* iter, bool isExpander, bool isExpanded, OnApplyAttributesDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(TreeModel, TreeModelIF)(model), ObjectG.getDObject!(TreeIter)(iter), isExpander, isExpanded, wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackApplyAttributesDestroy(OnApplyAttributesDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1339,13 +1339,13 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 		static OnFocusChangedDelegateWrapper[] listeners;
 		void delegate(CellRenderer, string, CellArea) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(CellRenderer, string, CellArea) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnFocusChangedDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1388,12 +1388,12 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackFocusChanged(GtkCellArea* cellareaStruct, GtkCellRenderer* renderer, char* path, OnFocusChangedDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(CellRenderer)(renderer), Str.toString(path), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackFocusChangedDestroy(OnFocusChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
@@ -1404,13 +1404,13 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 		static OnRemoveEditableDelegateWrapper[] listeners;
 		void delegate(CellRenderer, CellEditableIF, CellArea) dlg;
 		gulong handlerId;
-		
+
 		this(void delegate(CellRenderer, CellEditableIF, CellArea) dlg)
 		{
 			this.dlg = dlg;
 			this.listeners ~= this;
 		}
-		
+
 		void remove(OnRemoveEditableDelegateWrapper source)
 		{
 			foreach(index, wrapper; listeners)
@@ -1447,12 +1447,12 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 			connectFlags);
 		return wrapper.handlerId;
 	}
-	
+
 	extern(C) static void callBackRemoveEditable(GtkCellArea* cellareaStruct, GtkCellRenderer* renderer, GtkCellEditable* editable, OnRemoveEditableDelegateWrapper wrapper)
 	{
 		wrapper.dlg(ObjectG.getDObject!(CellRenderer)(renderer), ObjectG.getDObject!(CellEditable, CellEditableIF)(editable), wrapper.outer);
 	}
-	
+
 	extern(C) static void callBackRemoveEditableDestroy(OnRemoveEditableDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);

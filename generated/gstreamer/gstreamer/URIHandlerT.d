@@ -27,8 +27,8 @@ module gstreamer.URIHandlerT;
 public  import glib.ErrorG;
 public  import glib.GException;
 public  import glib.Str;
-public  import gstreamerc.gstreamer;
-public  import gstreamerc.gstreamertypes;
+public  import gstreamer.c.functions;
+public  import gstreamer.c.types;
 
 
 /**
@@ -77,7 +77,7 @@ public template URIHandlerT(TStruct)
 	public string getUri()
 	{
 		auto retStr = gst_uri_handler_get_uri(getURIHandlerStruct());
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -106,14 +106,14 @@ public template URIHandlerT(TStruct)
 	public bool setUri(string uri)
 	{
 		GError* err = null;
-		
+
 		auto p = gst_uri_handler_set_uri(getURIHandlerStruct(), Str.toStringz(uri), &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 }

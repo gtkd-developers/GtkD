@@ -29,8 +29,8 @@ private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 private import gtkd.Loader;
 
 
@@ -109,19 +109,19 @@ public class MappedFile
 	public this(string filename, bool writable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_mapped_file_new(Str.toStringz(filename), writable, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GMappedFile*) p);
 	}
 
@@ -153,19 +153,19 @@ public class MappedFile
 	public this(int fd, bool writable)
 	{
 		GError* err = null;
-		
+
 		auto p = g_mapped_file_new_from_fd(fd, writable, &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new_from_fd");
 		}
-		
+
 		this(cast(GMappedFile*) p);
 	}
 
@@ -196,12 +196,12 @@ public class MappedFile
 	public Bytes getBytes()
 	{
 		auto p = g_mapped_file_get_bytes(gMappedFile);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Bytes(cast(GBytes*) p, true);
 	}
 
@@ -220,7 +220,7 @@ public class MappedFile
 	public string getContents()
 	{
 		auto retStr = g_mapped_file_get_contents(gMappedFile);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -248,12 +248,12 @@ public class MappedFile
 	public MappedFile doref()
 	{
 		auto p = g_mapped_file_ref(gMappedFile);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new MappedFile(cast(GMappedFile*) p, true);
 	}
 

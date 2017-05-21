@@ -27,8 +27,8 @@ module gtk.Spinner;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gtk.Widget;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -96,12 +96,12 @@ public class Spinner : Widget
 	public this()
 	{
 		auto p = gtk_spinner_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkSpinner*) p);
 	}
 

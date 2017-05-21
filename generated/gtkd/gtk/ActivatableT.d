@@ -26,8 +26,8 @@ module gtk.ActivatableT;
 
 public  import gobject.ObjectG;
 public  import gtk.Action;
-public  import gtkc.gtk;
-public  import gtkc.gtktypes;
+public  import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /**
@@ -314,12 +314,12 @@ public template ActivatableT(TStruct)
 	public Action getRelatedAction()
 	{
 		auto p = gtk_activatable_get_related_action(getActivatableStruct());
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return ObjectG.getDObject!(Action)(cast(GtkAction*) p);
 	}
 

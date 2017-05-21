@@ -28,8 +28,8 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.Regex;
 private import glib.Str;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 private import gtkd.Loader;
 
 
@@ -104,14 +104,14 @@ public class MatchInfo
 	public string expandReferences(string stringToExpand)
 	{
 		GError* err = null;
-		
+
 		auto retStr = g_match_info_expand_references(gMatchInfo, Str.toStringz(stringToExpand), &err);
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -145,7 +145,7 @@ public class MatchInfo
 	public string fetch(int matchNum)
 	{
 		auto retStr = g_match_info_fetch(gMatchInfo, matchNum);
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -177,7 +177,7 @@ public class MatchInfo
 	public string[] fetchAll()
 	{
 		auto retStr = g_match_info_fetch_all(gMatchInfo);
-		
+
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
 	}
@@ -203,7 +203,7 @@ public class MatchInfo
 	public string fetchNamed(string name)
 	{
 		auto retStr = g_match_info_fetch_named(gMatchInfo, Str.toStringz(name));
-		
+
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
@@ -309,12 +309,12 @@ public class MatchInfo
 	public Regex getRegex()
 	{
 		auto p = g_match_info_get_regex(gMatchInfo);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Regex(cast(GRegex*) p, true);
 	}
 
@@ -406,14 +406,14 @@ public class MatchInfo
 	public bool next()
 	{
 		GError* err = null;
-		
+
 		auto p = g_match_info_next(gMatchInfo, &err) != 0;
-		
+
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
-		
+
 		return p;
 	}
 
@@ -427,12 +427,12 @@ public class MatchInfo
 	public MatchInfo doref()
 	{
 		auto p = g_match_info_ref(gMatchInfo);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new MatchInfo(cast(GMatchInfo*) p, true);
 	}
 

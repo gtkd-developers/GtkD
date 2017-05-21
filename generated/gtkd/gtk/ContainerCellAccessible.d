@@ -28,8 +28,8 @@ private import glib.ConstructionException;
 private import glib.ListG;
 private import gobject.ObjectG;
 private import gtk.CellAccessible;
-private import gtkc.gtk;
-public  import gtkc.gtktypes;
+private import gtk.c.functions;
+public  import gtk.c.types;
 
 
 /** */
@@ -78,12 +78,12 @@ public class ContainerCellAccessible : CellAccessible
 	public this()
 	{
 		auto p = gtk_container_cell_accessible_new();
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GtkContainerCellAccessible*) p, true);
 	}
 
@@ -99,12 +99,12 @@ public class ContainerCellAccessible : CellAccessible
 	public ListG getChildren()
 	{
 		auto p = gtk_container_cell_accessible_get_children(gtkContainerCellAccessible);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new ListG(cast(GList*) p);
 	}
 

@@ -28,8 +28,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.TypePluginIF;
 private import gobject.TypePluginT;
-private import gtkc.gobject;
-public  import gtkc.gobjecttypes;
+private import gobject.c.functions;
+public  import gobject.c.types;
 
 
 /**

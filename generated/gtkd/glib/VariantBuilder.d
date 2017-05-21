@@ -28,8 +28,8 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import glib.Variant;
 private import glib.VariantType;
-private import gtkc.glib;
-public  import gtkc.glibtypes;
+private import glib.c.functions;
+public  import glib.c.types;
 private import gtkd.Loader;
 
 
@@ -101,12 +101,12 @@ public class VariantBuilder
 	public this(VariantType type)
 	{
 		auto p = g_variant_builder_new((type is null) ? null : type.getVariantTypeStruct());
-		
+
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
-		
+
 		this(cast(GVariantBuilder*) p);
 	}
 
@@ -196,12 +196,12 @@ public class VariantBuilder
 	public Variant end()
 	{
 		auto p = g_variant_builder_end(gVariantBuilder);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Variant(cast(GVariant*) p);
 	}
 
@@ -307,12 +307,12 @@ public class VariantBuilder
 	public VariantBuilder doref()
 	{
 		auto p = g_variant_builder_ref(gVariantBuilder);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new VariantBuilder(cast(GVariantBuilder*) p, true);
 	}
 
