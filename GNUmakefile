@@ -428,7 +428,6 @@ define make-lib
 endef
 
 define make-shared-lib
-	#Remove this line when phobos #1280 is merged.
 	$(if $(findstring "dmd","$(DC)"),$(eval LDFLAGS+=-defaultlib=:libphobos2.so))
 	$(if $(findstring "gdc","$(DC)"),$(eval LDFLAGS+=-shared-libphobos))
  
