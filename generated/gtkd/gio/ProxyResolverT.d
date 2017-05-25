@@ -34,6 +34,7 @@ public  import glib.ErrorG;
 public  import glib.GException;
 public  import glib.Str;
 public  import gobject.ObjectG;
+public  import gtkc.giotypes;
 
 
 /**

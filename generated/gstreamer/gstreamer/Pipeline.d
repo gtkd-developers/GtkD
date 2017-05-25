@@ -33,6 +33,7 @@ private import gstreamer.Clock;
 private import gstreamer.Element;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
+public  import gstreamerc.gstreamertypes;
 
 
 /**

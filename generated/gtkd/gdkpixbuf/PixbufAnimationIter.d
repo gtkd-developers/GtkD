@@ -29,6 +29,7 @@ private import gdkpixbuf.c.functions;
 public  import gdkpixbuf.c.types;
 private import glib.TimeVal;
 private import gobject.ObjectG;
+public  import gtkc.gdkpixbuftypes;
 
 
 /**

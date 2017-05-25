@@ -30,6 +30,7 @@ private import gsv.SourceGutterRenderer;
 private import gsv.SourceView;
 private import gsv.c.functions;
 public  import gsv.c.types;
+public  import gsvc.gsvtypes;
 
 
 /** */

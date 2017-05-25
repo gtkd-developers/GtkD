@@ -49,6 +49,7 @@ private import vte.Pty;
 private import vte.Regex : RegexVte = Regex;
 private import vte.c.functions;
 public  import vte.c.types;
+public  import vtec.vtetypes;
 
 
 /** */

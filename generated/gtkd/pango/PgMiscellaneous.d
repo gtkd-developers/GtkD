@@ -27,6 +27,7 @@ module pango.PgMiscellaneous;
 private import core.stdc.stdio;
 private import glib.Str;
 private import glib.StringG;
+public  import gtkc.pangotypes;
 private import pango.c.functions;
 public  import pango.c.types;
 

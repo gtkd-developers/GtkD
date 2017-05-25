@@ -35,6 +35,7 @@ private import gtk.TreeModelT;
 private import gtk.TreePath;
 private import gtk.c.functions;
 public  import gtk.c.types;
+public  import gtkc.gtktypes;
 
 
 /**

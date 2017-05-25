@@ -32,6 +32,7 @@ private import gsv.SourceCompletionProviderIF;
 private import gsv.SourceCompletionProviderT;
 private import gsv.c.functions;
 public  import gsv.c.types;
+public  import gsvc.gsvtypes;
 private import gtk.TextBuffer;
 
 

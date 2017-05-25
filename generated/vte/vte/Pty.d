@@ -35,6 +35,7 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import vte.c.functions;
 public  import vte.c.types;
+public  import vtec.vtetypes;
 
 
 /** */

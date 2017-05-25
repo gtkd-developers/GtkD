@@ -39,6 +39,7 @@ private import gtk.Application;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
+public  import gtkc.gtktypes;
 private import gtkd.paths;
 private import std.string;
 

@@ -30,6 +30,7 @@ private import gdkpixbuf.c.functions;
 public  import gdkpixbuf.c.types;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
+public  import gtkc.gdkpixbuftypes;
 
 
 /**

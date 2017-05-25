@@ -29,6 +29,7 @@ private import gobject.ParamSpec;
 private import gobject.Value;
 private import gtk.c.functions;
 public  import gtk.c.types;
+public  import gtkc.gtktypes;
 
 
 /**

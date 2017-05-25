@@ -26,6 +26,7 @@ module gstreamer.PollFD;
 
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
+public  import gstreamerc.gstreamertypes;
 
 
 /**

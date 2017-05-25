@@ -32,6 +32,7 @@ private import gobject.ObjectG;
 private import gtkd.Loader;
 private import vte.c.functions;
 public  import vte.c.types;
+public  import vtec.vtetypes;
 
 
 /** */

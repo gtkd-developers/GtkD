@@ -27,6 +27,7 @@ module pango.PgCairoFontMap;
 private import cairo.ScaledFont;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
+public  import gtkc.pangotypes;
 private import pango.PgFontMap;
 private import pango.c.functions;
 public  import pango.c.types;

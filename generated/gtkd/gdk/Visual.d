@@ -29,6 +29,7 @@ private import gdk.c.functions;
 public  import gdk.c.types;
 private import glib.ListG;
 private import gobject.ObjectG;
+public  import gtkc.gdktypes;
 
 
 /**

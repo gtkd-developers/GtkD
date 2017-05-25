@@ -44,6 +44,7 @@ private import glib.Str;
 private import glib.VariantDict;
 private import gobject.ObjectG;
 private import gobject.Signals;
+public  import gtkc.giotypes;
 private import std.algorithm;
 
 

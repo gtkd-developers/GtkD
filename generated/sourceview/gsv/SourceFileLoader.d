@@ -39,6 +39,7 @@ private import gsv.SourceEncoding;
 private import gsv.SourceFile;
 private import gsv.c.functions;
 public  import gsv.c.types;
+public  import gsvc.gsvtypes;
 
 
 /** */

@@ -30,6 +30,7 @@ private import gobject.ObjectG;
 private import gstreamer.Structure;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
+public  import gstreamerc.gstreamertypes;
 
 
 /**

@@ -29,6 +29,7 @@ public  import glib.GException;
 public  import glib.Str;
 public  import gstreamer.c.functions;
 public  import gstreamer.c.types;
+public  import gstreamerc.gstreamertypes;
 
 
 /**

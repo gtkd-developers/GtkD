@@ -29,6 +29,7 @@ private import gio.c.functions;
 public  import gio.c.types;
 private import glib.Str;
 private import gobject.Closure;
+public  import gtkc.giotypes;
 
 
 /** */

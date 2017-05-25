@@ -33,6 +33,7 @@ private import gtk.Range;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
+public  import gtkc.gtktypes;
 private import pango.PgLayout;
 private import std.algorithm;
 

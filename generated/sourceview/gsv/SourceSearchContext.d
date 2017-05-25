@@ -36,6 +36,7 @@ private import gsv.SourceSearchSettings;
 private import gsv.SourceStyle;
 private import gsv.c.functions;
 public  import gsv.c.types;
+public  import gsvc.gsvtypes;
 private import gtk.TextIter;
 
 

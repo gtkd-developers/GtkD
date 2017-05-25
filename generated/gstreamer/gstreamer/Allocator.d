@@ -31,6 +31,7 @@ private import gstreamer.Memory;
 private import gstreamer.ObjectGst;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
+public  import gstreamerc.gstreamertypes;
 
 
 /**

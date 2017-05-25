@@ -27,6 +27,7 @@ module gio.IOSchedulerJob;
 private import gio.Cancellable;
 private import gio.c.functions;
 public  import gio.c.types;
+public  import gtkc.giotypes;
 
 
 /**

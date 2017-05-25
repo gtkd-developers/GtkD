@@ -28,6 +28,7 @@ public  import atk.c.functions;
 public  import atk.c.types;
 public  import glib.IOChannel;
 public  import glib.Str;
+public  import gtkc.atktypes;
 
 
 /**

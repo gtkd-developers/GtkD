@@ -30,6 +30,7 @@ private import glib.Str;
 private import glib.Variant;
 private import glib.VariantType;
 private import gobject.Signals;
+public  import gtkc.giotypes;
 private import std.algorithm;
 
 

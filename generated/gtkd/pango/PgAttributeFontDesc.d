@@ -26,6 +26,7 @@ module pango.PgAttributeFontDesc;
 
 private import glib.ConstructionException;
 private import gobject.ObjectG;
+public  import gtkc.pangotypes;
 private import pango.PgAttribute;
 private import pango.PgFontDescription;
 private import pango.c.functions;

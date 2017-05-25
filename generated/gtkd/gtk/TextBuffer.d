@@ -43,6 +43,7 @@ private import gtk.TextTag;
 private import gtk.TextTagTable;
 private import gtk.c.functions;
 public  import gtk.c.types;
+public  import gtkc.gtktypes;
 private import pango.PgFontDescription;
 private import pango.PgTabArray;
 private import std.algorithm;

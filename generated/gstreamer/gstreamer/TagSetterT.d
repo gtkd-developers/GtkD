@@ -30,6 +30,7 @@ public  import gobject.Value;
 public  import gstreamer.TagList;
 public  import gstreamer.c.functions;
 public  import gstreamer.c.types;
+public  import gstreamerc.gstreamertypes;
 
 
 /**

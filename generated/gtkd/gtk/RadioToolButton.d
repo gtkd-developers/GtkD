@@ -33,6 +33,7 @@ private import gtk.ToggleToolButton;
 private import gtk.ToolItem;
 private import gtk.c.functions;
 public  import gtk.c.types;
+public  import gtkc.gtktypes;
 
 
 /**

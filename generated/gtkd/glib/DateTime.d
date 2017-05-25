@@ -30,6 +30,7 @@ private import glib.TimeVal;
 private import glib.TimeZone;
 private import glib.c.functions;
 public  import glib.c.types;
+public  import gtkc.glibtypes;
 private import gtkd.Loader;
 
 

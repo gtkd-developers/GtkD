@@ -31,6 +31,7 @@ private import gtk.IMContext;
 private import gtk.MenuShell;
 private import gtk.c.functions;
 public  import gtk.c.types;
+public  import gtkc.gtktypes;
 
 
 /** */

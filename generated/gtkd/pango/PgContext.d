@@ -28,6 +28,7 @@ private import glib.ConstructionException;
 private import glib.ListG;
 private import glib.Str;
 private import gobject.ObjectG;
+public  import gtkc.pangotypes;
 private import pango.PgAttributeIterator;
 private import pango.PgAttributeList;
 private import pango.PgFont;

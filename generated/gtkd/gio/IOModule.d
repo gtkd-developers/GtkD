@@ -34,6 +34,7 @@ private import gobject.ObjectG;
 private import gobject.TypeModule;
 private import gobject.TypePluginIF;
 private import gobject.TypePluginT;
+public  import gtkc.giotypes;
 
 
 /**

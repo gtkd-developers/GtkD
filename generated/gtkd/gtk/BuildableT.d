@@ -30,6 +30,7 @@ public  import gobject.Value;
 public  import gtk.Builder;
 public  import gtk.c.functions;
 public  import gtk.c.types;
+public  import gtkc.gtktypes;
 
 
 /**

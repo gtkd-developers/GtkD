@@ -26,6 +26,7 @@ module pango.PgGlyphItemIter;
 
 private import glib.Str;
 private import gobject.ObjectG;
+public  import gtkc.pangotypes;
 private import gtkd.Loader;
 private import pango.PgGlyphItem;
 private import pango.c.functions;

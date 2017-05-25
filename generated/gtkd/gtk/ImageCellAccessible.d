@@ -29,6 +29,7 @@ private import atk.ImageT;
 private import gtk.RendererCellAccessible;
 private import gtk.c.functions;
 public  import gtk.c.types;
+public  import gtkc.gtktypes;
 
 
 /** */

@@ -30,6 +30,7 @@ private import gtk.TargetEntry;
 private import gtk.TextBuffer;
 private import gtk.c.functions;
 public  import gtk.c.types;
+public  import gtkc.gtktypes;
 private import gtkd.Loader;
 
 

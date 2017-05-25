@@ -28,6 +28,7 @@ public  import gobject.ObjectG;
 public  import gstreamer.Toc;
 public  import gstreamer.c.functions;
 public  import gstreamer.c.types;
+public  import gstreamerc.gstreamertypes;
 
 
 /**

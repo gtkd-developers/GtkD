@@ -39,6 +39,7 @@ private import gstreamer.TagList;
 private import gstreamer.Toc;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
+public  import gstreamerc.gstreamertypes;
 
 
 /**

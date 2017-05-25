@@ -30,6 +30,7 @@ private import gdk.Screen;
 private import gdk.c.functions;
 public  import gdk.c.types;
 private import gobject.ObjectG;
+public  import gtkc.gdktypes;
 private import pango.PgContext;
 private import pango.PgLayout;
 private import pango.PgLayoutLine;

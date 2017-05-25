@@ -32,6 +32,7 @@ private import gtk.StyleProperties;
 private import gtk.WidgetPath;
 private import gtk.c.functions;
 public  import gtk.c.types;
+public  import gtkc.gtktypes;
 
 
 /**

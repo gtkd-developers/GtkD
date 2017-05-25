@@ -35,6 +35,7 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gobject.Value;
+public  import gtkc.gdktypes;
 private import std.algorithm;
 
 

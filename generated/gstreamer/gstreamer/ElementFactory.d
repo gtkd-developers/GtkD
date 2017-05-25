@@ -32,6 +32,7 @@ private import gstreamer.Element;
 private import gstreamer.PluginFeature;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
+public  import gstreamerc.gstreamertypes;
 
 
 /**

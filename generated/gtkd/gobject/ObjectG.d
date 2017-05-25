@@ -36,6 +36,7 @@ private import gobject.TypeInterface;
 private import gobject.Value;
 private import gobject.c.functions;
 public  import gobject.c.types;
+public  import gtkc.gobjecttypes;
 private import gtkd.Loader;
 private import std.algorithm;
 private import std.traits;

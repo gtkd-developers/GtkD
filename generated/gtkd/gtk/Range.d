@@ -32,6 +32,7 @@ private import gtk.OrientableT;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
+public  import gtkc.gtktypes;
 private import std.algorithm;
 
 

@@ -27,6 +27,7 @@ module gstreamer.MiniObject;
 private import gobject.ObjectG;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
+public  import gstreamerc.gstreamertypes;
 private import gtkd.Loader;
 
 

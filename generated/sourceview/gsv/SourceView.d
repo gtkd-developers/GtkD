@@ -36,6 +36,7 @@ private import gsv.SourceMarkAttributes;
 private import gsv.SpaceDrawer;
 private import gsv.c.functions;
 public  import gsv.c.types;
+public  import gsvc.gsvtypes;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
 private import gtk.ScrollableIF;

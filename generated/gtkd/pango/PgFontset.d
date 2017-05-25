@@ -25,6 +25,7 @@
 module pango.PgFontset;
 
 private import gobject.ObjectG;
+public  import gtkc.pangotypes;
 private import pango.PgFont;
 private import pango.PgFontMetrics;
 private import pango.c.functions;

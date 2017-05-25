@@ -29,6 +29,7 @@ private import glib.GException;
 private import glib.SimpleXML;
 private import glib.Str;
 private import gobject.ObjectG;
+public  import gtkc.pangotypes;
 private import pango.PgAttributeList;
 private import pango.c.functions;
 public  import pango.c.types;

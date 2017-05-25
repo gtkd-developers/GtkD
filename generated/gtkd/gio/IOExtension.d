@@ -29,6 +29,7 @@ public  import gio.c.types;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.TypeClass;
+public  import gtkc.giotypes;
 
 
 /**

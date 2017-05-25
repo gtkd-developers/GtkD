@@ -29,6 +29,7 @@ private import gsv.SourceUndoManagerIF;
 private import gsv.SourceUndoManagerT;
 private import gsv.c.functions;
 public  import gsv.c.types;
+public  import gsvc.gsvtypes;
 
 
 /** */

@@ -49,6 +49,7 @@ private import glib.ListG;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
+public  import gtkc.gdktypes;
 private import std.algorithm;
 
 

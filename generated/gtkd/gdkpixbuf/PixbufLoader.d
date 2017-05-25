@@ -36,6 +36,7 @@ private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
+public  import gtkc.gdkpixbuftypes;
 private import std.algorithm;
 
 

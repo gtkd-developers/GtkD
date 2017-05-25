@@ -29,6 +29,7 @@ public  import gobject.ObjectG;
 public  import gobject.Signals;
 public  import gtk.c.functions;
 public  import gtk.c.types;
+public  import gtkc.gtktypes;
 public  import pango.PgFontDescription;
 public  import pango.PgFontFace;
 public  import pango.PgFontFamily;

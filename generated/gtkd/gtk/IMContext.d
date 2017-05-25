@@ -30,6 +30,7 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.c.functions;
 public  import gtk.c.types;
+public  import gtkc.gtktypes;
 private import pango.PgAttributeList;
 private import std.algorithm;
 

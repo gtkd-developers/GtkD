@@ -27,6 +27,7 @@ module atk.EditableTextT;
 public  import atk.c.functions;
 public  import atk.c.types;
 public  import glib.Str;
+public  import gtkc.atktypes;
 
 
 /**

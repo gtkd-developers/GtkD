@@ -27,6 +27,7 @@ module gdk.Testing;
 private import gdk.Window;
 private import gdk.c.functions;
 public  import gdk.c.types;
+public  import gtkc.gdktypes;
 
 
 /** */

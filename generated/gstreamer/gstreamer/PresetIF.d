@@ -27,6 +27,7 @@ module gstreamer.PresetIF;
 private import glib.Str;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
+public  import gstreamerc.gstreamertypes;
 
 
 /**

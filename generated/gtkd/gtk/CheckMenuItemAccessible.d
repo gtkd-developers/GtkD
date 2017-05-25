@@ -27,6 +27,7 @@ module gtk.CheckMenuItemAccessible;
 private import gtk.MenuItemAccessible;
 private import gtk.c.functions;
 public  import gtk.c.types;
+public  import gtkc.gtktypes;
 
 
 /** */

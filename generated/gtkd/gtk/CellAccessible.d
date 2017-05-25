@@ -31,6 +31,7 @@ private import atk.ComponentT;
 private import gtk.Accessible;
 private import gtk.c.functions;
 public  import gtk.c.types;
+public  import gtkc.gtktypes;
 
 
 /** */

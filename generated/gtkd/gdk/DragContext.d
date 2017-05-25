@@ -32,6 +32,7 @@ public  import gdk.c.types;
 private import glib.ListG;
 private import gobject.ObjectG;
 private import gobject.Signals;
+public  import gtkc.gdktypes;
 private import std.algorithm;
 
 

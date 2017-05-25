@@ -29,6 +29,7 @@ private import gobject.Signals;
 private import gstreamer.ObjectGst;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
+public  import gstreamerc.gstreamertypes;
 private import std.algorithm;
 
 

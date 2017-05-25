@@ -27,6 +27,7 @@ module gtk.RadioButtonAccessible;
 private import gtk.ToggleButtonAccessible;
 private import gtk.c.functions;
 public  import gtk.c.types;
+public  import gtkc.gtktypes;
 
 
 /** */

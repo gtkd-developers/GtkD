@@ -26,6 +26,7 @@ module atk.TextRange;
 
 private import atk.c.functions;
 public  import atk.c.types;
+public  import gtkc.atktypes;
 
 
 /**

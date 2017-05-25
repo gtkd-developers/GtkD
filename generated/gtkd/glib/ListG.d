@@ -27,6 +27,7 @@ module glib.ListG;
 private import glib.c.functions;
 public  import glib.c.types;
 private import gobject.ObjectG;
+public  import gtkc.glibtypes;
 
 
 /**

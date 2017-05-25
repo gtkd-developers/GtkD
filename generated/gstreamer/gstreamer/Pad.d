@@ -41,6 +41,7 @@ private import gstreamer.StaticPadTemplate;
 private import gstreamer.Stream;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
+public  import gstreamerc.gstreamertypes;
 private import std.algorithm;
 
 

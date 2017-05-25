@@ -26,6 +26,7 @@ module pango.PgAttributeIterator;
 
 private import glib.ListSG;
 private import gobject.ObjectG;
+public  import gtkc.pangotypes;
 private import pango.PgAttribute;
 private import pango.PgFontDescription;
 private import pango.PgLanguage;

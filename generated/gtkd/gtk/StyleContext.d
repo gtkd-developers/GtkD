@@ -45,6 +45,7 @@ private import gtk.StyleProviderIF;
 private import gtk.WidgetPath;
 private import gtk.c.functions;
 public  import gtk.c.types;
+public  import gtkc.gtktypes;
 private import pango.PgFontDescription;
 private import pango.PgLayout;
 private import std.algorithm;

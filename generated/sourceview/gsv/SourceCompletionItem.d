@@ -33,6 +33,7 @@ private import gsv.SourceCompletionProposalIF;
 private import gsv.SourceCompletionProposalT;
 private import gsv.c.functions;
 public  import gsv.c.types;
+public  import gsvc.gsvtypes;
 
 
 /** */

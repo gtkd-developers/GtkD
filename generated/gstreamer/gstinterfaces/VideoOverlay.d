@@ -27,6 +27,7 @@ module gstinterfaces.VideoOverlay;
 private import gstinterfaces.c.functions;
 public  import gstinterfaces.c.types;
 private import gstreamer.Element;
+public  import gstreamerc.gstinterfacestypes;
 
 
 /**

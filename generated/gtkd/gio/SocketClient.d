@@ -41,6 +41,7 @@ private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
+public  import gtkc.giotypes;
 private import std.algorithm;
 
 

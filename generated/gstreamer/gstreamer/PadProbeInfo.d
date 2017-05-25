@@ -31,6 +31,7 @@ private import gstreamer.Event;
 private import gstreamer.Query;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
+public  import gstreamerc.gstreamertypes;
 
 
 /**

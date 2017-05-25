@@ -31,6 +31,7 @@ public  import gtk.CellArea;
 public  import gtk.CellRenderer;
 public  import gtk.c.functions;
 public  import gtk.c.types;
+public  import gtkc.gtktypes;
 
 
 /**

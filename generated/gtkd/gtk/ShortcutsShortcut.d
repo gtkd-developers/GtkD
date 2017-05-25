@@ -27,6 +27,7 @@ module gtk.ShortcutsShortcut;
 private import gtk.Box;
 private import gtk.c.functions;
 public  import gtk.c.types;
+public  import gtkc.gtktypes;
 
 
 /**

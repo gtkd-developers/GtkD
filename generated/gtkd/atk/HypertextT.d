@@ -29,6 +29,7 @@ public  import atk.c.functions;
 public  import atk.c.types;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
+public  import gtkc.atktypes;
 public  import std.algorithm;
 
 

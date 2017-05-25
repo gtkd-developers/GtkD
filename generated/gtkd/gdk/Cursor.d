@@ -32,6 +32,7 @@ private import gdkpixbuf.Pixbuf;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
+public  import gtkc.gdktypes;
 
 
 /**

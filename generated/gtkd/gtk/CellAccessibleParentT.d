@@ -28,6 +28,7 @@ public  import atk.RelationSet;
 public  import gtk.CellAccessible;
 public  import gtk.c.functions;
 public  import gtk.c.types;
+public  import gtkc.gtktypes;
 
 
 /** */

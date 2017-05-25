@@ -34,6 +34,7 @@ public  import gsv.SourceCompletionInfo;
 public  import gsv.SourceCompletionProposalIF;
 public  import gsv.c.functions;
 public  import gsv.c.types;
+public  import gsvc.gsvtypes;
 public  import gtk.TextIter;
 public  import gtk.Widget;
 

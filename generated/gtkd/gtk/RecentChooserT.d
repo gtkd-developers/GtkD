@@ -35,6 +35,7 @@ public  import gtk.RecentFilter;
 public  import gtk.RecentInfo;
 public  import gtk.c.functions;
 public  import gtk.c.types;
+public  import gtkc.gtktypes;
 public  import std.algorithm;
 
 

@@ -30,6 +30,7 @@ public  import glib.Str;
 public  import gobject.ObjectG;
 public  import gtk.c.functions;
 public  import gtk.c.types;
+public  import gtkc.gtktypes;
 
 
 /**

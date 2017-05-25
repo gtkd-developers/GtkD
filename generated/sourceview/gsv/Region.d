@@ -30,6 +30,7 @@ private import gobject.ObjectG;
 private import gsv.RegionIter;
 private import gsv.c.functions;
 public  import gsv.c.types;
+public  import gsvc.gsvtypes;
 private import gtk.TextBuffer;
 private import gtk.TextIter;
 

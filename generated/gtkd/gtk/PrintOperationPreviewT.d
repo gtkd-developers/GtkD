@@ -29,6 +29,7 @@ public  import gtk.PageSetup;
 public  import gtk.PrintContext;
 public  import gtk.c.functions;
 public  import gtk.c.types;
+public  import gtkc.gtktypes;
 public  import std.algorithm;
 
 

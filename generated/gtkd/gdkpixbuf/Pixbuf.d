@@ -44,6 +44,7 @@ private import glib.HashTable;
 private import glib.ListSG;
 private import glib.Str;
 private import gobject.ObjectG;
+public  import gtkc.gdkpixbuftypes;
 
 
 /**

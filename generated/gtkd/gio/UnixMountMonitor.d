@@ -29,6 +29,7 @@ public  import gio.c.types;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gobject.Signals;
+public  import gtkc.giotypes;
 private import std.algorithm;
 
 

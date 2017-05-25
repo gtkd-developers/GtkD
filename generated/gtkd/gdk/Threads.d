@@ -26,6 +26,7 @@ module gdk.Threads;
 
 private import gdk.c.functions;
 public  import gdk.c.types;
+public  import gtkc.gdktypes;
 
 
 /** */

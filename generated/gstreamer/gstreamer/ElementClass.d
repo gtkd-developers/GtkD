@@ -31,6 +31,7 @@ private import gstreamer.PadTemplate;
 private import gstreamer.StaticPadTemplate;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
+public  import gstreamerc.gstreamertypes;
 
 
 /**

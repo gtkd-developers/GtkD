@@ -33,6 +33,7 @@ private import gstreamer.DateTime;
 private import gstreamer.Sample;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
+public  import gstreamerc.gstreamertypes;
 
 
 /**

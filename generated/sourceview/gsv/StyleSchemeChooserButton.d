@@ -30,6 +30,7 @@ private import gsv.StyleSchemeChooserIF;
 private import gsv.StyleSchemeChooserT;
 private import gsv.c.functions;
 public  import gsv.c.types;
+public  import gsvc.gsvtypes;
 private import gtk.ActionableIF;
 private import gtk.ActionableT;
 private import gtk.ActivatableIF;

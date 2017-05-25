@@ -31,6 +31,7 @@ private import gstreamer.ObjectGst;
 private import gstreamer.TaskPool;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
+public  import gstreamerc.gstreamertypes;
 
 
 /**

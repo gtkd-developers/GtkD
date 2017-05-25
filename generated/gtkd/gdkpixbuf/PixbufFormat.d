@@ -28,6 +28,7 @@ private import gdkpixbuf.c.functions;
 public  import gdkpixbuf.c.types;
 private import glib.Str;
 private import gobject.ObjectG;
+public  import gtkc.gdkpixbuftypes;
 private import gtkd.Loader;
 
 

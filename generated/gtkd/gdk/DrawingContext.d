@@ -30,6 +30,7 @@ private import gdk.Window;
 private import gdk.c.functions;
 public  import gdk.c.types;
 private import gobject.ObjectG;
+public  import gtkc.gdktypes;
 
 
 /**

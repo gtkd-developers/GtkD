@@ -26,6 +26,7 @@ module pango.PgFontMap;
 
 private import glib.Str;
 private import gobject.ObjectG;
+public  import gtkc.pangotypes;
 private import pango.PgContext;
 private import pango.PgFont;
 private import pango.PgFontDescription;

@@ -31,6 +31,7 @@ private import glib.ConstructionException;
 private import glib.PtrArray;
 private import glib.Str;
 private import gobject.ObjectG;
+public  import gtkc.atktypes;
 
 
 /**

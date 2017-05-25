@@ -27,6 +27,7 @@ module gtk.GestureSingle;
 private import gtk.Gesture;
 private import gtk.c.functions;
 public  import gtk.c.types;
+public  import gtkc.gtktypes;
 
 
 /**

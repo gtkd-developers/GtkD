@@ -53,6 +53,7 @@ private import atk.c.functions;
 public  import atk.c.types;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
+public  import gtkc.atktypes;
 
 
 /**

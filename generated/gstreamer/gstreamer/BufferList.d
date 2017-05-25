@@ -29,6 +29,7 @@ private import gobject.ObjectG;
 private import gstreamer.Buffer;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
+public  import gstreamerc.gstreamertypes;
 
 
 /**

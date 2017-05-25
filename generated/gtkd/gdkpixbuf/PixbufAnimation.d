@@ -37,6 +37,7 @@ private import glib.GException;
 private import glib.Str;
 private import glib.TimeVal;
 private import gobject.ObjectG;
+public  import gtkc.gdkpixbuftypes;
 
 
 /**

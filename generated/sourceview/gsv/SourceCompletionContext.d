@@ -31,6 +31,7 @@ private import gsv.SourceCompletionProposalIF;
 private import gsv.SourceCompletionProviderIF;
 private import gsv.c.functions;
 public  import gsv.c.types;
+public  import gsvc.gsvtypes;
 private import gtk.TextIter;
 private import std.algorithm;
 

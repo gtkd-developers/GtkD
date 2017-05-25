@@ -33,6 +33,7 @@ private import gtk.CellRendererText;
 private import gtk.TreeIter;
 private import gtk.c.functions;
 public  import gtk.c.types;
+public  import gtkc.gtktypes;
 private import std.algorithm;
 
 

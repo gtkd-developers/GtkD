@@ -26,6 +26,7 @@ module pango.PgRenderer;
 
 private import glib.Str;
 private import gobject.ObjectG;
+public  import gtkc.pangotypes;
 private import pango.PgColor;
 private import pango.PgFont;
 private import pango.PgGlyphItem;

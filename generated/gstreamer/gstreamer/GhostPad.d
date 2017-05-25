@@ -33,6 +33,7 @@ private import gstreamer.PadTemplate;
 private import gstreamer.ProxyPad;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
+public  import gstreamerc.gstreamertypes;
 
 
 /**

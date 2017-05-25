@@ -39,6 +39,7 @@ public  import glib.GException;
 public  import glib.ListG;
 public  import glib.Str;
 public  import gobject.ObjectG;
+public  import gtkc.giotypes;
 
 
 /**

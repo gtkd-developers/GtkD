@@ -29,6 +29,7 @@ private import gdk.Window;
 private import gdk.c.functions;
 public  import gdk.c.types;
 private import glib.Str;
+public  import gtkc.gdktypes;
 
 
 /**

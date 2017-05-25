@@ -25,6 +25,7 @@
 module pango.PgEngine;
 
 private import gobject.ObjectG;
+public  import gtkc.pangotypes;
 private import pango.c.functions;
 public  import pango.c.types;
 

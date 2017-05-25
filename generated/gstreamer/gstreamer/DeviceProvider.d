@@ -35,6 +35,7 @@ private import gstreamer.ObjectGst;
 private import gstreamer.Plugin;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
+public  import gstreamerc.gstreamertypes;
 private import std.algorithm;
 
 

@@ -40,6 +40,7 @@ private import gtk.TextMark;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
+public  import gtkc.gtktypes;
 private import pango.PgTabArray;
 private import std.algorithm;
 

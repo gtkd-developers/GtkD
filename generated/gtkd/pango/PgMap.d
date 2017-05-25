@@ -26,6 +26,7 @@ module pango.PgMap;
 
 private import glib.ListSG;
 private import gobject.ObjectG;
+public  import gtkc.pangotypes;
 private import pango.PgEngine;
 private import pango.PgLanguage;
 private import pango.c.functions;

@@ -32,6 +32,7 @@ public  import gobject.ObjectG;
 public  import gobject.Signals;
 public  import gsv.c.functions;
 public  import gsv.c.types;
+public  import gsvc.gsvtypes;
 public  import std.algorithm;
 
 

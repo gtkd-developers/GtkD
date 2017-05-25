@@ -31,6 +31,7 @@ public  import gobject.Signals;
 public  import gobject.Value;
 public  import gstreamer.c.functions;
 public  import gstreamer.c.types;
+public  import gstreamerc.gstreamertypes;
 public  import std.algorithm;
 
 

@@ -36,6 +36,7 @@ private import glib.KeyFile;
 private import glib.ListG;
 private import glib.Str;
 private import gobject.ObjectG;
+public  import gtkc.giotypes;
 
 
 /**

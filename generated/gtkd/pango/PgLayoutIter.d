@@ -25,6 +25,7 @@
 module pango.PgLayoutIter;
 
 private import gobject.ObjectG;
+public  import gtkc.pangotypes;
 private import gtkd.Loader;
 private import pango.PgLayout;
 private import pango.PgLayoutLine;

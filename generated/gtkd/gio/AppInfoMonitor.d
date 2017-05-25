@@ -28,6 +28,7 @@ private import gio.c.functions;
 public  import gio.c.types;
 private import gobject.ObjectG;
 private import gobject.Signals;
+public  import gtkc.giotypes;
 private import std.algorithm;
 
 

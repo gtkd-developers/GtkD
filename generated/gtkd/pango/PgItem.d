@@ -26,6 +26,7 @@ module pango.PgItem;
 
 private import glib.ConstructionException;
 private import gobject.ObjectG;
+public  import gtkc.pangotypes;
 private import gtkd.Loader;
 private import pango.c.functions;
 public  import pango.c.types;

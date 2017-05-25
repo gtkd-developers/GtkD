@@ -28,6 +28,7 @@ private import cairo.Context;
 private import cairo.FontOption;
 private import glib.Str;
 private import gobject.ObjectG;
+public  import gtkc.pangotypes;
 private import pango.PgContext;
 private import pango.PgFont;
 private import pango.PgGlyphItem;

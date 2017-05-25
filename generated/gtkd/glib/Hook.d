@@ -27,6 +27,7 @@ module glib.Hook;
 private import glib.HookList;
 private import glib.c.functions;
 public  import glib.c.types;
+public  import gtkc.glibtypes;
 
 
 /**

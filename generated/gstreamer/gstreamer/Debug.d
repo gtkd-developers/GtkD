@@ -31,6 +31,7 @@ private import gstreamer.Bin;
 private import gstreamer.DebugCategory;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
+public  import gstreamerc.gstreamertypes;
 
 
 /** */

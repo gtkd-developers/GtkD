@@ -29,6 +29,7 @@ private import gobject.ObjectG;
 private import gtk.PageSetup;
 private import gtk.c.functions;
 public  import gtk.c.types;
+public  import gtkc.gtktypes;
 private import pango.PgContext;
 private import pango.PgFontMap;
 private import pango.PgLayout;

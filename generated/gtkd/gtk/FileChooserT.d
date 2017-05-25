@@ -36,6 +36,7 @@ public  import gtk.FileFilter;
 public  import gtk.Widget;
 public  import gtk.c.functions;
 public  import gtk.c.types;
+public  import gtkc.gtktypes;
 public  import std.algorithm;
 
 

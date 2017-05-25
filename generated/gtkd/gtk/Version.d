@@ -27,6 +27,7 @@ module gtk.Version;
 private import glib.Str;
 private import gtk.c.functions;
 public  import gtk.c.types;
+public  import gtkc.gtktypes;
 
 
 /** */

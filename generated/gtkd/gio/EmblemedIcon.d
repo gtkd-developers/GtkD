@@ -33,6 +33,7 @@ public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.ListG;
 private import gobject.ObjectG;
+public  import gtkc.giotypes;
 
 
 /**

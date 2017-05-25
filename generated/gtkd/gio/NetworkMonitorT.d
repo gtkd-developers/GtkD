@@ -35,6 +35,7 @@ public  import glib.ErrorG;
 public  import glib.GException;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
+public  import gtkc.giotypes;
 public  import std.algorithm;
 
 

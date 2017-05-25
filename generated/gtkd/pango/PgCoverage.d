@@ -27,6 +27,7 @@ module pango.PgCoverage;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
+public  import gtkc.pangotypes;
 private import gtkd.Loader;
 private import pango.c.functions;
 public  import pango.c.types;

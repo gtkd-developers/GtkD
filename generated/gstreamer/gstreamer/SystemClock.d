@@ -28,6 +28,7 @@ private import gobject.ObjectG;
 private import gstreamer.Clock;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
+public  import gstreamerc.gstreamertypes;
 
 
 /**

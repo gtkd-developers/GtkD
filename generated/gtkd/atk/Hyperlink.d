@@ -32,6 +32,7 @@ public  import atk.c.types;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
+public  import gtkc.atktypes;
 private import std.algorithm;
 
 

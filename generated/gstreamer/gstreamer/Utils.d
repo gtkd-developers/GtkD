@@ -31,6 +31,7 @@ private import gobject.ValueArray;
 private import gstreamer.Plugin;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
+public  import gstreamerc.gstreamertypes;
 
 
 /** */

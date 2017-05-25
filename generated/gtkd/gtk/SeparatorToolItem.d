@@ -29,6 +29,7 @@ private import gobject.ObjectG;
 private import gtk.ToolItem;
 private import gtk.c.functions;
 public  import gtk.c.types;
+public  import gtkc.gtktypes;
 
 
 /**
