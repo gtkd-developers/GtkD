@@ -1,6 +1,10 @@
 GtkD ChangeLog
 ==============
 
+Release: 3.6.4
+--------------
+-Don't add deprecation warnings in a bugfix release.
+
 Release: 3.6.3
 --------------
 -Fix the destroyNotify error when destroying an object with unref.
