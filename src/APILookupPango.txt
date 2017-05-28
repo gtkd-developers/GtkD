@@ -131,9 +131,8 @@ struct: Context
 alias: break pangoBreak
 
 struct: FcFontMap
-class: PgCairoFontMap
-implements:
-noCode: create_context
+noCode: true
+noExternal: true
 
 struct: FontDescription
 code: start
@@ -157,6 +156,12 @@ array: set_text text length
 struct: Map
 out: get_engines exact_engines
 out: get_engines fallback_engines
+
+struct: PangoCairoFontMap
+class: PgCairoFontMap
+extend: FontMap
+merge: PangoCairoFont
+noCode: create_context
 
 struct: PgMiscellaneous
 import: core.stdc.stdio

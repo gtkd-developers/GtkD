@@ -58,6 +58,8 @@ private import std.algorithm;
  * 
  * |[<!-- language="plain" -->
  * spinbutton.horizontal
+ * ├── undershoot.left
+ * ├── undershoot.right
  * ├── entry
  * │   ╰── ...
  * ├── button.down
@@ -66,6 +68,8 @@ private import std.algorithm;
  * 
  * |[<!-- language="plain" -->
  * spinbutton.vertical
+ * ├── undershoot.left
+ * ├── undershoot.right
  * ├── button.up
  * ├── entry
  * │   ╰── ...

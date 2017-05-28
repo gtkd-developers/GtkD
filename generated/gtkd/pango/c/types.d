@@ -2152,23 +2152,11 @@ struct PangoRendererClass
 
 struct PangoRendererPrivate;
 
-struct PangoScriptForLang
-{
-	char[7] lang;
-	PangoScript[3] scripts;
-}
-
 struct PangoScriptIter;
 
 struct PangoTabArray;
 
-struct PangoCairoFcFontMap
-{
-	PangoFcFontMap parentInstance;
-	uint serial;
-	double dpi;
-	FTLibrary library;
-}
+struct PangoCairoFontMap;
 
 /**
  * Type of a function that can duplicate user data for an attribute.

@@ -252,10 +252,9 @@ public class Scale : Range
 	}
 
 	/**
-	 * Gets the number of decimal places to which the value is rounded on change.
-	 * This number is also used by the default #GtkScale::format-value handler.
+	 * Gets the number of decimal places that are displayed in the value.
 	 *
-	 * Returns: the number of decimal places
+	 * Returns: the number of decimal places that are displayed
 	 */
 	public int getDigits()
 	{
@@ -338,9 +337,11 @@ public class Scale : Range
 	}
 
 	/**
-	 * Sets the number of decimal places to which the value is rounded when it is
-	 * changed. This also sets the number of digits shown in the displayed value
-	 * when using the default handler for the #GtkScale::format-value signal.
+	 * Sets the number of decimal places that are displayed in the value. Also
+	 * causes the value of the adjustment to be rounded to this number of digits,
+	 * so the retrieved value matches the displayed one, if #GtkScale:draw-value is
+	 * %TRUE when the value changes. If you want to enforce rounding the value when
+	 * #GtkScale:draw-value is %FALSE, you can set #GtkRange:round-digits instead.
 	 *
 	 * Note that rounding to a small number of digits can interfere with
 	 * the smooth autoscrolling that is built into #GtkScale. As an alternative,
@@ -348,7 +349,8 @@ public class Scale : Range
 	 * value yourself.
 	 *
 	 * Params:
-	 *     digits = the number of decimal places to which the value will be rounded
+	 *     digits = the number of decimal places to display,
+	 *         e.g. use 1 to display 1.0, 2 to display 1.00, etc
 	 */
 	public void setDigits(int digits)
 	{
@@ -368,9 +370,8 @@ public class Scale : Range
 	}
 
 	/**
-	 * If @has_origin is set to %TRUE (the default),
-	 * the scale will highlight the part of the scale
-	 * between the origin (bottom or left side) of the scale
+	 * If #GtkScale:has-origin is set to %TRUE (the default), the scale will
+	 * highlight the part of the trough between the origin (bottom or left side)
 	 * and the current value.
 	 *
 	 * Params:

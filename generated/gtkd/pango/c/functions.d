@@ -30,11 +30,11 @@ import cairo.c.types;
 import gtkd.Loader;
 
 version (Windows)
-	static immutable LIBRARY_PANGO = ["libpango-1.0-0.dll", "libpangocairo-1.0-0.dll", "libpangoft2-1.0-0.dll"];
+	static immutable LIBRARY_PANGO = ["libpango-1.0-0.dll", "libpangocairo-1.0-0.dll"];
 else version (OSX)
-	static immutable LIBRARY_PANGO = ["libpango-1.0.0.dylib", "libpangocairo-1.0.0.dylib", "libpangoft2-1.0.0.dylib"];
+	static immutable LIBRARY_PANGO = ["libpango-1.0.0.dylib", "libpangocairo-1.0.0.dylib"];
 else
-	static immutable LIBRARY_PANGO = ["libpango-1.0.so.0", "libpangocairo-1.0.so.0", "libpangoft2-1.0.so.0"];
+	static immutable LIBRARY_PANGO = ["libpango-1.0.so.0", "libpangocairo-1.0.so.0"];
 
 shared static this()
 {
@@ -509,8 +509,7 @@ shared static this()
 
 	// pango.PgCairoFontMap
 
-	Linker.link(pango_cairo_font_map_get_type, "pango_cairo_font_map_get_type", LIBRARY_PANGO);
-	Linker.link(pango_cairo_font_get_scaled_font, "pango_cairo_font_get_scaled_font", LIBRARY_PANGO);
+	Linker.link(pango_cairo_font_get_type, "pango_cairo_font_get_type", LIBRARY_PANGO);
 	Linker.link(pango_cairo_font_map_get_default, "pango_cairo_font_map_get_default", LIBRARY_PANGO);
 	Linker.link(pango_cairo_font_map_new, "pango_cairo_font_map_new", LIBRARY_PANGO);
 	Linker.link(pango_cairo_font_map_new_for_font_type, "pango_cairo_font_map_new_for_font_type", LIBRARY_PANGO);
@@ -519,6 +518,7 @@ shared static this()
 	Linker.link(pango_cairo_font_map_get_resolution, "pango_cairo_font_map_get_resolution", LIBRARY_PANGO);
 	Linker.link(pango_cairo_font_map_set_default, "pango_cairo_font_map_set_default", LIBRARY_PANGO);
 	Linker.link(pango_cairo_font_map_set_resolution, "pango_cairo_font_map_set_resolution", LIBRARY_PANGO);
+	Linker.link(pango_cairo_font_get_scaled_font, "pango_cairo_font_get_scaled_font", LIBRARY_PANGO);
 
 	// pango.PgMiscellaneous
 
@@ -1058,8 +1058,7 @@ __gshared extern(C)
 
 	// pango.PgCairoFontMap
 
-	GType function() c_pango_cairo_font_map_get_type;
-	cairo_scaled_font_t* function(PangoCairoFont* font) c_pango_cairo_font_get_scaled_font;
+	GType function() c_pango_cairo_font_get_type;
 	PangoFontMap* function() c_pango_cairo_font_map_get_default;
 	PangoFontMap* function() c_pango_cairo_font_map_new;
 	PangoFontMap* function(cairo_font_type_t fonttype) c_pango_cairo_font_map_new_for_font_type;
@@ -1068,6 +1067,7 @@ __gshared extern(C)
 	double function(PangoCairoFontMap* fontmap) c_pango_cairo_font_map_get_resolution;
 	void function(PangoCairoFontMap* fontmap) c_pango_cairo_font_map_set_default;
 	void function(PangoCairoFontMap* fontmap, double dpi) c_pango_cairo_font_map_set_resolution;
+	cairo_scaled_font_t* function(PangoCairoFont* font) c_pango_cairo_font_get_scaled_font;
 
 	// pango.PgMiscellaneous
 
@@ -1605,8 +1605,7 @@ alias c_pango_tab_array_set_tab pango_tab_array_set_tab;
 
 // pango.PgCairoFontMap
 
-alias c_pango_cairo_font_map_get_type pango_cairo_font_map_get_type;
-alias c_pango_cairo_font_get_scaled_font pango_cairo_font_get_scaled_font;
+alias c_pango_cairo_font_get_type pango_cairo_font_get_type;
 alias c_pango_cairo_font_map_get_default pango_cairo_font_map_get_default;
 alias c_pango_cairo_font_map_new pango_cairo_font_map_new;
 alias c_pango_cairo_font_map_new_for_font_type pango_cairo_font_map_new_for_font_type;
@@ -1615,6 +1614,7 @@ alias c_pango_cairo_font_map_get_font_type pango_cairo_font_map_get_font_type;
 alias c_pango_cairo_font_map_get_resolution pango_cairo_font_map_get_resolution;
 alias c_pango_cairo_font_map_set_default pango_cairo_font_map_set_default;
 alias c_pango_cairo_font_map_set_resolution pango_cairo_font_map_set_resolution;
+alias c_pango_cairo_font_get_scaled_font pango_cairo_font_get_scaled_font;
 
 // pango.PgMiscellaneous
 

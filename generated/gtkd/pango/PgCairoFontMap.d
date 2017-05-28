@@ -33,63 +33,47 @@ private import pango.c.functions;
 public  import pango.c.types;
 
 
-/** */
+/**
+ * #PangoCairoFontMap is an interface exported by font maps for
+ * use with Cairo. The actual type of the font map will depend
+ * on the particular font technology Cairo was compiled to use.
+ *
+ * Since: 1.10
+ */
 public class PgCairoFontMap : PgFontMap
 {
 	/** the main Gtk struct */
-	protected PangoCairoFcFontMap* pangoCairoFcFontMap;
+	protected PangoCairoFontMap* pangoCairoFontMap;
 
 	/** Get the main Gtk struct */
-	public PangoCairoFcFontMap* getPgCairoFontMapStruct(bool transferOwnership = false)
+	public PangoCairoFontMap* getPgCairoFontMapStruct(bool transferOwnership = false)
 	{
 		if (transferOwnership)
 			ownedRef = false;
-		return pangoCairoFcFontMap;
+		return pangoCairoFontMap;
 	}
 
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
-		return cast(void*)pangoCairoFcFontMap;
+		return cast(void*)pangoCairoFontMap;
 	}
 
 	protected override void setStruct(GObject* obj)
 	{
-		pangoCairoFcFontMap = cast(PangoCairoFcFontMap*)obj;
+		pangoCairoFontMap = cast(PangoCairoFontMap*)obj;
 		super.setStruct(obj);
 	}
 
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (PangoCairoFcFontMap* pangoCairoFcFontMap, bool ownedRef = false)
+	public this (PangoCairoFontMap* pangoCairoFontMap, bool ownedRef = false)
 	{
-		this.pangoCairoFcFontMap = pangoCairoFcFontMap;
-		super(cast(PangoFontMap*)pangoCairoFcFontMap, ownedRef);
+		this.pangoCairoFontMap = pangoCairoFontMap;
+		super(cast(PangoFontMap*)pangoCairoFontMap, ownedRef);
 	}
 
-
-	/**
-	 * Gets the #cairo_scaled_font_t used by @font.
-	 * The scaled font can be referenced and kept using
-	 * cairo_scaled_font_reference().
-	 *
-	 * Returns: the #cairo_scaled_font_t used by @font,
-	 *     or %NULL if @font is %NULL.
-	 *
-	 * Since: 1.18
-	 */
-	public ScaledFont getScaledFont()
-	{
-		auto p = pango_cairo_font_get_scaled_font(cast(PangoCairoFont*)pangoCairoFcFontMap);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return new ScaledFont(cast(cairo_scaled_font_t*) p);
-	}
 
 	/**
 	 * Gets a default #PangoCairoFontMap to use with Cairo.
@@ -160,7 +144,7 @@ public class PgCairoFontMap : PgFontMap
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(PangoCairoFcFontMap*) p, true);
+		this(cast(PangoCairoFontMap*) p, true);
 	}
 
 	/**
@@ -192,7 +176,7 @@ public class PgCairoFontMap : PgFontMap
 			throw new ConstructionException("null returned by new_for_font_type");
 		}
 
-		this(cast(PangoCairoFcFontMap*) p, true);
+		this(cast(PangoCairoFontMap*) p, true);
 	}
 
 	/**
@@ -204,7 +188,7 @@ public class PgCairoFontMap : PgFontMap
 	 */
 	public cairo_font_type_t getFontType()
 	{
-		return pango_cairo_font_map_get_font_type(cast(PangoCairoFontMap*)pangoCairoFcFontMap);
+		return pango_cairo_font_map_get_font_type(cast(PangoCairoFontMap*)pangoCairoFontMap);
 	}
 
 	/**
@@ -216,7 +200,7 @@ public class PgCairoFontMap : PgFontMap
 	 */
 	public double getResolution()
 	{
-		return pango_cairo_font_map_get_resolution(cast(PangoCairoFontMap*)pangoCairoFcFontMap);
+		return pango_cairo_font_map_get_resolution(cast(PangoCairoFontMap*)pangoCairoFontMap);
 	}
 
 	/**
@@ -240,7 +224,7 @@ public class PgCairoFontMap : PgFontMap
 	 */
 	public void setDefault()
 	{
-		pango_cairo_font_map_set_default(cast(PangoCairoFontMap*)pangoCairoFcFontMap);
+		pango_cairo_font_map_set_default(cast(PangoCairoFontMap*)pangoCairoFontMap);
 	}
 
 	/**
@@ -257,6 +241,28 @@ public class PgCairoFontMap : PgFontMap
 	 */
 	public void setResolution(double dpi)
 	{
-		pango_cairo_font_map_set_resolution(cast(PangoCairoFontMap*)pangoCairoFcFontMap, dpi);
+		pango_cairo_font_map_set_resolution(cast(PangoCairoFontMap*)pangoCairoFontMap, dpi);
+	}
+
+	/**
+	 * Gets the #cairo_scaled_font_t used by @font.
+	 * The scaled font can be referenced and kept using
+	 * cairo_scaled_font_reference().
+	 *
+	 * Returns: the #cairo_scaled_font_t used by @font,
+	 *     or %NULL if @font is %NULL.
+	 *
+	 * Since: 1.18
+	 */
+	public ScaledFont getScaledFont()
+	{
+		auto p = pango_cairo_font_get_scaled_font(cast(PangoCairoFont*)pangoCairoFontMap);
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return new ScaledFont(cast(cairo_scaled_font_t*) p);
 	}
 }
