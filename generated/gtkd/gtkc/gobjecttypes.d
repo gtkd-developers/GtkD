@@ -17,6 +17,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
 
-module gobject.glibtypes;
+module gtkc.gobjecttypes;
 
 public import gobject.c.types;
