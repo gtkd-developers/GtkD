@@ -82,39 +82,37 @@ void build(string dir, string lib)
 	{
 		if (lib == "gtkd")
 		{
-			string files = dFiles(dir);
-			
-			ptrdiff_t pivot = indexOf(files, ' ', files.length / 2);
+			string[] subDirs = ["atk", "cairo", "gdk", "gdkpixbuf", "gio", "glib", "gobject", "gthread", "gtk", "gtkc", "gtkd", "pango", "rsvg"];
 
-			string files2 = files[pivot .. $];
-			files = files [0 .. pivot];
+			foreach(directory; subDirs)
+				buildObj(dFiles("generated\\gtkd\\"~ directory), directory);
 
-			std.file.write("build.rf", format("-c %s -Igenerated/gtkd -ofgtkd1.obj %s", dcflags, files));
-			auto pid = spawnProcess(["dmd", "@build.rf"]);
-			if ( wait(pid) != 0 )
-				exit(1);
-			std.file.write("build.rf", format("-c %s -Igenerated/gtkd -ofgtkd2.obj %s", dcflags, files2));
-			pid = spawnProcess(["dmd", "@build.rf"]);
-			if ( wait(pid) != 0 )
-				exit(1);
+			string objects;
+			foreach(directory; subDirs)
+				objects ~= directory ~".obj ";
 
-			executeShell(format("dmd -lib %s -of%s.lib gtkd1.obj gtkd2.obj", ldflags, lib));
+			executeShell(format("dmd -lib %s -of%s.lib %s", ldflags, lib, objects));
 
-			std.file.remove("gtkd1.obj");
-			std.file.remove("gtkd2.obj");
+			foreach(directory; subDirs)
+				std.file.remove(directory ~".obj");
 		}
 		else
 		{
-			std.file.write("build.rf", format("-c %s -Igenerated/gtkd -of%s.obj %s", dcflags, lib, dFiles(dir)));
-			auto pid = spawnProcess(["dmd", "@build.rf"]);
-			if ( wait(pid) != 0 )
-				exit(1);
+			buildObj(dFiles(dir), lib);
 			executeShell(format("dmd -lib %s -of%s.lib %s.obj", ldflags, lib, lib));
 			std.file.remove(lib ~".obj");
 		}
 	}
 	
 	std.file.remove("build.rf");
+}
+
+void buildObj(string files, string objName)
+{
+	std.file.write("build.rf", format("-c %s -Igenerated/gtkd -of%s.obj %s", dcflags, objName, files));
+	auto pid = spawnProcess(["dmd", "@build.rf"]);
+	if ( wait(pid) != 0 )
+		exit(1);
 }
 
 string dFiles(string sourceDir)
