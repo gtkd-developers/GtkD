@@ -1,5 +1,7 @@
 module Build;
 
+import core.stdc.stdlib: exit;
+
 import std.algorithm;
 import std.array;
 import std.file;
@@ -33,10 +35,10 @@ int main(string[] args)
 	}
 	
 	if ( args.length == 0 )
-		args = ["gtkd", "gtkdgl", "sv"];
+		args = ["gtkd", "sv"];
 		
 	if ( args.canFind("all") )
-		args = ["gtkd", "gtkdgl", "sv", "gstreamer", "vte"];
+		args = ["gtkd", "sv", "gstreamer", "peas"];
 	
 	foreach ( arg; args )
 	{
@@ -53,9 +55,6 @@ int main(string[] args)
 				break;
 			case "gstreamer":
 				build("generated\\gstreamer", "gstreamerd");
-				break;
-			case "vte":
-				build("generated\\vte", "vted");
 				break;
 			case "peas":
 				build("generated\\peas", "peasd");
@@ -74,7 +73,10 @@ void build(string dir, string lib)
 	version(Win64)
 	{
 		std.file.write("build.rf", format("-m64 -c -lib %s %s -Igenerated/gtkd -of%s.lib %s", dcflags, ldflags, lib, dFiles(dir)));
-		executeShell("dmd @build.rf");
+		auto pid = spawnProcess(["dmd", "@build.rf"]);
+
+		if ( wait(pid) != 0 )
+			exit(1);
 	}
 	else
 	{
@@ -88,9 +90,13 @@ void build(string dir, string lib)
 			files = files [0 .. pivot];
 
 			std.file.write("build.rf", format("-c %s -Igenerated/gtkd -ofgtkd1.obj %s", dcflags, files));
-			executeShell("dmd @build.rf");
+			auto pid = spawnProcess(["dmd", "@build.rf"]);
+			if ( wait(pid) != 0 )
+				exit(1);
 			std.file.write("build.rf", format("-c %s -Igenerated/gtkd -ofgtkd2.obj %s", dcflags, files2));
-			executeShell("dmd @build.rf");
+			pid = spawnProcess(["dmd", "@build.rf"]);
+			if ( wait(pid) != 0 )
+				exit(1);
 
 			executeShell(format("dmd -lib %s -of%s.lib gtkd1.obj gtkd2.obj", ldflags, lib));
 
@@ -100,7 +106,9 @@ void build(string dir, string lib)
 		else
 		{
 			std.file.write("build.rf", format("-c %s -Igenerated/gtkd -of%s.obj %s", dcflags, lib, dFiles(dir)));
-			executeShell("dmd @build.rf");
+			auto pid = spawnProcess(["dmd", "@build.rf"]);
+			if ( wait(pid) != 0 )
+				exit(1);
 			executeShell(format("dmd -lib %s -of%s.lib %s.obj", ldflags, lib, lib));
 			std.file.remove(lib ~".obj");
 		}
