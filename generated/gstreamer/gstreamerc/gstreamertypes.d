@@ -2615,85 +2615,83 @@ public enum GstState
 alias GstState State;
 
 /**
- * #GST_STATE_CHANGE_NULL_TO_READY    : state change from NULL to READY.
- * * The element must check if the resources it needs are available. Device
- * sinks and -sources typically try to probe the device to constrain their
- * caps.
- * * The element opens the device (in case feature need to be probed).
- *
- * #GST_STATE_CHANGE_READY_TO_PAUSED  : state change from READY to PAUSED.
- *
- * * The element pads are activated in order to receive data in PAUSED.
- * Streaming threads are started.
- * * Some elements might need to return %GST_STATE_CHANGE_ASYNC and complete
- * the state change when they have enough information. It is a requirement
- * for sinks to return %GST_STATE_CHANGE_ASYNC and complete the state change
- * when they receive the first buffer or %GST_EVENT_EOS (preroll).
- * Sinks also block the dataflow when in PAUSED.
- * * A pipeline resets the running_time to 0.
- *
- * * Live sources return %GST_STATE_CHANGE_NO_PREROLL and don't generate data.
- *
- * #GST_STATE_CHANGE_PAUSED_TO_PLAYING: state change from PAUSED to PLAYING.
- *
- * * Most elements ignore this state change.
- * * The pipeline selects a #GstClock and distributes this to all the children
- * before setting them to PLAYING. This means that it is only allowed to
- * synchronize on the #GstClock in the PLAYING state.
- * * The pipeline uses the #GstClock and the running_time to calculate the
- * base_time. The base_time is distributed to all children when performing
- * the state change.
- * * Sink elements stop blocking on the preroll buffer or event and start
- * rendering the data.
- * * Sinks can post %GST_MESSAGE_EOS in the PLAYING state. It is not allowed
- * to post %GST_MESSAGE_EOS when not in the PLAYING state.
- * * While streaming in PAUSED or PLAYING elements can create and remove
- * sometimes pads.
- * * Live sources start generating data and return %GST_STATE_CHANGE_SUCCESS.
- *
- * #GST_STATE_CHANGE_PLAYING_TO_PAUSED: state change from PLAYING to PAUSED.
- *
- * * Most elements ignore this state change.
- * * The pipeline calculates the running_time based on the last selected
- * #GstClock and the base_time. It stores this information to continue
- * playback when going back to the PLAYING state.
- *
- * * Sinks unblock any #GstClock wait calls.
- * * When a sink does not have a pending buffer to play, it returns
- * #GST_STATE_CHANGE_ASYNC from this state change and completes the state
- * change when it receives a new buffer or an %GST_EVENT_EOS.
- * * Any queued %GST_MESSAGE_EOS items are removed since they will be reposted
- * when going back to the PLAYING state. The EOS messages are queued in
- * #GstBin containers.
- *
- * * Live sources stop generating data and return %GST_STATE_CHANGE_NO_PREROLL.
- *
- * #GST_STATE_CHANGE_PAUSED_TO_READY  : state change from PAUSED to READY.
- *
- * * Sinks unblock any waits in the preroll.
- * * Elements unblock any waits on devices
- * * Chain or get_range functions return %GST_FLOW_FLUSHING.
- * * The element pads are deactivated so that streaming becomes impossible and
- * all streaming threads are stopped.
- * * The sink forgets all negotiated formats
- * * Elements remove all sometimes pads
- *
- * #GST_STATE_CHANGE_READY_TO_NULL    : state change from READY to NULL.
- *
- * * Elements close devices
- * * Elements reset any internal state.
- *
  * These are the different state changes an element goes through.
  * %GST_STATE_NULL &rArr; %GST_STATE_PLAYING is called an upwards state change
  * and %GST_STATE_PLAYING &rArr; %GST_STATE_NULL a downwards state change.
  */
 public enum GstStateChange
 {
+	/**
+	 * state change from NULL to READY.
+	 * * The element must check if the resources it needs are available. Device
+	 * sinks and -sources typically try to probe the device to constrain their
+	 * caps.
+	 * * The element opens the device (in case feature need to be probed).
+	 */
 	NULL_TO_READY = 10,
+	/**
+	 * state change from READY to PAUSED.
+	 * * The element pads are activated in order to receive data in PAUSED.
+	 * Streaming threads are started.
+	 * * Some elements might need to return %GST_STATE_CHANGE_ASYNC and complete
+	 * the state change when they have enough information. It is a requirement
+	 * for sinks to return %GST_STATE_CHANGE_ASYNC and complete the state change
+	 * when they receive the first buffer or %GST_EVENT_EOS (preroll).
+	 * Sinks also block the dataflow when in PAUSED.
+	 * * A pipeline resets the running_time to 0.
+	 * * Live sources return %GST_STATE_CHANGE_NO_PREROLL and don't generate data.
+	 */
 	READY_TO_PAUSED = 19,
+	/**
+	 * state change from PAUSED to PLAYING.
+	 * * Most elements ignore this state change.
+	 * * The pipeline selects a #GstClock and distributes this to all the children
+	 * before setting them to PLAYING. This means that it is only allowed to
+	 * synchronize on the #GstClock in the PLAYING state.
+	 * * The pipeline uses the #GstClock and the running_time to calculate the
+	 * base_time. The base_time is distributed to all children when performing
+	 * the state change.
+	 * * Sink elements stop blocking on the preroll buffer or event and start
+	 * rendering the data.
+	 * * Sinks can post %GST_MESSAGE_EOS in the PLAYING state. It is not allowed
+	 * to post %GST_MESSAGE_EOS when not in the PLAYING state.
+	 * * While streaming in PAUSED or PLAYING elements can create and remove
+	 * sometimes pads.
+	 * * Live sources start generating data and return %GST_STATE_CHANGE_SUCCESS.
+	 */
 	PAUSED_TO_PLAYING = 28,
+	/**
+	 * state change from PLAYING to PAUSED.
+	 * * Most elements ignore this state change.
+	 * * The pipeline calculates the running_time based on the last selected
+	 * #GstClock and the base_time. It stores this information to continue
+	 * playback when going back to the PLAYING state.
+	 * * Sinks unblock any #GstClock wait calls.
+	 * * When a sink does not have a pending buffer to play, it returns
+	 * #GST_STATE_CHANGE_ASYNC from this state change and completes the state
+	 * change when it receives a new buffer or an %GST_EVENT_EOS.
+	 * * Any queued %GST_MESSAGE_EOS items are removed since they will be reposted
+	 * when going back to the PLAYING state. The EOS messages are queued in
+	 * #GstBin containers.
+	 * * Live sources stop generating data and return %GST_STATE_CHANGE_NO_PREROLL.
+	 */
 	PLAYING_TO_PAUSED = 35,
+	/**
+	 * state change from PAUSED to READY.
+	 * * Sinks unblock any waits in the preroll.
+	 * * Elements unblock any waits on devices
+	 * * Chain or get_range functions return %GST_FLOW_FLUSHING.
+	 * * The element pads are deactivated so that streaming becomes impossible and
+	 * all streaming threads are stopped.
+	 * * The sink forgets all negotiated formats
+	 * * Elements remove all sometimes pads
+	 */
 	PAUSED_TO_READY = 26,
+	/**
+	 * state change from READY to NULL.
+	 * * Elements close devices
+	 * * Elements reset any internal state.
+	 */
 	READY_TO_NULL = 17,
 }
 alias GstStateChange StateChange;

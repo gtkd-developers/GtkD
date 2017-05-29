@@ -1751,8 +1751,8 @@ shared static this()
 
 	version(Win64)
 	{
-		Linker.link(g_module_name, "g_module_name_uft8", LIBRARY.GLIB, LIBRARY.GMODULE);
-		Linker.link(g_module_open, "g_module_open_utf8", LIBRARY.GLIB, LIBRARY.GMODULE);
+		Linker.link(g_module_name, "g_module_name_uft8", LIBRARY_GLIB);
+		Linker.link(g_module_open, "g_module_open_utf8", LIBRARY_GLIB);
 	}
 }
 
