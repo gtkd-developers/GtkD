@@ -41,7 +41,7 @@ public struct Linker
 	 *     symbol    = The name of the symbol to link
 	 *     libraries = One or more libraries to search for the symbol
 	 */
-	deprecated("Use the LIBRARY_* symbols defined for each package, instead of gtkd.paths.LIBRARY")
+	//deprecated("Use the LIBRARY_* symbols defined for each package, instead of gtkd.paths.LIBRARY")
 	public static void link(T)(ref T funct, string symbol, LIBRARY[] libraries ...)
 	{
 		funct = cast(T)getSymbol(symbol, libraries);
@@ -65,7 +65,7 @@ public struct Linker
 	 *     symbol    = The name of the symbol to link
 	 *     libraries = One or more libraries to search for the symbol
 	 */
-	deprecated("Use the LIBRARY_* symbols defined for each package, instead of gtkd.paths.LIBRARY")
+	//deprecated("Use the LIBRARY_* symbols defined for each package, instead of gtkd.paths.LIBRARY")
 	public static void* getSymbol(string symbol, LIBRARY[] libraries ...)
 	{
 		string[] libStr = new string[libraries.length];
@@ -130,7 +130,7 @@ public struct Linker
 	/*
 	 * Unload a library
 	 */
-	deprecated("Use the LIBRARY_* symbols defined for each package, instead of gtkd.paths.LIBRARY")
+	//deprecated("Use the LIBRARY_* symbols defined for each package, instead of gtkd.paths.LIBRARY")
 	public static void unloadLibrary(LIBRARY library)
 	{
 		unloadLibrary( importLibs[library] );
@@ -188,7 +188,7 @@ public struct Linker
 	 * Checks if a library is loaded.
 	 * Returns: true is the library was loaded sucsessfully.
 	 */
-	deprecated("Use the LIBRARY_* symbols defined for each package, instead of gtkd.paths.LIBRARY")
+	//deprecated("Use the LIBRARY_* symbols defined for each package, instead of gtkd.paths.LIBRARY")
 	public static bool isLoaded(LIBRARY library)
 	{
 		return isLoaded(importLibs[library]);
@@ -217,7 +217,7 @@ public struct Linker
 	 * returns: An array of the names hat failed to load for a specific library
 	 *          or null if none was found
 	 */
-	deprecated("Use the LIBRARY_* symbols defined for each package, instead of gtkd.paths.LIBRARY")
+	//deprecated("Use the LIBRARY_* symbols defined for each package, instead of gtkd.paths.LIBRARY")
 	public static string[] getLoadFailures(LIBRARY library)
 	{
 		return getLoadFailures(importLibs[library]);
