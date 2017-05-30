@@ -1,6 +1,11 @@
 GtkD ChangeLog
 ==============
 
+Release: 3.6.5
+--------------
+-Fix the Windows build script.
+-Fix the 64bit Windows workaround.
+
 Release: 3.6.4
 --------------
 -Don't add deprecation warnings in a bugfix release.
