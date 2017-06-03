@@ -986,9 +986,6 @@ code: start
 	}
 code: end
 
-struct: Object
-class: ObjectGst
-
 struct: Pad
 code: start
 	/*

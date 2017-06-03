@@ -131,7 +131,6 @@ code: start
 code: end
 
 struct: Object
-class: ObjectG
 import: core.memory
 import: gobject.Signals
 import: gtkd.Loader

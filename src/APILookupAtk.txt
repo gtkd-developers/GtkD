@@ -60,9 +60,6 @@ code: start
 	}
 code: end
 
-struct: Object
-class: ObjectAtk
-
 struct: Util
 namespace: Util
 
