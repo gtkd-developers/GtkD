@@ -132,7 +132,7 @@ ifeq ("$(OS)","Darwin")
     shared-libs: shared-gtkd
 else
     libs: gtkd sv gstreamer vte peas
-    shared-libs: shared-gtkd shared-sv shared-gstreamer shared-vte
+    shared-libs: shared-gtkd shared-sv shared-gstreamer shared-vte shared-peas
 endif
 
 gtkd:      $(LIBNAME_GTKD)
