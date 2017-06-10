@@ -164,6 +164,12 @@ noCode: create_context
 struct: PgMiscellaneous
 import: core.stdc.stdio
 
+version Windows: start
+	struct: Win32FontMap
+	noCode: true
+	noExternal: true
+version: end
+
 struct:
 
 move: attr_background_new Attribute background_new

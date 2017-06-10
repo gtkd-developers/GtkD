@@ -349,31 +349,33 @@ code: start
 	}
 code: end
 
-struct: DesktopAppInfo
-noCode: new_from_filename
-code: start
-	/**
-	 * Creates a new #GDesktopAppInfo.
-	 *
-	 * Params:
-	 *     filename = the path of a desktop file, in the GLib filename encoding
-	 *
-	 * Return: a new #GDesktopAppInfo or %NULL on error.
-	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public static DesktopAppInfo createFromFilename(string filename)
-	{
-		auto p = g_desktop_app_info_new_from_filename(Str.toStringz(filename));
-
-		if(p is null)
+version !Windows: start
+	struct: DesktopAppInfo
+	noCode: new_from_filename
+	code: start
+		/**
+		* Creates a new #GDesktopAppInfo.
+		*
+		* Params:
+		*     filename = the path of a desktop file, in the GLib filename encoding
+		*
+		* Return: a new #GDesktopAppInfo or %NULL on error.
+		*
+		* Throws: ConstructionException GTK+ fails to create the object.
+		*/
+		public static DesktopAppInfo createFromFilename(string filename)
 		{
-			throw new ConstructionException("null returned by g_desktop_app_info_new_from_filename");
-		}
+			auto p = g_desktop_app_info_new_from_filename(Str.toStringz(filename));
 
-		return new DesktopAppInfo(p, true);
-	}
-code: end
+			if(p is null)
+			{
+				throw new ConstructionException("null returned by g_desktop_app_info_new_from_filename");
+			}
+
+			return new DesktopAppInfo(p, true);
+		}
+	code: end
+version: end
 
 struct:
 class: Drive
@@ -505,8 +507,10 @@ array: get_value Return length
 array: set_value value length
 array: set_value_full value length
 
-struct: UnixSocketAddress
-noCode: new_abstract
+version !Windows: start
+	struct: UnixSocketAddress
+	noCode: new_abstract
+version: end
 
 struct:
 class: Volume
@@ -630,21 +634,23 @@ move: simple_async_report_error_in_idle SimpleAsyncResult
 move: simple_async_report_gerror_in_idle SimpleAsyncResult
 move: simple_async_report_take_gerror_in_idle SimpleAsyncResult
 
-move: unix_is_mount_path_system_internal UnixMountEntry is_mount_path_system_internal
-move: unix_mount_at UnixMountEntry at
-move: unix_mount_compare UnixMountEntry compare
-move: unix_mount_free UnixMountEntry free
-move: unix_mount_get_device_path UnixMountEntry get_device_path
-move: unix_mount_get_fs_type UnixMountEntry get_fs_type
-move: unix_mount_get_mount_path UnixMountEntry get_mount_path
-move: unix_mount_guess_can_eject UnixMountEntry guess_can_eject
-move: unix_mount_guess_icon UnixMountEntry guess_icon
-move: unix_mount_guess_name UnixMountEntry guess_name
-move: unix_mount_guess_should_display UnixMountEntry guess_should_display
-move: unix_mount_guess_symbolic_icon UnixMountEntry guess_symbolic_icon
-move: unix_mount_is_readonly UnixMountEntry is_readonly
-move: unix_mount_is_system_internal UnixMountEntry is_system_internal
-move: unix_mount_points_changed_since UnixMountEntry points_changed_since
-move: unix_mount_points_get UnixMountEntry mount_points_get
-move: unix_mounts_changed_since UnixMountEntry mounts_changed_since
-move: unix_mounts_get UnixMountEntry mounts_get
+version !Windows: start
+	move: unix_is_mount_path_system_internal UnixMountEntry is_mount_path_system_internal
+	move: unix_mount_at UnixMountEntry at
+	move: unix_mount_compare UnixMountEntry compare
+	move: unix_mount_free UnixMountEntry free
+	move: unix_mount_get_device_path UnixMountEntry get_device_path
+	move: unix_mount_get_fs_type UnixMountEntry get_fs_type
+	move: unix_mount_get_mount_path UnixMountEntry get_mount_path
+	move: unix_mount_guess_can_eject UnixMountEntry guess_can_eject
+	move: unix_mount_guess_icon UnixMountEntry guess_icon
+	move: unix_mount_guess_name UnixMountEntry guess_name
+	move: unix_mount_guess_should_display UnixMountEntry guess_should_display
+	move: unix_mount_guess_symbolic_icon UnixMountEntry guess_symbolic_icon
+	move: unix_mount_is_readonly UnixMountEntry is_readonly
+	move: unix_mount_is_system_internal UnixMountEntry is_system_internal
+	move: unix_mount_points_changed_since UnixMountEntry points_changed_since
+	move: unix_mount_points_get UnixMountEntry mount_points_get
+	move: unix_mounts_changed_since UnixMountEntry mounts_changed_since
+	move: unix_mounts_get UnixMountEntry mounts_get
+version: end

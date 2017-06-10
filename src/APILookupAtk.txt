@@ -87,11 +87,14 @@ move: text_attribute_get_name Text attribute_get_name
 move: text_attribute_get_value Text attribute_get_value
 move: text_attribute_register Text attribute_register
 
-move: get_binary_age Version
-move: get_interface_age Version
-move: get_major_version Version
-move: get_micro_version Version
-move: get_minor_version Version
+#TODO: Why are these functions not available on Windows?
+version !Windows: start
+	move: get_binary_age Version
+	move: get_interface_age Version
+	move: get_major_version Version
+	move: get_micro_version Version
+	move: get_minor_version Version
+version: end
 move: get_toolkit_version Version
 move: get_version Version
 

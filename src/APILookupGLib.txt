@@ -765,6 +765,7 @@ import: core.thread
 import: core.stdc.string
 import: core.stdc.stdio
 import: std.string
+import: std.traits
 #noCode: spawn_async_with_pipes
 code: start
 	//we need fdopen.
@@ -845,10 +846,21 @@ code: start
 			fclose(standardError);
 			stdErr = 0;
 		}
-		if ( childPid != 0 )
+		static if ( isPointer!(GPid) )
 		{
-			closePid(childPid);
-			childPid = 0;
+			if ( childPid !is null )
+			{
+				closePid(childPid);
+				childPid = null;
+			}
+		}
+		else
+		{
+			if ( childPid != 0 )
+			{
+				closePid(childPid);
+				childPid = 0;
+			}
 		}
 	}
 
@@ -1957,15 +1969,17 @@ move: utf8_to_utf16 Unicode
 move: utf8_validate Unicode
 version 2.52: move: utf8_make_valid Unicode
 
-move: unix_error_quark UnixUtils error_quark
-move: unix_fd_add UnixUtils fd_add
-move: unix_fd_add_full UnixUtils fd_add_full
-move: unix_fd_source_new UnixUtils fd_source_new
-move: unix_open_pipe UnixUtils open_pipe
-move: unix_set_fd_nonblocking UnixUtils set_fd_nonblocking
-move: unix_signal_add UnixUtils signal_add
-move: unix_signal_add_full UnixUtils signal_add_full
-move: unix_signal_source_new UnixUtils signal_source_new
+version !Windows: start
+	move: unix_error_quark UnixUtils error_quark
+	move: unix_fd_add UnixUtils fd_add
+	move: unix_fd_add_full UnixUtils fd_add_full
+	move: unix_fd_source_new UnixUtils fd_source_new
+	move: unix_open_pipe UnixUtils open_pipe
+	move: unix_set_fd_nonblocking UnixUtils set_fd_nonblocking
+	move: unix_signal_add UnixUtils signal_add
+	move: unix_signal_add_full UnixUtils signal_add_full
+	move: unix_signal_source_new UnixUtils signal_source_new
+version: end
 
 move: filename_from_uri URI
 move: filename_to_uri URI
