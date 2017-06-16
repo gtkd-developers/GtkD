@@ -1,68 +1,55 @@
 module builder.builderTest;
 
+import gio.Application: GioApplication = Application;
+
+import gtk.Application;
+import gtk.ApplicationWindow;
 import gtk.Builder;
 import gtk.Button;
-import gtk.Main;
-import gtk.Widget;
-import gtk.Window;
-
-import gobject.Type;
 
 import std.stdio;
 import core.stdc.stdlib;
-
 
 /**
  * Usage ./gladeText /path/to/your/glade/file.glade
  *
  */
 
-int main(string[] args)
-{
+int main(string[] args) {
 	string gladefile;
-
-	Main.init(args);
-
-	if(args.length > 1)
-	{
+	if(args.length > 1) {
 		writefln("Loading %s", args[1]);
 		gladefile = args[1];
-	}
-	else
-	{
-		writefln("No glade file specified, using default \"builderTest.glade\"");
+	} else {
+		writeln("No glade file specified, using default \"builderTest.glade\"");
 		gladefile = "builderTest.glade";
 	}
+	auto application = new Application("org.gtkd.demo.builder.builderTest", GApplicationFlags.FLAGS_NONE);
 
-	Builder g = new Builder();
-
-	if( ! g.addFromFile(gladefile) )
-	{
-		writefln("Oops, could not create Glade object, check your glade file ;)");
-		exit(1);
-	}
-
-	Window w = cast(Window)g.getObject("window1");
-
-	if (w !is null)
-	{
-		w.setTitle("This is a glade window");
-		w.addOnHide( delegate void(Widget aux){ Main.quit(); } );
-
-		Button b = cast(Button)g.getObject("button1");
-		if(b !is null)
-		{
-			b.addOnClicked( delegate void(Button aux){ Main.quit(); } );
+	void buildAndDisplay(GioApplication a) {
+		auto builder = new Builder();
+		if( ! builder.addFromFile(gladefile) ) {
+			writeln("Oops, could not create Glade object, check your glade file ;)");
+			exit(1);
+		}
+		auto window = cast(ApplicationWindow)builder.getObject("window");
+		window.setApplication(application);
+		if (window !is null) {
+			window.setTitle("This is a glade application window");
+			auto button = cast(Button)builder.getObject("button");
+			if(button !is null) {
+				button.addOnClicked( delegate void(Button aux){ a.quit(); } );
+				window.showAll();
+			} else {
+				writeln("No button in the window?");
+				exit(1);
+			}
+		} else {
+			writeln("No window?");
+			exit(1);
 		}
 	}
-	else
-	{
-		writefln("No window?");
-		exit(1);
-	}
 
-	w.showAll();
-	Main.run();
-
-	return 0;
+	application.addOnActivate(&buildAndDisplay);
+	return application.run(args);
 }
