@@ -1472,25 +1472,6 @@ public struct Str
 	}
 
 	/**
-	 * An implementation of the standard fprintf() function which supports
-	 * positional parameters, as specified in the Single Unix Specification.
-	 *
-	 * Params:
-	 *     file = the stream to write to.
-	 *     format = a standard printf() format string, but notice
-	 *         [string precision pitfalls][string-precision]
-	 *     args = the list of arguments to insert in the output.
-	 *
-	 * Returns: the number of bytes printed.
-	 *
-	 * Since: 2.2
-	 */
-	public static int vfprintf(FILE* file, string format, void* args)
-	{
-		return g_vfprintf(file, Str.toStringz(format), args);
-	}
-
-	/**
 	 * An implementation of the standard vprintf() function which supports
 	 * positional parameters, as specified in the Single Unix Specification.
 	 *
@@ -1560,5 +1541,24 @@ public struct Str
 	public static int vsprintf(string str, string format, void* args)
 	{
 		return g_vsprintf(Str.toStringz(str), Str.toStringz(format), args);
+	}
+
+	/**
+	 * An implementation of the standard fprintf() function which supports
+	 * positional parameters, as specified in the Single Unix Specification.
+	 *
+	 * Params:
+	 *     file = the stream to write to.
+	 *     format = a standard printf() format string, but notice
+	 *         [string precision pitfalls][string-precision]
+	 *     args = the list of arguments to insert in the output.
+	 *
+	 * Returns: the number of bytes printed.
+	 *
+	 * Since: 2.2
+	 */
+	public static int vfprintf(FILE* file, string format, void* args)
+	{
+		return g_vfprintf(file, Str.toStringz(format), args);
 	}
 }

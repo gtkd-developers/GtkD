@@ -83,9 +83,11 @@ copy: gstreamerc
 lookup: APILookupGStreamer.txt
 lookup: APILookupGstInterfaces.txt
 
-srcDir: vte
-copy: vtec
-lookup: APILookupVte.txt
+version !Windows: start
+	srcDir: vte
+	copy: vtec
+	lookup: APILookupVte.txt
+version: end
 
 srcDir: peas
 copy: peasc

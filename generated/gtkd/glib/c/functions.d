@@ -1377,7 +1377,6 @@ shared static this()
 	Linker.link(g_ascii_tolower, "g_ascii_tolower", LIBRARY_GLIB);
 	Linker.link(g_ascii_toupper, "g_ascii_toupper", LIBRARY_GLIB);
 	Linker.link(g_ascii_xdigit_value, "g_ascii_xdigit_value", LIBRARY_GLIB);
-	Linker.link(g_fprintf, "g_fprintf", LIBRARY_GLIB);
 	Linker.link(g_printf, "g_printf", LIBRARY_GLIB);
 	Linker.link(g_printf_string_upper_bound, "g_printf_string_upper_bound", LIBRARY_GLIB);
 	Linker.link(g_snprintf, "g_snprintf", LIBRARY_GLIB);
@@ -1425,10 +1424,11 @@ shared static this()
 	Linker.link(g_strv_length, "g_strv_length", LIBRARY_GLIB);
 	Linker.link(g_strv_contains, "g_strv_contains", LIBRARY_GLIB);
 	Linker.link(g_vasprintf, "g_vasprintf", LIBRARY_GLIB);
-	Linker.link(g_vfprintf, "g_vfprintf", LIBRARY_GLIB);
 	Linker.link(g_vprintf, "g_vprintf", LIBRARY_GLIB);
 	Linker.link(g_vsnprintf, "g_vsnprintf", LIBRARY_GLIB);
 	Linker.link(g_vsprintf, "g_vsprintf", LIBRARY_GLIB);
+	Linker.link(g_fprintf, "g_fprintf", LIBRARY_GLIB);
+	Linker.link(g_vfprintf, "g_vfprintf", LIBRARY_GLIB);
 
 	// glib.Timeout
 
@@ -3098,7 +3098,6 @@ __gshared extern(C)
 	char function(char c) c_g_ascii_tolower;
 	char function(char c) c_g_ascii_toupper;
 	int function(char c) c_g_ascii_xdigit_value;
-	int function(FILE* file, char* format, ... ) c_g_fprintf;
 	int function(char* format, ... ) c_g_printf;
 	size_t function(const(char)* format, void* args) c_g_printf_string_upper_bound;
 	int function(char* str, gulong n, char* format, ... ) c_g_snprintf;
@@ -3146,10 +3145,11 @@ __gshared extern(C)
 	uint function(char** strArray) c_g_strv_length;
 	int function(const(char)* strv, const(char)* str) c_g_strv_contains;
 	int function(char** str, char* format, void* args) c_g_vasprintf;
-	int function(FILE* file, char* format, void* args) c_g_vfprintf;
 	int function(char* format, void* args) c_g_vprintf;
 	int function(char* str, gulong n, char* format, void* args) c_g_vsnprintf;
 	int function(char* str, char* format, void* args) c_g_vsprintf;
+	int function(FILE* file, char* format, ... ) c_g_fprintf;
+	int function(FILE* file, char* format, void* args) c_g_vfprintf;
 
 	// glib.Timeout
 
@@ -4811,7 +4811,6 @@ alias c_g_ascii_strup g_ascii_strup;
 alias c_g_ascii_tolower g_ascii_tolower;
 alias c_g_ascii_toupper g_ascii_toupper;
 alias c_g_ascii_xdigit_value g_ascii_xdigit_value;
-alias c_g_fprintf g_fprintf;
 alias c_g_printf g_printf;
 alias c_g_printf_string_upper_bound g_printf_string_upper_bound;
 alias c_g_snprintf g_snprintf;
@@ -4859,10 +4858,11 @@ alias c_g_strv_get_type g_strv_get_type;
 alias c_g_strv_length g_strv_length;
 alias c_g_strv_contains g_strv_contains;
 alias c_g_vasprintf g_vasprintf;
-alias c_g_vfprintf g_vfprintf;
 alias c_g_vprintf g_vprintf;
 alias c_g_vsnprintf g_vsnprintf;
 alias c_g_vsprintf g_vsprintf;
+alias c_g_fprintf g_fprintf;
+alias c_g_vfprintf g_vfprintf;
 
 // glib.Timeout
 

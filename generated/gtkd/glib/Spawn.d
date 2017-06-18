@@ -34,6 +34,7 @@ private import glib.c.functions;
 public  import glib.c.types;
 public  import gtkc.glibtypes;
 private import std.string;
+private import std.traits;
 
 
 /** */
@@ -117,10 +118,21 @@ public class Spawn
 			fclose(standardError);
 			stdErr = 0;
 		}
-		if ( childPid != 0 )
+		static if ( isPointer!(GPid) )
 		{
-			closePid(childPid);
-			childPid = 0;
+			if ( childPid !is null )
+			{
+				closePid(childPid);
+				childPid = null;
+			}
+		}
+		else
+		{
+			if ( childPid != 0 )
+			{
+				closePid(childPid);
+				childPid = 0;
+			}
 		}
 	}
 

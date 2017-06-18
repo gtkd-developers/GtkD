@@ -535,13 +535,13 @@ shared static this()
 	Linker.link(pango_parse_variant, "pango_parse_variant", LIBRARY_PANGO);
 	Linker.link(pango_parse_weight, "pango_parse_weight", LIBRARY_PANGO);
 	Linker.link(pango_quantize_line_geometry, "pango_quantize_line_geometry", LIBRARY_PANGO);
-	Linker.link(pango_read_line, "pango_read_line", LIBRARY_PANGO);
 	Linker.link(pango_scan_int, "pango_scan_int", LIBRARY_PANGO);
 	Linker.link(pango_scan_string, "pango_scan_string", LIBRARY_PANGO);
 	Linker.link(pango_scan_word, "pango_scan_word", LIBRARY_PANGO);
 	Linker.link(pango_skip_space, "pango_skip_space", LIBRARY_PANGO);
 	Linker.link(pango_split_file_list, "pango_split_file_list", LIBRARY_PANGO);
 	Linker.link(pango_trim_string, "pango_trim_string", LIBRARY_PANGO);
+	Linker.link(pango_read_line, "pango_read_line", LIBRARY_PANGO);
 
 	// pango.PgVertical
 
@@ -1084,13 +1084,13 @@ __gshared extern(C)
 	int function(const(char)* str, PangoVariant* variant, int warn) c_pango_parse_variant;
 	int function(const(char)* str, PangoWeight* weight, int warn) c_pango_parse_weight;
 	void function(int* thickness, int* position) c_pango_quantize_line_geometry;
-	int function(FILE* stream, GString* str) c_pango_read_line;
 	int function(char** pos, int* output) c_pango_scan_int;
 	int function(char** pos, GString* output) c_pango_scan_string;
 	int function(char** pos, GString* output) c_pango_scan_word;
 	int function(char** pos) c_pango_skip_space;
 	char** function(const(char)* str) c_pango_split_file_list;
 	char* function(const(char)* str) c_pango_trim_string;
+	int function(FILE* stream, GString* str) c_pango_read_line;
 
 	// pango.PgVertical
 
@@ -1631,13 +1631,13 @@ alias c_pango_parse_style pango_parse_style;
 alias c_pango_parse_variant pango_parse_variant;
 alias c_pango_parse_weight pango_parse_weight;
 alias c_pango_quantize_line_geometry pango_quantize_line_geometry;
-alias c_pango_read_line pango_read_line;
 alias c_pango_scan_int pango_scan_int;
 alias c_pango_scan_string pango_scan_string;
 alias c_pango_scan_word pango_scan_word;
 alias c_pango_skip_space pango_skip_space;
 alias c_pango_split_file_list pango_split_file_list;
 alias c_pango_trim_string pango_trim_string;
+alias c_pango_read_line pango_read_line;
 
 // pango.PgVertical
 

@@ -128,6 +128,16 @@ code: end
 struct: Context
 alias: break pangoBreak
 
+version OSX: start
+	struct: CoreTextFont
+	noCode: true
+	noExternal: true
+
+	struct: CoreTextFontMap
+	noCode: true
+	noExternal: true
+version: end
+
 struct: FcFontMap
 noCode: true
 noExternal: true
@@ -235,13 +245,14 @@ move: parse_style PgMiscellaneous
 move: parse_variant PgMiscellaneous
 move: parse_weight PgMiscellaneous
 move: quantize_line_geometry PgMiscellaneous
-move: read_line PgMiscellaneous
 move: scan_int PgMiscellaneous
 move: scan_string PgMiscellaneous
 move: scan_word PgMiscellaneous
 move: skip_space PgMiscellaneous
 move: split_file_list PgMiscellaneous
 move: trim_string PgMiscellaneous
+
+version !OSX: move: read_line PgMiscellaneous
 
 move: extents_to_pixels Matrix
 move: units_from_double Matrix

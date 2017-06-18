@@ -1826,7 +1826,6 @@ move: ascii_strup Str
 move: ascii_tolower Str
 move: ascii_toupper Str
 move: ascii_xdigit_value Str
-move: fprintf Str
 move: printf Str
 move: printf_string_upper_bound Str
 move: snprintf Str
@@ -1874,10 +1873,14 @@ move: strv_get_type Str
 move: strv_length Str
 move: strv_contains Str
 move: vasprintf Str
-move: vfprintf Str
 move: vprintf Str
 move: vsnprintf Str
 move: vsprintf Str
+
+version !OSX: start
+	move: fprintf Str
+	move: vfprintf Str
+version: end
 
 move: string_new String
 move: string_new_len String

@@ -288,34 +288,6 @@ public struct PgMiscellaneous
 	}
 
 	/**
-	 * Reads an entire line from a file into a buffer. Lines may
-	 * be delimited with '\n', '\r', '\n\r', or '\r\n'. The delimiter
-	 * is not written into the buffer. Text after a '#' character is treated as
-	 * a comment and skipped. '\' can be used to escape a # character.
-	 * '\' proceeding a line delimiter combines adjacent lines. A '\' proceeding
-	 * any other character is ignored and written into the output buffer
-	 * unmodified.
-	 *
-	 * Params:
-	 *     stream = a stdio stream
-	 *     str = #GString buffer into which to write the result
-	 *
-	 * Returns: 0 if the stream was already at an %EOF character, otherwise
-	 *     the number of lines read (this is useful for maintaining
-	 *     a line number counter which doesn't combine lines with '\')
-	 */
-	public static int readLine(FILE* stream, out StringG str)
-	{
-		GString* outstr = gMalloc!GString();
-
-		auto p = pango_read_line(stream, outstr);
-
-		str = new StringG(outstr, true);
-
-		return p;
-	}
-
-	/**
 	 * Scans an integer.
 	 * Leading white space is skipped.
 	 *
@@ -437,5 +409,33 @@ public struct PgMiscellaneous
 
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
+	}
+
+	/**
+	 * Reads an entire line from a file into a buffer. Lines may
+	 * be delimited with '\n', '\r', '\n\r', or '\r\n'. The delimiter
+	 * is not written into the buffer. Text after a '#' character is treated as
+	 * a comment and skipped. '\' can be used to escape a # character.
+	 * '\' proceeding a line delimiter combines adjacent lines. A '\' proceeding
+	 * any other character is ignored and written into the output buffer
+	 * unmodified.
+	 *
+	 * Params:
+	 *     stream = a stdio stream
+	 *     str = #GString buffer into which to write the result
+	 *
+	 * Returns: 0 if the stream was already at an %EOF character, otherwise
+	 *     the number of lines read (this is useful for maintaining
+	 *     a line number counter which doesn't combine lines with '\')
+	 */
+	public static int readLine(FILE* stream, out StringG str)
+	{
+		GString* outstr = gMalloc!GString();
+
+		auto p = pango_read_line(stream, outstr);
+
+		str = new StringG(outstr, true);
+
+		return p;
 	}
 }
