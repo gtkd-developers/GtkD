@@ -18,9 +18,10 @@
 
 module sourceView.SVTest;
 
+private import gio.Application : GioApplication = Application;
+private import gtk.Application;
+private import gtk.ApplicationWindow;
 
-private import gtk.MainWindow;
-private import gtk.Main;
 private import gtk.ScrolledWindow;
 private import gtk.Widget;
 
@@ -40,20 +41,21 @@ private import std.file;
  * TODO on gsv: override methods from TextView, TextBuffer, etc
  */
 
-class HelloWorld : MainWindow
+class HelloWorld : ApplicationWindow
 {
 
 	SourceView sourceView;
-	
-	this()
+
+	this(Application application)
 	{
-		super("GtkD SourceView");
+		super(application);
+		setTitle("GtkD SourceView");
 		setBorderWidth(10);
 		add(getSourceView());
 		setDefaultSize(640,400);
 		showAll();
 	}
-	
+
 	private string getDemoText()
 	{
 		string text;
@@ -63,49 +65,49 @@ class HelloWorld : MainWindow
 			text = cast(string)std.file.read("SVTest.d");
 		}
 		catch ( FileException fe ) { }
-		
+
 		return text;
 	}
-	
+
 	private Widget getSourceView()
 	{
 		sourceView = new SourceView();
 		sourceView.setShowLineNumbers(true);
-		
+
 		sourceView.setInsertSpacesInsteadOfTabs(false);
 		sourceView.setTabWidth(4);
 		sourceView.setHighlightCurrentLine(true);
-		
+
 		SourceBuffer sb = sourceView.getBuffer();
 		sb.setText(getDemoText());
-		
+
 		ScrolledWindow scWindow = new ScrolledWindow();
 		scWindow.add(sourceView);
 
-		
+
 		SourceLanguageManager slm = new SourceLanguageManager();
 		SourceLanguage dLang = slm.getLanguage("d");
-		
+
 		if ( dLang !is null )
 		{
 			writefln("Setting language to D");
 			sb.setLanguage(dLang);
 			sb.setHighlightSyntax(true);
 		}
-		
+
 		//sourceView.modifyFont("Courier", 9);
 		sourceView.setRightMarginPosition(72);
 		sourceView.setShowRightMargin(true);
 		sourceView.setAutoIndent(true);
-		
-		
+
+
 		return scWindow;
 	}
 }
 
-void main(string[] args)
+int main(string[] args)
 {
-	Main.init(args);
-	new HelloWorld();
-	Main.run();
+	auto application = new Application("org.gtkd.demo.sourceview", GApplicationFlags.FLAGS_NONE);
+	application.addOnActivate(delegate (GioApplication app) { new HelloWorld(application); });
+	return application.run(args);
 }
