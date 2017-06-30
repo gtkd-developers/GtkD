@@ -1,8 +1,10 @@
 module pangocairo;
 
+import gio.Application : GioApplication = Application;
+import gtk.Application;
+import gtk.ApplicationWindow;
+
 import gtk.DrawingArea;
-import gtk.Main;
-import gtk.MainWindow;
 import gtk.Widget;
 
 import cairo.Context;
@@ -36,7 +38,7 @@ class PangoText : DrawingArea
 
 		// Create a PangoLayout, set the font and text
 		layout = PgCairo.createLayout(cr);
-	  
+
 		layout.setText("Text");
 		desc = PgFontDescription.fromString(m_font);
 		layout.setFontDescription(desc);
@@ -56,10 +58,10 @@ class PangoText : DrawingArea
 			cr.setSourceRgb(red, 0, 1.0 - red);
 
 			cr.rotate(angle * PI / 180.);
-		
+
 			/* Inform Pango to re-layout the text with the new transformation */
 			PgCairo.updateLayout(cr, layout);
-		
+
 			layout.getSize(width, height);
 			cr.moveTo( -(cast(double)width / PANGO_SCALE) / 2, - m_radius );
 			PgCairo.showLayout(cr, layout);
@@ -72,18 +74,22 @@ class PangoText : DrawingArea
 }
 
 
-void main(string[] args)
+int main(string[] args)
 {
-	Main.init(args);
-	
-	MainWindow win = new MainWindow("gtkD Pango text");
-	
-	win.setDefaultSize( 300, 300 );
+	Application application;
 
-	PangoText p = new PangoText();
-	win.add(p);
-	p.show();
-	win.showAll();
+	void activatePangoText(GioApplication app)
+	{
+		auto window = new ApplicationWindow(application);
+		window.setTitle("gtkD Pango text");
+		window.setDefaultSize(300, 300);
+		auto pt = new PangoText();
+		window.add(pt);
+		pt.show();
+		window.showAll();
+	}
 
-	Main.run();
+	application = new Application("org.gtkd.demo.pangocairo", GApplicationFlags.FLAGS_NONE);
+	application.addOnActivate(&activatePangoText);
+	return application.run(args);
 }
