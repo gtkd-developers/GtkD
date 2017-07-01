@@ -24,26 +24,33 @@ module coreGL.CoreGL;
 
 import std.string;
 
+import gio.Application : GioApplication = Application;
+import gtk.Application;
+import gtk.ApplicationWindow;
 import gdk.GLContext;
 import gtk.DrawingArea;
 import gtk.GLArea;
-import gtk.Main;
-import gtk.MainWindow;
 import gtk.Widget;
 
 import glcore;
 
-void main(string[] args)
+int main(string[] args)
 {
-  Main.init(args);
+	Application application;
 
-  auto mainWnd = new MainWindow("Simplest GLArea + CoreGL Example");
+	void activateCoreGL(GioApplication app)
+	{
+    auto mainWnd = new ApplicationWindow(application);
+    mainWnd.setTitle("Simplest GLArea + CoreGL Example");
 
-  auto wnd = new CoreGL;
-  mainWnd.add(wnd);
-  mainWnd.showAll();
+    auto wnd = new CoreGL;
+    mainWnd.add(wnd);
+    mainWnd.showAll();
+	}
 
-  Main.run();
+	application = new Application("org.gtkd.demo.gl.core", GApplicationFlags.FLAGS_NONE);
+	application.addOnActivate(&activateCoreGL);
+	return application.run(args);
 }
 
 /**
