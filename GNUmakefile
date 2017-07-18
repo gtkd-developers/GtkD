@@ -108,11 +108,11 @@ USE_RUNTIME_LINKER = $(shell grep "Linker" generated/gtkd/gtkc/atk.d)
 
 ifeq ($(USE_RUNTIME_LINKER),)
     SOFLAGS_GTKD = $(subst -l,$(LINKERFLAG)-l,$(shell pkg-config --libs gtk+-3.0 librsvg-2.0))
-    SOFLAGS_GTKDGL = $(LINKERFLAG)-L. $(LINKERFLAG)-lgtkd-3 $(subst -l,$(LINKERFLAG)-l,$(shell pkg-config --libs gtkglext-3.0))
-    SOFLAGS_GTKDSV = $(LINKERFLAG)-L. $(LINKERFLAG)-lgtkd-3 $(subst -l,$(LINKERFLAG)-l,$(shell pkg-config --libs gtksourceview-3.0))
-    SOFLAGS_GSTREAMERD = $(LINKERFLAG)-L. $(LINKERFLAG)-lgtkd-3 $(subst -l,$(LINKERFLAG)-l,$(shell pkg-config --libs gstreamer-base-1.0))
-    SOFLAGS_VTED = $(LINKERFLAG)-L. $(LINKERFLAG)-lgtkd-3 $(subst -l,$(LINKERFLAG)-l,$(shell pkg-config --libs vte-2.91))
-    SOFLAGS_PEASD = $(LINKERFLAG)-L. $(LINKERFLAG)-lgtkd-3 $(subst -l,$(LINKERFLAG)-l,$(shell pkg-config --libs-only-l libpeas-1.0))
+    SOFLAGS_GTKDGL = $(LINKERFLAG)-L. $(LINKERFLAG)./libgtkd-$(MAJOR).so $(subst -l,$(LINKERFLAG)-l,$(shell pkg-config --libs gtkglext-3.0))
+    SOFLAGS_GTKDSV = $(LINKERFLAG)-L. $(LINKERFLAG)./libgtkd-$(MAJOR).so $(subst -l,$(LINKERFLAG)-l,$(shell pkg-config --libs gtksourceview-3.0))
+    SOFLAGS_GSTREAMERD = $(LINKERFLAG)-L. $(LINKERFLAG)./libgtkd-$(MAJOR).so $(subst -l,$(LINKERFLAG)-l,$(shell pkg-config --libs gstreamer-base-1.0))
+    SOFLAGS_VTED = $(LINKERFLAG)-L. $(LINKERFLAG)./libgtkd-$(MAJOR).so $(subst -l,$(LINKERFLAG)-l,$(shell pkg-config --libs vte-2.91))
+    SOFLAGS_PEASD = $(LINKERFLAG)-L. $(LINKERFLAG)./libgtkd-$(MAJOR).so $(subst -l,$(LINKERFLAG)-l,$(shell pkg-config --libs-only-l libpeas-1.0))
 endif
 
 #######################################################################
@@ -220,7 +220,7 @@ $(BINNAME_DEMO): $(OBJECTS_DEMO)
 	$(if $(wildcard $(SONAME_GTKD)),$(eval LDFLAGS+= $(LINKERFLAG)-rpath=./))
 	$(if $(wildcard $(SONAME_GTKD)),$(if $(findstring "gdc","$(DC)"),$(eval LDFLAGS+=-shared-libphobos)))
 	$(if $(wildcard $(SONAME_GTKD)),$(if $(wildcard $(SONAME_GTKD).$(SO_VERSION)),,$(shell ln -s $(SONAME_GTKD) $(SONAME_GTKD).$(SO_VERSION))))
-	$(DC) $(OBJECTS_DEMO) $(output) $(LINKERFLAG)-L. $(LINKERFLAG)-lgtkd-$(MAJOR) $(LDFLAGS)
+	$(DC) $(OBJECTS_DEMO) $(output) $(if $(wildcard $(SONAME_GTKD)),$(LINKERFLAG)./libgtkd-$(MAJOR).so,$(LINKERFLAG)./libgtkd-$(MAJOR).a) $(LDFLAGS)
 
 #######################################################################
 
