@@ -45,8 +45,9 @@ libs | build all the static libraries.
 shared | build all the shared libraries.
 [shared-]gtkd | build gtkd.
 [shared-]gtkdsv | build gtkd-sourceview.
-[shared-]gda | build gda.
 [shared-]gstreamer | build gstreamer.
+[shared-]vte | build vte.
+[shared-]peas | build peas.
 
 install and uninstall options are also available for the options mentioned above.
 
