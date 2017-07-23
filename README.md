@@ -1,13 +1,13 @@
 # GtkD
 
-GtkD is the Digital Mars D programming language OO wrapper for Gtk+ 3.10.  GtkD
+GtkD is the Digital Mars D programming language OO wrapper for Gtk+ 3.22.  GtkD
 is release on the LGPL license with additional exceptions.
 
 Please view COPYING for GtkD's license.
 
 ## Requirements
 
-- Linux, Windows(2000, XP), or Mac
+- Linux, Windows, or Mac
 - Gtk libs
 - dmd, gdc or ldc installation
 
@@ -41,11 +41,12 @@ Optionally these options are available:
 Option | Meaning
 --- | ---
 all | build everything.
+libs | build all the static libraries.
+shared | build all the shared libraries.
 [shared-]gtkd | build gtkd.
 [shared-]gtkdsv | build gtkd-sourceview.
 [shared-]gda | build gda.
 [shared-]gstreamer | build gstreamer.
-shared | build gtkd and gtkd-sourceview as shared libraries.
 
 install and uninstall options are also available for the options mentioned above.
 
