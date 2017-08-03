@@ -113,7 +113,7 @@ class MainWindow: ApplicationWindow {
 	private void buttonClicked(Button button) {
 		if (!running) {
 			writeln("Adding idle delegate");
-			gdk.Threads.threadsAddIdle(cast(GSourceFunc)&threadIdleProcess, null);
+			gdk.Threads.threadsAddIdle(&threadIdleProcess, null);
 
 			writeln("Spawning thread...");
 			childTid = spawn(&countNumbers);
@@ -178,7 +178,7 @@ void countNumbers() {
  * The idle callback invoked by GTK periodically when the
  * application main thread is not engaged in any processing.
  */
-extern(C) nothrow static bool threadIdleProcess(void* data) {
+extern(C) nothrow static int threadIdleProcess(void* data) {
 	//Don't let D exceptions get thrown from function
 	try{
 		receiveTimeout(dur!("msecs")( 0 ), (int value) {
@@ -188,12 +188,12 @@ extern(C) nothrow static bool threadIdleProcess(void* data) {
 		// If thread is not running, return false so GTK removes it
 		// and no longer calls it during idle processing.
 		if (!running) {
-			return false;
+			return 0;
 		}
 	} catch (Throwable t) {
-		return false;
+		return 0;
 	}
-	return true;
+	return 1;
 }
 
 MainWindow mainWindow;
