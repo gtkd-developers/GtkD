@@ -213,29 +213,29 @@ public template ListModelT(TStruct)
 
 	protected class OnItemsChangedDelegateWrapper
 	{
-		static OnItemsChangedDelegateWrapper[] listeners;
 		void delegate(uint, uint, uint, ListModelIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(uint, uint, uint, ListModelIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onItemsChangedListeners ~= this;
 		}
 
 		void remove(OnItemsChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onItemsChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onItemsChangedListeners[index] = null;
+					onItemsChangedListeners = std.algorithm.remove(onItemsChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnItemsChangedDelegateWrapper[] onItemsChangedListeners;
 
 	/**
 	 * This signal is emitted whenever items were added or removed to

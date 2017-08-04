@@ -390,29 +390,29 @@ public class Engine : ObjectG
 
 	protected class OnLoadPluginDelegateWrapper
 	{
-		static OnLoadPluginDelegateWrapper[] listeners;
 		void delegate(PluginInfo, Engine) dlg;
 		gulong handlerId;
 
 		this(void delegate(PluginInfo, Engine) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onLoadPluginListeners ~= this;
 		}
 
 		void remove(OnLoadPluginDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onLoadPluginListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onLoadPluginListeners[index] = null;
+					onLoadPluginListeners = std.algorithm.remove(onLoadPluginListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnLoadPluginDelegateWrapper[] onLoadPluginListeners;
 
 	/**
 	 * The load-plugin signal is emitted when a plugin is being loaded.
@@ -451,29 +451,29 @@ public class Engine : ObjectG
 
 	protected class OnUnloadPluginDelegateWrapper
 	{
-		static OnUnloadPluginDelegateWrapper[] listeners;
 		void delegate(PluginInfo, Engine) dlg;
 		gulong handlerId;
 
 		this(void delegate(PluginInfo, Engine) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onUnloadPluginListeners ~= this;
 		}
 
 		void remove(OnUnloadPluginDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onUnloadPluginListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onUnloadPluginListeners[index] = null;
+					onUnloadPluginListeners = std.algorithm.remove(onUnloadPluginListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnUnloadPluginDelegateWrapper[] onUnloadPluginListeners;
 
 	/**
 	 * The unload-plugin signal is emitted when a plugin is being unloaded.

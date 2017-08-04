@@ -489,29 +489,29 @@ public class Popover : Bin
 
 	protected class OnClosedDelegateWrapper
 	{
-		static OnClosedDelegateWrapper[] listeners;
 		void delegate(Popover) dlg;
 		gulong handlerId;
 
 		this(void delegate(Popover) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onClosedListeners ~= this;
 		}
 
 		void remove(OnClosedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onClosedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onClosedListeners[index] = null;
+					onClosedListeners = std.algorithm.remove(onClosedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnClosedDelegateWrapper[] onClosedListeners;
 
 	/** */
 	gulong addOnClosed(void delegate(Popover) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)

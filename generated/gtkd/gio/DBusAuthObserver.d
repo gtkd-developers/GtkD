@@ -169,29 +169,29 @@ public class DBusAuthObserver : ObjectG
 
 	protected class OnAllowMechanismDelegateWrapper
 	{
-		static OnAllowMechanismDelegateWrapper[] listeners;
 		bool delegate(string, DBusAuthObserver) dlg;
 		gulong handlerId;
 
 		this(bool delegate(string, DBusAuthObserver) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onAllowMechanismListeners ~= this;
 		}
 
 		void remove(OnAllowMechanismDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onAllowMechanismListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onAllowMechanismListeners[index] = null;
+					onAllowMechanismListeners = std.algorithm.remove(onAllowMechanismListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnAllowMechanismDelegateWrapper[] onAllowMechanismListeners;
 
 	/**
 	 * Emitted to check if @mechanism is allowed to be used.
@@ -228,29 +228,29 @@ public class DBusAuthObserver : ObjectG
 
 	protected class OnAuthorizeAuthenticatedPeerDelegateWrapper
 	{
-		static OnAuthorizeAuthenticatedPeerDelegateWrapper[] listeners;
 		bool delegate(IOStream, Credentials, DBusAuthObserver) dlg;
 		gulong handlerId;
 
 		this(bool delegate(IOStream, Credentials, DBusAuthObserver) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onAuthorizeAuthenticatedPeerListeners ~= this;
 		}
 
 		void remove(OnAuthorizeAuthenticatedPeerDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onAuthorizeAuthenticatedPeerListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onAuthorizeAuthenticatedPeerListeners[index] = null;
+					onAuthorizeAuthenticatedPeerListeners = std.algorithm.remove(onAuthorizeAuthenticatedPeerListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnAuthorizeAuthenticatedPeerDelegateWrapper[] onAuthorizeAuthenticatedPeerListeners;
 
 	/**
 	 * Emitted to check if a peer that is successfully authenticated

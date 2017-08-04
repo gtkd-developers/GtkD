@@ -624,29 +624,29 @@ public template DtlsConnectionT(TStruct)
 
 	protected class OnAcceptCertificateDelegateWrapper
 	{
-		static OnAcceptCertificateDelegateWrapper[] listeners;
 		bool delegate(TlsCertificate, GTlsCertificateFlags, DtlsConnectionIF) dlg;
 		gulong handlerId;
 
 		this(bool delegate(TlsCertificate, GTlsCertificateFlags, DtlsConnectionIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onAcceptCertificateListeners ~= this;
 		}
 
 		void remove(OnAcceptCertificateDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onAcceptCertificateListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onAcceptCertificateListeners[index] = null;
+					onAcceptCertificateListeners = std.algorithm.remove(onAcceptCertificateListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnAcceptCertificateDelegateWrapper[] onAcceptCertificateListeners;
 
 	/**
 	 * Emitted during the TLS handshake after the peer certificate has

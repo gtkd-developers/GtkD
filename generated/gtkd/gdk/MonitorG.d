@@ -249,29 +249,29 @@ public class MonitorG : ObjectG
 
 	protected class OnInvalidateDelegateWrapper
 	{
-		static OnInvalidateDelegateWrapper[] listeners;
 		void delegate(MonitorG) dlg;
 		gulong handlerId;
 
 		this(void delegate(MonitorG) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onInvalidateListeners ~= this;
 		}
 
 		void remove(OnInvalidateDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onInvalidateListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onInvalidateListeners[index] = null;
+					onInvalidateListeners = std.algorithm.remove(onInvalidateListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnInvalidateDelegateWrapper[] onInvalidateListeners;
 
 	/** */
 	gulong addOnInvalidate(void delegate(MonitorG) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)

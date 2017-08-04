@@ -342,29 +342,29 @@ public class Paned : Container, OrientableIF
 
 	protected class OnAcceptPositionDelegateWrapper
 	{
-		static OnAcceptPositionDelegateWrapper[] listeners;
 		bool delegate(Paned) dlg;
 		gulong handlerId;
 
 		this(bool delegate(Paned) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onAcceptPositionListeners ~= this;
 		}
 
 		void remove(OnAcceptPositionDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onAcceptPositionListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onAcceptPositionListeners[index] = null;
+					onAcceptPositionListeners = std.algorithm.remove(onAcceptPositionListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnAcceptPositionDelegateWrapper[] onAcceptPositionListeners;
 
 	/**
 	 * The ::accept-position signal is a
@@ -401,29 +401,29 @@ public class Paned : Container, OrientableIF
 
 	protected class OnCancelPositionDelegateWrapper
 	{
-		static OnCancelPositionDelegateWrapper[] listeners;
 		bool delegate(Paned) dlg;
 		gulong handlerId;
 
 		this(bool delegate(Paned) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCancelPositionListeners ~= this;
 		}
 
 		void remove(OnCancelPositionDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCancelPositionListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCancelPositionListeners[index] = null;
+					onCancelPositionListeners = std.algorithm.remove(onCancelPositionListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCancelPositionDelegateWrapper[] onCancelPositionListeners;
 
 	/**
 	 * The ::cancel-position signal is a
@@ -461,29 +461,29 @@ public class Paned : Container, OrientableIF
 
 	protected class OnCycleChildFocusDelegateWrapper
 	{
-		static OnCycleChildFocusDelegateWrapper[] listeners;
 		bool delegate(bool, Paned) dlg;
 		gulong handlerId;
 
 		this(bool delegate(bool, Paned) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCycleChildFocusListeners ~= this;
 		}
 
 		void remove(OnCycleChildFocusDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCycleChildFocusListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCycleChildFocusListeners[index] = null;
+					onCycleChildFocusListeners = std.algorithm.remove(onCycleChildFocusListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCycleChildFocusDelegateWrapper[] onCycleChildFocusListeners;
 
 	/**
 	 * The ::cycle-child-focus signal is a
@@ -522,29 +522,29 @@ public class Paned : Container, OrientableIF
 
 	protected class OnCycleHandleFocusDelegateWrapper
 	{
-		static OnCycleHandleFocusDelegateWrapper[] listeners;
 		bool delegate(bool, Paned) dlg;
 		gulong handlerId;
 
 		this(bool delegate(bool, Paned) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCycleHandleFocusListeners ~= this;
 		}
 
 		void remove(OnCycleHandleFocusDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCycleHandleFocusListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCycleHandleFocusListeners[index] = null;
+					onCycleHandleFocusListeners = std.algorithm.remove(onCycleHandleFocusListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCycleHandleFocusDelegateWrapper[] onCycleHandleFocusListeners;
 
 	/**
 	 * The ::cycle-handle-focus signal is a
@@ -584,29 +584,29 @@ public class Paned : Container, OrientableIF
 
 	protected class OnMoveHandleDelegateWrapper
 	{
-		static OnMoveHandleDelegateWrapper[] listeners;
 		bool delegate(GtkScrollType, Paned) dlg;
 		gulong handlerId;
 
 		this(bool delegate(GtkScrollType, Paned) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMoveHandleListeners ~= this;
 		}
 
 		void remove(OnMoveHandleDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMoveHandleListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMoveHandleListeners[index] = null;
+					onMoveHandleListeners = std.algorithm.remove(onMoveHandleListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMoveHandleDelegateWrapper[] onMoveHandleListeners;
 
 	/**
 	 * The ::move-handle signal is a
@@ -644,29 +644,29 @@ public class Paned : Container, OrientableIF
 
 	protected class OnToggleHandleFocusDelegateWrapper
 	{
-		static OnToggleHandleFocusDelegateWrapper[] listeners;
 		bool delegate(Paned) dlg;
 		gulong handlerId;
 
 		this(bool delegate(Paned) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onToggleHandleFocusListeners ~= this;
 		}
 
 		void remove(OnToggleHandleFocusDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onToggleHandleFocusListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onToggleHandleFocusListeners[index] = null;
+					onToggleHandleFocusListeners = std.algorithm.remove(onToggleHandleFocusListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnToggleHandleFocusDelegateWrapper[] onToggleHandleFocusListeners;
 
 	/**
 	 * The ::toggle-handle-focus is a

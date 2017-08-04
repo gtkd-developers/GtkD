@@ -107,29 +107,29 @@ public class CellRendererAccel : CellRendererText
 
 	protected class OnAccelClearedDelegateWrapper
 	{
-		static OnAccelClearedDelegateWrapper[] listeners;
 		void delegate(string, CellRendererAccel) dlg;
 		gulong handlerId;
 
 		this(void delegate(string, CellRendererAccel) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onAccelClearedListeners ~= this;
 		}
 
 		void remove(OnAccelClearedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onAccelClearedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onAccelClearedListeners[index] = null;
+					onAccelClearedListeners = std.algorithm.remove(onAccelClearedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnAccelClearedDelegateWrapper[] onAccelClearedListeners;
 
 	/**
 	 * Gets emitted when the user has removed the accelerator.
@@ -164,29 +164,29 @@ public class CellRendererAccel : CellRendererText
 
 	protected class OnAccelEditedDelegateWrapper
 	{
-		static OnAccelEditedDelegateWrapper[] listeners;
 		void delegate(string, uint, GdkModifierType, uint, CellRendererAccel) dlg;
 		gulong handlerId;
 
 		this(void delegate(string, uint, GdkModifierType, uint, CellRendererAccel) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onAccelEditedListeners ~= this;
 		}
 
 		void remove(OnAccelEditedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onAccelEditedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onAccelEditedListeners[index] = null;
+					onAccelEditedListeners = std.algorithm.remove(onAccelEditedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnAccelEditedDelegateWrapper[] onAccelEditedListeners;
 
 	/**
 	 * Gets emitted when the user has selected a new accelerator.

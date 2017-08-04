@@ -592,29 +592,29 @@ public class Assistant : Window
 
 	protected class OnApplyDelegateWrapper
 	{
-		static OnApplyDelegateWrapper[] listeners;
 		void delegate(Assistant) dlg;
 		gulong handlerId;
 
 		this(void delegate(Assistant) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onApplyListeners ~= this;
 		}
 
 		void remove(OnApplyDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onApplyListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onApplyListeners[index] = null;
+					onApplyListeners = std.algorithm.remove(onApplyListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnApplyDelegateWrapper[] onApplyListeners;
 
 	/**
 	 * The ::apply signal is emitted when the apply button is clicked.
@@ -656,29 +656,29 @@ public class Assistant : Window
 
 	protected class OnCancelDelegateWrapper
 	{
-		static OnCancelDelegateWrapper[] listeners;
 		void delegate(Assistant) dlg;
 		gulong handlerId;
 
 		this(void delegate(Assistant) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCancelListeners ~= this;
 		}
 
 		void remove(OnCancelDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCancelListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCancelListeners[index] = null;
+					onCancelListeners = std.algorithm.remove(onCancelListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCancelDelegateWrapper[] onCancelListeners;
 
 	/**
 	 * The ::cancel signal is emitted when then the cancel button is clicked.
@@ -710,29 +710,29 @@ public class Assistant : Window
 
 	protected class OnCloseDelegateWrapper
 	{
-		static OnCloseDelegateWrapper[] listeners;
 		void delegate(Assistant) dlg;
 		gulong handlerId;
 
 		this(void delegate(Assistant) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCloseListeners ~= this;
 		}
 
 		void remove(OnCloseDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCloseListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCloseListeners[index] = null;
+					onCloseListeners = std.algorithm.remove(onCloseListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCloseDelegateWrapper[] onCloseListeners;
 
 	/**
 	 * The ::close signal is emitted either when the close button of
@@ -766,29 +766,29 @@ public class Assistant : Window
 
 	protected class OnEscapeDelegateWrapper
 	{
-		static OnEscapeDelegateWrapper[] listeners;
 		void delegate(Assistant) dlg;
 		gulong handlerId;
 
 		this(void delegate(Assistant) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onEscapeListeners ~= this;
 		}
 
 		void remove(OnEscapeDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onEscapeListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onEscapeListeners[index] = null;
+					onEscapeListeners = std.algorithm.remove(onEscapeListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnEscapeDelegateWrapper[] onEscapeListeners;
 
 	/** */
 	gulong addOnEscape(void delegate(Assistant) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -816,29 +816,29 @@ public class Assistant : Window
 
 	protected class OnPrepareDelegateWrapper
 	{
-		static OnPrepareDelegateWrapper[] listeners;
 		void delegate(Widget, Assistant) dlg;
 		gulong handlerId;
 
 		this(void delegate(Widget, Assistant) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPrepareListeners ~= this;
 		}
 
 		void remove(OnPrepareDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPrepareListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPrepareListeners[index] = null;
+					onPrepareListeners = std.algorithm.remove(onPrepareListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPrepareDelegateWrapper[] onPrepareListeners;
 
 	/**
 	 * The ::prepare signal is emitted when a new page is set as the

@@ -697,29 +697,29 @@ public class ScrolledWindow : Bin
 
 	protected class OnEdgeOvershotDelegateWrapper
 	{
-		static OnEdgeOvershotDelegateWrapper[] listeners;
 		void delegate(GtkPositionType, ScrolledWindow) dlg;
 		gulong handlerId;
 
 		this(void delegate(GtkPositionType, ScrolledWindow) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onEdgeOvershotListeners ~= this;
 		}
 
 		void remove(OnEdgeOvershotDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onEdgeOvershotListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onEdgeOvershotListeners[index] = null;
+					onEdgeOvershotListeners = std.algorithm.remove(onEdgeOvershotListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnEdgeOvershotDelegateWrapper[] onEdgeOvershotListeners;
 
 	/**
 	 * The ::edge-overshot signal is emitted whenever user initiated scrolling
@@ -762,29 +762,29 @@ public class ScrolledWindow : Bin
 
 	protected class OnEdgeReachedDelegateWrapper
 	{
-		static OnEdgeReachedDelegateWrapper[] listeners;
 		void delegate(GtkPositionType, ScrolledWindow) dlg;
 		gulong handlerId;
 
 		this(void delegate(GtkPositionType, ScrolledWindow) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onEdgeReachedListeners ~= this;
 		}
 
 		void remove(OnEdgeReachedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onEdgeReachedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onEdgeReachedListeners[index] = null;
+					onEdgeReachedListeners = std.algorithm.remove(onEdgeReachedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnEdgeReachedDelegateWrapper[] onEdgeReachedListeners;
 
 	/**
 	 * The ::edge-reached signal is emitted whenever user-initiated scrolling
@@ -827,29 +827,29 @@ public class ScrolledWindow : Bin
 
 	protected class OnMoveFocusOutDelegateWrapper
 	{
-		static OnMoveFocusOutDelegateWrapper[] listeners;
 		void delegate(GtkDirectionType, ScrolledWindow) dlg;
 		gulong handlerId;
 
 		this(void delegate(GtkDirectionType, ScrolledWindow) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMoveFocusOutListeners ~= this;
 		}
 
 		void remove(OnMoveFocusOutDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMoveFocusOutListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMoveFocusOutListeners[index] = null;
+					onMoveFocusOutListeners = std.algorithm.remove(onMoveFocusOutListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMoveFocusOutDelegateWrapper[] onMoveFocusOutListeners;
 
 	/**
 	 * The ::move-focus-out signal is a
@@ -889,29 +889,29 @@ public class ScrolledWindow : Bin
 
 	protected class OnScrollChildDelegateWrapper
 	{
-		static OnScrollChildDelegateWrapper[] listeners;
 		bool delegate(GtkScrollType, bool, ScrolledWindow) dlg;
 		gulong handlerId;
 
 		this(bool delegate(GtkScrollType, bool, ScrolledWindow) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onScrollChildListeners ~= this;
 		}
 
 		void remove(OnScrollChildDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onScrollChildListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onScrollChildListeners[index] = null;
+					onScrollChildListeners = std.algorithm.remove(onScrollChildListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnScrollChildDelegateWrapper[] onScrollChildListeners;
 
 	/**
 	 * The ::scroll-child signal is a

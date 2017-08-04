@@ -494,29 +494,29 @@ public template TextT(TStruct)
 
 	protected class OnTextAttributesChangedDelegateWrapper
 	{
-		static OnTextAttributesChangedDelegateWrapper[] listeners;
 		void delegate(TextIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(TextIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onTextAttributesChangedListeners ~= this;
 		}
 
 		void remove(OnTextAttributesChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onTextAttributesChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onTextAttributesChangedListeners[index] = null;
+					onTextAttributesChangedListeners = std.algorithm.remove(onTextAttributesChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnTextAttributesChangedDelegateWrapper[] onTextAttributesChangedListeners;
 
 	/**
 	 * The "text-attributes-changed" signal is emitted when the text
@@ -548,29 +548,29 @@ public template TextT(TStruct)
 
 	protected class OnTextCaretMovedDelegateWrapper
 	{
-		static OnTextCaretMovedDelegateWrapper[] listeners;
 		void delegate(int, TextIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(int, TextIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onTextCaretMovedListeners ~= this;
 		}
 
 		void remove(OnTextCaretMovedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onTextCaretMovedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onTextCaretMovedListeners[index] = null;
+					onTextCaretMovedListeners = std.algorithm.remove(onTextCaretMovedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnTextCaretMovedDelegateWrapper[] onTextCaretMovedListeners;
 
 	/**
 	 * The "text-caret-moved" signal is emitted when the caret
@@ -605,29 +605,29 @@ public template TextT(TStruct)
 
 	protected class OnTextChangedDelegateWrapper
 	{
-		static OnTextChangedDelegateWrapper[] listeners;
 		void delegate(int, int, TextIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(int, int, TextIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onTextChangedListeners ~= this;
 		}
 
 		void remove(OnTextChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onTextChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onTextChangedListeners[index] = null;
+					onTextChangedListeners = std.algorithm.remove(onTextChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnTextChangedDelegateWrapper[] onTextChangedListeners;
 
 	/**
 	 * The "text-changed" signal is emitted when the text of the
@@ -668,29 +668,29 @@ public template TextT(TStruct)
 
 	protected class OnTextInsertDelegateWrapper
 	{
-		static OnTextInsertDelegateWrapper[] listeners;
 		void delegate(int, int, string, TextIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(int, int, string, TextIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onTextInsertListeners ~= this;
 		}
 
 		void remove(OnTextInsertDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onTextInsertListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onTextInsertListeners[index] = null;
+					onTextInsertListeners = std.algorithm.remove(onTextInsertListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnTextInsertDelegateWrapper[] onTextInsertListeners;
 
 	/**
 	 * The "text-insert" signal is emitted when a new text is
@@ -728,29 +728,29 @@ public template TextT(TStruct)
 
 	protected class OnTextRemoveDelegateWrapper
 	{
-		static OnTextRemoveDelegateWrapper[] listeners;
 		void delegate(int, int, string, TextIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(int, int, string, TextIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onTextRemoveListeners ~= this;
 		}
 
 		void remove(OnTextRemoveDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onTextRemoveListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onTextRemoveListeners[index] = null;
+					onTextRemoveListeners = std.algorithm.remove(onTextRemoveListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnTextRemoveDelegateWrapper[] onTextRemoveListeners;
 
 	/**
 	 * The "text-remove" signal is emitted when a new text is
@@ -788,29 +788,29 @@ public template TextT(TStruct)
 
 	protected class OnTextSelectionChangedDelegateWrapper
 	{
-		static OnTextSelectionChangedDelegateWrapper[] listeners;
 		void delegate(TextIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(TextIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onTextSelectionChangedListeners ~= this;
 		}
 
 		void remove(OnTextSelectionChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onTextSelectionChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onTextSelectionChangedListeners[index] = null;
+					onTextSelectionChangedListeners = std.algorithm.remove(onTextSelectionChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnTextSelectionChangedDelegateWrapper[] onTextSelectionChangedListeners;
 
 	/**
 	 * The "text-selection-changed" signal is emitted when the

@@ -112,29 +112,29 @@ public class GestureLongPress : GestureSingle
 
 	protected class OnCancelledDelegateWrapper
 	{
-		static OnCancelledDelegateWrapper[] listeners;
 		void delegate(GestureLongPress) dlg;
 		gulong handlerId;
 
 		this(void delegate(GestureLongPress) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCancelledListeners ~= this;
 		}
 
 		void remove(OnCancelledDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCancelledListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCancelledListeners[index] = null;
+					onCancelledListeners = std.algorithm.remove(onCancelledListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCancelledDelegateWrapper[] onCancelledListeners;
 
 	/**
 	 * This signal is emitted whenever a press moved too far, or was released
@@ -167,29 +167,29 @@ public class GestureLongPress : GestureSingle
 
 	protected class OnPressedDelegateWrapper
 	{
-		static OnPressedDelegateWrapper[] listeners;
 		void delegate(double, double, GestureLongPress) dlg;
 		gulong handlerId;
 
 		this(void delegate(double, double, GestureLongPress) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPressedListeners ~= this;
 		}
 
 		void remove(OnPressedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPressedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPressedListeners[index] = null;
+					onPressedListeners = std.algorithm.remove(onPressedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPressedDelegateWrapper[] onPressedListeners;
 
 	/**
 	 * This signal is emitted whenever a press goes unmoved/unreleased longer than

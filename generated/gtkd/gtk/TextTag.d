@@ -182,29 +182,29 @@ public class TextTag : ObjectG
 
 	protected class OnDelegateWrapper
 	{
-		static OnDelegateWrapper[] listeners;
 		bool delegate(ObjectG, Event, TextIter, TextTag) dlg;
 		gulong handlerId;
 
 		this(bool delegate(ObjectG, Event, TextIter, TextTag) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onListeners ~= this;
 		}
 
 		void remove(OnDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onListeners[index] = null;
+					onListeners = std.algorithm.remove(onListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDelegateWrapper[] onListeners;
 
 	/**
 	 * The ::event signal is emitted when an event occurs on a region of the

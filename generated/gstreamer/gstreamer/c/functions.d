@@ -993,6 +993,7 @@ shared static this()
 
 	Linker.link(gst_parse_context_get_type, "gst_parse_context_get_type", LIBRARY_GSTREAMER);
 	Linker.link(gst_parse_context_new, "gst_parse_context_new", LIBRARY_GSTREAMER);
+	Linker.link(gst_parse_context_copy, "gst_parse_context_copy", LIBRARY_GSTREAMER);
 	Linker.link(gst_parse_context_free, "gst_parse_context_free", LIBRARY_GSTREAMER);
 	Linker.link(gst_parse_context_get_missing_elements, "gst_parse_context_get_missing_elements", LIBRARY_GSTREAMER);
 
@@ -2727,6 +2728,7 @@ __gshared extern(C)
 
 	GType function() c_gst_parse_context_get_type;
 	GstParseContext* function() c_gst_parse_context_new;
+	GstParseContext* function(GstParseContext* context) c_gst_parse_context_copy;
 	void function(GstParseContext* context) c_gst_parse_context_free;
 	char** function(GstParseContext* context) c_gst_parse_context_get_missing_elements;
 
@@ -4459,6 +4461,7 @@ alias c_gst_parent_buffer_meta_api_get_type gst_parent_buffer_meta_api_get_type;
 
 alias c_gst_parse_context_get_type gst_parse_context_get_type;
 alias c_gst_parse_context_new gst_parse_context_new;
+alias c_gst_parse_context_copy gst_parse_context_copy;
 alias c_gst_parse_context_free gst_parse_context_free;
 alias c_gst_parse_context_get_missing_elements gst_parse_context_get_missing_elements;
 

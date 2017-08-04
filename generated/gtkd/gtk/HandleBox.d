@@ -235,29 +235,29 @@ public class HandleBox : Bin
 
 	protected class OnChildAttachedDelegateWrapper
 	{
-		static OnChildAttachedDelegateWrapper[] listeners;
 		void delegate(Widget, HandleBox) dlg;
 		gulong handlerId;
 
 		this(void delegate(Widget, HandleBox) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onChildAttachedListeners ~= this;
 		}
 
 		void remove(OnChildAttachedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onChildAttachedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onChildAttachedListeners[index] = null;
+					onChildAttachedListeners = std.algorithm.remove(onChildAttachedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnChildAttachedDelegateWrapper[] onChildAttachedListeners;
 
 	/**
 	 * This signal is emitted when the contents of the
@@ -295,29 +295,29 @@ public class HandleBox : Bin
 
 	protected class OnChildDetachedDelegateWrapper
 	{
-		static OnChildDetachedDelegateWrapper[] listeners;
 		void delegate(Widget, HandleBox) dlg;
 		gulong handlerId;
 
 		this(void delegate(Widget, HandleBox) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onChildDetachedListeners ~= this;
 		}
 
 		void remove(OnChildDetachedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onChildDetachedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onChildDetachedListeners[index] = null;
+					onChildDetachedListeners = std.algorithm.remove(onChildDetachedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnChildDetachedDelegateWrapper[] onChildDetachedListeners;
 
 	/**
 	 * This signal is emitted when the contents of the

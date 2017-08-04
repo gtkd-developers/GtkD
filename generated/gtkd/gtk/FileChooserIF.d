@@ -362,7 +362,7 @@ public interface FileChooserIF{
 	public bool getDoOverwriteConfirmation();
 
 	/**
-	 * Gets the current preview widget; see
+	 * Gets the current extra widget; see
 	 * gtk_file_chooser_set_extra_widget().
 	 *
 	 * Returns: the current extra widget, or %NULL

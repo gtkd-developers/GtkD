@@ -557,29 +557,29 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 
 	protected class OnActionActivatedDelegateWrapper
 	{
-		static OnActionActivatedDelegateWrapper[] listeners;
 		void delegate(int, EntryCompletion) dlg;
 		gulong handlerId;
 
 		this(void delegate(int, EntryCompletion) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onActionActivatedListeners ~= this;
 		}
 
 		void remove(OnActionActivatedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onActionActivatedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onActionActivatedListeners[index] = null;
+					onActionActivatedListeners = std.algorithm.remove(onActionActivatedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnActionActivatedDelegateWrapper[] onActionActivatedListeners;
 
 	/**
 	 * Gets emitted when an action is activated.
@@ -614,29 +614,29 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 
 	protected class OnCursorOnMatchDelegateWrapper
 	{
-		static OnCursorOnMatchDelegateWrapper[] listeners;
 		bool delegate(TreeModelIF, TreeIter, EntryCompletion) dlg;
 		gulong handlerId;
 
 		this(bool delegate(TreeModelIF, TreeIter, EntryCompletion) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCursorOnMatchListeners ~= this;
 		}
 
 		void remove(OnCursorOnMatchDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCursorOnMatchListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCursorOnMatchListeners[index] = null;
+					onCursorOnMatchListeners = std.algorithm.remove(onCursorOnMatchListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCursorOnMatchDelegateWrapper[] onCursorOnMatchListeners;
 
 	/**
 	 * Gets emitted when a match from the cursor is on a match
@@ -680,29 +680,29 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 
 	protected class OnInsertPrefixDelegateWrapper
 	{
-		static OnInsertPrefixDelegateWrapper[] listeners;
 		bool delegate(string, EntryCompletion) dlg;
 		gulong handlerId;
 
 		this(bool delegate(string, EntryCompletion) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onInsertPrefixListeners ~= this;
 		}
 
 		void remove(OnInsertPrefixDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onInsertPrefixListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onInsertPrefixListeners[index] = null;
+					onInsertPrefixListeners = std.algorithm.remove(onInsertPrefixListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnInsertPrefixDelegateWrapper[] onInsertPrefixListeners;
 
 	/**
 	 * Gets emitted when the inline autocompletion is triggered.
@@ -746,29 +746,29 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 
 	protected class OnMatchSelectedDelegateWrapper
 	{
-		static OnMatchSelectedDelegateWrapper[] listeners;
 		bool delegate(TreeModelIF, TreeIter, EntryCompletion) dlg;
 		gulong handlerId;
 
 		this(bool delegate(TreeModelIF, TreeIter, EntryCompletion) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMatchSelectedListeners ~= this;
 		}
 
 		void remove(OnMatchSelectedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMatchSelectedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMatchSelectedListeners[index] = null;
+					onMatchSelectedListeners = std.algorithm.remove(onMatchSelectedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMatchSelectedDelegateWrapper[] onMatchSelectedListeners;
 
 	/**
 	 * Gets emitted when a match from the list is selected.
@@ -812,29 +812,29 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 
 	protected class OnNoMatchesDelegateWrapper
 	{
-		static OnNoMatchesDelegateWrapper[] listeners;
 		void delegate(EntryCompletion) dlg;
 		gulong handlerId;
 
 		this(void delegate(EntryCompletion) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onNoMatchesListeners ~= this;
 		}
 
 		void remove(OnNoMatchesDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onNoMatchesListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onNoMatchesListeners[index] = null;
+					onNoMatchesListeners = std.algorithm.remove(onNoMatchesListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnNoMatchesDelegateWrapper[] onNoMatchesListeners;
 
 	/**
 	 * Gets emitted when the filter model has zero

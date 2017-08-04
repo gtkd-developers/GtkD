@@ -388,29 +388,29 @@ public class Cancellable : ObjectG
 
 	protected class OnCancelledDelegateWrapper
 	{
-		static OnCancelledDelegateWrapper[] listeners;
 		void delegate(Cancellable) dlg;
 		gulong handlerId;
 
 		this(void delegate(Cancellable) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCancelledListeners ~= this;
 		}
 
 		void remove(OnCancelledDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCancelledListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCancelledListeners[index] = null;
+					onCancelledListeners = std.algorithm.remove(onCancelledListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCancelledDelegateWrapper[] onCancelledListeners;
 
 	/**
 	 * Emitted when the operation has been cancelled.

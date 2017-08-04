@@ -190,29 +190,29 @@ public class SocketService : SocketListener
 
 	protected class OnIncomingDelegateWrapper
 	{
-		static OnIncomingDelegateWrapper[] listeners;
 		bool delegate(SocketConnection, ObjectG, SocketService) dlg;
 		gulong handlerId;
 
 		this(bool delegate(SocketConnection, ObjectG, SocketService) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onIncomingListeners ~= this;
 		}
 
 		void remove(OnIncomingDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onIncomingListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onIncomingListeners[index] = null;
+					onIncomingListeners = std.algorithm.remove(onIncomingListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnIncomingDelegateWrapper[] onIncomingListeners;
 
 	/**
 	 * The ::incoming signal is emitted when a new incoming connection

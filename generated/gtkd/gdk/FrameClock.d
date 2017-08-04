@@ -283,29 +283,29 @@ public class FrameClock : ObjectG
 
 	protected class OnAfterPaintDelegateWrapper
 	{
-		static OnAfterPaintDelegateWrapper[] listeners;
 		void delegate(FrameClock) dlg;
 		gulong handlerId;
 
 		this(void delegate(FrameClock) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onAfterPaintListeners ~= this;
 		}
 
 		void remove(OnAfterPaintDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onAfterPaintListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onAfterPaintListeners[index] = null;
+					onAfterPaintListeners = std.algorithm.remove(onAfterPaintListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnAfterPaintDelegateWrapper[] onAfterPaintListeners;
 
 	/**
 	 * This signal ends processing of the frame. Applications
@@ -336,29 +336,29 @@ public class FrameClock : ObjectG
 
 	protected class OnBeforePaintDelegateWrapper
 	{
-		static OnBeforePaintDelegateWrapper[] listeners;
 		void delegate(FrameClock) dlg;
 		gulong handlerId;
 
 		this(void delegate(FrameClock) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onBeforePaintListeners ~= this;
 		}
 
 		void remove(OnBeforePaintDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onBeforePaintListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onBeforePaintListeners[index] = null;
+					onBeforePaintListeners = std.algorithm.remove(onBeforePaintListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnBeforePaintDelegateWrapper[] onBeforePaintListeners;
 
 	/**
 	 * This signal begins processing of the frame. Applications
@@ -389,29 +389,29 @@ public class FrameClock : ObjectG
 
 	protected class OnFlushEventsDelegateWrapper
 	{
-		static OnFlushEventsDelegateWrapper[] listeners;
 		void delegate(FrameClock) dlg;
 		gulong handlerId;
 
 		this(void delegate(FrameClock) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onFlushEventsListeners ~= this;
 		}
 
 		void remove(OnFlushEventsDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onFlushEventsListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onFlushEventsListeners[index] = null;
+					onFlushEventsListeners = std.algorithm.remove(onFlushEventsListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnFlushEventsDelegateWrapper[] onFlushEventsListeners;
 
 	/**
 	 * This signal is used to flush pending motion events that
@@ -443,29 +443,29 @@ public class FrameClock : ObjectG
 
 	protected class OnLayoutDelegateWrapper
 	{
-		static OnLayoutDelegateWrapper[] listeners;
 		void delegate(FrameClock) dlg;
 		gulong handlerId;
 
 		this(void delegate(FrameClock) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onLayoutListeners ~= this;
 		}
 
 		void remove(OnLayoutDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onLayoutListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onLayoutListeners[index] = null;
+					onLayoutListeners = std.algorithm.remove(onLayoutListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnLayoutDelegateWrapper[] onLayoutListeners;
 
 	/**
 	 * This signal is emitted as the second step of toolkit and
@@ -498,29 +498,29 @@ public class FrameClock : ObjectG
 
 	protected class OnPaintDelegateWrapper
 	{
-		static OnPaintDelegateWrapper[] listeners;
 		void delegate(FrameClock) dlg;
 		gulong handlerId;
 
 		this(void delegate(FrameClock) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPaintListeners ~= this;
 		}
 
 		void remove(OnPaintDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPaintListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPaintListeners[index] = null;
+					onPaintListeners = std.algorithm.remove(onPaintListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPaintDelegateWrapper[] onPaintListeners;
 
 	/**
 	 * This signal is emitted as the third step of toolkit and
@@ -554,29 +554,29 @@ public class FrameClock : ObjectG
 
 	protected class OnResumeEventsDelegateWrapper
 	{
-		static OnResumeEventsDelegateWrapper[] listeners;
 		void delegate(FrameClock) dlg;
 		gulong handlerId;
 
 		this(void delegate(FrameClock) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onResumeEventsListeners ~= this;
 		}
 
 		void remove(OnResumeEventsDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onResumeEventsListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onResumeEventsListeners[index] = null;
+					onResumeEventsListeners = std.algorithm.remove(onResumeEventsListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnResumeEventsDelegateWrapper[] onResumeEventsListeners;
 
 	/**
 	 * This signal is emitted after processing of the frame is
@@ -608,29 +608,29 @@ public class FrameClock : ObjectG
 
 	protected class OnUpdateDelegateWrapper
 	{
-		static OnUpdateDelegateWrapper[] listeners;
 		void delegate(FrameClock) dlg;
 		gulong handlerId;
 
 		this(void delegate(FrameClock) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onUpdateListeners ~= this;
 		}
 
 		void remove(OnUpdateDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onUpdateListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onUpdateListeners[index] = null;
+					onUpdateListeners = std.algorithm.remove(onUpdateListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnUpdateDelegateWrapper[] onUpdateListeners;
 
 	/**
 	 * This signal is emitted as the first step of toolkit and

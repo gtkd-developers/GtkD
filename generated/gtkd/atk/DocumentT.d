@@ -171,29 +171,29 @@ public template DocumentT(TStruct)
 
 	protected class OnLoadCompleteDelegateWrapper
 	{
-		static OnLoadCompleteDelegateWrapper[] listeners;
 		void delegate(DocumentIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(DocumentIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onLoadCompleteListeners ~= this;
 		}
 
 		void remove(OnLoadCompleteDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onLoadCompleteListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onLoadCompleteListeners[index] = null;
+					onLoadCompleteListeners = std.algorithm.remove(onLoadCompleteListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnLoadCompleteDelegateWrapper[] onLoadCompleteListeners;
 
 	/**
 	 * The 'load-complete' signal is emitted when a pending load of
@@ -231,29 +231,29 @@ public template DocumentT(TStruct)
 
 	protected class OnLoadStoppedDelegateWrapper
 	{
-		static OnLoadStoppedDelegateWrapper[] listeners;
 		void delegate(DocumentIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(DocumentIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onLoadStoppedListeners ~= this;
 		}
 
 		void remove(OnLoadStoppedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onLoadStoppedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onLoadStoppedListeners[index] = null;
+					onLoadStoppedListeners = std.algorithm.remove(onLoadStoppedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnLoadStoppedDelegateWrapper[] onLoadStoppedListeners;
 
 	/**
 	 * The 'load-stopped' signal is emitted when a pending load of
@@ -288,29 +288,29 @@ public template DocumentT(TStruct)
 
 	protected class OnPageChangedDelegateWrapper
 	{
-		static OnPageChangedDelegateWrapper[] listeners;
 		void delegate(int, DocumentIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(int, DocumentIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPageChangedListeners ~= this;
 		}
 
 		void remove(OnPageChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPageChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPageChangedListeners[index] = null;
+					onPageChangedListeners = std.algorithm.remove(onPageChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPageChangedDelegateWrapper[] onPageChangedListeners;
 
 	/**
 	 * The 'page-changed' signal is emitted when the current page of
@@ -348,29 +348,29 @@ public template DocumentT(TStruct)
 
 	protected class OnReloadDelegateWrapper
 	{
-		static OnReloadDelegateWrapper[] listeners;
 		void delegate(DocumentIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(DocumentIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onReloadListeners ~= this;
 		}
 
 		void remove(OnReloadDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onReloadListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onReloadListeners[index] = null;
+					onReloadListeners = std.algorithm.remove(onReloadListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnReloadDelegateWrapper[] onReloadListeners;
 
 	/**
 	 * The 'reload' signal is emitted when the contents of a

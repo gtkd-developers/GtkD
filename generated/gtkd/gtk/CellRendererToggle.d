@@ -184,29 +184,29 @@ public class CellRendererToggle : CellRenderer
 
 	protected class OnToggledDelegateWrapper
 	{
-		static OnToggledDelegateWrapper[] listeners;
 		void delegate(string, CellRendererToggle) dlg;
 		gulong handlerId;
 
 		this(void delegate(string, CellRendererToggle) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onToggledListeners ~= this;
 		}
 
 		void remove(OnToggledDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onToggledListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onToggledListeners[index] = null;
+					onToggledListeners = std.algorithm.remove(onToggledListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnToggledDelegateWrapper[] onToggledListeners;
 
 	/**
 	 * The ::toggled signal is emitted when the cell is toggled.

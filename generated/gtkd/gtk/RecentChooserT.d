@@ -552,29 +552,29 @@ public template RecentChooserT(TStruct)
 
 	protected class OnItemActivatedDelegateWrapper
 	{
-		static OnItemActivatedDelegateWrapper[] listeners;
 		void delegate(RecentChooserIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(RecentChooserIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onItemActivatedListeners ~= this;
 		}
 
 		void remove(OnItemActivatedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onItemActivatedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onItemActivatedListeners[index] = null;
+					onItemActivatedListeners = std.algorithm.remove(onItemActivatedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnItemActivatedDelegateWrapper[] onItemActivatedListeners;
 
 	/**
 	 * This signal is emitted when the user "activates" a recent item
@@ -609,29 +609,29 @@ public template RecentChooserT(TStruct)
 
 	protected class OnSelectionChangedDelegateWrapper
 	{
-		static OnSelectionChangedDelegateWrapper[] listeners;
 		void delegate(RecentChooserIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(RecentChooserIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onSelectionChangedListeners ~= this;
 		}
 
 		void remove(OnSelectionChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onSelectionChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onSelectionChangedListeners[index] = null;
+					onSelectionChangedListeners = std.algorithm.remove(onSelectionChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnSelectionChangedDelegateWrapper[] onSelectionChangedListeners;
 
 	/**
 	 * This signal is emitted when there is a change in the set of

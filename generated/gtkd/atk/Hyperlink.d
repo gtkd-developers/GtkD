@@ -205,29 +205,29 @@ public class Hyperlink : ObjectG, ActionIF
 
 	protected class OnLinkActivatedDelegateWrapper
 	{
-		static OnLinkActivatedDelegateWrapper[] listeners;
 		void delegate(Hyperlink) dlg;
 		gulong handlerId;
 
 		this(void delegate(Hyperlink) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onLinkActivatedListeners ~= this;
 		}
 
 		void remove(OnLinkActivatedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onLinkActivatedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onLinkActivatedListeners[index] = null;
+					onLinkActivatedListeners = std.algorithm.remove(onLinkActivatedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnLinkActivatedDelegateWrapper[] onLinkActivatedListeners;
 
 	/**
 	 * The signal link-activated is emitted when a link is activated.

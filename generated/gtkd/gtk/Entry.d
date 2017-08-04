@@ -1530,29 +1530,29 @@ public class Entry : Widget, CellEditableIF, EditableIF
 
 	protected class OnActivateDelegateWrapper
 	{
-		static OnActivateDelegateWrapper[] listeners;
 		void delegate(Entry) dlg;
 		gulong handlerId;
 
 		this(void delegate(Entry) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onActivateListeners ~= this;
 		}
 
 		void remove(OnActivateDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onActivateListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onActivateListeners[index] = null;
+					onActivateListeners = std.algorithm.remove(onActivateListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnActivateDelegateWrapper[] onActivateListeners;
 
 	/**
 	 * The ::activate signal is emitted when the user hits
@@ -1590,29 +1590,29 @@ public class Entry : Widget, CellEditableIF, EditableIF
 
 	protected class OnBackspaceDelegateWrapper
 	{
-		static OnBackspaceDelegateWrapper[] listeners;
 		void delegate(Entry) dlg;
 		gulong handlerId;
 
 		this(void delegate(Entry) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onBackspaceListeners ~= this;
 		}
 
 		void remove(OnBackspaceDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onBackspaceListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onBackspaceListeners[index] = null;
+					onBackspaceListeners = std.algorithm.remove(onBackspaceListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnBackspaceDelegateWrapper[] onBackspaceListeners;
 
 	/**
 	 * The ::backspace signal is a
@@ -1647,29 +1647,29 @@ public class Entry : Widget, CellEditableIF, EditableIF
 
 	protected class OnCopyClipboardDelegateWrapper
 	{
-		static OnCopyClipboardDelegateWrapper[] listeners;
 		void delegate(Entry) dlg;
 		gulong handlerId;
 
 		this(void delegate(Entry) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCopyClipboardListeners ~= this;
 		}
 
 		void remove(OnCopyClipboardDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCopyClipboardListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCopyClipboardListeners[index] = null;
+					onCopyClipboardListeners = std.algorithm.remove(onCopyClipboardListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCopyClipboardDelegateWrapper[] onCopyClipboardListeners;
 
 	/**
 	 * The ::copy-clipboard signal is a
@@ -1704,29 +1704,29 @@ public class Entry : Widget, CellEditableIF, EditableIF
 
 	protected class OnCutClipboardDelegateWrapper
 	{
-		static OnCutClipboardDelegateWrapper[] listeners;
 		void delegate(Entry) dlg;
 		gulong handlerId;
 
 		this(void delegate(Entry) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCutClipboardListeners ~= this;
 		}
 
 		void remove(OnCutClipboardDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCutClipboardListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCutClipboardListeners[index] = null;
+					onCutClipboardListeners = std.algorithm.remove(onCutClipboardListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCutClipboardDelegateWrapper[] onCutClipboardListeners;
 
 	/**
 	 * The ::cut-clipboard signal is a
@@ -1761,29 +1761,29 @@ public class Entry : Widget, CellEditableIF, EditableIF
 
 	protected class OnDeleteFromCursorDelegateWrapper
 	{
-		static OnDeleteFromCursorDelegateWrapper[] listeners;
 		void delegate(GtkDeleteType, int, Entry) dlg;
 		gulong handlerId;
 
 		this(void delegate(GtkDeleteType, int, Entry) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDeleteFromCursorListeners ~= this;
 		}
 
 		void remove(OnDeleteFromCursorDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDeleteFromCursorListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDeleteFromCursorListeners[index] = null;
+					onDeleteFromCursorListeners = std.algorithm.remove(onDeleteFromCursorListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDeleteFromCursorDelegateWrapper[] onDeleteFromCursorListeners;
 
 	/**
 	 * The ::delete-from-cursor signal is a
@@ -1827,29 +1827,29 @@ public class Entry : Widget, CellEditableIF, EditableIF
 
 	protected class OnIconPressDelegateWrapper
 	{
-		static OnIconPressDelegateWrapper[] listeners;
 		void delegate(GtkEntryIconPosition, GdkEventButton*, Entry) dlg;
 		gulong handlerId;
 
 		this(void delegate(GtkEntryIconPosition, GdkEventButton*, Entry) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onIconPressListeners ~= this;
 		}
 
 		void remove(OnIconPressDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onIconPressListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onIconPressListeners[index] = null;
+					onIconPressListeners = std.algorithm.remove(onIconPressListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnIconPressDelegateWrapper[] onIconPressListeners;
 
 	/**
 	 * The ::icon-press signal is emitted when an activatable icon
@@ -1886,29 +1886,29 @@ public class Entry : Widget, CellEditableIF, EditableIF
 
 	protected class OnIconPressGenericDelegateWrapper
 	{
-		static OnIconPressGenericDelegateWrapper[] listeners;
 		void delegate(GtkEntryIconPosition, Event, Entry) dlg;
 		gulong handlerId;
 
 		this(void delegate(GtkEntryIconPosition, Event, Entry) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onIconPressGenericListeners ~= this;
 		}
 
 		void remove(OnIconPressGenericDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onIconPressGenericListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onIconPressGenericListeners[index] = null;
+					onIconPressGenericListeners = std.algorithm.remove(onIconPressGenericListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnIconPressGenericDelegateWrapper[] onIconPressGenericListeners;
 
 	/**
 	 * The ::icon-press signal is emitted when an activatable icon
@@ -1945,29 +1945,29 @@ public class Entry : Widget, CellEditableIF, EditableIF
 
 	protected class OnIconReleaseDelegateWrapper
 	{
-		static OnIconReleaseDelegateWrapper[] listeners;
 		void delegate(GtkEntryIconPosition, GdkEventButton*, Entry) dlg;
 		gulong handlerId;
 
 		this(void delegate(GtkEntryIconPosition, GdkEventButton*, Entry) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onIconReleaseListeners ~= this;
 		}
 
 		void remove(OnIconReleaseDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onIconReleaseListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onIconReleaseListeners[index] = null;
+					onIconReleaseListeners = std.algorithm.remove(onIconReleaseListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnIconReleaseDelegateWrapper[] onIconReleaseListeners;
 
 	/**
 	 * The ::icon-release signal is emitted on the button release from a
@@ -2004,29 +2004,29 @@ public class Entry : Widget, CellEditableIF, EditableIF
 
 	protected class OnIconReleaseGenericDelegateWrapper
 	{
-		static OnIconReleaseGenericDelegateWrapper[] listeners;
 		void delegate(GtkEntryIconPosition, Event, Entry) dlg;
 		gulong handlerId;
 
 		this(void delegate(GtkEntryIconPosition, Event, Entry) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onIconReleaseGenericListeners ~= this;
 		}
 
 		void remove(OnIconReleaseGenericDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onIconReleaseGenericListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onIconReleaseGenericListeners[index] = null;
+					onIconReleaseGenericListeners = std.algorithm.remove(onIconReleaseGenericListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnIconReleaseGenericDelegateWrapper[] onIconReleaseGenericListeners;
 
 	/**
 	 * The ::icon-release signal is emitted on the button release from a
@@ -2063,29 +2063,29 @@ public class Entry : Widget, CellEditableIF, EditableIF
 
 	protected class OnInsertAtCursorDelegateWrapper
 	{
-		static OnInsertAtCursorDelegateWrapper[] listeners;
 		void delegate(string, Entry) dlg;
 		gulong handlerId;
 
 		this(void delegate(string, Entry) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onInsertAtCursorListeners ~= this;
 		}
 
 		void remove(OnInsertAtCursorDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onInsertAtCursorListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onInsertAtCursorListeners[index] = null;
+					onInsertAtCursorListeners = std.algorithm.remove(onInsertAtCursorListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnInsertAtCursorDelegateWrapper[] onInsertAtCursorListeners;
 
 	/**
 	 * The ::insert-at-cursor signal is a
@@ -2123,29 +2123,29 @@ public class Entry : Widget, CellEditableIF, EditableIF
 
 	protected class OnMoveCursorDelegateWrapper
 	{
-		static OnMoveCursorDelegateWrapper[] listeners;
 		void delegate(GtkMovementStep, int, bool, Entry) dlg;
 		gulong handlerId;
 
 		this(void delegate(GtkMovementStep, int, bool, Entry) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMoveCursorListeners ~= this;
 		}
 
 		void remove(OnMoveCursorDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMoveCursorListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMoveCursorListeners[index] = null;
+					onMoveCursorListeners = std.algorithm.remove(onMoveCursorListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMoveCursorDelegateWrapper[] onMoveCursorListeners;
 
 	/**
 	 * The ::move-cursor signal is a
@@ -2196,29 +2196,29 @@ public class Entry : Widget, CellEditableIF, EditableIF
 
 	protected class OnPasteClipboardDelegateWrapper
 	{
-		static OnPasteClipboardDelegateWrapper[] listeners;
 		void delegate(Entry) dlg;
 		gulong handlerId;
 
 		this(void delegate(Entry) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPasteClipboardListeners ~= this;
 		}
 
 		void remove(OnPasteClipboardDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPasteClipboardListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPasteClipboardListeners[index] = null;
+					onPasteClipboardListeners = std.algorithm.remove(onPasteClipboardListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPasteClipboardDelegateWrapper[] onPasteClipboardListeners;
 
 	/**
 	 * The ::paste-clipboard signal is a
@@ -2254,29 +2254,29 @@ public class Entry : Widget, CellEditableIF, EditableIF
 
 	protected class OnPopulatePopupDelegateWrapper
 	{
-		static OnPopulatePopupDelegateWrapper[] listeners;
 		void delegate(Widget, Entry) dlg;
 		gulong handlerId;
 
 		this(void delegate(Widget, Entry) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPopulatePopupListeners ~= this;
 		}
 
 		void remove(OnPopulatePopupDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPopulatePopupListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPopulatePopupListeners[index] = null;
+					onPopulatePopupListeners = std.algorithm.remove(onPopulatePopupListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPopulatePopupDelegateWrapper[] onPopulatePopupListeners;
 
 	/**
 	 * The ::populate-popup signal gets emitted before showing the
@@ -2320,29 +2320,29 @@ public class Entry : Widget, CellEditableIF, EditableIF
 
 	protected class OnPreeditChangedDelegateWrapper
 	{
-		static OnPreeditChangedDelegateWrapper[] listeners;
 		void delegate(string, Entry) dlg;
 		gulong handlerId;
 
 		this(void delegate(string, Entry) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPreeditChangedListeners ~= this;
 		}
 
 		void remove(OnPreeditChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPreeditChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPreeditChangedListeners[index] = null;
+					onPreeditChangedListeners = std.algorithm.remove(onPreeditChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPreeditChangedDelegateWrapper[] onPreeditChangedListeners;
 
 	/**
 	 * If an input method is used, the typed text will not immediately
@@ -2379,29 +2379,29 @@ public class Entry : Widget, CellEditableIF, EditableIF
 
 	protected class OnToggleOverwriteDelegateWrapper
 	{
-		static OnToggleOverwriteDelegateWrapper[] listeners;
 		void delegate(Entry) dlg;
 		gulong handlerId;
 
 		this(void delegate(Entry) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onToggleOverwriteListeners ~= this;
 		}
 
 		void remove(OnToggleOverwriteDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onToggleOverwriteListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onToggleOverwriteListeners[index] = null;
+					onToggleOverwriteListeners = std.algorithm.remove(onToggleOverwriteListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnToggleOverwriteDelegateWrapper[] onToggleOverwriteListeners;
 
 	/**
 	 * The ::toggle-overwrite signal is a

@@ -102,6 +102,23 @@ public class ParseContext
 	}
 
 	/**
+	 * Copies the @context.
+	 *
+	 * Returns: A copied #GstParseContext
+	 */
+	public ParseContext copy()
+	{
+		auto p = gst_parse_context_copy(gstParseContext);
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(ParseContext)(cast(GstParseContext*) p, true);
+	}
+
+	/**
 	 * Frees a parse context previously allocated with gst_parse_context_new().
 	 */
 	public void free()

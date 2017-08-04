@@ -103,29 +103,29 @@ public template HypertextT(TStruct)
 
 	protected class OnLinkSelectedDelegateWrapper
 	{
-		static OnLinkSelectedDelegateWrapper[] listeners;
 		void delegate(int, HypertextIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(int, HypertextIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onLinkSelectedListeners ~= this;
 		}
 
 		void remove(OnLinkSelectedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onLinkSelectedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onLinkSelectedListeners[index] = null;
+					onLinkSelectedListeners = std.algorithm.remove(onLinkSelectedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnLinkSelectedDelegateWrapper[] onLinkSelectedListeners;
 
 	/**
 	 * The "link-selected" signal is emitted by an AtkHyperText

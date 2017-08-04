@@ -135,29 +135,29 @@ public template SourceUndoManagerT(TStruct)
 
 	protected class OnCanRedoChangedDelegateWrapper
 	{
-		static OnCanRedoChangedDelegateWrapper[] listeners;
 		void delegate(SourceUndoManagerIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(SourceUndoManagerIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCanRedoChangedListeners ~= this;
 		}
 
 		void remove(OnCanRedoChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCanRedoChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCanRedoChangedListeners[index] = null;
+					onCanRedoChangedListeners = std.algorithm.remove(onCanRedoChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCanRedoChangedDelegateWrapper[] onCanRedoChangedListeners;
 
 	/**
 	 * Emitted when the ability to redo has changed.
@@ -189,29 +189,29 @@ public template SourceUndoManagerT(TStruct)
 
 	protected class OnCanUndoChangedDelegateWrapper
 	{
-		static OnCanUndoChangedDelegateWrapper[] listeners;
 		void delegate(SourceUndoManagerIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(SourceUndoManagerIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCanUndoChangedListeners ~= this;
 		}
 
 		void remove(OnCanUndoChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCanUndoChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCanUndoChangedListeners[index] = null;
+					onCanUndoChangedListeners = std.algorithm.remove(onCanUndoChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCanUndoChangedDelegateWrapper[] onCanUndoChangedListeners;
 
 	/**
 	 * Emitted when the ability to undo has changed.

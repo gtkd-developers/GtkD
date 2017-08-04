@@ -560,29 +560,29 @@ public template DriveT(TStruct)
 
 	protected class OnChangedDelegateWrapper
 	{
-		static OnChangedDelegateWrapper[] listeners;
 		void delegate(DriveIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(DriveIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onChangedListeners ~= this;
 		}
 
 		void remove(OnChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onChangedListeners[index] = null;
+					onChangedListeners = std.algorithm.remove(onChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnChangedDelegateWrapper[] onChangedListeners;
 
 	/**
 	 * Emitted when the drive's state has changed.
@@ -612,29 +612,29 @@ public template DriveT(TStruct)
 
 	protected class OnDisconnectedDelegateWrapper
 	{
-		static OnDisconnectedDelegateWrapper[] listeners;
 		void delegate(DriveIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(DriveIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDisconnectedListeners ~= this;
 		}
 
 		void remove(OnDisconnectedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDisconnectedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDisconnectedListeners[index] = null;
+					onDisconnectedListeners = std.algorithm.remove(onDisconnectedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDisconnectedDelegateWrapper[] onDisconnectedListeners;
 
 	/**
 	 * This signal is emitted when the #GDrive have been
@@ -667,29 +667,29 @@ public template DriveT(TStruct)
 
 	protected class OnEjectButtonDelegateWrapper
 	{
-		static OnEjectButtonDelegateWrapper[] listeners;
 		void delegate(DriveIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(DriveIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onEjectButtonListeners ~= this;
 		}
 
 		void remove(OnEjectButtonDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onEjectButtonListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onEjectButtonListeners[index] = null;
+					onEjectButtonListeners = std.algorithm.remove(onEjectButtonListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnEjectButtonDelegateWrapper[] onEjectButtonListeners;
 
 	/**
 	 * Emitted when the physical eject button (if any) of a drive has
@@ -720,29 +720,29 @@ public template DriveT(TStruct)
 
 	protected class OnStopButtonDelegateWrapper
 	{
-		static OnStopButtonDelegateWrapper[] listeners;
 		void delegate(DriveIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(DriveIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onStopButtonListeners ~= this;
 		}
 
 		void remove(OnStopButtonDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onStopButtonListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onStopButtonListeners[index] = null;
+					onStopButtonListeners = std.algorithm.remove(onStopButtonListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnStopButtonDelegateWrapper[] onStopButtonListeners;
 
 	/**
 	 * Emitted when the physical stop button (if any) of a drive has

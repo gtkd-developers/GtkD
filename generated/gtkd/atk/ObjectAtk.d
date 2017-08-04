@@ -461,29 +461,29 @@ public class ObjectAtk : ObjectG
 
 	protected class OnActiveDescendantChangedDelegateWrapper
 	{
-		static OnActiveDescendantChangedDelegateWrapper[] listeners;
 		void delegate(void*, ObjectAtk) dlg;
 		gulong handlerId;
 
 		this(void delegate(void*, ObjectAtk) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onActiveDescendantChangedListeners ~= this;
 		}
 
 		void remove(OnActiveDescendantChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onActiveDescendantChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onActiveDescendantChangedListeners[index] = null;
+					onActiveDescendantChangedListeners = std.algorithm.remove(onActiveDescendantChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnActiveDescendantChangedDelegateWrapper[] onActiveDescendantChangedListeners;
 
 	/**
 	 * The "active-descendant-changed" signal is emitted by an object
@@ -519,29 +519,29 @@ public class ObjectAtk : ObjectG
 
 	protected class OnChildrenChangedDelegateWrapper
 	{
-		static OnChildrenChangedDelegateWrapper[] listeners;
 		void delegate(uint, void*, ObjectAtk) dlg;
 		gulong handlerId;
 
 		this(void delegate(uint, void*, ObjectAtk) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onChildrenChangedListeners ~= this;
 		}
 
 		void remove(OnChildrenChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onChildrenChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onChildrenChangedListeners[index] = null;
+					onChildrenChangedListeners = std.algorithm.remove(onChildrenChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnChildrenChangedDelegateWrapper[] onChildrenChangedListeners;
 
 	/**
 	 * The signal "children-changed" is emitted when a child is added or
@@ -582,29 +582,29 @@ public class ObjectAtk : ObjectG
 
 	protected class OnFocusDelegateWrapper
 	{
-		static OnFocusDelegateWrapper[] listeners;
 		void delegate(bool, ObjectAtk) dlg;
 		gulong handlerId;
 
 		this(void delegate(bool, ObjectAtk) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onFocusListeners ~= this;
 		}
 
 		void remove(OnFocusDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onFocusListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onFocusListeners[index] = null;
+					onFocusListeners = std.algorithm.remove(onFocusListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnFocusDelegateWrapper[] onFocusListeners;
 
 	/**
 	 * The signal "focus-event" is emitted when an object gained or lost
@@ -641,29 +641,29 @@ public class ObjectAtk : ObjectG
 
 	protected class OnPropertyChangeDelegateWrapper
 	{
-		static OnPropertyChangeDelegateWrapper[] listeners;
 		void delegate(void*, ObjectAtk) dlg;
 		gulong handlerId;
 
 		this(void delegate(void*, ObjectAtk) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPropertyChangeListeners ~= this;
 		}
 
 		void remove(OnPropertyChangeDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPropertyChangeListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPropertyChangeListeners[index] = null;
+					onPropertyChangeListeners = std.algorithm.remove(onPropertyChangeListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPropertyChangeDelegateWrapper[] onPropertyChangeListeners;
 
 	/**
 	 * The signal "property-change" is emitted when an object's property
@@ -709,29 +709,29 @@ public class ObjectAtk : ObjectG
 
 	protected class OnStateChangeDelegateWrapper
 	{
-		static OnStateChangeDelegateWrapper[] listeners;
 		void delegate(string, bool, ObjectAtk) dlg;
 		gulong handlerId;
 
 		this(void delegate(string, bool, ObjectAtk) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onStateChangeListeners ~= this;
 		}
 
 		void remove(OnStateChangeDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onStateChangeListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onStateChangeListeners[index] = null;
+					onStateChangeListeners = std.algorithm.remove(onStateChangeListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnStateChangeDelegateWrapper[] onStateChangeListeners;
 
 	/**
 	 * The "state-change" signal is emitted when an object's state
@@ -767,29 +767,29 @@ public class ObjectAtk : ObjectG
 
 	protected class OnVisibleDataChangedDelegateWrapper
 	{
-		static OnVisibleDataChangedDelegateWrapper[] listeners;
 		void delegate(ObjectAtk) dlg;
 		gulong handlerId;
 
 		this(void delegate(ObjectAtk) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onVisibleDataChangedListeners ~= this;
 		}
 
 		void remove(OnVisibleDataChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onVisibleDataChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onVisibleDataChangedListeners[index] = null;
+					onVisibleDataChangedListeners = std.algorithm.remove(onVisibleDataChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnVisibleDataChangedDelegateWrapper[] onVisibleDataChangedListeners;
 
 	/**
 	 * The "visible-data-changed" signal is emitted when the visual

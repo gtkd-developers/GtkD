@@ -147,29 +147,29 @@ public class GestureDrag : GestureSingle
 
 	protected class OnDragBeginDelegateWrapper
 	{
-		static OnDragBeginDelegateWrapper[] listeners;
 		void delegate(double, double, GestureDrag) dlg;
 		gulong handlerId;
 
 		this(void delegate(double, double, GestureDrag) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDragBeginListeners ~= this;
 		}
 
 		void remove(OnDragBeginDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDragBeginListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDragBeginListeners[index] = null;
+					onDragBeginListeners = std.algorithm.remove(onDragBeginListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDragBeginDelegateWrapper[] onDragBeginListeners;
 
 	/**
 	 * This signal is emitted whenever dragging starts.
@@ -205,29 +205,29 @@ public class GestureDrag : GestureSingle
 
 	protected class OnDragEndDelegateWrapper
 	{
-		static OnDragEndDelegateWrapper[] listeners;
 		void delegate(double, double, GestureDrag) dlg;
 		gulong handlerId;
 
 		this(void delegate(double, double, GestureDrag) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDragEndListeners ~= this;
 		}
 
 		void remove(OnDragEndDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDragEndListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDragEndListeners[index] = null;
+					onDragEndListeners = std.algorithm.remove(onDragEndListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDragEndDelegateWrapper[] onDragEndListeners;
 
 	/**
 	 * This signal is emitted whenever the dragging is finished.
@@ -263,29 +263,29 @@ public class GestureDrag : GestureSingle
 
 	protected class OnDragUpdateDelegateWrapper
 	{
-		static OnDragUpdateDelegateWrapper[] listeners;
 		void delegate(double, double, GestureDrag) dlg;
 		gulong handlerId;
 
 		this(void delegate(double, double, GestureDrag) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDragUpdateListeners ~= this;
 		}
 
 		void remove(OnDragUpdateDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDragUpdateListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDragUpdateListeners[index] = null;
+					onDragUpdateListeners = std.algorithm.remove(onDragUpdateListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDragUpdateDelegateWrapper[] onDragUpdateListeners;
 
 	/**
 	 * This signal is emitted whenever the dragging point moves.

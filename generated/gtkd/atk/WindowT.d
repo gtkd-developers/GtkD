@@ -49,29 +49,29 @@ public template WindowT(TStruct)
 
 	protected class OnActivateDelegateWrapper
 	{
-		static OnActivateDelegateWrapper[] listeners;
 		void delegate(WindowIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(WindowIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onActivateListeners ~= this;
 		}
 
 		void remove(OnActivateDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onActivateListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onActivateListeners[index] = null;
+					onActivateListeners = std.algorithm.remove(onActivateListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnActivateDelegateWrapper[] onActivateListeners;
 
 	/**
 	 * The signal #AtkWindow::activate is emitted when a window
@@ -104,29 +104,29 @@ public template WindowT(TStruct)
 
 	protected class OnCreateDelegateWrapper
 	{
-		static OnCreateDelegateWrapper[] listeners;
 		void delegate(WindowIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(WindowIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCreateListeners ~= this;
 		}
 
 		void remove(OnCreateDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCreateListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCreateListeners[index] = null;
+					onCreateListeners = std.algorithm.remove(onCreateListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCreateDelegateWrapper[] onCreateListeners;
 
 	/**
 	 * The signal #AtkWindow::create is emitted when a new window
@@ -159,29 +159,29 @@ public template WindowT(TStruct)
 
 	protected class OnDeactivateDelegateWrapper
 	{
-		static OnDeactivateDelegateWrapper[] listeners;
 		void delegate(WindowIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(WindowIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDeactivateListeners ~= this;
 		}
 
 		void remove(OnDeactivateDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDeactivateListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDeactivateListeners[index] = null;
+					onDeactivateListeners = std.algorithm.remove(onDeactivateListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDeactivateDelegateWrapper[] onDeactivateListeners;
 
 	/**
 	 * The signal #AtkWindow::deactivate is emitted when a window is
@@ -214,29 +214,29 @@ public template WindowT(TStruct)
 
 	protected class OnDestroyDelegateWrapper
 	{
-		static OnDestroyDelegateWrapper[] listeners;
 		void delegate(WindowIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(WindowIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDestroyListeners ~= this;
 		}
 
 		void remove(OnDestroyDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDestroyListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDestroyListeners[index] = null;
+					onDestroyListeners = std.algorithm.remove(onDestroyListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDestroyDelegateWrapper[] onDestroyListeners;
 
 	/**
 	 * The signal #AtkWindow::destroy is emitted when a window is
@@ -269,29 +269,29 @@ public template WindowT(TStruct)
 
 	protected class OnMaximizeDelegateWrapper
 	{
-		static OnMaximizeDelegateWrapper[] listeners;
 		void delegate(WindowIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(WindowIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMaximizeListeners ~= this;
 		}
 
 		void remove(OnMaximizeDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMaximizeListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMaximizeListeners[index] = null;
+					onMaximizeListeners = std.algorithm.remove(onMaximizeListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMaximizeDelegateWrapper[] onMaximizeListeners;
 
 	/**
 	 * The signal #AtkWindow::maximize is emitted when a window
@@ -324,29 +324,29 @@ public template WindowT(TStruct)
 
 	protected class OnMinimizeDelegateWrapper
 	{
-		static OnMinimizeDelegateWrapper[] listeners;
 		void delegate(WindowIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(WindowIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMinimizeListeners ~= this;
 		}
 
 		void remove(OnMinimizeDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMinimizeListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMinimizeListeners[index] = null;
+					onMinimizeListeners = std.algorithm.remove(onMinimizeListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMinimizeDelegateWrapper[] onMinimizeListeners;
 
 	/**
 	 * The signal #AtkWindow::minimize is emitted when a window
@@ -379,29 +379,29 @@ public template WindowT(TStruct)
 
 	protected class OnMoveDelegateWrapper
 	{
-		static OnMoveDelegateWrapper[] listeners;
 		void delegate(WindowIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(WindowIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMoveListeners ~= this;
 		}
 
 		void remove(OnMoveDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMoveListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMoveListeners[index] = null;
+					onMoveListeners = std.algorithm.remove(onMoveListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMoveDelegateWrapper[] onMoveListeners;
 
 	/**
 	 * The signal #AtkWindow::move is emitted when a window
@@ -434,29 +434,29 @@ public template WindowT(TStruct)
 
 	protected class OnResizeDelegateWrapper
 	{
-		static OnResizeDelegateWrapper[] listeners;
 		void delegate(WindowIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(WindowIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onResizeListeners ~= this;
 		}
 
 		void remove(OnResizeDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onResizeListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onResizeListeners[index] = null;
+					onResizeListeners = std.algorithm.remove(onResizeListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnResizeDelegateWrapper[] onResizeListeners;
 
 	/**
 	 * The signal #AtkWindow::resize is emitted when a window
@@ -489,29 +489,29 @@ public template WindowT(TStruct)
 
 	protected class OnRestoreDelegateWrapper
 	{
-		static OnRestoreDelegateWrapper[] listeners;
 		void delegate(WindowIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(WindowIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onRestoreListeners ~= this;
 		}
 
 		void remove(OnRestoreDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onRestoreListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onRestoreListeners[index] = null;
+					onRestoreListeners = std.algorithm.remove(onRestoreListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnRestoreDelegateWrapper[] onRestoreListeners;
 
 	/**
 	 * The signal #AtkWindow::restore is emitted when a window

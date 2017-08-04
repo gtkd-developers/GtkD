@@ -261,29 +261,29 @@ public class ColorButton : Button, ColorChooserIF
 
 	protected class OnColorSetDelegateWrapper
 	{
-		static OnColorSetDelegateWrapper[] listeners;
 		void delegate(ColorButton) dlg;
 		gulong handlerId;
 
 		this(void delegate(ColorButton) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onColorSetListeners ~= this;
 		}
 
 		void remove(OnColorSetDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onColorSetListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onColorSetListeners[index] = null;
+					onColorSetListeners = std.algorithm.remove(onColorSetListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnColorSetDelegateWrapper[] onColorSetListeners;
 
 	/**
 	 * The ::color-set signal is emitted when the user selects a color.

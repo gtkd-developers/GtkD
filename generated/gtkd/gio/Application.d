@@ -1169,29 +1169,29 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 
 	protected class OnActivateDelegateWrapper
 	{
-		static OnActivateDelegateWrapper[] listeners;
 		void delegate(Application) dlg;
 		gulong handlerId;
 
 		this(void delegate(Application) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onActivateListeners ~= this;
 		}
 
 		void remove(OnActivateDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onActivateListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onActivateListeners[index] = null;
+					onActivateListeners = std.algorithm.remove(onActivateListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnActivateDelegateWrapper[] onActivateListeners;
 
 	/**
 	 * The ::activate signal is emitted on the primary instance when an
@@ -1222,29 +1222,29 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 
 	protected class OnCommandLineDelegateWrapper
 	{
-		static OnCommandLineDelegateWrapper[] listeners;
 		int delegate(ApplicationCommandLine, Application) dlg;
 		gulong handlerId;
 
 		this(int delegate(ApplicationCommandLine, Application) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCommandLineListeners ~= this;
 		}
 
 		void remove(OnCommandLineDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCommandLineListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCommandLineListeners[index] = null;
+					onCommandLineListeners = std.algorithm.remove(onCommandLineListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCommandLineDelegateWrapper[] onCommandLineListeners;
 
 	/**
 	 * The ::command-line signal is emitted on the primary instance when
@@ -1283,29 +1283,29 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 
 	protected class OnHandleLocalOptionsDelegateWrapper
 	{
-		static OnHandleLocalOptionsDelegateWrapper[] listeners;
 		int delegate(VariantDict, Application) dlg;
 		gulong handlerId;
 
 		this(int delegate(VariantDict, Application) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onHandleLocalOptionsListeners ~= this;
 		}
 
 		void remove(OnHandleLocalOptionsDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onHandleLocalOptionsListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onHandleLocalOptionsListeners[index] = null;
+					onHandleLocalOptionsListeners = std.algorithm.remove(onHandleLocalOptionsListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnHandleLocalOptionsDelegateWrapper[] onHandleLocalOptionsListeners;
 
 	/**
 	 * The ::handle-local-options signal is emitted on the local instance
@@ -1385,29 +1385,29 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 
 	protected class OnOpenDelegateWrapper
 	{
-		static OnOpenDelegateWrapper[] listeners;
 		void delegate(void*, int, string, Application) dlg;
 		gulong handlerId;
 
 		this(void delegate(void*, int, string, Application) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onOpenListeners ~= this;
 		}
 
 		void remove(OnOpenDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onOpenListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onOpenListeners[index] = null;
+					onOpenListeners = std.algorithm.remove(onOpenListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnOpenDelegateWrapper[] onOpenListeners;
 
 	/**
 	 * The ::open signal is emitted on the primary instance when there are
@@ -1443,29 +1443,29 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 
 	protected class OnShutdownDelegateWrapper
 	{
-		static OnShutdownDelegateWrapper[] listeners;
 		void delegate(Application) dlg;
 		gulong handlerId;
 
 		this(void delegate(Application) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onShutdownListeners ~= this;
 		}
 
 		void remove(OnShutdownDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onShutdownListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onShutdownListeners[index] = null;
+					onShutdownListeners = std.algorithm.remove(onShutdownListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnShutdownDelegateWrapper[] onShutdownListeners;
 
 	/**
 	 * The ::shutdown signal is emitted only on the registered primary instance
@@ -1496,29 +1496,29 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 
 	protected class OnStartupDelegateWrapper
 	{
-		static OnStartupDelegateWrapper[] listeners;
 		void delegate(Application) dlg;
 		gulong handlerId;
 
 		this(void delegate(Application) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onStartupListeners ~= this;
 		}
 
 		void remove(OnStartupDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onStartupListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onStartupListeners[index] = null;
+					onStartupListeners = std.algorithm.remove(onStartupListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnStartupDelegateWrapper[] onStartupListeners;
 
 	/**
 	 * The ::startup signal is emitted on the primary instance immediately

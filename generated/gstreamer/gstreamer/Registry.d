@@ -507,29 +507,29 @@ public class Registry : ObjectGst
 
 	protected class OnFeatureAddedDelegateWrapper
 	{
-		static OnFeatureAddedDelegateWrapper[] listeners;
 		void delegate(PluginFeature, Registry) dlg;
 		gulong handlerId;
 
 		this(void delegate(PluginFeature, Registry) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onFeatureAddedListeners ~= this;
 		}
 
 		void remove(OnFeatureAddedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onFeatureAddedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onFeatureAddedListeners[index] = null;
+					onFeatureAddedListeners = std.algorithm.remove(onFeatureAddedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnFeatureAddedDelegateWrapper[] onFeatureAddedListeners;
 
 	/**
 	 * Signals that a feature has been added to the registry (possibly
@@ -563,29 +563,29 @@ public class Registry : ObjectGst
 
 	protected class OnPluginAddedDelegateWrapper
 	{
-		static OnPluginAddedDelegateWrapper[] listeners;
 		void delegate(Plugin, Registry) dlg;
 		gulong handlerId;
 
 		this(void delegate(Plugin, Registry) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPluginAddedListeners ~= this;
 		}
 
 		void remove(OnPluginAddedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPluginAddedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPluginAddedListeners[index] = null;
+					onPluginAddedListeners = std.algorithm.remove(onPluginAddedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPluginAddedDelegateWrapper[] onPluginAddedListeners;
 
 	/**
 	 * Signals that a plugin has been added to the registry (possibly

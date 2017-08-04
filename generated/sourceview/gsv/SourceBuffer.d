@@ -722,29 +722,29 @@ public class SourceBuffer : TextBuffer
 
 	protected class OnBracketMatchedDelegateWrapper
 	{
-		static OnBracketMatchedDelegateWrapper[] listeners;
 		void delegate(TextIter, GtkSourceBracketMatchType, SourceBuffer) dlg;
 		gulong handlerId;
 
 		this(void delegate(TextIter, GtkSourceBracketMatchType, SourceBuffer) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onBracketMatchedListeners ~= this;
 		}
 
 		void remove(OnBracketMatchedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onBracketMatchedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onBracketMatchedListeners[index] = null;
+					onBracketMatchedListeners = std.algorithm.remove(onBracketMatchedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnBracketMatchedDelegateWrapper[] onBracketMatchedListeners;
 
 	/**
 	 * @iter is set to a valid iterator pointing to the matching bracket
@@ -787,29 +787,29 @@ public class SourceBuffer : TextBuffer
 
 	protected class OnHighlightUpdatedDelegateWrapper
 	{
-		static OnHighlightUpdatedDelegateWrapper[] listeners;
 		void delegate(TextIter, TextIter, SourceBuffer) dlg;
 		gulong handlerId;
 
 		this(void delegate(TextIter, TextIter, SourceBuffer) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onHighlightUpdatedListeners ~= this;
 		}
 
 		void remove(OnHighlightUpdatedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onHighlightUpdatedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onHighlightUpdatedListeners[index] = null;
+					onHighlightUpdatedListeners = std.algorithm.remove(onHighlightUpdatedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnHighlightUpdatedDelegateWrapper[] onHighlightUpdatedListeners;
 
 	/**
 	 * The ::highlight-updated signal is emitted when the syntax
@@ -845,29 +845,29 @@ public class SourceBuffer : TextBuffer
 
 	protected class OnRedoDelegateWrapper
 	{
-		static OnRedoDelegateWrapper[] listeners;
 		void delegate(SourceBuffer) dlg;
 		gulong handlerId;
 
 		this(void delegate(SourceBuffer) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onRedoListeners ~= this;
 		}
 
 		void remove(OnRedoDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onRedoListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onRedoListeners[index] = null;
+					onRedoListeners = std.algorithm.remove(onRedoListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnRedoDelegateWrapper[] onRedoListeners;
 
 	/**
 	 * The ::redo signal is emitted to redo the last undo operation.
@@ -897,29 +897,29 @@ public class SourceBuffer : TextBuffer
 
 	protected class OnSourceMarkUpdatedDelegateWrapper
 	{
-		static OnSourceMarkUpdatedDelegateWrapper[] listeners;
 		void delegate(TextMark, SourceBuffer) dlg;
 		gulong handlerId;
 
 		this(void delegate(TextMark, SourceBuffer) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onSourceMarkUpdatedListeners ~= this;
 		}
 
 		void remove(OnSourceMarkUpdatedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onSourceMarkUpdatedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onSourceMarkUpdatedListeners[index] = null;
+					onSourceMarkUpdatedListeners = std.algorithm.remove(onSourceMarkUpdatedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnSourceMarkUpdatedDelegateWrapper[] onSourceMarkUpdatedListeners;
 
 	/**
 	 * The ::source-mark-updated signal is emitted each time
@@ -953,29 +953,29 @@ public class SourceBuffer : TextBuffer
 
 	protected class OnUndoDelegateWrapper
 	{
-		static OnUndoDelegateWrapper[] listeners;
 		void delegate(SourceBuffer) dlg;
 		gulong handlerId;
 
 		this(void delegate(SourceBuffer) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onUndoListeners ~= this;
 		}
 
 		void remove(OnUndoDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onUndoListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onUndoListeners[index] = null;
+					onUndoListeners = std.algorithm.remove(onUndoListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnUndoDelegateWrapper[] onUndoListeners;
 
 	/**
 	 * The ::undo signal is emitted to undo the last user action which

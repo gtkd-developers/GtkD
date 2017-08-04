@@ -206,29 +206,29 @@ public class SimpleAction : ObjectG, ActionIF
 
 	protected class OnActivateDelegateWrapper
 	{
-		static OnActivateDelegateWrapper[] listeners;
 		void delegate(Variant, SimpleAction) dlg;
 		gulong handlerId;
 
 		this(void delegate(Variant, SimpleAction) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onActivateListeners ~= this;
 		}
 
 		void remove(OnActivateDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onActivateListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onActivateListeners[index] = null;
+					onActivateListeners = std.algorithm.remove(onActivateListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnActivateDelegateWrapper[] onActivateListeners;
 
 	/**
 	 * Indicates that the action was just activated.
@@ -274,29 +274,29 @@ public class SimpleAction : ObjectG, ActionIF
 
 	protected class OnChangeStateDelegateWrapper
 	{
-		static OnChangeStateDelegateWrapper[] listeners;
 		void delegate(Variant, SimpleAction) dlg;
 		gulong handlerId;
 
 		this(void delegate(Variant, SimpleAction) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onChangeStateListeners ~= this;
 		}
 
 		void remove(OnChangeStateDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onChangeStateListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onChangeStateListeners[index] = null;
+					onChangeStateListeners = std.algorithm.remove(onChangeStateListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnChangeStateDelegateWrapper[] onChangeStateListeners;
 
 	/**
 	 * Indicates that the action just received a request to change its

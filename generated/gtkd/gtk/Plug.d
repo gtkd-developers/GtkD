@@ -221,29 +221,29 @@ public class Plug : Window
 
 	protected class OnEmbeddedDelegateWrapper
 	{
-		static OnEmbeddedDelegateWrapper[] listeners;
 		void delegate(Plug) dlg;
 		gulong handlerId;
 
 		this(void delegate(Plug) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onEmbeddedListeners ~= this;
 		}
 
 		void remove(OnEmbeddedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onEmbeddedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onEmbeddedListeners[index] = null;
+					onEmbeddedListeners = std.algorithm.remove(onEmbeddedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnEmbeddedDelegateWrapper[] onEmbeddedListeners;
 
 	/**
 	 * Gets emitted when the plug becomes embedded in a socket.

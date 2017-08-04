@@ -3560,6 +3560,9 @@ alias GtkTextViewLayer TextViewLayer;
  */
 public enum GtkTextWindowType
 {
+	/**
+	 * Invalid value, used as a marker
+	 */
 	PRIVATE = 0,
 	/**
 	 * Window that floats over scrolling areas.

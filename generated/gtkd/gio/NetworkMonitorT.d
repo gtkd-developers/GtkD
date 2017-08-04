@@ -227,29 +227,29 @@ public template NetworkMonitorT(TStruct)
 
 	protected class OnNetworkChangedDelegateWrapper
 	{
-		static OnNetworkChangedDelegateWrapper[] listeners;
 		void delegate(bool, NetworkMonitorIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(bool, NetworkMonitorIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onNetworkChangedListeners ~= this;
 		}
 
 		void remove(OnNetworkChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onNetworkChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onNetworkChangedListeners[index] = null;
+					onNetworkChangedListeners = std.algorithm.remove(onNetworkChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnNetworkChangedDelegateWrapper[] onNetworkChangedListeners;
 
 	/**
 	 * Emitted when the network configuration changes. If @available is

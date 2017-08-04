@@ -3206,29 +3206,29 @@ public class Window : ObjectG
 
 	protected class OnCreateSurfaceDelegateWrapper
 	{
-		static OnCreateSurfaceDelegateWrapper[] listeners;
 		Surface delegate(int, int, Window) dlg;
 		gulong handlerId;
 
 		this(Surface delegate(int, int, Window) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCreateSurfaceListeners ~= this;
 		}
 
 		void remove(OnCreateSurfaceDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCreateSurfaceListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCreateSurfaceListeners[index] = null;
+					onCreateSurfaceListeners = std.algorithm.remove(onCreateSurfaceListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCreateSurfaceDelegateWrapper[] onCreateSurfaceListeners;
 
 	/**
 	 * The ::create-surface signal is emitted when an offscreen window
@@ -3276,29 +3276,29 @@ public class Window : ObjectG
 
 	protected class OnFromEmbedderDelegateWrapper
 	{
-		static OnFromEmbedderDelegateWrapper[] listeners;
 		void delegate(double, double, void*, void*, Window) dlg;
 		gulong handlerId;
 
 		this(void delegate(double, double, void*, void*, Window) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onFromEmbedderListeners ~= this;
 		}
 
 		void remove(OnFromEmbedderDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onFromEmbedderListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onFromEmbedderListeners[index] = null;
+					onFromEmbedderListeners = std.algorithm.remove(onFromEmbedderListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnFromEmbedderDelegateWrapper[] onFromEmbedderListeners;
 
 	/**
 	 * The ::from-embedder signal is emitted to translate coordinates
@@ -3341,29 +3341,29 @@ public class Window : ObjectG
 
 	protected class OnMovedToRectDelegateWrapper
 	{
-		static OnMovedToRectDelegateWrapper[] listeners;
 		void delegate(void*, void*, bool, bool, Window) dlg;
 		gulong handlerId;
 
 		this(void delegate(void*, void*, bool, bool, Window) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMovedToRectListeners ~= this;
 		}
 
 		void remove(OnMovedToRectDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMovedToRectListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMovedToRectListeners[index] = null;
+					onMovedToRectListeners = std.algorithm.remove(onMovedToRectListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMovedToRectDelegateWrapper[] onMovedToRectListeners;
 
 	/**
 	 * Emitted when the position of @window is finalized after being moved to a
@@ -3413,29 +3413,29 @@ public class Window : ObjectG
 
 	protected class OnPickEmbeddedChildDelegateWrapper
 	{
-		static OnPickEmbeddedChildDelegateWrapper[] listeners;
 		Window delegate(double, double, Window) dlg;
 		gulong handlerId;
 
 		this(Window delegate(double, double, Window) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPickEmbeddedChildListeners ~= this;
 		}
 
 		void remove(OnPickEmbeddedChildDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPickEmbeddedChildListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPickEmbeddedChildListeners[index] = null;
+					onPickEmbeddedChildListeners = std.algorithm.remove(onPickEmbeddedChildListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPickEmbeddedChildDelegateWrapper[] onPickEmbeddedChildListeners;
 
 	/**
 	 * The ::pick-embedded-child signal is emitted to find an embedded
@@ -3476,29 +3476,29 @@ public class Window : ObjectG
 
 	protected class OnToEmbedderDelegateWrapper
 	{
-		static OnToEmbedderDelegateWrapper[] listeners;
 		void delegate(double, double, void*, void*, Window) dlg;
 		gulong handlerId;
 
 		this(void delegate(double, double, void*, void*, Window) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onToEmbedderListeners ~= this;
 		}
 
 		void remove(OnToEmbedderDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onToEmbedderListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onToEmbedderListeners[index] = null;
+					onToEmbedderListeners = std.algorithm.remove(onToEmbedderListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnToEmbedderDelegateWrapper[] onToEmbedderListeners;
 
 	/**
 	 * The ::to-embedder signal is emitted to translate coordinates

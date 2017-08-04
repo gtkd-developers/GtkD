@@ -409,29 +409,29 @@ public class LevelBar : Widget, OrientableIF
 
 	protected class OnOffsetChangedDelegateWrapper
 	{
-		static OnOffsetChangedDelegateWrapper[] listeners;
 		void delegate(string, LevelBar) dlg;
 		gulong handlerId;
 
 		this(void delegate(string, LevelBar) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onOffsetChangedListeners ~= this;
 		}
 
 		void remove(OnOffsetChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onOffsetChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onOffsetChangedListeners[index] = null;
+					onOffsetChangedListeners = std.algorithm.remove(onOffsetChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnOffsetChangedDelegateWrapper[] onOffsetChangedListeners;
 
 	/**
 	 * Emitted when an offset specified on the bar changes value as an

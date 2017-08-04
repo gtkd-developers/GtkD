@@ -245,29 +245,29 @@ public class Seat : ObjectG
 
 	protected class OnDeviceAddedDelegateWrapper
 	{
-		static OnDeviceAddedDelegateWrapper[] listeners;
 		void delegate(Device, Seat) dlg;
 		gulong handlerId;
 
 		this(void delegate(Device, Seat) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDeviceAddedListeners ~= this;
 		}
 
 		void remove(OnDeviceAddedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDeviceAddedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDeviceAddedListeners[index] = null;
+					onDeviceAddedListeners = std.algorithm.remove(onDeviceAddedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDeviceAddedDelegateWrapper[] onDeviceAddedListeners;
 
 	/**
 	 * The ::device-added signal is emitted when a new input
@@ -303,29 +303,29 @@ public class Seat : ObjectG
 
 	protected class OnDeviceRemovedDelegateWrapper
 	{
-		static OnDeviceRemovedDelegateWrapper[] listeners;
 		void delegate(Device, Seat) dlg;
 		gulong handlerId;
 
 		this(void delegate(Device, Seat) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDeviceRemovedListeners ~= this;
 		}
 
 		void remove(OnDeviceRemovedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDeviceRemovedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDeviceRemovedListeners[index] = null;
+					onDeviceRemovedListeners = std.algorithm.remove(onDeviceRemovedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDeviceRemovedDelegateWrapper[] onDeviceRemovedListeners;
 
 	/**
 	 * The ::device-removed signal is emitted when an
@@ -361,29 +361,29 @@ public class Seat : ObjectG
 
 	protected class OnToolAddedDelegateWrapper
 	{
-		static OnToolAddedDelegateWrapper[] listeners;
 		void delegate(DeviceTool, Seat) dlg;
 		gulong handlerId;
 
 		this(void delegate(DeviceTool, Seat) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onToolAddedListeners ~= this;
 		}
 
 		void remove(OnToolAddedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onToolAddedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onToolAddedListeners[index] = null;
+					onToolAddedListeners = std.algorithm.remove(onToolAddedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnToolAddedDelegateWrapper[] onToolAddedListeners;
 
 	/**
 	 * The ::tool-added signal is emitted whenever a new tool
@@ -423,29 +423,29 @@ public class Seat : ObjectG
 
 	protected class OnToolRemovedDelegateWrapper
 	{
-		static OnToolRemovedDelegateWrapper[] listeners;
 		void delegate(DeviceTool, Seat) dlg;
 		gulong handlerId;
 
 		this(void delegate(DeviceTool, Seat) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onToolRemovedListeners ~= this;
 		}
 
 		void remove(OnToolRemovedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onToolRemovedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onToolRemovedListeners[index] = null;
+					onToolRemovedListeners = std.algorithm.remove(onToolRemovedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnToolRemovedDelegateWrapper[] onToolRemovedListeners;
 
 	/**
 	 * This signal is emitted whenever a tool is no longer known

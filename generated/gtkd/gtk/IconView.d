@@ -1230,29 +1230,29 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 
 	protected class OnActivateCursorItemDelegateWrapper
 	{
-		static OnActivateCursorItemDelegateWrapper[] listeners;
 		bool delegate(IconView) dlg;
 		gulong handlerId;
 
 		this(bool delegate(IconView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onActivateCursorItemListeners ~= this;
 		}
 
 		void remove(OnActivateCursorItemDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onActivateCursorItemListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onActivateCursorItemListeners[index] = null;
+					onActivateCursorItemListeners = std.algorithm.remove(onActivateCursorItemListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnActivateCursorItemDelegateWrapper[] onActivateCursorItemListeners;
 
 	/**
 	 * A [keybinding signal][GtkBindingSignal]
@@ -1290,29 +1290,29 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 
 	protected class OnItemActivatedDelegateWrapper
 	{
-		static OnItemActivatedDelegateWrapper[] listeners;
 		void delegate(TreePath, IconView) dlg;
 		gulong handlerId;
 
 		this(void delegate(TreePath, IconView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onItemActivatedListeners ~= this;
 		}
 
 		void remove(OnItemActivatedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onItemActivatedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onItemActivatedListeners[index] = null;
+					onItemActivatedListeners = std.algorithm.remove(onItemActivatedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnItemActivatedDelegateWrapper[] onItemActivatedListeners;
 
 	/**
 	 * The ::item-activated signal is emitted when the method
@@ -1351,29 +1351,29 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 
 	protected class OnMoveCursorDelegateWrapper
 	{
-		static OnMoveCursorDelegateWrapper[] listeners;
 		bool delegate(GtkMovementStep, int, IconView) dlg;
 		gulong handlerId;
 
 		this(bool delegate(GtkMovementStep, int, IconView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMoveCursorListeners ~= this;
 		}
 
 		void remove(OnMoveCursorDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMoveCursorListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMoveCursorListeners[index] = null;
+					onMoveCursorListeners = std.algorithm.remove(onMoveCursorListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMoveCursorDelegateWrapper[] onMoveCursorListeners;
 
 	/**
 	 * The ::move-cursor signal is a
@@ -1420,29 +1420,29 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 
 	protected class OnSelectAllDelegateWrapper
 	{
-		static OnSelectAllDelegateWrapper[] listeners;
 		void delegate(IconView) dlg;
 		gulong handlerId;
 
 		this(void delegate(IconView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onSelectAllListeners ~= this;
 		}
 
 		void remove(OnSelectAllDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onSelectAllListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onSelectAllListeners[index] = null;
+					onSelectAllListeners = std.algorithm.remove(onSelectAllListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnSelectAllDelegateWrapper[] onSelectAllListeners;
 
 	/**
 	 * A [keybinding signal][GtkBindingSignal]
@@ -1479,29 +1479,29 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 
 	protected class OnSelectCursorItemDelegateWrapper
 	{
-		static OnSelectCursorItemDelegateWrapper[] listeners;
 		void delegate(IconView) dlg;
 		gulong handlerId;
 
 		this(void delegate(IconView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onSelectCursorItemListeners ~= this;
 		}
 
 		void remove(OnSelectCursorItemDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onSelectCursorItemListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onSelectCursorItemListeners[index] = null;
+					onSelectCursorItemListeners = std.algorithm.remove(onSelectCursorItemListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnSelectCursorItemDelegateWrapper[] onSelectCursorItemListeners;
 
 	/**
 	 * A [keybinding signal][GtkBindingSignal]
@@ -1539,29 +1539,29 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 
 	protected class OnSelectionChangedDelegateWrapper
 	{
-		static OnSelectionChangedDelegateWrapper[] listeners;
 		void delegate(IconView) dlg;
 		gulong handlerId;
 
 		this(void delegate(IconView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onSelectionChangedListeners ~= this;
 		}
 
 		void remove(OnSelectionChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onSelectionChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onSelectionChangedListeners[index] = null;
+					onSelectionChangedListeners = std.algorithm.remove(onSelectionChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnSelectionChangedDelegateWrapper[] onSelectionChangedListeners;
 
 	/**
 	 * The ::selection-changed signal is emitted when the selection
@@ -1592,29 +1592,29 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 
 	protected class OnToggleCursorItemDelegateWrapper
 	{
-		static OnToggleCursorItemDelegateWrapper[] listeners;
 		void delegate(IconView) dlg;
 		gulong handlerId;
 
 		this(void delegate(IconView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onToggleCursorItemListeners ~= this;
 		}
 
 		void remove(OnToggleCursorItemDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onToggleCursorItemListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onToggleCursorItemListeners[index] = null;
+					onToggleCursorItemListeners = std.algorithm.remove(onToggleCursorItemListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnToggleCursorItemDelegateWrapper[] onToggleCursorItemListeners;
 
 	/**
 	 * A [keybinding signal][GtkBindingSignal]
@@ -1653,29 +1653,29 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 
 	protected class OnUnselectAllDelegateWrapper
 	{
-		static OnUnselectAllDelegateWrapper[] listeners;
 		void delegate(IconView) dlg;
 		gulong handlerId;
 
 		this(void delegate(IconView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onUnselectAllListeners ~= this;
 		}
 
 		void remove(OnUnselectAllDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onUnselectAllListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onUnselectAllListeners[index] = null;
+					onUnselectAllListeners = std.algorithm.remove(onUnselectAllListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnUnselectAllDelegateWrapper[] onUnselectAllListeners;
 
 	/**
 	 * A [keybinding signal][GtkBindingSignal]

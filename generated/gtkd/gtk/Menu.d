@@ -825,29 +825,29 @@ public class Menu : MenuShell
 
 	protected class OnMoveScrollDelegateWrapper
 	{
-		static OnMoveScrollDelegateWrapper[] listeners;
 		void delegate(GtkScrollType, Menu) dlg;
 		gulong handlerId;
 
 		this(void delegate(GtkScrollType, Menu) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMoveScrollListeners ~= this;
 		}
 
 		void remove(OnMoveScrollDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMoveScrollListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMoveScrollListeners[index] = null;
+					onMoveScrollListeners = std.algorithm.remove(onMoveScrollListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMoveScrollDelegateWrapper[] onMoveScrollListeners;
 
 	/** */
 	gulong addOnMoveScroll(void delegate(GtkScrollType, Menu) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -875,29 +875,29 @@ public class Menu : MenuShell
 
 	protected class OnPoppedUpDelegateWrapper
 	{
-		static OnPoppedUpDelegateWrapper[] listeners;
 		void delegate(void*, void*, bool, bool, Menu) dlg;
 		gulong handlerId;
 
 		this(void delegate(void*, void*, bool, bool, Menu) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPoppedUpListeners ~= this;
 		}
 
 		void remove(OnPoppedUpDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPoppedUpListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPoppedUpListeners[index] = null;
+					onPoppedUpListeners = std.algorithm.remove(onPoppedUpListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPoppedUpDelegateWrapper[] onPoppedUpListeners;
 
 	/**
 	 * Emitted when the position of @menu is finalized after being popped up

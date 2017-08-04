@@ -376,29 +376,29 @@ public class ToolButton : ToolItem, ActionableIF
 
 	protected class OnClickedDelegateWrapper
 	{
-		static OnClickedDelegateWrapper[] listeners;
 		void delegate(ToolButton) dlg;
 		gulong handlerId;
 
 		this(void delegate(ToolButton) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onClickedListeners ~= this;
 		}
 
 		void remove(OnClickedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onClickedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onClickedListeners[index] = null;
+					onClickedListeners = std.algorithm.remove(onClickedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnClickedDelegateWrapper[] onClickedListeners;
 
 	/**
 	 * This signal is emitted when the tool button is clicked with the mouse

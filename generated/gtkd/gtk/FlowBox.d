@@ -653,29 +653,29 @@ public class FlowBox : Container, OrientableIF
 
 	protected class OnActivateCursorChildDelegateWrapper
 	{
-		static OnActivateCursorChildDelegateWrapper[] listeners;
 		void delegate(FlowBox) dlg;
 		gulong handlerId;
 
 		this(void delegate(FlowBox) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onActivateCursorChildListeners ~= this;
 		}
 
 		void remove(OnActivateCursorChildDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onActivateCursorChildListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onActivateCursorChildListeners[index] = null;
+					onActivateCursorChildListeners = std.algorithm.remove(onActivateCursorChildListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnActivateCursorChildDelegateWrapper[] onActivateCursorChildListeners;
 
 	/**
 	 * The ::activate-cursor-child signal is a
@@ -707,29 +707,29 @@ public class FlowBox : Container, OrientableIF
 
 	protected class OnChildActivatedDelegateWrapper
 	{
-		static OnChildActivatedDelegateWrapper[] listeners;
 		void delegate(FlowBoxChild, FlowBox) dlg;
 		gulong handlerId;
 
 		this(void delegate(FlowBoxChild, FlowBox) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onChildActivatedListeners ~= this;
 		}
 
 		void remove(OnChildActivatedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onChildActivatedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onChildActivatedListeners[index] = null;
+					onChildActivatedListeners = std.algorithm.remove(onChildActivatedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnChildActivatedDelegateWrapper[] onChildActivatedListeners;
 
 	/**
 	 * The ::child-activated signal is emitted when a child has been
@@ -763,29 +763,29 @@ public class FlowBox : Container, OrientableIF
 
 	protected class OnMoveCursorDelegateWrapper
 	{
-		static OnMoveCursorDelegateWrapper[] listeners;
 		bool delegate(GtkMovementStep, int, FlowBox) dlg;
 		gulong handlerId;
 
 		this(bool delegate(GtkMovementStep, int, FlowBox) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMoveCursorListeners ~= this;
 		}
 
 		void remove(OnMoveCursorDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMoveCursorListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMoveCursorListeners[index] = null;
+					onMoveCursorListeners = std.algorithm.remove(onMoveCursorListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMoveCursorDelegateWrapper[] onMoveCursorListeners;
 
 	/**
 	 * The ::move-cursor signal is a
@@ -836,29 +836,29 @@ public class FlowBox : Container, OrientableIF
 
 	protected class OnSelectAllDelegateWrapper
 	{
-		static OnSelectAllDelegateWrapper[] listeners;
 		void delegate(FlowBox) dlg;
 		gulong handlerId;
 
 		this(void delegate(FlowBox) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onSelectAllListeners ~= this;
 		}
 
 		void remove(OnSelectAllDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onSelectAllListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onSelectAllListeners[index] = null;
+					onSelectAllListeners = std.algorithm.remove(onSelectAllListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnSelectAllDelegateWrapper[] onSelectAllListeners;
 
 	/**
 	 * The ::select-all signal is a
@@ -893,29 +893,29 @@ public class FlowBox : Container, OrientableIF
 
 	protected class OnSelectedChildrenChangedDelegateWrapper
 	{
-		static OnSelectedChildrenChangedDelegateWrapper[] listeners;
 		void delegate(FlowBox) dlg;
 		gulong handlerId;
 
 		this(void delegate(FlowBox) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onSelectedChildrenChangedListeners ~= this;
 		}
 
 		void remove(OnSelectedChildrenChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onSelectedChildrenChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onSelectedChildrenChangedListeners[index] = null;
+					onSelectedChildrenChangedListeners = std.algorithm.remove(onSelectedChildrenChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnSelectedChildrenChangedDelegateWrapper[] onSelectedChildrenChangedListeners;
 
 	/**
 	 * The ::selected-children-changed signal is emitted when the
@@ -950,29 +950,29 @@ public class FlowBox : Container, OrientableIF
 
 	protected class OnToggleCursorChildDelegateWrapper
 	{
-		static OnToggleCursorChildDelegateWrapper[] listeners;
 		void delegate(FlowBox) dlg;
 		gulong handlerId;
 
 		this(void delegate(FlowBox) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onToggleCursorChildListeners ~= this;
 		}
 
 		void remove(OnToggleCursorChildDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onToggleCursorChildListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onToggleCursorChildListeners[index] = null;
+					onToggleCursorChildListeners = std.algorithm.remove(onToggleCursorChildListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnToggleCursorChildDelegateWrapper[] onToggleCursorChildListeners;
 
 	/**
 	 * The ::toggle-cursor-child signal is a
@@ -1006,29 +1006,29 @@ public class FlowBox : Container, OrientableIF
 
 	protected class OnUnselectAllDelegateWrapper
 	{
-		static OnUnselectAllDelegateWrapper[] listeners;
 		void delegate(FlowBox) dlg;
 		gulong handlerId;
 
 		this(void delegate(FlowBox) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onUnselectAllListeners ~= this;
 		}
 
 		void remove(OnUnselectAllDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onUnselectAllListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onUnselectAllListeners[index] = null;
+					onUnselectAllListeners = std.algorithm.remove(onUnselectAllListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnUnselectAllDelegateWrapper[] onUnselectAllListeners;
 
 	/**
 	 * The ::unselect-all signal is a

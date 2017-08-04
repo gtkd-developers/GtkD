@@ -487,29 +487,29 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 
 	protected class OnActivateDelegateWrapper
 	{
-		static OnActivateDelegateWrapper[] listeners;
 		void delegate(MenuItem) dlg;
 		gulong handlerId;
 
 		this(void delegate(MenuItem) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onActivateListeners ~= this;
 		}
 
 		void remove(OnActivateDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onActivateListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onActivateListeners[index] = null;
+					onActivateListeners = std.algorithm.remove(onActivateListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnActivateDelegateWrapper[] onActivateListeners;
 
 	/**
 	 * Emitted when the item is activated.
@@ -539,29 +539,29 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 
 	protected class OnActivateItemDelegateWrapper
 	{
-		static OnActivateItemDelegateWrapper[] listeners;
 		void delegate(MenuItem) dlg;
 		gulong handlerId;
 
 		this(void delegate(MenuItem) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onActivateItemListeners ~= this;
 		}
 
 		void remove(OnActivateItemDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onActivateItemListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onActivateItemListeners[index] = null;
+					onActivateItemListeners = std.algorithm.remove(onActivateItemListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnActivateItemDelegateWrapper[] onActivateItemListeners;
 
 	/**
 	 * Emitted when the item is activated, but also if the menu item has a
@@ -593,29 +593,29 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 
 	protected class OnDeselectDelegateWrapper
 	{
-		static OnDeselectDelegateWrapper[] listeners;
 		void delegate(MenuItem) dlg;
 		gulong handlerId;
 
 		this(void delegate(MenuItem) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDeselectListeners ~= this;
 		}
 
 		void remove(OnDeselectDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDeselectListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDeselectListeners[index] = null;
+					onDeselectListeners = std.algorithm.remove(onDeselectListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDeselectDelegateWrapper[] onDeselectListeners;
 
 	/** */
 	gulong addOnDeselect(void delegate(MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -643,29 +643,29 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 
 	protected class OnSelectDelegateWrapper
 	{
-		static OnSelectDelegateWrapper[] listeners;
 		void delegate(MenuItem) dlg;
 		gulong handlerId;
 
 		this(void delegate(MenuItem) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onSelectListeners ~= this;
 		}
 
 		void remove(OnSelectDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onSelectListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onSelectListeners[index] = null;
+					onSelectListeners = std.algorithm.remove(onSelectListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnSelectDelegateWrapper[] onSelectListeners;
 
 	/** */
 	gulong addOnSelect(void delegate(MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -693,29 +693,29 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 
 	protected class OnToggleSizeAllocateDelegateWrapper
 	{
-		static OnToggleSizeAllocateDelegateWrapper[] listeners;
 		void delegate(int, MenuItem) dlg;
 		gulong handlerId;
 
 		this(void delegate(int, MenuItem) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onToggleSizeAllocateListeners ~= this;
 		}
 
 		void remove(OnToggleSizeAllocateDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onToggleSizeAllocateListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onToggleSizeAllocateListeners[index] = null;
+					onToggleSizeAllocateListeners = std.algorithm.remove(onToggleSizeAllocateListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnToggleSizeAllocateDelegateWrapper[] onToggleSizeAllocateListeners;
 
 	/** */
 	gulong addOnToggleSizeAllocate(void delegate(int, MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -743,29 +743,29 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 
 	protected class OnToggleSizeRequestDelegateWrapper
 	{
-		static OnToggleSizeRequestDelegateWrapper[] listeners;
 		void delegate(void*, MenuItem) dlg;
 		gulong handlerId;
 
 		this(void delegate(void*, MenuItem) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onToggleSizeRequestListeners ~= this;
 		}
 
 		void remove(OnToggleSizeRequestDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onToggleSizeRequestListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onToggleSizeRequestListeners[index] = null;
+					onToggleSizeRequestListeners = std.algorithm.remove(onToggleSizeRequestListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnToggleSizeRequestDelegateWrapper[] onToggleSizeRequestListeners;
 
 	/** */
 	gulong addOnToggleSizeRequest(void delegate(void*, MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)

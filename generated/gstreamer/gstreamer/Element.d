@@ -1491,29 +1491,29 @@ public class Element : ObjectGst
 
 	protected class OnNoMorePadsDelegateWrapper
 	{
-		static OnNoMorePadsDelegateWrapper[] listeners;
 		void delegate(Element) dlg;
 		gulong handlerId;
 
 		this(void delegate(Element) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onNoMorePadsListeners ~= this;
 		}
 
 		void remove(OnNoMorePadsDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onNoMorePadsListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onNoMorePadsListeners[index] = null;
+					onNoMorePadsListeners = std.algorithm.remove(onNoMorePadsListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnNoMorePadsDelegateWrapper[] onNoMorePadsListeners;
 
 	/**
 	 * This signals that the element will not generate more dynamic pads.
@@ -1545,29 +1545,29 @@ public class Element : ObjectGst
 
 	protected class OnPadAddedDelegateWrapper
 	{
-		static OnPadAddedDelegateWrapper[] listeners;
 		void delegate(Pad, Element) dlg;
 		gulong handlerId;
 
 		this(void delegate(Pad, Element) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPadAddedListeners ~= this;
 		}
 
 		void remove(OnPadAddedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPadAddedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPadAddedListeners[index] = null;
+					onPadAddedListeners = std.algorithm.remove(onPadAddedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPadAddedDelegateWrapper[] onPadAddedListeners;
 
 	/**
 	 * a new #GstPad has been added to the element. Note that this signal will
@@ -1604,29 +1604,29 @@ public class Element : ObjectGst
 
 	protected class OnPadRemovedDelegateWrapper
 	{
-		static OnPadRemovedDelegateWrapper[] listeners;
 		void delegate(Pad, Element) dlg;
 		gulong handlerId;
 
 		this(void delegate(Pad, Element) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPadRemovedListeners ~= this;
 		}
 
 		void remove(OnPadRemovedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPadRemovedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPadRemovedListeners[index] = null;
+					onPadRemovedListeners = std.algorithm.remove(onPadRemovedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPadRemovedDelegateWrapper[] onPadRemovedListeners;
 
 	/**
 	 * a #GstPad has been removed from the element

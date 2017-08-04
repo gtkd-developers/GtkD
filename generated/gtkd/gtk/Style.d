@@ -353,29 +353,29 @@ public class Style : ObjectG
 
 	protected class OnRealizeDelegateWrapper
 	{
-		static OnRealizeDelegateWrapper[] listeners;
 		void delegate(Style) dlg;
 		gulong handlerId;
 
 		this(void delegate(Style) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onRealizeListeners ~= this;
 		}
 
 		void remove(OnRealizeDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onRealizeListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onRealizeListeners[index] = null;
+					onRealizeListeners = std.algorithm.remove(onRealizeListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnRealizeDelegateWrapper[] onRealizeListeners;
 
 	/**
 	 * Emitted when the style has been initialized for a particular
@@ -410,29 +410,29 @@ public class Style : ObjectG
 
 	protected class OnUnrealizeDelegateWrapper
 	{
-		static OnUnrealizeDelegateWrapper[] listeners;
 		void delegate(Style) dlg;
 		gulong handlerId;
 
 		this(void delegate(Style) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onUnrealizeListeners ~= this;
 		}
 
 		void remove(OnUnrealizeDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onUnrealizeListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onUnrealizeListeners[index] = null;
+					onUnrealizeListeners = std.algorithm.remove(onUnrealizeListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnUnrealizeDelegateWrapper[] onUnrealizeListeners;
 
 	/**
 	 * Emitted when the aspects of the style specific to a particular visual

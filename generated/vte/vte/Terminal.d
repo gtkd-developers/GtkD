@@ -1492,29 +1492,29 @@ public class Terminal : Widget, ScrollableIF
 
 	protected class OnBellDelegateWrapper
 	{
-		static OnBellDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
 
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onBellListeners ~= this;
 		}
 
 		void remove(OnBellDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onBellListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onBellListeners[index] = null;
+					onBellListeners = std.algorithm.remove(onBellListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnBellDelegateWrapper[] onBellListeners;
 
 	/**
 	 * This signal is emitted when the a child sends a bell request to the
@@ -1545,29 +1545,29 @@ public class Terminal : Widget, ScrollableIF
 
 	protected class OnCharSizeChangedDelegateWrapper
 	{
-		static OnCharSizeChangedDelegateWrapper[] listeners;
 		void delegate(uint, uint, Terminal) dlg;
 		gulong handlerId;
 
 		this(void delegate(uint, uint, Terminal) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCharSizeChangedListeners ~= this;
 		}
 
 		void remove(OnCharSizeChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCharSizeChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCharSizeChangedListeners[index] = null;
+					onCharSizeChangedListeners = std.algorithm.remove(onCharSizeChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCharSizeChangedDelegateWrapper[] onCharSizeChangedListeners;
 
 	/**
 	 * Emitted whenever selection of a new font causes the values of the
@@ -1602,29 +1602,29 @@ public class Terminal : Widget, ScrollableIF
 
 	protected class OnChildExitedDelegateWrapper
 	{
-		static OnChildExitedDelegateWrapper[] listeners;
 		void delegate(int, Terminal) dlg;
 		gulong handlerId;
 
 		this(void delegate(int, Terminal) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onChildExitedListeners ~= this;
 		}
 
 		void remove(OnChildExitedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onChildExitedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onChildExitedListeners[index] = null;
+					onChildExitedListeners = std.algorithm.remove(onChildExitedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnChildExitedDelegateWrapper[] onChildExitedListeners;
 
 	/**
 	 * This signal is emitted when the terminal detects that a child
@@ -1658,29 +1658,29 @@ public class Terminal : Widget, ScrollableIF
 
 	protected class OnCommitDelegateWrapper
 	{
-		static OnCommitDelegateWrapper[] listeners;
 		void delegate(string, uint, Terminal) dlg;
 		gulong handlerId;
 
 		this(void delegate(string, uint, Terminal) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCommitListeners ~= this;
 		}
 
 		void remove(OnCommitDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCommitListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCommitListeners[index] = null;
+					onCommitListeners = std.algorithm.remove(onCommitListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCommitDelegateWrapper[] onCommitListeners;
 
 	/**
 	 * Emitted whenever the terminal receives input from the user and
@@ -1716,29 +1716,29 @@ public class Terminal : Widget, ScrollableIF
 
 	protected class OnContentsChangedDelegateWrapper
 	{
-		static OnContentsChangedDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
 
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onContentsChangedListeners ~= this;
 		}
 
 		void remove(OnContentsChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onContentsChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onContentsChangedListeners[index] = null;
+					onContentsChangedListeners = std.algorithm.remove(onContentsChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnContentsChangedDelegateWrapper[] onContentsChangedListeners;
 
 	/**
 	 * Emitted whenever the visible appearance of the terminal has changed.
@@ -1769,29 +1769,29 @@ public class Terminal : Widget, ScrollableIF
 
 	protected class OnCopyClipboardDelegateWrapper
 	{
-		static OnCopyClipboardDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
 
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCopyClipboardListeners ~= this;
 		}
 
 		void remove(OnCopyClipboardDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCopyClipboardListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCopyClipboardListeners[index] = null;
+					onCopyClipboardListeners = std.algorithm.remove(onCopyClipboardListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCopyClipboardDelegateWrapper[] onCopyClipboardListeners;
 
 	/**
 	 * Emitted whenever vte_terminal_copy_clipboard() is called.
@@ -1821,29 +1821,29 @@ public class Terminal : Widget, ScrollableIF
 
 	protected class OnCurrentDirectoryUriChangedDelegateWrapper
 	{
-		static OnCurrentDirectoryUriChangedDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
 
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCurrentDirectoryUriChangedListeners ~= this;
 		}
 
 		void remove(OnCurrentDirectoryUriChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCurrentDirectoryUriChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCurrentDirectoryUriChangedListeners[index] = null;
+					onCurrentDirectoryUriChangedListeners = std.algorithm.remove(onCurrentDirectoryUriChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCurrentDirectoryUriChangedDelegateWrapper[] onCurrentDirectoryUriChangedListeners;
 
 	/**
 	 * Emitted when the current directory URI is modified.
@@ -1873,29 +1873,29 @@ public class Terminal : Widget, ScrollableIF
 
 	protected class OnCurrentFileUriChangedDelegateWrapper
 	{
-		static OnCurrentFileUriChangedDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
 
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCurrentFileUriChangedListeners ~= this;
 		}
 
 		void remove(OnCurrentFileUriChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCurrentFileUriChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCurrentFileUriChangedListeners[index] = null;
+					onCurrentFileUriChangedListeners = std.algorithm.remove(onCurrentFileUriChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCurrentFileUriChangedDelegateWrapper[] onCurrentFileUriChangedListeners;
 
 	/**
 	 * Emitted when the current file URI is modified.
@@ -1925,29 +1925,29 @@ public class Terminal : Widget, ScrollableIF
 
 	protected class OnCursorMovedDelegateWrapper
 	{
-		static OnCursorMovedDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
 
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCursorMovedListeners ~= this;
 		}
 
 		void remove(OnCursorMovedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCursorMovedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCursorMovedListeners[index] = null;
+					onCursorMovedListeners = std.algorithm.remove(onCursorMovedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCursorMovedDelegateWrapper[] onCursorMovedListeners;
 
 	/**
 	 * Emitted whenever the cursor moves to a new character cell.  Used
@@ -1978,29 +1978,29 @@ public class Terminal : Widget, ScrollableIF
 
 	protected class OnDecreaseFontSizeDelegateWrapper
 	{
-		static OnDecreaseFontSizeDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
 
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDecreaseFontSizeListeners ~= this;
 		}
 
 		void remove(OnDecreaseFontSizeDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDecreaseFontSizeListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDecreaseFontSizeListeners[index] = null;
+					onDecreaseFontSizeListeners = std.algorithm.remove(onDecreaseFontSizeListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDecreaseFontSizeDelegateWrapper[] onDecreaseFontSizeListeners;
 
 	/**
 	 * Emitted when the user hits the '-' key while holding the Control key.
@@ -2030,29 +2030,29 @@ public class Terminal : Widget, ScrollableIF
 
 	protected class OnDeiconifyWindowDelegateWrapper
 	{
-		static OnDeiconifyWindowDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
 
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDeiconifyWindowListeners ~= this;
 		}
 
 		void remove(OnDeiconifyWindowDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDeiconifyWindowListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDeiconifyWindowListeners[index] = null;
+					onDeiconifyWindowListeners = std.algorithm.remove(onDeiconifyWindowListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDeiconifyWindowDelegateWrapper[] onDeiconifyWindowListeners;
 
 	/**
 	 * Emitted at the child application's request.
@@ -2082,29 +2082,29 @@ public class Terminal : Widget, ScrollableIF
 
 	protected class OnEncodingChangedDelegateWrapper
 	{
-		static OnEncodingChangedDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
 
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onEncodingChangedListeners ~= this;
 		}
 
 		void remove(OnEncodingChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onEncodingChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onEncodingChangedListeners[index] = null;
+					onEncodingChangedListeners = std.algorithm.remove(onEncodingChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnEncodingChangedDelegateWrapper[] onEncodingChangedListeners;
 
 	/**
 	 * Emitted whenever the terminal's current encoding has changed, either
@@ -2136,29 +2136,29 @@ public class Terminal : Widget, ScrollableIF
 
 	protected class OnEofDelegateWrapper
 	{
-		static OnEofDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
 
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onEofListeners ~= this;
 		}
 
 		void remove(OnEofDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onEofListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onEofListeners[index] = null;
+					onEofListeners = std.algorithm.remove(onEofListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnEofDelegateWrapper[] onEofListeners;
 
 	/**
 	 * Emitted when the terminal receives an end-of-file from a child which
@@ -2190,29 +2190,29 @@ public class Terminal : Widget, ScrollableIF
 
 	protected class OnIconTitleChangedDelegateWrapper
 	{
-		static OnIconTitleChangedDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
 
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onIconTitleChangedListeners ~= this;
 		}
 
 		void remove(OnIconTitleChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onIconTitleChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onIconTitleChangedListeners[index] = null;
+					onIconTitleChangedListeners = std.algorithm.remove(onIconTitleChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnIconTitleChangedDelegateWrapper[] onIconTitleChangedListeners;
 
 	/**
 	 * Emitted when the terminal's %icon_title field is modified.
@@ -2242,29 +2242,29 @@ public class Terminal : Widget, ScrollableIF
 
 	protected class OnIconifyWindowDelegateWrapper
 	{
-		static OnIconifyWindowDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
 
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onIconifyWindowListeners ~= this;
 		}
 
 		void remove(OnIconifyWindowDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onIconifyWindowListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onIconifyWindowListeners[index] = null;
+					onIconifyWindowListeners = std.algorithm.remove(onIconifyWindowListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnIconifyWindowDelegateWrapper[] onIconifyWindowListeners;
 
 	/**
 	 * Emitted at the child application's request.
@@ -2294,29 +2294,29 @@ public class Terminal : Widget, ScrollableIF
 
 	protected class OnIncreaseFontSizeDelegateWrapper
 	{
-		static OnIncreaseFontSizeDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
 
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onIncreaseFontSizeListeners ~= this;
 		}
 
 		void remove(OnIncreaseFontSizeDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onIncreaseFontSizeListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onIncreaseFontSizeListeners[index] = null;
+					onIncreaseFontSizeListeners = std.algorithm.remove(onIncreaseFontSizeListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnIncreaseFontSizeDelegateWrapper[] onIncreaseFontSizeListeners;
 
 	/**
 	 * Emitted when the user hits the '+' key while holding the Control key.
@@ -2346,29 +2346,29 @@ public class Terminal : Widget, ScrollableIF
 
 	protected class OnLowerWindowDelegateWrapper
 	{
-		static OnLowerWindowDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
 
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onLowerWindowListeners ~= this;
 		}
 
 		void remove(OnLowerWindowDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onLowerWindowListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onLowerWindowListeners[index] = null;
+					onLowerWindowListeners = std.algorithm.remove(onLowerWindowListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnLowerWindowDelegateWrapper[] onLowerWindowListeners;
 
 	/**
 	 * Emitted at the child application's request.
@@ -2398,29 +2398,29 @@ public class Terminal : Widget, ScrollableIF
 
 	protected class OnMaximizeWindowDelegateWrapper
 	{
-		static OnMaximizeWindowDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
 
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMaximizeWindowListeners ~= this;
 		}
 
 		void remove(OnMaximizeWindowDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMaximizeWindowListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMaximizeWindowListeners[index] = null;
+					onMaximizeWindowListeners = std.algorithm.remove(onMaximizeWindowListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMaximizeWindowDelegateWrapper[] onMaximizeWindowListeners;
 
 	/**
 	 * Emitted at the child application's request.
@@ -2450,29 +2450,29 @@ public class Terminal : Widget, ScrollableIF
 
 	protected class OnMoveWindowDelegateWrapper
 	{
-		static OnMoveWindowDelegateWrapper[] listeners;
 		void delegate(uint, uint, Terminal) dlg;
 		gulong handlerId;
 
 		this(void delegate(uint, uint, Terminal) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMoveWindowListeners ~= this;
 		}
 
 		void remove(OnMoveWindowDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMoveWindowListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMoveWindowListeners[index] = null;
+					onMoveWindowListeners = std.algorithm.remove(onMoveWindowListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMoveWindowDelegateWrapper[] onMoveWindowListeners;
 
 	/**
 	 * Emitted at the child application's request.
@@ -2506,29 +2506,29 @@ public class Terminal : Widget, ScrollableIF
 
 	protected class OnPasteClipboardDelegateWrapper
 	{
-		static OnPasteClipboardDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
 
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPasteClipboardListeners ~= this;
 		}
 
 		void remove(OnPasteClipboardDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPasteClipboardListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPasteClipboardListeners[index] = null;
+					onPasteClipboardListeners = std.algorithm.remove(onPasteClipboardListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPasteClipboardDelegateWrapper[] onPasteClipboardListeners;
 
 	/**
 	 * Emitted whenever vte_terminal_paste_clipboard() is called.
@@ -2558,29 +2558,29 @@ public class Terminal : Widget, ScrollableIF
 
 	protected class OnRaiseWindowDelegateWrapper
 	{
-		static OnRaiseWindowDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
 
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onRaiseWindowListeners ~= this;
 		}
 
 		void remove(OnRaiseWindowDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onRaiseWindowListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onRaiseWindowListeners[index] = null;
+					onRaiseWindowListeners = std.algorithm.remove(onRaiseWindowListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnRaiseWindowDelegateWrapper[] onRaiseWindowListeners;
 
 	/**
 	 * Emitted at the child application's request.
@@ -2610,29 +2610,29 @@ public class Terminal : Widget, ScrollableIF
 
 	protected class OnRefreshWindowDelegateWrapper
 	{
-		static OnRefreshWindowDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
 
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onRefreshWindowListeners ~= this;
 		}
 
 		void remove(OnRefreshWindowDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onRefreshWindowListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onRefreshWindowListeners[index] = null;
+					onRefreshWindowListeners = std.algorithm.remove(onRefreshWindowListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnRefreshWindowDelegateWrapper[] onRefreshWindowListeners;
 
 	/**
 	 * Emitted at the child application's request.
@@ -2662,29 +2662,29 @@ public class Terminal : Widget, ScrollableIF
 
 	protected class OnResizeWindowDelegateWrapper
 	{
-		static OnResizeWindowDelegateWrapper[] listeners;
 		void delegate(uint, uint, Terminal) dlg;
 		gulong handlerId;
 
 		this(void delegate(uint, uint, Terminal) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onResizeWindowListeners ~= this;
 		}
 
 		void remove(OnResizeWindowDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onResizeWindowListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onResizeWindowListeners[index] = null;
+					onResizeWindowListeners = std.algorithm.remove(onResizeWindowListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnResizeWindowDelegateWrapper[] onResizeWindowListeners;
 
 	/**
 	 * Emitted at the child application's request.
@@ -2718,29 +2718,29 @@ public class Terminal : Widget, ScrollableIF
 
 	protected class OnRestoreWindowDelegateWrapper
 	{
-		static OnRestoreWindowDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
 
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onRestoreWindowListeners ~= this;
 		}
 
 		void remove(OnRestoreWindowDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onRestoreWindowListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onRestoreWindowListeners[index] = null;
+					onRestoreWindowListeners = std.algorithm.remove(onRestoreWindowListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnRestoreWindowDelegateWrapper[] onRestoreWindowListeners;
 
 	/**
 	 * Emitted at the child application's request.
@@ -2770,29 +2770,29 @@ public class Terminal : Widget, ScrollableIF
 
 	protected class OnSelectionChangedDelegateWrapper
 	{
-		static OnSelectionChangedDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
 
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onSelectionChangedListeners ~= this;
 		}
 
 		void remove(OnSelectionChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onSelectionChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onSelectionChangedListeners[index] = null;
+					onSelectionChangedListeners = std.algorithm.remove(onSelectionChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnSelectionChangedDelegateWrapper[] onSelectionChangedListeners;
 
 	/**
 	 * Emitted whenever the contents of terminal's selection changes.
@@ -2822,29 +2822,29 @@ public class Terminal : Widget, ScrollableIF
 
 	protected class OnTextDeletedDelegateWrapper
 	{
-		static OnTextDeletedDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
 
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onTextDeletedListeners ~= this;
 		}
 
 		void remove(OnTextDeletedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onTextDeletedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onTextDeletedListeners[index] = null;
+					onTextDeletedListeners = std.algorithm.remove(onTextDeletedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnTextDeletedDelegateWrapper[] onTextDeletedListeners;
 
 	/**
 	 * An internal signal used for communication between the terminal and
@@ -2876,29 +2876,29 @@ public class Terminal : Widget, ScrollableIF
 
 	protected class OnTextInsertedDelegateWrapper
 	{
-		static OnTextInsertedDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
 
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onTextInsertedListeners ~= this;
 		}
 
 		void remove(OnTextInsertedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onTextInsertedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onTextInsertedListeners[index] = null;
+					onTextInsertedListeners = std.algorithm.remove(onTextInsertedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnTextInsertedDelegateWrapper[] onTextInsertedListeners;
 
 	/**
 	 * An internal signal used for communication between the terminal and
@@ -2930,29 +2930,29 @@ public class Terminal : Widget, ScrollableIF
 
 	protected class OnTextModifiedDelegateWrapper
 	{
-		static OnTextModifiedDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
 
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onTextModifiedListeners ~= this;
 		}
 
 		void remove(OnTextModifiedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onTextModifiedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onTextModifiedListeners[index] = null;
+					onTextModifiedListeners = std.algorithm.remove(onTextModifiedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnTextModifiedDelegateWrapper[] onTextModifiedListeners;
 
 	/**
 	 * An internal signal used for communication between the terminal and
@@ -2984,29 +2984,29 @@ public class Terminal : Widget, ScrollableIF
 
 	protected class OnTextScrolledDelegateWrapper
 	{
-		static OnTextScrolledDelegateWrapper[] listeners;
 		void delegate(int, Terminal) dlg;
 		gulong handlerId;
 
 		this(void delegate(int, Terminal) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onTextScrolledListeners ~= this;
 		}
 
 		void remove(OnTextScrolledDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onTextScrolledListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onTextScrolledListeners[index] = null;
+					onTextScrolledListeners = std.algorithm.remove(onTextScrolledListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnTextScrolledDelegateWrapper[] onTextScrolledListeners;
 
 	/**
 	 * An internal signal used for communication between the terminal and
@@ -3041,29 +3041,29 @@ public class Terminal : Widget, ScrollableIF
 
 	protected class OnWindowTitleChangedDelegateWrapper
 	{
-		static OnWindowTitleChangedDelegateWrapper[] listeners;
 		void delegate(Terminal) dlg;
 		gulong handlerId;
 
 		this(void delegate(Terminal) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onWindowTitleChangedListeners ~= this;
 		}
 
 		void remove(OnWindowTitleChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onWindowTitleChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onWindowTitleChangedListeners[index] = null;
+					onWindowTitleChangedListeners = std.algorithm.remove(onWindowTitleChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnWindowTitleChangedDelegateWrapper[] onWindowTitleChangedListeners;
 
 	/**
 	 * Emitted when the terminal's %window_title field is modified.

@@ -225,29 +225,29 @@ public class Statusbar : Box
 
 	protected class OnTextPoppedDelegateWrapper
 	{
-		static OnTextPoppedDelegateWrapper[] listeners;
 		void delegate(uint, string, Statusbar) dlg;
 		gulong handlerId;
 
 		this(void delegate(uint, string, Statusbar) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onTextPoppedListeners ~= this;
 		}
 
 		void remove(OnTextPoppedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onTextPoppedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onTextPoppedListeners[index] = null;
+					onTextPoppedListeners = std.algorithm.remove(onTextPoppedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnTextPoppedDelegateWrapper[] onTextPoppedListeners;
 
 	/**
 	 * Is emitted whenever a new message is popped off a statusbar's stack.
@@ -281,29 +281,29 @@ public class Statusbar : Box
 
 	protected class OnTextPushedDelegateWrapper
 	{
-		static OnTextPushedDelegateWrapper[] listeners;
 		void delegate(uint, string, Statusbar) dlg;
 		gulong handlerId;
 
 		this(void delegate(uint, string, Statusbar) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onTextPushedListeners ~= this;
 		}
 
 		void remove(OnTextPushedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onTextPushedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onTextPushedListeners[index] = null;
+					onTextPushedListeners = std.algorithm.remove(onTextPushedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnTextPushedDelegateWrapper[] onTextPushedListeners;
 
 	/**
 	 * Is emitted whenever a new message gets pushed onto a statusbar's stack.

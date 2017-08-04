@@ -824,29 +824,29 @@ public class Container : Widget
 
 	protected class OnAddDelegateWrapper
 	{
-		static OnAddDelegateWrapper[] listeners;
 		void delegate(Widget, Container) dlg;
 		gulong handlerId;
 
 		this(void delegate(Widget, Container) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onAddListeners ~= this;
 		}
 
 		void remove(OnAddDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onAddListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onAddListeners[index] = null;
+					onAddListeners = std.algorithm.remove(onAddListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnAddDelegateWrapper[] onAddListeners;
 
 	/** */
 	gulong addOnAdd(void delegate(Widget, Container) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -874,29 +874,29 @@ public class Container : Widget
 
 	protected class OnCheckResizeDelegateWrapper
 	{
-		static OnCheckResizeDelegateWrapper[] listeners;
 		void delegate(Container) dlg;
 		gulong handlerId;
 
 		this(void delegate(Container) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCheckResizeListeners ~= this;
 		}
 
 		void remove(OnCheckResizeDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCheckResizeListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCheckResizeListeners[index] = null;
+					onCheckResizeListeners = std.algorithm.remove(onCheckResizeListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCheckResizeDelegateWrapper[] onCheckResizeListeners;
 
 	/** */
 	gulong addOnCheckResize(void delegate(Container) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -924,29 +924,29 @@ public class Container : Widget
 
 	protected class OnRemoveDelegateWrapper
 	{
-		static OnRemoveDelegateWrapper[] listeners;
 		void delegate(Widget, Container) dlg;
 		gulong handlerId;
 
 		this(void delegate(Widget, Container) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onRemoveListeners ~= this;
 		}
 
 		void remove(OnRemoveDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onRemoveListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onRemoveListeners[index] = null;
+					onRemoveListeners = std.algorithm.remove(onRemoveListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnRemoveDelegateWrapper[] onRemoveListeners;
 
 	/** */
 	gulong addOnRemove(void delegate(Widget, Container) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -974,29 +974,29 @@ public class Container : Widget
 
 	protected class OnSetFocusChildDelegateWrapper
 	{
-		static OnSetFocusChildDelegateWrapper[] listeners;
 		void delegate(Widget, Container) dlg;
 		gulong handlerId;
 
 		this(void delegate(Widget, Container) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onSetFocusChildListeners ~= this;
 		}
 
 		void remove(OnSetFocusChildDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onSetFocusChildListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onSetFocusChildListeners[index] = null;
+					onSetFocusChildListeners = std.algorithm.remove(onSetFocusChildListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnSetFocusChildDelegateWrapper[] onSetFocusChildListeners;
 
 	/** */
 	gulong addOnSetFocusChild(void delegate(Widget, Container) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)

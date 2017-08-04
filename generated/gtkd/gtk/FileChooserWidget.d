@@ -120,29 +120,29 @@ public class FileChooserWidget : Box, FileChooserIF
 
 	protected class OnDesktopFolderDelegateWrapper
 	{
-		static OnDesktopFolderDelegateWrapper[] listeners;
 		void delegate(FileChooserWidget) dlg;
 		gulong handlerId;
 
 		this(void delegate(FileChooserWidget) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDesktopFolderListeners ~= this;
 		}
 
 		void remove(OnDesktopFolderDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDesktopFolderListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDesktopFolderListeners[index] = null;
+					onDesktopFolderListeners = std.algorithm.remove(onDesktopFolderListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDesktopFolderDelegateWrapper[] onDesktopFolderListeners;
 
 	/**
 	 * The ::desktop-folder signal is a [keybinding signal][GtkBindingSignal]
@@ -178,29 +178,29 @@ public class FileChooserWidget : Box, FileChooserIF
 
 	protected class OnDownFolderDelegateWrapper
 	{
-		static OnDownFolderDelegateWrapper[] listeners;
 		void delegate(FileChooserWidget) dlg;
 		gulong handlerId;
 
 		this(void delegate(FileChooserWidget) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDownFolderListeners ~= this;
 		}
 
 		void remove(OnDownFolderDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDownFolderListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDownFolderListeners[index] = null;
+					onDownFolderListeners = std.algorithm.remove(onDownFolderListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDownFolderDelegateWrapper[] onDownFolderListeners;
 
 	/**
 	 * The ::down-folder signal is a [keybinding signal][GtkBindingSignal]
@@ -239,29 +239,29 @@ public class FileChooserWidget : Box, FileChooserIF
 
 	protected class OnHomeFolderDelegateWrapper
 	{
-		static OnHomeFolderDelegateWrapper[] listeners;
 		void delegate(FileChooserWidget) dlg;
 		gulong handlerId;
 
 		this(void delegate(FileChooserWidget) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onHomeFolderListeners ~= this;
 		}
 
 		void remove(OnHomeFolderDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onHomeFolderListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onHomeFolderListeners[index] = null;
+					onHomeFolderListeners = std.algorithm.remove(onHomeFolderListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnHomeFolderDelegateWrapper[] onHomeFolderListeners;
 
 	/**
 	 * The ::home-folder signal is a [keybinding signal][GtkBindingSignal]
@@ -297,29 +297,29 @@ public class FileChooserWidget : Box, FileChooserIF
 
 	protected class OnLocationPopupDelegateWrapper
 	{
-		static OnLocationPopupDelegateWrapper[] listeners;
 		void delegate(string, FileChooserWidget) dlg;
 		gulong handlerId;
 
 		this(void delegate(string, FileChooserWidget) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onLocationPopupListeners ~= this;
 		}
 
 		void remove(OnLocationPopupDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onLocationPopupListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onLocationPopupListeners[index] = null;
+					onLocationPopupListeners = std.algorithm.remove(onLocationPopupListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnLocationPopupDelegateWrapper[] onLocationPopupListeners;
 
 	/**
 	 * The ::location-popup signal is a [keybinding signal][GtkBindingSignal]
@@ -362,29 +362,29 @@ public class FileChooserWidget : Box, FileChooserIF
 
 	protected class OnLocationPopupOnPasteDelegateWrapper
 	{
-		static OnLocationPopupOnPasteDelegateWrapper[] listeners;
 		void delegate(FileChooserWidget) dlg;
 		gulong handlerId;
 
 		this(void delegate(FileChooserWidget) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onLocationPopupOnPasteListeners ~= this;
 		}
 
 		void remove(OnLocationPopupOnPasteDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onLocationPopupOnPasteListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onLocationPopupOnPasteListeners[index] = null;
+					onLocationPopupOnPasteListeners = std.algorithm.remove(onLocationPopupOnPasteListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnLocationPopupOnPasteDelegateWrapper[] onLocationPopupOnPasteListeners;
 
 	/**
 	 * The ::location-popup-on-paste signal is a [keybinding signal][GtkBindingSignal]
@@ -420,29 +420,29 @@ public class FileChooserWidget : Box, FileChooserIF
 
 	protected class OnLocationTogglePopupDelegateWrapper
 	{
-		static OnLocationTogglePopupDelegateWrapper[] listeners;
 		void delegate(FileChooserWidget) dlg;
 		gulong handlerId;
 
 		this(void delegate(FileChooserWidget) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onLocationTogglePopupListeners ~= this;
 		}
 
 		void remove(OnLocationTogglePopupDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onLocationTogglePopupListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onLocationTogglePopupListeners[index] = null;
+					onLocationTogglePopupListeners = std.algorithm.remove(onLocationTogglePopupListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnLocationTogglePopupDelegateWrapper[] onLocationTogglePopupListeners;
 
 	/**
 	 * The ::location-toggle-popup signal is a [keybinding signal][GtkBindingSignal]
@@ -478,29 +478,29 @@ public class FileChooserWidget : Box, FileChooserIF
 
 	protected class OnPlacesShortcutDelegateWrapper
 	{
-		static OnPlacesShortcutDelegateWrapper[] listeners;
 		void delegate(FileChooserWidget) dlg;
 		gulong handlerId;
 
 		this(void delegate(FileChooserWidget) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPlacesShortcutListeners ~= this;
 		}
 
 		void remove(OnPlacesShortcutDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPlacesShortcutListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPlacesShortcutListeners[index] = null;
+					onPlacesShortcutListeners = std.algorithm.remove(onPlacesShortcutListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPlacesShortcutDelegateWrapper[] onPlacesShortcutListeners;
 
 	/**
 	 * The ::places-shortcut signal is a [keybinding signal][GtkBindingSignal]
@@ -535,29 +535,29 @@ public class FileChooserWidget : Box, FileChooserIF
 
 	protected class OnQuickBookmarkDelegateWrapper
 	{
-		static OnQuickBookmarkDelegateWrapper[] listeners;
 		void delegate(int, FileChooserWidget) dlg;
 		gulong handlerId;
 
 		this(void delegate(int, FileChooserWidget) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onQuickBookmarkListeners ~= this;
 		}
 
 		void remove(OnQuickBookmarkDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onQuickBookmarkListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onQuickBookmarkListeners[index] = null;
+					onQuickBookmarkListeners = std.algorithm.remove(onQuickBookmarkListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnQuickBookmarkDelegateWrapper[] onQuickBookmarkListeners;
 
 	/**
 	 * The ::quick-bookmark signal is a [keybinding signal][GtkBindingSignal]
@@ -601,29 +601,29 @@ public class FileChooserWidget : Box, FileChooserIF
 
 	protected class OnRecentShortcutDelegateWrapper
 	{
-		static OnRecentShortcutDelegateWrapper[] listeners;
 		void delegate(FileChooserWidget) dlg;
 		gulong handlerId;
 
 		this(void delegate(FileChooserWidget) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onRecentShortcutListeners ~= this;
 		}
 
 		void remove(OnRecentShortcutDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onRecentShortcutListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onRecentShortcutListeners[index] = null;
+					onRecentShortcutListeners = std.algorithm.remove(onRecentShortcutListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnRecentShortcutDelegateWrapper[] onRecentShortcutListeners;
 
 	/**
 	 * The ::recent-shortcut signal is a [keybinding signal][GtkBindingSignal]
@@ -658,29 +658,29 @@ public class FileChooserWidget : Box, FileChooserIF
 
 	protected class OnSearchShortcutDelegateWrapper
 	{
-		static OnSearchShortcutDelegateWrapper[] listeners;
 		void delegate(FileChooserWidget) dlg;
 		gulong handlerId;
 
 		this(void delegate(FileChooserWidget) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onSearchShortcutListeners ~= this;
 		}
 
 		void remove(OnSearchShortcutDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onSearchShortcutListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onSearchShortcutListeners[index] = null;
+					onSearchShortcutListeners = std.algorithm.remove(onSearchShortcutListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnSearchShortcutDelegateWrapper[] onSearchShortcutListeners;
 
 	/**
 	 * The ::search-shortcut signal is a [keybinding signal][GtkBindingSignal]
@@ -715,29 +715,29 @@ public class FileChooserWidget : Box, FileChooserIF
 
 	protected class OnShowHiddenDelegateWrapper
 	{
-		static OnShowHiddenDelegateWrapper[] listeners;
 		void delegate(FileChooserWidget) dlg;
 		gulong handlerId;
 
 		this(void delegate(FileChooserWidget) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onShowHiddenListeners ~= this;
 		}
 
 		void remove(OnShowHiddenDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onShowHiddenListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onShowHiddenListeners[index] = null;
+					onShowHiddenListeners = std.algorithm.remove(onShowHiddenListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnShowHiddenDelegateWrapper[] onShowHiddenListeners;
 
 	/**
 	 * The ::show-hidden signal is a [keybinding signal][GtkBindingSignal]
@@ -772,29 +772,29 @@ public class FileChooserWidget : Box, FileChooserIF
 
 	protected class OnUpFolderDelegateWrapper
 	{
-		static OnUpFolderDelegateWrapper[] listeners;
 		void delegate(FileChooserWidget) dlg;
 		gulong handlerId;
 
 		this(void delegate(FileChooserWidget) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onUpFolderListeners ~= this;
 		}
 
 		void remove(OnUpFolderDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onUpFolderListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onUpFolderListeners[index] = null;
+					onUpFolderListeners = std.algorithm.remove(onUpFolderListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnUpFolderDelegateWrapper[] onUpFolderListeners;
 
 	/**
 	 * The ::up-folder signal is a [keybinding signal][GtkBindingSignal]

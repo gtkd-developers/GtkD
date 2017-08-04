@@ -150,29 +150,29 @@ public class SourceCompletionInfo : Window
 
 	protected class OnBeforeShowDelegateWrapper
 	{
-		static OnBeforeShowDelegateWrapper[] listeners;
 		void delegate(SourceCompletionInfo) dlg;
 		gulong handlerId;
 
 		this(void delegate(SourceCompletionInfo) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onBeforeShowListeners ~= this;
 		}
 
 		void remove(OnBeforeShowDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onBeforeShowListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onBeforeShowListeners[index] = null;
+					onBeforeShowListeners = std.algorithm.remove(onBeforeShowListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnBeforeShowDelegateWrapper[] onBeforeShowListeners;
 
 	/**
 	 * This signal is emitted before any "show" management. You can connect

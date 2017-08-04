@@ -87,29 +87,29 @@ public class ShortcutsSection : Box
 
 	protected class OnChangeCurrentPageDelegateWrapper
 	{
-		static OnChangeCurrentPageDelegateWrapper[] listeners;
 		bool delegate(int, ShortcutsSection) dlg;
 		gulong handlerId;
 
 		this(bool delegate(int, ShortcutsSection) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onChangeCurrentPageListeners ~= this;
 		}
 
 		void remove(OnChangeCurrentPageDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onChangeCurrentPageListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onChangeCurrentPageListeners[index] = null;
+					onChangeCurrentPageListeners = std.algorithm.remove(onChangeCurrentPageListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnChangeCurrentPageDelegateWrapper[] onChangeCurrentPageListeners;
 
 	/** */
 	gulong addOnChangeCurrentPage(bool delegate(int, ShortcutsSection) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)

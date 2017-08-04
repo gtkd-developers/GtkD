@@ -543,29 +543,29 @@ public class PlacesSidebar : ScrolledWindow
 
 	protected class OnDragActionAskDelegateWrapper
 	{
-		static OnDragActionAskDelegateWrapper[] listeners;
 		int delegate(int, PlacesSidebar) dlg;
 		gulong handlerId;
 
 		this(int delegate(int, PlacesSidebar) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDragActionAskListeners ~= this;
 		}
 
 		void remove(OnDragActionAskDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDragActionAskListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDragActionAskListeners[index] = null;
+					onDragActionAskListeners = std.algorithm.remove(onDragActionAskListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDragActionAskDelegateWrapper[] onDragActionAskListeners;
 
 	/**
 	 * The places sidebar emits this signal when it needs to ask the application
@@ -604,29 +604,29 @@ public class PlacesSidebar : ScrolledWindow
 
 	protected class OnDragActionRequestedDelegateWrapper
 	{
-		static OnDragActionRequestedDelegateWrapper[] listeners;
 		int delegate(DragContext, FileIF, ListG, PlacesSidebar) dlg;
 		gulong handlerId;
 
 		this(int delegate(DragContext, FileIF, ListG, PlacesSidebar) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDragActionRequestedListeners ~= this;
 		}
 
 		void remove(OnDragActionRequestedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDragActionRequestedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDragActionRequestedListeners[index] = null;
+					onDragActionRequestedListeners = std.algorithm.remove(onDragActionRequestedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDragActionRequestedDelegateWrapper[] onDragActionRequestedListeners;
 
 	/**
 	 * When the user starts a drag-and-drop operation and the sidebar needs
@@ -675,29 +675,29 @@ public class PlacesSidebar : ScrolledWindow
 
 	protected class OnDragPerformDropDelegateWrapper
 	{
-		static OnDragPerformDropDelegateWrapper[] listeners;
 		void delegate(FileIF, ListG, int, PlacesSidebar) dlg;
 		gulong handlerId;
 
 		this(void delegate(FileIF, ListG, int, PlacesSidebar) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDragPerformDropListeners ~= this;
 		}
 
 		void remove(OnDragPerformDropDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDragPerformDropListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDragPerformDropListeners[index] = null;
+					onDragPerformDropListeners = std.algorithm.remove(onDragPerformDropListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDragPerformDropDelegateWrapper[] onDragPerformDropListeners;
 
 	/**
 	 * The places sidebar emits this signal when the user completes a
@@ -738,29 +738,29 @@ public class PlacesSidebar : ScrolledWindow
 
 	protected class OnMountDelegateWrapper
 	{
-		static OnMountDelegateWrapper[] listeners;
 		void delegate(MountOperation, PlacesSidebar) dlg;
 		gulong handlerId;
 
 		this(void delegate(MountOperation, PlacesSidebar) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMountListeners ~= this;
 		}
 
 		void remove(OnMountDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMountListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMountListeners[index] = null;
+					onMountListeners = std.algorithm.remove(onMountListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMountDelegateWrapper[] onMountListeners;
 
 	/**
 	 * The places sidebar emits this signal when it starts a new operation
@@ -798,29 +798,29 @@ public class PlacesSidebar : ScrolledWindow
 
 	protected class OnOpenLocationDelegateWrapper
 	{
-		static OnOpenLocationDelegateWrapper[] listeners;
 		void delegate(FileIF, GtkPlacesOpenFlags, PlacesSidebar) dlg;
 		gulong handlerId;
 
 		this(void delegate(FileIF, GtkPlacesOpenFlags, PlacesSidebar) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onOpenLocationListeners ~= this;
 		}
 
 		void remove(OnOpenLocationDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onOpenLocationListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onOpenLocationListeners[index] = null;
+					onOpenLocationListeners = std.algorithm.remove(onOpenLocationListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnOpenLocationDelegateWrapper[] onOpenLocationListeners;
 
 	/**
 	 * The places sidebar emits this signal when the user selects a location
@@ -859,29 +859,29 @@ public class PlacesSidebar : ScrolledWindow
 
 	protected class OnPopulatePopupDelegateWrapper
 	{
-		static OnPopulatePopupDelegateWrapper[] listeners;
 		void delegate(Widget, FileIF, VolumeIF, PlacesSidebar) dlg;
 		gulong handlerId;
 
 		this(void delegate(Widget, FileIF, VolumeIF, PlacesSidebar) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPopulatePopupListeners ~= this;
 		}
 
 		void remove(OnPopulatePopupDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPopulatePopupListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPopulatePopupListeners[index] = null;
+					onPopulatePopupListeners = std.algorithm.remove(onPopulatePopupListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPopulatePopupDelegateWrapper[] onPopulatePopupListeners;
 
 	/**
 	 * The places sidebar emits this signal when the user invokes a contextual
@@ -942,29 +942,29 @@ public class PlacesSidebar : ScrolledWindow
 
 	protected class OnShowConnectToServerDelegateWrapper
 	{
-		static OnShowConnectToServerDelegateWrapper[] listeners;
 		void delegate(PlacesSidebar) dlg;
 		gulong handlerId;
 
 		this(void delegate(PlacesSidebar) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onShowConnectToServerListeners ~= this;
 		}
 
 		void remove(OnShowConnectToServerDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onShowConnectToServerListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onShowConnectToServerListeners[index] = null;
+					onShowConnectToServerListeners = std.algorithm.remove(onShowConnectToServerListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnShowConnectToServerDelegateWrapper[] onShowConnectToServerListeners;
 
 	/**
 	 * The places sidebar emits this signal when it needs the calling
@@ -1001,29 +1001,29 @@ public class PlacesSidebar : ScrolledWindow
 
 	protected class OnShowEnterLocationDelegateWrapper
 	{
-		static OnShowEnterLocationDelegateWrapper[] listeners;
 		void delegate(PlacesSidebar) dlg;
 		gulong handlerId;
 
 		this(void delegate(PlacesSidebar) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onShowEnterLocationListeners ~= this;
 		}
 
 		void remove(OnShowEnterLocationDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onShowEnterLocationListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onShowEnterLocationListeners[index] = null;
+					onShowEnterLocationListeners = std.algorithm.remove(onShowEnterLocationListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnShowEnterLocationDelegateWrapper[] onShowEnterLocationListeners;
 
 	/**
 	 * The places sidebar emits this signal when it needs the calling
@@ -1058,29 +1058,29 @@ public class PlacesSidebar : ScrolledWindow
 
 	protected class OnShowErrorMessageDelegateWrapper
 	{
-		static OnShowErrorMessageDelegateWrapper[] listeners;
 		void delegate(string, string, PlacesSidebar) dlg;
 		gulong handlerId;
 
 		this(void delegate(string, string, PlacesSidebar) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onShowErrorMessageListeners ~= this;
 		}
 
 		void remove(OnShowErrorMessageDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onShowErrorMessageListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onShowErrorMessageListeners[index] = null;
+					onShowErrorMessageListeners = std.algorithm.remove(onShowErrorMessageListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnShowErrorMessageDelegateWrapper[] onShowErrorMessageListeners;
 
 	/**
 	 * The places sidebar emits this signal when it needs the calling
@@ -1119,29 +1119,29 @@ public class PlacesSidebar : ScrolledWindow
 
 	protected class OnShowOtherLocationsDelegateWrapper
 	{
-		static OnShowOtherLocationsDelegateWrapper[] listeners;
 		void delegate(PlacesSidebar) dlg;
 		gulong handlerId;
 
 		this(void delegate(PlacesSidebar) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onShowOtherLocationsListeners ~= this;
 		}
 
 		void remove(OnShowOtherLocationsDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onShowOtherLocationsListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onShowOtherLocationsListeners[index] = null;
+					onShowOtherLocationsListeners = std.algorithm.remove(onShowOtherLocationsListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnShowOtherLocationsDelegateWrapper[] onShowOtherLocationsListeners;
 
 	/**
 	 * The places sidebar emits this signal when it needs the calling
@@ -1181,29 +1181,29 @@ public class PlacesSidebar : ScrolledWindow
 
 	protected class OnShowOtherLocationsWithFlagsDelegateWrapper
 	{
-		static OnShowOtherLocationsWithFlagsDelegateWrapper[] listeners;
 		void delegate(GtkPlacesOpenFlags, PlacesSidebar) dlg;
 		gulong handlerId;
 
 		this(void delegate(GtkPlacesOpenFlags, PlacesSidebar) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onShowOtherLocationsWithFlagsListeners ~= this;
 		}
 
 		void remove(OnShowOtherLocationsWithFlagsDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onShowOtherLocationsWithFlagsListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onShowOtherLocationsWithFlagsListeners[index] = null;
+					onShowOtherLocationsWithFlagsListeners = std.algorithm.remove(onShowOtherLocationsWithFlagsListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnShowOtherLocationsWithFlagsDelegateWrapper[] onShowOtherLocationsWithFlagsListeners;
 
 	/**
 	 * The places sidebar emits this signal when it needs the calling
@@ -1242,29 +1242,29 @@ public class PlacesSidebar : ScrolledWindow
 
 	protected class OnUnmountDelegateWrapper
 	{
-		static OnUnmountDelegateWrapper[] listeners;
 		void delegate(MountOperation, PlacesSidebar) dlg;
 		gulong handlerId;
 
 		this(void delegate(MountOperation, PlacesSidebar) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onUnmountListeners ~= this;
 		}
 
 		void remove(OnUnmountDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onUnmountListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onUnmountListeners[index] = null;
+					onUnmountListeners = std.algorithm.remove(onUnmountListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnUnmountDelegateWrapper[] onUnmountListeners;
 
 	/**
 	 * The places sidebar emits this signal when it starts a new operation

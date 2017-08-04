@@ -235,29 +235,29 @@ public class CheckMenuItem : MenuItem
 
 	protected class OnToggledDelegateWrapper
 	{
-		static OnToggledDelegateWrapper[] listeners;
 		void delegate(CheckMenuItem) dlg;
 		gulong handlerId;
 
 		this(void delegate(CheckMenuItem) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onToggledListeners ~= this;
 		}
 
 		void remove(OnToggledDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onToggledListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onToggledListeners[index] = null;
+					onToggledListeners = std.algorithm.remove(onToggledListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnToggledDelegateWrapper[] onToggledListeners;
 
 	/**
 	 * This signal is emitted when the state of the check box is changed.

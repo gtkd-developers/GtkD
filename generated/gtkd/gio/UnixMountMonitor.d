@@ -152,29 +152,29 @@ public class UnixMountMonitor : ObjectG
 
 	protected class OnMountpointsChangedDelegateWrapper
 	{
-		static OnMountpointsChangedDelegateWrapper[] listeners;
 		void delegate(UnixMountMonitor) dlg;
 		gulong handlerId;
 
 		this(void delegate(UnixMountMonitor) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMountpointsChangedListeners ~= this;
 		}
 
 		void remove(OnMountpointsChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMountpointsChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMountpointsChangedListeners[index] = null;
+					onMountpointsChangedListeners = std.algorithm.remove(onMountpointsChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMountpointsChangedDelegateWrapper[] onMountpointsChangedListeners;
 
 	/**
 	 * Emitted when the unix mount points have changed.
@@ -204,29 +204,29 @@ public class UnixMountMonitor : ObjectG
 
 	protected class OnMountsChangedDelegateWrapper
 	{
-		static OnMountsChangedDelegateWrapper[] listeners;
 		void delegate(UnixMountMonitor) dlg;
 		gulong handlerId;
 
 		this(void delegate(UnixMountMonitor) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMountsChangedListeners ~= this;
 		}
 
 		void remove(OnMountsChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMountsChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMountsChangedListeners[index] = null;
+					onMountsChangedListeners = std.algorithm.remove(onMountsChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMountsChangedDelegateWrapper[] onMountsChangedListeners;
 
 	/**
 	 * Emitted when the unix mounts have changed.

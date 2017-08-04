@@ -327,29 +327,29 @@ public template FontChooserT(TStruct)
 
 	protected class OnFontActivatedDelegateWrapper
 	{
-		static OnFontActivatedDelegateWrapper[] listeners;
 		void delegate(string, FontChooserIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(string, FontChooserIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onFontActivatedListeners ~= this;
 		}
 
 		void remove(OnFontActivatedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onFontActivatedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onFontActivatedListeners[index] = null;
+					onFontActivatedListeners = std.algorithm.remove(onFontActivatedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnFontActivatedDelegateWrapper[] onFontActivatedListeners;
 
 	/**
 	 * Emitted when a font is activated.

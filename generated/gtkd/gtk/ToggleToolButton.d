@@ -179,29 +179,29 @@ public class ToggleToolButton : ToolButton
 
 	protected class OnToggledDelegateWrapper
 	{
-		static OnToggledDelegateWrapper[] listeners;
 		void delegate(ToggleToolButton) dlg;
 		gulong handlerId;
 
 		this(void delegate(ToggleToolButton) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onToggledListeners ~= this;
 		}
 
 		void remove(OnToggledDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onToggledListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onToggledListeners[index] = null;
+					onToggledListeners = std.algorithm.remove(onToggledListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnToggledDelegateWrapper[] onToggledListeners;
 
 	/**
 	 * Emitted whenever the toggle tool button changes state.

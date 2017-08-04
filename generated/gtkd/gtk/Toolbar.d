@@ -325,29 +325,29 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 
 	protected class OnFocusHomeOrEndDelegateWrapper
 	{
-		static OnFocusHomeOrEndDelegateWrapper[] listeners;
 		bool delegate(bool, Toolbar) dlg;
 		gulong handlerId;
 
 		this(bool delegate(bool, Toolbar) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onFocusHomeOrEndListeners ~= this;
 		}
 
 		void remove(OnFocusHomeOrEndDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onFocusHomeOrEndListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onFocusHomeOrEndListeners[index] = null;
+					onFocusHomeOrEndListeners = std.algorithm.remove(onFocusHomeOrEndListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnFocusHomeOrEndDelegateWrapper[] onFocusHomeOrEndListeners;
 
 	/**
 	 * A keybinding signal used internally by GTK+. This signal can't
@@ -383,29 +383,29 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 
 	protected class OnOrientationChangedDelegateWrapper
 	{
-		static OnOrientationChangedDelegateWrapper[] listeners;
 		void delegate(GtkOrientation, Toolbar) dlg;
 		gulong handlerId;
 
 		this(void delegate(GtkOrientation, Toolbar) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onOrientationChangedListeners ~= this;
 		}
 
 		void remove(OnOrientationChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onOrientationChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onOrientationChangedListeners[index] = null;
+					onOrientationChangedListeners = std.algorithm.remove(onOrientationChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnOrientationChangedDelegateWrapper[] onOrientationChangedListeners;
 
 	/**
 	 * Emitted when the orientation of the toolbar changes.
@@ -438,29 +438,29 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 
 	protected class OnPopupContextMenuDelegateWrapper
 	{
-		static OnPopupContextMenuDelegateWrapper[] listeners;
 		bool delegate(int, int, int, Toolbar) dlg;
 		gulong handlerId;
 
 		this(bool delegate(int, int, int, Toolbar) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPopupContextMenuListeners ~= this;
 		}
 
 		void remove(OnPopupContextMenuDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPopupContextMenuListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPopupContextMenuListeners[index] = null;
+					onPopupContextMenuListeners = std.algorithm.remove(onPopupContextMenuListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPopupContextMenuDelegateWrapper[] onPopupContextMenuListeners;
 
 	/**
 	 * Emitted when the user right-clicks the toolbar or uses the
@@ -504,29 +504,29 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 
 	protected class OnStyleChangedDelegateWrapper
 	{
-		static OnStyleChangedDelegateWrapper[] listeners;
 		void delegate(GtkToolbarStyle, Toolbar) dlg;
 		gulong handlerId;
 
 		this(void delegate(GtkToolbarStyle, Toolbar) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onStyleChangedListeners ~= this;
 		}
 
 		void remove(OnStyleChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onStyleChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onStyleChangedListeners[index] = null;
+					onStyleChangedListeners = std.algorithm.remove(onStyleChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnStyleChangedDelegateWrapper[] onStyleChangedListeners;
 
 	/**
 	 * Emitted when the style of the toolbar changes.

@@ -208,29 +208,29 @@ public class AppLaunchContext : ObjectG
 
 	protected class OnLaunchFailedDelegateWrapper
 	{
-		static OnLaunchFailedDelegateWrapper[] listeners;
 		void delegate(string, AppLaunchContext) dlg;
 		gulong handlerId;
 
 		this(void delegate(string, AppLaunchContext) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onLaunchFailedListeners ~= this;
 		}
 
 		void remove(OnLaunchFailedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onLaunchFailedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onLaunchFailedListeners[index] = null;
+					onLaunchFailedListeners = std.algorithm.remove(onLaunchFailedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnLaunchFailedDelegateWrapper[] onLaunchFailedListeners;
 
 	/**
 	 * The ::launch-failed signal is emitted when a #GAppInfo launch
@@ -267,29 +267,29 @@ public class AppLaunchContext : ObjectG
 
 	protected class OnLaunchedDelegateWrapper
 	{
-		static OnLaunchedDelegateWrapper[] listeners;
 		void delegate(AppInfoIF, Variant, AppLaunchContext) dlg;
 		gulong handlerId;
 
 		this(void delegate(AppInfoIF, Variant, AppLaunchContext) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onLaunchedListeners ~= this;
 		}
 
 		void remove(OnLaunchedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onLaunchedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onLaunchedListeners[index] = null;
+					onLaunchedListeners = std.algorithm.remove(onLaunchedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnLaunchedDelegateWrapper[] onLaunchedListeners;
 
 	/**
 	 * The ::launched signal is emitted when a #GAppInfo is successfully

@@ -1807,29 +1807,29 @@ public class Pad : ObjectGst
 
 	protected class OnLinkedDelegateWrapper
 	{
-		static OnLinkedDelegateWrapper[] listeners;
 		void delegate(Pad, Pad) dlg;
 		gulong handlerId;
 
 		this(void delegate(Pad, Pad) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onLinkedListeners ~= this;
 		}
 
 		void remove(OnLinkedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onLinkedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onLinkedListeners[index] = null;
+					onLinkedListeners = std.algorithm.remove(onLinkedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnLinkedDelegateWrapper[] onLinkedListeners;
 
 	/**
 	 * Signals that a pad has been linked to the peer pad.
@@ -1862,29 +1862,29 @@ public class Pad : ObjectGst
 
 	protected class OnUnlinkedDelegateWrapper
 	{
-		static OnUnlinkedDelegateWrapper[] listeners;
 		void delegate(Pad, Pad) dlg;
 		gulong handlerId;
 
 		this(void delegate(Pad, Pad) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onUnlinkedListeners ~= this;
 		}
 
 		void remove(OnUnlinkedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onUnlinkedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onUnlinkedListeners[index] = null;
+					onUnlinkedListeners = std.algorithm.remove(onUnlinkedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnUnlinkedDelegateWrapper[] onUnlinkedListeners;
 
 	/**
 	 * Signals that a pad has been unlinked from the peer pad.

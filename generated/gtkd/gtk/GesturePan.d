@@ -145,29 +145,29 @@ public class GesturePan : GestureDrag
 
 	protected class OnPanDelegateWrapper
 	{
-		static OnPanDelegateWrapper[] listeners;
 		void delegate(GtkPanDirection, double, GesturePan) dlg;
 		gulong handlerId;
 
 		this(void delegate(GtkPanDirection, double, GesturePan) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPanListeners ~= this;
 		}
 
 		void remove(OnPanDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPanListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPanListeners[index] = null;
+					onPanListeners = std.algorithm.remove(onPanListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPanDelegateWrapper[] onPanListeners;
 
 	/**
 	 * This signal is emitted once a panning gesture along the

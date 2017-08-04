@@ -197,29 +197,29 @@ public class PadTemplate : ObjectGst
 
 	protected class OnPadCreatedDelegateWrapper
 	{
-		static OnPadCreatedDelegateWrapper[] listeners;
 		void delegate(Pad, PadTemplate) dlg;
 		gulong handlerId;
 
 		this(void delegate(Pad, PadTemplate) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPadCreatedListeners ~= this;
 		}
 
 		void remove(OnPadCreatedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPadCreatedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPadCreatedListeners[index] = null;
+					onPadCreatedListeners = std.algorithm.remove(onPadCreatedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPadCreatedDelegateWrapper[] onPadCreatedListeners;
 
 	/**
 	 * This signal is fired when an element creates a pad from this template.

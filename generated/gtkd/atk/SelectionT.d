@@ -169,29 +169,29 @@ public template SelectionT(TStruct)
 
 	protected class OnSelectionChangedDelegateWrapper
 	{
-		static OnSelectionChangedDelegateWrapper[] listeners;
 		void delegate(SelectionIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(SelectionIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onSelectionChangedListeners ~= this;
 		}
 
 		void remove(OnSelectionChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onSelectionChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onSelectionChangedListeners[index] = null;
+					onSelectionChangedListeners = std.algorithm.remove(onSelectionChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnSelectionChangedDelegateWrapper[] onSelectionChangedListeners;
 
 	/**
 	 * The "selection-changed" signal is emitted by an object which

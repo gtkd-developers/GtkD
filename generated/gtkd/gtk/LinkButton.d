@@ -207,29 +207,29 @@ public class LinkButton : Button
 
 	protected class OnActivateLinkDelegateWrapper
 	{
-		static OnActivateLinkDelegateWrapper[] listeners;
 		bool delegate(LinkButton) dlg;
 		gulong handlerId;
 
 		this(bool delegate(LinkButton) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onActivateLinkListeners ~= this;
 		}
 
 		void remove(OnActivateLinkDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onActivateLinkListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onActivateLinkListeners[index] = null;
+					onActivateLinkListeners = std.algorithm.remove(onActivateLinkListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnActivateLinkDelegateWrapper[] onActivateLinkListeners;
 
 	/**
 	 * The ::activate-link signal is emitted each time the #GtkLinkButton

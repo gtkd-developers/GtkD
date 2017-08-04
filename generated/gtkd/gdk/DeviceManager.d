@@ -271,29 +271,29 @@ public class DeviceManager : ObjectG
 
 	protected class OnDeviceAddedDelegateWrapper
 	{
-		static OnDeviceAddedDelegateWrapper[] listeners;
 		void delegate(Device, DeviceManager) dlg;
 		gulong handlerId;
 
 		this(void delegate(Device, DeviceManager) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDeviceAddedListeners ~= this;
 		}
 
 		void remove(OnDeviceAddedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDeviceAddedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDeviceAddedListeners[index] = null;
+					onDeviceAddedListeners = std.algorithm.remove(onDeviceAddedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDeviceAddedDelegateWrapper[] onDeviceAddedListeners;
 
 	/**
 	 * The ::device-added signal is emitted either when a new master
@@ -328,29 +328,29 @@ public class DeviceManager : ObjectG
 
 	protected class OnDeviceChangedDelegateWrapper
 	{
-		static OnDeviceChangedDelegateWrapper[] listeners;
 		void delegate(Device, DeviceManager) dlg;
 		gulong handlerId;
 
 		this(void delegate(Device, DeviceManager) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDeviceChangedListeners ~= this;
 		}
 
 		void remove(OnDeviceChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDeviceChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDeviceChangedListeners[index] = null;
+					onDeviceChangedListeners = std.algorithm.remove(onDeviceChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDeviceChangedDelegateWrapper[] onDeviceChangedListeners;
 
 	/**
 	 * The ::device-changed signal is emitted whenever a device
@@ -392,29 +392,29 @@ public class DeviceManager : ObjectG
 
 	protected class OnDeviceRemovedDelegateWrapper
 	{
-		static OnDeviceRemovedDelegateWrapper[] listeners;
 		void delegate(Device, DeviceManager) dlg;
 		gulong handlerId;
 
 		this(void delegate(Device, DeviceManager) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDeviceRemovedListeners ~= this;
 		}
 
 		void remove(OnDeviceRemovedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDeviceRemovedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDeviceRemovedListeners[index] = null;
+					onDeviceRemovedListeners = std.algorithm.remove(onDeviceRemovedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDeviceRemovedDelegateWrapper[] onDeviceRemovedListeners;
 
 	/**
 	 * The ::device-removed signal is emitted either when a master

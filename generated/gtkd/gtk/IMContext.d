@@ -345,29 +345,29 @@ public class IMContext : ObjectG
 
 	protected class OnCommitDelegateWrapper
 	{
-		static OnCommitDelegateWrapper[] listeners;
 		void delegate(string, IMContext) dlg;
 		gulong handlerId;
 
 		this(void delegate(string, IMContext) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCommitListeners ~= this;
 		}
 
 		void remove(OnCommitDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCommitListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCommitListeners[index] = null;
+					onCommitListeners = std.algorithm.remove(onCommitListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCommitDelegateWrapper[] onCommitListeners;
 
 	/**
 	 * The ::commit signal is emitted when a complete input sequence
@@ -402,29 +402,29 @@ public class IMContext : ObjectG
 
 	protected class OnDeleteSurroundingDelegateWrapper
 	{
-		static OnDeleteSurroundingDelegateWrapper[] listeners;
 		bool delegate(int, int, IMContext) dlg;
 		gulong handlerId;
 
 		this(bool delegate(int, int, IMContext) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDeleteSurroundingListeners ~= this;
 		}
 
 		void remove(OnDeleteSurroundingDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDeleteSurroundingListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDeleteSurroundingListeners[index] = null;
+					onDeleteSurroundingListeners = std.algorithm.remove(onDeleteSurroundingListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDeleteSurroundingDelegateWrapper[] onDeleteSurroundingListeners;
 
 	/**
 	 * The ::delete-surrounding signal is emitted when the input method
@@ -463,29 +463,29 @@ public class IMContext : ObjectG
 
 	protected class OnPreeditChangedDelegateWrapper
 	{
-		static OnPreeditChangedDelegateWrapper[] listeners;
 		void delegate(IMContext) dlg;
 		gulong handlerId;
 
 		this(void delegate(IMContext) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPreeditChangedListeners ~= this;
 		}
 
 		void remove(OnPreeditChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPreeditChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPreeditChangedListeners[index] = null;
+					onPreeditChangedListeners = std.algorithm.remove(onPreeditChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPreeditChangedDelegateWrapper[] onPreeditChangedListeners;
 
 	/**
 	 * The ::preedit-changed signal is emitted whenever the preedit sequence
@@ -518,29 +518,29 @@ public class IMContext : ObjectG
 
 	protected class OnPreeditEndDelegateWrapper
 	{
-		static OnPreeditEndDelegateWrapper[] listeners;
 		void delegate(IMContext) dlg;
 		gulong handlerId;
 
 		this(void delegate(IMContext) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPreeditEndListeners ~= this;
 		}
 
 		void remove(OnPreeditEndDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPreeditEndListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPreeditEndListeners[index] = null;
+					onPreeditEndListeners = std.algorithm.remove(onPreeditEndListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPreeditEndDelegateWrapper[] onPreeditEndListeners;
 
 	/**
 	 * The ::preedit-end signal is emitted when a preediting sequence
@@ -571,29 +571,29 @@ public class IMContext : ObjectG
 
 	protected class OnPreeditStartDelegateWrapper
 	{
-		static OnPreeditStartDelegateWrapper[] listeners;
 		void delegate(IMContext) dlg;
 		gulong handlerId;
 
 		this(void delegate(IMContext) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPreeditStartListeners ~= this;
 		}
 
 		void remove(OnPreeditStartDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPreeditStartListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPreeditStartListeners[index] = null;
+					onPreeditStartListeners = std.algorithm.remove(onPreeditStartListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPreeditStartDelegateWrapper[] onPreeditStartListeners;
 
 	/**
 	 * The ::preedit-start signal is emitted when a new preediting sequence
@@ -624,29 +624,29 @@ public class IMContext : ObjectG
 
 	protected class OnRetrieveSurroundingDelegateWrapper
 	{
-		static OnRetrieveSurroundingDelegateWrapper[] listeners;
 		bool delegate(IMContext) dlg;
 		gulong handlerId;
 
 		this(bool delegate(IMContext) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onRetrieveSurroundingListeners ~= this;
 		}
 
 		void remove(OnRetrieveSurroundingDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onRetrieveSurroundingListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onRetrieveSurroundingListeners[index] = null;
+					onRetrieveSurroundingListeners = std.algorithm.remove(onRetrieveSurroundingListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnRetrieveSurroundingDelegateWrapper[] onRetrieveSurroundingListeners;
 
 	/**
 	 * The ::retrieve-surrounding signal is emitted when the input method

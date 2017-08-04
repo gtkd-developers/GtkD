@@ -6013,29 +6013,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnAccelClosuresChangedDelegateWrapper
 		{
-			static OnAccelClosuresChangedDelegateWrapper[] listeners;
 			void delegate(Widget) dlg;
 			gulong handlerId;
 
 			this(void delegate(Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onAccelClosuresChangedListeners ~= this;
 			}
 
 			void remove(OnAccelClosuresChangedDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onAccelClosuresChangedListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onAccelClosuresChangedListeners[index] = null;
+						onAccelClosuresChangedListeners = std.algorithm.remove(onAccelClosuresChangedListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnAccelClosuresChangedDelegateWrapper[] onAccelClosuresChangedListeners;
 
 		/** */
 		gulong addOnAccelClosuresChanged(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -6063,29 +6063,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnButtonPressDelegateWrapper
 		{
-			static OnButtonPressDelegateWrapper[] listeners;
 			bool delegate(GdkEventButton*, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(GdkEventButton*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onButtonPressListeners ~= this;
 			}
 
 			void remove(OnButtonPressDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onButtonPressListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onButtonPressListeners[index] = null;
+						onButtonPressListeners = std.algorithm.remove(onButtonPressListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnButtonPressDelegateWrapper[] onButtonPressListeners;
 
 		/**
 		 * The ::button-press-event signal will be emitted when a button
@@ -6129,29 +6129,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnButtonPressEventGenericDelegateWrapper
 		{
-			static OnButtonPressEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onButtonPressEventGenericListeners ~= this;
 			}
 
 			void remove(OnButtonPressEventGenericDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onButtonPressEventGenericListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onButtonPressEventGenericListeners[index] = null;
+						onButtonPressEventGenericListeners = std.algorithm.remove(onButtonPressEventGenericListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnButtonPressEventGenericDelegateWrapper[] onButtonPressEventGenericListeners;
 
 		/**
 		 * The ::button-press-event signal will be emitted when a button
@@ -6195,29 +6195,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnButtonReleaseDelegateWrapper
 		{
-			static OnButtonReleaseDelegateWrapper[] listeners;
 			bool delegate(GdkEventButton*, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(GdkEventButton*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onButtonReleaseListeners ~= this;
 			}
 
 			void remove(OnButtonReleaseDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onButtonReleaseListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onButtonReleaseListeners[index] = null;
+						onButtonReleaseListeners = std.algorithm.remove(onButtonReleaseListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnButtonReleaseDelegateWrapper[] onButtonReleaseListeners;
 
 		/**
 		 * The ::button-release-event signal will be emitted when a button
@@ -6261,29 +6261,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnButtonReleaseEventGenericDelegateWrapper
 		{
-			static OnButtonReleaseEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onButtonReleaseEventGenericListeners ~= this;
 			}
 
 			void remove(OnButtonReleaseEventGenericDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onButtonReleaseEventGenericListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onButtonReleaseEventGenericListeners[index] = null;
+						onButtonReleaseEventGenericListeners = std.algorithm.remove(onButtonReleaseEventGenericListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnButtonReleaseEventGenericDelegateWrapper[] onButtonReleaseEventGenericListeners;
 
 		/**
 		 * The ::button-release-event signal will be emitted when a button
@@ -6327,29 +6327,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnCanActivateAccelDelegateWrapper
 		{
-			static OnCanActivateAccelDelegateWrapper[] listeners;
 			bool delegate(uint, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(uint, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onCanActivateAccelListeners ~= this;
 			}
 
 			void remove(OnCanActivateAccelDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onCanActivateAccelListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onCanActivateAccelListeners[index] = null;
+						onCanActivateAccelListeners = std.algorithm.remove(onCanActivateAccelListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnCanActivateAccelDelegateWrapper[] onCanActivateAccelListeners;
 
 		/**
 		 * Determines whether an accelerator that activates the signal
@@ -6388,29 +6388,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnChildNotifyDelegateWrapper
 		{
-			static OnChildNotifyDelegateWrapper[] listeners;
 			void delegate(ParamSpec, Widget) dlg;
 			gulong handlerId;
 
 			this(void delegate(ParamSpec, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onChildNotifyListeners ~= this;
 			}
 
 			void remove(OnChildNotifyDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onChildNotifyListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onChildNotifyListeners[index] = null;
+						onChildNotifyListeners = std.algorithm.remove(onChildNotifyListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnChildNotifyDelegateWrapper[] onChildNotifyListeners;
 
 		/**
 		 * The ::child-notify signal is emitted for each
@@ -6445,29 +6445,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnCompositedChangedDelegateWrapper
 		{
-			static OnCompositedChangedDelegateWrapper[] listeners;
 			void delegate(Widget) dlg;
 			gulong handlerId;
 
 			this(void delegate(Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onCompositedChangedListeners ~= this;
 			}
 
 			void remove(OnCompositedChangedDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onCompositedChangedListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onCompositedChangedListeners[index] = null;
+						onCompositedChangedListeners = std.algorithm.remove(onCompositedChangedListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnCompositedChangedDelegateWrapper[] onCompositedChangedListeners;
 
 		/**
 		 * The ::composited-changed signal is emitted when the composited
@@ -6501,29 +6501,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnConfigureDelegateWrapper
 		{
-			static OnConfigureDelegateWrapper[] listeners;
 			bool delegate(GdkEventConfigure*, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(GdkEventConfigure*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onConfigureListeners ~= this;
 			}
 
 			void remove(OnConfigureDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onConfigureListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onConfigureListeners[index] = null;
+						onConfigureListeners = std.algorithm.remove(onConfigureListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnConfigureDelegateWrapper[] onConfigureListeners;
 
 		/**
 		 * The ::configure-event signal will be emitted when the size, position or
@@ -6565,29 +6565,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnConfigureEventGenericDelegateWrapper
 		{
-			static OnConfigureEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onConfigureEventGenericListeners ~= this;
 			}
 
 			void remove(OnConfigureEventGenericDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onConfigureEventGenericListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onConfigureEventGenericListeners[index] = null;
+						onConfigureEventGenericListeners = std.algorithm.remove(onConfigureEventGenericListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnConfigureEventGenericDelegateWrapper[] onConfigureEventGenericListeners;
 
 		/**
 		 * The ::configure-event signal will be emitted when the size, position or
@@ -6629,29 +6629,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnDamageDelegateWrapper
 		{
-			static OnDamageDelegateWrapper[] listeners;
 			bool delegate(GdkEventExpose*, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(GdkEventExpose*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onDamageListeners ~= this;
 			}
 
 			void remove(OnDamageDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onDamageListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onDamageListeners[index] = null;
+						onDamageListeners = std.algorithm.remove(onDamageListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnDamageDelegateWrapper[] onDamageListeners;
 
 		/**
 		 * Emitted when a redirected window belonging to @widget gets drawn into.
@@ -6691,29 +6691,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnDamageEventGenericDelegateWrapper
 		{
-			static OnDamageEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onDamageEventGenericListeners ~= this;
 			}
 
 			void remove(OnDamageEventGenericDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onDamageEventGenericListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onDamageEventGenericListeners[index] = null;
+						onDamageEventGenericListeners = std.algorithm.remove(onDamageEventGenericListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnDamageEventGenericDelegateWrapper[] onDamageEventGenericListeners;
 
 		/**
 		 * Emitted when a redirected window belonging to @widget gets drawn into.
@@ -6753,29 +6753,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnDeleteDelegateWrapper
 		{
-			static OnDeleteDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onDeleteListeners ~= this;
 			}
 
 			void remove(OnDeleteDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onDeleteListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onDeleteListeners[index] = null;
+						onDeleteListeners = std.algorithm.remove(onDeleteListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnDeleteDelegateWrapper[] onDeleteListeners;
 
 		/**
 		 * The ::delete-event signal is emitted if a user requests that
@@ -6815,29 +6815,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnDestroyDelegateWrapper
 		{
-			static OnDestroyDelegateWrapper[] listeners;
 			void delegate(Widget) dlg;
 			gulong handlerId;
 
 			this(void delegate(Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onDestroyListeners ~= this;
 			}
 
 			void remove(OnDestroyDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onDestroyListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onDestroyListeners[index] = null;
+						onDestroyListeners = std.algorithm.remove(onDestroyListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnDestroyDelegateWrapper[] onDestroyListeners;
 
 		/**
 		 * Signals that all holders of a reference to the widget should release
@@ -6871,29 +6871,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnDestroyEventDelegateWrapper
 		{
-			static OnDestroyEventDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onDestroyEventListeners ~= this;
 			}
 
 			void remove(OnDestroyEventDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onDestroyEventListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onDestroyEventListeners[index] = null;
+						onDestroyEventListeners = std.algorithm.remove(onDestroyEventListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnDestroyEventDelegateWrapper[] onDestroyEventListeners;
 
 		/**
 		 * The ::destroy-event signal is emitted when a #GdkWindow is destroyed.
@@ -6936,29 +6936,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnDirectionChangedDelegateWrapper
 		{
-			static OnDirectionChangedDelegateWrapper[] listeners;
 			void delegate(GtkTextDirection, Widget) dlg;
 			gulong handlerId;
 
 			this(void delegate(GtkTextDirection, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onDirectionChangedListeners ~= this;
 			}
 
 			void remove(OnDirectionChangedDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onDirectionChangedListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onDirectionChangedListeners[index] = null;
+						onDirectionChangedListeners = std.algorithm.remove(onDirectionChangedListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnDirectionChangedDelegateWrapper[] onDirectionChangedListeners;
 
 		/**
 		 * The ::direction-changed signal is emitted when the text direction
@@ -6992,29 +6992,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnDragBeginDelegateWrapper
 		{
-			static OnDragBeginDelegateWrapper[] listeners;
 			void delegate(DragContext, Widget) dlg;
 			gulong handlerId;
 
 			this(void delegate(DragContext, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onDragBeginListeners ~= this;
 			}
 
 			void remove(OnDragBeginDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onDragBeginListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onDragBeginListeners[index] = null;
+						onDragBeginListeners = std.algorithm.remove(onDragBeginListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnDragBeginDelegateWrapper[] onDragBeginListeners;
 
 		/**
 		 * The ::drag-begin signal is emitted on the drag source when a drag is
@@ -7053,29 +7053,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnDragDataDeleteDelegateWrapper
 		{
-			static OnDragDataDeleteDelegateWrapper[] listeners;
 			void delegate(DragContext, Widget) dlg;
 			gulong handlerId;
 
 			this(void delegate(DragContext, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onDragDataDeleteListeners ~= this;
 			}
 
 			void remove(OnDragDataDeleteDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onDragDataDeleteListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onDragDataDeleteListeners[index] = null;
+						onDragDataDeleteListeners = std.algorithm.remove(onDragDataDeleteListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnDragDataDeleteDelegateWrapper[] onDragDataDeleteListeners;
 
 		/**
 		 * The ::drag-data-delete signal is emitted on the drag source when a drag
@@ -7111,29 +7111,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnDragDataGetDelegateWrapper
 		{
-			static OnDragDataGetDelegateWrapper[] listeners;
 			void delegate(DragContext, SelectionData, uint, uint, Widget) dlg;
 			gulong handlerId;
 
 			this(void delegate(DragContext, SelectionData, uint, uint, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onDragDataGetListeners ~= this;
 			}
 
 			void remove(OnDragDataGetDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onDragDataGetListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onDragDataGetListeners[index] = null;
+						onDragDataGetListeners = std.algorithm.remove(onDragDataGetListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnDragDataGetDelegateWrapper[] onDragDataGetListeners;
 
 		/**
 		 * The ::drag-data-get signal is emitted on the drag source when the drop
@@ -7174,29 +7174,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnDragDataReceivedDelegateWrapper
 		{
-			static OnDragDataReceivedDelegateWrapper[] listeners;
 			void delegate(DragContext, int, int, SelectionData, uint, uint, Widget) dlg;
 			gulong handlerId;
 
 			this(void delegate(DragContext, int, int, SelectionData, uint, uint, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onDragDataReceivedListeners ~= this;
 			}
 
 			void remove(OnDragDataReceivedDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onDragDataReceivedListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onDragDataReceivedListeners[index] = null;
+						onDragDataReceivedListeners = std.algorithm.remove(onDragDataReceivedListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnDragDataReceivedDelegateWrapper[] onDragDataReceivedListeners;
 
 		/**
 		 * The ::drag-data-received signal is emitted on the drop site when the
@@ -7294,29 +7294,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnDragDropDelegateWrapper
 		{
-			static OnDragDropDelegateWrapper[] listeners;
 			bool delegate(DragContext, int, int, uint, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(DragContext, int, int, uint, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onDragDropListeners ~= this;
 			}
 
 			void remove(OnDragDropDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onDragDropListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onDragDropListeners[index] = null;
+						onDragDropListeners = std.algorithm.remove(onDragDropListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnDragDropDelegateWrapper[] onDragDropListeners;
 
 		/**
 		 * The ::drag-drop signal is emitted on the drop site when the user drops
@@ -7363,29 +7363,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnDragEndDelegateWrapper
 		{
-			static OnDragEndDelegateWrapper[] listeners;
 			void delegate(DragContext, Widget) dlg;
 			gulong handlerId;
 
 			this(void delegate(DragContext, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onDragEndListeners ~= this;
 			}
 
 			void remove(OnDragEndDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onDragEndListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onDragEndListeners[index] = null;
+						onDragEndListeners = std.algorithm.remove(onDragEndListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnDragEndDelegateWrapper[] onDragEndListeners;
 
 		/**
 		 * The ::drag-end signal is emitted on the drag source when a drag is
@@ -7420,29 +7420,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnDragFailedDelegateWrapper
 		{
-			static OnDragFailedDelegateWrapper[] listeners;
 			bool delegate(DragContext, GtkDragResult, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(DragContext, GtkDragResult, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onDragFailedListeners ~= this;
 			}
 
 			void remove(OnDragFailedDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onDragFailedListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onDragFailedListeners[index] = null;
+						onDragFailedListeners = std.algorithm.remove(onDragFailedListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnDragFailedDelegateWrapper[] onDragFailedListeners;
 
 		/**
 		 * The ::drag-failed signal is emitted on the drag source when a drag has
@@ -7484,29 +7484,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnDragLeaveDelegateWrapper
 		{
-			static OnDragLeaveDelegateWrapper[] listeners;
 			void delegate(DragContext, uint, Widget) dlg;
 			gulong handlerId;
 
 			this(void delegate(DragContext, uint, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onDragLeaveListeners ~= this;
 			}
 
 			void remove(OnDragLeaveDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onDragLeaveListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onDragLeaveListeners[index] = null;
+						onDragLeaveListeners = std.algorithm.remove(onDragLeaveListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnDragLeaveDelegateWrapper[] onDragLeaveListeners;
 
 		/**
 		 * The ::drag-leave signal is emitted on the drop site when the cursor
@@ -7548,29 +7548,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnDragMotionDelegateWrapper
 		{
-			static OnDragMotionDelegateWrapper[] listeners;
 			bool delegate(DragContext, int, int, uint, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(DragContext, int, int, uint, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onDragMotionListeners ~= this;
 			}
 
 			void remove(OnDragMotionDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onDragMotionListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onDragMotionListeners[index] = null;
+						onDragMotionListeners = std.algorithm.remove(onDragMotionListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnDragMotionDelegateWrapper[] onDragMotionListeners;
 
 		/**
 		 * The ::drag-motion signal is emitted on the drop site when the user
@@ -7693,29 +7693,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnEnterNotifyDelegateWrapper
 		{
-			static OnEnterNotifyDelegateWrapper[] listeners;
 			bool delegate(GdkEventCrossing*, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(GdkEventCrossing*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onEnterNotifyListeners ~= this;
 			}
 
 			void remove(OnEnterNotifyDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onEnterNotifyListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onEnterNotifyListeners[index] = null;
+						onEnterNotifyListeners = std.algorithm.remove(onEnterNotifyListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnEnterNotifyDelegateWrapper[] onEnterNotifyListeners;
 
 		/**
 		 * The ::enter-notify-event will be emitted when the pointer enters
@@ -7759,29 +7759,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnEnterNotifyEventGenericDelegateWrapper
 		{
-			static OnEnterNotifyEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onEnterNotifyEventGenericListeners ~= this;
 			}
 
 			void remove(OnEnterNotifyEventGenericDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onEnterNotifyEventGenericListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onEnterNotifyEventGenericListeners[index] = null;
+						onEnterNotifyEventGenericListeners = std.algorithm.remove(onEnterNotifyEventGenericListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnEnterNotifyEventGenericDelegateWrapper[] onEnterNotifyEventGenericListeners;
 
 		/**
 		 * The ::enter-notify-event will be emitted when the pointer enters
@@ -7825,29 +7825,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnDelegateWrapper
 		{
-			static OnDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onListeners ~= this;
 			}
 
 			void remove(OnDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onListeners[index] = null;
+						onListeners = std.algorithm.remove(onListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnDelegateWrapper[] onListeners;
 
 		/**
 		 * The GTK+ main loop will emit three signals for each GDK event delivered
@@ -7890,29 +7890,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnEventAfterDelegateWrapper
 		{
-			static OnEventAfterDelegateWrapper[] listeners;
 			void delegate(Event, Widget) dlg;
 			gulong handlerId;
 
 			this(void delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onEventAfterListeners ~= this;
 			}
 
 			void remove(OnEventAfterDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onEventAfterListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onEventAfterListeners[index] = null;
+						onEventAfterListeners = std.algorithm.remove(onEventAfterListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnEventAfterDelegateWrapper[] onEventAfterListeners;
 
 		/**
 		 * After the emission of the #GtkWidget::event signal and (optionally)
@@ -7947,29 +7947,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnFocusDelegateWrapper
 		{
-			static OnFocusDelegateWrapper[] listeners;
 			bool delegate(GtkDirectionType, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(GtkDirectionType, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onFocusListeners ~= this;
 			}
 
 			void remove(OnFocusDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onFocusListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onFocusListeners[index] = null;
+						onFocusListeners = std.algorithm.remove(onFocusListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnFocusDelegateWrapper[] onFocusListeners;
 
 		/**
 		 * Returns: %TRUE to stop other handlers from being invoked for the event. %FALSE to propagate the event further.
@@ -7999,29 +7999,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnFocusInDelegateWrapper
 		{
-			static OnFocusInDelegateWrapper[] listeners;
 			bool delegate(GdkEventFocus*, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(GdkEventFocus*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onFocusInListeners ~= this;
 			}
 
 			void remove(OnFocusInDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onFocusInListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onFocusInListeners[index] = null;
+						onFocusInListeners = std.algorithm.remove(onFocusInListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnFocusInDelegateWrapper[] onFocusInListeners;
 
 		/**
 		 * The ::focus-in-event signal will be emitted when the keyboard focus
@@ -8063,29 +8063,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnFocusInEventGenericDelegateWrapper
 		{
-			static OnFocusInEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onFocusInEventGenericListeners ~= this;
 			}
 
 			void remove(OnFocusInEventGenericDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onFocusInEventGenericListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onFocusInEventGenericListeners[index] = null;
+						onFocusInEventGenericListeners = std.algorithm.remove(onFocusInEventGenericListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnFocusInEventGenericDelegateWrapper[] onFocusInEventGenericListeners;
 
 		/**
 		 * The ::focus-in-event signal will be emitted when the keyboard focus
@@ -8127,29 +8127,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnFocusOutDelegateWrapper
 		{
-			static OnFocusOutDelegateWrapper[] listeners;
 			bool delegate(GdkEventFocus*, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(GdkEventFocus*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onFocusOutListeners ~= this;
 			}
 
 			void remove(OnFocusOutDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onFocusOutListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onFocusOutListeners[index] = null;
+						onFocusOutListeners = std.algorithm.remove(onFocusOutListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnFocusOutDelegateWrapper[] onFocusOutListeners;
 
 		/**
 		 * The ::focus-out-event signal will be emitted when the keyboard focus
@@ -8191,29 +8191,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnFocusOutEventGenericDelegateWrapper
 		{
-			static OnFocusOutEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onFocusOutEventGenericListeners ~= this;
 			}
 
 			void remove(OnFocusOutEventGenericDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onFocusOutEventGenericListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onFocusOutEventGenericListeners[index] = null;
+						onFocusOutEventGenericListeners = std.algorithm.remove(onFocusOutEventGenericListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnFocusOutEventGenericDelegateWrapper[] onFocusOutEventGenericListeners;
 
 		/**
 		 * The ::focus-out-event signal will be emitted when the keyboard focus
@@ -8255,29 +8255,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnGrabBrokenDelegateWrapper
 		{
-			static OnGrabBrokenDelegateWrapper[] listeners;
 			bool delegate(GdkEventGrabBroken*, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(GdkEventGrabBroken*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onGrabBrokenListeners ~= this;
 			}
 
 			void remove(OnGrabBrokenDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onGrabBrokenListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onGrabBrokenListeners[index] = null;
+						onGrabBrokenListeners = std.algorithm.remove(onGrabBrokenListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnGrabBrokenDelegateWrapper[] onGrabBrokenListeners;
 
 		/**
 		 * Emitted when a pointer or keyboard grab on a window belonging
@@ -8320,29 +8320,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnGrabBrokenEventGenericDelegateWrapper
 		{
-			static OnGrabBrokenEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onGrabBrokenEventGenericListeners ~= this;
 			}
 
 			void remove(OnGrabBrokenEventGenericDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onGrabBrokenEventGenericListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onGrabBrokenEventGenericListeners[index] = null;
+						onGrabBrokenEventGenericListeners = std.algorithm.remove(onGrabBrokenEventGenericListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnGrabBrokenEventGenericDelegateWrapper[] onGrabBrokenEventGenericListeners;
 
 		/**
 		 * Emitted when a pointer or keyboard grab on a window belonging
@@ -8385,29 +8385,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnGrabFocusDelegateWrapper
 		{
-			static OnGrabFocusDelegateWrapper[] listeners;
 			void delegate(Widget) dlg;
 			gulong handlerId;
 
 			this(void delegate(Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onGrabFocusListeners ~= this;
 			}
 
 			void remove(OnGrabFocusDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onGrabFocusListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onGrabFocusListeners[index] = null;
+						onGrabFocusListeners = std.algorithm.remove(onGrabFocusListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnGrabFocusDelegateWrapper[] onGrabFocusListeners;
 
 		/** */
 		gulong addOnGrabFocus(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -8435,29 +8435,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnGrabNotifyDelegateWrapper
 		{
-			static OnGrabNotifyDelegateWrapper[] listeners;
 			void delegate(bool, Widget) dlg;
 			gulong handlerId;
 
 			this(void delegate(bool, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onGrabNotifyListeners ~= this;
 			}
 
 			void remove(OnGrabNotifyDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onGrabNotifyListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onGrabNotifyListeners[index] = null;
+						onGrabNotifyListeners = std.algorithm.remove(onGrabNotifyListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnGrabNotifyDelegateWrapper[] onGrabNotifyListeners;
 
 		/**
 		 * The ::grab-notify signal is emitted when a widget becomes
@@ -8498,29 +8498,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnHideDelegateWrapper
 		{
-			static OnHideDelegateWrapper[] listeners;
 			void delegate(Widget) dlg;
 			gulong handlerId;
 
 			this(void delegate(Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onHideListeners ~= this;
 			}
 
 			void remove(OnHideDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onHideListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onHideListeners[index] = null;
+						onHideListeners = std.algorithm.remove(onHideListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnHideDelegateWrapper[] onHideListeners;
 
 		/**
 		 * The ::hide signal is emitted when @widget is hidden, for example with
@@ -8551,29 +8551,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnHierarchyChangedDelegateWrapper
 		{
-			static OnHierarchyChangedDelegateWrapper[] listeners;
 			void delegate(Widget, Widget) dlg;
 			gulong handlerId;
 
 			this(void delegate(Widget, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onHierarchyChangedListeners ~= this;
 			}
 
 			void remove(OnHierarchyChangedDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onHierarchyChangedListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onHierarchyChangedListeners[index] = null;
+						onHierarchyChangedListeners = std.algorithm.remove(onHierarchyChangedListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnHierarchyChangedDelegateWrapper[] onHierarchyChangedListeners;
 
 		/**
 		 * The ::hierarchy-changed signal is emitted when the
@@ -8611,29 +8611,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnKeyPressDelegateWrapper
 		{
-			static OnKeyPressDelegateWrapper[] listeners;
 			bool delegate(GdkEventKey*, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(GdkEventKey*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onKeyPressListeners ~= this;
 			}
 
 			void remove(OnKeyPressDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onKeyPressListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onKeyPressListeners[index] = null;
+						onKeyPressListeners = std.algorithm.remove(onKeyPressListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnKeyPressDelegateWrapper[] onKeyPressListeners;
 
 		/**
 		 * The ::key-press-event signal is emitted when a key is pressed. The signal
@@ -8676,29 +8676,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnKeyPressEventGenericDelegateWrapper
 		{
-			static OnKeyPressEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onKeyPressEventGenericListeners ~= this;
 			}
 
 			void remove(OnKeyPressEventGenericDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onKeyPressEventGenericListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onKeyPressEventGenericListeners[index] = null;
+						onKeyPressEventGenericListeners = std.algorithm.remove(onKeyPressEventGenericListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnKeyPressEventGenericDelegateWrapper[] onKeyPressEventGenericListeners;
 
 		/**
 		 * The ::key-press-event signal is emitted when a key is pressed. The signal
@@ -8741,29 +8741,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnKeyReleaseDelegateWrapper
 		{
-			static OnKeyReleaseDelegateWrapper[] listeners;
 			bool delegate(GdkEventKey*, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(GdkEventKey*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onKeyReleaseListeners ~= this;
 			}
 
 			void remove(OnKeyReleaseDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onKeyReleaseListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onKeyReleaseListeners[index] = null;
+						onKeyReleaseListeners = std.algorithm.remove(onKeyReleaseListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnKeyReleaseDelegateWrapper[] onKeyReleaseListeners;
 
 		/**
 		 * The ::key-release-event signal is emitted when a key is released.
@@ -8805,29 +8805,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnKeyReleaseEventGenericDelegateWrapper
 		{
-			static OnKeyReleaseEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onKeyReleaseEventGenericListeners ~= this;
 			}
 
 			void remove(OnKeyReleaseEventGenericDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onKeyReleaseEventGenericListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onKeyReleaseEventGenericListeners[index] = null;
+						onKeyReleaseEventGenericListeners = std.algorithm.remove(onKeyReleaseEventGenericListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnKeyReleaseEventGenericDelegateWrapper[] onKeyReleaseEventGenericListeners;
 
 		/**
 		 * The ::key-release-event signal is emitted when a key is released.
@@ -8869,29 +8869,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnKeynavFailedDelegateWrapper
 		{
-			static OnKeynavFailedDelegateWrapper[] listeners;
 			bool delegate(GtkDirectionType, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(GtkDirectionType, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onKeynavFailedListeners ~= this;
 			}
 
 			void remove(OnKeynavFailedDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onKeynavFailedListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onKeynavFailedListeners[index] = null;
+						onKeynavFailedListeners = std.algorithm.remove(onKeynavFailedListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnKeynavFailedDelegateWrapper[] onKeynavFailedListeners;
 
 		/**
 		 * Gets emitted if keyboard navigation fails.
@@ -8931,29 +8931,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnLeaveNotifyDelegateWrapper
 		{
-			static OnLeaveNotifyDelegateWrapper[] listeners;
 			bool delegate(GdkEventCrossing*, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(GdkEventCrossing*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onLeaveNotifyListeners ~= this;
 			}
 
 			void remove(OnLeaveNotifyDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onLeaveNotifyListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onLeaveNotifyListeners[index] = null;
+						onLeaveNotifyListeners = std.algorithm.remove(onLeaveNotifyListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnLeaveNotifyDelegateWrapper[] onLeaveNotifyListeners;
 
 		/**
 		 * The ::leave-notify-event will be emitted when the pointer leaves
@@ -8997,29 +8997,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnLeaveNotifyEventGenericDelegateWrapper
 		{
-			static OnLeaveNotifyEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onLeaveNotifyEventGenericListeners ~= this;
 			}
 
 			void remove(OnLeaveNotifyEventGenericDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onLeaveNotifyEventGenericListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onLeaveNotifyEventGenericListeners[index] = null;
+						onLeaveNotifyEventGenericListeners = std.algorithm.remove(onLeaveNotifyEventGenericListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnLeaveNotifyEventGenericDelegateWrapper[] onLeaveNotifyEventGenericListeners;
 
 		/**
 		 * The ::leave-notify-event will be emitted when the pointer leaves
@@ -9063,29 +9063,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnMapDelegateWrapper
 		{
-			static OnMapDelegateWrapper[] listeners;
 			void delegate(Widget) dlg;
 			gulong handlerId;
 
 			this(void delegate(Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onMapListeners ~= this;
 			}
 
 			void remove(OnMapDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onMapListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onMapListeners[index] = null;
+						onMapListeners = std.algorithm.remove(onMapListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnMapDelegateWrapper[] onMapListeners;
 
 		/**
 		 * The ::map signal is emitted when @widget is going to be mapped, that is
@@ -9123,29 +9123,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnMapEventDelegateWrapper
 		{
-			static OnMapEventDelegateWrapper[] listeners;
 			bool delegate(GdkEventAny*, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(GdkEventAny*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onMapEventListeners ~= this;
 			}
 
 			void remove(OnMapEventDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onMapEventListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onMapEventListeners[index] = null;
+						onMapEventListeners = std.algorithm.remove(onMapEventListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnMapEventDelegateWrapper[] onMapEventListeners;
 
 		/**
 		 * The ::map-event signal will be emitted when the @widget's window is
@@ -9186,29 +9186,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnMapEventGenericDelegateWrapper
 		{
-			static OnMapEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onMapEventGenericListeners ~= this;
 			}
 
 			void remove(OnMapEventGenericDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onMapEventGenericListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onMapEventGenericListeners[index] = null;
+						onMapEventGenericListeners = std.algorithm.remove(onMapEventGenericListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnMapEventGenericDelegateWrapper[] onMapEventGenericListeners;
 
 		/**
 		 * The ::map-event signal will be emitted when the @widget's window is
@@ -9249,29 +9249,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnMnemonicActivateDelegateWrapper
 		{
-			static OnMnemonicActivateDelegateWrapper[] listeners;
 			bool delegate(bool, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(bool, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onMnemonicActivateListeners ~= this;
 			}
 
 			void remove(OnMnemonicActivateDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onMnemonicActivateListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onMnemonicActivateListeners[index] = null;
+						onMnemonicActivateListeners = std.algorithm.remove(onMnemonicActivateListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnMnemonicActivateDelegateWrapper[] onMnemonicActivateListeners;
 
 		/**
 		 * The default handler for this signal activates @widget if @group_cycling
@@ -9308,29 +9308,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnMotionNotifyDelegateWrapper
 		{
-			static OnMotionNotifyDelegateWrapper[] listeners;
 			bool delegate(GdkEventMotion*, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(GdkEventMotion*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onMotionNotifyListeners ~= this;
 			}
 
 			void remove(OnMotionNotifyDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onMotionNotifyListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onMotionNotifyListeners[index] = null;
+						onMotionNotifyListeners = std.algorithm.remove(onMotionNotifyListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnMotionNotifyDelegateWrapper[] onMotionNotifyListeners;
 
 		/**
 		 * The ::motion-notify-event signal is emitted when the pointer moves
@@ -9374,29 +9374,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnMotionNotifyEventGenericDelegateWrapper
 		{
-			static OnMotionNotifyEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onMotionNotifyEventGenericListeners ~= this;
 			}
 
 			void remove(OnMotionNotifyEventGenericDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onMotionNotifyEventGenericListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onMotionNotifyEventGenericListeners[index] = null;
+						onMotionNotifyEventGenericListeners = std.algorithm.remove(onMotionNotifyEventGenericListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnMotionNotifyEventGenericDelegateWrapper[] onMotionNotifyEventGenericListeners;
 
 		/**
 		 * The ::motion-notify-event signal is emitted when the pointer moves
@@ -9440,29 +9440,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnMoveFocusDelegateWrapper
 		{
-			static OnMoveFocusDelegateWrapper[] listeners;
 			void delegate(GtkDirectionType, Widget) dlg;
 			gulong handlerId;
 
 			this(void delegate(GtkDirectionType, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onMoveFocusListeners ~= this;
 			}
 
 			void remove(OnMoveFocusDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onMoveFocusListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onMoveFocusListeners[index] = null;
+						onMoveFocusListeners = std.algorithm.remove(onMoveFocusListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnMoveFocusDelegateWrapper[] onMoveFocusListeners;
 
 		/** */
 		gulong addOnMoveFocus(void delegate(GtkDirectionType, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -9490,29 +9490,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnParentSetDelegateWrapper
 		{
-			static OnParentSetDelegateWrapper[] listeners;
 			void delegate(Widget, Widget) dlg;
 			gulong handlerId;
 
 			this(void delegate(Widget, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onParentSetListeners ~= this;
 			}
 
 			void remove(OnParentSetDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onParentSetListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onParentSetListeners[index] = null;
+						onParentSetListeners = std.algorithm.remove(onParentSetListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnParentSetDelegateWrapper[] onParentSetListeners;
 
 		/**
 		 * The ::parent-set signal is emitted when a new parent
@@ -9547,29 +9547,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnPopupMenuDelegateWrapper
 		{
-			static OnPopupMenuDelegateWrapper[] listeners;
 			bool delegate(Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onPopupMenuListeners ~= this;
 			}
 
 			void remove(OnPopupMenuDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onPopupMenuListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onPopupMenuListeners[index] = null;
+						onPopupMenuListeners = std.algorithm.remove(onPopupMenuListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnPopupMenuDelegateWrapper[] onPopupMenuListeners;
 
 		/**
 		 * This signal gets emitted whenever a widget should pop up a context
@@ -9607,29 +9607,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnPropertyNotifyDelegateWrapper
 		{
-			static OnPropertyNotifyDelegateWrapper[] listeners;
 			bool delegate(GdkEventProperty*, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(GdkEventProperty*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onPropertyNotifyListeners ~= this;
 			}
 
 			void remove(OnPropertyNotifyDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onPropertyNotifyListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onPropertyNotifyListeners[index] = null;
+						onPropertyNotifyListeners = std.algorithm.remove(onPropertyNotifyListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnPropertyNotifyDelegateWrapper[] onPropertyNotifyListeners;
 
 		/**
 		 * The ::property-notify-event signal will be emitted when a property on
@@ -9671,29 +9671,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnPropertyNotifyEventGenericDelegateWrapper
 		{
-			static OnPropertyNotifyEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onPropertyNotifyEventGenericListeners ~= this;
 			}
 
 			void remove(OnPropertyNotifyEventGenericDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onPropertyNotifyEventGenericListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onPropertyNotifyEventGenericListeners[index] = null;
+						onPropertyNotifyEventGenericListeners = std.algorithm.remove(onPropertyNotifyEventGenericListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnPropertyNotifyEventGenericDelegateWrapper[] onPropertyNotifyEventGenericListeners;
 
 		/**
 		 * The ::property-notify-event signal will be emitted when a property on
@@ -9735,29 +9735,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnProximityInDelegateWrapper
 		{
-			static OnProximityInDelegateWrapper[] listeners;
 			bool delegate(GdkEventProximity*, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(GdkEventProximity*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onProximityInListeners ~= this;
 			}
 
 			void remove(OnProximityInDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onProximityInListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onProximityInListeners[index] = null;
+						onProximityInListeners = std.algorithm.remove(onProximityInListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnProximityInDelegateWrapper[] onProximityInListeners;
 
 		/**
 		 * To receive this signal the #GdkWindow associated to the widget needs
@@ -9798,29 +9798,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnProximityInEventGenericDelegateWrapper
 		{
-			static OnProximityInEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onProximityInEventGenericListeners ~= this;
 			}
 
 			void remove(OnProximityInEventGenericDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onProximityInEventGenericListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onProximityInEventGenericListeners[index] = null;
+						onProximityInEventGenericListeners = std.algorithm.remove(onProximityInEventGenericListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnProximityInEventGenericDelegateWrapper[] onProximityInEventGenericListeners;
 
 		/**
 		 * To receive this signal the #GdkWindow associated to the widget needs
@@ -9861,29 +9861,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnProximityOutDelegateWrapper
 		{
-			static OnProximityOutDelegateWrapper[] listeners;
 			bool delegate(GdkEventProximity*, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(GdkEventProximity*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onProximityOutListeners ~= this;
 			}
 
 			void remove(OnProximityOutDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onProximityOutListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onProximityOutListeners[index] = null;
+						onProximityOutListeners = std.algorithm.remove(onProximityOutListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnProximityOutDelegateWrapper[] onProximityOutListeners;
 
 		/**
 		 * To receive this signal the #GdkWindow associated to the widget needs
@@ -9924,29 +9924,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnProximityOutEventGenericDelegateWrapper
 		{
-			static OnProximityOutEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onProximityOutEventGenericListeners ~= this;
 			}
 
 			void remove(OnProximityOutEventGenericDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onProximityOutEventGenericListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onProximityOutEventGenericListeners[index] = null;
+						onProximityOutEventGenericListeners = std.algorithm.remove(onProximityOutEventGenericListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnProximityOutEventGenericDelegateWrapper[] onProximityOutEventGenericListeners;
 
 		/**
 		 * To receive this signal the #GdkWindow associated to the widget needs
@@ -9987,29 +9987,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnQueryTooltipDelegateWrapper
 		{
-			static OnQueryTooltipDelegateWrapper[] listeners;
 			bool delegate(int, int, bool, Tooltip, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(int, int, bool, Tooltip, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onQueryTooltipListeners ~= this;
 			}
 
 			void remove(OnQueryTooltipDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onQueryTooltipListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onQueryTooltipListeners[index] = null;
+						onQueryTooltipListeners = std.algorithm.remove(onQueryTooltipListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnQueryTooltipDelegateWrapper[] onQueryTooltipListeners;
 
 		/**
 		 * Emitted when #GtkWidget:has-tooltip is %TRUE and the hover timeout
@@ -10062,29 +10062,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnRealizeDelegateWrapper
 		{
-			static OnRealizeDelegateWrapper[] listeners;
 			void delegate(Widget) dlg;
 			gulong handlerId;
 
 			this(void delegate(Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onRealizeListeners ~= this;
 			}
 
 			void remove(OnRealizeDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onRealizeListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onRealizeListeners[index] = null;
+						onRealizeListeners = std.algorithm.remove(onRealizeListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnRealizeDelegateWrapper[] onRealizeListeners;
 
 		/**
 		 * The ::realize signal is emitted when @widget is associated with a
@@ -10116,29 +10116,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnScreenChangedDelegateWrapper
 		{
-			static OnScreenChangedDelegateWrapper[] listeners;
 			void delegate(Screen, Widget) dlg;
 			gulong handlerId;
 
 			this(void delegate(Screen, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onScreenChangedListeners ~= this;
 			}
 
 			void remove(OnScreenChangedDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onScreenChangedListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onScreenChangedListeners[index] = null;
+						onScreenChangedListeners = std.algorithm.remove(onScreenChangedListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnScreenChangedDelegateWrapper[] onScreenChangedListeners;
 
 		/**
 		 * The ::screen-changed signal gets emitted when the
@@ -10173,29 +10173,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnScrollDelegateWrapper
 		{
-			static OnScrollDelegateWrapper[] listeners;
 			bool delegate(GdkEventScroll*, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(GdkEventScroll*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onScrollListeners ~= this;
 			}
 
 			void remove(OnScrollDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onScrollListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onScrollListeners[index] = null;
+						onScrollListeners = std.algorithm.remove(onScrollListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnScrollDelegateWrapper[] onScrollListeners;
 
 		/**
 		 * The ::scroll-event signal is emitted when a button in the 4 to 7
@@ -10240,29 +10240,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnScrollEventGenericDelegateWrapper
 		{
-			static OnScrollEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onScrollEventGenericListeners ~= this;
 			}
 
 			void remove(OnScrollEventGenericDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onScrollEventGenericListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onScrollEventGenericListeners[index] = null;
+						onScrollEventGenericListeners = std.algorithm.remove(onScrollEventGenericListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnScrollEventGenericDelegateWrapper[] onScrollEventGenericListeners;
 
 		/**
 		 * The ::scroll-event signal is emitted when a button in the 4 to 7
@@ -10307,29 +10307,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnSelectionClearDelegateWrapper
 		{
-			static OnSelectionClearDelegateWrapper[] listeners;
 			bool delegate(GdkEventSelection*, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(GdkEventSelection*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onSelectionClearListeners ~= this;
 			}
 
 			void remove(OnSelectionClearDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onSelectionClearListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onSelectionClearListeners[index] = null;
+						onSelectionClearListeners = std.algorithm.remove(onSelectionClearListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnSelectionClearDelegateWrapper[] onSelectionClearListeners;
 
 		/**
 		 * The ::selection-clear-event signal will be emitted when the
@@ -10367,29 +10367,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnSelectionClearEventGenericDelegateWrapper
 		{
-			static OnSelectionClearEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onSelectionClearEventGenericListeners ~= this;
 			}
 
 			void remove(OnSelectionClearEventGenericDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onSelectionClearEventGenericListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onSelectionClearEventGenericListeners[index] = null;
+						onSelectionClearEventGenericListeners = std.algorithm.remove(onSelectionClearEventGenericListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnSelectionClearEventGenericDelegateWrapper[] onSelectionClearEventGenericListeners;
 
 		/**
 		 * The ::selection-clear-event signal will be emitted when the
@@ -10427,29 +10427,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnSelectionGetDelegateWrapper
 		{
-			static OnSelectionGetDelegateWrapper[] listeners;
 			void delegate(SelectionData, uint, uint, Widget) dlg;
 			gulong handlerId;
 
 			this(void delegate(SelectionData, uint, uint, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onSelectionGetListeners ~= this;
 			}
 
 			void remove(OnSelectionGetDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onSelectionGetListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onSelectionGetListeners[index] = null;
+						onSelectionGetListeners = std.algorithm.remove(onSelectionGetListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnSelectionGetDelegateWrapper[] onSelectionGetListeners;
 
 		/** */
 		gulong addOnSelectionGet(void delegate(SelectionData, uint, uint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -10477,29 +10477,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnSelectionNotifyDelegateWrapper
 		{
-			static OnSelectionNotifyDelegateWrapper[] listeners;
 			bool delegate(GdkEventSelection*, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(GdkEventSelection*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onSelectionNotifyListeners ~= this;
 			}
 
 			void remove(OnSelectionNotifyDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onSelectionNotifyListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onSelectionNotifyListeners[index] = null;
+						onSelectionNotifyListeners = std.algorithm.remove(onSelectionNotifyListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnSelectionNotifyDelegateWrapper[] onSelectionNotifyListeners;
 
 		/**
 		 * Returns: %TRUE to stop other handlers from being invoked for the event. %FALSE to propagate the event further.
@@ -10529,29 +10529,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnSelectionNotifyEventGenericDelegateWrapper
 		{
-			static OnSelectionNotifyEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onSelectionNotifyEventGenericListeners ~= this;
 			}
 
 			void remove(OnSelectionNotifyEventGenericDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onSelectionNotifyEventGenericListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onSelectionNotifyEventGenericListeners[index] = null;
+						onSelectionNotifyEventGenericListeners = std.algorithm.remove(onSelectionNotifyEventGenericListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnSelectionNotifyEventGenericDelegateWrapper[] onSelectionNotifyEventGenericListeners;
 
 		/**
 		 * Returns: %TRUE to stop other handlers from being invoked for the event. %FALSE to propagate the event further.
@@ -10581,29 +10581,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnSelectionReceivedDelegateWrapper
 		{
-			static OnSelectionReceivedDelegateWrapper[] listeners;
 			void delegate(SelectionData, uint, Widget) dlg;
 			gulong handlerId;
 
 			this(void delegate(SelectionData, uint, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onSelectionReceivedListeners ~= this;
 			}
 
 			void remove(OnSelectionReceivedDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onSelectionReceivedListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onSelectionReceivedListeners[index] = null;
+						onSelectionReceivedListeners = std.algorithm.remove(onSelectionReceivedListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnSelectionReceivedDelegateWrapper[] onSelectionReceivedListeners;
 
 		/** */
 		gulong addOnSelectionReceived(void delegate(SelectionData, uint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -10631,29 +10631,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnSelectionRequestDelegateWrapper
 		{
-			static OnSelectionRequestDelegateWrapper[] listeners;
 			bool delegate(GdkEventSelection*, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(GdkEventSelection*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onSelectionRequestListeners ~= this;
 			}
 
 			void remove(OnSelectionRequestDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onSelectionRequestListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onSelectionRequestListeners[index] = null;
+						onSelectionRequestListeners = std.algorithm.remove(onSelectionRequestListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnSelectionRequestDelegateWrapper[] onSelectionRequestListeners;
 
 		/**
 		 * The ::selection-request-event signal will be emitted when
@@ -10692,29 +10692,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnSelectionRequestEventGenericDelegateWrapper
 		{
-			static OnSelectionRequestEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onSelectionRequestEventGenericListeners ~= this;
 			}
 
 			void remove(OnSelectionRequestEventGenericDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onSelectionRequestEventGenericListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onSelectionRequestEventGenericListeners[index] = null;
+						onSelectionRequestEventGenericListeners = std.algorithm.remove(onSelectionRequestEventGenericListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnSelectionRequestEventGenericDelegateWrapper[] onSelectionRequestEventGenericListeners;
 
 		/**
 		 * The ::selection-request-event signal will be emitted when
@@ -10753,29 +10753,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnShowDelegateWrapper
 		{
-			static OnShowDelegateWrapper[] listeners;
 			void delegate(Widget) dlg;
 			gulong handlerId;
 
 			this(void delegate(Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onShowListeners ~= this;
 			}
 
 			void remove(OnShowDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onShowListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onShowListeners[index] = null;
+						onShowListeners = std.algorithm.remove(onShowListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnShowDelegateWrapper[] onShowListeners;
 
 		/**
 		 * The ::show signal is emitted when @widget is shown, for example with
@@ -10806,29 +10806,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnShowHelpDelegateWrapper
 		{
-			static OnShowHelpDelegateWrapper[] listeners;
 			bool delegate(GtkWidgetHelpType, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(GtkWidgetHelpType, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onShowHelpListeners ~= this;
 			}
 
 			void remove(OnShowHelpDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onShowHelpListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onShowHelpListeners[index] = null;
+						onShowHelpListeners = std.algorithm.remove(onShowHelpListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnShowHelpDelegateWrapper[] onShowHelpListeners;
 
 		/**
 		 * Returns: %TRUE to stop other handlers from being invoked for the event.
@@ -10859,29 +10859,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnSizeAllocateDelegateWrapper
 		{
-			static OnSizeAllocateDelegateWrapper[] listeners;
 			void delegate(Allocation, Widget) dlg;
 			gulong handlerId;
 
 			this(void delegate(Allocation, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onSizeAllocateListeners ~= this;
 			}
 
 			void remove(OnSizeAllocateDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onSizeAllocateListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onSizeAllocateListeners[index] = null;
+						onSizeAllocateListeners = std.algorithm.remove(onSizeAllocateListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnSizeAllocateDelegateWrapper[] onSizeAllocateListeners;
 
 		/** */
 		gulong addOnSizeAllocate(void delegate(Allocation, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -10909,29 +10909,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnStateChangedDelegateWrapper
 		{
-			static OnStateChangedDelegateWrapper[] listeners;
 			void delegate(GtkStateType, Widget) dlg;
 			gulong handlerId;
 
 			this(void delegate(GtkStateType, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onStateChangedListeners ~= this;
 			}
 
 			void remove(OnStateChangedDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onStateChangedListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onStateChangedListeners[index] = null;
+						onStateChangedListeners = std.algorithm.remove(onStateChangedListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnStateChangedDelegateWrapper[] onStateChangedListeners;
 
 		/**
 		 * The ::state-changed signal is emitted when the widget state changes.
@@ -10967,29 +10967,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnStateFlagsChangedDelegateWrapper
 		{
-			static OnStateFlagsChangedDelegateWrapper[] listeners;
 			void delegate(GtkStateFlags, Widget) dlg;
 			gulong handlerId;
 
 			this(void delegate(GtkStateFlags, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onStateFlagsChangedListeners ~= this;
 			}
 
 			void remove(OnStateFlagsChangedDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onStateFlagsChangedListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onStateFlagsChangedListeners[index] = null;
+						onStateFlagsChangedListeners = std.algorithm.remove(onStateFlagsChangedListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnStateFlagsChangedDelegateWrapper[] onStateFlagsChangedListeners;
 
 		/**
 		 * The ::state-flags-changed signal is emitted when the widget state
@@ -11025,29 +11025,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnStyleSetDelegateWrapper
 		{
-			static OnStyleSetDelegateWrapper[] listeners;
 			void delegate(Style, Widget) dlg;
 			gulong handlerId;
 
 			this(void delegate(Style, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onStyleSetListeners ~= this;
 			}
 
 			void remove(OnStyleSetDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onStyleSetListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onStyleSetListeners[index] = null;
+						onStyleSetListeners = std.algorithm.remove(onStyleSetListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnStyleSetDelegateWrapper[] onStyleSetListeners;
 
 		/**
 		 * The ::style-set signal is emitted when a new style has been set
@@ -11089,29 +11089,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnStyleUpdatedDelegateWrapper
 		{
-			static OnStyleUpdatedDelegateWrapper[] listeners;
 			void delegate(Widget) dlg;
 			gulong handlerId;
 
 			this(void delegate(Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onStyleUpdatedListeners ~= this;
 			}
 
 			void remove(OnStyleUpdatedDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onStyleUpdatedListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onStyleUpdatedListeners[index] = null;
+						onStyleUpdatedListeners = std.algorithm.remove(onStyleUpdatedListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnStyleUpdatedDelegateWrapper[] onStyleUpdatedListeners;
 
 		/**
 		 * The ::style-updated signal is a convenience signal that is emitted when the
@@ -11148,29 +11148,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnTouchDelegateWrapper
 		{
-			static OnTouchDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onTouchListeners ~= this;
 			}
 
 			void remove(OnTouchDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onTouchListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onTouchListeners[index] = null;
+						onTouchListeners = std.algorithm.remove(onTouchListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnTouchDelegateWrapper[] onTouchListeners;
 
 		/** */
 		gulong addOnTouch(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -11198,29 +11198,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnUnmapDelegateWrapper
 		{
-			static OnUnmapDelegateWrapper[] listeners;
 			void delegate(Widget) dlg;
 			gulong handlerId;
 
 			this(void delegate(Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onUnmapListeners ~= this;
 			}
 
 			void remove(OnUnmapDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onUnmapListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onUnmapListeners[index] = null;
+						onUnmapListeners = std.algorithm.remove(onUnmapListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnUnmapDelegateWrapper[] onUnmapListeners;
 
 		/**
 		 * The ::unmap signal is emitted when @widget is going to be unmapped, which
@@ -11255,29 +11255,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnUnmapEventDelegateWrapper
 		{
-			static OnUnmapEventDelegateWrapper[] listeners;
 			bool delegate(GdkEventAny*, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(GdkEventAny*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onUnmapEventListeners ~= this;
 			}
 
 			void remove(OnUnmapEventDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onUnmapEventListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onUnmapEventListeners[index] = null;
+						onUnmapEventListeners = std.algorithm.remove(onUnmapEventListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnUnmapEventDelegateWrapper[] onUnmapEventListeners;
 
 		/**
 		 * The ::unmap-event signal will be emitted when the @widget's window is
@@ -11318,29 +11318,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnUnmapEventGenericDelegateWrapper
 		{
-			static OnUnmapEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onUnmapEventGenericListeners ~= this;
 			}
 
 			void remove(OnUnmapEventGenericDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onUnmapEventGenericListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onUnmapEventGenericListeners[index] = null;
+						onUnmapEventGenericListeners = std.algorithm.remove(onUnmapEventGenericListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnUnmapEventGenericDelegateWrapper[] onUnmapEventGenericListeners;
 
 		/**
 		 * The ::unmap-event signal will be emitted when the @widget's window is
@@ -11381,29 +11381,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnUnrealizeDelegateWrapper
 		{
-			static OnUnrealizeDelegateWrapper[] listeners;
 			void delegate(Widget) dlg;
 			gulong handlerId;
 
 			this(void delegate(Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onUnrealizeListeners ~= this;
 			}
 
 			void remove(OnUnrealizeDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onUnrealizeListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onUnrealizeListeners[index] = null;
+						onUnrealizeListeners = std.algorithm.remove(onUnrealizeListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnUnrealizeDelegateWrapper[] onUnrealizeListeners;
 
 		/**
 		 * The ::unrealize signal is emitted when the #GdkWindow associated with
@@ -11436,29 +11436,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnVisibilityNotifyDelegateWrapper
 		{
-			static OnVisibilityNotifyDelegateWrapper[] listeners;
 			bool delegate(GdkEventVisibility*, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(GdkEventVisibility*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onVisibilityNotifyListeners ~= this;
 			}
 
 			void remove(OnVisibilityNotifyDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onVisibilityNotifyListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onVisibilityNotifyListeners[index] = null;
+						onVisibilityNotifyListeners = std.algorithm.remove(onVisibilityNotifyListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnVisibilityNotifyDelegateWrapper[] onVisibilityNotifyListeners;
 
 		/**
 		 * The ::visibility-notify-event will be emitted when the @widget's
@@ -11505,29 +11505,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnVisibilityNotifyEventGenericDelegateWrapper
 		{
-			static OnVisibilityNotifyEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onVisibilityNotifyEventGenericListeners ~= this;
 			}
 
 			void remove(OnVisibilityNotifyEventGenericDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onVisibilityNotifyEventGenericListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onVisibilityNotifyEventGenericListeners[index] = null;
+						onVisibilityNotifyEventGenericListeners = std.algorithm.remove(onVisibilityNotifyEventGenericListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnVisibilityNotifyEventGenericDelegateWrapper[] onVisibilityNotifyEventGenericListeners;
 
 		/**
 		 * The ::visibility-notify-event will be emitted when the @widget's
@@ -11574,29 +11574,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnWindowStateDelegateWrapper
 		{
-			static OnWindowStateDelegateWrapper[] listeners;
 			bool delegate(GdkEventWindowState*, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(GdkEventWindowState*, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onWindowStateListeners ~= this;
 			}
 
 			void remove(OnWindowStateDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onWindowStateListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onWindowStateListeners[index] = null;
+						onWindowStateListeners = std.algorithm.remove(onWindowStateListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnWindowStateDelegateWrapper[] onWindowStateListeners;
 
 		/**
 		 * The ::window-state-event will be emitted when the state of the
@@ -11638,29 +11638,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnWindowStateEventGenericDelegateWrapper
 		{
-			static OnWindowStateEventGenericDelegateWrapper[] listeners;
 			bool delegate(Event, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(Event, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onWindowStateEventGenericListeners ~= this;
 			}
 
 			void remove(OnWindowStateEventGenericDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onWindowStateEventGenericListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onWindowStateEventGenericListeners[index] = null;
+						onWindowStateEventGenericListeners = std.algorithm.remove(onWindowStateEventGenericListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnWindowStateEventGenericDelegateWrapper[] onWindowStateEventGenericListeners;
 
 		/**
 		 * The ::window-state-event will be emitted when the state of the

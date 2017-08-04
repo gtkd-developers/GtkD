@@ -585,29 +585,29 @@ public class Bin : Element, ChildProxyIF
 
 	protected class OnDeepElementAddedDelegateWrapper
 	{
-		static OnDeepElementAddedDelegateWrapper[] listeners;
 		void delegate(Bin, Element, Bin) dlg;
 		gulong handlerId;
 
 		this(void delegate(Bin, Element, Bin) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDeepElementAddedListeners ~= this;
 		}
 
 		void remove(OnDeepElementAddedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDeepElementAddedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDeepElementAddedListeners[index] = null;
+					onDeepElementAddedListeners = std.algorithm.remove(onDeepElementAddedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDeepElementAddedDelegateWrapper[] onDeepElementAddedListeners;
 
 	/**
 	 * Will be emitted after the element was added to sub_bin.
@@ -643,29 +643,29 @@ public class Bin : Element, ChildProxyIF
 
 	protected class OnDeepElementRemovedDelegateWrapper
 	{
-		static OnDeepElementRemovedDelegateWrapper[] listeners;
 		void delegate(Bin, Element, Bin) dlg;
 		gulong handlerId;
 
 		this(void delegate(Bin, Element, Bin) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDeepElementRemovedListeners ~= this;
 		}
 
 		void remove(OnDeepElementRemovedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDeepElementRemovedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDeepElementRemovedListeners[index] = null;
+					onDeepElementRemovedListeners = std.algorithm.remove(onDeepElementRemovedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDeepElementRemovedDelegateWrapper[] onDeepElementRemovedListeners;
 
 	/**
 	 * Will be emitted after the element was removed from sub_bin.
@@ -701,29 +701,29 @@ public class Bin : Element, ChildProxyIF
 
 	protected class OnDoLatencyDelegateWrapper
 	{
-		static OnDoLatencyDelegateWrapper[] listeners;
 		bool delegate(Bin) dlg;
 		gulong handlerId;
 
 		this(bool delegate(Bin) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDoLatencyListeners ~= this;
 		}
 
 		void remove(OnDoLatencyDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDoLatencyListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDoLatencyListeners[index] = null;
+					onDoLatencyListeners = std.algorithm.remove(onDoLatencyListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDoLatencyDelegateWrapper[] onDoLatencyListeners;
 
 	/**
 	 * Will be emitted when the bin needs to perform latency calculations. This
@@ -763,29 +763,29 @@ public class Bin : Element, ChildProxyIF
 
 	protected class OnElementAddedDelegateWrapper
 	{
-		static OnElementAddedDelegateWrapper[] listeners;
 		void delegate(Element, Bin) dlg;
 		gulong handlerId;
 
 		this(void delegate(Element, Bin) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onElementAddedListeners ~= this;
 		}
 
 		void remove(OnElementAddedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onElementAddedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onElementAddedListeners[index] = null;
+					onElementAddedListeners = std.algorithm.remove(onElementAddedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnElementAddedDelegateWrapper[] onElementAddedListeners;
 
 	/**
 	 * Will be emitted after the element was added to the bin.
@@ -818,29 +818,29 @@ public class Bin : Element, ChildProxyIF
 
 	protected class OnElementRemovedDelegateWrapper
 	{
-		static OnElementRemovedDelegateWrapper[] listeners;
 		void delegate(Element, Bin) dlg;
 		gulong handlerId;
 
 		this(void delegate(Element, Bin) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onElementRemovedListeners ~= this;
 		}
 
 		void remove(OnElementRemovedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onElementRemovedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onElementRemovedListeners[index] = null;
+					onElementRemovedListeners = std.algorithm.remove(onElementRemovedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnElementRemovedDelegateWrapper[] onElementRemovedListeners;
 
 	/**
 	 * Will be emitted after the element was removed from the bin.

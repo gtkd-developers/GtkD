@@ -552,29 +552,29 @@ public class ToolItem : Bin, ActivatableIF
 
 	protected class OnCreateMenuProxyDelegateWrapper
 	{
-		static OnCreateMenuProxyDelegateWrapper[] listeners;
 		bool delegate(ToolItem) dlg;
 		gulong handlerId;
 
 		this(bool delegate(ToolItem) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCreateMenuProxyListeners ~= this;
 		}
 
 		void remove(OnCreateMenuProxyDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCreateMenuProxyListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCreateMenuProxyListeners[index] = null;
+					onCreateMenuProxyListeners = std.algorithm.remove(onCreateMenuProxyListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCreateMenuProxyDelegateWrapper[] onCreateMenuProxyListeners;
 
 	/**
 	 * This signal is emitted when the toolbar needs information from @tool_item
@@ -624,29 +624,29 @@ public class ToolItem : Bin, ActivatableIF
 
 	protected class OnToolbarReconfiguredDelegateWrapper
 	{
-		static OnToolbarReconfiguredDelegateWrapper[] listeners;
 		void delegate(ToolItem) dlg;
 		gulong handlerId;
 
 		this(void delegate(ToolItem) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onToolbarReconfiguredListeners ~= this;
 		}
 
 		void remove(OnToolbarReconfiguredDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onToolbarReconfiguredListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onToolbarReconfiguredListeners[index] = null;
+					onToolbarReconfiguredListeners = std.algorithm.remove(onToolbarReconfiguredListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnToolbarReconfiguredDelegateWrapper[] onToolbarReconfiguredListeners;
 
 	/**
 	 * This signal is emitted when some property of the toolbar that the

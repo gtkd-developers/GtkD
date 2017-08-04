@@ -112,29 +112,29 @@ public template DBusObjectT(TStruct)
 
 	protected class OnInterfaceAddedDelegateWrapper
 	{
-		static OnInterfaceAddedDelegateWrapper[] listeners;
 		void delegate(DBusInterfaceIF, DBusObjectIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(DBusInterfaceIF, DBusObjectIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onInterfaceAddedListeners ~= this;
 		}
 
 		void remove(OnInterfaceAddedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onInterfaceAddedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onInterfaceAddedListeners[index] = null;
+					onInterfaceAddedListeners = std.algorithm.remove(onInterfaceAddedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnInterfaceAddedDelegateWrapper[] onInterfaceAddedListeners;
 
 	/**
 	 * Emitted when @interface is added to @object.
@@ -169,29 +169,29 @@ public template DBusObjectT(TStruct)
 
 	protected class OnInterfaceRemovedDelegateWrapper
 	{
-		static OnInterfaceRemovedDelegateWrapper[] listeners;
 		void delegate(DBusInterfaceIF, DBusObjectIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(DBusInterfaceIF, DBusObjectIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onInterfaceRemovedListeners ~= this;
 		}
 
 		void remove(OnInterfaceRemovedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onInterfaceRemovedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onInterfaceRemovedListeners[index] = null;
+					onInterfaceRemovedListeners = std.algorithm.remove(onInterfaceRemovedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnInterfaceRemovedDelegateWrapper[] onInterfaceRemovedListeners;
 
 	/**
 	 * Emitted when @interface is removed from @object.

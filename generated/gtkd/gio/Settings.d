@@ -1562,29 +1562,29 @@ public class Settings : ObjectG
 
 	protected class OnChangeDelegateWrapper
 	{
-		static OnChangeDelegateWrapper[] listeners;
 		bool delegate(void*, int, Settings) dlg;
 		gulong handlerId;
 
 		this(bool delegate(void*, int, Settings) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onChangeListeners ~= this;
 		}
 
 		void remove(OnChangeDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onChangeListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onChangeListeners[index] = null;
+					onChangeListeners = std.algorithm.remove(onChangeListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnChangeDelegateWrapper[] onChangeListeners;
 
 	/**
 	 * The "change-event" signal is emitted once per change event that
@@ -1635,29 +1635,29 @@ public class Settings : ObjectG
 
 	protected class OnChangedDelegateWrapper
 	{
-		static OnChangedDelegateWrapper[] listeners;
 		void delegate(string, Settings) dlg;
 		gulong handlerId;
 
 		this(void delegate(string, Settings) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onChangedListeners ~= this;
 		}
 
 		void remove(OnChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onChangedListeners[index] = null;
+					onChangedListeners = std.algorithm.remove(onChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnChangedDelegateWrapper[] onChangedListeners;
 
 	/**
 	 * The "changed" signal is emitted when a key has potentially changed.
@@ -1699,29 +1699,29 @@ public class Settings : ObjectG
 
 	protected class OnWritableChangeDelegateWrapper
 	{
-		static OnWritableChangeDelegateWrapper[] listeners;
 		bool delegate(uint, Settings) dlg;
 		gulong handlerId;
 
 		this(bool delegate(uint, Settings) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onWritableChangeListeners ~= this;
 		}
 
 		void remove(OnWritableChangeDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onWritableChangeListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onWritableChangeListeners[index] = null;
+					onWritableChangeListeners = std.algorithm.remove(onWritableChangeListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnWritableChangeDelegateWrapper[] onWritableChangeListeners;
 
 	/**
 	 * The "writable-change-event" signal is emitted once per writability
@@ -1774,29 +1774,29 @@ public class Settings : ObjectG
 
 	protected class OnWritableChangedDelegateWrapper
 	{
-		static OnWritableChangedDelegateWrapper[] listeners;
 		void delegate(string, Settings) dlg;
 		gulong handlerId;
 
 		this(void delegate(string, Settings) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onWritableChangedListeners ~= this;
 		}
 
 		void remove(OnWritableChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onWritableChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onWritableChangedListeners[index] = null;
+					onWritableChangedListeners = std.algorithm.remove(onWritableChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnWritableChangedDelegateWrapper[] onWritableChangedListeners;
 
 	/**
 	 * The "writable-changed" signal is emitted when the writability of a

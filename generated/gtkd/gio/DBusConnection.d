@@ -1714,29 +1714,29 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 
 	protected class OnClosedDelegateWrapper
 	{
-		static OnClosedDelegateWrapper[] listeners;
 		void delegate(bool, ErrorG, DBusConnection) dlg;
 		gulong handlerId;
 
 		this(void delegate(bool, ErrorG, DBusConnection) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onClosedListeners ~= this;
 		}
 
 		void remove(OnClosedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onClosedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onClosedListeners[index] = null;
+					onClosedListeners = std.algorithm.remove(onClosedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnClosedDelegateWrapper[] onClosedListeners;
 
 	/**
 	 * Emitted when the connection is closed.

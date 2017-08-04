@@ -366,29 +366,29 @@ public class MenuModel : ObjectG
 
 	protected class OnItemsChangedDelegateWrapper
 	{
-		static OnItemsChangedDelegateWrapper[] listeners;
 		void delegate(int, int, int, MenuModel) dlg;
 		gulong handlerId;
 
 		this(void delegate(int, int, int, MenuModel) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onItemsChangedListeners ~= this;
 		}
 
 		void remove(OnItemsChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onItemsChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onItemsChangedListeners[index] = null;
+					onItemsChangedListeners = std.algorithm.remove(onItemsChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnItemsChangedDelegateWrapper[] onItemsChangedListeners;
 
 	/**
 	 * Emitted when a change has occured to the menu.

@@ -155,29 +155,29 @@ public class GestureMultiPress : GestureSingle
 
 	protected class OnPressedDelegateWrapper
 	{
-		static OnPressedDelegateWrapper[] listeners;
 		void delegate(int, double, double, GestureMultiPress) dlg;
 		gulong handlerId;
 
 		this(void delegate(int, double, double, GestureMultiPress) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPressedListeners ~= this;
 		}
 
 		void remove(OnPressedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPressedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPressedListeners[index] = null;
+					onPressedListeners = std.algorithm.remove(onPressedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPressedDelegateWrapper[] onPressedListeners;
 
 	/**
 	 * This signal is emitted whenever a button or touch press happens.
@@ -214,29 +214,29 @@ public class GestureMultiPress : GestureSingle
 
 	protected class OnReleasedDelegateWrapper
 	{
-		static OnReleasedDelegateWrapper[] listeners;
 		void delegate(int, double, double, GestureMultiPress) dlg;
 		gulong handlerId;
 
 		this(void delegate(int, double, double, GestureMultiPress) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onReleasedListeners ~= this;
 		}
 
 		void remove(OnReleasedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onReleasedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onReleasedListeners[index] = null;
+					onReleasedListeners = std.algorithm.remove(onReleasedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnReleasedDelegateWrapper[] onReleasedListeners;
 
 	/**
 	 * This signal is emitted when a button or touch is released. @n_press
@@ -276,29 +276,29 @@ public class GestureMultiPress : GestureSingle
 
 	protected class OnStoppedDelegateWrapper
 	{
-		static OnStoppedDelegateWrapper[] listeners;
 		void delegate(GestureMultiPress) dlg;
 		gulong handlerId;
 
 		this(void delegate(GestureMultiPress) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onStoppedListeners ~= this;
 		}
 
 		void remove(OnStoppedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onStoppedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onStoppedListeners[index] = null;
+					onStoppedListeners = std.algorithm.remove(onStoppedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnStoppedDelegateWrapper[] onStoppedListeners;
 
 	/**
 	 * This signal is emitted whenever any time/distance threshold has

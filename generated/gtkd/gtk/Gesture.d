@@ -553,29 +553,29 @@ public class Gesture : EventController
 
 	protected class OnBeginDelegateWrapper
 	{
-		static OnBeginDelegateWrapper[] listeners;
 		void delegate(GdkEventSequence*, Gesture) dlg;
 		gulong handlerId;
 
 		this(void delegate(GdkEventSequence*, Gesture) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onBeginListeners ~= this;
 		}
 
 		void remove(OnBeginDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onBeginListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onBeginListeners[index] = null;
+					onBeginListeners = std.algorithm.remove(onBeginListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnBeginDelegateWrapper[] onBeginListeners;
 
 	/**
 	 * This signal is emitted when the gesture is recognized. This means the
@@ -616,29 +616,29 @@ public class Gesture : EventController
 
 	protected class OnBeginGenericDelegateWrapper
 	{
-		static OnBeginGenericDelegateWrapper[] listeners;
 		void delegate(Event, Gesture) dlg;
 		gulong handlerId;
 
 		this(void delegate(Event, Gesture) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onBeginGenericListeners ~= this;
 		}
 
 		void remove(OnBeginGenericDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onBeginGenericListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onBeginGenericListeners[index] = null;
+					onBeginGenericListeners = std.algorithm.remove(onBeginGenericListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnBeginGenericDelegateWrapper[] onBeginGenericListeners;
 
 	/**
 	 * This signal is emitted when the gesture is recognized. This means the
@@ -679,29 +679,29 @@ public class Gesture : EventController
 
 	protected class OnCancelDelegateWrapper
 	{
-		static OnCancelDelegateWrapper[] listeners;
 		void delegate(GdkEventSequence*, Gesture) dlg;
 		gulong handlerId;
 
 		this(void delegate(GdkEventSequence*, Gesture) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCancelListeners ~= this;
 		}
 
 		void remove(OnCancelDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCancelListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCancelListeners[index] = null;
+					onCancelListeners = std.algorithm.remove(onCancelListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCancelDelegateWrapper[] onCancelListeners;
 
 	/**
 	 * This signal is emitted whenever a sequence is cancelled. This usually
@@ -741,29 +741,29 @@ public class Gesture : EventController
 
 	protected class OnCancelGenericDelegateWrapper
 	{
-		static OnCancelGenericDelegateWrapper[] listeners;
 		void delegate(Event, Gesture) dlg;
 		gulong handlerId;
 
 		this(void delegate(Event, Gesture) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCancelGenericListeners ~= this;
 		}
 
 		void remove(OnCancelGenericDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCancelGenericListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCancelGenericListeners[index] = null;
+					onCancelGenericListeners = std.algorithm.remove(onCancelGenericListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCancelGenericDelegateWrapper[] onCancelGenericListeners;
 
 	/**
 	 * This signal is emitted whenever a sequence is cancelled. This usually
@@ -803,29 +803,29 @@ public class Gesture : EventController
 
 	protected class OnEndDelegateWrapper
 	{
-		static OnEndDelegateWrapper[] listeners;
 		void delegate(GdkEventSequence*, Gesture) dlg;
 		gulong handlerId;
 
 		this(void delegate(GdkEventSequence*, Gesture) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onEndListeners ~= this;
 		}
 
 		void remove(OnEndDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onEndListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onEndListeners[index] = null;
+					onEndListeners = std.algorithm.remove(onEndListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnEndDelegateWrapper[] onEndListeners;
 
 	/**
 	 * This signal is emitted when @gesture either stopped recognizing the event
@@ -868,29 +868,29 @@ public class Gesture : EventController
 
 	protected class OnEndGenericDelegateWrapper
 	{
-		static OnEndGenericDelegateWrapper[] listeners;
 		void delegate(Event, Gesture) dlg;
 		gulong handlerId;
 
 		this(void delegate(Event, Gesture) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onEndGenericListeners ~= this;
 		}
 
 		void remove(OnEndGenericDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onEndGenericListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onEndGenericListeners[index] = null;
+					onEndGenericListeners = std.algorithm.remove(onEndGenericListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnEndGenericDelegateWrapper[] onEndGenericListeners;
 
 	/**
 	 * This signal is emitted when @gesture either stopped recognizing the event
@@ -933,29 +933,29 @@ public class Gesture : EventController
 
 	protected class OnSequenceStateChangedDelegateWrapper
 	{
-		static OnSequenceStateChangedDelegateWrapper[] listeners;
 		void delegate(GdkEventSequence*, GtkEventSequenceState, Gesture) dlg;
 		gulong handlerId;
 
 		this(void delegate(GdkEventSequence*, GtkEventSequenceState, Gesture) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onSequenceStateChangedListeners ~= this;
 		}
 
 		void remove(OnSequenceStateChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onSequenceStateChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onSequenceStateChangedListeners[index] = null;
+					onSequenceStateChangedListeners = std.algorithm.remove(onSequenceStateChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnSequenceStateChangedDelegateWrapper[] onSequenceStateChangedListeners;
 
 	/**
 	 * This signal is emitted whenever a sequence state changes. See
@@ -993,29 +993,29 @@ public class Gesture : EventController
 
 	protected class OnSequenceStateChangedGenericDelegateWrapper
 	{
-		static OnSequenceStateChangedGenericDelegateWrapper[] listeners;
 		void delegate(Event, GtkEventSequenceState, Gesture) dlg;
 		gulong handlerId;
 
 		this(void delegate(Event, GtkEventSequenceState, Gesture) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onSequenceStateChangedGenericListeners ~= this;
 		}
 
 		void remove(OnSequenceStateChangedGenericDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onSequenceStateChangedGenericListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onSequenceStateChangedGenericListeners[index] = null;
+					onSequenceStateChangedGenericListeners = std.algorithm.remove(onSequenceStateChangedGenericListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnSequenceStateChangedGenericDelegateWrapper[] onSequenceStateChangedGenericListeners;
 
 	/**
 	 * This signal is emitted whenever a sequence state changes. See
@@ -1053,29 +1053,29 @@ public class Gesture : EventController
 
 	protected class OnUpdateDelegateWrapper
 	{
-		static OnUpdateDelegateWrapper[] listeners;
 		void delegate(GdkEventSequence*, Gesture) dlg;
 		gulong handlerId;
 
 		this(void delegate(GdkEventSequence*, Gesture) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onUpdateListeners ~= this;
 		}
 
 		void remove(OnUpdateDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onUpdateListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onUpdateListeners[index] = null;
+					onUpdateListeners = std.algorithm.remove(onUpdateListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnUpdateDelegateWrapper[] onUpdateListeners;
 
 	/**
 	 * This signal is emitted whenever an event is handled while the gesture is
@@ -1111,29 +1111,29 @@ public class Gesture : EventController
 
 	protected class OnUpdateGenericDelegateWrapper
 	{
-		static OnUpdateGenericDelegateWrapper[] listeners;
 		void delegate(Event, Gesture) dlg;
 		gulong handlerId;
 
 		this(void delegate(Event, Gesture) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onUpdateGenericListeners ~= this;
 		}
 
 		void remove(OnUpdateGenericDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onUpdateGenericListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onUpdateGenericListeners[index] = null;
+					onUpdateGenericListeners = std.algorithm.remove(onUpdateGenericListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnUpdateGenericDelegateWrapper[] onUpdateGenericListeners;
 
 	/**
 	 * This signal is emitted whenever an event is handled while the gesture is

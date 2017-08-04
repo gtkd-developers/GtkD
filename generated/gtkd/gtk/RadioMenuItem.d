@@ -304,29 +304,29 @@ public class RadioMenuItem : CheckMenuItem
 
 	protected class OnGroupChangedDelegateWrapper
 	{
-		static OnGroupChangedDelegateWrapper[] listeners;
 		void delegate(RadioMenuItem) dlg;
 		gulong handlerId;
 
 		this(void delegate(RadioMenuItem) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onGroupChangedListeners ~= this;
 		}
 
 		void remove(OnGroupChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onGroupChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onGroupChangedListeners[index] = null;
+					onGroupChangedListeners = std.algorithm.remove(onGroupChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnGroupChangedDelegateWrapper[] onGroupChangedListeners;
 
 	/** */
 	gulong addOnGroupChanged(void delegate(RadioMenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)

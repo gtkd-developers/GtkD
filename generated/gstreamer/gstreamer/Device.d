@@ -239,29 +239,29 @@ public class Device : ObjectGst
 
 	protected class OnRemovedDelegateWrapper
 	{
-		static OnRemovedDelegateWrapper[] listeners;
 		void delegate(Device) dlg;
 		gulong handlerId;
 
 		this(void delegate(Device) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onRemovedListeners ~= this;
 		}
 
 		void remove(OnRemovedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onRemovedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onRemovedListeners[index] = null;
+					onRemovedListeners = std.algorithm.remove(onRemovedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnRemovedDelegateWrapper[] onRemovedListeners;
 
 	/** */
 	gulong addOnRemoved(void delegate(Device) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)

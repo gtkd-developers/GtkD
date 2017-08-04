@@ -96,29 +96,29 @@ public template PrintOperationPreviewT(TStruct)
 
 	protected class OnGotPageSizeDelegateWrapper
 	{
-		static OnGotPageSizeDelegateWrapper[] listeners;
 		void delegate(PrintContext, PageSetup, PrintOperationPreviewIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(PrintContext, PageSetup, PrintOperationPreviewIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onGotPageSizeListeners ~= this;
 		}
 
 		void remove(OnGotPageSizeDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onGotPageSizeListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onGotPageSizeListeners[index] = null;
+					onGotPageSizeListeners = std.algorithm.remove(onGotPageSizeListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnGotPageSizeDelegateWrapper[] onGotPageSizeListeners;
 
 	/**
 	 * The ::got-page-size signal is emitted once for each page
@@ -157,29 +157,29 @@ public template PrintOperationPreviewT(TStruct)
 
 	protected class OnReadyDelegateWrapper
 	{
-		static OnReadyDelegateWrapper[] listeners;
 		void delegate(PrintContext, PrintOperationPreviewIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(PrintContext, PrintOperationPreviewIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onReadyListeners ~= this;
 		}
 
 		void remove(OnReadyDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onReadyListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onReadyListeners[index] = null;
+					onReadyListeners = std.algorithm.remove(onReadyListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnReadyDelegateWrapper[] onReadyListeners;
 
 	/**
 	 * The ::ready signal gets emitted once per preview operation,

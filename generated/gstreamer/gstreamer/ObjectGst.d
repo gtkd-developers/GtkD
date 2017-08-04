@@ -306,9 +306,15 @@ public class ObjectGst : ObjectG
 	 *
 	 * Returns: %TRUE if the given array could be filled, %FALSE otherwise
 	 */
-	public bool getGValueArray(string propertyName, GstClockTime timestamp, GstClockTime interval, uint nValues, Value values)
+	public bool getGValueArray(string propertyName, GstClockTime timestamp, GstClockTime interval, Value[] values)
 	{
-		return gst_object_get_g_value_array(gstObject, Str.toStringz(propertyName), timestamp, interval, nValues, (values is null) ? null : values.getValueStruct()) != 0;
+		GValue[] valuesArray = new GValue[values.length];
+		for ( int i = 0; i < values.length; i++ )
+		{
+			valuesArray[i] = *(values[i].getValueStruct());
+		}
+
+		return gst_object_get_g_value_array(gstObject, Str.toStringz(propertyName), timestamp, interval, cast(uint)values.length, valuesArray.ptr) != 0;
 	}
 
 	/**
@@ -659,29 +665,29 @@ public class ObjectGst : ObjectG
 
 	protected class OnDeepNotifyDelegateWrapper
 	{
-		static OnDeepNotifyDelegateWrapper[] listeners;
 		void delegate(ObjectGst, ParamSpec, ObjectGst) dlg;
 		gulong handlerId;
 
 		this(void delegate(ObjectGst, ParamSpec, ObjectGst) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDeepNotifyListeners ~= this;
 		}
 
 		void remove(OnDeepNotifyDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDeepNotifyListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDeepNotifyListeners[index] = null;
+					onDeepNotifyListeners = std.algorithm.remove(onDeepNotifyListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDeepNotifyDelegateWrapper[] onDeepNotifyListeners;
 
 	/**
 	 * The deep notify signal is used to be notified of property changes. It is

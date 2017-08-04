@@ -259,29 +259,29 @@ public class FileChooserButton : Box, FileChooserIF
 
 	protected class OnFileSetDelegateWrapper
 	{
-		static OnFileSetDelegateWrapper[] listeners;
 		void delegate(FileChooserButton) dlg;
 		gulong handlerId;
 
 		this(void delegate(FileChooserButton) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onFileSetListeners ~= this;
 		}
 
 		void remove(OnFileSetDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onFileSetListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onFileSetListeners[index] = null;
+					onFileSetListeners = std.algorithm.remove(onFileSetListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnFileSetDelegateWrapper[] onFileSetListeners;
 
 	/**
 	 * The ::file-set signal is emitted when the user selects a file.

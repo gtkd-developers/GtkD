@@ -142,29 +142,29 @@ public template DBusObjectManagerT(TStruct)
 
 	protected class OnInterfaceAddedDelegateWrapper
 	{
-		static OnInterfaceAddedDelegateWrapper[] listeners;
 		void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onInterfaceAddedListeners ~= this;
 		}
 
 		void remove(OnInterfaceAddedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onInterfaceAddedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onInterfaceAddedListeners[index] = null;
+					onInterfaceAddedListeners = std.algorithm.remove(onInterfaceAddedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnInterfaceAddedDelegateWrapper[] onInterfaceAddedListeners;
 
 	/**
 	 * Emitted when @interface is added to @object.
@@ -203,29 +203,29 @@ public template DBusObjectManagerT(TStruct)
 
 	protected class OnInterfaceRemovedDelegateWrapper
 	{
-		static OnInterfaceRemovedDelegateWrapper[] listeners;
 		void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(DBusObjectIF, DBusInterfaceIF, DBusObjectManagerIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onInterfaceRemovedListeners ~= this;
 		}
 
 		void remove(OnInterfaceRemovedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onInterfaceRemovedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onInterfaceRemovedListeners[index] = null;
+					onInterfaceRemovedListeners = std.algorithm.remove(onInterfaceRemovedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnInterfaceRemovedDelegateWrapper[] onInterfaceRemovedListeners;
 
 	/**
 	 * Emitted when @interface has been removed from @object.
@@ -264,29 +264,29 @@ public template DBusObjectManagerT(TStruct)
 
 	protected class OnObjectAddedDelegateWrapper
 	{
-		static OnObjectAddedDelegateWrapper[] listeners;
 		void delegate(DBusObjectIF, DBusObjectManagerIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(DBusObjectIF, DBusObjectManagerIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onObjectAddedListeners ~= this;
 		}
 
 		void remove(OnObjectAddedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onObjectAddedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onObjectAddedListeners[index] = null;
+					onObjectAddedListeners = std.algorithm.remove(onObjectAddedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnObjectAddedDelegateWrapper[] onObjectAddedListeners;
 
 	/**
 	 * Emitted when @object is added to @manager.
@@ -321,29 +321,29 @@ public template DBusObjectManagerT(TStruct)
 
 	protected class OnObjectRemovedDelegateWrapper
 	{
-		static OnObjectRemovedDelegateWrapper[] listeners;
 		void delegate(DBusObjectIF, DBusObjectManagerIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(DBusObjectIF, DBusObjectManagerIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onObjectRemovedListeners ~= this;
 		}
 
 		void remove(OnObjectRemovedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onObjectRemovedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onObjectRemovedListeners[index] = null;
+					onObjectRemovedListeners = std.algorithm.remove(onObjectRemovedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnObjectRemovedDelegateWrapper[] onObjectRemovedListeners;
 
 	/**
 	 * Emitted when @object is removed from @manager.

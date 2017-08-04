@@ -282,29 +282,29 @@ public template ComponentT(TStruct)
 
 	protected class OnBoundsChangedDelegateWrapper
 	{
-		static OnBoundsChangedDelegateWrapper[] listeners;
 		void delegate(AtkRectangle*, ComponentIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(AtkRectangle*, ComponentIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onBoundsChangedListeners ~= this;
 		}
 
 		void remove(OnBoundsChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onBoundsChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onBoundsChangedListeners[index] = null;
+					onBoundsChangedListeners = std.algorithm.remove(onBoundsChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnBoundsChangedDelegateWrapper[] onBoundsChangedListeners;
 
 	/**
 	 * The 'bounds-changed" signal is emitted when the bposition or

@@ -397,29 +397,29 @@ public class Scale : Range
 
 	protected class OnFormatValueDelegateWrapper
 	{
-		static OnFormatValueDelegateWrapper[] listeners;
 		string delegate(double, Scale) dlg;
 		gulong handlerId;
 
 		this(string delegate(double, Scale) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onFormatValueListeners ~= this;
 		}
 
 		void remove(OnFormatValueDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onFormatValueListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onFormatValueListeners[index] = null;
+					onFormatValueListeners = std.algorithm.remove(onFormatValueListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnFormatValueDelegateWrapper[] onFormatValueListeners;
 
 	/**
 	 * Signal which allows you to change how the scale value is displayed.

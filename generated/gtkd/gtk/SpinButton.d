@@ -518,29 +518,29 @@ public class SpinButton : Entry, OrientableIF
 
 	protected class OnChangeValueDelegateWrapper
 	{
-		static OnChangeValueDelegateWrapper[] listeners;
 		void delegate(GtkScrollType, SpinButton) dlg;
 		gulong handlerId;
 
 		this(void delegate(GtkScrollType, SpinButton) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onChangeValueListeners ~= this;
 		}
 
 		void remove(OnChangeValueDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onChangeValueListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onChangeValueListeners[index] = null;
+					onChangeValueListeners = std.algorithm.remove(onChangeValueListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnChangeValueDelegateWrapper[] onChangeValueListeners;
 
 	/**
 	 * The ::change-value signal is a [keybinding signal][GtkBindingSignal]
@@ -580,29 +580,29 @@ public class SpinButton : Entry, OrientableIF
 
 	protected class OnInputDelegateWrapper
 	{
-		static OnInputDelegateWrapper[] listeners;
 		int delegate(void*, SpinButton) dlg;
 		gulong handlerId;
 
 		this(int delegate(void*, SpinButton) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onInputListeners ~= this;
 		}
 
 		void remove(OnInputDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onInputListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onInputListeners[index] = null;
+					onInputListeners = std.algorithm.remove(onInputListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnInputDelegateWrapper[] onInputListeners;
 
 	/**
 	 * The ::input signal can be used to influence the conversion of
@@ -643,29 +643,29 @@ public class SpinButton : Entry, OrientableIF
 
 	protected class OnOutputDelegateWrapper
 	{
-		static OnOutputDelegateWrapper[] listeners;
 		bool delegate(SpinButton) dlg;
 		gulong handlerId;
 
 		this(bool delegate(SpinButton) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onOutputListeners ~= this;
 		}
 
 		void remove(OnOutputDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onOutputListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onOutputListeners[index] = null;
+					onOutputListeners = std.algorithm.remove(onOutputListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnOutputDelegateWrapper[] onOutputListeners;
 
 	/**
 	 * The ::output signal can be used to change to formatting
@@ -717,29 +717,29 @@ public class SpinButton : Entry, OrientableIF
 
 	protected class OnValueChangedDelegateWrapper
 	{
-		static OnValueChangedDelegateWrapper[] listeners;
 		void delegate(SpinButton) dlg;
 		gulong handlerId;
 
 		this(void delegate(SpinButton) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onValueChangedListeners ~= this;
 		}
 
 		void remove(OnValueChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onValueChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onValueChangedListeners[index] = null;
+					onValueChangedListeners = std.algorithm.remove(onValueChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnValueChangedDelegateWrapper[] onValueChangedListeners;
 
 	/**
 	 * The ::value-changed signal is emitted when the value represented by
@@ -770,29 +770,29 @@ public class SpinButton : Entry, OrientableIF
 
 	protected class OnWrappedDelegateWrapper
 	{
-		static OnWrappedDelegateWrapper[] listeners;
 		void delegate(SpinButton) dlg;
 		gulong handlerId;
 
 		this(void delegate(SpinButton) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onWrappedListeners ~= this;
 		}
 
 		void remove(OnWrappedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onWrappedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onWrappedListeners[index] = null;
+					onWrappedListeners = std.algorithm.remove(onWrappedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnWrappedDelegateWrapper[] onWrappedListeners;
 
 	/**
 	 * The ::wrapped signal is emitted right after the spinbutton wraps

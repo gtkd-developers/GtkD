@@ -169,29 +169,29 @@ public class ExtensionSet : ObjectG
 
 	protected class OnExtensionAddedDelegateWrapper
 	{
-		static OnExtensionAddedDelegateWrapper[] listeners;
 		void delegate(PluginInfo, ObjectG, ExtensionSet) dlg;
 		gulong handlerId;
 
 		this(void delegate(PluginInfo, ObjectG, ExtensionSet) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onExtensionAddedListeners ~= this;
 		}
 
 		void remove(OnExtensionAddedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onExtensionAddedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onExtensionAddedListeners[index] = null;
+					onExtensionAddedListeners = std.algorithm.remove(onExtensionAddedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnExtensionAddedDelegateWrapper[] onExtensionAddedListeners;
 
 	/**
 	 * The extension-added signal is emitted when a new extension has been
@@ -232,29 +232,29 @@ public class ExtensionSet : ObjectG
 
 	protected class OnExtensionRemovedDelegateWrapper
 	{
-		static OnExtensionRemovedDelegateWrapper[] listeners;
 		void delegate(PluginInfo, ObjectG, ExtensionSet) dlg;
 		gulong handlerId;
 
 		this(void delegate(PluginInfo, ObjectG, ExtensionSet) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onExtensionRemovedListeners ~= this;
 		}
 
 		void remove(OnExtensionRemovedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onExtensionRemovedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onExtensionRemovedListeners[index] = null;
+					onExtensionRemovedListeners = std.algorithm.remove(onExtensionRemovedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnExtensionRemovedDelegateWrapper[] onExtensionRemovedListeners;
 
 	/**
 	 * The extension-removed signal is emitted when a new extension is about to be

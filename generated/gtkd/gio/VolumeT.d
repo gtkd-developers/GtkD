@@ -473,29 +473,29 @@ public template VolumeT(TStruct)
 
 	protected class OnChangedDelegateWrapper
 	{
-		static OnChangedDelegateWrapper[] listeners;
 		void delegate(VolumeIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(VolumeIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onChangedListeners ~= this;
 		}
 
 		void remove(OnChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onChangedListeners[index] = null;
+					onChangedListeners = std.algorithm.remove(onChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnChangedDelegateWrapper[] onChangedListeners;
 
 	/**
 	 * Emitted when the volume has been changed.
@@ -525,29 +525,29 @@ public template VolumeT(TStruct)
 
 	protected class OnRemovedDelegateWrapper
 	{
-		static OnRemovedDelegateWrapper[] listeners;
 		void delegate(VolumeIF) dlg;
 		gulong handlerId;
 
 		this(void delegate(VolumeIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onRemovedListeners ~= this;
 		}
 
 		void remove(OnRemovedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onRemovedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onRemovedListeners[index] = null;
+					onRemovedListeners = std.algorithm.remove(onRemovedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnRemovedDelegateWrapper[] onRemovedListeners;
 
 	/**
 	 * This signal is emitted when the #GVolume have been removed. If
