@@ -9,14 +9,15 @@ grep -h -e "^module" generated/peas/* -r | sort -u | sed 's/;//' | sed 's/\r//' 
 cd generated
 
 dmd -o- -D -Dd../docs  ../modules.ddoc ../docs/candydoc/candy.ddoc \
-	gtkd/gtk/*  gtkd/gtkc/* gtkd/gtkd/* gtkd/glib/* gtkd/gio/* gtkd/gdk/* \
-	gtkd/gobject/* gtkd/gthread/* gtkd/atk/* \
-	gtkd/pango/* gtkd/cairo/* gtkd/gdkpixbuf/* \
-	gtkdgl/glgdk/*  gtkdgl/glgtk/*  gtkdgl/gtkglc/* \
-	gstreamer/gstinterfaces/*  gstreamer/gstreamer/*  gstreamer/gstreamerc/* \
-	sourceview/gsv/*  sourceview/gsvc/* \
-	vte/vtec/* vte/vte/* \
-	peas/peasc/* peas/peas/* -op
+	gtkd/gtk/*.d gtkd/gtk/c/*.d  gtkd/gtkc/*.d gtkd/gtkd/*.d gtkd/glib/*.d gtkd/glib/c/*.d gtkd/gio/*.d \
+	gtkd/gio/c/*.d gtkd/gdk/*.d gtkd/gdk/c/*.d gtkd/gobject/*.d gtkd/gobject/c/*.d \
+	gtkd/gthread/*.d gtkd/gthread/c/*.d gtkd/atk/*.d gtkd/atk/c/*.d gtkd/pango/*.d gtkd/pango/c/*.d \
+	gtkd/cairo/*.d gtkd/cairo/c/*.d gtkd/gdkpixbuf/*.d gtkd/gdkpixbuf/c/*.d gtkd/rsvg/*.d gtkd/rsvg/c/*.d \
+	gtkdgl/glgdk/*.d  gtkdgl/glgtk/*.d gtkdgl/gtkglc/*.d \
+	sourceview/gsv/*.d sourceview/gsv/c/*.d sourceview/gsvc/*.d \
+	vte/vtec/*.d  vte/vte/*.d vte/vte/c/*.d \
+	gstreamer/gstreamer/*.d gstreamer/gstreamer/c/*.d gstreamer/gstinterfaces/*.d gstreamer/gstinterfaces/c/*.d gstreamer/gstreamerc/*.d \
+	peas/peas/*.d peas/peas/c/*.d peas/peasc/*.d -op
 
 cd ../docs
 
