@@ -587,29 +587,29 @@ public class Resolver : ObjectG
 
 	protected class OnReloadDelegateWrapper
 	{
-		static OnReloadDelegateWrapper[] listeners;
 		void delegate(Resolver) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Resolver) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onReloadListeners ~= this;
 		}
 		
 		void remove(OnReloadDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onReloadListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onReloadListeners[index] = null;
+					onReloadListeners = std.algorithm.remove(onReloadListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnReloadDelegateWrapper[] onReloadListeners;
 
 	/**
 	 * Emitted when the resolver notices that the system resolver

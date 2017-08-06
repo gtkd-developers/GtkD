@@ -235,29 +235,29 @@ public class MenuToolButton : ToolButton
 
 	protected class OnShowMenuDelegateWrapper
 	{
-		static OnShowMenuDelegateWrapper[] listeners;
 		void delegate(MenuToolButton) dlg;
 		gulong handlerId;
 		
 		this(void delegate(MenuToolButton) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onShowMenuListeners ~= this;
 		}
 		
 		void remove(OnShowMenuDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onShowMenuListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onShowMenuListeners[index] = null;
+					onShowMenuListeners = std.algorithm.remove(onShowMenuListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnShowMenuDelegateWrapper[] onShowMenuListeners;
 
 	/**
 	 * The ::show-menu signal is emitted before the menu is shown.

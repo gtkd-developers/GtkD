@@ -165,29 +165,29 @@ public class PluginManagerView : TreeView
 
 	protected class OnPopulatePopupDelegateWrapper
 	{
-		static OnPopulatePopupDelegateWrapper[] listeners;
 		void delegate(Menu, PluginManagerView) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Menu, PluginManagerView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPopulatePopupListeners ~= this;
 		}
 		
 		void remove(OnPopulatePopupDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPopulatePopupListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPopulatePopupListeners[index] = null;
+					onPopulatePopupListeners = std.algorithm.remove(onPopulatePopupListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPopulatePopupDelegateWrapper[] onPopulatePopupListeners;
 
 	/**
 	 * The ::populate-popup signal is emitted before showing the context

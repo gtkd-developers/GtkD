@@ -746,29 +746,29 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 
 	protected class OnClickedDelegateWrapper
 	{
-		static OnClickedDelegateWrapper[] listeners;
 		void delegate(TreeViewColumn) dlg;
 		gulong handlerId;
 		
 		this(void delegate(TreeViewColumn) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onClickedListeners ~= this;
 		}
 		
 		void remove(OnClickedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onClickedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onClickedListeners[index] = null;
+					onClickedListeners = std.algorithm.remove(onClickedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnClickedDelegateWrapper[] onClickedListeners;
 
 	/** */
 	gulong addOnClicked(void delegate(TreeViewColumn) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)

@@ -662,29 +662,29 @@ public class SourceView : TextView
 
 	protected class OnChangeCaseDelegateWrapper
 	{
-		static OnChangeCaseDelegateWrapper[] listeners;
 		void delegate(GtkSourceChangeCaseType, SourceView) dlg;
 		gulong handlerId;
 		
 		this(void delegate(GtkSourceChangeCaseType, SourceView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onChangeCaseListeners ~= this;
 		}
 		
 		void remove(OnChangeCaseDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onChangeCaseListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onChangeCaseListeners[index] = null;
+					onChangeCaseListeners = std.algorithm.remove(onChangeCaseListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnChangeCaseDelegateWrapper[] onChangeCaseListeners;
 
 	/**
 	 * Keybinding signal to change case of the text at the current cursor position.
@@ -719,29 +719,29 @@ public class SourceView : TextView
 
 	protected class OnChangeNumberDelegateWrapper
 	{
-		static OnChangeNumberDelegateWrapper[] listeners;
 		void delegate(int, SourceView) dlg;
 		gulong handlerId;
 		
 		this(void delegate(int, SourceView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onChangeNumberListeners ~= this;
 		}
 		
 		void remove(OnChangeNumberDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onChangeNumberListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onChangeNumberListeners[index] = null;
+					onChangeNumberListeners = std.algorithm.remove(onChangeNumberListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnChangeNumberDelegateWrapper[] onChangeNumberListeners;
 
 	/**
 	 * Keybinding signal to edit a number at the current cursor position.
@@ -776,29 +776,29 @@ public class SourceView : TextView
 
 	protected class OnJoinLinesDelegateWrapper
 	{
-		static OnJoinLinesDelegateWrapper[] listeners;
 		void delegate(SourceView) dlg;
 		gulong handlerId;
 		
 		this(void delegate(SourceView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onJoinLinesListeners ~= this;
 		}
 		
 		void remove(OnJoinLinesDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onJoinLinesListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onJoinLinesListeners[index] = null;
+					onJoinLinesListeners = std.algorithm.remove(onJoinLinesListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnJoinLinesDelegateWrapper[] onJoinLinesListeners;
 
 	/**
 	 * Keybinding signal to join the lines currently selected.
@@ -830,29 +830,29 @@ public class SourceView : TextView
 
 	protected class OnLineMarkActivatedDelegateWrapper
 	{
-		static OnLineMarkActivatedDelegateWrapper[] listeners;
 		void delegate(TextIter, Event, SourceView) dlg;
 		gulong handlerId;
 		
 		this(void delegate(TextIter, Event, SourceView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onLineMarkActivatedListeners ~= this;
 		}
 		
 		void remove(OnLineMarkActivatedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onLineMarkActivatedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onLineMarkActivatedListeners[index] = null;
+					onLineMarkActivatedListeners = std.algorithm.remove(onLineMarkActivatedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnLineMarkActivatedDelegateWrapper[] onLineMarkActivatedListeners;
 
 	/**
 	 * Emitted when a line mark has been activated (for instance when there
@@ -888,29 +888,29 @@ public class SourceView : TextView
 
 	protected class OnMoveLinesDelegateWrapper
 	{
-		static OnMoveLinesDelegateWrapper[] listeners;
 		void delegate(bool, int, SourceView) dlg;
 		gulong handlerId;
 		
 		this(void delegate(bool, int, SourceView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMoveLinesListeners ~= this;
 		}
 		
 		void remove(OnMoveLinesDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMoveLinesListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMoveLinesListeners[index] = null;
+					onMoveLinesListeners = std.algorithm.remove(onMoveLinesListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMoveLinesDelegateWrapper[] onMoveLinesListeners;
 
 	/**
 	 * The ::move-lines signal is a keybinding which gets emitted
@@ -956,29 +956,29 @@ public class SourceView : TextView
 
 	protected class OnMoveToMatchingBracketDelegateWrapper
 	{
-		static OnMoveToMatchingBracketDelegateWrapper[] listeners;
 		void delegate(bool, SourceView) dlg;
 		gulong handlerId;
 		
 		this(void delegate(bool, SourceView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMoveToMatchingBracketListeners ~= this;
 		}
 		
 		void remove(OnMoveToMatchingBracketDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMoveToMatchingBracketListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMoveToMatchingBracketListeners[index] = null;
+					onMoveToMatchingBracketListeners = std.algorithm.remove(onMoveToMatchingBracketListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMoveToMatchingBracketDelegateWrapper[] onMoveToMatchingBracketListeners;
 
 	/**
 	 * Keybinding signal to move the cursor to the matching bracket.
@@ -1013,29 +1013,29 @@ public class SourceView : TextView
 
 	protected class OnMoveWordsDelegateWrapper
 	{
-		static OnMoveWordsDelegateWrapper[] listeners;
 		void delegate(int, SourceView) dlg;
 		gulong handlerId;
 		
 		this(void delegate(int, SourceView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMoveWordsListeners ~= this;
 		}
 		
 		void remove(OnMoveWordsDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMoveWordsListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMoveWordsListeners[index] = null;
+					onMoveWordsListeners = std.algorithm.remove(onMoveWordsListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMoveWordsDelegateWrapper[] onMoveWordsListeners;
 
 	/**
 	 * The ::move-words signal is a keybinding which gets emitted
@@ -1073,29 +1073,29 @@ public class SourceView : TextView
 
 	protected class OnRedoDelegateWrapper
 	{
-		static OnRedoDelegateWrapper[] listeners;
 		void delegate(SourceView) dlg;
 		gulong handlerId;
 		
 		this(void delegate(SourceView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onRedoListeners ~= this;
 		}
 		
 		void remove(OnRedoDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onRedoListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onRedoListeners[index] = null;
+					onRedoListeners = std.algorithm.remove(onRedoListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnRedoDelegateWrapper[] onRedoListeners;
 
 	/** */
 	gulong addOnRedo(void delegate(SourceView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -1123,29 +1123,29 @@ public class SourceView : TextView
 
 	protected class OnShowCompletionDelegateWrapper
 	{
-		static OnShowCompletionDelegateWrapper[] listeners;
 		void delegate(SourceView) dlg;
 		gulong handlerId;
 		
 		this(void delegate(SourceView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onShowCompletionListeners ~= this;
 		}
 		
 		void remove(OnShowCompletionDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onShowCompletionListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onShowCompletionListeners[index] = null;
+					onShowCompletionListeners = std.algorithm.remove(onShowCompletionListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnShowCompletionDelegateWrapper[] onShowCompletionListeners;
 
 	/**
 	 * The ::show-completion signal is a key binding signal which gets
@@ -1184,29 +1184,29 @@ public class SourceView : TextView
 
 	protected class OnSmartHomeEndDelegateWrapper
 	{
-		static OnSmartHomeEndDelegateWrapper[] listeners;
 		void delegate(TextIter, int, SourceView) dlg;
 		gulong handlerId;
 		
 		this(void delegate(TextIter, int, SourceView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onSmartHomeEndListeners ~= this;
 		}
 		
 		void remove(OnSmartHomeEndDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onSmartHomeEndListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onSmartHomeEndListeners[index] = null;
+					onSmartHomeEndListeners = std.algorithm.remove(onSmartHomeEndListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnSmartHomeEndDelegateWrapper[] onSmartHomeEndListeners;
 
 	/**
 	 * Emitted when a the cursor was moved according to the smart home
@@ -1246,29 +1246,29 @@ public class SourceView : TextView
 
 	protected class OnUndoDelegateWrapper
 	{
-		static OnUndoDelegateWrapper[] listeners;
 		void delegate(SourceView) dlg;
 		gulong handlerId;
 		
 		this(void delegate(SourceView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onUndoListeners ~= this;
 		}
 		
 		void remove(OnUndoDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onUndoListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onUndoListeners[index] = null;
+					onUndoListeners = std.algorithm.remove(onUndoListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnUndoDelegateWrapper[] onUndoListeners;
 
 	/** */
 	gulong addOnUndo(void delegate(SourceView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)

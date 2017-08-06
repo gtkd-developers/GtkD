@@ -290,29 +290,29 @@ public class SourceCompletion : ObjectG, BuildableIF
 
 	protected class OnActivateProposalDelegateWrapper
 	{
-		static OnActivateProposalDelegateWrapper[] listeners;
 		void delegate(SourceCompletion) dlg;
 		gulong handlerId;
 		
 		this(void delegate(SourceCompletion) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onActivateProposalListeners ~= this;
 		}
 		
 		void remove(OnActivateProposalDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onActivateProposalListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onActivateProposalListeners[index] = null;
+					onActivateProposalListeners = std.algorithm.remove(onActivateProposalListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnActivateProposalDelegateWrapper[] onActivateProposalListeners;
 
 	/**
 	 * The #GtkSourceCompletion::activate-proposal signal is a
@@ -348,29 +348,29 @@ public class SourceCompletion : ObjectG, BuildableIF
 
 	protected class OnHideDelegateWrapper
 	{
-		static OnHideDelegateWrapper[] listeners;
 		void delegate(SourceCompletion) dlg;
 		gulong handlerId;
 		
 		this(void delegate(SourceCompletion) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onHideListeners ~= this;
 		}
 		
 		void remove(OnHideDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onHideListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onHideListeners[index] = null;
+					onHideListeners = std.algorithm.remove(onHideListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnHideDelegateWrapper[] onHideListeners;
 
 	/**
 	 * Emitted when the completion window is hidden. The default handler
@@ -401,29 +401,29 @@ public class SourceCompletion : ObjectG, BuildableIF
 
 	protected class OnMoveCursorDelegateWrapper
 	{
-		static OnMoveCursorDelegateWrapper[] listeners;
 		void delegate(GtkScrollStep, int, SourceCompletion) dlg;
 		gulong handlerId;
 		
 		this(void delegate(GtkScrollStep, int, SourceCompletion) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMoveCursorListeners ~= this;
 		}
 		
 		void remove(OnMoveCursorDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMoveCursorListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMoveCursorListeners[index] = null;
+					onMoveCursorListeners = std.algorithm.remove(onMoveCursorListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMoveCursorDelegateWrapper[] onMoveCursorListeners;
 
 	/**
 	 * The #GtkSourceCompletion::move-cursor signal is a keybinding
@@ -472,29 +472,29 @@ public class SourceCompletion : ObjectG, BuildableIF
 
 	protected class OnMovePageDelegateWrapper
 	{
-		static OnMovePageDelegateWrapper[] listeners;
 		void delegate(GtkScrollStep, int, SourceCompletion) dlg;
 		gulong handlerId;
 		
 		this(void delegate(GtkScrollStep, int, SourceCompletion) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMovePageListeners ~= this;
 		}
 		
 		void remove(OnMovePageDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMovePageListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMovePageListeners[index] = null;
+					onMovePageListeners = std.algorithm.remove(onMovePageListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMovePageDelegateWrapper[] onMovePageListeners;
 
 	/**
 	 * The #GtkSourceCompletion::move-page signal is a keybinding
@@ -546,29 +546,29 @@ public class SourceCompletion : ObjectG, BuildableIF
 
 	protected class OnPopulateContextDelegateWrapper
 	{
-		static OnPopulateContextDelegateWrapper[] listeners;
 		void delegate(SourceCompletionContext, SourceCompletion) dlg;
 		gulong handlerId;
 		
 		this(void delegate(SourceCompletionContext, SourceCompletion) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPopulateContextListeners ~= this;
 		}
 		
 		void remove(OnPopulateContextDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPopulateContextListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPopulateContextListeners[index] = null;
+					onPopulateContextListeners = std.algorithm.remove(onPopulateContextListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPopulateContextDelegateWrapper[] onPopulateContextListeners;
 
 	/**
 	 * Emitted just before starting to populate the completion with providers.
@@ -602,29 +602,29 @@ public class SourceCompletion : ObjectG, BuildableIF
 
 	protected class OnShowDelegateWrapper
 	{
-		static OnShowDelegateWrapper[] listeners;
 		void delegate(SourceCompletion) dlg;
 		gulong handlerId;
 		
 		this(void delegate(SourceCompletion) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onShowListeners ~= this;
 		}
 		
 		void remove(OnShowDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onShowListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onShowListeners[index] = null;
+					onShowListeners = std.algorithm.remove(onShowListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnShowDelegateWrapper[] onShowListeners;
 
 	/**
 	 * Emitted when the completion window is shown. The default handler

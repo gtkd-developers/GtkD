@@ -384,29 +384,29 @@ public template ValueT(TStruct)
 
 	protected class OnValueChangedDelegateWrapper
 	{
-		static OnValueChangedDelegateWrapper[] listeners;
 		void delegate(double, string, ValueIF) dlg;
 		gulong handlerId;
 		
 		this(void delegate(double, string, ValueIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onValueChangedListeners ~= this;
 		}
 		
 		void remove(OnValueChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onValueChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onValueChangedListeners[index] = null;
+					onValueChangedListeners = std.algorithm.remove(onValueChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnValueChangedDelegateWrapper[] onValueChangedListeners;
 
 	/**
 	 * The 'value-changed' signal is emitted when the current value

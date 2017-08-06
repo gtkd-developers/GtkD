@@ -199,29 +199,29 @@ public class TextTagTable : ObjectG, BuildableIF
 
 	protected class OnTagAddedDelegateWrapper
 	{
-		static OnTagAddedDelegateWrapper[] listeners;
 		void delegate(TextTag, TextTagTable) dlg;
 		gulong handlerId;
 		
 		this(void delegate(TextTag, TextTagTable) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onTagAddedListeners ~= this;
 		}
 		
 		void remove(OnTagAddedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onTagAddedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onTagAddedListeners[index] = null;
+					onTagAddedListeners = std.algorithm.remove(onTagAddedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnTagAddedDelegateWrapper[] onTagAddedListeners;
 
 	/** */
 	gulong addOnTagAdded(void delegate(TextTag, TextTagTable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -249,29 +249,29 @@ public class TextTagTable : ObjectG, BuildableIF
 
 	protected class OnTagChangedDelegateWrapper
 	{
-		static OnTagChangedDelegateWrapper[] listeners;
 		void delegate(TextTag, bool, TextTagTable) dlg;
 		gulong handlerId;
 		
 		this(void delegate(TextTag, bool, TextTagTable) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onTagChangedListeners ~= this;
 		}
 		
 		void remove(OnTagChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onTagChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onTagChangedListeners[index] = null;
+					onTagChangedListeners = std.algorithm.remove(onTagChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnTagChangedDelegateWrapper[] onTagChangedListeners;
 
 	/** */
 	gulong addOnTagChanged(void delegate(TextTag, bool, TextTagTable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -299,29 +299,29 @@ public class TextTagTable : ObjectG, BuildableIF
 
 	protected class OnTagRemovedDelegateWrapper
 	{
-		static OnTagRemovedDelegateWrapper[] listeners;
 		void delegate(TextTag, TextTagTable) dlg;
 		gulong handlerId;
 		
 		this(void delegate(TextTag, TextTagTable) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onTagRemovedListeners ~= this;
 		}
 		
 		void remove(OnTagRemovedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onTagRemovedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onTagRemovedListeners[index] = null;
+					onTagRemovedListeners = std.algorithm.remove(onTagRemovedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnTagRemovedDelegateWrapper[] onTagRemovedListeners;
 
 	/** */
 	gulong addOnTagRemoved(void delegate(TextTag, TextTagTable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)

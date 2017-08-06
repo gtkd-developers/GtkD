@@ -195,29 +195,29 @@ public class ToggleAction : Action
 
 	protected class OnToggledDelegateWrapper
 	{
-		static OnToggledDelegateWrapper[] listeners;
 		void delegate(ToggleAction) dlg;
 		gulong handlerId;
 		
 		this(void delegate(ToggleAction) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onToggledListeners ~= this;
 		}
 		
 		void remove(OnToggledDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onToggledListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onToggledListeners[index] = null;
+					onToggledListeners = std.algorithm.remove(onToggledListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnToggledDelegateWrapper[] onToggledListeners;
 
 	/**
 	 * Should be connected if you wish to perform an action

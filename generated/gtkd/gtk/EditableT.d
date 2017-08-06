@@ -265,29 +265,29 @@ public template EditableT(TStruct)
 
 	protected class OnChangedDelegateWrapper
 	{
-		static OnChangedDelegateWrapper[] listeners;
 		void delegate(EditableIF) dlg;
 		gulong handlerId;
 		
 		this(void delegate(EditableIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onChangedListeners ~= this;
 		}
 		
 		void remove(OnChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onChangedListeners[index] = null;
+					onChangedListeners = std.algorithm.remove(onChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnChangedDelegateWrapper[] onChangedListeners;
 
 	/**
 	 * The ::changed signal is emitted at the end of a single
@@ -324,29 +324,29 @@ public template EditableT(TStruct)
 
 	protected class OnDeleteTextDelegateWrapper
 	{
-		static OnDeleteTextDelegateWrapper[] listeners;
 		void delegate(int, int, EditableIF) dlg;
 		gulong handlerId;
 		
 		this(void delegate(int, int, EditableIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDeleteTextListeners ~= this;
 		}
 		
 		void remove(OnDeleteTextDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDeleteTextListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDeleteTextListeners[index] = null;
+					onDeleteTextListeners = std.algorithm.remove(onDeleteTextListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDeleteTextDelegateWrapper[] onDeleteTextListeners;
 
 	/**
 	 * This signal is emitted when text is deleted from
@@ -388,29 +388,29 @@ public template EditableT(TStruct)
 
 	protected class OnInsertTextDelegateWrapper
 	{
-		static OnInsertTextDelegateWrapper[] listeners;
 		void delegate(string, int, void*, EditableIF) dlg;
 		gulong handlerId;
 		
 		this(void delegate(string, int, void*, EditableIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onInsertTextListeners ~= this;
 		}
 		
 		void remove(OnInsertTextDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onInsertTextListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onInsertTextListeners[index] = null;
+					onInsertTextListeners = std.algorithm.remove(onInsertTextListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnInsertTextDelegateWrapper[] onInsertTextListeners;
 
 	/**
 	 * This signal is emitted when text is inserted into

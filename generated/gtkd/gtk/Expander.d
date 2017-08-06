@@ -438,29 +438,29 @@ public class Expander : Bin
 
 	protected class OnActivateDelegateWrapper
 	{
-		static OnActivateDelegateWrapper[] listeners;
 		void delegate(Expander) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Expander) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onActivateListeners ~= this;
 		}
 		
 		void remove(OnActivateDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onActivateListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onActivateListeners[index] = null;
+					onActivateListeners = std.algorithm.remove(onActivateListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnActivateDelegateWrapper[] onActivateListeners;
 
 	/** */
 	gulong addOnActivate(void delegate(Expander) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)

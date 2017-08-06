@@ -314,29 +314,29 @@ public class SourceMarkAttributes : ObjectG
 
 	protected class OnQueryTooltipMarkupDelegateWrapper
 	{
-		static OnQueryTooltipMarkupDelegateWrapper[] listeners;
 		string delegate(SourceMark, SourceMarkAttributes) dlg;
 		gulong handlerId;
 		
 		this(string delegate(SourceMark, SourceMarkAttributes) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onQueryTooltipMarkupListeners ~= this;
 		}
 		
 		void remove(OnQueryTooltipMarkupDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onQueryTooltipMarkupListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onQueryTooltipMarkupListeners[index] = null;
+					onQueryTooltipMarkupListeners = std.algorithm.remove(onQueryTooltipMarkupListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnQueryTooltipMarkupDelegateWrapper[] onQueryTooltipMarkupListeners;
 
 	/**
 	 * The code should connect to this signal to provide a tooltip for given
@@ -373,29 +373,29 @@ public class SourceMarkAttributes : ObjectG
 
 	protected class OnQueryTooltipTextDelegateWrapper
 	{
-		static OnQueryTooltipTextDelegateWrapper[] listeners;
 		string delegate(SourceMark, SourceMarkAttributes) dlg;
 		gulong handlerId;
 		
 		this(string delegate(SourceMark, SourceMarkAttributes) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onQueryTooltipTextListeners ~= this;
 		}
 		
 		void remove(OnQueryTooltipTextDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onQueryTooltipTextListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onQueryTooltipTextListeners[index] = null;
+					onQueryTooltipTextListeners = std.algorithm.remove(onQueryTooltipTextListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnQueryTooltipTextDelegateWrapper[] onQueryTooltipTextListeners;
 
 	/**
 	 * The code should connect to this signal to provide a tooltip for given

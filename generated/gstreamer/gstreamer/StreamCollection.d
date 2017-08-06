@@ -186,29 +186,29 @@ public class StreamCollection : ObjectGst
 
 	protected class OnStreamNotifyDelegateWrapper
 	{
-		static OnStreamNotifyDelegateWrapper[] listeners;
 		void delegate(Stream, ParamSpec, StreamCollection) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Stream, ParamSpec, StreamCollection) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onStreamNotifyListeners ~= this;
 		}
 		
 		void remove(OnStreamNotifyDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onStreamNotifyListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onStreamNotifyListeners[index] = null;
+					onStreamNotifyListeners = std.algorithm.remove(onStreamNotifyListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnStreamNotifyDelegateWrapper[] onStreamNotifyListeners;
 
 	/** */
 	gulong addOnStreamNotify(void delegate(Stream, ParamSpec, StreamCollection) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)

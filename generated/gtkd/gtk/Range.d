@@ -508,29 +508,29 @@ public class Range : Widget, OrientableIF
 
 	protected class OnAdjustBoundsDelegateWrapper
 	{
-		static OnAdjustBoundsDelegateWrapper[] listeners;
 		void delegate(double, Range) dlg;
 		gulong handlerId;
 		
 		this(void delegate(double, Range) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onAdjustBoundsListeners ~= this;
 		}
 		
 		void remove(OnAdjustBoundsDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onAdjustBoundsListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onAdjustBoundsListeners[index] = null;
+					onAdjustBoundsListeners = std.algorithm.remove(onAdjustBoundsListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnAdjustBoundsDelegateWrapper[] onAdjustBoundsListeners;
 
 	/**
 	 * Emitted before clamping a value, to give the application a
@@ -564,29 +564,29 @@ public class Range : Widget, OrientableIF
 
 	protected class OnChangeValueDelegateWrapper
 	{
-		static OnChangeValueDelegateWrapper[] listeners;
 		bool delegate(GtkScrollType, double, Range) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(GtkScrollType, double, Range) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onChangeValueListeners ~= this;
 		}
 		
 		void remove(OnChangeValueDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onChangeValueListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onChangeValueListeners[index] = null;
+					onChangeValueListeners = std.algorithm.remove(onChangeValueListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnChangeValueDelegateWrapper[] onChangeValueListeners;
 
 	/**
 	 * The #GtkRange::change-value signal is emitted when a scroll action is
@@ -636,29 +636,29 @@ public class Range : Widget, OrientableIF
 
 	protected class OnMoveSliderDelegateWrapper
 	{
-		static OnMoveSliderDelegateWrapper[] listeners;
 		void delegate(GtkScrollType, Range) dlg;
 		gulong handlerId;
 		
 		this(void delegate(GtkScrollType, Range) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMoveSliderListeners ~= this;
 		}
 		
 		void remove(OnMoveSliderDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMoveSliderListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMoveSliderListeners[index] = null;
+					onMoveSliderListeners = std.algorithm.remove(onMoveSliderListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMoveSliderDelegateWrapper[] onMoveSliderListeners;
 
 	/**
 	 * Virtual function that moves the slider. Used for keybindings.
@@ -691,29 +691,29 @@ public class Range : Widget, OrientableIF
 
 	protected class OnValueChangedDelegateWrapper
 	{
-		static OnValueChangedDelegateWrapper[] listeners;
 		void delegate(Range) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Range) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onValueChangedListeners ~= this;
 		}
 		
 		void remove(OnValueChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onValueChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onValueChangedListeners[index] = null;
+					onValueChangedListeners = std.algorithm.remove(onValueChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnValueChangedDelegateWrapper[] onValueChangedListeners;
 
 	/**
 	 * Emitted when the range value changes.

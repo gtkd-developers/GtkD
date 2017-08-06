@@ -148,29 +148,29 @@ public template ColorChooserT(TStruct)
 
 	protected class OnColorActivatedDelegateWrapper
 	{
-		static OnColorActivatedDelegateWrapper[] listeners;
 		void delegate(RGBA, ColorChooserIF) dlg;
 		gulong handlerId;
 		
 		this(void delegate(RGBA, ColorChooserIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onColorActivatedListeners ~= this;
 		}
 		
 		void remove(OnColorActivatedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onColorActivatedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onColorActivatedListeners[index] = null;
+					onColorActivatedListeners = std.algorithm.remove(onColorActivatedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnColorActivatedDelegateWrapper[] onColorActivatedListeners;
 
 	/**
 	 * Emitted when a color is activated from the color chooser.

@@ -480,29 +480,29 @@ public class GLArea : Widget
 
 	protected class OnCreateContextDelegateWrapper
 	{
-		static OnCreateContextDelegateWrapper[] listeners;
 		GLContext delegate(GLArea) dlg;
 		gulong handlerId;
 		
 		this(GLContext delegate(GLArea) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCreateContextListeners ~= this;
 		}
 		
 		void remove(OnCreateContextDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCreateContextListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCreateContextListeners[index] = null;
+					onCreateContextListeners = std.algorithm.remove(onCreateContextListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCreateContextDelegateWrapper[] onCreateContextListeners;
 
 	/**
 	 * The ::create-context signal is emitted when the widget is being
@@ -546,29 +546,29 @@ public class GLArea : Widget
 
 	protected class OnRenderDelegateWrapper
 	{
-		static OnRenderDelegateWrapper[] listeners;
 		bool delegate(GLContext, GLArea) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(GLContext, GLArea) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onRenderListeners ~= this;
 		}
 		
 		void remove(OnRenderDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onRenderListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onRenderListeners[index] = null;
+					onRenderListeners = std.algorithm.remove(onRenderListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnRenderDelegateWrapper[] onRenderListeners;
 
 	/**
 	 * The ::render signal is emitted every time the contents
@@ -610,29 +610,29 @@ public class GLArea : Widget
 
 	protected class OnResizeDelegateWrapper
 	{
-		static OnResizeDelegateWrapper[] listeners;
 		void delegate(int, int, GLArea) dlg;
 		gulong handlerId;
 		
 		this(void delegate(int, int, GLArea) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onResizeListeners ~= this;
 		}
 		
 		void remove(OnResizeDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onResizeListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onResizeListeners[index] = null;
+					onResizeListeners = std.algorithm.remove(onResizeListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnResizeDelegateWrapper[] onResizeListeners;
 
 	/**
 	 * The ::resize signal is emitted once when the widget is realized, and

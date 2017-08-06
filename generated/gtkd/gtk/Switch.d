@@ -181,29 +181,29 @@ public class Switch : Widget, ActionableIF, ActivatableIF
 
 	protected class OnActivateDelegateWrapper
 	{
-		static OnActivateDelegateWrapper[] listeners;
 		void delegate(Switch) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Switch) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onActivateListeners ~= this;
 		}
 		
 		void remove(OnActivateDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onActivateListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onActivateListeners[index] = null;
+					onActivateListeners = std.algorithm.remove(onActivateListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnActivateDelegateWrapper[] onActivateListeners;
 
 	/**
 	 * The ::activate signal on GtkSwitch is an action signal and
@@ -236,29 +236,29 @@ public class Switch : Widget, ActionableIF, ActivatableIF
 
 	protected class OnStateSetDelegateWrapper
 	{
-		static OnStateSetDelegateWrapper[] listeners;
 		bool delegate(bool, Switch) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(bool, Switch) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onStateSetListeners ~= this;
 		}
 		
 		void remove(OnStateSetDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onStateSetListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onStateSetListeners[index] = null;
+					onStateSetListeners = std.algorithm.remove(onStateSetListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnStateSetDelegateWrapper[] onStateSetListeners;
 
 	/**
 	 * The ::state-set signal on GtkSwitch is emitted to change the underlying

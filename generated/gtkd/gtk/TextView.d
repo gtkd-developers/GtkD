@@ -302,7 +302,7 @@ public class TextView : Container, ScrollableIF
 	 * gtk_text_view_set_border_window_size()).
 	 *
 	 * Params:
-	 *     win = a #GtkTextWindowType except #GTK_TEXT_WINDOW_PRIVATE
+	 *     win = a #GtkTextWindowType, except %GTK_TEXT_WINDOW_PRIVATE
 	 *     bufferX = buffer x coordinate
 	 *     bufferY = buffer y coordinate
 	 *     windowX = window x coordinate return location or %NULL
@@ -801,9 +801,9 @@ public class TextView : Container, ScrollableIF
 
 	/**
 	 * Usually used to find out which window an event corresponds to.
+	 *
 	 * If you connect to an event signal on @text_view, this function
-	 * should be called on `event->window` to
-	 * see which window it was.
+	 * should be called on `event->window` to see which window it was.
 	 *
 	 * Params:
 	 *     window = a window type
@@ -1045,9 +1045,9 @@ public class TextView : Container, ScrollableIF
 	 * or the height of %GTK_TEXT_WINDOW_TOP or %GTK_TEXT_WINDOW_BOTTOM.
 	 * Automatically destroys the corresponding window if the size is set
 	 * to 0, and creates the window if the size is set to non-zero.  This
-	 * function can only be used for the “border windows,” it doesn’t work
-	 * with #GTK_TEXT_WINDOW_WIDGET, #GTK_TEXT_WINDOW_TEXT, or
-	 * #GTK_TEXT_WINDOW_PRIVATE.
+	 * function can only be used for the “border windows”, and it won’t
+	 * work with %GTK_TEXT_WINDOW_WIDGET, %GTK_TEXT_WINDOW_TEXT, or
+	 * %GTK_TEXT_WINDOW_PRIVATE.
 	 *
 	 * Params:
 	 *     type = window to affect
@@ -1329,7 +1329,7 @@ public class TextView : Container, ScrollableIF
 	 * gtk_text_view_set_border_window_size()).
 	 *
 	 * Params:
-	 *     win = a #GtkTextWindowType except #GTK_TEXT_WINDOW_PRIVATE
+	 *     win = a #GtkTextWindowType except %GTK_TEXT_WINDOW_PRIVATE
 	 *     windowX = window x coordinate
 	 *     windowY = window y coordinate
 	 *     bufferX = buffer x coordinate return location or %NULL
@@ -1342,29 +1342,29 @@ public class TextView : Container, ScrollableIF
 
 	protected class OnBackspaceDelegateWrapper
 	{
-		static OnBackspaceDelegateWrapper[] listeners;
 		void delegate(TextView) dlg;
 		gulong handlerId;
 		
 		this(void delegate(TextView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onBackspaceListeners ~= this;
 		}
 		
 		void remove(OnBackspaceDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onBackspaceListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onBackspaceListeners[index] = null;
+					onBackspaceListeners = std.algorithm.remove(onBackspaceListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnBackspaceDelegateWrapper[] onBackspaceListeners;
 
 	/**
 	 * The ::backspace signal is a
@@ -1399,29 +1399,29 @@ public class TextView : Container, ScrollableIF
 
 	protected class OnCopyClipboardDelegateWrapper
 	{
-		static OnCopyClipboardDelegateWrapper[] listeners;
 		void delegate(TextView) dlg;
 		gulong handlerId;
 		
 		this(void delegate(TextView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCopyClipboardListeners ~= this;
 		}
 		
 		void remove(OnCopyClipboardDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCopyClipboardListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCopyClipboardListeners[index] = null;
+					onCopyClipboardListeners = std.algorithm.remove(onCopyClipboardListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCopyClipboardDelegateWrapper[] onCopyClipboardListeners;
 
 	/**
 	 * The ::copy-clipboard signal is a
@@ -1456,29 +1456,29 @@ public class TextView : Container, ScrollableIF
 
 	protected class OnCutClipboardDelegateWrapper
 	{
-		static OnCutClipboardDelegateWrapper[] listeners;
 		void delegate(TextView) dlg;
 		gulong handlerId;
 		
 		this(void delegate(TextView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCutClipboardListeners ~= this;
 		}
 		
 		void remove(OnCutClipboardDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCutClipboardListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCutClipboardListeners[index] = null;
+					onCutClipboardListeners = std.algorithm.remove(onCutClipboardListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCutClipboardDelegateWrapper[] onCutClipboardListeners;
 
 	/**
 	 * The ::cut-clipboard signal is a
@@ -1513,29 +1513,29 @@ public class TextView : Container, ScrollableIF
 
 	protected class OnDeleteFromCursorDelegateWrapper
 	{
-		static OnDeleteFromCursorDelegateWrapper[] listeners;
 		void delegate(GtkDeleteType, int, TextView) dlg;
 		gulong handlerId;
 		
 		this(void delegate(GtkDeleteType, int, TextView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDeleteFromCursorListeners ~= this;
 		}
 		
 		void remove(OnDeleteFromCursorDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDeleteFromCursorListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDeleteFromCursorListeners[index] = null;
+					onDeleteFromCursorListeners = std.algorithm.remove(onDeleteFromCursorListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDeleteFromCursorDelegateWrapper[] onDeleteFromCursorListeners;
 
 	/**
 	 * The ::delete-from-cursor signal is a
@@ -1580,29 +1580,29 @@ public class TextView : Container, ScrollableIF
 
 	protected class OnExtendSelectionDelegateWrapper
 	{
-		static OnExtendSelectionDelegateWrapper[] listeners;
 		bool delegate(GtkTextExtendSelection, TextIter, TextIter, TextIter, TextView) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(GtkTextExtendSelection, TextIter, TextIter, TextIter, TextView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onExtendSelectionListeners ~= this;
 		}
 		
 		void remove(OnExtendSelectionDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onExtendSelectionListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onExtendSelectionListeners[index] = null;
+					onExtendSelectionListeners = std.algorithm.remove(onExtendSelectionListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnExtendSelectionDelegateWrapper[] onExtendSelectionListeners;
 
 	/**
 	 * The ::extend-selection signal is emitted when the selection needs to be
@@ -1644,29 +1644,29 @@ public class TextView : Container, ScrollableIF
 
 	protected class OnInsertAtCursorDelegateWrapper
 	{
-		static OnInsertAtCursorDelegateWrapper[] listeners;
 		void delegate(string, TextView) dlg;
 		gulong handlerId;
 		
 		this(void delegate(string, TextView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onInsertAtCursorListeners ~= this;
 		}
 		
 		void remove(OnInsertAtCursorDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onInsertAtCursorListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onInsertAtCursorListeners[index] = null;
+					onInsertAtCursorListeners = std.algorithm.remove(onInsertAtCursorListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnInsertAtCursorDelegateWrapper[] onInsertAtCursorListeners;
 
 	/**
 	 * The ::insert-at-cursor signal is a
@@ -1704,29 +1704,29 @@ public class TextView : Container, ScrollableIF
 
 	protected class OnMoveCursorDelegateWrapper
 	{
-		static OnMoveCursorDelegateWrapper[] listeners;
 		void delegate(GtkMovementStep, int, bool, TextView) dlg;
 		gulong handlerId;
 		
 		this(void delegate(GtkMovementStep, int, bool, TextView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMoveCursorListeners ~= this;
 		}
 		
 		void remove(OnMoveCursorDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMoveCursorListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMoveCursorListeners[index] = null;
+					onMoveCursorListeners = std.algorithm.remove(onMoveCursorListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMoveCursorDelegateWrapper[] onMoveCursorListeners;
 
 	/**
 	 * The ::move-cursor signal is a
@@ -1779,29 +1779,29 @@ public class TextView : Container, ScrollableIF
 
 	protected class OnMoveViewportDelegateWrapper
 	{
-		static OnMoveViewportDelegateWrapper[] listeners;
 		void delegate(GtkScrollStep, int, TextView) dlg;
 		gulong handlerId;
 		
 		this(void delegate(GtkScrollStep, int, TextView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMoveViewportListeners ~= this;
 		}
 		
 		void remove(OnMoveViewportDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMoveViewportListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMoveViewportListeners[index] = null;
+					onMoveViewportListeners = std.algorithm.remove(onMoveViewportListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMoveViewportDelegateWrapper[] onMoveViewportListeners;
 
 	/**
 	 * The ::move-viewport signal is a
@@ -1841,29 +1841,29 @@ public class TextView : Container, ScrollableIF
 
 	protected class OnPasteClipboardDelegateWrapper
 	{
-		static OnPasteClipboardDelegateWrapper[] listeners;
 		void delegate(TextView) dlg;
 		gulong handlerId;
 		
 		this(void delegate(TextView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPasteClipboardListeners ~= this;
 		}
 		
 		void remove(OnPasteClipboardDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPasteClipboardListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPasteClipboardListeners[index] = null;
+					onPasteClipboardListeners = std.algorithm.remove(onPasteClipboardListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPasteClipboardDelegateWrapper[] onPasteClipboardListeners;
 
 	/**
 	 * The ::paste-clipboard signal is a
@@ -1899,29 +1899,29 @@ public class TextView : Container, ScrollableIF
 
 	protected class OnPopulatePopupDelegateWrapper
 	{
-		static OnPopulatePopupDelegateWrapper[] listeners;
 		void delegate(Widget, TextView) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Widget, TextView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPopulatePopupListeners ~= this;
 		}
 		
 		void remove(OnPopulatePopupDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPopulatePopupListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPopulatePopupListeners[index] = null;
+					onPopulatePopupListeners = std.algorithm.remove(onPopulatePopupListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPopulatePopupDelegateWrapper[] onPopulatePopupListeners;
 
 	/**
 	 * The ::populate-popup signal gets emitted before showing the
@@ -1967,29 +1967,29 @@ public class TextView : Container, ScrollableIF
 
 	protected class OnPreeditChangedDelegateWrapper
 	{
-		static OnPreeditChangedDelegateWrapper[] listeners;
 		void delegate(string, TextView) dlg;
 		gulong handlerId;
 		
 		this(void delegate(string, TextView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPreeditChangedListeners ~= this;
 		}
 		
 		void remove(OnPreeditChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPreeditChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPreeditChangedListeners[index] = null;
+					onPreeditChangedListeners = std.algorithm.remove(onPreeditChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPreeditChangedDelegateWrapper[] onPreeditChangedListeners;
 
 	/**
 	 * If an input method is used, the typed text will not immediately
@@ -2029,29 +2029,29 @@ public class TextView : Container, ScrollableIF
 
 	protected class OnSelectAllDelegateWrapper
 	{
-		static OnSelectAllDelegateWrapper[] listeners;
 		void delegate(bool, TextView) dlg;
 		gulong handlerId;
 		
 		this(void delegate(bool, TextView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onSelectAllListeners ~= this;
 		}
 		
 		void remove(OnSelectAllDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onSelectAllListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onSelectAllListeners[index] = null;
+					onSelectAllListeners = std.algorithm.remove(onSelectAllListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnSelectAllDelegateWrapper[] onSelectAllListeners;
 
 	/**
 	 * The ::select-all signal is a
@@ -2090,29 +2090,29 @@ public class TextView : Container, ScrollableIF
 
 	protected class OnSetAnchorDelegateWrapper
 	{
-		static OnSetAnchorDelegateWrapper[] listeners;
 		void delegate(TextView) dlg;
 		gulong handlerId;
 		
 		this(void delegate(TextView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onSetAnchorListeners ~= this;
 		}
 		
 		void remove(OnSetAnchorDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onSetAnchorListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onSetAnchorListeners[index] = null;
+					onSetAnchorListeners = std.algorithm.remove(onSetAnchorListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnSetAnchorDelegateWrapper[] onSetAnchorListeners;
 
 	/**
 	 * The ::set-anchor signal is a
@@ -2148,29 +2148,29 @@ public class TextView : Container, ScrollableIF
 
 	protected class OnToggleCursorVisibleDelegateWrapper
 	{
-		static OnToggleCursorVisibleDelegateWrapper[] listeners;
 		void delegate(TextView) dlg;
 		gulong handlerId;
 		
 		this(void delegate(TextView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onToggleCursorVisibleListeners ~= this;
 		}
 		
 		void remove(OnToggleCursorVisibleDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onToggleCursorVisibleListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onToggleCursorVisibleListeners[index] = null;
+					onToggleCursorVisibleListeners = std.algorithm.remove(onToggleCursorVisibleListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnToggleCursorVisibleDelegateWrapper[] onToggleCursorVisibleListeners;
 
 	/**
 	 * The ::toggle-cursor-visible signal is a
@@ -2205,29 +2205,29 @@ public class TextView : Container, ScrollableIF
 
 	protected class OnToggleOverwriteDelegateWrapper
 	{
-		static OnToggleOverwriteDelegateWrapper[] listeners;
 		void delegate(TextView) dlg;
 		gulong handlerId;
 		
 		this(void delegate(TextView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onToggleOverwriteListeners ~= this;
 		}
 		
 		void remove(OnToggleOverwriteDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onToggleOverwriteListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onToggleOverwriteListeners[index] = null;
+					onToggleOverwriteListeners = std.algorithm.remove(onToggleOverwriteListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnToggleOverwriteDelegateWrapper[] onToggleOverwriteListeners;
 
 	/**
 	 * The ::toggle-overwrite signal is a

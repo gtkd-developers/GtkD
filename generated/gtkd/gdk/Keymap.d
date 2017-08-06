@@ -413,29 +413,29 @@ public class Keymap : ObjectG
 
 	protected class OnDirectionChangedDelegateWrapper
 	{
-		static OnDirectionChangedDelegateWrapper[] listeners;
 		void delegate(Keymap) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Keymap) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDirectionChangedListeners ~= this;
 		}
 		
 		void remove(OnDirectionChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDirectionChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDirectionChangedListeners[index] = null;
+					onDirectionChangedListeners = std.algorithm.remove(onDirectionChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDirectionChangedDelegateWrapper[] onDirectionChangedListeners;
 
 	/**
 	 * The ::direction-changed signal gets emitted when the direction of
@@ -468,29 +468,29 @@ public class Keymap : ObjectG
 
 	protected class OnKeysChangedDelegateWrapper
 	{
-		static OnKeysChangedDelegateWrapper[] listeners;
 		void delegate(Keymap) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Keymap) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onKeysChangedListeners ~= this;
 		}
 		
 		void remove(OnKeysChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onKeysChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onKeysChangedListeners[index] = null;
+					onKeysChangedListeners = std.algorithm.remove(onKeysChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnKeysChangedDelegateWrapper[] onKeysChangedListeners;
 
 	/**
 	 * The ::keys-changed signal is emitted when the mapping represented by
@@ -523,29 +523,29 @@ public class Keymap : ObjectG
 
 	protected class OnStateChangedDelegateWrapper
 	{
-		static OnStateChangedDelegateWrapper[] listeners;
 		void delegate(Keymap) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Keymap) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onStateChangedListeners ~= this;
 		}
 		
 		void remove(OnStateChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onStateChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onStateChangedListeners[index] = null;
+					onStateChangedListeners = std.algorithm.remove(onStateChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnStateChangedDelegateWrapper[] onStateChangedListeners;
 
 	/**
 	 * The ::state-changed signal is emitted when the state of the

@@ -307,29 +307,29 @@ public class Calendar : Widget
 
 	protected class OnDaySelectedDelegateWrapper
 	{
-		static OnDaySelectedDelegateWrapper[] listeners;
 		void delegate(Calendar) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Calendar) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDaySelectedListeners ~= this;
 		}
 		
 		void remove(OnDaySelectedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDaySelectedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDaySelectedListeners[index] = null;
+					onDaySelectedListeners = std.algorithm.remove(onDaySelectedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDaySelectedDelegateWrapper[] onDaySelectedListeners;
 
 	/**
 	 * Emitted when the user selects a day.
@@ -359,29 +359,29 @@ public class Calendar : Widget
 
 	protected class OnDaySelectedDoubleClickDelegateWrapper
 	{
-		static OnDaySelectedDoubleClickDelegateWrapper[] listeners;
 		void delegate(Calendar) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Calendar) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDaySelectedDoubleClickListeners ~= this;
 		}
 		
 		void remove(OnDaySelectedDoubleClickDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDaySelectedDoubleClickListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDaySelectedDoubleClickListeners[index] = null;
+					onDaySelectedDoubleClickListeners = std.algorithm.remove(onDaySelectedDoubleClickListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDaySelectedDoubleClickDelegateWrapper[] onDaySelectedDoubleClickListeners;
 
 	/**
 	 * Emitted when the user double-clicks a day.
@@ -411,29 +411,29 @@ public class Calendar : Widget
 
 	protected class OnMonthChangedDelegateWrapper
 	{
-		static OnMonthChangedDelegateWrapper[] listeners;
 		void delegate(Calendar) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Calendar) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMonthChangedListeners ~= this;
 		}
 		
 		void remove(OnMonthChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMonthChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMonthChangedListeners[index] = null;
+					onMonthChangedListeners = std.algorithm.remove(onMonthChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMonthChangedDelegateWrapper[] onMonthChangedListeners;
 
 	/**
 	 * Emitted when the user clicks a button to change the selected month on a
@@ -464,29 +464,29 @@ public class Calendar : Widget
 
 	protected class OnNextMonthDelegateWrapper
 	{
-		static OnNextMonthDelegateWrapper[] listeners;
 		void delegate(Calendar) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Calendar) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onNextMonthListeners ~= this;
 		}
 		
 		void remove(OnNextMonthDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onNextMonthListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onNextMonthListeners[index] = null;
+					onNextMonthListeners = std.algorithm.remove(onNextMonthListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnNextMonthDelegateWrapper[] onNextMonthListeners;
 
 	/**
 	 * Emitted when the user switched to the next month.
@@ -516,29 +516,29 @@ public class Calendar : Widget
 
 	protected class OnNextYearDelegateWrapper
 	{
-		static OnNextYearDelegateWrapper[] listeners;
 		void delegate(Calendar) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Calendar) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onNextYearListeners ~= this;
 		}
 		
 		void remove(OnNextYearDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onNextYearListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onNextYearListeners[index] = null;
+					onNextYearListeners = std.algorithm.remove(onNextYearListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnNextYearDelegateWrapper[] onNextYearListeners;
 
 	/**
 	 * Emitted when user switched to the next year.
@@ -568,29 +568,29 @@ public class Calendar : Widget
 
 	protected class OnPrevMonthDelegateWrapper
 	{
-		static OnPrevMonthDelegateWrapper[] listeners;
 		void delegate(Calendar) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Calendar) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPrevMonthListeners ~= this;
 		}
 		
 		void remove(OnPrevMonthDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPrevMonthListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPrevMonthListeners[index] = null;
+					onPrevMonthListeners = std.algorithm.remove(onPrevMonthListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPrevMonthDelegateWrapper[] onPrevMonthListeners;
 
 	/**
 	 * Emitted when the user switched to the previous month.
@@ -620,29 +620,29 @@ public class Calendar : Widget
 
 	protected class OnPrevYearDelegateWrapper
 	{
-		static OnPrevYearDelegateWrapper[] listeners;
 		void delegate(Calendar) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Calendar) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPrevYearListeners ~= this;
 		}
 		
 		void remove(OnPrevYearDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPrevYearListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPrevYearListeners[index] = null;
+					onPrevYearListeners = std.algorithm.remove(onPrevYearListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPrevYearDelegateWrapper[] onPrevYearListeners;
 
 	/**
 	 * Emitted when user switched to the previous year.

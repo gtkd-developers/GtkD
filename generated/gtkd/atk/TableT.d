@@ -518,29 +518,29 @@ public template TableT(TStruct)
 
 	protected class OnColumnDeletedDelegateWrapper
 	{
-		static OnColumnDeletedDelegateWrapper[] listeners;
 		void delegate(int, int, TableIF) dlg;
 		gulong handlerId;
 		
 		this(void delegate(int, int, TableIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onColumnDeletedListeners ~= this;
 		}
 		
 		void remove(OnColumnDeletedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onColumnDeletedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onColumnDeletedListeners[index] = null;
+					onColumnDeletedListeners = std.algorithm.remove(onColumnDeletedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnColumnDeletedDelegateWrapper[] onColumnDeletedListeners;
 
 	/**
 	 * The "column-deleted" signal is emitted by an object which
@@ -575,29 +575,29 @@ public template TableT(TStruct)
 
 	protected class OnColumnInsertedDelegateWrapper
 	{
-		static OnColumnInsertedDelegateWrapper[] listeners;
 		void delegate(int, int, TableIF) dlg;
 		gulong handlerId;
 		
 		this(void delegate(int, int, TableIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onColumnInsertedListeners ~= this;
 		}
 		
 		void remove(OnColumnInsertedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onColumnInsertedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onColumnInsertedListeners[index] = null;
+					onColumnInsertedListeners = std.algorithm.remove(onColumnInsertedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnColumnInsertedDelegateWrapper[] onColumnInsertedListeners;
 
 	/**
 	 * The "column-inserted" signal is emitted by an object which
@@ -632,29 +632,29 @@ public template TableT(TStruct)
 
 	protected class OnColumnReorderedDelegateWrapper
 	{
-		static OnColumnReorderedDelegateWrapper[] listeners;
 		void delegate(TableIF) dlg;
 		gulong handlerId;
 		
 		this(void delegate(TableIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onColumnReorderedListeners ~= this;
 		}
 		
 		void remove(OnColumnReorderedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onColumnReorderedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onColumnReorderedListeners[index] = null;
+					onColumnReorderedListeners = std.algorithm.remove(onColumnReorderedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnColumnReorderedDelegateWrapper[] onColumnReorderedListeners;
 
 	/**
 	 * The "column-reordered" signal is emitted by an object which
@@ -686,29 +686,29 @@ public template TableT(TStruct)
 
 	protected class OnModelChangedDelegateWrapper
 	{
-		static OnModelChangedDelegateWrapper[] listeners;
 		void delegate(TableIF) dlg;
 		gulong handlerId;
 		
 		this(void delegate(TableIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onModelChangedListeners ~= this;
 		}
 		
 		void remove(OnModelChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onModelChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onModelChangedListeners[index] = null;
+					onModelChangedListeners = std.algorithm.remove(onModelChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnModelChangedDelegateWrapper[] onModelChangedListeners;
 
 	/**
 	 * The "model-changed" signal is emitted by an object which
@@ -740,29 +740,29 @@ public template TableT(TStruct)
 
 	protected class OnRowDeletedDelegateWrapper
 	{
-		static OnRowDeletedDelegateWrapper[] listeners;
 		void delegate(int, int, TableIF) dlg;
 		gulong handlerId;
 		
 		this(void delegate(int, int, TableIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onRowDeletedListeners ~= this;
 		}
 		
 		void remove(OnRowDeletedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onRowDeletedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onRowDeletedListeners[index] = null;
+					onRowDeletedListeners = std.algorithm.remove(onRowDeletedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnRowDeletedDelegateWrapper[] onRowDeletedListeners;
 
 	/**
 	 * The "row-deleted" signal is emitted by an object which
@@ -797,29 +797,29 @@ public template TableT(TStruct)
 
 	protected class OnRowInsertedDelegateWrapper
 	{
-		static OnRowInsertedDelegateWrapper[] listeners;
 		void delegate(int, int, TableIF) dlg;
 		gulong handlerId;
 		
 		this(void delegate(int, int, TableIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onRowInsertedListeners ~= this;
 		}
 		
 		void remove(OnRowInsertedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onRowInsertedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onRowInsertedListeners[index] = null;
+					onRowInsertedListeners = std.algorithm.remove(onRowInsertedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnRowInsertedDelegateWrapper[] onRowInsertedListeners;
 
 	/**
 	 * The "row-inserted" signal is emitted by an object which
@@ -854,29 +854,29 @@ public template TableT(TStruct)
 
 	protected class OnRowReorderedDelegateWrapper
 	{
-		static OnRowReorderedDelegateWrapper[] listeners;
 		void delegate(TableIF) dlg;
 		gulong handlerId;
 		
 		this(void delegate(TableIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onRowReorderedListeners ~= this;
 		}
 		
 		void remove(OnRowReorderedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onRowReorderedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onRowReorderedListeners[index] = null;
+					onRowReorderedListeners = std.algorithm.remove(onRowReorderedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnRowReorderedDelegateWrapper[] onRowReorderedListeners;
 
 	/**
 	 * The "row-reordered" signal is emitted by an object which

@@ -373,29 +373,29 @@ public class Adjustment : ObjectG
 
 	protected class OnChangedDelegateWrapper
 	{
-		static OnChangedDelegateWrapper[] listeners;
 		void delegate(Adjustment) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Adjustment) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onChangedListeners ~= this;
 		}
 		
 		void remove(OnChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onChangedListeners[index] = null;
+					onChangedListeners = std.algorithm.remove(onChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnChangedDelegateWrapper[] onChangedListeners;
 
 	/**
 	 * Emitted when one or more of the #GtkAdjustment properties have been
@@ -426,29 +426,29 @@ public class Adjustment : ObjectG
 
 	protected class OnValueChangedDelegateWrapper
 	{
-		static OnValueChangedDelegateWrapper[] listeners;
 		void delegate(Adjustment) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Adjustment) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onValueChangedListeners ~= this;
 		}
 		
 		void remove(OnValueChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onValueChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onValueChangedListeners[index] = null;
+					onValueChangedListeners = std.algorithm.remove(onValueChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnValueChangedDelegateWrapper[] onValueChangedListeners;
 
 	/**
 	 * Emitted when the #GtkAdjustment:value property has been changed.

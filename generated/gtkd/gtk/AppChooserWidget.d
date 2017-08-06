@@ -294,29 +294,29 @@ public class AppChooserWidget : Box, AppChooserIF
 
 	protected class OnApplicationActivatedDelegateWrapper
 	{
-		static OnApplicationActivatedDelegateWrapper[] listeners;
 		void delegate(AppInfoIF, AppChooserWidget) dlg;
 		gulong handlerId;
 		
 		this(void delegate(AppInfoIF, AppChooserWidget) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onApplicationActivatedListeners ~= this;
 		}
 		
 		void remove(OnApplicationActivatedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onApplicationActivatedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onApplicationActivatedListeners[index] = null;
+					onApplicationActivatedListeners = std.algorithm.remove(onApplicationActivatedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnApplicationActivatedDelegateWrapper[] onApplicationActivatedListeners;
 
 	/**
 	 * Emitted when an application item is activated from the widget's list.
@@ -353,29 +353,29 @@ public class AppChooserWidget : Box, AppChooserIF
 
 	protected class OnApplicationSelectedDelegateWrapper
 	{
-		static OnApplicationSelectedDelegateWrapper[] listeners;
 		void delegate(AppInfoIF, AppChooserWidget) dlg;
 		gulong handlerId;
 		
 		this(void delegate(AppInfoIF, AppChooserWidget) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onApplicationSelectedListeners ~= this;
 		}
 		
 		void remove(OnApplicationSelectedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onApplicationSelectedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onApplicationSelectedListeners[index] = null;
+					onApplicationSelectedListeners = std.algorithm.remove(onApplicationSelectedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnApplicationSelectedDelegateWrapper[] onApplicationSelectedListeners;
 
 	/**
 	 * Emitted when an application item is selected from the widget's list.
@@ -408,29 +408,29 @@ public class AppChooserWidget : Box, AppChooserIF
 
 	protected class OnPopulatePopupDelegateWrapper
 	{
-		static OnPopulatePopupDelegateWrapper[] listeners;
 		void delegate(Menu, AppInfoIF, AppChooserWidget) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Menu, AppInfoIF, AppChooserWidget) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPopulatePopupListeners ~= this;
 		}
 		
 		void remove(OnPopulatePopupDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPopulatePopupListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPopulatePopupListeners[index] = null;
+					onPopulatePopupListeners = std.algorithm.remove(onPopulatePopupListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPopulatePopupDelegateWrapper[] onPopulatePopupListeners;
 
 	/**
 	 * Emitted when a context menu is about to popup over an application item.

@@ -606,29 +606,29 @@ public class ListBox : Container
 
 	protected class OnActivateCursorRowDelegateWrapper
 	{
-		static OnActivateCursorRowDelegateWrapper[] listeners;
 		void delegate(ListBox) dlg;
 		gulong handlerId;
 		
 		this(void delegate(ListBox) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onActivateCursorRowListeners ~= this;
 		}
 		
 		void remove(OnActivateCursorRowDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onActivateCursorRowListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onActivateCursorRowListeners[index] = null;
+					onActivateCursorRowListeners = std.algorithm.remove(onActivateCursorRowListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnActivateCursorRowDelegateWrapper[] onActivateCursorRowListeners;
 
 	/** */
 	gulong addOnActivateCursorRow(void delegate(ListBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -656,29 +656,29 @@ public class ListBox : Container
 
 	protected class OnMoveCursorDelegateWrapper
 	{
-		static OnMoveCursorDelegateWrapper[] listeners;
 		void delegate(GtkMovementStep, int, ListBox) dlg;
 		gulong handlerId;
 		
 		this(void delegate(GtkMovementStep, int, ListBox) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMoveCursorListeners ~= this;
 		}
 		
 		void remove(OnMoveCursorDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMoveCursorListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMoveCursorListeners[index] = null;
+					onMoveCursorListeners = std.algorithm.remove(onMoveCursorListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMoveCursorDelegateWrapper[] onMoveCursorListeners;
 
 	/** */
 	gulong addOnMoveCursor(void delegate(GtkMovementStep, int, ListBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -706,29 +706,29 @@ public class ListBox : Container
 
 	protected class OnRowActivatedDelegateWrapper
 	{
-		static OnRowActivatedDelegateWrapper[] listeners;
 		void delegate(ListBoxRow, ListBox) dlg;
 		gulong handlerId;
 		
 		this(void delegate(ListBoxRow, ListBox) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onRowActivatedListeners ~= this;
 		}
 		
 		void remove(OnRowActivatedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onRowActivatedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onRowActivatedListeners[index] = null;
+					onRowActivatedListeners = std.algorithm.remove(onRowActivatedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnRowActivatedDelegateWrapper[] onRowActivatedListeners;
 
 	/**
 	 * The ::row-activated signal is emitted when a row has been activated by the user.
@@ -763,29 +763,29 @@ public class ListBox : Container
 
 	protected class OnRowSelectedDelegateWrapper
 	{
-		static OnRowSelectedDelegateWrapper[] listeners;
 		void delegate(ListBoxRow, ListBox) dlg;
 		gulong handlerId;
 		
 		this(void delegate(ListBoxRow, ListBox) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onRowSelectedListeners ~= this;
 		}
 		
 		void remove(OnRowSelectedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onRowSelectedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onRowSelectedListeners[index] = null;
+					onRowSelectedListeners = std.algorithm.remove(onRowSelectedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnRowSelectedDelegateWrapper[] onRowSelectedListeners;
 
 	/**
 	 * The ::row-selected signal is emitted when a new row is selected, or
@@ -825,29 +825,29 @@ public class ListBox : Container
 
 	protected class OnSelectAllDelegateWrapper
 	{
-		static OnSelectAllDelegateWrapper[] listeners;
 		void delegate(ListBox) dlg;
 		gulong handlerId;
 		
 		this(void delegate(ListBox) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onSelectAllListeners ~= this;
 		}
 		
 		void remove(OnSelectAllDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onSelectAllListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onSelectAllListeners[index] = null;
+					onSelectAllListeners = std.algorithm.remove(onSelectAllListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnSelectAllDelegateWrapper[] onSelectAllListeners;
 
 	/**
 	 * The ::select-all signal is a [keybinding signal][GtkBindingSignal]
@@ -883,29 +883,29 @@ public class ListBox : Container
 
 	protected class OnSelectedRowsChangedDelegateWrapper
 	{
-		static OnSelectedRowsChangedDelegateWrapper[] listeners;
 		void delegate(ListBox) dlg;
 		gulong handlerId;
 		
 		this(void delegate(ListBox) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onSelectedRowsChangedListeners ~= this;
 		}
 		
 		void remove(OnSelectedRowsChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onSelectedRowsChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onSelectedRowsChangedListeners[index] = null;
+					onSelectedRowsChangedListeners = std.algorithm.remove(onSelectedRowsChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnSelectedRowsChangedDelegateWrapper[] onSelectedRowsChangedListeners;
 
 	/**
 	 * The ::selected-rows-changed signal is emitted when the
@@ -938,29 +938,29 @@ public class ListBox : Container
 
 	protected class OnToggleCursorRowDelegateWrapper
 	{
-		static OnToggleCursorRowDelegateWrapper[] listeners;
 		void delegate(ListBox) dlg;
 		gulong handlerId;
 		
 		this(void delegate(ListBox) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onToggleCursorRowListeners ~= this;
 		}
 		
 		void remove(OnToggleCursorRowDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onToggleCursorRowListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onToggleCursorRowListeners[index] = null;
+					onToggleCursorRowListeners = std.algorithm.remove(onToggleCursorRowListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnToggleCursorRowDelegateWrapper[] onToggleCursorRowListeners;
 
 	/** */
 	gulong addOnToggleCursorRow(void delegate(ListBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -988,29 +988,29 @@ public class ListBox : Container
 
 	protected class OnUnselectAllDelegateWrapper
 	{
-		static OnUnselectAllDelegateWrapper[] listeners;
 		void delegate(ListBox) dlg;
 		gulong handlerId;
 		
 		this(void delegate(ListBox) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onUnselectAllListeners ~= this;
 		}
 		
 		void remove(OnUnselectAllDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onUnselectAllListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onUnselectAllListeners[index] = null;
+					onUnselectAllListeners = std.algorithm.remove(onUnselectAllListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnUnselectAllDelegateWrapper[] onUnselectAllListeners;
 
 	/**
 	 * The ::unselect-all signal is a [keybinding signal][GtkBindingSignal]

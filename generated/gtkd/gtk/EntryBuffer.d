@@ -286,29 +286,29 @@ public class EntryBuffer : ObjectG
 
 	protected class OnDeletedTextDelegateWrapper
 	{
-		static OnDeletedTextDelegateWrapper[] listeners;
 		void delegate(uint, uint, EntryBuffer) dlg;
 		gulong handlerId;
 		
 		this(void delegate(uint, uint, EntryBuffer) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDeletedTextListeners ~= this;
 		}
 		
 		void remove(OnDeletedTextDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDeletedTextListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDeletedTextListeners[index] = null;
+					onDeletedTextListeners = std.algorithm.remove(onDeletedTextListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDeletedTextDelegateWrapper[] onDeletedTextListeners;
 
 	/**
 	 * This signal is emitted after text is deleted from the buffer.
@@ -344,29 +344,29 @@ public class EntryBuffer : ObjectG
 
 	protected class OnInsertedTextDelegateWrapper
 	{
-		static OnInsertedTextDelegateWrapper[] listeners;
 		void delegate(uint, string, uint, EntryBuffer) dlg;
 		gulong handlerId;
 		
 		this(void delegate(uint, string, uint, EntryBuffer) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onInsertedTextListeners ~= this;
 		}
 		
 		void remove(OnInsertedTextDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onInsertedTextListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onInsertedTextListeners[index] = null;
+					onInsertedTextListeners = std.algorithm.remove(onInsertedTextListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnInsertedTextDelegateWrapper[] onInsertedTextListeners;
 
 	/**
 	 * This signal is emitted after text is inserted into the buffer.

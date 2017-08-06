@@ -122,29 +122,29 @@ public class ThreadedSocketService : SocketService
 
 	protected class OnRunDelegateWrapper
 	{
-		static OnRunDelegateWrapper[] listeners;
 		bool delegate(SocketConnection, ObjectG, ThreadedSocketService) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(SocketConnection, ObjectG, ThreadedSocketService) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onRunListeners ~= this;
 		}
 		
 		void remove(OnRunDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onRunListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onRunListeners[index] = null;
+					onRunListeners = std.algorithm.remove(onRunListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnRunDelegateWrapper[] onRunListeners;
 
 	/**
 	 * The ::run signal is emitted in a worker thread in response to an

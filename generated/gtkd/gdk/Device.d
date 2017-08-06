@@ -779,29 +779,29 @@ public class Device : ObjectG
 
 	protected class OnChangedDelegateWrapper
 	{
-		static OnChangedDelegateWrapper[] listeners;
 		void delegate(Device) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Device) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onChangedListeners ~= this;
 		}
 		
 		void remove(OnChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onChangedListeners[index] = null;
+					onChangedListeners = std.algorithm.remove(onChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnChangedDelegateWrapper[] onChangedListeners;
 
 	/**
 	 * The ::changed signal is emitted either when the #GdkDevice
@@ -837,29 +837,29 @@ public class Device : ObjectG
 
 	protected class OnToolChangedDelegateWrapper
 	{
-		static OnToolChangedDelegateWrapper[] listeners;
 		void delegate(DeviceTool, Device) dlg;
 		gulong handlerId;
 		
 		this(void delegate(DeviceTool, Device) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onToolChangedListeners ~= this;
 		}
 		
 		void remove(OnToolChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onToolChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onToolChangedListeners[index] = null;
+					onToolChangedListeners = std.algorithm.remove(onToolChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnToolChangedDelegateWrapper[] onToolChangedListeners;
 
 	/**
 	 * The ::tool-changed signal is emitted on pen/eraser

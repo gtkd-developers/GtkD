@@ -611,29 +611,29 @@ public class Button : Bin, ActionableIF, ActivatableIF
 
 	protected class OnActivateDelegateWrapper
 	{
-		static OnActivateDelegateWrapper[] listeners;
 		void delegate(Button) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Button) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onActivateListeners ~= this;
 		}
 		
 		void remove(OnActivateDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onActivateListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onActivateListeners[index] = null;
+					onActivateListeners = std.algorithm.remove(onActivateListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnActivateDelegateWrapper[] onActivateListeners;
 
 	/**
 	 * The ::activate signal on GtkButton is an action signal and
@@ -666,29 +666,29 @@ public class Button : Bin, ActionableIF, ActivatableIF
 
 	protected class OnClickedDelegateWrapper
 	{
-		static OnClickedDelegateWrapper[] listeners;
 		void delegate(Button) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Button) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onClickedListeners ~= this;
 		}
 		
 		void remove(OnClickedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onClickedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onClickedListeners[index] = null;
+					onClickedListeners = std.algorithm.remove(onClickedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnClickedDelegateWrapper[] onClickedListeners;
 
 	/**
 	 * Emitted when the button has been activated (pressed and released).
@@ -718,29 +718,29 @@ public class Button : Bin, ActionableIF, ActivatableIF
 
 	protected class OnEnterDelegateWrapper
 	{
-		static OnEnterDelegateWrapper[] listeners;
 		void delegate(Button) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Button) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onEnterListeners ~= this;
 		}
 		
 		void remove(OnEnterDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onEnterListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onEnterListeners[index] = null;
+					onEnterListeners = std.algorithm.remove(onEnterListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnEnterDelegateWrapper[] onEnterListeners;
 
 	/**
 	 * Emitted when the pointer enters the button.
@@ -772,29 +772,29 @@ public class Button : Bin, ActionableIF, ActivatableIF
 
 	protected class OnLeaveDelegateWrapper
 	{
-		static OnLeaveDelegateWrapper[] listeners;
 		void delegate(Button) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Button) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onLeaveListeners ~= this;
 		}
 		
 		void remove(OnLeaveDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onLeaveListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onLeaveListeners[index] = null;
+					onLeaveListeners = std.algorithm.remove(onLeaveListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnLeaveDelegateWrapper[] onLeaveListeners;
 
 	/**
 	 * Emitted when the pointer leaves the button.
@@ -826,29 +826,29 @@ public class Button : Bin, ActionableIF, ActivatableIF
 
 	protected class OnPressedDelegateWrapper
 	{
-		static OnPressedDelegateWrapper[] listeners;
 		void delegate(Button) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Button) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPressedListeners ~= this;
 		}
 		
 		void remove(OnPressedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPressedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPressedListeners[index] = null;
+					onPressedListeners = std.algorithm.remove(onPressedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPressedDelegateWrapper[] onPressedListeners;
 
 	/**
 	 * Emitted when the button is pressed.
@@ -880,29 +880,29 @@ public class Button : Bin, ActionableIF, ActivatableIF
 
 	protected class OnReleasedDelegateWrapper
 	{
-		static OnReleasedDelegateWrapper[] listeners;
 		void delegate(Button) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Button) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onReleasedListeners ~= this;
 		}
 		
 		void remove(OnReleasedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onReleasedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onReleasedListeners[index] = null;
+					onReleasedListeners = std.algorithm.remove(onReleasedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnReleasedDelegateWrapper[] onReleasedListeners;
 
 	/**
 	 * Emitted when the button is released.

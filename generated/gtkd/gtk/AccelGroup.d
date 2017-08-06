@@ -323,29 +323,29 @@ public class AccelGroup : ObjectG
 
 	protected class OnAccelActivateDelegateWrapper
 	{
-		static OnAccelActivateDelegateWrapper[] listeners;
 		bool delegate(ObjectG, uint, GdkModifierType, AccelGroup) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(ObjectG, uint, GdkModifierType, AccelGroup) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onAccelActivateListeners ~= this;
 		}
 		
 		void remove(OnAccelActivateDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onAccelActivateListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onAccelActivateListeners[index] = null;
+					onAccelActivateListeners = std.algorithm.remove(onAccelActivateListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnAccelActivateDelegateWrapper[] onAccelActivateListeners;
 
 	/**
 	 * The accel-activate signal is an implementation detail of
@@ -383,29 +383,29 @@ public class AccelGroup : ObjectG
 
 	protected class OnAccelChangedDelegateWrapper
 	{
-		static OnAccelChangedDelegateWrapper[] listeners;
 		void delegate(uint, GdkModifierType, Closure, AccelGroup) dlg;
 		gulong handlerId;
 		
 		this(void delegate(uint, GdkModifierType, Closure, AccelGroup) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onAccelChangedListeners ~= this;
 		}
 		
 		void remove(OnAccelChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onAccelChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onAccelChangedListeners[index] = null;
+					onAccelChangedListeners = std.algorithm.remove(onAccelChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnAccelChangedDelegateWrapper[] onAccelChangedListeners;
 
 	/**
 	 * The accel-changed signal is emitted when an entry

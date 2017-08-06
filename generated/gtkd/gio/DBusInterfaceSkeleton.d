@@ -323,29 +323,29 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 
 	protected class OnGAuthorizeMethodDelegateWrapper
 	{
-		static OnGAuthorizeMethodDelegateWrapper[] listeners;
 		bool delegate(DBusMethodInvocation, DBusInterfaceSkeleton) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(DBusMethodInvocation, DBusInterfaceSkeleton) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onGAuthorizeMethodListeners ~= this;
 		}
 		
 		void remove(OnGAuthorizeMethodDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onGAuthorizeMethodListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onGAuthorizeMethodListeners[index] = null;
+					onGAuthorizeMethodListeners = std.algorithm.remove(onGAuthorizeMethodListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnGAuthorizeMethodDelegateWrapper[] onGAuthorizeMethodListeners;
 
 	/**
 	 * Emitted when a method is invoked by a remote caller and used to

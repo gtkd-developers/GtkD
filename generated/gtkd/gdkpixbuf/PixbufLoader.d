@@ -341,29 +341,29 @@ public class PixbufLoader : ObjectG
 
 	protected class OnAreaPreparedDelegateWrapper
 	{
-		static OnAreaPreparedDelegateWrapper[] listeners;
 		void delegate(PixbufLoader) dlg;
 		gulong handlerId;
 		
 		this(void delegate(PixbufLoader) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onAreaPreparedListeners ~= this;
 		}
 		
 		void remove(OnAreaPreparedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onAreaPreparedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onAreaPreparedListeners[index] = null;
+					onAreaPreparedListeners = std.algorithm.remove(onAreaPreparedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnAreaPreparedDelegateWrapper[] onAreaPreparedListeners;
 
 	/**
 	 * This signal is emitted when the pixbuf loader has allocated the
@@ -396,29 +396,29 @@ public class PixbufLoader : ObjectG
 
 	protected class OnAreaUpdatedDelegateWrapper
 	{
-		static OnAreaUpdatedDelegateWrapper[] listeners;
 		void delegate(int, int, int, int, PixbufLoader) dlg;
 		gulong handlerId;
 		
 		this(void delegate(int, int, int, int, PixbufLoader) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onAreaUpdatedListeners ~= this;
 		}
 		
 		void remove(OnAreaUpdatedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onAreaUpdatedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onAreaUpdatedListeners[index] = null;
+					onAreaUpdatedListeners = std.algorithm.remove(onAreaUpdatedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnAreaUpdatedDelegateWrapper[] onAreaUpdatedListeners;
 
 	/**
 	 * This signal is emitted when a significant area of the image being
@@ -458,29 +458,29 @@ public class PixbufLoader : ObjectG
 
 	protected class OnClosedDelegateWrapper
 	{
-		static OnClosedDelegateWrapper[] listeners;
 		void delegate(PixbufLoader) dlg;
 		gulong handlerId;
 		
 		this(void delegate(PixbufLoader) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onClosedListeners ~= this;
 		}
 		
 		void remove(OnClosedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onClosedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onClosedListeners[index] = null;
+					onClosedListeners = std.algorithm.remove(onClosedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnClosedDelegateWrapper[] onClosedListeners;
 
 	/**
 	 * This signal is emitted when gdk_pixbuf_loader_close() is called.
@@ -513,29 +513,29 @@ public class PixbufLoader : ObjectG
 
 	protected class OnSizePreparedDelegateWrapper
 	{
-		static OnSizePreparedDelegateWrapper[] listeners;
 		void delegate(int, int, PixbufLoader) dlg;
 		gulong handlerId;
 		
 		this(void delegate(int, int, PixbufLoader) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onSizePreparedListeners ~= this;
 		}
 		
 		void remove(OnSizePreparedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onSizePreparedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onSizePreparedListeners[index] = null;
+					onSizePreparedListeners = std.algorithm.remove(onSizePreparedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnSizePreparedDelegateWrapper[] onSizePreparedListeners;
 
 	/**
 	 * This signal is emitted when the pixbuf loader has been fed the

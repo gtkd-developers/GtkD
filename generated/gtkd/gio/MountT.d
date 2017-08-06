@@ -655,29 +655,29 @@ public template MountT(TStruct)
 
 	protected class OnChangedDelegateWrapper
 	{
-		static OnChangedDelegateWrapper[] listeners;
 		void delegate(MountIF) dlg;
 		gulong handlerId;
 		
 		this(void delegate(MountIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onChangedListeners ~= this;
 		}
 		
 		void remove(OnChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onChangedListeners[index] = null;
+					onChangedListeners = std.algorithm.remove(onChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnChangedDelegateWrapper[] onChangedListeners;
 
 	/**
 	 * Emitted when the mount has been changed.
@@ -707,29 +707,29 @@ public template MountT(TStruct)
 
 	protected class OnPreUnmountDelegateWrapper
 	{
-		static OnPreUnmountDelegateWrapper[] listeners;
 		void delegate(MountIF) dlg;
 		gulong handlerId;
 		
 		this(void delegate(MountIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPreUnmountListeners ~= this;
 		}
 		
 		void remove(OnPreUnmountDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPreUnmountListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPreUnmountListeners[index] = null;
+					onPreUnmountListeners = std.algorithm.remove(onPreUnmountListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPreUnmountDelegateWrapper[] onPreUnmountListeners;
 
 	/**
 	 * This signal is emitted when the #GMount is about to be
@@ -762,29 +762,29 @@ public template MountT(TStruct)
 
 	protected class OnUnmountedDelegateWrapper
 	{
-		static OnUnmountedDelegateWrapper[] listeners;
 		void delegate(MountIF) dlg;
 		gulong handlerId;
 		
 		this(void delegate(MountIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onUnmountedListeners ~= this;
 		}
 		
 		void remove(OnUnmountedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onUnmountedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onUnmountedListeners[index] = null;
+					onUnmountedListeners = std.algorithm.remove(onUnmountedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnUnmountedDelegateWrapper[] onUnmountedListeners;
 
 	/**
 	 * This signal is emitted when the #GMount have been

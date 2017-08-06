@@ -361,7 +361,8 @@ public class Application : GioApplication
 	 * if another application has it — this is just the most
 	 * recently-focused window within this application.
 	 *
-	 * Returns: the active window
+	 * Returns: the active window, or %NULL if
+	 *     there isn't one.
 	 *
 	 * Since: 3.6
 	 */
@@ -728,29 +729,29 @@ public class Application : GioApplication
 
 	protected class OnWindowAddedDelegateWrapper
 	{
-		static OnWindowAddedDelegateWrapper[] listeners;
 		void delegate(Window, Application) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Window, Application) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onWindowAddedListeners ~= this;
 		}
 		
 		void remove(OnWindowAddedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onWindowAddedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onWindowAddedListeners[index] = null;
+					onWindowAddedListeners = std.algorithm.remove(onWindowAddedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnWindowAddedDelegateWrapper[] onWindowAddedListeners;
 
 	/**
 	 * Emitted when a #GtkWindow is added to @application through
@@ -786,29 +787,29 @@ public class Application : GioApplication
 
 	protected class OnWindowRemovedDelegateWrapper
 	{
-		static OnWindowRemovedDelegateWrapper[] listeners;
 		void delegate(Window, Application) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Window, Application) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onWindowRemovedListeners ~= this;
 		}
 		
 		void remove(OnWindowRemovedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onWindowRemovedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onWindowRemovedListeners[index] = null;
+					onWindowRemovedListeners = std.algorithm.remove(onWindowRemovedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnWindowRemovedDelegateWrapper[] onWindowRemovedListeners;
 
 	/**
 	 * Emitted when a #GtkWindow is removed from @application,

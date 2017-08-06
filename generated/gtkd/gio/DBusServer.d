@@ -224,29 +224,29 @@ public class DBusServer : ObjectG, InitableIF
 
 	protected class OnNewConnectionDelegateWrapper
 	{
-		static OnNewConnectionDelegateWrapper[] listeners;
 		bool delegate(DBusConnection, DBusServer) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(DBusConnection, DBusServer) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onNewConnectionListeners ~= this;
 		}
 		
 		void remove(OnNewConnectionDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onNewConnectionListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onNewConnectionListeners[index] = null;
+					onNewConnectionListeners = std.algorithm.remove(onNewConnectionListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnNewConnectionDelegateWrapper[] onNewConnectionListeners;
 
 	/**
 	 * Emitted when a new authenticated connection has been made. Use

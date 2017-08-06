@@ -360,29 +360,29 @@ public class MenuShell : Container
 
 	protected class OnActivateCurrentDelegateWrapper
 	{
-		static OnActivateCurrentDelegateWrapper[] listeners;
 		void delegate(bool, MenuShell) dlg;
 		gulong handlerId;
 		
 		this(void delegate(bool, MenuShell) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onActivateCurrentListeners ~= this;
 		}
 		
 		void remove(OnActivateCurrentDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onActivateCurrentListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onActivateCurrentListeners[index] = null;
+					onActivateCurrentListeners = std.algorithm.remove(onActivateCurrentListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnActivateCurrentDelegateWrapper[] onActivateCurrentListeners;
 
 	/**
 	 * An action signal that activates the current menu item within
@@ -416,29 +416,29 @@ public class MenuShell : Container
 
 	protected class OnCancelDelegateWrapper
 	{
-		static OnCancelDelegateWrapper[] listeners;
 		void delegate(MenuShell) dlg;
 		gulong handlerId;
 		
 		this(void delegate(MenuShell) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCancelListeners ~= this;
 		}
 		
 		void remove(OnCancelDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCancelListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCancelListeners[index] = null;
+					onCancelListeners = std.algorithm.remove(onCancelListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCancelDelegateWrapper[] onCancelListeners;
 
 	/**
 	 * An action signal which cancels the selection within the menu shell.
@@ -469,29 +469,29 @@ public class MenuShell : Container
 
 	protected class OnCycleFocusDelegateWrapper
 	{
-		static OnCycleFocusDelegateWrapper[] listeners;
 		void delegate(GtkDirectionType, MenuShell) dlg;
 		gulong handlerId;
 		
 		this(void delegate(GtkDirectionType, MenuShell) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCycleFocusListeners ~= this;
 		}
 		
 		void remove(OnCycleFocusDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCycleFocusListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCycleFocusListeners[index] = null;
+					onCycleFocusListeners = std.algorithm.remove(onCycleFocusListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCycleFocusDelegateWrapper[] onCycleFocusListeners;
 
 	/**
 	 * A keybinding signal which moves the focus in the
@@ -525,29 +525,29 @@ public class MenuShell : Container
 
 	protected class OnDeactivateDelegateWrapper
 	{
-		static OnDeactivateDelegateWrapper[] listeners;
 		void delegate(MenuShell) dlg;
 		gulong handlerId;
 		
 		this(void delegate(MenuShell) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDeactivateListeners ~= this;
 		}
 		
 		void remove(OnDeactivateDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDeactivateListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDeactivateListeners[index] = null;
+					onDeactivateListeners = std.algorithm.remove(onDeactivateListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDeactivateDelegateWrapper[] onDeactivateListeners;
 
 	/**
 	 * This signal is emitted when a menu shell is deactivated.
@@ -577,29 +577,29 @@ public class MenuShell : Container
 
 	protected class OnInsertDelegateWrapper
 	{
-		static OnInsertDelegateWrapper[] listeners;
 		void delegate(Widget, int, MenuShell) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Widget, int, MenuShell) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onInsertListeners ~= this;
 		}
 		
 		void remove(OnInsertDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onInsertListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onInsertListeners[index] = null;
+					onInsertListeners = std.algorithm.remove(onInsertListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnInsertDelegateWrapper[] onInsertListeners;
 
 	/**
 	 * The ::insert signal is emitted when a new #GtkMenuItem is added to
@@ -640,29 +640,29 @@ public class MenuShell : Container
 
 	protected class OnMoveCurrentDelegateWrapper
 	{
-		static OnMoveCurrentDelegateWrapper[] listeners;
 		void delegate(GtkMenuDirectionType, MenuShell) dlg;
 		gulong handlerId;
 		
 		this(void delegate(GtkMenuDirectionType, MenuShell) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMoveCurrentListeners ~= this;
 		}
 		
 		void remove(OnMoveCurrentDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMoveCurrentListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMoveCurrentListeners[index] = null;
+					onMoveCurrentListeners = std.algorithm.remove(onMoveCurrentListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMoveCurrentDelegateWrapper[] onMoveCurrentListeners;
 
 	/**
 	 * An keybinding signal which moves the current menu item
@@ -696,29 +696,29 @@ public class MenuShell : Container
 
 	protected class OnMoveSelectedDelegateWrapper
 	{
-		static OnMoveSelectedDelegateWrapper[] listeners;
 		bool delegate(int, MenuShell) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(int, MenuShell) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMoveSelectedListeners ~= this;
 		}
 		
 		void remove(OnMoveSelectedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMoveSelectedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMoveSelectedListeners[index] = null;
+					onMoveSelectedListeners = std.algorithm.remove(onMoveSelectedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMoveSelectedDelegateWrapper[] onMoveSelectedListeners;
 
 	/**
 	 * The ::move-selected signal is emitted to move the selection to
@@ -756,29 +756,29 @@ public class MenuShell : Container
 
 	protected class OnSelectionDoneDelegateWrapper
 	{
-		static OnSelectionDoneDelegateWrapper[] listeners;
 		void delegate(MenuShell) dlg;
 		gulong handlerId;
 		
 		this(void delegate(MenuShell) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onSelectionDoneListeners ~= this;
 		}
 		
 		void remove(OnSelectionDoneDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onSelectionDoneListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onSelectionDoneListeners[index] = null;
+					onSelectionDoneListeners = std.algorithm.remove(onSelectionDoneListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnSelectionDoneDelegateWrapper[] onSelectionDoneListeners;
 
 	/**
 	 * This signal is emitted when a selection has been

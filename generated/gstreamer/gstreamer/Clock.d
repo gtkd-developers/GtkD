@@ -735,29 +735,29 @@ public class Clock : ObjectGst
 
 	protected class OnSyncedDelegateWrapper
 	{
-		static OnSyncedDelegateWrapper[] listeners;
 		void delegate(bool, Clock) dlg;
 		gulong handlerId;
 		
 		this(void delegate(bool, Clock) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onSyncedListeners ~= this;
 		}
 		
 		void remove(OnSyncedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onSyncedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onSyncedListeners[index] = null;
+					onSyncedListeners = std.algorithm.remove(onSyncedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnSyncedDelegateWrapper[] onSyncedListeners;
 
 	/**
 	 * Signaled on clocks with GST_CLOCK_FLAG_NEEDS_STARTUP_SYNC set once

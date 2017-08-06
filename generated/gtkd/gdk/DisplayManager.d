@@ -222,29 +222,29 @@ public class DisplayManager : ObjectG
 
 	protected class OnDisplayOpenedDelegateWrapper
 	{
-		static OnDisplayOpenedDelegateWrapper[] listeners;
 		void delegate(Display, DisplayManager) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Display, DisplayManager) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDisplayOpenedListeners ~= this;
 		}
 		
 		void remove(OnDisplayOpenedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDisplayOpenedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDisplayOpenedListeners[index] = null;
+					onDisplayOpenedListeners = std.algorithm.remove(onDisplayOpenedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDisplayOpenedDelegateWrapper[] onDisplayOpenedListeners;
 
 	/**
 	 * The ::display-opened signal is emitted when a display is opened.

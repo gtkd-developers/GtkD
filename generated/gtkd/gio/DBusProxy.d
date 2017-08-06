@@ -861,29 +861,29 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 
 	protected class OnGPropertiesChangedDelegateWrapper
 	{
-		static OnGPropertiesChangedDelegateWrapper[] listeners;
 		void delegate(Variant, string[], DBusProxy) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Variant, string[], DBusProxy) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onGPropertiesChangedListeners ~= this;
 		}
 		
 		void remove(OnGPropertiesChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onGPropertiesChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onGPropertiesChangedListeners[index] = null;
+					onGPropertiesChangedListeners = std.algorithm.remove(onGPropertiesChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnGPropertiesChangedDelegateWrapper[] onGPropertiesChangedListeners;
 
 	/**
 	 * Emitted when one or more D-Bus properties on @proxy changes. The
@@ -930,29 +930,29 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 
 	protected class OnGSignalDelegateWrapper
 	{
-		static OnGSignalDelegateWrapper[] listeners;
 		void delegate(string, string, Variant, DBusProxy) dlg;
 		gulong handlerId;
 		
 		this(void delegate(string, string, Variant, DBusProxy) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onGSignalListeners ~= this;
 		}
 		
 		void remove(OnGSignalDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onGSignalListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onGSignalListeners[index] = null;
+					onGSignalListeners = std.algorithm.remove(onGSignalListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnGSignalDelegateWrapper[] onGSignalListeners;
 
 	/**
 	 * Emitted when a signal from the remote object and interface that @proxy is for, has been received.

@@ -794,29 +794,29 @@ public class StatusIcon : ObjectG
 
 	protected class OnActivateDelegateWrapper
 	{
-		static OnActivateDelegateWrapper[] listeners;
 		void delegate(StatusIcon) dlg;
 		gulong handlerId;
 		
 		this(void delegate(StatusIcon) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onActivateListeners ~= this;
 		}
 		
 		void remove(OnActivateDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onActivateListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onActivateListeners[index] = null;
+					onActivateListeners = std.algorithm.remove(onActivateListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnActivateDelegateWrapper[] onActivateListeners;
 
 	/**
 	 * Gets emitted when the user activates the status icon.
@@ -852,29 +852,29 @@ public class StatusIcon : ObjectG
 
 	protected class OnButtonPressDelegateWrapper
 	{
-		static OnButtonPressDelegateWrapper[] listeners;
 		bool delegate(GdkEventButton*, StatusIcon) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(GdkEventButton*, StatusIcon) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onButtonPressListeners ~= this;
 		}
 		
 		void remove(OnButtonPressDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onButtonPressListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onButtonPressListeners[index] = null;
+					onButtonPressListeners = std.algorithm.remove(onButtonPressListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnButtonPressDelegateWrapper[] onButtonPressListeners;
 
 	/**
 	 * The ::button-press-event signal will be emitted when a button
@@ -917,29 +917,29 @@ public class StatusIcon : ObjectG
 
 	protected class OnButtonPressEventGenericDelegateWrapper
 	{
-		static OnButtonPressEventGenericDelegateWrapper[] listeners;
 		bool delegate(Event, StatusIcon) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(Event, StatusIcon) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onButtonPressEventGenericListeners ~= this;
 		}
 		
 		void remove(OnButtonPressEventGenericDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onButtonPressEventGenericListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onButtonPressEventGenericListeners[index] = null;
+					onButtonPressEventGenericListeners = std.algorithm.remove(onButtonPressEventGenericListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnButtonPressEventGenericDelegateWrapper[] onButtonPressEventGenericListeners;
 	
 	/**
 	 * The ::button-press-event signal will be emitted when a button
@@ -982,29 +982,29 @@ public class StatusIcon : ObjectG
 
 	protected class OnButtonReleaseDelegateWrapper
 	{
-		static OnButtonReleaseDelegateWrapper[] listeners;
 		bool delegate(GdkEventButton*, StatusIcon) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(GdkEventButton*, StatusIcon) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onButtonReleaseListeners ~= this;
 		}
 		
 		void remove(OnButtonReleaseDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onButtonReleaseListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onButtonReleaseListeners[index] = null;
+					onButtonReleaseListeners = std.algorithm.remove(onButtonReleaseListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnButtonReleaseDelegateWrapper[] onButtonReleaseListeners;
 
 	/**
 	 * The ::button-release-event signal will be emitted when a button
@@ -1047,29 +1047,29 @@ public class StatusIcon : ObjectG
 
 	protected class OnButtonReleaseEventGenericDelegateWrapper
 	{
-		static OnButtonReleaseEventGenericDelegateWrapper[] listeners;
 		bool delegate(Event, StatusIcon) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(Event, StatusIcon) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onButtonReleaseEventGenericListeners ~= this;
 		}
 		
 		void remove(OnButtonReleaseEventGenericDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onButtonReleaseEventGenericListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onButtonReleaseEventGenericListeners[index] = null;
+					onButtonReleaseEventGenericListeners = std.algorithm.remove(onButtonReleaseEventGenericListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnButtonReleaseEventGenericDelegateWrapper[] onButtonReleaseEventGenericListeners;
 	
 	/**
 	 * The ::button-release-event signal will be emitted when a button
@@ -1112,29 +1112,29 @@ public class StatusIcon : ObjectG
 
 	protected class OnPopupMenuDelegateWrapper
 	{
-		static OnPopupMenuDelegateWrapper[] listeners;
 		void delegate(uint, uint, StatusIcon) dlg;
 		gulong handlerId;
 		
 		this(void delegate(uint, uint, StatusIcon) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPopupMenuListeners ~= this;
 		}
 		
 		void remove(OnPopupMenuDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPopupMenuListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPopupMenuListeners[index] = null;
+					onPopupMenuListeners = std.algorithm.remove(onPopupMenuListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPopupMenuDelegateWrapper[] onPopupMenuListeners;
 
 	/**
 	 * Gets emitted when the user brings up the context menu
@@ -1180,29 +1180,29 @@ public class StatusIcon : ObjectG
 
 	protected class OnQueryTooltipDelegateWrapper
 	{
-		static OnQueryTooltipDelegateWrapper[] listeners;
 		bool delegate(int, int, bool, Tooltip, StatusIcon) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(int, int, bool, Tooltip, StatusIcon) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onQueryTooltipListeners ~= this;
 		}
 		
 		void remove(OnQueryTooltipDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onQueryTooltipListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onQueryTooltipListeners[index] = null;
+					onQueryTooltipListeners = std.algorithm.remove(onQueryTooltipListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnQueryTooltipDelegateWrapper[] onQueryTooltipListeners;
 
 	/**
 	 * Emitted when the hover timeout has expired with the
@@ -1258,29 +1258,29 @@ public class StatusIcon : ObjectG
 
 	protected class OnScrollDelegateWrapper
 	{
-		static OnScrollDelegateWrapper[] listeners;
 		bool delegate(GdkEventScroll*, StatusIcon) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(GdkEventScroll*, StatusIcon) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onScrollListeners ~= this;
 		}
 		
 		void remove(OnScrollDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onScrollListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onScrollListeners[index] = null;
+					onScrollListeners = std.algorithm.remove(onScrollListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnScrollDelegateWrapper[] onScrollListeners;
 
 	/**
 	 * The ::scroll-event signal is emitted when a button in the 4 to 7
@@ -1323,29 +1323,29 @@ public class StatusIcon : ObjectG
 
 	protected class OnScrollEventGenericDelegateWrapper
 	{
-		static OnScrollEventGenericDelegateWrapper[] listeners;
 		bool delegate(Event, StatusIcon) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(Event, StatusIcon) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onScrollEventGenericListeners ~= this;
 		}
 		
 		void remove(OnScrollEventGenericDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onScrollEventGenericListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onScrollEventGenericListeners[index] = null;
+					onScrollEventGenericListeners = std.algorithm.remove(onScrollEventGenericListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnScrollEventGenericDelegateWrapper[] onScrollEventGenericListeners;
 	
 	/**
 	 * The ::scroll-event signal is emitted when a button in the 4 to 7
@@ -1388,29 +1388,29 @@ public class StatusIcon : ObjectG
 
 	protected class OnSizeChangedDelegateWrapper
 	{
-		static OnSizeChangedDelegateWrapper[] listeners;
 		bool delegate(int, StatusIcon) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(int, StatusIcon) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onSizeChangedListeners ~= this;
 		}
 		
 		void remove(OnSizeChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onSizeChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onSizeChangedListeners[index] = null;
+					onSizeChangedListeners = std.algorithm.remove(onSizeChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnSizeChangedDelegateWrapper[] onSizeChangedListeners;
 
 	/**
 	 * Gets emitted when the size available for the image

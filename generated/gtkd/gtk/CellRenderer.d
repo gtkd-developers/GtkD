@@ -506,29 +506,29 @@ public class CellRenderer : ObjectG
 
 	protected class OnEditingCanceledDelegateWrapper
 	{
-		static OnEditingCanceledDelegateWrapper[] listeners;
 		void delegate(CellRenderer) dlg;
 		gulong handlerId;
 		
 		this(void delegate(CellRenderer) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onEditingCanceledListeners ~= this;
 		}
 		
 		void remove(OnEditingCanceledDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onEditingCanceledListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onEditingCanceledListeners[index] = null;
+					onEditingCanceledListeners = std.algorithm.remove(onEditingCanceledListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnEditingCanceledDelegateWrapper[] onEditingCanceledListeners;
 
 	/**
 	 * This signal gets emitted when the user cancels the process of editing a
@@ -564,29 +564,29 @@ public class CellRenderer : ObjectG
 
 	protected class OnEditingStartedDelegateWrapper
 	{
-		static OnEditingStartedDelegateWrapper[] listeners;
 		void delegate(CellEditableIF, string, CellRenderer) dlg;
 		gulong handlerId;
 		
 		this(void delegate(CellEditableIF, string, CellRenderer) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onEditingStartedListeners ~= this;
 		}
 		
 		void remove(OnEditingStartedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onEditingStartedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onEditingStartedListeners[index] = null;
+					onEditingStartedListeners = std.algorithm.remove(onEditingStartedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnEditingStartedDelegateWrapper[] onEditingStartedListeners;
 
 	/**
 	 * This signal gets emitted when a cell starts to be edited.

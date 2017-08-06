@@ -143,29 +143,29 @@ public template TreeSortableT(TStruct)
 
 	protected class OnSortColumnChangedDelegateWrapper
 	{
-		static OnSortColumnChangedDelegateWrapper[] listeners;
 		void delegate(TreeSortableIF) dlg;
 		gulong handlerId;
 		
 		this(void delegate(TreeSortableIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onSortColumnChangedListeners ~= this;
 		}
 		
 		void remove(OnSortColumnChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onSortColumnChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onSortColumnChangedListeners[index] = null;
+					onSortColumnChangedListeners = std.algorithm.remove(onSortColumnChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnSortColumnChangedDelegateWrapper[] onSortColumnChangedListeners;
 
 	/**
 	 * The ::sort-column-changed signal is emitted when the sort column

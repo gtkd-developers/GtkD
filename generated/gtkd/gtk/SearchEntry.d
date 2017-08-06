@@ -153,29 +153,29 @@ public class SearchEntry : Entry
 
 	protected class OnNextMatchDelegateWrapper
 	{
-		static OnNextMatchDelegateWrapper[] listeners;
 		void delegate(SearchEntry) dlg;
 		gulong handlerId;
 		
 		this(void delegate(SearchEntry) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onNextMatchListeners ~= this;
 		}
 		
 		void remove(OnNextMatchDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onNextMatchListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onNextMatchListeners[index] = null;
+					onNextMatchListeners = std.algorithm.remove(onNextMatchListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnNextMatchDelegateWrapper[] onNextMatchListeners;
 
 	/**
 	 * The ::next-match signal is a [keybinding signal][GtkBindingSignal]
@@ -214,29 +214,29 @@ public class SearchEntry : Entry
 
 	protected class OnPreviousMatchDelegateWrapper
 	{
-		static OnPreviousMatchDelegateWrapper[] listeners;
 		void delegate(SearchEntry) dlg;
 		gulong handlerId;
 		
 		this(void delegate(SearchEntry) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPreviousMatchListeners ~= this;
 		}
 		
 		void remove(OnPreviousMatchDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPreviousMatchListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPreviousMatchListeners[index] = null;
+					onPreviousMatchListeners = std.algorithm.remove(onPreviousMatchListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPreviousMatchDelegateWrapper[] onPreviousMatchListeners;
 
 	/**
 	 * The ::previous-match signal is a [keybinding signal][GtkBindingSignal]
@@ -275,29 +275,29 @@ public class SearchEntry : Entry
 
 	protected class OnSearchChangedDelegateWrapper
 	{
-		static OnSearchChangedDelegateWrapper[] listeners;
 		void delegate(SearchEntry) dlg;
 		gulong handlerId;
 		
 		this(void delegate(SearchEntry) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onSearchChangedListeners ~= this;
 		}
 		
 		void remove(OnSearchChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onSearchChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onSearchChangedListeners[index] = null;
+					onSearchChangedListeners = std.algorithm.remove(onSearchChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnSearchChangedDelegateWrapper[] onSearchChangedListeners;
 
 	/**
 	 * The #GtkSearchEntry::search-changed signal is emitted with a short
@@ -330,29 +330,29 @@ public class SearchEntry : Entry
 
 	protected class OnStopSearchDelegateWrapper
 	{
-		static OnStopSearchDelegateWrapper[] listeners;
 		void delegate(SearchEntry) dlg;
 		gulong handlerId;
 		
 		this(void delegate(SearchEntry) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onStopSearchListeners ~= this;
 		}
 		
 		void remove(OnStopSearchDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onStopSearchListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onStopSearchListeners[index] = null;
+					onStopSearchListeners = std.algorithm.remove(onStopSearchListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnStopSearchDelegateWrapper[] onStopSearchListeners;
 
 	/**
 	 * The ::stop-search signal is a [keybinding signal][GtkBindingSignal]

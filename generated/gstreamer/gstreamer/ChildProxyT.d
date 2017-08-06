@@ -230,29 +230,29 @@ public template ChildProxyT(TStruct)
 
 	protected class OnChildAddedDelegateWrapper
 	{
-		static OnChildAddedDelegateWrapper[] listeners;
 		void delegate(ObjectG, string, ChildProxyIF) dlg;
 		gulong handlerId;
 		
 		this(void delegate(ObjectG, string, ChildProxyIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onChildAddedListeners ~= this;
 		}
 		
 		void remove(OnChildAddedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onChildAddedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onChildAddedListeners[index] = null;
+					onChildAddedListeners = std.algorithm.remove(onChildAddedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnChildAddedDelegateWrapper[] onChildAddedListeners;
 
 	/**
 	 * Will be emitted after the @object was added to the @child_proxy.
@@ -286,29 +286,29 @@ public template ChildProxyT(TStruct)
 
 	protected class OnChildRemovedDelegateWrapper
 	{
-		static OnChildRemovedDelegateWrapper[] listeners;
 		void delegate(ObjectG, string, ChildProxyIF) dlg;
 		gulong handlerId;
 		
 		this(void delegate(ObjectG, string, ChildProxyIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onChildRemovedListeners ~= this;
 		}
 		
 		void remove(OnChildRemovedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onChildRemovedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onChildRemovedListeners[index] = null;
+					onChildRemovedListeners = std.algorithm.remove(onChildRemovedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnChildRemovedDelegateWrapper[] onChildRemovedListeners;
 
 	/**
 	 * Will be emitted after the @object was removed from the @child_proxy.

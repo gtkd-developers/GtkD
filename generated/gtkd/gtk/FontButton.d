@@ -294,29 +294,29 @@ public class FontButton : Button, FontChooserIF
 
 	protected class OnFontSetDelegateWrapper
 	{
-		static OnFontSetDelegateWrapper[] listeners;
 		void delegate(FontButton) dlg;
 		gulong handlerId;
 		
 		this(void delegate(FontButton) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onFontSetListeners ~= this;
 		}
 		
 		void remove(OnFontSetDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onFontSetListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onFontSetListeners[index] = null;
+					onFontSetListeners = std.algorithm.remove(onFontSetListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnFontSetDelegateWrapper[] onFontSetListeners;
 
 	/**
 	 * The ::font-set signal is emitted when the user selects a font.

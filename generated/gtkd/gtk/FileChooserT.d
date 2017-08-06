@@ -434,7 +434,7 @@ public template FileChooserT(TStruct)
 	}
 
 	/**
-	 * Gets the current preview widget; see
+	 * Gets the current extra widget; see
 	 * gtk_file_chooser_set_extra_widget().
 	 *
 	 * Returns: the current extra widget, or %NULL
@@ -1493,29 +1493,29 @@ public template FileChooserT(TStruct)
 
 	protected class OnConfirmOverwriteDelegateWrapper
 	{
-		static OnConfirmOverwriteDelegateWrapper[] listeners;
 		GtkFileChooserConfirmation delegate(FileChooserIF) dlg;
 		gulong handlerId;
 		
 		this(GtkFileChooserConfirmation delegate(FileChooserIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onConfirmOverwriteListeners ~= this;
 		}
 		
 		void remove(OnConfirmOverwriteDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onConfirmOverwriteListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onConfirmOverwriteListeners[index] = null;
+					onConfirmOverwriteListeners = std.algorithm.remove(onConfirmOverwriteListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnConfirmOverwriteDelegateWrapper[] onConfirmOverwriteListeners;
 
 	/**
 	 * This signal gets emitted whenever it is appropriate to present a
@@ -1607,29 +1607,29 @@ public template FileChooserT(TStruct)
 
 	protected class OnCurrentFolderChangedDelegateWrapper
 	{
-		static OnCurrentFolderChangedDelegateWrapper[] listeners;
 		void delegate(FileChooserIF) dlg;
 		gulong handlerId;
 		
 		this(void delegate(FileChooserIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCurrentFolderChangedListeners ~= this;
 		}
 		
 		void remove(OnCurrentFolderChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCurrentFolderChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCurrentFolderChangedListeners[index] = null;
+					onCurrentFolderChangedListeners = std.algorithm.remove(onCurrentFolderChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCurrentFolderChangedDelegateWrapper[] onCurrentFolderChangedListeners;
 
 	/**
 	 * This signal is emitted when the current folder in a #GtkFileChooser
@@ -1671,29 +1671,29 @@ public template FileChooserT(TStruct)
 
 	protected class OnFileActivatedDelegateWrapper
 	{
-		static OnFileActivatedDelegateWrapper[] listeners;
 		void delegate(FileChooserIF) dlg;
 		gulong handlerId;
 		
 		this(void delegate(FileChooserIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onFileActivatedListeners ~= this;
 		}
 		
 		void remove(OnFileActivatedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onFileActivatedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onFileActivatedListeners[index] = null;
+					onFileActivatedListeners = std.algorithm.remove(onFileActivatedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnFileActivatedDelegateWrapper[] onFileActivatedListeners;
 
 	/**
 	 * This signal is emitted when the user "activates" a file in the file
@@ -1733,29 +1733,29 @@ public template FileChooserT(TStruct)
 
 	protected class OnSelectionChangedDelegateWrapper
 	{
-		static OnSelectionChangedDelegateWrapper[] listeners;
 		void delegate(FileChooserIF) dlg;
 		gulong handlerId;
 		
 		this(void delegate(FileChooserIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onSelectionChangedListeners ~= this;
 		}
 		
 		void remove(OnSelectionChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onSelectionChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onSelectionChangedListeners[index] = null;
+					onSelectionChangedListeners = std.algorithm.remove(onSelectionChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnSelectionChangedDelegateWrapper[] onSelectionChangedListeners;
 
 	/**
 	 * This signal is emitted when there is a change in the set of selected files
@@ -1798,29 +1798,29 @@ public template FileChooserT(TStruct)
 
 	protected class OnUpdatePreviewDelegateWrapper
 	{
-		static OnUpdatePreviewDelegateWrapper[] listeners;
 		void delegate(FileChooserIF) dlg;
 		gulong handlerId;
 		
 		this(void delegate(FileChooserIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onUpdatePreviewListeners ~= this;
 		}
 		
 		void remove(OnUpdatePreviewDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onUpdatePreviewListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onUpdatePreviewListeners[index] = null;
+					onUpdatePreviewListeners = std.algorithm.remove(onUpdatePreviewListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnUpdatePreviewDelegateWrapper[] onUpdatePreviewListeners;
 
 	/**
 	 * This signal is emitted when the preview in a file chooser should be

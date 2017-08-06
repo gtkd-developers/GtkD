@@ -723,29 +723,29 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 
 	protected class OnBeginPrintDelegateWrapper
 	{
-		static OnBeginPrintDelegateWrapper[] listeners;
 		void delegate(PrintContext, PrintOperation) dlg;
 		gulong handlerId;
 		
 		this(void delegate(PrintContext, PrintOperation) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onBeginPrintListeners ~= this;
 		}
 		
 		void remove(OnBeginPrintDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onBeginPrintListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onBeginPrintListeners[index] = null;
+					onBeginPrintListeners = std.algorithm.remove(onBeginPrintListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnBeginPrintDelegateWrapper[] onBeginPrintListeners;
 
 	/**
 	 * Emitted after the user has finished changing print settings
@@ -785,29 +785,29 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 
 	protected class OnCreateCustomWidgetDelegateWrapper
 	{
-		static OnCreateCustomWidgetDelegateWrapper[] listeners;
 		ObjectG delegate(PrintOperation) dlg;
 		gulong handlerId;
 		
 		this(ObjectG delegate(PrintOperation) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCreateCustomWidgetListeners ~= this;
 		}
 		
 		void remove(OnCreateCustomWidgetDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCreateCustomWidgetListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCreateCustomWidgetListeners[index] = null;
+					onCreateCustomWidgetListeners = std.algorithm.remove(onCreateCustomWidgetListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCreateCustomWidgetDelegateWrapper[] onCreateCustomWidgetListeners;
 
 	/**
 	 * Emitted when displaying the print dialog. If you return a
@@ -852,29 +852,29 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 
 	protected class OnCustomWidgetApplyDelegateWrapper
 	{
-		static OnCustomWidgetApplyDelegateWrapper[] listeners;
 		void delegate(Widget, PrintOperation) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Widget, PrintOperation) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCustomWidgetApplyListeners ~= this;
 		}
 		
 		void remove(OnCustomWidgetApplyDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCustomWidgetApplyListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCustomWidgetApplyListeners[index] = null;
+					onCustomWidgetApplyListeners = std.algorithm.remove(onCustomWidgetApplyListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCustomWidgetApplyDelegateWrapper[] onCustomWidgetApplyListeners;
 
 	/**
 	 * Emitted right before #GtkPrintOperation::begin-print if you added
@@ -913,29 +913,29 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 
 	protected class OnDoneDelegateWrapper
 	{
-		static OnDoneDelegateWrapper[] listeners;
 		void delegate(GtkPrintOperationResult, PrintOperation) dlg;
 		gulong handlerId;
 		
 		this(void delegate(GtkPrintOperationResult, PrintOperation) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDoneListeners ~= this;
 		}
 		
 		void remove(OnDoneDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDoneListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDoneListeners[index] = null;
+					onDoneListeners = std.algorithm.remove(onDoneListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDoneDelegateWrapper[] onDoneListeners;
 
 	/**
 	 * Emitted when the print operation run has finished doing
@@ -979,29 +979,29 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 
 	protected class OnDrawPageDelegateWrapper
 	{
-		static OnDrawPageDelegateWrapper[] listeners;
 		void delegate(PrintContext, int, PrintOperation) dlg;
 		gulong handlerId;
 		
 		this(void delegate(PrintContext, int, PrintOperation) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDrawPageListeners ~= this;
 		}
 		
 		void remove(OnDrawPageDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDrawPageListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDrawPageListeners[index] = null;
+					onDrawPageListeners = std.algorithm.remove(onDrawPageListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDrawPageDelegateWrapper[] onDrawPageListeners;
 
 	/**
 	 * Emitted for every page that is printed. The signal handler
@@ -1084,29 +1084,29 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 
 	protected class OnEndPrintDelegateWrapper
 	{
-		static OnEndPrintDelegateWrapper[] listeners;
 		void delegate(PrintContext, PrintOperation) dlg;
 		gulong handlerId;
 		
 		this(void delegate(PrintContext, PrintOperation) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onEndPrintListeners ~= this;
 		}
 		
 		void remove(OnEndPrintDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onEndPrintListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onEndPrintListeners[index] = null;
+					onEndPrintListeners = std.algorithm.remove(onEndPrintListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnEndPrintDelegateWrapper[] onEndPrintListeners;
 
 	/**
 	 * Emitted after all pages have been rendered.
@@ -1143,29 +1143,29 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 
 	protected class OnPaginateDelegateWrapper
 	{
-		static OnPaginateDelegateWrapper[] listeners;
 		bool delegate(PrintContext, PrintOperation) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(PrintContext, PrintOperation) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPaginateListeners ~= this;
 		}
 		
 		void remove(OnPaginateDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPaginateListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPaginateListeners[index] = null;
+					onPaginateListeners = std.algorithm.remove(onPaginateListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPaginateDelegateWrapper[] onPaginateListeners;
 
 	/**
 	 * Emitted after the #GtkPrintOperation::begin-print signal, but before
@@ -1214,29 +1214,29 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 
 	protected class OnPreviewDelegateWrapper
 	{
-		static OnPreviewDelegateWrapper[] listeners;
 		bool delegate(PrintOperationPreviewIF, PrintContext, Window, PrintOperation) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(PrintOperationPreviewIF, PrintContext, Window, PrintOperation) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPreviewListeners ~= this;
 		}
 		
 		void remove(OnPreviewDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPreviewListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPreviewListeners[index] = null;
+					onPreviewListeners = std.algorithm.remove(onPreviewListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPreviewDelegateWrapper[] onPreviewListeners;
 
 	/**
 	 * Gets emitted when a preview is requested from the native dialog.
@@ -1290,29 +1290,29 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 
 	protected class OnRequestPageSetupDelegateWrapper
 	{
-		static OnRequestPageSetupDelegateWrapper[] listeners;
 		void delegate(PrintContext, int, PageSetup, PrintOperation) dlg;
 		gulong handlerId;
 		
 		this(void delegate(PrintContext, int, PageSetup, PrintOperation) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onRequestPageSetupListeners ~= this;
 		}
 		
 		void remove(OnRequestPageSetupDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onRequestPageSetupListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onRequestPageSetupListeners[index] = null;
+					onRequestPageSetupListeners = std.algorithm.remove(onRequestPageSetupListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnRequestPageSetupDelegateWrapper[] onRequestPageSetupListeners;
 
 	/**
 	 * Emitted once for every page that is printed, to give
@@ -1351,29 +1351,29 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 
 	protected class OnStatusChangedDelegateWrapper
 	{
-		static OnStatusChangedDelegateWrapper[] listeners;
 		void delegate(PrintOperation) dlg;
 		gulong handlerId;
 		
 		this(void delegate(PrintOperation) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onStatusChangedListeners ~= this;
 		}
 		
 		void remove(OnStatusChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onStatusChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onStatusChangedListeners[index] = null;
+					onStatusChangedListeners = std.algorithm.remove(onStatusChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnStatusChangedDelegateWrapper[] onStatusChangedListeners;
 
 	/**
 	 * Emitted at between the various phases of the print operation.
@@ -1408,29 +1408,29 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 
 	protected class OnUpdateCustomWidgetDelegateWrapper
 	{
-		static OnUpdateCustomWidgetDelegateWrapper[] listeners;
 		void delegate(Widget, PageSetup, PrintSettings, PrintOperation) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Widget, PageSetup, PrintSettings, PrintOperation) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onUpdateCustomWidgetListeners ~= this;
 		}
 		
 		void remove(OnUpdateCustomWidgetDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onUpdateCustomWidgetListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onUpdateCustomWidgetListeners[index] = null;
+					onUpdateCustomWidgetListeners = std.algorithm.remove(onUpdateCustomWidgetListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnUpdateCustomWidgetDelegateWrapper[] onUpdateCustomWidgetListeners;
 
 	/**
 	 * Emitted after change of selected printer. The actual page setup and

@@ -879,29 +879,29 @@ public class SocketClient : ObjectG
 
 	protected class OnDelegateWrapper
 	{
-		static OnDelegateWrapper[] listeners;
 		void delegate(GSocketClientEvent, SocketConnectableIF, IOStream, SocketClient) dlg;
 		gulong handlerId;
 		
 		this(void delegate(GSocketClientEvent, SocketConnectableIF, IOStream, SocketClient) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onListeners ~= this;
 		}
 		
 		void remove(OnDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onListeners[index] = null;
+					onListeners = std.algorithm.remove(onListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDelegateWrapper[] onListeners;
 
 	/**
 	 * Emitted when @client's activity on @connectable changes state.

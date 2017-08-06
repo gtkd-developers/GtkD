@@ -538,29 +538,29 @@ public class Dialog : Window
 
 	protected class OnCloseDelegateWrapper
 	{
-		static OnCloseDelegateWrapper[] listeners;
 		void delegate(Dialog) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Dialog) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCloseListeners ~= this;
 		}
 		
 		void remove(OnCloseDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCloseListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCloseListeners[index] = null;
+					onCloseListeners = std.algorithm.remove(onCloseListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCloseDelegateWrapper[] onCloseListeners;
 
 	/**
 	 * The ::close signal is a
@@ -595,29 +595,29 @@ public class Dialog : Window
 
 	protected class OnResponseDelegateWrapper
 	{
-		static OnResponseDelegateWrapper[] listeners;
 		void delegate(int, Dialog) dlg;
 		gulong handlerId;
 		
 		this(void delegate(int, Dialog) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onResponseListeners ~= this;
 		}
 		
 		void remove(OnResponseDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onResponseListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onResponseListeners[index] = null;
+					onResponseListeners = std.algorithm.remove(onResponseListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnResponseDelegateWrapper[] onResponseListeners;
 
 	/**
 	 * Emitted when an action widget is clicked, the dialog receives a

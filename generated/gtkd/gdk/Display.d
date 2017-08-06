@@ -985,29 +985,29 @@ public class Display : ObjectG
 
 	protected class OnClosedDelegateWrapper
 	{
-		static OnClosedDelegateWrapper[] listeners;
 		void delegate(bool, Display) dlg;
 		gulong handlerId;
 		
 		this(void delegate(bool, Display) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onClosedListeners ~= this;
 		}
 		
 		void remove(OnClosedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onClosedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onClosedListeners[index] = null;
+					onClosedListeners = std.algorithm.remove(onClosedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnClosedDelegateWrapper[] onClosedListeners;
 
 	/**
 	 * The ::closed signal is emitted when the connection to the windowing
@@ -1043,29 +1043,29 @@ public class Display : ObjectG
 
 	protected class OnMonitorAddedDelegateWrapper
 	{
-		static OnMonitorAddedDelegateWrapper[] listeners;
 		void delegate(MonitorG, Display) dlg;
 		gulong handlerId;
 		
 		this(void delegate(MonitorG, Display) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMonitorAddedListeners ~= this;
 		}
 		
 		void remove(OnMonitorAddedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMonitorAddedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMonitorAddedListeners[index] = null;
+					onMonitorAddedListeners = std.algorithm.remove(onMonitorAddedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMonitorAddedDelegateWrapper[] onMonitorAddedListeners;
 
 	/**
 	 * The ::monitor-added signal is emitted whenever a monitor is
@@ -1101,29 +1101,29 @@ public class Display : ObjectG
 
 	protected class OnMonitorRemovedDelegateWrapper
 	{
-		static OnMonitorRemovedDelegateWrapper[] listeners;
 		void delegate(MonitorG, Display) dlg;
 		gulong handlerId;
 		
 		this(void delegate(MonitorG, Display) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMonitorRemovedListeners ~= this;
 		}
 		
 		void remove(OnMonitorRemovedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMonitorRemovedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMonitorRemovedListeners[index] = null;
+					onMonitorRemovedListeners = std.algorithm.remove(onMonitorRemovedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMonitorRemovedDelegateWrapper[] onMonitorRemovedListeners;
 
 	/**
 	 * The ::monitor-removed signal is emitted whenever a monitor is
@@ -1159,29 +1159,29 @@ public class Display : ObjectG
 
 	protected class OnOpenedDelegateWrapper
 	{
-		static OnOpenedDelegateWrapper[] listeners;
 		void delegate(Display) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Display) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onOpenedListeners ~= this;
 		}
 		
 		void remove(OnOpenedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onOpenedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onOpenedListeners[index] = null;
+					onOpenedListeners = std.algorithm.remove(onOpenedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnOpenedDelegateWrapper[] onOpenedListeners;
 
 	/**
 	 * The ::opened signal is emitted when the connection to the windowing
@@ -1212,29 +1212,29 @@ public class Display : ObjectG
 
 	protected class OnSeatAddedDelegateWrapper
 	{
-		static OnSeatAddedDelegateWrapper[] listeners;
 		void delegate(Seat, Display) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Seat, Display) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onSeatAddedListeners ~= this;
 		}
 		
 		void remove(OnSeatAddedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onSeatAddedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onSeatAddedListeners[index] = null;
+					onSeatAddedListeners = std.algorithm.remove(onSeatAddedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnSeatAddedDelegateWrapper[] onSeatAddedListeners;
 
 	/**
 	 * The ::seat-added signal is emitted whenever a new seat is made
@@ -1270,29 +1270,29 @@ public class Display : ObjectG
 
 	protected class OnSeatRemovedDelegateWrapper
 	{
-		static OnSeatRemovedDelegateWrapper[] listeners;
 		void delegate(Seat, Display) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Seat, Display) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onSeatRemovedListeners ~= this;
 		}
 		
 		void remove(OnSeatRemovedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onSeatRemovedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onSeatRemovedListeners[index] = null;
+					onSeatRemovedListeners = std.algorithm.remove(onSeatRemovedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnSeatRemovedDelegateWrapper[] onSeatRemovedListeners;
 
 	/**
 	 * The ::seat-removed signal is emitted whenever a seat is removed

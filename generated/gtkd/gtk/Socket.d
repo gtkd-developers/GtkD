@@ -208,29 +208,29 @@ public class Socket : Container
 
 	protected class OnPlugAddedDelegateWrapper
 	{
-		static OnPlugAddedDelegateWrapper[] listeners;
 		void delegate(Socket) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Socket) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPlugAddedListeners ~= this;
 		}
 		
 		void remove(OnPlugAddedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPlugAddedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPlugAddedListeners[index] = null;
+					onPlugAddedListeners = std.algorithm.remove(onPlugAddedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPlugAddedDelegateWrapper[] onPlugAddedListeners;
 
 	/**
 	 * This signal is emitted when a client is successfully
@@ -261,29 +261,29 @@ public class Socket : Container
 
 	protected class OnPlugRemovedDelegateWrapper
 	{
-		static OnPlugRemovedDelegateWrapper[] listeners;
 		bool delegate(Socket) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(Socket) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPlugRemovedListeners ~= this;
 		}
 		
 		void remove(OnPlugRemovedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPlugRemovedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPlugRemovedListeners[index] = null;
+					onPlugRemovedListeners = std.algorithm.remove(onPlugRemovedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPlugRemovedDelegateWrapper[] onPlugRemovedListeners;
 
 	/**
 	 * This signal is emitted when a client is removed from the socket.

@@ -289,29 +289,29 @@ public class NativeDialog : ObjectG
 
 	protected class OnResponseDelegateWrapper
 	{
-		static OnResponseDelegateWrapper[] listeners;
 		void delegate(int, NativeDialog) dlg;
 		gulong handlerId;
 		
 		this(void delegate(int, NativeDialog) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onResponseListeners ~= this;
 		}
 		
 		void remove(OnResponseDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onResponseListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onResponseListeners[index] = null;
+					onResponseListeners = std.algorithm.remove(onResponseListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnResponseDelegateWrapper[] onResponseListeners;
 
 	/**
 	 * Emitted when the user responds to the dialog.

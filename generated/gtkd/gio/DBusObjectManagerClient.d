@@ -433,29 +433,29 @@ public class DBusObjectManagerClient : ObjectG, AsyncInitableIF, DBusObjectManag
 
 	protected class OnInterfaceProxyPropertiesChangedDelegateWrapper
 	{
-		static OnInterfaceProxyPropertiesChangedDelegateWrapper[] listeners;
 		void delegate(DBusObjectProxy, DBusProxy, Variant, string[], DBusObjectManagerClient) dlg;
 		gulong handlerId;
 		
 		this(void delegate(DBusObjectProxy, DBusProxy, Variant, string[], DBusObjectManagerClient) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onInterfaceProxyPropertiesChangedListeners ~= this;
 		}
 		
 		void remove(OnInterfaceProxyPropertiesChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onInterfaceProxyPropertiesChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onInterfaceProxyPropertiesChangedListeners[index] = null;
+					onInterfaceProxyPropertiesChangedListeners = std.algorithm.remove(onInterfaceProxyPropertiesChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnInterfaceProxyPropertiesChangedDelegateWrapper[] onInterfaceProxyPropertiesChangedListeners;
 
 	/**
 	 * Emitted when one or more D-Bus properties on proxy changes. The
@@ -503,29 +503,29 @@ public class DBusObjectManagerClient : ObjectG, AsyncInitableIF, DBusObjectManag
 
 	protected class OnInterfaceProxySignalDelegateWrapper
 	{
-		static OnInterfaceProxySignalDelegateWrapper[] listeners;
 		void delegate(DBusObjectProxy, DBusProxy, string, string, Variant, DBusObjectManagerClient) dlg;
 		gulong handlerId;
 		
 		this(void delegate(DBusObjectProxy, DBusProxy, string, string, Variant, DBusObjectManagerClient) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onInterfaceProxySignalListeners ~= this;
 		}
 		
 		void remove(OnInterfaceProxySignalDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onInterfaceProxySignalListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onInterfaceProxySignalListeners[index] = null;
+					onInterfaceProxySignalListeners = std.algorithm.remove(onInterfaceProxySignalListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnInterfaceProxySignalDelegateWrapper[] onInterfaceProxySignalListeners;
 
 	/**
 	 * Emitted when a D-Bus signal is received on @interface_proxy.

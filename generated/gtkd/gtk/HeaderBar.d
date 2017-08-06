@@ -296,7 +296,7 @@ public class HeaderBar : Container
 	 * including close, maximize, and minimize.
 	 *
 	 * Params:
-	 *     setting = %TRUE to show standard widow decorations
+	 *     setting = %TRUE to show standard window decorations
 	 *
 	 * Since: 3.10
 	 */

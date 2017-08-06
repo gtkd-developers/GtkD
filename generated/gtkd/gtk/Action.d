@@ -902,29 +902,29 @@ public class Action : ObjectG, BuildableIF
 
 	protected class OnActivateDelegateWrapper
 	{
-		static OnActivateDelegateWrapper[] listeners;
 		void delegate(Action) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Action) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onActivateListeners ~= this;
 		}
 		
 		void remove(OnActivateDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onActivateListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onActivateListeners[index] = null;
+					onActivateListeners = std.algorithm.remove(onActivateListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnActivateDelegateWrapper[] onActivateListeners;
 
 	/**
 	 * The "activate" signal is emitted when the action is activated.

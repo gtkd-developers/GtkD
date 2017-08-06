@@ -122,29 +122,29 @@ public class GestureZoom : Gesture
 
 	protected class OnScaleChangedDelegateWrapper
 	{
-		static OnScaleChangedDelegateWrapper[] listeners;
 		void delegate(double, GestureZoom) dlg;
 		gulong handlerId;
 		
 		this(void delegate(double, GestureZoom) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onScaleChangedListeners ~= this;
 		}
 		
 		void remove(OnScaleChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onScaleChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onScaleChangedListeners[index] = null;
+					onScaleChangedListeners = std.algorithm.remove(onScaleChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnScaleChangedDelegateWrapper[] onScaleChangedListeners;
 
 	/**
 	 * This signal is emitted whenever the distance between both tracked

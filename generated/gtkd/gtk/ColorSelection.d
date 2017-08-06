@@ -409,29 +409,29 @@ public class ColorSelection : Box
 
 	protected class OnColorChangedDelegateWrapper
 	{
-		static OnColorChangedDelegateWrapper[] listeners;
 		void delegate(ColorSelection) dlg;
 		gulong handlerId;
 		
 		this(void delegate(ColorSelection) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onColorChangedListeners ~= this;
 		}
 		
 		void remove(OnColorChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onColorChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onColorChangedListeners[index] = null;
+					onColorChangedListeners = std.algorithm.remove(onColorChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnColorChangedDelegateWrapper[] onColorChangedListeners;
 
 	/**
 	 * This signal is emitted when the color changes in the #GtkColorSelection

@@ -261,29 +261,29 @@ public class ScaleButton : Button, OrientableIF
 
 	protected class OnPopdownDelegateWrapper
 	{
-		static OnPopdownDelegateWrapper[] listeners;
 		void delegate(ScaleButton) dlg;
 		gulong handlerId;
 		
 		this(void delegate(ScaleButton) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPopdownListeners ~= this;
 		}
 		
 		void remove(OnPopdownDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPopdownListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPopdownListeners[index] = null;
+					onPopdownListeners = std.algorithm.remove(onPopdownListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPopdownDelegateWrapper[] onPopdownListeners;
 
 	/**
 	 * The ::popdown signal is a
@@ -319,29 +319,29 @@ public class ScaleButton : Button, OrientableIF
 
 	protected class OnPopupDelegateWrapper
 	{
-		static OnPopupDelegateWrapper[] listeners;
 		void delegate(ScaleButton) dlg;
 		gulong handlerId;
 		
 		this(void delegate(ScaleButton) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPopupListeners ~= this;
 		}
 		
 		void remove(OnPopupDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPopupListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPopupListeners[index] = null;
+					onPopupListeners = std.algorithm.remove(onPopupListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPopupDelegateWrapper[] onPopupListeners;
 
 	/**
 	 * The ::popup signal is a
@@ -377,29 +377,29 @@ public class ScaleButton : Button, OrientableIF
 
 	protected class OnValueChangedDelegateWrapper
 	{
-		static OnValueChangedDelegateWrapper[] listeners;
 		void delegate(double, ScaleButton) dlg;
 		gulong handlerId;
 		
 		this(void delegate(double, ScaleButton) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onValueChangedListeners ~= this;
 		}
 		
 		void remove(OnValueChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onValueChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onValueChangedListeners[index] = null;
+					onValueChangedListeners = std.algorithm.remove(onValueChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnValueChangedDelegateWrapper[] onValueChangedListeners;
 
 	/**
 	 * The ::value-changed signal is emitted when the value field has

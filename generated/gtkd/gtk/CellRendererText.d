@@ -127,29 +127,29 @@ public class CellRendererText : CellRenderer
 
 	protected class OnEditedDelegateWrapper
 	{
-		static OnEditedDelegateWrapper[] listeners;
 		void delegate(string, string, CellRendererText) dlg;
 		gulong handlerId;
 		
 		this(void delegate(string, string, CellRendererText) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onEditedListeners ~= this;
 		}
 		
 		void remove(OnEditedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onEditedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onEditedListeners[index] = null;
+					onEditedListeners = std.algorithm.remove(onEditedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnEditedDelegateWrapper[] onEditedListeners;
 
 	/**
 	 * This signal is emitted after @renderer has been edited.

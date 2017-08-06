@@ -628,29 +628,29 @@ public class Bus : ObjectGst
 
 	protected class OnMessageDelegateWrapper
 	{
-		static OnMessageDelegateWrapper[] listeners;
 		void delegate(Message, Bus) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Message, Bus) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMessageListeners ~= this;
 		}
 		
 		void remove(OnMessageDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMessageListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMessageListeners[index] = null;
+					onMessageListeners = std.algorithm.remove(onMessageListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMessageDelegateWrapper[] onMessageListeners;
 
 	/**
 	 * A message has been posted on the bus. This signal is emitted from a
@@ -685,29 +685,29 @@ public class Bus : ObjectGst
 
 	protected class OnSyncMessageDelegateWrapper
 	{
-		static OnSyncMessageDelegateWrapper[] listeners;
 		void delegate(Message, Bus) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Message, Bus) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onSyncMessageListeners ~= this;
 		}
 		
 		void remove(OnSyncMessageDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onSyncMessageListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onSyncMessageListeners[index] = null;
+					onSyncMessageListeners = std.algorithm.remove(onSyncMessageListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnSyncMessageDelegateWrapper[] onSyncMessageListeners;
 
 	/**
 	 * A message has been posted on the bus. This signal is emitted from the

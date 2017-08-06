@@ -902,29 +902,29 @@ public class Notebook : Container
 
 	protected class OnChangeCurrentPageDelegateWrapper
 	{
-		static OnChangeCurrentPageDelegateWrapper[] listeners;
 		bool delegate(int, Notebook) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(int, Notebook) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onChangeCurrentPageListeners ~= this;
 		}
 		
 		void remove(OnChangeCurrentPageDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onChangeCurrentPageListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onChangeCurrentPageListeners[index] = null;
+					onChangeCurrentPageListeners = std.algorithm.remove(onChangeCurrentPageListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnChangeCurrentPageDelegateWrapper[] onChangeCurrentPageListeners;
 
 	/** */
 	gulong addOnChangeCurrentPage(bool delegate(int, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -952,29 +952,29 @@ public class Notebook : Container
 
 	protected class OnCreateWindowDelegateWrapper
 	{
-		static OnCreateWindowDelegateWrapper[] listeners;
 		Notebook delegate(Widget, int, int, Notebook) dlg;
 		gulong handlerId;
 		
 		this(Notebook delegate(Widget, int, int, Notebook) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCreateWindowListeners ~= this;
 		}
 		
 		void remove(OnCreateWindowDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCreateWindowListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCreateWindowListeners[index] = null;
+					onCreateWindowListeners = std.algorithm.remove(onCreateWindowListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCreateWindowDelegateWrapper[] onCreateWindowListeners;
 
 	/**
 	 * The ::create-window signal is emitted when a detachable
@@ -1022,29 +1022,29 @@ public class Notebook : Container
 
 	protected class OnFocusTabDelegateWrapper
 	{
-		static OnFocusTabDelegateWrapper[] listeners;
 		bool delegate(GtkNotebookTab, Notebook) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(GtkNotebookTab, Notebook) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onFocusTabListeners ~= this;
 		}
 		
 		void remove(OnFocusTabDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onFocusTabListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onFocusTabListeners[index] = null;
+					onFocusTabListeners = std.algorithm.remove(onFocusTabListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnFocusTabDelegateWrapper[] onFocusTabListeners;
 
 	/** */
 	gulong addOnFocusTab(bool delegate(GtkNotebookTab, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -1072,29 +1072,29 @@ public class Notebook : Container
 
 	protected class OnMoveFocusOutDelegateWrapper
 	{
-		static OnMoveFocusOutDelegateWrapper[] listeners;
 		void delegate(GtkDirectionType, Notebook) dlg;
 		gulong handlerId;
 		
 		this(void delegate(GtkDirectionType, Notebook) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMoveFocusOutListeners ~= this;
 		}
 		
 		void remove(OnMoveFocusOutDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMoveFocusOutListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMoveFocusOutListeners[index] = null;
+					onMoveFocusOutListeners = std.algorithm.remove(onMoveFocusOutListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMoveFocusOutDelegateWrapper[] onMoveFocusOutListeners;
 
 	/** */
 	gulong addOnMoveFocusOut(void delegate(GtkDirectionType, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -1122,29 +1122,29 @@ public class Notebook : Container
 
 	protected class OnPageAddedDelegateWrapper
 	{
-		static OnPageAddedDelegateWrapper[] listeners;
 		void delegate(Widget, uint, Notebook) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Widget, uint, Notebook) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPageAddedListeners ~= this;
 		}
 		
 		void remove(OnPageAddedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPageAddedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPageAddedListeners[index] = null;
+					onPageAddedListeners = std.algorithm.remove(onPageAddedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPageAddedDelegateWrapper[] onPageAddedListeners;
 
 	/**
 	 * the ::page-added signal is emitted in the notebook
@@ -1181,29 +1181,29 @@ public class Notebook : Container
 
 	protected class OnPageRemovedDelegateWrapper
 	{
-		static OnPageRemovedDelegateWrapper[] listeners;
 		void delegate(Widget, uint, Notebook) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Widget, uint, Notebook) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPageRemovedListeners ~= this;
 		}
 		
 		void remove(OnPageRemovedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPageRemovedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPageRemovedListeners[index] = null;
+					onPageRemovedListeners = std.algorithm.remove(onPageRemovedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPageRemovedDelegateWrapper[] onPageRemovedListeners;
 
 	/**
 	 * the ::page-removed signal is emitted in the notebook
@@ -1240,29 +1240,29 @@ public class Notebook : Container
 
 	protected class OnPageReorderedDelegateWrapper
 	{
-		static OnPageReorderedDelegateWrapper[] listeners;
 		void delegate(Widget, uint, Notebook) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Widget, uint, Notebook) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPageReorderedListeners ~= this;
 		}
 		
 		void remove(OnPageReorderedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPageReorderedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPageReorderedListeners[index] = null;
+					onPageReorderedListeners = std.algorithm.remove(onPageReorderedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPageReorderedDelegateWrapper[] onPageReorderedListeners;
 
 	/**
 	 * the ::page-reordered signal is emitted in the notebook
@@ -1299,29 +1299,29 @@ public class Notebook : Container
 
 	protected class OnReorderTabDelegateWrapper
 	{
-		static OnReorderTabDelegateWrapper[] listeners;
 		bool delegate(GtkDirectionType, bool, Notebook) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(GtkDirectionType, bool, Notebook) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onReorderTabListeners ~= this;
 		}
 		
 		void remove(OnReorderTabDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onReorderTabListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onReorderTabListeners[index] = null;
+					onReorderTabListeners = std.algorithm.remove(onReorderTabListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnReorderTabDelegateWrapper[] onReorderTabListeners;
 
 	/** */
 	gulong addOnReorderTab(bool delegate(GtkDirectionType, bool, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -1349,29 +1349,29 @@ public class Notebook : Container
 
 	protected class OnSelectPageDelegateWrapper
 	{
-		static OnSelectPageDelegateWrapper[] listeners;
 		bool delegate(bool, Notebook) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(bool, Notebook) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onSelectPageListeners ~= this;
 		}
 		
 		void remove(OnSelectPageDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onSelectPageListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onSelectPageListeners[index] = null;
+					onSelectPageListeners = std.algorithm.remove(onSelectPageListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnSelectPageDelegateWrapper[] onSelectPageListeners;
 
 	/** */
 	gulong addOnSelectPage(bool delegate(bool, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -1399,29 +1399,29 @@ public class Notebook : Container
 
 	protected class OnSwitchPageDelegateWrapper
 	{
-		static OnSwitchPageDelegateWrapper[] listeners;
 		void delegate(Widget, uint, Notebook) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Widget, uint, Notebook) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onSwitchPageListeners ~= this;
 		}
 		
 		void remove(OnSwitchPageDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onSwitchPageListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onSwitchPageListeners[index] = null;
+					onSwitchPageListeners = std.algorithm.remove(onSwitchPageListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnSwitchPageDelegateWrapper[] onSwitchPageListeners;
 
 	/**
 	 * Emitted when the user or a function changes the current page.

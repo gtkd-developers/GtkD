@@ -449,29 +449,29 @@ public template ActionGroupT(TStruct)
 
 	protected class OnActionAddedDelegateWrapper
 	{
-		static OnActionAddedDelegateWrapper[] listeners;
 		void delegate(string, ActionGroupIF) dlg;
 		gulong handlerId;
 		
 		this(void delegate(string, ActionGroupIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onActionAddedListeners ~= this;
 		}
 		
 		void remove(OnActionAddedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onActionAddedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onActionAddedListeners[index] = null;
+					onActionAddedListeners = std.algorithm.remove(onActionAddedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnActionAddedDelegateWrapper[] onActionAddedListeners;
 
 	/**
 	 * Signals that a new action was just added to the group.
@@ -508,29 +508,29 @@ public template ActionGroupT(TStruct)
 
 	protected class OnActionEnabledChangedDelegateWrapper
 	{
-		static OnActionEnabledChangedDelegateWrapper[] listeners;
 		void delegate(string, bool, ActionGroupIF) dlg;
 		gulong handlerId;
 		
 		this(void delegate(string, bool, ActionGroupIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onActionEnabledChangedListeners ~= this;
 		}
 		
 		void remove(OnActionEnabledChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onActionEnabledChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onActionEnabledChangedListeners[index] = null;
+					onActionEnabledChangedListeners = std.algorithm.remove(onActionEnabledChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnActionEnabledChangedDelegateWrapper[] onActionEnabledChangedListeners;
 
 	/**
 	 * Signals that the enabled status of the named action has changed.
@@ -566,29 +566,29 @@ public template ActionGroupT(TStruct)
 
 	protected class OnActionRemovedDelegateWrapper
 	{
-		static OnActionRemovedDelegateWrapper[] listeners;
 		void delegate(string, ActionGroupIF) dlg;
 		gulong handlerId;
 		
 		this(void delegate(string, ActionGroupIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onActionRemovedListeners ~= this;
 		}
 		
 		void remove(OnActionRemovedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onActionRemovedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onActionRemovedListeners[index] = null;
+					onActionRemovedListeners = std.algorithm.remove(onActionRemovedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnActionRemovedDelegateWrapper[] onActionRemovedListeners;
 
 	/**
 	 * Signals that an action is just about to be removed from the group.
@@ -625,29 +625,29 @@ public template ActionGroupT(TStruct)
 
 	protected class OnActionStateChangedDelegateWrapper
 	{
-		static OnActionStateChangedDelegateWrapper[] listeners;
 		void delegate(string, Variant, ActionGroupIF) dlg;
 		gulong handlerId;
 		
 		this(void delegate(string, Variant, ActionGroupIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onActionStateChangedListeners ~= this;
 		}
 		
 		void remove(OnActionStateChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onActionStateChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onActionStateChangedListeners[index] = null;
+					onActionStateChangedListeners = std.algorithm.remove(onActionStateChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnActionStateChangedDelegateWrapper[] onActionStateChangedListeners;
 
 	/**
 	 * Signals that the state of the named action has changed.

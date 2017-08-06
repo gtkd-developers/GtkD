@@ -746,29 +746,29 @@ public template TreeModelT(TStruct)
 
 	protected class OnRowChangedDelegateWrapper
 	{
-		static OnRowChangedDelegateWrapper[] listeners;
 		void delegate(TreePath, TreeIter, TreeModelIF) dlg;
 		gulong handlerId;
 		
 		this(void delegate(TreePath, TreeIter, TreeModelIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onRowChangedListeners ~= this;
 		}
 		
 		void remove(OnRowChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onRowChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onRowChangedListeners[index] = null;
+					onRowChangedListeners = std.algorithm.remove(onRowChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnRowChangedDelegateWrapper[] onRowChangedListeners;
 
 	/**
 	 * This signal is emitted when a row in the model has changed.
@@ -802,29 +802,29 @@ public template TreeModelT(TStruct)
 
 	protected class OnRowDeletedDelegateWrapper
 	{
-		static OnRowDeletedDelegateWrapper[] listeners;
 		void delegate(TreePath, TreeModelIF) dlg;
 		gulong handlerId;
 		
 		this(void delegate(TreePath, TreeModelIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onRowDeletedListeners ~= this;
 		}
 		
 		void remove(OnRowDeletedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onRowDeletedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onRowDeletedListeners[index] = null;
+					onRowDeletedListeners = std.algorithm.remove(onRowDeletedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnRowDeletedDelegateWrapper[] onRowDeletedListeners;
 
 	/**
 	 * This signal is emitted when a row has been deleted.
@@ -864,29 +864,29 @@ public template TreeModelT(TStruct)
 
 	protected class OnRowHasChildToggledDelegateWrapper
 	{
-		static OnRowHasChildToggledDelegateWrapper[] listeners;
 		void delegate(TreePath, TreeIter, TreeModelIF) dlg;
 		gulong handlerId;
 		
 		this(void delegate(TreePath, TreeIter, TreeModelIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onRowHasChildToggledListeners ~= this;
 		}
 		
 		void remove(OnRowHasChildToggledDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onRowHasChildToggledListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onRowHasChildToggledListeners[index] = null;
+					onRowHasChildToggledListeners = std.algorithm.remove(onRowHasChildToggledListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnRowHasChildToggledDelegateWrapper[] onRowHasChildToggledListeners;
 
 	/**
 	 * This signal is emitted when a row has gotten the first child
@@ -921,29 +921,29 @@ public template TreeModelT(TStruct)
 
 	protected class OnRowInsertedDelegateWrapper
 	{
-		static OnRowInsertedDelegateWrapper[] listeners;
 		void delegate(TreePath, TreeIter, TreeModelIF) dlg;
 		gulong handlerId;
 		
 		this(void delegate(TreePath, TreeIter, TreeModelIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onRowInsertedListeners ~= this;
 		}
 		
 		void remove(OnRowInsertedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onRowInsertedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onRowInsertedListeners[index] = null;
+					onRowInsertedListeners = std.algorithm.remove(onRowInsertedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnRowInsertedDelegateWrapper[] onRowInsertedListeners;
 
 	/**
 	 * This signal is emitted when a new row has been inserted in
@@ -982,29 +982,29 @@ public template TreeModelT(TStruct)
 
 	protected class OnRowsReorderedDelegateWrapper
 	{
-		static OnRowsReorderedDelegateWrapper[] listeners;
 		void delegate(TreePath, TreeIter, void*, TreeModelIF) dlg;
 		gulong handlerId;
 		
 		this(void delegate(TreePath, TreeIter, void*, TreeModelIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onRowsReorderedListeners ~= this;
 		}
 		
 		void remove(OnRowsReorderedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onRowsReorderedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onRowsReorderedListeners[index] = null;
+					onRowsReorderedListeners = std.algorithm.remove(onRowsReorderedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnRowsReorderedDelegateWrapper[] onRowsReorderedListeners;
 
 	/**
 	 * This signal is emitted when the children of a node in the

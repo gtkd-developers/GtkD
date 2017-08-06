@@ -2468,29 +2468,29 @@ public class Window : Bin
 
 	protected class OnActivateDefaultDelegateWrapper
 	{
-		static OnActivateDefaultDelegateWrapper[] listeners;
 		void delegate(Window) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Window) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onActivateDefaultListeners ~= this;
 		}
 		
 		void remove(OnActivateDefaultDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onActivateDefaultListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onActivateDefaultListeners[index] = null;
+					onActivateDefaultListeners = std.algorithm.remove(onActivateDefaultListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnActivateDefaultDelegateWrapper[] onActivateDefaultListeners;
 
 	/**
 	 * The ::activate-default signal is a
@@ -2523,29 +2523,29 @@ public class Window : Bin
 
 	protected class OnActivateFocusDelegateWrapper
 	{
-		static OnActivateFocusDelegateWrapper[] listeners;
 		void delegate(Window) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Window) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onActivateFocusListeners ~= this;
 		}
 		
 		void remove(OnActivateFocusDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onActivateFocusListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onActivateFocusListeners[index] = null;
+					onActivateFocusListeners = std.algorithm.remove(onActivateFocusListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnActivateFocusDelegateWrapper[] onActivateFocusListeners;
 
 	/**
 	 * The ::activate-focus signal is a
@@ -2578,29 +2578,29 @@ public class Window : Bin
 
 	protected class OnEnableDebuggingDelegateWrapper
 	{
-		static OnEnableDebuggingDelegateWrapper[] listeners;
 		bool delegate(bool, Window) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(bool, Window) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onEnableDebuggingListeners ~= this;
 		}
 		
 		void remove(OnEnableDebuggingDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onEnableDebuggingListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onEnableDebuggingListeners[index] = null;
+					onEnableDebuggingListeners = std.algorithm.remove(onEnableDebuggingListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnEnableDebuggingDelegateWrapper[] onEnableDebuggingListeners;
 
 	/**
 	 * The ::enable-debugging signal is a [keybinding signal][GtkBindingSignal]
@@ -2642,29 +2642,29 @@ public class Window : Bin
 
 	protected class OnKeysChangedDelegateWrapper
 	{
-		static OnKeysChangedDelegateWrapper[] listeners;
 		void delegate(Window) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Window) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onKeysChangedListeners ~= this;
 		}
 		
 		void remove(OnKeysChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onKeysChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onKeysChangedListeners[index] = null;
+					onKeysChangedListeners = std.algorithm.remove(onKeysChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnKeysChangedDelegateWrapper[] onKeysChangedListeners;
 
 	/**
 	 * The ::keys-changed signal gets emitted when the set of accelerators
@@ -2695,29 +2695,29 @@ public class Window : Bin
 
 	protected class OnSetFocusDelegateWrapper
 	{
-		static OnSetFocusDelegateWrapper[] listeners;
 		void delegate(Widget, Window) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Widget, Window) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onSetFocusListeners ~= this;
 		}
 		
 		void remove(OnSetFocusDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onSetFocusListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onSetFocusListeners[index] = null;
+					onSetFocusListeners = std.algorithm.remove(onSetFocusListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnSetFocusDelegateWrapper[] onSetFocusListeners;
 
 	/** */
 	gulong addOnSetFocus(void delegate(Widget, Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)

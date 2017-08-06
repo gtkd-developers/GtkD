@@ -190,29 +190,29 @@ public class Overlay : Bin
 
 	protected class OnGetChildPositionDelegateWrapper
 	{
-		static OnGetChildPositionDelegateWrapper[] listeners;
 		bool delegate(Widget, GdkRectangle*, Overlay) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(Widget, GdkRectangle*, Overlay) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onGetChildPositionListeners ~= this;
 		}
 		
 		void remove(OnGetChildPositionDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onGetChildPositionListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onGetChildPositionListeners[index] = null;
+					onGetChildPositionListeners = std.algorithm.remove(onGetChildPositionListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnGetChildPositionDelegateWrapper[] onGetChildPositionListeners;
 
 	/**
 	 * The ::get-child-position signal is emitted to determine

@@ -794,29 +794,29 @@ public class Screen : ObjectG
 
 	protected class OnCompositedChangedDelegateWrapper
 	{
-		static OnCompositedChangedDelegateWrapper[] listeners;
 		void delegate(Screen) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Screen) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCompositedChangedListeners ~= this;
 		}
 		
 		void remove(OnCompositedChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCompositedChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCompositedChangedListeners[index] = null;
+					onCompositedChangedListeners = std.algorithm.remove(onCompositedChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCompositedChangedDelegateWrapper[] onCompositedChangedListeners;
 
 	/**
 	 * The ::composited-changed signal is emitted when the composited
@@ -849,29 +849,29 @@ public class Screen : ObjectG
 
 	protected class OnMonitorsChangedDelegateWrapper
 	{
-		static OnMonitorsChangedDelegateWrapper[] listeners;
 		void delegate(Screen) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Screen) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMonitorsChangedListeners ~= this;
 		}
 		
 		void remove(OnMonitorsChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMonitorsChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMonitorsChangedListeners[index] = null;
+					onMonitorsChangedListeners = std.algorithm.remove(onMonitorsChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMonitorsChangedDelegateWrapper[] onMonitorsChangedListeners;
 
 	/**
 	 * The ::monitors-changed signal is emitted when the number, size
@@ -907,29 +907,29 @@ public class Screen : ObjectG
 
 	protected class OnSizeChangedDelegateWrapper
 	{
-		static OnSizeChangedDelegateWrapper[] listeners;
 		void delegate(Screen) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Screen) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onSizeChangedListeners ~= this;
 		}
 		
 		void remove(OnSizeChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onSizeChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onSizeChangedListeners[index] = null;
+					onSizeChangedListeners = std.algorithm.remove(onSizeChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnSizeChangedDelegateWrapper[] onSizeChangedListeners;
 
 	/**
 	 * The ::size-changed signal is emitted when the pixel width or

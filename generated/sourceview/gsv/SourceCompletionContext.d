@@ -127,29 +127,29 @@ public class SourceCompletionContext : ObjectG
 
 	protected class OnCancelledDelegateWrapper
 	{
-		static OnCancelledDelegateWrapper[] listeners;
 		void delegate(SourceCompletionContext) dlg;
 		gulong handlerId;
 		
 		this(void delegate(SourceCompletionContext) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCancelledListeners ~= this;
 		}
 		
 		void remove(OnCancelledDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCancelledListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCancelledListeners[index] = null;
+					onCancelledListeners = std.algorithm.remove(onCancelledListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCancelledDelegateWrapper[] onCancelledListeners;
 
 	/**
 	 * Emitted when the current population of proposals has been cancelled.

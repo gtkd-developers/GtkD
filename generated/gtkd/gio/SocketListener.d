@@ -501,29 +501,29 @@ public class SocketListener : ObjectG
 
 	protected class OnDelegateWrapper
 	{
-		static OnDelegateWrapper[] listeners;
 		void delegate(GSocketListenerEvent, Socket, SocketListener) dlg;
 		gulong handlerId;
 		
 		this(void delegate(GSocketListenerEvent, Socket, SocketListener) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onListeners ~= this;
 		}
 		
 		void remove(OnDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onListeners[index] = null;
+					onListeners = std.algorithm.remove(onListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDelegateWrapper[] onListeners;
 
 	/**
 	 * Emitted when @listener's activity on @socket changes state.

@@ -1889,29 +1889,29 @@ public class TreeView : Container, ScrollableIF
 
 	protected class OnColumnsChangedDelegateWrapper
 	{
-		static OnColumnsChangedDelegateWrapper[] listeners;
 		void delegate(TreeView) dlg;
 		gulong handlerId;
 		
 		this(void delegate(TreeView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onColumnsChangedListeners ~= this;
 		}
 		
 		void remove(OnColumnsChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onColumnsChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onColumnsChangedListeners[index] = null;
+					onColumnsChangedListeners = std.algorithm.remove(onColumnsChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnColumnsChangedDelegateWrapper[] onColumnsChangedListeners;
 
 	/**
 	 * The number of columns of the treeview has changed.
@@ -1941,29 +1941,29 @@ public class TreeView : Container, ScrollableIF
 
 	protected class OnCursorChangedDelegateWrapper
 	{
-		static OnCursorChangedDelegateWrapper[] listeners;
 		void delegate(TreeView) dlg;
 		gulong handlerId;
 		
 		this(void delegate(TreeView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCursorChangedListeners ~= this;
 		}
 		
 		void remove(OnCursorChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCursorChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCursorChangedListeners[index] = null;
+					onCursorChangedListeners = std.algorithm.remove(onCursorChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCursorChangedDelegateWrapper[] onCursorChangedListeners;
 
 	/**
 	 * The position of the cursor (focused cell) has changed.
@@ -1993,29 +1993,29 @@ public class TreeView : Container, ScrollableIF
 
 	protected class OnExpandCollapseCursorRowDelegateWrapper
 	{
-		static OnExpandCollapseCursorRowDelegateWrapper[] listeners;
 		bool delegate(bool, bool, bool, TreeView) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(bool, bool, bool, TreeView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onExpandCollapseCursorRowListeners ~= this;
 		}
 		
 		void remove(OnExpandCollapseCursorRowDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onExpandCollapseCursorRowListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onExpandCollapseCursorRowListeners[index] = null;
+					onExpandCollapseCursorRowListeners = std.algorithm.remove(onExpandCollapseCursorRowListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnExpandCollapseCursorRowDelegateWrapper[] onExpandCollapseCursorRowListeners;
 
 	/** */
 	gulong addOnExpandCollapseCursorRow(bool delegate(bool, bool, bool, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -2043,29 +2043,29 @@ public class TreeView : Container, ScrollableIF
 
 	protected class OnMoveCursorDelegateWrapper
 	{
-		static OnMoveCursorDelegateWrapper[] listeners;
 		bool delegate(GtkMovementStep, int, TreeView) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(GtkMovementStep, int, TreeView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMoveCursorListeners ~= this;
 		}
 		
 		void remove(OnMoveCursorDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMoveCursorListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMoveCursorListeners[index] = null;
+					onMoveCursorListeners = std.algorithm.remove(onMoveCursorListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMoveCursorDelegateWrapper[] onMoveCursorListeners;
 
 	/**
 	 * The #GtkTreeView::move-cursor signal is a [keybinding
@@ -2116,29 +2116,29 @@ public class TreeView : Container, ScrollableIF
 
 	protected class OnRowActivatedDelegateWrapper
 	{
-		static OnRowActivatedDelegateWrapper[] listeners;
 		void delegate(TreePath, TreeViewColumn, TreeView) dlg;
 		gulong handlerId;
 		
 		this(void delegate(TreePath, TreeViewColumn, TreeView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onRowActivatedListeners ~= this;
 		}
 		
 		void remove(OnRowActivatedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onRowActivatedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onRowActivatedListeners[index] = null;
+					onRowActivatedListeners = std.algorithm.remove(onRowActivatedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnRowActivatedDelegateWrapper[] onRowActivatedListeners;
 
 	/**
 	 * The "row-activated" signal is emitted when the method
@@ -2182,29 +2182,29 @@ public class TreeView : Container, ScrollableIF
 
 	protected class OnRowCollapsedDelegateWrapper
 	{
-		static OnRowCollapsedDelegateWrapper[] listeners;
 		void delegate(TreeIter, TreePath, TreeView) dlg;
 		gulong handlerId;
 		
 		this(void delegate(TreeIter, TreePath, TreeView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onRowCollapsedListeners ~= this;
 		}
 		
 		void remove(OnRowCollapsedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onRowCollapsedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onRowCollapsedListeners[index] = null;
+					onRowCollapsedListeners = std.algorithm.remove(onRowCollapsedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnRowCollapsedDelegateWrapper[] onRowCollapsedListeners;
 
 	/**
 	 * The given row has been collapsed (child nodes are hidden).
@@ -2238,29 +2238,29 @@ public class TreeView : Container, ScrollableIF
 
 	protected class OnRowExpandedDelegateWrapper
 	{
-		static OnRowExpandedDelegateWrapper[] listeners;
 		void delegate(TreeIter, TreePath, TreeView) dlg;
 		gulong handlerId;
 		
 		this(void delegate(TreeIter, TreePath, TreeView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onRowExpandedListeners ~= this;
 		}
 		
 		void remove(OnRowExpandedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onRowExpandedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onRowExpandedListeners[index] = null;
+					onRowExpandedListeners = std.algorithm.remove(onRowExpandedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnRowExpandedDelegateWrapper[] onRowExpandedListeners;
 
 	/**
 	 * The given row has been expanded (child nodes are shown).
@@ -2294,29 +2294,29 @@ public class TreeView : Container, ScrollableIF
 
 	protected class OnSelectAllDelegateWrapper
 	{
-		static OnSelectAllDelegateWrapper[] listeners;
 		bool delegate(TreeView) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(TreeView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onSelectAllListeners ~= this;
 		}
 		
 		void remove(OnSelectAllDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onSelectAllListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onSelectAllListeners[index] = null;
+					onSelectAllListeners = std.algorithm.remove(onSelectAllListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnSelectAllDelegateWrapper[] onSelectAllListeners;
 
 	/** */
 	gulong addOnSelectAll(bool delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -2344,29 +2344,29 @@ public class TreeView : Container, ScrollableIF
 
 	protected class OnSelectCursorParentDelegateWrapper
 	{
-		static OnSelectCursorParentDelegateWrapper[] listeners;
 		bool delegate(TreeView) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(TreeView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onSelectCursorParentListeners ~= this;
 		}
 		
 		void remove(OnSelectCursorParentDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onSelectCursorParentListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onSelectCursorParentListeners[index] = null;
+					onSelectCursorParentListeners = std.algorithm.remove(onSelectCursorParentListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnSelectCursorParentDelegateWrapper[] onSelectCursorParentListeners;
 
 	/** */
 	gulong addOnSelectCursorParent(bool delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -2394,29 +2394,29 @@ public class TreeView : Container, ScrollableIF
 
 	protected class OnSelectCursorRowDelegateWrapper
 	{
-		static OnSelectCursorRowDelegateWrapper[] listeners;
 		bool delegate(bool, TreeView) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(bool, TreeView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onSelectCursorRowListeners ~= this;
 		}
 		
 		void remove(OnSelectCursorRowDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onSelectCursorRowListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onSelectCursorRowListeners[index] = null;
+					onSelectCursorRowListeners = std.algorithm.remove(onSelectCursorRowListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnSelectCursorRowDelegateWrapper[] onSelectCursorRowListeners;
 
 	/** */
 	gulong addOnSelectCursorRow(bool delegate(bool, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -2444,29 +2444,29 @@ public class TreeView : Container, ScrollableIF
 
 	protected class OnStartInteractiveSearchDelegateWrapper
 	{
-		static OnStartInteractiveSearchDelegateWrapper[] listeners;
 		bool delegate(TreeView) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(TreeView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onStartInteractiveSearchListeners ~= this;
 		}
 		
 		void remove(OnStartInteractiveSearchDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onStartInteractiveSearchListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onStartInteractiveSearchListeners[index] = null;
+					onStartInteractiveSearchListeners = std.algorithm.remove(onStartInteractiveSearchListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnStartInteractiveSearchDelegateWrapper[] onStartInteractiveSearchListeners;
 
 	/** */
 	gulong addOnStartInteractiveSearch(bool delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -2494,29 +2494,29 @@ public class TreeView : Container, ScrollableIF
 
 	protected class OnTestCollapseRowDelegateWrapper
 	{
-		static OnTestCollapseRowDelegateWrapper[] listeners;
 		bool delegate(TreeIter, TreePath, TreeView) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(TreeIter, TreePath, TreeView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onTestCollapseRowListeners ~= this;
 		}
 		
 		void remove(OnTestCollapseRowDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onTestCollapseRowListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onTestCollapseRowListeners[index] = null;
+					onTestCollapseRowListeners = std.algorithm.remove(onTestCollapseRowListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnTestCollapseRowDelegateWrapper[] onTestCollapseRowListeners;
 
 	/**
 	 * The given row is about to be collapsed (hide its children nodes). Use this
@@ -2553,29 +2553,29 @@ public class TreeView : Container, ScrollableIF
 
 	protected class OnTestExpandRowDelegateWrapper
 	{
-		static OnTestExpandRowDelegateWrapper[] listeners;
 		bool delegate(TreeIter, TreePath, TreeView) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(TreeIter, TreePath, TreeView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onTestExpandRowListeners ~= this;
 		}
 		
 		void remove(OnTestExpandRowDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onTestExpandRowListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onTestExpandRowListeners[index] = null;
+					onTestExpandRowListeners = std.algorithm.remove(onTestExpandRowListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnTestExpandRowDelegateWrapper[] onTestExpandRowListeners;
 
 	/**
 	 * The given row is about to be expanded (show its children nodes). Use this
@@ -2612,29 +2612,29 @@ public class TreeView : Container, ScrollableIF
 
 	protected class OnToggleCursorRowDelegateWrapper
 	{
-		static OnToggleCursorRowDelegateWrapper[] listeners;
 		bool delegate(TreeView) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(TreeView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onToggleCursorRowListeners ~= this;
 		}
 		
 		void remove(OnToggleCursorRowDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onToggleCursorRowListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onToggleCursorRowListeners[index] = null;
+					onToggleCursorRowListeners = std.algorithm.remove(onToggleCursorRowListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnToggleCursorRowDelegateWrapper[] onToggleCursorRowListeners;
 
 	/** */
 	gulong addOnToggleCursorRow(bool delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -2662,29 +2662,29 @@ public class TreeView : Container, ScrollableIF
 
 	protected class OnUnselectAllDelegateWrapper
 	{
-		static OnUnselectAllDelegateWrapper[] listeners;
 		bool delegate(TreeView) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(TreeView) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onUnselectAllListeners ~= this;
 		}
 		
 		void remove(OnUnselectAllDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onUnselectAllListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onUnselectAllListeners[index] = null;
+					onUnselectAllListeners = std.algorithm.remove(onUnselectAllListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnUnselectAllDelegateWrapper[] onUnselectAllListeners;
 
 	/** */
 	gulong addOnUnselectAll(bool delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)

@@ -121,29 +121,29 @@ public class GestureRotate : Gesture
 
 	protected class OnAngleChangedDelegateWrapper
 	{
-		static OnAngleChangedDelegateWrapper[] listeners;
 		void delegate(double, double, GestureRotate) dlg;
 		gulong handlerId;
 		
 		this(void delegate(double, double, GestureRotate) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onAngleChangedListeners ~= this;
 		}
 		
 		void remove(OnAngleChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onAngleChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onAngleChangedListeners[index] = null;
+					onAngleChangedListeners = std.algorithm.remove(onAngleChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnAngleChangedDelegateWrapper[] onAngleChangedListeners;
 
 	/**
 	 * This signal is emitted when the angle between both tracked points

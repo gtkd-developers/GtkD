@@ -147,29 +147,29 @@ public class FilenameCompleter : ObjectG
 
 	protected class OnGotCompletionDataDelegateWrapper
 	{
-		static OnGotCompletionDataDelegateWrapper[] listeners;
 		void delegate(FilenameCompleter) dlg;
 		gulong handlerId;
 		
 		this(void delegate(FilenameCompleter) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onGotCompletionDataListeners ~= this;
 		}
 		
 		void remove(OnGotCompletionDataDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onGotCompletionDataListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onGotCompletionDataListeners[index] = null;
+					onGotCompletionDataListeners = std.algorithm.remove(onGotCompletionDataListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnGotCompletionDataDelegateWrapper[] onGotCompletionDataListeners;
 
 	/**
 	 * Emitted when the file name completion information comes available.

@@ -132,29 +132,29 @@ public class GestureSwipe : GestureSingle
 
 	protected class OnSwipeDelegateWrapper
 	{
-		static OnSwipeDelegateWrapper[] listeners;
 		void delegate(double, double, GestureSwipe) dlg;
 		gulong handlerId;
 		
 		this(void delegate(double, double, GestureSwipe) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onSwipeListeners ~= this;
 		}
 		
 		void remove(OnSwipeDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onSwipeListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onSwipeListeners[index] = null;
+					onSwipeListeners = std.algorithm.remove(onSwipeListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnSwipeDelegateWrapper[] onSwipeListeners;
 
 	/**
 	 * This signal is emitted when the recognized gesture is finished, velocity

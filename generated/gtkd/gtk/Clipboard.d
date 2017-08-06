@@ -816,29 +816,29 @@ public class Clipboard : ObjectG
 
 	protected class OnOwnerChangeDelegateWrapper
 	{
-		static OnOwnerChangeDelegateWrapper[] listeners;
 		void delegate(GdkEventOwnerChange*, Clipboard) dlg;
 		gulong handlerId;
 		
 		this(void delegate(GdkEventOwnerChange*, Clipboard) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onOwnerChangeListeners ~= this;
 		}
 		
 		void remove(OnOwnerChangeDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onOwnerChangeListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onOwnerChangeListeners[index] = null;
+					onOwnerChangeListeners = std.algorithm.remove(onOwnerChangeListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnOwnerChangeDelegateWrapper[] onOwnerChangeListeners;
 
 	/**
 	 * The ::owner-change signal is emitted when GTK+ receives an
@@ -875,29 +875,29 @@ public class Clipboard : ObjectG
 
 	protected class OnOwnerChangeGenericDelegateWrapper
 	{
-		static OnOwnerChangeGenericDelegateWrapper[] listeners;
 		void delegate(Event, Clipboard) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Event, Clipboard) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onOwnerChangeGenericListeners ~= this;
 		}
 		
 		void remove(OnOwnerChangeGenericDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onOwnerChangeGenericListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onOwnerChangeGenericListeners[index] = null;
+					onOwnerChangeGenericListeners = std.algorithm.remove(onOwnerChangeGenericListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnOwnerChangeGenericDelegateWrapper[] onOwnerChangeGenericListeners;
 	
 	/**
 	 * The ::owner-change signal is emitted when GTK+ receives an

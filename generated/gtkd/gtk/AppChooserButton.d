@@ -258,29 +258,29 @@ public class AppChooserButton : ComboBox, AppChooserIF
 
 	protected class OnCustomItemActivatedDelegateWrapper
 	{
-		static OnCustomItemActivatedDelegateWrapper[] listeners;
 		void delegate(string, AppChooserButton) dlg;
 		gulong handlerId;
 		
 		this(void delegate(string, AppChooserButton) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCustomItemActivatedListeners ~= this;
 		}
 		
 		void remove(OnCustomItemActivatedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCustomItemActivatedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCustomItemActivatedListeners[index] = null;
+					onCustomItemActivatedListeners = std.algorithm.remove(onCustomItemActivatedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCustomItemActivatedDelegateWrapper[] onCustomItemActivatedListeners;
 
 	/**
 	 * Emitted when a custom item, previously added with

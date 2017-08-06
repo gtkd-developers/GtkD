@@ -77,7 +77,7 @@ private import std.algorithm;
  * <object class="GtkLabel">
  * <attributes>
  * <attribute name="weight" value="PANGO_WEIGHT_BOLD"/>
- * <attribute name="background" value="red" start="5" end="10"/>"
+ * <attribute name="background" value="red" start="5" end="10"/>
  * </attributes>
  * </object>
  * ]|
@@ -1026,29 +1026,29 @@ public class Label : Misc
 
 	protected class OnActivateCurrentLinkDelegateWrapper
 	{
-		static OnActivateCurrentLinkDelegateWrapper[] listeners;
 		void delegate(Label) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Label) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onActivateCurrentLinkListeners ~= this;
 		}
 		
 		void remove(OnActivateCurrentLinkDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onActivateCurrentLinkListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onActivateCurrentLinkListeners[index] = null;
+					onActivateCurrentLinkListeners = std.algorithm.remove(onActivateCurrentLinkListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnActivateCurrentLinkDelegateWrapper[] onActivateCurrentLinkListeners;
 
 	/**
 	 * A [keybinding signal][GtkBindingSignal]
@@ -1086,29 +1086,29 @@ public class Label : Misc
 
 	protected class OnActivateLinkDelegateWrapper
 	{
-		static OnActivateLinkDelegateWrapper[] listeners;
 		bool delegate(string, Label) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(string, Label) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onActivateLinkListeners ~= this;
 		}
 		
 		void remove(OnActivateLinkDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onActivateLinkListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onActivateLinkListeners[index] = null;
+					onActivateLinkListeners = std.algorithm.remove(onActivateLinkListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnActivateLinkDelegateWrapper[] onActivateLinkListeners;
 
 	/**
 	 * The signal which gets emitted to activate a URI.
@@ -1147,29 +1147,29 @@ public class Label : Misc
 
 	protected class OnCopyClipboardDelegateWrapper
 	{
-		static OnCopyClipboardDelegateWrapper[] listeners;
 		void delegate(Label) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Label) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCopyClipboardListeners ~= this;
 		}
 		
 		void remove(OnCopyClipboardDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCopyClipboardListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCopyClipboardListeners[index] = null;
+					onCopyClipboardListeners = std.algorithm.remove(onCopyClipboardListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCopyClipboardDelegateWrapper[] onCopyClipboardListeners;
 
 	/**
 	 * The ::copy-clipboard signal is a
@@ -1203,29 +1203,29 @@ public class Label : Misc
 
 	protected class OnMoveCursorDelegateWrapper
 	{
-		static OnMoveCursorDelegateWrapper[] listeners;
 		void delegate(GtkMovementStep, int, bool, Label) dlg;
 		gulong handlerId;
 		
 		this(void delegate(GtkMovementStep, int, bool, Label) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMoveCursorListeners ~= this;
 		}
 		
 		void remove(OnMoveCursorDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMoveCursorListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMoveCursorListeners[index] = null;
+					onMoveCursorListeners = std.algorithm.remove(onMoveCursorListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMoveCursorDelegateWrapper[] onMoveCursorListeners;
 
 	/**
 	 * The ::move-cursor signal is a
@@ -1276,29 +1276,29 @@ public class Label : Misc
 
 	protected class OnPopulatePopupDelegateWrapper
 	{
-		static OnPopulatePopupDelegateWrapper[] listeners;
 		void delegate(Menu, Label) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Menu, Label) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPopulatePopupListeners ~= this;
 		}
 		
 		void remove(OnPopulatePopupDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPopulatePopupListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPopulatePopupListeners[index] = null;
+					onPopulatePopupListeners = std.algorithm.remove(onPopulatePopupListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPopulatePopupDelegateWrapper[] onPopulatePopupListeners;
 
 	/**
 	 * The ::populate-popup signal gets emitted before showing the

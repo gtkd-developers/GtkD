@@ -397,29 +397,29 @@ public class SourceGutterRenderer : ObjectG
 
 	protected class OnActivateDelegateWrapper
 	{
-		static OnActivateDelegateWrapper[] listeners;
 		void delegate(TextIter, GdkRectangle*, Event, SourceGutterRenderer) dlg;
 		gulong handlerId;
 		
 		this(void delegate(TextIter, GdkRectangle*, Event, SourceGutterRenderer) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onActivateListeners ~= this;
 		}
 		
 		void remove(OnActivateDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onActivateListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onActivateListeners[index] = null;
+					onActivateListeners = std.algorithm.remove(onActivateListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnActivateDelegateWrapper[] onActivateListeners;
 
 	/**
 	 * The ::activate signal is emitted when the renderer is
@@ -455,29 +455,29 @@ public class SourceGutterRenderer : ObjectG
 
 	protected class OnQueryActivatableDelegateWrapper
 	{
-		static OnQueryActivatableDelegateWrapper[] listeners;
 		bool delegate(TextIter, GdkRectangle*, Event, SourceGutterRenderer) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(TextIter, GdkRectangle*, Event, SourceGutterRenderer) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onQueryActivatableListeners ~= this;
 		}
 		
 		void remove(OnQueryActivatableDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onQueryActivatableListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onQueryActivatableListeners[index] = null;
+					onQueryActivatableListeners = std.algorithm.remove(onQueryActivatableListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnQueryActivatableDelegateWrapper[] onQueryActivatableListeners;
 
 	/**
 	 * The ::query-activatable signal is emitted when the renderer
@@ -513,29 +513,29 @@ public class SourceGutterRenderer : ObjectG
 
 	protected class OnQueryDataDelegateWrapper
 	{
-		static OnQueryDataDelegateWrapper[] listeners;
 		void delegate(TextIter, TextIter, GtkSourceGutterRendererState, SourceGutterRenderer) dlg;
 		gulong handlerId;
 		
 		this(void delegate(TextIter, TextIter, GtkSourceGutterRendererState, SourceGutterRenderer) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onQueryDataListeners ~= this;
 		}
 		
 		void remove(OnQueryDataDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onQueryDataListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onQueryDataListeners[index] = null;
+					onQueryDataListeners = std.algorithm.remove(onQueryDataListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnQueryDataDelegateWrapper[] onQueryDataListeners;
 
 	/**
 	 * The ::query-data signal is emitted when the renderer needs
@@ -573,29 +573,29 @@ public class SourceGutterRenderer : ObjectG
 
 	protected class OnQueryTooltipDelegateWrapper
 	{
-		static OnQueryTooltipDelegateWrapper[] listeners;
 		bool delegate(TextIter, GdkRectangle*, int, int, Tooltip, SourceGutterRenderer) dlg;
 		gulong handlerId;
 		
 		this(bool delegate(TextIter, GdkRectangle*, int, int, Tooltip, SourceGutterRenderer) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onQueryTooltipListeners ~= this;
 		}
 		
 		void remove(OnQueryTooltipDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onQueryTooltipListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onQueryTooltipListeners[index] = null;
+					onQueryTooltipListeners = std.algorithm.remove(onQueryTooltipListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnQueryTooltipDelegateWrapper[] onQueryTooltipListeners;
 
 	/**
 	 * The ::query-tooltip signal is emitted when the renderer can
@@ -633,29 +633,29 @@ public class SourceGutterRenderer : ObjectG
 
 	protected class OnQueueDrawDelegateWrapper
 	{
-		static OnQueueDrawDelegateWrapper[] listeners;
 		void delegate(SourceGutterRenderer) dlg;
 		gulong handlerId;
 		
 		this(void delegate(SourceGutterRenderer) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onQueueDrawListeners ~= this;
 		}
 		
 		void remove(OnQueueDrawDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onQueueDrawListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onQueueDrawListeners[index] = null;
+					onQueueDrawListeners = std.algorithm.remove(onQueueDrawListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnQueueDrawDelegateWrapper[] onQueueDrawListeners;
 
 	/**
 	 * The ::queue-draw signal is emitted when the renderer needs

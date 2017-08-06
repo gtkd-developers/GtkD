@@ -77,29 +77,29 @@ public template CellEditableT(TStruct)
 
 	protected class OnEditingDoneDelegateWrapper
 	{
-		static OnEditingDoneDelegateWrapper[] listeners;
 		void delegate(CellEditableIF) dlg;
 		gulong handlerId;
 		
 		this(void delegate(CellEditableIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onEditingDoneListeners ~= this;
 		}
 		
 		void remove(OnEditingDoneDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onEditingDoneListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onEditingDoneListeners[index] = null;
+					onEditingDoneListeners = std.algorithm.remove(onEditingDoneListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnEditingDoneDelegateWrapper[] onEditingDoneListeners;
 
 	/**
 	 * This signal is a sign for the cell renderer to update its
@@ -137,29 +137,29 @@ public template CellEditableT(TStruct)
 
 	protected class OnRemoveWidgetDelegateWrapper
 	{
-		static OnRemoveWidgetDelegateWrapper[] listeners;
 		void delegate(CellEditableIF) dlg;
 		gulong handlerId;
 		
 		this(void delegate(CellEditableIF) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onRemoveWidgetListeners ~= this;
 		}
 		
 		void remove(OnRemoveWidgetDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onRemoveWidgetListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onRemoveWidgetListeners[index] = null;
+					onRemoveWidgetListeners = std.algorithm.remove(onRemoveWidgetListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnRemoveWidgetDelegateWrapper[] onRemoveWidgetListeners;
 
 	/**
 	 * This signal is meant to indicate that the cell is finished

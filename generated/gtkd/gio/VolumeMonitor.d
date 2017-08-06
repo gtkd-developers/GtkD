@@ -269,29 +269,29 @@ public class VolumeMonitor : ObjectG
 
 	protected class OnDriveChangedDelegateWrapper
 	{
-		static OnDriveChangedDelegateWrapper[] listeners;
 		void delegate(DriveIF, VolumeMonitor) dlg;
 		gulong handlerId;
 		
 		this(void delegate(DriveIF, VolumeMonitor) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDriveChangedListeners ~= this;
 		}
 		
 		void remove(OnDriveChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDriveChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDriveChangedListeners[index] = null;
+					onDriveChangedListeners = std.algorithm.remove(onDriveChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDriveChangedDelegateWrapper[] onDriveChangedListeners;
 
 	/**
 	 * Emitted when a drive changes.
@@ -324,29 +324,29 @@ public class VolumeMonitor : ObjectG
 
 	protected class OnDriveConnectedDelegateWrapper
 	{
-		static OnDriveConnectedDelegateWrapper[] listeners;
 		void delegate(DriveIF, VolumeMonitor) dlg;
 		gulong handlerId;
 		
 		this(void delegate(DriveIF, VolumeMonitor) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDriveConnectedListeners ~= this;
 		}
 		
 		void remove(OnDriveConnectedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDriveConnectedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDriveConnectedListeners[index] = null;
+					onDriveConnectedListeners = std.algorithm.remove(onDriveConnectedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDriveConnectedDelegateWrapper[] onDriveConnectedListeners;
 
 	/**
 	 * Emitted when a drive is connected to the system.
@@ -379,29 +379,29 @@ public class VolumeMonitor : ObjectG
 
 	protected class OnDriveDisconnectedDelegateWrapper
 	{
-		static OnDriveDisconnectedDelegateWrapper[] listeners;
 		void delegate(DriveIF, VolumeMonitor) dlg;
 		gulong handlerId;
 		
 		this(void delegate(DriveIF, VolumeMonitor) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDriveDisconnectedListeners ~= this;
 		}
 		
 		void remove(OnDriveDisconnectedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDriveDisconnectedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDriveDisconnectedListeners[index] = null;
+					onDriveDisconnectedListeners = std.algorithm.remove(onDriveDisconnectedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDriveDisconnectedDelegateWrapper[] onDriveDisconnectedListeners;
 
 	/**
 	 * Emitted when a drive is disconnected from the system.
@@ -434,29 +434,29 @@ public class VolumeMonitor : ObjectG
 
 	protected class OnDriveEjectButtonDelegateWrapper
 	{
-		static OnDriveEjectButtonDelegateWrapper[] listeners;
 		void delegate(DriveIF, VolumeMonitor) dlg;
 		gulong handlerId;
 		
 		this(void delegate(DriveIF, VolumeMonitor) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDriveEjectButtonListeners ~= this;
 		}
 		
 		void remove(OnDriveEjectButtonDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDriveEjectButtonListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDriveEjectButtonListeners[index] = null;
+					onDriveEjectButtonListeners = std.algorithm.remove(onDriveEjectButtonListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDriveEjectButtonDelegateWrapper[] onDriveEjectButtonListeners;
 
 	/**
 	 * Emitted when the eject button is pressed on @drive.
@@ -491,29 +491,29 @@ public class VolumeMonitor : ObjectG
 
 	protected class OnDriveStopButtonDelegateWrapper
 	{
-		static OnDriveStopButtonDelegateWrapper[] listeners;
 		void delegate(DriveIF, VolumeMonitor) dlg;
 		gulong handlerId;
 		
 		this(void delegate(DriveIF, VolumeMonitor) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDriveStopButtonListeners ~= this;
 		}
 		
 		void remove(OnDriveStopButtonDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDriveStopButtonListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDriveStopButtonListeners[index] = null;
+					onDriveStopButtonListeners = std.algorithm.remove(onDriveStopButtonListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDriveStopButtonDelegateWrapper[] onDriveStopButtonListeners;
 
 	/**
 	 * Emitted when the stop button is pressed on @drive.
@@ -548,29 +548,29 @@ public class VolumeMonitor : ObjectG
 
 	protected class OnMountAddedDelegateWrapper
 	{
-		static OnMountAddedDelegateWrapper[] listeners;
 		void delegate(MountIF, VolumeMonitor) dlg;
 		gulong handlerId;
 		
 		this(void delegate(MountIF, VolumeMonitor) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMountAddedListeners ~= this;
 		}
 		
 		void remove(OnMountAddedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMountAddedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMountAddedListeners[index] = null;
+					onMountAddedListeners = std.algorithm.remove(onMountAddedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMountAddedDelegateWrapper[] onMountAddedListeners;
 
 	/**
 	 * Emitted when a mount is added.
@@ -603,29 +603,29 @@ public class VolumeMonitor : ObjectG
 
 	protected class OnMountChangedDelegateWrapper
 	{
-		static OnMountChangedDelegateWrapper[] listeners;
 		void delegate(MountIF, VolumeMonitor) dlg;
 		gulong handlerId;
 		
 		this(void delegate(MountIF, VolumeMonitor) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMountChangedListeners ~= this;
 		}
 		
 		void remove(OnMountChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMountChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMountChangedListeners[index] = null;
+					onMountChangedListeners = std.algorithm.remove(onMountChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMountChangedDelegateWrapper[] onMountChangedListeners;
 
 	/**
 	 * Emitted when a mount changes.
@@ -658,29 +658,29 @@ public class VolumeMonitor : ObjectG
 
 	protected class OnMountPreUnmountDelegateWrapper
 	{
-		static OnMountPreUnmountDelegateWrapper[] listeners;
 		void delegate(MountIF, VolumeMonitor) dlg;
 		gulong handlerId;
 		
 		this(void delegate(MountIF, VolumeMonitor) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMountPreUnmountListeners ~= this;
 		}
 		
 		void remove(OnMountPreUnmountDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMountPreUnmountListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMountPreUnmountListeners[index] = null;
+					onMountPreUnmountListeners = std.algorithm.remove(onMountPreUnmountListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMountPreUnmountDelegateWrapper[] onMountPreUnmountListeners;
 
 	/**
 	 * Emitted when a mount is about to be removed.
@@ -713,29 +713,29 @@ public class VolumeMonitor : ObjectG
 
 	protected class OnMountRemovedDelegateWrapper
 	{
-		static OnMountRemovedDelegateWrapper[] listeners;
 		void delegate(MountIF, VolumeMonitor) dlg;
 		gulong handlerId;
 		
 		this(void delegate(MountIF, VolumeMonitor) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMountRemovedListeners ~= this;
 		}
 		
 		void remove(OnMountRemovedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMountRemovedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMountRemovedListeners[index] = null;
+					onMountRemovedListeners = std.algorithm.remove(onMountRemovedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMountRemovedDelegateWrapper[] onMountRemovedListeners;
 
 	/**
 	 * Emitted when a mount is removed.
@@ -768,29 +768,29 @@ public class VolumeMonitor : ObjectG
 
 	protected class OnVolumeAddedDelegateWrapper
 	{
-		static OnVolumeAddedDelegateWrapper[] listeners;
 		void delegate(VolumeIF, VolumeMonitor) dlg;
 		gulong handlerId;
 		
 		this(void delegate(VolumeIF, VolumeMonitor) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onVolumeAddedListeners ~= this;
 		}
 		
 		void remove(OnVolumeAddedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onVolumeAddedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onVolumeAddedListeners[index] = null;
+					onVolumeAddedListeners = std.algorithm.remove(onVolumeAddedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnVolumeAddedDelegateWrapper[] onVolumeAddedListeners;
 
 	/**
 	 * Emitted when a mountable volume is added to the system.
@@ -823,29 +823,29 @@ public class VolumeMonitor : ObjectG
 
 	protected class OnVolumeChangedDelegateWrapper
 	{
-		static OnVolumeChangedDelegateWrapper[] listeners;
 		void delegate(VolumeIF, VolumeMonitor) dlg;
 		gulong handlerId;
 		
 		this(void delegate(VolumeIF, VolumeMonitor) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onVolumeChangedListeners ~= this;
 		}
 		
 		void remove(OnVolumeChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onVolumeChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onVolumeChangedListeners[index] = null;
+					onVolumeChangedListeners = std.algorithm.remove(onVolumeChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnVolumeChangedDelegateWrapper[] onVolumeChangedListeners;
 
 	/**
 	 * Emitted when mountable volume is changed.
@@ -878,29 +878,29 @@ public class VolumeMonitor : ObjectG
 
 	protected class OnVolumeRemovedDelegateWrapper
 	{
-		static OnVolumeRemovedDelegateWrapper[] listeners;
 		void delegate(VolumeIF, VolumeMonitor) dlg;
 		gulong handlerId;
 		
 		this(void delegate(VolumeIF, VolumeMonitor) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onVolumeRemovedListeners ~= this;
 		}
 		
 		void remove(OnVolumeRemovedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onVolumeRemovedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onVolumeRemovedListeners[index] = null;
+					onVolumeRemovedListeners = std.algorithm.remove(onVolumeRemovedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnVolumeRemovedDelegateWrapper[] onVolumeRemovedListeners;
 
 	/**
 	 * Emitted when a mountable volume is removed from the system.

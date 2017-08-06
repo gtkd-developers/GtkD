@@ -295,29 +295,29 @@ public class DeviceProvider : ObjectGst
 
 	protected class OnProviderHiddenDelegateWrapper
 	{
-		static OnProviderHiddenDelegateWrapper[] listeners;
 		void delegate(string, DeviceProvider) dlg;
 		gulong handlerId;
 		
 		this(void delegate(string, DeviceProvider) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onProviderHiddenListeners ~= this;
 		}
 		
 		void remove(OnProviderHiddenDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onProviderHiddenListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onProviderHiddenListeners[index] = null;
+					onProviderHiddenListeners = std.algorithm.remove(onProviderHiddenListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnProviderHiddenDelegateWrapper[] onProviderHiddenListeners;
 
 	/** */
 	gulong addOnProviderHidden(void delegate(string, DeviceProvider) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -345,29 +345,29 @@ public class DeviceProvider : ObjectGst
 
 	protected class OnProviderUnhiddenDelegateWrapper
 	{
-		static OnProviderUnhiddenDelegateWrapper[] listeners;
 		void delegate(string, DeviceProvider) dlg;
 		gulong handlerId;
 		
 		this(void delegate(string, DeviceProvider) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onProviderUnhiddenListeners ~= this;
 		}
 		
 		void remove(OnProviderUnhiddenDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onProviderUnhiddenListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onProviderUnhiddenListeners[index] = null;
+					onProviderUnhiddenListeners = std.algorithm.remove(onProviderUnhiddenListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnProviderUnhiddenDelegateWrapper[] onProviderUnhiddenListeners;
 
 	/** */
 	gulong addOnProviderUnhidden(void delegate(string, DeviceProvider) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)

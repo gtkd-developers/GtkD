@@ -296,29 +296,29 @@ public class CssProvider : ObjectG, StyleProviderIF
 
 	protected class OnParsingErrorDelegateWrapper
 	{
-		static OnParsingErrorDelegateWrapper[] listeners;
 		void delegate(CssSection, ErrorG, CssProvider) dlg;
 		gulong handlerId;
 		
 		this(void delegate(CssSection, ErrorG, CssProvider) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onParsingErrorListeners ~= this;
 		}
 		
 		void remove(OnParsingErrorDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onParsingErrorListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onParsingErrorListeners[index] = null;
+					onParsingErrorListeners = std.algorithm.remove(onParsingErrorListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnParsingErrorDelegateWrapper[] onParsingErrorListeners;
 
 	/**
 	 * Signals that a parsing error occurred. the @path, @line and @position

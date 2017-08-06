@@ -205,29 +205,29 @@ public class HSV : Widget
 
 	protected class OnChangedDelegateWrapper
 	{
-		static OnChangedDelegateWrapper[] listeners;
 		void delegate(HSV) dlg;
 		gulong handlerId;
 		
 		this(void delegate(HSV) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onChangedListeners ~= this;
 		}
 		
 		void remove(OnChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onChangedListeners[index] = null;
+					onChangedListeners = std.algorithm.remove(onChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnChangedDelegateWrapper[] onChangedListeners;
 
 	/** */
 	gulong addOnChanged(void delegate(HSV) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
@@ -255,29 +255,29 @@ public class HSV : Widget
 
 	protected class OnMoveDelegateWrapper
 	{
-		static OnMoveDelegateWrapper[] listeners;
 		void delegate(GtkDirectionType, HSV) dlg;
 		gulong handlerId;
 		
 		this(void delegate(GtkDirectionType, HSV) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMoveListeners ~= this;
 		}
 		
 		void remove(OnMoveDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMoveListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMoveListeners[index] = null;
+					onMoveListeners = std.algorithm.remove(onMoveListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMoveDelegateWrapper[] onMoveListeners;
 
 	/** */
 	gulong addOnMove(void delegate(GtkDirectionType, HSV) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)

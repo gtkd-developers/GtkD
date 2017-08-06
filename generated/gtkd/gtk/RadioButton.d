@@ -371,29 +371,29 @@ public class RadioButton : CheckButton
 
 	protected class OnGroupChangedDelegateWrapper
 	{
-		static OnGroupChangedDelegateWrapper[] listeners;
 		void delegate(RadioButton) dlg;
 		gulong handlerId;
 		
 		this(void delegate(RadioButton) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onGroupChangedListeners ~= this;
 		}
 		
 		void remove(OnGroupChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onGroupChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onGroupChangedListeners[index] = null;
+					onGroupChangedListeners = std.algorithm.remove(onGroupChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnGroupChangedDelegateWrapper[] onGroupChangedListeners;
 
 	/**
 	 * Emitted when the group of radio buttons that a radio button belongs

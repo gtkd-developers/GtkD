@@ -1214,29 +1214,29 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 
 	protected class OnAddEditableDelegateWrapper
 	{
-		static OnAddEditableDelegateWrapper[] listeners;
 		void delegate(CellRenderer, CellEditableIF, GdkRectangle*, string, CellArea) dlg;
 		gulong handlerId;
 		
 		this(void delegate(CellRenderer, CellEditableIF, GdkRectangle*, string, CellArea) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onAddEditableListeners ~= this;
 		}
 		
 		void remove(OnAddEditableDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onAddEditableListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onAddEditableListeners[index] = null;
+					onAddEditableListeners = std.algorithm.remove(onAddEditableListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnAddEditableDelegateWrapper[] onAddEditableListeners;
 
 	/**
 	 * Indicates that editing has started on @renderer and that @editable
@@ -1276,29 +1276,29 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 
 	protected class OnApplyAttributesDelegateWrapper
 	{
-		static OnApplyAttributesDelegateWrapper[] listeners;
 		void delegate(TreeModelIF, TreeIter, bool, bool, CellArea) dlg;
 		gulong handlerId;
 		
 		this(void delegate(TreeModelIF, TreeIter, bool, bool, CellArea) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onApplyAttributesListeners ~= this;
 		}
 		
 		void remove(OnApplyAttributesDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onApplyAttributesListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onApplyAttributesListeners[index] = null;
+					onApplyAttributesListeners = std.algorithm.remove(onApplyAttributesListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnApplyAttributesDelegateWrapper[] onApplyAttributesListeners;
 
 	/**
 	 * This signal is emitted whenever applying attributes to @area from @model
@@ -1336,29 +1336,29 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 
 	protected class OnFocusChangedDelegateWrapper
 	{
-		static OnFocusChangedDelegateWrapper[] listeners;
 		void delegate(CellRenderer, string, CellArea) dlg;
 		gulong handlerId;
 		
 		this(void delegate(CellRenderer, string, CellArea) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onFocusChangedListeners ~= this;
 		}
 		
 		void remove(OnFocusChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onFocusChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onFocusChangedListeners[index] = null;
+					onFocusChangedListeners = std.algorithm.remove(onFocusChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnFocusChangedDelegateWrapper[] onFocusChangedListeners;
 
 	/**
 	 * Indicates that focus changed on this @area. This signal
@@ -1401,29 +1401,29 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 
 	protected class OnRemoveEditableDelegateWrapper
 	{
-		static OnRemoveEditableDelegateWrapper[] listeners;
 		void delegate(CellRenderer, CellEditableIF, CellArea) dlg;
 		gulong handlerId;
 		
 		this(void delegate(CellRenderer, CellEditableIF, CellArea) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onRemoveEditableListeners ~= this;
 		}
 		
 		void remove(OnRemoveEditableDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onRemoveEditableListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onRemoveEditableListeners[index] = null;
+					onRemoveEditableListeners = std.algorithm.remove(onRemoveEditableListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnRemoveEditableDelegateWrapper[] onRemoveEditableListeners;
 
 	/**
 	 * Indicates that editing finished on @renderer and that @editable

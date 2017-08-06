@@ -285,29 +285,29 @@ public class DragContext : ObjectG
 
 	protected class OnActionChangedDelegateWrapper
 	{
-		static OnActionChangedDelegateWrapper[] listeners;
 		void delegate(GdkDragAction, DragContext) dlg;
 		gulong handlerId;
 		
 		this(void delegate(GdkDragAction, DragContext) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onActionChangedListeners ~= this;
 		}
 		
 		void remove(OnActionChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onActionChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onActionChangedListeners[index] = null;
+					onActionChangedListeners = std.algorithm.remove(onActionChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnActionChangedDelegateWrapper[] onActionChangedListeners;
 
 	/**
 	 * A new action is being chosen for the drag and drop operation.
@@ -346,29 +346,29 @@ public class DragContext : ObjectG
 
 	protected class OnCancelDelegateWrapper
 	{
-		static OnCancelDelegateWrapper[] listeners;
 		void delegate(GdkDragCancelReason, DragContext) dlg;
 		gulong handlerId;
 		
 		this(void delegate(GdkDragCancelReason, DragContext) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCancelListeners ~= this;
 		}
 		
 		void remove(OnCancelDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCancelListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCancelListeners[index] = null;
+					onCancelListeners = std.algorithm.remove(onCancelListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCancelDelegateWrapper[] onCancelListeners;
 
 	/**
 	 * The drag and drop operation was cancelled.
@@ -407,29 +407,29 @@ public class DragContext : ObjectG
 
 	protected class OnDndFinishedDelegateWrapper
 	{
-		static OnDndFinishedDelegateWrapper[] listeners;
 		void delegate(DragContext) dlg;
 		gulong handlerId;
 		
 		this(void delegate(DragContext) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDndFinishedListeners ~= this;
 		}
 		
 		void remove(OnDndFinishedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDndFinishedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDndFinishedListeners[index] = null;
+					onDndFinishedListeners = std.algorithm.remove(onDndFinishedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDndFinishedDelegateWrapper[] onDndFinishedListeners;
 
 	/**
 	 * The drag and drop operation was finished, the drag destination
@@ -467,29 +467,29 @@ public class DragContext : ObjectG
 
 	protected class OnDropPerformedDelegateWrapper
 	{
-		static OnDropPerformedDelegateWrapper[] listeners;
 		void delegate(int, DragContext) dlg;
 		gulong handlerId;
 		
 		this(void delegate(int, DragContext) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDropPerformedListeners ~= this;
 		}
 		
 		void remove(OnDropPerformedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDropPerformedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDropPerformedListeners[index] = null;
+					onDropPerformedListeners = std.algorithm.remove(onDropPerformedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDropPerformedDelegateWrapper[] onDropPerformedListeners;
 
 	/**
 	 * The drag and drop operation was performed on an accepting client.

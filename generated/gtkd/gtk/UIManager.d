@@ -763,29 +763,29 @@ public class UIManager : ObjectG, BuildableIF
 
 	protected class OnActionsChangedDelegateWrapper
 	{
-		static OnActionsChangedDelegateWrapper[] listeners;
 		void delegate(UIManager) dlg;
 		gulong handlerId;
 		
 		this(void delegate(UIManager) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onActionsChangedListeners ~= this;
 		}
 		
 		void remove(OnActionsChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onActionsChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onActionsChangedListeners[index] = null;
+					onActionsChangedListeners = std.algorithm.remove(onActionsChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnActionsChangedDelegateWrapper[] onActionsChangedListeners;
 
 	/**
 	 * The ::actions-changed signal is emitted whenever the set of actions
@@ -818,29 +818,29 @@ public class UIManager : ObjectG, BuildableIF
 
 	protected class OnAddWidgetDelegateWrapper
 	{
-		static OnAddWidgetDelegateWrapper[] listeners;
 		void delegate(Widget, UIManager) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Widget, UIManager) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onAddWidgetListeners ~= this;
 		}
 		
 		void remove(OnAddWidgetDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onAddWidgetListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onAddWidgetListeners[index] = null;
+					onAddWidgetListeners = std.algorithm.remove(onAddWidgetListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnAddWidgetDelegateWrapper[] onAddWidgetListeners;
 
 	/**
 	 * The ::add-widget signal is emitted for each generated menubar and toolbar.
@@ -877,29 +877,29 @@ public class UIManager : ObjectG, BuildableIF
 
 	protected class OnConnectProxyDelegateWrapper
 	{
-		static OnConnectProxyDelegateWrapper[] listeners;
 		void delegate(Action, Widget, UIManager) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Action, Widget, UIManager) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onConnectProxyListeners ~= this;
 		}
 		
 		void remove(OnConnectProxyDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onConnectProxyListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onConnectProxyListeners[index] = null;
+					onConnectProxyListeners = std.algorithm.remove(onConnectProxyListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnConnectProxyDelegateWrapper[] onConnectProxyListeners;
 
 	/**
 	 * The ::connect-proxy signal is emitted after connecting a proxy to
@@ -940,29 +940,29 @@ public class UIManager : ObjectG, BuildableIF
 
 	protected class OnDisconnectProxyDelegateWrapper
 	{
-		static OnDisconnectProxyDelegateWrapper[] listeners;
 		void delegate(Action, Widget, UIManager) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Action, Widget, UIManager) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onDisconnectProxyListeners ~= this;
 		}
 		
 		void remove(OnDisconnectProxyDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onDisconnectProxyListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onDisconnectProxyListeners[index] = null;
+					onDisconnectProxyListeners = std.algorithm.remove(onDisconnectProxyListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnDisconnectProxyDelegateWrapper[] onDisconnectProxyListeners;
 
 	/**
 	 * The ::disconnect-proxy signal is emitted after disconnecting a proxy
@@ -999,29 +999,29 @@ public class UIManager : ObjectG, BuildableIF
 
 	protected class OnPostActivateDelegateWrapper
 	{
-		static OnPostActivateDelegateWrapper[] listeners;
 		void delegate(Action, UIManager) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Action, UIManager) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPostActivateListeners ~= this;
 		}
 		
 		void remove(OnPostActivateDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPostActivateListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPostActivateListeners[index] = null;
+					onPostActivateListeners = std.algorithm.remove(onPostActivateListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPostActivateDelegateWrapper[] onPostActivateListeners;
 
 	/**
 	 * The ::post-activate signal is emitted just after the @action
@@ -1060,29 +1060,29 @@ public class UIManager : ObjectG, BuildableIF
 
 	protected class OnPreActivateDelegateWrapper
 	{
-		static OnPreActivateDelegateWrapper[] listeners;
 		void delegate(Action, UIManager) dlg;
 		gulong handlerId;
 		
 		this(void delegate(Action, UIManager) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPreActivateListeners ~= this;
 		}
 		
 		void remove(OnPreActivateDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPreActivateListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPreActivateListeners[index] = null;
+					onPreActivateListeners = std.algorithm.remove(onPreActivateListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPreActivateDelegateWrapper[] onPreActivateListeners;
 
 	/**
 	 * The ::pre-activate signal is emitted just before the @action

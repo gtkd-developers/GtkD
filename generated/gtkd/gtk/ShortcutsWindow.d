@@ -116,29 +116,29 @@ public class ShortcutsWindow : Window
 
 	protected class OnCloseDelegateWrapper
 	{
-		static OnCloseDelegateWrapper[] listeners;
 		void delegate(ShortcutsWindow) dlg;
 		gulong handlerId;
 		
 		this(void delegate(ShortcutsWindow) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onCloseListeners ~= this;
 		}
 		
 		void remove(OnCloseDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onCloseListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onCloseListeners[index] = null;
+					onCloseListeners = std.algorithm.remove(onCloseListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnCloseDelegateWrapper[] onCloseListeners;
 
 	/**
 	 * The ::close signal is a
@@ -173,29 +173,29 @@ public class ShortcutsWindow : Window
 
 	protected class OnSearchDelegateWrapper
 	{
-		static OnSearchDelegateWrapper[] listeners;
 		void delegate(ShortcutsWindow) dlg;
 		gulong handlerId;
 		
 		this(void delegate(ShortcutsWindow) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onSearchListeners ~= this;
 		}
 		
 		void remove(OnSearchDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onSearchListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onSearchListeners[index] = null;
+					onSearchListeners = std.algorithm.remove(onSearchListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnSearchDelegateWrapper[] onSearchListeners;
 
 	/**
 	 * The ::search signal is a
