@@ -40,8 +40,8 @@ public  import gtkc.gtktypes;
  * #GtkFileChooserNative is an abstraction of a dialog box suitable
  * for use with “File/Open” or “File/Save as” commands. By default, this
  * just uses a #GtkFileChooserDialog to implement the actual dialog.
- * However, on certain platforms, such as Windows, the native platform
- * file chooser is uses instead. When the application is running in a
+ * However, on certain platforms, such as Windows and macOS, the native platform
+ * file chooser is used instead. When the application is running in a
  * sandboxed environment without direct filesystem access (such as Flatpak),
  * #GtkFileChooserNative may call the proper APIs (portals) to let the user
  * choose a file and make it available to the application.
@@ -177,6 +177,22 @@ public  import gtkc.gtktypes;
  * * Use of custom previews by connecting to #GtkFileChooser::update-preview.
  * 
  * * Any #GtkFileFilter added with a custom filter.
+ * 
+ * ## macOS details ## {#gtkfilechooserdialognative-macos}
+ * 
+ * On macOS the NSSavePanel and NSOpenPanel classes are used to provide native
+ * file chooser dialogs. Some features provided by #GtkFileChooserDialog are
+ * not supported:
+ * 
+ * * Extra widgets added with gtk_file_chooser_set_extra_widget(), unless the
+ * widget is an instance of GtkLabel, in which case the label text will be used
+ * to set the NSSavePanel message instance property.
+ * 
+ * * Use of custom previews by connecting to #GtkFileChooser::update-preview.
+ * 
+ * * Any #GtkFileFilter added with a custom filter.
+ * 
+ * * Shortcut folders.
  */
 public class FileChooserNative : NativeDialog, FileChooserIF
 {

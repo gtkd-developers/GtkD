@@ -216,29 +216,29 @@ public class ComboBoxText : ComboBox
 
 	protected class OnChangedDelegateWrapper
 	{
-		static OnChangedDelegateWrapper[] listeners;
 		void delegate(ComboBoxText) dlg;
 		gulong handlerId;
 
 		this(void delegate(ComboBoxText) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onChangedListeners ~= this;
 		}
 
 		void remove(OnChangedDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onChangedListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onChangedListeners[index] = null;
+					onChangedListeners = std.algorithm.remove(onChangedListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnChangedDelegateWrapper[] onChangedListeners;
 
 	/**
 	 * The changed signal is emitted when the active
@@ -275,29 +275,29 @@ public class ComboBoxText : ComboBox
 
 	protected class OnFormatEntryTextDelegateWrapper
 	{
-		static OnFormatEntryTextDelegateWrapper[] listeners;
 		string delegate(string, ComboBoxText) dlg;
 		gulong handlerId;
 
 		this(string delegate(string, ComboBoxText) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onFormatEntryTextListeners ~= this;
 		}
 
 		void remove(OnFormatEntryTextDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onFormatEntryTextListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onFormatEntryTextListeners[index] = null;
+					onFormatEntryTextListeners = std.algorithm.remove(onFormatEntryTextListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnFormatEntryTextDelegateWrapper[] onFormatEntryTextListeners;
 
 	/**
 	 * For combo boxes that are created with an entry (See GtkComboBox:has-entry).
@@ -366,29 +366,29 @@ public class ComboBoxText : ComboBox
 
 	protected class OnMoveActiveDelegateWrapper
 	{
-		static OnMoveActiveDelegateWrapper[] listeners;
 		void delegate(GtkScrollType, ComboBoxText) dlg;
 		gulong handlerId;
 
 		this(void delegate(GtkScrollType, ComboBoxText) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onMoveActiveListeners ~= this;
 		}
 
 		void remove(OnMoveActiveDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onMoveActiveListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onMoveActiveListeners[index] = null;
+					onMoveActiveListeners = std.algorithm.remove(onMoveActiveListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnMoveActiveDelegateWrapper[] onMoveActiveListeners;
 
 	/**
 	 * The ::move-active signal is a
@@ -425,29 +425,29 @@ public class ComboBoxText : ComboBox
 
 	protected class OnPopdownDelegateWrapper
 	{
-		static OnPopdownDelegateWrapper[] listeners;
 		bool delegate(ComboBoxText) dlg;
 		gulong handlerId;
 
 		this(bool delegate(ComboBoxText) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPopdownListeners ~= this;
 		}
 
 		void remove(OnPopdownDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPopdownListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPopdownListeners[index] = null;
+					onPopdownListeners = std.algorithm.remove(onPopdownListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPopdownDelegateWrapper[] onPopdownListeners;
 
 	/**
 	 * The ::popdown signal is a
@@ -483,29 +483,29 @@ public class ComboBoxText : ComboBox
 
 	protected class OnPopupDelegateWrapper
 	{
-		static OnPopupDelegateWrapper[] listeners;
 		void delegate(ComboBoxText) dlg;
 		gulong handlerId;
 
 		this(void delegate(ComboBoxText) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onPopupListeners ~= this;
 		}
 
 		void remove(OnPopupDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onPopupListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onPopupListeners[index] = null;
+					onPopupListeners = std.algorithm.remove(onPopupListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnPopupDelegateWrapper[] onPopupListeners;
 
 	/**
 	 * The ::popup signal is a

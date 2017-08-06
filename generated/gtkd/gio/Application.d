@@ -207,29 +207,29 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 
 	protected class ScopedOnCommandLineDelegateWrapper
 	{
-		static ScopedOnCommandLineDelegateWrapper[] listeners;
 		int delegate(Scoped!ApplicationCommandLine, Application) dlg;
 		gulong handlerId;
 
 		this(int delegate(Scoped!ApplicationCommandLine, Application) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			scopedOnCommandLineListeners ~= this;
 		}
 
 		void remove(ScopedOnCommandLineDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; scopedOnCommandLineListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					scopedOnCommandLineListeners[index] = null;
+					scopedOnCommandLineListeners = std.algorithm.remove(scopedOnCommandLineListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	ScopedOnCommandLineDelegateWrapper[] scopedOnCommandLineListeners;
 
 	/**
 	 * The ::command-line signal is emitted on the primary instance when

@@ -320,29 +320,29 @@ code: start
 
 	protected class OnNotifyDelegateWrapper
 	{
-		static OnNotifyDelegateWrapper[] listeners;
 		void delegate(ParamSpec, ObjectG) dlg;
 		gulong handlerId;
 		
 		this(void delegate(ParamSpec, ObjectG) dlg)
 		{
 			this.dlg = dlg;
-			this.listeners ~= this;
+			onNotifyListeners ~= this;
 		}
 		
 		void remove(OnNotifyDelegateWrapper source)
 		{
-			foreach(index, wrapper; listeners)
+			foreach(index, wrapper; onNotifyListeners;)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					listeners[index] = null;
-					listeners = std.algorithm.remove(listeners, index);
+					onNotifyListeners[index] = null;
+					onNotifyListeners = std.algorithm.remove(onNotifyListeners, index);
 					break;
 				}
 			}
 		}
 	}
+	OnNotifyDelegateWrapper[] onNotifyListeners;
 
 	/**
 	 * The notify signal is emitted on an object when one of its

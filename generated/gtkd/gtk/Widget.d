@@ -756,29 +756,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class ScopedOnDrawDelegateWrapper
 		{
-			static ScopedOnDrawDelegateWrapper[] listeners;
 			bool delegate(Scoped!Context, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(Scoped!Context, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				scopedOnDrawListeners ~= this;
 			}
 
 			void remove(ScopedOnDrawDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; scopedOnDrawListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						scopedOnDrawListeners[index] = null;
+						scopedOnDrawListeners = std.algorithm.remove(scopedOnDrawListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		ScopedOnDrawDelegateWrapper[] scopedOnDrawListeners;
 
 		/**
 		 * This signal is emitted when a widget is supposed to render itself.
@@ -832,29 +832,29 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		protected class OnDrawDelegateWrapper
 		{
-			static OnDrawDelegateWrapper[] listeners;
 			bool delegate(Context, Widget) dlg;
 			gulong handlerId;
 
 			this(bool delegate(Context, Widget) dlg)
 			{
 				this.dlg = dlg;
-				this.listeners ~= this;
+				onDrawListeners ~= this;
 			}
 
 			void remove(OnDrawDelegateWrapper source)
 			{
-				foreach(index, wrapper; listeners)
+				foreach(index, wrapper; onDrawListeners)
 				{
 					if (wrapper.handlerId == source.handlerId)
 					{
-						listeners[index] = null;
-						listeners = std.algorithm.remove(listeners, index);
+						onDrawListeners[index] = null;
+						onDrawListeners = std.algorithm.remove(onDrawListeners, index);
 						break;
 					}
 				}
 			}
 		}
+		OnDrawDelegateWrapper[] onDrawListeners;
 
 		/**
 		 * This signal is emitted when a widget is supposed to render itself.

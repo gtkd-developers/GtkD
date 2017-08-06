@@ -362,7 +362,8 @@ public class Application : GioApplication
 	 * if another application has it — this is just the most
 	 * recently-focused window within this application.
 	 *
-	 * Returns: the active window
+	 * Returns: the active window, or %NULL if
+	 *     there isn't one.
 	 *
 	 * Since: 3.6
 	 */
