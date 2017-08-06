@@ -1214,8 +1214,6 @@ struct PangoFcFontMap
 
 struct PangoCairoFont;
 
-struct PangoCairoFontMap;
-
 
 /**
  * The #PangoAnalysis structure stores information about
