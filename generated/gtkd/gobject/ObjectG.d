@@ -255,7 +255,7 @@ public class ObjectG
 
 		void remove(OnNotifyDelegateWrapper source)
 		{
-			foreach(index, wrapper; onNotifyListeners;)
+			foreach(index, wrapper; onNotifyListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
