@@ -44,6 +44,27 @@ public struct Signals
 	}
 
 	/**
+	 * Connects a GCallback function to a signal for a particular object.
+	 *
+	 * The handler will be called before the default handler of the signal.
+	 *
+	 * See [memory management of signal handlers][signal-memory-management] for
+	 * details on how to handle the return value and memory management of @data.
+	 *
+	 * Params:
+	 *     instance       = the instance to connect to.
+	 *     detailedSignal = a string of the form "signal-name::detail".
+	 *     cHandler       = the GCallback to connect.
+	 *     data           = data to pass to cHandler calls.
+	 *
+	 * Returns: the handler ID, of type gulong (always greater than 0 for successful connections)
+	 */
+	public static gulong connect(ObjectG instanc, string detailedSignal, GCallback cHandler, void* data)
+	{
+		return g_signal_connect_data((instanc is null) ? null : instanc.getObjectGStruct(), Str.toStringz(detailedSignal), cHandler, data, null, cast(ConnectFlags)0);
+	}
+
+	/**
 	 */
 
 	/**
