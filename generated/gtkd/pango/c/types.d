@@ -2209,6 +2209,15 @@ public alias extern(C) int function(PangoFontset* fontset, PangoFont* font, void
  */
 public alias extern(C) void function(cairo_t* cr, PangoAttrShape* attr, int doPath, void* data) PangoCairoShapeRendererFunc;
 
+enum PANGO_SCALE_XX_SMALL = 0.5787037037037;  /// The scale factor for three shrinking steps (1 / (1.2 * 1.2 * 1.2)).
+enum PANGO_SCALE_X_SMALL  = 0.6444444444444;  /// The scale factor for two shrinking steps (1 / (1.2 * 1.2)).
+enum PANGO_SCALE_SMALL    = 0.8333333333333;  /// The scale factor for one shrinking step (1 / 1.2).
+enum PANGO_SCALE_MEDIUM   = 1.0;              /// The scale factor for normal size (1.0).
+enum PANGO_SCALE_LARGE    = 1.2;              /// The scale factor for one magnification step (1.2)
+enum PANGO_SCALE_X_LARGE  = 1.4399999999999;  /// The scale factor for two magnification steps (1.2 * 1.2).
+enum PANGO_SCALE_XX_LARGE = 1.728;            /// The scale factor for three magnification steps (1.2 * 1.2 * 1.2).
+
+
 /**
  * Whether the segment should be shifted to center around the baseline.
  * Used in vertical writing directions mostly.
