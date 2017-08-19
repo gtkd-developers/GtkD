@@ -4101,3 +4101,61 @@ public alias extern(C) int function(GdkWindow* window, void* userData) GdkWindow
  * Since: 3.10
  */
 public alias extern(C) void function(GdkWindow* window, cairo_region_t* region) GdkWindowInvalidateHandlerFunc;
+
+/**
+ * The middle button.
+ */
+enum BUTTON_MIDDLE = 2;
+alias GDK_BUTTON_MIDDLE = BUTTON_MIDDLE;
+
+/**
+ * The primary button. This is typically the left mouse button, or the
+ * right button in a left-handed setup.
+ */
+enum BUTTON_PRIMARY = 1;
+alias GDK_BUTTON_PRIMARY = BUTTON_PRIMARY;
+
+/**
+ * The secondary button. This is typically the right mouse button, or the
+ * left button in a left-handed setup.
+ */
+enum BUTTON_SECONDARY = 3;
+alias GDK_BUTTON_SECONDARY = BUTTON_SECONDARY;
+
+/**
+ * Represents the current time, and can be used anywhere a time is expected.
+ */
+enum CURRENT_TIME = 0;
+alias GDK_CURRENT_TIME = CURRENT_TIME;
+
+/**
+ * Use this macro as the return value for continuing the propagation of
+ * an event handler.
+ */
+enum EVENT_PROPAGATE = false;
+alias GDK_EVENT_PROPAGATE = EVENT_PROPAGATE;
+
+/**
+ * Use this macro as the return value for stopping the propagation of
+ * an event handler.
+ */
+enum EVENT_STOP = true;
+alias GDK_EVENT_STOP = EVENT_STOP;
+
+enum MAX_TIMECOORD_AXES = 128;
+alias GDK_MAX_TIMECOORD_AXES = MAX_TIMECOORD_AXES;
+
+/**
+ * A special value, indicating that the background
+ * for a window should be inherited from the parent window.
+ */
+enum PARENT_RELATIVE = 1;
+alias GDK_PARENT_RELATIVE = PARENT_RELATIVE;
+
+/**
+ * This is the priority that the idle handler processing window updates
+ * is given in the
+ * [GLib Main Loop][glib-The-Main-Event-Loop].
+ */
+enum PRIORITY_REDRAW = 20;
+alias GDK_PRIORITY_REDRAW = PRIORITY_REDRAW;

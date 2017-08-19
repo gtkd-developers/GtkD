@@ -27,8 +27,6 @@ module gstreamer.c.types;
 public import glib.c.types;
 public import gobject.c.types;
 
-enum GST_CLOCK_TIME_NONE = 18446744073709551615UL;
-
 /**
  * A datatype to hold the handle to an outstanding sync or async clock callback.
  */
@@ -6383,3 +6381,1111 @@ public alias extern(C) int function(GValue* dest, const(char)* s) GstValueDeseri
  * Returns: the string representation of the value
  */
 public alias extern(C) char* function(GValue* value1) GstValueSerializeFunc;
+
+/**
+ * The allocator name for the default system memory allocator
+ */
+enum ALLOCATOR_SYSMEM = "SystemMemory";
+alias GST_ALLOCATOR_SYSMEM = ALLOCATOR_SYSMEM;
+
+/**
+ * Combination of all possible fields that can be copied with
+ * gst_buffer_copy_into().
+ */
+enum BUFFER_COPY_ALL = 15;
+alias GST_BUFFER_COPY_ALL = BUFFER_COPY_ALL;
+
+/**
+ * Combination of all possible metadata fields that can be copied with
+ * gst_buffer_copy_into().
+ */
+enum BUFFER_COPY_METADATA = 7;
+alias GST_BUFFER_COPY_METADATA = BUFFER_COPY_METADATA;
+
+/**
+ * Constant for no-offset return results.
+ */
+enum BUFFER_OFFSET_NONE = 18446744073709551615UL;
+alias GST_BUFFER_OFFSET_NONE = BUFFER_OFFSET_NONE;
+
+enum CAN_INLINE = 1;
+alias GST_CAN_INLINE = CAN_INLINE;
+
+enum CAPS_FEATURE_MEMORY_SYSTEM_MEMORY = "memory:SystemMemory";
+alias GST_CAPS_FEATURE_MEMORY_SYSTEM_MEMORY = CAPS_FEATURE_MEMORY_SYSTEM_MEMORY;
+
+/**
+ * Constant to define an undefined clock time.
+ */
+enum CLOCK_TIME_NONE = 18446744073709551615UL;
+alias GST_CLOCK_TIME_NONE = CLOCK_TIME_NONE;
+
+enum DEBUG_BG_MASK = 240;
+alias GST_DEBUG_BG_MASK = DEBUG_BG_MASK;
+
+enum DEBUG_FG_MASK = 15;
+alias GST_DEBUG_FG_MASK = DEBUG_FG_MASK;
+
+enum DEBUG_FORMAT_MASK = 65280;
+alias GST_DEBUG_FORMAT_MASK = DEBUG_FORMAT_MASK;
+
+enum ELEMENT_FACTORY_KLASS_DECODER = "Decoder";
+alias GST_ELEMENT_FACTORY_KLASS_DECODER = ELEMENT_FACTORY_KLASS_DECODER;
+
+enum ELEMENT_FACTORY_KLASS_DECRYPTOR = "Decryptor";
+alias GST_ELEMENT_FACTORY_KLASS_DECRYPTOR = ELEMENT_FACTORY_KLASS_DECRYPTOR;
+
+enum ELEMENT_FACTORY_KLASS_DEMUXER = "Demuxer";
+alias GST_ELEMENT_FACTORY_KLASS_DEMUXER = ELEMENT_FACTORY_KLASS_DEMUXER;
+
+enum ELEMENT_FACTORY_KLASS_DEPAYLOADER = "Depayloader";
+alias GST_ELEMENT_FACTORY_KLASS_DEPAYLOADER = ELEMENT_FACTORY_KLASS_DEPAYLOADER;
+
+enum ELEMENT_FACTORY_KLASS_ENCODER = "Encoder";
+alias GST_ELEMENT_FACTORY_KLASS_ENCODER = ELEMENT_FACTORY_KLASS_ENCODER;
+
+enum ELEMENT_FACTORY_KLASS_ENCRYPTOR = "Encryptor";
+alias GST_ELEMENT_FACTORY_KLASS_ENCRYPTOR = ELEMENT_FACTORY_KLASS_ENCRYPTOR;
+
+enum ELEMENT_FACTORY_KLASS_FORMATTER = "Formatter";
+alias GST_ELEMENT_FACTORY_KLASS_FORMATTER = ELEMENT_FACTORY_KLASS_FORMATTER;
+
+enum ELEMENT_FACTORY_KLASS_MEDIA_AUDIO = "Audio";
+alias GST_ELEMENT_FACTORY_KLASS_MEDIA_AUDIO = ELEMENT_FACTORY_KLASS_MEDIA_AUDIO;
+
+enum ELEMENT_FACTORY_KLASS_MEDIA_IMAGE = "Image";
+alias GST_ELEMENT_FACTORY_KLASS_MEDIA_IMAGE = ELEMENT_FACTORY_KLASS_MEDIA_IMAGE;
+
+enum ELEMENT_FACTORY_KLASS_MEDIA_METADATA = "Metadata";
+alias GST_ELEMENT_FACTORY_KLASS_MEDIA_METADATA = ELEMENT_FACTORY_KLASS_MEDIA_METADATA;
+
+enum ELEMENT_FACTORY_KLASS_MEDIA_SUBTITLE = "Subtitle";
+alias GST_ELEMENT_FACTORY_KLASS_MEDIA_SUBTITLE = ELEMENT_FACTORY_KLASS_MEDIA_SUBTITLE;
+
+enum ELEMENT_FACTORY_KLASS_MEDIA_VIDEO = "Video";
+alias GST_ELEMENT_FACTORY_KLASS_MEDIA_VIDEO = ELEMENT_FACTORY_KLASS_MEDIA_VIDEO;
+
+enum ELEMENT_FACTORY_KLASS_MUXER = "Muxer";
+alias GST_ELEMENT_FACTORY_KLASS_MUXER = ELEMENT_FACTORY_KLASS_MUXER;
+
+enum ELEMENT_FACTORY_KLASS_PARSER = "Parser";
+alias GST_ELEMENT_FACTORY_KLASS_PARSER = ELEMENT_FACTORY_KLASS_PARSER;
+
+enum ELEMENT_FACTORY_KLASS_PAYLOADER = "Payloader";
+alias GST_ELEMENT_FACTORY_KLASS_PAYLOADER = ELEMENT_FACTORY_KLASS_PAYLOADER;
+
+enum ELEMENT_FACTORY_KLASS_SINK = "Sink";
+alias GST_ELEMENT_FACTORY_KLASS_SINK = ELEMENT_FACTORY_KLASS_SINK;
+
+enum ELEMENT_FACTORY_KLASS_SRC = "Source";
+alias GST_ELEMENT_FACTORY_KLASS_SRC = ELEMENT_FACTORY_KLASS_SRC;
+
+/**
+ * Elements of any of the defined GST_ELEMENT_FACTORY_LIST types
+ */
+enum ELEMENT_FACTORY_TYPE_ANY = 562949953421311UL;
+alias GST_ELEMENT_FACTORY_TYPE_ANY = ELEMENT_FACTORY_TYPE_ANY;
+
+/**
+ * All sinks handling audio, video or image media types
+ */
+enum ELEMENT_FACTORY_TYPE_AUDIOVIDEO_SINKS = 3940649673949188UL;
+alias GST_ELEMENT_FACTORY_TYPE_AUDIOVIDEO_SINKS = ELEMENT_FACTORY_TYPE_AUDIOVIDEO_SINKS;
+
+/**
+ * All encoders handling audio media types
+ */
+enum ELEMENT_FACTORY_TYPE_AUDIO_ENCODER = 1125899906842626UL;
+alias GST_ELEMENT_FACTORY_TYPE_AUDIO_ENCODER = ELEMENT_FACTORY_TYPE_AUDIO_ENCODER;
+
+/**
+ * All elements used to 'decode' streams (decoders, demuxers, parsers, depayloaders)
+ */
+enum ELEMENT_FACTORY_TYPE_DECODABLE = 353UL;
+alias GST_ELEMENT_FACTORY_TYPE_DECODABLE = ELEMENT_FACTORY_TYPE_DECODABLE;
+
+enum ELEMENT_FACTORY_TYPE_DECODER = 1UL;
+alias GST_ELEMENT_FACTORY_TYPE_DECODER = ELEMENT_FACTORY_TYPE_DECODER;
+
+enum ELEMENT_FACTORY_TYPE_DECRYPTOR = 1024UL;
+alias GST_ELEMENT_FACTORY_TYPE_DECRYPTOR = ELEMENT_FACTORY_TYPE_DECRYPTOR;
+
+enum ELEMENT_FACTORY_TYPE_DEMUXER = 32UL;
+alias GST_ELEMENT_FACTORY_TYPE_DEMUXER = ELEMENT_FACTORY_TYPE_DEMUXER;
+
+enum ELEMENT_FACTORY_TYPE_DEPAYLOADER = 256UL;
+alias GST_ELEMENT_FACTORY_TYPE_DEPAYLOADER = ELEMENT_FACTORY_TYPE_DEPAYLOADER;
+
+enum ELEMENT_FACTORY_TYPE_ENCODER = 2UL;
+alias GST_ELEMENT_FACTORY_TYPE_ENCODER = ELEMENT_FACTORY_TYPE_ENCODER;
+
+enum ELEMENT_FACTORY_TYPE_ENCRYPTOR = 2048UL;
+alias GST_ELEMENT_FACTORY_TYPE_ENCRYPTOR = ELEMENT_FACTORY_TYPE_ENCRYPTOR;
+
+enum ELEMENT_FACTORY_TYPE_FORMATTER = 512UL;
+alias GST_ELEMENT_FACTORY_TYPE_FORMATTER = ELEMENT_FACTORY_TYPE_FORMATTER;
+
+enum ELEMENT_FACTORY_TYPE_MAX_ELEMENTS = 281474976710656UL;
+alias GST_ELEMENT_FACTORY_TYPE_MAX_ELEMENTS = ELEMENT_FACTORY_TYPE_MAX_ELEMENTS;
+
+/**
+ * Elements matching any of the defined GST_ELEMENT_FACTORY_TYPE_MEDIA types
+ *
+ * Note: Do not use this if you wish to not filter against any of the defined
+ * media types. If you wish to do this, simply don't specify any
+ * GST_ELEMENT_FACTORY_TYPE_MEDIA flag.
+ */
+enum ELEMENT_FACTORY_TYPE_MEDIA_ANY = 18446462598732840960UL;
+alias GST_ELEMENT_FACTORY_TYPE_MEDIA_ANY = ELEMENT_FACTORY_TYPE_MEDIA_ANY;
+
+enum ELEMENT_FACTORY_TYPE_MEDIA_AUDIO = 1125899906842624UL;
+alias GST_ELEMENT_FACTORY_TYPE_MEDIA_AUDIO = ELEMENT_FACTORY_TYPE_MEDIA_AUDIO;
+
+enum ELEMENT_FACTORY_TYPE_MEDIA_IMAGE = 2251799813685248UL;
+alias GST_ELEMENT_FACTORY_TYPE_MEDIA_IMAGE = ELEMENT_FACTORY_TYPE_MEDIA_IMAGE;
+
+enum ELEMENT_FACTORY_TYPE_MEDIA_METADATA = 9007199254740992UL;
+alias GST_ELEMENT_FACTORY_TYPE_MEDIA_METADATA = ELEMENT_FACTORY_TYPE_MEDIA_METADATA;
+
+enum ELEMENT_FACTORY_TYPE_MEDIA_SUBTITLE = 4503599627370496UL;
+alias GST_ELEMENT_FACTORY_TYPE_MEDIA_SUBTITLE = ELEMENT_FACTORY_TYPE_MEDIA_SUBTITLE;
+
+enum ELEMENT_FACTORY_TYPE_MEDIA_VIDEO = 562949953421312UL;
+alias GST_ELEMENT_FACTORY_TYPE_MEDIA_VIDEO = ELEMENT_FACTORY_TYPE_MEDIA_VIDEO;
+
+enum ELEMENT_FACTORY_TYPE_MUXER = 16UL;
+alias GST_ELEMENT_FACTORY_TYPE_MUXER = ELEMENT_FACTORY_TYPE_MUXER;
+
+enum ELEMENT_FACTORY_TYPE_PARSER = 64UL;
+alias GST_ELEMENT_FACTORY_TYPE_PARSER = ELEMENT_FACTORY_TYPE_PARSER;
+
+enum ELEMENT_FACTORY_TYPE_PAYLOADER = 128UL;
+alias GST_ELEMENT_FACTORY_TYPE_PAYLOADER = ELEMENT_FACTORY_TYPE_PAYLOADER;
+
+enum ELEMENT_FACTORY_TYPE_SINK = 4UL;
+alias GST_ELEMENT_FACTORY_TYPE_SINK = ELEMENT_FACTORY_TYPE_SINK;
+
+enum ELEMENT_FACTORY_TYPE_SRC = 8UL;
+alias GST_ELEMENT_FACTORY_TYPE_SRC = ELEMENT_FACTORY_TYPE_SRC;
+
+/**
+ * All encoders handling video or image media types
+ */
+enum ELEMENT_FACTORY_TYPE_VIDEO_ENCODER = 2814749767106562UL;
+alias GST_ELEMENT_FACTORY_TYPE_VIDEO_ENCODER = ELEMENT_FACTORY_TYPE_VIDEO_ENCODER;
+
+/**
+ * Name and contact details of the author(s). Use \n to separate
+ * multiple author details.
+ * E.g: "Joe Bloggs &lt;joe.blogs at foo.com&gt;"
+ */
+enum ELEMENT_METADATA_AUTHOR = "author";
+alias GST_ELEMENT_METADATA_AUTHOR = ELEMENT_METADATA_AUTHOR;
+
+/**
+ * Sentence describing the purpose of the element.
+ * E.g: "Write stream to a file"
+ */
+enum ELEMENT_METADATA_DESCRIPTION = "description";
+alias GST_ELEMENT_METADATA_DESCRIPTION = ELEMENT_METADATA_DESCRIPTION;
+
+/**
+ * Set uri pointing to user documentation. Applications can use this to show
+ * help for e.g. effects to users.
+ */
+enum ELEMENT_METADATA_DOC_URI = "doc-uri";
+alias GST_ELEMENT_METADATA_DOC_URI = ELEMENT_METADATA_DOC_URI;
+
+/**
+ * Elements that bridge to certain other products can include an icon of that
+ * used product. Application can show the icon in menus/selectors to help
+ * identifying specific elements.
+ */
+enum ELEMENT_METADATA_ICON_NAME = "icon-name";
+alias GST_ELEMENT_METADATA_ICON_NAME = ELEMENT_METADATA_ICON_NAME;
+
+/**
+ * String describing the type of element, as an unordered list
+ * separated with slashes ('/'). See draft-klass.txt of the design docs
+ * for more details and common types. E.g: "Sink/File"
+ */
+enum ELEMENT_METADATA_KLASS = "klass";
+alias GST_ELEMENT_METADATA_KLASS = ELEMENT_METADATA_KLASS;
+
+/**
+ * The long English name of the element. E.g. "File Sink"
+ */
+enum ELEMENT_METADATA_LONGNAME = "long-name";
+alias GST_ELEMENT_METADATA_LONGNAME = ELEMENT_METADATA_LONGNAME;
+
+/**
+ * Builds a string using errno describing the previously failed system
+ * call.  To be used as the debug argument in #GST_ELEMENT_ERROR.
+ */
+enum ERROR_SYSTEM = "system error: %s";
+alias GST_ERROR_SYSTEM = ERROR_SYSTEM;
+
+enum EVENT_NUM_SHIFT = 8;
+alias GST_EVENT_NUM_SHIFT = EVENT_NUM_SHIFT;
+
+/**
+ * The same thing as #GST_EVENT_TYPE_UPSTREAM | #GST_EVENT_TYPE_DOWNSTREAM.
+ */
+enum EVENT_TYPE_BOTH = 3;
+alias GST_EVENT_TYPE_BOTH = EVENT_TYPE_BOTH;
+
+/**
+ * A mask value with all bits set, for use as a
+ * #GstFlagSet mask where all flag bits must match
+ * exactly
+ */
+enum FLAG_SET_MASK_EXACT = 4294967295;
+alias GST_FLAG_SET_MASK_EXACT = FLAG_SET_MASK_EXACT;
+
+/**
+ * The PERCENT format is between 0 and this value
+ */
+enum FORMAT_PERCENT_MAX = 1000000UL;
+alias GST_FORMAT_PERCENT_MAX = FORMAT_PERCENT_MAX;
+
+/**
+ * The value used to scale down the reported PERCENT format value to
+ * its real value.
+ */
+enum FORMAT_PERCENT_SCALE = 10000UL;
+alias GST_FORMAT_PERCENT_SCALE = FORMAT_PERCENT_SCALE;
+
+/**
+ * Can be used together with #GST_FOURCC_ARGS to properly output a
+ * #guint32 fourcc value in a printf()-style text message.
+ *
+ * |[
+ * printf ("fourcc: %" GST_FOURCC_FORMAT "\n", GST_FOURCC_ARGS (fcc));
+ * ]|
+ */
+enum FOURCC_FORMAT = "c%c%c%c";
+alias GST_FOURCC_FORMAT = FOURCC_FORMAT;
+
+/**
+ * To be used in GST_PLUGIN_DEFINE if unsure about the licence.
+ */
+enum LICENSE_UNKNOWN = "unknown";
+alias GST_LICENSE_UNKNOWN = LICENSE_UNKNOWN;
+
+/**
+ * GstLockFlags value alias for GST_LOCK_FLAG_READ | GST_LOCK_FLAG_WRITE
+ */
+enum LOCK_FLAG_READWRITE = 3;
+alias GST_LOCK_FLAG_READWRITE = LOCK_FLAG_READWRITE;
+
+/**
+ * GstMapFlags value alias for GST_MAP_READ | GST_MAP_WRITE
+ */
+enum MAP_READWRITE = 3;
+alias GST_MAP_READWRITE = MAP_READWRITE;
+
+/**
+ * This metadata stays relevant as long as memory layout is unchanged.
+ */
+enum META_TAG_MEMORY_STR = "memory";
+alias GST_META_TAG_MEMORY_STR = META_TAG_MEMORY_STR;
+
+/**
+ * Constant that defines one GStreamer millisecond.
+ */
+enum MSECOND = 1000000UL;
+alias GST_MSECOND = MSECOND;
+
+/**
+ * Constant that defines one GStreamer nanosecond
+ */
+enum NSECOND = 1UL;
+alias GST_NSECOND = NSECOND;
+
+/**
+ * Use this flag on GObject properties to signal they can make sense to be.
+ * controlled over time. This hint is used by the GstController.
+ */
+enum PARAM_CONTROLLABLE = 2;
+alias GST_PARAM_CONTROLLABLE = PARAM_CONTROLLABLE;
+
+/**
+ * Use this flag on GObject properties of GstElements to indicate that
+ * they can be changed when the element is in the PAUSED or lower state.
+ * This flag implies GST_PARAM_MUTABLE_READY.
+ */
+enum PARAM_MUTABLE_PAUSED = 8;
+alias GST_PARAM_MUTABLE_PAUSED = PARAM_MUTABLE_PAUSED;
+
+/**
+ * Use this flag on GObject properties of GstElements to indicate that
+ * they can be changed when the element is in the PLAYING or lower state.
+ * This flag implies GST_PARAM_MUTABLE_PAUSED.
+ */
+enum PARAM_MUTABLE_PLAYING = 16;
+alias GST_PARAM_MUTABLE_PLAYING = PARAM_MUTABLE_PLAYING;
+
+/**
+ * Use this flag on GObject properties of GstElements to indicate that
+ * they can be changed when the element is in the READY or lower state.
+ */
+enum PARAM_MUTABLE_READY = 4;
+alias GST_PARAM_MUTABLE_READY = PARAM_MUTABLE_READY;
+
+/**
+ * Bits based on GST_PARAM_USER_SHIFT can be used by 3rd party applications.
+ */
+enum PARAM_USER_SHIFT = 256;
+alias GST_PARAM_USER_SHIFT = PARAM_USER_SHIFT;
+
+/**
+ * The field name in a GstCaps that is used to signal the UUID of the protection
+ * system.
+ */
+enum PROTECTION_SYSTEM_ID_CAPS_FIELD = "protection-system";
+alias GST_PROTECTION_SYSTEM_ID_CAPS_FIELD = PROTECTION_SYSTEM_ID_CAPS_FIELD;
+
+/**
+ * printf format type used to debug GStreamer types. You can use this in
+ * combination with GStreamer's debug logging system as well as the functions
+ * gst_info_vasprintf(), gst_info_strdup_vprintf() and gst_info_strdup_printf()
+ * to pretty-print the following types: #GstCaps, #GstStructure,
+ * #GstCapsFeatures, #GstTagList, #GstDateTime, #GstBuffer, #GstBufferList,
+ * #GstMessage, #GstEvent, #GstQuery, #GstContext, #GstPad, #GstObject. All
+ * #GObject types will be printed as typename plus pointer, and everything
+ * else will simply be printed as pointer address.
+ *
+ * This can only be used on types whose size is >= sizeof(gpointer).
+ */
+enum PTR_FORMAT = "paA";
+alias GST_PTR_FORMAT = PTR_FORMAT;
+
+enum QUERY_NUM_SHIFT = 8;
+alias GST_QUERY_NUM_SHIFT = QUERY_NUM_SHIFT;
+
+/**
+ * The same thing as #GST_QUERY_TYPE_UPSTREAM | #GST_QUERY_TYPE_DOWNSTREAM.
+ */
+enum QUERY_TYPE_BOTH = 3;
+alias GST_QUERY_TYPE_BOTH = QUERY_TYPE_BOTH;
+
+/**
+ * Constant that defines one GStreamer second.
+ */
+enum SECOND = 1000000000UL;
+alias GST_SECOND = SECOND;
+
+/**
+ * printf format type used to debug GStreamer segments. You can use this in
+ * combination with GStreamer's debug logging system as well as the functions
+ * gst_info_vasprintf(), gst_info_strdup_vprintf() and gst_info_strdup_printf()
+ * to pretty-print #GstSegment structures.
+ * This can only be used on pointers to GstSegment structures.
+ */
+enum SEGMENT_FORMAT = "paB";
+alias GST_SEGMENT_FORMAT = SEGMENT_FORMAT;
+
+/**
+ * A string that can be used in printf-like format strings to display a signed
+ * #GstClockTimeDiff or #gint64 value in h:m:s format.  Use GST_TIME_ARGS() to
+ * construct the matching arguments.
+ *
+ * Example:
+ * |[
+ * printf("%" GST_STIME_FORMAT "\n", GST_STIME_ARGS(ts));
+ * ]|
+ */
+enum STIME_FORMAT = "c%";
+alias GST_STIME_FORMAT = STIME_FORMAT;
+
+/**
+ * album containing this data (string)
+ *
+ * The album name as it should be displayed, e.g. 'The Jazz Guitar'
+ */
+enum TAG_ALBUM = "album";
+alias GST_TAG_ALBUM = TAG_ALBUM;
+
+/**
+ * The artist of the entire album, as it should be displayed.
+ */
+enum TAG_ALBUM_ARTIST = "album-artist";
+alias GST_TAG_ALBUM_ARTIST = TAG_ALBUM_ARTIST;
+
+/**
+ * The artist of the entire album, as it should be sorted.
+ */
+enum TAG_ALBUM_ARTIST_SORTNAME = "album-artist-sortname";
+alias GST_TAG_ALBUM_ARTIST_SORTNAME = TAG_ALBUM_ARTIST_SORTNAME;
+
+/**
+ * album gain in db (double)
+ */
+enum TAG_ALBUM_GAIN = "replaygain-album-gain";
+alias GST_TAG_ALBUM_GAIN = TAG_ALBUM_GAIN;
+
+/**
+ * peak of the album (double)
+ */
+enum TAG_ALBUM_PEAK = "replaygain-album-peak";
+alias GST_TAG_ALBUM_PEAK = TAG_ALBUM_PEAK;
+
+/**
+ * album containing this data, as used for sorting (string)
+ *
+ * The album name as it should be sorted, e.g. 'Jazz Guitar, The'
+ */
+enum TAG_ALBUM_SORTNAME = "album-sortname";
+alias GST_TAG_ALBUM_SORTNAME = TAG_ALBUM_SORTNAME;
+
+/**
+ * count of discs inside collection this disc belongs to (unsigned integer)
+ */
+enum TAG_ALBUM_VOLUME_COUNT = "album-disc-count";
+alias GST_TAG_ALBUM_VOLUME_COUNT = TAG_ALBUM_VOLUME_COUNT;
+
+/**
+ * disc number inside a collection (unsigned integer)
+ */
+enum TAG_ALBUM_VOLUME_NUMBER = "album-disc-number";
+alias GST_TAG_ALBUM_VOLUME_NUMBER = TAG_ALBUM_VOLUME_NUMBER;
+
+/**
+ * Arbitrary application data (sample)
+ *
+ * Some formats allow applications to add their own arbitrary data
+ * into files. This data is application dependent.
+ */
+enum TAG_APPLICATION_DATA = "application-data";
+alias GST_TAG_APPLICATION_DATA = TAG_APPLICATION_DATA;
+
+/**
+ * Name of the application used to create the media (string)
+ */
+enum TAG_APPLICATION_NAME = "application-name";
+alias GST_TAG_APPLICATION_NAME = TAG_APPLICATION_NAME;
+
+/**
+ * person(s) responsible for the recording (string)
+ *
+ * The artist name as it should be displayed, e.g. 'Jimi Hendrix' or
+ * 'The Guitar Heroes'
+ */
+enum TAG_ARTIST = "artist";
+alias GST_TAG_ARTIST = TAG_ARTIST;
+
+/**
+ * person(s) responsible for the recording, as used for sorting (string)
+ *
+ * The artist name as it should be sorted, e.g. 'Hendrix, Jimi' or
+ * 'Guitar Heroes, The'
+ */
+enum TAG_ARTIST_SORTNAME = "artist-sortname";
+alias GST_TAG_ARTIST_SORTNAME = TAG_ARTIST_SORTNAME;
+
+/**
+ * generic file attachment (sample) (sample taglist should specify the content
+ * type and if possible set "filename" to the file name of the
+ * attachment)
+ */
+enum TAG_ATTACHMENT = "attachment";
+alias GST_TAG_ATTACHMENT = TAG_ATTACHMENT;
+
+/**
+ * codec the audio data is stored in (string)
+ */
+enum TAG_AUDIO_CODEC = "audio-codec";
+alias GST_TAG_AUDIO_CODEC = TAG_AUDIO_CODEC;
+
+/**
+ * number of beats per minute in audio (double)
+ */
+enum TAG_BEATS_PER_MINUTE = "beats-per-minute";
+alias GST_TAG_BEATS_PER_MINUTE = TAG_BEATS_PER_MINUTE;
+
+/**
+ * exact or average bitrate in bits/s (unsigned integer)
+ */
+enum TAG_BITRATE = "bitrate";
+alias GST_TAG_BITRATE = TAG_BITRATE;
+
+/**
+ * codec the data is stored in (string)
+ */
+enum TAG_CODEC = "codec";
+alias GST_TAG_CODEC = TAG_CODEC;
+
+/**
+ * free text commenting the data (string)
+ */
+enum TAG_COMMENT = "comment";
+alias GST_TAG_COMMENT = TAG_COMMENT;
+
+/**
+ * person(s) who composed the recording (string)
+ */
+enum TAG_COMPOSER = "composer";
+alias GST_TAG_COMPOSER = TAG_COMPOSER;
+
+/**
+ * The composer's name, used for sorting (string)
+ */
+enum TAG_COMPOSER_SORTNAME = "composer-sortname";
+alias GST_TAG_COMPOSER_SORTNAME = TAG_COMPOSER_SORTNAME;
+
+/**
+ * conductor/performer refinement (string)
+ */
+enum TAG_CONDUCTOR = "conductor";
+alias GST_TAG_CONDUCTOR = TAG_CONDUCTOR;
+
+/**
+ * contact information (string)
+ */
+enum TAG_CONTACT = "contact";
+alias GST_TAG_CONTACT = TAG_CONTACT;
+
+/**
+ * container format the data is stored in (string)
+ */
+enum TAG_CONTAINER_FORMAT = "container-format";
+alias GST_TAG_CONTAINER_FORMAT = TAG_CONTAINER_FORMAT;
+
+/**
+ * copyright notice of the data (string)
+ */
+enum TAG_COPYRIGHT = "copyright";
+alias GST_TAG_COPYRIGHT = TAG_COPYRIGHT;
+
+/**
+ * URI to location where copyright details can be found (string)
+ */
+enum TAG_COPYRIGHT_URI = "copyright-uri";
+alias GST_TAG_COPYRIGHT_URI = TAG_COPYRIGHT_URI;
+
+/**
+ * date the data was created (#GDate structure)
+ */
+enum TAG_DATE = "date";
+alias GST_TAG_DATE = TAG_DATE;
+
+/**
+ * date and time the data was created (#GstDateTime structure)
+ */
+enum TAG_DATE_TIME = "datetime";
+alias GST_TAG_DATE_TIME = TAG_DATE_TIME;
+
+/**
+ * short text describing the content of the data (string)
+ */
+enum TAG_DESCRIPTION = "description";
+alias GST_TAG_DESCRIPTION = TAG_DESCRIPTION;
+
+/**
+ * Manufacturer of the device used to create the media (string)
+ */
+enum TAG_DEVICE_MANUFACTURER = "device-manufacturer";
+alias GST_TAG_DEVICE_MANUFACTURER = TAG_DEVICE_MANUFACTURER;
+
+/**
+ * Model of the device used to create the media (string)
+ */
+enum TAG_DEVICE_MODEL = "device-model";
+alias GST_TAG_DEVICE_MODEL = TAG_DEVICE_MODEL;
+
+/**
+ * length in GStreamer time units (nanoseconds) (unsigned 64-bit integer)
+ */
+enum TAG_DURATION = "duration";
+alias GST_TAG_DURATION = TAG_DURATION;
+
+/**
+ * name of the person or organisation that encoded the file. May contain a
+ * copyright message if the person or organisation also holds the copyright
+ * (string)
+ *
+ * Note: do not use this field to describe the encoding application. Use
+ * #GST_TAG_APPLICATION_NAME or #GST_TAG_COMMENT for that.
+ */
+enum TAG_ENCODED_BY = "encoded-by";
+alias GST_TAG_ENCODED_BY = TAG_ENCODED_BY;
+
+/**
+ * encoder used to encode this stream (string)
+ */
+enum TAG_ENCODER = "encoder";
+alias GST_TAG_ENCODER = TAG_ENCODER;
+
+/**
+ * version of the encoder used to encode this stream (unsigned integer)
+ */
+enum TAG_ENCODER_VERSION = "encoder-version";
+alias GST_TAG_ENCODER_VERSION = TAG_ENCODER_VERSION;
+
+/**
+ * key/value text commenting the data (string)
+ *
+ * Must be in the form of 'key=comment' or
+ * 'key[lc]=comment' where 'lc' is an ISO-639
+ * language code.
+ *
+ * This tag is used for unknown Vorbis comment tags,
+ * unknown APE tags and certain ID3v2 comment fields.
+ */
+enum TAG_EXTENDED_COMMENT = "extended-comment";
+alias GST_TAG_EXTENDED_COMMENT = TAG_EXTENDED_COMMENT;
+
+/**
+ * genre this data belongs to (string)
+ */
+enum TAG_GENRE = "genre";
+alias GST_TAG_GENRE = TAG_GENRE;
+
+/**
+ * Indicates the direction the device is pointing to when capturing
+ * a media. It is represented as degrees in floating point representation,
+ * 0 means the geographic north, and increases clockwise (double from 0 to 360)
+ *
+ * See also #GST_TAG_GEO_LOCATION_MOVEMENT_DIRECTION
+ */
+enum TAG_GEO_LOCATION_CAPTURE_DIRECTION = "geo-location-capture-direction";
+alias GST_TAG_GEO_LOCATION_CAPTURE_DIRECTION = TAG_GEO_LOCATION_CAPTURE_DIRECTION;
+
+/**
+ * The city (english name) where the media has been produced (string).
+ */
+enum TAG_GEO_LOCATION_CITY = "geo-location-city";
+alias GST_TAG_GEO_LOCATION_CITY = TAG_GEO_LOCATION_CITY;
+
+/**
+ * The country (english name) where the media has been produced (string).
+ */
+enum TAG_GEO_LOCATION_COUNTRY = "geo-location-country";
+alias GST_TAG_GEO_LOCATION_COUNTRY = TAG_GEO_LOCATION_COUNTRY;
+
+/**
+ * geo elevation of where the media has been recorded or produced in meters
+ * according to WGS84 (zero is average sea level) (double).
+ */
+enum TAG_GEO_LOCATION_ELEVATION = "geo-location-elevation";
+alias GST_TAG_GEO_LOCATION_ELEVATION = TAG_GEO_LOCATION_ELEVATION;
+
+/**
+ * Represents the expected error on the horizontal positioning in
+ * meters (double).
+ */
+enum TAG_GEO_LOCATION_HORIZONTAL_ERROR = "geo-location-horizontal-error";
+alias GST_TAG_GEO_LOCATION_HORIZONTAL_ERROR = TAG_GEO_LOCATION_HORIZONTAL_ERROR;
+
+/**
+ * geo latitude location of where the media has been recorded or produced in
+ * degrees according to WGS84 (zero at the equator, negative values for southern
+ * latitudes) (double).
+ */
+enum TAG_GEO_LOCATION_LATITUDE = "geo-location-latitude";
+alias GST_TAG_GEO_LOCATION_LATITUDE = TAG_GEO_LOCATION_LATITUDE;
+
+/**
+ * geo longitude location of where the media has been recorded or produced in
+ * degrees according to WGS84 (zero at the prime meridian in Greenwich/UK,
+ * negative values for western longitudes). (double).
+ */
+enum TAG_GEO_LOCATION_LONGITUDE = "geo-location-longitude";
+alias GST_TAG_GEO_LOCATION_LONGITUDE = TAG_GEO_LOCATION_LONGITUDE;
+
+/**
+ * Indicates the movement direction of the device performing the capture
+ * of a media. It is represented as degrees in floating point representation,
+ * 0 means the geographic north, and increases clockwise (double from 0 to 360)
+ *
+ * See also #GST_TAG_GEO_LOCATION_CAPTURE_DIRECTION
+ */
+enum TAG_GEO_LOCATION_MOVEMENT_DIRECTION = "geo-location-movement-direction";
+alias GST_TAG_GEO_LOCATION_MOVEMENT_DIRECTION = TAG_GEO_LOCATION_MOVEMENT_DIRECTION;
+
+/**
+ * Speed of the capturing device when performing the capture.
+ * Represented in m/s. (double)
+ *
+ * See also #GST_TAG_GEO_LOCATION_MOVEMENT_DIRECTION
+ */
+enum TAG_GEO_LOCATION_MOVEMENT_SPEED = "geo-location-movement-speed";
+alias GST_TAG_GEO_LOCATION_MOVEMENT_SPEED = TAG_GEO_LOCATION_MOVEMENT_SPEED;
+
+/**
+ * human readable descriptive location of where the media has been recorded or
+ * produced. (string).
+ */
+enum TAG_GEO_LOCATION_NAME = "geo-location-name";
+alias GST_TAG_GEO_LOCATION_NAME = TAG_GEO_LOCATION_NAME;
+
+/**
+ * A location 'smaller' than GST_TAG_GEO_LOCATION_CITY that specifies better
+ * where the media has been produced. (e.g. the neighborhood) (string).
+ *
+ * This tag has been added as this is how it is handled/named in XMP's
+ * Iptc4xmpcore schema.
+ */
+enum TAG_GEO_LOCATION_SUBLOCATION = "geo-location-sublocation";
+alias GST_TAG_GEO_LOCATION_SUBLOCATION = TAG_GEO_LOCATION_SUBLOCATION;
+
+/**
+ * Groups together media that are related and spans multiple tracks. An
+ * example are multiple pieces of a concerto. (string)
+ */
+enum TAG_GROUPING = "grouping";
+alias GST_TAG_GROUPING = TAG_GROUPING;
+
+/**
+ * Homepage for this media (i.e. artist or movie homepage) (string)
+ */
+enum TAG_HOMEPAGE = "homepage";
+alias GST_TAG_HOMEPAGE = TAG_HOMEPAGE;
+
+/**
+ * image (sample) (sample taglist should specify the content type and preferably
+ * also set "image-type" field as #GstTagImageType)
+ */
+enum TAG_IMAGE = "image";
+alias GST_TAG_IMAGE = TAG_IMAGE;
+
+/**
+ * Represents the 'Orientation' tag from EXIF. Defines how the image
+ * should be rotated and mirrored for display. (string)
+ *
+ * This tag has a predefined set of allowed values:
+ * "rotate-0"
+ * "rotate-90"
+ * "rotate-180"
+ * "rotate-270"
+ * "flip-rotate-0"
+ * "flip-rotate-90"
+ * "flip-rotate-180"
+ * "flip-rotate-270"
+ *
+ * The naming is adopted according to a possible transformation to perform
+ * on the image to fix its orientation, obviously equivalent operations will
+ * yield the same result.
+ *
+ * Rotations indicated by the values are in clockwise direction and
+ * 'flip' means an horizontal mirroring.
+ */
+enum TAG_IMAGE_ORIENTATION = "image-orientation";
+alias GST_TAG_IMAGE_ORIENTATION = TAG_IMAGE_ORIENTATION;
+
+/**
+ * Information about the people behind a remix and similar
+ * interpretations of another existing piece (string)
+ */
+enum TAG_INTERPRETED_BY = "interpreted-by";
+alias GST_TAG_INTERPRETED_BY = TAG_INTERPRETED_BY;
+
+/**
+ * International Standard Recording Code - see http://www.ifpi.org/isrc/ (string)
+ */
+enum TAG_ISRC = "isrc";
+alias GST_TAG_ISRC = TAG_ISRC;
+
+/**
+ * comma separated keywords describing the content (string).
+ */
+enum TAG_KEYWORDS = "keywords";
+alias GST_TAG_KEYWORDS = TAG_KEYWORDS;
+
+/**
+ * ISO-639-2 or ISO-639-1 code for the language the content is in (string)
+ *
+ * There is utility API in libgsttag in gst-plugins-base to obtain a translated
+ * language name from the language code: gst_tag_get_language_name()
+ */
+enum TAG_LANGUAGE_CODE = "language-code";
+alias GST_TAG_LANGUAGE_CODE = TAG_LANGUAGE_CODE;
+
+/**
+ * Name of the language the content is in (string)
+ *
+ * Free-form name of the language the content is in, if a language code
+ * is not available. This tag should not be set in addition to a language
+ * code. It is undefined what language or locale the language name is in.
+ */
+enum TAG_LANGUAGE_NAME = "language-name";
+alias GST_TAG_LANGUAGE_NAME = TAG_LANGUAGE_NAME;
+
+/**
+ * license of data (string)
+ */
+enum TAG_LICENSE = "license";
+alias GST_TAG_LICENSE = TAG_LICENSE;
+
+/**
+ * URI to location where license details can be found (string)
+ */
+enum TAG_LICENSE_URI = "license-uri";
+alias GST_TAG_LICENSE_URI = TAG_LICENSE_URI;
+
+/**
+ * Origin of media as a URI (location, where the original of the file or stream
+ * is hosted) (string)
+ */
+enum TAG_LOCATION = "location";
+alias GST_TAG_LOCATION = TAG_LOCATION;
+
+/**
+ * The lyrics of the media (string)
+ */
+enum TAG_LYRICS = "lyrics";
+alias GST_TAG_LYRICS = TAG_LYRICS;
+
+/**
+ * maximum bitrate in bits/s (unsigned integer)
+ */
+enum TAG_MAXIMUM_BITRATE = "maximum-bitrate";
+alias GST_TAG_MAXIMUM_BITRATE = TAG_MAXIMUM_BITRATE;
+
+/**
+ * <ulink url="http://en.wikipedia.org/wiki/Note#Note_designation_in_accordance_with_octave_name">Midi note number</ulink>
+ * of the audio track. This is useful for sample instruments and in particular
+ * for multi-samples.
+ */
+enum TAG_MIDI_BASE_NOTE = "midi-base-note";
+alias GST_TAG_MIDI_BASE_NOTE = TAG_MIDI_BASE_NOTE;
+
+/**
+ * minimum bitrate in bits/s (unsigned integer)
+ */
+enum TAG_MINIMUM_BITRATE = "minimum-bitrate";
+alias GST_TAG_MINIMUM_BITRATE = TAG_MINIMUM_BITRATE;
+
+/**
+ * nominal bitrate in bits/s (unsigned integer). The actual bitrate might be
+ * different from this target bitrate.
+ */
+enum TAG_NOMINAL_BITRATE = "nominal-bitrate";
+alias GST_TAG_NOMINAL_BITRATE = TAG_NOMINAL_BITRATE;
+
+/**
+ * organization (string)
+ */
+enum TAG_ORGANIZATION = "organization";
+alias GST_TAG_ORGANIZATION = TAG_ORGANIZATION;
+
+/**
+ * person(s) performing (string)
+ */
+enum TAG_PERFORMER = "performer";
+alias GST_TAG_PERFORMER = TAG_PERFORMER;
+
+/**
+ * image that is meant for preview purposes, e.g. small icon-sized version
+ * (sample) (sample taglist should specify the content type)
+ */
+enum TAG_PREVIEW_IMAGE = "preview-image";
+alias GST_TAG_PREVIEW_IMAGE = TAG_PREVIEW_IMAGE;
+
+/**
+ * Any private data that may be contained in tags (sample).
+ *
+ * It is represented by #GstSample in which #GstBuffer contains the
+ * binary data and the sample's info #GstStructure may contain any
+ * extra information that identifies the origin or meaning of the data.
+ *
+ * Private frames in ID3v2 tags ('PRIV' frames) will be represented
+ * using this tag, in which case the GstStructure will be named
+ * "ID3PrivateFrame" and contain a field named "owner" of type string
+ * which contains the owner-identification string from the tag.
+ */
+enum TAG_PRIVATE_DATA = "private-data";
+alias GST_TAG_PRIVATE_DATA = TAG_PRIVATE_DATA;
+
+/**
+ * Name of the label or publisher (string)
+ */
+enum TAG_PUBLISHER = "publisher";
+alias GST_TAG_PUBLISHER = TAG_PUBLISHER;
+
+/**
+ * reference level of track and album gain values (double)
+ */
+enum TAG_REFERENCE_LEVEL = "replaygain-reference-level";
+alias GST_TAG_REFERENCE_LEVEL = TAG_REFERENCE_LEVEL;
+
+/**
+ * serial number of track (unsigned integer)
+ */
+enum TAG_SERIAL = "serial";
+alias GST_TAG_SERIAL = TAG_SERIAL;
+
+/**
+ * Number of the episode within a season/show (unsigned integer)
+ */
+enum TAG_SHOW_EPISODE_NUMBER = "show-episode-number";
+alias GST_TAG_SHOW_EPISODE_NUMBER = TAG_SHOW_EPISODE_NUMBER;
+
+/**
+ * Name of the show, used for displaying (string)
+ */
+enum TAG_SHOW_NAME = "show-name";
+alias GST_TAG_SHOW_NAME = TAG_SHOW_NAME;
+
+/**
+ * Number of the season of a show/series (unsigned integer)
+ */
+enum TAG_SHOW_SEASON_NUMBER = "show-season-number";
+alias GST_TAG_SHOW_SEASON_NUMBER = TAG_SHOW_SEASON_NUMBER;
+
+/**
+ * Name of the show, used for sorting (string)
+ */
+enum TAG_SHOW_SORTNAME = "show-sortname";
+alias GST_TAG_SHOW_SORTNAME = TAG_SHOW_SORTNAME;
+
+/**
+ * codec/format the subtitle data is stored in (string)
+ */
+enum TAG_SUBTITLE_CODEC = "subtitle-codec";
+alias GST_TAG_SUBTITLE_CODEC = TAG_SUBTITLE_CODEC;
+
+/**
+ * commonly used title (string)
+ *
+ * The title as it should be displayed, e.g. 'The Doll House'
+ */
+enum TAG_TITLE = "title";
+alias GST_TAG_TITLE = TAG_TITLE;
+
+/**
+ * commonly used title, as used for sorting (string)
+ *
+ * The title as it should be sorted, e.g. 'Doll House, The'
+ */
+enum TAG_TITLE_SORTNAME = "title-sortname";
+alias GST_TAG_TITLE_SORTNAME = TAG_TITLE_SORTNAME;
+
+/**
+ * count of tracks inside collection this track belongs to (unsigned integer)
+ */
+enum TAG_TRACK_COUNT = "track-count";
+alias GST_TAG_TRACK_COUNT = TAG_TRACK_COUNT;
+
+/**
+ * track gain in db (double)
+ */
+enum TAG_TRACK_GAIN = "replaygain-track-gain";
+alias GST_TAG_TRACK_GAIN = TAG_TRACK_GAIN;
+
+/**
+ * track number inside a collection (unsigned integer)
+ */
+enum TAG_TRACK_NUMBER = "track-number";
+alias GST_TAG_TRACK_NUMBER = TAG_TRACK_NUMBER;
+
+/**
+ * peak of the track (double)
+ */
+enum TAG_TRACK_PEAK = "replaygain-track-peak";
+alias GST_TAG_TRACK_PEAK = TAG_TRACK_PEAK;
+
+/**
+ * Rating attributed by a person (likely the application user).
+ * The higher the value, the more the user likes this media
+ * (unsigned int from 0 to 100)
+ */
+enum TAG_USER_RATING = "user-rating";
+alias GST_TAG_USER_RATING = TAG_USER_RATING;
+
+/**
+ * version of this data (string)
+ */
+enum TAG_VERSION = "version";
+alias GST_TAG_VERSION = TAG_VERSION;
+
+/**
+ * codec the video data is stored in (string)
+ */
+enum TAG_VIDEO_CODEC = "video-codec";
+alias GST_TAG_VIDEO_CODEC = TAG_VIDEO_CODEC;
+
+/**
+ * A string that can be used in printf-like format strings to display a
+ * #GstClockTime value in h:m:s format.  Use GST_TIME_ARGS() to construct
+ * the matching arguments.
+ *
+ * Example:
+ * |[<!-- language="C" -->
+ * printf("%" GST_TIME_FORMAT "\n", GST_TIME_ARGS(ts));
+ * ]|
+ */
+enum TIME_FORMAT = "u:%02u:%02u.%09u";
+alias GST_TIME_FORMAT = TIME_FORMAT;
+
+/**
+ * Special value for the repeat_count set in gst_toc_entry_set_loop() or
+ * returned by gst_toc_entry_set_loop() to indicate infinite looping.
+ */
+enum TOC_REPEAT_COUNT_INFINITE = -1;
+alias GST_TOC_REPEAT_COUNT_INFINITE = TOC_REPEAT_COUNT_INFINITE;
+
+/**
+ * Value for #GstUri<!-- -->.port to indicate no port number.
+ */
+enum URI_NO_PORT = 0;
+alias GST_URI_NO_PORT = URI_NO_PORT;
+
+/**
+ * Constant that defines one GStreamer microsecond.
+ */
+enum USECOND = 1000UL;
+alias GST_USECOND = USECOND;
+
+/**
+ * Indicates that the first value provided to a comparison function
+ * (gst_value_compare()) is equal to the second one.
+ */
+enum VALUE_EQUAL = 0;
+alias GST_VALUE_EQUAL = VALUE_EQUAL;
+
+/**
+ * Indicates that the first value provided to a comparison function
+ * (gst_value_compare()) is greater than the second one.
+ */
+enum VALUE_GREATER_THAN = 1;
+alias GST_VALUE_GREATER_THAN = VALUE_GREATER_THAN;
+
+/**
+ * Indicates that the first value provided to a comparison function
+ * (gst_value_compare()) is lesser than the second one.
+ */
+enum VALUE_LESS_THAN = -1;
+alias GST_VALUE_LESS_THAN = VALUE_LESS_THAN;
+
+/**
+ * Indicates that the comparison function (gst_value_compare()) can not
+ * determine a order for the two provided values.
+ */
+enum VALUE_UNORDERED = 2;
+alias GST_VALUE_UNORDERED = VALUE_UNORDERED;
+
+/**
+ * The major version of GStreamer at compile time:
+ */
+enum VERSION_MAJOR = 1;
+alias GST_VERSION_MAJOR = VERSION_MAJOR;
+
+/**
+ * The micro version of GStreamer at compile time:
+ */
+enum VERSION_MICRO = 2;
+alias GST_VERSION_MICRO = VERSION_MICRO;
+
+/**
+ * The minor version of GStreamer at compile time:
+ */
+enum VERSION_MINOR = 12;
+alias GST_VERSION_MINOR = VERSION_MINOR;
+
+/**
+ * The nano version of GStreamer at compile time:
+ * Actual releases have 0, GIT versions have 1, prerelease versions have 2-...
+ */
+enum VERSION_NANO = 0;
+alias GST_VERSION_NANO = VERSION_NANO;

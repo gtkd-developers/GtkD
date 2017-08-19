@@ -385,3 +385,47 @@ public alias extern(C) void function(char* pixels, void* data) GdkPixbufDestroyN
  * Since: 2.4
  */
 public alias extern(C) int function(char* buf, size_t count, GError** error, void* data) GdkPixbufSaveFunc;
+
+enum PIXBUF_FEATURES_H = 1;
+alias GDK_PIXBUF_FEATURES_H = PIXBUF_FEATURES_H;
+
+/**
+ * Magic number for #GdkPixdata structures.
+ */
+enum PIXBUF_MAGIC_NUMBER = 1197763408;
+alias GDK_PIXBUF_MAGIC_NUMBER = PIXBUF_MAGIC_NUMBER;
+
+/**
+ * Major version of gdk-pixbuf library, that is the "0" in
+ * "0.8.2" for example.
+ */
+enum PIXBUF_MAJOR = 2;
+alias GDK_PIXBUF_MAJOR = PIXBUF_MAJOR;
+
+/**
+ * Micro version of gdk-pixbuf library, that is the "2" in
+ * "0.8.2" for example.
+ */
+enum PIXBUF_MICRO = 7;
+alias GDK_PIXBUF_MICRO = PIXBUF_MICRO;
+
+/**
+ * Minor version of gdk-pixbuf library, that is the "8" in
+ * "0.8.2" for example.
+ */
+enum PIXBUF_MINOR = 36;
+alias GDK_PIXBUF_MINOR = PIXBUF_MINOR;
+
+/**
+ * Contains the full version of the gdk-pixbuf header as a string.
+ * This is the version being compiled against; contrast with
+ * #gdk_pixbuf_version.
+ */
+enum PIXBUF_VERSION = "2.36.7";
+alias GDK_PIXBUF_VERSION = PIXBUF_VERSION;
+
+/**
+ * The length of a #GdkPixdata structure without the @pixel_data pointer.
+ */
+enum PIXDATA_HEADER_LENGTH = 24;
+alias GDK_PIXDATA_HEADER_LENGTH = PIXDATA_HEADER_LENGTH;

@@ -2209,12 +2209,109 @@ public alias extern(C) int function(PangoFontset* fontset, PangoFont* font, void
  */
 public alias extern(C) void function(cairo_t* cr, PangoAttrShape* attr, int doPath, void* data) PangoCairoShapeRendererFunc;
 
-const int PANGO_SCALE = 1024;
-const double PANGO_SCALE_XX_SMALL = 0.5787037037037;	/// The scale factor for three shrinking steps (1 / (1.2 * 1.2 * 1.2)).
-const double PANGO_SCALE_X_SMALL  = 0.6444444444444;	/// The scale factor for two shrinking steps (1 / (1.2 * 1.2)).
-const double PANGO_SCALE_SMALL    = 0.8333333333333;	/// The scale factor for one shrinking step (1 / 1.2).
-const double PANGO_SCALE_MEDIUM   = 1.0;	/// The scale factor for normal size (1.0).
-const double PANGO_SCALE_LARGE    = 1.2;	/// The scale factor for one magnification step (1.2)
-const double PANGO_SCALE_X_LARGE  = 1.4399999999999;	/// The scale factor for two magnification steps (1.2 * 1.2).
-const double PANGO_SCALE_XX_LARGE = 1.728;	/// The scale factor for three magnification steps (1.2 * 1.2 * 1.2).
+/**
+ * Whether the segment should be shifted to center around the baseline.
+ * Used in vertical writing directions mostly.
+ */
+enum ANALYSIS_FLAG_CENTERED_BASELINE = 1;
+alias PANGO_ANALYSIS_FLAG_CENTERED_BASELINE = ANALYSIS_FLAG_CENTERED_BASELINE;
 
+/**
+ * This flag is used to mark runs that hold ellipsized text,
+ * in an ellipsized layout.
+ */
+enum ANALYSIS_FLAG_IS_ELLIPSIS = 2;
+alias PANGO_ANALYSIS_FLAG_IS_ELLIPSIS = ANALYSIS_FLAG_IS_ELLIPSIS;
+
+/**
+ * This value can be used to set the start_index member of a #PangoAttribute
+ * such that the attribute covers from the beginning of the text.
+ */
+enum ATTR_INDEX_FROM_TEXT_BEGINNING = 0;
+alias PANGO_ATTR_INDEX_FROM_TEXT_BEGINNING = ATTR_INDEX_FROM_TEXT_BEGINNING;
+
+/**
+ * A string constant defining the engine type for language engines.
+ * These engines derive from #PangoEngineLang.
+ */
+enum ENGINE_TYPE_LANG = "PangoEngineLang";
+alias PANGO_ENGINE_TYPE_LANG = ENGINE_TYPE_LANG;
+
+/**
+ * A string constant defining the engine type for shaping engines.
+ * These engines derive from #PangoEngineShape.
+ */
+enum ENGINE_TYPE_SHAPE = "PangoEngineShape";
+alias PANGO_ENGINE_TYPE_SHAPE = ENGINE_TYPE_SHAPE;
+
+/**
+ * The %PANGO_GLYPH_EMPTY macro represents a #PangoGlyph value that has a
+ * special meaning, which is a zero-width empty glyph.  This is useful for
+ * example in shaper modules, to use as the glyph for various zero-width
+ * Unicode characters (those passing pango_is_zero_width()).
+ */
+enum GLYPH_EMPTY = 268435455;
+alias PANGO_GLYPH_EMPTY = GLYPH_EMPTY;
+
+/**
+ * The %PANGO_GLYPH_INVALID_INPUT macro represents a #PangoGlyph value that has a
+ * special meaning of invalid input.  #PangoLayout produces one such glyph
+ * per invalid input UTF-8 byte and such a glyph is rendered as a crossed
+ * box.
+ *
+ * Note that this value is defined such that it has the %PANGO_GLYPH_UNKNOWN_FLAG
+ * on.
+ */
+enum GLYPH_INVALID_INPUT = 4294967295;
+alias PANGO_GLYPH_INVALID_INPUT = GLYPH_INVALID_INPUT;
+
+/**
+ * The %PANGO_GLYPH_UNKNOWN_FLAG macro is a flag value that can be added to
+ * a #gunichar value of a valid Unicode character, to produce a #PangoGlyph
+ * value, representing an unknown-character glyph for the respective #gunichar.
+ */
+enum GLYPH_UNKNOWN_FLAG = 268435456;
+alias PANGO_GLYPH_UNKNOWN_FLAG = GLYPH_UNKNOWN_FLAG;
+
+/**
+ * A string constant defining the render type
+ * for engines that are not rendering-system specific.
+ */
+enum RENDER_TYPE_NONE = "PangoRenderNone";
+alias PANGO_RENDER_TYPE_NONE = RENDER_TYPE_NONE;
+
+/**
+ * The %PANGO_SCALE macro represents the scale between dimensions used
+ * for Pango distances and device units. (The definition of device
+ * units is dependent on the output device; it will typically be pixels
+ * for a screen, and points for a printer.) %PANGO_SCALE is currently
+ * 1024, but this may be changed in the future.
+ *
+ * When setting font sizes, device units are always considered to be
+ * points (as in "12 point font"), rather than pixels.
+ */
+enum SCALE = 1024;
+alias PANGO_SCALE = SCALE;
+
+enum UNKNOWN_GLYPH_HEIGHT = 14;
+alias PANGO_UNKNOWN_GLYPH_HEIGHT = UNKNOWN_GLYPH_HEIGHT;
+
+enum UNKNOWN_GLYPH_WIDTH = 10;
+alias PANGO_UNKNOWN_GLYPH_WIDTH = UNKNOWN_GLYPH_WIDTH;
+
+/**
+ * A macro that should be defined by the user prior to including
+ * the pango.h header.
+ * The definition should be one of the predefined Pango version
+ * macros: %PANGO_VERSION_1_2, %PANGO_VERSION_1_4,...
+ *
+ * This macro defines the earliest version of Pango that the package is
+ * required to be able to compile against.
+ *
+ * If the compiler is configured to warn about the use of deprecated
+ * functions, then using functions that were deprecated in version
+ * %PANGO_VERSION_MIN_REQUIRED or earlier will cause warnings (but
+ * using functions deprecated in later releases will not).
+ */
+enum VERSION_MIN_REQUIRED = 2;
+alias PANGO_VERSION_MIN_REQUIRED = VERSION_MIN_REQUIRED;

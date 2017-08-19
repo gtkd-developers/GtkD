@@ -27,8 +27,6 @@ file: Gst-1.0.gir
 addAliases: start
 	public import glib.c.types;
 	public import gobject.c.types;
-
-	enum GST_CLOCK_TIME_NONE = 18446744073709551615UL;
 addAliases: end
 
 struct: Bin

@@ -44,19 +44,6 @@ addStructs: start
 
 addStructs: end
 
-addConstants: start
-
-	const int PANGO_SCALE = 1024;
-	const double PANGO_SCALE_XX_SMALL = 0.5787037037037;	/// The scale factor for three shrinking steps (1 / (1.2 * 1.2 * 1.2)).
-	const double PANGO_SCALE_X_SMALL  = 0.6444444444444;	/// The scale factor for two shrinking steps (1 / (1.2 * 1.2)).
-	const double PANGO_SCALE_SMALL    = 0.8333333333333;	/// The scale factor for one shrinking step (1 / 1.2).
-	const double PANGO_SCALE_MEDIUM   = 1.0;	/// The scale factor for normal size (1.0).
-	const double PANGO_SCALE_LARGE    = 1.2;	/// The scale factor for one magnification step (1.2)
-	const double PANGO_SCALE_X_LARGE  = 1.4399999999999;	/// The scale factor for two magnification steps (1.2 * 1.2).
-	const double PANGO_SCALE_XX_LARGE = 1.728;	/// The scale factor for three magnification steps (1.2 * 1.2 * 1.2).
-
-addConstants: end
-
 struct: AttrFontDesc
 class: PgAttributeFontDesc
 extend: Attribute

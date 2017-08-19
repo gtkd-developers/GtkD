@@ -5281,3 +5281,825 @@ public alias extern(C) const(char)* function(GModule* modul) GModuleCheckInit;
  *     modul = the #GModule about to be unloaded
  */
 public alias extern(C) void function(GModule* modul) GModuleUnload;
+
+enum ANALYZER_ANALYZING = 1;
+alias G_ANALYZER_ANALYZING = ANALYZER_ANALYZING;
+
+/**
+ * A good size for a buffer to be passed into g_ascii_dtostr().
+ * It is guaranteed to be enough for all output of that function
+ * on systems with 64bit IEEE-compatible doubles.
+ *
+ * The typical usage would be something like:
+ * |[<!-- language="C" -->
+ * char buf[G_ASCII_DTOSTR_BUF_SIZE];
+ *
+ * fprintf (out, "value=%s\n", g_ascii_dtostr (buf, sizeof (buf), value));
+ * ]|
+ */
+enum ASCII_DTOSTR_BUF_SIZE = 39;
+alias G_ASCII_DTOSTR_BUF_SIZE = ASCII_DTOSTR_BUF_SIZE;
+
+/**
+ * Specifies one of the possible types of byte order.
+ * See #G_BYTE_ORDER.
+ */
+enum BIG_ENDIAN = 4321;
+alias G_BIG_ENDIAN = BIG_ENDIAN;
+
+/**
+ * The set of uppercase ASCII alphabet characters.
+ * Used for specifying valid identifier characters
+ * in #GScannerConfig.
+ */
+enum CSET_A_2_Z = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+alias G_CSET_A_2_Z = CSET_A_2_Z;
+
+/**
+ * The set of ASCII digits.
+ * Used for specifying valid identifier characters
+ * in #GScannerConfig.
+ */
+enum CSET_DIGITS = "0123456789";
+alias G_CSET_DIGITS = CSET_DIGITS;
+
+/**
+ * The set of lowercase ASCII alphabet characters.
+ * Used for specifying valid identifier characters
+ * in #GScannerConfig.
+ */
+enum CSET_a_2_z = "abcdefghijklmnopqrstuvwxyz";
+alias G_CSET_a_2_z = CSET_a_2_z;
+
+/**
+ * A bitmask that restricts the possible flags passed to
+ * g_datalist_set_flags(). Passing a flags value where
+ * flags & ~G_DATALIST_FLAGS_MASK != 0 is an error.
+ */
+enum DATALIST_FLAGS_MASK = 3;
+alias G_DATALIST_FLAGS_MASK = DATALIST_FLAGS_MASK;
+
+/**
+ * Represents an invalid #GDateDay.
+ */
+enum DATE_BAD_DAY = 0;
+alias G_DATE_BAD_DAY = DATE_BAD_DAY;
+
+/**
+ * Represents an invalid Julian day number.
+ */
+enum DATE_BAD_JULIAN = 0;
+alias G_DATE_BAD_JULIAN = DATE_BAD_JULIAN;
+
+/**
+ * Represents an invalid year.
+ */
+enum DATE_BAD_YEAR = 0;
+alias G_DATE_BAD_YEAR = DATE_BAD_YEAR;
+
+/**
+ * This is the platform dependent conversion specifier for scanning and
+ * printing values of type #gint16. It is a string literal, but doesn't
+ * include the percent-sign, such that you can add precision and length
+ * modifiers between percent-sign and conversion specifier.
+ *
+ * |[<!-- language="C" -->
+ * gint16 in;
+ * gint32 out;
+ * sscanf ("42", "%" G_GINT16_FORMAT, &in)
+ * out = in * 1000;
+ * g_print ("%" G_GINT32_FORMAT, out);
+ * ]|
+ */
+enum GINT16_FORMAT = "hi";
+alias G_GINT16_FORMAT = GINT16_FORMAT;
+
+/**
+ * The platform dependent length modifier for conversion specifiers
+ * for scanning and printing values of type #gint16 or #guint16. It
+ * is a string literal, but doesn't include the percent-sign, such
+ * that you can add precision and length modifiers between percent-sign
+ * and conversion specifier and append a conversion specifier.
+ *
+ * The following example prints "0x7b";
+ * |[<!-- language="C" -->
+ * gint16 value = 123;
+ * g_print ("%#" G_GINT16_MODIFIER "x", value);
+ * ]|
+ */
+enum GINT16_MODIFIER = "h";
+alias G_GINT16_MODIFIER = GINT16_MODIFIER;
+
+/**
+ * This is the platform dependent conversion specifier for scanning
+ * and printing values of type #gint32. See also #G_GINT16_FORMAT.
+ */
+enum GINT32_FORMAT = "i";
+alias G_GINT32_FORMAT = GINT32_FORMAT;
+
+/**
+ * The platform dependent length modifier for conversion specifiers
+ * for scanning and printing values of type #gint32 or #guint32. It
+ * is a string literal. See also #G_GINT16_MODIFIER.
+ */
+enum GINT32_MODIFIER = "";
+alias G_GINT32_MODIFIER = GINT32_MODIFIER;
+
+/**
+ * This is the platform dependent conversion specifier for scanning
+ * and printing values of type #gint64. See also #G_GINT16_FORMAT.
+ *
+ * Some platforms do not support scanning and printing 64-bit integers,
+ * even though the types are supported. On such platforms %G_GINT64_FORMAT
+ * is not defined. Note that scanf() may not support 64-bit integers, even
+ * if %G_GINT64_FORMAT is defined. Due to its weak error handling, scanf()
+ * is not recommended for parsing anyway; consider using g_ascii_strtoull()
+ * instead.
+ */
+enum GINT64_FORMAT = "li";
+alias G_GINT64_FORMAT = GINT64_FORMAT;
+
+/**
+ * The platform dependent length modifier for conversion specifiers
+ * for scanning and printing values of type #gint64 or #guint64.
+ * It is a string literal.
+ *
+ * Some platforms do not support printing 64-bit integers, even
+ * though the types are supported. On such platforms %G_GINT64_MODIFIER
+ * is not defined.
+ */
+enum GINT64_MODIFIER = "l";
+alias G_GINT64_MODIFIER = GINT64_MODIFIER;
+
+/**
+ * This is the platform dependent conversion specifier for scanning
+ * and printing values of type #gintptr.
+ */
+enum GINTPTR_FORMAT = "li";
+alias G_GINTPTR_FORMAT = GINTPTR_FORMAT;
+
+/**
+ * The platform dependent length modifier for conversion specifiers
+ * for scanning and printing values of type #gintptr or #guintptr.
+ * It is a string literal.
+ */
+enum GINTPTR_MODIFIER = "l";
+alias G_GINTPTR_MODIFIER = GINTPTR_MODIFIER;
+
+/**
+ * Expands to "" on all modern compilers, and to  __FUNCTION__ on gcc
+ * version 2.x. Don't use it.
+ *
+ * Deprecated: Use G_STRFUNC() instead
+ */
+enum GNUC_FUNCTION = "";
+alias G_GNUC_FUNCTION = GNUC_FUNCTION;
+
+/**
+ * Expands to "" on all modern compilers, and to __PRETTY_FUNCTION__
+ * on gcc version 2.x. Don't use it.
+ *
+ * Deprecated: Use G_STRFUNC() instead
+ */
+enum GNUC_PRETTY_FUNCTION = "";
+alias G_GNUC_PRETTY_FUNCTION = GNUC_PRETTY_FUNCTION;
+
+/**
+ * This is the platform dependent conversion specifier for scanning
+ * and printing values of type #gsize. See also #G_GINT16_FORMAT.
+ */
+enum GSIZE_FORMAT = "lu";
+alias G_GSIZE_FORMAT = GSIZE_FORMAT;
+
+/**
+ * The platform dependent length modifier for conversion specifiers
+ * for scanning and printing values of type #gsize. It
+ * is a string literal.
+ */
+enum GSIZE_MODIFIER = "l";
+alias G_GSIZE_MODIFIER = GSIZE_MODIFIER;
+
+/**
+ * This is the platform dependent conversion specifier for scanning
+ * and printing values of type #gssize. See also #G_GINT16_FORMAT.
+ */
+enum GSSIZE_FORMAT = "li";
+alias G_GSSIZE_FORMAT = GSSIZE_FORMAT;
+
+/**
+ * The platform dependent length modifier for conversion specifiers
+ * for scanning and printing values of type #gssize. It
+ * is a string literal.
+ */
+enum GSSIZE_MODIFIER = "l";
+alias G_GSSIZE_MODIFIER = GSSIZE_MODIFIER;
+
+/**
+ * This is the platform dependent conversion specifier for scanning
+ * and printing values of type #guint16. See also #G_GINT16_FORMAT
+ */
+enum GUINT16_FORMAT = "hu";
+alias G_GUINT16_FORMAT = GUINT16_FORMAT;
+
+/**
+ * This is the platform dependent conversion specifier for scanning
+ * and printing values of type #guint32. See also #G_GINT16_FORMAT.
+ */
+enum GUINT32_FORMAT = "u";
+alias G_GUINT32_FORMAT = GUINT32_FORMAT;
+
+/**
+ * This is the platform dependent conversion specifier for scanning
+ * and printing values of type #guint64. See also #G_GINT16_FORMAT.
+ *
+ * Some platforms do not support scanning and printing 64-bit integers,
+ * even though the types are supported. On such platforms %G_GUINT64_FORMAT
+ * is not defined.  Note that scanf() may not support 64-bit integers, even
+ * if %G_GINT64_FORMAT is defined. Due to its weak error handling, scanf()
+ * is not recommended for parsing anyway; consider using g_ascii_strtoull()
+ * instead.
+ */
+enum GUINT64_FORMAT = "lu";
+alias G_GUINT64_FORMAT = GUINT64_FORMAT;
+
+/**
+ * This is the platform dependent conversion specifier
+ * for scanning and printing values of type #guintptr.
+ */
+enum GUINTPTR_FORMAT = "lu";
+alias G_GUINTPTR_FORMAT = GUINTPTR_FORMAT;
+
+enum HAVE_GINT64 = 1;
+alias G_HAVE_GINT64 = HAVE_GINT64;
+
+enum HAVE_GNUC_VARARGS = 1;
+alias G_HAVE_GNUC_VARARGS = HAVE_GNUC_VARARGS;
+
+/**
+ * Defined to 1 if gcc-style visibility handling is supported.
+ */
+enum HAVE_GNUC_VISIBILITY = 1;
+alias G_HAVE_GNUC_VISIBILITY = HAVE_GNUC_VISIBILITY;
+
+enum HAVE_GROWING_STACK = 0;
+alias G_HAVE_GROWING_STACK = HAVE_GROWING_STACK;
+
+enum HAVE_ISO_VARARGS = 1;
+alias G_HAVE_ISO_VARARGS = HAVE_ISO_VARARGS;
+
+/**
+ * The position of the first bit which is not reserved for internal
+ * use be the #GHook implementation, i.e.
+ * `1 << G_HOOK_FLAG_USER_SHIFT` is the first
+ * bit which can be used for application-defined flags.
+ */
+enum HOOK_FLAG_USER_SHIFT = 4;
+alias G_HOOK_FLAG_USER_SHIFT = HOOK_FLAG_USER_SHIFT;
+
+/**
+ * The bias by which exponents in double-precision floats are offset.
+ */
+enum IEEE754_DOUBLE_BIAS = 1023;
+alias G_IEEE754_DOUBLE_BIAS = IEEE754_DOUBLE_BIAS;
+
+/**
+ * The bias by which exponents in single-precision floats are offset.
+ */
+enum IEEE754_FLOAT_BIAS = 127;
+alias G_IEEE754_FLOAT_BIAS = IEEE754_FLOAT_BIAS;
+
+/**
+ * The name of the main group of a desktop entry file, as defined in the
+ * [Desktop Entry Specification](http://freedesktop.org/Standards/desktop-entry-spec).
+ * Consult the specification for more
+ * details about the meanings of the keys below.
+ */
+enum KEY_FILE_DESKTOP_GROUP = "Desktop Entry";
+alias G_KEY_FILE_DESKTOP_GROUP = KEY_FILE_DESKTOP_GROUP;
+
+/**
+ * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a string list
+ * giving the available application actions.
+ */
+enum KEY_FILE_DESKTOP_KEY_ACTIONS = "Actions";
+alias G_KEY_FILE_DESKTOP_KEY_ACTIONS = KEY_FILE_DESKTOP_KEY_ACTIONS;
+
+/**
+ * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a list
+ * of strings giving the categories in which the desktop entry
+ * should be shown in a menu.
+ */
+enum KEY_FILE_DESKTOP_KEY_CATEGORIES = "Categories";
+alias G_KEY_FILE_DESKTOP_KEY_CATEGORIES = KEY_FILE_DESKTOP_KEY_CATEGORIES;
+
+/**
+ * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a localized
+ * string giving the tooltip for the desktop entry.
+ */
+enum KEY_FILE_DESKTOP_KEY_COMMENT = "Comment";
+alias G_KEY_FILE_DESKTOP_KEY_COMMENT = KEY_FILE_DESKTOP_KEY_COMMENT;
+
+/**
+ * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a boolean set to true
+ * if the application is D-Bus activatable.
+ */
+enum KEY_FILE_DESKTOP_KEY_DBUS_ACTIVATABLE = "DBusActivatable";
+alias G_KEY_FILE_DESKTOP_KEY_DBUS_ACTIVATABLE = KEY_FILE_DESKTOP_KEY_DBUS_ACTIVATABLE;
+
+/**
+ * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a string
+ * giving the command line to execute. It is only valid for desktop
+ * entries with the `Application` type.
+ */
+enum KEY_FILE_DESKTOP_KEY_EXEC = "Exec";
+alias G_KEY_FILE_DESKTOP_KEY_EXEC = KEY_FILE_DESKTOP_KEY_EXEC;
+
+/**
+ * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a localized
+ * string giving the generic name of the desktop entry.
+ */
+enum KEY_FILE_DESKTOP_KEY_GENERIC_NAME = "GenericName";
+alias G_KEY_FILE_DESKTOP_KEY_GENERIC_NAME = KEY_FILE_DESKTOP_KEY_GENERIC_NAME;
+
+/**
+ * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a boolean
+ * stating whether the desktop entry has been deleted by the user.
+ */
+enum KEY_FILE_DESKTOP_KEY_HIDDEN = "Hidden";
+alias G_KEY_FILE_DESKTOP_KEY_HIDDEN = KEY_FILE_DESKTOP_KEY_HIDDEN;
+
+/**
+ * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a localized
+ * string giving the name of the icon to be displayed for the desktop
+ * entry.
+ */
+enum KEY_FILE_DESKTOP_KEY_ICON = "Icon";
+alias G_KEY_FILE_DESKTOP_KEY_ICON = KEY_FILE_DESKTOP_KEY_ICON;
+
+/**
+ * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a list
+ * of strings giving the MIME types supported by this desktop entry.
+ */
+enum KEY_FILE_DESKTOP_KEY_MIME_TYPE = "MimeType";
+alias G_KEY_FILE_DESKTOP_KEY_MIME_TYPE = KEY_FILE_DESKTOP_KEY_MIME_TYPE;
+
+/**
+ * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a localized
+ * string giving the specific name of the desktop entry.
+ */
+enum KEY_FILE_DESKTOP_KEY_NAME = "Name";
+alias G_KEY_FILE_DESKTOP_KEY_NAME = KEY_FILE_DESKTOP_KEY_NAME;
+
+/**
+ * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a list of
+ * strings identifying the environments that should not display the
+ * desktop entry.
+ */
+enum KEY_FILE_DESKTOP_KEY_NOT_SHOW_IN = "NotShowIn";
+alias G_KEY_FILE_DESKTOP_KEY_NOT_SHOW_IN = KEY_FILE_DESKTOP_KEY_NOT_SHOW_IN;
+
+/**
+ * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a boolean
+ * stating whether the desktop entry should be shown in menus.
+ */
+enum KEY_FILE_DESKTOP_KEY_NO_DISPLAY = "NoDisplay";
+alias G_KEY_FILE_DESKTOP_KEY_NO_DISPLAY = KEY_FILE_DESKTOP_KEY_NO_DISPLAY;
+
+/**
+ * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a list of
+ * strings identifying the environments that should display the
+ * desktop entry.
+ */
+enum KEY_FILE_DESKTOP_KEY_ONLY_SHOW_IN = "OnlyShowIn";
+alias G_KEY_FILE_DESKTOP_KEY_ONLY_SHOW_IN = KEY_FILE_DESKTOP_KEY_ONLY_SHOW_IN;
+
+/**
+ * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a string
+ * containing the working directory to run the program in. It is only
+ * valid for desktop entries with the `Application` type.
+ */
+enum KEY_FILE_DESKTOP_KEY_PATH = "Path";
+alias G_KEY_FILE_DESKTOP_KEY_PATH = KEY_FILE_DESKTOP_KEY_PATH;
+
+/**
+ * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a boolean
+ * stating whether the application supports the
+ * [Startup Notification Protocol Specification](http://www.freedesktop.org/Standards/startup-notification-spec).
+ */
+enum KEY_FILE_DESKTOP_KEY_STARTUP_NOTIFY = "StartupNotify";
+alias G_KEY_FILE_DESKTOP_KEY_STARTUP_NOTIFY = KEY_FILE_DESKTOP_KEY_STARTUP_NOTIFY;
+
+/**
+ * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is string
+ * identifying the WM class or name hint of a window that the application
+ * will create, which can be used to emulate Startup Notification with
+ * older applications.
+ */
+enum KEY_FILE_DESKTOP_KEY_STARTUP_WM_CLASS = "StartupWMClass";
+alias G_KEY_FILE_DESKTOP_KEY_STARTUP_WM_CLASS = KEY_FILE_DESKTOP_KEY_STARTUP_WM_CLASS;
+
+/**
+ * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a boolean
+ * stating whether the program should be run in a terminal window.
+ * It is only valid for desktop entries with the
+ * `Application` type.
+ */
+enum KEY_FILE_DESKTOP_KEY_TERMINAL = "Terminal";
+alias G_KEY_FILE_DESKTOP_KEY_TERMINAL = KEY_FILE_DESKTOP_KEY_TERMINAL;
+
+/**
+ * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a string
+ * giving the file name of a binary on disk used to determine if the
+ * program is actually installed. It is only valid for desktop entries
+ * with the `Application` type.
+ */
+enum KEY_FILE_DESKTOP_KEY_TRY_EXEC = "TryExec";
+alias G_KEY_FILE_DESKTOP_KEY_TRY_EXEC = KEY_FILE_DESKTOP_KEY_TRY_EXEC;
+
+/**
+ * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a string
+ * giving the type of the desktop entry. Usually
+ * #G_KEY_FILE_DESKTOP_TYPE_APPLICATION,
+ * #G_KEY_FILE_DESKTOP_TYPE_LINK, or
+ * #G_KEY_FILE_DESKTOP_TYPE_DIRECTORY.
+ */
+enum KEY_FILE_DESKTOP_KEY_TYPE = "Type";
+alias G_KEY_FILE_DESKTOP_KEY_TYPE = KEY_FILE_DESKTOP_KEY_TYPE;
+
+/**
+ * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a string
+ * giving the URL to access. It is only valid for desktop entries
+ * with the `Link` type.
+ */
+enum KEY_FILE_DESKTOP_KEY_URL = "URL";
+alias G_KEY_FILE_DESKTOP_KEY_URL = KEY_FILE_DESKTOP_KEY_URL;
+
+/**
+ * A key under #G_KEY_FILE_DESKTOP_GROUP, whose value is a string
+ * giving the version of the Desktop Entry Specification used for
+ * the desktop entry file.
+ */
+enum KEY_FILE_DESKTOP_KEY_VERSION = "Version";
+alias G_KEY_FILE_DESKTOP_KEY_VERSION = KEY_FILE_DESKTOP_KEY_VERSION;
+
+/**
+ * The value of the #G_KEY_FILE_DESKTOP_KEY_TYPE, key for desktop
+ * entries representing applications.
+ */
+enum KEY_FILE_DESKTOP_TYPE_APPLICATION = "Application";
+alias G_KEY_FILE_DESKTOP_TYPE_APPLICATION = KEY_FILE_DESKTOP_TYPE_APPLICATION;
+
+/**
+ * The value of the #G_KEY_FILE_DESKTOP_KEY_TYPE, key for desktop
+ * entries representing directories.
+ */
+enum KEY_FILE_DESKTOP_TYPE_DIRECTORY = "Directory";
+alias G_KEY_FILE_DESKTOP_TYPE_DIRECTORY = KEY_FILE_DESKTOP_TYPE_DIRECTORY;
+
+/**
+ * The value of the #G_KEY_FILE_DESKTOP_KEY_TYPE, key for desktop
+ * entries representing links to documents.
+ */
+enum KEY_FILE_DESKTOP_TYPE_LINK = "Link";
+alias G_KEY_FILE_DESKTOP_TYPE_LINK = KEY_FILE_DESKTOP_TYPE_LINK;
+
+/**
+ * Specifies one of the possible types of byte order.
+ * See #G_BYTE_ORDER.
+ */
+enum LITTLE_ENDIAN = 1234;
+alias G_LITTLE_ENDIAN = LITTLE_ENDIAN;
+
+/**
+ * Defines the log domain.
+ *
+ * For applications, this is typically left as the default %NULL
+ * (or "") domain. Libraries should define this so that any messages
+ * which they log can be differentiated from messages from other
+ * libraries and application code. But be careful not to define
+ * it in any public header files.
+ *
+ * For example, GTK+ uses this in its Makefile.am:
+ * |[
+ * AM_CPPFLAGS = -DG_LOG_DOMAIN=\"Gtk\"
+ * ]|
+ */
+enum LOG_DOMAIN = 0;
+alias G_LOG_DOMAIN = LOG_DOMAIN;
+
+/**
+ * GLib log levels that are considered fatal by default.
+ *
+ * This is not used if structured logging is enabled; see
+ * [Using Structured Logging][using-structured-logging].
+ */
+enum LOG_FATAL_MASK = 0;
+alias G_LOG_FATAL_MASK = LOG_FATAL_MASK;
+
+/**
+ * Log levels below 1<<G_LOG_LEVEL_USER_SHIFT are used by GLib.
+ * Higher bits can be used for user-defined log levels.
+ */
+enum LOG_LEVEL_USER_SHIFT = 8;
+alias G_LOG_LEVEL_USER_SHIFT = LOG_LEVEL_USER_SHIFT;
+
+/**
+ * The major version number of the GLib library.
+ *
+ * Like #glib_major_version, but from the headers used at
+ * application compile time, rather than from the library
+ * linked against at application run time.
+ */
+enum MAJOR_VERSION = 2;
+alias GLIB_MAJOR_VERSION = MAJOR_VERSION;
+
+/**
+ * The maximum value which can be held in a #gint16.
+ */
+enum MAXINT16 = 32767;
+alias G_MAXINT16 = MAXINT16;
+
+/**
+ * The maximum value which can be held in a #gint32.
+ */
+enum MAXINT32 = 2147483647;
+alias G_MAXINT32 = MAXINT32;
+
+/**
+ * The maximum value which can be held in a #gint64.
+ */
+enum MAXINT64 = 9223372036854775807UL;
+alias G_MAXINT64 = MAXINT64;
+
+/**
+ * The maximum value which can be held in a #gint8.
+ */
+enum MAXINT8 = 127;
+alias G_MAXINT8 = MAXINT8;
+
+/**
+ * The maximum value which can be held in a #guint16.
+ */
+enum MAXUINT16 = 65535;
+alias G_MAXUINT16 = MAXUINT16;
+
+/**
+ * The maximum value which can be held in a #guint32.
+ */
+enum MAXUINT32 = 4294967295;
+alias G_MAXUINT32 = MAXUINT32;
+
+/**
+ * The maximum value which can be held in a #guint64.
+ */
+enum MAXUINT64 = 18446744073709551615UL;
+alias G_MAXUINT64 = MAXUINT64;
+
+/**
+ * The maximum value which can be held in a #guint8.
+ */
+enum MAXUINT8 = 255;
+alias G_MAXUINT8 = MAXUINT8;
+
+/**
+ * The micro version number of the GLib library.
+ *
+ * Like #gtk_micro_version, but from the headers used at
+ * application compile time, rather than from the library
+ * linked against at application run time.
+ */
+enum MICRO_VERSION = 1;
+alias GLIB_MICRO_VERSION = MICRO_VERSION;
+
+/**
+ * The minimum value which can be held in a #gint16.
+ */
+enum MININT16 = -32768;
+alias G_MININT16 = MININT16;
+
+/**
+ * The minimum value which can be held in a #gint32.
+ */
+enum MININT32 = -2147483648;
+alias G_MININT32 = MININT32;
+
+/**
+ * The minimum value which can be held in a #gint64.
+ */
+enum MININT64 = -9223372036854775808UL;
+alias G_MININT64 = MININT64;
+
+/**
+ * The minimum value which can be held in a #gint8.
+ */
+enum MININT8 = -128;
+alias G_MININT8 = MININT8;
+
+/**
+ * The minor version number of the GLib library.
+ *
+ * Like #gtk_minor_version, but from the headers used at
+ * application compile time, rather than from the library
+ * linked against at application run time.
+ */
+enum MINOR_VERSION = 52;
+alias GLIB_MINOR_VERSION = MINOR_VERSION;
+
+enum MODULE_SUFFIX = "so";
+alias G_MODULE_SUFFIX = MODULE_SUFFIX;
+
+/**
+ * If a long option in the main group has this name, it is not treated as a
+ * regular option. Instead it collects all non-option arguments which would
+ * otherwise be left in `argv`. The option must be of type
+ * %G_OPTION_ARG_CALLBACK, %G_OPTION_ARG_STRING_ARRAY
+ * or %G_OPTION_ARG_FILENAME_ARRAY.
+ *
+ *
+ * Using #G_OPTION_REMAINING instead of simply scanning `argv`
+ * for leftover arguments has the advantage that GOption takes care of
+ * necessary encoding conversions for strings or filenames.
+ */
+enum OPTION_REMAINING = "";
+alias G_OPTION_REMAINING = OPTION_REMAINING;
+
+/**
+ * Specifies one of the possible types of byte order
+ * (currently unused). See #G_BYTE_ORDER.
+ */
+enum PDP_ENDIAN = 3412;
+alias G_PDP_ENDIAN = PDP_ENDIAN;
+
+/**
+ * A format specifier that can be used in printf()-style format strings
+ * when printing a #GPid.
+ */
+enum PID_FORMAT = "i";
+alias G_PID_FORMAT = PID_FORMAT;
+
+/**
+ * A format specifier that can be used in printf()-style format strings
+ * when printing the @fd member of a #GPollFD.
+ */
+enum POLLFD_FORMAT = "%d";
+alias G_POLLFD_FORMAT = POLLFD_FORMAT;
+
+/**
+ * Use this for default priority event sources.
+ *
+ * In GLib this priority is used when adding timeout functions
+ * with g_timeout_add(). In GDK this priority is used for events
+ * from the X server.
+ */
+enum PRIORITY_DEFAULT = 0;
+alias G_PRIORITY_DEFAULT = PRIORITY_DEFAULT;
+
+/**
+ * Use this for default priority idle functions.
+ *
+ * In GLib this priority is used when adding idle functions with
+ * g_idle_add().
+ */
+enum PRIORITY_DEFAULT_IDLE = 200;
+alias G_PRIORITY_DEFAULT_IDLE = PRIORITY_DEFAULT_IDLE;
+
+/**
+ * Use this for high priority event sources.
+ *
+ * It is not used within GLib or GTK+.
+ */
+enum PRIORITY_HIGH = -100;
+alias G_PRIORITY_HIGH = PRIORITY_HIGH;
+
+/**
+ * Use this for high priority idle functions.
+ *
+ * GTK+ uses #G_PRIORITY_HIGH_IDLE + 10 for resizing operations,
+ * and #G_PRIORITY_HIGH_IDLE + 20 for redrawing operations. (This is
+ * done to ensure that any pending resizes are processed before any
+ * pending redraws, so that widgets are not redrawn twice unnecessarily.)
+ */
+enum PRIORITY_HIGH_IDLE = 100;
+alias G_PRIORITY_HIGH_IDLE = PRIORITY_HIGH_IDLE;
+
+/**
+ * Use this for very low priority background tasks.
+ *
+ * It is not used within GLib or GTK+.
+ */
+enum PRIORITY_LOW = 300;
+alias G_PRIORITY_LOW = PRIORITY_LOW;
+
+enum SIZEOF_LONG = 8;
+alias GLIB_SIZEOF_LONG = SIZEOF_LONG;
+
+enum SIZEOF_SIZE_T = 8;
+alias GLIB_SIZEOF_SIZE_T = SIZEOF_SIZE_T;
+
+enum SIZEOF_SSIZE_T = 8;
+alias GLIB_SIZEOF_SSIZE_T = SIZEOF_SSIZE_T;
+
+enum SIZEOF_VOID_P = 8;
+alias GLIB_SIZEOF_VOID_P = SIZEOF_VOID_P;
+
+/**
+ * Use this macro as the return value of a #GSourceFunc to leave
+ * the #GSource in the main loop.
+ */
+enum SOURCE_CONTINUE = true;
+alias G_SOURCE_CONTINUE = SOURCE_CONTINUE;
+
+/**
+ * Use this macro as the return value of a #GSourceFunc to remove
+ * the #GSource from the main loop.
+ */
+enum SOURCE_REMOVE = false;
+alias G_SOURCE_REMOVE = SOURCE_REMOVE;
+
+/**
+ * The standard delimiters, used in g_strdelimit().
+ */
+enum STR_DELIMITERS = "_-|> <.";
+alias G_STR_DELIMITERS = STR_DELIMITERS;
+
+enum SYSDEF_AF_INET = 2;
+alias GLIB_SYSDEF_AF_INET = SYSDEF_AF_INET;
+
+enum SYSDEF_AF_INET6 = 10;
+alias GLIB_SYSDEF_AF_INET6 = SYSDEF_AF_INET6;
+
+enum SYSDEF_AF_UNIX = 1;
+alias GLIB_SYSDEF_AF_UNIX = SYSDEF_AF_UNIX;
+
+enum SYSDEF_MSG_DONTROUTE = 4;
+alias GLIB_SYSDEF_MSG_DONTROUTE = SYSDEF_MSG_DONTROUTE;
+
+enum SYSDEF_MSG_OOB = 1;
+alias GLIB_SYSDEF_MSG_OOB = SYSDEF_MSG_OOB;
+
+enum SYSDEF_MSG_PEEK = 2;
+alias GLIB_SYSDEF_MSG_PEEK = SYSDEF_MSG_PEEK;
+
+/**
+ * Evaluates to a time span of one day.
+ */
+enum TIME_SPAN_DAY = 86400000000UL;
+alias G_TIME_SPAN_DAY = TIME_SPAN_DAY;
+
+/**
+ * Evaluates to a time span of one hour.
+ */
+enum TIME_SPAN_HOUR = 3600000000UL;
+alias G_TIME_SPAN_HOUR = TIME_SPAN_HOUR;
+
+/**
+ * Evaluates to a time span of one millisecond.
+ */
+enum TIME_SPAN_MILLISECOND = 1000UL;
+alias G_TIME_SPAN_MILLISECOND = TIME_SPAN_MILLISECOND;
+
+/**
+ * Evaluates to a time span of one minute.
+ */
+enum TIME_SPAN_MINUTE = 60000000UL;
+alias G_TIME_SPAN_MINUTE = TIME_SPAN_MINUTE;
+
+/**
+ * Evaluates to a time span of one second.
+ */
+enum TIME_SPAN_SECOND = 1000000UL;
+alias G_TIME_SPAN_SECOND = TIME_SPAN_SECOND;
+
+/**
+ * The maximum length (in codepoints) of a compatibility or canonical
+ * decomposition of a single Unicode character.
+ *
+ * This is as defined by Unicode 6.1.
+ */
+enum UNICHAR_MAX_DECOMPOSITION_LENGTH = 18;
+alias G_UNICHAR_MAX_DECOMPOSITION_LENGTH = UNICHAR_MAX_DECOMPOSITION_LENGTH;
+
+/**
+ * Generic delimiters characters as defined in RFC 3986. Includes ":/?#[]@".
+ */
+enum URI_RESERVED_CHARS_GENERIC_DELIMITERS = ":/?#[]@";
+alias G_URI_RESERVED_CHARS_GENERIC_DELIMITERS = URI_RESERVED_CHARS_GENERIC_DELIMITERS;
+
+/**
+ * Subcomponent delimiter characters as defined in RFC 3986. Includes "!$&'()*+,;=".
+ */
+enum URI_RESERVED_CHARS_SUBCOMPONENT_DELIMITERS = "!$&'()*+,;=";
+alias G_URI_RESERVED_CHARS_SUBCOMPONENT_DELIMITERS = URI_RESERVED_CHARS_SUBCOMPONENT_DELIMITERS;
+
+/**
+ * Number of microseconds in one second (1 million).
+ * This macro is provided for code readability.
+ */
+enum USEC_PER_SEC = 1000000;
+alias G_USEC_PER_SEC = USEC_PER_SEC;
+
+enum VA_COPY_AS_ARRAY = 1;
+alias G_VA_COPY_AS_ARRAY = VA_COPY_AS_ARRAY;
+
+enum WIN32_MSG_HANDLE = 19981206;
+alias G_WIN32_MSG_HANDLE = WIN32_MSG_HANDLE;

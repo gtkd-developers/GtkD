@@ -299,3 +299,30 @@ public alias extern(C) int function(VteTerminal* terminal, glong column, glong r
  * Since: 0.48
  */
 public alias extern(C) void function(VteTerminal* terminal, GPid pid, GError* error, void* userData) VteTerminalSpawnAsyncCallback;
+
+/**
+ * The major version number of the VTE library
+ * (e.g. in version 3.1.4 this is 3).
+ */
+enum MAJOR_VERSION = 0;
+alias VTE_MAJOR_VERSION = MAJOR_VERSION;
+
+/**
+ * The micro version number of the VTE library
+ * (e.g. in version 3.1.4 this is 4).
+ */
+enum MICRO_VERSION = 3;
+alias VTE_MICRO_VERSION = MICRO_VERSION;
+
+/**
+ * The minor version number of the VTE library
+ * (e.g. in version 3.1.4 this is 1).
+ */
+enum MINOR_VERSION = 48;
+alias VTE_MINOR_VERSION = MINOR_VERSION;
+
+enum REGEX_FLAGS_DEFAULT = 1075314688;
+alias VTE_REGEX_FLAGS_DEFAULT = REGEX_FLAGS_DEFAULT;
+
+enum SPAWN_NO_PARENT_ENVV = 33554432;
+alias VTE_SPAWN_NO_PARENT_ENVV = SPAWN_NO_PARENT_ENVV;

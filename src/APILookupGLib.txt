@@ -138,6 +138,20 @@ addEnums: start
 
 addEnums: end
 
+noConstant: DIR_SEPARATOR
+noConstant: DIR_SEPARATOR_S
+noConstant: E
+noConstant: LN10
+noConstant: LN2
+noConstant: LOG_2_BASE_10
+noConstant: PI
+noConstant: PI_2
+noConstant: PI_4
+noConstant: SEARCHPATH_SEPARATOR
+noConstant: SEARCHPATH_SEPARATOR_S
+noConstant: SQRT2
+noConstant: VERSION_MIN_REQUIRED 
+
 struct: Array
 class: ArrayG
 

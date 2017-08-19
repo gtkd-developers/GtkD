@@ -1902,3 +1902,103 @@ public alias extern(C) void function(GValue* srcValue, GValue* destValue) GValue
  *     whereTheObjectWas = the object being finalized
  */
 public alias extern(C) void function(void* data, GObject* whereTheObjectWas) GWeakNotify;
+
+/**
+ * Mask containing the bits of #GParamSpec.flags which are reserved for GLib.
+ */
+enum PARAM_MASK = 255;
+alias G_PARAM_MASK = PARAM_MASK;
+
+/**
+ * #GParamFlags value alias for %G_PARAM_STATIC_NAME | %G_PARAM_STATIC_NICK | %G_PARAM_STATIC_BLURB.
+ *
+ * Since 2.13.0
+ */
+enum PARAM_STATIC_STRINGS = 0;
+alias G_PARAM_STATIC_STRINGS = PARAM_STATIC_STRINGS;
+
+/**
+ * Minimum shift count to be used for user defined flags, to be stored in
+ * #GParamSpec.flags. The maximum allowed is 10.
+ */
+enum PARAM_USER_SHIFT = 8;
+alias G_PARAM_USER_SHIFT = PARAM_USER_SHIFT;
+
+/**
+ * A mask for all #GSignalFlags bits.
+ */
+enum SIGNAL_FLAGS_MASK = 511;
+alias G_SIGNAL_FLAGS_MASK = SIGNAL_FLAGS_MASK;
+
+/**
+ * A mask for all #GSignalMatchType bits.
+ */
+enum SIGNAL_MATCH_MASK = 63;
+alias G_SIGNAL_MATCH_MASK = SIGNAL_MATCH_MASK;
+
+/**
+ * A bit in the type number that's supposed to be left untouched.
+ */
+enum TYPE_FLAG_RESERVED_ID_BIT = 1;
+alias G_TYPE_FLAG_RESERVED_ID_BIT = TYPE_FLAG_RESERVED_ID_BIT;
+
+/**
+ * An integer constant that represents the number of identifiers reserved
+ * for types that are assigned at compile-time.
+ */
+enum TYPE_FUNDAMENTAL_MAX = 255;
+alias G_TYPE_FUNDAMENTAL_MAX = TYPE_FUNDAMENTAL_MAX;
+
+/**
+ * Shift value used in converting numbers to type IDs.
+ */
+enum TYPE_FUNDAMENTAL_SHIFT = 2;
+alias G_TYPE_FUNDAMENTAL_SHIFT = TYPE_FUNDAMENTAL_SHIFT;
+
+/**
+ * First fundamental type number to create a new fundamental type id with
+ * G_TYPE_MAKE_FUNDAMENTAL() reserved for BSE.
+ */
+enum TYPE_RESERVED_BSE_FIRST = 32;
+alias G_TYPE_RESERVED_BSE_FIRST = TYPE_RESERVED_BSE_FIRST;
+
+/**
+ * Last fundamental type number reserved for BSE.
+ */
+enum TYPE_RESERVED_BSE_LAST = 48;
+alias G_TYPE_RESERVED_BSE_LAST = TYPE_RESERVED_BSE_LAST;
+
+/**
+ * First fundamental type number to create a new fundamental type id with
+ * G_TYPE_MAKE_FUNDAMENTAL() reserved for GLib.
+ */
+enum TYPE_RESERVED_GLIB_FIRST = 22;
+alias G_TYPE_RESERVED_GLIB_FIRST = TYPE_RESERVED_GLIB_FIRST;
+
+/**
+ * Last fundamental type number reserved for GLib.
+ */
+enum TYPE_RESERVED_GLIB_LAST = 31;
+alias G_TYPE_RESERVED_GLIB_LAST = TYPE_RESERVED_GLIB_LAST;
+
+/**
+ * First available fundamental type number to create new fundamental
+ * type id with G_TYPE_MAKE_FUNDAMENTAL().
+ */
+enum TYPE_RESERVED_USER_FIRST = 49;
+alias G_TYPE_RESERVED_USER_FIRST = TYPE_RESERVED_USER_FIRST;
+
+/**
+ * The maximal number of #GTypeCValues which can be collected for a
+ * single #GValue.
+ */
+enum VALUE_COLLECT_FORMAT_MAX_LENGTH = 8;
+alias G_VALUE_COLLECT_FORMAT_MAX_LENGTH = VALUE_COLLECT_FORMAT_MAX_LENGTH;
+
+/**
+ * If passed to G_VALUE_COLLECT(), allocated data won't be copied
+ * but used verbatim. This does not affect ref-counted types like
+ * objects.
+ */
+enum VALUE_NOCOPY_CONTENTS = 134217728;
+alias G_VALUE_NOCOPY_CONTENTS = VALUE_NOCOPY_CONTENTS;

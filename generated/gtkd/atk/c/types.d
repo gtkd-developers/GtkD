@@ -2916,3 +2916,60 @@ public alias extern(C) int function(AtkKeyEventStruct* event, void* userData) At
  *     vals = values changed
  */
 public alias extern(C) void function(AtkObject* obj, AtkPropertyValues* vals) AtkPropertyChangeHandler;
+
+/**
+ * Like atk_get_binary_age(), but from the headers used at
+ * application compile time, rather than from the library linked
+ * against at application run time.
+ */
+enum BINARY_AGE = 22410;
+alias ATK_BINARY_AGE = BINARY_AGE;
+
+/**
+ * Like atk_get_interface_age(), but from the headers used at
+ * application compile time, rather than from the library linked
+ * against at application run time.
+ */
+enum INTERFACE_AGE = 1;
+alias ATK_INTERFACE_AGE = INTERFACE_AGE;
+
+/**
+ * Like atk_get_major_version(), but from the headers used at
+ * application compile time, rather than from the library linked
+ * against at application run time.
+ */
+enum MAJOR_VERSION = 2;
+alias ATK_MAJOR_VERSION = MAJOR_VERSION;
+
+/**
+ * Like atk_get_micro_version(), but from the headers used at
+ * application compile time, rather than from the library linked
+ * against at application run time.
+ */
+enum MICRO_VERSION = 0;
+alias ATK_MICRO_VERSION = MICRO_VERSION;
+
+/**
+ * Like atk_get_minor_version(), but from the headers used at
+ * application compile time, rather than from the library linked
+ * against at application run time.
+ */
+enum MINOR_VERSION = 24;
+alias ATK_MINOR_VERSION = MINOR_VERSION;
+
+/**
+ * A macro that should be defined by the user prior to including
+ * the atk/atk.h header.
+ * The definition should be one of the predefined ATK version
+ * macros: %ATK_VERSION_2_12, %ATK_VERSION_2_14,...
+ *
+ * This macro defines the earliest version of ATK that the package is
+ * required to be able to compile against.
+ *
+ * If the compiler is configured to warn about the use of deprecated
+ * functions, then using functions that were deprecated in version
+ * %ATK_VERSION_MIN_REQUIRED or earlier will cause warnings (but
+ * using functions deprecated in later releases will not).
+ */
+enum VERSION_MIN_REQUIRED = 2;
+alias ATK_VERSION_MIN_REQUIRED = VERSION_MIN_REQUIRED;
