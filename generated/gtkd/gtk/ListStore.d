@@ -273,15 +273,7 @@ public class ListStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	}
 
 	/** */
-	void setValue(TreeIter iter, int column, string value)
-	{
-		Value v = new Value(value);
-		gtk_list_store_set_value(gtkListStore, iter.getTreeIterStruct(), column, v.getValueStruct());
-		//gtk_list_store_set_value(obj(), iter.getIter(), column, (GValue*)cChar(value));
-	}
-
-	/** */
-	void setValue(TreeIter iter, int column, int value)
+	void setValue(TYPE)(TreeIter iter, int column, TYPE value)
 	{
 		Value v = new Value(value);
 		gtk_list_store_set_value(gtkListStore, iter.getTreeIterStruct(), column, v.getValueStruct());

@@ -82,11 +82,12 @@ public class Value
 	}
 
 	/** */
-	this(Pixbuf pixbuf)
+	this(GOBJECT)(GOBJECT obj)
+	if ( is(GOBJECT : ObjectG) )
 	{
 		this();
-		init(Pixbuf.getType());
-		setObject(pixbuf);
+		init(GOBJECT.getType());
+		setObject(obj);
 	}
 
 	/** */
@@ -103,6 +104,30 @@ public class Value
 		this();
 		init(GType.INT);
 		setInt(value);
+	}
+
+	/** */
+	this(uint value)
+	{
+		this();
+		init(GType.UINT);
+		setUint(value);
+	}
+
+	/** */
+	this(long value)
+	{
+		this();
+		init(GType.INT64);
+		setInt64(value);
+	}
+
+	/** */
+	this(ulong value)
+	{
+		this();
+		init(GType.UINT64);
+		setUint64(value);
 	}
 
 	/** */
