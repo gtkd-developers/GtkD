@@ -4392,22 +4392,9 @@ code: start
 	 *  column = to column number to set
 	 *  value = the value
 	 */
-	void setValue(TreeIter iter, int column, string value)
+	void setValue(TYPE)(TreeIter iter, int column, TYPE value)
 	{
-		gtk_tree_store_set(gtkTreeStore, iter.getTreeIterStruct(), column, Str.toStringz(value) , -1);
-	}
-
-	/** ditto */
-	void setValue(TreeIter iter, int column, int value)
-	{
-		gtk_tree_store_set(gtkTreeStore, iter.getTreeIterStruct(), column, value, -1);
-	}
-
-	/** ditto */
-	//TODO: confirm we need to destroy the Value instance
-	void setValue(TreeIter iter, int column, Pixbuf pixbuf)
-	{
-		Value v = new Value(pixbuf);
+		Value v = new Value(value);
 		gtk_tree_store_set_value(gtkTreeStore, iter.getTreeIterStruct(), column, v.getValueStruct());
 	}
 
