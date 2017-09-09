@@ -24,8 +24,8 @@
 
 module gstinterfaces.c.types;
 
-public import glib.c.types;
 public import gobject.c.types;
+
 
 /**
  * The different video orientation methods.

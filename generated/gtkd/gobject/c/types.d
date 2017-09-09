@@ -26,6 +26,7 @@ module gobject.c.types;
 
 public import glib.c.types;
 
+
 /**
  * This is the signature of marshaller functions, required to marshall
  * arrays of parameter values to signal emissions into C language callback

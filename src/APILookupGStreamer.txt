@@ -24,11 +24,6 @@
 wrap: gstreamer
 file: Gst-1.0.gir
 
-addAliases: start
-	public import glib.c.types;
-	public import gobject.c.types;
-addAliases: end
-
 struct: Bin
 code: start
 	/** */

@@ -27,6 +27,7 @@ module gio.c.types;
 public import glib.c.types;
 public import gobject.c.types;
 
+
 /**
  * Flags used when creating a #GAppInfo.
  */

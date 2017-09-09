@@ -23,14 +23,6 @@
 wrap: gdkpixbuf
 file: GdkPixbuf-2.0.gir
 
-addAliases: start
-	public  import glib.c.types;
-	public  import gobject.c.types;
-	public  import gdk.c.types;
-	public  import atk.c.types;
-	private import std.stdio;
-addAliases: start
-
 struct: Pixbuf
 noCode: save_to_bufferv
 noCode: ref

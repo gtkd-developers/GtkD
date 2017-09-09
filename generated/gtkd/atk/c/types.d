@@ -27,6 +27,7 @@ module atk.c.types;
 public import glib.c.types;
 public import gobject.c.types;
 
+
 /**
  * This is a singly-linked list (a #GSList) of #AtkAttribute. It is
  * used by atk_text_get_run_attributes(),

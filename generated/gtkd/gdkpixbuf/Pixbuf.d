@@ -688,6 +688,27 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	}
 
 	/**
+	 * Calculates the rowstride that an image created with those values would
+	 * have. This is useful for front-ends and backends that want to sanity
+	 * check image values without needing to create them.
+	 *
+	 * Params:
+	 *     colorspace = Color space for image
+	 *     hasAlpha = Whether the image should have transparency information
+	 *     bitsPerSample = Number of bits per color sample
+	 *     width = Width of image in pixels, must be > 0
+	 *     height = Height of image in pixels, must be > 0
+	 *
+	 * Returns: the rowstride for the given values, or -1 in case of error.
+	 *
+	 * Since: 2.36.8
+	 */
+	public static int calculateRowstride(GdkColorspace colorspace, bool hasAlpha, int bitsPerSample, int width, int height)
+	{
+		return gdk_pixbuf_calculate_rowstride(colorspace, hasAlpha, bitsPerSample, width, height);
+	}
+
+	/**
 	 * Converts a #GdkPixdata to a #GdkPixbuf. If @copy_pixels is %TRUE or
 	 * if the pixel data is run-length-encoded, the pixel data is copied into
 	 * newly-allocated memory; otherwise it is reused.

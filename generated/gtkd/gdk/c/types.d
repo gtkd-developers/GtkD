@@ -24,11 +24,13 @@
 
 module gdk.c.types;
 
+public import cairo.c.types;
+public import gdkpixbuf.c.types;
+public import gio.c.types;
 public import glib.c.types;
 public import gobject.c.types;
-public import gio.c.types;
 public import pango.c.types;
-public import gdkpixbuf.c.types;
+
 
 /**
  * Used to represent native events (XEvents for the X11

@@ -24,7 +24,13 @@
 
 module vte.c.types;
 
+public import gdk.c.types;
+public import gio.c.types;
+public import glib.c.types;
+public import gobject.c.types;
 public import gtk.c.types;
+public import pango.c.types;
+
 
 /**
  * An enumerated type which can be used to indicate the cursor blink mode

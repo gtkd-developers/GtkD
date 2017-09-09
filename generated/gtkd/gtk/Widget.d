@@ -2784,9 +2784,10 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		}
 
 		/**
-		 * Gets @widget’s parent window.
+		 * Gets @widget’s parent window, or %NULL if it does not have one.
 		 *
-		 * Returns: the parent window of @widget.
+		 * Returns: the parent window of @widget, or %NULL
+		 *     if it does not have a parent window.
 		 */
 		public GdkWin getParentWindow()
 		{
@@ -5612,14 +5613,11 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		}
 
 		/**
-		 * Replaces the default, usually yellow, window used for displaying
+		 * Replaces the default window used for displaying
 		 * tooltips with @custom_window. GTK+ will take care of showing and
 		 * hiding @custom_window at the right moment, to behave likewise as
 		 * the default tooltip window. If @custom_window is %NULL, the default
 		 * tooltip window will be used.
-		 *
-		 * If the custom window should have the default theming it needs to
-		 * have the name “gtk-tooltip”, see gtk_widget_set_name().
 		 *
 		 * Params:
 		 *     customWindow = a #GtkWindow, or %NULL

@@ -24,11 +24,10 @@
 
 module gdkpixbuf.c.types;
 
-public  import glib.c.types;
-public  import gobject.c.types;
-public  import gdk.c.types;
-public  import atk.c.types;
-private import std.stdio;
+public import gio.c.types;
+public import glib.c.types;
+public import gobject.c.types;
+
 
 /**
  * This enumeration defines the color spaces that are supported by
@@ -406,7 +405,7 @@ alias GDK_PIXBUF_MAJOR = PIXBUF_MAJOR;
  * Micro version of gdk-pixbuf library, that is the "2" in
  * "0.8.2" for example.
  */
-enum PIXBUF_MICRO = 7;
+enum PIXBUF_MICRO = 9;
 alias GDK_PIXBUF_MICRO = PIXBUF_MICRO;
 
 /**
@@ -421,7 +420,7 @@ alias GDK_PIXBUF_MINOR = PIXBUF_MINOR;
  * This is the version being compiled against; contrast with
  * #gdk_pixbuf_version.
  */
-enum PIXBUF_VERSION = "2.36.7";
+enum PIXBUF_VERSION = "2.36.9";
 alias GDK_PIXBUF_VERSION = PIXBUF_VERSION;
 
 /**

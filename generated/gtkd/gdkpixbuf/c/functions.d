@@ -53,6 +53,7 @@ shared static this()
 	Linker.link(gdk_pixbuf_new_from_stream_at_scale, "gdk_pixbuf_new_from_stream_at_scale", LIBRARY_GDKPIXBUF);
 	Linker.link(gdk_pixbuf_new_from_stream_finish, "gdk_pixbuf_new_from_stream_finish", LIBRARY_GDKPIXBUF);
 	Linker.link(gdk_pixbuf_new_from_xpm_data, "gdk_pixbuf_new_from_xpm_data", LIBRARY_GDKPIXBUF);
+	Linker.link(gdk_pixbuf_calculate_rowstride, "gdk_pixbuf_calculate_rowstride", LIBRARY_GDKPIXBUF);
 	Linker.link(gdk_pixbuf_from_pixdata, "gdk_pixbuf_from_pixdata", LIBRARY_GDKPIXBUF);
 	Linker.link(gdk_pixbuf_get_file_info, "gdk_pixbuf_get_file_info", LIBRARY_GDKPIXBUF);
 	Linker.link(gdk_pixbuf_get_file_info_async, "gdk_pixbuf_get_file_info_async", LIBRARY_GDKPIXBUF);
@@ -198,6 +199,7 @@ __gshared extern(C)
 	GdkPixbuf* function(GInputStream* stream, int width, int height, int preserveAspectRatio, GCancellable* cancellable, GError** err) c_gdk_pixbuf_new_from_stream_at_scale;
 	GdkPixbuf* function(GAsyncResult* asyncResult, GError** err) c_gdk_pixbuf_new_from_stream_finish;
 	GdkPixbuf* function(char** data) c_gdk_pixbuf_new_from_xpm_data;
+	int function(GdkColorspace colorspace, int hasAlpha, int bitsPerSample, int width, int height) c_gdk_pixbuf_calculate_rowstride;
 	GdkPixbuf* function(GdkPixdata* pixdata, int copyPixels, GError** err) c_gdk_pixbuf_from_pixdata;
 	GdkPixbufFormat* function(const(char)* filename, int* width, int* height) c_gdk_pixbuf_get_file_info;
 	void function(const(char)* filename, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_gdk_pixbuf_get_file_info_async;
@@ -341,6 +343,7 @@ alias c_gdk_pixbuf_new_from_stream gdk_pixbuf_new_from_stream;
 alias c_gdk_pixbuf_new_from_stream_at_scale gdk_pixbuf_new_from_stream_at_scale;
 alias c_gdk_pixbuf_new_from_stream_finish gdk_pixbuf_new_from_stream_finish;
 alias c_gdk_pixbuf_new_from_xpm_data gdk_pixbuf_new_from_xpm_data;
+alias c_gdk_pixbuf_calculate_rowstride gdk_pixbuf_calculate_rowstride;
 alias c_gdk_pixbuf_from_pixdata gdk_pixbuf_from_pixdata;
 alias c_gdk_pixbuf_get_file_info gdk_pixbuf_get_file_info;
 alias c_gdk_pixbuf_get_file_info_async gdk_pixbuf_get_file_info_async;

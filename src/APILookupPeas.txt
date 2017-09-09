@@ -24,10 +24,6 @@ wrap: peas
 file: Peas-1.0.gir
 file: PeasGtk-1.0.gir
 
-addAliases: start
-	public import gtk.c.types;
-addAliases: end
-
 addStructs: start
 	struct GIArgument;
 addStructs: end

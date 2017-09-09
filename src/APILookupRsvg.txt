@@ -22,10 +22,3 @@
 # must start with wrap
 wrap: rsvg
 file: Rsvg-2.0.gir
-
-addAliases: start
-	public import cairo.c.types;
-	public import glib.c.types;
-	public import gobject.c.types;
-	public import gdkpixbuf.c.types;
-addAliases: end

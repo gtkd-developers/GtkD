@@ -24,7 +24,11 @@
 
 module peas.c.types;
 
+public import gio.c.types;
+public import glib.c.types;
+public import gobject.c.types;
 public import gtk.c.types;
+
 
 /**
  * A proxy class to access the actual plugin.

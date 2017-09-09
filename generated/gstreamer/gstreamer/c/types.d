@@ -27,6 +27,7 @@ module gstreamer.c.types;
 public import glib.c.types;
 public import gobject.c.types;
 
+
 /**
  * A datatype to hold the handle to an outstanding sync or async clock callback.
  */

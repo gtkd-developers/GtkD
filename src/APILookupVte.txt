@@ -23,10 +23,6 @@
 wrap: vte
 file: Vte-2.91.gir
 
-addAliases: start
-	public import gtk.c.types;
-addAliases: end
-
 struct: Terminal
 import: vte.Regex : RegexVte = Regex
 in: event_check_gregex_simple n_regexes

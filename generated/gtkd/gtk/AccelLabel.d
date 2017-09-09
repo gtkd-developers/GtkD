@@ -37,7 +37,7 @@ public  import gtkc.gtktypes;
 
 /**
  * The #GtkAccelLabel widget is a subclass of #GtkLabel that also displays an
- * accelerator key on the right of the label text, e.g. “Ctl+S”.
+ * accelerator key on the right of the label text, e.g. “Ctrl+S”.
  * It is commonly used in menus to show the keyboard short-cuts for commands.
  * 
  * The accelerator key to display is typically not set explicitly (although it
@@ -46,10 +46,10 @@ public  import gtkc.gtktypes;
  * set by calling gtk_accel_label_set_accel_widget().
  * 
  * For example, a #GtkMenuItem widget may have an accelerator added to emit
- * the “activate” signal when the “Ctl+S” key combination is pressed.
+ * the “activate” signal when the “Ctrl+S” key combination is pressed.
  * A #GtkAccelLabel is created and added to the #GtkMenuItem, and
  * gtk_accel_label_set_accel_widget() is called with the #GtkMenuItem as the
- * second argument. The #GtkAccelLabel will now display “Ctl+S” after its label.
+ * second argument. The #GtkAccelLabel will now display “Ctrl+S” after its label.
  * 
  * Note that creating a #GtkMenuItem with gtk_menu_item_new_with_label() (or
  * one of the similar functions for #GtkCheckMenuItem and #GtkRadioMenuItem)
@@ -238,9 +238,12 @@ public class AccelLabel : Label
 	/**
 	 * Sets the closure to be monitored by this accelerator label. The closure
 	 * must be connected to an accelerator group; see gtk_accel_group_connect().
+	 * Passing %NULL for @accel_closure will dissociate @accel_label from its
+	 * current closure, if any.
 	 *
 	 * Params:
-	 *     accelClosure = the closure to monitor for accelerator changes.
+	 *     accelClosure = the closure to monitor for accelerator changes,
+	 *         or %NULL
 	 */
 	public void setAccelClosure(Closure accelClosure)
 	{
@@ -248,10 +251,11 @@ public class AccelLabel : Label
 	}
 
 	/**
-	 * Sets the widget to be monitored by this accelerator label.
+	 * Sets the widget to be monitored by this accelerator label. Passing %NULL for
+	 * @accel_widget will dissociate @accel_label from its current widget, if any.
 	 *
 	 * Params:
-	 *     accelWidget = the widget to be monitored.
+	 *     accelWidget = the widget to be monitored, or %NULL
 	 */
 	public void setAccelWidget(Widget accelWidget)
 	{

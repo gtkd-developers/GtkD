@@ -25,9 +25,10 @@
 module rsvg.c.types;
 
 public import cairo.c.types;
-public import glib.c.types;
-public import gobject.c.types;
 public import gdkpixbuf.c.types;
+public import gio.c.types;
+public import gobject.c.types;
+
 
 /**
  * An enumeration representing possible errors

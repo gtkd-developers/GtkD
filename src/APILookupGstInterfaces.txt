@@ -28,11 +28,6 @@ alias: 90L _90L
 wrap: gstinterfaces
 file: GstVideo-1.0.gir
 
-addAliases: start
-	public import glib.c.types;
-	public import gobject.c.types;
-addAliases: end
-
 struct: ColorBalanceChannel
 noCode: true
 noExternal: true

@@ -38,17 +38,18 @@ public  import gtkc.gtktypes;
 
 
 /**
- * #GtkLayout is similar to #GtkDrawingArea in that it’s a “blank slate”
- * and doesn’t do anything but paint a blank background by default. It's
- * different in that it supports scrolling natively (you can add it to a
- * #GtkScrolledWindow), and it can contain child widgets, since it’s a
- * #GtkContainer. However if you’re just going to draw, a #GtkDrawingArea
- * is a better choice since it has lower overhead.
+ * #GtkLayout is similar to #GtkDrawingArea in that it’s a “blank slate” and
+ * doesn’t do anything except paint a blank background by default. It’s
+ * different in that it supports scrolling natively due to implementing
+ * #GtkScrollable, and can contain child widgets since it’s a #GtkContainer.
  * 
- * When handling expose events on a #GtkLayout, you must draw to
- * GTK_LAYOUT (layout)->bin_window, rather than to
- * GTK_WIDGET (layout)->window, as you would for a drawing
- * area.
+ * If you just want to draw, a #GtkDrawingArea is a better choice since it has
+ * lower overhead. If you just need to position child widgets at specific
+ * points, then #GtkFixed provides that functionality on its own.
+ * 
+ * When handling expose events on a #GtkLayout, you must draw to the #GdkWindow
+ * returned by gtk_layout_get_bin_window(), rather than to the one returned by
+ * gtk_widget_get_window() as you would for a #GtkDrawingArea.
  */
 public class Layout : Container, ScrollableIF
 {

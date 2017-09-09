@@ -23,11 +23,6 @@
 wrap: gio
 file: Gio-2.0.gir
 
-addAliases: start
-	public import glib.c.types;
-	public import gobject.c.types;
-addAliases: end
-
 struct:
 class: Action
 extend: GObject.Object

@@ -23,11 +23,6 @@
 wrap: atk
 file: Atk-1.0.gir
 
-addAliases: start
-	public import glib.c.types;
-	public import gobject.c.types;
-addAliases: end
-
 struct: Attribute
 noCode: true
 noExternal: true

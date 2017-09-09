@@ -23,10 +23,6 @@
 wrap: gobject
 file: GObject-2.0.gir
 
-addAliases: start
-	public import glib.c.types;
-addAliases: end
-
 noAlias: Type
 addEnums: start
 
