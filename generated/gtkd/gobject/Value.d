@@ -24,7 +24,6 @@
 
 module gobject.Value;
 
-private import gdk.Pixbuf;
 private import glib.Str;
 private import glib.Variant;
 private import glib.VariantType;
@@ -34,6 +33,7 @@ private import gobject.TypeInstance;
 private import gobject.c.functions;
 public  import gobject.c.types;
 public  import gtkc.gobjecttypes;
+private import std.traits;
 
 
 /**
@@ -90,6 +90,7 @@ public class Value
 		setObject(obj);
 	}
 
+
 	/** */
 	this(string value)
 	{
@@ -99,51 +100,62 @@ public class Value
 	}
 
 	/** */
-	this(int value)
+	this(bool value)
 	{
 		this();
-		init(GType.INT);
+		init(GType.BOOLEAN);
 		setInt(value);
 	}
 
 	/** */
-	this(uint value)
+	this(INT)(INT value)
+	if ( isIntegral!INT )
 	{
 		this();
-		init(GType.UINT);
-		setUint(value);
+
+		static if ( is(OriginalType!INT == int) )
+		{
+			init(GType.INT);
+			setInt(value);
+		}
+		else static if ( is(OriginalType!INT == uint) )
+		{
+			init(GType.UINT);
+			setUint(value);
+		}
+		else static if ( is(OriginalType!INT == long) )
+		{
+			init(GType.INT64);
+			setInt64(value);
+		}
+		else static if ( is(OriginalType!INT == ulong) )
+		{
+			init(GType.UINT64);
+			setUint64(value);
+		}
+		else
+		{
+			init(GType.INT);
+			setInt(value);
+		}
 	}
 
 	/** */
-	this(long value)
+	this(FLOAT)(FLOAT value)
+	if ( isFloatingPoint!FLOAT )
 	{
 		this();
-		init(GType.INT64);
-		setInt64(value);
-	}
 
-	/** */
-	this(ulong value)
-	{
-		this();
-		init(GType.UINT64);
-		setUint64(value);
-	}
-
-	/** */
-	this(float value)
-	{
-		this();
-		init(GType.FLOAT);
-		setFloat(value);
-	}
-
-	/** */
-	this(double value)
-	{
-		this();
-		init(GType.DOUBLE);
-		setDouble(value);
+		static if ( is( FLOAT == float ) )
+		{
+			init(GType.FLOAT);
+			setFloat(value);
+		}
+		else
+		{
+			init(GType.DOUBLE);
+			setDouble(value);
+		}
 	}
 
 	/**
