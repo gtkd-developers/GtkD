@@ -100,11 +100,12 @@ public class Value
 	}
 
 	/** */
-	this(bool value)
+	this(BOOL)(BOOL value)
+	if( is (BOOL == bool) )
 	{
 		this();
 		init(GType.BOOLEAN);
-		setInt(value);
+		setBoolean(value);
 	}
 
 	/** */

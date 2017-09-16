@@ -24,6 +24,7 @@
 
 module glib.ListG;
 
+private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
 private import gobject.ObjectG;
@@ -100,7 +101,8 @@ public class ListG
 	 * Turn the list into a D array of the desiered type.
 	 * Type T wraps should match the type of the data.
 	 */
-	public T[] toArray(T, TC = typeof(T.tupleof[0]))()
+	public T[] toArray(T, TC = getCType!T)()
+	if ( is(T == class) )
 	{
 		T[] arr = new T[length()];
 		ListG list = this;
@@ -116,6 +118,32 @@ public class ListG
 		return arr;
 	}
 
+	/** Ditto */
+	public T[] toArray(T)()
+	if ( is ( T == string ) )
+	{
+		T[] arr = new T[length()];
+		ListG list = this;
+		size_t count;
+
+		while(list !is null && count < arr.length)
+		{
+			arr[count] = Str.toString(cast(char*)list.data);
+			list = list.next();
+			count++;
+		}
+
+		return arr;
+	}
+
+	private template getCType(T)
+	{
+		static if ( is(T == class) )
+			alias getCType = typeof(T.tupleof[0]);
+		else
+			alias getCType = void*;
+	}
+
 	unittest
 	{
 		import gobject.Value;
@@ -127,6 +155,12 @@ public class ListG
 
 		assert(arr[0].getInt() == 0);
 		assert(arr[1].getInt() == 1);
+
+		list = new ListG(null);
+		list = list.append(cast(void*)"test\0".ptr);
+		list = list.append(cast(void*)"test2\0".ptr);
+
+		assert(["test", "test2"] == list.toArray!string());
 	}
 
 	/**
