@@ -347,16 +347,18 @@ private string getTypeFunction(Iface)()
 
 	if ( is(Iface == gobject.c.types.GObject) )
 		return "GType.OBJECT";
-
-	foreach ( i, char c; Iface.stringof )
+	else
 	{
-		if ( c.isUpper && i > 0 )
-			result ~= "_"~c;
-		else
-			result ~= c;
-	}
+		foreach ( i, char c; Iface.stringof )
+		{
+			if ( c.isUpper && i > 0 )
+				result ~= "_"~c;
+			else
+				result ~= c;
+		}
 
-	return result.toLower.replace("_iface", "")~ "_get_type()";
+		return result.toLower.replace("_iface", "")~ "_get_type()";
+	}
 }
 
 private string getTypeImport(Iface)()
@@ -410,15 +412,18 @@ private string getWrapFunction(Impl, Member, string name)()
 		{
 			if ( i == 0 )
 				continue;
-			if ( i > 1 )
-				result ~= ", ";
-
-			if ( (ParamStorage[i] == STC.out_ || ParamStorage[i] == STC.ref_) && isGtkdType!(DParamTypes[i]) )
-				result ~= "d_"~ ParamNames[i];
-			else if ( isGtkdType!(DParamTypes[i]) )
-				result ~= "ObjectG.getDObject!("~ DParamTypes[i].stringof ~")("~ ParamNames[i] ~")";
 			else
-				result ~= ParamNames[i];
+			{
+				if ( i > 1 )
+					result ~= ", ";
+
+				if ( (ParamStorage[i] == STC.out_ || ParamStorage[i] == STC.ref_) && isGtkdType!(DParamTypes[i]) )
+					result ~= "d_"~ ParamNames[i];
+				else if ( isGtkdType!(DParamTypes[i]) )
+					result ~= "ObjectG.getDObject!("~ DParamTypes[i].stringof ~")("~ ParamNames[i] ~")";
+				else
+					result ~= ParamNames[i];
+			}
 		}
 
 		result ~= ");\n\n";
