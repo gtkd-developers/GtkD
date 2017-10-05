@@ -101,7 +101,7 @@ public class Value
 
 	/** */
 	this(BOOL)(BOOL value)
-	if( is (BOOL == bool) )
+	if( isBoolean!BOOL )
 	{
 		this();
 		init(GType.BOOLEAN);
