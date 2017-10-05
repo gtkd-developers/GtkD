@@ -69,7 +69,7 @@ public class MainContext
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
 			g_main_context_unref(gMainContext);
 	}
 

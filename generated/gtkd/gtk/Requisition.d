@@ -25,6 +25,7 @@
 module gtk.Requisition;
 
 private import glib.ConstructionException;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.c.functions;
 public  import gtk.c.types;
@@ -37,7 +38,7 @@ private import gtkd.Loader;
  * [GtkWidget’s geometry management section][geometry-management] for
  * more information.
  */
-public class Requisition
+public final class Requisition
 {
 	/** the main Gtk struct */
 	protected GtkRequisition* gtkRequisition;
@@ -68,10 +69,38 @@ public class Requisition
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GTK) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GTK) && ownedRef )
 			gtk_requisition_free(gtkRequisition);
 	}
 
+
+	/**
+	 * the widget’s desired width
+	 */
+	public @property int width()
+	{
+		return gtkRequisition.width;
+	}
+
+	/** Ditto */
+	public @property void width(int value)
+	{
+		gtkRequisition.width = value;
+	}
+
+	/**
+	 * the widget’s desired height
+	 */
+	public @property int height()
+	{
+		return gtkRequisition.height;
+	}
+
+	/** Ditto */
+	public @property void height(int value)
+	{
+		gtkRequisition.height = value;
+	}
 
 	/** */
 	public static GType getType()

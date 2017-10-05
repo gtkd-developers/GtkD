@@ -70,7 +70,7 @@ public class KeyFile
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
 			g_key_file_unref(gKeyFile);
 	}
 

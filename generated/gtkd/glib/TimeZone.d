@@ -69,7 +69,7 @@ public class TimeZone
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
 			g_time_zone_unref(gTimeZone);
 	}
 

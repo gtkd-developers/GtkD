@@ -24,15 +24,17 @@
 
 module glib.HookList;
 
+private import glib.Hook;
 private import glib.c.functions;
 public  import glib.c.types;
 public  import gtkc.glibtypes;
+private import gtkd.Loader;
 
 
 /**
  * The #GHookList struct represents a list of hook functions.
  */
-public class HookList
+public final class HookList
 {
 	/** the main Gtk struct */
 	protected GHookList* gHookList;
@@ -61,6 +63,83 @@ public class HookList
 		this.ownedRef = ownedRef;
 	}
 
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+			g_free(gHookList);
+	}
+
+
+	/**
+	 * the next free #GHook id
+	 */
+	public @property gulong seqId()
+	{
+		return gHookList.seqId;
+	}
+
+	/** Ditto */
+	public @property void seqId(gulong value)
+	{
+		gHookList.seqId = value;
+	}
+
+	/**
+	 * the size of the #GHookList elements, in bytes
+	 */
+	public @property uint hookSize()
+	{
+		return gHookList.hookSize;
+	}
+
+	/** Ditto */
+	public @property void hookSize(uint value)
+	{
+		gHookList.hookSize = value;
+	}
+
+	/**
+	 * 1 if the #GHookList has been initialized
+	 */
+	public @property uint isSetup()
+	{
+		return gHookList.isSetup;
+	}
+
+	/** Ditto */
+	public @property void isSetup(uint value)
+	{
+		gHookList.isSetup = value;
+	}
+
+	/**
+	 * the first #GHook element in the list
+	 */
+	public @property Hook hooks()
+	{
+		return new Hook(gHookList.hooks, false);
+	}
+
+	/** Ditto */
+	public @property void hooks(Hook value)
+	{
+		gHookList.hooks = value.getHookStruct();
+	}
+
+	/**
+	 * the function to call to finalize a #GHook element.
+	 * The default behaviour is to call the hooks @destroy function
+	 */
+	public @property GHookFinalizeFunc finalizeHook()
+	{
+		return gHookList.finalizeHook;
+	}
+
+	/** Ditto */
+	public @property void finalizeHook(GHookFinalizeFunc value)
+	{
+		gHookList.finalizeHook = value;
+	}
 
 	/**
 	 * Removes all the #GHook elements from a #GHookList.

@@ -24,9 +24,13 @@
 
 module gstreamer.ParentBufferMeta;
 
+private import glib.c.functions;
+private import gobject.ObjectG;
+private import gstreamer.Buffer;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
 public  import gstreamerc.gstreamertypes;
+private import gtkd.Loader;
 
 
 /**
@@ -41,8 +45,69 @@ public  import gstreamerc.gstreamertypes;
  *
  * Since: 1.6
  */
-public struct ParentBufferMeta
+public final class ParentBufferMeta
 {
+	/** the main Gtk struct */
+	protected GstParentBufferMeta* gstParentBufferMeta;
+	protected bool ownedRef;
+
+	/** Get the main Gtk struct */
+	public GstParentBufferMeta* getParentBufferMetaStruct(bool transferOwnership = false)
+	{
+		if (transferOwnership)
+			ownedRef = false;
+		return gstParentBufferMeta;
+	}
+
+	/** the main Gtk struct as a void* */
+	protected void* getStruct()
+	{
+		return cast(void*)gstParentBufferMeta;
+	}
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GstParentBufferMeta* gstParentBufferMeta, bool ownedRef = false)
+	{
+		this.gstParentBufferMeta = gstParentBufferMeta;
+		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
+			g_free(gstParentBufferMeta);
+	}
+
+
+	/**
+	 * the parent #GstMeta structure
+	 */
+	public @property GstMeta parent()
+	{
+		return gstParentBufferMeta.parent;
+	}
+
+	/** Ditto */
+	public @property void parent(GstMeta value)
+	{
+		gstParentBufferMeta.parent = value;
+	}
+
+	/**
+	 * the #GstBuffer on which a reference is being held.
+	 */
+	public @property Buffer buffer()
+	{
+		return ObjectG.getDObject!(Buffer)(gstParentBufferMeta.buffer, false);
+	}
+
+	/** Ditto */
+	public @property void buffer(Buffer value)
+	{
+		gstParentBufferMeta.buffer = value.getBufferStruct();
+	}
 
 	/**
 	 * Get the global #GstMetaInfo describing  the #GstParentBufferMeta meta.

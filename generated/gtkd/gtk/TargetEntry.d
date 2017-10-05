@@ -26,6 +26,7 @@ module gtk.TargetEntry;
 
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.c.functions;
 public  import gtk.c.types;
@@ -38,7 +39,7 @@ private import gtkd.Loader;
  * data than can be supplied for by a widget for a selection
  * or for supplied or received during drag-and-drop.
  */
-public class TargetEntry
+public final class TargetEntry
 {
 	/** the main Gtk struct */
 	protected GtkTargetEntry* gtkTargetEntry;
@@ -69,10 +70,55 @@ public class TargetEntry
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GTK) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GTK) && ownedRef )
 			gtk_target_entry_free(gtkTargetEntry);
 	}
 
+
+	/**
+	 * a string representation of the target type
+	 */
+	public @property string target()
+	{
+		return Str.toString(gtkTargetEntry.target);
+	}
+
+	/** Ditto */
+	public @property void target(string value)
+	{
+		gtkTargetEntry.target = Str.toStringz(value);
+	}
+
+	/**
+	 * #GtkTargetFlags for DND
+	 */
+	public @property uint flags()
+	{
+		return gtkTargetEntry.flags;
+	}
+
+	/** Ditto */
+	public @property void flags(uint value)
+	{
+		gtkTargetEntry.flags = value;
+	}
+
+	/**
+	 * an application-assigned integer ID which will
+	 * get passed as a parameter to e.g the #GtkWidget::selection-get
+	 * signal. It allows the application to identify the target
+	 * type without extensive string compares.
+	 */
+	public @property uint info()
+	{
+		return gtkTargetEntry.info;
+	}
+
+	/** Ditto */
+	public @property void info(uint value)
+	{
+		gtkTargetEntry.info = value;
+	}
 
 	/** */
 	public static GType getType()

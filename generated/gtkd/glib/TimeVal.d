@@ -28,6 +28,7 @@ private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
 public  import gtkc.glibtypes;
+private import gtkd.Loader;
 
 
 /**
@@ -39,7 +40,7 @@ public  import gtkc.glibtypes;
  * represent microsecond-precision time. As such, this type will be
  * removed from a future version of GLib.
  */
-public class TimeVal
+public final class TimeVal
 {
 	/** the main Gtk struct */
 	protected GTimeVal* gTimeVal;
@@ -68,6 +69,40 @@ public class TimeVal
 		this.ownedRef = ownedRef;
 	}
 
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+			g_free(gTimeVal);
+	}
+
+
+	/**
+	 * seconds
+	 */
+	public @property glong tvSec()
+	{
+		return gTimeVal.tvSec;
+	}
+
+	/** Ditto */
+	public @property void tvSec(glong value)
+	{
+		gTimeVal.tvSec = value;
+	}
+
+	/**
+	 * microseconds
+	 */
+	public @property glong tvUsec()
+	{
+		return gTimeVal.tvUsec;
+	}
+
+	/** Ditto */
+	public @property void tvUsec(glong value)
+	{
+		gTimeVal.tvUsec = value;
+	}
 
 	/**
 	 * Adds the given number of microseconds to @time_. @microseconds can

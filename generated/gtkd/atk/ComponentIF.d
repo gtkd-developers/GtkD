@@ -25,6 +25,7 @@
 module atk.ComponentIF;
 
 private import atk.ObjectAtk;
+private import atk.Rectangle;
 private import atk.c.functions;
 public  import atk.c.types;
 private import gobject.ObjectG;
@@ -235,5 +236,5 @@ public interface ComponentIF{
 	 * Params:
 	 *     arg1 = The AtkRectangle giving the new position and size.
 	 */
-	gulong addOnBoundsChanged(void delegate(AtkRectangle*, ComponentIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	gulong addOnBoundsChanged(void delegate(Rectangle, ComponentIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 }

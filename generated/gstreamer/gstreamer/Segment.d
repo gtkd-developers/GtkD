@@ -111,7 +111,7 @@ public class Segment
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
 			gst_segment_free(gstSegment);
 	}
 
@@ -359,9 +359,9 @@ public class Segment
 	 *
 	 * Since: 1.8
 	 */
-	public int positionFromRunningTimeFull(GstFormat format, ulong runningTime, ulong* position)
+	public int positionFromRunningTimeFull(GstFormat format, ulong runningTime, out ulong position)
 	{
-		return gst_segment_position_from_running_time_full(gstSegment, format, runningTime, position);
+		return gst_segment_position_from_running_time_full(gstSegment, format, runningTime, &position);
 	}
 
 	/**
@@ -408,9 +408,9 @@ public class Segment
 	 *
 	 * Since: 1.8
 	 */
-	public int positionFromStreamTimeFull(GstFormat format, ulong streamTime, ulong* position)
+	public int positionFromStreamTimeFull(GstFormat format, ulong streamTime, out ulong position)
 	{
-		return gst_segment_position_from_stream_time_full(gstSegment, format, streamTime, position);
+		return gst_segment_position_from_stream_time_full(gstSegment, format, streamTime, &position);
 	}
 
 	/**
@@ -496,9 +496,9 @@ public class Segment
 	 *
 	 * Since: 1.6
 	 */
-	public int toRunningTimeFull(GstFormat format, ulong position, ulong* runningTime)
+	public int toRunningTimeFull(GstFormat format, ulong position, out ulong runningTime)
 	{
-		return gst_segment_to_running_time_full(gstSegment, format, position, runningTime);
+		return gst_segment_to_running_time_full(gstSegment, format, position, &runningTime);
 	}
 
 	/**
@@ -553,8 +553,8 @@ public class Segment
 	 *
 	 * Since: 1.8
 	 */
-	public int toStreamTimeFull(GstFormat format, ulong position, ulong* streamTime)
+	public int toStreamTimeFull(GstFormat format, ulong position, out ulong streamTime)
 	{
-		return gst_segment_to_stream_time_full(gstSegment, format, position, streamTime);
+		return gst_segment_to_stream_time_full(gstSegment, format, position, &streamTime);
 	}
 }

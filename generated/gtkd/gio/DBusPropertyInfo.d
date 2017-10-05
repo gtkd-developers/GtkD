@@ -24,8 +24,11 @@
 
 module gio.DBusPropertyInfo;
 
+private import gio.DBusAnnotationInfo;
 private import gio.c.functions;
 public  import gio.c.types;
+private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.giotypes;
 private import gtkd.Loader;
@@ -36,7 +39,7 @@ private import gtkd.Loader;
  *
  * Since: 2.26
  */
-public class DBusPropertyInfo
+public final class DBusPropertyInfo
 {
 	/** the main Gtk struct */
 	protected GDBusPropertyInfo* gDBusPropertyInfo;
@@ -67,10 +70,93 @@ public class DBusPropertyInfo
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GIO) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GIO) && ownedRef )
 			g_dbus_property_info_unref(gDBusPropertyInfo);
 	}
 
+
+	/**
+	 * The reference count or -1 if statically allocated.
+	 */
+	public @property int refCount()
+	{
+		return gDBusPropertyInfo.refCount;
+	}
+
+	/** Ditto */
+	public @property void refCount(int value)
+	{
+		gDBusPropertyInfo.refCount = value;
+	}
+
+	/**
+	 * The name of the D-Bus property, e.g. "SupportedFilesystems".
+	 */
+	public @property string name()
+	{
+		return Str.toString(gDBusPropertyInfo.name);
+	}
+
+	/** Ditto */
+	public @property void name(string value)
+	{
+		gDBusPropertyInfo.name = Str.toStringz(value);
+	}
+
+	/**
+	 * The D-Bus signature of the property (a single complete type).
+	 */
+	public @property string signature()
+	{
+		return Str.toString(gDBusPropertyInfo.signature);
+	}
+
+	/** Ditto */
+	public @property void signature(string value)
+	{
+		gDBusPropertyInfo.signature = Str.toStringz(value);
+	}
+
+	/**
+	 * Access control flags for the property.
+	 */
+	public @property GDBusPropertyInfoFlags flags()
+	{
+		return gDBusPropertyInfo.flags;
+	}
+
+	/** Ditto */
+	public @property void flags(GDBusPropertyInfoFlags value)
+	{
+		gDBusPropertyInfo.flags = value;
+	}
+
+	/**
+	 * A pointer to a %NULL-terminated array of pointers to #GDBusAnnotationInfo structures or %NULL if there are no annotations.
+	 */
+	public @property DBusAnnotationInfo[] annotations()
+	{
+		DBusAnnotationInfo[] arr = new DBusAnnotationInfo[getArrayLength(gDBusPropertyInfo.annotations)];
+		for ( int i = 0; i < arr.length; i++ )
+		{
+			arr[i] = ObjectG.getDObject!(DBusAnnotationInfo)(gDBusPropertyInfo.annotations[i], false);
+		}
+
+		return arr;
+	}
+
+	/** Ditto */
+	public @property void annotations(DBusAnnotationInfo[] value)
+	{
+		GDBusAnnotationInfo*[] arr = new GDBusAnnotationInfo*[value.length+1];
+		for ( int i = 0; i < value.length; i++ )
+		{
+			arr[i] = value[i].getDBusAnnotationInfoStruct();
+		}
+		arr[value.length] = null;
+
+		gDBusPropertyInfo.annotations = arr.ptr;
+	}
 
 	/** */
 	public static GType getType()

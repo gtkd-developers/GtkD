@@ -77,7 +77,7 @@ public class PgAttributeList
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
 			pango_attr_list_unref(pangoAttrList);
 	}
 

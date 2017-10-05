@@ -28,12 +28,13 @@ private import glib.HookList;
 private import glib.c.functions;
 public  import glib.c.types;
 public  import gtkc.glibtypes;
+private import gtkd.Loader;
 
 
 /**
  * The #GHook struct represents a single hook function in a #GHookList.
  */
-public class Hook
+public final class Hook
 {
 	/** the main Gtk struct */
 	protected GHook* gHook;
@@ -62,6 +63,127 @@ public class Hook
 		this.ownedRef = ownedRef;
 	}
 
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+			g_free(gHook);
+	}
+
+
+	/**
+	 * data which is passed to func when this hook is invoked
+	 */
+	public @property void* data()
+	{
+		return gHook.data;
+	}
+
+	/** Ditto */
+	public @property void data(void* value)
+	{
+		gHook.data = value;
+	}
+
+	/**
+	 * pointer to the next hook in the list
+	 */
+	public @property Hook next()
+	{
+		return new Hook(gHook.next, false);
+	}
+
+	/** Ditto */
+	public @property void next(Hook value)
+	{
+		gHook.next = value.getHookStruct();
+	}
+
+	/**
+	 * pointer to the previous hook in the list
+	 */
+	public @property Hook prev()
+	{
+		return new Hook(gHook.prev, false);
+	}
+
+	/** Ditto */
+	public @property void prev(Hook value)
+	{
+		gHook.prev = value.getHookStruct();
+	}
+
+	/**
+	 * the reference count of this hook
+	 */
+	public @property uint refCount()
+	{
+		return gHook.refCount;
+	}
+
+	/** Ditto */
+	public @property void refCount(uint value)
+	{
+		gHook.refCount = value;
+	}
+
+	/**
+	 * the id of this hook, which is unique within its list
+	 */
+	public @property gulong hookId()
+	{
+		return gHook.hookId;
+	}
+
+	/** Ditto */
+	public @property void hookId(gulong value)
+	{
+		gHook.hookId = value;
+	}
+
+	/**
+	 * flags which are set for this hook. See #GHookFlagMask for
+	 * predefined flags
+	 */
+	public @property uint flags()
+	{
+		return gHook.flags;
+	}
+
+	/** Ditto */
+	public @property void flags(uint value)
+	{
+		gHook.flags = value;
+	}
+
+	/**
+	 * the function to call when this hook is invoked. The possible
+	 * signatures for this function are #GHookFunc and #GHookCheckFunc
+	 */
+	public @property void* func()
+	{
+		return gHook.func;
+	}
+
+	/** Ditto */
+	public @property void func(void* value)
+	{
+		gHook.func = value;
+	}
+
+	/**
+	 * the default @finalize_hook function of a #GHookList calls
+	 * this member of the hook that is being finalized
+	 */
+	public @property GDestroyNotify destroy()
+	{
+		return gHook.destroy;
+	}
+
+	/** Ditto */
+	public @property void destroy(GDestroyNotify value)
+	{
+		gHook.destroy = value;
+	}
 
 	/**
 	 * Compares the ids of two #GHook elements, returning a negative value

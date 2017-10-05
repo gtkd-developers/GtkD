@@ -66,7 +66,7 @@ public class RandG
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
 			g_rand_free(gRand);
 	}
 

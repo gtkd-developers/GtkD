@@ -65,7 +65,7 @@ public class TypeClass
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GOBJECT) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GOBJECT) && ownedRef )
 			g_type_class_unref(gTypeClass);
 	}
 

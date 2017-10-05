@@ -67,7 +67,7 @@ public class AtomicQueue
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
 			gst_atomic_queue_unref(gstAtomicQueue);
 	}
 

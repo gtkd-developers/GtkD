@@ -30,6 +30,7 @@ private import glib.GException;
 private import glib.c.functions;
 public  import glib.c.types;
 public  import gtkc.glibtypes;
+private import gtkd.Loader;
 
 
 /**
@@ -37,7 +38,7 @@ public  import gtkc.glibtypes;
  * public read-only members, but the underlying struct is bigger,
  * so you must not copy this struct.
  */
-public class ThreadPool
+public final class ThreadPool
 {
 	/** the main Gtk struct */
 	protected GThreadPool* gThreadPool;
@@ -66,6 +67,54 @@ public class ThreadPool
 		this.ownedRef = ownedRef;
 	}
 
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+			g_free(gThreadPool);
+	}
+
+
+	/**
+	 * the function to execute in the threads of this pool
+	 */
+	public @property GFunc func()
+	{
+		return gThreadPool.func;
+	}
+
+	/** Ditto */
+	public @property void func(GFunc value)
+	{
+		gThreadPool.func = value;
+	}
+
+	/**
+	 * the user data for the threads of this pool
+	 */
+	public @property void* userData()
+	{
+		return gThreadPool.userData;
+	}
+
+	/** Ditto */
+	public @property void userData(void* value)
+	{
+		gThreadPool.userData = value;
+	}
+
+	/**
+	 * are all threads exclusive to this pool
+	 */
+	public @property bool exclusive()
+	{
+		return gThreadPool.exclusive != 0;
+	}
+
+	/** Ditto */
+	public @property void exclusive(bool value)
+	{
+		gThreadPool.exclusive = value;
+	}
 
 	/**
 	 * Frees all resources allocated for @pool.

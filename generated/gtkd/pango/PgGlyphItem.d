@@ -26,10 +26,13 @@ module pango.PgGlyphItem;
 
 private import glib.ListSG;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.pangotypes;
 private import gtkd.Loader;
 private import pango.PgAttributeList;
+private import pango.PgGlyphString;
+private import pango.PgItem;
 private import pango.c.functions;
 public  import pango.c.types;
 
@@ -41,7 +44,7 @@ public  import pango.c.types;
  * of shaping text with #PangoLayout is a list of #PangoLayoutLine,
  * each of which contains a list of #PangoGlyphItem.
  */
-public class PgGlyphItem
+public final class PgGlyphItem
 {
 	/** the main Gtk struct */
 	protected PangoGlyphItem* pangoGlyphItem;
@@ -72,10 +75,38 @@ public class PgGlyphItem
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
 			pango_glyph_item_free(pangoGlyphItem);
 	}
 
+
+	/**
+	 * corresponding #PangoItem.
+	 */
+	public @property PgItem item()
+	{
+		return ObjectG.getDObject!(PgItem)(pangoGlyphItem.item, false);
+	}
+
+	/** Ditto */
+	public @property void item(PgItem value)
+	{
+		pangoGlyphItem.item = value.getPgItemStruct();
+	}
+
+	/**
+	 * corresponding #PangoGlyphString.
+	 */
+	public @property PgGlyphString glyphs()
+	{
+		return ObjectG.getDObject!(PgGlyphString)(pangoGlyphItem.glyphs, false);
+	}
+
+	/** Ditto */
+	public @property void glyphs(PgGlyphString value)
+	{
+		pangoGlyphItem.glyphs = value.getPgGlyphStringStruct();
+	}
 
 	/** */
 	public static GType getType()

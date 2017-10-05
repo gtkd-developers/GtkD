@@ -27,6 +27,7 @@ module gdk.RGBA;
 private import gdk.c.functions;
 public  import gdk.c.types;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.gdktypes;
 private import gtkd.Loader;
@@ -36,7 +37,7 @@ private import gtkd.Loader;
  * A #GdkRGBA is used to represent a (possibly translucent)
  * color, in a way that is compatible with cairos notion of color.
  */
-public class RGBA
+public final class RGBA
 {
 	/** the main Gtk struct */
 	protected GdkRGBA* gdkRGBA;
@@ -67,7 +68,7 @@ public class RGBA
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GDK) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GDK) && ownedRef )
 			gdk_rgba_free(gdkRGBA);
 	}
 
@@ -95,58 +96,64 @@ public class RGBA
 	}
 
 	/**
-	 * The color values.
-	 * All values are in the range from 0.0 to 1.0 inclusive.
 	 */
-	double red()
+
+	/**
+	 * The intensity of the red channel from 0.0 to 1.0 inclusive
+	 */
+	public @property double red()
 	{
 		return gdkRGBA.red;
 	}
 
-	/** ditto */
-	void red(double value)
+	/** Ditto */
+	public @property void red(double value)
 	{
 		gdkRGBA.red = value;
 	}
 
-	/** ditto */
-	double green()
+	/**
+	 * The intensity of the green channel from 0.0 to 1.0 inclusive
+	 */
+	public @property double green()
 	{
 		return gdkRGBA.green;
 	}
 
-	/** ditto */
-	void green(double value)
+	/** Ditto */
+	public @property void green(double value)
 	{
 		gdkRGBA.green = value;
 	}
 
-	/** ditto */
-	double blue()
+	/**
+	 * The intensity of the blue channel from 0.0 to 1.0 inclusive
+	 */
+	public @property double blue()
 	{
 		return gdkRGBA.blue;
 	}
 
-	/** ditto */
-	void blue(double value)
+	/** Ditto */
+	public @property void blue(double value)
 	{
 		gdkRGBA.blue = value;
 	}
 
-	/** ditto */
-	double alpha()
+	/**
+	 * The opacity of the color from 0.0 for completely translucent to
+	 * 1.0 for opaque
+	 */
+	public @property double alpha()
 	{
 		return gdkRGBA.alpha;
 	}
 
-	/** ditto */
-	void alpha(double value)
+	/** Ditto */
+	public @property void alpha(double value)
 	{
 		gdkRGBA.alpha = value;
 	}
-
-	/**
-	 */
 
 	/** */
 	public static GType getType()

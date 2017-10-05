@@ -28,12 +28,13 @@ private import glib.ConstructionException;
 private import glib.c.functions;
 public  import glib.c.types;
 public  import gtkc.glibtypes;
+private import gtkd.Loader;
 
 
 /**
  * The #GNode struct represents one node in a [n-ary tree][glib-N-ary-Trees].
  */
-public class Node
+public final class Node
 {
 	/** the main Gtk struct */
 	protected GNode* gNode;
@@ -62,6 +63,86 @@ public class Node
 		this.ownedRef = ownedRef;
 	}
 
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+			g_free(gNode);
+	}
+
+
+	/**
+	 * contains the actual data of the node.
+	 */
+	public @property void* data()
+	{
+		return gNode.data;
+	}
+
+	/** Ditto */
+	public @property void data(void* value)
+	{
+		gNode.data = value;
+	}
+
+	/**
+	 * points to the node's next sibling (a sibling is another
+	 * #GNode with the same parent).
+	 */
+	public @property Node next()
+	{
+		return new Node(gNode.next, false);
+	}
+
+	/** Ditto */
+	public @property void next(Node value)
+	{
+		gNode.next = value.getNodeStruct();
+	}
+
+	/**
+	 * points to the node's previous sibling.
+	 */
+	public @property Node prev()
+	{
+		return new Node(gNode.prev, false);
+	}
+
+	/** Ditto */
+	public @property void prev(Node value)
+	{
+		gNode.prev = value.getNodeStruct();
+	}
+
+	/**
+	 * points to the parent of the #GNode, or is %NULL if the
+	 * #GNode is the root of the tree.
+	 */
+	public @property Node parent()
+	{
+		return new Node(gNode.parent, false);
+	}
+
+	/** Ditto */
+	public @property void parent(Node value)
+	{
+		gNode.parent = value.getNodeStruct();
+	}
+
+	/**
+	 * points to the first child of the #GNode.  The other
+	 * children are accessed by using the @next pointer of each
+	 * child.
+	 */
+	public @property Node children()
+	{
+		return new Node(gNode.children, false);
+	}
+
+	/** Ditto */
+	public @property void children(Node value)
+	{
+		gNode.children = value.getNodeStruct();
+	}
 
 	/**
 	 * Gets the position of the first child of a #GNode

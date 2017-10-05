@@ -70,7 +70,7 @@ public class Hmac
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
 			g_hmac_unref(gHmac);
 	}
 

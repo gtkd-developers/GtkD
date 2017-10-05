@@ -108,7 +108,7 @@ public class Closure
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GOBJECT) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GOBJECT) && ownedRef )
 			g_closure_unref(gClosure);
 	}
 

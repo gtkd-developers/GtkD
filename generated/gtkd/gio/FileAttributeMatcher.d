@@ -67,7 +67,7 @@ public class FileAttributeMatcher
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GIO) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GIO) && ownedRef )
 			g_file_attribute_matcher_unref(gFileAttributeMatcher);
 	}
 

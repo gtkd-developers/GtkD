@@ -67,7 +67,7 @@ public class ParseContext
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
 			gst_parse_context_free(gstParseContext);
 	}
 

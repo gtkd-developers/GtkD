@@ -71,7 +71,7 @@ public class Range
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_ATK) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_ATK) && ownedRef )
 			atk_range_free(atkRange);
 	}
 

@@ -24,9 +24,11 @@
 
 module atk.TextT;
 
+public  import atk.TextRange;
 public  import atk.c.functions;
 public  import atk.c.types;
 public  import glib.Str;
+public  import gobject.ObjectG;
 public  import gobject.Signals;
 public  import gtkc.atktypes;
 public  import std.algorithm;
@@ -75,9 +77,15 @@ public template TextT(TStruct)
 	 *
 	 * Since: 1.3
 	 */
-	public static void freeRanges(AtkTextRange*[] ranges)
+	public static void freeRanges(TextRange[] ranges)
 	{
-		atk_text_free_ranges(ranges.ptr);
+		AtkTextRange*[] rangesArray = new AtkTextRange*[ranges.length];
+		for ( int i = 0; i < ranges.length; i++ )
+		{
+			rangesArray[i] = ranges[i].getTextRangeStruct();
+		}
+
+		atk_text_free_ranges(rangesArray.ptr);
 	}
 
 	/**
@@ -108,11 +116,22 @@ public template TextT(TStruct)
 	 *
 	 * Since: 1.3
 	 */
-	public AtkTextRange*[] getBoundedRanges(AtkTextRectangle* rect, AtkCoordType coordType, AtkTextClipType xClipType, AtkTextClipType yClipType)
+	public TextRange[] getBoundedRanges(AtkTextRectangle* rect, AtkCoordType coordType, AtkTextClipType xClipType, AtkTextClipType yClipType)
 	{
 		auto p = atk_text_get_bounded_ranges(getTextStruct(), rect, coordType, xClipType, yClipType);
 
-		return p[0 .. getArrayLength(p)];
+		if(p is null)
+		{
+			return null;
+		}
+
+		TextRange[] arr = new TextRange[getArrayLength(p)];
+		for(int i = 0; i < getArrayLength(p); i++)
+		{
+			arr[i] = ObjectG.getDObject!(TextRange)(cast(AtkTextRange*) p[i]);
+		}
+
+		return arr;
 	}
 
 	/**

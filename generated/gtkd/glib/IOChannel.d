@@ -72,7 +72,7 @@ public class IOChannel
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
 			g_io_channel_unref(gIOChannel);
 	}
 

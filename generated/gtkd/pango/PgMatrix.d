@@ -24,6 +24,7 @@
 
 module pango.PgMatrix;
 
+private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.pangotypes;
 private import gtkd.Loader;
@@ -43,7 +44,7 @@ public  import pango.c.types;
  *
  * Since: 1.6
  */
-public class PgMatrix
+public final class PgMatrix
 {
 	/** the main Gtk struct */
 	protected PangoMatrix* pangoMatrix;
@@ -74,10 +75,94 @@ public class PgMatrix
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
 			pango_matrix_free(pangoMatrix);
 	}
 
+
+	/**
+	 * 1st component of the transformation matrix
+	 */
+	public @property double xx()
+	{
+		return pangoMatrix.xx;
+	}
+
+	/** Ditto */
+	public @property void xx(double value)
+	{
+		pangoMatrix.xx = value;
+	}
+
+	/**
+	 * 2nd component of the transformation matrix
+	 */
+	public @property double xy()
+	{
+		return pangoMatrix.xy;
+	}
+
+	/** Ditto */
+	public @property void xy(double value)
+	{
+		pangoMatrix.xy = value;
+	}
+
+	/**
+	 * 3rd component of the transformation matrix
+	 */
+	public @property double yx()
+	{
+		return pangoMatrix.yx;
+	}
+
+	/** Ditto */
+	public @property void yx(double value)
+	{
+		pangoMatrix.yx = value;
+	}
+
+	/**
+	 * 4th component of the transformation matrix
+	 */
+	public @property double yy()
+	{
+		return pangoMatrix.yy;
+	}
+
+	/** Ditto */
+	public @property void yy(double value)
+	{
+		pangoMatrix.yy = value;
+	}
+
+	/**
+	 * x translation
+	 */
+	public @property double x0()
+	{
+		return pangoMatrix.x0;
+	}
+
+	/** Ditto */
+	public @property void x0(double value)
+	{
+		pangoMatrix.x0 = value;
+	}
+
+	/**
+	 * y translation
+	 */
+	public @property double y0()
+	{
+		return pangoMatrix.y0;
+	}
+
+	/** Ditto */
+	public @property void y0(double value)
+	{
+		pangoMatrix.y0 = value;
+	}
 
 	/** */
 	public static GType getType()

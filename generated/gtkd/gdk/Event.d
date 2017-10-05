@@ -102,7 +102,7 @@ public class Event
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GDK) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GDK) && ownedRef )
 			gdk_event_free(gdkEvent);
 	}
 

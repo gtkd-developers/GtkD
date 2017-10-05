@@ -24,9 +24,11 @@
 
 module atk.TextIF;
 
+private import atk.TextRange;
 private import atk.c.functions;
 public  import atk.c.types;
 private import glib.Str;
+private import gobject.ObjectG;
 private import gobject.Signals;
 public  import gtkc.atktypes;
 private import std.algorithm;
@@ -72,7 +74,7 @@ public interface TextIF{
 	 *
 	 * Since: 1.3
 	 */
-	public static void freeRanges(AtkTextRange*[] ranges);
+	public static void freeRanges(TextRange[] ranges);
 
 	/**
 	 * Adds a selection bounded by the specified offsets.
@@ -99,7 +101,7 @@ public interface TextIF{
 	 *
 	 * Since: 1.3
 	 */
-	public AtkTextRange*[] getBoundedRanges(AtkTextRectangle* rect, AtkCoordType coordType, AtkTextClipType xClipType, AtkTextClipType yClipType);
+	public TextRange[] getBoundedRanges(AtkTextRectangle* rect, AtkCoordType coordType, AtkTextClipType xClipType, AtkTextClipType yClipType);
 
 	/**
 	 * Gets the offset position of the caret (cursor).

@@ -27,6 +27,7 @@ module gdk.Color;
 private import gdk.c.functions;
 public  import gdk.c.types;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.gdktypes;
 private import gtkd.Loader;
@@ -38,7 +39,7 @@ private import gtkd.Loader;
  * 
  * Deprecated: Use #GdkRGBA
  */
-public class Color
+public final class Color
 {
 	/** the main Gtk struct */
 	protected GdkColor* gdkColor;
@@ -69,7 +70,7 @@ public class Color
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GDK) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GDK) && ownedRef )
 			gdk_color_free(gdkColor);
 	}
 
@@ -107,53 +108,6 @@ public class Color
 		this(gdk_color_copy(&color));
 	}
 
-	/**
-	 * The color values.
-	 */
-	ushort red()
-	{
-		return gdkColor.red;
-	}
-
-	/** ditto */
-	void red(ushort value)
-	{
-		gdkColor.red = value;
-		updatePixel();
-	}
-
-	/** ditto */
-	ushort green()
-	{
-		return gdkColor.green;
-	}
-
-	/** ditto */
-	void green(ushort value)
-	{
-		gdkColor.green = value;
-		updatePixel();
-	}
-
-	/** ditto */
-	ushort blue()
-	{
-		return gdkColor.blue;
-	}
-
-	/** ditto */
-	void blue(ushort value)
-	{
-		gdkColor.blue = value;
-		updatePixel();
-	}
-
-	/** ditto */
-	uint pixel()
-	{
-		return gdkColor.pixel;
-	}
-
 	private void updatePixel()
 	{
 		gdkColor.pixel = (gdkColor.red&0xFF00 << 8) | (gdkColor.green&0xFF00) | (gdkColor.blue >> 8) ;
@@ -161,6 +115,65 @@ public class Color
 
 	/**
 	 */
+
+	/**
+	 * For allocated colors, the pixel value used to
+	 * draw this color on the screen. Not used anymore.
+	 */
+	public @property uint pixel()
+	{
+		return gdkColor.pixel;
+	}
+
+	/** Ditto */
+	public @property void pixel(uint value)
+	{
+		gdkColor.pixel = value;
+	}
+
+	/**
+	 * The red component of the color. This is
+	 * a value between 0 and 65535, with 65535 indicating
+	 * full intensity
+	 */
+	public @property ushort red()
+	{
+		return gdkColor.red;
+	}
+
+	/** Ditto */
+	public @property void red(ushort value)
+	{
+		gdkColor.red = value;
+	}
+
+	/**
+	 * The green component of the color
+	 */
+	public @property ushort green()
+	{
+		return gdkColor.green;
+	}
+
+	/** Ditto */
+	public @property void green(ushort value)
+	{
+		gdkColor.green = value;
+	}
+
+	/**
+	 * The blue component of the color
+	 */
+	public @property ushort blue()
+	{
+		return gdkColor.blue;
+	}
+
+	/** Ditto */
+	public @property void blue(ushort value)
+	{
+		gdkColor.blue = value;
+	}
 
 	/** */
 	public static GType getType()

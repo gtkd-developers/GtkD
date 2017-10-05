@@ -70,7 +70,7 @@ public class PgFontDescription
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
 			pango_font_description_free(pangoFontDescription);
 	}
 

@@ -67,7 +67,7 @@ public class PgTabArray
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
 			pango_tab_array_free(pangoTabArray);
 	}
 

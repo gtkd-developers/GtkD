@@ -25,6 +25,7 @@
 module gtk.Border;
 
 private import glib.ConstructionException;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.c.functions;
 public  import gtk.c.types;
@@ -36,7 +37,7 @@ private import gtkd.Loader;
  * A struct that specifies a border around a rectangular area
  * that can be of different width on each side.
  */
-public class Border
+public final class Border
 {
 	/** the main Gtk struct */
 	protected GtkBorder* gtkBorder;
@@ -67,10 +68,66 @@ public class Border
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GTK) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GTK) && ownedRef )
 			gtk_border_free(gtkBorder);
 	}
 
+
+	/**
+	 * The width of the left border
+	 */
+	public @property short left()
+	{
+		return gtkBorder.left;
+	}
+
+	/** Ditto */
+	public @property void left(short value)
+	{
+		gtkBorder.left = value;
+	}
+
+	/**
+	 * The width of the right border
+	 */
+	public @property short right()
+	{
+		return gtkBorder.right;
+	}
+
+	/** Ditto */
+	public @property void right(short value)
+	{
+		gtkBorder.right = value;
+	}
+
+	/**
+	 * The width of the top border
+	 */
+	public @property short top()
+	{
+		return gtkBorder.top;
+	}
+
+	/** Ditto */
+	public @property void top(short value)
+	{
+		gtkBorder.top = value;
+	}
+
+	/**
+	 * The width of the bottom border
+	 */
+	public @property short bottom()
+	{
+		return gtkBorder.bottom;
+	}
+
+	/** Ditto */
+	public @property void bottom(short value)
+	{
+		gtkBorder.bottom = value;
+	}
 
 	/** */
 	public static GType getType()

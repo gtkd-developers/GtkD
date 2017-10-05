@@ -27,6 +27,7 @@ module glib.Once;
 private import glib.c.functions;
 public  import glib.c.types;
 public  import gtkc.glibtypes;
+private import gtkd.Loader;
 
 
 /**
@@ -36,7 +37,7 @@ public  import gtkc.glibtypes;
  *
  * Since: 2.4
  */
-public class Once
+public final class Once
 {
 	/** the main Gtk struct */
 	protected GOnce* gOnce;
@@ -65,6 +66,41 @@ public class Once
 		this.ownedRef = ownedRef;
 	}
 
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+			g_free(gOnce);
+	}
+
+
+	/**
+	 * the status of the #GOnce
+	 */
+	public @property GOnceStatus status()
+	{
+		return gOnce.status;
+	}
+
+	/** Ditto */
+	public @property void status(GOnceStatus value)
+	{
+		gOnce.status = value;
+	}
+
+	/**
+	 * the value returned by the call to the function, if @status
+	 * is %G_ONCE_STATUS_READY
+	 */
+	public @property void* retval()
+	{
+		return gOnce.retval;
+	}
+
+	/** Ditto */
+	public @property void retval(void* value)
+	{
+		gOnce.retval = value;
+	}
 
 	/** */
 	public void* impl(GThreadFunc func, void* arg)

@@ -67,7 +67,7 @@ public class VariantIter
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
 			g_variant_iter_free(gVariantIter);
 	}
 

@@ -209,7 +209,7 @@ public class VariantType
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
 			g_variant_type_free(gVariantType);
 	}
 

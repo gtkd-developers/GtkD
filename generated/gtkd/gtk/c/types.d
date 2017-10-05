@@ -1407,6 +1407,14 @@ public enum GtkInputHints
 	 * The text is vertical. Since 3.18
 	 */
 	VERTICAL_WRITING = 256,
+	/**
+	 * Suggest offering Emoji support. Since 3.22.20
+	 */
+	EMOJI = 512,
+	/**
+	 * Suggest not offering Emoji support. Since 3.22.20
+	 */
+	NO_EMOJI = 1024,
 }
 alias GtkInputHints InputHints;
 
@@ -12301,7 +12309,7 @@ public alias extern(C) void function(GtkTreeView* treeView, GtkWidget* searchDia
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum BINARY_AGE = 2219;
+enum BINARY_AGE = 2221;
 alias GTK_BINARY_AGE = BINARY_AGE;
 
 /**
@@ -12316,7 +12324,7 @@ alias GTK_INPUT_ERROR = INPUT_ERROR;
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum INTERFACE_AGE = 19;
+enum INTERFACE_AGE = 21;
 alias GTK_INTERFACE_AGE = INTERFACE_AGE;
 
 /**
@@ -12356,7 +12364,7 @@ alias GTK_MAX_COMPOSE_LEN = MAX_COMPOSE_LEN;
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum MICRO_VERSION = 19;
+enum MICRO_VERSION = 21;
 alias GTK_MICRO_VERSION = MICRO_VERSION;
 
 /**

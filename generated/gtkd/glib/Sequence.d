@@ -67,7 +67,7 @@ public class Sequence
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
 			g_sequence_free(gSequence);
 	}
 

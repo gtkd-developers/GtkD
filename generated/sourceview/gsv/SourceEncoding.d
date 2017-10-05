@@ -65,7 +65,7 @@ public class SourceEncoding
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GSV) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GSV) && ownedRef )
 			gtk_source_encoding_free(gtkSourceEncoding);
 	}
 

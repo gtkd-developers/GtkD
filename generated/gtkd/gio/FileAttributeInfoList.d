@@ -28,6 +28,7 @@ private import gio.c.functions;
 public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.giotypes;
 private import gtkd.Loader;
@@ -37,7 +38,7 @@ private import gtkd.Loader;
  * Acts as a lightweight registry for possible valid file attributes.
  * The registry stores Key-Value pair formats as #GFileAttributeInfos.
  */
-public class FileAttributeInfoList
+public final class FileAttributeInfoList
 {
 	/** the main Gtk struct */
 	protected GFileAttributeInfoList* gFileAttributeInfoList;
@@ -68,8 +69,24 @@ public class FileAttributeInfoList
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GIO) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GIO) && ownedRef )
 			g_file_attribute_info_list_unref(gFileAttributeInfoList);
+	}
+
+
+	/**
+	 * an array of #GFileAttributeInfos.
+	 */
+	public @property GFileAttributeInfo[] infos()
+	{
+		return gFileAttributeInfoList.infos[0..gFileAttributeInfoList.nInfos];
+	}
+
+	/** Ditto */
+	public @property void infos(GFileAttributeInfo[] value)
+	{
+		gFileAttributeInfoList.infos = value.ptr;
+		gFileAttributeInfoList.nInfos = cast(int)value.length;
 	}
 
 

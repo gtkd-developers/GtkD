@@ -62,7 +62,7 @@ public class TestLogMsg
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
 			g_test_log_msg_free(gTestLogMsg);
 	}
 

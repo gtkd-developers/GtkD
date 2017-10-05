@@ -67,7 +67,7 @@ public class Pattern
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
 			g_pattern_spec_free(gPatternSpec);
 	}
 

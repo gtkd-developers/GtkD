@@ -24,9 +24,12 @@
 
 module pango.PgLayoutLine;
 
+private import glib.ListSG;
+private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.pangotypes;
 private import gtkd.Loader;
+private import pango.PgLayout;
 private import pango.c.functions;
 public  import pango.c.types;
 
@@ -41,7 +44,7 @@ public  import pango.c.types;
  * Routines for rendering PangoLayout objects are provided in
  * code specific to each rendering system.
  */
-public class PgLayoutLine
+public final class PgLayoutLine
 {
 	/** the main Gtk struct */
 	protected PangoLayoutLine* pangoLayoutLine;
@@ -72,10 +75,95 @@ public class PgLayoutLine
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
 			pango_layout_line_unref(pangoLayoutLine);
 	}
 
+
+	/**
+	 * the layout this line belongs to, might be %NULL
+	 */
+	public @property PgLayout layout()
+	{
+		return ObjectG.getDObject!(PgLayout)(pangoLayoutLine.layout, false);
+	}
+
+	/** Ditto */
+	public @property void layout(PgLayout value)
+	{
+		pangoLayoutLine.layout = value.getPgLayoutStruct();
+	}
+
+	/**
+	 * start of line as byte index into layout->text
+	 */
+	public @property int startIndex()
+	{
+		return pangoLayoutLine.startIndex;
+	}
+
+	/** Ditto */
+	public @property void startIndex(int value)
+	{
+		pangoLayoutLine.startIndex = value;
+	}
+
+	/**
+	 * length of line in bytes
+	 */
+	public @property int length()
+	{
+		return pangoLayoutLine.length;
+	}
+
+	/** Ditto */
+	public @property void length(int value)
+	{
+		pangoLayoutLine.length = value;
+	}
+
+	/**
+	 * list of runs in the
+	 * line, from left to right
+	 */
+	public @property ListSG runs()
+	{
+		return new ListSG(pangoLayoutLine.runs, false);
+	}
+
+	/** Ditto */
+	public @property void runs(ListSG value)
+	{
+		pangoLayoutLine.runs = value.getListSGStruct();
+	}
+
+	/**
+	 * #TRUE if this is the first line of the paragraph
+	 */
+	public @property uint isParagraphStart()
+	{
+		return pangoLayoutLine.isParagraphStart;
+	}
+
+	/** Ditto */
+	public @property void isParagraphStart(uint value)
+	{
+		pangoLayoutLine.isParagraphStart = value;
+	}
+
+	/**
+	 * #Resolved PangoDirection of line
+	 */
+	public @property uint resolvedDir()
+	{
+		return pangoLayoutLine.resolvedDir;
+	}
+
+	/** Ditto */
+	public @property void resolvedDir(uint value)
+	{
+		pangoLayoutLine.resolvedDir = value;
+	}
 
 	/** */
 	public static GType getType()

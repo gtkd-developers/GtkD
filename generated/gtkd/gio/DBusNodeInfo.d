@@ -24,6 +24,7 @@
 
 module gio.DBusNodeInfo;
 
+private import gio.DBusAnnotationInfo;
 private import gio.DBusInterfaceInfo;
 private import gio.c.functions;
 public  import gio.c.types;
@@ -32,6 +33,7 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import glib.StringG;
+private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.giotypes;
 private import gtkd.Loader;
@@ -42,7 +44,7 @@ private import gtkd.Loader;
  *
  * Since: 2.26
  */
-public class DBusNodeInfo
+public final class DBusNodeInfo
 {
 	/** the main Gtk struct */
 	protected GDBusNodeInfo* gDBusNodeInfo;
@@ -73,10 +75,119 @@ public class DBusNodeInfo
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GIO) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GIO) && ownedRef )
 			g_dbus_node_info_unref(gDBusNodeInfo);
 	}
 
+
+	/**
+	 * The reference count or -1 if statically allocated.
+	 */
+	public @property int refCount()
+	{
+		return gDBusNodeInfo.refCount;
+	}
+
+	/** Ditto */
+	public @property void refCount(int value)
+	{
+		gDBusNodeInfo.refCount = value;
+	}
+
+	/**
+	 * The path of the node or %NULL if omitted. Note that this may be a relative path. See the D-Bus specification for more details.
+	 */
+	public @property string path()
+	{
+		return Str.toString(gDBusNodeInfo.path);
+	}
+
+	/** Ditto */
+	public @property void path(string value)
+	{
+		gDBusNodeInfo.path = Str.toStringz(value);
+	}
+
+	/**
+	 * A pointer to a %NULL-terminated array of pointers to #GDBusInterfaceInfo structures or %NULL if there are no interfaces.
+	 */
+	public @property DBusInterfaceInfo[] interfaces()
+	{
+		DBusInterfaceInfo[] arr = new DBusInterfaceInfo[getArrayLength(gDBusNodeInfo.interfaces)];
+		for ( int i = 0; i < arr.length; i++ )
+		{
+			arr[i] = ObjectG.getDObject!(DBusInterfaceInfo)(gDBusNodeInfo.interfaces[i], false);
+		}
+
+		return arr;
+	}
+
+	/** Ditto */
+	public @property void interfaces(DBusInterfaceInfo[] value)
+	{
+		GDBusInterfaceInfo*[] arr = new GDBusInterfaceInfo*[value.length+1];
+		for ( int i = 0; i < value.length; i++ )
+		{
+			arr[i] = value[i].getDBusInterfaceInfoStruct();
+		}
+		arr[value.length] = null;
+
+		gDBusNodeInfo.interfaces = arr.ptr;
+	}
+
+	/**
+	 * A pointer to a %NULL-terminated array of pointers to #GDBusNodeInfo structures or %NULL if there are no nodes.
+	 */
+	public @property DBusNodeInfo[] nodes()
+	{
+		DBusNodeInfo[] arr = new DBusNodeInfo[getArrayLength(gDBusNodeInfo.nodes)];
+		for ( int i = 0; i < arr.length; i++ )
+		{
+			arr[i] = ObjectG.getDObject!(DBusNodeInfo)(gDBusNodeInfo.nodes[i], false);
+		}
+
+		return arr;
+	}
+
+	/** Ditto */
+	public @property void nodes(DBusNodeInfo[] value)
+	{
+		GDBusNodeInfo*[] arr = new GDBusNodeInfo*[value.length+1];
+		for ( int i = 0; i < value.length; i++ )
+		{
+			arr[i] = value[i].getDBusNodeInfoStruct();
+		}
+		arr[value.length] = null;
+
+		gDBusNodeInfo.nodes = arr.ptr;
+	}
+
+	/**
+	 * A pointer to a %NULL-terminated array of pointers to #GDBusAnnotationInfo structures or %NULL if there are no annotations.
+	 */
+	public @property DBusAnnotationInfo[] annotations()
+	{
+		DBusAnnotationInfo[] arr = new DBusAnnotationInfo[getArrayLength(gDBusNodeInfo.annotations)];
+		for ( int i = 0; i < arr.length; i++ )
+		{
+			arr[i] = ObjectG.getDObject!(DBusAnnotationInfo)(gDBusNodeInfo.annotations[i], false);
+		}
+
+		return arr;
+	}
+
+	/** Ditto */
+	public @property void annotations(DBusAnnotationInfo[] value)
+	{
+		GDBusAnnotationInfo*[] arr = new GDBusAnnotationInfo*[value.length+1];
+		for ( int i = 0; i < value.length; i++ )
+		{
+			arr[i] = value[i].getDBusAnnotationInfoStruct();
+		}
+		arr[value.length] = null;
+
+		gDBusNodeInfo.annotations = arr.ptr;
+	}
 
 	/** */
 	public static GType getType()

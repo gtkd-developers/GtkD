@@ -84,7 +84,7 @@ public class CapsFeatures
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
 			gst_caps_features_free(gstCapsFeatures);
 	}
 

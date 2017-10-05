@@ -275,12 +275,13 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 	}
 
 	/**
-	 * Sets @iter to point to the current active item, if it exists.
+	 * Sets @iter to point to the currently active item, if any item is active.
+	 * Otherwise, @iter is left unchanged.
 	 *
 	 * Params:
-	 *     iter = The uninitialized #GtkTreeIter
+	 *     iter = A #GtkTreeIter
 	 *
-	 * Returns: %TRUE, if @iter was set
+	 * Returns: %TRUE if @iter was set, %FALSE otherwise
 	 *
 	 * Since: 2.4
 	 */

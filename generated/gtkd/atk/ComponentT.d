@@ -25,6 +25,7 @@
 module atk.ComponentT;
 
 public  import atk.ObjectAtk;
+public  import atk.Rectangle;
 public  import atk.c.functions;
 public  import atk.c.types;
 public  import gobject.ObjectG;
@@ -282,10 +283,10 @@ public template ComponentT(TStruct)
 
 	protected class OnBoundsChangedDelegateWrapper
 	{
-		void delegate(AtkRectangle*, ComponentIF) dlg;
+		void delegate(Rectangle, ComponentIF) dlg;
 		gulong handlerId;
 
-		this(void delegate(AtkRectangle*, ComponentIF) dlg)
+		this(void delegate(Rectangle, ComponentIF) dlg)
 		{
 			this.dlg = dlg;
 			onBoundsChangedListeners ~= this;
@@ -313,7 +314,7 @@ public template ComponentT(TStruct)
 	 * Params:
 	 *     arg1 = The AtkRectangle giving the new position and size.
 	 */
-	gulong addOnBoundsChanged(void delegate(AtkRectangle*, ComponentIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnBoundsChanged(void delegate(Rectangle, ComponentIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		auto wrapper = new OnBoundsChangedDelegateWrapper(dlg);
 		wrapper.handlerId = Signals.connectData(
@@ -328,7 +329,7 @@ public template ComponentT(TStruct)
 
 	extern(C) static void callBackBoundsChanged(AtkComponent* componentStruct, AtkRectangle* arg1, OnBoundsChangedDelegateWrapper wrapper)
 	{
-		wrapper.dlg(arg1, wrapper.outer);
+		wrapper.dlg(ObjectG.getDObject!(Rectangle)(arg1), wrapper.outer);
 	}
 
 	extern(C) static void callBackBoundsChangedDestroy(OnBoundsChangedDelegateWrapper wrapper, GClosure* closure)

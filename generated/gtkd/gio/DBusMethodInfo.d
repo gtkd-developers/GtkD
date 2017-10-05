@@ -24,8 +24,12 @@
 
 module gio.DBusMethodInfo;
 
+private import gio.DBusAnnotationInfo;
+private import gio.DBusArgInfo;
 private import gio.c.functions;
 public  import gio.c.types;
+private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.giotypes;
 private import gtkd.Loader;
@@ -36,7 +40,7 @@ private import gtkd.Loader;
  *
  * Since: 2.26
  */
-public class DBusMethodInfo
+public final class DBusMethodInfo
 {
 	/** the main Gtk struct */
 	protected GDBusMethodInfo* gDBusMethodInfo;
@@ -67,10 +71,119 @@ public class DBusMethodInfo
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GIO) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GIO) && ownedRef )
 			g_dbus_method_info_unref(gDBusMethodInfo);
 	}
 
+
+	/**
+	 * The reference count or -1 if statically allocated.
+	 */
+	public @property int refCount()
+	{
+		return gDBusMethodInfo.refCount;
+	}
+
+	/** Ditto */
+	public @property void refCount(int value)
+	{
+		gDBusMethodInfo.refCount = value;
+	}
+
+	/**
+	 * The name of the D-Bus method, e.g. @RequestName.
+	 */
+	public @property string name()
+	{
+		return Str.toString(gDBusMethodInfo.name);
+	}
+
+	/** Ditto */
+	public @property void name(string value)
+	{
+		gDBusMethodInfo.name = Str.toStringz(value);
+	}
+
+	/**
+	 * A pointer to a %NULL-terminated array of pointers to #GDBusArgInfo structures or %NULL if there are no in arguments.
+	 */
+	public @property DBusArgInfo[] inArgs()
+	{
+		DBusArgInfo[] arr = new DBusArgInfo[getArrayLength(gDBusMethodInfo.inArgs)];
+		for ( int i = 0; i < arr.length; i++ )
+		{
+			arr[i] = ObjectG.getDObject!(DBusArgInfo)(gDBusMethodInfo.inArgs[i], false);
+		}
+
+		return arr;
+	}
+
+	/** Ditto */
+	public @property void inArgs(DBusArgInfo[] value)
+	{
+		GDBusArgInfo*[] arr = new GDBusArgInfo*[value.length+1];
+		for ( int i = 0; i < value.length; i++ )
+		{
+			arr[i] = value[i].getDBusArgInfoStruct();
+		}
+		arr[value.length] = null;
+
+		gDBusMethodInfo.inArgs = arr.ptr;
+	}
+
+	/**
+	 * A pointer to a %NULL-terminated array of pointers to #GDBusArgInfo structures or %NULL if there are no out arguments.
+	 */
+	public @property DBusArgInfo[] outArgs()
+	{
+		DBusArgInfo[] arr = new DBusArgInfo[getArrayLength(gDBusMethodInfo.outArgs)];
+		for ( int i = 0; i < arr.length; i++ )
+		{
+			arr[i] = ObjectG.getDObject!(DBusArgInfo)(gDBusMethodInfo.outArgs[i], false);
+		}
+
+		return arr;
+	}
+
+	/** Ditto */
+	public @property void outArgs(DBusArgInfo[] value)
+	{
+		GDBusArgInfo*[] arr = new GDBusArgInfo*[value.length+1];
+		for ( int i = 0; i < value.length; i++ )
+		{
+			arr[i] = value[i].getDBusArgInfoStruct();
+		}
+		arr[value.length] = null;
+
+		gDBusMethodInfo.outArgs = arr.ptr;
+	}
+
+	/**
+	 * A pointer to a %NULL-terminated array of pointers to #GDBusAnnotationInfo structures or %NULL if there are no annotations.
+	 */
+	public @property DBusAnnotationInfo[] annotations()
+	{
+		DBusAnnotationInfo[] arr = new DBusAnnotationInfo[getArrayLength(gDBusMethodInfo.annotations)];
+		for ( int i = 0; i < arr.length; i++ )
+		{
+			arr[i] = ObjectG.getDObject!(DBusAnnotationInfo)(gDBusMethodInfo.annotations[i], false);
+		}
+
+		return arr;
+	}
+
+	/** Ditto */
+	public @property void annotations(DBusAnnotationInfo[] value)
+	{
+		GDBusAnnotationInfo*[] arr = new GDBusAnnotationInfo*[value.length+1];
+		for ( int i = 0; i < value.length; i++ )
+		{
+			arr[i] = value[i].getDBusAnnotationInfoStruct();
+		}
+		arr[value.length] = null;
+
+		gDBusMethodInfo.annotations = arr.ptr;
+	}
 
 	/** */
 	public static GType getType()

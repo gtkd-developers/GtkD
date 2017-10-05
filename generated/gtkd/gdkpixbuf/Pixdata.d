@@ -31,14 +31,16 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import glib.StringG;
+private import glib.c.functions;
 public  import gtkc.gdkpixbuftypes;
+private import gtkd.Loader;
 
 
 /**
  * A #GdkPixdata contains pixbuf information in a form suitable for
  * serialization and streaming.
  */
-public class Pixdata
+public final class Pixdata
 {
 	/** the main Gtk struct */
 	protected GdkPixdata* gdkPixdata;
@@ -65,6 +67,100 @@ public class Pixdata
 	{
 		this.gdkPixdata = gdkPixdata;
 		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY_GDKPIXBUF) && ownedRef )
+			g_free(gdkPixdata);
+	}
+
+
+	/**
+	 * magic number. A valid #GdkPixdata structure must have
+	 * #GDK_PIXBUF_MAGIC_NUMBER here.
+	 */
+	public @property uint magic()
+	{
+		return gdkPixdata.magic;
+	}
+
+	/** Ditto */
+	public @property void magic(uint value)
+	{
+		gdkPixdata.magic = value;
+	}
+
+	/**
+	 * less than 1 to disable length checks, otherwise
+	 * #GDK_PIXDATA_HEADER_LENGTH + length of @pixel_data.
+	 */
+	public @property int length()
+	{
+		return gdkPixdata.length;
+	}
+
+	/** Ditto */
+	public @property void length(int value)
+	{
+		gdkPixdata.length = value;
+	}
+
+	/**
+	 * information about colorspace, sample width and
+	 * encoding, in a #GdkPixdataType.
+	 */
+	public @property uint pixdataType()
+	{
+		return gdkPixdata.pixdataType;
+	}
+
+	/** Ditto */
+	public @property void pixdataType(uint value)
+	{
+		gdkPixdata.pixdataType = value;
+	}
+
+	/**
+	 * Distance in bytes between rows.
+	 */
+	public @property uint rowstride()
+	{
+		return gdkPixdata.rowstride;
+	}
+
+	/** Ditto */
+	public @property void rowstride(uint value)
+	{
+		gdkPixdata.rowstride = value;
+	}
+
+	/**
+	 * Width of the image in pixels.
+	 */
+	public @property uint width()
+	{
+		return gdkPixdata.width;
+	}
+
+	/** Ditto */
+	public @property void width(uint value)
+	{
+		gdkPixdata.width = value;
+	}
+
+	/**
+	 * Height of the image in pixels.
+	 */
+	public @property uint height()
+	{
+		return gdkPixdata.height;
+	}
+
+	/** Ditto */
+	public @property void height(uint value)
+	{
+		gdkPixdata.height = value;
 	}
 
 

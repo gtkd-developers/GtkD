@@ -81,7 +81,7 @@ public class SrvTarget
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GIO) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GIO) && ownedRef )
 			g_srv_target_free(gSrvTarget);
 	}
 

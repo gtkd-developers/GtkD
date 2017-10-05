@@ -453,6 +453,8 @@ public class ToolItem : Bin, ActivatableIF
 	 * @menu_item_id is used to identify the caller of this function and
 	 * should also be used with gtk_tool_item_get_proxy_menu_item().
 	 *
+	 * See also #GtkToolItem::create-menu-proxy.
+	 *
 	 * Params:
 	 *     menuItemId = a string used to identify @menu_item
 	 *     menuItem = a #GtkMenuItem to be used in the overflow menu

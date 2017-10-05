@@ -69,7 +69,7 @@ public class MatchInfo
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
 			g_match_info_unref(gMatchInfo);
 	}
 

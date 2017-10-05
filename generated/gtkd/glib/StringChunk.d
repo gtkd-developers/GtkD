@@ -67,7 +67,7 @@ public class StringChunk
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
 			g_string_chunk_free(gStringChunk);
 	}
 

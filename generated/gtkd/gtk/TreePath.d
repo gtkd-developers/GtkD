@@ -65,7 +65,7 @@ public class TreePath
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GTK) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GTK) && ownedRef )
 			gtk_tree_path_free(gtkTreePath);
 	}
 

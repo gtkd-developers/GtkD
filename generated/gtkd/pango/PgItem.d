@@ -25,6 +25,7 @@
 module pango.PgItem;
 
 private import glib.ConstructionException;
+private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.pangotypes;
 private import gtkd.Loader;
@@ -35,7 +36,7 @@ public  import pango.c.types;
 /**
  * The #PangoItem structure stores information about a segment of text.
  */
-public class PgItem
+public final class PgItem
 {
 	/** the main Gtk struct */
 	protected PangoItem* pangoItem;
@@ -66,10 +67,66 @@ public class PgItem
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
 			pango_item_free(pangoItem);
 	}
 
+
+	/**
+	 * byte offset of the start of this item in text.
+	 */
+	public @property int offset()
+	{
+		return pangoItem.offset;
+	}
+
+	/** Ditto */
+	public @property void offset(int value)
+	{
+		pangoItem.offset = value;
+	}
+
+	/**
+	 * length of this item in bytes.
+	 */
+	public @property int length()
+	{
+		return pangoItem.length;
+	}
+
+	/** Ditto */
+	public @property void length(int value)
+	{
+		pangoItem.length = value;
+	}
+
+	/**
+	 * number of Unicode characters in the item.
+	 */
+	public @property int numChars()
+	{
+		return pangoItem.numChars;
+	}
+
+	/** Ditto */
+	public @property void numChars(int value)
+	{
+		pangoItem.numChars = value;
+	}
+
+	/**
+	 * analysis results for the item.
+	 */
+	public @property PangoAnalysis analysis()
+	{
+		return pangoItem.analysis;
+	}
+
+	/** Ditto */
+	public @property void analysis(PangoAnalysis value)
+	{
+		pangoItem.analysis = value;
+	}
 
 	/** */
 	public static GType getType()

@@ -76,7 +76,7 @@ public class ParamSpec
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GOBJECT) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GOBJECT) && ownedRef )
 			g_param_spec_unref(gParamSpec);
 	}
 

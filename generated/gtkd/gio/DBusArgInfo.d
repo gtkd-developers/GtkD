@@ -24,8 +24,11 @@
 
 module gio.DBusArgInfo;
 
+private import gio.DBusAnnotationInfo;
 private import gio.c.functions;
 public  import gio.c.types;
+private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.giotypes;
 private import gtkd.Loader;
@@ -36,7 +39,7 @@ private import gtkd.Loader;
  *
  * Since: 2.26
  */
-public class DBusArgInfo
+public final class DBusArgInfo
 {
 	/** the main Gtk struct */
 	protected GDBusArgInfo* gDBusArgInfo;
@@ -67,10 +70,79 @@ public class DBusArgInfo
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GIO) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GIO) && ownedRef )
 			g_dbus_arg_info_unref(gDBusArgInfo);
 	}
 
+
+	/**
+	 * The reference count or -1 if statically allocated.
+	 */
+	public @property int refCount()
+	{
+		return gDBusArgInfo.refCount;
+	}
+
+	/** Ditto */
+	public @property void refCount(int value)
+	{
+		gDBusArgInfo.refCount = value;
+	}
+
+	/**
+	 * Name of the argument, e.g. @unix_user_id.
+	 */
+	public @property string name()
+	{
+		return Str.toString(gDBusArgInfo.name);
+	}
+
+	/** Ditto */
+	public @property void name(string value)
+	{
+		gDBusArgInfo.name = Str.toStringz(value);
+	}
+
+	/**
+	 * D-Bus signature of the argument (a single complete type).
+	 */
+	public @property string signature()
+	{
+		return Str.toString(gDBusArgInfo.signature);
+	}
+
+	/** Ditto */
+	public @property void signature(string value)
+	{
+		gDBusArgInfo.signature = Str.toStringz(value);
+	}
+
+	/**
+	 * A pointer to a %NULL-terminated array of pointers to #GDBusAnnotationInfo structures or %NULL if there are no annotations.
+	 */
+	public @property DBusAnnotationInfo[] annotations()
+	{
+		DBusAnnotationInfo[] arr = new DBusAnnotationInfo[getArrayLength(gDBusArgInfo.annotations)];
+		for ( int i = 0; i < arr.length; i++ )
+		{
+			arr[i] = ObjectG.getDObject!(DBusAnnotationInfo)(gDBusArgInfo.annotations[i], false);
+		}
+
+		return arr;
+	}
+
+	/** Ditto */
+	public @property void annotations(DBusAnnotationInfo[] value)
+	{
+		GDBusAnnotationInfo*[] arr = new GDBusAnnotationInfo*[value.length+1];
+		for ( int i = 0; i < value.length; i++ )
+		{
+			arr[i] = value[i].getDBusAnnotationInfoStruct();
+		}
+		arr[value.length] = null;
+
+		gDBusArgInfo.annotations = arr.ptr;
+	}
 
 	/** */
 	public static GType getType()

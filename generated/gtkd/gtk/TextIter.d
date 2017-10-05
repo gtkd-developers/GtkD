@@ -76,7 +76,7 @@ public class TextIter
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GTK) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GTK) && ownedRef )
 			gtk_text_iter_free(gtkTextIter);
 	}
 

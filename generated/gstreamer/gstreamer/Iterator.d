@@ -106,7 +106,7 @@ public class Iterator
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
 			gst_iterator_free(gstIterator);
 	}
 

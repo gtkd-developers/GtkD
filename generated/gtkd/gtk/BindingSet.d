@@ -25,11 +25,14 @@
 module gtk.BindingSet;
 
 private import glib.ConstructionException;
+private import glib.ListSG;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.c.functions;
 public  import gtk.c.types;
 public  import gtkc.gtktypes;
+private import gtkd.Loader;
 
 
 /**
@@ -40,7 +43,7 @@ public  import gtkc.gtktypes;
  * activation, an action signal is emitted on the target widget to carry out
  * the actual activation.
  */
-public class BindingSet
+public final class BindingSet
 {
 	/** the main Gtk struct */
 	protected GtkBindingSet* gtkBindingSet;
@@ -69,6 +72,124 @@ public class BindingSet
 		this.ownedRef = ownedRef;
 	}
 
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY_GTK) && ownedRef )
+			g_free(gtkBindingSet);
+	}
+
+
+	/**
+	 * unique name of this binding set
+	 */
+	public @property string setName()
+	{
+		return Str.toString(gtkBindingSet.setName);
+	}
+
+	/** Ditto */
+	public @property void setName(string value)
+	{
+		gtkBindingSet.setName = Str.toStringz(value);
+	}
+
+	/**
+	 * unused
+	 */
+	public @property int priority()
+	{
+		return gtkBindingSet.priority;
+	}
+
+	/** Ditto */
+	public @property void priority(int value)
+	{
+		gtkBindingSet.priority = value;
+	}
+
+	/**
+	 * unused
+	 */
+	public @property ListSG widgetPathPspecs()
+	{
+		return new ListSG(gtkBindingSet.widgetPathPspecs, false);
+	}
+
+	/** Ditto */
+	public @property void widgetPathPspecs(ListSG value)
+	{
+		gtkBindingSet.widgetPathPspecs = value.getListSGStruct();
+	}
+
+	/**
+	 * unused
+	 */
+	public @property ListSG widgetClassPspecs()
+	{
+		return new ListSG(gtkBindingSet.widgetClassPspecs, false);
+	}
+
+	/** Ditto */
+	public @property void widgetClassPspecs(ListSG value)
+	{
+		gtkBindingSet.widgetClassPspecs = value.getListSGStruct();
+	}
+
+	/**
+	 * unused
+	 */
+	public @property ListSG classBranchPspecs()
+	{
+		return new ListSG(gtkBindingSet.classBranchPspecs, false);
+	}
+
+	/** Ditto */
+	public @property void classBranchPspecs(ListSG value)
+	{
+		gtkBindingSet.classBranchPspecs = value.getListSGStruct();
+	}
+
+	/**
+	 * the key binding entries in this binding set
+	 */
+	public @property GtkBindingEntry* entries()
+	{
+		return gtkBindingSet.entries;
+	}
+
+	/** Ditto */
+	public @property void entries(GtkBindingEntry* value)
+	{
+		gtkBindingSet.entries = value;
+	}
+
+	/**
+	 * implementation detail
+	 */
+	public @property GtkBindingEntry* current()
+	{
+		return gtkBindingSet.current;
+	}
+
+	/** Ditto */
+	public @property void current(GtkBindingEntry* value)
+	{
+		gtkBindingSet.current = value;
+	}
+
+	/**
+	 * whether this binding set stems from a CSS file and is reset upon theme changes
+	 */
+	public @property uint parsed()
+	{
+		return gtkBindingSet.parsed;
+	}
+
+	/** Ditto */
+	public @property void parsed(uint value)
+	{
+		gtkBindingSet.parsed = value;
+	}
 
 	/**
 	 * Find a key binding matching @keyval and @modifiers within

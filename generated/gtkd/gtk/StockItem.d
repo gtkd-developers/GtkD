@@ -26,6 +26,7 @@ module gtk.StockItem;
 
 private import glib.ListSG;
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.c.functions;
 public  import gtk.c.types;
@@ -34,7 +35,7 @@ private import gtkd.Loader;
 
 
 /** */
-public class StockItem
+public final class StockItem
 {
 	/** the main Gtk struct */
 	protected GtkStockItem* gtkStockItem;
@@ -65,10 +66,80 @@ public class StockItem
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GTK) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GTK) && ownedRef )
 			gtk_stock_item_free(gtkStockItem);
 	}
 
+
+	/**
+	 * Identifier.
+	 */
+	public @property string stockId()
+	{
+		return Str.toString(gtkStockItem.stockId);
+	}
+
+	/** Ditto */
+	public @property void stockId(string value)
+	{
+		gtkStockItem.stockId = Str.toStringz(value);
+	}
+
+	/**
+	 * User visible label.
+	 */
+	public @property string label()
+	{
+		return Str.toString(gtkStockItem.label);
+	}
+
+	/** Ditto */
+	public @property void label(string value)
+	{
+		gtkStockItem.label = Str.toStringz(value);
+	}
+
+	/**
+	 * Modifier type for keyboard accelerator
+	 */
+	public @property GdkModifierType modifier()
+	{
+		return gtkStockItem.modifier;
+	}
+
+	/** Ditto */
+	public @property void modifier(GdkModifierType value)
+	{
+		gtkStockItem.modifier = value;
+	}
+
+	/**
+	 * Keyboard accelerator
+	 */
+	public @property uint keyval()
+	{
+		return gtkStockItem.keyval;
+	}
+
+	/** Ditto */
+	public @property void keyval(uint value)
+	{
+		gtkStockItem.keyval = value;
+	}
+
+	/**
+	 * Translation domain of the menu or toolbar item
+	 */
+	public @property string translationDomain()
+	{
+		return Str.toString(gtkStockItem.translationDomain);
+	}
+
+	/** Ditto */
+	public @property void translationDomain(string value)
+	{
+		gtkStockItem.translationDomain = Str.toStringz(value);
+	}
 
 	/**
 	 * Copies a stock item, mostly useful for language bindings and not in applications.

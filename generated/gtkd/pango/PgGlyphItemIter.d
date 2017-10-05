@@ -25,6 +25,7 @@
 module pango.PgGlyphItemIter;
 
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.pangotypes;
 private import gtkd.Loader;
@@ -74,7 +75,7 @@ public  import pango.c.types;
  *
  * Since: 1.22
  */
-public class PgGlyphItemIter
+public final class PgGlyphItemIter
 {
 	/** the main Gtk struct */
 	protected PangoGlyphItemIter* pangoGlyphItemIter;
@@ -105,10 +106,106 @@ public class PgGlyphItemIter
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
 			pango_glyph_item_iter_free(pangoGlyphItemIter);
 	}
 
+
+	/** */
+	public @property PgGlyphItem glyphItem()
+	{
+		return ObjectG.getDObject!(PgGlyphItem)(pangoGlyphItemIter.glyphItem, false);
+	}
+
+	/** Ditto */
+	public @property void glyphItem(PgGlyphItem value)
+	{
+		pangoGlyphItemIter.glyphItem = value.getPgGlyphItemStruct();
+	}
+
+	/** */
+	public @property string text()
+	{
+		return Str.toString(pangoGlyphItemIter.text);
+	}
+
+	/** Ditto */
+	public @property void text(string value)
+	{
+		pangoGlyphItemIter.text = Str.toStringz(value);
+	}
+
+	/** */
+	public @property int startGlyph()
+	{
+		return pangoGlyphItemIter.startGlyph;
+	}
+
+	/** Ditto */
+	public @property void startGlyph(int value)
+	{
+		pangoGlyphItemIter.startGlyph = value;
+	}
+
+	/** */
+	public @property int startIndex()
+	{
+		return pangoGlyphItemIter.startIndex;
+	}
+
+	/** Ditto */
+	public @property void startIndex(int value)
+	{
+		pangoGlyphItemIter.startIndex = value;
+	}
+
+	/** */
+	public @property int startChar()
+	{
+		return pangoGlyphItemIter.startChar;
+	}
+
+	/** Ditto */
+	public @property void startChar(int value)
+	{
+		pangoGlyphItemIter.startChar = value;
+	}
+
+	/** */
+	public @property int endGlyph()
+	{
+		return pangoGlyphItemIter.endGlyph;
+	}
+
+	/** Ditto */
+	public @property void endGlyph(int value)
+	{
+		pangoGlyphItemIter.endGlyph = value;
+	}
+
+	/** */
+	public @property int endIndex()
+	{
+		return pangoGlyphItemIter.endIndex;
+	}
+
+	/** Ditto */
+	public @property void endIndex(int value)
+	{
+		pangoGlyphItemIter.endIndex = value;
+	}
+
+	/** */
+	public @property int endChar()
+	{
+		return pangoGlyphItemIter.endChar;
+	}
+
+	/** Ditto */
+	public @property void endChar(int value)
+	{
+		pangoGlyphItemIter.endChar = value;
+	}
 
 	/** */
 	public static GType getType()

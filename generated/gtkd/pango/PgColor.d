@@ -25,6 +25,7 @@
 module pango.PgColor;
 
 private import glib.Str;
+private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.pangotypes;
 private import gtkd.Loader;
@@ -36,7 +37,7 @@ public  import pango.c.types;
  * The #PangoColor structure is used to
  * represent a color in an uncalibrated RGB color-space.
  */
-public class PgColor
+public final class PgColor
 {
 	/** the main Gtk struct */
 	protected PangoColor* pangoColor;
@@ -67,10 +68,52 @@ public class PgColor
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
 			pango_color_free(pangoColor);
 	}
 
+
+	/**
+	 * value of red component
+	 */
+	public @property ushort red()
+	{
+		return pangoColor.red;
+	}
+
+	/** Ditto */
+	public @property void red(ushort value)
+	{
+		pangoColor.red = value;
+	}
+
+	/**
+	 * value of green component
+	 */
+	public @property ushort green()
+	{
+		return pangoColor.green;
+	}
+
+	/** Ditto */
+	public @property void green(ushort value)
+	{
+		pangoColor.green = value;
+	}
+
+	/**
+	 * value of blue component
+	 */
+	public @property ushort blue()
+	{
+		return pangoColor.blue;
+	}
+
+	/** Ditto */
+	public @property void blue(ushort value)
+	{
+		pangoColor.blue = value;
+	}
 
 	/** */
 	public static GType getType()

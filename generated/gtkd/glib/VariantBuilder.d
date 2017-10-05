@@ -74,7 +74,7 @@ public class VariantBuilder
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
 			g_variant_builder_unref(gVariantBuilder);
 	}
 

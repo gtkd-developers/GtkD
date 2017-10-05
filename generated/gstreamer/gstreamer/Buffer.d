@@ -29,6 +29,7 @@ private import gobject.ObjectG;
 private import gstreamer.AllocationParams;
 private import gstreamer.Allocator;
 private import gstreamer.Memory;
+private import gstreamer.ParentBufferMeta;
 private import gstreamer.ProtectionMeta;
 private import gstreamer.Structure;
 private import gstreamer.c.functions;
@@ -303,9 +304,16 @@ public class Buffer
 	 *
 	 * Since: 1.6
 	 */
-	public GstParentBufferMeta* addParentBufferMeta(Buffer doref)
+	public ParentBufferMeta addParentBufferMeta(Buffer doref)
 	{
-		return gst_buffer_add_parent_buffer_meta(gstBuffer, (doref is null) ? null : doref.getBufferStruct());
+		auto p = gst_buffer_add_parent_buffer_meta(gstBuffer, (doref is null) ? null : doref.getBufferStruct());
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(ParentBufferMeta)(cast(GstParentBufferMeta*) p);
 	}
 
 	/**

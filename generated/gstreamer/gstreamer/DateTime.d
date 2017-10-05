@@ -73,7 +73,7 @@ public class DateTime
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
 			gst_date_time_unref(gstDateTime);
 	}
 

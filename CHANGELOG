@@ -1,6 +1,19 @@
 GtkD ChangeLog
 ==============
 
+Release: 3.7.0
+--------------
+-Add properties for simple structs with fields marked as writable.
+-Templatize ListStore.setValue, TreeStore.setValue andthe gobject.Value constructor to allow for more types.
+-Also generate constants. #213
+-Add gobject.Signals.Signals.connect(). #207.
+-Update some of the demos to the Gtk3 way of doing things. #204, #205 and #206
+-Remove GtkGlExt demos.
+
+Release: 3.6.6
+--------------
+-Fix a memory leak with signals. #211
+
 Release: 3.6.5
 --------------
 -Fix the Windows build script.

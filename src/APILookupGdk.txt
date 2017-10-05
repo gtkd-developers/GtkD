@@ -82,53 +82,6 @@ code: start
 		this(gdk_color_copy(&color));
 	}
 
-	/**
-	 * The color values.
-	 */
-	ushort red()
-	{
-		return gdkColor.red;
-	}
-
-	/** ditto */
-	void red(ushort value)
-	{
-		gdkColor.red = value;
-		updatePixel();
-	}
-
-	/** ditto */
-	ushort green()
-	{
-		return gdkColor.green;
-	}
-
-	/** ditto */
-	void green(ushort value)
-	{
-		gdkColor.green = value;
-		updatePixel();
-	}
-
-	/** ditto */
-	ushort blue()
-	{
-		return gdkColor.blue;
-	}
-
-	/** ditto */
-	void blue(ushort value)
-	{
-		gdkColor.blue = value;
-		updatePixel();
-	}
-
-	/** ditto */
-	uint pixel()
-	{
-		return gdkColor.pixel;
-	}
-
 	private void updatePixel()
 	{
 		gdkColor.pixel = (gdkColor.red&0xFF00 << 8) | (gdkColor.green&0xFF00) | (gdkColor.blue >> 8) ;
@@ -311,57 +264,6 @@ code: start
 		rgba.alpha = alpha;
 
 		this(gdk_rgba_copy(&rgba), true);
-	}
-
-	/**
-	 * The color values.
-	 * All values are in the range from 0.0 to 1.0 inclusive.
-	 */
-	double red()
-	{
-		return gdkRGBA.red;
-	}
-
-	/** ditto */
-	void red(double value)
-	{
-		gdkRGBA.red = value;
-	}
-
-	/** ditto */
-	double green()
-	{
-		return gdkRGBA.green;
-	}
-
-	/** ditto */
-	void green(double value)
-	{
-		gdkRGBA.green = value;
-	}
-
-	/** ditto */
-	double blue()
-	{
-		return gdkRGBA.blue;
-	}
-
-	/** ditto */
-	void blue(double value)
-	{
-		gdkRGBA.blue = value;
-	}
-
-	/** ditto */
-	double alpha()
-	{
-		return gdkRGBA.alpha;
-	}
-
-	/** ditto */
-	void alpha(double value)
-	{
-		gdkRGBA.alpha = value;
 	}
 code: end
 

@@ -53,6 +53,11 @@ private import std.algorithm;
  * “expand” is #TRUE and the property #GtkSeparatorToolItem:draw is set to
  * #FALSE, the effect is to force all following items to the end of the toolbar.
  * 
+ * By default, a toolbar can be shrunk, upon which it will add an arrow button
+ * to show an overflow menu offering access to any #GtkToolItem child that has
+ * a proxy menu item. To disable this and request enough size for all children,
+ * call gtk_toolbar_set_show_arrow() to set #GtkToolbar:show-arrow to %FALSE.
+ * 
  * Creating a context menu for the toolbar can be done by connecting to
  * the #GtkToolbar::popup-context-menu signal.
  * 
@@ -279,10 +284,12 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 	}
 
 	/**
-	 * Sets whether to show an overflow menu when
-	 * @toolbar doesn’t have room for all items on it. If %TRUE,
-	 * items that there are not room are available through an
-	 * overflow menu.
+	 * Sets whether to show an overflow menu when @toolbar isn’t allocated enough
+	 * size to show all of its items. If %TRUE, items which can’t fit in @toolbar,
+	 * and which have a proxy menu item set by gtk_tool_item_set_proxy_menu_item()
+	 * or #GtkToolItem::create-menu-proxy, will be available in an overflow menu,
+	 * which can be opened by an added arrow button. If %FALSE, @toolbar will
+	 * request enough size to fit all of its child items without any overflow.
 	 *
 	 * Params:
 	 *     showArrow = Whether to show an overflow menu

@@ -135,7 +135,7 @@ public class Regex
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
 			g_regex_unref(gRegex);
 	}
 

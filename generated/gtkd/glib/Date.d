@@ -46,7 +46,7 @@ private import gtkd.Loader;
  * becomes valid after you set it to a Julian day or you set a day, month,
  * and year.
  */
-public class Date
+public final class Date
 {
 	/** the main Gtk struct */
 	protected GDate* gDate;
@@ -77,10 +77,96 @@ public class Date
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
 			g_date_free(gDate);
 	}
 
+
+	/**
+	 * the Julian representation of the date
+	 */
+	public @property uint julianDays()
+	{
+		return gDate.julianDays;
+	}
+
+	/** Ditto */
+	public @property void julianDays(uint value)
+	{
+		gDate.julianDays = value;
+	}
+
+	/**
+	 * this bit is set if @julian_days is valid
+	 */
+	public @property uint julian()
+	{
+		return gDate.julian;
+	}
+
+	/** Ditto */
+	public @property void julian(uint value)
+	{
+		gDate.julian = value;
+	}
+
+	/**
+	 * this is set if @day, @month and @year are valid
+	 */
+	public @property uint dmy()
+	{
+		return gDate.dmy;
+	}
+
+	/** Ditto */
+	public @property void dmy(uint value)
+	{
+		gDate.dmy = value;
+	}
+
+	/**
+	 * the day of the day-month-year representation of the date,
+	 * as a number between 1 and 31
+	 */
+	public @property uint day()
+	{
+		return gDate.day;
+	}
+
+	/** Ditto */
+	public @property void day(uint value)
+	{
+		gDate.day = value;
+	}
+
+	/**
+	 * the day of the day-month-year representation of the date,
+	 * as a number between 1 and 12
+	 */
+	public @property uint month()
+	{
+		return gDate.month;
+	}
+
+	/** Ditto */
+	public @property void month(uint value)
+	{
+		gDate.month = value;
+	}
+
+	/**
+	 * the day of the day-month-year representation of the date
+	 */
+	public @property uint year()
+	{
+		return gDate.year;
+	}
+
+	/** Ditto */
+	public @property void year(uint value)
+	{
+		gDate.year = value;
+	}
 
 	/**
 	 * Allocates a #GDate and initializes

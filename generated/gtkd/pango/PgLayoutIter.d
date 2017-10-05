@@ -71,7 +71,7 @@ public class PgLayoutIter
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
 			pango_layout_iter_free(pangoLayoutIter);
 	}
 

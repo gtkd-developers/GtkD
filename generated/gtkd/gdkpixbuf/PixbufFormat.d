@@ -64,7 +64,7 @@ public class PixbufFormat
 
 	~this ()
 	{
-		if (  Linker.isLoaded(LIBRARY_GDKPIXBUF) && ownedRef )
+		if ( Linker.isLoaded(LIBRARY_GDKPIXBUF) && ownedRef )
 			gdk_pixbuf_format_free(gdkPixbufFormat);
 	}
 
