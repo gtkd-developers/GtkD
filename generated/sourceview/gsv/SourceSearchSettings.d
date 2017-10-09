@@ -199,9 +199,9 @@ public class SourceSearchSettings : ObjectG
 	}
 
 	/**
-	 * Sets the text to search. If @text is %NULL or is empty, the search will be
-	 * disabled. A copy of @text will be made, so you can safely free @text after
-	 * a call to this function.
+	 * Sets the text to search. If @search_text is %NULL or is empty, the search
+	 * will be disabled. A copy of @search_text will be made, so you can safely free
+	 * @search_text after a call to this function.
 	 *
 	 * You may be interested to call gtk_source_utils_unescape_search_text() before
 	 * this function.

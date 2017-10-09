@@ -492,9 +492,11 @@ public struct Util
 	 * Gets the name of the program. This name should not be localized,
 	 * in contrast to g_get_application_name().
 	 *
-	 * If you are using GDK or GTK+ the program name is set in gdk_init(),
-	 * which is called by gtk_init(). The program name is found by taking
-	 * the last component of @argv[0].
+	 * If you are using #GApplication the program name is set in
+	 * g_application_run(). In case of GDK or GTK+ it is set in
+	 * gdk_init(), which is called by gtk_init() and the
+	 * #GtkApplication::startup handler. The program name is found by
+	 * taking the last component of @argv[0].
 	 *
 	 * Returns: the name of the program. The returned string belongs
 	 *     to GLib and must not be modified or freed.
@@ -527,12 +529,15 @@ public struct Util
 	 * [XDG Base Directory Specification](http://www.freedesktop.org/Standards/basedir-spec).
 	 * In this case the list of directories retrieved will be `XDG_CONFIG_DIRS`.
 	 *
-	 * On Windows is the directory that contains application data for all users.
-	 * A typical path is C:\Documents and Settings\All Users\Application Data.
-	 * This folder is used for application data that is not user specific.
-	 * For example, an application can store a spell-check dictionary, a database
-	 * of clip art, or a log file in the CSIDL_COMMON_APPDATA folder.
-	 * This information will not roam and is available to anyone using the computer.
+	 * On Windows it follows XDG Base Directory Specification if `XDG_CONFIG_DIRS` is defined.
+	 * If `XDG_CONFIG_DIRS` is undefined, the directory that contains application
+	 * data for all users is used instead. A typical path is
+	 * `C:\Documents and Settings\All Users\Application Data`.
+	 * This folder is used for application data
+	 * that is not user specific. For example, an application can store
+	 * a spell-check dictionary, a database of clip art, or a log file in the
+	 * CSIDL_COMMON_APPDATA folder. This information will not roam and is available
+	 * to anyone using the computer.
 	 *
 	 * Returns: a %NULL-terminated array of strings owned by GLib that must not be
 	 *     modified or freed.
@@ -551,9 +556,11 @@ public struct Util
 	 * On UNIX platforms this is determined using the mechanisms described
 	 * in the
 	 * [XDG Base Directory Specification](http://www.freedesktop.org/Standards/basedir-spec)
-	 * In this case the list of directories retrieved will be XDG_DATA_DIRS.
+	 * In this case the list of directories retrieved will be `XDG_DATA_DIRS`.
 	 *
-	 * On Windows the first elements in the list are the Application Data
+	 * On Windows it follows XDG Base Directory Specification if `XDG_DATA_DIRS` is defined.
+	 * If `XDG_DATA_DIRS` is undefined,
+	 * the first elements in the list are the Application Data
 	 * and Documents folders for All Users. (These can be determined only
 	 * on Windows 2000 or later and are not present in the list on other
 	 * Windows versions.) See documentation for CSIDL_COMMON_APPDATA and
@@ -615,12 +622,13 @@ public struct Util
 	 * On UNIX platforms this is determined using the mechanisms described
 	 * in the
 	 * [XDG Base Directory Specification](http://www.freedesktop.org/Standards/basedir-spec).
-	 * In this case the directory retrieved will be XDG_CACHE_HOME.
+	 * In this case the directory retrieved will be `XDG_CACHE_HOME`.
 	 *
-	 * On Windows is the directory that serves as a common repository for
-	 * temporary Internet files. A typical path is
-	 * C:\Documents and Settings\username\Local Settings\Temporary Internet Files.
-	 * See documentation for CSIDL_INTERNET_CACHE.
+	 * On Windows it follows XDG Base Directory Specification if `XDG_CACHE_HOME` is defined.
+	 * If `XDG_CACHE_HOME` is undefined, the directory that serves as a common
+	 * repository for temporary Internet files is used instead. A typical path is
+	 * `C:\Documents and Settings\username\Local Settings\Temporary Internet Files`.
+	 * See the [documentation for `CSIDL_INTERNET_CACHE`](https://msdn.microsoft.com/en-us/library/windows/desktop/bb762494%28v=vs.85%29.aspx#csidl_internet_cache).
 	 *
 	 * Returns: a string owned by GLib that must not be modified
 	 *     or freed.
@@ -641,10 +649,12 @@ public struct Util
 	 * [XDG Base Directory Specification](http://www.freedesktop.org/Standards/basedir-spec).
 	 * In this case the directory retrieved will be `XDG_CONFIG_HOME`.
 	 *
-	 * On Windows this is the folder to use for local (as opposed to
-	 * roaming) application data. See documentation for
-	 * CSIDL_LOCAL_APPDATA. Note that on Windows it thus is the same as
-	 * what g_get_user_data_dir() returns.
+	 * On Windows it follows XDG Base Directory Specification if `XDG_CONFIG_HOME` is defined.
+	 * If `XDG_CONFIG_HOME` is undefined, the folder to use for local (as opposed
+	 * to roaming) application data is used instead. See the
+	 * [documentation for `CSIDL_LOCAL_APPDATA`](https://msdn.microsoft.com/en-us/library/windows/desktop/bb762494%28v=vs.85%29.aspx#csidl_local_appdata).
+	 * Note that in this case on Windows it will be  the same
+	 * as what g_get_user_data_dir() returns.
 	 *
 	 * Returns: a string owned by GLib that must not be modified
 	 *     or freed.
@@ -665,10 +675,12 @@ public struct Util
 	 * [XDG Base Directory Specification](http://www.freedesktop.org/Standards/basedir-spec).
 	 * In this case the directory retrieved will be `XDG_DATA_HOME`.
 	 *
-	 * On Windows this is the folder to use for local (as opposed to
-	 * roaming) application data. See documentation for
-	 * CSIDL_LOCAL_APPDATA. Note that on Windows it thus is the same as
-	 * what g_get_user_config_dir() returns.
+	 * On Windows it follows XDG Base Directory Specification if `XDG_DATA_HOME`
+	 * is defined. If `XDG_DATA_HOME` is undefined, the folder to use for local (as
+	 * opposed to roaming) application data is used instead. See the
+	 * [documentation for `CSIDL_LOCAL_APPDATA`](https://msdn.microsoft.com/en-us/library/windows/desktop/bb762494%28v=vs.85%29.aspx#csidl_local_appdata).
+	 * Note that in this case on Windows it will be the same
+	 * as what g_get_user_config_dir() returns.
 	 *
 	 * Returns: a string owned by GLib that must not be modified
 	 *     or freed.
@@ -697,18 +709,13 @@ public struct Util
 	 * Returns a directory that is unique to the current user on the local
 	 * system.
 	 *
-	 * On UNIX platforms this is determined using the mechanisms described
+	 * This is determined using the mechanisms described
 	 * in the
 	 * [XDG Base Directory Specification](http://www.freedesktop.org/Standards/basedir-spec).
 	 * This is the directory
 	 * specified in the `XDG_RUNTIME_DIR` environment variable.
 	 * In the case that this variable is not set, we return the value of
 	 * g_get_user_cache_dir(), after verifying that it exists.
-	 *
-	 * On Windows this is the folder to use for local (as opposed to
-	 * roaming) application data. See documentation for
-	 * CSIDL_LOCAL_APPDATA.  Note that on Windows it thus is the same as
-	 * what g_get_user_config_dir() returns.
 	 *
 	 * Returns: a string owned by GLib that must not be
 	 *     modified or freed.
@@ -984,6 +991,12 @@ public struct Util
 	/**
 	 * Sets the name of the program. This name should not be localized,
 	 * in contrast to g_set_application_name().
+	 *
+	 * If you are using #GApplication the program name is set in
+	 * g_application_run(). In case of GDK or GTK+ it is set in
+	 * gdk_init(), which is called by gtk_init() and the
+	 * #GtkApplication::startup handler. The program name is found by
+	 * taking the last component of @argv[0].
 	 *
 	 * Note that for thread-safety reasons this function can only be called once.
 	 *

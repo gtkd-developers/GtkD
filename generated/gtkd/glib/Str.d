@@ -26,6 +26,8 @@ module glib.Str;
 
 private import core.stdc.stdio;
 private import core.stdc.string;
+private import glib.ErrorG;
+private import glib.GException;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
@@ -974,7 +976,17 @@ public struct Str
 	 *
 	 * Note that the string may be translated according to the current locale.
 	 *
-	 * The value of %errno will not be changed by this function.
+	 * The value of %errno will not be changed by this function. However, it may
+	 * be changed by intermediate function calls, so you should save its value
+	 * as soon as the call returns:
+	 * |[
+	 * int saved_errno;
+	 *
+	 * ret = read (blah);
+	 * saved_errno = errno;
+	 *
+	 * g_strerror (saved_errno);
+	 * ]|
 	 *
 	 * Params:
 	 *     errnum = the system error number. See the standard C %errno
@@ -1560,5 +1572,105 @@ public struct Str
 	public static int vfprintf(FILE* file, string format, void* args)
 	{
 		return g_vfprintf(file, Str.toStringz(format), args);
+	}
+
+	/**
+	 * A convenience function for converting a string to a signed number.
+	 *
+	 * This function assumes that @str contains only a number of the given
+	 * @base that is within inclusive bounds limited by @min and @max. If
+	 * this is true, then the converted number is stored in @out_num. An
+	 * empty string is not a valid input. A string with leading or
+	 * trailing whitespace is also an invalid input.
+	 *
+	 * @base can be between 2 and 36 inclusive. Hexadecimal numbers must
+	 * not be prefixed with "0x" or "0X". Such a problem does not exist
+	 * for octal numbers, since they were usually prefixed with a zero
+	 * which does not change the value of the parsed number.
+	 *
+	 * Parsing failures result in an error with the %G_NUMBER_PARSER_ERROR
+	 * domain. If the input is invalid, the error code will be
+	 * %G_NUMBER_PARSER_ERROR_INVALID. If the parsed number is out of
+	 * bounds - %G_NUMBER_PARSER_ERROR_OUT_OF_BOUNDS.
+	 *
+	 * See g_ascii_strtoll() if you have more complex needs such as
+	 * parsing a string which starts with a number, but then has other
+	 * characters.
+	 *
+	 * Params:
+	 *     str = a string
+	 *     base = base of a parsed number
+	 *     min = a lower bound (inclusive)
+	 *     max = an upper bound (inclusive)
+	 *     outNum = a return location for a number
+	 *
+	 * Returns: %TRUE if @str was a number, otherwise %FALSE.
+	 *
+	 * Since: 2.54
+	 *
+	 * Throws: GException on failure.
+	 */
+	public static bool asciiStringToSigned(string str, uint base, long min, long max, out long outNum)
+	{
+		GError* err = null;
+
+		auto p = g_ascii_string_to_signed(Str.toStringz(str), base, min, max, &outNum, &err) != 0;
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		return p;
+	}
+
+	/**
+	 * A convenience function for converting a string to an unsigned number.
+	 *
+	 * This function assumes that @str contains only a number of the given
+	 * @base that is within inclusive bounds limited by @min and @max. If
+	 * this is true, then the converted number is stored in @out_num. An
+	 * empty string is not a valid input. A string with leading or
+	 * trailing whitespace is also an invalid input.
+	 *
+	 * @base can be between 2 and 36 inclusive. Hexadecimal numbers must
+	 * not be prefixed with "0x" or "0X". Such a problem does not exist
+	 * for octal numbers, since they were usually prefixed with a zero
+	 * which does not change the value of the parsed number.
+	 *
+	 * Parsing failures result in an error with the %G_NUMBER_PARSER_ERROR
+	 * domain. If the input is invalid, the error code will be
+	 * %G_NUMBER_PARSER_ERROR_INVALID. If the parsed number is out of
+	 * bounds - %G_NUMBER_PARSER_ERROR_OUT_OF_BOUNDS.
+	 *
+	 * See g_ascii_strtoull() if you have more complex needs such as
+	 * parsing a string which starts with a number, but then has other
+	 * characters.
+	 *
+	 * Params:
+	 *     str = a string
+	 *     base = base of a parsed number
+	 *     min = a lower bound (inclusive)
+	 *     max = an upper bound (inclusive)
+	 *     outNum = a return location for a number
+	 *
+	 * Returns: %TRUE if @str was a number, otherwise %FALSE.
+	 *
+	 * Since: 2.54
+	 *
+	 * Throws: GException on failure.
+	 */
+	public static bool asciiStringToUnsigned(string str, uint base, ulong min, ulong max, out ulong outNum)
+	{
+		GError* err = null;
+
+		auto p = g_ascii_string_to_unsigned(Str.toStringz(str), base, min, max, &outNum, &err) != 0;
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		return p;
 	}
 }

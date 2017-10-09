@@ -97,6 +97,10 @@ public class ArrayG
 	 * If array elements contain dynamically-allocated memory, they should
 	 * be freed separately.
 	 *
+	 * This function is not thread-safe. If using a #GArray from multiple
+	 * threads, use only the atomic g_array_ref() and g_array_unref()
+	 * functions.
+	 *
 	 * Params:
 	 *     freeSegment = if %TRUE the actual element data is freed as well
 	 *
@@ -198,7 +202,7 @@ public class ArrayG
 
 	/**
 	 * Atomically increments the reference count of @array by one.
-	 * This function is MT-safe and may be called from any thread.
+	 * This function is thread-safe and may be called from any thread.
 	 *
 	 * Returns: The passed in #GArray
 	 *
@@ -392,7 +396,7 @@ public class ArrayG
 	/**
 	 * Atomically decrements the reference count of @array by one. If the
 	 * reference count drops to 0, all memory allocated by the array is
-	 * released. This function is MT-safe and may be called from any
+	 * released. This function is thread-safe and may be called from any
 	 * thread.
 	 *
 	 * Since: 2.22

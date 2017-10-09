@@ -231,7 +231,7 @@ public struct UnixUtils
 	 * Create a #GSource that will be dispatched upon delivery of the UNIX
 	 * signal @signum.  In GLib versions before 2.36, only `SIGHUP`, `SIGINT`,
 	 * `SIGTERM` can be monitored.  In GLib 2.36, `SIGUSR1` and `SIGUSR2`
-	 * were added.
+	 * were added. In GLib 2.54, `SIGWINCH` was added.
 	 *
 	 * Note that unlike the UNIX default, all sources which have created a
 	 * watch will be dispatched, regardless of which underlying thread

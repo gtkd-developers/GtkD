@@ -125,6 +125,7 @@ shared static this()
 	Linker.link(g_initially_unowned_get_type, "g_initially_unowned_get_type", LIBRARY_GOBJECT);
 	Linker.link(g_object_new, "g_object_new", LIBRARY_GOBJECT);
 	Linker.link(g_object_new_valist, "g_object_new_valist", LIBRARY_GOBJECT);
+	Linker.link(g_object_new_with_properties, "g_object_new_with_properties", LIBRARY_GOBJECT);
 	Linker.link(g_object_newv, "g_object_newv", LIBRARY_GOBJECT);
 	Linker.link(g_object_compat_control, "g_object_compat_control", LIBRARY_GOBJECT);
 	Linker.link(g_object_interface_find_property, "g_object_interface_find_property", LIBRARY_GOBJECT);
@@ -146,6 +147,7 @@ shared static this()
 	Linker.link(g_object_get_property, "g_object_get_property", LIBRARY_GOBJECT);
 	Linker.link(g_object_get_qdata, "g_object_get_qdata", LIBRARY_GOBJECT);
 	Linker.link(g_object_get_valist, "g_object_get_valist", LIBRARY_GOBJECT);
+	Linker.link(g_object_getv, "g_object_getv", LIBRARY_GOBJECT);
 	Linker.link(g_object_is_floating, "g_object_is_floating", LIBRARY_GOBJECT);
 	Linker.link(g_object_notify, "g_object_notify", LIBRARY_GOBJECT);
 	Linker.link(g_object_notify_by_pspec, "g_object_notify_by_pspec", LIBRARY_GOBJECT);
@@ -163,6 +165,7 @@ shared static this()
 	Linker.link(g_object_set_qdata, "g_object_set_qdata", LIBRARY_GOBJECT);
 	Linker.link(g_object_set_qdata_full, "g_object_set_qdata_full", LIBRARY_GOBJECT);
 	Linker.link(g_object_set_valist, "g_object_set_valist", LIBRARY_GOBJECT);
+	Linker.link(g_object_setv, "g_object_setv", LIBRARY_GOBJECT);
 	Linker.link(g_object_steal_data, "g_object_steal_data", LIBRARY_GOBJECT);
 	Linker.link(g_object_steal_qdata, "g_object_steal_qdata", LIBRARY_GOBJECT);
 	Linker.link(g_object_thaw_notify, "g_object_thaw_notify", LIBRARY_GOBJECT);
@@ -489,6 +492,8 @@ shared static this()
 	Linker.link(g_enum_get_value_by_name, "g_enum_get_value_by_name", LIBRARY_GOBJECT);
 	Linker.link(g_enum_get_value_by_nick, "g_enum_get_value_by_nick", LIBRARY_GOBJECT);
 	Linker.link(g_enum_register_static, "g_enum_register_static", LIBRARY_GOBJECT);
+	Linker.link(g_enum_to_string, "g_enum_to_string", LIBRARY_GOBJECT);
+	Linker.link(g_flags_to_string, "g_flags_to_string", LIBRARY_GOBJECT);
 
 	// gobject.Flags
 
@@ -590,6 +595,7 @@ __gshared extern(C)
 	GType function() c_g_initially_unowned_get_type;
 	void* function(GType objectType, const(char)* firstPropertyName, ... ) c_g_object_new;
 	GObject* function(GType objectType, const(char)* firstPropertyName, void* varArgs) c_g_object_new_valist;
+	GObject* function(GType objectType, uint nProperties, char** names, GValue* values) c_g_object_new_with_properties;
 	void* function(GType objectType, uint nParameters, GParameter* parameters) c_g_object_newv;
 	size_t function(size_t what, void* data) c_g_object_compat_control;
 	GParamSpec* function(void* gIface, const(char)* propertyName) c_g_object_interface_find_property;
@@ -611,6 +617,7 @@ __gshared extern(C)
 	void function(GObject* object, const(char)* propertyName, GValue* value) c_g_object_get_property;
 	void* function(GObject* object, GQuark quark) c_g_object_get_qdata;
 	void function(GObject* object, const(char)* firstPropertyName, void* varArgs) c_g_object_get_valist;
+	void function(GObject* object, uint nProperties, char** names, GValue* values) c_g_object_getv;
 	int function(void* object) c_g_object_is_floating;
 	void function(GObject* object, const(char)* propertyName) c_g_object_notify;
 	void function(GObject* object, GParamSpec* pspec) c_g_object_notify_by_pspec;
@@ -628,6 +635,7 @@ __gshared extern(C)
 	void function(GObject* object, GQuark quark, void* data) c_g_object_set_qdata;
 	void function(GObject* object, GQuark quark, void* data, GDestroyNotify destroy) c_g_object_set_qdata_full;
 	void function(GObject* object, const(char)* firstPropertyName, void* varArgs) c_g_object_set_valist;
+	void function(GObject* object, uint nProperties, char** names, GValue* values) c_g_object_setv;
 	void* function(GObject* object, const(char)* key) c_g_object_steal_data;
 	void* function(GObject* object, GQuark quark) c_g_object_steal_qdata;
 	void function(GObject* object) c_g_object_thaw_notify;
@@ -954,6 +962,8 @@ __gshared extern(C)
 	GEnumValue* function(GEnumClass* enumClass, const(char)* name) c_g_enum_get_value_by_name;
 	GEnumValue* function(GEnumClass* enumClass, const(char)* nick) c_g_enum_get_value_by_nick;
 	GType function(const(char)* name, GEnumValue* constStaticValues) c_g_enum_register_static;
+	char* function(GType gEnumType, int value) c_g_enum_to_string;
+	char* function(GType flagsType, uint value) c_g_flags_to_string;
 
 	// gobject.Flags
 
@@ -1053,6 +1063,7 @@ alias c_g_source_set_dummy_callback g_source_set_dummy_callback;
 alias c_g_initially_unowned_get_type g_initially_unowned_get_type;
 alias c_g_object_new g_object_new;
 alias c_g_object_new_valist g_object_new_valist;
+alias c_g_object_new_with_properties g_object_new_with_properties;
 alias c_g_object_newv g_object_newv;
 alias c_g_object_compat_control g_object_compat_control;
 alias c_g_object_interface_find_property g_object_interface_find_property;
@@ -1074,6 +1085,7 @@ alias c_g_object_get_data g_object_get_data;
 alias c_g_object_get_property g_object_get_property;
 alias c_g_object_get_qdata g_object_get_qdata;
 alias c_g_object_get_valist g_object_get_valist;
+alias c_g_object_getv g_object_getv;
 alias c_g_object_is_floating g_object_is_floating;
 alias c_g_object_notify g_object_notify;
 alias c_g_object_notify_by_pspec g_object_notify_by_pspec;
@@ -1091,6 +1103,7 @@ alias c_g_object_set_property g_object_set_property;
 alias c_g_object_set_qdata g_object_set_qdata;
 alias c_g_object_set_qdata_full g_object_set_qdata_full;
 alias c_g_object_set_valist g_object_set_valist;
+alias c_g_object_setv g_object_setv;
 alias c_g_object_steal_data g_object_steal_data;
 alias c_g_object_steal_qdata g_object_steal_qdata;
 alias c_g_object_thaw_notify g_object_thaw_notify;
@@ -1417,6 +1430,8 @@ alias c_g_enum_get_value g_enum_get_value;
 alias c_g_enum_get_value_by_name g_enum_get_value_by_name;
 alias c_g_enum_get_value_by_nick g_enum_get_value_by_nick;
 alias c_g_enum_register_static g_enum_register_static;
+alias c_g_enum_to_string g_enum_to_string;
+alias c_g_flags_to_string g_flags_to_string;
 
 // gobject.Flags
 

@@ -630,6 +630,11 @@ move: enum_get_value_by_name Enums get_value_by_name
 move: enum_get_value_by_nick Enums get_value_by_nick
 move: enum_register_static Enums register_static
 
+version 2.54: start
+	move: enum_to_string Enums
+	move: flags_to_string Enums
+version: end
+
 move: flags_complete_type_info Flags complete_type_info
 move: flags_get_first_value Flags get_first_value
 move: flags_get_value_by_name Flags get_value_by_name

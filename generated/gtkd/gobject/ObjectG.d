@@ -354,10 +354,52 @@ public class ObjectG
 	}
 
 	/**
+	 * Creates a new instance of a #GObject subtype and sets its properties using
+	 * the provided arrays. Both arrays must have exactly @n_properties elements,
+	 * and the names and values correspond by index.
+	 *
+	 * Construction parameters (see %G_PARAM_CONSTRUCT, %G_PARAM_CONSTRUCT_ONLY)
+	 * which are not explicitly specified are set to their default values.
+	 *
+	 * Params:
+	 *     objectType = the object type to instantiate
+	 *     nProperties = the number of properties
+	 *     names = the names of each property to be set
+	 *     values = the values of each property to be set
+	 *
+	 * Returns: a new instance of
+	 *     @object_type
+	 *
+	 * Since: 2.54
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(GType objectType, string[] names, Value[] values)
+	{
+		GValue[] valuesArray = new GValue[values.length];
+		for ( int i = 0; i < values.length; i++ )
+		{
+			valuesArray[i] = *(values[i].getValueStruct());
+		}
+
+		auto p = g_object_new_with_properties(objectType, cast(uint)values.length, Str.toStringzArray(names), valuesArray.ptr);
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_with_properties");
+		}
+
+		this(cast(GObject*) p, true);
+	}
+
+	/**
 	 * Creates a new instance of a #GObject subtype and sets its properties.
 	 *
 	 * Construction parameters (see #G_PARAM_CONSTRUCT, #G_PARAM_CONSTRUCT_ONLY)
 	 * which are not explicitly specified are set to their default values.
+	 *
+	 * Deprecated: Use g_object_new_with_properties() instead.
+	 * deprecated. See #GParameter for more information.
 	 *
 	 * Params:
 	 *     objectType = the type id of the #GObject subtype to instantiate
@@ -851,6 +893,30 @@ public class ObjectG
 	}
 
 	/**
+	 * Gets @n_properties properties for an @object.
+	 * Obtained properties will be set to @values. All properties must be valid.
+	 * Warnings will be emitted and undefined behaviour may result if invalid
+	 * properties are passed in.
+	 *
+	 * Params:
+	 *     nProperties = the number of properties
+	 *     names = the names of each property to get
+	 *     values = the values of each property to get
+	 *
+	 * Since: 2.54
+	 */
+	public void getv(string[] names, Value[] values)
+	{
+		GValue[] valuesArray = new GValue[values.length];
+		for ( int i = 0; i < values.length; i++ )
+		{
+			valuesArray[i] = *(values[i].getValueStruct());
+		}
+
+		g_object_getv(gObject, cast(uint)values.length, Str.toStringzArray(names), valuesArray.ptr);
+	}
+
+	/**
 	 * Checks whether @object has a [floating][floating-ref] reference.
 	 *
 	 * Returns: %TRUE if @object has a floating reference
@@ -1174,6 +1240,30 @@ public class ObjectG
 	public void setValist(string firstPropertyName, void* varArgs)
 	{
 		g_object_set_valist(gObject, Str.toStringz(firstPropertyName), varArgs);
+	}
+
+	/**
+	 * Sets @n_properties properties for an @object.
+	 * Properties to be set will be taken from @values. All properties must be
+	 * valid. Warnings will be emitted and undefined behaviour may result if invalid
+	 * properties are passed in.
+	 *
+	 * Params:
+	 *     nProperties = the number of properties
+	 *     names = the names of each property to be set
+	 *     values = the values of each property to be set
+	 *
+	 * Since: 2.54
+	 */
+	public void setv(string[] names, Value[] values)
+	{
+		GValue[] valuesArray = new GValue[values.length];
+		for ( int i = 0; i < values.length; i++ )
+		{
+			valuesArray[i] = *(values[i].getValueStruct());
+		}
+
+		g_object_setv(gObject, cast(uint)values.length, Str.toStringzArray(names), valuesArray.ptr);
 	}
 
 	/**

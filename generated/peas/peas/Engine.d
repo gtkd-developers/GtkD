@@ -162,9 +162,12 @@ public class Engine : ObjectG
 	}
 
 	/**
-	 * If the plugin identified by @info implements the @extension_type interface,
+	 * If the plugin identified by @info implements the @extension_type,
 	 * then this function will return a new instance of this implementation,
 	 * wrapped in a new #PeasExtension instance. Otherwise, it will return %NULL.
+	 *
+	 * Since libpeas 1.22, @extension_type can be an Abstract #GType
+	 * and not just an Interface #GType.
 	 *
 	 * See peas_engine_create_extension() for more information.
 	 *
@@ -184,9 +187,12 @@ public class Engine : ObjectG
 	}
 
 	/**
-	 * If the plugin identified by @info implements the @extension_type interface,
+	 * If the plugin identified by @info implements the @extension_type,
 	 * then this function will return a new instance of this implementation,
 	 * wrapped in a new #PeasExtension instance. Otherwise, it will return %NULL.
+	 *
+	 * Since libpeas 1.22, @extension_type can be an Abstract #GType
+	 * and not just an Interface #GType.
 	 *
 	 * See peas_engine_create_extension() for more information.
 	 *
@@ -333,6 +339,9 @@ public class Engine : ObjectG
 	/**
 	 * Returns if @info provides an extension for @extension_type.
 	 * If the @info is not loaded than %FALSE will always be returned.
+	 *
+	 * Since libpeas 1.22, @extension_type can be an Abstract #GType
+	 * and not just an Interface #GType.
 	 *
 	 * Params:
 	 *     info = A #PeasPluginInfo.

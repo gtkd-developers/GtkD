@@ -5200,7 +5200,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		}
 
 		/**
-		 * Marks the widget as being realized.
+		 * Marks the widget as being mapped.
 		 *
 		 * This function should only ever be called in a derived widget's
 		 * “map” or “unmap” implementation.

@@ -187,7 +187,7 @@ public enum AtkRelationType
 	 */
 	EMBEDS = 10,
 	/**
-	 * Inverse of %ATK_RELATION_EMBEDS, indicates that
+	 * Reciprocal of %ATK_RELATION_EMBEDS, indicates that
 	 * this object's content is visualy embedded in another object.
 	 */
 	EMBEDDED_BY = 11,
@@ -200,11 +200,22 @@ public enum AtkRelationType
 	 */
 	PARENT_WINDOW_OF = 13,
 	/**
-	 * Indicates that another object provides descriptive information about this object; more verbose than ATK_RELATION_LABELLED_BY.
+	 * Reciprocal of %ATK_RELATION_DESCRIPTION_FOR. Indicates that one
+	 * or more target objects provide descriptive information about this object. This relation
+	 * type is most appropriate for information that is not essential as its presentation may
+	 * be user-configurable and/or limited to an on-demand mechanism such as an assistive
+	 * technology command. For brief, essential information such as can be found in a widget's
+	 * on-screen label, use %ATK_RELATION_LABELLED_BY. For an on-screen error message, use
+	 * %ATK_RELATION_ERROR_MESSAGE. For lengthy extended descriptive information contained in
+	 * an on-screen object, consider using %ATK_RELATION_DETAILS as assistive technologies may
+	 * provide a means for the user to navigate to objects containing detailed descriptions so
+	 * that their content can be more closely reviewed.
 	 */
 	DESCRIBED_BY = 14,
 	/**
-	 * Indicates that an object provides descriptive information about another object; more verbose than ATK_RELATION_LABEL_FOR.
+	 * Reciprocal of %ATK_RELATION_DESCRIBED_BY. Indicates that this
+	 * object provides descriptive information about the target object(s). See also
+	 * %ATK_RELATION_DETAILS_FOR and %ATK_RELATION_ERROR_FOR.
 	 */
 	DESCRIPTION_FOR = 15,
 	/**
@@ -212,9 +223,38 @@ public enum AtkRelationType
 	 */
 	NODE_PARENT_OF = 16,
 	/**
+	 * Reciprocal of %ATK_RELATION_DETAILS_FOR. Indicates that this object
+	 * has a detailed or extended description, the contents of which can be found in the target
+	 * object(s). This relation type is most appropriate for information that is sufficiently
+	 * lengthy as to make navigation to the container of that information desirable. For less
+	 * verbose information suitable for announcement only, see %ATK_RELATION_DESCRIBED_BY. If
+	 * the detailed information describes an error condition, %ATK_RELATION_ERROR_FOR should be
+	 * used instead. @Since: ATK-2.26.
+	 */
+	DETAILS = 17,
+	/**
+	 * Reciprocal of %ATK_RELATION_DETAILS. Indicates that this object
+	 * provides a detailed or extended description about the target object(s). See also
+	 * %ATK_RELATION_DESCRIPTION_FOR and %ATK_RELATION_ERROR_FOR. @Since: ATK-2.26.
+	 */
+	DETAILS_FOR = 18,
+	/**
+	 * Reciprocal of %ATK_RELATION_ERROR_FOR. Indicates that this object
+	 * has one or more errors, the nature of which is described in the contents of the target
+	 * object(s). Objects that have this relation type should also contain %ATK_STATE_INVALID_ENTRY
+	 * in their #AtkStateSet. @Since: ATK-2.26.
+	 */
+	ERROR_MESSAGE = 19,
+	/**
+	 * Reciprocal of %ATK_RELATION_ERROR_MESSAGE. Indicates that this object
+	 * contains an error message describing an invalid condition in the target object(s). @Since:
+	 * ATK_2.26.
+	 */
+	ERROR_FOR = 20,
+	/**
 	 * Not used, this value indicates the end of the enumeration.
 	 */
-	LAST_DEFINED = 17,
+	LAST_DEFINED = 21,
 }
 alias AtkRelationType RelationType;
 
@@ -780,9 +820,13 @@ public enum AtkRole
 	 */
 	SUPERSCRIPT = 121,
 	/**
+	 * An object that contains the text of a footnote. @Since: ATK-2.26.
+	 */
+	FOOTNOTE = 122,
+	/**
 	 * not a valid role, used for finding end of the enumeration
 	 */
-	LAST_DEFINED = 122,
+	LAST_DEFINED = 123,
 }
 alias AtkRole Role;
 
@@ -2923,7 +2967,7 @@ public alias extern(C) void function(AtkObject* obj, AtkPropertyValues* vals) At
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum BINARY_AGE = 22410;
+enum BINARY_AGE = 22610;
 alias ATK_BINARY_AGE = BINARY_AGE;
 
 /**
@@ -2955,7 +2999,7 @@ alias ATK_MICRO_VERSION = MICRO_VERSION;
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum MINOR_VERSION = 24;
+enum MINOR_VERSION = 26;
 alias ATK_MINOR_VERSION = MINOR_VERSION;
 
 /**

@@ -1054,6 +1054,8 @@ struct GParamSpecVariant
 /**
  * The GParameter struct is an auxiliary structure used
  * to hand parameter name/value pairs to g_object_newv().
+ *
+ * Deprecated: This type is not introspectable.
  */
 struct GParameter
 {

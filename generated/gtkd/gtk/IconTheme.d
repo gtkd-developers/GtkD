@@ -325,9 +325,9 @@ public class IconTheme : ObjectG
 	 *
 	 * Since: 2.12
 	 */
-	public IconInfo chooseIcon(string iconNames, int size, GtkIconLookupFlags flags)
+	public IconInfo chooseIcon(string[] iconNames, int size, GtkIconLookupFlags flags)
 	{
-		auto p = gtk_icon_theme_choose_icon(gtkIconTheme, Str.toStringz(iconNames), size, flags);
+		auto p = gtk_icon_theme_choose_icon(gtkIconTheme, Str.toStringzArray(iconNames), size, flags);
 
 		if(p is null)
 		{
@@ -361,9 +361,9 @@ public class IconTheme : ObjectG
 	 *
 	 * Since: 3.10
 	 */
-	public IconInfo chooseIconForScale(string iconNames, int size, int scale, GtkIconLookupFlags flags)
+	public IconInfo chooseIconForScale(string[] iconNames, int size, int scale, GtkIconLookupFlags flags)
 	{
-		auto p = gtk_icon_theme_choose_icon_for_scale(gtkIconTheme, Str.toStringz(iconNames), size, scale, flags);
+		auto p = gtk_icon_theme_choose_icon_for_scale(gtkIconTheme, Str.toStringzArray(iconNames), size, scale, flags);
 
 		if(p is null)
 		{

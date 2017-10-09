@@ -156,21 +156,24 @@ public class ObjectModule : TypeModule
 	}
 
 	/**
-	 * Creates an object for the @interface passing @n_parameters
+	 * Creates an object for the @exten_type passing @n_parameters
 	 * and @parameters to the #PeasFactoryFunc. If @module does
-	 * not provide a #PeasFactoryFunc for @interface then
+	 * not provide a #PeasFactoryFunc for @exten_type then
 	 * %NULL is returned.
 	 *
+	 * Since libpeas 1.22, @exten_type can be an Abstract #GType
+	 * and not just an Interface #GType.
+	 *
 	 * Params:
-	 *     iface = The #GType of the extension interface.
+	 *     extenType = The #GType of the extension.
 	 *     nParameters = The number of paramteters.
 	 *     parameters = The parameters.
 	 *
 	 * Returns: The created object, or %NULL.
 	 */
-	public ObjectG createObject(GType iface, GParameter[] parameters)
+	public ObjectG createObject(GType extenType, GParameter[] parameters)
 	{
-		auto p = peas_object_module_create_object(peasObjectModule, iface, cast(uint)parameters.length, parameters.ptr);
+		auto p = peas_object_module_create_object(peasObjectModule, extenType, cast(uint)parameters.length, parameters.ptr);
 
 		if(p is null)
 		{
@@ -230,16 +233,19 @@ public class ObjectModule : TypeModule
 	}
 
 	/**
-	 * Determines if the module provides an extension for @interface.
+	 * Determines if the module provides an extension for @exten_type.
+	 *
+	 * Since libpeas 1.22, @exten_type can be an Abstract #GType
+	 * and not just an Interface #GType.
 	 *
 	 * Params:
-	 *     iface = The #GType of the extension interface.
+	 *     extenType = The #GType of the extension.
 	 *
-	 * Returns: if the module provides an extension for @interface.
+	 * Returns: if the module provides an extension for @exten_type.
 	 */
-	public bool providesObject(GType iface)
+	public bool providesObject(GType extenType)
 	{
-		return peas_object_module_provides_object(peasObjectModule, iface) != 0;
+		return peas_object_module_provides_object(peasObjectModule, extenType) != 0;
 	}
 
 	/**
@@ -252,28 +258,33 @@ public class ObjectModule : TypeModule
 	 * g_object_new().  For other uses, you will usually prefer relying on
 	 * peas_object_module_register_extension_type().
 	 *
+	 * Since libpeas 1.22, @exten_type can be an Abstract #GType
+	 * and not just an Interface #GType.
+	 *
 	 * Params:
-	 *     ifaceType = The #GType of the extension interface you implement.
-	 *     factoryFunc = The #PeasFactoryFunc that will create the @iface_type
+	 *     extenType = The #GType of the extension you implement.
+	 *     factoryFunc = The #PeasFactoryFunc that will create the @exten_type
 	 *         instance when requested.
 	 *     userData = Data to pass to @func calls.
 	 *     destroyFunc = A #GDestroyNotify for @user_data.
 	 */
-	public void registerExtensionFactory(GType ifaceType, PeasFactoryFunc factoryFunc, void* userData, GDestroyNotify destroyFunc)
+	public void registerExtensionFactory(GType extenType, PeasFactoryFunc factoryFunc, void* userData, GDestroyNotify destroyFunc)
 	{
-		peas_object_module_register_extension_factory(peasObjectModule, ifaceType, factoryFunc, userData, destroyFunc);
+		peas_object_module_register_extension_factory(peasObjectModule, extenType, factoryFunc, userData, destroyFunc);
 	}
 
 	/**
-	 * Register an extension type which implements the extension interface
-	 * @iface_type.
+	 * Register @impl_type as an extension which implements @extension_type.
+	 *
+	 * Since libpeas 1.22, @exten_type can be an Abstract #GType
+	 * and not just an Interface #GType.
 	 *
 	 * Params:
-	 *     ifaceType = The #GType of the extension interface you implement.
-	 *     extensionType = The #GType of your implementation of @iface_type.
+	 *     extenType = The #GType of the extension you implement.
+	 *     implType = The #GType of your implementation of @exten_type.
 	 */
-	public void registerExtensionType(GType ifaceType, GType extensionType)
+	public void registerExtensionType(GType extenType, GType implType)
 	{
-		peas_object_module_register_extension_type(peasObjectModule, ifaceType, extensionType);
+		peas_object_module_register_extension_type(peasObjectModule, extenType, implType);
 	}
 }

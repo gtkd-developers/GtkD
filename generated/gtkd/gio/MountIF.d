@@ -76,14 +76,14 @@ public interface MountIF{
 
 
 	/**
-	 * Checks if @mount can be eject.
+	 * Checks if @mount can be ejected.
 	 *
 	 * Returns: %TRUE if the @mount can be ejected.
 	 */
 	public bool canEject();
 
 	/**
-	 * Checks if @mount can be mounted.
+	 * Checks if @mount can be unmounted.
 	 *
 	 * Returns: %TRUE if the @mount can be unmounted.
 	 */

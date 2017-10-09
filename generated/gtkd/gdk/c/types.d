@@ -2263,9 +2263,42 @@ public enum GdkWindowState
 	 */
 	FOCUSED = 128,
 	/**
-	 * the window is in a tiled state, Since 3.10
+	 * the window is in a tiled state, Since 3.10. Since 3.22.23, this
+	 * is deprecated in favor of per-edge information.
 	 */
 	TILED = 256,
+	/**
+	 * whether the top edge is tiled, Since 3.22.23
+	 */
+	TOP_TILED = 512,
+	/**
+	 * whether the top edge is resizable, Since 3.22.23
+	 */
+	TOP_RESIZABLE = 1024,
+	/**
+	 * whether the right edge is tiled, Since 3.22.23
+	 */
+	RIGHT_TILED = 2048,
+	/**
+	 * whether the right edge is resizable, Since 3.22.23
+	 */
+	RIGHT_RESIZABLE = 4096,
+	/**
+	 * whether the bottom edge is tiled, Since 3.22.23
+	 */
+	BOTTOM_TILED = 8192,
+	/**
+	 * whether the bottom edge is resizable, Since 3.22.23
+	 */
+	BOTTOM_RESIZABLE = 16384,
+	/**
+	 * whether the left edge is tiled, Since 3.22.23
+	 */
+	LEFT_TILED = 32768,
+	/**
+	 * whether the left edge is resizable, Since 3.22.23
+	 */
+	LEFT_RESIZABLE = 65536,
 }
 alias GdkWindowState WindowState;
 

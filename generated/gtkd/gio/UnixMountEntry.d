@@ -38,8 +38,41 @@ public  import gtkc.giotypes;
  * Defines a Unix mount entry (e.g. <filename>/media/cdrom</filename>).
  * This corresponds roughly to a mtab entry.
  */
-public struct UnixMountEntry
+public class UnixMountEntry
 {
+	/** the main Gtk struct */
+	protected GUnixMountEntry* gUnixMountEntry;
+	protected bool ownedRef;
+
+	/** Get the main Gtk struct */
+	public GUnixMountEntry* getUnixMountEntryStruct(bool transferOwnership = false)
+	{
+		if (transferOwnership)
+			ownedRef = false;
+		return gUnixMountEntry;
+	}
+
+	/** the main Gtk struct as a void* */
+	protected void* getStruct()
+	{
+		return cast(void*)gUnixMountEntry;
+	}
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GUnixMountEntry* gUnixMountEntry, bool ownedRef = false)
+	{
+		this.gUnixMountEntry = gUnixMountEntry;
+		this.ownedRef = ownedRef;
+	}
+
+
+	/** */
+	public static GType getType()
+	{
+		return g_unix_mount_entry_get_type();
+	}
 
 	/**
 	 * Determines if @mount_path is considered an implementation of the
@@ -69,100 +102,88 @@ public struct UnixMountEntry
 	 *
 	 * Returns: a #GUnixMountEntry.
 	 */
-	public static GUnixMountEntry* at(string mountPath, out ulong timeRead)
+	public static UnixMountEntry at(string mountPath, out ulong timeRead)
 	{
-		return g_unix_mount_at(Str.toStringz(mountPath), &timeRead);
+		auto p = g_unix_mount_at(Str.toStringz(mountPath), &timeRead);
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(UnixMountEntry)(cast(GUnixMountEntry*) p, true);
 	}
 
 	/**
 	 * Compares two unix mounts.
 	 *
 	 * Params:
-	 *     mount1 = first #GUnixMountEntry to compare.
 	 *     mount2 = second #GUnixMountEntry to compare.
 	 *
 	 * Returns: 1, 0 or -1 if @mount1 is greater than, equal to,
 	 *     or less than @mount2, respectively.
 	 */
-	public static int compare(GUnixMountEntry* mount1, GUnixMountEntry* mount2)
+	public int compare(UnixMountEntry mount2)
 	{
-		return g_unix_mount_compare(mount1, mount2);
+		return g_unix_mount_compare(gUnixMountEntry, (mount2 is null) ? null : mount2.getUnixMountEntryStruct());
 	}
 
 	/**
 	 * Frees a unix mount.
-	 *
-	 * Params:
-	 *     mountEntry = a #GUnixMountEntry.
 	 */
-	public static void free(GUnixMountEntry* mountEntry)
+	public void free()
 	{
-		g_unix_mount_free(mountEntry);
+		g_unix_mount_free(gUnixMountEntry);
 	}
 
 	/**
 	 * Gets the device path for a unix mount.
 	 *
-	 * Params:
-	 *     mountEntry = a #GUnixMount.
-	 *
 	 * Returns: a string containing the device path.
 	 */
-	public static string getDevicePath(GUnixMountEntry* mountEntry)
+	public string getDevicePath()
 	{
-		return Str.toString(g_unix_mount_get_device_path(mountEntry));
+		return Str.toString(g_unix_mount_get_device_path(gUnixMountEntry));
 	}
 
 	/**
 	 * Gets the filesystem type for the unix mount.
 	 *
-	 * Params:
-	 *     mountEntry = a #GUnixMount.
-	 *
 	 * Returns: a string containing the file system type.
 	 */
-	public static string getFsType(GUnixMountEntry* mountEntry)
+	public string getFsType()
 	{
-		return Str.toString(g_unix_mount_get_fs_type(mountEntry));
+		return Str.toString(g_unix_mount_get_fs_type(gUnixMountEntry));
 	}
 
 	/**
 	 * Gets the mount path for a unix mount.
 	 *
-	 * Params:
-	 *     mountEntry = input #GUnixMountEntry to get the mount path for.
-	 *
 	 * Returns: the mount path for @mount_entry.
 	 */
-	public static string getMountPath(GUnixMountEntry* mountEntry)
+	public string getMountPath()
 	{
-		return Str.toString(g_unix_mount_get_mount_path(mountEntry));
+		return Str.toString(g_unix_mount_get_mount_path(gUnixMountEntry));
 	}
 
 	/**
 	 * Guesses whether a Unix mount can be ejected.
 	 *
-	 * Params:
-	 *     mountEntry = a #GUnixMountEntry
-	 *
 	 * Returns: %TRUE if @mount_entry is deemed to be ejectable.
 	 */
-	public static bool guessCanEject(GUnixMountEntry* mountEntry)
+	public bool guessCanEject()
 	{
-		return g_unix_mount_guess_can_eject(mountEntry) != 0;
+		return g_unix_mount_guess_can_eject(gUnixMountEntry) != 0;
 	}
 
 	/**
 	 * Guesses the icon of a Unix mount.
 	 *
-	 * Params:
-	 *     mountEntry = a #GUnixMountEntry
-	 *
 	 * Returns: a #GIcon
 	 */
-	public static IconIF guessIcon(GUnixMountEntry* mountEntry)
+	public IconIF guessIcon()
 	{
-		auto p = g_unix_mount_guess_icon(mountEntry);
+		auto p = g_unix_mount_guess_icon(gUnixMountEntry);
 
 		if(p is null)
 		{
@@ -176,15 +197,12 @@ public struct UnixMountEntry
 	 * Guesses the name of a Unix mount.
 	 * The result is a translated string.
 	 *
-	 * Params:
-	 *     mountEntry = a #GUnixMountEntry
-	 *
 	 * Returns: A newly allocated string that must
 	 *     be freed with g_free()
 	 */
-	public static string guessName(GUnixMountEntry* mountEntry)
+	public string guessName()
 	{
-		auto retStr = g_unix_mount_guess_name(mountEntry);
+		auto retStr = g_unix_mount_guess_name(gUnixMountEntry);
 
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
@@ -193,29 +211,23 @@ public struct UnixMountEntry
 	/**
 	 * Guesses whether a Unix mount should be displayed in the UI.
 	 *
-	 * Params:
-	 *     mountEntry = a #GUnixMountEntry
-	 *
 	 * Returns: %TRUE if @mount_entry is deemed to be displayable.
 	 */
-	public static bool guessShouldDisplay(GUnixMountEntry* mountEntry)
+	public bool guessShouldDisplay()
 	{
-		return g_unix_mount_guess_should_display(mountEntry) != 0;
+		return g_unix_mount_guess_should_display(gUnixMountEntry) != 0;
 	}
 
 	/**
 	 * Guesses the symbolic icon of a Unix mount.
 	 *
-	 * Params:
-	 *     mountEntry = a #GUnixMountEntry
-	 *
 	 * Returns: a #GIcon
 	 *
 	 * Since: 2.34
 	 */
-	public static IconIF guessSymbolicIcon(GUnixMountEntry* mountEntry)
+	public IconIF guessSymbolicIcon()
 	{
-		auto p = g_unix_mount_guess_symbolic_icon(mountEntry);
+		auto p = g_unix_mount_guess_symbolic_icon(gUnixMountEntry);
 
 		if(p is null)
 		{
@@ -228,27 +240,21 @@ public struct UnixMountEntry
 	/**
 	 * Checks if a unix mount is mounted read only.
 	 *
-	 * Params:
-	 *     mountEntry = a #GUnixMount.
-	 *
 	 * Returns: %TRUE if @mount_entry is read only.
 	 */
-	public static bool isReadonly(GUnixMountEntry* mountEntry)
+	public bool isReadonly()
 	{
-		return g_unix_mount_is_readonly(mountEntry) != 0;
+		return g_unix_mount_is_readonly(gUnixMountEntry) != 0;
 	}
 
 	/**
 	 * Checks if a unix mount is a system path.
 	 *
-	 * Params:
-	 *     mountEntry = a #GUnixMount.
-	 *
 	 * Returns: %TRUE if the unix mount is for a system path.
 	 */
-	public static bool isSystemInternal(GUnixMountEntry* mountEntry)
+	public bool isSystemInternal()
 	{
-		return g_unix_mount_is_system_internal(mountEntry) != 0;
+		return g_unix_mount_is_system_internal(gUnixMountEntry) != 0;
 	}
 
 	/**
@@ -321,5 +327,49 @@ public struct UnixMountEntry
 		}
 
 		return new ListG(cast(GList*) p, true);
+	}
+
+	/**
+	 * Makes a copy of @mount_entry.
+	 *
+	 * Returns: a new #GUnixMountEntry
+	 *
+	 * Since: 2.54
+	 */
+	public UnixMountEntry copy()
+	{
+		auto p = g_unix_mount_copy(gUnixMountEntry);
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(UnixMountEntry)(cast(GUnixMountEntry*) p, true);
+	}
+
+	/**
+	 * Gets a #GUnixMountEntry for a given file path. If @time_read
+	 * is set, it will be filled with a unix timestamp for checking
+	 * if the mounts have changed since with g_unix_mounts_changed_since().
+	 *
+	 * Params:
+	 *     filePath = file path on some unix mount.
+	 *     timeRead = guint64 to contain a timestamp.
+	 *
+	 * Returns: a #GUnixMountEntry.
+	 *
+	 * Since: 2.52
+	 */
+	public static UnixMountEntry mountFor(string filePath, out ulong timeRead)
+	{
+		auto p = g_unix_mount_for(Str.toStringz(filePath), &timeRead);
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(UnixMountEntry)(cast(GUnixMountEntry*) p, true);
 	}
 }

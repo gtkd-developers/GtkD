@@ -506,6 +506,9 @@ array: set_value value length
 array: set_value_full value length
 
 version !Windows: start
+	struct: UnixMountEntry
+	class: UnixMountEntry
+
 	struct: UnixSocketAddress
 	noCode: new_abstract
 version: end
@@ -651,4 +654,9 @@ version !Windows: start
 	move: unix_mount_points_get UnixMountEntry mount_points_get
 	move: unix_mounts_changed_since UnixMountEntry mounts_changed_since
 	move: unix_mounts_get UnixMountEntry mounts_get
+
+	version 2.54: start
+		move: unix_mount_copy UnixMountEntry copy
+		move: unix_mount_for UnixMountEntry mount_for
+	version: end
 version: end

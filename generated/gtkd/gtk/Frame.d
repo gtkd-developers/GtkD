@@ -63,17 +63,18 @@ public  import gtkc.gtktypes;
  * 
  * |[<!-- language="plain" -->
  * frame
- * ├── border
+ * ├── border[.flat]
  * ├── <label widget>
  * ╰── <child>
  * ]|
  * 
- * GtkFrame has a main CSS node with name frame and a subnode with
- * name border. The border node is used to render the visible border.
+ * GtkFrame has a main CSS node named “frame” and a subnode named “border”. The
+ * “border” node is used to draw the visible border. You can set the appearance
+ * of the border using CSS properties like “border-style” on the “border” node.
  * 
- * The border node can be given the style class .flat, which is used by themes
+ * The border node can be given the style class “.flat”, which is used by themes
  * to disable drawing of the border. To do this from code, call
- * gtk_frame_set_shadow_type() with GTK_SHADOW_NONE to add the .flat class or
+ * gtk_frame_set_shadow_type() with %GTK_SHADOW_NONE to add the “.flat” class or
  * any other shadow type to remove it.
  */
 public class Frame : Bin
@@ -256,8 +257,8 @@ public class Frame : Bin
 
 	/**
 	 * Sets the #GtkFrame:shadow-type for @frame, i.e. whether it is drawn without
-	 * (GTK_SHADOW_NONE) or with (other values) a visible border. Values other than
-	 * GTK_SHADOW_NONE are treated identically by #GtkFrame. The chosen type is
+	 * (%GTK_SHADOW_NONE) or with (other values) a visible border. Values other than
+	 * %GTK_SHADOW_NONE are treated identically by GtkFrame. The chosen type is
 	 * applied by removing or adding the .flat class to the CSS node named border.
 	 *
 	 * Params:

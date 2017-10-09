@@ -266,13 +266,9 @@ public final class DBusInterfaceInfo
 	 *
 	 * Since: 2.26
 	 */
-	public void generateXml(uint indent, out StringG stringBuilder)
+	public void generateXml(uint indent, StringG stringBuilder)
 	{
-		GString* outstringBuilder = gMalloc!GString();
-
-		g_dbus_interface_info_generate_xml(gDBusInterfaceInfo, indent, outstringBuilder);
-
-		stringBuilder = new StringG(outstringBuilder, true);
+		g_dbus_interface_info_generate_xml(gDBusInterfaceInfo, indent, (stringBuilder is null) ? null : stringBuilder.getStringGStruct());
 	}
 
 	/**

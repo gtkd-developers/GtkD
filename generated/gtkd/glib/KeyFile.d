@@ -1231,9 +1231,9 @@ public class KeyFile
 	 *
 	 * Since: 2.6
 	 */
-	public void setLocaleStringList(string groupName, string key, string locale, string list)
+	public void setLocaleStringList(string groupName, string key, string locale, string[] list)
 	{
-		g_key_file_set_locale_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(locale), Str.toStringz(list), cast(size_t)list.length);
+		g_key_file_set_locale_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(locale), Str.toStringzArray(list), cast(size_t)list.length);
 	}
 
 	/**

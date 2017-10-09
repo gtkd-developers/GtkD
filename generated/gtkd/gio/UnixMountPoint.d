@@ -74,6 +74,12 @@ public class UnixMountPoint
 	}
 
 
+	/** */
+	public static GType getType()
+	{
+		return g_unix_mount_point_get_type();
+	}
+
 	/**
 	 * Compares two unix mount points.
 	 *
@@ -86,6 +92,25 @@ public class UnixMountPoint
 	public int compare(UnixMountPoint mount2)
 	{
 		return g_unix_mount_point_compare(gUnixMountPoint, (mount2 is null) ? null : mount2.getUnixMountPointStruct());
+	}
+
+	/**
+	 * Makes a copy of @mount_point.
+	 *
+	 * Returns: a new #GUnixMountPoint
+	 *
+	 * Since: 2.54
+	 */
+	public UnixMountPoint copy()
+	{
+		auto p = g_unix_mount_point_copy(gUnixMountPoint);
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(UnixMountPoint)(cast(GUnixMountPoint*) p, true);
 	}
 
 	/**

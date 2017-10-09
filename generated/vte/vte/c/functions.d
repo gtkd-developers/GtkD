@@ -65,6 +65,7 @@ shared static this()
 	Linker.link(vte_terminal_get_type, "vte_terminal_get_type", LIBRARY_VTE);
 	Linker.link(vte_terminal_new, "vte_terminal_new", LIBRARY_VTE);
 	Linker.link(vte_terminal_copy_clipboard, "vte_terminal_copy_clipboard", LIBRARY_VTE);
+	Linker.link(vte_terminal_copy_clipboard_format, "vte_terminal_copy_clipboard_format", LIBRARY_VTE);
 	Linker.link(vte_terminal_copy_primary, "vte_terminal_copy_primary", LIBRARY_VTE);
 	Linker.link(vte_terminal_event_check_gregex_simple, "vte_terminal_event_check_gregex_simple", LIBRARY_VTE);
 	Linker.link(vte_terminal_event_check_regex_simple, "vte_terminal_event_check_regex_simple", LIBRARY_VTE);
@@ -72,6 +73,7 @@ shared static this()
 	Linker.link(vte_terminal_feed_child, "vte_terminal_feed_child", LIBRARY_VTE);
 	Linker.link(vte_terminal_feed_child_binary, "vte_terminal_feed_child_binary", LIBRARY_VTE);
 	Linker.link(vte_terminal_get_allow_bold, "vte_terminal_get_allow_bold", LIBRARY_VTE);
+	Linker.link(vte_terminal_get_allow_hyperlink, "vte_terminal_get_allow_hyperlink", LIBRARY_VTE);
 	Linker.link(vte_terminal_get_audible_bell, "vte_terminal_get_audible_bell", LIBRARY_VTE);
 	Linker.link(vte_terminal_get_char_height, "vte_terminal_get_char_height", LIBRARY_VTE);
 	Linker.link(vte_terminal_get_char_width, "vte_terminal_get_char_width", LIBRARY_VTE);
@@ -98,6 +100,7 @@ shared static this()
 	Linker.link(vte_terminal_get_text_range, "vte_terminal_get_text_range", LIBRARY_VTE);
 	Linker.link(vte_terminal_get_window_title, "vte_terminal_get_window_title", LIBRARY_VTE);
 	Linker.link(vte_terminal_get_word_char_exceptions, "vte_terminal_get_word_char_exceptions", LIBRARY_VTE);
+	Linker.link(vte_terminal_hyperlink_check_event, "vte_terminal_hyperlink_check_event", LIBRARY_VTE);
 	Linker.link(vte_terminal_match_add_gregex, "vte_terminal_match_add_gregex", LIBRARY_VTE);
 	Linker.link(vte_terminal_match_add_regex, "vte_terminal_match_add_regex", LIBRARY_VTE);
 	Linker.link(vte_terminal_match_check, "vte_terminal_match_check", LIBRARY_VTE);
@@ -121,6 +124,7 @@ shared static this()
 	Linker.link(vte_terminal_search_set_wrap_around, "vte_terminal_search_set_wrap_around", LIBRARY_VTE);
 	Linker.link(vte_terminal_select_all, "vte_terminal_select_all", LIBRARY_VTE);
 	Linker.link(vte_terminal_set_allow_bold, "vte_terminal_set_allow_bold", LIBRARY_VTE);
+	Linker.link(vte_terminal_set_allow_hyperlink, "vte_terminal_set_allow_hyperlink", LIBRARY_VTE);
 	Linker.link(vte_terminal_set_audible_bell, "vte_terminal_set_audible_bell", LIBRARY_VTE);
 	Linker.link(vte_terminal_set_backspace_binding, "vte_terminal_set_backspace_binding", LIBRARY_VTE);
 	Linker.link(vte_terminal_set_cjk_ambiguous_width, "vte_terminal_set_cjk_ambiguous_width", LIBRARY_VTE);
@@ -195,6 +199,7 @@ __gshared extern(C)
 	GType function() c_vte_terminal_get_type;
 	GtkWidget* function() c_vte_terminal_new;
 	void function(VteTerminal* terminal) c_vte_terminal_copy_clipboard;
+	void function(VteTerminal* terminal, VteFormat format) c_vte_terminal_copy_clipboard_format;
 	void function(VteTerminal* terminal) c_vte_terminal_copy_primary;
 	int function(VteTerminal* terminal, GdkEvent* event, GRegex** regexes, size_t nRegexes, GRegexMatchFlags matchFlags, char** matches) c_vte_terminal_event_check_gregex_simple;
 	int function(VteTerminal* terminal, GdkEvent* event, VteRegex** regexes, size_t nRegexes, uint matchFlags, char** matches) c_vte_terminal_event_check_regex_simple;
@@ -202,6 +207,7 @@ __gshared extern(C)
 	void function(VteTerminal* terminal, const(char)* text, ptrdiff_t length) c_vte_terminal_feed_child;
 	void function(VteTerminal* terminal, ubyte* data, size_t length) c_vte_terminal_feed_child_binary;
 	int function(VteTerminal* terminal) c_vte_terminal_get_allow_bold;
+	int function(VteTerminal* terminal) c_vte_terminal_get_allow_hyperlink;
 	int function(VteTerminal* terminal) c_vte_terminal_get_audible_bell;
 	glong function(VteTerminal* terminal) c_vte_terminal_get_char_height;
 	glong function(VteTerminal* terminal) c_vte_terminal_get_char_width;
@@ -228,6 +234,7 @@ __gshared extern(C)
 	char* function(VteTerminal* terminal, glong startRow, glong startCol, glong endRow, glong endCol, VteSelectionFunc isSelected, void* userData, GArray* attributes) c_vte_terminal_get_text_range;
 	const(char)* function(VteTerminal* terminal) c_vte_terminal_get_window_title;
 	const(char)* function(VteTerminal* terminal) c_vte_terminal_get_word_char_exceptions;
+	char* function(VteTerminal* terminal, GdkEvent* event) c_vte_terminal_hyperlink_check_event;
 	int function(VteTerminal* terminal, GRegex* gregex, GRegexMatchFlags gflags) c_vte_terminal_match_add_gregex;
 	int function(VteTerminal* terminal, VteRegex* regex, uint flags) c_vte_terminal_match_add_regex;
 	char* function(VteTerminal* terminal, glong column, glong row, int* tag) c_vte_terminal_match_check;
@@ -251,6 +258,7 @@ __gshared extern(C)
 	void function(VteTerminal* terminal, int wrapAround) c_vte_terminal_search_set_wrap_around;
 	void function(VteTerminal* terminal) c_vte_terminal_select_all;
 	void function(VteTerminal* terminal, int allowBold) c_vte_terminal_set_allow_bold;
+	void function(VteTerminal* terminal, int allowHyperlink) c_vte_terminal_set_allow_hyperlink;
 	void function(VteTerminal* terminal, int isAudible) c_vte_terminal_set_audible_bell;
 	void function(VteTerminal* terminal, VteEraseBinding binding) c_vte_terminal_set_backspace_binding;
 	void function(VteTerminal* terminal, int width) c_vte_terminal_set_cjk_ambiguous_width;
@@ -323,6 +331,7 @@ alias c_vte_regex_unref vte_regex_unref;
 alias c_vte_terminal_get_type vte_terminal_get_type;
 alias c_vte_terminal_new vte_terminal_new;
 alias c_vte_terminal_copy_clipboard vte_terminal_copy_clipboard;
+alias c_vte_terminal_copy_clipboard_format vte_terminal_copy_clipboard_format;
 alias c_vte_terminal_copy_primary vte_terminal_copy_primary;
 alias c_vte_terminal_event_check_gregex_simple vte_terminal_event_check_gregex_simple;
 alias c_vte_terminal_event_check_regex_simple vte_terminal_event_check_regex_simple;
@@ -330,6 +339,7 @@ alias c_vte_terminal_feed vte_terminal_feed;
 alias c_vte_terminal_feed_child vte_terminal_feed_child;
 alias c_vte_terminal_feed_child_binary vte_terminal_feed_child_binary;
 alias c_vte_terminal_get_allow_bold vte_terminal_get_allow_bold;
+alias c_vte_terminal_get_allow_hyperlink vte_terminal_get_allow_hyperlink;
 alias c_vte_terminal_get_audible_bell vte_terminal_get_audible_bell;
 alias c_vte_terminal_get_char_height vte_terminal_get_char_height;
 alias c_vte_terminal_get_char_width vte_terminal_get_char_width;
@@ -356,6 +366,7 @@ alias c_vte_terminal_get_text_include_trailing_spaces vte_terminal_get_text_incl
 alias c_vte_terminal_get_text_range vte_terminal_get_text_range;
 alias c_vte_terminal_get_window_title vte_terminal_get_window_title;
 alias c_vte_terminal_get_word_char_exceptions vte_terminal_get_word_char_exceptions;
+alias c_vte_terminal_hyperlink_check_event vte_terminal_hyperlink_check_event;
 alias c_vte_terminal_match_add_gregex vte_terminal_match_add_gregex;
 alias c_vte_terminal_match_add_regex vte_terminal_match_add_regex;
 alias c_vte_terminal_match_check vte_terminal_match_check;
@@ -379,6 +390,7 @@ alias c_vte_terminal_search_set_regex vte_terminal_search_set_regex;
 alias c_vte_terminal_search_set_wrap_around vte_terminal_search_set_wrap_around;
 alias c_vte_terminal_select_all vte_terminal_select_all;
 alias c_vte_terminal_set_allow_bold vte_terminal_set_allow_bold;
+alias c_vte_terminal_set_allow_hyperlink vte_terminal_set_allow_hyperlink;
 alias c_vte_terminal_set_audible_bell vte_terminal_set_audible_bell;
 alias c_vte_terminal_set_backspace_binding vte_terminal_set_backspace_binding;
 alias c_vte_terminal_set_cjk_ambiguous_width vte_terminal_set_cjk_ambiguous_width;

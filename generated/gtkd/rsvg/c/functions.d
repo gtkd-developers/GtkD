@@ -54,6 +54,7 @@ shared static this()
 	Linker.link(rsvg_handle_get_pixbuf_sub, "rsvg_handle_get_pixbuf_sub", LIBRARY_RSVG);
 	Linker.link(rsvg_handle_get_position_sub, "rsvg_handle_get_position_sub", LIBRARY_RSVG);
 	Linker.link(rsvg_handle_has_sub, "rsvg_handle_has_sub", LIBRARY_RSVG);
+	Linker.link(rsvg_handle_internal_set_testing, "rsvg_handle_internal_set_testing", LIBRARY_RSVG);
 	Linker.link(rsvg_handle_read_stream_sync, "rsvg_handle_read_stream_sync", LIBRARY_RSVG);
 	Linker.link(rsvg_handle_render_cairo, "rsvg_handle_render_cairo", LIBRARY_RSVG);
 	Linker.link(rsvg_handle_render_cairo_sub, "rsvg_handle_render_cairo_sub", LIBRARY_RSVG);
@@ -62,6 +63,8 @@ shared static this()
 	Linker.link(rsvg_handle_set_dpi, "rsvg_handle_set_dpi", LIBRARY_RSVG);
 	Linker.link(rsvg_handle_set_dpi_x_y, "rsvg_handle_set_dpi_x_y", LIBRARY_RSVG);
 	Linker.link(rsvg_handle_write, "rsvg_handle_write", LIBRARY_RSVG);
+	Linker.link(rsvg_set_default_dpi, "rsvg_set_default_dpi", LIBRARY_RSVG);
+	Linker.link(rsvg_set_default_dpi_x_y, "rsvg_set_default_dpi_x_y", LIBRARY_RSVG);
 }
 
 __gshared extern(C)
@@ -84,6 +87,7 @@ __gshared extern(C)
 	GdkPixbuf* function(RsvgHandle* handle, const(char)* id) c_rsvg_handle_get_pixbuf_sub;
 	int function(RsvgHandle* handle, RsvgPositionData* positionData, const(char)* id) c_rsvg_handle_get_position_sub;
 	int function(RsvgHandle* handle, const(char)* id) c_rsvg_handle_has_sub;
+	void function(RsvgHandle* handle, int testing) c_rsvg_handle_internal_set_testing;
 	int function(RsvgHandle* handle, GInputStream* stream, GCancellable* cancellable, GError** err) c_rsvg_handle_read_stream_sync;
 	int function(RsvgHandle* handle, cairo_t* cr) c_rsvg_handle_render_cairo;
 	int function(RsvgHandle* handle, cairo_t* cr, const(char)* id) c_rsvg_handle_render_cairo_sub;
@@ -92,6 +96,8 @@ __gshared extern(C)
 	void function(RsvgHandle* handle, double dpi) c_rsvg_handle_set_dpi;
 	void function(RsvgHandle* handle, double dpiX, double dpiY) c_rsvg_handle_set_dpi_x_y;
 	int function(RsvgHandle* handle, char* buf, size_t count, GError** err) c_rsvg_handle_write;
+	void function(double dpi) c_rsvg_set_default_dpi;
+	void function(double dpiX, double dpiY) c_rsvg_set_default_dpi_x_y;
 }
 
 
@@ -112,6 +118,7 @@ alias c_rsvg_handle_get_pixbuf rsvg_handle_get_pixbuf;
 alias c_rsvg_handle_get_pixbuf_sub rsvg_handle_get_pixbuf_sub;
 alias c_rsvg_handle_get_position_sub rsvg_handle_get_position_sub;
 alias c_rsvg_handle_has_sub rsvg_handle_has_sub;
+alias c_rsvg_handle_internal_set_testing rsvg_handle_internal_set_testing;
 alias c_rsvg_handle_read_stream_sync rsvg_handle_read_stream_sync;
 alias c_rsvg_handle_render_cairo rsvg_handle_render_cairo;
 alias c_rsvg_handle_render_cairo_sub rsvg_handle_render_cairo_sub;
@@ -120,3 +127,5 @@ alias c_rsvg_handle_set_base_uri rsvg_handle_set_base_uri;
 alias c_rsvg_handle_set_dpi rsvg_handle_set_dpi;
 alias c_rsvg_handle_set_dpi_x_y rsvg_handle_set_dpi_x_y;
 alias c_rsvg_handle_write rsvg_handle_write;
+alias c_rsvg_set_default_dpi rsvg_set_default_dpi;
+alias c_rsvg_set_default_dpi_x_y rsvg_set_default_dpi_x_y;

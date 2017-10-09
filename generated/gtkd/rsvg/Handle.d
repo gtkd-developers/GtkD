@@ -420,6 +420,12 @@ public class Handle : ObjectG
 		return rsvg_handle_has_sub(rsvgHandle, Str.toStringz(id)) != 0;
 	}
 
+	/** */
+	public void internalSetTesting(bool testing)
+	{
+		rsvg_handle_internal_set_testing(rsvgHandle, testing);
+	}
+
 	/**
 	 * Reads @stream and writes the data from it to @handle.
 	 *
@@ -573,5 +579,36 @@ public class Handle : ObjectG
 		}
 
 		return p;
+	}
+
+	/**
+	 * Sets the DPI for the all future outgoing pixbufs. Common values are
+	 * 75, 90, and 300 DPI. Passing a number <= 0 to @dpi will
+	 * reset the DPI to whatever the default value happens to be.
+	 *
+	 * Params:
+	 *     dpi = Dots Per Inch (aka Pixels Per Inch)
+	 *
+	 * Since: 2.8
+	 */
+	public static void setDefaultDpi(double dpi)
+	{
+		rsvg_set_default_dpi(dpi);
+	}
+
+	/**
+	 * Sets the DPI for the all future outgoing pixbufs. Common values are
+	 * 75, 90, and 300 DPI. Passing a number <= 0 to @dpi will
+	 * reset the DPI to whatever the default value happens to be.
+	 *
+	 * Params:
+	 *     dpiX = Dots Per Inch (aka Pixels Per Inch)
+	 *     dpiY = Dots Per Inch (aka Pixels Per Inch)
+	 *
+	 * Since: 2.8
+	 */
+	public static void setDefaultDpiXY(double dpiX, double dpiY)
+	{
+		rsvg_set_default_dpi_x_y(dpiX, dpiY);
 	}
 }

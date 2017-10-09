@@ -7017,8 +7017,8 @@ __gshared extern(C)
 	GtkIconTheme* function(GdkScreen* screen) c_gtk_icon_theme_get_for_screen;
 	void function(GtkIconTheme* iconTheme, const(char)* path) c_gtk_icon_theme_add_resource_path;
 	void function(GtkIconTheme* iconTheme, char* path) c_gtk_icon_theme_append_search_path;
-	GtkIconInfo* function(GtkIconTheme* iconTheme, char* iconNames, int size, GtkIconLookupFlags flags) c_gtk_icon_theme_choose_icon;
-	GtkIconInfo* function(GtkIconTheme* iconTheme, char* iconNames, int size, int scale, GtkIconLookupFlags flags) c_gtk_icon_theme_choose_icon_for_scale;
+	GtkIconInfo* function(GtkIconTheme* iconTheme, char** iconNames, int size, GtkIconLookupFlags flags) c_gtk_icon_theme_choose_icon;
+	GtkIconInfo* function(GtkIconTheme* iconTheme, char** iconNames, int size, int scale, GtkIconLookupFlags flags) c_gtk_icon_theme_choose_icon_for_scale;
 	char* function(GtkIconTheme* iconTheme) c_gtk_icon_theme_get_example_icon_name;
 	int* function(GtkIconTheme* iconTheme, const(char)* iconName) c_gtk_icon_theme_get_icon_sizes;
 	void function(GtkIconTheme* iconTheme, char** path, int* nElements) c_gtk_icon_theme_get_search_path;

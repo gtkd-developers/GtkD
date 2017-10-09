@@ -347,10 +347,10 @@ public class Spawn
 	 * You should call g_spawn_close_pid() on the returned child process
 	 * reference when you don't need it any more.
 	 *
-	 * If you are writing a GTK+ application, and the program you are
-	 * spawning is a graphical application, too, then you may want to
-	 * use gdk_spawn_on_screen() instead to ensure that the spawned program
-	 * opens its windows on the right screen.
+	 * If you are writing a GTK+ application, and the program you are spawning is a
+	 * graphical application too, then to ensure that the spawned program opens its
+	 * windows on the right screen, you may want to use #GdkAppLaunchContext,
+	 * #GAppLaunchcontext, or set the %DISPLAY environment variable.
 	 *
 	 * Note that the returned @child_pid on Windows is a handle to the child
 	 * process and not its identifier. Process handles and process identifiers

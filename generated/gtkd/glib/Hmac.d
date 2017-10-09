@@ -24,6 +24,7 @@
 
 module glib.Hmac;
 
+private import glib.Bytes;
 private import glib.ConstructionException;
 private import glib.Str;
 private import glib.c.functions;
@@ -282,6 +283,31 @@ public class Hmac
 	public static string computeHmacForString(GChecksumType digestType, char[] key, string str)
 	{
 		auto retStr = g_compute_hmac_for_string(digestType, key.ptr, cast(size_t)key.length, Str.toStringz(str), cast(ptrdiff_t)str.length);
+
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
+	}
+
+	/**
+	 * Computes the HMAC for a binary @data. This is a
+	 * convenience wrapper for g_hmac_new(), g_hmac_get_string()
+	 * and g_hmac_unref().
+	 *
+	 * The hexadecimal string returned will be in lower case.
+	 *
+	 * Params:
+	 *     digestType = a #GChecksumType to use for the HMAC
+	 *     key = the key to use in the HMAC
+	 *     data = binary blob to compute the HMAC of
+	 *
+	 * Returns: the HMAC of the binary data as a string in hexadecimal.
+	 *     The returned string should be freed with g_free() when done using it.
+	 *
+	 * Since: 2.50
+	 */
+	public static string computeHmacForBytes(GChecksumType digestType, Bytes key, Bytes data)
+	{
+		auto retStr = g_compute_hmac_for_bytes(digestType, (key is null) ? null : key.getBytesStruct(), (data is null) ? null : data.getBytesStruct());
 
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);

@@ -76,6 +76,57 @@ public class PtrArray
 	}
 
 	/**
+	 * Checks whether @needle exists in @haystack. If the element is found, %TRUE is
+	 * returned and the element’s index is returned in @index_ (if non-%NULL).
+	 * Otherwise, %FALSE is returned and @index_ is undefined. If @needle exists
+	 * multiple times in @haystack, the index of the first instance is returned.
+	 *
+	 * This does pointer comparisons only. If you want to use more complex equality
+	 * checks, such as string comparisons, use g_ptr_array_find_with_equal_func().
+	 *
+	 * Params:
+	 *     needle = pointer to look for
+	 *     index = return location for the index of
+	 *         the element, if found
+	 *
+	 * Returns: %TRUE if @needle is one of the elements of @haystack
+	 *
+	 * Since: 2.54
+	 */
+	public bool find(void* needle, out uint index)
+	{
+		return g_ptr_array_find(gPtrArray, needle, &index) != 0;
+	}
+
+	/**
+	 * Checks whether @needle exists in @haystack, using the given @equal_func.
+	 * If the element is found, %TRUE is returned and the element’s index is
+	 * returned in @index_ (if non-%NULL). Otherwise, %FALSE is returned and @index_
+	 * is undefined. If @needle exists multiple times in @haystack, the index of
+	 * the first instance is returned.
+	 *
+	 * @equal_func is called with the element from the array as its first parameter,
+	 * and @needle as its second parameter. If @equal_func is %NULL, pointer
+	 * equality is used.
+	 *
+	 * Params:
+	 *     needle = pointer to look for
+	 *     equalFunc = the function to call for each element, which should
+	 *         return %TRUE when the desired element is found; or %NULL to use pointer
+	 *         equality
+	 *     index = return location for the index of
+	 *         the element, if found
+	 *
+	 * Returns: %TRUE if @needle is one of the elements of @haystack
+	 *
+	 * Since: 2.54
+	 */
+	public bool findWithEqualFunc(void* needle, GEqualFunc equalFunc, out uint index)
+	{
+		return g_ptr_array_find_with_equal_func(gPtrArray, needle, equalFunc, &index) != 0;
+	}
+
+	/**
 	 * Calls a function for each element of a #GPtrArray.
 	 *
 	 * Params:
@@ -100,6 +151,10 @@ public class PtrArray
 	 * If array contents point to dynamically-allocated memory, they should
 	 * be freed separately if @free_seg is %TRUE and no #GDestroyNotify
 	 * function has been set for @array.
+	 *
+	 * This function is not thread-safe. If using a #GPtrArray from multiple
+	 * threads, use only the atomic g_ptr_array_ref() and g_ptr_array_unref()
+	 * functions.
 	 *
 	 * Params:
 	 *     freeSeg = if %TRUE the actual pointer array is freed as well
@@ -421,7 +476,7 @@ public class PtrArray
 	 * Atomically decrements the reference count of @array by one. If the
 	 * reference count drops to 0, the effect is the same as calling
 	 * g_ptr_array_free() with @free_segment set to %TRUE. This function
-	 * is MT-safe and may be called from any thread.
+	 * is thread-safe and may be called from any thread.
 	 *
 	 * Since: 2.22
 	 */

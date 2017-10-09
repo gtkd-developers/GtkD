@@ -135,4 +135,49 @@ public struct Enums
 	{
 		return g_enum_register_static(Str.toStringz(name), constStaticValues);
 	}
+
+	/**
+	 * Pretty-prints @value in the form of the enum’s name.
+	 *
+	 * This is intended to be used for debugging purposes. The format of the output
+	 * may change in the future.
+	 *
+	 * Params:
+	 *     gEnumType = the type identifier of a #GEnumClass type
+	 *     value = the value
+	 *
+	 * Returns: a newly-allocated text string
+	 *
+	 * Since: 2.54
+	 */
+	public static string enumToString(GType gEnumType, int value)
+	{
+		auto retStr = g_enum_to_string(gEnumType, value);
+
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
+	}
+
+	/**
+	 * Pretty-prints @value in the form of the flag names separated by ` | ` and
+	 * sorted. Any extra bits will be shown at the end as a hexadecimal number.
+	 *
+	 * This is intended to be used for debugging purposes. The format of the output
+	 * may change in the future.
+	 *
+	 * Params:
+	 *     flagsType = the type identifier of a #GFlagsClass type
+	 *     value = the value
+	 *
+	 * Returns: a newly-allocated text string
+	 *
+	 * Since: 2.54
+	 */
+	public static string flagsToString(GType flagsType, uint value)
+	{
+		auto retStr = g_flags_to_string(flagsType, value);
+
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
+	}
 }

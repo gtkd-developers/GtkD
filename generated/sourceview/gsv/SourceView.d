@@ -413,8 +413,8 @@ public class SourceView : TextView
 	}
 
 	/**
-	 * Insert one indentation level at the beginning of the
-	 * specified lines.
+	 * Inserts one indentation level at the beginning of the specified lines. The
+	 * empty lines are not indented.
 	 *
 	 * Params:
 	 *     start = #GtkTextIter of the first line to indent

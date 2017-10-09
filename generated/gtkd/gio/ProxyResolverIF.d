@@ -41,6 +41,10 @@ public  import gtkc.giotypes;
  * #GProxyResolver provides synchronous and asynchronous network proxy
  * resolution. #GProxyResolver is used within #GSocketClient through
  * the method g_socket_connectable_proxy_enumerate().
+ * 
+ * Implementations of #GProxyResolver based on libproxy and GNOME settings can
+ * be found in glib-networking. GIO comes with an implementation for use inside
+ * Flatpak portals.
  *
  * Since: 2.26
  */

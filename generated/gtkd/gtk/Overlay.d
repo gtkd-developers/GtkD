@@ -54,6 +54,12 @@ private import std.algorithm;
  * The GtkOverlay implementation of the GtkBuildable interface
  * supports placing a child as an overlay by specifying “overlay” as
  * the “type” attribute of a `<child>` element.
+ * 
+ * # CSS nodes
+ * 
+ * GtkOverlay has a single CSS node with the name “overlay”. Overlay children
+ * whose alignments cause them to be positioned at an edge get the style classes
+ * “.left”, “.right”, “.top”, and/or “.bottom” according to their position.
  */
 public class Overlay : Bin
 {

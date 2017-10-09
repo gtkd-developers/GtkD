@@ -457,7 +457,7 @@ public class ToolItem : Bin, ActivatableIF
 	 *
 	 * Params:
 	 *     menuItemId = a string used to identify @menu_item
-	 *     menuItem = a #GtkMenuItem to be used in the overflow menu
+	 *     menuItem = a #GtkMenuItem to use in the overflow menu, or %NULL
 	 *
 	 * Since: 2.4
 	 */

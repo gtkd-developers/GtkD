@@ -424,6 +424,7 @@ struct: Hmac
 noCode: get_digest
 move: compute_hmac_for_data Hmac
 move: compute_hmac_for_string Hmac
+move: compute_hmac_for_bytes Hmac
 array: compute_hmac_for_data data length
 array: compute_hmac_for_string str length
 code: start
@@ -1962,6 +1963,11 @@ move: vsprintf Str
 version !OSX: start
 	move: fprintf Str
 	move: vfprintf Str
+version: end
+
+version 2.54: start
+	move: ascii_string_to_signed Str
+	move: ascii_string_to_unsigned Str
 version: end
 
 move: string_new String

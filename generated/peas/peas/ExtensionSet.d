@@ -85,6 +85,9 @@ public class ExtensionSet : ObjectG
 	 *
 	 * If @engine is %NULL, then the default engine will be used.
 	 *
+	 * Since libpeas 1.22, @exten_type can be an Abstract #GType
+	 * and not just an Interface #GType.
+	 *
 	 * See peas_extension_set_new() for more information.
 	 *
 	 * Params:
@@ -114,6 +117,9 @@ public class ExtensionSet : ObjectG
 	 * Create a new #PeasExtensionSet for the @exten_type extension type.
 	 *
 	 * If @engine is %NULL, then the default engine will be used.
+	 *
+	 * Since libpeas 1.22, @exten_type can be an Abstract #GType
+	 * and not just an Interface #GType.
 	 *
 	 * See peas_extension_set_new() for more information.
 	 *

@@ -247,13 +247,9 @@ public final class DBusNodeInfo
 	 *
 	 * Since: 2.26
 	 */
-	public void generateXml(uint indent, out StringG stringBuilder)
+	public void generateXml(uint indent, StringG stringBuilder)
 	{
-		GString* outstringBuilder = gMalloc!GString();
-
-		g_dbus_node_info_generate_xml(gDBusNodeInfo, indent, outstringBuilder);
-
-		stringBuilder = new StringG(outstringBuilder, true);
+		g_dbus_node_info_generate_xml(gDBusNodeInfo, indent, (stringBuilder is null) ? null : stringBuilder.getStringGStruct());
 	}
 
 	/**

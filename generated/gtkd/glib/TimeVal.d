@@ -138,7 +138,14 @@ public final class TimeVal
 	 * Use g_date_time_format() or g_strdup_printf() if a different
 	 * variation of ISO 8601 format is required.
 	 *
-	 * Returns: a newly allocated string containing an ISO 8601 date
+	 * If @time_ represents a date which is too large to fit into a `struct tm`,
+	 * %NULL will be returned. This is platform dependent, but it is safe to assume
+	 * years up to 3000 are supported. The return value of g_time_val_to_iso8601()
+	 * has been nullable since GLib 2.54; before then, GLib would crash under the
+	 * same conditions.
+	 *
+	 * Returns: a newly allocated string containing an ISO 8601 date,
+	 *     or %NULL if @time_ was too large
 	 *
 	 * Since: 2.12
 	 */

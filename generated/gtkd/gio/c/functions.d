@@ -2228,6 +2228,7 @@ shared static this()
 
 	// gio.UnixMountEntry
 
+	Linker.link(g_unix_mount_entry_get_type, "g_unix_mount_entry_get_type", LIBRARY_GIO);
 	Linker.link(g_unix_is_mount_path_system_internal, "g_unix_is_mount_path_system_internal", LIBRARY_GIO);
 	Linker.link(g_unix_mount_at, "g_unix_mount_at", LIBRARY_GIO);
 	Linker.link(g_unix_mount_compare, "g_unix_mount_compare", LIBRARY_GIO);
@@ -2246,6 +2247,8 @@ shared static this()
 	Linker.link(g_unix_mount_points_get, "g_unix_mount_points_get", LIBRARY_GIO);
 	Linker.link(g_unix_mounts_changed_since, "g_unix_mounts_changed_since", LIBRARY_GIO);
 	Linker.link(g_unix_mounts_get, "g_unix_mounts_get", LIBRARY_GIO);
+	Linker.link(g_unix_mount_copy, "g_unix_mount_copy", LIBRARY_GIO);
+	Linker.link(g_unix_mount_for, "g_unix_mount_for", LIBRARY_GIO);
 
 	// gio.UnixMountMonitor
 
@@ -2256,7 +2259,9 @@ shared static this()
 
 	// gio.UnixMountPoint
 
+	Linker.link(g_unix_mount_point_get_type, "g_unix_mount_point_get_type", LIBRARY_GIO);
 	Linker.link(g_unix_mount_point_compare, "g_unix_mount_point_compare", LIBRARY_GIO);
+	Linker.link(g_unix_mount_point_copy, "g_unix_mount_point_copy", LIBRARY_GIO);
 	Linker.link(g_unix_mount_point_free, "g_unix_mount_point_free", LIBRARY_GIO);
 	Linker.link(g_unix_mount_point_get_device_path, "g_unix_mount_point_get_device_path", LIBRARY_GIO);
 	Linker.link(g_unix_mount_point_get_fs_type, "g_unix_mount_point_get_fs_type", LIBRARY_GIO);
@@ -4618,8 +4623,9 @@ __gshared extern(C)
 
 	// gio.UnixMountEntry
 
+	GType function() c_g_unix_mount_entry_get_type;
 	int function(char* mountPath) c_g_unix_is_mount_path_system_internal;
-	GUnixMountEntry* function(const(char)* mountPath, ulong* timeRead) c_g_unix_mount_at;
+	GUnixMountEntry* function(char* mountPath, ulong* timeRead) c_g_unix_mount_at;
 	int function(GUnixMountEntry* mount1, GUnixMountEntry* mount2) c_g_unix_mount_compare;
 	void function(GUnixMountEntry* mountEntry) c_g_unix_mount_free;
 	char* function(GUnixMountEntry* mountEntry) c_g_unix_mount_get_device_path;
@@ -4636,6 +4642,8 @@ __gshared extern(C)
 	GList* function(ulong* timeRead) c_g_unix_mount_points_get;
 	int function(ulong time) c_g_unix_mounts_changed_since;
 	GList* function(ulong* timeRead) c_g_unix_mounts_get;
+	GUnixMountEntry* function(GUnixMountEntry* mountEntry) c_g_unix_mount_copy;
+	GUnixMountEntry* function(char* filePath, ulong* timeRead) c_g_unix_mount_for;
 
 	// gio.UnixMountMonitor
 
@@ -4646,7 +4654,9 @@ __gshared extern(C)
 
 	// gio.UnixMountPoint
 
+	GType function() c_g_unix_mount_point_get_type;
 	int function(GUnixMountPoint* mount1, GUnixMountPoint* mount2) c_g_unix_mount_point_compare;
+	GUnixMountPoint* function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_copy;
 	void function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_free;
 	char* function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_get_device_path;
 	const(char)* function(GUnixMountPoint* mountPoint) c_g_unix_mount_point_get_fs_type;
@@ -7006,6 +7016,7 @@ alias c_g_unix_input_stream_set_close_fd g_unix_input_stream_set_close_fd;
 
 // gio.UnixMountEntry
 
+alias c_g_unix_mount_entry_get_type g_unix_mount_entry_get_type;
 alias c_g_unix_is_mount_path_system_internal g_unix_is_mount_path_system_internal;
 alias c_g_unix_mount_at g_unix_mount_at;
 alias c_g_unix_mount_compare g_unix_mount_compare;
@@ -7024,6 +7035,8 @@ alias c_g_unix_mount_points_changed_since g_unix_mount_points_changed_since;
 alias c_g_unix_mount_points_get g_unix_mount_points_get;
 alias c_g_unix_mounts_changed_since g_unix_mounts_changed_since;
 alias c_g_unix_mounts_get g_unix_mounts_get;
+alias c_g_unix_mount_copy g_unix_mount_copy;
+alias c_g_unix_mount_for g_unix_mount_for;
 
 // gio.UnixMountMonitor
 
@@ -7034,7 +7047,9 @@ alias c_g_unix_mount_monitor_set_rate_limit g_unix_mount_monitor_set_rate_limit;
 
 // gio.UnixMountPoint
 
+alias c_g_unix_mount_point_get_type g_unix_mount_point_get_type;
 alias c_g_unix_mount_point_compare g_unix_mount_point_compare;
+alias c_g_unix_mount_point_copy g_unix_mount_point_copy;
 alias c_g_unix_mount_point_free g_unix_mount_point_free;
 alias c_g_unix_mount_point_get_device_path g_unix_mount_point_get_device_path;
 alias c_g_unix_mount_point_get_fs_type g_unix_mount_point_get_fs_type;

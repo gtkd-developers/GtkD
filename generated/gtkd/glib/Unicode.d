@@ -973,12 +973,18 @@ public struct Unicode
 	 * is made to see if the character found is actually valid other than
 	 * it starts with an appropriate byte.
 	 *
+	 * If @end is %NULL, the return value will never be %NULL: if the end of the
+	 * string is reached, a pointer to the terminating nul byte is returned. If
+	 * @end is non-%NULL, the return value will be %NULL if the end of the string
+	 * is reached.
+	 *
 	 * Params:
 	 *     p = a pointer to a position within a UTF-8 encoded string
 	 *     end = a pointer to the byte following the end of the string,
 	 *         or %NULL to indicate that the string is nul-terminated
 	 *
-	 * Returns: a pointer to the found character or %NULL
+	 * Returns: a pointer to the found character or %NULL if @end is
+	 *     set and is reached
 	 */
 	public static string utf8FindNextChar(string p, string end)
 	{
@@ -1034,6 +1040,10 @@ public struct Unicode
 	 * This function checks for incomplete characters, for invalid characters
 	 * such as characters that are out of the range of Unicode, and for
 	 * overlong encodings of valid characters.
+	 *
+	 * Note that g_utf8_get_char_validated() returns (gunichar)-2 if
+	 * @max_len is positive and any of the bytes in the first UTF-8 character
+	 * sequence are nul.
 	 *
 	 * Params:
 	 *     p = a pointer to Unicode character encoded as UTF-8

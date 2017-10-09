@@ -119,10 +119,34 @@ public class Terminal : Widget, ScrollableIF
 	/**
 	 * Places the selected text in the terminal in the #GDK_SELECTION_CLIPBOARD
 	 * selection.
+	 *
+	 * Deprecated: Use vte_terminal_copy_clipboard_format() with %VTE_FORMAT_TEXT
+	 * instead.
 	 */
 	public void copyClipboard()
 	{
 		vte_terminal_copy_clipboard(vteTerminal);
+	}
+
+	/**
+	 * Places the selected text in the terminal in the #GDK_SELECTION_CLIPBOARD
+	 * selection in the form specified by @format.
+	 *
+	 * For all formats, the selection data (see #GtkSelectionData) will include the
+	 * text targets (see gtk_target_list_add_text_targets() and
+	 * gtk_selection_data_targets_includes_text()). For %VTE_FORMAT_HTML,
+	 * the selection will also include the "text/html" target, which when requested,
+	 * returns the HTML data in UTF-16 with a U+FEFF BYTE ORDER MARK character at
+	 * the start.
+	 *
+	 * Params:
+	 *     format = a #VteFormat
+	 *
+	 * Since: 0.50
+	 */
+	public void copyClipboardFormat(VteFormat format)
+	{
+		vte_terminal_copy_clipboard_format(vteTerminal, format);
 	}
 
 	/**
@@ -237,6 +261,18 @@ public class Terminal : Widget, ScrollableIF
 	public bool getAllowBold()
 	{
 		return vte_terminal_get_allow_bold(vteTerminal) != 0;
+	}
+
+	/**
+	 * Checks whether or not hyperlinks (OSC 8 escape sequence) are allowed.
+	 *
+	 * Returns: %TRUE if hyperlinks are enabled, %FALSE if not
+	 *
+	 * Since: 0.50
+	 */
+	public bool getAllowHyperlink()
+	{
+		return vte_terminal_get_allow_hyperlink(vteTerminal) != 0;
 	}
 
 	/**
@@ -580,6 +616,29 @@ public class Terminal : Widget, ScrollableIF
 	public string getWordCharExceptions()
 	{
 		return Str.toString(vte_terminal_get_word_char_exceptions(vteTerminal));
+	}
+
+	/**
+	 * Returns a nonempty string: the target of the explicit hyperlink (printed using the OSC 8
+	 * escape sequence) at the position of the event, or %NULL.
+	 *
+	 * Proper use of the escape sequence should result in URI-encoded URIs with a proper scheme
+	 * like "http://", "https://", "file://", "mailto:" etc. This is, however, not enforced by VTE.
+	 * The caller must tolerate the returned string potentially not being a valid URI.
+	 *
+	 * Params:
+	 *     event = a #GdkEvent
+	 *
+	 * Returns: a newly allocated string containing the target of the hyperlink
+	 *
+	 * Since: 0.50
+	 */
+	public string hyperlinkCheckEvent(Event event)
+	{
+		auto retStr = vte_terminal_hyperlink_check_event(vteTerminal, (event is null) ? null : event.getEventStruct());
+
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -932,6 +991,19 @@ public class Terminal : Widget, ScrollableIF
 	public void setAllowBold(bool allowBold)
 	{
 		vte_terminal_set_allow_bold(vteTerminal, allowBold);
+	}
+
+	/**
+	 * Controls whether or not hyperlinks (OSC 8 escape sequence) are allowed.
+	 *
+	 * Params:
+	 *     allowHyperlink = %TRUE if the terminal should allow hyperlinks
+	 *
+	 * Since: 0.50
+	 */
+	public void setAllowHyperlink(bool allowHyperlink)
+	{
+		vte_terminal_set_allow_hyperlink(vteTerminal, allowHyperlink);
 	}
 
 	/**
@@ -2184,6 +2256,70 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	extern(C) static void callBackEofDestroy(OnEofDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.remove(wrapper);
+	}
+
+	protected class OnHyperlinkHoverUriChangedDelegateWrapper
+	{
+		void delegate(string, GdkRectangle*, Terminal) dlg;
+		gulong handlerId;
+
+		this(void delegate(string, GdkRectangle*, Terminal) dlg)
+		{
+			this.dlg = dlg;
+			onHyperlinkHoverUriChangedListeners ~= this;
+		}
+
+		void remove(OnHyperlinkHoverUriChangedDelegateWrapper source)
+		{
+			foreach(index, wrapper; onHyperlinkHoverUriChangedListeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					onHyperlinkHoverUriChangedListeners[index] = null;
+					onHyperlinkHoverUriChangedListeners = std.algorithm.remove(onHyperlinkHoverUriChangedListeners, index);
+					break;
+				}
+			}
+		}
+	}
+	OnHyperlinkHoverUriChangedDelegateWrapper[] onHyperlinkHoverUriChangedListeners;
+
+	/**
+	 * Emitted when the hovered hyperlink changes.
+	 *
+	 * @uri and @bbox are owned by VTE, must not be modified, and might
+	 * change after the signal handlers returns.
+	 *
+	 * The signal is not re-emitted when the bounding box changes for the
+	 * same hyperlink. This might change in a future VTE version without notice.
+	 *
+	 * Params:
+	 *     uri = the nonempty target URI under the mouse, or NULL
+	 *     bbox = the bounding box of the hyperlink anchor text, or NULL
+	 *
+	 * Since: 0.50
+	 */
+	gulong addOnHyperlinkHoverUriChanged(void delegate(string, GdkRectangle*, Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		auto wrapper = new OnHyperlinkHoverUriChangedDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
+			this,
+			"hyperlink-hover-uri-changed",
+			cast(GCallback)&callBackHyperlinkHoverUriChanged,
+			cast(void*)wrapper,
+			cast(GClosureNotify)&callBackHyperlinkHoverUriChangedDestroy,
+			connectFlags);
+		return wrapper.handlerId;
+	}
+
+	extern(C) static void callBackHyperlinkHoverUriChanged(VteTerminal* terminalStruct, char* uri, GdkRectangle* bbox, OnHyperlinkHoverUriChangedDelegateWrapper wrapper)
+	{
+		wrapper.dlg(Str.toString(uri), bbox, wrapper.outer);
+	}
+
+	extern(C) static void callBackHyperlinkHoverUriChangedDestroy(OnHyperlinkHoverUriChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
 	}

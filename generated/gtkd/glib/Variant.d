@@ -57,10 +57,10 @@ private import gtkd.Loader;
  * can use:
  * 
  * |[<!-- language="C" -->
- * GVariant *v = g_variant_new ('u', 40);
+ * GVariant *v = g_variant_new ("u", 40);
  * ]|
  * 
- * The string 'u' in the first argument tells #GVariant that the data passed to
+ * The string "u" in the first argument tells #GVariant that the data passed to
  * the constructor (40) is going to be an unsigned integer.
  * 
  * More advanced examples of #GVariant in use can be found in documentation for
@@ -272,7 +272,7 @@ private import gtkd.Loader;
  * 
  * To put the entire example together, for our dictionary mapping
  * strings to variants (with two entries, as given above), we are
- * using 91 bytes of memory for type information, 29 byes of memory
+ * using 91 bytes of memory for type information, 29 bytes of memory
  * for the serialised data, 16 bytes for buffer management and 24
  * bytes for the #GVariant instance, or a total of 160 bytes, plus
  * malloc overhead.  If we were to use g_variant_get_child_value() to
@@ -574,10 +574,10 @@ public class Variant
 	}
 
 	/**
-	 * Provides access to the serialised data for an array of fixed-sized
-	 * items.
+	 * Constructs a new array #GVariant instance, where the elements are
+	 * of @element_type type.
 	 *
-	 * @value must be an array with fixed-sized elements.  Numeric types are
+	 * @elements must be an array with fixed-sized elements.  Numeric types are
 	 * fixed-size as are tuples containing only other fixed-sized types.
 	 *
 	 * @element_size must be the size of a single element in the array.
@@ -586,8 +586,7 @@ public class Variant
 	 * of a double-check that the form of the serialised data matches the caller's
 	 * expectation.
 	 *
-	 * @n_elements, which must be non-%NULL is set equal to the number of
-	 * items in the array.
+	 * @n_elements must be the length of the @elements array.
 	 *
 	 * Params:
 	 *     elementType = the #GVariantType of each element
@@ -1029,7 +1028,7 @@ public class Variant
 	 *
 	 * Note that the arguments in @app must be of the correct width for their
 	 * types specified in @format_string when collected into the #va_list.
-	 * See the [GVariant varargs documentation][gvariant-varargs.
+	 * See the [GVariant varargs documentation][gvariant-varargs].
 	 *
 	 * These two generalisations allow mixing of multiple calls to
 	 * g_variant_new_va() and g_variant_get_va() within a single actual

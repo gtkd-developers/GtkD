@@ -368,6 +368,7 @@ shared static this()
 	Linker.link(g_hmac_new, "g_hmac_new", LIBRARY_GLIB);
 	Linker.link(g_compute_hmac_for_data, "g_compute_hmac_for_data", LIBRARY_GLIB);
 	Linker.link(g_compute_hmac_for_string, "g_compute_hmac_for_string", LIBRARY_GLIB);
+	Linker.link(g_compute_hmac_for_bytes, "g_compute_hmac_for_bytes", LIBRARY_GLIB);
 
 	// glib.Hook
 
@@ -722,6 +723,8 @@ shared static this()
 	// glib.PtrArray
 
 	Linker.link(g_ptr_array_add, "g_ptr_array_add", LIBRARY_GLIB);
+	Linker.link(g_ptr_array_find, "g_ptr_array_find", LIBRARY_GLIB);
+	Linker.link(g_ptr_array_find_with_equal_func, "g_ptr_array_find_with_equal_func", LIBRARY_GLIB);
 	Linker.link(g_ptr_array_foreach, "g_ptr_array_foreach", LIBRARY_GLIB);
 	Linker.link(g_ptr_array_free, "g_ptr_array_free", LIBRARY_GLIB);
 	Linker.link(g_ptr_array_insert, "g_ptr_array_insert", LIBRARY_GLIB);
@@ -1429,6 +1432,8 @@ shared static this()
 	Linker.link(g_vsprintf, "g_vsprintf", LIBRARY_GLIB);
 	Linker.link(g_fprintf, "g_fprintf", LIBRARY_GLIB);
 	Linker.link(g_vfprintf, "g_vfprintf", LIBRARY_GLIB);
+	Linker.link(g_ascii_string_to_signed, "g_ascii_string_to_signed", LIBRARY_GLIB);
+	Linker.link(g_ascii_string_to_unsigned, "g_ascii_string_to_unsigned", LIBRARY_GLIB);
 
 	// glib.Timeout
 
@@ -2089,6 +2094,7 @@ __gshared extern(C)
 	GHmac* function(GChecksumType digestType, char* key, size_t keyLen) c_g_hmac_new;
 	char* function(GChecksumType digestType, char* key, size_t keyLen, char* data, size_t length) c_g_compute_hmac_for_data;
 	char* function(GChecksumType digestType, char* key, size_t keyLen, const(char)* str, ptrdiff_t length) c_g_compute_hmac_for_string;
+	char* function(GChecksumType digestType, GBytes* key, GBytes* data) c_g_compute_hmac_for_bytes;
 
 	// glib.Hook
 
@@ -2209,7 +2215,7 @@ __gshared extern(C)
 	void function(GKeyFile* keyFile, const(char)* groupName, const(char)* key, int* list, size_t length) c_g_key_file_set_integer_list;
 	void function(GKeyFile* keyFile, char separator) c_g_key_file_set_list_separator;
 	void function(GKeyFile* keyFile, const(char)* groupName, const(char)* key, const(char)* locale, const(char)* str) c_g_key_file_set_locale_string;
-	void function(GKeyFile* keyFile, const(char)* groupName, const(char)* key, const(char)* locale, char* list, size_t length) c_g_key_file_set_locale_string_list;
+	void function(GKeyFile* keyFile, const(char)* groupName, const(char)* key, const(char)* locale, char** list, size_t length) c_g_key_file_set_locale_string_list;
 	void function(GKeyFile* keyFile, const(char)* groupName, const(char)* key, const(char)* str) c_g_key_file_set_string;
 	void function(GKeyFile* keyFile, const(char)* groupName, const(char)* key, char** list, size_t length) c_g_key_file_set_string_list;
 	void function(GKeyFile* keyFile, const(char)* groupName, const(char)* key, ulong value) c_g_key_file_set_uint64;
@@ -2443,6 +2449,8 @@ __gshared extern(C)
 	// glib.PtrArray
 
 	void function(GPtrArray* array, void* data) c_g_ptr_array_add;
+	int function(GPtrArray* haystack, void* needle, uint* index) c_g_ptr_array_find;
+	int function(GPtrArray* haystack, void* needle, GEqualFunc equalFunc, uint* index) c_g_ptr_array_find_with_equal_func;
 	void function(GPtrArray* array, GFunc func, void* userData) c_g_ptr_array_foreach;
 	void** function(GPtrArray* array, int freeSeg) c_g_ptr_array_free;
 	void function(GPtrArray* array, int index, void* data) c_g_ptr_array_insert;
@@ -3150,6 +3158,8 @@ __gshared extern(C)
 	int function(char* str, char* format, void* args) c_g_vsprintf;
 	int function(FILE* file, char* format, ... ) c_g_fprintf;
 	int function(FILE* file, char* format, void* args) c_g_vfprintf;
+	int function(const(char)* str, uint base, long min, long max, long* outNum, GError** err) c_g_ascii_string_to_signed;
+	int function(const(char)* str, uint base, ulong min, ulong max, ulong* outNum, GError** err) c_g_ascii_string_to_unsigned;
 
 	// glib.Timeout
 
@@ -3802,6 +3812,7 @@ alias c_g_hmac_update g_hmac_update;
 alias c_g_hmac_new g_hmac_new;
 alias c_g_compute_hmac_for_data g_compute_hmac_for_data;
 alias c_g_compute_hmac_for_string g_compute_hmac_for_string;
+alias c_g_compute_hmac_for_bytes g_compute_hmac_for_bytes;
 
 // glib.Hook
 
@@ -4156,6 +4167,8 @@ alias c_g_private_set g_private_set;
 // glib.PtrArray
 
 alias c_g_ptr_array_add g_ptr_array_add;
+alias c_g_ptr_array_find g_ptr_array_find;
+alias c_g_ptr_array_find_with_equal_func g_ptr_array_find_with_equal_func;
 alias c_g_ptr_array_foreach g_ptr_array_foreach;
 alias c_g_ptr_array_free g_ptr_array_free;
 alias c_g_ptr_array_insert g_ptr_array_insert;
@@ -4863,6 +4876,8 @@ alias c_g_vsnprintf g_vsnprintf;
 alias c_g_vsprintf g_vsprintf;
 alias c_g_fprintf g_fprintf;
 alias c_g_vfprintf g_vfprintf;
+alias c_g_ascii_string_to_signed g_ascii_string_to_signed;
+alias c_g_ascii_string_to_unsigned g_ascii_string_to_unsigned;
 
 // glib.Timeout
 

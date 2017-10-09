@@ -105,6 +105,25 @@ public enum VteEraseBinding
 }
 alias VteEraseBinding EraseBinding;
 
+/**
+ * An enumeratio type that can be used to specify the format the selection
+ * should be copied to the clipboard in.
+ *
+ * Since: 0.50
+ */
+public enum VteFormat
+{
+	/**
+	 * Export as plain text
+	 */
+	TEXT = 1,
+	/**
+	 * Export as HTML formatted text
+	 */
+	HTML = 2,
+}
+alias VteFormat Format;
+
 public enum VtePtyError
 {
 	/**
@@ -317,14 +336,14 @@ alias VTE_MAJOR_VERSION = MAJOR_VERSION;
  * The micro version number of the VTE library
  * (e.g. in version 3.1.4 this is 4).
  */
-enum MICRO_VERSION = 3;
+enum MICRO_VERSION = 1;
 alias VTE_MICRO_VERSION = MICRO_VERSION;
 
 /**
  * The minor version number of the VTE library
  * (e.g. in version 3.1.4 this is 1).
  */
-enum MINOR_VERSION = 48;
+enum MINOR_VERSION = 50;
 alias VTE_MINOR_VERSION = MINOR_VERSION;
 
 enum REGEX_FLAGS_DEFAULT = 1075314688;

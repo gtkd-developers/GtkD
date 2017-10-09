@@ -151,7 +151,7 @@ public class InputStream : ObjectG
 	 *
 	 * For behaviour details see g_input_stream_close().
 	 *
-	 * The asyncronous methods have a default fallback that uses threads to implement
+	 * The asynchronous methods have a default fallback that uses threads to implement
 	 * asynchronicity, so they are optional for inheriting classes. However, if you
 	 * override one you must override all.
 	 *
@@ -387,7 +387,7 @@ public class InputStream : ObjectG
 	 * be executed before an outstanding request with lower priority. Default
 	 * priority is %G_PRIORITY_DEFAULT.
 	 *
-	 * The asyncronous methods have a default fallback that uses threads to implement
+	 * The asynchronous methods have a default fallback that uses threads to implement
 	 * asynchronicity, so they are optional for inheriting classes. However, if you
 	 * override one you must override all.
 	 *

@@ -1235,8 +1235,8 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 *         pointer, or %NULL
 	 *     vectors = an array of #GInputVector structs
 	 *     numVectors = the number of elements in @vectors, or -1
-	 *     messages = a pointer which
-	 *         may be filled with an array of #GSocketControlMessages, or %NULL
+	 *     messages = a pointer
+	 *         which may be filled with an array of #GSocketControlMessages, or %NULL
 	 *     numMessages = a pointer which will be filled with the number of
 	 *         elements in @messages, or %NULL
 	 *     flags = a pointer to an int containing #GSocketMsgFlags flags

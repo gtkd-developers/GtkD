@@ -533,7 +533,7 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	 * gtk_widget_show() on @image yourself.
 	 *
 	 * Params:
-	 *     image = a widget to set as the image for the button
+	 *     image = a widget to set as the image for the button, or %NULL to unset
 	 *
 	 * Since: 2.6
 	 */

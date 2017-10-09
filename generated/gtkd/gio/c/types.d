@@ -168,6 +168,11 @@ public enum GBusNameOwnerFlags
 	 * specified #G_BUS_NAME_OWNER_FLAGS_ALLOW_REPLACEMENT, then take the name from the other connection.
 	 */
 	REPLACE = 2,
+	/**
+	 * If another message bus connection owns the name, immediately
+	 * return an error from g_bus_own_name() rather than entering the waiting queue for that name. (Since 2.54)
+	 */
+	DO_NOT_QUEUE = 4,
 }
 alias GBusNameOwnerFlags BusNameOwnerFlags;
 

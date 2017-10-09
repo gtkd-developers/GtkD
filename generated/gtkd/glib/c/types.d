@@ -1227,6 +1227,24 @@ public enum GNormalizeMode
 alias GNormalizeMode NormalizeMode;
 
 /**
+ * Error codes returned by functions converting a string to a number.
+ *
+ * Since: 2.54
+ */
+public enum GNumberParserError
+{
+	/**
+	 * String was not a valid number.
+	 */
+	INVALID = 0,
+	/**
+	 * String was a number, but out of bounds.
+	 */
+	OUT_OF_BOUNDS = 1,
+}
+alias GNumberParserError NumberParserError;
+
+/**
  * The possible statuses of a one-time initialization function
  * controlled by a #GOnce struct.
  *
@@ -3196,8 +3214,16 @@ public enum GUnicodeScript
 	OSAGE = 136,
 	/**
 	 * Tangut. Since: 2.50
+	 * @G_UNICODE_SCRIPT_MASARAM_GONDI,        Masaram Gondi. Since: 2.54
+	 * @G_UNICODE_SCRIPT_NUSHU,                Nushu. Since: 2.54
+	 * @G_UNICODE_SCRIPT_SOYOMBO,              Soyombo. Since: 2.54
+	 * @G_UNICODE_SCRIPT_ZANABAZAR_SQUARE      Zanabazar Square. Since: 2.54
 	 */
 	TANGUT = 137,
+	MASARAM_GONDI = 138,
+	NUSHU = 139,
+	SOYOMBO = 140,
+	ZANABAZAR_SQUARE = 141,
 }
 alias GUnicodeScript UnicodeScript;
 
@@ -4933,6 +4959,13 @@ public alias extern(C) void function(const(char)* logDomain, GLogLevelFlags logL
  * but is provided separately for convenience of deciding whether or where to
  * output the log entry.
  *
+ * Writer functions should return %G_LOG_WRITER_HANDLED if they handled the log
+ * message successfully or if they deliberately ignored it. If there was an
+ * error handling the message (for example, if the writer function is meant to
+ * send messages to a remote logging server and there is a network error), it
+ * should return %G_LOG_WRITER_UNHANDLED. This allows writer functions to be
+ * chained and fall back to simpler handlers in case of failure.
+ *
  * Params:
  *     logLevel = log level of the message
  *     fields = fields forming the message
@@ -5773,8 +5806,7 @@ alias G_LITTLE_ENDIAN = LITTLE_ENDIAN;
 /**
  * Defines the log domain.
  *
- * For applications, this is typically left as the default %NULL
- * (or "") domain. Libraries should define this so that any messages
+ * Libraries should define this so that any messages
  * which they log can be differentiated from messages from other
  * libraries and application code. But be careful not to define
  * it in any public header files.
@@ -5783,6 +5815,10 @@ alias G_LITTLE_ENDIAN = LITTLE_ENDIAN;
  * |[
  * AM_CPPFLAGS = -DG_LOG_DOMAIN=\"Gtk\"
  * ]|
+ *
+ * Applications can choose to leave it as the default %NULL (or "")
+ * domain. However, defining the domain offers the same advantages as
+ * above.
  */
 enum LOG_DOMAIN = 0;
 alias G_LOG_DOMAIN = LOG_DOMAIN;
@@ -5868,7 +5904,7 @@ alias G_MAXUINT8 = MAXUINT8;
  * application compile time, rather than from the library
  * linked against at application run time.
  */
-enum MICRO_VERSION = 1;
+enum MICRO_VERSION = 0;
 alias GLIB_MICRO_VERSION = MICRO_VERSION;
 
 /**
@@ -5902,7 +5938,7 @@ alias G_MININT8 = MININT8;
  * application compile time, rather than from the library
  * linked against at application run time.
  */
-enum MINOR_VERSION = 52;
+enum MINOR_VERSION = 54;
 alias GLIB_MINOR_VERSION = MINOR_VERSION;
 
 enum MODULE_SUFFIX = "so";

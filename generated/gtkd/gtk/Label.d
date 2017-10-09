@@ -866,7 +866,7 @@ public class Label : Misc
 	 * and toggle focus between the colliding widgets otherwise.
 	 *
 	 * Params:
-	 *     widget = the target #GtkWidget
+	 *     widget = the target #GtkWidget, or %NULL to unset
 	 */
 	public void setMnemonicWidget(Widget widget)
 	{
