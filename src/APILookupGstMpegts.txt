@@ -1,0 +1,80 @@
+﻿# This file is part of gtkD.
+#
+# gtkD is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 2.1 of the License, or
+# (at your option) any later version.
+#
+# gtkD is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with gtkD; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+#############################################
+### Definitions for wrapping Gtk+ ###########
+#############################################
+
+# must start with wrap
+wrap: gst.mpegts
+file: GstMpegts-1.0.gir
+
+struct: AtscStringSegment
+array: compressed_data compressed_data_size
+
+struct: DataBroadcastDescriptor
+array: selector_bytes length
+
+struct: Descriptor
+array: parse_ca private_data private_data_size
+array: parse_dvb_data_broadcast_id id_selector_bytes len
+out: parse_dvb_multilingual_component component_tag
+array: parse_dvb_private_data_specifier private_data length
+array: from_custom data length
+array: from_custom_with_extension data length
+array: from_registration additional_info additional_info_length
+
+noCode: parse_dvb_stuffing
+code: start
+	/**
+	 * Parses out the stuffing bytes from the @descriptor.
+	 *
+	 * Params:
+	 *     stuffingBytes = the stuffing bytes
+	 *
+	 * Returns: %TRUE if the parsing happened correctly, else %FALSE.
+	 */
+	public bool parseDvbStuffing(out ubyte[] stuffingBytes)
+	{
+		ubyte* outstuffingBytes = null;
+
+		auto p = gst_mpegts_descriptor_parse_dvb_stuffing(gstMpegtsDescriptor, &outstuffingBytes) != 0;
+
+		stuffingBytes = outstuffingBytes[0 .. gstMpegtsDescriptor.length];
+
+		return p;
+	}
+code: end
+
+struct: Section
+array: new data data_size
+array: packetize Return output_size
+
+struct: 
+
+move: dvb_component_descriptor_free ComponentDescriptor free
+
+move: find_descriptor Descriptor
+move: parse_descriptors Descriptor
+
+move: initialize Mpegts
+
+move: event_parse_mpegts_section Section
+move: message_new_mpegts_section Section
+move: message_parse_mpegts_section Section
+
+move: pat_new PatProgram
