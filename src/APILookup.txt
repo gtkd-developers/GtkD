@@ -82,6 +82,8 @@ srcDir: gstreamer
 copy: gstreamerc
 lookup: APILookupGStreamer.txt
 lookup: APILookupGstInterfaces.txt
+lookup: APILookupGstApp.txt
+lookup: APILookupGstBase.txt
 lookup: APILookupGstMpegts.txt
 
 version !Windows: start
