@@ -152,7 +152,6 @@ public class UnixSocketAddress : SocketAddress
 	 *
 	 * Params:
 	 *     path = the name
-	 *     pathLen = the length of @path, or -1
 	 *     type = a #GUnixSocketAddressType
 	 *
 	 * Returns: a new #GUnixSocketAddress

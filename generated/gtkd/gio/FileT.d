@@ -1419,8 +1419,6 @@ public template FileT(TStruct)
 	 * Params:
 	 *     cancellable = optional #GCancellable object, %NULL to ignore
 	 *     contents = a location to place the contents of the file
-	 *     length = a location to place the length of the contents of the file,
-	 *         or %NULL if the length is not needed
 	 *     etagOut = a location to place the current entity tag for the file,
 	 *         or %NULL if the entity tag is not needed
 	 *
@@ -1484,8 +1482,6 @@ public template FileT(TStruct)
 	 * Params:
 	 *     res = a #GAsyncResult
 	 *     contents = a location to place the contents of the file
-	 *     length = a location to place the length of the contents of the file,
-	 *         or %NULL if the length is not needed
 	 *     etagOut = a location to place the current entity tag for the file,
 	 *         or %NULL if the entity tag is not needed
 	 *
@@ -1549,8 +1545,6 @@ public template FileT(TStruct)
 	 * Params:
 	 *     res = a #GAsyncResult
 	 *     contents = a location to place the contents of the file
-	 *     length = a location to place the length of the contents of the file,
-	 *         or %NULL if the length is not needed
 	 *     etagOut = a location to place the current entity tag for the file,
 	 *         or %NULL if the entity tag is not needed
 	 *
@@ -2933,7 +2927,6 @@ public template FileT(TStruct)
 	 *
 	 * Params:
 	 *     contents = a string containing the new contents for @file
-	 *     length = the length of @contents in bytes
 	 *     etag = the old [entity-tag][gfile-etag] for the document,
 	 *         or %NULL
 	 *     makeBackup = %TRUE if a backup should be created
@@ -2988,7 +2981,6 @@ public template FileT(TStruct)
 	 *
 	 * Params:
 	 *     contents = string of contents to replace the file with
-	 *     length = the length of @contents in bytes
 	 *     etag = a new [entity tag][gfile-etag] for the @file, or %NULL
 	 *     makeBackup = %TRUE if a backup should be created
 	 *     flags = a set of #GFileCreateFlags

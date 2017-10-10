@@ -1053,7 +1053,6 @@ public class KeyFile
 	 *     groupName = a group name
 	 *     key = a key
 	 *     list = an array of boolean values
-	 *     length = length of @list
 	 *
 	 * Since: 2.6
 	 */
@@ -1127,7 +1126,6 @@ public class KeyFile
 	 *     groupName = a group name
 	 *     key = a key
 	 *     list = an array of double values
-	 *     length = number of double values in @list
 	 *
 	 * Since: 2.12
 	 */
@@ -1176,7 +1174,6 @@ public class KeyFile
 	 *     groupName = a group name
 	 *     key = a key
 	 *     list = an array of integer values
-	 *     length = number of integer values in @list
 	 *
 	 * Since: 2.6
 	 */
@@ -1227,7 +1224,6 @@ public class KeyFile
 	 *     key = a key
 	 *     locale = a locale identifier
 	 *     list = a %NULL-terminated array of locale string values
-	 *     length = the length of @list
 	 *
 	 * Since: 2.6
 	 */
@@ -1264,7 +1260,6 @@ public class KeyFile
 	 *     groupName = a group name
 	 *     key = a key
 	 *     list = an array of string values
-	 *     length = number of string values in @list
 	 *
 	 * Since: 2.6
 	 */

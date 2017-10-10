@@ -257,7 +257,6 @@ public class OptionContext
 	 * arguments.
 	 *
 	 * Params:
-	 *     argc = a pointer to the number of command line arguments
 	 *     argv = a pointer to the array of command line arguments
 	 *
 	 * Returns: %TRUE if the parsing was successful,

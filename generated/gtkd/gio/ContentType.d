@@ -198,7 +198,6 @@ public struct ContentType
 	 * Params:
 	 *     filename = a string, or %NULL
 	 *     data = a stream of data, or %NULL
-	 *     dataSize = the size of @data
 	 *     resultUncertain = return location for the certainty
 	 *         of the result, or %NULL
 	 *

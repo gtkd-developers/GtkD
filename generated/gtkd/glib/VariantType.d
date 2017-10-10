@@ -337,7 +337,6 @@ public class VariantType
 	 *
 	 * Params:
 	 *     items = an array of #GVariantTypes, one for each item
-	 *     length = the length of @items, or -1
 	 *
 	 * Returns: a new tuple #GVariantType
 	 *

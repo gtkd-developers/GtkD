@@ -423,7 +423,6 @@ public class Regex
 	 *
 	 * Params:
 	 *     str = the string to scan for matches
-	 *     stringLen = the length of @string, or -1 if @string is nul-terminated
 	 *     startPosition = starting index of the string to match, in bytes
 	 *     matchOptions = match options
 	 *     matchInfo = pointer to location where to store
@@ -505,7 +504,6 @@ public class Regex
 	 *
 	 * Params:
 	 *     str = the string to scan for matches
-	 *     stringLen = the length of @string, or -1 if @string is nul-terminated
 	 *     startPosition = starting index of the string to match, in bytes
 	 *     matchOptions = match options
 	 *     matchInfo = pointer to location where to store
@@ -583,7 +581,6 @@ public class Regex
 	 *
 	 * Params:
 	 *     str = the string to perform matches against
-	 *     stringLen = the length of @string, or -1 if @string is nul-terminated
 	 *     startPosition = starting index of the string to match, in bytes
 	 *     replacement = text to replace each match with
 	 *     matchOptions = options for the match
@@ -658,7 +655,6 @@ public class Regex
 	 *
 	 * Params:
 	 *     str = string to perform matches against
-	 *     stringLen = the length of @string, or -1 if @string is nul-terminated
 	 *     startPosition = starting index of the string to match, in bytes
 	 *     matchOptions = options for the match
 	 *     eval = a function to call for each match
@@ -697,7 +693,6 @@ public class Regex
 	 *
 	 * Params:
 	 *     str = the string to perform matches against
-	 *     stringLen = the length of @string, or -1 if @string is nul-terminated
 	 *     startPosition = starting index of the string to match, in bytes
 	 *     replacement = text to replace each match with
 	 *     matchOptions = options for the match
@@ -784,7 +779,6 @@ public class Regex
 	 *
 	 * Params:
 	 *     str = the string to split with the pattern
-	 *     stringLen = the length of @string, or -1 if @string is nul-terminated
 	 *     startPosition = starting index of the string to match, in bytes
 	 *     matchOptions = match time option flags
 	 *     maxTokens = the maximum number of tokens to split @string into.
@@ -902,7 +896,6 @@ public class Regex
 	 *
 	 * Params:
 	 *     str = the string to escape
-	 *     length = the length of @string, or -1 if @string is nul-terminated
 	 *
 	 * Returns: a newly-allocated escaped string
 	 *

@@ -332,7 +332,6 @@ public class PgContext : ObjectG
 	 *     families = location to store a pointer to
 	 *         an array of #PangoFontFamily *. This array should be freed
 	 *         with g_free().
-	 *     nFamilies = location to store the number of elements in @descs
 	 */
 	public void listFamilies(out PgFontFamily[] families)
 	{
@@ -530,7 +529,6 @@ public class PgContext : ObjectG
 	 *     analysis = #PangoAnalysis structure from pango_itemize()
 	 *     attrs = an array to store character
 	 *         information in
-	 *     attrsLen = size of the array passed as @attrs
 	 */
 	public static void pangoBreak(string text, int length, PangoAnalysis* analysis, PangoLogAttr[] attrs)
 	{
@@ -617,7 +615,6 @@ public class PgContext : ObjectG
 	 *     language = language tag
 	 *     logAttrs = array with one #PangoLogAttr
 	 *         per character in @text, plus one extra, to be filled in
-	 *     attrsLen = length of @log_attrs array
 	 */
 	public static void getLogAttrs(string text, int length, int level, PgLanguage language, PangoLogAttr[] logAttrs)
 	{

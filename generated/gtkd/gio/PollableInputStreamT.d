@@ -137,7 +137,6 @@ public template PollableInputStreamT(TStruct)
 	 * Params:
 	 *     buffer = a buffer to
 	 *         read data into (which should be at least @count bytes long).
-	 *     count = the number of bytes you want to read
 	 *     cancellable = a #GCancellable, or %NULL
 	 *
 	 * Returns: the number of bytes read, or -1 on error (including

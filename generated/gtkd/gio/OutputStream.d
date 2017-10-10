@@ -472,7 +472,6 @@ public class OutputStream : ObjectG
 	 *
 	 * Params:
 	 *     buffer = the buffer containing the data to write.
-	 *     count = the number of bytes to write
 	 *     cancellable = optional cancellable object
 	 *
 	 * Returns: Number of bytes written, or -1 on error
@@ -516,7 +515,6 @@ public class OutputStream : ObjectG
 	 *
 	 * Params:
 	 *     buffer = the buffer containing the data to write.
-	 *     count = the number of bytes to write
 	 *     bytesWritten = location to store the number of bytes that was
 	 *         written to the stream
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
@@ -558,7 +556,6 @@ public class OutputStream : ObjectG
 	 *
 	 * Params:
 	 *     buffer = the buffer containing the data to write
-	 *     count = the number of bytes to write
 	 *     ioPriority = the io priority of the request
 	 *     cancellable = optional #GCancellable object, %NULL to ignore
 	 *     callback = callback to call when the request is satisfied
@@ -646,7 +643,6 @@ public class OutputStream : ObjectG
 	 *
 	 * Params:
 	 *     buffer = the buffer containing the data to write.
-	 *     count = the number of bytes to write
 	 *     ioPriority = the io priority of the request.
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *     callback = callback to call when the request is satisfied

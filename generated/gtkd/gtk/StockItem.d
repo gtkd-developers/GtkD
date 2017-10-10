@@ -179,7 +179,6 @@ public final class StockItem
 	 *
 	 * Params:
 	 *     items = a #GtkStockItem or array of items
-	 *     nItems = number of #GtkStockItem in @items
 	 */
 	public static void stockAdd(StockItem[] items)
 	{
@@ -198,7 +197,6 @@ public final class StockItem
 	 *
 	 * Params:
 	 *     items = a #GtkStockItem or array of #GtkStockItem
-	 *     nItems = number of items
 	 */
 	public static void stockAddStatic(StockItem[] items)
 	{

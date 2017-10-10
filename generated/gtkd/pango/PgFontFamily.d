@@ -123,7 +123,6 @@ public class PgFontFamily : ObjectG
 	 *     faces = location to store an array of pointers to #PangoFontFace objects,
 	 *         or %NULL. This array should be freed with g_free() when it is no
 	 *         longer needed.
-	 *     nFaces = location to store number of elements in @faces.
 	 */
 	public void listFaces(out PgFontFace[] faces)
 	{

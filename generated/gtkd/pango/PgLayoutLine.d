@@ -229,7 +229,6 @@ public final class PgLayoutLine
 	 *         and of width <literal>(*ranges)[2*n + 1] - (*ranges)[2*n]</literal>.
 	 *         This array must be freed with g_free(). The coordinates are relative
 	 *         to the layout and are in Pango units.
-	 *     nRanges = The number of ranges stored in @ranges.
 	 */
 	public void getXRanges(int startIndex, int endIndex, out int[] ranges)
 	{

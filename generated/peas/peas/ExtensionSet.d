@@ -126,7 +126,6 @@ public class ExtensionSet : ObjectG
 	 * Params:
 	 *     engine = A #PeasEngine, or %NULL.
 	 *     extenType = the extension #GType.
-	 *     nParameters = the length of the @parameters array.
 	 *     parameters = an array of #GParameter.
 	 *
 	 * Returns: a new instance of #PeasExtensionSet.

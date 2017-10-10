@@ -166,7 +166,6 @@ public class ObjectModule : TypeModule
 	 *
 	 * Params:
 	 *     extenType = The #GType of the extension.
-	 *     nParameters = The number of paramteters.
 	 *     parameters = The parameters.
 	 *
 	 * Returns: The created object, or %NULL.

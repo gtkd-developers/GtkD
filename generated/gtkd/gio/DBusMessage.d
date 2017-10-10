@@ -111,7 +111,6 @@ public class DBusMessage : ObjectG
 	 *
 	 * Params:
 	 *     blob = A blob represent a binary D-Bus message.
-	 *     blobLen = The length of @blob.
 	 *     capabilities = A #GDBusCapabilityFlags describing what protocol features are supported.
 	 *
 	 * Returns: A new #GDBusMessage or %NULL if @error is set. Free with
@@ -200,7 +199,6 @@ public class DBusMessage : ObjectG
 	 *
 	 * Params:
 	 *     blob = A blob represent a binary D-Bus message.
-	 *     blobLen = The length of @blob (must be at least 16).
 	 *
 	 * Returns: Number of bytes needed or -1 if @error is set (e.g. if
 	 *     @blob contains invalid data or not enough data is available to

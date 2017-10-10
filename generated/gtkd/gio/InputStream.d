@@ -236,7 +236,6 @@ public class InputStream : ObjectG
 	 * Params:
 	 *     buffer = a buffer to
 	 *         read data into (which should be at least count bytes long).
-	 *     count = the number of bytes that will be read from the stream
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
 	 * Returns: Number of bytes read, or -1 on error, or 0 on end of file.
@@ -281,7 +280,6 @@ public class InputStream : ObjectG
 	 * Params:
 	 *     buffer = a buffer to
 	 *         read data into (which should be at least count bytes long).
-	 *     count = the number of bytes that will be read from the stream
 	 *     bytesRead = location to store the number of bytes that was read from the stream
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
@@ -318,7 +316,6 @@ public class InputStream : ObjectG
 	 * Params:
 	 *     buffer = a buffer to
 	 *         read data into (which should be at least count bytes long)
-	 *     count = the number of bytes that will be read from the stream
 	 *     ioPriority = the [I/O priority][io-priority] of the request
 	 *     cancellable = optional #GCancellable object, %NULL to ignore
 	 *     callback = callback to call when the request is satisfied
@@ -394,7 +391,6 @@ public class InputStream : ObjectG
 	 * Params:
 	 *     buffer = a buffer to
 	 *         read data into (which should be at least count bytes long).
-	 *     count = the number of bytes that will be read from the stream
 	 *     ioPriority = the [I/O priority][io-priority]
 	 *         of the request.
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.

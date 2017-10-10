@@ -586,7 +586,6 @@ public interface TreeModelIF{
 	 *         mapping the current position of each child to its old
 	 *         position before the re-ordering,
 	 *         i.e. @new_order`[newpos] = oldpos`
-	 *     length = length of @new_order array
 	 *
 	 * Since: 3.10
 	 */

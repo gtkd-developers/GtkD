@@ -993,7 +993,6 @@ public class PrintSettings : ObjectG
 	 *
 	 * Params:
 	 *     pageRanges = an array of #GtkPageRanges
-	 *     numRanges = the length of @page_ranges
 	 *
 	 * Since: 2.10
 	 */

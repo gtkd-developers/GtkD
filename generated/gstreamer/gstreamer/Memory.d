@@ -119,7 +119,6 @@ public class Memory
 	 *         wrap
 	 *     maxsize = allocated size of @data
 	 *     offset = offset in @data
-	 *     size = size of valid data
 	 *     userData = user_data
 	 *     notify = called with @user_data when the memory is freed
 	 *

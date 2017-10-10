@@ -446,7 +446,6 @@ public class Variant
 	 *     childType = the element type of the new array
 	 *     children = an array of
 	 *         #GVariant pointers, the children
-	 *     nChildren = the length of @children
 	 *
 	 * Returns: a floating reference to a new #GVariant array
 	 *
@@ -671,7 +670,6 @@ public class Variant
 	 * Params:
 	 *     type = a definite #GVariantType
 	 *     data = the serialised data
-	 *     size = the size of @data
 	 *     trusted = %TRUE if @data is definitely in normal form
 	 *     notify = function to call when @data is no longer needed
 	 *     userData = data for @notify
@@ -879,7 +877,6 @@ public class Variant
 	 *
 	 * Params:
 	 *     strv = an array of strings
-	 *     length = the length of @strv, or -1
 	 *
 	 * Returns: a new floating #GVariant instance
 	 *
@@ -911,7 +908,6 @@ public class Variant
 	 *
 	 * Params:
 	 *     children = the items to make the tuple out of
-	 *     nChildren = the length of @children
 	 *
 	 * Returns: a floating reference to a new #GVariant tuple
 	 *

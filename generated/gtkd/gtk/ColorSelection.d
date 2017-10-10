@@ -107,7 +107,6 @@ public class ColorSelection : Box
 	 *     str = a string encoding a color palette
 	 *     colors = return location for
 	 *         allocated array of #GdkColor
-	 *     nColors = return location for length of array
 	 *
 	 * Returns: %TRUE if a palette was successfully parsed
 	 */
@@ -132,7 +131,6 @@ public class ColorSelection : Box
 	 *
 	 * Params:
 	 *     colors = an array of colors
-	 *     nColors = length of the array
 	 *
 	 * Returns: allocated string encoding the palette
 	 */

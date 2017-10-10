@@ -226,7 +226,6 @@ public class Buffer
 	 *
 	 * Params:
 	 *     data = data to wrap
-	 *     size = allocated size of @data
 	 *
 	 * Returns: a new #GstBuffer
 	 *
@@ -259,7 +258,6 @@ public class Buffer
 	 *     data = data to wrap
 	 *     maxsize = allocated size of @data
 	 *     offset = offset in @data
-	 *     size = size of valid data
 	 *     userData = user_data
 	 *     notify = called with @user_data when the memory is freed
 	 *
@@ -503,7 +501,6 @@ public class Buffer
 	 *     size = the size to extract
 	 *     dest = A pointer where
 	 *         the destination array will be written.
-	 *     destSize = A location where the size of @dest can be written
 	 *
 	 * Since: 1.0.10
 	 */
@@ -523,7 +520,6 @@ public class Buffer
 	 * Params:
 	 *     offset = the offset to fill
 	 *     src = the source address
-	 *     size = the size to fill
 	 *
 	 * Returns: The amount of bytes copied. This value can be lower than @size
 	 *     when @buffer did not contain enough data.
@@ -884,7 +880,6 @@ public class Buffer
 	 * Params:
 	 *     offset = the offset in @buffer
 	 *     mem = the memory to compare
-	 *     size = the size to compare
 	 *
 	 * Returns: 0 if the memory is equal.
 	 */

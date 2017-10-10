@@ -499,7 +499,6 @@ public class Dialog : Window
 	 * Deprecated: Deprecated
 	 *
 	 * Params:
-	 *     nParams = the number of response ids in @new_order
 	 *     newOrder = an array of response ids of
 	 *         @dialog’s buttons
 	 *

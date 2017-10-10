@@ -241,7 +241,6 @@ public interface DatagramBasedIF{
 	 *
 	 * Params:
 	 *     messages = an array of #GInputMessage structs
-	 *     numMessages = the number of elements in @messages
 	 *     flags = an int containing #GSocketMsgFlags flags for the overall operation
 	 *     timeout = the maximum time (in microseconds) to wait, 0 to not block, or -1
 	 *         to block indefinitely
@@ -304,7 +303,6 @@ public interface DatagramBasedIF{
 	 *
 	 * Params:
 	 *     messages = an array of #GOutputMessage structs
-	 *     numMessages = the number of elements in @messages
 	 *     flags = an int containing #GSocketMsgFlags flags
 	 *     timeout = the maximum time (in microseconds) to wait, 0 to not block, or -1
 	 *         to block indefinitely

@@ -1104,7 +1104,6 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 * Params:
 	 *     buffer = a buffer to
 	 *         read data into (which should be at least @size bytes long).
-	 *     size = the number of bytes you want to read from the socket
 	 *     cancellable = a %GCancellable or %NULL
 	 *
 	 * Returns: Number of bytes read, or 0 if the connection was closed by
@@ -1142,7 +1141,6 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 *         pointer, or %NULL
 	 *     buffer = a buffer to
 	 *         read data into (which should be at least @size bytes long).
-	 *     size = the number of bytes you want to read from the socket
 	 *     cancellable = a %GCancellable or %NULL
 	 *
 	 * Returns: Number of bytes read, or 0 if the connection was closed by
@@ -1234,11 +1232,8 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 *     address = a pointer to a #GSocketAddress
 	 *         pointer, or %NULL
 	 *     vectors = an array of #GInputVector structs
-	 *     numVectors = the number of elements in @vectors, or -1
 	 *     messages = a pointer
 	 *         which may be filled with an array of #GSocketControlMessages, or %NULL
-	 *     numMessages = a pointer which will be filled with the number of
-	 *         elements in @messages, or %NULL
 	 *     flags = a pointer to an int containing #GSocketMsgFlags flags
 	 *     cancellable = a %GCancellable or %NULL
 	 *
@@ -1326,7 +1321,6 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 *
 	 * Params:
 	 *     messages = an array of #GInputMessage structs
-	 *     numMessages = the number of elements in @messages
 	 *     flags = an int containing #GSocketMsgFlags flags for the overall operation
 	 *     cancellable = a %GCancellable or %NULL
 	 *
@@ -1362,7 +1356,6 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 * Params:
 	 *     buffer = a buffer to
 	 *         read data into (which should be at least @size bytes long).
-	 *     size = the number of bytes you want to read from the socket
 	 *     blocking = whether to do blocking or non-blocking I/O
 	 *     cancellable = a %GCancellable or %NULL
 	 *
@@ -1406,7 +1399,6 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 * Params:
 	 *     buffer = the buffer
 	 *         containing the data to send.
-	 *     size = the number of bytes to send
 	 *     cancellable = a %GCancellable or %NULL
 	 *
 	 * Returns: Number of bytes written (which may be less than @size), or -1
@@ -1472,10 +1464,8 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 * Params:
 	 *     address = a #GSocketAddress, or %NULL
 	 *     vectors = an array of #GOutputVector structs
-	 *     numVectors = the number of elements in @vectors, or -1
 	 *     messages = a pointer to an
 	 *         array of #GSocketControlMessages, or %NULL.
-	 *     numMessages = number of elements in @messages, or -1.
 	 *     flags = an int containing #GSocketMsgFlags flags
 	 *     cancellable = a %GCancellable or %NULL
 	 *
@@ -1544,7 +1534,6 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 *
 	 * Params:
 	 *     messages = an array of #GOutputMessage structs
-	 *     numMessages = the number of elements in @messages
 	 *     flags = an int containing #GSocketMsgFlags flags
 	 *     cancellable = a %GCancellable or %NULL
 	 *
@@ -1582,7 +1571,6 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 *     address = a #GSocketAddress, or %NULL
 	 *     buffer = the buffer
 	 *         containing the data to send.
-	 *     size = the number of bytes to send
 	 *     cancellable = a %GCancellable or %NULL
 	 *
 	 * Returns: Number of bytes written (which may be less than @size), or -1
@@ -1614,7 +1602,6 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 * Params:
 	 *     buffer = the buffer
 	 *         containing the data to send.
-	 *     size = the number of bytes to send
 	 *     blocking = whether to do blocking or non-blocking I/O
 	 *     cancellable = a %GCancellable or %NULL
 	 *

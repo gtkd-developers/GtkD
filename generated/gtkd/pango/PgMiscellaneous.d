@@ -147,7 +147,6 @@ public struct PgMiscellaneous
 	 *     fontname = an ascii string
 	 *     families = will be set to an array of font family names.
 	 *         this array is owned by pango and should not be freed.
-	 *     nFamilies = will be set to the length of the @families array.
 	 */
 	public static void lookupAliases(string fontname, out string[] families)
 	{

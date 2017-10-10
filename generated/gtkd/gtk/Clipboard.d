@@ -438,7 +438,6 @@ public class Clipboard : ObjectG
 	 *     targets = array containing
 	 *         information about which forms should be stored or %NULL
 	 *         to indicate that all forms should be stored.
-	 *     nTargets = number of elements in @targets
 	 *
 	 * Since: 2.6
 	 */
@@ -493,7 +492,6 @@ public class Clipboard : ObjectG
 	 * Params:
 	 *     targets = array containing information
 	 *         about the available forms for the clipboard data
-	 *     nTargets = number of elements in @targets
 	 *     getFunc = function to call to get the actual clipboard data
 	 *     clearFunc = when the clipboard contents are set again,
 	 *         this function will be called, and @get_func will not be subsequently
@@ -527,7 +525,6 @@ public class Clipboard : ObjectG
 	 * Params:
 	 *     targets = array containing information
 	 *         about the available forms for the clipboard data
-	 *     nTargets = number of elements in @targets
 	 *     getFunc = function to call to get the actual clipboard data
 	 *     clearFunc = when the clipboard contents are set again,
 	 *         this function will be called, and @get_func will not be subsequently
@@ -653,7 +650,6 @@ public class Clipboard : ObjectG
 	 *     targets = location
 	 *         to store an array of targets. The result stored here must
 	 *         be freed with g_free().
-	 *     nTargets = location to store number of items in @targets.
 	 *
 	 * Returns: %TRUE if any targets are present on the clipboard,
 	 *     otherwise %FALSE.

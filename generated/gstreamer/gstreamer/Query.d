@@ -1270,7 +1270,6 @@ public class Query
 	 * in the @formats array must be equal to @n_formats.
 	 *
 	 * Params:
-	 *     nFormats = the number of formats to set.
 	 *     formats = an array containing @n_formats
 	 *         @GstFormat values.
 	 */

@@ -288,7 +288,6 @@ public class BufferedInputStream : FilterInputStream, SeekableIF
 	 *     buffer = a pointer to
 	 *         an allocated chunk of memory
 	 *     offset = a #gsize
-	 *     count = a #gsize
 	 *
 	 * Returns: a #gsize of the number of bytes peeked, or -1 on error.
 	 */

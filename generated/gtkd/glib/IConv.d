@@ -45,9 +45,7 @@ public  import gtkc.glibtypes;
  *
  * Params:
  *     inbuf = bytes to convert
- *     inbytesLeft = inout parameter, bytes remaining to convert in @inbuf
  *     outbuf = converted output bytes
- *     outbytesLeft = inout parameter, bytes available to fill in @outbuf
  *
  * Returns: count of non-reversible conversions, or -1 on error
  */

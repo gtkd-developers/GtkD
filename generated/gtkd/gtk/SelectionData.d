@@ -248,7 +248,6 @@ public class SelectionData
 	 * Params:
 	 *     targets = location to store an array of targets. The result stored
 	 *         here must be freed with g_free().
-	 *     nAtoms = location to store number of items in @targets.
 	 *
 	 * Returns: %TRUE if @selection_data contains a valid
 	 *     array of targets, otherwise %FALSE.
@@ -309,7 +308,6 @@ public class SelectionData
 	 *     type = the type of selection data
 	 *     format = format (number of bits in a unit)
 	 *     data = pointer to the data (will be copied)
-	 *     length = length of the data
 	 */
 	public void set(GdkAtom type, int format, char[] data)
 	{
@@ -459,7 +457,6 @@ public class SelectionData
 	 *     widget = a #GtkWidget
 	 *     selection = the selection
 	 *     targets = a table of targets to add
-	 *     ntargets = number of entries in @targets
 	 */
 	public static void addTargets(Widget widget, GdkAtom selection, TargetEntry[] targets)
 	{

@@ -125,7 +125,6 @@ public class StateSet : ObjectG
 	 *
 	 * Params:
 	 *     types = an array of #AtkStateType
-	 *     nTypes = The number of elements in the array
 	 */
 	public void addStates(AtkStateType[] types)
 	{
@@ -181,7 +180,6 @@ public class StateSet : ObjectG
 	 *
 	 * Params:
 	 *     types = an array of #AtkStateType
-	 *     nTypes = The number of elements in the array
 	 *
 	 * Returns: %TRUE if all the states for @type are in @set.
 	 */

@@ -176,7 +176,6 @@ public class ObjectClass
 	 * ]|
 	 *
 	 * Params:
-	 *     nPspecs = the length of the #GParamSpecs array
 	 *     pspecs = the #GParamSpecs array
 	 *         defining the new properties
 	 *

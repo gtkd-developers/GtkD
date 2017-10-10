@@ -166,7 +166,6 @@ public class Terminal : Widget, ScrollableIF
 	 * Params:
 	 *     event = a #GdkEvent
 	 *     regexes = an array of #GRegex
-	 *     nRegexes = number of items in @regexes
 	 *     matchFlags = the #GRegexMatchFlags to use when matching the regexes
 	 *     matches = a location to store the matches
 	 *
@@ -194,7 +193,6 @@ public class Terminal : Widget, ScrollableIF
 	 * Params:
 	 *     event = a #GdkEvent
 	 *     regexes = an array of #VteRegex
-	 *     nRegexes = number of items in @regexes
 	 *     matchFlags = PCRE2 match flags, or 0
 	 *     matches = a location to store the matches
 	 *
@@ -220,7 +218,6 @@ public class Terminal : Widget, ScrollableIF
 	 *
 	 * Params:
 	 *     data = a string in the terminal's current encoding
-	 *     length = the length of the string, or -1 to use the full length or a nul-terminated string
 	 */
 	public void feed(string data)
 	{
@@ -245,7 +242,6 @@ public class Terminal : Widget, ScrollableIF
 	 *
 	 * Params:
 	 *     data = data to send to the child
-	 *     length = length of @data
 	 */
 	public void feedChildBinary(ubyte[] data)
 	{
@@ -1151,7 +1147,6 @@ public class Terminal : Widget, ScrollableIF
 	 *     foreground = the new foreground color, or %NULL
 	 *     background = the new background color, or %NULL
 	 *     palette = the color palette
-	 *     paletteSize = the number of entries in @palette
 	 */
 	public void setColors(RGBA foreground, RGBA background, RGBA[] palette)
 	{

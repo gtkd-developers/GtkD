@@ -137,10 +137,8 @@ public interface ConverterIF{
 	 * Params:
 	 *     inbuf = the buffer
 	 *         containing the data to convert.
-	 *     inbufSize = the number of bytes in @inbuf
 	 *     outbuf = a buffer to write
 	 *         converted data in.
-	 *     outbufSize = the number of bytes in @outbuf, must be at least one
 	 *     flags = a #GConverterFlags controlling the conversion details
 	 *     bytesRead = will be set to the number of bytes read from @inbuf on success
 	 *     bytesWritten = will be set to the number of bytes written to @outbuf on success

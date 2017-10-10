@@ -184,7 +184,6 @@ public class Hmac
 	 *
 	 * Params:
 	 *     data = buffer used to compute the checksum
-	 *     length = size of the buffer, or -1 if it is a nul-terminated string
 	 *
 	 * Since: 2.30
 	 */
@@ -214,7 +213,6 @@ public class Hmac
 	 * Params:
 	 *     digestType = the desired type of digest
 	 *     key = the key for the HMAC
-	 *     keyLen = the length of the keys
 	 *
 	 * Returns: the newly created #GHmac, or %NULL.
 	 *     Use g_hmac_unref() to free the memory allocated by it.
@@ -245,9 +243,7 @@ public class Hmac
 	 * Params:
 	 *     digestType = a #GChecksumType to use for the HMAC
 	 *     key = the key to use in the HMAC
-	 *     keyLen = the length of the key
 	 *     data = binary blob to compute the HMAC of
-	 *     length = length of @data
 	 *
 	 * Returns: the HMAC of the binary data as a string in hexadecimal.
 	 *     The returned string should be freed with g_free() when done using it.
@@ -270,9 +266,7 @@ public class Hmac
 	 * Params:
 	 *     digestType = a #GChecksumType to use for the HMAC
 	 *     key = the key to use in the HMAC
-	 *     keyLen = the length of the key
 	 *     str = the string to compute the HMAC for
-	 *     length = the length of the string, or -1 if the string is nul-terminated
 	 *
 	 * Returns: the HMAC as a hexadecimal string.
 	 *     The returned string should be freed with g_free()

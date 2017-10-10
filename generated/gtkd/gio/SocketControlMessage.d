@@ -105,7 +105,6 @@ public class SocketControlMessage : ObjectG
 	 * Params:
 	 *     level = a socket level
 	 *     type = a socket control message type for the given @level
-	 *     size = the size of the data in bytes
 	 *     data = pointer to the message data
 	 *
 	 * Returns: the deserialized message or %NULL

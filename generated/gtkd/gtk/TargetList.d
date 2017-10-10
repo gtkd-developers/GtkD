@@ -87,7 +87,6 @@ public class TargetList
 	 * Params:
 	 *     targets = Pointer to an array
 	 *         of #GtkTargetEntry
-	 *     ntargets = number of entries in @targets.
 	 *
 	 * Returns: the new #GtkTargetList.
 	 *
@@ -164,7 +163,6 @@ public class TargetList
 	 *
 	 * Params:
 	 *     targets = the table of #GtkTargetEntry
-	 *     ntargets = number of targets in the table
 	 */
 	public void addTable(TargetEntry[] targets)
 	{
@@ -263,7 +261,6 @@ public class TargetList
 	 *
 	 * Params:
 	 *     targets = a #GtkTargetEntry array
-	 *     nTargets = the number of entries in the array
 	 *
 	 * Since: 2.10
 	 */
@@ -317,7 +314,6 @@ public class TargetList
 	 *
 	 * Params:
 	 *     targets = an array of #GdkAtoms
-	 *     nTargets = the length of @targets
 	 *     writable = whether to accept only targets for which GTK+ knows
 	 *         how to convert a pixbuf into the format
 	 *
@@ -337,7 +333,6 @@ public class TargetList
 	 *
 	 * Params:
 	 *     targets = an array of #GdkAtoms
-	 *     nTargets = the length of @targets
 	 *     buffer = a #GtkTextBuffer
 	 *
 	 * Returns: %TRUE if @targets include a suitable target for rich text,
@@ -356,7 +351,6 @@ public class TargetList
 	 *
 	 * Params:
 	 *     targets = an array of #GdkAtoms
-	 *     nTargets = the length of @targets
 	 *
 	 * Returns: %TRUE if @targets include a suitable target for text,
 	 *     otherwise %FALSE.
@@ -374,7 +368,6 @@ public class TargetList
 	 *
 	 * Params:
 	 *     targets = an array of #GdkAtoms
-	 *     nTargets = the length of @targets
 	 *
 	 * Returns: %TRUE if @targets include a suitable target for uri lists,
 	 *     otherwise %FALSE.

@@ -363,7 +363,6 @@ public class ObjectG
 	 *
 	 * Params:
 	 *     objectType = the object type to instantiate
-	 *     nProperties = the number of properties
 	 *     names = the names of each property to be set
 	 *     values = the values of each property to be set
 	 *
@@ -403,7 +402,6 @@ public class ObjectG
 	 *
 	 * Params:
 	 *     objectType = the type id of the #GObject subtype to instantiate
-	 *     nParameters = the length of the @parameters array
 	 *     parameters = an array of #GParameter
 	 *
 	 * Returns: a new instance of
@@ -899,7 +897,6 @@ public class ObjectG
 	 * properties are passed in.
 	 *
 	 * Params:
-	 *     nProperties = the number of properties
 	 *     names = the names of each property to get
 	 *     values = the values of each property to get
 	 *
@@ -1249,7 +1246,6 @@ public class ObjectG
 	 * properties are passed in.
 	 *
 	 * Params:
-	 *     nProperties = the number of properties
 	 *     names = the names of each property to be set
 	 *     values = the values of each property to be set
 	 *

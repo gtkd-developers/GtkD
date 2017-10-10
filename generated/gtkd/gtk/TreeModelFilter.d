@@ -304,7 +304,6 @@ public class TreeModelFilter : ObjectG, TreeDragSourceIF, TreeModelIF
 	 * can only be called once for a given filter model.
 	 *
 	 * Params:
-	 *     nColumns = The number of columns in the filter model.
 	 *     types = The #GTypes of the columns.
 	 *     func = A #GtkTreeModelFilterModifyFunc
 	 *     data = User data to pass to the modify function, or %NULL.

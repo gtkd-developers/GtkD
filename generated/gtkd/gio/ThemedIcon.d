@@ -92,8 +92,6 @@ public class ThemedIcon : ObjectG, IconIF
 	 *
 	 * Params:
 	 *     iconnames = an array of strings containing icon names.
-	 *     len = the length of the @iconnames array, or -1 if @iconnames is
-	 *         %NULL-terminated
 	 *
 	 * Returns: a new #GThemedIcon
 	 *

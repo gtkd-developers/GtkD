@@ -139,7 +139,6 @@ public class MemoryInputStream : InputStream, PollableInputStreamIF, SeekableIF
 	 *
 	 * Params:
 	 *     data = input data
-	 *     len = length of the data, may be -1 if @data is a nul-terminated string
 	 *     destroy = function that is called to free @data, or %NULL
 	 *
 	 * Returns: new #GInputStream read from @data of @len bytes.
@@ -176,7 +175,6 @@ public class MemoryInputStream : InputStream, PollableInputStreamIF, SeekableIF
 	 *
 	 * Params:
 	 *     data = input data
-	 *     len = length of the data, may be -1 if @data is a nul-terminated string
 	 *     destroy = function that is called to free @data, or %NULL
 	 */
 	public void addData(ubyte[] data, GDestroyNotify destroy)

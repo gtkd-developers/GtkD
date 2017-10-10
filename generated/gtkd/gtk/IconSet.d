@@ -205,7 +205,6 @@ public class IconSet
 	 * Params:
 	 *     sizes = return location
 	 *         for array of sizes (#GtkIconSize)
-	 *     nSizes = location to store number of elements in returned array
 	 */
 	public void getSizes(out GtkIconSize[] sizes)
 	{

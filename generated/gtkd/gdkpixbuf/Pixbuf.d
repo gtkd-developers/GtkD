@@ -495,8 +495,6 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 * Deprecated: Use #GResource instead.
 	 *
 	 * Params:
-	 *     dataLength = Length in bytes of the @data argument or -1 to
-	 *         disable length checks
 	 *     data = Byte data containing a
 	 *         serialized #GdkPixdata structure
 	 *     copyPixels = Whether to copy the pixel data, or use direct pointers

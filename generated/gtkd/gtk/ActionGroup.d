@@ -209,7 +209,6 @@ public class ActionGroup : ObjectG, BuildableIF
 	 *
 	 * Params:
 	 *     entries = an array of action descriptions
-	 *     nEntries = the number of entries
 	 *     userData = data to pass to the action callbacks
 	 *
 	 * Since: 2.4
@@ -225,7 +224,6 @@ public class ActionGroup : ObjectG, BuildableIF
 	 *
 	 * Params:
 	 *     entries = an array of action descriptions
-	 *     nEntries = the number of entries
 	 *     userData = data to pass to the action callbacks
 	 *     destroy = destroy notification callback for @user_data
 	 *
@@ -246,7 +244,6 @@ public class ActionGroup : ObjectG, BuildableIF
 	 *
 	 * Params:
 	 *     entries = an array of radio action descriptions
-	 *     nEntries = the number of entries
 	 *     value = the value of the action to activate initially, or -1 if
 	 *         no action should be activated
 	 *     onChange = the callback to connect to the changed signal
@@ -265,7 +262,6 @@ public class ActionGroup : ObjectG, BuildableIF
 	 *
 	 * Params:
 	 *     entries = an array of radio action descriptions
-	 *     nEntries = the number of entries
 	 *     value = the value of the action to activate initially, or -1 if
 	 *         no action should be activated
 	 *     onChange = the callback to connect to the changed signal
@@ -288,7 +284,6 @@ public class ActionGroup : ObjectG, BuildableIF
 	 *
 	 * Params:
 	 *     entries = an array of toggle action descriptions
-	 *     nEntries = the number of entries
 	 *     userData = data to pass to the action callbacks
 	 *
 	 * Since: 2.4
@@ -304,7 +299,6 @@ public class ActionGroup : ObjectG, BuildableIF
 	 *
 	 * Params:
 	 *     entries = an array of toggle action descriptions
-	 *     nEntries = the number of entries
 	 *     userData = data to pass to the action callbacks
 	 *     destroy = destroy notification callback for @user_data
 	 *

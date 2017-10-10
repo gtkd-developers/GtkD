@@ -635,7 +635,6 @@ public struct Signals
 	 *         invocations or %NULL
 	 *     returnType = the type of return value, or #G_TYPE_NONE for a signal
 	 *         without a return value
-	 *     nParams = the length of @param_types
 	 *     paramTypes = an array of types, one for
 	 *         each parameter
 	 *

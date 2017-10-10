@@ -176,9 +176,6 @@ public class CssProvider : ObjectG, StyleProviderIF
 	 *
 	 * Params:
 	 *     data = CSS data loaded in memory
-	 *     length = the length of @data in bytes, or -1 for NUL terminated strings. If
-	 *         @length is not -1, the code will assume it is not NUL terminated and will
-	 *         potentially do a copy.
 	 *
 	 * Returns: %TRUE. The return value is deprecated and %FALSE will only be
 	 *     returned for backwards compatibility reasons if an @error is not

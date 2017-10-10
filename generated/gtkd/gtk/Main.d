@@ -378,9 +378,6 @@ public struct Main
 	 * similar things.
 	 *
 	 * Params:
-	 *     argc = Address of the `argc` parameter of
-	 *         your main() function (or 0 if @argv is %NULL). This will be changed if
-	 *         any arguments were handled.
 	 *     argv = Address of the
 	 *         `argv` parameter of main(), or %NULL. Any options
 	 *         understood by GTK+ are stripped before return.
@@ -406,9 +403,6 @@ public struct Main
 	 * interface.
 	 *
 	 * Params:
-	 *     argc = Address of the `argc` parameter of
-	 *         your main() function (or 0 if @argv is %NULL). This will be changed if
-	 *         any arguments were handled.
 	 *     argv = Address of the
 	 *         `argv` parameter of main(), or %NULL. Any options
 	 *         understood by GTK+ are stripped before return.
@@ -437,9 +431,6 @@ public struct Main
 	 * be terminated after writing out the help output.
 	 *
 	 * Params:
-	 *     argc = Address of the `argc` parameter of
-	 *         your main() function (or 0 if @argv is %NULL). This will be changed if
-	 *         any arguments were handled.
 	 *     argv = Address of the
 	 *         `argv` parameter of main(), or %NULL. Any options
 	 *         understood by GTK+ are stripped before return.
@@ -636,7 +627,6 @@ public struct Main
 	 * for specialized use cases.
 	 *
 	 * Params:
-	 *     argc = a pointer to the number of command line arguments
 	 *     argv = a pointer to the array of
 	 *         command line arguments
 	 *

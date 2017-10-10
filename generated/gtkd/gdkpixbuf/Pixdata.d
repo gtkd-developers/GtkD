@@ -176,7 +176,6 @@ public final class Pixdata
 	 * Deprecated: Use #GResource instead.
 	 *
 	 * Params:
-	 *     streamLength = length of the stream used for deserialization.
 	 *     stream = stream of bytes containing a
 	 *         serialized #GdkPixdata structure.
 	 *

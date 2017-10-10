@@ -196,7 +196,6 @@ public class TlsPassword : ObjectG
 	 *
 	 * Params:
 	 *     value = the new password value
-	 *     length = the length of the password, or -1
 	 *
 	 * Since: 2.30
 	 */
@@ -218,7 +217,6 @@ public class TlsPassword : ObjectG
 	 *
 	 * Params:
 	 *     value = the value for the password
-	 *     length = the length of the password, or -1
 	 *     destroy = a function to use to free the password.
 	 *
 	 * Since: 2.30

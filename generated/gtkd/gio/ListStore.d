@@ -232,7 +232,6 @@ public class ListStore : ObjectG, ListModelIF
 	 *     position = the position at which to make the change
 	 *     nRemovals = the number of items to remove
 	 *     additions = the items to add
-	 *     nAdditions = the number of items to add
 	 *
 	 * Since: 2.44
 	 */

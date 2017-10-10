@@ -155,7 +155,6 @@ public class ByteArray
 	 *
 	 * Params:
 	 *     data = byte data for the array
-	 *     len = length of @data
 	 *
 	 * Returns: a new #GByteArray
 	 *

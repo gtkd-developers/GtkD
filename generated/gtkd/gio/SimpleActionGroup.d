@@ -121,7 +121,6 @@ public class SimpleActionGroup : ObjectG, ActionGroupIF, ActionMapIF
 	 * Params:
 	 *     entries = a pointer to the first item in
 	 *         an array of #GActionEntry structs
-	 *     nEntries = the length of @entries, or -1
 	 *     userData = the user data for signal connections
 	 *
 	 * Since: 2.30

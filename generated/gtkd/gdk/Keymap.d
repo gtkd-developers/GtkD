@@ -182,7 +182,6 @@ public class Keymap : ObjectG
 	 *         location for array of #GdkKeymapKey, or %NULL
 	 *     keyvals = return
 	 *         location for array of keyvals, or %NULL
-	 *     nEntries = length of @keys and @keyvals
 	 *
 	 * Returns: %TRUE if there were any entries
 	 */
@@ -217,7 +216,6 @@ public class Keymap : ObjectG
 	 *     keyval = a keyval, such as %GDK_KEY_a, %GDK_KEY_Up, %GDK_KEY_Return, etc.
 	 *     keys = return location
 	 *         for an array of #GdkKeymapKey
-	 *     nKeys = return location for number of elements in returned array
 	 *
 	 * Returns: %TRUE if keys were found and returned
 	 */

@@ -207,7 +207,6 @@ public class Checksum
 	 *
 	 * Params:
 	 *     data = buffer used to compute the checksum
-	 *     length = size of the buffer, or -1 if it is a null-terminated string.
 	 *
 	 * Since: 2.16
 	 */
@@ -266,7 +265,6 @@ public class Checksum
 	 * Params:
 	 *     checksumType = a #GChecksumType
 	 *     data = binary blob to compute the digest of
-	 *     length = length of @data
 	 *
 	 * Returns: the digest of the binary data as a string in hexadecimal.
 	 *     The returned string should be freed with g_free() when done using it.

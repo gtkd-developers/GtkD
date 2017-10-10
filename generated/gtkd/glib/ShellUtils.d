@@ -55,7 +55,6 @@ public struct ShellUtils
 	 *
 	 * Params:
 	 *     commandLine = command line to parse
-	 *     argcp = return location for number of args
 	 *     argvp = return
 	 *         location for array of args
 	 *

@@ -828,7 +828,6 @@ public class Display : ObjectG
 	 *     targets = an array of targets
 	 *         that should be saved, or %NULL
 	 *         if all available targets should be saved.
-	 *     nTargets = length of the @targets array
 	 *
 	 * Since: 2.6
 	 */

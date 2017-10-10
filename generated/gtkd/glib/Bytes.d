@@ -103,7 +103,6 @@ public class Bytes
 	 *
 	 * Params:
 	 *     data = the data to be used for the bytes
-	 *     size = the size of @data
 	 *
 	 * Returns: a new #GBytes
 	 *
@@ -136,7 +135,6 @@ public class Bytes
 	 *
 	 * Params:
 	 *     data = the data to be used for the bytes
-	 *     size = the size of @data
 	 *     freeFunc = the function to call to release the data
 	 *     userData = data to pass to @free_func
 	 *

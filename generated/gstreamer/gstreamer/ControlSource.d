@@ -107,7 +107,6 @@ public class ControlSource : ObjectGst
 	 * Params:
 	 *     timestamp = the first timestamp
 	 *     interval = the time steps
-	 *     nValues = the number of values to fetch
 	 *     values = array to put control-values in
 	 *
 	 * Returns: %TRUE if the given array could be filled, %FALSE otherwise

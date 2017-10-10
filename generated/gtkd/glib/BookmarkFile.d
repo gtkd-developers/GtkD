@@ -932,7 +932,6 @@ public class BookmarkFile
 	 * Params:
 	 *     uri = an item's URI
 	 *     groups = an array of group names, or %NULL to remove all groups
-	 *     length = number of group name values in @groups
 	 *
 	 * Since: 2.12
 	 */

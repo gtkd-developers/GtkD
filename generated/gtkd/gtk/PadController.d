@@ -186,7 +186,6 @@ public class PadController : EventController
 	 *
 	 * Params:
 	 *     entries = the action entries to set on @controller
-	 *     nEntries = the number of elements in @entries
 	 *
 	 * Since: 3.22
 	 */

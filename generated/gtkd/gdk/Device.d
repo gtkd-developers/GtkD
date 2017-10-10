@@ -94,7 +94,6 @@ public class Device : ObjectG
 	 *
 	 * Params:
 	 *     events = an array of #GdkTimeCoord.
-	 *     nEvents = the length of the array.
 	 */
 	public static void freeHistory(GdkTimeCoord*[] events)
 	{
@@ -283,8 +282,6 @@ public class Device : ObjectG
 	 *     stop = ending timestamp for the range of events to return
 	 *     events = location to store a newly-allocated array of #GdkTimeCoord, or
 	 *         %NULL
-	 *     nEvents = location to store the length of
-	 *         @events, or %NULL
 	 *
 	 * Returns: %TRUE if the windowing system supports motion history and
 	 *     at least one event was found.

@@ -111,7 +111,6 @@ public class Handle : ObjectG
 	 *
 	 * Params:
 	 *     data = The SVG data
-	 *     dataLen = The length of @data, in bytes
 	 *
 	 * Returns: A #RsvgHandle or %NULL if an error occurs.
 	 *
@@ -561,7 +560,6 @@ public class Handle : ObjectG
 	 *
 	 * Params:
 	 *     buf = pointer to svg data
-	 *     count = length of the @buf buffer in bytes
 	 *
 	 * Returns: %TRUE on success, or %FALSE on error
 	 *

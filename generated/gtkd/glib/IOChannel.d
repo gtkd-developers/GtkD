@@ -318,9 +318,6 @@ public class IOChannel
 	 *
 	 * Params:
 	 *     buf = a buffer to read data into
-	 *     count = the size of the buffer. Note that the buffer may not be
-	 *         complelely filled even if there is data in the buffer if the
-	 *         remaining data is not a complete character.
 	 *     bytesRead = The number of bytes read. This may be
 	 *         zero even on success if count < 6 and the channel's encoding
 	 *         is non-%NULL. This indicates that the next UTF-8 character is
@@ -355,7 +352,6 @@ public class IOChannel
 	 *         line terminator. This data should be freed with g_free()
 	 *         when no longer needed. This is a nul-terminated string.
 	 *         If a @length of zero is returned, this will be %NULL instead.
-	 *     length = location to store length of the read data, or %NULL
 	 *     terminatorPos = location to store position of line terminator, or %NULL
 	 *
 	 * Returns: the status of the operation.
@@ -416,7 +412,6 @@ public class IOChannel
 	 *         #GIOChannel. This data should be freed with g_free() when no
 	 *         longer needed. This data is terminated by an extra nul
 	 *         character, but there may be other nuls in the intervening data.
-	 *     length = location to store length of the data
 	 *
 	 * Returns: %G_IO_STATUS_NORMAL on success.
 	 *     This function never returns %G_IO_STATUS_EOF.
@@ -761,8 +756,6 @@ public class IOChannel
 	 *
 	 * Params:
 	 *     buf = a buffer to write data from
-	 *     count = the size of the buffer. If -1, the buffer
-	 *         is taken to be a nul-terminated string.
 	 *     bytesWritten = The number of bytes written. This can be nonzero
 	 *         even if the return value is not %G_IO_STATUS_NORMAL.
 	 *         If the return value is %G_IO_STATUS_NORMAL and the

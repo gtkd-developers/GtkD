@@ -259,7 +259,6 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	 * Non vararg creation function.  Used primarily by language bindings.
 	 *
 	 * Params:
-	 *     nColumns = number of columns in the tree store
 	 *     types = an array of #GType types for the columns, from first to last
 	 *
 	 * Returns: a new #GtkTreeStore
@@ -390,7 +389,6 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	 *     position = position to insert the new row, or -1 for last
 	 *     columns = an array of column numbers
 	 *     values = an array of GValues
-	 *     nValues = the length of the @columns and @values arrays
 	 *
 	 * Since: 2.10
 	 */
@@ -550,7 +548,6 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	 * or a method on the #GtkTreeModel interface is called.
 	 *
 	 * Params:
-	 *     nColumns = Number of columns for the tree store
 	 *     types = An array of #GType types, one for each column
 	 */
 	public void setColumnTypes(GType[] types)
@@ -596,7 +593,6 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	 *     iter = A valid #GtkTreeIter for the row being modified
 	 *     columns = an array of column numbers
 	 *     values = an array of GValues
-	 *     nValues = the length of the @columns and @values arrays
 	 *
 	 * Since: 2.12
 	 */

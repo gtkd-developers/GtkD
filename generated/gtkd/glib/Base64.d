@@ -117,7 +117,6 @@ public struct Base64
 	 *
 	 * Params:
 	 *     data = the binary data to encode
-	 *     len = the length of @data
 	 *
 	 * Returns: a newly allocated, zero-terminated Base-64
 	 *     encoded string representing @data. The returned string must
@@ -180,7 +179,6 @@ public struct Base64
 	 *
 	 * Params:
 	 *     inn = the binary data to encode
-	 *     len = the length of @in
 	 *     breakLines = whether to break long lines
 	 *     output = pointer to destination buffer
 	 *     state = Saved state between steps, initialize to 0

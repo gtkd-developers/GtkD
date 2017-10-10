@@ -558,7 +558,6 @@ public class TextBuffer : ObjectG
 	 *     format = the rich text format to use for deserializing
 	 *     iter = insertion point for the deserialized text
 	 *     data = data to deserialize
-	 *     length = length of @data
 	 *
 	 * Returns: %TRUE on success, %FALSE otherwise.
 	 *
@@ -1116,7 +1115,6 @@ public class TextBuffer : ObjectG
 	 * Params:
 	 *     iter = a position in the buffer
 	 *     text = text in UTF-8 format
-	 *     len = length of text in bytes, or -1
 	 */
 	public void insert(TextIter iter, string text)
 	{
@@ -1129,7 +1127,6 @@ public class TextBuffer : ObjectG
 	 *
 	 * Params:
 	 *     text = text in UTF-8 format
-	 *     len = length of text, in bytes
 	 */
 	public void insertAtCursor(string text)
 	{
@@ -1171,7 +1168,6 @@ public class TextBuffer : ObjectG
 	 * Params:
 	 *     iter = a position in @buffer
 	 *     text = some UTF-8 text
-	 *     len = length of text in bytes, or -1
 	 *     defaultEditable = default editability of buffer
 	 *
 	 * Returns: whether text was actually inserted
@@ -1191,7 +1187,6 @@ public class TextBuffer : ObjectG
 	 *
 	 * Params:
 	 *     text = text in UTF-8 format
-	 *     len = length of text in bytes, or -1
 	 *     defaultEditable = default editability of buffer
 	 *
 	 * Returns: whether text was actually inserted
@@ -1558,7 +1553,6 @@ public class TextBuffer : ObjectG
 	 *
 	 * Params:
 	 *     text = UTF-8 text to insert
-	 *     len = length of @text in bytes
 	 */
 	public void setText(string text)
 	{

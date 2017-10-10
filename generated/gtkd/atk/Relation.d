@@ -88,7 +88,6 @@ public class Relation : ObjectG
 	 * Params:
 	 *     targets = an array of pointers to
 	 *         #AtkObjects
-	 *     nTargets = number of #AtkObjects pointed to by @targets
 	 *     relationship = an #AtkRelationType with which to create the new
 	 *         #AtkRelation
 	 *

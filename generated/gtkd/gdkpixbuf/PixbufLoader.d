@@ -285,7 +285,6 @@ public class PixbufLoader : ObjectG
 	 *
 	 * Params:
 	 *     buf = Pointer to image data.
-	 *     count = Length of the @buf buffer in bytes.
 	 *
 	 * Returns: %TRUE if the write was successful, or %FALSE if the loader
 	 *     cannot parse the buffer.

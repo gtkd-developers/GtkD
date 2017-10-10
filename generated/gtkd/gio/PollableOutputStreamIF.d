@@ -118,7 +118,6 @@ public interface PollableOutputStreamIF{
 	 * Params:
 	 *     buffer = a buffer to write
 	 *         data from
-	 *     count = the number of bytes you want to write
 	 *     cancellable = a #GCancellable, or %NULL
 	 *
 	 * Returns: the number of bytes written, or -1 on error (including

@@ -73,7 +73,6 @@ public struct GStreamer
 	 * abort program execution.
 	 *
 	 * Params:
-	 *     argc = pointer to application's argc
 	 *     argv = pointer to application's argv
 	 */
 	public static void init(ref string[] argv)
@@ -95,7 +94,6 @@ public struct GStreamer
 	 * use gst_init() instead.
 	 *
 	 * Params:
-	 *     argc = pointer to application's argc
 	 *     argv = pointer to application's argv
 	 *
 	 * Returns: %TRUE if GStreamer could be initialized.

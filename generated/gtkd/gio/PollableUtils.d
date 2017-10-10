@@ -107,7 +107,6 @@ public Source pollableSourceNewFull(ObjectG pollableStream, Source childSource, 
  *     stream = a #GInputStream
  *     buffer = a buffer to
  *         read data into
- *     count = the number of bytes to read
  *     blocking = whether to do blocking I/O
  *     cancellable = optional #GCancellable object, %NULL to ignore.
  *
@@ -147,7 +146,6 @@ public ptrdiff_t pollableStreamRead(InputStream stream, ubyte[] buffer, bool blo
  *     stream = a #GOutputStream.
  *     buffer = the buffer
  *         containing the data to write.
- *     count = the number of bytes to write
  *     blocking = whether to do blocking I/O
  *     cancellable = optional #GCancellable object, %NULL to ignore.
  *
@@ -195,7 +193,6 @@ public ptrdiff_t pollableStreamWrite(OutputStream stream, ubyte[] buffer, bool b
  *     stream = a #GOutputStream.
  *     buffer = the buffer
  *         containing the data to write.
- *     count = the number of bytes to write
  *     blocking = whether to do blocking I/O
  *     bytesWritten = location to store the number of bytes that was
  *         written to the stream

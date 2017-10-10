@@ -1470,7 +1470,6 @@ public struct Unicode
 	 *
 	 * Params:
 	 *     str = a pointer to character data
-	 *     maxLen = max bytes to validate, or -1 to go until NUL
 	 *     end = return location for end of valid data
 	 *
 	 * Returns: %TRUE if the text was valid UTF-8

@@ -828,7 +828,6 @@ public struct Util
 	 *         commas, or %NULL.
 	 *     keys = pointer to an array of #GDebugKey which associate
 	 *         strings with bit flags.
-	 *     nkeys = the number of #GDebugKeys in the array.
 	 *
 	 * Returns: the combined set of bit flags.
 	 */

@@ -178,7 +178,6 @@ public class PgFontMap : ObjectG
 	 * Params:
 	 *     families = location to store a pointer to an array of #PangoFontFamily *.
 	 *         This array should be freed with g_free().
-	 *     nFamilies = location to store the number of elements in @families
 	 */
 	public void listFamilies(out PgFontFamily[] families)
 	{

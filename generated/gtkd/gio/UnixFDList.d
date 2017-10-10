@@ -119,7 +119,6 @@ public class UnixFDList : ObjectG
 	 *
 	 * Params:
 	 *     fds = the initial list of file descriptors
-	 *     nFds = the length of #fds, or -1
 	 *
 	 * Returns: a new #GUnixFDList
 	 *

@@ -420,7 +420,6 @@ public class IconTheme : ObjectG
 	 * Params:
 	 *     path = location to store a list of icon theme path directories or %NULL.
 	 *         The stored value should be freed with g_strfreev().
-	 *     nElements = location to store number of elements in @path, or %NULL
 	 *
 	 * Since: 2.4
 	 */
@@ -865,7 +864,6 @@ public class IconTheme : ObjectG
 	 * Params:
 	 *     path = array of
 	 *         directories that are searched for icon themes
-	 *     nElements = number of elements in @path.
 	 *
 	 * Since: 2.4
 	 */

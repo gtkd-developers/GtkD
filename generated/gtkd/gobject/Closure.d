@@ -284,7 +284,6 @@ public class Closure
 	 *     returnValue = a #GValue to store the return
 	 *         value. May be %NULL if the callback of @closure
 	 *         doesn't return a value.
-	 *     nParamValues = the length of the @param_values array
 	 *     paramValues = an array of
 	 *         #GValues holding the arguments on which to
 	 *         invoke the callback of @closure

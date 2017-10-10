@@ -179,7 +179,6 @@ public struct Gdk
 	 * needed by GTK+ applications.
 	 *
 	 * Params:
-	 *     argc = the number of command line arguments.
 	 *     argv = the array of command line arguments.
 	 */
 	public static void init(ref string[] argv)
@@ -203,7 +202,6 @@ public struct Gdk
 	 * needed by GTK+ applications.
 	 *
 	 * Params:
-	 *     argc = the number of command line arguments.
 	 *     argv = the array of command line arguments.
 	 *
 	 * Returns: %TRUE if initialization succeeded.
@@ -313,7 +311,6 @@ public struct Gdk
 	 * gtk_init(), gtk_init_check(), gdk_init(), or gdk_init_check().
 	 *
 	 * Params:
-	 *     argc = the number of command line arguments.
 	 *     argv = the array of command line arguments.
 	 *
 	 * Since: 2.2

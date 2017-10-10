@@ -742,7 +742,6 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 *
 	 * Params:
 	 *     files = an array of #GFiles to open
-	 *     nFiles = the length of the @files array
 	 *     hint = a hint (or ""), but never %NULL
 	 *
 	 * Since: 2.28
@@ -922,7 +921,6 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 * what their exit status will be.
 	 *
 	 * Params:
-	 *     argc = the argc from main() (or 0 if @argv is %NULL)
 	 *     argv = the argv from main(), or %NULL
 	 *
 	 * Returns: the exit status

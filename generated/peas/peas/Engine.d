@@ -199,7 +199,6 @@ public class Engine : ObjectG
 	 * Params:
 	 *     info = A loaded #PeasPluginInfo.
 	 *     extensionType = The implemented extension #GType.
-	 *     nParameters = the length of the @parameters array.
 	 *     parameters = an array of #GParameter.
 	 *
 	 * Returns: a new instance of #PeasExtension wrapping

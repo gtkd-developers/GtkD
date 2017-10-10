@@ -1596,7 +1596,6 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *         #GtkTargetEntrys indicating the drop types that this @widget will
 		 *         accept, or %NULL. Later you can access the list with
 		 *         gtk_drag_dest_get_target_list() and gtk_drag_dest_find_target().
-		 *     nTargets = the number of entries in @targets
 		 *     actions = a bitmask of possible actions for a drop onto this @widget.
 		 */
 		public void dragDestSet(GtkDestDefaults flags, TargetEntry[] targets, GdkDragAction actions)
@@ -1769,7 +1768,6 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     startButtonMask = the bitmask of buttons that can start the drag
 		 *     targets = the table of targets
 		 *         that the drag will support, may be %NULL
-		 *     nTargets = the number of items in @targets
 		 *     actions = the bitmask of possible actions for a drag from this widget
 		 */
 		public void dragSourceSet(GdkModifierType startButtonMask, TargetEntry[] targets, GdkDragAction actions)

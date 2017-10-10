@@ -154,8 +154,6 @@ public class IconInfo : ObjectG
 	 * Params:
 	 *     points = location to store pointer
 	 *         to an array of points, or %NULL free the array of points with g_free().
-	 *     nPoints = location to store the number of points in @points,
-	 *         or %NULL
 	 *
 	 * Returns: %FALSE
 	 *

@@ -124,7 +124,6 @@ public class Descriptor
 	 *     caSystemId = the type of CA system used
 	 *     caPid = The PID containing ECM or EMM data
 	 *     privateData = The private data
-	 *     privateDataSize = The size of @private_data in bytes
 	 *
 	 * Returns: %TRUE if parsing succeeded, else %FALSE.
 	 */
@@ -256,7 +255,6 @@ public class Descriptor
 	 * Params:
 	 *     dataBroadcastId = the data broadcast id
 	 *     idSelectorBytes = the selector bytes, if present
-	 *     len = the length of #id_selector_bytes
 	 *
 	 * Returns: %TRUE if the parsing happened correctly, else %FALSE.
 	 */
@@ -455,7 +453,6 @@ public class Descriptor
 	 *     privateDataSpecifier = the private data specifier id
 	 *         registered by http://www.dvbservices.com/
 	 *     privateData = additional data or NULL
-	 *     length = length of %private_data
 	 *
 	 * Returns: %TRUE if the parsing happened correctly, else %FALSE.
 	 */
@@ -751,7 +748,6 @@ public class Descriptor
 	 * Params:
 	 *     tag = descriptor tag
 	 *     data = descriptor data (after tag and length field)
-	 *     length = length of @data
 	 *
 	 * Returns: #GstMpegtsDescriptor
 	 */
@@ -774,7 +770,6 @@ public class Descriptor
 	 *     tag = descriptor tag
 	 *     tagExtension = descriptor tag extension
 	 *     data = descriptor data (after tag and length field)
-	 *     length = length of @data
 	 *
 	 * Returns: #GstMpegtsDescriptor
 	 */
@@ -876,7 +871,6 @@ public class Descriptor
 	 * Params:
 	 *     formatIdentifier = a 4 character format identifier string
 	 *     additionalInfo = pointer to optional additional info
-	 *     additionalInfoLength = length of the optional @additional_info
 	 *
 	 * Returns: #GstMpegtsDescriptor, %NULL on failure
 	 */

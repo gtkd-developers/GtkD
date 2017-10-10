@@ -292,7 +292,6 @@ public class ListStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	 * Non-vararg creation function.  Used primarily by language bindings.
 	 *
 	 * Params:
-	 *     nColumns = number of columns in the list store
 	 *     types = an array of #GType types for the columns, from first to last
 	 *
 	 * Returns: a new #GtkListStore
@@ -405,7 +404,6 @@ public class ListStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	 *     position = position to insert the new row, or -1 for last
 	 *     columns = an array of column numbers
 	 *     values = an array of GValues
-	 *     nValues = the length of the @columns and @values arrays
 	 *
 	 * Since: 2.6
 	 */
@@ -530,7 +528,6 @@ public class ListStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	 * interface is called.
 	 *
 	 * Params:
-	 *     nColumns = Number of columns for the list store
 	 *     types = An array length n of #GTypes
 	 */
 	public void setColumnTypes(GType[] types)
@@ -577,7 +574,6 @@ public class ListStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	 *     iter = A valid #GtkTreeIter for the row being modified
 	 *     columns = an array of column numbers
 	 *     values = an array of GValues
-	 *     nValues = the length of the @columns and @values arrays
 	 *
 	 * Since: 2.12
 	 */

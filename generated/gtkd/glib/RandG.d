@@ -232,8 +232,6 @@ public class RandG
 	 *
 	 * Params:
 	 *     seed = an array of seeds to initialize the random number generator
-	 *     seedLength = an array of seeds to initialize the random number
-	 *         generator
 	 *
 	 * Returns: the new #GRand
 	 *

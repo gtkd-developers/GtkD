@@ -153,7 +153,6 @@ public class PgCoverage
 	 *
 	 * Params:
 	 *     bytes = location to store result (must be freed with g_free())
-	 *     nBytes = location to store size of result
 	 */
 	public void toBytes(out ubyte[] bytes)
 	{
@@ -181,7 +180,6 @@ public class PgCoverage
 	 * Params:
 	 *     bytes = binary data
 	 *         representing a #PangoCoverage
-	 *     nBytes = the size of @bytes in bytes
 	 *
 	 * Returns: a newly allocated
 	 *     #PangoCoverage, or %NULL if the data was invalid.

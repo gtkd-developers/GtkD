@@ -90,7 +90,6 @@ public class ControlBinding : ObjectGst
 	 * Params:
 	 *     timestamp = the time that should be processed
 	 *     interval = the time spacing between subsequent values
-	 *     nValues = the number of values
 	 *     values = array to put control-values in
 	 *
 	 * Returns: %TRUE if the given array could be filled, %FALSE otherwise
@@ -142,7 +141,6 @@ public class ControlBinding : ObjectGst
 	 * Params:
 	 *     timestamp = the time that should be processed
 	 *     interval = the time spacing between subsequent values
-	 *     nValues = the number of values
 	 *     values = array to put control-values in
 	 *
 	 * Returns: %TRUE if the given array could be filled, %FALSE otherwise

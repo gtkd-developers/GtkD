@@ -110,8 +110,6 @@ public GdkAtom internStaticString(string atomName)
  *     data = the data (a `guchar *`
  *         `gushort *`, or `gulong *`,
  *         depending on @format), cast to a `guchar *`.
- *     nelements = the number of elements of size determined by the format,
- *         contained in @data.
  */
 public void propertyChange(Window window, GdkAtom property, GdkAtom type, int format, GdkPropMode mode, char[] data)
 {
@@ -165,12 +163,6 @@ public void propertyDelete(Window window, GdkAtom property)
  *         actual type of the property.
  *     actualFormat = location to store the actual return format of the
  *         data; either 8, 16 or 32 bits.
- *     actualLength = location to store the length of the retrieved data, in
- *         bytes.  Data returned in the 32 bit format is stored
- *         in a long variable, so the actual number of 32 bit
- *         elements should be be calculated via
- *         @actual_length / sizeof(glong) to ensure portability to
- *         64 bit systems.
  *     data = location
  *         to store a pointer to the data. The retrieved data should be
  *         freed with g_free() when you are finished using it.
@@ -199,7 +191,6 @@ public bool propertyGet(Window window, GdkAtom property, GdkAtom type, gulong of
  *     encoding = an atom representing the encoding of the text
  *     format = the format of the property
  *     text = the text to convert
- *     length = the length of @text, in bytes
  *     list = location to store the list
  *         of strings or %NULL. The list should be freed with
  *         g_strfreev().

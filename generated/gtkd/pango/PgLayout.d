@@ -509,11 +509,6 @@ public class PgLayout : ObjectG
 	 * Params:
 	 *     attrs = location to store a pointer to an array of logical attributes
 	 *         This value must be freed with g_free().
-	 *     nAttrs = location to store the number of the attributes in the
-	 *         array. (The stored value will be one more than the total number
-	 *         of characters in the layout, since there need to be attributes
-	 *         corresponding to both the position before the first character
-	 *         and the position after the last character.)
 	 */
 	public void getLogAttrs(out PangoLogAttr[] attrs)
 	{
@@ -1088,11 +1083,6 @@ public class PgLayout : ObjectG
 	 *
 	 * Params:
 	 *     text = a valid UTF-8 string
-	 *     length = maximum length of @text, in bytes. -1 indicates that
-	 *         the string is nul-terminated and the length should be
-	 *         calculated.  The text will also be truncated on
-	 *         encountering a nul-termination even when @length is
-	 *         positive.
 	 */
 	public void setText(string text)
 	{

@@ -103,7 +103,6 @@ public class Section
 	 *     pid = the PID to which this section belongs
 	 *     data = a pointer to the beginning of the section (i.e. the first byte
 	 *         should contain the table_id field).
-	 *     dataSize = size of the @data argument.
 	 *
 	 * Returns: A new #GstMpegtsSection if the data was valid,
 	 *     else %NULL

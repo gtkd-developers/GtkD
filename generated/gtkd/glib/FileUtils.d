@@ -159,7 +159,6 @@ public struct FileUtils
 	 *     filename = name of a file to read contents from, in the GLib file name encoding
 	 *     contents = location to store an allocated string, use g_free() to free
 	 *         the returned string
-	 *     length = location to store length in bytes of the contents, or %NULL
 	 *
 	 * Returns: %TRUE on success, %FALSE if an error occurred
 	 *
@@ -292,7 +291,6 @@ public struct FileUtils
 	 *     filename = name of a file to write @contents to, in the GLib file name
 	 *         encoding
 	 *     contents = string to write to the file
-	 *     length = length of @contents, or -1 if @contents is a nul-terminated string
 	 *
 	 * Returns: %TRUE on success, %FALSE if an error occurred
 	 *

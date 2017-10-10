@@ -416,7 +416,6 @@ public class Visual : ObjectG
 	 * Params:
 	 *     depths = return
 	 *         location for available depths
-	 *     count = return location for number of available depths
 	 */
 	public static void queryDepths(out int[] depths)
 	{
@@ -442,7 +441,6 @@ public class Visual : ObjectG
 	 * Params:
 	 *     visualTypes = return
 	 *         location for the available visual types
-	 *     count = return location for the number of available visual types
 	 */
 	public static void queryVisualTypes(out GdkVisualType[] visualTypes)
 	{

@@ -97,7 +97,6 @@ public class PgFont : ObjectG
 	 * Params:
 	 *     descs = a pointer
 	 *         to an array of #PangoFontDescription, may be %NULL
-	 *     nDescs = number of font descriptions in @descs
 	 */
 	public static void descriptionsFree(PgFontDescription[] descs)
 	{

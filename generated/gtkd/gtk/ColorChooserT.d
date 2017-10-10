@@ -75,7 +75,6 @@ public template ColorChooserT(TStruct)
 	 *     orientation = %GTK_ORIENTATION_HORIZONTAL if the palette should
 	 *         be displayed in rows, %GTK_ORIENTATION_VERTICAL for columns
 	 *     colorsPerLine = the number of colors to show in each row/column
-	 *     nColors = the total number of elements in @colors
 	 *     colors = the colors of the palette, or %NULL
 	 *
 	 * Since: 3.4

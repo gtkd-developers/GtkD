@@ -607,7 +607,6 @@ public uint addFromResource(string resourcePath)
  *
  * Params:
  *     buffer = the string to parse
- *     length = the length of @buffer (may be -1 if @buffer is nul-terminated)
  *
  * Returns: A positive value on success, 0 if an error occurred
  *

@@ -108,7 +108,6 @@ public class ContainerClass
 	 * Installs child properties on a container class.
 	 *
 	 * Params:
-	 *     nPspecs = the length of the #GParamSpec array
 	 *     pspecs = the #GParamSpec array defining the new
 	 *         child properties
 	 *

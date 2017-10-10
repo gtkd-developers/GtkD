@@ -135,7 +135,6 @@ public class PgFontFace : ObjectG
 	 * Params:
 	 *     sizes = location to store a pointer to an array of int. This array
 	 *         should be freed with g_free().
-	 *     nSizes = location to store the number of elements in @sizes
 	 *
 	 * Since: 1.4
 	 */

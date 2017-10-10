@@ -236,7 +236,6 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	 * Params:
 	 *     targets = the table of targets that the drag will
 	 *         support
-	 *     nTargets = the number of items in @targets
 	 *     actions = the bitmask of possible actions for a drag to this
 	 *         widget
 	 *
@@ -261,7 +260,6 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	 *     startButtonMask = Mask of allowed buttons to start drag
 	 *     targets = the table of targets that the drag will
 	 *         support
-	 *     nTargets = the number of items in @targets
 	 *     actions = the bitmask of possible actions for a drag from this
 	 *         widget
 	 *

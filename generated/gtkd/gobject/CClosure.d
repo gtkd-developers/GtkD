@@ -166,7 +166,6 @@ public class CClosure
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
 	 *         g_closure_set_meta_marshal()
-	 *     nParams = the length of the @param_types array
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
@@ -212,7 +211,6 @@ public class CClosure
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
 	 *         g_closure_set_meta_marshal()
-	 *     nParams = the length of the @param_types array
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
@@ -257,7 +255,6 @@ public class CClosure
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
 	 *         g_closure_set_meta_marshal()
-	 *     nParams = the length of the @param_types array
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
@@ -301,7 +298,6 @@ public class CClosure
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
 	 *         g_closure_set_meta_marshal()
-	 *     nParams = the length of the @param_types array
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
@@ -345,7 +341,6 @@ public class CClosure
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
 	 *         g_closure_set_meta_marshal()
-	 *     nParams = the length of the @param_types array
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
@@ -389,7 +384,6 @@ public class CClosure
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
 	 *         g_closure_set_meta_marshal()
-	 *     nParams = the length of the @param_types array
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
@@ -433,7 +427,6 @@ public class CClosure
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
 	 *         g_closure_set_meta_marshal()
-	 *     nParams = the length of the @param_types array
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
@@ -477,7 +470,6 @@ public class CClosure
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
 	 *         g_closure_set_meta_marshal()
-	 *     nParams = the length of the @param_types array
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
@@ -521,7 +513,6 @@ public class CClosure
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
 	 *         g_closure_set_meta_marshal()
-	 *     nParams = the length of the @param_types array
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
@@ -565,7 +556,6 @@ public class CClosure
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
 	 *         g_closure_set_meta_marshal()
-	 *     nParams = the length of the @param_types array
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
@@ -609,7 +599,6 @@ public class CClosure
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
 	 *         g_closure_set_meta_marshal()
-	 *     nParams = the length of the @param_types array
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
@@ -653,7 +642,6 @@ public class CClosure
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
 	 *         g_closure_set_meta_marshal()
-	 *     nParams = the length of the @param_types array
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
@@ -697,7 +685,6 @@ public class CClosure
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
 	 *         g_closure_set_meta_marshal()
-	 *     nParams = the length of the @param_types array
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
@@ -741,7 +728,6 @@ public class CClosure
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
 	 *         g_closure_set_meta_marshal()
-	 *     nParams = the length of the @param_types array
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
@@ -789,7 +775,6 @@ public class CClosure
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
 	 *         g_closure_set_meta_marshal()
-	 *     nParams = the length of the @param_types array
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
@@ -833,7 +818,6 @@ public class CClosure
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
 	 *         g_closure_set_meta_marshal()
-	 *     nParams = the length of the @param_types array
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
@@ -877,7 +861,6 @@ public class CClosure
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
 	 *         g_closure_set_meta_marshal()
-	 *     nParams = the length of the @param_types array
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
@@ -943,7 +926,6 @@ public class CClosure
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
 	 *         g_closure_set_meta_marshal()
-	 *     nParams = the length of the @param_types array
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
@@ -965,7 +947,6 @@ public class CClosure
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
 	 *         g_closure_set_meta_marshal()
-	 *     nParams = the length of the @param_types array
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
@@ -1009,7 +990,6 @@ public class CClosure
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
 	 *         g_closure_set_meta_marshal()
-	 *     nParams = the length of the @param_types array
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
@@ -1053,7 +1033,6 @@ public class CClosure
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
 	 *         g_closure_set_meta_marshal()
-	 *     nParams = the length of the @param_types array
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
@@ -1096,7 +1075,6 @@ public class CClosure
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
 	 *         g_closure_set_meta_marshal()
-	 *     nParams = the length of the @param_types array
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
@@ -1147,7 +1125,6 @@ public class CClosure
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
 	 *         g_closure_set_meta_marshal()
-	 *     nParams = the length of the @param_types array
 	 *     paramTypes = the #GType of each argument from
 	 *         @args_list.
 	 *

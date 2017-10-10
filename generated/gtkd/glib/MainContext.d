@@ -140,7 +140,6 @@ public class MainContext
 	 *     maxPriority = the maximum numerical priority of sources to check
 	 *     fds = array of #GPollFD's that was passed to
 	 *         the last call to g_main_context_query()
-	 *     nFds = return value of g_main_context_query()
 	 *
 	 * Returns: %TRUE if some sources are ready to be dispatched.
 	 */
@@ -441,7 +440,6 @@ public class MainContext
 	 *     timeout = location to store timeout to be used in polling
 	 *     fds = location to
 	 *         store #GPollFD records that need to be polled.
-	 *     nFds = length of @fds.
 	 *
 	 * Returns: the number of records actually stored in @fds,
 	 *     or, if more than @n_fds records need to be stored, the number
