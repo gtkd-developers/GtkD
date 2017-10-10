@@ -100,7 +100,7 @@ public class ObjectG
 			}
 
 			//When constructed via GtkBuilder set the structs.
-			if ( getStruct() is null)
+			if ( getStruct() is null )
 			{
 				setStruct(gObject);
 			}
@@ -159,6 +159,43 @@ public class ObjectG
 
 			unref();
 		}
+	}
+
+	/** */
+	T opCast(T)()
+	{
+		static if ( is(T : ObjectG)
+			&& !is(T == interface)
+			&& is(typeof(new T(cast(typeof(T.tupleof[0]))gObject, false))) )
+		{
+			//If a regular cast works, return the result.
+			if ( auto r = cast(T)super )
+				return r;
+
+			//Prints a warning if the cast is invalid.
+			//g_type_check_instance_cast(cast(GTypeInstance*)gObject, T.getType());
+
+			//Can we cast this type to T.
+			if ( !g_type_is_a(gObject.gTypeInstance.gClass.gType, T.getType()) )
+				return null;
+
+			//Remove the GDestroyNotify callback for the original d object.
+			g_object_steal_data(gObject, "GObject");
+			//Remove the original object as a GC root if needed.
+			if ( isGcRoot )
+			{
+				GC.removeRoot(cast(void*)this);
+				isGcRoot = false;
+			}
+			//Add a reference for the original D object before we remove the toggle reference.
+			g_object_ref(gObject);
+			g_object_remove_toggle_ref(gObject, cast(GToggleNotify)&toggleNotify, cast(void*)this);
+
+			//The new object handles the memory management.
+			return new T(cast(typeof(T.tupleof[0]))gObject, false);
+		}
+		else
+			return cast(T)super;
 	}
 
 	/**

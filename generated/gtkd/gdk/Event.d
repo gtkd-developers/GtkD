@@ -226,14 +226,14 @@ public class Event
 	public static bool isDoubleClick(GdkEventButton* eventButton, int buttonNumber=1)
 	{
 		return eventButton.button==buttonNumber
-		&& eventButton.type == EventType.DOUBLE_BUTTON_PRESS;
+			&& eventButton.type == EventType.DOUBLE_BUTTON_PRESS;
 	}
 
 	/** */
 	public static bool isTripleClick(GdkEventButton* eventButton, int buttonNumber=1)
 	{
 		return eventButton.button==buttonNumber
-		&& eventButton.type == EventType.TRIPLE_BUTTON_PRESS;
+			&& eventButton.type == EventType.TRIPLE_BUTTON_PRESS;
 	}
 
 	/**
