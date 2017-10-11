@@ -49,6 +49,12 @@ public interface EditableTextIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return atk_editable_text_get_type();
+	}
+
 	/**
 	 * Copy text from @start_pos up to, but not including @end_pos
 	 * to the clipboard.

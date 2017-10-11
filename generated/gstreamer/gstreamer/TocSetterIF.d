@@ -55,6 +55,12 @@ public interface TocSetterIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return gst_toc_setter_get_type();
+	}
+
 	/**
 	 * Return current TOC the setter uses. The TOC should not be
 	 * modified without making it writable first.

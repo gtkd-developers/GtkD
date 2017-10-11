@@ -45,6 +45,12 @@ public interface FileDescriptorBasedIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return g_file_descriptor_based_get_type();
+	}
+
 	/**
 	 * Gets the underlying file descriptor.
 	 *

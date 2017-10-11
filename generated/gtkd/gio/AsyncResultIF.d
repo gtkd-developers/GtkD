@@ -123,6 +123,12 @@ public interface AsyncResultIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return g_async_result_get_type();
+	}
+
 	/**
 	 * Gets the source object from a #GAsyncResult.
 	 *

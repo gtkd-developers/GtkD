@@ -75,6 +75,12 @@ public interface MountIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return g_mount_get_type();
+	}
+
 	/**
 	 * Checks if @mount can be ejected.
 	 *

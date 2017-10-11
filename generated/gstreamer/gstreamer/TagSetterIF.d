@@ -83,6 +83,12 @@ public interface TagSetterIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return gst_tag_setter_get_type();
+	}
+
 	/**
 	 * Adds the given tag / value pairs on the setter using the given merge mode.
 	 * The list must be terminated with %NULL.

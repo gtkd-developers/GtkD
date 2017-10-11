@@ -56,6 +56,12 @@ public interface ProxyResolverIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return g_proxy_resolver_get_type();
+	}
+
 	/**
 	 * Gets the default #GProxyResolver for the system.
 	 *

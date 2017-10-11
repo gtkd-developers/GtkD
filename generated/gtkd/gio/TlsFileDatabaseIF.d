@@ -48,4 +48,10 @@ public interface TlsFileDatabaseIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
+
+	/** */
+	public static GType getType()
+	{
+		return g_tls_file_database_get_type();
+	}
 }

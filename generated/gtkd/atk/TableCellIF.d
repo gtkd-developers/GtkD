@@ -47,6 +47,12 @@ public interface TableCellIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return atk_table_cell_get_type();
+	}
+
 	/**
 	 * Returns the column headers as an array of cell accessibles.
 	 *

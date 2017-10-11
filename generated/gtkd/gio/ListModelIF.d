@@ -89,6 +89,12 @@ public interface ListModelIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return g_list_model_get_type();
+	}
+
 	/**
 	 * Get the item at @position. If @position is greater than the number of
 	 * items in @list, %NULL is returned.

@@ -40,6 +40,12 @@ public interface SourceUndoManagerIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return gtk_source_undo_manager_get_type();
+	}
+
 	/**
 	 * Begin a not undoable action on the buffer. All changes between this call
 	 * and the call to gtk_source_undo_manager_end_not_undoable_action() cannot

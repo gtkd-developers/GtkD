@@ -53,6 +53,12 @@ public interface ImageIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return atk_image_get_type();
+	}
+
 	/**
 	 * Get a textual description of this image.
 	 *

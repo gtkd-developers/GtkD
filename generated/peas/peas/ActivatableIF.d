@@ -39,6 +39,12 @@ public interface ActivatableIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return peas_activatable_get_type();
+	}
+
 	/**
 	 * Activates the extension on the targetted object.
 	 *

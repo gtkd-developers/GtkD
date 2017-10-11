@@ -89,6 +89,12 @@ public interface ActionGroupIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return g_action_group_get_type();
+	}
+
 	/**
 	 * Emits the #GActionGroup::action-added signal on @action_group.
 	 *

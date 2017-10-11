@@ -332,6 +332,12 @@ public class VideoOverlay
 	/**
 	 */
 
+	/** */
+	public static GType getType()
+	{
+		return gst_video_overlay_get_type();
+	}
+
 	/**
 	 * Tell an overlay that it has been exposed. This will redraw the current frame
 	 * in the drawable even if the pipeline is PAUSED.

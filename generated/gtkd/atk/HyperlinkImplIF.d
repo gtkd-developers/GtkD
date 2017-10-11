@@ -69,6 +69,12 @@ public interface HyperlinkImplIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return atk_hyperlink_impl_get_type();
+	}
+
 	/**
 	 * Gets the hyperlink associated with this object.
 	 *

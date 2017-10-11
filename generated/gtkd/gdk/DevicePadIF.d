@@ -56,6 +56,12 @@ public interface DevicePadIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return gdk_device_pad_get_type();
+	}
+
 	/**
 	 * Returns the group the given @feature and @idx belong to,
 	 * or -1 if feature/index do not exist in @pad.

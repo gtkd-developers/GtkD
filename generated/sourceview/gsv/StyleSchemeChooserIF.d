@@ -40,6 +40,12 @@ public interface StyleSchemeChooserIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return gtk_source_style_scheme_chooser_get_type();
+	}
+
 	/**
 	 * Gets the currently-selected scheme.
 	 *

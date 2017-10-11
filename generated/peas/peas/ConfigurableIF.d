@@ -41,6 +41,12 @@ public interface ConfigurableIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return peas_gtk_configurable_get_type();
+	}
+
 	/**
 	 * Creates the configure widget for the plugin. The returned widget
 	 * should allow configuring all the relevant aspects of the plugin, and should

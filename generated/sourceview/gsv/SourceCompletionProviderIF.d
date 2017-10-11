@@ -48,6 +48,12 @@ public interface SourceCompletionProviderIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return gtk_source_completion_provider_get_type();
+	}
+
 	/**
 	 * Activate @proposal at @iter. When this functions returns %FALSE, the default
 	 * activation of @proposal will take place which replaces the word at @iter

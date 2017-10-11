@@ -100,6 +100,12 @@ public interface AppInfoIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return g_app_info_get_type();
+	}
+
 	/**
 	 * Creates a new #GAppInfo from the given information.
 	 *

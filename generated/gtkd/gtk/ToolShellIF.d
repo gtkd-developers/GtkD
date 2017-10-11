@@ -54,6 +54,12 @@ public interface ToolShellIF{
 	/**
 	 */
 
+	/** */
+	public static GType getType()
+	{
+		return gtk_tool_shell_get_type();
+	}
+
 	/**
 	 * Retrieves the current ellipsize mode for the tool shell. Tool items must not
 	 * call this function directly, but rely on gtk_tool_item_get_ellipsize_mode()

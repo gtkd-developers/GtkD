@@ -40,6 +40,12 @@ public interface TreeDragDestIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return gtk_tree_drag_dest_get_type();
+	}
+
 	/**
 	 * Asks the #GtkTreeDragDest to insert a row before the path @dest,
 	 * deriving the contents of the row from @selection_data. If @dest is

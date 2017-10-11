@@ -58,6 +58,12 @@ public interface ChildProxyIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return gst_child_proxy_get_type();
+	}
+
 	/**
 	 * Emits the "child-added" signal.
 	 *

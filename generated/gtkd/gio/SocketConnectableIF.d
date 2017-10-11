@@ -99,6 +99,12 @@ public interface SocketConnectableIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return g_socket_connectable_get_type();
+	}
+
 	/**
 	 * Creates a #GSocketAddressEnumerator for @connectable.
 	 *

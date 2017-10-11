@@ -47,6 +47,12 @@ public interface OrientableIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return gtk_orientable_get_type();
+	}
+
 	/**
 	 * Retrieves the orientation of the @orientable.
 	 *

@@ -69,6 +69,12 @@ public interface ScrollableIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return gtk_scrollable_get_type();
+	}
+
 	/**
 	 * Returns the size of a non-scrolling border around the
 	 * outside of the scrollable. An example for this would

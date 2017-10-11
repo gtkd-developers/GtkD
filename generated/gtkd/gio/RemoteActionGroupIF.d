@@ -62,6 +62,12 @@ public interface RemoteActionGroupIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return g_remote_action_group_get_type();
+	}
+
 	/**
 	 * Activates the remote action.
 	 *

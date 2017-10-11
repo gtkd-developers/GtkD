@@ -45,6 +45,12 @@ public interface SourceCompletionProposalIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return gtk_source_completion_proposal_get_type();
+	}
+
 	/**
 	 * Emits the "changed" signal on @proposal. This should be called by
 	 * implementations whenever the name, icon or info of the proposal has

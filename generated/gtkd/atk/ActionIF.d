@@ -57,6 +57,12 @@ public interface ActionIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return atk_action_get_type();
+	}
+
 	/**
 	 * Perform the specified action on the object.
 	 *

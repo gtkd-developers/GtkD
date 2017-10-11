@@ -77,6 +77,12 @@ public interface DriveIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return g_drive_get_type();
+	}
+
 	/**
 	 * Checks if a drive can be ejected.
 	 *

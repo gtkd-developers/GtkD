@@ -42,6 +42,12 @@ public interface PrintOperationPreviewIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return gtk_print_operation_preview_get_type();
+	}
+
 	/**
 	 * Ends a preview.
 	 *

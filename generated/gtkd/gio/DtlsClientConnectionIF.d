@@ -51,6 +51,12 @@ public interface DtlsClientConnectionIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return g_dtls_client_connection_get_type();
+	}
+
 	/**
 	 * Gets the list of distinguished names of the Certificate Authorities
 	 * that the server will accept certificates from. This will be set

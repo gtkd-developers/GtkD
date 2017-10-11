@@ -275,6 +275,12 @@ public interface TreeModelIF{
 	/**
 	 */
 
+	/** */
+	public static GType getType()
+	{
+		return gtk_tree_model_get_type();
+	}
+
 	/**
 	 * Calls func on each node in model in a depth-first fashion.
 	 *

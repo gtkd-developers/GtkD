@@ -75,6 +75,12 @@ public interface IconIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return g_icon_get_type();
+	}
+
 	/**
 	 * Deserializes a #GIcon previously serialized using g_icon_serialize().
 	 *

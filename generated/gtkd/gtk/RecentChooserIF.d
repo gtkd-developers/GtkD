@@ -55,6 +55,12 @@ public interface RecentChooserIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return gtk_recent_chooser_get_type();
+	}
+
 	/**
 	 * Adds @filter to the list of #GtkRecentFilter objects held by @chooser.
 	 *

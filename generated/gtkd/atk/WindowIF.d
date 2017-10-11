@@ -44,6 +44,12 @@ public interface WindowIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return atk_window_get_type();
+	}
+
 	/**
 	 * The signal #AtkWindow::activate is emitted when a window
 	 * becomes the active window of the application or session.

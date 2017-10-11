@@ -57,6 +57,12 @@ public interface ProxyIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return g_proxy_get_type();
+	}
+
 	/**
 	 * Lookup "gio-proxy" extension point for a proxy implementation that supports
 	 * specified protocol.

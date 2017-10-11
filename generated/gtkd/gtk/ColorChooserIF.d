@@ -49,6 +49,12 @@ public interface ColorChooserIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return gtk_color_chooser_get_type();
+	}
+
 	/**
 	 * Adds a palette to the color chooser. If @orientation is horizontal,
 	 * the colors are grouped in rows, with @colors_per_line colors

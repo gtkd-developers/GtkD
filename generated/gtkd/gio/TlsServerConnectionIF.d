@@ -48,4 +48,10 @@ public interface TlsServerConnectionIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
+
+	/** */
+	public static GType getType()
+	{
+		return g_tls_server_connection_get_type();
+	}
 }

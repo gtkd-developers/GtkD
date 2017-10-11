@@ -57,6 +57,12 @@ public interface StreamableContentIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return atk_streamable_content_get_type();
+	}
+
 	/**
 	 * Gets the character string of the specified mime type. The first mime
 	 * type is at position 0, the second at position 1, and so on.

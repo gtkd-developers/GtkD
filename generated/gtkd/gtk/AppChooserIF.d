@@ -60,6 +60,12 @@ public interface AppChooserIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return gtk_app_chooser_get_type();
+	}
+
 	/**
 	 * Returns the currently selected application.
 	 *

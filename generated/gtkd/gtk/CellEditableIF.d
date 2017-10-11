@@ -44,6 +44,12 @@ public interface CellEditableIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return gtk_cell_editable_get_type();
+	}
+
 	/**
 	 * Emits the #GtkCellEditable::editing-done signal.
 	 */

@@ -71,6 +71,12 @@ public interface InitableIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return g_initable_get_type();
+	}
+
 	/**
 	 * Initializes the object implementing the interface.
 	 *

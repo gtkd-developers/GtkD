@@ -75,6 +75,12 @@ public class PgCairoFontMap : PgFontMap
 	}
 
 
+	/** */
+	public static GType getType()
+	{
+		return pango_cairo_font_get_type();
+	}
+
 	/**
 	 * Gets a default #PangoCairoFontMap to use with Cairo.
 	 *

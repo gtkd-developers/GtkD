@@ -97,6 +97,12 @@ public interface VolumeIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return g_volume_get_type();
+	}
+
 	/**
 	 * Checks if a volume can be ejected.
 	 *

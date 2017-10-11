@@ -70,6 +70,12 @@ public interface DtlsConnectionIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return g_dtls_connection_get_type();
+	}
+
 	/**
 	 * Close the DTLS connection. This is equivalent to calling
 	 * g_dtls_connection_shutdown() to shut down both sides of the connection.

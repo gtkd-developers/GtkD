@@ -51,6 +51,12 @@ public interface TlsClientConnectionIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return g_tls_client_connection_get_type();
+	}
+
 	/**
 	 * Copies session state from one connection to another. This is
 	 * not normally needed, but may be used when the same session

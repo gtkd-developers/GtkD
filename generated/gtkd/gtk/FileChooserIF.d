@@ -174,6 +174,12 @@ public interface FileChooserIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return gtk_file_chooser_get_type();
+	}
+
 	/**
 	 * Adds a 'choice' to the file chooser. This is typically implemented
 	 * as a combobox or, for boolean choices, as a checkbutton. You can select

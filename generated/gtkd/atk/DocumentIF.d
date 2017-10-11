@@ -49,6 +49,12 @@ public interface DocumentIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return atk_document_get_type();
+	}
+
 	/**
 	 *
 	 * Params:

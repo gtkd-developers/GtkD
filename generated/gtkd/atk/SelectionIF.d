@@ -53,6 +53,12 @@ public interface SelectionIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return atk_selection_get_type();
+	}
+
 	/**
 	 * Adds the specified accessible child of the object to the
 	 * object's selection.

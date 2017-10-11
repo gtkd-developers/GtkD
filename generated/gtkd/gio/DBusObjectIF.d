@@ -50,6 +50,12 @@ public interface DBusObjectIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return g_dbus_object_get_type();
+	}
+
 	/**
 	 * Gets the D-Bus interface with name @interface_name associated with
 	 * @object, if any.

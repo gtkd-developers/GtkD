@@ -52,6 +52,12 @@ public interface ActionMapIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return g_action_map_get_type();
+	}
+
 	/**
 	 * Adds an action to the @action_map.
 	 *

@@ -147,6 +147,12 @@ public interface CellLayoutIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return gtk_cell_layout_get_type();
+	}
+
 	/**
 	 * Adds an attribute mapping to the list in @cell_layout.
 	 *

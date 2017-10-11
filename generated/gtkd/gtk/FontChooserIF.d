@@ -52,6 +52,12 @@ public interface FontChooserIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return gtk_font_chooser_get_type();
+	}
+
 	/**
 	 * Gets the currently-selected font name.
 	 *

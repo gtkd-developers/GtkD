@@ -53,6 +53,12 @@ public interface ActionableIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return gtk_actionable_get_type();
+	}
+
 	/**
 	 * Gets the action name for @actionable.
 	 *

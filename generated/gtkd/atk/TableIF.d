@@ -72,6 +72,12 @@ public interface TableIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return atk_table_get_type();
+	}
+
 	/**
 	 * Adds the specified @column to the selection.
 	 *

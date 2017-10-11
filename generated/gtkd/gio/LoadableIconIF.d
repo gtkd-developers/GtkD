@@ -48,6 +48,12 @@ public interface LoadableIconIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return g_loadable_icon_get_type();
+	}
+
 	/**
 	 * Loads a loadable icon. For the asynchronous version of this function,
 	 * see g_loadable_icon_load_async().

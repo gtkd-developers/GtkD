@@ -45,6 +45,12 @@ public interface DesktopAppInfoLookupIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return g_desktop_app_info_lookup_get_type();
+	}
+
 	/**
 	 * Gets the default application for launching applications
 	 * using this URI scheme for a particular GDesktopAppInfoLookup

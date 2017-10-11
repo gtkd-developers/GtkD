@@ -275,6 +275,12 @@ public interface ActivatableIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return gtk_activatable_get_type();
+	}
+
 	/**
 	 * This is a utility function for #GtkActivatable implementors.
 	 *

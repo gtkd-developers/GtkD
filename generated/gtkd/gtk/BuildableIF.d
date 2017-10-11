@@ -55,6 +55,12 @@ public interface BuildableIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return gtk_buildable_get_type();
+	}
+
 	/**
 	 * Adds a child to @buildable. @type is an optional string
 	 * describing how the child should be added.

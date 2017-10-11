@@ -48,6 +48,12 @@ public interface DBusInterfaceIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return g_dbus_interface_get_type();
+	}
+
 	/**
 	 * Gets the #GDBusObject that @interface_ belongs to, if any.
 	 *

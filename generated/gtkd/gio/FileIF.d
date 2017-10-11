@@ -141,6 +141,12 @@ public interface FileIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return g_file_get_type();
+	}
+
 	/**
 	 * Constructs a #GFile with the given @parse_name (i.e. something
 	 * given by g_file_get_parse_name()). This operation never fails,

@@ -49,6 +49,12 @@ public interface PollableOutputStreamIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return g_pollable_output_stream_get_type();
+	}
+
 	/**
 	 * Checks if @stream is actually pollable. Some classes may implement
 	 * #GPollableOutputStream but have only certain instances of that

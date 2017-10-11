@@ -48,4 +48,10 @@ public interface ImplementorIF{
 	 *     implementation
 	 */
 	public ObjectAtk refAccessible();
+
+	/** */
+	public static GType getType()
+	{
+		return atk_implementor_get_type();
+	}
 }

@@ -50,6 +50,12 @@ public interface URIHandlerIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return gst_uri_handler_get_type();
+	}
+
 	/**
 	 * Gets the list of protocols supported by @handler. This list may not be
 	 * modified.

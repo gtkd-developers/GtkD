@@ -145,6 +145,12 @@ public interface AsyncInitableIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return g_async_initable_get_type();
+	}
+
 	/**
 	 * Helper function for constructing #GAsyncInitable object. This is
 	 * similar to g_object_new_valist() but also initializes the object

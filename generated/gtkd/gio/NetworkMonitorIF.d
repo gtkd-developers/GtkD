@@ -57,6 +57,12 @@ public interface NetworkMonitorIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return g_network_monitor_get_type();
+	}
+
 	/**
 	 * Gets the default #GNetworkMonitor for the system.
 	 *

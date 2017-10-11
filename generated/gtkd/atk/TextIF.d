@@ -63,6 +63,12 @@ public interface TextIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return atk_text_get_type();
+	}
+
 	/**
 	 * Frees the memory associated with an array of AtkTextRange. It is assumed
 	 * that the array was returned by the function atk_text_get_bounded_ranges

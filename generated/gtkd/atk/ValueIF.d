@@ -186,6 +186,12 @@ public interface ValueIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return atk_value_get_type();
+	}
+
 	/**
 	 * Gets the value of this object.
 	 *

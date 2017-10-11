@@ -55,6 +55,12 @@ public interface DBusObjectManagerIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return g_dbus_object_manager_get_type();
+	}
+
 	/**
 	 * Gets the interface proxy for @interface_name at @object_path, if
 	 * any.

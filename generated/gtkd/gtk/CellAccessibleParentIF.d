@@ -41,6 +41,12 @@ public interface CellAccessibleParentIF{
 
 
 	/** */
+	public static GType getType()
+	{
+		return gtk_cell_accessible_parent_get_type();
+	}
+
+	/** */
 	public void activate(CellAccessible cell);
 
 	/** */

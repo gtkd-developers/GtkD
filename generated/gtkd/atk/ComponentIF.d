@@ -54,6 +54,12 @@ public interface ComponentIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return atk_component_get_type();
+	}
+
 	/**
 	 * Add the specified handler to the set of functions to be called
 	 * when this object receives focus events (in or out). If the handler is

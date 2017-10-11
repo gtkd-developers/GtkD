@@ -51,6 +51,12 @@ public interface HypertextIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return atk_hypertext_get_type();
+	}
+
 	/**
 	 * Gets the link in this hypertext document at index
 	 * @link_index

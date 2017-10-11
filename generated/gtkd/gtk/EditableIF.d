@@ -77,6 +77,12 @@ public interface EditableIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return gtk_editable_get_type();
+	}
+
 	/**
 	 * Copies the contents of the currently selected content in the editable and
 	 * puts it on the clipboard.

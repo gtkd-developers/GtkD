@@ -43,6 +43,12 @@ public interface TreeDragSourceIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return gtk_tree_drag_source_get_type();
+	}
+
 	/**
 	 * Asks the #GtkTreeDragSource to delete the row at @path, because
 	 * it was moved somewhere else via drag-and-drop. Returns %FALSE

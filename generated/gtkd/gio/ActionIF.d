@@ -73,6 +73,12 @@ public interface ActionIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return g_action_get_type();
+	}
+
 	/**
 	 * Checks if @action_name is valid.
 	 *

@@ -44,6 +44,12 @@ public interface TreeSortableIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return gtk_tree_sortable_get_type();
+	}
+
 	/**
 	 * Fills in @sort_column_id and @order with the current sort column and the
 	 * order. It returns %TRUE unless the @sort_column_id is

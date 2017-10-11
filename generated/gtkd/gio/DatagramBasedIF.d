@@ -92,6 +92,12 @@ public interface DatagramBasedIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return g_datagram_based_get_type();
+	}
+
 	/**
 	 * Checks on the readiness of @datagram_based to perform operations. The
 	 * operations specified in @condition are checked for and masked against the

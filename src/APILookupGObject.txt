@@ -266,6 +266,20 @@ code: start
 			//The new object handles the memory management.
 			return new T(cast(typeof(T.tupleof[0]))gObject, false);
 		}
+		else static if ( is(T == interface)
+			&& hasStaticMember!(T, "getType")
+			&& is(ReturnType!(T.getType) == GType) )
+		{
+			//If a regular cast works, return the result.
+			if ( auto r = cast(T)super )
+				return r;
+
+			//Do we implement interface T.
+			if ( !g_type_is_a(gObject.gTypeInstance.gClass.gType, T.getType()) )
+				return null;
+
+			return getInterfaceInstance!T(gObject);
+		}
 		else
 			return cast(T)super;
 	}
@@ -283,30 +297,57 @@ code: start
 			return null;
 		}
 
-		static if ( is(T : ObjectG) )
+		static if ( is(T : ObjectG) && !is(RT == interface) )
 		{
 			auto p = g_object_get_data(cast(GObject*)obj, Str.toStringz("GObject"));
 
 			if ( p !is null )
-			{
-				static if ( is(RT == interface ) )
-				{
-					return cast(RT)cast(ObjectG)p;
-				}
-				else
-				{
-					return cast(RT)p;
-				}
-			}
+				return cast(RT)p;
 			else
-			{
 				return new T(obj, ownedRef);
-			}
+		}
+		else static if ( is(RT == interface) && hasStaticMember!(RT, "getType") && is(ReturnType!(RT.getType) == GType) )
+		{
+			return getInterfaceInstance!RT(cast(GObject*)obj);
 		}
 		else
 		{
-			return new T(obj);
+			return new T(obj, ownedRef);
 		}
+	}
+
+	private static I getInterfaceInstance(I)(GObject* instance)
+	{
+		static class Impl: ObjectG, I
+		{
+			public this (GObject* gObject, bool ownedRef = false)
+			{
+				super(gObject, ownedRef);
+			}
+			
+			/** the main Gtk struct as a void* */
+			protected override void* getStruct()
+			{
+				return cast(void*)gObject;
+			}
+
+			// add the interface capabilities
+			mixin("import "~ moduleName!I[0..$-2] ~"T;import "~ moduleName!I ~"; mixin "~ __traits(identifier, I)[0..$-2] ~"T!("~__traits(identifier, Impl)~");");
+		}
+
+		ClassInfo ci = Impl.classinfo;
+		Impl iface;
+		void* p;
+
+		//Skip all the setup for the memory management,
+		//and only add an extra reference for the instance returned.
+		p = GC.malloc(ci.initializer.length, GC.BlkAttr.FINALIZE, ci);
+		p[0..ci.initializer.length] = ci.initializer;
+		iface = cast(Impl)p;
+		iface.gObject = instance;
+		iface.doref();
+
+		return iface;
 	}
 
 	protected void setStruct(GObject* obj)

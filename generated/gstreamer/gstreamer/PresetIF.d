@@ -63,6 +63,12 @@ public interface PresetIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return gst_preset_get_type();
+	}
+
 	/**
 	 * Gets the directory for application specific presets if set by the
 	 * application.

@@ -48,4 +48,10 @@ public interface DtlsServerConnectionIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
+
+	/** */
+	public static GType getType()
+	{
+		return g_dtls_server_connection_get_type();
+	}
 }

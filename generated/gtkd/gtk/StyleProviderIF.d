@@ -47,6 +47,12 @@ public interface StyleProviderIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return gtk_style_provider_get_type();
+	}
+
 	/**
 	 * Returns the #GtkIconFactory defined to be in use for @path, or %NULL if none
 	 * is defined.

@@ -86,6 +86,12 @@ public interface TypePluginIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return g_type_plugin_get_type();
+	}
+
 	/**
 	 * Calls the @complete_interface_info function from the
 	 * #GTypePluginClass of @plugin. There should be no need to use this

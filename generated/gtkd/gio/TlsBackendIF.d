@@ -46,6 +46,12 @@ public interface TlsBackendIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return g_tls_backend_get_type();
+	}
+
 	/**
 	 * Gets the default #GTlsBackend for the system.
 	 *

@@ -56,6 +56,12 @@ public interface SeekableIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return g_seekable_get_type();
+	}
+
 	/**
 	 * Tests if the stream supports the #GSeekableIface.
 	 *
