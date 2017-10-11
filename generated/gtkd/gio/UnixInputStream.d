@@ -66,12 +66,6 @@ public class UnixInputStream : InputStream, FileDescriptorBasedIF, PollableInput
 		return cast(void*)gUnixInputStream;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gUnixInputStream = cast(GUnixInputStream*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

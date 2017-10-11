@@ -222,12 +222,6 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 		return cast(void*)gSimpleAsyncResult;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gSimpleAsyncResult = cast(GSimpleAsyncResult*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -49,12 +49,6 @@ public class GLDrawable : ObjectG, GLDrawableIF
 		return cast(void*)gdkGLDrawable;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gdkGLDrawable = cast(GdkGLDrawable*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

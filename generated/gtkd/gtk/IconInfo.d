@@ -66,12 +66,6 @@ public class IconInfo : ObjectG
 		return cast(void*)gtkIconInfo;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkIconInfo = cast(GtkIconInfo*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

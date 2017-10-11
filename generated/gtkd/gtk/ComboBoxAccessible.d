@@ -54,12 +54,6 @@ public class ComboBoxAccessible : ContainerAccessible, ActionIF, SelectionIF
 		return cast(void*)gtkComboBoxAccessible;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkComboBoxAccessible = cast(GtkComboBoxAccessible*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

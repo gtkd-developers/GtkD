@@ -76,12 +76,6 @@ public class SocketConnection : IOStream
 		return cast(void*)gSocketConnection;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gSocketConnection = cast(GSocketConnection*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

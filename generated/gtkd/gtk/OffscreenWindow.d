@@ -73,12 +73,6 @@ public class OffscreenWindow : Window
 		return cast(void*)gtkOffscreenWindow;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkOffscreenWindow = cast(GtkOffscreenWindow*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

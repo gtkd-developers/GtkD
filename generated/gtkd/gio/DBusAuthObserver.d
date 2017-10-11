@@ -93,12 +93,6 @@ public class DBusAuthObserver : ObjectG
 		return cast(void*)gDBusAuthObserver;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gDBusAuthObserver = cast(GDBusAuthObserver*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

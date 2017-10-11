@@ -62,12 +62,6 @@ public class ThemedIcon : ObjectG, IconIF
 		return cast(void*)gThemedIcon;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gThemedIcon = cast(GThemedIcon*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -93,12 +93,6 @@ public class AppSink : BaseSink, URIHandlerIF
 		return cast(void*)gstAppSink;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gstAppSink = cast(GstAppSink*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

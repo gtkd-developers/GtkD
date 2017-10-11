@@ -95,12 +95,6 @@ public class AboutDialog : Dialog
 		return cast(void*)gtkAboutDialog;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkAboutDialog = cast(GtkAboutDialog*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

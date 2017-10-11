@@ -62,12 +62,6 @@ public class DBusObjectProxy : ObjectG, DBusObjectIF
 		return cast(void*)gDBusObjectProxy;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gDBusObjectProxy = cast(GDBusObjectProxy*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

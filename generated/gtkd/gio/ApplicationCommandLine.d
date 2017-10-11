@@ -211,12 +211,6 @@ public class ApplicationCommandLine : ObjectG
 		return cast(void*)gApplicationCommandLine;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gApplicationCommandLine = cast(GApplicationCommandLine*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

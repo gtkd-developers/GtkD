@@ -66,12 +66,6 @@ public class UnixOutputStream : OutputStream, FileDescriptorBasedIF, PollableOut
 		return cast(void*)gUnixOutputStream;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gUnixOutputStream = cast(GUnixOutputStream*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

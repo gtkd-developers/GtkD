@@ -52,12 +52,6 @@ public class DBusObject : ObjectG, DBusObjectIF
 		return cast(void*)gDBusObject;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gDBusObject = cast(GDBusObject*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

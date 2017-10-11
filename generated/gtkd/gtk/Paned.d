@@ -123,12 +123,6 @@ public class Paned : Container, OrientableIF
 		return cast(void*)gtkPaned;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkPaned = cast(GtkPaned*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -59,12 +59,6 @@ public class MountOperation : GioMountOperation
 		return cast(void*)gtkMountOperation;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkMountOperation = cast(GtkMountOperation*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

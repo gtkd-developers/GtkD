@@ -114,12 +114,6 @@ public class AccelLabel : Label
 		return cast(void*)gtkAccelLabel;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkAccelLabel = cast(GtkAccelLabel*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

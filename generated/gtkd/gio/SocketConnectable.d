@@ -52,12 +52,6 @@ public class SocketConnectable : ObjectG, SocketConnectableIF
 		return cast(void*)gSocketConnectable;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gSocketConnectable = cast(GSocketConnectable*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

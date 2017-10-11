@@ -57,12 +57,6 @@ public class PgEngineLang : PgEngine
 		return cast(void*)pangoEngineLang;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		pangoEngineLang = cast(PangoEngineLang*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

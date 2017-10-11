@@ -52,12 +52,6 @@ public class AppInfo : ObjectG, AppInfoIF
 		return cast(void*)gAppInfo;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gAppInfo = cast(GAppInfo*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

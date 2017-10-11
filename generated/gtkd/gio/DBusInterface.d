@@ -52,12 +52,6 @@ public class DBusInterface : ObjectG, DBusInterfaceIF
 		return cast(void*)gDBusInterface;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gDBusInterface = cast(GDBusInterface*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

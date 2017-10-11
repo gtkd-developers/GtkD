@@ -61,12 +61,6 @@ public class TcpWrapperConnection : TcpConnection
 		return cast(void*)gTcpWrapperConnection;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gTcpWrapperConnection = cast(GTcpWrapperConnection*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

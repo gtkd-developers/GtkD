@@ -108,12 +108,6 @@ public class ObjectGst : ObjectG
 		return cast(void*)gstObject;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gstObject = cast(GstObject*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

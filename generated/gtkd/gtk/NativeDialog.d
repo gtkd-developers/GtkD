@@ -70,12 +70,6 @@ public class NativeDialog : ObjectG
 		return cast(void*)gtkNativeDialog;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkNativeDialog = cast(GtkNativeDialog*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

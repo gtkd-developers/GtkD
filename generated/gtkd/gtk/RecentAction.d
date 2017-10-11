@@ -65,12 +65,6 @@ public class RecentAction : Action, RecentChooserIF
 		return cast(void*)gtkRecentAction;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkRecentAction = cast(GtkRecentAction*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

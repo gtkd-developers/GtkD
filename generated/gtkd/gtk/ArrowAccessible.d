@@ -52,12 +52,6 @@ public class ArrowAccessible : WidgetAccessible, ImageIF
 		return cast(void*)gtkArrowAccessible;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkArrowAccessible = cast(GtkArrowAccessible*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -58,12 +58,6 @@ public class FilenameCompleter : ObjectG
 		return cast(void*)gFilenameCompleter;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gFilenameCompleter = cast(GFilenameCompleter*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -82,12 +82,6 @@ public class AppChooserButton : ComboBox, AppChooserIF
 		return cast(void*)gtkAppChooserButton;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkAppChooserButton = cast(GtkAppChooserButton*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

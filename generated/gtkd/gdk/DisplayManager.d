@@ -95,12 +95,6 @@ public class DisplayManager : ObjectG
 		return cast(void*)gdkDisplayManager;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gdkDisplayManager = cast(GdkDisplayManager*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

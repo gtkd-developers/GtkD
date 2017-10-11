@@ -94,12 +94,6 @@ public class Scrollbar : Range
 		return cast(void*)gtkScrollbar;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkScrollbar = cast(GtkScrollbar*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

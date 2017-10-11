@@ -52,12 +52,6 @@ public class ExpanderAccessible : ContainerAccessible, ActionIF
 		return cast(void*)gtkExpanderAccessible;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkExpanderAccessible = cast(GtkExpanderAccessible*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

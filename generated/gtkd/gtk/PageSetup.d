@@ -101,12 +101,6 @@ public class PageSetup : ObjectG
 		return cast(void*)gtkPageSetup;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkPageSetup = cast(GtkPageSetup*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

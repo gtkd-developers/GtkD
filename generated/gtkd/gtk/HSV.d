@@ -63,12 +63,6 @@ public class HSV : Widget
 		return cast(void*)gtkHSV;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkHSV = cast(GtkHSV*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

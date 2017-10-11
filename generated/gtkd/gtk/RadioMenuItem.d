@@ -93,12 +93,6 @@ public class RadioMenuItem : CheckMenuItem
 		return cast(void*)gtkRadioMenuItem;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkRadioMenuItem = cast(GtkRadioMenuItem*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

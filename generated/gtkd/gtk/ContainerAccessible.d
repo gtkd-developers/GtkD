@@ -50,12 +50,6 @@ public class ContainerAccessible : WidgetAccessible
 		return cast(void*)gtkContainerAccessible;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkContainerAccessible = cast(GtkContainerAccessible*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

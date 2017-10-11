@@ -59,12 +59,6 @@ public class SourceCompletionInfo : Window
 		return cast(void*)gtkSourceCompletionInfo;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkSourceCompletionInfo = cast(GtkSourceCompletionInfo*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

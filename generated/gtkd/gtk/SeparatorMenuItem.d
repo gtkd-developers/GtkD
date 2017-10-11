@@ -61,12 +61,6 @@ public class SeparatorMenuItem : MenuItem
 		return cast(void*)gtkSeparatorMenuItem;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkSeparatorMenuItem = cast(GtkSeparatorMenuItem*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -59,12 +59,6 @@ public class Invisible : Widget
 		return cast(void*)gtkInvisible;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkInvisible = cast(GtkInvisible*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

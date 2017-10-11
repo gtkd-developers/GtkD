@@ -62,12 +62,6 @@ public class CellAreaContext : ObjectG
 		return cast(void*)gtkCellAreaContext;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkCellAreaContext = cast(GtkCellAreaContext*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

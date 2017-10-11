@@ -85,12 +85,6 @@ public class FileEnumerator : ObjectG
 		return cast(void*)gFileEnumerator;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gFileEnumerator = cast(GFileEnumerator*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

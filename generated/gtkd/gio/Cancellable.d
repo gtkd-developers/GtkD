@@ -60,12 +60,6 @@ public class Cancellable : ObjectG
 		return cast(void*)gCancellable;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gCancellable = cast(GCancellable*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

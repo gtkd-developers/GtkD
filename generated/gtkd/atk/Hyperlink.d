@@ -63,12 +63,6 @@ public class Hyperlink : ObjectG, ActionIF
 		return cast(void*)atkHyperlink;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		atkHyperlink = cast(AtkHyperlink*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

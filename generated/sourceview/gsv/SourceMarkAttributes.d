@@ -60,12 +60,6 @@ public class SourceMarkAttributes : ObjectG
 		return cast(void*)gtkSourceMarkAttributes;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkSourceMarkAttributes = cast(GtkSourceMarkAttributes*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

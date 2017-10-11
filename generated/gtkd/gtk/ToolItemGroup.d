@@ -65,12 +65,6 @@ public class ToolItemGroup : Container, ToolShellIF
 		return cast(void*)gtkToolItemGroup;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkToolItemGroup = cast(GtkToolItemGroup*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

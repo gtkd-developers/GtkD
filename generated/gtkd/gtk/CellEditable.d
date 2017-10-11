@@ -52,12 +52,6 @@ public class CellEditable : ObjectG, CellEditableIF
 		return cast(void*)gtkCellEditable;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkCellEditable = cast(GtkCellEditable*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

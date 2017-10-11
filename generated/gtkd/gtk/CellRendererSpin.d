@@ -67,12 +67,6 @@ public class CellRendererSpin : CellRendererText
 		return cast(void*)gtkCellRendererSpin;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkCellRendererSpin = cast(GtkCellRendererSpin*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

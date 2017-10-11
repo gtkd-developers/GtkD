@@ -97,12 +97,6 @@ public class RecentChooserDialog : Dialog, RecentChooserIF
 		return cast(void*)gtkRecentChooserDialog;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkRecentChooserDialog = cast(GtkRecentChooserDialog*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

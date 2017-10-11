@@ -57,12 +57,6 @@ public class VolumeButton : ScaleButton
 		return cast(void*)gtkVolumeButton;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkVolumeButton = cast(GtkVolumeButton*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

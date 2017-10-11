@@ -50,12 +50,6 @@ public class MenuAccessible : MenuShellAccessible
 		return cast(void*)gtkMenuAccessible;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkMenuAccessible = cast(GtkMenuAccessible*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

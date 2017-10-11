@@ -58,12 +58,6 @@ public class ToggleAction : Action
 		return cast(void*)gtkToggleAction;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkToggleAction = cast(GtkToggleAction*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

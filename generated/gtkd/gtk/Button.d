@@ -85,12 +85,6 @@ public class Button : Bin, ActionableIF, ActivatableIF
 		return cast(void*)gtkButton;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkButton = cast(GtkButton*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -145,12 +145,6 @@ public class DBusObjectManagerClient : ObjectG, AsyncInitableIF, DBusObjectManag
 		return cast(void*)gDBusObjectManagerClient;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gDBusObjectManagerClient = cast(GDBusObjectManagerClient*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

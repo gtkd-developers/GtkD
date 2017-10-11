@@ -173,12 +173,6 @@ public class MenuModel : ObjectG
 		return cast(void*)gMenuModel;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gMenuModel = cast(GMenuModel*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

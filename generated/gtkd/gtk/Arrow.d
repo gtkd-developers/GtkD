@@ -74,12 +74,6 @@ public class Arrow : Misc
 		return cast(void*)gtkArrow;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkArrow = cast(GtkArrow*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

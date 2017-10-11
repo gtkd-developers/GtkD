@@ -118,12 +118,6 @@ public class PadTemplate : ObjectGst
 		return cast(void*)gstPadTemplate;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gstPadTemplate = cast(GstPadTemplate*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

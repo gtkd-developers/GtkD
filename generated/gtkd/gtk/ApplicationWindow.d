@@ -163,12 +163,6 @@ public class ApplicationWindow : Window, ActionGroupIF, ActionMapIF
 		return cast(void*)gtkApplicationWindow;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkApplicationWindow = cast(GtkApplicationWindow*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

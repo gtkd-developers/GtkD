@@ -52,12 +52,6 @@ public class Volume : ObjectG, VolumeIF
 		return cast(void*)gVolume;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gVolume = cast(GVolume*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

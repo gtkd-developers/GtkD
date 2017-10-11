@@ -70,12 +70,6 @@ public class PrintSettings : ObjectG
 		return cast(void*)gtkPrintSettings;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkPrintSettings = cast(GtkPrintSettings*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

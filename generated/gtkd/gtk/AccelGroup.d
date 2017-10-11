@@ -73,12 +73,6 @@ public class AccelGroup : ObjectG
 		return cast(void*)gtkAccelGroup;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkAccelGroup = cast(GtkAccelGroup*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

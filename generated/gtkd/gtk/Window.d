@@ -120,12 +120,6 @@ public class Window : Bin
 		return cast(void*)gtkWindow;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkWindow = cast(GtkWindow*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

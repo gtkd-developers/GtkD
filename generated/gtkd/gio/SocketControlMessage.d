@@ -71,12 +71,6 @@ public class SocketControlMessage : ObjectG
 		return cast(void*)gSocketControlMessage;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gSocketControlMessage = cast(GSocketControlMessage*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

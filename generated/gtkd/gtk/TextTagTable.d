@@ -77,12 +77,6 @@ public class TextTagTable : ObjectG, BuildableIF
 		return cast(void*)gtkTextTagTable;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkTextTagTable = cast(GtkTextTagTable*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

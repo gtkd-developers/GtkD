@@ -63,12 +63,6 @@ public class VScrollbar : Scrollbar
 		return cast(void*)gtkVScrollbar;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkVScrollbar = cast(GtkVScrollbar*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

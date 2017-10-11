@@ -68,12 +68,6 @@ public class PgContext : ObjectG
 		return cast(void*)pangoContext;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		pangoContext = cast(PangoContext*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

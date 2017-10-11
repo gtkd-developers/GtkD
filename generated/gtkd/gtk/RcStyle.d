@@ -62,12 +62,6 @@ public class RcStyle : ObjectG
 		return cast(void*)gtkRcStyle;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkRcStyle = cast(GtkRcStyle*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

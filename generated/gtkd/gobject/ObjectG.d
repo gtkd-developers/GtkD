@@ -98,12 +98,6 @@ public class ObjectG
 			{
 				unref();
 			}
-
-			//When constructed via GtkBuilder set the structs.
-			if ( getStruct() is null )
-			{
-				setStruct(gObject);
-			}
 		}
 	}
 
@@ -276,11 +270,6 @@ public class ObjectG
 		iface.doref();
 
 		return iface;
-	}
-
-	protected void setStruct(GObject* obj)
-	{
-		gObject = cast(GObject*)obj;
 	}
 
 	/** */

@@ -59,12 +59,6 @@ public class PgFontset : ObjectG
 		return cast(void*)pangoFontset;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		pangoFontset = cast(PangoFontset*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

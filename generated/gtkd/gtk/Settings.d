@@ -92,12 +92,6 @@ public class Settings : ObjectG, StyleProviderIF
 		return cast(void*)gtkSettings;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkSettings = cast(GtkSettings*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

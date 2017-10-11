@@ -235,12 +235,6 @@ public class Label : Misc
 		return cast(void*)gtkLabel;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkLabel = cast(GtkLabel*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

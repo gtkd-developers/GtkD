@@ -75,12 +75,6 @@ public class VBox : Box
 		return cast(void*)gtkVBox;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkVBox = cast(GtkVBox*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

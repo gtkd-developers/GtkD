@@ -52,12 +52,6 @@ public class Proxy : ObjectG, ProxyIF
 		return cast(void*)gProxy;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gProxy = cast(GProxy*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -69,12 +69,6 @@ public class OutputStream : ObjectG
 		return cast(void*)gOutputStream;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gOutputStream = cast(GOutputStream*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

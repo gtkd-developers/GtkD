@@ -83,12 +83,6 @@ public class CheckButton : ToggleButton
 		return cast(void*)gtkCheckButton;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkCheckButton = cast(GtkCheckButton*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -66,12 +66,6 @@ public class HeaderBar : Container
 		return cast(void*)gtkHeaderBar;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkHeaderBar = cast(GtkHeaderBar*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -57,12 +57,6 @@ public class MenuAttributeIter : ObjectG
 		return cast(void*)gMenuAttributeIter;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gMenuAttributeIter = cast(GMenuAttributeIter*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

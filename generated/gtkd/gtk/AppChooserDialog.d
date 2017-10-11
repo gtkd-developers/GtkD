@@ -68,12 +68,6 @@ public class AppChooserDialog : Dialog, AppChooserIF
 		return cast(void*)gtkAppChooserDialog;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkAppChooserDialog = cast(GtkAppChooserDialog*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

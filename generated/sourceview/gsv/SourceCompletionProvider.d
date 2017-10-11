@@ -52,12 +52,6 @@ public class SourceCompletionProvider : ObjectG, SourceCompletionProviderIF
 		return cast(void*)gtkSourceCompletionProvider;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkSourceCompletionProvider = cast(GtkSourceCompletionProvider*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

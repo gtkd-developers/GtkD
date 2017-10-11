@@ -56,12 +56,6 @@ public class ZlibDecompressor : ObjectG, ConverterIF
 		return cast(void*)gZlibDecompressor;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gZlibDecompressor = cast(GZlibDecompressor*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

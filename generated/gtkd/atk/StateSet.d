@@ -55,12 +55,6 @@ public class StateSet : ObjectG
 		return cast(void*)atkStateSet;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		atkStateSet = cast(AtkStateSet*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -94,12 +94,6 @@ public class FileFilter : ObjectG, BuildableIF
 		return cast(void*)gtkFileFilter;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkFileFilter = cast(GtkFileFilter*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

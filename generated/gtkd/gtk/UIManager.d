@@ -300,12 +300,6 @@ public class UIManager : ObjectG, BuildableIF
 		return cast(void*)gtkUIManager;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkUIManager = cast(GtkUIManager*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

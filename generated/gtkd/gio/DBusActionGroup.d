@@ -61,12 +61,6 @@ public class DBusActionGroup : ObjectG, ActionGroupIF, RemoteActionGroupIF
 		return cast(void*)gDBusActionGroup;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gDBusActionGroup = cast(GDBusActionGroup*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

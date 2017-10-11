@@ -126,12 +126,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		return cast(void*)gtkPrintOperation;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkPrintOperation = cast(GtkPrintOperation*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

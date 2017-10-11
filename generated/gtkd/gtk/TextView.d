@@ -93,12 +93,6 @@ public class TextView : Container, ScrollableIF
 		return cast(void*)gtkTextView;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkTextView = cast(GtkTextView*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

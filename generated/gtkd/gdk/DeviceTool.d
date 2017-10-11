@@ -50,12 +50,6 @@ public class DeviceTool : ObjectG
 		return cast(void*)gdkDeviceTool;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gdkDeviceTool = cast(GdkDeviceTool*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

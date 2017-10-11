@@ -63,12 +63,6 @@ public class GestureSingle : Gesture
 		return cast(void*)gtkGestureSingle;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkGestureSingle = cast(GtkGestureSingle*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -101,12 +101,6 @@ public class RecentFilter : ObjectG, BuildableIF
 		return cast(void*)gtkRecentFilter;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkRecentFilter = cast(GtkRecentFilter*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

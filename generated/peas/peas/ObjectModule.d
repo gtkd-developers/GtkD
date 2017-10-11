@@ -58,12 +58,6 @@ public class ObjectModule : TypeModule
 		return cast(void*)peasObjectModule;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		peasObjectModule = cast(PeasObjectModule*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -52,12 +52,6 @@ public class ActionGroup : ObjectG, ActionGroupIF
 		return cast(void*)gActionGroup;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gActionGroup = cast(GActionGroup*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

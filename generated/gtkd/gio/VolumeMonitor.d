@@ -70,12 +70,6 @@ public class VolumeMonitor : ObjectG
 		return cast(void*)gVolumeMonitor;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gVolumeMonitor = cast(GVolumeMonitor*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -72,13 +72,6 @@ public class PgAttribute
 		this.ownedRef = ownedRef;
 	}
 
-	protected void setStruct(GObject* obj)
-	{
-		pangoAttribute = cast(PangoAttribute*)obj;
-	}
-
-	/**
-	 */
 
 	/**
 	 * Make a copy of an attribute.

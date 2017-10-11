@@ -57,12 +57,6 @@ public class ShortcutLabel : Box
 		return cast(void*)gtkShortcutLabel;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkShortcutLabel = cast(GtkShortcutLabel*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

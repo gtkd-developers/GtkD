@@ -266,7 +266,6 @@ alias: get_name buildableGetName
 
 struct: Builder
 noCode: new
-noCode: get_object
 noCode: get_objects
 
 #There are now 3 constructors that have a single string parameter, disable 2 of them.
@@ -366,20 +365,6 @@ code: start
 	}
 
 	/**
-	 * Gets the object named name. Note that this function does not
-	 * increment the reference count of the returned object.
-	 * Since 2.12
-	 * Params:
-	 * name = name of object to get
-	 * Returns: the object named name or NULL if it could not be found in the object tree.. transfer none.
-	 */
-	public ObjectG getObject(string name)
-	{
-		// GObject* gtk_builder_get_object (GtkBuilder *builder,  const gchar *name);
-		return newFromObject( gtk_builder_get_object(gtkBuilder, Str.toStringz(name)) );
-	}
-
-	/**
 	 * Gets all objects that have been constructed by builder.
 	 * Since 2.12
 	 * Returns: an array containing all the objects constructed by the GtkBuilder instance.
@@ -393,91 +378,13 @@ code: start
 
 		while ( list.next !is null )
 		{
-			objects ~= newFromObject( cast(GObject*)list.data );
+			objects ~= ObjectG.getDObject!(ObjectG)(cast(GObject*) list.data);
 			list = list.next;
 		}
 
 		g_slist_free(list);
 
 		return objects;
-	}
-
-	/**
-	 * This function creates an D object corresponding to the Struct pointer passed in.
-	 */
-	public ObjectG newFromObject(GObject* cobj)
-	{
-		if(cobj is null)
-		{
-			return null;
-		}
-
-		void* dObj = g_object_get_data(cobj, Str.toStringz("GObject"));
-
-		if ( dObj !is null )
-		{
-			return cast(ObjectG)dObj;
-		}
-
-		string type = convertClassName(Type.name((cast(GTypeInstance*)cobj).gClass.gType));
-		ClassInfo ci = cast(ClassInfo)ClassInfo.find(type);
-
-		//Gobject and Gio types both start with g, so try both.
-		if(ci is null && startsWith(type, "gobject"))
-		{
-				ci = cast(ClassInfo)ClassInfo.find("gio"~ type[7..$]);
-		}
-
-		if(ci is null)
-		{
-			return null;
-		}
-
-		ObjectG obj = cast(ObjectG)gtk.c.types._d_newclass(ci);
-
-		obj.__ctor(cobj);
-
-		return obj;
-	}
-
-	/**
-	 * Turn the name of a C Type in to the name of the corresponding D type.
-	 * Note: If the prefix of the type is "G" this always usses "gobject" as
-	 *     the prefix, extra care should be taken for types from GIO.
-	 */
-	private string convertClassName(string gName)
-	{
-		string conv;
-		string prefix;
-
-		if      ( startsWith(gName, "GtkSource" ) ) prefix = "Gsv";
-		else if ( startsWith(gName, "Gtk") )        prefix = "Gtk";
-		else if ( startsWith(gName, "Gdk") )        prefix = "Gdk";
-		else if ( startsWith(gName, "Gst") )        prefix = "Gst";
-		else if ( startsWith(gName, "Gda") )        prefix = "Gda";
-		else if ( startsWith(gName, "Atk") )        prefix = "Atk";
-		else if ( startsWith(gName, "G") )          prefix = "G";
-		else if ( startsWith(gName, "Pango") )      prefix = "Pg";
-		else if ( startsWith(gName, "cairo") )      prefix = "cairo";
-
-		conv = gName[prefix.length..gName.length];
-
-		if ( conv == "Object" ) conv ~= prefix;
-		if ( prefix == "Pg" )   conv = "Pg" ~ gName[5..gName.length];
-		if ( prefix == "cairo") conv = toUpper(gName[6..7]) ~ gName[7..gName.length - 2];
-
-		prefix = toLower(prefix);
-
-		if( prefix == "gst") prefix = "gstreamer";
-		if( prefix == "g")   prefix = "gobject";
-		if( prefix == "pg" ) prefix = "pango";
-
-		return prefix ~"."~ conv ~"."~ conv;
-	}
-
-	private bool startsWith(string str, string prefix)
-	{
-		return str.length >= prefix.length && str[0..prefix.length] == prefix;
 	}
 code: end
 

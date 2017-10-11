@@ -106,12 +106,6 @@ public class GLContext : ObjectG
 		return cast(void*)gdkGLContext;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gdkGLContext = cast(GdkGLContext*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -71,12 +71,6 @@ public class WindowGroup : ObjectG
 		return cast(void*)gtkWindowGroup;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkWindowGroup = cast(GtkWindowGroup*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

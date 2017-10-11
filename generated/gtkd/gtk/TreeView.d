@@ -145,12 +145,6 @@ public class TreeView : Container, ScrollableIF
 		return cast(void*)gtkTreeView;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkTreeView = cast(GtkTreeView*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

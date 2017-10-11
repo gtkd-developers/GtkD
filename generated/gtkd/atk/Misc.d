@@ -53,12 +53,6 @@ public class Misc : ObjectG
 		return cast(void*)atkMisc;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		atkMisc = cast(AtkMisc*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

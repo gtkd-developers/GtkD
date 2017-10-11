@@ -56,12 +56,6 @@ public class EntryAccessible : WidgetAccessible, ActionIF, EditableTextIF, TextI
 		return cast(void*)gtkEntryAccessible;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkEntryAccessible = cast(GtkEntryAccessible*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -52,12 +52,6 @@ public class ProxyResolver : ObjectG, ProxyResolverIF
 		return cast(void*)gProxyResolver;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gProxyResolver = cast(GProxyResolver*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

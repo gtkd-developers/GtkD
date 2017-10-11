@@ -131,12 +131,6 @@ public class Binding : ObjectG
 		return cast(void*)gBinding;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gBinding = cast(GBinding*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

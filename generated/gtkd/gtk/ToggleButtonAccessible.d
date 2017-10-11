@@ -50,12 +50,6 @@ public class ToggleButtonAccessible : ButtonAccessible
 		return cast(void*)gtkToggleButtonAccessible;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkToggleButtonAccessible = cast(GtkToggleButtonAccessible*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -59,12 +59,6 @@ public class ProxyAddress : InetSocketAddress
 		return cast(void*)gProxyAddress;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gProxyAddress = cast(GProxyAddress*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

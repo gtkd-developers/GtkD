@@ -74,12 +74,6 @@ public class StyleProperties : ObjectG, StyleProviderIF
 		return cast(void*)gtkStyleProperties;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkStyleProperties = cast(GtkStyleProperties*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

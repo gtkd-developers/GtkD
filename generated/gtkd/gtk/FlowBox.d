@@ -105,12 +105,6 @@ public class FlowBox : Container, OrientableIF
 		return cast(void*)gtkFlowBox;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkFlowBox = cast(GtkFlowBox*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

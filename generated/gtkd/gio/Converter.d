@@ -52,12 +52,6 @@ public class Converter : ObjectG, ConverterIF
 		return cast(void*)gConverter;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gConverter = cast(GConverter*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

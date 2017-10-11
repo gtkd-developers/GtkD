@@ -57,12 +57,6 @@ public class InetSocketAddress : SocketAddress
 		return cast(void*)gInetSocketAddress;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gInetSocketAddress = cast(GInetSocketAddress*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

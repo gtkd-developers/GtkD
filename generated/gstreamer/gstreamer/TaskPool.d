@@ -59,12 +59,6 @@ public class TaskPool : ObjectGst
 		return cast(void*)gstTaskPool;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gstTaskPool = cast(GstTaskPool*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

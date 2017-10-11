@@ -52,12 +52,6 @@ public class SwitchAccessible : WidgetAccessible, ActionIF
 		return cast(void*)gtkSwitchAccessible;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkSwitchAccessible = cast(GtkSwitchAccessible*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

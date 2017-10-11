@@ -144,12 +144,6 @@ public class Entry : Widget, CellEditableIF, EditableIF
 		return cast(void*)gtkEntry;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkEntry = cast(GtkEntry*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

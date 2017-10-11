@@ -119,12 +119,6 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 		return cast(void*)gSocket;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gSocket = cast(GSocket*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

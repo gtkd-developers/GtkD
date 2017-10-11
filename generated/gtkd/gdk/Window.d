@@ -73,12 +73,6 @@ public class Window : ObjectG
 		return cast(void*)gdkWindow;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gdkWindow = cast(GdkWindow*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

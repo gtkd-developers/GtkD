@@ -58,12 +58,6 @@ public class DBusMenuModel : MenuModel
 		return cast(void*)gDBusMenuModel;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gDBusMenuModel = cast(GDBusMenuModel*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

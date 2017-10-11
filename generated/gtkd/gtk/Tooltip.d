@@ -90,12 +90,6 @@ public class Tooltip : ObjectG
 		return cast(void*)gtkTooltip;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkTooltip = cast(GtkTooltip*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

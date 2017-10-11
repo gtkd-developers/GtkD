@@ -72,12 +72,6 @@ public class TextTag : ObjectG
 		return cast(void*)gtkTextTag;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkTextTag = cast(GtkTextTag*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

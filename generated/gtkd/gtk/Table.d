@@ -77,12 +77,6 @@ public class Table : Container
 		return cast(void*)gtkTable;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkTable = cast(GtkTable*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -80,12 +80,6 @@ public class FileIOStream : IOStream, SeekableIF
 		return cast(void*)gFileIOStream;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gFileIOStream = cast(GFileIOStream*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

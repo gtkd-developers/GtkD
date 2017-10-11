@@ -52,12 +52,6 @@ public class SourceUndoManager : ObjectG, SourceUndoManagerIF
 		return cast(void*)gtkSourceUndoManager;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkSourceUndoManager = cast(GtkSourceUndoManager*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

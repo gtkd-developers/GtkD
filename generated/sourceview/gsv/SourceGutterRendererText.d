@@ -53,12 +53,6 @@ public class SourceGutterRendererText : SourceGutterRenderer
 		return cast(void*)gtkSourceGutterRendererText;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkSourceGutterRendererText = cast(GtkSourceGutterRendererText*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

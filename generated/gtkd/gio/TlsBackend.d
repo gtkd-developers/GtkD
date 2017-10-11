@@ -52,12 +52,6 @@ public class TlsBackend : ObjectG, TlsBackendIF
 		return cast(void*)gTlsBackend;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gTlsBackend = cast(GTlsBackend*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

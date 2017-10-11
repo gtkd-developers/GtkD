@@ -75,12 +75,6 @@ public class StackSwitcher : Box
 		return cast(void*)gtkStackSwitcher;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkStackSwitcher = cast(GtkStackSwitcher*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

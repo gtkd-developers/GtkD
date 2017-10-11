@@ -103,12 +103,6 @@ public class IOStream : ObjectG
 		return cast(void*)gIOStream;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gIOStream = cast(GIOStream*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

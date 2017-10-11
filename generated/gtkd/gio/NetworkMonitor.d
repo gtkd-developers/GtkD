@@ -52,12 +52,6 @@ public class NetworkMonitor : ObjectG, NetworkMonitorIF
 		return cast(void*)gNetworkMonitor;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gNetworkMonitor = cast(GNetworkMonitor*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

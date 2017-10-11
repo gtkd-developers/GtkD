@@ -76,12 +76,6 @@ public class Plug : Window
 		return cast(void*)gtkPlug;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkPlug = cast(GtkPlug*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

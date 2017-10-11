@@ -94,12 +94,6 @@ public class Fixed : Container
 		return cast(void*)gtkFixed;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkFixed = cast(GtkFixed*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

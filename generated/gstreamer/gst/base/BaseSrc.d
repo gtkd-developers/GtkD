@@ -167,12 +167,6 @@ public class BaseSrc : Element
 		return cast(void*)gstBaseSrc;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gstBaseSrc = cast(GstBaseSrc*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

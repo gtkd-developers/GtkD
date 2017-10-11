@@ -52,12 +52,6 @@ public class Icon : ObjectG, IconIF
 		return cast(void*)gIcon;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gIcon = cast(GIcon*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -52,12 +52,6 @@ public class TypePlugin : ObjectG, TypePluginIF
 		return cast(void*)gTypePlugin;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gTypePlugin = cast(GTypePlugin*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

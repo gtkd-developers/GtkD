@@ -69,12 +69,6 @@ public class TlsDatabase : ObjectG
 		return cast(void*)gTlsDatabase;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gTlsDatabase = cast(GTlsDatabase*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

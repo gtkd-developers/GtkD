@@ -120,12 +120,6 @@ public class DeviceMonitor : ObjectGst
 		return cast(void*)gstDeviceMonitor;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gstDeviceMonitor = cast(GstDeviceMonitor*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

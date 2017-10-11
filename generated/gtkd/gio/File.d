@@ -52,12 +52,6 @@ public class File : ObjectG, FileIF
 		return cast(void*)gFile;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gFile = cast(GFile*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

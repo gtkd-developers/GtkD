@@ -74,12 +74,6 @@ public class FileOutputStream : OutputStream, SeekableIF
 		return cast(void*)gFileOutputStream;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gFileOutputStream = cast(GFileOutputStream*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
