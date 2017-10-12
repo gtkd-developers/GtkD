@@ -564,11 +564,6 @@ code: start
 	}
 code: end
 
-struct:
-class: TypePlugin
-extend: Object
-implements: TypePlugin
-
 struct: Value
 import: std.traits
 code: start
