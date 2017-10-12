@@ -32,22 +32,22 @@ public  import gtkc.glibtypes;
 /** */
 public struct MemorySlice
 {
-	T* mewSlice(T)()
+	public static T* mewSlice(T)()
 	{
 		return cast(T*)g_slice_alloc(T.sizeof);
 	}
 
-	T* mewSlice0(T)()
+	public static T* mewSlice0(T)()
 	{
 		return cast(T*)g_slice_alloc0(T.sizeof);
 	}
 
-	T* dup(T)(T* memBlock)
+	public static T* dup(T)(T* memBlock)
 	{
 		return cast(T*)g_slice_copy(T.sizeof, memBlock);
 	}
 
-	void free(T)(T* memBlock)
+	public static void free(T)(T* memBlock)
 	{
 		g_slice_free1(T.sizeof, memBlock);
 	}
