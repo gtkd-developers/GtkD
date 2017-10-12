@@ -43,11 +43,6 @@ else
 	alias uint gulong;
 }
 
-version( Windows )
-	enum _utfPostfix = "_utf8";
-else
-	enum _utfPostfix = "";
-
 version (Windows)
 {
 	private import core.stdc.stdio;
