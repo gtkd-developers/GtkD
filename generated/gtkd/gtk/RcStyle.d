@@ -71,16 +71,16 @@ public class RcStyle : ObjectG
 		super(cast(GObject*)gtkRcStyle, ownedRef);
 	}
 
-	deprecated:
-
-	/**
-	 */
-
 	/** */
 	public static GType getType()
 	{
 		return gtk_rc_style_get_type();
 	}
+
+	deprecated:
+
+	/**
+	 */
 
 	/**
 	 * Creates a new #GtkRcStyle with no fields set and

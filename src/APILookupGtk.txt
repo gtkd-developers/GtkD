@@ -680,6 +680,7 @@ code: start
 code: end
 
 struct: ColorButton
+#Use the functions from the mixed in interface.
 noCode: set_rgba
 noCode: get_rgba
 noCode: set_use_alpha
@@ -2644,7 +2645,14 @@ code: start
 code: end
 
 struct: RcStyle
+noCode: get_type
 code: start
+	/** */
+	public static GType getType()
+	{
+		return gtk_rc_style_get_type();
+	}
+
 	deprecated:
 code: end
 
