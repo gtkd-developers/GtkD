@@ -278,28 +278,9 @@ public class ObjectG
 	}
 
 	/** */
-	public void setProperty(string propertyName, int value)
+	public void setProperty(T)(string propertyName, T value)
 	{
 		setProperty(propertyName, new Value(value));
-	}
-
-	/** */
-	public void setProperty(string propertyName, string value)
-	{
-		setProperty(propertyName, new Value(value));
-	}
-
-	/** */
-	public void setProperty(string propertyName, long value)
-	{
-		//We use g_object_set instead of g_object_set_property, because Value doesn't like longs and ulongs for some reason.
-		g_object_set( gObject, Str.toStringz(propertyName), value, null);
-	}
-
-	/** */
-	public void setProperty(string propertyName, ulong value)
-	{
-		g_object_set( gObject, Str.toStringz(propertyName), value, null);
 	}
 
 	deprecated("Use the member function")
