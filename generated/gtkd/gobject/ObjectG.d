@@ -224,13 +224,18 @@ public class ObjectG
 			auto p = g_object_get_data(cast(GObject*)obj, Str.toStringz("GObject"));
 
 			if ( p !is null )
-				return cast(RT)p;
+				return cast(RT)cast(ObjectG)p;
 			else
 				return new T(obj, ownedRef);
 		}
 		else static if ( is(RT == interface) && hasStaticMember!(RT, "getType") && is(ReturnType!(RT.getType) == GType) )
 		{
-			return getInterfaceInstance!RT(cast(GObject*)obj);
+			auto p = g_object_get_data(cast(GObject*)obj, Str.toStringz("GObject"));
+
+			if ( p !is null )
+				return cast(RT)cast(ObjectG)p;
+			else
+				return getInterfaceInstance!RT(cast(GObject*)obj);
 		}
 		else
 		{
