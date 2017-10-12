@@ -25,9 +25,6 @@ wrap: gtk
 file: Gtk-3.0.gir
 
 addAliases: start
-
-	extern(C) Object _d_newclass(ClassInfo ci);
-
 	alias GtkAllocation* Allocation;
 addAliases: end
 
