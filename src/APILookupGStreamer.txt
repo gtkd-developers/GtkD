@@ -313,12 +313,12 @@ code: start
 	public Pad[] pads()
 	{
 		Pad[] result;
-		GValue* pad = g_value_init(new GValue(), Type.fromName("GstPad"));
+		GValue* pad = g_value_init(new GValue(), Pad.getType());
 		GstIterator* iter = gst_element_iterate_pads(gstElement);
 
 		while ( gst_iterator_next(iter, pad) == GstIteratorResult.OK )
 		{
-			result ~= new Pad(cast(GstPad*)g_value_get_object(pad));
+			result ~= ObjectG.getDObject!(Pad)(cast(GstPad*)g_value_get_object(pad));
 			g_value_reset(pad);
 		}
 
@@ -349,7 +349,7 @@ code: start
 			return null;
 		}
 
-		return new Element( p );
+		return ObjectG.getDObject!(Element)(cast(GstElement*) p);
 	}
 code: end
 
@@ -981,17 +981,6 @@ code: end
 
 struct: Pad
 code: start
-	/*
-	 * Sets our main struct and passes it to the parent class.
-	 * This one is additional to make gstreamer.Element addOnPadAdded()
-	 * working without changes.
-	 */
-	public this (GObject* gstPad)
-	{
-		super(cast(GstObject*)gstPad);
-		this.gstPad = cast(GstPad*) gstPad;
-	}
-	
 	/**
 	 * Queries a pad for the stream position.
 	 * This is a convenience function for gstreamerD.

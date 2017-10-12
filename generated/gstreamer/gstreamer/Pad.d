@@ -134,17 +134,6 @@ public class Pad : ObjectGst
 		super(cast(GstObject*)gstPad, ownedRef);
 	}
 
-	/*
-	 * Sets our main struct and passes it to the parent class.
-	 * This one is additional to make gstreamer.Element addOnPadAdded()
-	 * working without changes.
-	 */
-	public this (GObject* gstPad)
-	{
-		super(cast(GstObject*)gstPad);
-		this.gstPad = cast(GstPad*) gstPad;
-	}
-
 	/**
 	 * Queries a pad for the stream position.
 	 * This is a convenience function for gstreamerD.

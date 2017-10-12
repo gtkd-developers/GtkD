@@ -193,12 +193,12 @@ public class Element : ObjectGst
 	public Pad[] pads()
 	{
 		Pad[] result;
-		GValue* pad = g_value_init(new GValue(), Type.fromName("GstPad"));
+		GValue* pad = g_value_init(new GValue(), Pad.getType());
 		GstIterator* iter = gst_element_iterate_pads(gstElement);
 
 		while ( gst_iterator_next(iter, pad) == GstIteratorResult.OK )
 		{
-			result ~= new Pad(cast(GstPad*)g_value_get_object(pad));
+			result ~= ObjectG.getDObject!(Pad)(cast(GstPad*)g_value_get_object(pad));
 			g_value_reset(pad);
 		}
 

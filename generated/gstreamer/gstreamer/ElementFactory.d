@@ -109,7 +109,7 @@ public class ElementFactory : PluginFeature
 			return null;
 		}
 
-		return new Element( p );
+		return ObjectG.getDObject!(Element)(cast(GstElement*) p);
 	}
 
 	/**
