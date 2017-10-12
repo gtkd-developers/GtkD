@@ -104,8 +104,6 @@ public class Table : Container
 
 		row = 0;
 		col = 0;
-		maxRows = 1;
-		maxCols = 1;
 	}
 
 	/**

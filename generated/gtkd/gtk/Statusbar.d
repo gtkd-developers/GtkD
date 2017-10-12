@@ -111,7 +111,7 @@ public class Statusbar : Box
 		{
 			return null;
 		}
-		return new Box(cast(GtkBox*) p);
+		return ObjectG.getDObject!(Box)(cast(GtkBox*) p);
 	}
 
 	/**

@@ -228,7 +228,7 @@ public class MessageDialog : Dialog
 		{
 			return null;
 		}
-		return new VBox(cast(GtkVBox*) p);
+		return ObjectG.getDObject!(VBox)(cast(GtkVBox*) p);
 	}
 
 	/**

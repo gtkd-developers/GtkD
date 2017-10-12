@@ -1737,7 +1737,7 @@ code: start
 		{
 			return null;
 		}
-		return new VButtonBox(cast(GtkVButtonBox*) p);
+		return ObjectG.getDObject!(VButtonBox)(cast(GtkVButtonBox*) p);
 	}
 
 	/**
@@ -1753,7 +1753,7 @@ code: start
 		{
 			return null;
 		}
-		return new HBox(cast(GtkHBox*) p);
+		return ObjectG.getDObject!(HBox)(cast(GtkHBox*) p);
 	}
 code: end
 
@@ -2261,7 +2261,7 @@ code: start
 		{
 			return null;
 		}
-		return new VBox(cast(GtkVBox*) p);
+		return ObjectG.getDObject!(VBox)(cast(GtkVBox*) p);
 	}
 code: end
 
@@ -2822,7 +2822,7 @@ code: start
 		{
 			return null;
 		}
-		return new Box(cast(GtkBox*) p);
+		return ObjectG.getDObject!(Box)(cast(GtkBox*) p);
 	}
 code: end
 
@@ -2960,8 +2960,6 @@ code: start
 
 		row = 0;
 		col = 0;
-		maxRows = 1;
-		maxCols = 1;
 	}
 
 	/**
@@ -4526,7 +4524,7 @@ code: start
 		{
 			return null;
 		}
-		return new Button(cast(GtkButton*) p);
+		return ObjectG.getDObject!(Button)(cast(GtkButton*) p);
 	}
 
 	/**
@@ -4544,7 +4542,7 @@ code: start
 		{
 			return null;
 		}
-		return new TreeView(cast(GtkTreeView*) p);
+		return ObjectG.getDObject!(TreeView)(cast(GtkTreeView*) p);
 	}
 code: end
 

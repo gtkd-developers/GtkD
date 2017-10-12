@@ -126,7 +126,7 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 		{
 			return null;
 		}
-		return new Button(cast(GtkButton*) p);
+		return ObjectG.getDObject!(Button)(cast(GtkButton*) p);
 	}
 
 	/**
@@ -144,7 +144,7 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 		{
 			return null;
 		}
-		return new TreeView(cast(GtkTreeView*) p);
+		return ObjectG.getDObject!(TreeView)(cast(GtkTreeView*) p);
 	}
 
 	/**

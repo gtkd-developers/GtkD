@@ -204,7 +204,7 @@ public class InfoBar : Box
 		{
 			return null;
 		}
-		return new VButtonBox(cast(GtkVButtonBox*) p);
+		return ObjectG.getDObject!(VButtonBox)(cast(GtkVButtonBox*) p);
 	}
 
 	/**
@@ -220,7 +220,7 @@ public class InfoBar : Box
 		{
 			return null;
 		}
-		return new HBox(cast(GtkHBox*) p);
+		return ObjectG.getDObject!(HBox)(cast(GtkHBox*) p);
 	}
 
 	/**
