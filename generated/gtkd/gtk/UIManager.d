@@ -32,27 +32,11 @@ private import glib.ListSG;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gobject.Type;
 private import gtk.AccelGroup;
 private import gtk.Action;
 private import gtk.ActionGroup;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
-private import gtk.CheckMenuItem;
-private import gtk.ImageMenuItem;
-private import gtk.Menu;
-private import gtk.MenuBar;
-private import gtk.MenuItem;
-private import gtk.MenuToolButton;
-private import gtk.RadioMenuItem;
-private import gtk.RadioToolButton;
-private import gtk.SeparatorMenuItem;
-private import gtk.SeparatorToolItem;
-private import gtk.TearoffMenuItem;
-private import gtk.ToggleToolButton;
-private import gtk.ToolButton;
-private import gtk.ToolItem;
-private import gtk.Toolbar;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
@@ -312,81 +296,6 @@ public class UIManager : ObjectG, BuildableIF
 	// add the Buildable capabilities
 	mixin BuildableT!(GtkUIManager);
 
-	/**
-	 * Warning: getWidget is deprecated and should not be used in newly-written code. 3.10
-	 *
-	 * Looks up a widget by following a path.
-	 * The path consists of the names specified in the XML description of the UI.
-	 * separated by '/'. Elements which don't have a name or action attribute in
-	 * the XML (e.g. &lt;popup&gt;) can be addressed by their XML element name
-	 * (e.g. "popup"). The root element ("/ui") can be omitted in the path.
-	 *
-	 * Note that the widget found by following a path that ends in a &lt;menu&gt;
-	 * element is the menuitem to which the menu is attached, not the menu itself.
-	 *
-	 * Also note that the widgets constructed by a ui manager are not tied to
-	 * the lifecycle of the ui manager. If you add the widgets returned by this
-	 * function to some container or explicitly ref them, they will survive the
-	 * destruction of the ui manager.
-	 *
-	 * Since 2.4
-	 *
-	 * Params:
-	 *    path = a path
-	 *
-	 * Returns: the widget found by following the path, or null if no widget was found.
-	 */
-	public Widget getWidget(string path)
-	{
-		// GtkWidget * gtk_ui_manager_get_widget (GtkUIManager *manager,  const gchar *path);
-		auto p = gtk_ui_manager_get_widget(gtkUIManager, Str.toStringz(path));
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		string typeName = Type.name((cast(GTypeInstance*)p).gClass.gType);
-
-		switch(typeName)
-		{
-			case "GtkCheckMenuItem":
-			return ObjectG.getDObject!(CheckMenuItem)(cast(GtkCheckMenuItem*) p);
-			case "GtkImageMenuItem":
-			return ObjectG.getDObject!(ImageMenuItem)(cast(GtkImageMenuItem*) p);
-			case "GtkMenu":
-			return ObjectG.getDObject!(Menu)(cast(GtkMenu*) p);
-			case "GtkMenuBar":
-			return ObjectG.getDObject!(MenuBar)(cast(GtkMenuBar*) p);
-			case "GtkMenuItem":
-			return ObjectG.getDObject!(MenuItem)(cast(GtkMenuItem*) p);
-			case "GtkMenuToolButton":
-			return ObjectG.getDObject!(MenuToolButton)(cast(GtkMenuToolButton*) p);
-			case "GtkRadioMenuItem":
-			return ObjectG.getDObject!(RadioMenuItem)(cast(GtkRadioMenuItem*) p);
-			case "GtkRadioToolButton":
-			return ObjectG.getDObject!(RadioToolButton)(cast(GtkRadioToolButton*) p);
-			case "GtkSeparatorMenuItem":
-			return ObjectG.getDObject!(SeparatorMenuItem)(cast(GtkSeparatorMenuItem*) p);
-			case "GtkSeparatorToolItem":
-			return ObjectG.getDObject!(SeparatorToolItem)(cast(GtkSeparatorToolItem*) p);
-			case "GtkTearoffMenuItem":
-			return ObjectG.getDObject!(TearoffMenuItem)(cast(GtkTearoffMenuItem*) p);
-			case "GtkToggleToolButton":
-			return ObjectG.getDObject!(ToggleToolButton)(cast(GtkToggleToolButton*) p);
-			case "GtkToolbar":
-			return ObjectG.getDObject!(Toolbar)(cast(GtkToolbar*) p);
-			case "GtkToolButton":
-			return ObjectG.getDObject!(ToolButton)(cast(GtkToolButton*) p);
-			case "GtkToolItem":
-			return ObjectG.getDObject!(ToolItem)(cast(GtkToolItem*) p);
-			default:
-			return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
-		}
-	}
-
-	/**
-	 */
 
 	/** */
 	public static GType getType()
@@ -674,6 +583,42 @@ public class UIManager : ObjectG, BuildableIF
 
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
+	}
+
+	/**
+	 * Looks up a widget by following a path.
+	 * The path consists of the names specified in the XML description of the UI.
+	 * separated by “/”. Elements which don’t have a name or action attribute in
+	 * the XML (e.g. <popup>) can be addressed by their XML element name
+	 * (e.g. "popup"). The root element ("/ui") can be omitted in the path.
+	 *
+	 * Note that the widget found by following a path that ends in a <menu>;
+	 * element is the menuitem to which the menu is attached, not the menu it
+	 * manages.
+	 *
+	 * Also note that the widgets constructed by a ui manager are not tied to
+	 * the lifecycle of the ui manager. If you add the widgets returned by this
+	 * function to some container or explicitly ref them, they will survive the
+	 * destruction of the ui manager.
+	 *
+	 * Params:
+	 *     path = a path
+	 *
+	 * Returns: the widget found by following the path,
+	 *     or %NULL if no widget was found
+	 *
+	 * Since: 2.4
+	 */
+	public Widget getWidget(string path)
+	{
+		auto p = gtk_ui_manager_get_widget(gtkUIManager, Str.toStringz(path));
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
 	}
 
 	/**
