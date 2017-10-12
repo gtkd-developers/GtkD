@@ -34,13 +34,11 @@ private import gobject.Value;
 private import gtk.BuildableIF;
 private import gtk.BuildableT;
 private import gtk.CellAreaContext;
-private import gtk.CellEditable;
 private import gtk.CellEditableIF;
 private import gtk.CellLayoutIF;
 private import gtk.CellLayoutT;
 private import gtk.CellRenderer;
 private import gtk.TreeIter;
-private import gtk.TreeModel;
 private import gtk.TreeModelIF;
 private import gtk.Widget;
 private import gtk.c.functions;
@@ -824,7 +822,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 			return null;
 		}
 
-		return ObjectG.getDObject!(CellEditable, CellEditableIF)(cast(GtkCellEditable*) p);
+		return ObjectG.getDObject!(CellEditableIF)(cast(GtkCellEditable*) p);
 	}
 
 	/**
@@ -1261,7 +1259,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 
 	extern(C) static void callBackAddEditable(GtkCellArea* cellareaStruct, GtkCellRenderer* renderer, GtkCellEditable* editable, GdkRectangle* cellArea, char* path, OnAddEditableDelegateWrapper wrapper)
 	{
-		wrapper.dlg(ObjectG.getDObject!(CellRenderer)(renderer), ObjectG.getDObject!(CellEditable, CellEditableIF)(editable), cellArea, Str.toString(path), wrapper.outer);
+		wrapper.dlg(ObjectG.getDObject!(CellRenderer)(renderer), ObjectG.getDObject!(CellEditableIF)(editable), cellArea, Str.toString(path), wrapper.outer);
 	}
 
 	extern(C) static void callBackAddEditableDestroy(OnAddEditableDelegateWrapper wrapper, GClosure* closure)
@@ -1321,7 +1319,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 
 	extern(C) static void callBackApplyAttributes(GtkCellArea* cellareaStruct, GtkTreeModel* model, GtkTreeIter* iter, bool isExpander, bool isExpanded, OnApplyAttributesDelegateWrapper wrapper)
 	{
-		wrapper.dlg(ObjectG.getDObject!(TreeModel, TreeModelIF)(model), ObjectG.getDObject!(TreeIter)(iter), isExpander, isExpanded, wrapper.outer);
+		wrapper.dlg(ObjectG.getDObject!(TreeModelIF)(model), ObjectG.getDObject!(TreeIter)(iter), isExpander, isExpanded, wrapper.outer);
 	}
 
 	extern(C) static void callBackApplyAttributesDestroy(OnApplyAttributesDelegateWrapper wrapper, GClosure* closure)
@@ -1445,7 +1443,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 
 	extern(C) static void callBackRemoveEditable(GtkCellArea* cellareaStruct, GtkCellRenderer* renderer, GtkCellEditable* editable, OnRemoveEditableDelegateWrapper wrapper)
 	{
-		wrapper.dlg(ObjectG.getDObject!(CellRenderer)(renderer), ObjectG.getDObject!(CellEditable, CellEditableIF)(editable), wrapper.outer);
+		wrapper.dlg(ObjectG.getDObject!(CellRenderer)(renderer), ObjectG.getDObject!(CellEditableIF)(editable), wrapper.outer);
 	}
 
 	extern(C) static void callBackRemoveEditableDestroy(OnRemoveEditableDelegateWrapper wrapper, GClosure* closure)

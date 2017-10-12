@@ -26,7 +26,6 @@ module gsv.SourceFileSaver;
 
 private import gio.AsyncResultIF;
 private import gio.Cancellable;
-private import gio.File;
 private import gio.FileIF;
 private import glib.ConstructionException;
 private import glib.ErrorG;
@@ -222,7 +221,7 @@ public class SourceFileSaver : ObjectG
 			return null;
 		}
 
-		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) p);
 	}
 
 	/**

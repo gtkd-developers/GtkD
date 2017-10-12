@@ -26,13 +26,9 @@ module gio.VolumeIF;
 
 private import gio.AsyncResultIF;
 private import gio.Cancellable;
-private import gio.Drive;
 private import gio.DriveIF;
-private import gio.File;
 private import gio.FileIF;
-private import gio.Icon;
 private import gio.IconIF;
-private import gio.Mount;
 private import gio.MountIF;
 private import gio.MountOperation;
 private import gio.c.functions;

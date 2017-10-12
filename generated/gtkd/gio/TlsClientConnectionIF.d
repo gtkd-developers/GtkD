@@ -25,7 +25,6 @@
 module gio.TlsClientConnectionIF;
 
 private import gio.IOStream;
-private import gio.SocketConnectable;
 private import gio.SocketConnectableIF;
 private import gio.c.functions;
 public  import gio.c.types;

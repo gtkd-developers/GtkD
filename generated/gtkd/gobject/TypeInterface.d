@@ -26,7 +26,6 @@ module gobject.TypeInterface;
 
 private import gobject.ObjectG;
 private import gobject.TypeClass;
-private import gobject.TypePlugin;
 private import gobject.TypePluginIF;
 private import gobject.c.functions;
 public  import gobject.c.types;
@@ -127,7 +126,7 @@ public class TypeInterface
 			return null;
 		}
 
-		return ObjectG.getDObject!(TypePlugin, TypePluginIF)(cast(GTypePlugin*) p);
+		return ObjectG.getDObject!(TypePluginIF)(cast(GTypePlugin*) p);
 	}
 
 	/**

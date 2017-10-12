@@ -79,12 +79,6 @@ interface: SourceCompletionProposal
 struct: CompletionProvider
 interface: SourceCompletionProvider
 
-struct:
-class: SourceCompletionProvider
-cType: GtkSourceCompletionProvider
-extend: GObject.Object
-implements: CompletionProvider
-
 struct: CompletionWords
 class: SourceCompletionWords
 
@@ -161,12 +155,6 @@ class: SourceStyleSchemeManager
 	
 struct: UndoManager
 interface: SourceUndoManager
-
-struct:
-class: SourceUndoManager
-cType: GtkSourceUndoManager
-extend: GObject.Object
-implements: UndoManager
 
 struct: View
 class: SourceView

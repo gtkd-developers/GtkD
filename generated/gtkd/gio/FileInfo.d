@@ -25,7 +25,6 @@
 module gio.FileInfo;
 
 private import gio.FileAttributeMatcher;
-private import gio.Icon;
 private import gio.IconIF;
 private import gio.c.functions;
 public  import gio.c.types;
@@ -449,7 +448,7 @@ public class FileInfo : ObjectG
 			return null;
 		}
 
-		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p);
 	}
 
 	/**
@@ -545,7 +544,7 @@ public class FileInfo : ObjectG
 			return null;
 		}
 
-		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p);
 	}
 
 	/**

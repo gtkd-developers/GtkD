@@ -27,7 +27,6 @@ module gtk.TreeRowReference;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gtk.TreeIter;
-private import gtk.TreeModel;
 private import gtk.TreeModelIF;
 private import gtk.TreePath;
 private import gtk.c.functions;
@@ -202,7 +201,7 @@ public class TreeRowReference
 			return null;
 		}
 
-		return ObjectG.getDObject!(TreeModel, TreeModelIF)(cast(GtkTreeModel*) p);
+		return ObjectG.getDObject!(TreeModelIF)(cast(GtkTreeModel*) p);
 	}
 
 	/**

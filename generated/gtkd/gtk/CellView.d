@@ -36,7 +36,6 @@ private import gtk.CellLayoutT;
 private import gtk.OrientableIF;
 private import gtk.OrientableT;
 private import gtk.Requisition;
-private import gtk.TreeModel;
 private import gtk.TreeModelIF;
 private import gtk.TreePath;
 private import gtk.Widget;
@@ -285,7 +284,7 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 			return null;
 		}
 
-		return ObjectG.getDObject!(TreeModel, TreeModelIF)(cast(GtkTreeModel*) p);
+		return ObjectG.getDObject!(TreeModelIF)(cast(GtkTreeModel*) p);
 	}
 
 	/**

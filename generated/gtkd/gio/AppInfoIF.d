@@ -24,13 +24,11 @@
 
 module gio.AppInfoIF;
 
-private import gio.AppInfo;
 private import gio.AppInfoIF;
 private import gio.AppLaunchContext;
 private import gio.AsyncResultIF;
 private import gio.Cancellable;
 private import gio.FileIF;
-private import gio.Icon;
 private import gio.IconIF;
 private import gio.c.functions;
 public  import gio.c.types;

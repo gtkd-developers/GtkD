@@ -26,7 +26,6 @@ module gio.NetworkMonitorT;
 
 public  import gio.AsyncResultIF;
 public  import gio.Cancellable;
-public  import gio.NetworkMonitor;
 public  import gio.NetworkMonitorIF;
 public  import gio.SocketConnectableIF;
 public  import gio.c.functions;
@@ -76,7 +75,7 @@ public template NetworkMonitorT(TStruct)
 			return null;
 		}
 
-		return ObjectG.getDObject!(NetworkMonitor, NetworkMonitorIF)(cast(GNetworkMonitor*) p);
+		return ObjectG.getDObject!(NetworkMonitorIF)(cast(GNetworkMonitor*) p);
 	}
 
 	/**

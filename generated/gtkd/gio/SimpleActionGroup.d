@@ -24,7 +24,6 @@
 
 module gio.SimpleActionGroup;
 
-private import gio.Action;
 private import gio.ActionGroupIF;
 private import gio.ActionGroupT;
 private import gio.ActionIF;
@@ -167,7 +166,7 @@ public class SimpleActionGroup : ObjectG, ActionGroupIF, ActionMapIF
 			return null;
 		}
 
-		return ObjectG.getDObject!(Action, ActionIF)(cast(GAction*) p);
+		return ObjectG.getDObject!(ActionIF)(cast(GAction*) p);
 	}
 
 	/**

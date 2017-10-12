@@ -24,7 +24,6 @@
 
 module gio.DesktopAppInfoLookupT;
 
-public  import gio.AppInfo;
 public  import gio.AppInfoIF;
 public  import gio.c.functions;
 public  import gio.c.types;
@@ -74,6 +73,6 @@ public template DesktopAppInfoLookupT(TStruct)
 			return null;
 		}
 
-		return ObjectG.getDObject!(AppInfo, AppInfoIF)(cast(GAppInfo*) p, true);
+		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) p, true);
 	}
 }

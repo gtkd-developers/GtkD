@@ -25,7 +25,6 @@
 module gio.DtlsClientConnectionT;
 
 public  import gio.DatagramBasedIF;
-public  import gio.SocketConnectable;
 public  import gio.SocketConnectableIF;
 public  import gio.c.functions;
 public  import gio.c.types;
@@ -99,7 +98,7 @@ public template DtlsClientConnectionT(TStruct)
 			return null;
 		}
 
-		return ObjectG.getDObject!(SocketConnectable, SocketConnectableIF)(cast(GSocketConnectable*) p);
+		return ObjectG.getDObject!(SocketConnectableIF)(cast(GSocketConnectable*) p);
 	}
 
 	/**

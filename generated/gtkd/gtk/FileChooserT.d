@@ -24,7 +24,6 @@
 
 module gtk.FileChooserT;
 
-public  import gio.File;
 public  import gio.FileIF;
 public  import glib.ErrorG;
 public  import glib.GException;
@@ -364,7 +363,7 @@ public template FileChooserT(TStruct)
 			return null;
 		}
 
-		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
 	}
 
 	/**
@@ -476,7 +475,7 @@ public template FileChooserT(TStruct)
 			return null;
 		}
 
-		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
 	}
 
 	/**
@@ -600,7 +599,7 @@ public template FileChooserT(TStruct)
 			return null;
 		}
 
-		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
 	}
 
 	/**

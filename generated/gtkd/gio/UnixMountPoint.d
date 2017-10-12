@@ -24,7 +24,6 @@
 
 module gio.UnixMountPoint;
 
-private import gio.Icon;
 private import gio.IconIF;
 private import gio.c.functions;
 public  import gio.c.types;
@@ -188,7 +187,7 @@ public class UnixMountPoint
 			return null;
 		}
 
-		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p, true);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p, true);
 	}
 
 	/**
@@ -222,7 +221,7 @@ public class UnixMountPoint
 			return null;
 		}
 
-		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p, true);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p, true);
 	}
 
 	/**

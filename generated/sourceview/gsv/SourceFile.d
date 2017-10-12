@@ -24,7 +24,6 @@
 
 module gsv.SourceFile;
 
-private import gio.File;
 private import gio.FileIF;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
@@ -151,7 +150,7 @@ public class SourceFile : ObjectG
 			return null;
 		}
 
-		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) p);
 	}
 
 	/**

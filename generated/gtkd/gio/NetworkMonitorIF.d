@@ -26,7 +26,6 @@ module gio.NetworkMonitorIF;
 
 private import gio.AsyncResultIF;
 private import gio.Cancellable;
-private import gio.NetworkMonitor;
 private import gio.NetworkMonitorIF;
 private import gio.SocketConnectableIF;
 private import gio.c.functions;

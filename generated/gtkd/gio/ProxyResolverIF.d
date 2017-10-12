@@ -26,7 +26,6 @@ module gio.ProxyResolverIF;
 
 private import gio.AsyncResultIF;
 private import gio.Cancellable;
-private import gio.ProxyResolver;
 private import gio.ProxyResolverIF;
 private import gio.c.functions;
 public  import gio.c.types;

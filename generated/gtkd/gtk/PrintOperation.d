@@ -32,7 +32,6 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.PageSetup;
 private import gtk.PrintContext;
-private import gtk.PrintOperationPreview;
 private import gtk.PrintOperationPreviewIF;
 private import gtk.PrintOperationPreviewT;
 private import gtk.PrintSettings;
@@ -1275,7 +1274,7 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 
 	extern(C) static int callBackPreview(GtkPrintOperation* printoperationStruct, GtkPrintOperationPreview* preview, GtkPrintContext* context, GtkWindow* parent, OnPreviewDelegateWrapper wrapper)
 	{
-		return wrapper.dlg(ObjectG.getDObject!(PrintOperationPreview, PrintOperationPreviewIF)(preview), ObjectG.getDObject!(PrintContext)(context), ObjectG.getDObject!(Window)(parent), wrapper.outer);
+		return wrapper.dlg(ObjectG.getDObject!(PrintOperationPreviewIF)(preview), ObjectG.getDObject!(PrintContext)(context), ObjectG.getDObject!(Window)(parent), wrapper.outer);
 	}
 
 	extern(C) static void callBackPreviewDestroy(OnPreviewDelegateWrapper wrapper, GClosure* closure)

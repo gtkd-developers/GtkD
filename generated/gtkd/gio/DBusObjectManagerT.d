@@ -24,9 +24,7 @@
 
 module gio.DBusObjectManagerT;
 
-public  import gio.DBusInterface;
 public  import gio.DBusInterfaceIF;
-public  import gio.DBusObject;
 public  import gio.DBusObjectIF;
 public  import gio.c.functions;
 public  import gio.c.types;
@@ -80,7 +78,7 @@ public template DBusObjectManagerT(TStruct)
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusInterface, DBusInterfaceIF)(cast(GDBusInterface*) p, true);
+		return ObjectG.getDObject!(DBusInterfaceIF)(cast(GDBusInterface*) p, true);
 	}
 
 	/**
@@ -103,7 +101,7 @@ public template DBusObjectManagerT(TStruct)
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusObject, DBusObjectIF)(cast(GDBusObject*) p, true);
+		return ObjectG.getDObject!(DBusObjectIF)(cast(GDBusObject*) p, true);
 	}
 
 	/**
@@ -193,7 +191,7 @@ public template DBusObjectManagerT(TStruct)
 
 	extern(C) static void callBackInterfaceAdded(GDBusObjectManager* dbusobjectmanagerStruct, GDBusObject* object, GDBusInterface* iface, OnInterfaceAddedDelegateWrapper wrapper)
 	{
-		wrapper.dlg(ObjectG.getDObject!(DBusObject, DBusObjectIF)(object), ObjectG.getDObject!(DBusInterface, DBusInterfaceIF)(iface), wrapper.outer);
+		wrapper.dlg(ObjectG.getDObject!(DBusObjectIF)(object), ObjectG.getDObject!(DBusInterfaceIF)(iface), wrapper.outer);
 	}
 
 	extern(C) static void callBackInterfaceAddedDestroy(OnInterfaceAddedDelegateWrapper wrapper, GClosure* closure)
@@ -254,7 +252,7 @@ public template DBusObjectManagerT(TStruct)
 
 	extern(C) static void callBackInterfaceRemoved(GDBusObjectManager* dbusobjectmanagerStruct, GDBusObject* object, GDBusInterface* iface, OnInterfaceRemovedDelegateWrapper wrapper)
 	{
-		wrapper.dlg(ObjectG.getDObject!(DBusObject, DBusObjectIF)(object), ObjectG.getDObject!(DBusInterface, DBusInterfaceIF)(iface), wrapper.outer);
+		wrapper.dlg(ObjectG.getDObject!(DBusObjectIF)(object), ObjectG.getDObject!(DBusInterfaceIF)(iface), wrapper.outer);
 	}
 
 	extern(C) static void callBackInterfaceRemovedDestroy(OnInterfaceRemovedDelegateWrapper wrapper, GClosure* closure)
@@ -311,7 +309,7 @@ public template DBusObjectManagerT(TStruct)
 
 	extern(C) static void callBackObjectAdded(GDBusObjectManager* dbusobjectmanagerStruct, GDBusObject* object, OnObjectAddedDelegateWrapper wrapper)
 	{
-		wrapper.dlg(ObjectG.getDObject!(DBusObject, DBusObjectIF)(object), wrapper.outer);
+		wrapper.dlg(ObjectG.getDObject!(DBusObjectIF)(object), wrapper.outer);
 	}
 
 	extern(C) static void callBackObjectAddedDestroy(OnObjectAddedDelegateWrapper wrapper, GClosure* closure)
@@ -368,7 +366,7 @@ public template DBusObjectManagerT(TStruct)
 
 	extern(C) static void callBackObjectRemoved(GDBusObjectManager* dbusobjectmanagerStruct, GDBusObject* object, OnObjectRemovedDelegateWrapper wrapper)
 	{
-		wrapper.dlg(ObjectG.getDObject!(DBusObject, DBusObjectIF)(object), wrapper.outer);
+		wrapper.dlg(ObjectG.getDObject!(DBusObjectIF)(object), wrapper.outer);
 	}
 
 	extern(C) static void callBackObjectRemovedDestroy(OnObjectRemovedDelegateWrapper wrapper, GClosure* closure)

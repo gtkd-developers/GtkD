@@ -25,7 +25,6 @@
 module gtk.NumerableIcon;
 
 private import gio.EmblemedIcon;
-private import gio.Icon;
 private import gio.IconIF;
 private import gio.IconT;
 private import glib.ConstructionException;
@@ -154,7 +153,7 @@ public class NumerableIcon : EmblemedIcon
 			return null;
 		}
 
-		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p);
 	}
 
 	/**

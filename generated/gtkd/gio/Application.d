@@ -31,7 +31,6 @@ private import gio.ActionMapT;
 private import gio.ApplicationCommandLine;
 private import gio.Cancellable;
 private import gio.DBusConnection;
-private import gio.File;
 private import gio.FileIF;
 private import gio.Notification;
 private import gio.c.functions;

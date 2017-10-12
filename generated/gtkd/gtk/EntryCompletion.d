@@ -34,7 +34,6 @@ private import gtk.CellArea;
 private import gtk.CellLayoutIF;
 private import gtk.CellLayoutT;
 private import gtk.TreeIter;
-private import gtk.TreeModel;
 private import gtk.TreeModelIF;
 private import gtk.Widget;
 private import gtk.c.functions;
@@ -310,7 +309,7 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 			return null;
 		}
 
-		return ObjectG.getDObject!(TreeModel, TreeModelIF)(cast(GtkTreeModel*) p);
+		return ObjectG.getDObject!(TreeModelIF)(cast(GtkTreeModel*) p);
 	}
 
 	/**
@@ -664,7 +663,7 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 
 	extern(C) static int callBackCursorOnMatch(GtkEntryCompletion* entrycompletionStruct, GtkTreeModel* model, GtkTreeIter* iter, OnCursorOnMatchDelegateWrapper wrapper)
 	{
-		return wrapper.dlg(ObjectG.getDObject!(TreeModel, TreeModelIF)(model), ObjectG.getDObject!(TreeIter)(iter), wrapper.outer);
+		return wrapper.dlg(ObjectG.getDObject!(TreeModelIF)(model), ObjectG.getDObject!(TreeIter)(iter), wrapper.outer);
 	}
 
 	extern(C) static void callBackCursorOnMatchDestroy(OnCursorOnMatchDelegateWrapper wrapper, GClosure* closure)
@@ -796,7 +795,7 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 
 	extern(C) static int callBackMatchSelected(GtkEntryCompletion* entrycompletionStruct, GtkTreeModel* model, GtkTreeIter* iter, OnMatchSelectedDelegateWrapper wrapper)
 	{
-		return wrapper.dlg(ObjectG.getDObject!(TreeModel, TreeModelIF)(model), ObjectG.getDObject!(TreeIter)(iter), wrapper.outer);
+		return wrapper.dlg(ObjectG.getDObject!(TreeModelIF)(model), ObjectG.getDObject!(TreeIter)(iter), wrapper.outer);
 	}
 
 	extern(C) static void callBackMatchSelectedDestroy(OnMatchSelectedDelegateWrapper wrapper, GClosure* closure)

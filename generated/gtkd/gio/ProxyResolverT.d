@@ -26,7 +26,6 @@ module gio.ProxyResolverT;
 
 public  import gio.AsyncResultIF;
 public  import gio.Cancellable;
-public  import gio.ProxyResolver;
 public  import gio.ProxyResolverIF;
 public  import gio.c.functions;
 public  import gio.c.types;
@@ -75,7 +74,7 @@ public template ProxyResolverT(TStruct)
 			return null;
 		}
 
-		return ObjectG.getDObject!(ProxyResolver, ProxyResolverIF)(cast(GProxyResolver*) p);
+		return ObjectG.getDObject!(ProxyResolverIF)(cast(GProxyResolver*) p);
 	}
 
 	/**

@@ -25,7 +25,6 @@
 module gio.DtlsClientConnectionIF;
 
 private import gio.DatagramBasedIF;
-private import gio.SocketConnectable;
 private import gio.SocketConnectableIF;
 private import gio.c.functions;
 public  import gio.c.types;

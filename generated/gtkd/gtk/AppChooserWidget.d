@@ -24,7 +24,6 @@
 
 module gtk.AppChooserWidget;
 
-private import gio.AppInfo;
 private import gio.AppInfoIF;
 private import glib.ConstructionException;
 private import glib.Str;
@@ -338,7 +337,7 @@ public class AppChooserWidget : Box, AppChooserIF
 
 	extern(C) static void callBackApplicationActivated(GtkAppChooserWidget* appchooserwidgetStruct, GAppInfo* application, OnApplicationActivatedDelegateWrapper wrapper)
 	{
-		wrapper.dlg(ObjectG.getDObject!(AppInfo, AppInfoIF)(application), wrapper.outer);
+		wrapper.dlg(ObjectG.getDObject!(AppInfoIF)(application), wrapper.outer);
 	}
 
 	extern(C) static void callBackApplicationActivatedDestroy(OnApplicationActivatedDelegateWrapper wrapper, GClosure* closure)
@@ -393,7 +392,7 @@ public class AppChooserWidget : Box, AppChooserIF
 
 	extern(C) static void callBackApplicationSelected(GtkAppChooserWidget* appchooserwidgetStruct, GAppInfo* application, OnApplicationSelectedDelegateWrapper wrapper)
 	{
-		wrapper.dlg(ObjectG.getDObject!(AppInfo, AppInfoIF)(application), wrapper.outer);
+		wrapper.dlg(ObjectG.getDObject!(AppInfoIF)(application), wrapper.outer);
 	}
 
 	extern(C) static void callBackApplicationSelectedDestroy(OnApplicationSelectedDelegateWrapper wrapper, GClosure* closure)
@@ -452,7 +451,7 @@ public class AppChooserWidget : Box, AppChooserIF
 
 	extern(C) static void callBackPopulatePopup(GtkAppChooserWidget* appchooserwidgetStruct, GtkMenu* menu, GAppInfo* application, OnPopulatePopupDelegateWrapper wrapper)
 	{
-		wrapper.dlg(ObjectG.getDObject!(Menu)(menu), ObjectG.getDObject!(AppInfo, AppInfoIF)(application), wrapper.outer);
+		wrapper.dlg(ObjectG.getDObject!(Menu)(menu), ObjectG.getDObject!(AppInfoIF)(application), wrapper.outer);
 	}
 
 	extern(C) static void callBackPopulatePopupDestroy(OnPopulatePopupDelegateWrapper wrapper, GClosure* closure)

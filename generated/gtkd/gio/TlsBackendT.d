@@ -24,7 +24,6 @@
 
 module gio.TlsBackendT;
 
-public  import gio.TlsBackend;
 public  import gio.TlsBackendIF;
 public  import gio.TlsDatabase;
 public  import gio.c.functions;
@@ -65,7 +64,7 @@ public template TlsBackendT(TStruct)
 			return null;
 		}
 
-		return ObjectG.getDObject!(TlsBackend, TlsBackendIF)(cast(GTlsBackend*) p);
+		return ObjectG.getDObject!(TlsBackendIF)(cast(GTlsBackend*) p);
 	}
 
 	/**

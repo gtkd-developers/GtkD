@@ -39,7 +39,6 @@ private import gtk.ScrollableT;
 private import gtk.TargetEntry;
 private import gtk.Tooltip;
 private import gtk.TreeIter;
-private import gtk.TreeModel;
 private import gtk.TreeModelIF;
 private import gtk.TreePath;
 private import gtk.Widget;
@@ -543,7 +542,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 			return null;
 		}
 
-		return ObjectG.getDObject!(TreeModel, TreeModelIF)(cast(GtkTreeModel*) p);
+		return ObjectG.getDObject!(TreeModelIF)(cast(GtkTreeModel*) p);
 	}
 
 	/**
@@ -722,7 +721,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 
 		auto p = gtk_icon_view_get_tooltip_context(gtkIconView, &x, &y, keyboardTip, &outmodel, &outpath, outiter) != 0;
 
-		model = ObjectG.getDObject!(TreeModel, TreeModelIF)(outmodel);
+		model = ObjectG.getDObject!(TreeModelIF)(outmodel);
 		path = ObjectG.getDObject!(TreePath)(outpath);
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 

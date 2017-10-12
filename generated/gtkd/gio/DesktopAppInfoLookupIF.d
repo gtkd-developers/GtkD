@@ -24,7 +24,6 @@
 
 module gio.DesktopAppInfoLookupIF;
 
-private import gio.AppInfo;
 private import gio.AppInfoIF;
 private import gio.c.functions;
 public  import gio.c.types;

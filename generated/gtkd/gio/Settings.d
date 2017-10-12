@@ -24,7 +24,6 @@
 
 module gio.Settings;
 
-private import gio.Action;
 private import gio.ActionIF;
 private import gio.SettingsBackend;
 private import gio.SettingsSchema;
@@ -746,7 +745,7 @@ public class Settings : ObjectG
 			return null;
 		}
 
-		return ObjectG.getDObject!(Action, ActionIF)(cast(GAction*) p, true);
+		return ObjectG.getDObject!(ActionIF)(cast(GAction*) p, true);
 	}
 
 	/**

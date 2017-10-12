@@ -25,7 +25,6 @@
 module gsv.SourceCompletionProposalT;
 
 public  import gdkpixbuf.Pixbuf;
-public  import gio.Icon;
 public  import gio.IconIF;
 public  import glib.Str;
 public  import gobject.ObjectG;
@@ -89,7 +88,7 @@ public template SourceCompletionProposalT(TStruct)
 			return null;
 		}
 
-		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p);
 	}
 
 	/**

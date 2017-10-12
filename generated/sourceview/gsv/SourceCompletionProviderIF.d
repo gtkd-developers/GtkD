@@ -25,7 +25,6 @@
 module gsv.SourceCompletionProviderIF;
 
 private import gdkpixbuf.Pixbuf;
-private import gio.Icon;
 private import gio.IconIF;
 private import glib.Str;
 private import gobject.ObjectG;

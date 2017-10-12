@@ -42,7 +42,6 @@ private import gdk.Screen;
 private import gdk.Visual;
 private import gdk.Window : GdkWin = Window;
 private import gdkpixbuf.Pixbuf;
-private import gio.ActionGroup;
 private import gio.ActionGroupIF;
 private import gio.IconIF;
 private import glib.ConstructionException;
@@ -2005,7 +2004,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 				return null;
 			}
 
-			return ObjectG.getDObject!(ActionGroup, ActionGroupIF)(cast(GActionGroup*) p);
+			return ObjectG.getDObject!(ActionGroupIF)(cast(GActionGroup*) p);
 		}
 
 		/**

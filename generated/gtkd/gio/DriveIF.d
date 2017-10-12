@@ -26,7 +26,6 @@ module gio.DriveIF;
 
 private import gio.AsyncResultIF;
 private import gio.Cancellable;
-private import gio.Icon;
 private import gio.IconIF;
 private import gio.MountOperation;
 private import gio.c.functions;

@@ -29,7 +29,6 @@ private import gdk.Event;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-private import gtk.CellEditable;
 private import gtk.CellEditableIF;
 private import gtk.Requisition;
 private import gtk.Widget;
@@ -477,7 +476,7 @@ public class CellRenderer : ObjectG
 			return null;
 		}
 
-		return ObjectG.getDObject!(CellEditable, CellEditableIF)(cast(GtkCellEditable*) p);
+		return ObjectG.getDObject!(CellEditableIF)(cast(GtkCellEditable*) p);
 	}
 
 	/**
@@ -632,7 +631,7 @@ public class CellRenderer : ObjectG
 
 	extern(C) static void callBackEditingStarted(GtkCellRenderer* cellrendererStruct, GtkCellEditable* editable, char* path, OnEditingStartedDelegateWrapper wrapper)
 	{
-		wrapper.dlg(ObjectG.getDObject!(CellEditable, CellEditableIF)(editable), Str.toString(path), wrapper.outer);
+		wrapper.dlg(ObjectG.getDObject!(CellEditableIF)(editable), Str.toString(path), wrapper.outer);
 	}
 
 	extern(C) static void callBackEditingStartedDestroy(OnEditingStartedDelegateWrapper wrapper, GClosure* closure)

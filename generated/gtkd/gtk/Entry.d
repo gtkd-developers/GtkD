@@ -26,7 +26,6 @@ module gtk.Entry;
 
 private import gdk.Event;
 private import gdkpixbuf.Pixbuf;
-private import gio.Icon;
 private import gio.IconIF;
 private import glib.ConstructionException;
 private import glib.Str;
@@ -457,7 +456,7 @@ public class Entry : Widget, CellEditableIF, EditableIF
 			return null;
 		}
 
-		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p);
 	}
 
 	/**

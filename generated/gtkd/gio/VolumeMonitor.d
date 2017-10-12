@@ -24,11 +24,8 @@
 
 module gio.VolumeMonitor;
 
-private import gio.Drive;
 private import gio.DriveIF;
-private import gio.Mount;
 private import gio.MountIF;
-private import gio.Volume;
 private import gio.VolumeIF;
 private import gio.c.functions;
 public  import gio.c.types;
@@ -157,7 +154,7 @@ public class VolumeMonitor : ObjectG
 			return null;
 		}
 
-		return ObjectG.getDObject!(Volume, VolumeIF)(cast(GVolume*) p, true);
+		return ObjectG.getDObject!(VolumeIF)(cast(GVolume*) p, true);
 	}
 
 	/**
@@ -198,7 +195,7 @@ public class VolumeMonitor : ObjectG
 			return null;
 		}
 
-		return ObjectG.getDObject!(Mount, MountIF)(cast(GMount*) p, true);
+		return ObjectG.getDObject!(MountIF)(cast(GMount*) p, true);
 	}
 
 	/**
@@ -239,7 +236,7 @@ public class VolumeMonitor : ObjectG
 			return null;
 		}
 
-		return ObjectG.getDObject!(Volume, VolumeIF)(cast(GVolume*) p, true);
+		return ObjectG.getDObject!(VolumeIF)(cast(GVolume*) p, true);
 	}
 
 	/**
@@ -309,7 +306,7 @@ public class VolumeMonitor : ObjectG
 
 	extern(C) static void callBackDriveChanged(GVolumeMonitor* volumemonitorStruct, GDrive* drive, OnDriveChangedDelegateWrapper wrapper)
 	{
-		wrapper.dlg(ObjectG.getDObject!(Drive, DriveIF)(drive), wrapper.outer);
+		wrapper.dlg(ObjectG.getDObject!(DriveIF)(drive), wrapper.outer);
 	}
 
 	extern(C) static void callBackDriveChangedDestroy(OnDriveChangedDelegateWrapper wrapper, GClosure* closure)
@@ -364,7 +361,7 @@ public class VolumeMonitor : ObjectG
 
 	extern(C) static void callBackDriveConnected(GVolumeMonitor* volumemonitorStruct, GDrive* drive, OnDriveConnectedDelegateWrapper wrapper)
 	{
-		wrapper.dlg(ObjectG.getDObject!(Drive, DriveIF)(drive), wrapper.outer);
+		wrapper.dlg(ObjectG.getDObject!(DriveIF)(drive), wrapper.outer);
 	}
 
 	extern(C) static void callBackDriveConnectedDestroy(OnDriveConnectedDelegateWrapper wrapper, GClosure* closure)
@@ -419,7 +416,7 @@ public class VolumeMonitor : ObjectG
 
 	extern(C) static void callBackDriveDisconnected(GVolumeMonitor* volumemonitorStruct, GDrive* drive, OnDriveDisconnectedDelegateWrapper wrapper)
 	{
-		wrapper.dlg(ObjectG.getDObject!(Drive, DriveIF)(drive), wrapper.outer);
+		wrapper.dlg(ObjectG.getDObject!(DriveIF)(drive), wrapper.outer);
 	}
 
 	extern(C) static void callBackDriveDisconnectedDestroy(OnDriveDisconnectedDelegateWrapper wrapper, GClosure* closure)
@@ -476,7 +473,7 @@ public class VolumeMonitor : ObjectG
 
 	extern(C) static void callBackDriveEjectButton(GVolumeMonitor* volumemonitorStruct, GDrive* drive, OnDriveEjectButtonDelegateWrapper wrapper)
 	{
-		wrapper.dlg(ObjectG.getDObject!(Drive, DriveIF)(drive), wrapper.outer);
+		wrapper.dlg(ObjectG.getDObject!(DriveIF)(drive), wrapper.outer);
 	}
 
 	extern(C) static void callBackDriveEjectButtonDestroy(OnDriveEjectButtonDelegateWrapper wrapper, GClosure* closure)
@@ -533,7 +530,7 @@ public class VolumeMonitor : ObjectG
 
 	extern(C) static void callBackDriveStopButton(GVolumeMonitor* volumemonitorStruct, GDrive* drive, OnDriveStopButtonDelegateWrapper wrapper)
 	{
-		wrapper.dlg(ObjectG.getDObject!(Drive, DriveIF)(drive), wrapper.outer);
+		wrapper.dlg(ObjectG.getDObject!(DriveIF)(drive), wrapper.outer);
 	}
 
 	extern(C) static void callBackDriveStopButtonDestroy(OnDriveStopButtonDelegateWrapper wrapper, GClosure* closure)
@@ -588,7 +585,7 @@ public class VolumeMonitor : ObjectG
 
 	extern(C) static void callBackMountAdded(GVolumeMonitor* volumemonitorStruct, GMount* mount, OnMountAddedDelegateWrapper wrapper)
 	{
-		wrapper.dlg(ObjectG.getDObject!(Mount, MountIF)(mount), wrapper.outer);
+		wrapper.dlg(ObjectG.getDObject!(MountIF)(mount), wrapper.outer);
 	}
 
 	extern(C) static void callBackMountAddedDestroy(OnMountAddedDelegateWrapper wrapper, GClosure* closure)
@@ -643,7 +640,7 @@ public class VolumeMonitor : ObjectG
 
 	extern(C) static void callBackMountChanged(GVolumeMonitor* volumemonitorStruct, GMount* mount, OnMountChangedDelegateWrapper wrapper)
 	{
-		wrapper.dlg(ObjectG.getDObject!(Mount, MountIF)(mount), wrapper.outer);
+		wrapper.dlg(ObjectG.getDObject!(MountIF)(mount), wrapper.outer);
 	}
 
 	extern(C) static void callBackMountChangedDestroy(OnMountChangedDelegateWrapper wrapper, GClosure* closure)
@@ -698,7 +695,7 @@ public class VolumeMonitor : ObjectG
 
 	extern(C) static void callBackMountPreUnmount(GVolumeMonitor* volumemonitorStruct, GMount* mount, OnMountPreUnmountDelegateWrapper wrapper)
 	{
-		wrapper.dlg(ObjectG.getDObject!(Mount, MountIF)(mount), wrapper.outer);
+		wrapper.dlg(ObjectG.getDObject!(MountIF)(mount), wrapper.outer);
 	}
 
 	extern(C) static void callBackMountPreUnmountDestroy(OnMountPreUnmountDelegateWrapper wrapper, GClosure* closure)
@@ -753,7 +750,7 @@ public class VolumeMonitor : ObjectG
 
 	extern(C) static void callBackMountRemoved(GVolumeMonitor* volumemonitorStruct, GMount* mount, OnMountRemovedDelegateWrapper wrapper)
 	{
-		wrapper.dlg(ObjectG.getDObject!(Mount, MountIF)(mount), wrapper.outer);
+		wrapper.dlg(ObjectG.getDObject!(MountIF)(mount), wrapper.outer);
 	}
 
 	extern(C) static void callBackMountRemovedDestroy(OnMountRemovedDelegateWrapper wrapper, GClosure* closure)
@@ -808,7 +805,7 @@ public class VolumeMonitor : ObjectG
 
 	extern(C) static void callBackVolumeAdded(GVolumeMonitor* volumemonitorStruct, GVolume* volume, OnVolumeAddedDelegateWrapper wrapper)
 	{
-		wrapper.dlg(ObjectG.getDObject!(Volume, VolumeIF)(volume), wrapper.outer);
+		wrapper.dlg(ObjectG.getDObject!(VolumeIF)(volume), wrapper.outer);
 	}
 
 	extern(C) static void callBackVolumeAddedDestroy(OnVolumeAddedDelegateWrapper wrapper, GClosure* closure)
@@ -863,7 +860,7 @@ public class VolumeMonitor : ObjectG
 
 	extern(C) static void callBackVolumeChanged(GVolumeMonitor* volumemonitorStruct, GVolume* volume, OnVolumeChangedDelegateWrapper wrapper)
 	{
-		wrapper.dlg(ObjectG.getDObject!(Volume, VolumeIF)(volume), wrapper.outer);
+		wrapper.dlg(ObjectG.getDObject!(VolumeIF)(volume), wrapper.outer);
 	}
 
 	extern(C) static void callBackVolumeChangedDestroy(OnVolumeChangedDelegateWrapper wrapper, GClosure* closure)
@@ -918,7 +915,7 @@ public class VolumeMonitor : ObjectG
 
 	extern(C) static void callBackVolumeRemoved(GVolumeMonitor* volumemonitorStruct, GVolume* volume, OnVolumeRemovedDelegateWrapper wrapper)
 	{
-		wrapper.dlg(ObjectG.getDObject!(Volume, VolumeIF)(volume), wrapper.outer);
+		wrapper.dlg(ObjectG.getDObject!(VolumeIF)(volume), wrapper.outer);
 	}
 
 	extern(C) static void callBackVolumeRemovedDestroy(OnVolumeRemovedDelegateWrapper wrapper, GClosure* closure)

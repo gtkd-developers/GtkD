@@ -26,7 +26,6 @@ module gsv.SourceFileLoader;
 
 private import gio.AsyncResultIF;
 private import gio.Cancellable;
-private import gio.File;
 private import gio.FileIF;
 private import gio.InputStream;
 private import glib.ConstructionException;
@@ -227,7 +226,7 @@ public class SourceFileLoader : ObjectG
 			return null;
 		}
 
-		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) p);
 	}
 
 	/**

@@ -24,7 +24,6 @@
 
 module gtk.CssSection;
 
-private import gio.File;
 private import gio.FileIF;
 private import gobject.ObjectG;
 private import gtk.c.functions;
@@ -140,7 +139,7 @@ public class CssSection
 			return null;
 		}
 
-		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) p);
 	}
 
 	/**

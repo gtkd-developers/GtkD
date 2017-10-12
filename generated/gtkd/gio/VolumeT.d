@@ -26,13 +26,9 @@ module gio.VolumeT;
 
 public  import gio.AsyncResultIF;
 public  import gio.Cancellable;
-public  import gio.Drive;
 public  import gio.DriveIF;
-public  import gio.File;
 public  import gio.FileIF;
-public  import gio.Icon;
 public  import gio.IconIF;
-public  import gio.Mount;
 public  import gio.MountIF;
 public  import gio.MountOperation;
 public  import gio.c.functions;
@@ -269,7 +265,7 @@ public template VolumeT(TStruct)
 			return null;
 		}
 
-		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
 	}
 
 	/**
@@ -288,7 +284,7 @@ public template VolumeT(TStruct)
 			return null;
 		}
 
-		return ObjectG.getDObject!(Drive, DriveIF)(cast(GDrive*) p, true);
+		return ObjectG.getDObject!(DriveIF)(cast(GDrive*) p, true);
 	}
 
 	/**
@@ -307,7 +303,7 @@ public template VolumeT(TStruct)
 			return null;
 		}
 
-		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p, true);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p, true);
 	}
 
 	/**
@@ -346,7 +342,7 @@ public template VolumeT(TStruct)
 			return null;
 		}
 
-		return ObjectG.getDObject!(Mount, MountIF)(cast(GMount*) p, true);
+		return ObjectG.getDObject!(MountIF)(cast(GMount*) p, true);
 	}
 
 	/**
@@ -393,7 +389,7 @@ public template VolumeT(TStruct)
 			return null;
 		}
 
-		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p, true);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p, true);
 	}
 
 	/**

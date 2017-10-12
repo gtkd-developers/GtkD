@@ -23,21 +23,6 @@
 wrap: gio
 file: Gio-2.0.gir
 
-struct:
-class: Action
-extend: GObject.Object
-implements: Action
-
-struct:
-class: ActionGroup
-extend: GObject.Object
-implements: ActionGroup
-
-struct:
-class: AppInfo
-extend: GObject.Object
-implements: AppInfo
-
 struct: Application
 code: start
 	protected class ScopedOnCommandLineDelegateWrapper
@@ -124,11 +109,6 @@ code: start
 		return (cast(ubyte*)p)[0 .. count];
 	}
 code: end
-
-struct:
-class: Converter
-extend: GObject.Object
-implements: Converter
 
 struct: DataInputStream
 noCode: read_byte
@@ -245,11 +225,6 @@ code: start
 	}
 code: end
 
-struct:
-class: DBusObject
-extend: GObject.Object
-implements: DBusObject
-
 struct: DBusObjectManagerClient
 alias: new newObjectManagerClient
 noCode: new_finish
@@ -293,11 +268,6 @@ code: start
 		this(cast(GDBusObjectManagerClient*) p, true);
 	}
 code: end
-
-struct:
-class: DBusInterface
-extend: GObject.Object
-implements: DBusInterface
 
 struct: DBusProxy
 alias: new newProxy
@@ -372,23 +342,8 @@ version !Windows: start
 	code: end
 version: end
 
-struct:
-class: Drive
-extend: GObject.Object
-implements: Drive
-
-struct:
-class: File
-extend: GObject.Object
-implements: File
-
 struct: FileAttributeInfoList
 array: infos n_infos
-
-struct:
-class: Icon
-extend: GObject.Object
-implements: Icon
 
 struct: InetAddress
 noCode: new_any
@@ -440,31 +395,11 @@ struct: MenuItem
 noCode: new_section
 noCode: new_submenu
 
-struct:
-class: Mount
-extend: GObject.Object
-implements: Mount
-
-struct:
-class: NetworkMonitor
-extend: GObject.Object
-implements: NetworkMonitor
-
 struct: OutputStream
 out: vprintf error
 
 struct: PollableUtils
 namespace:
-
-struct:
-class: Proxy
-extend: GObject.Object
-implements: Proxy
-
-struct:
-class: ProxyResolver
-extend: GObject.Object
-implements: ProxyResolver
 
 struct: Resource
 alias: _register register
@@ -483,21 +418,11 @@ ref: receive_from buffer
 out: receive_message messages
 out: receive_message num_messages
 
-struct:
-class: SocketConnectable
-extend: GObject.Object
-implements: SocketConnectable
-
 struct: SubprocessLauncher
 array: set_environ env
 
 struct: ThemedIcon
 noCode: new
-
-struct:
-class: TlsBackend
-extend: GObject.Object
-implements: TlsBackend
 
 struct: TlsPassword
 out: get_value length
@@ -512,11 +437,6 @@ version !Windows: start
 	struct: UnixSocketAddress
 	noCode: new_abstract
 version: end
-
-struct:
-class: Volume
-extend: GObject.Object
-implements: Volume
 
 struct: VolumeMonitor
 import: glib.ConstructionException

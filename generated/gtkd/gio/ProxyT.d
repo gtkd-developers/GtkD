@@ -27,7 +27,6 @@ module gio.ProxyT;
 public  import gio.AsyncResultIF;
 public  import gio.Cancellable;
 public  import gio.IOStream;
-public  import gio.Proxy;
 public  import gio.ProxyAddress;
 public  import gio.ProxyIF;
 public  import gio.c.functions;
@@ -81,7 +80,7 @@ public template ProxyT(TStruct)
 			return null;
 		}
 
-		return ObjectG.getDObject!(Proxy, ProxyIF)(cast(GProxy*) p, true);
+		return ObjectG.getDObject!(ProxyIF)(cast(GProxy*) p, true);
 	}
 
 	/**

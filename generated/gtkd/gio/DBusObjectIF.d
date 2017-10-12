@@ -24,7 +24,6 @@
 
 module gio.DBusObjectIF;
 
-private import gio.DBusInterface;
 private import gio.DBusInterfaceIF;
 private import gio.c.functions;
 public  import gio.c.types;

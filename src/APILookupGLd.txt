@@ -70,12 +70,6 @@ noStruct: true
 struct: Drawable
 interface: GLDrawable
 
-struct: 
-class: GLDrawable
-cType: GdkGLDrawable
-extend: GObject.Object
-implements: Drawable
-
 struct: GLdInit
 move: init GLdInit
 move: init_check GLdInit

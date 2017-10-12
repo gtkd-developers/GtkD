@@ -24,7 +24,6 @@
 
 module gio.Vfs;
 
-private import gio.File;
 private import gio.FileIF;
 private import gio.c.functions;
 public  import gio.c.types;
@@ -123,7 +122,7 @@ public class Vfs : ObjectG
 			return null;
 		}
 
-		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
 	}
 
 	/**
@@ -148,7 +147,7 @@ public class Vfs : ObjectG
 			return null;
 		}
 
-		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
 	}
 
 	/**
@@ -194,7 +193,7 @@ public class Vfs : ObjectG
 			return null;
 		}
 
-		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
 	}
 
 	/**

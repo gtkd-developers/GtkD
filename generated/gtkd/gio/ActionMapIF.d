@@ -24,7 +24,6 @@
 
 module gio.ActionMapIF;
 
-private import gio.Action;
 private import gio.ActionIF;
 private import gio.c.functions;
 public  import gio.c.types;

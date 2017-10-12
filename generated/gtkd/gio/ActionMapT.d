@@ -24,7 +24,6 @@
 
 module gio.ActionMapT;
 
-public  import gio.Action;
 public  import gio.ActionIF;
 public  import gio.c.functions;
 public  import gio.c.types;
@@ -145,7 +144,7 @@ public template ActionMapT(TStruct)
 			return null;
 		}
 
-		return ObjectG.getDObject!(Action, ActionIF)(cast(GAction*) p);
+		return ObjectG.getDObject!(ActionIF)(cast(GAction*) p);
 	}
 
 	/**

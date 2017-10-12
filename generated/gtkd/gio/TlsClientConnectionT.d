@@ -25,7 +25,6 @@
 module gio.TlsClientConnectionT;
 
 public  import gio.IOStream;
-public  import gio.SocketConnectable;
 public  import gio.SocketConnectableIF;
 public  import gio.c.functions;
 public  import gio.c.types;
@@ -117,7 +116,7 @@ public template TlsClientConnectionT(TStruct)
 			return null;
 		}
 
-		return ObjectG.getDObject!(SocketConnectable, SocketConnectableIF)(cast(GSocketConnectable*) p);
+		return ObjectG.getDObject!(SocketConnectableIF)(cast(GSocketConnectable*) p);
 	}
 
 	/**

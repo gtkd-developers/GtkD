@@ -24,13 +24,11 @@
 
 module gio.AppInfoT;
 
-public  import gio.AppInfo;
 public  import gio.AppInfoIF;
 public  import gio.AppLaunchContext;
 public  import gio.AsyncResultIF;
 public  import gio.Cancellable;
 public  import gio.FileIF;
-public  import gio.Icon;
 public  import gio.IconIF;
 public  import gio.c.functions;
 public  import gio.c.types;
@@ -137,7 +135,7 @@ public template AppInfoT(TStruct)
 			return null;
 		}
 
-		return ObjectG.getDObject!(AppInfo, AppInfoIF)(cast(GAppInfo*) p, true);
+		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) p, true);
 	}
 
 	/**
@@ -208,7 +206,7 @@ public template AppInfoT(TStruct)
 			return null;
 		}
 
-		return ObjectG.getDObject!(AppInfo, AppInfoIF)(cast(GAppInfo*) p, true);
+		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) p, true);
 	}
 
 	/**
@@ -231,7 +229,7 @@ public template AppInfoT(TStruct)
 			return null;
 		}
 
-		return ObjectG.getDObject!(AppInfo, AppInfoIF)(cast(GAppInfo*) p, true);
+		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) p, true);
 	}
 
 	/**
@@ -457,7 +455,7 @@ public template AppInfoT(TStruct)
 			return null;
 		}
 
-		return ObjectG.getDObject!(AppInfo, AppInfoIF)(cast(GAppInfo*) p, true);
+		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) p, true);
 	}
 
 	/**
@@ -542,7 +540,7 @@ public template AppInfoT(TStruct)
 			return null;
 		}
 
-		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p);
 	}
 
 	/**

@@ -25,7 +25,6 @@
 module gio.DBusInterfaceT;
 
 public  import gio.DBusInterfaceInfo;
-public  import gio.DBusObject;
 public  import gio.DBusObjectIF;
 public  import gio.c.functions;
 public  import gio.c.types;
@@ -68,7 +67,7 @@ public template DBusInterfaceT(TStruct)
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusObject, DBusObjectIF)(cast(GDBusObject*) p, true);
+		return ObjectG.getDObject!(DBusObjectIF)(cast(GDBusObject*) p, true);
 	}
 
 	/**
@@ -112,7 +111,7 @@ public template DBusInterfaceT(TStruct)
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusObject, DBusObjectIF)(cast(GDBusObject*) p);
+		return ObjectG.getDObject!(DBusObjectIF)(cast(GDBusObject*) p);
 	}
 
 	/**

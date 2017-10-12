@@ -25,7 +25,6 @@
 module gsv.SourceGutterRendererPixbuf;
 
 private import gdkpixbuf.Pixbuf;
-private import gio.Icon;
 private import gio.IconIF;
 private import glib.ConstructionException;
 private import glib.Str;
@@ -113,7 +112,7 @@ public class SourceGutterRendererPixbuf : SourceGutterRenderer
 			return null;
 		}
 
-		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p);
 	}
 
 	/** */

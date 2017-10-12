@@ -25,10 +25,8 @@
 module gtk.PlacesSidebar;
 
 private import gdk.DragContext;
-private import gio.File;
 private import gio.FileIF;
 private import gio.MountOperation;
-private import gio.Volume;
 private import gio.VolumeIF;
 private import glib.ConstructionException;
 private import glib.ListG;
@@ -198,7 +196,7 @@ public class PlacesSidebar : ScrolledWindow
 			return null;
 		}
 
-		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
 	}
 
 	/**
@@ -224,7 +222,7 @@ public class PlacesSidebar : ScrolledWindow
 			return null;
 		}
 
-		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
 	}
 
 	/**
@@ -659,7 +657,7 @@ public class PlacesSidebar : ScrolledWindow
 
 	extern(C) static int callBackDragActionRequested(GtkPlacesSidebar* placessidebarStruct, GdkDragContext* context, GFile* destFile, GList* sourceFileList, OnDragActionRequestedDelegateWrapper wrapper)
 	{
-		return wrapper.dlg(ObjectG.getDObject!(DragContext)(context), ObjectG.getDObject!(File, FileIF)(destFile), new ListG(sourceFileList), wrapper.outer);
+		return wrapper.dlg(ObjectG.getDObject!(DragContext)(context), ObjectG.getDObject!(FileIF)(destFile), new ListG(sourceFileList), wrapper.outer);
 	}
 
 	extern(C) static void callBackDragActionRequestedDestroy(OnDragActionRequestedDelegateWrapper wrapper, GClosure* closure)
@@ -722,7 +720,7 @@ public class PlacesSidebar : ScrolledWindow
 
 	extern(C) static void callBackDragPerformDrop(GtkPlacesSidebar* placessidebarStruct, GFile* destFile, GList* sourceFileList, int action, OnDragPerformDropDelegateWrapper wrapper)
 	{
-		wrapper.dlg(ObjectG.getDObject!(File, FileIF)(destFile), new ListG(sourceFileList), action, wrapper.outer);
+		wrapper.dlg(ObjectG.getDObject!(FileIF)(destFile), new ListG(sourceFileList), action, wrapper.outer);
 	}
 
 	extern(C) static void callBackDragPerformDropDestroy(OnDragPerformDropDelegateWrapper wrapper, GClosure* closure)
@@ -843,7 +841,7 @@ public class PlacesSidebar : ScrolledWindow
 
 	extern(C) static void callBackOpenLocation(GtkPlacesSidebar* placessidebarStruct, GFile* location, GtkPlacesOpenFlags openFlags, OnOpenLocationDelegateWrapper wrapper)
 	{
-		wrapper.dlg(ObjectG.getDObject!(File, FileIF)(location), openFlags, wrapper.outer);
+		wrapper.dlg(ObjectG.getDObject!(FileIF)(location), openFlags, wrapper.outer);
 	}
 
 	extern(C) static void callBackOpenLocationDestroy(OnOpenLocationDelegateWrapper wrapper, GClosure* closure)
@@ -926,7 +924,7 @@ public class PlacesSidebar : ScrolledWindow
 
 	extern(C) static void callBackPopulatePopup(GtkPlacesSidebar* placessidebarStruct, GtkWidget* container, GFile* selectedItem, GVolume* selectedVolume, OnPopulatePopupDelegateWrapper wrapper)
 	{
-		wrapper.dlg(ObjectG.getDObject!(Widget)(container), ObjectG.getDObject!(File, FileIF)(selectedItem), ObjectG.getDObject!(Volume, VolumeIF)(selectedVolume), wrapper.outer);
+		wrapper.dlg(ObjectG.getDObject!(Widget)(container), ObjectG.getDObject!(FileIF)(selectedItem), ObjectG.getDObject!(VolumeIF)(selectedVolume), wrapper.outer);
 	}
 
 	extern(C) static void callBackPopulatePopupDestroy(OnPopulatePopupDelegateWrapper wrapper, GClosure* closure)

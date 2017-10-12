@@ -24,7 +24,6 @@
 
 module gio.IconT;
 
-public  import gio.Icon;
 public  import gio.IconIF;
 public  import gio.c.functions;
 public  import gio.c.types;
@@ -97,7 +96,7 @@ public template IconT(TStruct)
 			return null;
 		}
 
-		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p, true);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p, true);
 	}
 
 	/**

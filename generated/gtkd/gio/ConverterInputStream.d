@@ -24,7 +24,6 @@
 
 module gio.ConverterInputStream;
 
-private import gio.Converter;
 private import gio.ConverterIF;
 private import gio.FilterInputStream;
 private import gio.InputStream;
@@ -121,6 +120,6 @@ public class ConverterInputStream : FilterInputStream, PollableInputStreamIF
 			return null;
 		}
 
-		return ObjectG.getDObject!(Converter, ConverterIF)(cast(GConverter*) p);
+		return ObjectG.getDObject!(ConverterIF)(cast(GConverter*) p);
 	}
 }

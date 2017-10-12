@@ -24,7 +24,6 @@
 
 module gio.FileMonitor;
 
-private import gio.File;
 private import gio.FileIF;
 private import gio.c.functions;
 public  import gio.c.types;
@@ -213,7 +212,7 @@ public class FileMonitor : ObjectG
 
 	extern(C) static void callBackChanged(GFileMonitor* filemonitorStruct, GFile* file, GFile* otherFile, GFileMonitorEvent eventType, OnChangedDelegateWrapper wrapper)
 	{
-		wrapper.dlg(ObjectG.getDObject!(File, FileIF)(file), ObjectG.getDObject!(File, FileIF)(otherFile), eventType, wrapper.outer);
+		wrapper.dlg(ObjectG.getDObject!(FileIF)(file), ObjectG.getDObject!(FileIF)(otherFile), eventType, wrapper.outer);
 	}
 
 	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)

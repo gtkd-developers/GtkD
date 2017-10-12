@@ -24,11 +24,9 @@
 
 module gio.FileIF;
 
-private import gio.AppInfo;
 private import gio.AppInfoIF;
 private import gio.AsyncResultIF;
 private import gio.Cancellable;
-private import gio.File;
 private import gio.FileAttributeInfoList;
 private import gio.FileEnumerator;
 private import gio.FileIF;
@@ -37,7 +35,6 @@ private import gio.FileInfo;
 private import gio.FileInputStream;
 private import gio.FileMonitor;
 private import gio.FileOutputStream;
-private import gio.Mount;
 private import gio.MountIF;
 private import gio.MountOperation;
 private import gio.c.functions;

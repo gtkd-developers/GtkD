@@ -29,7 +29,6 @@ private import gobject.ObjectG;
 private import gtk.TreeDragSourceIF;
 private import gtk.TreeDragSourceT;
 private import gtk.TreeIter;
-private import gtk.TreeModel;
 private import gtk.TreeModelIF;
 private import gtk.TreeModelT;
 private import gtk.TreePath;
@@ -293,7 +292,7 @@ public class TreeModelSort : ObjectG, TreeDragSourceIF, TreeModelIF, TreeSortabl
 			return null;
 		}
 
-		return ObjectG.getDObject!(TreeModel, TreeModelIF)(cast(GtkTreeModel*) p);
+		return ObjectG.getDObject!(TreeModelIF)(cast(GtkTreeModel*) p);
 	}
 
 	/**

@@ -27,7 +27,6 @@ module gio.ProxyIF;
 private import gio.AsyncResultIF;
 private import gio.Cancellable;
 private import gio.IOStream;
-private import gio.Proxy;
 private import gio.ProxyAddress;
 private import gio.ProxyIF;
 private import gio.c.functions;

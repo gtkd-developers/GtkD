@@ -24,7 +24,6 @@
 
 module gio.ApplicationCommandLine;
 
-private import gio.File;
 private import gio.FileIF;
 private import gio.InputStream;
 private import gio.c.functions;
@@ -251,7 +250,7 @@ public class ApplicationCommandLine : ObjectG
 			return null;
 		}
 
-		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
 	}
 
 	/**

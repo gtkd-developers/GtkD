@@ -24,7 +24,6 @@
 
 module gio.IconIF;
 
-private import gio.Icon;
 private import gio.IconIF;
 private import gio.c.functions;
 public  import gio.c.types;

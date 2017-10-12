@@ -24,7 +24,6 @@
 
 module gtk.Action;
 
-private import gio.Icon;
 private import gio.IconIF;
 private import glib.ConstructionException;
 private import glib.ListSG;
@@ -424,7 +423,7 @@ public class Action : ObjectG, BuildableIF
 			return null;
 		}
 
-		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p);
 	}
 
 	/**

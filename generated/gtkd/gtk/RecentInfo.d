@@ -25,9 +25,7 @@
 module gtk.RecentInfo;
 
 private import gdkpixbuf.Pixbuf;
-private import gio.AppInfo;
 private import gio.AppInfoIF;
-private import gio.Icon;
 private import gio.IconIF;
 private import glib.ErrorG;
 private import glib.GException;
@@ -120,7 +118,7 @@ public class RecentInfo
 			return null;
 		}
 
-		return ObjectG.getDObject!(AppInfo, AppInfoIF)(cast(GAppInfo*) p, true);
+		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) p, true);
 	}
 
 	/**
@@ -260,7 +258,7 @@ public class RecentInfo
 			return null;
 		}
 
-		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p, true);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p, true);
 	}
 
 	/**

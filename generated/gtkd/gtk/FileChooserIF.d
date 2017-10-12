@@ -24,7 +24,6 @@
 
 module gtk.FileChooserIF;
 
-private import gio.File;
 private import gio.FileIF;
 private import glib.ErrorG;
 private import glib.GException;

@@ -27,10 +27,8 @@ module gio.SocketClient;
 private import gio.AsyncResultIF;
 private import gio.Cancellable;
 private import gio.IOStream;
-private import gio.ProxyResolver;
 private import gio.ProxyResolverIF;
 private import gio.SocketAddress;
-private import gio.SocketConnectable;
 private import gio.SocketConnectableIF;
 private import gio.SocketConnection;
 private import gio.c.functions;
@@ -640,7 +638,7 @@ public class SocketClient : ObjectG
 			return null;
 		}
 
-		return ObjectG.getDObject!(ProxyResolver, ProxyResolverIF)(cast(GProxyResolver*) p);
+		return ObjectG.getDObject!(ProxyResolverIF)(cast(GProxyResolver*) p);
 	}
 
 	/**
@@ -971,7 +969,7 @@ public class SocketClient : ObjectG
 
 	extern(C) static void callBack(GSocketClient* socketclientStruct, GSocketClientEvent event, GSocketConnectable* connectable, GIOStream* connection, OnDelegateWrapper wrapper)
 	{
-		wrapper.dlg(event, ObjectG.getDObject!(SocketConnectable, SocketConnectableIF)(connectable), ObjectG.getDObject!(IOStream)(connection), wrapper.outer);
+		wrapper.dlg(event, ObjectG.getDObject!(SocketConnectableIF)(connectable), ObjectG.getDObject!(IOStream)(connection), wrapper.outer);
 	}
 
 	extern(C) static void callBackDestroy(OnDelegateWrapper wrapper, GClosure* closure)

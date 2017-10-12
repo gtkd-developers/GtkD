@@ -28,7 +28,6 @@ private import glib.ListG;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.TreeIter;
-private import gtk.TreeModel;
 private import gtk.TreeModelIF;
 private import gtk.TreePath;
 private import gtk.TreeView;
@@ -136,7 +135,7 @@ public class TreeSelection : ObjectG
 				paths ~= new TreePath(cast(GtkTreePath*)list.nthData(i));
 			}
 		}
-		model = ObjectG.getDObject!(TreeModel, TreeModelIF)(outmodel);
+		model = ObjectG.getDObject!(TreeModelIF)(outmodel);
 
 		return paths;
 	}
@@ -205,7 +204,7 @@ public class TreeSelection : ObjectG
 
 		auto p = gtk_tree_selection_get_selected(gtkTreeSelection, &outmodel, outiter) != 0;
 
-		model = ObjectG.getDObject!(TreeModel, TreeModelIF)(outmodel);
+		model = ObjectG.getDObject!(TreeModelIF)(outmodel);
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 
 		return p;

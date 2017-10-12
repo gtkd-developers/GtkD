@@ -555,10 +555,6 @@ code: start
 	}
 
 code: end
-struct:
-class: CellEditable
-extend: GObject.Object
-implements: CellEditable
 
 struct: CellView
 noCode: new_with_text
@@ -2443,11 +2439,6 @@ code: start
 	}
 code: end
 
-struct:
-class: PrintOperationPreview
-extend: GObject.Object
-implements: PrintOperationPreview
-
 struct: PrintUnixDialog
 alias: set_settings setPrintSettings
 alias: get_settings getPrintSettings
@@ -4261,7 +4252,7 @@ code: start
 				paths ~= new TreePath(cast(GtkTreePath*)list.nthData(i));
 			}
 		}
-		model = ObjectG.getDObject!(TreeModel, TreeModelIF)(outmodel);
+		model = ObjectG.getDObject!(TreeModelIF)(outmodel);
 
 		return paths;
 	}

@@ -25,7 +25,6 @@
 module gio.ContentType;
 
 private import gio.FileIF;
-private import gio.Icon;
 private import gio.IconIF;
 private import gio.c.functions;
 public  import gio.c.types;
@@ -146,7 +145,7 @@ public struct ContentType
 			return null;
 		}
 
-		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p, true);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p, true);
 	}
 
 	/**
@@ -186,7 +185,7 @@ public struct ContentType
 			return null;
 		}
 
-		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p, true);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p, true);
 	}
 
 	/**

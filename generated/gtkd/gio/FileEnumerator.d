@@ -26,7 +26,6 @@ module gio.FileEnumerator;
 
 private import gio.AsyncResultIF;
 private import gio.Cancellable;
-private import gio.File;
 private import gio.FileIF;
 private import gio.FileInfo;
 private import gio.c.functions;
@@ -211,7 +210,7 @@ public class FileEnumerator : ObjectG
 			return null;
 		}
 
-		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
 	}
 
 	/**
@@ -230,7 +229,7 @@ public class FileEnumerator : ObjectG
 			return null;
 		}
 
-		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) p);
 	}
 
 	/**
@@ -316,7 +315,7 @@ public class FileEnumerator : ObjectG
 		}
 
 		outInfo = ObjectG.getDObject!(FileInfo)(outoutInfo);
-		outChild = ObjectG.getDObject!(File, FileIF)(outoutChild);
+		outChild = ObjectG.getDObject!(FileIF)(outoutChild);
 
 		return p;
 	}

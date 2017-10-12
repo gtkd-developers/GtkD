@@ -25,7 +25,6 @@
 module gio.EmblemedIcon;
 
 private import gio.Emblem;
-private import gio.Icon;
 private import gio.IconIF;
 private import gio.IconT;
 private import gio.c.functions;
@@ -166,6 +165,6 @@ public class EmblemedIcon : ObjectG, IconIF
 			return null;
 		}
 
-		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p);
 	}
 }

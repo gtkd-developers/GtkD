@@ -27,7 +27,6 @@ module gtk.Image;
 private import cairo.Surface;
 private import gdkpixbuf.Pixbuf;
 private import gdkpixbuf.PixbufAnimation;
-private import gio.Icon;
 private import gio.IconIF;
 private import glib.ConstructionException;
 private import glib.Str;
@@ -472,7 +471,7 @@ public class Image : Misc
 
 		gtk_image_get_gicon(gtkImage, &outgicon, &size);
 
-		gicon = ObjectG.getDObject!(Icon, IconIF)(outgicon);
+		gicon = ObjectG.getDObject!(IconIF)(outgicon);
 	}
 
 	/**

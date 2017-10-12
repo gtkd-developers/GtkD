@@ -29,7 +29,6 @@ private import gobject.ObjectG;
 private import gobject.TypeClass;
 private import gobject.TypeInstance;
 private import gobject.TypeInterface;
-private import gobject.TypePlugin;
 private import gobject.TypePluginIF;
 private import gobject.Value;
 private import gobject.c.functions;
@@ -482,7 +481,7 @@ public struct Type
 			return null;
 		}
 
-		return ObjectG.getDObject!(TypePlugin, TypePluginIF)(cast(GTypePlugin*) p);
+		return ObjectG.getDObject!(TypePluginIF)(cast(GTypePlugin*) p);
 	}
 
 	/**

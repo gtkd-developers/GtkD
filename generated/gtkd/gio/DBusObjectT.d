@@ -24,7 +24,6 @@
 
 module gio.DBusObjectT;
 
-public  import gio.DBusInterface;
 public  import gio.DBusInterfaceIF;
 public  import gio.c.functions;
 public  import gio.c.types;
@@ -74,7 +73,7 @@ public template DBusObjectT(TStruct)
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusInterface, DBusInterfaceIF)(cast(GDBusInterface*) p, true);
+		return ObjectG.getDObject!(DBusInterfaceIF)(cast(GDBusInterface*) p, true);
 	}
 
 	/**
@@ -159,7 +158,7 @@ public template DBusObjectT(TStruct)
 
 	extern(C) static void callBackInterfaceAdded(GDBusObject* dbusobjectStruct, GDBusInterface* iface, OnInterfaceAddedDelegateWrapper wrapper)
 	{
-		wrapper.dlg(ObjectG.getDObject!(DBusInterface, DBusInterfaceIF)(iface), wrapper.outer);
+		wrapper.dlg(ObjectG.getDObject!(DBusInterfaceIF)(iface), wrapper.outer);
 	}
 
 	extern(C) static void callBackInterfaceAddedDestroy(OnInterfaceAddedDelegateWrapper wrapper, GClosure* closure)
@@ -216,7 +215,7 @@ public template DBusObjectT(TStruct)
 
 	extern(C) static void callBackInterfaceRemoved(GDBusObject* dbusobjectStruct, GDBusInterface* iface, OnInterfaceRemovedDelegateWrapper wrapper)
 	{
-		wrapper.dlg(ObjectG.getDObject!(DBusInterface, DBusInterfaceIF)(iface), wrapper.outer);
+		wrapper.dlg(ObjectG.getDObject!(DBusInterfaceIF)(iface), wrapper.outer);
 	}
 
 	extern(C) static void callBackInterfaceRemovedDestroy(OnInterfaceRemovedDelegateWrapper wrapper, GClosure* closure)

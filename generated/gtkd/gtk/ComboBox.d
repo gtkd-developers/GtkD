@@ -36,7 +36,6 @@ private import gtk.CellEditableT;
 private import gtk.CellLayoutIF;
 private import gtk.CellLayoutT;
 private import gtk.TreeIter;
-private import gtk.TreeModel;
 private import gtk.TreeModelIF;
 private import gtk.c.functions;
 public  import gtk.c.types;
@@ -400,7 +399,7 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 			return null;
 		}
 
-		return ObjectG.getDObject!(TreeModel, TreeModelIF)(cast(GtkTreeModel*) p);
+		return ObjectG.getDObject!(TreeModelIF)(cast(GtkTreeModel*) p);
 	}
 
 	/**

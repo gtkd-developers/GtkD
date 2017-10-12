@@ -26,14 +26,10 @@ module gio.MountT;
 
 public  import gio.AsyncResultIF;
 public  import gio.Cancellable;
-public  import gio.Drive;
 public  import gio.DriveIF;
-public  import gio.File;
 public  import gio.FileIF;
-public  import gio.Icon;
 public  import gio.IconIF;
 public  import gio.MountOperation;
-public  import gio.Volume;
 public  import gio.VolumeIF;
 public  import gio.c.functions;
 public  import gio.c.types;
@@ -208,7 +204,7 @@ public template MountT(TStruct)
 			return null;
 		}
 
-		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
 	}
 
 	/**
@@ -230,7 +226,7 @@ public template MountT(TStruct)
 			return null;
 		}
 
-		return ObjectG.getDObject!(Drive, DriveIF)(cast(GDrive*) p, true);
+		return ObjectG.getDObject!(DriveIF)(cast(GDrive*) p, true);
 	}
 
 	/**
@@ -249,7 +245,7 @@ public template MountT(TStruct)
 			return null;
 		}
 
-		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p, true);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p, true);
 	}
 
 	/**
@@ -283,7 +279,7 @@ public template MountT(TStruct)
 			return null;
 		}
 
-		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p, true);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
 	}
 
 	/**
@@ -316,7 +312,7 @@ public template MountT(TStruct)
 			return null;
 		}
 
-		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p, true);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p, true);
 	}
 
 	/**
@@ -353,7 +349,7 @@ public template MountT(TStruct)
 			return null;
 		}
 
-		return ObjectG.getDObject!(Volume, VolumeIF)(cast(GVolume*) p, true);
+		return ObjectG.getDObject!(VolumeIF)(cast(GVolume*) p, true);
 	}
 
 	/**

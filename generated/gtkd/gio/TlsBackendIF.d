@@ -24,7 +24,6 @@
 
 module gio.TlsBackendIF;
 
-private import gio.TlsBackend;
 private import gio.TlsBackendIF;
 private import gio.TlsDatabase;
 private import gio.c.functions;

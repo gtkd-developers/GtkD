@@ -24,7 +24,6 @@
 
 module gio.FileIcon;
 
-private import gio.File;
 private import gio.FileIF;
 private import gio.IconIF;
 private import gio.IconT;
@@ -119,6 +118,6 @@ public class FileIcon : ObjectG, IconIF, LoadableIconIF
 			return null;
 		}
 
-		return ObjectG.getDObject!(File, FileIF)(cast(GFile*) p);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) p);
 	}
 }

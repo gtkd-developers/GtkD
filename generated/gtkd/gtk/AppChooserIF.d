@@ -24,7 +24,6 @@
 
 module gtk.AppChooserIF;
 
-private import gio.AppInfo;
 private import gio.AppInfoIF;
 private import glib.Str;
 private import gobject.ObjectG;

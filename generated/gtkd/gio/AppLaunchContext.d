@@ -24,7 +24,6 @@
 
 module gio.AppLaunchContext;
 
-private import gio.AppInfo;
 private import gio.AppInfoIF;
 private import gio.FileIF;
 private import gio.c.functions;
@@ -313,7 +312,7 @@ public class AppLaunchContext : ObjectG
 
 	extern(C) static void callBackLaunched(GAppLaunchContext* applaunchcontextStruct, GAppInfo* info, GVariant* platformData, OnLaunchedDelegateWrapper wrapper)
 	{
-		wrapper.dlg(ObjectG.getDObject!(AppInfo, AppInfoIF)(info), new Variant(platformData), wrapper.outer);
+		wrapper.dlg(ObjectG.getDObject!(AppInfoIF)(info), new Variant(platformData), wrapper.outer);
 	}
 
 	extern(C) static void callBackLaunchedDestroy(OnLaunchedDelegateWrapper wrapper, GClosure* closure)

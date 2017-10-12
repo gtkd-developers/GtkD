@@ -32,7 +32,6 @@ private import gobject.Signals;
 private import gsv.SourceLanguage;
 private import gsv.SourceMark;
 private import gsv.SourceStyleScheme;
-private import gsv.SourceUndoManager;
 private import gsv.SourceUndoManagerIF;
 private import gsv.c.functions;
 public  import gsv.c.types;
@@ -451,7 +450,7 @@ public class SourceBuffer : TextBuffer
 			return null;
 		}
 
-		return ObjectG.getDObject!(SourceUndoManager, SourceUndoManagerIF)(cast(GtkSourceUndoManager*) p);
+		return ObjectG.getDObject!(SourceUndoManagerIF)(cast(GtkSourceUndoManager*) p);
 	}
 
 	/**

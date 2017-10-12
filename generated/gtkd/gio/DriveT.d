@@ -26,7 +26,6 @@ module gio.DriveT;
 
 public  import gio.AsyncResultIF;
 public  import gio.Cancellable;
-public  import gio.Icon;
 public  import gio.IconIF;
 public  import gio.MountOperation;
 public  import gio.c.functions;
@@ -263,7 +262,7 @@ public template DriveT(TStruct)
 			return null;
 		}
 
-		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p, true);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p, true);
 	}
 
 	/**
@@ -339,7 +338,7 @@ public template DriveT(TStruct)
 			return null;
 		}
 
-		return ObjectG.getDObject!(Icon, IconIF)(cast(GIcon*) p, true);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p, true);
 	}
 
 	/**
