@@ -25,7 +25,6 @@
 module glgdk.GLContext;
 
 private import glgdk.GLConfig;
-private import glgdk.GLDrawable;
 private import glgdk.GLDrawableIF;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
@@ -166,7 +165,7 @@ public class GLContext : ObjectG
 			return null;
 		}
 		
-		return ObjectG.getDObject!(GLDrawable, GLDrawableIF)(cast(GdkGLDrawable*) p);
+		return ObjectG.getDObject!(GLDrawableIF)(cast(GdkGLDrawable*) p);
 	}
 
 	/**

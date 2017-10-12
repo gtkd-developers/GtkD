@@ -39,6 +39,12 @@ public interface GLDrawableIF{
 	protected void* getStruct();
 
 
+	/** */
+	public static GType getType()
+	{
+		return gdk_gl_drawable_get_type();
+	}
+
 	/**
 	 * Gets #GdkGLConfig with which the @gldrawable is configured.
 	 *
