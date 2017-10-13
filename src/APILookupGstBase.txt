@@ -40,6 +40,7 @@ out: masked_scan_uint32_peek value
 struct: ByteWriter
 array: new_with_data data size
 noCode: free_and_get_data
+noCode: reset_and_get_data
 code: start
 	/**
 	 * Frees @writer and all memory allocated by it except

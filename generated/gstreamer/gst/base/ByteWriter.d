@@ -596,21 +596,6 @@ public class ByteWriter
 	}
 
 	/**
-	 * Resets @writer and returns the current data.
-	 *
-	 * Free-function: g_free
-	 *
-	 * Returns: the current data. g_free() after
-	 *     usage.
-	 */
-	public ubyte[] resetAndGetData()
-	{
-		auto p = gst_byte_writer_reset_and_get_data(gstByteWriter);
-
-		return p[0 .. getArrayLength(p)];
-	}
-
-	/**
 	 * Creates a new, empty #GstByteWriter instance
 	 *
 	 * Free-function: gst_byte_writer_free
