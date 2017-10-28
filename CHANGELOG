@@ -5,6 +5,7 @@ Release: 3.7.0
 --------------
 -Add GstMpegts bindings.
 -Add GstBase and GstApp bindings. #215
+-Add an opCast for ObjectG.
 -Add properties for simple structs with fields marked as writable.
 -Templatize ListStore.setValue, TreeStore.setValue andthe gobject.Value constructor to allow for more types.
 -Also generate constants. #213

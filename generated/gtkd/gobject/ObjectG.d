@@ -151,7 +151,7 @@ public class ObjectG
 				isGcRoot = false;
 			}
 
-			unref();
+			g_object_remove_toggle_ref(gObject, cast(GToggleNotify)&toggleNotify, cast(void*)this);
 		}
 	}
 
