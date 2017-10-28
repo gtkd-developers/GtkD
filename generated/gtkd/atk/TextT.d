@@ -67,28 +67,6 @@ public template TextT(TStruct)
 
 
 	/**
-	 * Frees the memory associated with an array of AtkTextRange. It is assumed
-	 * that the array was returned by the function atk_text_get_bounded_ranges
-	 * and is NULL terminated.
-	 *
-	 * Params:
-	 *     ranges = A pointer to an array of #AtkTextRange which is
-	 *         to be freed.
-	 *
-	 * Since: 1.3
-	 */
-	public static void freeRanges(TextRange[] ranges)
-	{
-		AtkTextRange*[] rangesArray = new AtkTextRange*[ranges.length];
-		for ( int i = 0; i < ranges.length; i++ )
-		{
-			rangesArray[i] = ranges[i].getTextRangeStruct();
-		}
-
-		atk_text_free_ranges(rangesArray.ptr);
-	}
-
-	/**
 	 * Adds a selection bounded by the specified offsets.
 	 *
 	 * Params:
@@ -856,74 +834,5 @@ public template TextT(TStruct)
 	extern(C) static void callBackTextSelectionChangedDestroy(OnTextSelectionChangedDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
-	}
-
-	/**
-	 * Frees the memory used by an #AtkAttributeSet, including all its
-	 * #AtkAttributes.
-	 *
-	 * Params:
-	 *     attribSet = The #AtkAttributeSet to free
-	 */
-	public static void attributeSetFree(AtkAttributeSet* attribSet)
-	{
-		atk_attribute_set_free(attribSet);
-	}
-
-	/**
-	 * Get the #AtkTextAttribute type corresponding to a text attribute name.
-	 *
-	 * Params:
-	 *     name = a string which is the (non-localized) name of an ATK text attribute.
-	 *
-	 * Returns: the #AtkTextAttribute enumerated type corresponding to the specified
-	 *     name,
-	 *     or #ATK_TEXT_ATTRIBUTE_INVALID if no matching text attribute is found.
-	 */
-	public static AtkTextAttribute attributeForName(string name)
-	{
-		return atk_text_attribute_for_name(Str.toStringz(name));
-	}
-
-	/**
-	 * Gets the name corresponding to the #AtkTextAttribute
-	 *
-	 * Params:
-	 *     attr = The #AtkTextAttribute whose name is required
-	 *
-	 * Returns: a string containing the name; this string should not be freed
-	 */
-	public static string attributeGetName(AtkTextAttribute attr)
-	{
-		return Str.toString(atk_text_attribute_get_name(attr));
-	}
-
-	/**
-	 * Gets the value for the index of the #AtkTextAttribute
-	 *
-	 * Params:
-	 *     attr = The #AtkTextAttribute for which a value is required
-	 *     index = The index of the required value
-	 *
-	 * Returns: a string containing the value; this string
-	 *     should not be freed; %NULL is returned if there are no values
-	 *     maintained for the attr value.
-	 */
-	public static string attributeGetValue(AtkTextAttribute attr, int index)
-	{
-		return Str.toString(atk_text_attribute_get_value(attr, index));
-	}
-
-	/**
-	 * Associate @name with a new #AtkTextAttribute
-	 *
-	 * Params:
-	 *     name = a name string
-	 *
-	 * Returns: an #AtkTextAttribute associated with @name
-	 */
-	public static AtkTextAttribute attributeRegister(string name)
-	{
-		return atk_text_attribute_register(Str.toStringz(name));
 	}
 }

@@ -49,25 +49,6 @@ public template TlsBackendT(TStruct)
 
 
 	/**
-	 * Gets the default #GTlsBackend for the system.
-	 *
-	 * Returns: a #GTlsBackend
-	 *
-	 * Since: 2.28
-	 */
-	public static TlsBackendIF getDefault()
-	{
-		auto p = g_tls_backend_get_default();
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(TlsBackendIF)(cast(GTlsBackend*) p);
-	}
-
-	/**
 	 * Gets the #GType of @backend's #GTlsCertificate implementation.
 	 *
 	 * Returns: the #GType of @backend's #GTlsCertificate

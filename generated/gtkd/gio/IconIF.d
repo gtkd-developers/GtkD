@@ -90,7 +90,17 @@ public interface IconIF{
 	 *
 	 * Since: 2.38
 	 */
-	public static IconIF deserialize(Variant value);
+	public static IconIF deserialize(Variant value)
+	{
+		auto p = g_icon_deserialize((value is null) ? null : value.getVariantStruct());
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p, true);
+	}
 
 	/**
 	 * Gets a hash for an icon.
@@ -101,7 +111,10 @@ public interface IconIF{
 	 * Returns: a #guint containing a hash for the @icon, suitable for
 	 *     use in a #GHashTable or similar data structure.
 	 */
-	public static uint hash(void* icon);
+	public static uint hash(void* icon)
+	{
+		return g_icon_hash(icon);
+	}
 
 	/**
 	 * Checks if two icons are equal.

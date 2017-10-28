@@ -237,13 +237,13 @@ public class StyleContext : ObjectG
 	 * In the CSS file format, a #GtkEntry defining a “search”
 	 * class, would be matched by:
 	 *
-	 * |[
+	 * |[ <!-- language="CSS" -->
 	 * entry.search { ... }
 	 * ]|
 	 *
 	 * While any widget defining a “search” class would be
 	 * matched by:
-	 * |[
+	 * |[ <!-- language="CSS" -->
 	 * .search { ... }
 	 * ]|
 	 *
@@ -291,15 +291,15 @@ public class StyleContext : ObjectG
 	 * In the CSS file format, a #GtkTreeView defining a “row”
 	 * region, would be matched by:
 	 *
-	 * |[
-	 * GtkTreeView row { ... }
+	 * |[ <!-- language="CSS" -->
+	 * treeview row { ... }
 	 * ]|
 	 *
 	 * Pseudo-classes are used for matching @flags, so the two
 	 * following rules:
-	 * |[
-	 * GtkTreeView row:nth-child(even) { ... }
-	 * GtkTreeView row:nth-child(odd) { ... }
+	 * |[ <!-- language="CSS" -->
+	 * treeview row:nth-child(even) { ... }
+	 * treeview row:nth-child(odd) { ... }
 	 * ]|
 	 *
 	 * would apply to even and odd rows, respectively.
@@ -894,7 +894,7 @@ public class StyleContext : ObjectG
 	 *
 	 * As a practical example, a #GtkButton notifying a state transition on
 	 * the prelight state:
-	 * |[<!-- language="C" -->
+	 * |[ <!-- language="C" -->
 	 * gtk_style_context_notify_state_change (context,
 	 * gtk_widget_get_window (widget),
 	 * NULL,
@@ -903,12 +903,12 @@ public class StyleContext : ObjectG
 	 * ]|
 	 *
 	 * Can be handled in the CSS file like this:
-	 * |[
-	 * GtkButton {
+	 * |[ <!-- language="CSS" -->
+	 * button {
 	 * background-color: #f00
 	 * }
 	 *
-	 * GtkButton:hover {
+	 * button:hover {
 	 * background-color: #fff;
 	 * transition: 200ms linear
 	 * }

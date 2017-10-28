@@ -173,7 +173,10 @@ public interface AsyncInitableIF{
 	 *
 	 * Since: 2.22
 	 */
-	public static void newValistAsync(GType objectType, string firstPropertyName, void* varArgs, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData);
+	public static void newValistAsync(GType objectType, string firstPropertyName, void* varArgs, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		g_async_initable_new_valist_async(objectType, Str.toStringz(firstPropertyName), varArgs, ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
 
 	/**
 	 * Helper function for constructing #GAsyncInitable object. This is
@@ -198,7 +201,10 @@ public interface AsyncInitableIF{
 	 *
 	 * Since: 2.22
 	 */
-	public static void newvAsync(GType objectType, uint nParameters, GParameter* parameters, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData);
+	public static void newvAsync(GType objectType, uint nParameters, GParameter* parameters, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		g_async_initable_newv_async(objectType, nParameters, parameters, ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
 
 	/**
 	 * Starts asynchronous initialization of the object implementing the

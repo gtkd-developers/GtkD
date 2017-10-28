@@ -78,42 +78,6 @@ public template IconT(TStruct)
 
 
 	/**
-	 * Deserializes a #GIcon previously serialized using g_icon_serialize().
-	 *
-	 * Params:
-	 *     value = a #GVariant created with g_icon_serialize()
-	 *
-	 * Returns: a #GIcon, or %NULL when deserialization fails.
-	 *
-	 * Since: 2.38
-	 */
-	public static IconIF deserialize(Variant value)
-	{
-		auto p = g_icon_deserialize((value is null) ? null : value.getVariantStruct());
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p, true);
-	}
-
-	/**
-	 * Gets a hash for an icon.
-	 *
-	 * Params:
-	 *     icon = #gconstpointer to an icon object.
-	 *
-	 * Returns: a #guint containing a hash for the @icon, suitable for
-	 *     use in a #GHashTable or similar data structure.
-	 */
-	public static uint hash(void* icon)
-	{
-		return g_icon_hash(icon);
-	}
-
-	/**
 	 * Checks if two icons are equal.
 	 *
 	 * Params:

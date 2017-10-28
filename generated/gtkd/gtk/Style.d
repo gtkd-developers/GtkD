@@ -864,7 +864,8 @@ public class Style : ObjectG
 	/**
 	 * Draws a spinner on @window using the given parameters.
 	 *
-	 * Deprecated: Use gtk_render_activity() instead
+	 * Deprecated: Use gtk_render_icon() and the #GtkStyleContext
+	 * you are drawing instead
 	 *
 	 * Params:
 	 *     style = a #GtkStyle

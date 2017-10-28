@@ -64,6 +64,8 @@ public  import gtkc.gtktypes;
  * ## Creating a simple menu item with an accelerator key.
  * 
  * |[<!-- language="C" -->
+ * GtkWidget *window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+ * GtkWidget *menu = gtk_menu_new ();
  * GtkWidget *save_item;
  * GtkAccelGroup *accel_group;
  * 

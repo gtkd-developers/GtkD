@@ -67,33 +67,6 @@ public template PresetT(TStruct)
 
 
 	/**
-	 * Gets the directory for application specific presets if set by the
-	 * application.
-	 *
-	 * Returns: the directory or %NULL, don't free or modify
-	 *     the string
-	 */
-	public static string getAppDir()
-	{
-		return Str.toString(gst_preset_get_app_dir());
-	}
-
-	/**
-	 * Sets an extra directory as an absolute path that should be considered when
-	 * looking for presets. Any presets in the application dir will shadow the
-	 * system presets.
-	 *
-	 * Params:
-	 *     appDir = the application specific preset dir
-	 *
-	 * Returns: %TRUE for success, %FALSE if the dir already has been set
-	 */
-	public static bool setAppDir(string appDir)
-	{
-		return gst_preset_set_app_dir(Str.toStringz(appDir)) != 0;
-	}
-
-	/**
 	 * Delete the given preset.
 	 *
 	 * Params:

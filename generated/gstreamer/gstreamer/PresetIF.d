@@ -76,7 +76,10 @@ public interface PresetIF{
 	 * Returns: the directory or %NULL, don't free or modify
 	 *     the string
 	 */
-	public static string getAppDir();
+	public static string getAppDir()
+	{
+		return Str.toString(gst_preset_get_app_dir());
+	}
 
 	/**
 	 * Sets an extra directory as an absolute path that should be considered when
@@ -88,7 +91,10 @@ public interface PresetIF{
 	 *
 	 * Returns: %TRUE for success, %FALSE if the dir already has been set
 	 */
-	public static bool setAppDir(string appDir);
+	public static bool setAppDir(string appDir)
+	{
+		return gst_preset_set_app_dir(Str.toStringz(appDir)) != 0;
+	}
 
 	/**
 	 * Delete the given preset.

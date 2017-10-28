@@ -74,7 +74,17 @@ public interface ProxyIF{
 	 *
 	 * Since: 2.26
 	 */
-	public static ProxyIF getDefaultForProtocol(string protocol);
+	public static ProxyIF getDefaultForProtocol(string protocol)
+	{
+		auto p = g_proxy_get_default_for_protocol(Str.toStringz(protocol));
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(ProxyIF)(cast(GProxy*) p, true);
+	}
 
 	/**
 	 * Given @connection to communicate with a proxy (eg, a

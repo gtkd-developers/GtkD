@@ -142,29 +142,6 @@ public template FileT(TStruct)
 
 
 	/**
-	 * Constructs a #GFile with the given @parse_name (i.e. something
-	 * given by g_file_get_parse_name()). This operation never fails,
-	 * but the returned object might not support any I/O operation if
-	 * the @parse_name cannot be parsed.
-	 *
-	 * Params:
-	 *     parseName = a file name or path to be parsed
-	 *
-	 * Returns: a new #GFile.
-	 */
-	public static FileIF parseName(string parseName)
-	{
-		auto p = g_file_parse_name(Str.toStringz(parseName));
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
-	}
-
-	/**
 	 * Gets an output stream for appending data to the file.
 	 * If the file doesn't already exist it is created.
 	 *

@@ -80,7 +80,16 @@ public interface TextIF{
 	 *
 	 * Since: 1.3
 	 */
-	public static void freeRanges(TextRange[] ranges);
+	public static void freeRanges(TextRange[] ranges)
+	{
+		AtkTextRange*[] rangesArray = new AtkTextRange*[ranges.length];
+		for ( int i = 0; i < ranges.length; i++ )
+		{
+			rangesArray[i] = ranges[i].getTextRangeStruct();
+		}
+
+		atk_text_free_ranges(rangesArray.ptr);
+	}
 
 	/**
 	 * Adds a selection bounded by the specified offsets.
@@ -486,7 +495,10 @@ public interface TextIF{
 	 * Params:
 	 *     attribSet = The #AtkAttributeSet to free
 	 */
-	public static void attributeSetFree(AtkAttributeSet* attribSet);
+	public static void attributeSetFree(AtkAttributeSet* attribSet)
+	{
+		atk_attribute_set_free(attribSet);
+	}
 
 	/**
 	 * Get the #AtkTextAttribute type corresponding to a text attribute name.
@@ -498,7 +510,10 @@ public interface TextIF{
 	 *     name,
 	 *     or #ATK_TEXT_ATTRIBUTE_INVALID if no matching text attribute is found.
 	 */
-	public static AtkTextAttribute attributeForName(string name);
+	public static AtkTextAttribute attributeForName(string name)
+	{
+		return atk_text_attribute_for_name(Str.toStringz(name));
+	}
 
 	/**
 	 * Gets the name corresponding to the #AtkTextAttribute
@@ -508,7 +523,10 @@ public interface TextIF{
 	 *
 	 * Returns: a string containing the name; this string should not be freed
 	 */
-	public static string attributeGetName(AtkTextAttribute attr);
+	public static string attributeGetName(AtkTextAttribute attr)
+	{
+		return Str.toString(atk_text_attribute_get_name(attr));
+	}
 
 	/**
 	 * Gets the value for the index of the #AtkTextAttribute
@@ -521,7 +539,10 @@ public interface TextIF{
 	 *     should not be freed; %NULL is returned if there are no values
 	 *     maintained for the attr value.
 	 */
-	public static string attributeGetValue(AtkTextAttribute attr, int index);
+	public static string attributeGetValue(AtkTextAttribute attr, int index)
+	{
+		return Str.toString(atk_text_attribute_get_value(attr, index));
+	}
 
 	/**
 	 * Associate @name with a new #AtkTextAttribute
@@ -531,5 +552,8 @@ public interface TextIF{
 	 *
 	 * Returns: an #AtkTextAttribute associated with @name
 	 */
-	public static AtkTextAttribute attributeRegister(string name);
+	public static AtkTextAttribute attributeRegister(string name)
+	{
+		return atk_text_attribute_register(Str.toStringz(name));
+	}
 }

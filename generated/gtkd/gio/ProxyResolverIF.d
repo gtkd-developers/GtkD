@@ -68,7 +68,17 @@ public interface ProxyResolverIF{
 	 *
 	 * Since: 2.26
 	 */
-	public static ProxyResolverIF getDefault();
+	public static ProxyResolverIF getDefault()
+	{
+		auto p = g_proxy_resolver_get_default();
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(ProxyResolverIF)(cast(GProxyResolver*) p);
+	}
 
 	/**
 	 * Checks if @resolver can be used on this system. (This is used

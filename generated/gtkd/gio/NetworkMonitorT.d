@@ -60,25 +60,6 @@ public template NetworkMonitorT(TStruct)
 
 
 	/**
-	 * Gets the default #GNetworkMonitor for the system.
-	 *
-	 * Returns: a #GNetworkMonitor
-	 *
-	 * Since: 2.32
-	 */
-	public static NetworkMonitorIF getDefault()
-	{
-		auto p = g_network_monitor_get_default();
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(NetworkMonitorIF)(cast(GNetworkMonitor*) p);
-	}
-
-	/**
 	 * Attempts to determine whether or not the host pointed to by
 	 * @connectable can be reached, without actually trying to connect to
 	 * it.

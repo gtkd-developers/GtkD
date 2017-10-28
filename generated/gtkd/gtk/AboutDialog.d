@@ -65,10 +65,11 @@ private import std.algorithm;
  * set the title property explicitly when constructing a GtkAboutDialog,
  * as shown in the following example:
  * |[<!-- language="C" -->
+ * GdkPixbuf *example_logo = gdk_pixbuf_new_from_file ("./logo.png", NULL);
  * gtk_show_about_dialog (NULL,
  * "program-name", "ExampleCode",
  * "logo", example_logo,
- * "title" _("About ExampleCode"),
+ * "title", _("About ExampleCode"),
  * NULL);
  * ]|
  * 
@@ -511,7 +512,8 @@ public class AboutDialog : Dialog
 	 * Using gettext(), a simple way to achieve that is to mark the
 	 * string for translation:
 	 * |[<!-- language="C" -->
-	 * gtk_about_dialog_set_translator_credits (about,
+	 * GtkWidget *about = gtk_about_dialog_new ();
+	 * gtk_about_dialog_set_translator_credits (GTK_ABOUT_DIALOG (about),
 	 * _("translator-credits"));
 	 * ]|
 	 * It is a good idea to use the customary msgid “translator-credits” for this

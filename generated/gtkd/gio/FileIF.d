@@ -155,7 +155,17 @@ public interface FileIF{
 	 *
 	 * Returns: a new #GFile.
 	 */
-	public static FileIF parseName(string parseName);
+	public static FileIF parseName(string parseName)
+	{
+		auto p = g_file_parse_name(Str.toStringz(parseName));
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
+	}
 
 	/**
 	 * Gets an output stream for appending data to the file.

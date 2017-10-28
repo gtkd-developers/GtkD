@@ -2736,7 +2736,7 @@ alias GtkResizeMode ResizeMode;
 
 /**
  * Predefined values for use as response ids in gtk_dialog_add_button().
- * All predefined values are negative, GTK+ leaves positive values for
+ * All predefined values are negative; GTK+ leaves values of 0 or greater for
  * application-defined response ids.
  */
 public enum GtkResponseType

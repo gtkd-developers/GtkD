@@ -122,7 +122,24 @@ public interface AppInfoIF{
 	 *
 	 * Throws: GException on failure.
 	 */
-	public static AppInfoIF createFromCommandline(string commandline, string applicationName, GAppInfoCreateFlags flags);
+	public static AppInfoIF createFromCommandline(string commandline, string applicationName, GAppInfoCreateFlags flags)
+	{
+		GError* err = null;
+
+		auto p = g_app_info_create_from_commandline(Str.toStringz(commandline), Str.toStringz(applicationName), flags, &err);
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) p, true);
+	}
 
 	/**
 	 * Gets a list of all of the applications currently registered
@@ -136,7 +153,17 @@ public interface AppInfoIF{
 	 *
 	 * Returns: a newly allocated #GList of references to #GAppInfos.
 	 */
-	public static ListG getAll();
+	public static ListG getAll()
+	{
+		auto p = g_app_info_get_all();
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return new ListG(cast(GList*) p, true);
+	}
 
 	/**
 	 * Gets a list of all #GAppInfos for a given content type,
@@ -150,7 +177,17 @@ public interface AppInfoIF{
 	 * Returns: #GList of #GAppInfos
 	 *     for given @content_type or %NULL on error.
 	 */
-	public static ListG getAllForType(string contentType);
+	public static ListG getAllForType(string contentType)
+	{
+		auto p = g_app_info_get_all_for_type(Str.toStringz(contentType));
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return new ListG(cast(GList*) p, true);
+	}
 
 	/**
 	 * Gets the default #GAppInfo for a given content type.
@@ -163,7 +200,17 @@ public interface AppInfoIF{
 	 * Returns: #GAppInfo for given @content_type or
 	 *     %NULL on error.
 	 */
-	public static AppInfoIF getDefaultForType(string contentType, bool mustSupportUris);
+	public static AppInfoIF getDefaultForType(string contentType, bool mustSupportUris)
+	{
+		auto p = g_app_info_get_default_for_type(Str.toStringz(contentType), mustSupportUris);
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) p, true);
+	}
 
 	/**
 	 * Gets the default application for handling URIs with
@@ -176,7 +223,17 @@ public interface AppInfoIF{
 	 *
 	 * Returns: #GAppInfo for given @uri_scheme or %NULL on error.
 	 */
-	public static AppInfoIF getDefaultForUriScheme(string uriScheme);
+	public static AppInfoIF getDefaultForUriScheme(string uriScheme)
+	{
+		auto p = g_app_info_get_default_for_uri_scheme(Str.toStringz(uriScheme));
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) p, true);
+	}
 
 	/**
 	 * Gets a list of fallback #GAppInfos for a given content type, i.e.
@@ -191,7 +248,17 @@ public interface AppInfoIF{
 	 *
 	 * Since: 2.28
 	 */
-	public static ListG getFallbackForType(string contentType);
+	public static ListG getFallbackForType(string contentType)
+	{
+		auto p = g_app_info_get_fallback_for_type(Str.toStringz(contentType));
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return new ListG(cast(GList*) p, true);
+	}
 
 	/**
 	 * Gets a list of recommended #GAppInfos for a given content type, i.e.
@@ -209,7 +276,17 @@ public interface AppInfoIF{
 	 *
 	 * Since: 2.28
 	 */
-	public static ListG getRecommendedForType(string contentType);
+	public static ListG getRecommendedForType(string contentType)
+	{
+		auto p = g_app_info_get_recommended_for_type(Str.toStringz(contentType));
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return new ListG(cast(GList*) p, true);
+	}
 
 	/**
 	 * Utility function that launches the default application
@@ -225,7 +302,19 @@ public interface AppInfoIF{
 	 *
 	 * Throws: GException on failure.
 	 */
-	public static bool launchDefaultForUri(string uri, AppLaunchContext launchContext);
+	public static bool launchDefaultForUri(string uri, AppLaunchContext launchContext)
+	{
+		GError* err = null;
+
+		auto p = g_app_info_launch_default_for_uri(Str.toStringz(uri), (launchContext is null) ? null : launchContext.getAppLaunchContextStruct(), &err) != 0;
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		return p;
+	}
 
 	/**
 	 * Async version of g_app_info_launch_default_for_uri().
@@ -242,7 +331,10 @@ public interface AppInfoIF{
 	 *
 	 * Since: 2.50
 	 */
-	public static void launchDefaultForUriAsync(string uri, AppLaunchContext launchContext, Cancellable cancellable, GAsyncReadyCallback callback, void* userData);
+	public static void launchDefaultForUriAsync(string uri, AppLaunchContext launchContext, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		g_app_info_launch_default_for_uri_async(Str.toStringz(uri), (launchContext is null) ? null : launchContext.getAppLaunchContextStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
 
 	/**
 	 * Finishes an asynchronous launch-default-for-uri operation.
@@ -256,7 +348,19 @@ public interface AppInfoIF{
 	 *
 	 * Throws: GException on failure.
 	 */
-	public static bool launchDefaultForUriFinish(AsyncResultIF result);
+	public static bool launchDefaultForUriFinish(AsyncResultIF result)
+	{
+		GError* err = null;
+
+		auto p = g_app_info_launch_default_for_uri_finish((result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		return p;
+	}
 
 	/**
 	 * Removes all changes to the type associations done by
@@ -270,7 +374,10 @@ public interface AppInfoIF{
 	 *
 	 * Since: 2.20
 	 */
-	public static void resetTypeAssociations(string contentType);
+	public static void resetTypeAssociations(string contentType)
+	{
+		g_app_info_reset_type_associations(Str.toStringz(contentType));
+	}
 
 	/**
 	 * Adds a content type to the application information to indicate the

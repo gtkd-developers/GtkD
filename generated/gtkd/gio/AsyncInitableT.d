@@ -149,61 +149,6 @@ public template AsyncInitableT(TStruct)
 
 
 	/**
-	 * Helper function for constructing #GAsyncInitable object. This is
-	 * similar to g_object_new_valist() but also initializes the object
-	 * asynchronously.
-	 *
-	 * When the initialization is finished, @callback will be called. You can
-	 * then call g_async_initable_new_finish() to get the new object and check
-	 * for any errors.
-	 *
-	 * Params:
-	 *     objectType = a #GType supporting #GAsyncInitable.
-	 *     firstPropertyName = the name of the first property, followed by
-	 *         the value, and other property value pairs, and ended by %NULL.
-	 *     varArgs = The var args list generated from @first_property_name.
-	 *     ioPriority = the [I/O priority][io-priority] of the operation
-	 *     cancellable = optional #GCancellable object, %NULL to ignore.
-	 *     callback = a #GAsyncReadyCallback to call when the initialization is
-	 *         finished
-	 *     userData = the data to pass to callback function
-	 *
-	 * Since: 2.22
-	 */
-	public static void newValistAsync(GType objectType, string firstPropertyName, void* varArgs, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
-	{
-		g_async_initable_new_valist_async(objectType, Str.toStringz(firstPropertyName), varArgs, ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
-	}
-
-	/**
-	 * Helper function for constructing #GAsyncInitable object. This is
-	 * similar to g_object_newv() but also initializes the object asynchronously.
-	 *
-	 * When the initialization is finished, @callback will be called. You can
-	 * then call g_async_initable_new_finish() to get the new object and check
-	 * for any errors.
-	 *
-	 * Deprecated: Use g_object_new_with_properties() and
-	 * g_async_initable_init_async() instead. See #GParameter for more information.
-	 *
-	 * Params:
-	 *     objectType = a #GType supporting #GAsyncInitable.
-	 *     nParameters = the number of parameters in @parameters
-	 *     parameters = the parameters to use to construct the object
-	 *     ioPriority = the [I/O priority][io-priority] of the operation
-	 *     cancellable = optional #GCancellable object, %NULL to ignore.
-	 *     callback = a #GAsyncReadyCallback to call when the initialization is
-	 *         finished
-	 *     userData = the data to pass to callback function
-	 *
-	 * Since: 2.22
-	 */
-	public static void newvAsync(GType objectType, uint nParameters, GParameter* parameters, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
-	{
-		g_async_initable_newv_async(objectType, nParameters, parameters, ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
-	}
-
-	/**
 	 * Starts asynchronous initialization of the object implementing the
 	 * interface. This must be done before any real use of the object after
 	 * initial construction. If the object also implements #GInitable you can

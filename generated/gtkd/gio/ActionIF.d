@@ -95,7 +95,10 @@ public interface ActionIF{
 	 *
 	 * Since: 2.38
 	 */
-	public static bool nameIsValid(string actionName);
+	public static bool nameIsValid(string actionName)
+	{
+		return g_action_name_is_valid(Str.toStringz(actionName)) != 0;
+	}
 
 	/**
 	 * Parses a detailed action name into its separate name and target
@@ -134,7 +137,24 @@ public interface ActionIF{
 	 *
 	 * Throws: GException on failure.
 	 */
-	public static bool parseDetailedName(string detailedName, out string actionName, out Variant targetValue);
+	public static bool parseDetailedName(string detailedName, out string actionName, out Variant targetValue)
+	{
+		char* outactionName = null;
+		GVariant* outtargetValue = null;
+		GError* err = null;
+
+		auto p = g_action_parse_detailed_name(Str.toStringz(detailedName), &outactionName, &outtargetValue, &err) != 0;
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		actionName = Str.toString(outactionName);
+		targetValue = new Variant(outtargetValue);
+
+		return p;
+	}
 
 	/**
 	 * Formats a detailed action name from @action_name and @target_value.
@@ -156,7 +176,13 @@ public interface ActionIF{
 	 *
 	 * Since: 2.38
 	 */
-	public static string printDetailedName(string actionName, Variant targetValue);
+	public static string printDetailedName(string actionName, Variant targetValue)
+	{
+		auto retStr = g_action_print_detailed_name(Str.toStringz(actionName), (targetValue is null) ? null : targetValue.getVariantStruct());
+
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
+	}
 
 	/**
 	 * Activates the action.

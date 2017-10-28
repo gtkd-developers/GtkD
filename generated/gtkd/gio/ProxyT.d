@@ -60,30 +60,6 @@ public template ProxyT(TStruct)
 
 
 	/**
-	 * Lookup "gio-proxy" extension point for a proxy implementation that supports
-	 * specified protocol.
-	 *
-	 * Params:
-	 *     protocol = the proxy protocol name (e.g. http, socks, etc)
-	 *
-	 * Returns: return a #GProxy or NULL if protocol
-	 *     is not supported.
-	 *
-	 * Since: 2.26
-	 */
-	public static ProxyIF getDefaultForProtocol(string protocol)
-	{
-		auto p = g_proxy_get_default_for_protocol(Str.toStringz(protocol));
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(ProxyIF)(cast(GProxy*) p, true);
-	}
-
-	/**
 	 * Given @connection to communicate with a proxy (eg, a
 	 * #GSocketConnection that is connected to the proxy server), this
 	 * does the necessary handshake to connect to @proxy_address, and if

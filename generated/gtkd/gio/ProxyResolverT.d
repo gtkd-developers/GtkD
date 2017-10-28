@@ -59,25 +59,6 @@ public template ProxyResolverT(TStruct)
 
 
 	/**
-	 * Gets the default #GProxyResolver for the system.
-	 *
-	 * Returns: the default #GProxyResolver.
-	 *
-	 * Since: 2.26
-	 */
-	public static ProxyResolverIF getDefault()
-	{
-		auto p = g_proxy_resolver_get_default();
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(ProxyResolverIF)(cast(GProxyResolver*) p);
-	}
-
-	/**
 	 * Checks if @resolver can be used on this system. (This is used
 	 * internally; g_proxy_resolver_get_default() will only return a proxy
 	 * resolver that returns %TRUE for this method.)

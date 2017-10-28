@@ -108,7 +108,18 @@ public interface TreeDragSourceIF{
 	 * Returns: %TRUE if @selection_data had target type %GTK_TREE_MODEL_ROW and
 	 *     is otherwise valid
 	 */
-	public static bool getRowDragData(SelectionData selectionData, out TreeModelIF treeModel, out TreePath path);
+	public static bool getRowDragData(SelectionData selectionData, out TreeModelIF treeModel, out TreePath path)
+	{
+		GtkTreeModel* outtreeModel = null;
+		GtkTreePath* outpath = null;
+
+		auto p = gtk_tree_get_row_drag_data((selectionData is null) ? null : selectionData.getSelectionDataStruct(), &outtreeModel, &outpath) != 0;
+
+		treeModel = ObjectG.getDObject!(TreeModelIF)(outtreeModel);
+		path = ObjectG.getDObject!(TreePath)(outpath);
+
+		return p;
+	}
 
 	/**
 	 * Sets selection data of target type %GTK_TREE_MODEL_ROW. Normally used
@@ -121,5 +132,8 @@ public interface TreeDragSourceIF{
 	 *
 	 * Returns: %TRUE if the #GtkSelectionData had the proper target type to allow us to set a tree row
 	 */
-	public static bool setRowDragData(SelectionData selectionData, TreeModelIF treeModel, TreePath path);
+	public static bool setRowDragData(SelectionData selectionData, TreeModelIF treeModel, TreePath path)
+	{
+		return gtk_tree_set_row_drag_data((selectionData is null) ? null : selectionData.getSelectionDataStruct(), (treeModel is null) ? null : treeModel.getTreeModelStruct(), (path is null) ? null : path.getTreePathStruct()) != 0;
+	}
 }
