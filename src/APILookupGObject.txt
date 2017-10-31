@@ -255,7 +255,7 @@ code: start
 			else
 				return new T(obj, ownedRef);
 		}
-		else static if ( is(RT == interface) && hasStaticMember!(RT, "getType") && is(ReturnType!(RT.getType) == GType) )
+		else static if ( is(RT == interface) && hasMember!(RT, "getType") && is(ReturnType!(RT.getType) == GType) )
 		{
 			auto p = g_object_get_data(cast(GObject*)obj, Str.toStringz("GObject"));
 

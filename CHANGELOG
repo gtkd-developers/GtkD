@@ -1,6 +1,11 @@
 GtkD ChangeLog
 ==============
 
+Release: 3.7.1
+--------------
+-Revert the opCast changes for the 3.7 release.
+-Use hasMember instead of hasStaticMember.
+
 Release: 3.7.0
 --------------
 -Add GstMpegts bindings.
