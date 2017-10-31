@@ -57,6 +57,12 @@ public class Plug : ObjectAtk, ComponentIF
 		return cast(void*)atkPlug;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		atkPlug = cast(AtkPlug*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

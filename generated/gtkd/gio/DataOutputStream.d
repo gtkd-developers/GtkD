@@ -62,6 +62,12 @@ public class DataOutputStream : FilterOutputStream, SeekableIF
 		return cast(void*)gDataOutputStream;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gDataOutputStream = cast(GDataOutputStream*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

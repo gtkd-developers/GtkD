@@ -64,6 +64,12 @@ public class TlsCertificate : ObjectG
 		return cast(void*)gTlsCertificate;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gTlsCertificate = cast(GTlsCertificate*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

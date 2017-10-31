@@ -50,6 +50,12 @@ public class CheckMenuItemAccessible : MenuItemAccessible
 		return cast(void*)gtkCheckMenuItemAccessible;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkCheckMenuItemAccessible = cast(GtkCheckMenuItemAccessible*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

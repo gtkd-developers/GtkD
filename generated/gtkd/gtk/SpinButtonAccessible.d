@@ -52,6 +52,12 @@ public class SpinButtonAccessible : EntryAccessible, ValueIF
 		return cast(void*)gtkSpinButtonAccessible;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkSpinButtonAccessible = cast(GtkSpinButtonAccessible*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -210,6 +210,12 @@ public class FileChooserDialog : Dialog, FileChooserIF
 		return cast(void*)gtkFileChooserDialog;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkFileChooserDialog = cast(GtkFileChooserDialog*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

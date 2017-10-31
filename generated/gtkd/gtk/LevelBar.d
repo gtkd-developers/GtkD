@@ -151,6 +151,12 @@ public class LevelBar : Widget, OrientableIF
 		return cast(void*)gtkLevelBar;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkLevelBar = cast(GtkLevelBar*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

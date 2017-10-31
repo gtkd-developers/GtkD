@@ -53,6 +53,12 @@ public class ContainerCellAccessible : CellAccessible
 		return cast(void*)gtkContainerCellAccessible;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkContainerCellAccessible = cast(GtkContainerCellAccessible*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

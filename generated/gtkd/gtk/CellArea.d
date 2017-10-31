@@ -381,6 +381,12 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 		return cast(void*)gtkCellArea;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkCellArea = cast(GtkCellArea*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

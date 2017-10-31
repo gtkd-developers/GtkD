@@ -79,6 +79,12 @@ public class SocketClient : ObjectG
 		return cast(void*)gSocketClient;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gSocketClient = cast(GSocketClient*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

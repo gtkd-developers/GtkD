@@ -71,6 +71,12 @@ public class GesturePan : GestureDrag
 		return cast(void*)gtkGesturePan;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkGesturePan = cast(GtkGesturePan*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -117,6 +117,12 @@ public class ImageMenuItem : MenuItem
 		return cast(void*)gtkImageMenuItem;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkImageMenuItem = cast(GtkImageMenuItem*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

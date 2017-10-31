@@ -143,6 +143,12 @@ public class Image : Misc
 		return cast(void*)gtkImage;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkImage = cast(GtkImage*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

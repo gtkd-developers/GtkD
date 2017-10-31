@@ -68,6 +68,12 @@ public class RadioToolButton : ToggleToolButton
 		return cast(void*)gtkRadioToolButton;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkRadioToolButton = cast(GtkRadioToolButton*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

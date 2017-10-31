@@ -71,6 +71,12 @@ public class StackSidebar : Bin
 		return cast(void*)gtkStackSidebar;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkStackSidebar = cast(GtkStackSidebar*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

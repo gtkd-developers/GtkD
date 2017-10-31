@@ -78,6 +78,12 @@ public class Notification : ObjectG
 		return cast(void*)gNotification;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gNotification = cast(GNotification*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

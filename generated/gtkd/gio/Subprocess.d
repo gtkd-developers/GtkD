@@ -118,6 +118,12 @@ public class Subprocess : ObjectG, InitableIF
 		return cast(void*)gSubprocess;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gSubprocess = cast(GSubprocess*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

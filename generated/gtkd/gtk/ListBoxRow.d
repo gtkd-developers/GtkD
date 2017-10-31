@@ -55,6 +55,12 @@ public class ListBoxRow : Bin
 		return cast(void*)gtkListBoxRow;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkListBoxRow = cast(GtkListBoxRow*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

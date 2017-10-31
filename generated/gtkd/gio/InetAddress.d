@@ -63,6 +63,12 @@ public class InetAddress : ObjectG
 		return cast(void*)gInetAddress;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gInetAddress = cast(GInetAddress*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

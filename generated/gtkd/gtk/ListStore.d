@@ -199,6 +199,12 @@ public class ListStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 		return cast(void*)gtkListStore;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkListStore = cast(GtkListStore*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

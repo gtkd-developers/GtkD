@@ -65,6 +65,12 @@ public class ToggleToolButton : ToolButton
 		return cast(void*)gtkToggleToolButton;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkToggleToolButton = cast(GtkToggleToolButton*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

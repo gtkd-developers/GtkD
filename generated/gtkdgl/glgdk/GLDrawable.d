@@ -22,58 +22,49 @@
 // implement new conversion functionalities on the wrap.utils pakage
 
 
-module gstreamer.Tracer;
+module glgdk.GLDrawable;
 
-private import gstreamer.ObjectGst;
-private import gstreamer.c.functions;
-public  import gstreamer.c.types;
-public  import gstreamerc.gstreamertypes;
+private import glgdk.GLDrawableIF;
+private import glgdk.GLDrawableT;
+private import gobject.ObjectG;
+private import gtkglc.glgdk;
+public  import gtkglc.glgdktypes;
 
 
-/**
- * Tracing modules will subclass #GstTracer and register through
- * gst_tracing_register(). Modules can attach to various hook-types - see
- * gst_tracing_register_hook(). When invoked they receive hook specific
- * contextual data, which they must not modify.
- */
-public class Tracer : ObjectGst
+/** */
+public class GLDrawable : ObjectG, GLDrawableIF
 {
 	/** the main Gtk struct */
-	protected GstTracer* gstTracer;
+	protected GdkGLDrawable* gdkGLDrawable;
 
 	/** Get the main Gtk struct */
-	public GstTracer* getTracerStruct(bool transferOwnership = false)
+	public GdkGLDrawable* getGLDrawableStruct()
 	{
-		if (transferOwnership)
-			ownedRef = false;
-		return gstTracer;
+		return gdkGLDrawable;
 	}
 
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
-		return cast(void*)gstTracer;
+		return cast(void*)gdkGLDrawable;
 	}
 
 	protected override void setStruct(GObject* obj)
 	{
-		gstTracer = cast(GstTracer*)obj;
+		gdkGLDrawable = cast(GdkGLDrawable*)obj;
 		super.setStruct(obj);
 	}
 
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GstTracer* gstTracer, bool ownedRef = false)
+	public this (GdkGLDrawable* gdkGLDrawable, bool ownedRef = false)
 	{
-		this.gstTracer = gstTracer;
-		super(cast(GstObject*)gstTracer, ownedRef);
+		this.gdkGLDrawable = gdkGLDrawable;
+		super(cast(GObject*)gdkGLDrawable, ownedRef);
 	}
 
+	// add the GLDrawable capabilities
+	mixin GLDrawableT!(GdkGLDrawable);
 
-	/** */
-	public static GType getType()
-	{
-		return gst_tracer_get_type();
-	}
 }

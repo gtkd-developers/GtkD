@@ -94,6 +94,12 @@ public class Task : ObjectGst
 		return cast(void*)gstTask;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gstTask = cast(GstTask*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

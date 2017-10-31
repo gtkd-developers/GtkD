@@ -59,6 +59,12 @@ public class BytesIcon : ObjectG, IconIF, LoadableIconIF
 		return cast(void*)gBytesIcon;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gBytesIcon = cast(GBytesIcon*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

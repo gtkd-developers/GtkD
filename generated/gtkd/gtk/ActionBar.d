@@ -66,6 +66,12 @@ public class ActionBar : Bin
 		return cast(void*)gtkActionBar;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkActionBar = cast(GtkActionBar*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

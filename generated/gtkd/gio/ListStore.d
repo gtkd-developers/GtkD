@@ -59,6 +59,12 @@ public class ListStore : ObjectG, ListModelIF
 		return cast(void*)gListStore;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gListStore = cast(GListStore*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

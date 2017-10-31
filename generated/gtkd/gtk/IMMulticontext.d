@@ -54,6 +54,12 @@ public class IMMulticontext : IMContext
 		return cast(void*)gtkIMMulticontext;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkIMMulticontext = cast(GtkIMMulticontext*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

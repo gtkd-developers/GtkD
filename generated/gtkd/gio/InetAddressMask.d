@@ -64,6 +64,12 @@ public class InetAddressMask : ObjectG, InitableIF
 		return cast(void*)gInetAddressMask;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gInetAddressMask = cast(GInetAddressMask*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

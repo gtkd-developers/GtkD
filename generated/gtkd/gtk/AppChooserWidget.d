@@ -82,6 +82,12 @@ public class AppChooserWidget : Box, AppChooserIF
 		return cast(void*)gtkAppChooserWidget;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkAppChooserWidget = cast(GtkAppChooserWidget*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

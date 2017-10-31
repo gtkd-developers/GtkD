@@ -51,6 +51,12 @@ public class GLConfig : ObjectG
 		return cast(void*)gdkGLConfig;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gdkGLConfig = cast(GdkGLConfig*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

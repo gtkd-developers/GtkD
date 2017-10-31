@@ -142,6 +142,12 @@ public class RadioButton : CheckButton
 		return cast(void*)gtkRadioButton;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkRadioButton = cast(GtkRadioButton*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

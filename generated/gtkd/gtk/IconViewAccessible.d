@@ -52,6 +52,12 @@ public class IconViewAccessible : ContainerAccessible, SelectionIF
 		return cast(void*)gtkIconViewAccessible;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkIconViewAccessible = cast(GtkIconViewAccessible*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

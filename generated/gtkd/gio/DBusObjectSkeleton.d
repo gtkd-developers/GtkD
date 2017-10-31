@@ -66,6 +66,12 @@ public class DBusObjectSkeleton : ObjectG, DBusObjectIF
 		return cast(void*)gDBusObjectSkeleton;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gDBusObjectSkeleton = cast(GDBusObjectSkeleton*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

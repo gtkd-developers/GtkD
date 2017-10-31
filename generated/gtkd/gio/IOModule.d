@@ -61,6 +61,12 @@ public class IOModule : TypeModule
 		return cast(void*)gIOModule;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gIOModule = cast(GIOModule*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

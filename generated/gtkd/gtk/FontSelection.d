@@ -56,6 +56,12 @@ public class FontSelection : Box
 		return cast(void*)gtkFontSelection;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkFontSelection = cast(GtkFontSelection*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

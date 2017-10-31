@@ -121,6 +121,12 @@ public class RecentManager : ObjectG
 		return cast(void*)gtkRecentManager;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkRecentManager = cast(GtkRecentManager*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

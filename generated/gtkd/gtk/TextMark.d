@@ -83,6 +83,12 @@ public class TextMark : ObjectG
 		return cast(void*)gtkTextMark;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkTextMark = cast(GtkTextMark*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -33,6 +33,9 @@ public import glib.c.types;
 public import gobject.c.types;
 public import pango.c.types;
 
+
+extern(C) Object _d_newclass(ClassInfo ci);
+
 alias GtkAllocation* Allocation;
 
 /**

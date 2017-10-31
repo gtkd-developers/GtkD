@@ -64,6 +64,12 @@ public class Separator : Widget, OrientableIF
 		return cast(void*)gtkSeparator;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkSeparator = cast(GtkSeparator*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

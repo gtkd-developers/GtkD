@@ -52,6 +52,12 @@ public class ImageAccessible : WidgetAccessible, ImageIF
 		return cast(void*)gtkImageAccessible;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkImageAccessible = cast(GtkImageAccessible*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

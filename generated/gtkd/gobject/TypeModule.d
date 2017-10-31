@@ -80,6 +80,12 @@ public class TypeModule : ObjectG, TypePluginIF
 		return cast(void*)gTypeModule;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gTypeModule = cast(GTypeModule*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

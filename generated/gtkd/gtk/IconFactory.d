@@ -126,6 +126,12 @@ public class IconFactory : ObjectG, BuildableIF
 		return cast(void*)gtkIconFactory;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkIconFactory = cast(GtkIconFactory*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

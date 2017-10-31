@@ -84,6 +84,12 @@ public class Toolbar : Container, OrientableIF, ToolShellIF
 		return cast(void*)gtkToolbar;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkToolbar = cast(GtkToolbar*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

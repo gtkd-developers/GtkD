@@ -66,6 +66,12 @@ public class AspectFrame : Frame
 		return cast(void*)gtkAspectFrame;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkAspectFrame = cast(GtkAspectFrame*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

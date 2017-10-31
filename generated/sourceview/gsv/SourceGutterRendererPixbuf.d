@@ -55,6 +55,12 @@ public class SourceGutterRendererPixbuf : SourceGutterRenderer
 		return cast(void*)gtkSourceGutterRendererPixbuf;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkSourceGutterRendererPixbuf = cast(GtkSourceGutterRendererPixbuf*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

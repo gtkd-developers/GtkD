@@ -84,6 +84,12 @@ public class CssProvider : ObjectG, StyleProviderIF
 		return cast(void*)gtkCssProvider;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkCssProvider = cast(GtkCssProvider*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

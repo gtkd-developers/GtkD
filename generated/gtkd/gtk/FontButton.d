@@ -66,6 +66,12 @@ public class FontButton : Button, FontChooserIF
 		return cast(void*)gtkFontButton;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkFontButton = cast(GtkFontButton*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

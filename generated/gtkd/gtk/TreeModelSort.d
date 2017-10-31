@@ -154,6 +154,12 @@ public class TreeModelSort : ObjectG, TreeDragSourceIF, TreeModelIF, TreeSortabl
 		return cast(void*)gtkTreeModelSort;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkTreeModelSort = cast(GtkTreeModelSort*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

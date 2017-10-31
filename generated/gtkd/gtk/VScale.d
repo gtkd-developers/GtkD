@@ -62,6 +62,12 @@ public class VScale : Scale
 		return cast(void*)gtkVScale;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkVScale = cast(GtkVScale*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

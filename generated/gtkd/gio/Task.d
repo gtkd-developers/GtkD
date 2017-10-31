@@ -552,6 +552,12 @@ public class Task : ObjectG, AsyncResultIF
 		return cast(void*)gTask;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gTask = cast(GTask*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

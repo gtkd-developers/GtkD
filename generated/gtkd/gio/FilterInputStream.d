@@ -56,6 +56,12 @@ public class FilterInputStream : InputStream
 		return cast(void*)gFilterInputStream;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gFilterInputStream = cast(GFilterInputStream*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

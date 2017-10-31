@@ -62,6 +62,12 @@ public class CellRendererAccel : CellRendererText
 		return cast(void*)gtkCellRendererAccel;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkCellRendererAccel = cast(GtkCellRendererAccel*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

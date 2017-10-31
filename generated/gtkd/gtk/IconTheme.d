@@ -132,6 +132,12 @@ public class IconTheme : ObjectG
 		return cast(void*)gtkIconTheme;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkIconTheme = cast(GtkIconTheme*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -53,6 +53,12 @@ public class SourceStyleSchemeManager : ObjectG
 		return cast(void*)gtkSourceStyleSchemeManager;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkSourceStyleSchemeManager = cast(GtkSourceStyleSchemeManager*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

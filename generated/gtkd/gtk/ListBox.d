@@ -92,6 +92,12 @@ public class ListBox : Container
 		return cast(void*)gtkListBox;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkListBox = cast(GtkListBox*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

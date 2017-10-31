@@ -54,6 +54,12 @@ public class RendererCellAccessible : CellAccessible
 		return cast(void*)gtkRendererCellAccessible;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkRendererCellAccessible = cast(GtkRendererCellAccessible*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

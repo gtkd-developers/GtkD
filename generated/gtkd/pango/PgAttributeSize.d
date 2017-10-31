@@ -54,6 +54,12 @@ public class PgAttributeSize : PgAttribute
 		return cast(void*)pangoAttrSize;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		pangoAttrSize = cast(PangoAttrSize*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

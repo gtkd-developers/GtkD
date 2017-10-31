@@ -178,6 +178,12 @@ public class Dialog : Window
 		return cast(void*)gtkDialog;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkDialog = cast(GtkDialog*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -56,6 +56,12 @@ public class SourceCompletionWords : ObjectG, SourceCompletionProviderIF
 		return cast(void*)gtkSourceCompletionWords;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkSourceCompletionWords = cast(GtkSourceCompletionWords*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

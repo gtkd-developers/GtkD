@@ -64,6 +64,12 @@ public class PgRenderer : ObjectG
 		return cast(void*)pangoRenderer;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		pangoRenderer = cast(PangoRenderer*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

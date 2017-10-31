@@ -102,6 +102,12 @@ public class Pipeline : Bin
 		return cast(void*)gstPipeline;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gstPipeline = cast(GstPipeline*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

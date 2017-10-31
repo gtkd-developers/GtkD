@@ -125,6 +125,12 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 		return cast(void*)gDBusConnection;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gDBusConnection = cast(GDBusConnection*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

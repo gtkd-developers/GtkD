@@ -62,6 +62,12 @@ public class RelationSet : ObjectG
 		return cast(void*)atkRelationSet;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		atkRelationSet = cast(AtkRelationSet*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -75,6 +75,12 @@ public class DBusServer : ObjectG, InitableIF
 		return cast(void*)gDBusServer;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gDBusServer = cast(GDBusServer*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

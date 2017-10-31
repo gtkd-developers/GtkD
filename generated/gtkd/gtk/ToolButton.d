@@ -81,6 +81,12 @@ public class ToolButton : ToolItem, ActionableIF
 		return cast(void*)gtkToolButton;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkToolButton = cast(GtkToolButton*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

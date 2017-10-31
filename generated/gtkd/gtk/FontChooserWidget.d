@@ -73,6 +73,12 @@ public class FontChooserWidget : Box, FontChooserIF
 		return cast(void*)gtkFontChooserWidget;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkFontChooserWidget = cast(GtkFontChooserWidget*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

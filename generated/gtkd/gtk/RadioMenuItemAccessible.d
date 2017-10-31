@@ -50,6 +50,12 @@ public class RadioMenuItemAccessible : CheckMenuItemAccessible
 		return cast(void*)gtkRadioMenuItemAccessible;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkRadioMenuItemAccessible = cast(GtkRadioMenuItemAccessible*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

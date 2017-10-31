@@ -75,6 +75,12 @@ public class Switch : Widget, ActionableIF, ActivatableIF
 		return cast(void*)gtkSwitch;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkSwitch = cast(GtkSwitch*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

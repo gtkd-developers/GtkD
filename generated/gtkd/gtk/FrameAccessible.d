@@ -50,6 +50,12 @@ public class FrameAccessible : ContainerAccessible
 		return cast(void*)gtkFrameAccessible;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkFrameAccessible = cast(GtkFrameAccessible*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

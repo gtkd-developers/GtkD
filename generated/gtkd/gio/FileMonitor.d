@@ -68,6 +68,12 @@ public class FileMonitor : ObjectG
 		return cast(void*)gFileMonitor;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gFileMonitor = cast(GFileMonitor*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

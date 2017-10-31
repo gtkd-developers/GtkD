@@ -51,6 +51,12 @@ public class SourceStyle : ObjectG
 		return cast(void*)gtkSourceStyle;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkSourceStyle = cast(GtkSourceStyle*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

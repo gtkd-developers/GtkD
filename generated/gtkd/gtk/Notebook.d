@@ -138,6 +138,12 @@ public class Notebook : Container
 		return cast(void*)gtkNotebook;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkNotebook = cast(GtkNotebook*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

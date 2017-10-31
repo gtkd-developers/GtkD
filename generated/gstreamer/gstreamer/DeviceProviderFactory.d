@@ -65,6 +65,12 @@ public class DeviceProviderFactory : PluginFeature
 		return cast(void*)gstDeviceProviderFactory;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gstDeviceProviderFactory = cast(GstDeviceProviderFactory*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

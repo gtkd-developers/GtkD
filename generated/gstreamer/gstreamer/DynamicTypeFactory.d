@@ -71,6 +71,12 @@ public class DynamicTypeFactory : PluginFeature
 		return cast(void*)gstDynamicTypeFactory;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gstDynamicTypeFactory = cast(GstDynamicTypeFactory*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

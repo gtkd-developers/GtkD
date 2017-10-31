@@ -64,6 +64,12 @@ public class HSeparator : Separator
 		return cast(void*)gtkHSeparator;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkHSeparator = cast(GtkHSeparator*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

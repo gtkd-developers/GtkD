@@ -67,6 +67,12 @@ public class GestureSwipe : GestureSingle
 		return cast(void*)gtkGestureSwipe;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkGestureSwipe = cast(GtkGestureSwipe*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

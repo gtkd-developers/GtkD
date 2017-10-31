@@ -50,6 +50,12 @@ public class NativeVolumeMonitor : VolumeMonitor
 		return cast(void*)gNativeVolumeMonitor;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gNativeVolumeMonitor = cast(GNativeVolumeMonitor*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

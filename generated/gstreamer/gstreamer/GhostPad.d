@@ -70,6 +70,12 @@ public class GhostPad : ProxyPad
 		return cast(void*)gstGhostPad;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gstGhostPad = cast(GstGhostPad*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

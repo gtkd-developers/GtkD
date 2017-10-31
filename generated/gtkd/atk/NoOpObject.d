@@ -81,6 +81,12 @@ public class NoOpObject : ObjectAtk, ActionIF, ComponentIF, DocumentIF, Editable
 		return cast(void*)atkNoOpObject;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		atkNoOpObject = cast(AtkNoOpObject*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

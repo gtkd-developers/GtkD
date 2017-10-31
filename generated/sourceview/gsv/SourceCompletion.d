@@ -62,6 +62,12 @@ public class SourceCompletion : ObjectG, BuildableIF
 		return cast(void*)gtkSourceCompletion;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkSourceCompletion = cast(GtkSourceCompletion*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

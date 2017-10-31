@@ -63,6 +63,12 @@ public class MemoryInputStream : InputStream, PollableInputStreamIF, SeekableIF
 		return cast(void*)gMemoryInputStream;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gMemoryInputStream = cast(GMemoryInputStream*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

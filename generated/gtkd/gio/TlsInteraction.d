@@ -79,6 +79,12 @@ public class TlsInteraction : ObjectG
 		return cast(void*)gTlsInteraction;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gTlsInteraction = cast(GTlsInteraction*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

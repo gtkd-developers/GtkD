@@ -54,6 +54,12 @@ public class SpaceDrawer : ObjectG
 		return cast(void*)gtkSourceSpaceDrawer;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkSourceSpaceDrawer = cast(GtkSourceSpaceDrawer*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

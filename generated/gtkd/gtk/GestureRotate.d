@@ -59,6 +59,12 @@ public class GestureRotate : Gesture
 		return cast(void*)gtkGestureRotate;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkGestureRotate = cast(GtkGestureRotate*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

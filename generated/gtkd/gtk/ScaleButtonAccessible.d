@@ -52,6 +52,12 @@ public class ScaleButtonAccessible : ButtonAccessible, ValueIF
 		return cast(void*)gtkScaleButtonAccessible;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkScaleButtonAccessible = cast(GtkScaleButtonAccessible*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

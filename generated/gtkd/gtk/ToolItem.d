@@ -70,6 +70,12 @@ public class ToolItem : Bin, ActivatableIF
 		return cast(void*)gtkToolItem;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkToolItem = cast(GtkToolItem*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

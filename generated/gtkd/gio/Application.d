@@ -183,6 +183,12 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 		return cast(void*)gApplication;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gApplication = cast(GApplication*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

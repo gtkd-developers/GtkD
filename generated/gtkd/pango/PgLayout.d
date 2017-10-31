@@ -80,6 +80,12 @@ public class PgLayout : ObjectG
 		return cast(void*)pangoLayout;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		pangoLayout = cast(PangoLayout*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

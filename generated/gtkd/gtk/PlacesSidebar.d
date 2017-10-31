@@ -96,6 +96,12 @@ public class PlacesSidebar : ScrolledWindow
 		return cast(void*)gtkPlacesSidebar;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkPlacesSidebar = cast(GtkPlacesSidebar*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

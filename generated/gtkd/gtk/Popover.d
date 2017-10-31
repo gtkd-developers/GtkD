@@ -119,6 +119,12 @@ public class Popover : Bin
 		return cast(void*)gtkPopover;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkPopover = cast(GtkPopover*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

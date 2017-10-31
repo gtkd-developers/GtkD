@@ -60,6 +60,12 @@ public class CellRendererToggle : CellRenderer
 		return cast(void*)gtkCellRendererToggle;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkCellRendererToggle = cast(GtkCellRendererToggle*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

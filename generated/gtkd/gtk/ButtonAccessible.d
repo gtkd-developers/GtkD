@@ -54,6 +54,12 @@ public class ButtonAccessible : ContainerAccessible, ActionIF, ImageIF
 		return cast(void*)gtkButtonAccessible;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkButtonAccessible = cast(GtkButtonAccessible*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

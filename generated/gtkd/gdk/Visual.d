@@ -55,6 +55,12 @@ public class Visual : ObjectG
 		return cast(void*)gdkVisual;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gdkVisual = cast(GdkVisual*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

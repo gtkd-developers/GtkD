@@ -61,6 +61,12 @@ public class SystemClock : Clock
 		return cast(void*)gstSystemClock;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gstSystemClock = cast(GstSystemClock*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

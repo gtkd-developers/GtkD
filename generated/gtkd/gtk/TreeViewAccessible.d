@@ -56,6 +56,12 @@ public class TreeViewAccessible : ContainerAccessible, SelectionIF, TableIF, Cel
 		return cast(void*)gtkTreeViewAccessible;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkTreeViewAccessible = cast(GtkTreeViewAccessible*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

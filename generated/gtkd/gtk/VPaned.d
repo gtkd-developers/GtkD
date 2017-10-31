@@ -60,6 +60,12 @@ public class VPaned : Paned
 		return cast(void*)gtkVPaned;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkVPaned = cast(GtkVPaned*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

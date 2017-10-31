@@ -84,6 +84,12 @@ public class SocketService : SocketListener
 		return cast(void*)gSocketService;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gSocketService = cast(GSocketService*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

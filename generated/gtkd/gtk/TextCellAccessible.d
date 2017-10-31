@@ -52,6 +52,12 @@ public class TextCellAccessible : RendererCellAccessible, TextIF
 		return cast(void*)gtkTextCellAccessible;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkTextCellAccessible = cast(GtkTextCellAccessible*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

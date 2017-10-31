@@ -61,6 +61,12 @@ public class Keymap : ObjectG
 		return cast(void*)gdkKeymap;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gdkKeymap = cast(GdkKeymap*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

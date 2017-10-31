@@ -56,6 +56,12 @@ public class TlsPassword : ObjectG
 		return cast(void*)gTlsPassword;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gTlsPassword = cast(GTlsPassword*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

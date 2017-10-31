@@ -68,6 +68,12 @@ public class Resolver : ObjectG
 		return cast(void*)gResolver;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gResolver = cast(GResolver*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

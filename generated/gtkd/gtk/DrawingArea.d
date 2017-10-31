@@ -136,6 +136,12 @@ public class DrawingArea : Widget
 		return cast(void*)gtkDrawingArea;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkDrawingArea = cast(GtkDrawingArea*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

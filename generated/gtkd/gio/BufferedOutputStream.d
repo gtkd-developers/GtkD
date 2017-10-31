@@ -70,6 +70,12 @@ public class BufferedOutputStream : FilterOutputStream, SeekableIF
 		return cast(void*)gBufferedOutputStream;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gBufferedOutputStream = cast(GBufferedOutputStream*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

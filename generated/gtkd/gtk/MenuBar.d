@@ -64,6 +64,12 @@ public class MenuBar : MenuShell
 		return cast(void*)gtkMenuBar;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkMenuBar = cast(GtkMenuBar*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

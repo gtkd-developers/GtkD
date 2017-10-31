@@ -70,6 +70,12 @@ public class SocketListener : ObjectG
 		return cast(void*)gSocketListener;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gSocketListener = cast(GSocketListener*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

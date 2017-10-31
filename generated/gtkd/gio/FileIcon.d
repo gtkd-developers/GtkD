@@ -59,6 +59,12 @@ public class FileIcon : ObjectG, IconIF, LoadableIconIF
 		return cast(void*)gFileIcon;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gFileIcon = cast(GFileIcon*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

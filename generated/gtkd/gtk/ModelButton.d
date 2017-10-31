@@ -153,6 +153,12 @@ public class ModelButton : Button
 		return cast(void*)gtkModelButton;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkModelButton = cast(GtkModelButton*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

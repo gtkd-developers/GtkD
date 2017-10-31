@@ -69,6 +69,12 @@ public class PushSrc : BaseSrc
 		return cast(void*)gstPushSrc;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gstPushSrc = cast(GstPushSrc*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

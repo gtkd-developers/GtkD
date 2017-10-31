@@ -131,6 +131,12 @@ public class ToolPalette : Container, OrientableIF, ScrollableIF
 		return cast(void*)gtkToolPalette;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkToolPalette = cast(GtkToolPalette*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

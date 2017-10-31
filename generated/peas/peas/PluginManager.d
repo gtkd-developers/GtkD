@@ -60,6 +60,12 @@ public class PluginManager : Box
 		return cast(void*)peasGtkPluginManager;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		peasGtkPluginManager = cast(PeasGtkPluginManager*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -52,6 +52,12 @@ public class MenuShellAccessible : ContainerAccessible, SelectionIF
 		return cast(void*)gtkMenuShellAccessible;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkMenuShellAccessible = cast(GtkMenuShellAccessible*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

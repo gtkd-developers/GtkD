@@ -62,6 +62,12 @@ public class AppLaunchContext : ObjectG
 		return cast(void*)gAppLaunchContext;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gAppLaunchContext = cast(GAppLaunchContext*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

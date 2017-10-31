@@ -73,6 +73,12 @@ public class CellAreaBox : CellArea, OrientableIF
 		return cast(void*)gtkCellAreaBox;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkCellAreaBox = cast(GtkCellAreaBox*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

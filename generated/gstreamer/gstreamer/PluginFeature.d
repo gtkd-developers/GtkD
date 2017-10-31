@@ -56,6 +56,12 @@ public class PluginFeature : ObjectGst
 		return cast(void*)gstPluginFeature;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gstPluginFeature = cast(GstPluginFeature*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

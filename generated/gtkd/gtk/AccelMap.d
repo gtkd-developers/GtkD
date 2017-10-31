@@ -108,6 +108,12 @@ public class AccelMap : ObjectG
 		return cast(void*)gtkAccelMap;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkAccelMap = cast(GtkAccelMap*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -67,6 +67,12 @@ public class UnixCredentialsMessage : SocketControlMessage
 		return cast(void*)gUnixCredentialsMessage;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gUnixCredentialsMessage = cast(GUnixCredentialsMessage*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

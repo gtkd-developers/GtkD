@@ -63,6 +63,12 @@ public class PixbufLoader : ObjectG
 		return cast(void*)gdkPixbufLoader;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gdkPixbufLoader = cast(GdkPixbufLoader*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

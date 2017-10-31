@@ -55,6 +55,12 @@ public class ProxyPad : Pad
 		return cast(void*)gstProxyPad;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gstProxyPad = cast(GstProxyPad*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

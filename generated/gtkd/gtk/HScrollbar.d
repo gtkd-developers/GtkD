@@ -63,6 +63,12 @@ public class HScrollbar : Scrollbar
 		return cast(void*)gtkHScrollbar;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkHScrollbar = cast(GtkHScrollbar*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

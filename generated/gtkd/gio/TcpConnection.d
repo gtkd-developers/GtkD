@@ -55,6 +55,12 @@ public class TcpConnection : SocketConnection
 		return cast(void*)gTcpConnection;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gTcpConnection = cast(GTcpConnection*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -154,6 +154,12 @@ public class Adapter : ObjectG
 		return cast(void*)gstAdapter;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gstAdapter = cast(GstAdapter*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

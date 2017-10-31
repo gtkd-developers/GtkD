@@ -55,6 +55,12 @@ public class PixbufSimpleAnimation : PixbufAnimation
 		return cast(void*)gdkPixbufSimpleAnim;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gdkPixbufSimpleAnim = cast(GdkPixbufSimpleAnim*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

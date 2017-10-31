@@ -55,6 +55,12 @@ public class FlowBoxChild : Bin
 		return cast(void*)gtkFlowBoxChild;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkFlowBoxChild = cast(GtkFlowBoxChild*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

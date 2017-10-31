@@ -50,6 +50,12 @@ public class LockButtonAccessible : ButtonAccessible
 		return cast(void*)gtkLockButtonAccessible;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkLockButtonAccessible = cast(GtkLockButtonAccessible*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

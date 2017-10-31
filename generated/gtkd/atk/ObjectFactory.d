@@ -57,6 +57,12 @@ public class ObjectFactory : ObjectG
 		return cast(void*)atkObjectFactory;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		atkObjectFactory = cast(AtkObjectFactory*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -61,6 +61,12 @@ public class DataInputStream : BufferedInputStream
 		return cast(void*)gDataInputStream;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gDataInputStream = cast(GDataInputStream*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

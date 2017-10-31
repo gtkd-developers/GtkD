@@ -77,6 +77,12 @@ public class Viewport : Bin, ScrollableIF
 		return cast(void*)gtkViewport;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkViewport = cast(GtkViewport*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -66,6 +66,12 @@ public class FontChooserDialog : Dialog, FontChooserIF
 		return cast(void*)gtkFontChooserDialog;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkFontChooserDialog = cast(GtkFontChooserDialog*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -62,6 +62,12 @@ public class SimpleActionGroup : ObjectG, ActionGroupIF, ActionMapIF
 		return cast(void*)gSimpleActionGroup;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gSimpleActionGroup = cast(GSimpleActionGroup*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

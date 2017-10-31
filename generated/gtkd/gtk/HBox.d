@@ -71,6 +71,12 @@ public class HBox : Box
 		return cast(void*)gtkHBox;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkHBox = cast(GtkHBox*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

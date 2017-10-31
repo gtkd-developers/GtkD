@@ -107,6 +107,12 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 		return cast(void*)gtkMenuItem;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkMenuItem = cast(GtkMenuItem*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

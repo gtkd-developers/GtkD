@@ -72,6 +72,12 @@ public class Terminal : Widget, ScrollableIF
 		return cast(void*)vteTerminal;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		vteTerminal = cast(VteTerminal*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

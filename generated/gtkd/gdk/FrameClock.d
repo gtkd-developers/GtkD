@@ -87,6 +87,12 @@ public class FrameClock : ObjectG
 		return cast(void*)gdkFrameClock;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gdkFrameClock = cast(GdkFrameClock*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

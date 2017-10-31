@@ -59,6 +59,12 @@ public class SourceFileSaver : ObjectG
 		return cast(void*)gtkSourceFileSaver;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkSourceFileSaver = cast(GtkSourceFileSaver*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

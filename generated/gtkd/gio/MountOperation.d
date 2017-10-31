@@ -71,6 +71,12 @@ public class MountOperation : ObjectG
 		return cast(void*)gMountOperation;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gMountOperation = cast(GMountOperation*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

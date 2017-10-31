@@ -64,6 +64,12 @@ public class SimpleAction : ObjectG, ActionIF
 		return cast(void*)gSimpleAction;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gSimpleAction = cast(GSimpleAction*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

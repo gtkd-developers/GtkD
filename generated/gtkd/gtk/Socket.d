@@ -108,6 +108,12 @@ public class Socket : Container
 		return cast(void*)gtkSocket;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkSocket = cast(GtkSocket*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

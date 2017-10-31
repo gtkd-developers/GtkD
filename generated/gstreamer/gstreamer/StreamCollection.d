@@ -76,6 +76,12 @@ public class StreamCollection : ObjectGst
 		return cast(void*)gstStreamCollection;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gstStreamCollection = cast(GstStreamCollection*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

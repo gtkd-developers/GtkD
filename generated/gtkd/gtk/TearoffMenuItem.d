@@ -69,6 +69,12 @@ public class TearoffMenuItem : MenuItem
 		return cast(void*)gtkTearoffMenuItem;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkTearoffMenuItem = cast(GtkTearoffMenuItem*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

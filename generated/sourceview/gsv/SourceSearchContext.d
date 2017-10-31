@@ -60,6 +60,12 @@ public class SourceSearchContext : ObjectG
 		return cast(void*)gtkSourceSearchContext;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkSourceSearchContext = cast(GtkSourceSearchContext*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

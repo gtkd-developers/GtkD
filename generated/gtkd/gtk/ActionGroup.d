@@ -110,6 +110,12 @@ public class ActionGroup : ObjectG, BuildableIF
 		return cast(void*)gtkActionGroup;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkActionGroup = cast(GtkActionGroup*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

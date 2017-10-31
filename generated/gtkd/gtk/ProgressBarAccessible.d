@@ -52,6 +52,12 @@ public class ProgressBarAccessible : WidgetAccessible, ValueIF
 		return cast(void*)gtkProgressBarAccessible;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkProgressBarAccessible = cast(GtkProgressBarAccessible*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

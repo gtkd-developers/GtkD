@@ -122,6 +122,12 @@ public class Element : ObjectGst
 		return cast(void*)gstElement;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gstElement = cast(GstElement*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

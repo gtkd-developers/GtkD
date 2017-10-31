@@ -54,6 +54,12 @@ public class Vfs : ObjectG
 		return cast(void*)gVfs;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gVfs = cast(GVfs*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

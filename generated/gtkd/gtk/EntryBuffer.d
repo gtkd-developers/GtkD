@@ -66,6 +66,12 @@ public class EntryBuffer : ObjectG
 		return cast(void*)gtkEntryBuffer;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkEntryBuffer = cast(GtkEntryBuffer*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

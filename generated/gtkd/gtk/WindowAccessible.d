@@ -52,6 +52,12 @@ public class WindowAccessible : ContainerAccessible, WindowIF
 		return cast(void*)gtkWindowAccessible;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkWindowAccessible = cast(GtkWindowAccessible*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

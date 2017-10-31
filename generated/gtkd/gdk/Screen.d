@@ -71,6 +71,12 @@ public class Screen : ObjectG
 		return cast(void*)gdkScreen;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gdkScreen = cast(GdkScreen*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

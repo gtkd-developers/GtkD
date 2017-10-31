@@ -50,6 +50,12 @@ public class StackAccessible : ContainerAccessible
 		return cast(void*)gtkStackAccessible;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkStackAccessible = cast(GtkStackAccessible*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

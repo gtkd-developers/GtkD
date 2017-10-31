@@ -64,6 +64,12 @@ public class UnixFDList : ObjectG
 		return cast(void*)gUnixFDList;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gUnixFDList = cast(GUnixFDList*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -123,6 +123,12 @@ public class TreeModelFilter : ObjectG, TreeDragSourceIF, TreeModelIF
 		return cast(void*)gtkTreeModelFilter;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkTreeModelFilter = cast(GtkTreeModelFilter*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

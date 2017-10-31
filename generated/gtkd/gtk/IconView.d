@@ -90,6 +90,12 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 		return cast(void*)gtkIconView;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkIconView = cast(GtkIconView*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

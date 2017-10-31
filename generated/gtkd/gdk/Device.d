@@ -67,6 +67,12 @@ public class Device : ObjectG
 		return cast(void*)gdkDevice;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gdkDevice = cast(GdkDevice*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

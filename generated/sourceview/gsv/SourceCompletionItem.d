@@ -56,6 +56,12 @@ public class SourceCompletionItem : ObjectG, SourceCompletionProposalIF
 		return cast(void*)gtkSourceCompletionItem;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkSourceCompletionItem = cast(GtkSourceCompletionItem*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

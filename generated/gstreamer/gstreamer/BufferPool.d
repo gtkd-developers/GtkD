@@ -96,6 +96,12 @@ public class BufferPool : ObjectGst
 		return cast(void*)gstBufferPool;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gstBufferPool = cast(GstBufferPool*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

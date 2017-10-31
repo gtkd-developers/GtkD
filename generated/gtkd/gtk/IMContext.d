@@ -122,6 +122,12 @@ public class IMContext : ObjectG
 		return cast(void*)gtkIMContext;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkIMContext = cast(GtkIMContext*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

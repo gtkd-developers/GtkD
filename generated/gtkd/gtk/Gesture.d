@@ -147,6 +147,12 @@ public class Gesture : EventController
 		return cast(void*)gtkGesture;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkGesture = cast(GtkGesture*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

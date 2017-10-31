@@ -58,6 +58,12 @@ public class Registry : ObjectG
 		return cast(void*)atkRegistry;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		atkRegistry = cast(AtkRegistry*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

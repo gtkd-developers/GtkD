@@ -68,6 +68,12 @@ public class NumerableIcon : EmblemedIcon
 		return cast(void*)gtkNumerableIcon;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkNumerableIcon = cast(GtkNumerableIcon*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

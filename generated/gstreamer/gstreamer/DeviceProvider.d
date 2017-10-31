@@ -71,6 +71,12 @@ public class DeviceProvider : ObjectGst
 		return cast(void*)gstDeviceProvider;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gstDeviceProvider = cast(GstDeviceProvider*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

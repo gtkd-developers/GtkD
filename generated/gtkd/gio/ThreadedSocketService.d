@@ -73,6 +73,12 @@ public class ThreadedSocketService : SocketService
 		return cast(void*)gThreadedSocketService;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gThreadedSocketService = cast(GThreadedSocketService*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -56,6 +56,12 @@ public class NoOpObjectFactory : ObjectFactory
 		return cast(void*)atkNoOpObjectFactory;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		atkNoOpObjectFactory = cast(AtkNoOpObjectFactory*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

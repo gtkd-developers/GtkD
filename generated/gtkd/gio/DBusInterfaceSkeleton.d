@@ -66,6 +66,12 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 		return cast(void*)gDBusInterfaceSkeleton;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gDBusInterfaceSkeleton = cast(GDBusInterfaceSkeleton*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

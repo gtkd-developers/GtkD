@@ -131,6 +131,12 @@ public class Scale : Range
 		return cast(void*)gtkScale;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkScale = cast(GtkScale*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

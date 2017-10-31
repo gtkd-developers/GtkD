@@ -54,6 +54,12 @@ public class CellAccessible : Accessible, ActionIF, ComponentIF
 		return cast(void*)gtkCellAccessible;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkCellAccessible = cast(GtkCellAccessible*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

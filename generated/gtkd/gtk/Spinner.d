@@ -64,6 +64,12 @@ public class Spinner : Widget
 		return cast(void*)gtkSpinner;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkSpinner = cast(GtkSpinner*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -61,6 +61,12 @@ public class Adjustment : ObjectG
 		return cast(void*)gtkAdjustment;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkAdjustment = cast(GtkAdjustment*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -107,6 +107,12 @@ public class Box : Container, OrientableIF
 		return cast(void*)gtkBox;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkBox = cast(GtkBox*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

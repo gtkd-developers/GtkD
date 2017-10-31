@@ -77,6 +77,12 @@ public class RecentChooserMenu : Menu, ActivatableIF, RecentChooserIF
 		return cast(void*)gtkRecentChooserMenu;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkRecentChooserMenu = cast(GtkRecentChooserMenu*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

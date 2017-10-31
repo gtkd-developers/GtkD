@@ -67,6 +67,12 @@ public class InputStream : ObjectG
 		return cast(void*)gInputStream;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gInputStream = cast(GInputStream*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

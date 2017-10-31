@@ -50,6 +50,12 @@ public class BooleanCellAccessible : RendererCellAccessible
 		return cast(void*)gtkBooleanCellAccessible;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkBooleanCellAccessible = cast(GtkBooleanCellAccessible*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -56,6 +56,12 @@ public class TextViewAccessible : ContainerAccessible, EditableTextIF, Streamabl
 		return cast(void*)gtkTextViewAccessible;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkTextViewAccessible = cast(GtkTextViewAccessible*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

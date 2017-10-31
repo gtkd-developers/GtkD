@@ -52,6 +52,12 @@ public class PanedAccessible : ContainerAccessible, ValueIF
 		return cast(void*)gtkPanedAccessible;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkPanedAccessible = cast(GtkPanedAccessible*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

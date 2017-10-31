@@ -50,6 +50,12 @@ public class StatusbarAccessible : ContainerAccessible
 		return cast(void*)gtkStatusbarAccessible;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkStatusbarAccessible = cast(GtkStatusbarAccessible*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

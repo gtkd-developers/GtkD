@@ -67,6 +67,12 @@ public class SourceView : TextView
 		return cast(void*)gtkSourceView;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkSourceView = cast(GtkSourceView*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

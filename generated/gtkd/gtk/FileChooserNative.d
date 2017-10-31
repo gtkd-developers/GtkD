@@ -213,6 +213,12 @@ public class FileChooserNative : NativeDialog, FileChooserIF
 		return cast(void*)gtkFileChooserNative;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkFileChooserNative = cast(GtkFileChooserNative*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

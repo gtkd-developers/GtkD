@@ -64,6 +64,12 @@ public class DrawingContext : ObjectG
 		return cast(void*)gdkDrawingContext;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gdkDrawingContext = cast(GdkDrawingContext*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

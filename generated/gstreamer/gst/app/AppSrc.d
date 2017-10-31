@@ -122,6 +122,12 @@ public class AppSrc : BaseSrc, URIHandlerIF
 		return cast(void*)gstAppSrc;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gstAppSrc = cast(GstAppSrc*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

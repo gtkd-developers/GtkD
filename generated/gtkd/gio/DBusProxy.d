@@ -109,6 +109,12 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 		return cast(void*)gDBusProxy;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gDBusProxy = cast(GDBusProxy*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -67,6 +67,12 @@ public class FileChooserWidget : Box, FileChooserIF
 		return cast(void*)gtkFileChooserWidget;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkFileChooserWidget = cast(GtkFileChooserWidget*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

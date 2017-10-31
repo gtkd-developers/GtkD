@@ -64,6 +64,12 @@ public class Range : Widget, OrientableIF
 		return cast(void*)gtkRange;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkRange = cast(GtkRange*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

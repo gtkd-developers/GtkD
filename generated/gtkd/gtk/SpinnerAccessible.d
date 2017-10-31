@@ -52,6 +52,12 @@ public class SpinnerAccessible : WidgetAccessible, ImageIF
 		return cast(void*)gtkSpinnerAccessible;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkSpinnerAccessible = cast(GtkSpinnerAccessible*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

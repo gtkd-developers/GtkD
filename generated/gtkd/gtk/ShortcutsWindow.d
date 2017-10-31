@@ -93,6 +93,12 @@ public class ShortcutsWindow : Window
 		return cast(void*)gtkShortcutsWindow;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkShortcutsWindow = cast(GtkShortcutsWindow*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

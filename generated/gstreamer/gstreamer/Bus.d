@@ -96,6 +96,12 @@ public class Bus : ObjectGst
 		return cast(void*)gstBus;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gstBus = cast(GstBus*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

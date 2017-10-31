@@ -108,6 +108,12 @@ public class PropertyAction : ObjectG, ActionIF
 		return cast(void*)gPropertyAction;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gPropertyAction = cast(GPropertyAction*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

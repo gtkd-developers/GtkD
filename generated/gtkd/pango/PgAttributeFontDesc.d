@@ -56,6 +56,12 @@ public class PgAttributeFontDesc : PgAttribute
 		return cast(void*)pangoAttrFontDesc;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		pangoAttrFontDesc = cast(PangoAttrFontDesc*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

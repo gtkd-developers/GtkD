@@ -52,6 +52,12 @@ public class ImageCellAccessible : RendererCellAccessible, ImageIF
 		return cast(void*)gtkImageCellAccessible;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkImageCellAccessible = cast(GtkImageCellAccessible*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

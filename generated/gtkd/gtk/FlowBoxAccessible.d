@@ -52,6 +52,12 @@ public class FlowBoxAccessible : ContainerAccessible, SelectionIF
 		return cast(void*)gtkFlowBoxAccessible;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkFlowBoxAccessible = cast(GtkFlowBoxAccessible*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

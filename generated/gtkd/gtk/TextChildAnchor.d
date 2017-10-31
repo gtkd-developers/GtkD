@@ -56,6 +56,12 @@ public class TextChildAnchor : ObjectG
 		return cast(void*)gtkTextChildAnchor;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkTextChildAnchor = cast(GtkTextChildAnchor*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

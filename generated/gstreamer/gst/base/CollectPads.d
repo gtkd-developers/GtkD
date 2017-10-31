@@ -92,6 +92,12 @@ public class CollectPads : ObjectGst
 		return cast(void*)gstCollectPads;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gstCollectPads = cast(GstCollectPads*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

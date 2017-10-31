@@ -25,6 +25,9 @@ wrap: gtk
 file: Gtk-3.0.gir
 
 addAliases: start
+
+	extern(C) Object _d_newclass(ClassInfo ci);
+
 	alias GtkAllocation* Allocation;
 addAliases: end
 
@@ -263,6 +266,7 @@ alias: get_name buildableGetName
 
 struct: Builder
 noCode: new
+noCode: get_object
 noCode: get_objects
 
 #There are now 3 constructors that have a single string parameter, disable 2 of them.
@@ -362,6 +366,20 @@ code: start
 	}
 
 	/**
+	 * Gets the object named name. Note that this function does not
+	 * increment the reference count of the returned object.
+	 * Since 2.12
+	 * Params:
+	 * name = name of object to get
+	 * Returns: the object named name or NULL if it could not be found in the object tree.. transfer none.
+	 */
+	public ObjectG getObject(string name)
+	{
+		// GObject* gtk_builder_get_object (GtkBuilder *builder,  const gchar *name);
+		return newFromObject( gtk_builder_get_object(gtkBuilder, Str.toStringz(name)) );
+	}
+
+	/**
 	 * Gets all objects that have been constructed by builder.
 	 * Since 2.12
 	 * Returns: an array containing all the objects constructed by the GtkBuilder instance.
@@ -375,13 +393,91 @@ code: start
 
 		while ( list.next !is null )
 		{
-			objects ~= ObjectG.getDObject!(ObjectG)(cast(GObject*) list.data);
+			objects ~= newFromObject( cast(GObject*)list.data );
 			list = list.next;
 		}
 
 		g_slist_free(list);
 
 		return objects;
+	}
+
+	/**
+	 * This function creates an D object corresponding to the Struct pointer passed in.
+	 */
+	public ObjectG newFromObject(GObject* cobj)
+	{
+		if(cobj is null)
+		{
+			return null;
+		}
+
+		void* dObj = g_object_get_data(cobj, Str.toStringz("GObject"));
+
+		if ( dObj !is null )
+		{
+			return cast(ObjectG)dObj;
+		}
+
+		string type = convertClassName(Type.name((cast(GTypeInstance*)cobj).gClass.gType));
+		ClassInfo ci = cast(ClassInfo)ClassInfo.find(type);
+
+		//Gobject and Gio types both start with g, so try both.
+		if(ci is null && startsWith(type, "gobject"))
+		{
+				ci = cast(ClassInfo)ClassInfo.find("gio"~ type[7..$]);
+		}
+
+		if(ci is null)
+		{
+			return null;
+		}
+
+		ObjectG obj = cast(ObjectG)gtk.c.types._d_newclass(ci);
+
+		obj.__ctor(cobj);
+
+		return obj;
+	}
+
+	/**
+	 * Turn the name of a C Type in to the name of the corresponding D type.
+	 * Note: If the prefix of the type is "G" this always usses "gobject" as
+	 *     the prefix, extra care should be taken for types from GIO.
+	 */
+	private string convertClassName(string gName)
+	{
+		string conv;
+		string prefix;
+
+		if      ( startsWith(gName, "GtkSource" ) ) prefix = "Gsv";
+		else if ( startsWith(gName, "Gtk") )        prefix = "Gtk";
+		else if ( startsWith(gName, "Gdk") )        prefix = "Gdk";
+		else if ( startsWith(gName, "Gst") )        prefix = "Gst";
+		else if ( startsWith(gName, "Gda") )        prefix = "Gda";
+		else if ( startsWith(gName, "Atk") )        prefix = "Atk";
+		else if ( startsWith(gName, "G") )          prefix = "G";
+		else if ( startsWith(gName, "Pango") )      prefix = "Pg";
+		else if ( startsWith(gName, "cairo") )      prefix = "cairo";
+
+		conv = gName[prefix.length..gName.length];
+
+		if ( conv == "Object" ) conv ~= prefix;
+		if ( prefix == "Pg" )   conv = "Pg" ~ gName[5..gName.length];
+		if ( prefix == "cairo") conv = toUpper(gName[6..7]) ~ gName[7..gName.length - 2];
+
+		prefix = toLower(prefix);
+
+		if( prefix == "gst") prefix = "gstreamer";
+		if( prefix == "g")   prefix = "gobject";
+		if( prefix == "pg" ) prefix = "pango";
+
+		return prefix ~"."~ conv ~"."~ conv;
+	}
+
+	private bool startsWith(string str, string prefix)
+	{
+		return str.length >= prefix.length && str[0..prefix.length] == prefix;
 	}
 code: end
 
@@ -4543,6 +4639,103 @@ code: start
 			return null;
 		}
 		return ObjectG.getDObject!(TreeView)(cast(GtkTreeView*) p);
+	}
+code: end
+
+struct: UIManager
+import: gobject.Type
+import: gtk.AccelGroup
+import: gtk.Action
+import: gtk.ActionGroup
+import: gtk.CheckMenuItem
+import: gtk.ImageMenuItem
+import: gtk.Menu
+import: gtk.MenuBar
+import: gtk.MenuItem
+import: gtk.MenuToolButton
+import: gtk.RadioMenuItem
+import: gtk.RadioToolButton
+import: gtk.SeparatorMenuItem
+import: gtk.SeparatorToolItem
+import: gtk.TearoffMenuItem
+import: gtk.ToggleToolButton
+import: gtk.Toolbar
+import: gtk.ToolButton
+import: gtk.ToolItem
+import: gtk.Widget
+noCode: get_widget
+code: start
+	/**
+	 * Warning: getWidget is deprecated and should not be used in newly-written code. 3.10
+	 *
+	 * Looks up a widget by following a path.
+	 * The path consists of the names specified in the XML description of the UI.
+	 * separated by '/'. Elements which don't have a name or action attribute in
+	 * the XML (e.g. &lt;popup&gt;) can be addressed by their XML element name
+	 * (e.g. "popup"). The root element ("/ui") can be omitted in the path.
+	 *
+	 * Note that the widget found by following a path that ends in a &lt;menu&gt;
+	 * element is the menuitem to which the menu is attached, not the menu itself.
+	 *
+	 * Also note that the widgets constructed by a ui manager are not tied to
+	 * the lifecycle of the ui manager. If you add the widgets returned by this
+	 * function to some container or explicitly ref them, they will survive the
+	 * destruction of the ui manager.
+	 *
+	 * Since 2.4
+	 *
+	 * Params:
+	 *    path = a path
+	 *
+	 * Returns: the widget found by following the path, or null if no widget was found.
+	 */
+	public Widget getWidget(string path)
+	{
+		// GtkWidget * gtk_ui_manager_get_widget (GtkUIManager *manager,  const gchar *path);
+		auto p = gtk_ui_manager_get_widget(gtkUIManager, Str.toStringz(path));
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		string typeName = Type.name((cast(GTypeInstance*)p).gClass.gType);
+
+		switch(typeName)
+		{
+			case "GtkCheckMenuItem":
+				return ObjectG.getDObject!(CheckMenuItem)(cast(GtkCheckMenuItem*) p);
+			case "GtkImageMenuItem":
+				return ObjectG.getDObject!(ImageMenuItem)(cast(GtkImageMenuItem*) p);
+			case "GtkMenu":
+				return ObjectG.getDObject!(Menu)(cast(GtkMenu*) p);
+			case "GtkMenuBar":
+				return ObjectG.getDObject!(MenuBar)(cast(GtkMenuBar*) p);
+			case "GtkMenuItem":
+				return ObjectG.getDObject!(MenuItem)(cast(GtkMenuItem*) p);
+			case "GtkMenuToolButton":
+				return ObjectG.getDObject!(MenuToolButton)(cast(GtkMenuToolButton*) p);
+			case "GtkRadioMenuItem":
+				return ObjectG.getDObject!(RadioMenuItem)(cast(GtkRadioMenuItem*) p);
+			case "GtkRadioToolButton":
+				return ObjectG.getDObject!(RadioToolButton)(cast(GtkRadioToolButton*) p);
+			case "GtkSeparatorMenuItem":
+				return ObjectG.getDObject!(SeparatorMenuItem)(cast(GtkSeparatorMenuItem*) p);
+			case "GtkSeparatorToolItem":
+				return ObjectG.getDObject!(SeparatorToolItem)(cast(GtkSeparatorToolItem*) p);
+			case "GtkTearoffMenuItem":
+				return ObjectG.getDObject!(TearoffMenuItem)(cast(GtkTearoffMenuItem*) p);
+			case "GtkToggleToolButton":
+				return ObjectG.getDObject!(ToggleToolButton)(cast(GtkToggleToolButton*) p);
+			case "GtkToolbar":
+				return ObjectG.getDObject!(Toolbar)(cast(GtkToolbar*) p);
+			case "GtkToolButton":
+				return ObjectG.getDObject!(ToolButton)(cast(GtkToolButton*) p);
+			case "GtkToolItem":
+				return ObjectG.getDObject!(ToolItem)(cast(GtkToolItem*) p);
+			default:
+				return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		}
 	}
 code: end
 

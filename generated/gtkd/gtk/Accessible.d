@@ -64,6 +64,12 @@ public class Accessible : ObjectAtk
 		return cast(void*)gtkAccessible;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkAccessible = cast(GtkAccessible*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

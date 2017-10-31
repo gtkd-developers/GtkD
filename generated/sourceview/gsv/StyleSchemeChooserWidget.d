@@ -57,6 +57,12 @@ public class StyleSchemeChooserWidget : Bin, StyleSchemeChooserIF
 		return cast(void*)gtkSourceStyleSchemeChooserWidget;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkSourceStyleSchemeChooserWidget = cast(GtkSourceStyleSchemeChooserWidget*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

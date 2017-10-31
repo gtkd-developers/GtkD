@@ -68,6 +68,12 @@ public class Revealer : Bin
 		return cast(void*)gtkRevealer;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkRevealer = cast(GtkRevealer*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

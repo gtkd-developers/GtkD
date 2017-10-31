@@ -166,6 +166,12 @@ public class SpinButton : Entry, OrientableIF
 		return cast(void*)gtkSpinButton;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkSpinButton = cast(GtkSpinButton*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

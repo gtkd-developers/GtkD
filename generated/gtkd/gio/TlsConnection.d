@@ -69,6 +69,12 @@ public class TlsConnection : IOStream
 		return cast(void*)gTlsConnection;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gTlsConnection = cast(GTlsConnection*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -71,6 +71,12 @@ public class Stack : Container
 		return cast(void*)gtkStack;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkStack = cast(GtkStack*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -66,6 +66,12 @@ public class UnixConnection : SocketConnection
 		return cast(void*)gUnixConnection;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gUnixConnection = cast(GUnixConnection*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

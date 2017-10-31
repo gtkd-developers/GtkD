@@ -52,6 +52,12 @@ public class RangeAccessible : WidgetAccessible, ValueIF
 		return cast(void*)gtkRangeAccessible;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkRangeAccessible = cast(GtkRangeAccessible*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

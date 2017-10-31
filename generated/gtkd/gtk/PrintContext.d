@@ -123,6 +123,12 @@ public class PrintContext : ObjectG
 		return cast(void*)gtkPrintContext;
 	}
 
+	protected override void setStruct(GObject* obj)
+	{
+		gtkPrintContext = cast(GtkPrintContext*)obj;
+		super.setStruct(obj);
+	}
+
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
