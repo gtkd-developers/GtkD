@@ -4,10 +4,12 @@ import core.stdc.stdlib: exit;
 
 import std.algorithm;
 import std.array;
+import std.conv;
 import std.file;
 import std.getopt;
 import std.path;
 import std.process;
+import std.range;
 import std.stdio;
 import std.string;
 
@@ -82,19 +84,23 @@ void build(string dir, string lib)
 	{
 		if (lib == "gtkd")
 		{
-			string[] subDirs = ["atk", "cairo", "gdk", "gdkpixbuf", "gio", "glib", "gobject", "gthread", "gtk", "gtkc", "gtkd", "pango", "rsvg"];
+			string[] subDirs = ["atk", "cairo", "gdk", "gdkpixbuf", "gio", "glib", "gobject", "gthread", "gtkc", "gtkd", "pango", "rsvg"];
 
 			foreach(directory; subDirs)
 				buildObj(dFiles("generated\\gtkd\\"~ directory), directory);
 
+			string[] files = dFiles("generated\\gtkd\\gtk").split();
+			files.chunks((files.length / 4) + 1).enumerate(1).each!((index, value){buildObj(value.join(' '), "gtk"~to!string(index));});
+
 			string objects;
 			foreach(directory; subDirs)
 				objects ~= directory ~".obj ";
+			objects ~= "gtk1.obj gtk2.obj gtk3.obj gtk4.obj";
 
 			executeShell(format("dmd -lib %s -of%s.lib %s", ldflags, lib, objects));
 
-			foreach(directory; subDirs)
-				std.file.remove(directory ~".obj");
+			foreach(string obj; objects.split())
+				std.file.remove(obj);
 		}
 		else
 		{
