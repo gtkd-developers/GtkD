@@ -90,7 +90,7 @@ template GLCapability()
 	 */
 	bool drawFrame()
 	{
-		return drawFrame(scoped!Context(null, true), this);
+		return drawFrame(getScopedGobject!Context(null, true), this);
 	}
 	
 	bool alreadyRealized;

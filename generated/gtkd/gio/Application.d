@@ -257,7 +257,7 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 
 	extern(C) static int callBackScopedCommandLine(GApplication* applicationStruct, GApplicationCommandLine* commandLine, ScopedOnCommandLineDelegateWrapper wrapper)
 	{
-		return wrapper.dlg(scoped!ApplicationCommandLine(commandLine), wrapper.outer);
+		return wrapper.dlg(getScopedGobject!ApplicationCommandLine(commandLine), wrapper.outer);
 	}
 
 	extern(C) static void callBackScopedCommandLineDestroy(ScopedOnCommandLineDelegateWrapper wrapper, GClosure* closure)

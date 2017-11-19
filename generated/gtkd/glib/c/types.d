@@ -53,44 +53,27 @@ version (Windows)
 	}
 }
 
-static if ( __VERSION__ >= 2063 )
+struct Scoped(T)
 {
-	public import std.typecons : scoped;
+	T payload;
 
-	template Scoped(T)
+	alias payload this;
+
+	@disable this();
+	@disable this(this);
+
+	~this()
 	{
-		alias typeof(scoped!T(cast(typeof(T.tupleof[0]))null)) Scoped;
+		.destroy(payload);
 	}
 }
-else
+
+auto getScopedGobject(T, Args...)(auto ref Args args) if (is(T == class))
 {
-	// I'm getting the following error on the older dmd versions:
-	// this for Scoped_store needs to be type Scoped not type inout(Scoped!(T)).
-	// Unlike the phobos version this does use GC alocated memory for the object.
-	// Within GtkD this is used to make sure destroy is called on the object
-	// so it releases the resources it holds.
-	struct Scoped(T)
-	{
-		T payload;
+	Scoped!(T) result = void;
+	result.payload = new T(args);
 
-		alias payload this;
-
-		@disable this();
-		@disable this(this);
-
-		~this()
-		{
-			.destroy(payload);
-		}
-	}
-
-	auto scoped(T, Args...)(auto ref Args args) if (is(T == class))
-	{
-		Scoped!(T) result = void;
-		result.payload = new T(args);
-
-		return result;
-	}
+	return result;
 }
 
 /**

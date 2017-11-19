@@ -821,7 +821,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 
 		extern(C) static int callBackScopedDraw(GtkWidget* widgetStruct, cairo_t* cr, ScopedOnDrawDelegateWrapper wrapper)
 		{
-			return wrapper.dlg(scoped!Context(cr), wrapper.outer);
+			return wrapper.dlg(getScopedGobject!Context(cr), wrapper.outer);
 		}
 
 		extern(C) static void callBackDrawScopedDestroy(ScopedOnDrawDelegateWrapper wrapper, GClosure* closure)
