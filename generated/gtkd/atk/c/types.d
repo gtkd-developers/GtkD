@@ -2967,7 +2967,7 @@ public alias extern(C) void function(AtkObject* obj, AtkPropertyValues* vals) At
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum BINARY_AGE = 22610;
+enum BINARY_AGE = 22611;
 alias ATK_BINARY_AGE = BINARY_AGE;
 
 /**
@@ -2991,7 +2991,7 @@ alias ATK_MAJOR_VERSION = MAJOR_VERSION;
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum MICRO_VERSION = 0;
+enum MICRO_VERSION = 1;
 alias ATK_MICRO_VERSION = MICRO_VERSION;
 
 /**

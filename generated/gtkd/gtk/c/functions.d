@@ -2614,6 +2614,7 @@ shared static this()
 	Linker.link(gtk_places_sidebar_get_show_enter_location, "gtk_places_sidebar_get_show_enter_location", LIBRARY_GTK);
 	Linker.link(gtk_places_sidebar_get_show_other_locations, "gtk_places_sidebar_get_show_other_locations", LIBRARY_GTK);
 	Linker.link(gtk_places_sidebar_get_show_recent, "gtk_places_sidebar_get_show_recent", LIBRARY_GTK);
+	Linker.link(gtk_places_sidebar_get_show_starred_location, "gtk_places_sidebar_get_show_starred_location", LIBRARY_GTK);
 	Linker.link(gtk_places_sidebar_get_show_trash, "gtk_places_sidebar_get_show_trash", LIBRARY_GTK);
 	Linker.link(gtk_places_sidebar_list_shortcuts, "gtk_places_sidebar_list_shortcuts", LIBRARY_GTK);
 	Linker.link(gtk_places_sidebar_remove_shortcut, "gtk_places_sidebar_remove_shortcut", LIBRARY_GTK);
@@ -2626,6 +2627,7 @@ shared static this()
 	Linker.link(gtk_places_sidebar_set_show_enter_location, "gtk_places_sidebar_set_show_enter_location", LIBRARY_GTK);
 	Linker.link(gtk_places_sidebar_set_show_other_locations, "gtk_places_sidebar_set_show_other_locations", LIBRARY_GTK);
 	Linker.link(gtk_places_sidebar_set_show_recent, "gtk_places_sidebar_set_show_recent", LIBRARY_GTK);
+	Linker.link(gtk_places_sidebar_set_show_starred_location, "gtk_places_sidebar_set_show_starred_location", LIBRARY_GTK);
 	Linker.link(gtk_places_sidebar_set_show_trash, "gtk_places_sidebar_set_show_trash", LIBRARY_GTK);
 
 	// gtk.Plug
@@ -7770,6 +7772,7 @@ __gshared extern(C)
 	int function(GtkPlacesSidebar* sidebar) c_gtk_places_sidebar_get_show_enter_location;
 	int function(GtkPlacesSidebar* sidebar) c_gtk_places_sidebar_get_show_other_locations;
 	int function(GtkPlacesSidebar* sidebar) c_gtk_places_sidebar_get_show_recent;
+	int function(GtkPlacesSidebar* sidebar) c_gtk_places_sidebar_get_show_starred_location;
 	int function(GtkPlacesSidebar* sidebar) c_gtk_places_sidebar_get_show_trash;
 	GSList* function(GtkPlacesSidebar* sidebar) c_gtk_places_sidebar_list_shortcuts;
 	void function(GtkPlacesSidebar* sidebar, GFile* location) c_gtk_places_sidebar_remove_shortcut;
@@ -7782,6 +7785,7 @@ __gshared extern(C)
 	void function(GtkPlacesSidebar* sidebar, int showEnterLocation) c_gtk_places_sidebar_set_show_enter_location;
 	void function(GtkPlacesSidebar* sidebar, int showOtherLocations) c_gtk_places_sidebar_set_show_other_locations;
 	void function(GtkPlacesSidebar* sidebar, int showRecent) c_gtk_places_sidebar_set_show_recent;
+	void function(GtkPlacesSidebar* sidebar, int showStarredLocation) c_gtk_places_sidebar_set_show_starred_location;
 	void function(GtkPlacesSidebar* sidebar, int showTrash) c_gtk_places_sidebar_set_show_trash;
 
 	// gtk.Plug
@@ -12924,6 +12928,7 @@ alias c_gtk_places_sidebar_get_show_desktop gtk_places_sidebar_get_show_desktop;
 alias c_gtk_places_sidebar_get_show_enter_location gtk_places_sidebar_get_show_enter_location;
 alias c_gtk_places_sidebar_get_show_other_locations gtk_places_sidebar_get_show_other_locations;
 alias c_gtk_places_sidebar_get_show_recent gtk_places_sidebar_get_show_recent;
+alias c_gtk_places_sidebar_get_show_starred_location gtk_places_sidebar_get_show_starred_location;
 alias c_gtk_places_sidebar_get_show_trash gtk_places_sidebar_get_show_trash;
 alias c_gtk_places_sidebar_list_shortcuts gtk_places_sidebar_list_shortcuts;
 alias c_gtk_places_sidebar_remove_shortcut gtk_places_sidebar_remove_shortcut;
@@ -12936,6 +12941,7 @@ alias c_gtk_places_sidebar_set_show_desktop gtk_places_sidebar_set_show_desktop;
 alias c_gtk_places_sidebar_set_show_enter_location gtk_places_sidebar_set_show_enter_location;
 alias c_gtk_places_sidebar_set_show_other_locations gtk_places_sidebar_set_show_other_locations;
 alias c_gtk_places_sidebar_set_show_recent gtk_places_sidebar_set_show_recent;
+alias c_gtk_places_sidebar_set_show_starred_location gtk_places_sidebar_set_show_starred_location;
 alias c_gtk_places_sidebar_set_show_trash gtk_places_sidebar_set_show_trash;
 
 // gtk.Plug

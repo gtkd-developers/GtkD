@@ -1607,18 +1607,20 @@ struct PangoFontClass
 	 *
 	 * Params:
 	 *     font = a #PangoFont
+	 *     language = the language tag
 	 * Returns: a newly-allocated #PangoCoverage
 	 *     object.
 	 */
-	extern(C) PangoCoverage* function(PangoFont* font, PangoLanguage* lang) getCoverage;
+	extern(C) PangoCoverage* function(PangoFont* font, PangoLanguage* language) getCoverage;
 	/**
 	 *
 	 * Params:
 	 *     font = a #PangoFont
+	 *     language = the language tag
 	 *     ch = a Unicode character.
 	 * Returns: the best matching shaper.
 	 */
-	extern(C) PangoEngineShape* function(PangoFont* font, PangoLanguage* lang, uint ch) findShaper;
+	extern(C) PangoEngineShape* function(PangoFont* font, PangoLanguage* language, uint ch) findShaper;
 	/** */
 	extern(C) void function(PangoFont* font, PangoGlyph glyph, PangoRectangle* inkRect, PangoRectangle* logicalRect) getGlyphExtents;
 	/**

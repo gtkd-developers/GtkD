@@ -305,6 +305,18 @@ public class PlacesSidebar : ScrolledWindow
 	}
 
 	/**
+	 * Returns the value previously set with gtk_places_sidebar_set_show_starred_location()
+	 *
+	 * Returns: %TRUE if the sidebar will display a Starred item.
+	 *
+	 * Since: 3.22.26
+	 */
+	public bool getShowStarredLocation()
+	{
+		return gtk_places_sidebar_get_show_starred_location(gtkPlacesSidebar) != 0;
+	}
+
+	/**
 	 * Returns the value previously set with gtk_places_sidebar_set_show_trash()
 	 *
 	 * Returns: %TRUE if the sidebar will display a “Trash” item.
@@ -524,6 +536,20 @@ public class PlacesSidebar : ScrolledWindow
 	public void setShowRecent(bool showRecent)
 	{
 		gtk_places_sidebar_set_show_recent(gtkPlacesSidebar, showRecent);
+	}
+
+	/**
+	 * If you enable this, you should connect to the
+	 * #GtkPlacesSidebar::show-starred-location signal.
+	 *
+	 * Params:
+	 *     showStarredLocation = whether to show an item for Starred files
+	 *
+	 * Since: 3.22.26
+	 */
+	public void setShowStarredLocation(bool showStarredLocation)
+	{
+		gtk_places_sidebar_set_show_starred_location(gtkPlacesSidebar, showStarredLocation);
 	}
 
 	/**
@@ -1234,6 +1260,63 @@ public class PlacesSidebar : ScrolledWindow
 	}
 
 	extern(C) static void callBackShowOtherLocationsWithFlagsDestroy(OnShowOtherLocationsWithFlagsDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.remove(wrapper);
+	}
+
+	protected class OnShowStarredLocationDelegateWrapper
+	{
+		void delegate(GtkPlacesOpenFlags, PlacesSidebar) dlg;
+		gulong handlerId;
+
+		this(void delegate(GtkPlacesOpenFlags, PlacesSidebar) dlg)
+		{
+			this.dlg = dlg;
+			onShowStarredLocationListeners ~= this;
+		}
+
+		void remove(OnShowStarredLocationDelegateWrapper source)
+		{
+			foreach(index, wrapper; onShowStarredLocationListeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					onShowStarredLocationListeners[index] = null;
+					onShowStarredLocationListeners = std.algorithm.remove(onShowStarredLocationListeners, index);
+					break;
+				}
+			}
+		}
+	}
+	OnShowStarredLocationDelegateWrapper[] onShowStarredLocationListeners;
+
+	/**
+	 * The places sidebar emits this signal when it needs the calling
+	 * application to present a way to show the starred files. In GNOME,
+	 * starred files are implemented by setting the nao:predefined-tag-favorite
+	 * tag in the tracker database.
+	 *
+	 * Since: 3.22.26
+	 */
+	gulong addOnShowStarredLocation(void delegate(GtkPlacesOpenFlags, PlacesSidebar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		auto wrapper = new OnShowStarredLocationDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
+			this,
+			"show-starred-location",
+			cast(GCallback)&callBackShowStarredLocation,
+			cast(void*)wrapper,
+			cast(GClosureNotify)&callBackShowStarredLocationDestroy,
+			connectFlags);
+		return wrapper.handlerId;
+	}
+
+	extern(C) static void callBackShowStarredLocation(GtkPlacesSidebar* placessidebarStruct, GtkPlacesOpenFlags object, OnShowStarredLocationDelegateWrapper wrapper)
+	{
+		wrapper.dlg(object, wrapper.outer);
+	}
+
+	extern(C) static void callBackShowStarredLocationDestroy(OnShowStarredLocationDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
 	}

@@ -110,7 +110,7 @@ public class MonitorG : ObjectG
 	 * not in ”device pixels” (see gdk_monitor_get_scale_factor()).
 	 *
 	 * Params:
-	 *     geometry = a #GdkRectangle to be filled wiht the monitor geometry
+	 *     geometry = a #GdkRectangle to be filled with the monitor geometry
 	 *
 	 * Since: 3.22
 	 */
