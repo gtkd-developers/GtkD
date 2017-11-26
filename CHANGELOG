@@ -1,6 +1,11 @@
 GtkD ChangeLog
 ==============
 
+Release: 3.7.2
+--------------
+-Don't use the phobos version of Scoped, to avoid issues when the struct is moved.
+-Fix the Windows build script for dmd 2.077.
+
 Release: 3.7.1
 --------------
 -Revert the opCast changes for the 3.7 release.
