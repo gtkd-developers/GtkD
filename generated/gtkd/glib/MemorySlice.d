@@ -30,12 +30,17 @@ public  import gtkc.glibtypes;
 
 
 /** */
+public T* sliceNew(T)()
+{
+	return cast(T*)g_slice_alloc0(T.sizeof);
+}
+
 public T* sliceAlloc(T)()
 {
 	return cast(T*)g_slice_alloc0(T.sizeof);
 }
 
-public T* sliceCopy(T)(T* memBlock)
+public T* sliceDup(T)(T* memBlock)
 {
 	return cast(T*)g_slice_copy(T.sizeof, memBlock);
 }

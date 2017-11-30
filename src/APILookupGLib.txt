@@ -686,20 +686,25 @@ class: SimpleXML
 struct: MemorySlice
 namespace:
 code: start
+	public T* sliceNew(T)()
+	{
+		return cast(T*)g_slice_alloc0(T.sizeof);
+	}
+	
 	public T* sliceAlloc(T)()
 	{
 		return cast(T*)g_slice_alloc0(T.sizeof);
 	}
 
-	public T* sliceCopy(T)(T* memBlock)
+	public T* sliceDup(T)(T* memBlock)
 	{
 		return cast(T*)g_slice_copy(T.sizeof, memBlock);
 	}
-
+ 
 	public void sliceFree(T)(T* memBlock)
-	{
-		 g_slice_free1(T.sizeof, memBlock);
-	}
+ 	{
+ 		 g_slice_free1(T.sizeof, memBlock);
+ 	}
 code: end
 
 struct: Module
