@@ -24,6 +24,7 @@
 
 module gst.base.BaseSrc;
 
+private import glib.MemorySlice;
 private import gobject.ObjectG;
 private import gst.base.c.functions;
 public  import gst.base.c.types;
@@ -204,7 +205,7 @@ public class BaseSrc : Element
 	public void getAllocator(out Allocator allocator, out AllocationParams params)
 	{
 		GstAllocator* outallocator = null;
-		GstAllocationParams* outparams = gMalloc!GstAllocationParams();
+		GstAllocationParams* outparams = sliceAlloc!GstAllocationParams();
 
 		gst_base_src_get_allocator(gstBaseSrc, &outallocator, outparams);
 

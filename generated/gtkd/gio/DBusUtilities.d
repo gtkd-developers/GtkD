@@ -31,6 +31,7 @@ private import gio.c.functions;
 public  import gio.c.types;
 private import glib.ErrorG;
 private import glib.GException;
+private import glib.MemorySlice;
 private import glib.Str;
 private import glib.Variant;
 private import glib.VariantType;
@@ -298,7 +299,7 @@ public struct DBusUtilities
 	 */
 	public static void gvariantToGvalue(Variant value, out Value outGvalue)
 	{
-		GValue* outoutGvalue = gMalloc!GValue();
+		GValue* outoutGvalue = sliceAlloc!GValue();
 
 		g_dbus_gvariant_to_gvalue((value is null) ? null : value.getVariantStruct(), outoutGvalue);
 

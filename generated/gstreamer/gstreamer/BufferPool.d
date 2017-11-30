@@ -25,6 +25,7 @@
 module gstreamer.BufferPool;
 
 private import glib.ConstructionException;
+private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gstreamer.AllocationParams;
@@ -165,7 +166,7 @@ public class BufferPool : ObjectGst
 	public static bool configGetAllocator(Structure config, ref Allocator allocator, out AllocationParams params)
 	{
 		GstAllocator* outallocator = allocator.getAllocatorStruct();
-		GstAllocationParams* outparams = gMalloc!GstAllocationParams();
+		GstAllocationParams* outparams = sliceAlloc!GstAllocationParams();
 
 		auto p = gst_buffer_pool_config_get_allocator((config is null) ? null : config.getStructureStruct(), &outallocator, outparams) != 0;
 

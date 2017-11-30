@@ -24,6 +24,7 @@
 
 module gstreamer.ChildProxyT;
 
+public  import glib.MemorySlice;
 public  import glib.Str;
 public  import gobject.ObjectG;
 public  import gobject.ParamSpec;
@@ -157,7 +158,7 @@ public template ChildProxyT(TStruct)
 	 */
 	public void childGetProperty(string name, out Value value)
 	{
-		GValue* outvalue = gMalloc!GValue();
+		GValue* outvalue = sliceAlloc!GValue();
 
 		gst_child_proxy_get_property(getChildProxyStruct(), Str.toStringz(name), outvalue);
 

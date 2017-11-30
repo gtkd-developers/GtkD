@@ -26,6 +26,7 @@ module gstreamer.Iterator;
 
 private import glib.ConstructionException;
 private import glib.ListG;
+private import glib.MemorySlice;
 private import glib.Mutex;
 private import gobject.ObjectG;
 private import gobject.Value;
@@ -294,7 +295,7 @@ public class Iterator
 	 */
 	public bool findCustom(GCompareFunc func, out Value elem, void* userData)
 	{
-		GValue* outelem = gMalloc!GValue();
+		GValue* outelem = sliceAlloc!GValue();
 
 		auto p = gst_iterator_find_custom(gstIterator, func, outelem, userData) != 0;
 
@@ -390,7 +391,7 @@ public class Iterator
 	 */
 	public GstIteratorResult next(out Value elem)
 	{
-		GValue* outelem = gMalloc!GValue();
+		GValue* outelem = sliceAlloc!GValue();
 
 		auto p = gst_iterator_next(gstIterator, outelem);
 

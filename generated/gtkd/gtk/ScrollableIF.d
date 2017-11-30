@@ -24,6 +24,7 @@
 
 module gtk.ScrollableIF;
 
+private import glib.MemorySlice;
 private import gobject.ObjectG;
 private import gtk.Adjustment;
 private import gtk.Border;

@@ -25,6 +25,7 @@
 module gtk.TreeModelFilter;
 
 private import glib.ConstructionException;
+private import glib.MemorySlice;
 private import gobject.ObjectG;
 private import gtk.TreeDragSourceIF;
 private import gtk.TreeDragSourceT;
@@ -182,7 +183,7 @@ public class TreeModelFilter : ObjectG, TreeDragSourceIF, TreeModelIF
 	 */
 	public bool convertChildIterToIter(out TreeIter filterIter, TreeIter childIter)
 	{
-		GtkTreeIter* outfilterIter = gMalloc!GtkTreeIter();
+		GtkTreeIter* outfilterIter = sliceAlloc!GtkTreeIter();
 
 		auto p = gtk_tree_model_filter_convert_child_iter_to_iter(gtkTreeModelFilter, outfilterIter, (childIter is null) ? null : childIter.getTreeIterStruct()) != 0;
 
@@ -228,7 +229,7 @@ public class TreeModelFilter : ObjectG, TreeDragSourceIF, TreeModelIF
 	 */
 	public void convertIterToChildIter(out TreeIter childIter, TreeIter filterIter)
 	{
-		GtkTreeIter* outchildIter = gMalloc!GtkTreeIter();
+		GtkTreeIter* outchildIter = sliceAlloc!GtkTreeIter();
 
 		gtk_tree_model_filter_convert_iter_to_child_iter(gtkTreeModelFilter, outchildIter, (filterIter is null) ? null : filterIter.getTreeIterStruct());
 

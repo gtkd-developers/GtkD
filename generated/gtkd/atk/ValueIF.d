@@ -28,6 +28,7 @@ private import atk.Range;
 private import atk.c.functions;
 public  import atk.c.types;
 private import glib.ListSG;
+private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;

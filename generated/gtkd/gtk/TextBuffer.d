@@ -30,6 +30,7 @@ private import gdkpixbuf.Pixbuf;
 private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
+private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
@@ -644,8 +645,8 @@ public class TextBuffer : ObjectG
 	 */
 	public void getBounds(out TextIter start, out TextIter end)
 	{
-		GtkTextIter* outstart = gMalloc!GtkTextIter();
-		GtkTextIter* outend = gMalloc!GtkTextIter();
+		GtkTextIter* outstart = sliceAlloc!GtkTextIter();
+		GtkTextIter* outend = sliceAlloc!GtkTextIter();
 
 		gtk_text_buffer_get_bounds(gtkTextBuffer, outstart, outend);
 
@@ -721,7 +722,7 @@ public class TextBuffer : ObjectG
 	 */
 	public void getEndIter(out TextIter iter)
 	{
-		GtkTextIter* outiter = gMalloc!GtkTextIter();
+		GtkTextIter* outiter = sliceAlloc!GtkTextIter();
 
 		gtk_text_buffer_get_end_iter(gtkTextBuffer, outiter);
 
@@ -769,7 +770,7 @@ public class TextBuffer : ObjectG
 	 */
 	public void getIterAtChildAnchor(out TextIter iter, TextChildAnchor anchor)
 	{
-		GtkTextIter* outiter = gMalloc!GtkTextIter();
+		GtkTextIter* outiter = sliceAlloc!GtkTextIter();
 
 		gtk_text_buffer_get_iter_at_child_anchor(gtkTextBuffer, outiter, (anchor is null) ? null : anchor.getTextChildAnchorStruct());
 
@@ -786,7 +787,7 @@ public class TextBuffer : ObjectG
 	 */
 	public void getIterAtLine(out TextIter iter, int lineNumber)
 	{
-		GtkTextIter* outiter = gMalloc!GtkTextIter();
+		GtkTextIter* outiter = sliceAlloc!GtkTextIter();
 
 		gtk_text_buffer_get_iter_at_line(gtkTextBuffer, outiter, lineNumber);
 
@@ -811,7 +812,7 @@ public class TextBuffer : ObjectG
 	 */
 	public void getIterAtLineIndex(out TextIter iter, int lineNumber, int byteIndex)
 	{
-		GtkTextIter* outiter = gMalloc!GtkTextIter();
+		GtkTextIter* outiter = sliceAlloc!GtkTextIter();
 
 		gtk_text_buffer_get_iter_at_line_index(gtkTextBuffer, outiter, lineNumber, byteIndex);
 
@@ -835,7 +836,7 @@ public class TextBuffer : ObjectG
 	 */
 	public void getIterAtLineOffset(out TextIter iter, int lineNumber, int charOffset)
 	{
-		GtkTextIter* outiter = gMalloc!GtkTextIter();
+		GtkTextIter* outiter = sliceAlloc!GtkTextIter();
 
 		gtk_text_buffer_get_iter_at_line_offset(gtkTextBuffer, outiter, lineNumber, charOffset);
 
@@ -851,7 +852,7 @@ public class TextBuffer : ObjectG
 	 */
 	public void getIterAtMark(out TextIter iter, TextMark mark)
 	{
-		GtkTextIter* outiter = gMalloc!GtkTextIter();
+		GtkTextIter* outiter = sliceAlloc!GtkTextIter();
 
 		gtk_text_buffer_get_iter_at_mark(gtkTextBuffer, outiter, (mark is null) ? null : mark.getTextMarkStruct());
 
@@ -870,7 +871,7 @@ public class TextBuffer : ObjectG
 	 */
 	public void getIterAtOffset(out TextIter iter, int charOffset)
 	{
-		GtkTextIter* outiter = gMalloc!GtkTextIter();
+		GtkTextIter* outiter = sliceAlloc!GtkTextIter();
 
 		gtk_text_buffer_get_iter_at_offset(gtkTextBuffer, outiter, charOffset);
 
@@ -988,8 +989,8 @@ public class TextBuffer : ObjectG
 	 */
 	public bool getSelectionBounds(out TextIter start, out TextIter end)
 	{
-		GtkTextIter* outstart = gMalloc!GtkTextIter();
-		GtkTextIter* outend = gMalloc!GtkTextIter();
+		GtkTextIter* outstart = sliceAlloc!GtkTextIter();
+		GtkTextIter* outend = sliceAlloc!GtkTextIter();
 
 		auto p = gtk_text_buffer_get_selection_bounds(gtkTextBuffer, outstart, outend) != 0;
 
@@ -1055,7 +1056,7 @@ public class TextBuffer : ObjectG
 	 */
 	public void getStartIter(out TextIter iter)
 	{
-		GtkTextIter* outiter = gMalloc!GtkTextIter();
+		GtkTextIter* outiter = sliceAlloc!GtkTextIter();
 
 		gtk_text_buffer_get_start_iter(gtkTextBuffer, outiter);
 

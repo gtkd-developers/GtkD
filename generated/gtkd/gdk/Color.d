@@ -26,6 +26,7 @@ module gdk.Color;
 
 private import gdk.c.functions;
 public  import gdk.c.types;
+private import glib.MemorySlice;
 private import glib.Str;
 private import glib.c.functions;
 private import gobject.ObjectG;
@@ -284,7 +285,7 @@ public final class Color
 	 */
 	public static bool parse(string spec, out Color color)
 	{
-		GdkColor* outcolor = gMalloc!GdkColor();
+		GdkColor* outcolor = sliceAlloc!GdkColor();
 
 		auto p = gdk_color_parse(Str.toStringz(spec), outcolor) != 0;
 

@@ -25,6 +25,7 @@
 module gsv.SourceCompletionContext;
 
 private import glib.ListG;
+private import glib.MemorySlice;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gsv.SourceCompletionProposalIF;
@@ -117,7 +118,7 @@ public class SourceCompletionContext : ObjectG
 	 */
 	public bool getIter(out TextIter iter)
 	{
-		GtkTextIter* outiter = gMalloc!GtkTextIter();
+		GtkTextIter* outiter = sliceAlloc!GtkTextIter();
 
 		auto p = gtk_source_completion_context_get_iter(gtkSourceCompletionContext, outiter) != 0;
 

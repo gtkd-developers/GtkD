@@ -24,6 +24,7 @@
 
 module glib.TimeVal;
 
+private import glib.MemorySlice;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
@@ -176,7 +177,7 @@ public final class TimeVal
 	 */
 	public static bool fromIso8601(string isoDate, out TimeVal time)
 	{
-		GTimeVal* outtime = gMalloc!GTimeVal();
+		GTimeVal* outtime = sliceAlloc!GTimeVal();
 
 		auto p = g_time_val_from_iso8601(Str.toStringz(isoDate), outtime) != 0;
 

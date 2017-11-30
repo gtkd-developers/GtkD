@@ -24,6 +24,7 @@
 
 module gtk.TreeModelT;
 
+public  import glib.MemorySlice;
 public  import glib.Str;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
@@ -355,7 +356,7 @@ public template TreeModelT(TStruct)
 	 */
 	public bool getIterFirst(out TreeIter iter)
 	{
-		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
+		GtkTreeIter* outiter = sliceAlloc!GtkTreeIter();
 
 		auto p = gtk_tree_model_get_iter_first(getTreeModelStruct(), outiter) != 0;
 
@@ -376,7 +377,7 @@ public template TreeModelT(TStruct)
 	 */
 	public bool getIterFromString(out TreeIter iter, string pathString)
 	{
-		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
+		GtkTreeIter* outiter = sliceAlloc!GtkTreeIter();
 
 		auto p = gtk_tree_model_get_iter_from_string(getTreeModelStruct(), outiter, Str.toStringz(pathString)) != 0;
 
@@ -471,7 +472,7 @@ public template TreeModelT(TStruct)
 	 */
 	public bool iterChildren(out TreeIter iter, TreeIter parent)
 	{
-		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
+		GtkTreeIter* outiter = sliceAlloc!GtkTreeIter();
 
 		auto p = gtk_tree_model_iter_children(getTreeModelStruct(), outiter, (parent is null) ? null : parent.getTreeIterStruct()) != 0;
 
@@ -543,7 +544,7 @@ public template TreeModelT(TStruct)
 	 */
 	public bool iterNthChild(out TreeIter iter, TreeIter parent, int n)
 	{
-		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
+		GtkTreeIter* outiter = sliceAlloc!GtkTreeIter();
 
 		auto p = gtk_tree_model_iter_nth_child(getTreeModelStruct(), outiter, (parent is null) ? null : parent.getTreeIterStruct(), n) != 0;
 
@@ -571,7 +572,7 @@ public template TreeModelT(TStruct)
 	 */
 	public bool iterParent(out TreeIter iter, TreeIter child)
 	{
-		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
+		GtkTreeIter* outiter = sliceAlloc!GtkTreeIter();
 
 		auto p = gtk_tree_model_iter_parent(getTreeModelStruct(), outiter, (child is null) ? null : child.getTreeIterStruct()) != 0;
 

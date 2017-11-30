@@ -28,6 +28,7 @@ private import gdk.Color;
 private import gdk.RGBA;
 private import gdkpixbuf.Pixbuf;
 private import glib.ConstructionException;
+private import glib.MemorySlice;
 private import gobject.ObjectG;
 private import gtk.CellArea;
 private import gtk.CellAreaContext;
@@ -312,7 +313,7 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 	 */
 	public bool getSizeOfRow(TreePath path, out Requisition requisition)
 	{
-		GtkRequisition* outrequisition = gMalloc!GtkRequisition();
+		GtkRequisition* outrequisition = sliceAlloc!GtkRequisition();
 
 		auto p = gtk_cell_view_get_size_of_row(gtkCellView, (path is null) ? null : path.getTreePathStruct(), outrequisition) != 0;
 

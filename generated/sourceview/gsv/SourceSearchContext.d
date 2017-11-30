@@ -29,6 +29,7 @@ private import gio.Cancellable;
 private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
+private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gsv.SourceBuffer;
@@ -128,8 +129,8 @@ public class SourceSearchContext : ObjectG
 	 */
 	public bool backward(TextIter iter, out TextIter matchStart, out TextIter matchEnd)
 	{
-		GtkTextIter* outmatchStart = gMalloc!GtkTextIter();
-		GtkTextIter* outmatchEnd = gMalloc!GtkTextIter();
+		GtkTextIter* outmatchStart = sliceAlloc!GtkTextIter();
+		GtkTextIter* outmatchEnd = sliceAlloc!GtkTextIter();
 
 		auto p = gtk_source_search_context_backward(gtkSourceSearchContext, (iter is null) ? null : iter.getTextIterStruct(), outmatchStart, outmatchEnd) != 0;
 
@@ -167,8 +168,8 @@ public class SourceSearchContext : ObjectG
 	 */
 	public bool backward2(TextIter iter, out TextIter matchStart, out TextIter matchEnd, out bool hasWrappedAround)
 	{
-		GtkTextIter* outmatchStart = gMalloc!GtkTextIter();
-		GtkTextIter* outmatchEnd = gMalloc!GtkTextIter();
+		GtkTextIter* outmatchStart = sliceAlloc!GtkTextIter();
+		GtkTextIter* outmatchEnd = sliceAlloc!GtkTextIter();
 		int outhasWrappedAround;
 
 		auto p = gtk_source_search_context_backward2(gtkSourceSearchContext, (iter is null) ? null : iter.getTextIterStruct(), outmatchStart, outmatchEnd, &outhasWrappedAround) != 0;
@@ -224,8 +225,8 @@ public class SourceSearchContext : ObjectG
 	 */
 	public bool backwardFinish(AsyncResultIF result, out TextIter matchStart, out TextIter matchEnd)
 	{
-		GtkTextIter* outmatchStart = gMalloc!GtkTextIter();
-		GtkTextIter* outmatchEnd = gMalloc!GtkTextIter();
+		GtkTextIter* outmatchStart = sliceAlloc!GtkTextIter();
+		GtkTextIter* outmatchEnd = sliceAlloc!GtkTextIter();
 		GError* err = null;
 
 		auto p = gtk_source_search_context_backward_finish(gtkSourceSearchContext, (result is null) ? null : result.getAsyncResultStruct(), outmatchStart, outmatchEnd, &err) != 0;
@@ -263,8 +264,8 @@ public class SourceSearchContext : ObjectG
 	 */
 	public bool backwardFinish2(AsyncResultIF result, out TextIter matchStart, out TextIter matchEnd, out bool hasWrappedAround)
 	{
-		GtkTextIter* outmatchStart = gMalloc!GtkTextIter();
-		GtkTextIter* outmatchEnd = gMalloc!GtkTextIter();
+		GtkTextIter* outmatchStart = sliceAlloc!GtkTextIter();
+		GtkTextIter* outmatchEnd = sliceAlloc!GtkTextIter();
 		int outhasWrappedAround;
 		GError* err = null;
 
@@ -300,8 +301,8 @@ public class SourceSearchContext : ObjectG
 	 */
 	public bool forward(TextIter iter, out TextIter matchStart, out TextIter matchEnd)
 	{
-		GtkTextIter* outmatchStart = gMalloc!GtkTextIter();
-		GtkTextIter* outmatchEnd = gMalloc!GtkTextIter();
+		GtkTextIter* outmatchStart = sliceAlloc!GtkTextIter();
+		GtkTextIter* outmatchEnd = sliceAlloc!GtkTextIter();
 
 		auto p = gtk_source_search_context_forward(gtkSourceSearchContext, (iter is null) ? null : iter.getTextIterStruct(), outmatchStart, outmatchEnd) != 0;
 
@@ -339,8 +340,8 @@ public class SourceSearchContext : ObjectG
 	 */
 	public bool forward2(TextIter iter, out TextIter matchStart, out TextIter matchEnd, out bool hasWrappedAround)
 	{
-		GtkTextIter* outmatchStart = gMalloc!GtkTextIter();
-		GtkTextIter* outmatchEnd = gMalloc!GtkTextIter();
+		GtkTextIter* outmatchStart = sliceAlloc!GtkTextIter();
+		GtkTextIter* outmatchEnd = sliceAlloc!GtkTextIter();
 		int outhasWrappedAround;
 
 		auto p = gtk_source_search_context_forward2(gtkSourceSearchContext, (iter is null) ? null : iter.getTextIterStruct(), outmatchStart, outmatchEnd, &outhasWrappedAround) != 0;
@@ -396,8 +397,8 @@ public class SourceSearchContext : ObjectG
 	 */
 	public bool forwardFinish(AsyncResultIF result, out TextIter matchStart, out TextIter matchEnd)
 	{
-		GtkTextIter* outmatchStart = gMalloc!GtkTextIter();
-		GtkTextIter* outmatchEnd = gMalloc!GtkTextIter();
+		GtkTextIter* outmatchStart = sliceAlloc!GtkTextIter();
+		GtkTextIter* outmatchEnd = sliceAlloc!GtkTextIter();
 		GError* err = null;
 
 		auto p = gtk_source_search_context_forward_finish(gtkSourceSearchContext, (result is null) ? null : result.getAsyncResultStruct(), outmatchStart, outmatchEnd, &err) != 0;
@@ -435,8 +436,8 @@ public class SourceSearchContext : ObjectG
 	 */
 	public bool forwardFinish2(AsyncResultIF result, out TextIter matchStart, out TextIter matchEnd, out bool hasWrappedAround)
 	{
-		GtkTextIter* outmatchStart = gMalloc!GtkTextIter();
-		GtkTextIter* outmatchEnd = gMalloc!GtkTextIter();
+		GtkTextIter* outmatchStart = sliceAlloc!GtkTextIter();
+		GtkTextIter* outmatchEnd = sliceAlloc!GtkTextIter();
 		int outhasWrappedAround;
 		GError* err = null;
 

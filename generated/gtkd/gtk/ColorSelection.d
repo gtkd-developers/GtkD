@@ -27,6 +27,7 @@ module gtk.ColorSelection;
 private import gdk.Color;
 private import gdk.RGBA;
 private import glib.ConstructionException;
+private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
@@ -188,7 +189,7 @@ public class ColorSelection : Box
 	 */
 	public void getCurrentColor(out Color color)
 	{
-		GdkColor* outcolor = gMalloc!GdkColor();
+		GdkColor* outcolor = sliceAlloc!GdkColor();
 
 		gtk_color_selection_get_current_color(gtkColorSelection, outcolor);
 
@@ -205,7 +206,7 @@ public class ColorSelection : Box
 	 */
 	public void getCurrentRgba(out RGBA rgba)
 	{
-		GdkRGBA* outrgba = gMalloc!GdkRGBA();
+		GdkRGBA* outrgba = sliceAlloc!GdkRGBA();
 
 		gtk_color_selection_get_current_rgba(gtkColorSelection, outrgba);
 
@@ -253,7 +254,7 @@ public class ColorSelection : Box
 	 */
 	public void getPreviousColor(out Color color)
 	{
-		GdkColor* outcolor = gMalloc!GdkColor();
+		GdkColor* outcolor = sliceAlloc!GdkColor();
 
 		gtk_color_selection_get_previous_color(gtkColorSelection, outcolor);
 
@@ -270,7 +271,7 @@ public class ColorSelection : Box
 	 */
 	public void getPreviousRgba(out RGBA rgba)
 	{
-		GdkRGBA* outrgba = gMalloc!GdkRGBA();
+		GdkRGBA* outrgba = sliceAlloc!GdkRGBA();
 
 		gtk_color_selection_get_previous_rgba(gtkColorSelection, outrgba);
 

@@ -26,6 +26,7 @@ module gstreamer.TagList;
 
 private import glib.ConstructionException;
 private import glib.Date;
+private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Value;
@@ -904,7 +905,7 @@ public class TagList
 	 */
 	public static bool copyValue(out Value dest, TagList list, string tag)
 	{
-		GValue* outdest = gMalloc!GValue();
+		GValue* outdest = sliceAlloc!GValue();
 
 		auto p = gst_tag_list_copy_value(outdest, (list is null) ? null : list.getTagListStruct(), Str.toStringz(tag)) != 0;
 
@@ -992,7 +993,7 @@ public class TagList
 	 */
 	public static void mergeStringsWithComma(out Value dest, Value src)
 	{
-		GValue* outdest = gMalloc!GValue();
+		GValue* outdest = sliceAlloc!GValue();
 
 		gst_tag_merge_strings_with_comma(outdest, (src is null) ? null : src.getValueStruct());
 
@@ -1009,7 +1010,7 @@ public class TagList
 	 */
 	public static void mergeUseFirst(out Value dest, Value src)
 	{
-		GValue* outdest = gMalloc!GValue();
+		GValue* outdest = sliceAlloc!GValue();
 
 		gst_tag_merge_use_first(outdest, (src is null) ? null : src.getValueStruct());
 

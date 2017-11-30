@@ -24,6 +24,7 @@
 
 module gst.base.BaseTransform;
 
+private import glib.MemorySlice;
 private import gobject.ObjectG;
 private import gst.base.c.functions;
 public  import gst.base.c.types;
@@ -196,7 +197,7 @@ public class BaseTransform : Element
 	public void getAllocator(out Allocator allocator, out AllocationParams params)
 	{
 		GstAllocator* outallocator = null;
-		GstAllocationParams* outparams = gMalloc!GstAllocationParams();
+		GstAllocationParams* outparams = sliceAlloc!GstAllocationParams();
 
 		gst_base_transform_get_allocator(gstBaseTransform, &outallocator, outparams);
 

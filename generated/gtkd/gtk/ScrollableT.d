@@ -24,6 +24,7 @@
 
 module gtk.ScrollableT;
 
+public  import glib.MemorySlice;
 public  import gobject.ObjectG;
 public  import gtk.Adjustment;
 public  import gtk.Border;
@@ -88,7 +89,7 @@ public template ScrollableT(TStruct)
 	 */
 	public bool getBorder(out Border border)
 	{
-		GtkBorder* outborder = gMalloc!GtkBorder();
+		GtkBorder* outborder = sliceAlloc!GtkBorder();
 
 		auto p = gtk_scrollable_get_border(getScrollableStruct(), outborder) != 0;
 

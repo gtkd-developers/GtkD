@@ -33,6 +33,7 @@ private import gdk.Window;
 private import gdkpixbuf.Pixbuf;
 private import glib.ConstructionException;
 private import glib.ListG;
+private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
@@ -370,7 +371,7 @@ public class StyleContext : ObjectG
 	 */
 	public void getBackgroundColor(GtkStateFlags state, out RGBA color)
 	{
-		GdkRGBA* outcolor = gMalloc!GdkRGBA();
+		GdkRGBA* outcolor = sliceAlloc!GdkRGBA();
 
 		gtk_style_context_get_background_color(gtkStyleContext, state, outcolor);
 
@@ -391,7 +392,7 @@ public class StyleContext : ObjectG
 	 */
 	public void getBorder(GtkStateFlags state, out Border border)
 	{
-		GtkBorder* outborder = gMalloc!GtkBorder();
+		GtkBorder* outborder = sliceAlloc!GtkBorder();
 
 		gtk_style_context_get_border(gtkStyleContext, state, outborder);
 
@@ -411,7 +412,7 @@ public class StyleContext : ObjectG
 	 */
 	public void getBorderColor(GtkStateFlags state, out RGBA color)
 	{
-		GdkRGBA* outcolor = gMalloc!GdkRGBA();
+		GdkRGBA* outcolor = sliceAlloc!GdkRGBA();
 
 		gtk_style_context_get_border_color(gtkStyleContext, state, outcolor);
 
@@ -432,7 +433,7 @@ public class StyleContext : ObjectG
 	 */
 	public void getColor(GtkStateFlags state, out RGBA color)
 	{
-		GdkRGBA* outcolor = gMalloc!GdkRGBA();
+		GdkRGBA* outcolor = sliceAlloc!GdkRGBA();
 
 		gtk_style_context_get_color(gtkStyleContext, state, outcolor);
 
@@ -529,7 +530,7 @@ public class StyleContext : ObjectG
 	 */
 	public void getMargin(GtkStateFlags state, out Border margin)
 	{
-		GtkBorder* outmargin = gMalloc!GtkBorder();
+		GtkBorder* outmargin = sliceAlloc!GtkBorder();
 
 		gtk_style_context_get_margin(gtkStyleContext, state, outmargin);
 
@@ -549,7 +550,7 @@ public class StyleContext : ObjectG
 	 */
 	public void getPadding(GtkStateFlags state, out Border padding)
 	{
-		GtkBorder* outpadding = gMalloc!GtkBorder();
+		GtkBorder* outpadding = sliceAlloc!GtkBorder();
 
 		gtk_style_context_get_padding(gtkStyleContext, state, outpadding);
 
@@ -619,7 +620,7 @@ public class StyleContext : ObjectG
 	 */
 	public void getProperty(string property, GtkStateFlags state, out Value value)
 	{
-		GValue* outvalue = gMalloc!GValue();
+		GValue* outvalue = sliceAlloc!GValue();
 
 		gtk_style_context_get_property(gtkStyleContext, Str.toStringz(property), state, outvalue);
 
@@ -852,7 +853,7 @@ public class StyleContext : ObjectG
 	 */
 	public bool lookupColor(string colorName, out RGBA color)
 	{
-		GdkRGBA* outcolor = gMalloc!GdkRGBA();
+		GdkRGBA* outcolor = sliceAlloc!GdkRGBA();
 
 		auto p = gtk_style_context_lookup_color(gtkStyleContext, Str.toStringz(colorName), outcolor) != 0;
 

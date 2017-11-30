@@ -25,6 +25,7 @@
 module gtk.StockItem;
 
 private import glib.ListSG;
+private import glib.MemorySlice;
 private import glib.Str;
 private import glib.c.functions;
 private import gobject.ObjectG;
@@ -240,7 +241,7 @@ public final class StockItem
 	 */
 	public static bool stockLookup(string stockId, out StockItem item)
 	{
-		GtkStockItem* outitem = gMalloc!GtkStockItem();
+		GtkStockItem* outitem = sliceAlloc!GtkStockItem();
 
 		auto p = gtk_stock_lookup(Str.toStringz(stockId), outitem) != 0;
 

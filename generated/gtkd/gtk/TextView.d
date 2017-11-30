@@ -26,6 +26,7 @@ module gtk.TextView;
 
 private import gdk.Window;
 private import glib.ConstructionException;
+private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
@@ -541,7 +542,7 @@ public class TextView : Container, ScrollableIF
 	 */
 	public bool getIterAtLocation(out TextIter iter, int x, int y)
 	{
-		GtkTextIter* outiter = gMalloc!GtkTextIter();
+		GtkTextIter* outiter = sliceAlloc!GtkTextIter();
 
 		auto p = gtk_text_view_get_iter_at_location(gtkTextView, outiter, x, y) != 0;
 
@@ -577,7 +578,7 @@ public class TextView : Container, ScrollableIF
 	 */
 	public bool getIterAtPosition(out TextIter iter, out int trailing, int x, int y)
 	{
-		GtkTextIter* outiter = gMalloc!GtkTextIter();
+		GtkTextIter* outiter = sliceAlloc!GtkTextIter();
 
 		auto p = gtk_text_view_get_iter_at_position(gtkTextView, outiter, &trailing, x, y) != 0;
 
@@ -637,7 +638,7 @@ public class TextView : Container, ScrollableIF
 	 */
 	public void getLineAtY(out TextIter targetIter, int y, out int lineTop)
 	{
-		GtkTextIter* outtargetIter = gMalloc!GtkTextIter();
+		GtkTextIter* outtargetIter = sliceAlloc!GtkTextIter();
 
 		gtk_text_view_get_line_at_y(gtkTextView, outtargetIter, y, &lineTop);
 

@@ -25,6 +25,7 @@
 module pango.PgMiscellaneous;
 
 private import core.stdc.stdio;
+private import glib.MemorySlice;
 private import glib.Str;
 private import glib.StringG;
 public  import gtkc.pangotypes;
@@ -322,7 +323,7 @@ public struct PgMiscellaneous
 	public static bool scanString(ref string pos, out StringG output)
 	{
 		char* outpos = Str.toStringz(pos);
-		GString* outoutput = gMalloc!GString();
+		GString* outoutput = sliceAlloc!GString();
 
 		auto p = pango_scan_string(&outpos, outoutput) != 0;
 
@@ -346,7 +347,7 @@ public struct PgMiscellaneous
 	public static bool scanWord(ref string pos, out StringG output)
 	{
 		char* outpos = Str.toStringz(pos);
-		GString* outoutput = gMalloc!GString();
+		GString* outoutput = sliceAlloc!GString();
 
 		auto p = pango_scan_word(&outpos, outoutput) != 0;
 
@@ -429,7 +430,7 @@ public struct PgMiscellaneous
 	 */
 	public static int readLine(FILE* stream, out StringG str)
 	{
-		GString* outstr = gMalloc!GString();
+		GString* outstr = sliceAlloc!GString();
 
 		auto p = pango_read_line(stream, outstr);
 

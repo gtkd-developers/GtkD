@@ -25,6 +25,7 @@
 module gtk.ColorChooserT;
 
 public  import gdk.RGBA;
+public  import glib.MemorySlice;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
 public  import gtk.c.functions;
@@ -100,7 +101,7 @@ public template ColorChooserT(TStruct)
 	 */
 	public void getRgba(out RGBA color)
 	{
-		GdkRGBA* outcolor = gMalloc!GdkRGBA();
+		GdkRGBA* outcolor = sliceAlloc!GdkRGBA();
 
 		gtk_color_chooser_get_rgba(getColorChooserStruct(), outcolor);
 

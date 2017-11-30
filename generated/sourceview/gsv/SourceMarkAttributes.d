@@ -28,6 +28,7 @@ private import gdk.RGBA;
 private import gdkpixbuf.Pixbuf;
 private import gio.IconIF;
 private import glib.ConstructionException;
+private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
@@ -118,7 +119,7 @@ public class SourceMarkAttributes : ObjectG
 	 */
 	public bool getBackground(out RGBA background)
 	{
-		GdkRGBA* outbackground = gMalloc!GdkRGBA();
+		GdkRGBA* outbackground = sliceAlloc!GdkRGBA();
 
 		auto p = gtk_source_mark_attributes_get_background(gtkSourceMarkAttributes, outbackground) != 0;
 

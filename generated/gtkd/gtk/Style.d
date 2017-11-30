@@ -29,6 +29,7 @@ private import gdk.Color;
 private import gdk.Window;
 private import gdkpixbuf.Pixbuf;
 private import glib.ConstructionException;
+private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
@@ -215,7 +216,7 @@ public class Style : ObjectG
 	 */
 	public void getStyleProperty(GType widgetType, string propertyName, out Value value)
 	{
-		GValue* outvalue = gMalloc!GValue();
+		GValue* outvalue = sliceAlloc!GValue();
 
 		gtk_style_get_style_property(gtkStyle, widgetType, Str.toStringz(propertyName), outvalue);
 
@@ -271,7 +272,7 @@ public class Style : ObjectG
 	 */
 	public bool lookupColor(string colorName, out Color color)
 	{
-		GdkColor* outcolor = gMalloc!GdkColor();
+		GdkColor* outcolor = sliceAlloc!GdkColor();
 
 		auto p = gtk_style_lookup_color(gtkStyle, Str.toStringz(colorName), outcolor) != 0;
 

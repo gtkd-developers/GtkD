@@ -24,6 +24,7 @@
 
 module gstreamer.Utils;
 
+private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Value;
@@ -289,7 +290,7 @@ public struct Utils
 	 */
 	public static void setValueFromString(out Value value, string valueStr)
 	{
-		GValue* outvalue = gMalloc!GValue();
+		GValue* outvalue = sliceAlloc!GValue();
 
 		gst_util_set_value_from_string(outvalue, Str.toStringz(valueStr));
 

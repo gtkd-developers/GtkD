@@ -28,6 +28,7 @@ public  import atk.Range;
 public  import atk.c.functions;
 public  import atk.c.types;
 public  import glib.ListSG;
+public  import glib.MemorySlice;
 public  import glib.Str;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
@@ -200,7 +201,7 @@ public template ValueT(TStruct)
 	 */
 	public void getCurrentValue(out Value value)
 	{
-		GValue* outvalue = gMalloc!GValue();
+		GValue* outvalue = sliceAlloc!GValue();
 
 		atk_value_get_current_value(getValueStruct(), outvalue);
 
@@ -233,7 +234,7 @@ public template ValueT(TStruct)
 	 */
 	public void getMaximumValue(out Value value)
 	{
-		GValue* outvalue = gMalloc!GValue();
+		GValue* outvalue = sliceAlloc!GValue();
 
 		atk_value_get_maximum_value(getValueStruct(), outvalue);
 
@@ -254,7 +255,7 @@ public template ValueT(TStruct)
 	 */
 	public void getMinimumIncrement(out Value value)
 	{
-		GValue* outvalue = gMalloc!GValue();
+		GValue* outvalue = sliceAlloc!GValue();
 
 		atk_value_get_minimum_increment(getValueStruct(), outvalue);
 
@@ -271,7 +272,7 @@ public template ValueT(TStruct)
 	 */
 	public void getMinimumValue(out Value value)
 	{
-		GValue* outvalue = gMalloc!GValue();
+		GValue* outvalue = sliceAlloc!GValue();
 
 		atk_value_get_minimum_value(getValueStruct(), outvalue);
 

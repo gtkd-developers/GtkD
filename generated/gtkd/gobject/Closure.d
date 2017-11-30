@@ -25,6 +25,7 @@
 module gobject.Closure;
 
 private import glib.ConstructionException;
+private import glib.MemorySlice;
 private import glib.Source;
 private import gobject.ObjectG;
 private import gobject.Value;
@@ -291,7 +292,7 @@ public class Closure
 	 */
 	public void invoke(out Value returnValue, Value[] paramValues, void* invocationHint)
 	{
-		GValue* outreturnValue = gMalloc!GValue();
+		GValue* outreturnValue = sliceAlloc!GValue();
 
 		GValue[] paramValuesArray = new GValue[paramValues.length];
 		for ( int i = 0; i < paramValues.length; i++ )

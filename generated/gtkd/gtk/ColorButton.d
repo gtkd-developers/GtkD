@@ -27,6 +27,7 @@ module gtk.ColorButton;
 private import gdk.Color;
 private import gdk.RGBA;
 private import glib.ConstructionException;
+private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
@@ -197,7 +198,7 @@ public class ColorButton : Button, ColorChooserIF
 	 */
 	public void getColor(out Color color)
 	{
-		GdkColor* outcolor = gMalloc!GdkColor();
+		GdkColor* outcolor = sliceAlloc!GdkColor();
 
 		gtk_color_button_get_color(gtkColorButton, outcolor);
 

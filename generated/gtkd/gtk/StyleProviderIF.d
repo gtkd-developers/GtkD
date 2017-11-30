@@ -24,6 +24,7 @@
 
 module gtk.StyleProviderIF;
 
+private import glib.MemorySlice;
 private import gobject.ObjectG;
 private import gobject.ParamSpec;
 private import gobject.Value;

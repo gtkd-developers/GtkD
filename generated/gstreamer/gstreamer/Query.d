@@ -25,6 +25,7 @@
 module gstreamer.Query;
 
 private import glib.ConstructionException;
+private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gstreamer.AllocationParams;
@@ -926,7 +927,7 @@ public class Query
 	public void parseNthAllocationParam(uint index, out Allocator allocator, out AllocationParams params)
 	{
 		GstAllocator* outallocator = null;
-		GstAllocationParams* outparams = gMalloc!GstAllocationParams();
+		GstAllocationParams* outparams = sliceAlloc!GstAllocationParams();
 
 		gst_query_parse_nth_allocation_param(gstQuery, index, &outallocator, outparams);
 

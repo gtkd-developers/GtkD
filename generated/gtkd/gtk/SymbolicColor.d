@@ -26,6 +26,7 @@ module gtk.SymbolicColor;
 
 private import gdk.RGBA;
 private import glib.ConstructionException;
+private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gtk.StyleProperties;
@@ -290,7 +291,7 @@ public class SymbolicColor
 	 */
 	public bool resolve(StyleProperties props, out RGBA resolvedColor)
 	{
-		GdkRGBA* outresolvedColor = gMalloc!GdkRGBA();
+		GdkRGBA* outresolvedColor = sliceAlloc!GdkRGBA();
 
 		auto p = gtk_symbolic_color_resolve(gtkSymbolicColor, (props is null) ? null : props.getStylePropertiesStruct(), outresolvedColor) != 0;
 

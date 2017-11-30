@@ -24,6 +24,7 @@
 
 module gsv.RegionIter;
 
+private import glib.MemorySlice;
 private import gobject.ObjectG;
 private import gsv.c.functions;
 public  import gsv.c.types;
@@ -81,8 +82,8 @@ public class RegionIter
 	 */
 	public bool getSubregion(out TextIter start, out TextIter end)
 	{
-		GtkTextIter* outstart = gMalloc!GtkTextIter();
-		GtkTextIter* outend = gMalloc!GtkTextIter();
+		GtkTextIter* outstart = sliceAlloc!GtkTextIter();
+		GtkTextIter* outend = sliceAlloc!GtkTextIter();
 
 		auto p = gtk_source_region_iter_get_subregion(gtkSourceRegionIter, outstart, outend) != 0;
 

@@ -25,6 +25,7 @@
 module gtk.ColorChooserIF;
 
 private import gdk.RGBA;
+private import glib.MemorySlice;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.c.functions;

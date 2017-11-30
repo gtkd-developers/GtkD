@@ -24,6 +24,7 @@
 
 module gstreamer.ChildProxyIF;
 
+private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.ParamSpec;

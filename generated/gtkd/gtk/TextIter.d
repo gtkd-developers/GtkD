@@ -26,6 +26,7 @@ module gtk.TextIter;
 
 private import gdkpixbuf.Pixbuf;
 private import glib.ListSG;
+private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gtk.TextAttributes;
@@ -233,8 +234,8 @@ public class TextIter
 	 */
 	public bool backwardSearch(string str, GtkTextSearchFlags flags, out TextIter matchStart, out TextIter matchEnd, TextIter limit)
 	{
-		GtkTextIter* outmatchStart = gMalloc!GtkTextIter();
-		GtkTextIter* outmatchEnd = gMalloc!GtkTextIter();
+		GtkTextIter* outmatchStart = sliceAlloc!GtkTextIter();
+		GtkTextIter* outmatchEnd = sliceAlloc!GtkTextIter();
 
 		auto p = gtk_text_iter_backward_search(gtkTextIter, Str.toStringz(str), flags, outmatchStart, outmatchEnd, (limit is null) ? null : limit.getTextIterStruct()) != 0;
 
@@ -738,8 +739,8 @@ public class TextIter
 	 */
 	public bool forwardSearch(string str, GtkTextSearchFlags flags, out TextIter matchStart, out TextIter matchEnd, TextIter limit)
 	{
-		GtkTextIter* outmatchStart = gMalloc!GtkTextIter();
-		GtkTextIter* outmatchEnd = gMalloc!GtkTextIter();
+		GtkTextIter* outmatchStart = sliceAlloc!GtkTextIter();
+		GtkTextIter* outmatchEnd = sliceAlloc!GtkTextIter();
 
 		auto p = gtk_text_iter_forward_search(gtkTextIter, Str.toStringz(str), flags, outmatchStart, outmatchEnd, (limit is null) ? null : limit.getTextIterStruct()) != 0;
 
@@ -976,7 +977,7 @@ public class TextIter
 	 */
 	public bool getAttributes(out TextAttributes values)
 	{
-		GtkTextAttributes* outvalues = gMalloc!GtkTextAttributes();
+		GtkTextAttributes* outvalues = sliceAlloc!GtkTextAttributes();
 
 		auto p = gtk_text_iter_get_attributes(gtkTextIter, outvalues) != 0;
 

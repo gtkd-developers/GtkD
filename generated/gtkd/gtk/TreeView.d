@@ -28,6 +28,7 @@ private import cairo.Surface;
 private import gdk.Window;
 private import glib.ConstructionException;
 private import glib.ListG;
+private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
@@ -1094,7 +1095,7 @@ public class TreeView : Container, ScrollableIF
 	{
 		GtkTreeModel* outmodel = null;
 		GtkTreePath* outpath = null;
-		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
+		GtkTreeIter* outiter = sliceAlloc!GtkTreeIter();
 
 		auto p = gtk_tree_view_get_tooltip_context(gtkTreeView, &x, &y, keyboardTip, &outmodel, &outpath, outiter) != 0;
 

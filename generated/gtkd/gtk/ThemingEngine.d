@@ -26,6 +26,7 @@ module gtk.ThemingEngine;
 
 private import gdk.RGBA;
 private import gdk.Screen;
+private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.ParamSpec;
@@ -166,7 +167,7 @@ public class ThemingEngine : ObjectG
 	 */
 	public void getBackgroundColor(GtkStateFlags state, out RGBA color)
 	{
-		GdkRGBA* outcolor = gMalloc!GdkRGBA();
+		GdkRGBA* outcolor = sliceAlloc!GdkRGBA();
 
 		gtk_theming_engine_get_background_color(gtkThemingEngine, state, outcolor);
 
@@ -184,7 +185,7 @@ public class ThemingEngine : ObjectG
 	 */
 	public void getBorder(GtkStateFlags state, out Border border)
 	{
-		GtkBorder* outborder = gMalloc!GtkBorder();
+		GtkBorder* outborder = sliceAlloc!GtkBorder();
 
 		gtk_theming_engine_get_border(gtkThemingEngine, state, outborder);
 
@@ -202,7 +203,7 @@ public class ThemingEngine : ObjectG
 	 */
 	public void getBorderColor(GtkStateFlags state, out RGBA color)
 	{
-		GdkRGBA* outcolor = gMalloc!GdkRGBA();
+		GdkRGBA* outcolor = sliceAlloc!GdkRGBA();
 
 		gtk_theming_engine_get_border_color(gtkThemingEngine, state, outcolor);
 
@@ -220,7 +221,7 @@ public class ThemingEngine : ObjectG
 	 */
 	public void getColor(GtkStateFlags state, out RGBA color)
 	{
-		GdkRGBA* outcolor = gMalloc!GdkRGBA();
+		GdkRGBA* outcolor = sliceAlloc!GdkRGBA();
 
 		gtk_theming_engine_get_color(gtkThemingEngine, state, outcolor);
 
@@ -292,7 +293,7 @@ public class ThemingEngine : ObjectG
 	 */
 	public void getMargin(GtkStateFlags state, out Border margin)
 	{
-		GtkBorder* outmargin = gMalloc!GtkBorder();
+		GtkBorder* outmargin = sliceAlloc!GtkBorder();
 
 		gtk_theming_engine_get_margin(gtkThemingEngine, state, outmargin);
 
@@ -310,7 +311,7 @@ public class ThemingEngine : ObjectG
 	 */
 	public void getPadding(GtkStateFlags state, out Border padding)
 	{
-		GtkBorder* outpadding = gMalloc!GtkBorder();
+		GtkBorder* outpadding = sliceAlloc!GtkBorder();
 
 		gtk_theming_engine_get_padding(gtkThemingEngine, state, outpadding);
 
@@ -351,7 +352,7 @@ public class ThemingEngine : ObjectG
 	 */
 	public void getProperty(string property, GtkStateFlags state, out Value value)
 	{
-		GValue* outvalue = gMalloc!GValue();
+		GValue* outvalue = sliceAlloc!GValue();
 
 		gtk_theming_engine_get_property(gtkThemingEngine, Str.toStringz(property), state, outvalue);
 
@@ -399,7 +400,7 @@ public class ThemingEngine : ObjectG
 	 */
 	public void getStyleProperty(string propertyName, out Value value)
 	{
-		GValue* outvalue = gMalloc!GValue();
+		GValue* outvalue = sliceAlloc!GValue();
 
 		gtk_theming_engine_get_style_property(gtkThemingEngine, Str.toStringz(propertyName), outvalue);
 
@@ -482,7 +483,7 @@ public class ThemingEngine : ObjectG
 	 */
 	public bool lookupColor(string colorName, out RGBA color)
 	{
-		GdkRGBA* outcolor = gMalloc!GdkRGBA();
+		GdkRGBA* outcolor = sliceAlloc!GdkRGBA();
 
 		auto p = gtk_theming_engine_lookup_color(gtkThemingEngine, Str.toStringz(colorName), outcolor) != 0;
 

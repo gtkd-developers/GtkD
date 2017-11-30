@@ -25,6 +25,7 @@
 module gtk.TreeSelection;
 
 private import glib.ListG;
+private import glib.MemorySlice;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.TreeIter;
@@ -206,7 +207,7 @@ public class TreeSelection : ObjectG
 	public bool getSelected(out TreeModelIF model, out TreeIter iter)
 	{
 		GtkTreeModel* outmodel = null;
-		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
+		GtkTreeIter* outiter = sliceAlloc!GtkTreeIter();
 
 		auto p = gtk_tree_selection_get_selected(gtkTreeSelection, &outmodel, outiter) != 0;
 

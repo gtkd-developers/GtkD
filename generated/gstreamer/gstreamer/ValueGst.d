@@ -24,6 +24,7 @@
 
 module gstreamer.ValueGst;
 
+private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Value;
@@ -135,7 +136,7 @@ public struct ValueGst
 	 */
 	public static bool deserialize(out Value dest, string src)
 	{
-		GValue* outdest = gMalloc!GValue();
+		GValue* outdest = sliceAlloc!GValue();
 
 		auto p = gst_value_deserialize(outdest, Str.toStringz(src)) != 0;
 
@@ -494,7 +495,7 @@ public struct ValueGst
 	 */
 	public static void initAndCopy(out Value dest, Value src)
 	{
-		GValue* outdest = gMalloc!GValue();
+		GValue* outdest = sliceAlloc!GValue();
 
 		gst_value_init_and_copy(outdest, (src is null) ? null : src.getValueStruct());
 
@@ -518,7 +519,7 @@ public struct ValueGst
 	 */
 	public static bool intersect(out Value dest, Value value1, Value value2)
 	{
-		GValue* outdest = gMalloc!GValue();
+		GValue* outdest = sliceAlloc!GValue();
 
 		auto p = gst_value_intersect(outdest, (value1 is null) ? null : value1.getValueStruct(), (value2 is null) ? null : value2.getValueStruct()) != 0;
 
@@ -765,7 +766,7 @@ public struct ValueGst
 	 */
 	public static bool subtract(out Value dest, Value minuend, Value subtrahend)
 	{
-		GValue* outdest = gMalloc!GValue();
+		GValue* outdest = sliceAlloc!GValue();
 
 		auto p = gst_value_subtract(outdest, (minuend is null) ? null : minuend.getValueStruct(), (subtrahend is null) ? null : subtrahend.getValueStruct()) != 0;
 
@@ -786,7 +787,7 @@ public struct ValueGst
 	 */
 	public static bool unio(out Value dest, Value value1, Value value2)
 	{
-		GValue* outdest = gMalloc!GValue();
+		GValue* outdest = sliceAlloc!GValue();
 
 		auto p = gst_value_union(outdest, (value1 is null) ? null : value1.getValueStruct(), (value2 is null) ? null : value2.getValueStruct()) != 0;
 

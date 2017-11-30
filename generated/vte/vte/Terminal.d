@@ -33,6 +33,7 @@ private import glib.ArrayG;
 private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
+private import glib.MemorySlice;
 private import glib.Regex;
 private import glib.Str;
 private import gobject.ObjectG;
@@ -520,7 +521,7 @@ public class Terminal : Widget, ScrollableIF
 	 */
 	public string getText(VteSelectionFunc isSelected, void* userData, out ArrayG attributes)
 	{
-		GArray* outattributes = gMalloc!GArray();
+		GArray* outattributes = sliceAlloc!GArray();
 
 		auto retStr = vte_terminal_get_text(vteTerminal, isSelected, userData, outattributes);
 
@@ -548,7 +549,7 @@ public class Terminal : Widget, ScrollableIF
 	 */
 	public string getTextIncludeTrailingSpaces(VteSelectionFunc isSelected, void* userData, out ArrayG attributes)
 	{
-		GArray* outattributes = gMalloc!GArray();
+		GArray* outattributes = sliceAlloc!GArray();
 
 		auto retStr = vte_terminal_get_text_include_trailing_spaces(vteTerminal, isSelected, userData, outattributes);
 
@@ -580,7 +581,7 @@ public class Terminal : Widget, ScrollableIF
 	 */
 	public string getTextRange(glong startRow, glong startCol, glong endRow, glong endCol, VteSelectionFunc isSelected, void* userData, out ArrayG attributes)
 	{
-		GArray* outattributes = gMalloc!GArray();
+		GArray* outattributes = sliceAlloc!GArray();
 
 		auto retStr = vte_terminal_get_text_range(vteTerminal, startRow, startCol, endRow, endCol, isSelected, userData, outattributes);
 

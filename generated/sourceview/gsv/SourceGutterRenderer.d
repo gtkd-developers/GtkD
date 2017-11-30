@@ -27,6 +27,7 @@ module gsv.SourceGutterRenderer;
 private import cairo.Context;
 private import gdk.Event;
 private import gdk.RGBA;
+private import glib.MemorySlice;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gsv.c.functions;
@@ -182,7 +183,7 @@ public class SourceGutterRenderer : ObjectG
 	 */
 	public bool getBackground(out RGBA color)
 	{
-		GdkRGBA* outcolor = gMalloc!GdkRGBA();
+		GdkRGBA* outcolor = sliceAlloc!GdkRGBA();
 
 		auto p = gtk_source_gutter_renderer_get_background(gtkSourceGutterRenderer, outcolor) != 0;
 

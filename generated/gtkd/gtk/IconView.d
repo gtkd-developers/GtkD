@@ -27,6 +27,7 @@ module gtk.IconView;
 private import cairo.Surface;
 private import glib.ConstructionException;
 private import glib.ListG;
+private import glib.MemorySlice;
 private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.CellArea;
@@ -723,7 +724,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	{
 		GtkTreeModel* outmodel = null;
 		GtkTreePath* outpath = null;
-		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
+		GtkTreeIter* outiter = sliceAlloc!GtkTreeIter();
 
 		auto p = gtk_icon_view_get_tooltip_context(gtkIconView, &x, &y, keyboardTip, &outmodel, &outpath, outiter) != 0;
 

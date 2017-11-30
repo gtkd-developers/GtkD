@@ -25,6 +25,7 @@
 module gsv.Region;
 
 private import glib.ConstructionException;
+private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gsv.RegionIter;
@@ -142,8 +143,8 @@ public class Region : ObjectG
 	 */
 	public bool getBounds(out TextIter start, out TextIter end)
 	{
-		GtkTextIter* outstart = gMalloc!GtkTextIter();
-		GtkTextIter* outend = gMalloc!GtkTextIter();
+		GtkTextIter* outstart = sliceAlloc!GtkTextIter();
+		GtkTextIter* outend = sliceAlloc!GtkTextIter();
 
 		auto p = gtk_source_region_get_bounds(gtkSourceRegion, outstart, outend) != 0;
 
@@ -181,7 +182,7 @@ public class Region : ObjectG
 	 */
 	public void getStartRegionIter(out RegionIter iter)
 	{
-		GtkSourceRegionIter* outiter = gMalloc!GtkSourceRegionIter();
+		GtkSourceRegionIter* outiter = sliceAlloc!GtkSourceRegionIter();
 
 		gtk_source_region_get_start_region_iter(gtkSourceRegion, outiter);
 

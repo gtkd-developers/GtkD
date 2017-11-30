@@ -27,6 +27,7 @@ module gtk.ComboBox;
 private import atk.ObjectAtk;
 private import gdk.Device;
 private import glib.ConstructionException;
+private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
@@ -286,7 +287,7 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 	 */
 	public bool getActiveIter(out TreeIter iter)
 	{
-		GtkTreeIter* outiter = gMalloc!GtkTreeIter();
+		GtkTreeIter* outiter = sliceAlloc!GtkTreeIter();
 
 		auto p = gtk_combo_box_get_active_iter(gtkComboBox, outiter) != 0;
 

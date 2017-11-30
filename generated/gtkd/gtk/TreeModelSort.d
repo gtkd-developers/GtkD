@@ -25,6 +25,7 @@
 module gtk.TreeModelSort;
 
 private import glib.ConstructionException;
+private import glib.MemorySlice;
 private import gobject.ObjectG;
 private import gtk.TreeDragSourceIF;
 private import gtk.TreeDragSourceT;
@@ -212,7 +213,7 @@ public class TreeModelSort : ObjectG, TreeDragSourceIF, TreeModelIF, TreeSortabl
 	 */
 	public bool convertChildIterToIter(out TreeIter sortIter, TreeIter childIter)
 	{
-		GtkTreeIter* outsortIter = gMalloc!GtkTreeIter();
+		GtkTreeIter* outsortIter = sliceAlloc!GtkTreeIter();
 
 		auto p = gtk_tree_model_sort_convert_child_iter_to_iter(gtkTreeModelSort, outsortIter, (childIter is null) ? null : childIter.getTreeIterStruct()) != 0;
 
@@ -253,7 +254,7 @@ public class TreeModelSort : ObjectG, TreeDragSourceIF, TreeModelIF, TreeSortabl
 	 */
 	public void convertIterToChildIter(out TreeIter childIter, TreeIter sortedIter)
 	{
-		GtkTreeIter* outchildIter = gMalloc!GtkTreeIter();
+		GtkTreeIter* outchildIter = sliceAlloc!GtkTreeIter();
 
 		gtk_tree_model_sort_convert_iter_to_child_iter(gtkTreeModelSort, outchildIter, (sortedIter is null) ? null : sortedIter.getTreeIterStruct());
 

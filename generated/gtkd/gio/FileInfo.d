@@ -30,6 +30,7 @@ private import gio.c.functions;
 public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.DateTime;
+private import glib.MemorySlice;
 private import glib.Str;
 private import glib.TimeVal;
 private import gobject.ObjectG;
@@ -496,7 +497,7 @@ public class FileInfo : ObjectG
 	 */
 	public void getModificationTime(out TimeVal result)
 	{
-		GTimeVal* outresult = gMalloc!GTimeVal();
+		GTimeVal* outresult = sliceAlloc!GTimeVal();
 
 		g_file_info_get_modification_time(gFileInfo, outresult);
 

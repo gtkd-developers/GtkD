@@ -24,6 +24,7 @@
 
 module gtk.TreeModelIF;
 
+private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;

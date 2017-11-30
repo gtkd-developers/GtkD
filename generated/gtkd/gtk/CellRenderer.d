@@ -26,6 +26,7 @@ module gtk.CellRenderer;
 
 private import cairo.Context;
 private import gdk.Event;
+private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
@@ -239,8 +240,8 @@ public class CellRenderer : ObjectG
 	 */
 	public void getPreferredSize(Widget widget, out Requisition minimumSize, out Requisition naturalSize)
 	{
-		GtkRequisition* outminimumSize = gMalloc!GtkRequisition();
-		GtkRequisition* outnaturalSize = gMalloc!GtkRequisition();
+		GtkRequisition* outminimumSize = sliceAlloc!GtkRequisition();
+		GtkRequisition* outnaturalSize = sliceAlloc!GtkRequisition();
 
 		gtk_cell_renderer_get_preferred_size(gtkCellRenderer, (widget is null) ? null : widget.getWidgetStruct(), outminimumSize, outnaturalSize);
 
