@@ -197,7 +197,7 @@ public class BaseTransform : Element
 	public void getAllocator(out Allocator allocator, out AllocationParams params)
 	{
 		GstAllocator* outallocator = null;
-		GstAllocationParams* outparams = sliceAlloc!GstAllocationParams();
+		GstAllocationParams* outparams = sliceNew!GstAllocationParams();
 
 		gst_base_transform_get_allocator(gstBaseTransform, &outallocator, outparams);
 

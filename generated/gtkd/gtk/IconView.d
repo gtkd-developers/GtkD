@@ -724,7 +724,7 @@ public class IconView : Container, CellLayoutIF, ScrollableIF
 	{
 		GtkTreeModel* outmodel = null;
 		GtkTreePath* outpath = null;
-		GtkTreeIter* outiter = sliceAlloc!GtkTreeIter();
+		GtkTreeIter* outiter = sliceNew!GtkTreeIter();
 
 		auto p = gtk_icon_view_get_tooltip_context(gtkIconView, &x, &y, keyboardTip, &outmodel, &outpath, outiter) != 0;
 

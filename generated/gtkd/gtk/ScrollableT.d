@@ -89,7 +89,7 @@ public template ScrollableT(TStruct)
 	 */
 	public bool getBorder(out Border border)
 	{
-		GtkBorder* outborder = sliceAlloc!GtkBorder();
+		GtkBorder* outborder = sliceNew!GtkBorder();
 
 		auto p = gtk_scrollable_get_border(getScrollableStruct(), outborder) != 0;
 

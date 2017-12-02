@@ -166,7 +166,7 @@ public class BufferPool : ObjectGst
 	public static bool configGetAllocator(Structure config, ref Allocator allocator, out AllocationParams params)
 	{
 		GstAllocator* outallocator = allocator.getAllocatorStruct();
-		GstAllocationParams* outparams = sliceAlloc!GstAllocationParams();
+		GstAllocationParams* outparams = sliceNew!GstAllocationParams();
 
 		auto p = gst_buffer_pool_config_get_allocator((config is null) ? null : config.getStructureStruct(), &outallocator, outparams) != 0;
 

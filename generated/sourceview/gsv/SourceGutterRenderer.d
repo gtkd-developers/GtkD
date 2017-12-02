@@ -183,7 +183,7 @@ public class SourceGutterRenderer : ObjectG
 	 */
 	public bool getBackground(out RGBA color)
 	{
-		GdkRGBA* outcolor = sliceAlloc!GdkRGBA();
+		GdkRGBA* outcolor = sliceNew!GdkRGBA();
 
 		auto p = gtk_source_gutter_renderer_get_background(gtkSourceGutterRenderer, outcolor) != 0;
 

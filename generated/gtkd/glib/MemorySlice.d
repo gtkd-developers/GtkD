@@ -32,7 +32,16 @@ public  import gtkc.glibtypes;
 /** */
 public T* sliceNew(T)()
 {
-	return cast(T*)g_slice_alloc0(T.sizeof);
+	// We cant use sliceAlloc for the GLib array types.
+	// the actual array structs are larger than the ones used in the API.
+	static if ( is( T == GArray ) )
+		return g_array_new(false, false, 1);
+	else static if ( is( T == GByteArray ) )
+		return g_byte_array_new();
+	else static if ( is( T == GPtrArray ) )
+		return g_ptr_array_new();
+	else
+		return cast(T*)g_slice_alloc0(T.sizeof);
 }
 
 public T* sliceAlloc(T)()

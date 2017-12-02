@@ -195,7 +195,7 @@ public class StyleProperties : ObjectG, StyleProviderIF
 	 */
 	public bool getStyleProperty(string property, GtkStateFlags state, out Value value)
 	{
-		GValue* outvalue = sliceAlloc!GValue();
+		GValue* outvalue = sliceNew!GValue();
 
 		auto p = gtk_style_properties_get_property(gtkStyleProperties, Str.toStringz(property), state, outvalue) != 0;
 

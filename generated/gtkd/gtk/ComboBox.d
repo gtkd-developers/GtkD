@@ -287,7 +287,7 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 	 */
 	public bool getActiveIter(out TreeIter iter)
 	{
-		GtkTreeIter* outiter = sliceAlloc!GtkTreeIter();
+		GtkTreeIter* outiter = sliceNew!GtkTreeIter();
 
 		auto p = gtk_combo_box_get_active_iter(gtkComboBox, outiter) != 0;
 

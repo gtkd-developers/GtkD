@@ -205,7 +205,7 @@ public class BaseSrc : Element
 	public void getAllocator(out Allocator allocator, out AllocationParams params)
 	{
 		GstAllocator* outallocator = null;
-		GstAllocationParams* outparams = sliceAlloc!GstAllocationParams();
+		GstAllocationParams* outparams = sliceNew!GstAllocationParams();
 
 		gst_base_src_get_allocator(gstBaseSrc, &outallocator, outparams);
 

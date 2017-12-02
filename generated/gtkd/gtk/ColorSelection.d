@@ -189,7 +189,7 @@ public class ColorSelection : Box
 	 */
 	public void getCurrentColor(out Color color)
 	{
-		GdkColor* outcolor = sliceAlloc!GdkColor();
+		GdkColor* outcolor = sliceNew!GdkColor();
 
 		gtk_color_selection_get_current_color(gtkColorSelection, outcolor);
 
@@ -206,7 +206,7 @@ public class ColorSelection : Box
 	 */
 	public void getCurrentRgba(out RGBA rgba)
 	{
-		GdkRGBA* outrgba = sliceAlloc!GdkRGBA();
+		GdkRGBA* outrgba = sliceNew!GdkRGBA();
 
 		gtk_color_selection_get_current_rgba(gtkColorSelection, outrgba);
 
@@ -254,7 +254,7 @@ public class ColorSelection : Box
 	 */
 	public void getPreviousColor(out Color color)
 	{
-		GdkColor* outcolor = sliceAlloc!GdkColor();
+		GdkColor* outcolor = sliceNew!GdkColor();
 
 		gtk_color_selection_get_previous_color(gtkColorSelection, outcolor);
 
@@ -271,7 +271,7 @@ public class ColorSelection : Box
 	 */
 	public void getPreviousRgba(out RGBA rgba)
 	{
-		GdkRGBA* outrgba = sliceAlloc!GdkRGBA();
+		GdkRGBA* outrgba = sliceNew!GdkRGBA();
 
 		gtk_color_selection_get_previous_rgba(gtkColorSelection, outrgba);
 

@@ -207,7 +207,7 @@ public class TreeSelection : ObjectG
 	public bool getSelected(out TreeModelIF model, out TreeIter iter)
 	{
 		GtkTreeModel* outmodel = null;
-		GtkTreeIter* outiter = sliceAlloc!GtkTreeIter();
+		GtkTreeIter* outiter = sliceNew!GtkTreeIter();
 
 		auto p = gtk_tree_selection_get_selected(gtkTreeSelection, &outmodel, outiter) != 0;
 

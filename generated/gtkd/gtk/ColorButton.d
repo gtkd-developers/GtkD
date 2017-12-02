@@ -198,7 +198,7 @@ public class ColorButton : Button, ColorChooserIF
 	 */
 	public void getColor(out Color color)
 	{
-		GdkColor* outcolor = sliceAlloc!GdkColor();
+		GdkColor* outcolor = sliceNew!GdkColor();
 
 		gtk_color_button_get_color(gtkColorButton, outcolor);
 

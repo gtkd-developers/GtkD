@@ -542,7 +542,7 @@ public class TextView : Container, ScrollableIF
 	 */
 	public bool getIterAtLocation(out TextIter iter, int x, int y)
 	{
-		GtkTextIter* outiter = sliceAlloc!GtkTextIter();
+		GtkTextIter* outiter = sliceNew!GtkTextIter();
 
 		auto p = gtk_text_view_get_iter_at_location(gtkTextView, outiter, x, y) != 0;
 
@@ -578,7 +578,7 @@ public class TextView : Container, ScrollableIF
 	 */
 	public bool getIterAtPosition(out TextIter iter, out int trailing, int x, int y)
 	{
-		GtkTextIter* outiter = sliceAlloc!GtkTextIter();
+		GtkTextIter* outiter = sliceNew!GtkTextIter();
 
 		auto p = gtk_text_view_get_iter_at_position(gtkTextView, outiter, &trailing, x, y) != 0;
 
@@ -638,7 +638,7 @@ public class TextView : Container, ScrollableIF
 	 */
 	public void getLineAtY(out TextIter targetIter, int y, out int lineTop)
 	{
-		GtkTextIter* outtargetIter = sliceAlloc!GtkTextIter();
+		GtkTextIter* outtargetIter = sliceNew!GtkTextIter();
 
 		gtk_text_view_get_line_at_y(gtkTextView, outtargetIter, y, &lineTop);
 

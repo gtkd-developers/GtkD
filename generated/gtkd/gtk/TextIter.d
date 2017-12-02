@@ -234,8 +234,8 @@ public class TextIter
 	 */
 	public bool backwardSearch(string str, GtkTextSearchFlags flags, out TextIter matchStart, out TextIter matchEnd, TextIter limit)
 	{
-		GtkTextIter* outmatchStart = sliceAlloc!GtkTextIter();
-		GtkTextIter* outmatchEnd = sliceAlloc!GtkTextIter();
+		GtkTextIter* outmatchStart = sliceNew!GtkTextIter();
+		GtkTextIter* outmatchEnd = sliceNew!GtkTextIter();
 
 		auto p = gtk_text_iter_backward_search(gtkTextIter, Str.toStringz(str), flags, outmatchStart, outmatchEnd, (limit is null) ? null : limit.getTextIterStruct()) != 0;
 
@@ -739,8 +739,8 @@ public class TextIter
 	 */
 	public bool forwardSearch(string str, GtkTextSearchFlags flags, out TextIter matchStart, out TextIter matchEnd, TextIter limit)
 	{
-		GtkTextIter* outmatchStart = sliceAlloc!GtkTextIter();
-		GtkTextIter* outmatchEnd = sliceAlloc!GtkTextIter();
+		GtkTextIter* outmatchStart = sliceNew!GtkTextIter();
+		GtkTextIter* outmatchEnd = sliceNew!GtkTextIter();
 
 		auto p = gtk_text_iter_forward_search(gtkTextIter, Str.toStringz(str), flags, outmatchStart, outmatchEnd, (limit is null) ? null : limit.getTextIterStruct()) != 0;
 
@@ -977,7 +977,7 @@ public class TextIter
 	 */
 	public bool getAttributes(out TextAttributes values)
 	{
-		GtkTextAttributes* outvalues = sliceAlloc!GtkTextAttributes();
+		GtkTextAttributes* outvalues = sliceNew!GtkTextAttributes();
 
 		auto p = gtk_text_iter_get_attributes(gtkTextIter, outvalues) != 0;
 

@@ -290,7 +290,7 @@ public struct Utils
 	 */
 	public static void setValueFromString(out Value value, string valueStr)
 	{
-		GValue* outvalue = sliceAlloc!GValue();
+		GValue* outvalue = sliceNew!GValue();
 
 		gst_util_set_value_from_string(outvalue, Str.toStringz(valueStr));
 

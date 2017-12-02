@@ -177,7 +177,7 @@ public final class TimeVal
 	 */
 	public static bool fromIso8601(string isoDate, out TimeVal time)
 	{
-		GTimeVal* outtime = sliceAlloc!GTimeVal();
+		GTimeVal* outtime = sliceNew!GTimeVal();
 
 		auto p = g_time_val_from_iso8601(Str.toStringz(isoDate), outtime) != 0;
 

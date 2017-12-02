@@ -927,7 +927,7 @@ public class Query
 	public void parseNthAllocationParam(uint index, out Allocator allocator, out AllocationParams params)
 	{
 		GstAllocator* outallocator = null;
-		GstAllocationParams* outparams = sliceAlloc!GstAllocationParams();
+		GstAllocationParams* outparams = sliceNew!GstAllocationParams();
 
 		gst_query_parse_nth_allocation_param(gstQuery, index, &outallocator, outparams);
 

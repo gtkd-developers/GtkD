@@ -201,7 +201,7 @@ public template ValueT(TStruct)
 	 */
 	public void getCurrentValue(out Value value)
 	{
-		GValue* outvalue = sliceAlloc!GValue();
+		GValue* outvalue = sliceNew!GValue();
 
 		atk_value_get_current_value(getValueStruct(), outvalue);
 
@@ -234,7 +234,7 @@ public template ValueT(TStruct)
 	 */
 	public void getMaximumValue(out Value value)
 	{
-		GValue* outvalue = sliceAlloc!GValue();
+		GValue* outvalue = sliceNew!GValue();
 
 		atk_value_get_maximum_value(getValueStruct(), outvalue);
 
@@ -255,7 +255,7 @@ public template ValueT(TStruct)
 	 */
 	public void getMinimumIncrement(out Value value)
 	{
-		GValue* outvalue = sliceAlloc!GValue();
+		GValue* outvalue = sliceNew!GValue();
 
 		atk_value_get_minimum_increment(getValueStruct(), outvalue);
 
@@ -272,7 +272,7 @@ public template ValueT(TStruct)
 	 */
 	public void getMinimumValue(out Value value)
 	{
-		GValue* outvalue = sliceAlloc!GValue();
+		GValue* outvalue = sliceNew!GValue();
 
 		atk_value_get_minimum_value(getValueStruct(), outvalue);
 

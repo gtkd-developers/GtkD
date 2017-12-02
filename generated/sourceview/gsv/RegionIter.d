@@ -82,8 +82,8 @@ public class RegionIter
 	 */
 	public bool getSubregion(out TextIter start, out TextIter end)
 	{
-		GtkTextIter* outstart = sliceAlloc!GtkTextIter();
-		GtkTextIter* outend = sliceAlloc!GtkTextIter();
+		GtkTextIter* outstart = sliceNew!GtkTextIter();
+		GtkTextIter* outend = sliceNew!GtkTextIter();
 
 		auto p = gtk_source_region_iter_get_subregion(gtkSourceRegionIter, outstart, outend) != 0;
 

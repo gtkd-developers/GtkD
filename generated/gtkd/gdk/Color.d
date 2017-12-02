@@ -285,7 +285,7 @@ public final class Color
 	 */
 	public static bool parse(string spec, out Color color)
 	{
-		GdkColor* outcolor = sliceAlloc!GdkColor();
+		GdkColor* outcolor = sliceNew!GdkColor();
 
 		auto p = gdk_color_parse(Str.toStringz(spec), outcolor) != 0;
 

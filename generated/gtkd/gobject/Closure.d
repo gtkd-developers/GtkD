@@ -292,7 +292,7 @@ public class Closure
 	 */
 	public void invoke(out Value returnValue, Value[] paramValues, void* invocationHint)
 	{
-		GValue* outreturnValue = sliceAlloc!GValue();
+		GValue* outreturnValue = sliceNew!GValue();
 
 		GValue[] paramValuesArray = new GValue[paramValues.length];
 		for ( int i = 0; i < paramValues.length; i++ )

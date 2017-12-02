@@ -129,8 +129,8 @@ public class SourceSearchContext : ObjectG
 	 */
 	public bool backward(TextIter iter, out TextIter matchStart, out TextIter matchEnd)
 	{
-		GtkTextIter* outmatchStart = sliceAlloc!GtkTextIter();
-		GtkTextIter* outmatchEnd = sliceAlloc!GtkTextIter();
+		GtkTextIter* outmatchStart = sliceNew!GtkTextIter();
+		GtkTextIter* outmatchEnd = sliceNew!GtkTextIter();
 
 		auto p = gtk_source_search_context_backward(gtkSourceSearchContext, (iter is null) ? null : iter.getTextIterStruct(), outmatchStart, outmatchEnd) != 0;
 
@@ -168,8 +168,8 @@ public class SourceSearchContext : ObjectG
 	 */
 	public bool backward2(TextIter iter, out TextIter matchStart, out TextIter matchEnd, out bool hasWrappedAround)
 	{
-		GtkTextIter* outmatchStart = sliceAlloc!GtkTextIter();
-		GtkTextIter* outmatchEnd = sliceAlloc!GtkTextIter();
+		GtkTextIter* outmatchStart = sliceNew!GtkTextIter();
+		GtkTextIter* outmatchEnd = sliceNew!GtkTextIter();
 		int outhasWrappedAround;
 
 		auto p = gtk_source_search_context_backward2(gtkSourceSearchContext, (iter is null) ? null : iter.getTextIterStruct(), outmatchStart, outmatchEnd, &outhasWrappedAround) != 0;
@@ -225,8 +225,8 @@ public class SourceSearchContext : ObjectG
 	 */
 	public bool backwardFinish(AsyncResultIF result, out TextIter matchStart, out TextIter matchEnd)
 	{
-		GtkTextIter* outmatchStart = sliceAlloc!GtkTextIter();
-		GtkTextIter* outmatchEnd = sliceAlloc!GtkTextIter();
+		GtkTextIter* outmatchStart = sliceNew!GtkTextIter();
+		GtkTextIter* outmatchEnd = sliceNew!GtkTextIter();
 		GError* err = null;
 
 		auto p = gtk_source_search_context_backward_finish(gtkSourceSearchContext, (result is null) ? null : result.getAsyncResultStruct(), outmatchStart, outmatchEnd, &err) != 0;
@@ -264,8 +264,8 @@ public class SourceSearchContext : ObjectG
 	 */
 	public bool backwardFinish2(AsyncResultIF result, out TextIter matchStart, out TextIter matchEnd, out bool hasWrappedAround)
 	{
-		GtkTextIter* outmatchStart = sliceAlloc!GtkTextIter();
-		GtkTextIter* outmatchEnd = sliceAlloc!GtkTextIter();
+		GtkTextIter* outmatchStart = sliceNew!GtkTextIter();
+		GtkTextIter* outmatchEnd = sliceNew!GtkTextIter();
 		int outhasWrappedAround;
 		GError* err = null;
 
@@ -301,8 +301,8 @@ public class SourceSearchContext : ObjectG
 	 */
 	public bool forward(TextIter iter, out TextIter matchStart, out TextIter matchEnd)
 	{
-		GtkTextIter* outmatchStart = sliceAlloc!GtkTextIter();
-		GtkTextIter* outmatchEnd = sliceAlloc!GtkTextIter();
+		GtkTextIter* outmatchStart = sliceNew!GtkTextIter();
+		GtkTextIter* outmatchEnd = sliceNew!GtkTextIter();
 
 		auto p = gtk_source_search_context_forward(gtkSourceSearchContext, (iter is null) ? null : iter.getTextIterStruct(), outmatchStart, outmatchEnd) != 0;
 
@@ -340,8 +340,8 @@ public class SourceSearchContext : ObjectG
 	 */
 	public bool forward2(TextIter iter, out TextIter matchStart, out TextIter matchEnd, out bool hasWrappedAround)
 	{
-		GtkTextIter* outmatchStart = sliceAlloc!GtkTextIter();
-		GtkTextIter* outmatchEnd = sliceAlloc!GtkTextIter();
+		GtkTextIter* outmatchStart = sliceNew!GtkTextIter();
+		GtkTextIter* outmatchEnd = sliceNew!GtkTextIter();
 		int outhasWrappedAround;
 
 		auto p = gtk_source_search_context_forward2(gtkSourceSearchContext, (iter is null) ? null : iter.getTextIterStruct(), outmatchStart, outmatchEnd, &outhasWrappedAround) != 0;
@@ -397,8 +397,8 @@ public class SourceSearchContext : ObjectG
 	 */
 	public bool forwardFinish(AsyncResultIF result, out TextIter matchStart, out TextIter matchEnd)
 	{
-		GtkTextIter* outmatchStart = sliceAlloc!GtkTextIter();
-		GtkTextIter* outmatchEnd = sliceAlloc!GtkTextIter();
+		GtkTextIter* outmatchStart = sliceNew!GtkTextIter();
+		GtkTextIter* outmatchEnd = sliceNew!GtkTextIter();
 		GError* err = null;
 
 		auto p = gtk_source_search_context_forward_finish(gtkSourceSearchContext, (result is null) ? null : result.getAsyncResultStruct(), outmatchStart, outmatchEnd, &err) != 0;
@@ -436,8 +436,8 @@ public class SourceSearchContext : ObjectG
 	 */
 	public bool forwardFinish2(AsyncResultIF result, out TextIter matchStart, out TextIter matchEnd, out bool hasWrappedAround)
 	{
-		GtkTextIter* outmatchStart = sliceAlloc!GtkTextIter();
-		GtkTextIter* outmatchEnd = sliceAlloc!GtkTextIter();
+		GtkTextIter* outmatchStart = sliceNew!GtkTextIter();
+		GtkTextIter* outmatchEnd = sliceNew!GtkTextIter();
 		int outhasWrappedAround;
 		GError* err = null;
 

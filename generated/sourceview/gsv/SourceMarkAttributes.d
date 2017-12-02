@@ -119,7 +119,7 @@ public class SourceMarkAttributes : ObjectG
 	 */
 	public bool getBackground(out RGBA background)
 	{
-		GdkRGBA* outbackground = sliceAlloc!GdkRGBA();
+		GdkRGBA* outbackground = sliceNew!GdkRGBA();
 
 		auto p = gtk_source_mark_attributes_get_background(gtkSourceMarkAttributes, outbackground) != 0;
 

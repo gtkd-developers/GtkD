@@ -234,7 +234,7 @@ public template SourceCompletionProviderT(TStruct)
 	 */
 	public bool getStartIter(SourceCompletionContext context, SourceCompletionProposalIF proposal, out TextIter iter)
 	{
-		GtkTextIter* outiter = sliceAlloc!GtkTextIter();
+		GtkTextIter* outiter = sliceNew!GtkTextIter();
 
 		auto p = gtk_source_completion_provider_get_start_iter(getSourceCompletionProviderStruct(), (context is null) ? null : context.getSourceCompletionContextStruct(), (proposal is null) ? null : proposal.getSourceCompletionProposalStruct(), outiter) != 0;
 

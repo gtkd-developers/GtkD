@@ -291,7 +291,7 @@ public class SymbolicColor
 	 */
 	public bool resolve(StyleProperties props, out RGBA resolvedColor)
 	{
-		GdkRGBA* outresolvedColor = sliceAlloc!GdkRGBA();
+		GdkRGBA* outresolvedColor = sliceNew!GdkRGBA();
 
 		auto p = gtk_symbolic_color_resolve(gtkSymbolicColor, (props is null) ? null : props.getStylePropertiesStruct(), outresolvedColor) != 0;
 

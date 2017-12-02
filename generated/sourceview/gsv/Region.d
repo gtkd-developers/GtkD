@@ -143,8 +143,8 @@ public class Region : ObjectG
 	 */
 	public bool getBounds(out TextIter start, out TextIter end)
 	{
-		GtkTextIter* outstart = sliceAlloc!GtkTextIter();
-		GtkTextIter* outend = sliceAlloc!GtkTextIter();
+		GtkTextIter* outstart = sliceNew!GtkTextIter();
+		GtkTextIter* outend = sliceNew!GtkTextIter();
 
 		auto p = gtk_source_region_get_bounds(gtkSourceRegion, outstart, outend) != 0;
 
@@ -182,7 +182,7 @@ public class Region : ObjectG
 	 */
 	public void getStartRegionIter(out RegionIter iter)
 	{
-		GtkSourceRegionIter* outiter = sliceAlloc!GtkSourceRegionIter();
+		GtkSourceRegionIter* outiter = sliceNew!GtkSourceRegionIter();
 
 		gtk_source_region_get_start_region_iter(gtkSourceRegion, outiter);
 

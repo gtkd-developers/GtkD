@@ -905,7 +905,7 @@ public class TagList
 	 */
 	public static bool copyValue(out Value dest, TagList list, string tag)
 	{
-		GValue* outdest = sliceAlloc!GValue();
+		GValue* outdest = sliceNew!GValue();
 
 		auto p = gst_tag_list_copy_value(outdest, (list is null) ? null : list.getTagListStruct(), Str.toStringz(tag)) != 0;
 
@@ -993,7 +993,7 @@ public class TagList
 	 */
 	public static void mergeStringsWithComma(out Value dest, Value src)
 	{
-		GValue* outdest = sliceAlloc!GValue();
+		GValue* outdest = sliceNew!GValue();
 
 		gst_tag_merge_strings_with_comma(outdest, (src is null) ? null : src.getValueStruct());
 
@@ -1010,7 +1010,7 @@ public class TagList
 	 */
 	public static void mergeUseFirst(out Value dest, Value src)
 	{
-		GValue* outdest = sliceAlloc!GValue();
+		GValue* outdest = sliceNew!GValue();
 
 		gst_tag_merge_use_first(outdest, (src is null) ? null : src.getValueStruct());
 

@@ -969,7 +969,7 @@ public void setTranslationDomain(string domain)
  */
 public bool valueFromString(ParamSpec pspec, string str, out Value value)
 {
-	GValue* outvalue = sliceAlloc!GValue();
+	GValue* outvalue = sliceNew!GValue();
 	GError* err = null;
 
 	auto p = gtk_builder_value_from_string(gtkBuilder, (pspec is null) ? null : pspec.getParamSpecStruct(), Str.toStringz(str), outvalue, &err) != 0;
@@ -1006,7 +1006,7 @@ public bool valueFromString(ParamSpec pspec, string str, out Value value)
  */
 public bool valueFromStringType(GType type, string str, out Value value)
 {
-	GValue* outvalue = sliceAlloc!GValue();
+	GValue* outvalue = sliceNew!GValue();
 	GError* err = null;
 
 	auto p = gtk_builder_value_from_string_type(gtkBuilder, type, Str.toStringz(str), outvalue, &err) != 0;

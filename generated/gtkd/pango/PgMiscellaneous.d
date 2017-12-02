@@ -323,7 +323,7 @@ public struct PgMiscellaneous
 	public static bool scanString(ref string pos, out StringG output)
 	{
 		char* outpos = Str.toStringz(pos);
-		GString* outoutput = sliceAlloc!GString();
+		GString* outoutput = sliceNew!GString();
 
 		auto p = pango_scan_string(&outpos, outoutput) != 0;
 
@@ -347,7 +347,7 @@ public struct PgMiscellaneous
 	public static bool scanWord(ref string pos, out StringG output)
 	{
 		char* outpos = Str.toStringz(pos);
-		GString* outoutput = sliceAlloc!GString();
+		GString* outoutput = sliceNew!GString();
 
 		auto p = pango_scan_word(&outpos, outoutput) != 0;
 
@@ -430,7 +430,7 @@ public struct PgMiscellaneous
 	 */
 	public static int readLine(FILE* stream, out StringG str)
 	{
-		GString* outstr = sliceAlloc!GString();
+		GString* outstr = sliceNew!GString();
 
 		auto p = pango_read_line(stream, outstr);
 

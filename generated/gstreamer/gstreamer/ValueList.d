@@ -80,7 +80,7 @@ public class ValueList
 	 */
 	public static void concat(out Value dest, Value value1, Value value2)
 	{
-		GValue* outdest = sliceAlloc!GValue();
+		GValue* outdest = sliceNew!GValue();
 
 		gst_value_list_concat(outdest, (value1 is null) ? null : value1.getValueStruct(), (value2 is null) ? null : value2.getValueStruct());
 
@@ -137,7 +137,7 @@ public class ValueList
 	 */
 	public static void merge(out Value dest, Value value1, Value value2)
 	{
-		GValue* outdest = sliceAlloc!GValue();
+		GValue* outdest = sliceNew!GValue();
 
 		gst_value_list_merge(outdest, (value1 is null) ? null : value1.getValueStruct(), (value2 is null) ? null : value2.getValueStruct());
 

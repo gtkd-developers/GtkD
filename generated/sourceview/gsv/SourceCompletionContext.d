@@ -118,7 +118,7 @@ public class SourceCompletionContext : ObjectG
 	 */
 	public bool getIter(out TextIter iter)
 	{
-		GtkTextIter* outiter = sliceAlloc!GtkTextIter();
+		GtkTextIter* outiter = sliceNew!GtkTextIter();
 
 		auto p = gtk_source_completion_context_get_iter(gtkSourceCompletionContext, outiter) != 0;
 

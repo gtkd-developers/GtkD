@@ -241,7 +241,7 @@ public final class StockItem
 	 */
 	public static bool stockLookup(string stockId, out StockItem item)
 	{
-		GtkStockItem* outitem = sliceAlloc!GtkStockItem();
+		GtkStockItem* outitem = sliceNew!GtkStockItem();
 
 		auto p = gtk_stock_lookup(Str.toStringz(stockId), outitem) != 0;
 

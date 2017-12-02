@@ -299,7 +299,7 @@ public struct DBusUtilities
 	 */
 	public static void gvariantToGvalue(Variant value, out Value outGvalue)
 	{
-		GValue* outoutGvalue = sliceAlloc!GValue();
+		GValue* outoutGvalue = sliceNew!GValue();
 
 		g_dbus_gvariant_to_gvalue((value is null) ? null : value.getVariantStruct(), outoutGvalue);
 

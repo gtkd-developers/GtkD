@@ -101,7 +101,7 @@ public template ColorChooserT(TStruct)
 	 */
 	public void getRgba(out RGBA color)
 	{
-		GdkRGBA* outcolor = sliceAlloc!GdkRGBA();
+		GdkRGBA* outcolor = sliceNew!GdkRGBA();
 
 		gtk_color_chooser_get_rgba(getColorChooserStruct(), outcolor);
 

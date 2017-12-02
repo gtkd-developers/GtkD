@@ -1095,7 +1095,7 @@ public class TreeView : Container, ScrollableIF
 	{
 		GtkTreeModel* outmodel = null;
 		GtkTreePath* outpath = null;
-		GtkTreeIter* outiter = sliceAlloc!GtkTreeIter();
+		GtkTreeIter* outiter = sliceNew!GtkTreeIter();
 
 		auto p = gtk_tree_view_get_tooltip_context(gtkTreeView, &x, &y, keyboardTip, &outmodel, &outpath, outiter) != 0;
 
