@@ -20,6 +20,7 @@ int main(string[] args) {
 	if(args.length > 1) {
 		writefln("Loading %s", args[1]);
 		gladefile = args[1];
+		args = args[0..1];
 	} else {
 		writeln("No glade file specified, using default \"builderTest.glade\"");
 		gladefile = "builderTest.glade";
