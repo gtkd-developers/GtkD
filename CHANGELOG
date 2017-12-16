@@ -1,6 +1,10 @@
 GtkD ChangeLog
 ==============
 
+Release: 3.7.3
+--------------
+-Use the Slice allocator to allocate structs. #221
+
 Release: 3.7.2
 --------------
 -Don't use the phobos version of Scoped, to avoid issues when the struct is moved.
