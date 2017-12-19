@@ -78,7 +78,7 @@ sv | build gtkd-sourceview
 gstreamer | build gstreamer.
 all | build everything.
 
-For all the abobe packages there a two option avalable to specify aditional
+For all the above packages there a two option avalable to specify aditional
 compiler and linker flags:
 
 - --dcflags="your compiler flags"
