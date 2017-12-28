@@ -16,6 +16,28 @@ import std.string;
 string dcflags;
 string ldflags;
 
+version(DigitalMars)
+{
+	string DC = "dmd";
+	string OUTPUT = "-of";
+
+	version(Win32) version = DMD32;
+}
+else version(LDC)
+{
+	string DC = "ldc2";
+	string OUTPUT = "-od=objects -oq -of";
+}
+else version(GNU)
+{
+	string DC = "gdc";
+	string OUTPUT = "-o ";
+}
+else
+{
+	static assert(false, "Unsupported compiler");
+}
+
 int main(string[] args)
 {
 	version(Posix)
@@ -72,15 +94,7 @@ int main(string[] args)
 
 void build(string dir, string lib)
 {
-	version(Win64)
-	{
-		std.file.write("build.rf", format("-m64 -c -lib %s %s -Igenerated/gtkd -of%s.lib %s", dcflags, ldflags, lib, dFiles(dir)));
-		auto pid = spawnProcess(["dmd", "@build.rf"]);
-
-		if ( wait(pid) != 0 )
-			exit(1);
-	}
-	else
+	version(DMD32)
 	{
 		if (lib == "gtkd")
 		{
@@ -97,7 +111,7 @@ void build(string dir, string lib)
 				objects ~= directory ~".obj ";
 			objects ~= "gtk1.obj gtk2.obj gtk3.obj gtk4.obj";
 
-			executeShell(format("dmd -lib %s -of%s.lib %s", ldflags, lib, objects));
+			executeShell(format("%s -lib %s %s%s.lib %s", DC, ldflags, OUTPUT, lib, objects));
 
 			foreach(string obj; objects.split())
 				std.file.remove(obj);
@@ -105,17 +119,26 @@ void build(string dir, string lib)
 		else
 		{
 			buildObj(dFiles(dir), lib);
-			executeShell(format("dmd -lib %s -of%s.lib %s.obj", ldflags, lib, lib));
+			executeShell(format("%s -lib %s %s%s.lib %s.obj", DC, ldflags, OUTPUT, lib, lib));
 			std.file.remove(lib ~".obj");
 		}
 	}
+	else
+	{
+		std.file.write("build.rf", format("-m64 -c -lib %s %s -Igenerated/gtkd -%s%s.lib %s", dcflags, ldflags, OUTPUT ,lib, dFiles(dir)));
+		auto pid = spawnProcess([DC, "@build.rf"]);
+
+		if ( wait(pid) != 0 )
+			exit(1);
+	}
 	
+	version(LDC)std.file.rmdirRecurse("objects");
 	std.file.remove("build.rf");
 }
 
 void buildObj(string files, string objName)
 {
-	std.file.write("build.rf", format("-c %s -Igenerated/gtkd -of%s.obj %s", dcflags, objName, files));
+	std.file.write("build.rf", format("-c %s -Igenerated/gtkd %s%s.obj %s", dcflags, OUTPUT, objName, files));
 	auto pid = spawnProcess(["dmd", "@build.rf"]);
 	if ( wait(pid) != 0 )
 		exit(1);
