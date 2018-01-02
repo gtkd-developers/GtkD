@@ -114,11 +114,11 @@ public class Idle
 		bool runAgain = false;
 		int i = 0;
 
-		while ( i<idleListeners.length )
+		while ( i<idle.idleListeners.length )
 		{
-			if ( !idleListeners[i]() )
+			if ( !idle.idleListeners[i]() )
 			{
-				idleListeners = idleListeners[0..i] ~ idleListeners[i+1..idleListeners.length];
+				idle.idleListeners = idle.idleListeners[0..i] ~ idle.idleListeners[i+1..$];
 			}
 			else
 			{

@@ -33,10 +33,10 @@ public  import gtkc.glibtypes;
 /** */
 public class Timeout
 {
-	/** Holds all timeout delegates */
-	bool delegate()[] timeoutListeners;
-	/** our gtk timeout ID */
-	uint timeoutID;
+	/** Holds all idle delegates */
+	private bool delegate()[] timeoutListeners;
+	/** Our timeout ID */
+	private uint timeoutID;
 
 
 	/**
@@ -54,15 +54,11 @@ public class Timeout
 	 */
 	this(uint interval, bool delegate() dlg, bool fireNow=false)
 	{
+		if ( fireNow && !dlg() )
+			return;
+
 		timeoutListeners ~= dlg;
-		timeoutID = g_timeout_add(interval, cast(GSourceFunc)&timeoutCallback, cast(void*)this);
-		if ( fireNow )
-		{
-			if ( !dlg() )
-			{
-				timeoutListeners.length = 0;
-			}
-		}
+		timeoutID = g_timeout_add_full(GPriority.DEFAULT, interval, cast(GSourceFunc)&timeoutCallback, cast(void*)this, cast(GDestroyNotify)&destroyTimeoutNotify);
 	}
 
 	/**
@@ -75,15 +71,11 @@ public class Timeout
 	 */
 	this(uint interval, bool delegate() dlg, GPriority priority, bool fireNow=false)
 	{
+		if ( fireNow && !dlg() )
+			return;
+
 		timeoutListeners ~= dlg;
-		timeoutID = g_timeout_add_full(priority, interval, cast(GSourceFunc)&timeoutCallback, cast(void*)this, null);
-		if ( fireNow )
-		{
-			if ( !dlg() )
-			{
-				timeoutListeners.length = 0;
-			}
-		}
+		timeoutID = g_timeout_add_full(priority, interval, cast(GSourceFunc)&timeoutCallback, cast(void*)this, cast(GDestroyNotify)&destroyTimeoutNotify);
 	}
 
 	/**
@@ -95,15 +87,11 @@ public class Timeout
 	 */
 	this(bool delegate() dlg, uint seconds, bool fireNow=false)
 	{
+		if ( fireNow && !dlg() )
+			return;
+
 		timeoutListeners ~= dlg;
-		timeoutID = g_timeout_add_seconds(seconds, cast(GSourceFunc)&timeoutCallback, cast(void*)this);
-		if ( fireNow )
-		{
-			if ( !dlg() )
-			{
-				timeoutListeners.length = 0;
-			}
-		}
+		timeoutID = g_timeout_add_seconds_full(GPriority.DEFAULT, seconds, cast(GSourceFunc)&timeoutCallback, cast(void*)this, cast(GDestroyNotify)&destroyTimeoutNotify);
 	}
 
 	/**
@@ -116,26 +104,20 @@ public class Timeout
 	 */
 	this(bool delegate() dlg, uint seconds, GPriority priority, bool fireNow=false)
 	{
+		if ( fireNow && !dlg() )
+			return;
+
 		timeoutListeners ~= dlg;
-		timeoutID = g_timeout_add_seconds_full(priority, seconds, cast(GSourceFunc)&timeoutCallback, cast(void*)this, null);
-		if ( fireNow )
-		{
-			if ( !dlg() )
-			{
-				timeoutListeners.length = 0;
-			}
-		}
+		timeoutID = g_timeout_add_seconds_full(priority, seconds, cast(GSourceFunc)&timeoutCallback, cast(void*)this, cast(GDestroyNotify)&destroyTimeoutNotify);
 	}
 
-	/** */
+	/** Removes the timeout from gtk */
 	public void stop()
 	{
 		if ( timeoutID > 0 )
 		{
 			g_source_remove(timeoutID);
 		}
-		timeoutID = 0;
-		timeoutListeners.length = 0;
 	}
 
 	/**
@@ -154,14 +136,10 @@ public class Timeout
 	 */
 	public void addListener(bool delegate() dlg, bool fireNow=false)
 	{
+		if ( fireNow && !dlg() )
+			return;
+
 		timeoutListeners ~= dlg;
-		if ( fireNow )
-		{
-			if ( !dlg() )
-			{
-				timeoutListeners.length = timeoutListeners.length - 1;
-			}
-		}
 	}
 
 	/**
@@ -172,24 +150,14 @@ public class Timeout
 	 */
 	extern(C) static bool timeoutCallback(Timeout timeout)
 	{
-		return timeout.callAllListeners();
-	}
-
-	/**
-	 * Executes all delegates on the execution list
-	 * Returns:
-	 */
-	private bool callAllListeners()
-	{
 		bool runAgain = false;
-
 		int i = 0;
 
-		while ( i<timeoutListeners.length )
+		while ( i<timeout.timeoutListeners.length )
 		{
-			if ( !timeoutListeners[i]() )
+			if ( !timeout.timeoutListeners[i]() )
 			{
-				timeoutListeners = timeoutListeners[0..i] ~ timeoutListeners[i+1..timeoutListeners.length];
+				timeout.timeoutListeners = timeout.timeoutListeners[0..i] ~ timeout.timeoutListeners[i+1..$];
 			}
 			else
 			{
@@ -198,11 +166,16 @@ public class Timeout
 			}
 		}
 
-		// Set timeoutID to 0 if all delegates are removed
-		if (timeoutListeners.length == 0)
-			timeoutID = 0;
-
 		return runAgain;
+	}
+
+	/*
+	 * Reset the timeout object when it's destroyed on the GTK side.
+	 */
+	extern(C) static void destroyTimeoutNotify(Timeout timeout)
+	{
+		timeout.timeoutListeners.length = 0;
+		timeout.timeoutID = 0;
 	}
 
 	/**
