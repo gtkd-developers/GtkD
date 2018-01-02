@@ -34,28 +34,25 @@ public  import gtkc.glibtypes;
 public class Idle
 {
 	/** Holds all idle delegates */
-	bool delegate()[] idleListeners;
-	/** our idle ID */
-	uint idleID;
+	private bool delegate()[] idleListeners;
+	/** Our idle ID */
+	private uint idleID;
+	/** The priority this class was instantiated with */
+	private GPriority priority = GPriority.DEFAULT_IDLE;
 
 	/**
 	 * Creates a new idle cycle.
 	 * Params:
-	 *    	interval = the idle in milieconds
 	 *    	dlg = the delegate to be executed
 	 *    	fireNow = When true the delegate will be executed emmidiatly
 	 */
 	this(bool delegate() dlg, bool fireNow=false)
 	{
+		if ( fireNow && !dlg() )
+			return;
+
 		idleListeners ~= dlg;
-		idleID = g_idle_add(cast(GSourceFunc)&idleCallback, cast(void*)this);
-		if ( fireNow )
-		{
-			if ( !dlg() )
-			{
-				idleListeners.length = 0;
-			}
-		}
+		idleID = g_idle_add_full(priority, cast(GSourceFunc)&idleCallback, cast(void*)this, cast(GDestroyNotify)&destroyIdleNotify);
 	}
 
 	/**
@@ -67,25 +64,20 @@ public class Idle
 	 */
 	this(bool delegate() dlg, GPriority priority, bool fireNow=false)
 	{
+		this.priority = priority;
+
+		if ( fireNow && !dlg() )
+			return;
+
 		idleListeners ~= dlg;
-		idleID = g_idle_add_full(priority, cast(GSourceFunc)&idleCallback, cast(void*)this, null);
-		if ( fireNow )
-		{
-			if ( !dlg() )
-			{
-				idleListeners.length = 0;
-			}
-		}
+		idleID = g_idle_add_full(priority, cast(GSourceFunc)&idleCallback, cast(void*)this, cast(GDestroyNotify)&destroyIdleNotify);
 	}
 
 	/** */
 	public void stop()
 	{
 		if ( idleID > 0 )
-		{
 			g_source_remove(idleID);
-		}
-		idleListeners.length = 0;
 	}
 
 	/**
@@ -104,35 +96,22 @@ public class Idle
 	 */
 	public void addListener(bool delegate() dlg, bool fireNow=false)
 	{
+		if ( fireNow && !dlg() )
+			return;
+
 		idleListeners ~= dlg;
-		if ( fireNow )
-		{
-			if ( !dlg() )
-			{
-				idleListeners.length = idleListeners.length - 1;
-			}
-		}
+
+		if ( idleID == 0 )
+			idleID = g_idle_add_full(priority, cast(GSourceFunc)&idleCallback, cast(void*)this, cast(GDestroyNotify)&destroyIdleNotify);
 	}
 
-	/**
-	 * The callback execution from glib
-	 * Params:
-	 *    	idle =
-	 * Returns:
+	/*
+	 * Executes all delegates on the execution list
+	 * Returns: false if the callback should be removed.
 	 */
 	extern(C) static bool idleCallback(Idle idle)
 	{
-		return idle.callAllListeners();
-	}
-
-	/**
-	 * Executes all delegates on the execution list
-	 * Returns:
-	 */
-	private bool callAllListeners()
-	{
 		bool runAgain = false;
-
 		int i = 0;
 
 		while ( i<idleListeners.length )
@@ -148,11 +127,16 @@ public class Idle
 			}
 		}
 
-		// Set idleID to 0 if all delegates are removed
-		if (idleListeners.length == 0)
-			idleID = 0;
-
 		return runAgain;
+	}
+
+	/*
+	 * Reset the idle object when it's destroyed on the GTK side.
+	 */
+	extern(C) static void destroyIdleNotify(Idle idle)
+	{
+		idle.idleListeners.length = 0;
+		idle.idleID = 0;
 	}
 
 	/**
