@@ -319,7 +319,7 @@
 //			
 //	void dump(Object[] oArray)
 //	{
-//		writefln("\n");
+//		writeln("\n");
 //		foreach(Object o ; oArray)
 //		{
 //			writefln("%s",o);

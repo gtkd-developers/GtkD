@@ -87,14 +87,14 @@ class TestStock : ScrolledWindow
 
 //	bit enterNotify(Widget widget, EventCrossing event)
 //	{
-//		writeln("TestStock.mouseEnterNotify %X",widget);
+//		writefln("TestStock.mouseEnterNotify %X",widget);
 //		Cursor cursor = new Cursor(CursorType.MAN);
 //		widget.setCursor(cursor);
 //		return true;
 //	}
 //	bit leaveNotify(Widget widget, EventCrossing event)
 //	{
-//		writeln("TestStock.mouseLeaveNotify");
+//		writefln("TestStock.mouseLeaveNotify");
 //		widget.resetCursor();
 //		return true;
 //	}

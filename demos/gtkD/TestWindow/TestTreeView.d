@@ -106,14 +106,14 @@ class TestTreeView : ScrolledWindow
 
 	void rowActivatedCallback(TreePath path, TreeViewColumn column, TreeView treeView)
 	{
-		writeln("rowActivateCallback for %X",treeView);
-		writeln("rowActivateCallback for path %s",path.toString());
+		writefln("rowActivateCallback for %X",treeView);
+		writefln("rowActivateCallback for path %s",path.toString());
 	}
 
 	bool moveCursorCallBack(GtkMovementStep step, int direction, TreeView treeView)
 	{
-		writeln("moveCursorCallBack for %X",treeView);
-		writeln("moveCursorCallBack row = %d",direction);
+		writefln("moveCursorCallBack for %X",treeView);
+		writefln("moveCursorCallBack row = %d",direction);
 		return false;
 	}
 

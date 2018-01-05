@@ -193,10 +193,10 @@ class TestDrawingArea : VBox
 
 		public bool onButtonPress(Event event, Widget widget)
 		{
-			debug(trace) writefln("button DOWN");
+			debug(trace) writeln("button DOWN");
 			if ( event.type == EventType.BUTTON_PRESS && event.button.button == 1 )
 			{
-				debug(trace) writefln("Button 1 down");
+				debug(trace) writeln("Button 1 down");
 				buttonIsDown = true;
 
 				drawPrimitive(cast(int)event.button.x, cast(int)event.button.y);
@@ -206,10 +206,10 @@ class TestDrawingArea : VBox
 
 		public bool onButtonRelease(Event event, Widget widget)
 		{
-			debug(trace) writefln("button UP");
+			debug(trace) writeln("button UP");
 			if ( event.type == EventType.BUTTON_RELEASE && event.button.button == 1 )
 			{
-				debug(trace) writefln("Button 1 UP");
+				debug(trace) writeln("Button 1 UP");
 				buttonIsDown = false;
 			}
 			return false;
@@ -249,7 +249,7 @@ class TestDrawingArea : VBox
 			drawPoints(Context.create(surface));
 			this.queueDraw();
 
-			debug(trace) writefln("backSpinChanged - exit");
+			debug(trace) writeln("backSpinChanged - exit");
 		}
 
 		public void sizeSpinChanged(SpinButton spinButton)

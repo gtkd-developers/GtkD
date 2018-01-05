@@ -132,7 +132,7 @@ class TestWindow : ApplicationWindow
 	int windowDelete(GdkEvent* event, Widget widget)
 	{
 
-		debug(events) writeln("TestWindow.widgetDelete : this and widget to delete %X %X",this,window);
+		debug(events) writefln("TestWindow.widgetDelete : this and widget to delete %X %X",this,window);
 		MessageDialog d = new MessageDialog(
 										this,
 										GtkDialogFlags.MODAL,
@@ -563,12 +563,12 @@ class TestWindow : ApplicationWindow
 
 	void showTextCombo(Button button)
 	{
-		writeln("Combo selected text = %s",comboText.getActiveText());
+		writefln("Combo selected text = %s",comboText.getActiveText());
 	}
 
 	void showSimpleCombo(Button button)
 	{
-		writeln("Combo selected text = %s",simpleCombo.getActiveText());
+		writefln("Combo selected text = %s",simpleCombo.getActiveText());
 	}
 
 	class NB : Notebook
@@ -584,7 +584,7 @@ class TestWindow : ApplicationWindow
 
 		void switchPage(Notebook notebook, /*NotebookPage page,*/ uint pageNumber)
 		{
-			writeln("new page = %d",pageNumber);
+			writefln("new page = %d",pageNumber);
 		}
 	}
 
@@ -742,7 +742,7 @@ class TestWindow : ApplicationWindow
 //
 //		foreach ( int i, string selection ; fs.getSelections())
 //		{
-//			writeln("File(s) selected [%d] %s",i,selection);
+//			writefln("File(s) selected [%d] %s",i,selection);
 //		}
 		fcd.hide();
 	}

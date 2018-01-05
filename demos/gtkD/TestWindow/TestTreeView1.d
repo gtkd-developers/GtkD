@@ -59,25 +59,25 @@ public class TestTreeView1 : VBox
 	this()
 	{
 
-		debug(trace) writefln("TestTreeView1.this 1");
+		debug(trace) writeln("TestTreeView1.this 1");
 		super(false, 0);
-		debug(trace) writefln("TestTreeView1.this 2");
+		debug(trace) writeln("TestTreeView1.this 2");
 
 		pixbuf = new Pixbuf(greenClass_xpm);
-		debug(trace) writefln("TestTreeView1.this 2.1");
+		debug(trace) writeln("TestTreeView1.this 2.1");
 		pixbufTest = new Pixbuf(book_closed_xpm);
-		debug(trace) writefln("TestTreeView1.this 2.2");
+		debug(trace) writeln("TestTreeView1.this 2.2");
 		image = new Image(pixbufTest);
 
-		debug(trace) writefln("TestTreeView1.this 3");
+		debug(trace) writeln("TestTreeView1.this 3");
 		TreeView treeView1 = setup1();
 		populate(testTreeStore1);
 
-		debug(trace) writefln("TestTreeView1.this 4");
+		debug(trace) writeln("TestTreeView1.this 4");
 		TreeView treeView2 = setup2();
 		populate(testTreeStore2);
 
-		debug(trace) writefln("TestTreeView1.this 5");
+		debug(trace) writeln("TestTreeView1.this 5");
 		treeView2.addOnMoveCursor(&moveCursorCallback);
 		packStart(image, false, false, 1);
 		ScrolledWindow sw = new ScrolledWindow(null, null);
@@ -87,7 +87,7 @@ public class TestTreeView1 : VBox
 		sw.add(treeView2);
 		packStart(sw, true, true, 1);
 
-		debug(trace) writefln("TestTreeView1.this 6");
+		debug(trace) writeln("TestTreeView1.this 6");
 		//addWithViewport(treeView);
 
 
@@ -229,8 +229,8 @@ public class TestTreeView1 : VBox
 
 	void rowActivatedCallback(TreeView treeView, TreePath path, TreeViewColumn column)
 	{
-		writeln("rowActivateCallback for %X",treeView);
-		writeln("rowActivateCallback for path %s",path.toString());
+		writefln("rowActivateCallback for %X",treeView);
+		writefln("rowActivateCallback for path %s",path.toString());
 	}
 
 

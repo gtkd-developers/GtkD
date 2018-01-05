@@ -149,7 +149,7 @@ class TestIdle : VBox
 
 		public void onMap(Widget widget)
 		{
-			debug(trace) writefln("idle.onMap");
+			debug(trace) writeln("idle.onMap");
 			continueIdleCallback = true;
 			x = 0;
 			y = 0;
@@ -160,7 +160,7 @@ class TestIdle : VBox
 
 		public void onUnmap(Widget widget)
 		{
-			debug(trace) writefln("idle.onUnmap");
+			debug(trace) writeln("idle.onUnmap");
 			continueIdleCallback = false;
 		}
 
