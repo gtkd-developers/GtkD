@@ -78,7 +78,6 @@ mixin template ImplementClass(Class)
 mixin template ImplementInterface(Base, Iface)
 {
 	mixin(ImplementInterfaceImpl!(Base, Iface, typeof(this))());
-	pragma(msg, ImplementInterfaceImpl!(Base, Iface, typeof(this))());
 }
 
 template ImplementClassImpl(Klass, Impl)
@@ -434,7 +433,7 @@ private string getWrapFunction(Impl, Member, string name)()
 			if ( (ParamStorage[i] == STC.out_ || ParamStorage[i] == STC.ref_) && isGtkdType!(DParamTypes[i]) )
 			{
 				result ~= "\tif ( d_"~ ParamNames[i] ~" !is null )\n"~
-				          "\t\t"~ ParamNames[i] ~" = d_"~ ParamNames[i] ~".get"~ DParamTypes[i].stringof ~"Struct();\n";
+				          "\t\t*"~ ParamNames[i] ~" = *d_"~ ParamNames[i] ~".get"~ DParamTypes[i].stringof ~"Struct();\n";
 			}
 		}
 
