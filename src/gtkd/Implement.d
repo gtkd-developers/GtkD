@@ -78,6 +78,7 @@ mixin template ImplementClass(Class)
 mixin template ImplementInterface(Base, Iface)
 {
 	mixin(ImplementInterfaceImpl!(Base, Iface, typeof(this))());
+	pragma(msg, ImplementInterfaceImpl!(Base, Iface, typeof(this))());
 }
 
 template ImplementClassImpl(Klass, Impl)
@@ -438,7 +439,7 @@ private string getWrapFunction(Impl, Member, string name)()
 		}
 
 		if ( isGtkdType!(ReturnType!(__traits(getMember, Impl, name))) && isPointer!(ReturnType!Member) )
-			result ~= "\treturn ret.get"~ (ReturnType!(__traits(getMember, Impl, name))).stringof ~"Struct();\n";
+			result ~= "\treturn ret ? ret.get"~ (ReturnType!(__traits(getMember, Impl, name))).stringof ~"Struct() : null;\n";
 		else if ( !is(ReturnType!Member == void) )
 			result ~= "\treturn ret;\n";
 
