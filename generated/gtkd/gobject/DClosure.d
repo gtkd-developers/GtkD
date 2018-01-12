@@ -135,7 +135,10 @@ class DClosure : Closure
 		static if ( is(Ret == class) || is(Ret == struct) || is(Ret == enum) )
 			call ~= "import "~moduleName!Ret~";\n";
 
-		call ~= "auto ret = cl.callback(";
+		static if ( !is(Ret == void) )
+			call ~= "auto ret = ";
+		call ~= "cl.callback(";
+
 		foreach ( i, param; Params )
 		{
 			if ( i > 0 )
@@ -143,6 +146,9 @@ class DClosure : Closure
 			call ~= getValue!param(i);
 		}
 		call ~= ");\n";
+
+		static if ( is(Ret == void) )
+			return call;
 
 		static if ( is(Ret == bool) )
 			call ~= "g_value_set_boolean(return_value, ret);";
