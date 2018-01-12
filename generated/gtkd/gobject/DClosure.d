@@ -126,7 +126,9 @@ class DClosure : Closure
 		alias Params = Parameters!T;
 		foreach ( param; Params )
 		{
-			static if ( is(param == class) || is(param == struct) || is(param == enum) )
+			static if ( __traits(compiles, TemplateOf!param) && __traits(isSame, TemplateOf!param, glib.c.types.Scoped) )
+				call ~= "import "~moduleName!(TemplateArgsOf!(param)[0])~";\n";
+			else static if ( is(param == class) || is(param == struct) || is(param == enum) )
 				call ~= "import "~moduleName!param~";\n";
 		}
 		alias Ret = ReturnType!T;
@@ -211,7 +213,9 @@ class DClosure : Closure
 			return "cast("~fullyQualifiedName!Param~")(g_type_is_a(param_values["~to!string(index)~"].gType, GType.ENUM) ? g_value_get_enum(&param_values["~to!string(index)~"]) : g_value_get_flags(&param_values["~to!string(index)~"]))";
 		else static if ( isPointer!Param )
 			return "cast("~fullyQualifiedName!Param~")(g_type_is_a(param_values["~to!string(index)~"].gType, GType.POINTER) ? g_value_get_pointer(&param_values["~to!string(index)~"]) : (g_type_is_a(param_values["~to!string(index)~"].gType, GType.BOXED) ? g_value_get_boxed(&param_values["~to!string(index)~"]) : g_value_get_object(&param_values["~to!string(index)~"]))";
-		else static if ( is(param == interface) )
+		else static if ( __traits(compiles, TemplateOf!Param) && __traits(isSame, TemplateOf!Param, glib.c.types.Scoped) )
+			return "getScopedGobject!("~fullyQualifiedName!(TemplateArgsOf!(Param)[0])~")(cast(typeof("~fullyQualifiedName!(TemplateArgsOf!(Param)[0])~".tupleof[0]))(g_type_is_a(param_values["~to!string(index)~"].gType, GType.POINTER) ? g_value_get_pointer(&param_values["~to!string(index)~"]) : (g_type_is_a(param_values["~to!string(index)~"].gType, GType.BOXED) ? g_value_get_boxed(&param_values["~to!string(index)~"]) : g_value_get_object(&param_values["~to!string(index)~"]))))";
+		else static if ( is(Param == interface) )
 			return "getInterfaceInstance!("~fullyQualifiedName!Param~")(cast(GObject*)g_value_get_object(&param_values["~to!string(index)~"]))";
 		else static if ( is(Param == class) )
 		{
