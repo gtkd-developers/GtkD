@@ -279,6 +279,30 @@ public class TreeIter
 		gtkTreeIter.userData = data;
 	}
 
+	/** Ditto */
+	public void* userData2()
+	{
+		return gtkTreeIter.userData2;
+	}
+
+	/** Ditto */
+	public void userData2(void* data)
+	{
+		gtkTreeIter.userData2 = data;
+	}
+
+	/** Ditto */
+	public void* userData3()
+	{
+		return gtkTreeIter.userData3;
+	}
+
+	/** Ditto */
+	public void userData3(void* data)
+	{
+		gtkTreeIter.userData3 = data;
+	}
+
 	public struct IterData
 	{
 		/// Data fields.
@@ -310,6 +334,41 @@ public class TreeIter
 	 */
 	public void setUserData(T)(T data)
 	{
+		setUserDataIpml(data, gtkTreeIter.userData);
+	}
+
+	/** Ditto */
+	public void setUserData2(T)(T data)
+	{
+		setUserDataIpml(data, gtkTreeIter.userData2);
+	}
+
+	/** Ditto */
+	public void setUserData3(T)(T data)
+	{
+		setUserDataIpml(data, gtkTreeIter.userData3);
+	}
+
+	/** Ditto */
+	public T getUserData(T)()
+	{
+		return getUserData!T(gtkTreeIter.userData);
+	}
+
+	/** Ditto */
+	public T getUserData2(T)()
+	{
+		return getUserData!T(gtkTreeIter.userData2);
+	}
+
+	/** Ditto */
+	public T getUserData3(T)()
+	{
+		return getUserData!T(gtkTreeIter.userData3);
+	}
+
+	private void setUserDataIpml(T)(T data, void* target)
+	{
 		IterData* itData = new IterData;
 		itData.type = typeid(T);
 
@@ -339,18 +398,15 @@ public class TreeIter
 		}
 		else
 		{
-			pragma(msg, "IterData Type not Supported");
-
-			throw new TreeIterError("getUserData", "IterData Type not Supported");
+			static assert(false, "IterData Type not Supported");
 		}
 
-		gtkTreeIter.userData = itData;
+		target = itData;
 	}
 
-	/** Ditto */
-	public T getUserData(T)()
+	private T getUserDataImpl(T)(void* source)
 	{
-		IterData* itData = cast(IterData*)gtkTreeIter.userData;
+		IterData* itData = cast(IterData*)source;
 
 		static if(is(T == int))
 		{
