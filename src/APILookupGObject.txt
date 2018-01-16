@@ -181,6 +181,7 @@ code: start
 		*                 the first parameter, but when using delegates it usually isn't used.
 		*/
 		this(T)(T callback, bool swap = false)
+			if ( isCallable!T )
 		{
 			GClosure* gClosure = g_closure_new_simple(DGClosure!(T).sizeof, null);
 			g_closure_ref(gClosure);
@@ -688,9 +689,32 @@ struct: ParamSpecVariant
 noCode: true
 
 struct: Signals
+import: gobject.DClosure
+import: std.traits
 code: start
-	/** */
-	public static gulong connectData(void* instanc, string detailedSignal, GCallback cHandler, Object data, GClosureNotify destroyData, GConnectFlags connectFlags)
+	/**
+	 * Connects a callback to a signal for a particular object.
+	 *
+	 * The handler will be called before the default handler of the signal.
+	 *
+	 * Params:
+	 *     instance       = the instance to connect to.
+	 *     detailedSignal = a string of the form "signal-name::detail".
+	 *     callback       = the callback to connect.
+	 *     connectFlags   = a combination of ConnectFlags.
+	 *
+	 * Returns: the handler ID, of type gulong (always greater than 0 for successful connections)
+	 */
+	public static gulong connect(T)(ObjectG instance, string detailedSignal, T callback, ConnectFlags connectFlags = cast(ConnectFlags)0)
+		if ( isCallable!T && !is(T == GCallback) )
+	{
+		bool after = (connectFlags & ConnectFlags.AFTER) != false;
+		bool swap = (connectFlags & ConnectFlags.SWAPPED) != false;
+
+		return Signals.connectClosure(instance, detailedSignal, new DClosure(callback, swap), after);
+	}
+
+	deprecated public static gulong connectData(void* instanc, string detailedSignal, GCallback cHandler, Object data, GClosureNotify destroyData, GConnectFlags connectFlags)
 	{
 		return g_signal_connect_data(instanc, Str.toStringz(detailedSignal), cHandler, cast(void*)data, destroyData, connectFlags);
 	}

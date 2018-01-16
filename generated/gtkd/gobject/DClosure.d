@@ -80,6 +80,7 @@ class DClosure : Closure
 	 *                 the first parameter, but when using delegates it usually isn't used.
 	 */
 	this(T)(T callback, bool swap = false)
+	if ( isCallable!T )
 	{
 		GClosure* gClosure = g_closure_new_simple(DGClosure!(T).sizeof, null);
 		g_closure_ref(gClosure);
