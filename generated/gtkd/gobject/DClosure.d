@@ -113,7 +113,11 @@ class DClosure : Closure
 			assert(false, "DClosure doesn't have enough parameters.");
 
 		if ( closure.derivativeFlag )
-			swap(param_values[0], param_values[n_param_values-1]);
+		{
+			GValue instance = param_values[0];
+			param_values[0..n_param_values-1] = param_values[1..n_param_values];
+			param_values[n_param_values-1] = instance;
+		}
 
 		mixin(getCallbackCall!T());
 	}
