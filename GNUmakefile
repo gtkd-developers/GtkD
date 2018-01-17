@@ -57,6 +57,14 @@ endif
 AR=ar
 RANLIB=ranlib
 
+ifndef GIRTOD
+    ifneq ($(strip $(shell which girtod 2>/dev/null)),)
+        GIRTOD=girtod
+    else
+        GIRTOD=./wrap/girtod
+    endif
+endif
+
 #######################################################################
 
 GTKD_VERSION=3.7.3
@@ -122,6 +130,19 @@ SOURCES_DEMO = $(shell find \
         demos/gtkD/TestWindow \
         -name '*.d' )
 OBJECTS_DEMO = $(shell echo $(SOURCES_DEMO) | sed -e 's/\.d/\.o/g') 
+
+#######################################################################
+
+generate: generate-runtime
+
+generate-runtime: $(GIRTOD)
+	$(GIRTOD) -i src --use-runtime-linker --use-bind-dir
+
+generate-compiletime: $(GIRTOD)
+	$(GIRTOD) -i src --use-bind-dir
+
+$(GIRTOD):
+	$(if $(findstring "./wrap/girtod","$(GIRTOD)"),$(MAKE) -C wrap)
 
 #######################################################################
 
@@ -419,6 +440,7 @@ clean:
 	-rm -f $(LIBNAME_VTED)       $(SONAME_VTED)       vted-$(MAJOR).pc     $(OBJECTS_VTED)       $(PICOBJECTS_VTED)
 	-rm -f $(LIBNAME_PEASD)      $(SONAME_PEASD)      peasd-$(MAJOR).pc    $(OBJECTS_PEASD)      $(PICOBJECTS_PEASD)
 	-rm -f $(BINNAME_DEMO)       $(OBJECTS_DEMO)      $(SONAME_GTKD).$(SO_VERSION)
+	$(MAKE) -C wrap clean
 
 #######################################################################
 
