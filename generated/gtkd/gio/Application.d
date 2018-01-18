@@ -270,13 +270,13 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 */
 	gulong addOnOpen(void delegate(FileIF[], string, Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		return Signals.connect(this, "open", delegate gulong (GFile* gfiles, int nFiles, string hint, Application app){
-			FileIF[] files = new FileIF[nFiles];
-			for(int i = 0; i < nFiles; i++)
-			{
-				files[i] = ObjectG.getInterfaceInstance!FileIF((cast(GObject**)gfiles)[i]);
-			}
-			return dlg(files, hint, app);
+		return Signals.connect(this, "open", delegate void (GFile* gfiles, int nFiles, string hint, Application app){
+				FileIF[] files = new FileIF[nFiles];
+				for(int i = 0; i < nFiles; i++)
+				{
+					files[i] = ObjectG.getDObject!FileIF((cast(GFile**)gfiles)[i]);
+				}
+				dlg(files, hint, app);
 			}, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
