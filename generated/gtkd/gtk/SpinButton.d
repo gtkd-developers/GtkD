@@ -251,11 +251,11 @@ public class SpinButton : Entry, OrientableIF
 
 	/**
 	 * Changes the properties of an existing spin button. The adjustment,
-	 * climb rate, and number of decimal places are all changed accordingly,
-	 * after this function call.
+	 * climb rate, and number of decimal places are updated accordingly.
 	 *
 	 * Params:
-	 *     adjustment = a #GtkAdjustment
+	 *     adjustment = a #GtkAdjustment to replace the spin button’s
+	 *         existing adjustment, or %NULL to leave its current adjustment unchanged
 	 *     climbRate = the new climb rate
 	 *     digits = the number of decimal places to display in the spin button
 	 */

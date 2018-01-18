@@ -6035,6 +6035,8 @@ struct GtkEntryClass
 	/** */
 	extern(C) void function(GtkEntry* entry, int* x, int* y, int* width, int* height) getFrameSize;
 	/** */
+	extern(C) void function(GtkEntry* entry) insertEmoji;
+	/** */
 	extern(C) void function() GtkReserved1;
 	/** */
 	extern(C) void function() GtkReserved2;
@@ -6046,8 +6048,6 @@ struct GtkEntryClass
 	extern(C) void function() GtkReserved5;
 	/** */
 	extern(C) void function() GtkReserved6;
-	/** */
-	extern(C) void function() GtkReserved7;
 }
 
 struct GtkEntryCompletion
@@ -10202,6 +10202,8 @@ struct GtkTextViewClass
 	/** */
 	extern(C) int function(GtkTextView* textView, GtkTextExtendSelection granularity, GtkTextIter* location, GtkTextIter* start, GtkTextIter* end) extendSelection;
 	/** */
+	extern(C) void function(GtkTextView* textView) insertEmoji;
+	/** */
 	extern(C) void function() GtkReserved1;
 	/** */
 	extern(C) void function() GtkReserved2;
@@ -10209,8 +10211,6 @@ struct GtkTextViewClass
 	extern(C) void function() GtkReserved3;
 	/** */
 	extern(C) void function() GtkReserved4;
-	/** */
-	extern(C) void function() GtkReserved5;
 }
 
 struct GtkTextViewPrivate;

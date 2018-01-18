@@ -86,13 +86,16 @@ struct RsvgDimensionData
 
 struct RsvgHandle
 {
+	/**
+	 * parent instance
+	 */
 	GObject parent;
 	RsvgHandlePrivate* priv;
 	void*[15] AbiPadding;
 }
 
 /**
- * Class structure for #RsvgHandle
+ * Class structure for #RsvgHandle.
  */
 struct RsvgHandleClass
 {
@@ -123,11 +126,11 @@ struct RsvgPositionData
 enum MAJOR_VERSION = 2;
 alias LIBRSVG_MAJOR_VERSION = MAJOR_VERSION;
 
-enum MICRO_VERSION = 19;
+enum MICRO_VERSION = 0;
 alias LIBRSVG_MICRO_VERSION = MICRO_VERSION;
 
-enum MINOR_VERSION = 40;
+enum MINOR_VERSION = 42;
 alias LIBRSVG_MINOR_VERSION = MINOR_VERSION;
 
-enum VERSION = "2.40.19";
+enum VERSION = "2.42.0";
 alias LIBRSVG_VERSION = VERSION;

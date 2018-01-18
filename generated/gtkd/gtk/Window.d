@@ -779,7 +779,7 @@ public class Window : Bin
 	 * called gtk_window_set_icon_list(), gets the first icon in
 	 * the icon list).
 	 *
-	 * Returns: icon for window
+	 * Returns: icon for window or %NULL if none
 	 */
 	public Pixbuf getIcon()
 	{

@@ -1704,6 +1704,64 @@ public class TextView : Container, ScrollableIF
 		wrapper.remove(wrapper);
 	}
 
+	protected class OnInsertEmojiDelegateWrapper
+	{
+		void delegate(TextView) dlg;
+		gulong handlerId;
+
+		this(void delegate(TextView) dlg)
+		{
+			this.dlg = dlg;
+			onInsertEmojiListeners ~= this;
+		}
+
+		void remove(OnInsertEmojiDelegateWrapper source)
+		{
+			foreach(index, wrapper; onInsertEmojiListeners)
+			{
+				if (wrapper.handlerId == source.handlerId)
+				{
+					onInsertEmojiListeners[index] = null;
+					onInsertEmojiListeners = std.algorithm.remove(onInsertEmojiListeners, index);
+					break;
+				}
+			}
+		}
+	}
+	OnInsertEmojiDelegateWrapper[] onInsertEmojiListeners;
+
+	/**
+	 * The ::insert-emoji signal is a
+	 * [keybinding signal][GtkBindingSignal]
+	 * which gets emitted to present the Emoji chooser for the @text_view.
+	 *
+	 * The default bindings for this signal are Ctrl-. and Ctrl-;
+	 *
+	 * Since: 3.22.27
+	 */
+	gulong addOnInsertEmoji(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		auto wrapper = new OnInsertEmojiDelegateWrapper(dlg);
+		wrapper.handlerId = Signals.connectData(
+			this,
+			"insert-emoji",
+			cast(GCallback)&callBackInsertEmoji,
+			cast(void*)wrapper,
+			cast(GClosureNotify)&callBackInsertEmojiDestroy,
+			connectFlags);
+		return wrapper.handlerId;
+	}
+
+	extern(C) static void callBackInsertEmoji(GtkTextView* textviewStruct, OnInsertEmojiDelegateWrapper wrapper)
+	{
+		wrapper.dlg(wrapper.outer);
+	}
+
+	extern(C) static void callBackInsertEmojiDestroy(OnInsertEmojiDelegateWrapper wrapper, GClosure* closure)
+	{
+		wrapper.remove(wrapper);
+	}
+
 	protected class OnMoveCursorDelegateWrapper
 	{
 		void delegate(GtkMovementStep, int, bool, TextView) dlg;

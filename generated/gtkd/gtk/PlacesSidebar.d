@@ -178,7 +178,7 @@ public class PlacesSidebar : ScrolledWindow
 	}
 
 	/**
-	 * Gets the currently-selected location in the @sidebar.  This can be #NULL when
+	 * Gets the currently selected location in the @sidebar. This can be %NULL when
 	 * nothing is selected, for example, when gtk_places_sidebar_set_location() has
 	 * been called with a location that is not among the sidebar’s list of places to
 	 * show.
@@ -188,7 +188,7 @@ public class PlacesSidebar : ScrolledWindow
 	 * function to get the location that is being referred to during the callbacks
 	 * for your menu items.
 	 *
-	 * Returns: a GFile with the selected location, or
+	 * Returns: a #GFile with the selected location, or
 	 *     %NULL if nothing is visually selected.
 	 *
 	 * Since: 3.10
@@ -411,7 +411,7 @@ public class PlacesSidebar : ScrolledWindow
 	 * places in the list.
 	 *
 	 * Params:
-	 *     location = location to select, or #NULL for no current path
+	 *     location = location to select, or %NULL for no current path
 	 *
 	 * Since: 3.10
 	 */
@@ -936,8 +936,10 @@ public class PlacesSidebar : ScrolledWindow
 	 *
 	 * Params:
 	 *     container = a #GtkMenu or another #GtkContainer
-	 *     selectedItem = #GFile with the item to which the popup should refer, or #NULL in the case of a @selected_volume.
-	 *     selectedVolume = #GVolume if the selected item is a volume, or #NULL if it is a file.
+	 *     selectedItem = #GFile with the item to which
+	 *         the popup should refer, or %NULL in the case of a @selected_volume.
+	 *     selectedVolume = #GVolume if the selected
+	 *         item is a volume, or %NULL if it is a file.
 	 *
 	 * Since: 3.10
 	 */

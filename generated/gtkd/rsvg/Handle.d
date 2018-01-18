@@ -39,7 +39,7 @@ public  import rsvg.c.types;
 
 
 /**
- * The #RsvgHandle is an object representing the parsed form of a SVG
+ * Lets you load SVG data and render it.
  */
 public class Handle : ObjectG
 {
@@ -322,14 +322,13 @@ public class Handle : ObjectG
 	}
 
 	/**
-	 * Get the size of a subelement of the SVG file. Do not call from within the size_func callback, because an infinite loop will occur.
+	 * Get the size of a subelement of the SVG file. Do not call from within the
+	 * size_func callback, because an infinite loop will occur.
 	 *
 	 * Params:
 	 *     dimensionData = A place to store the SVG's size
-	 *     id = An element's id within the SVG, or %NULL to get
-	 *         the dimension of the whole SVG.  For example, if you have a layer
-	 *         called "layer1" for that you want to get the dimension, pass
-	 *         "#layer1" as the id.
+	 *     id = An element's id within the SVG, starting with "##", for
+	 *         example, "##layer1"; or %NULL to use the whole SVG.
 	 *
 	 * Since: 2.22
 	 */
@@ -367,9 +366,8 @@ public class Handle : ObjectG
 	 * @rsvg_handle_close has been called.
 	 *
 	 * Params:
-	 *     id = The id of an element inside the SVG, or %NULL to
-	 *         render the whole SVG. For example, if you have a layer called
-	 *         "layer1" that you wish to render, pass "##layer1" as the id.
+	 *     id = An element's id within the SVG, starting with "##", for
+	 *         example, "##layer1"; or %NULL to use the whole SVG.
 	 *
 	 * Returns: the pixbuf loaded by @handle, or %NULL.
 	 *
@@ -393,9 +391,8 @@ public class Handle : ObjectG
 	 *
 	 * Params:
 	 *     positionData = A place to store the SVG fragment's position.
-	 *     id = An element's id within the SVG.
-	 *         For example, if you have a layer called "layer1" for that you want to get
-	 *         the position, pass "##layer1" as the id.
+	 *     id = An element's id within the SVG, starting with "##", for
+	 *         example, "##layer1"; or %NULL to use the whole SVG.
 	 *
 	 * Since: 2.22
 	 */
@@ -408,7 +405,7 @@ public class Handle : ObjectG
 	 * Checks whether the element @id exists in the SVG document.
 	 *
 	 * Params:
-	 *     id = an element's id within the SVG
+	 *     id = an element's id within the SVG, starting with "##", for example, "##layer1".
 	 *
 	 * Returns: %TRUE if @id exists in the SVG document
 	 *

@@ -926,7 +926,7 @@ public enum GdkEventMask
 	/**
 	 * the combination of all the above event masks.
 	 */
-	ALL_EVENTS_MASK = 16777214,
+	ALL_EVENTS_MASK = 67108862,
 }
 alias GdkEventMask EventMask;
 

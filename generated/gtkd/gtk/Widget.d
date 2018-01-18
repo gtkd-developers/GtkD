@@ -1403,7 +1403,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * button is held down for some time.  Try to save the last event that you got
 		 * from the mouse, using gdk_event_copy(), and pass it to this function
 		 * (remember to free the event with gdk_event_free() when you are done).
-		 * If you can really not pass a real event, pass #NULL instead.
+		 * If you really cannot pass a real event, pass %NULL instead.
 		 *
 		 * Params:
 		 *     targets = The targets (data formats) in which the
@@ -2464,7 +2464,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Unrealized widgets do not have a frame clock.
 		 *
 		 * Returns: a #GdkFrameClock,
-		 *     or #NULL if widget is unrealized
+		 *     or %NULL if widget is unrealized
 		 *
 		 * Since: 3.8
 		 */
