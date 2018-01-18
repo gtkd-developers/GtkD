@@ -313,6 +313,7 @@ struct GdkPixbufSimpleAnim;
 
 struct GdkPixbufSimpleAnimClass;
 
+struct GdkPixbufSimpleAnimIter;
 
 struct GdkPixdata
 {

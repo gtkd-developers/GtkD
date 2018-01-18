@@ -32,6 +32,33 @@ public  import gstreamerc.gstreamertypes;
 /** */
 public class IntRange
 {
+	/** the main Gtk struct */
+	protected GstIntRange* gstIntRange;
+	protected bool ownedRef;
+
+	/** Get the main Gtk struct */
+	public GstIntRange* getIntRangeStruct(bool transferOwnership = false)
+	{
+		if (transferOwnership)
+			ownedRef = false;
+		return gstIntRange;
+	}
+
+	/** the main Gtk struct as a void* */
+	protected void* getStruct()
+	{
+		return cast(void*)gstIntRange;
+	}
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GstIntRange* gstIntRange, bool ownedRef = false)
+	{
+		this.gstIntRange = gstIntRange;
+		this.ownedRef = ownedRef;
+	}
+
 
 	/** */
 	public static GType getType()

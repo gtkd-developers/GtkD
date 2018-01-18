@@ -32,6 +32,33 @@ public  import gstreamerc.gstreamertypes;
 /** */
 public class FlagSet
 {
+	/** the main Gtk struct */
+	protected GstFlagSet* gstFlagSet;
+	protected bool ownedRef;
+
+	/** Get the main Gtk struct */
+	public GstFlagSet* getFlagSetStruct(bool transferOwnership = false)
+	{
+		if (transferOwnership)
+			ownedRef = false;
+		return gstFlagSet;
+	}
+
+	/** the main Gtk struct as a void* */
+	protected void* getStruct()
+	{
+		return cast(void*)gstFlagSet;
+	}
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GstFlagSet* gstFlagSet, bool ownedRef = false)
+	{
+		this.gstFlagSet = gstFlagSet;
+		this.ownedRef = ownedRef;
+	}
+
 
 	/** */
 	public static GType getType()

@@ -32,6 +32,33 @@ public  import gstreamerc.gstreamertypes;
 /** */
 public class FractionRange
 {
+	/** the main Gtk struct */
+	protected GstFractionRange* gstFractionRange;
+	protected bool ownedRef;
+
+	/** Get the main Gtk struct */
+	public GstFractionRange* getFractionRangeStruct(bool transferOwnership = false)
+	{
+		if (transferOwnership)
+			ownedRef = false;
+		return gstFractionRange;
+	}
+
+	/** the main Gtk struct as a void* */
+	protected void* getStruct()
+	{
+		return cast(void*)gstFractionRange;
+	}
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GstFractionRange* gstFractionRange, bool ownedRef = false)
+	{
+		this.gstFractionRange = gstFractionRange;
+		this.ownedRef = ownedRef;
+	}
+
 
 	/** */
 	public static GType getType()

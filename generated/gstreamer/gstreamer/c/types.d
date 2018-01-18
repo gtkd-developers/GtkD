@@ -3477,6 +3477,7 @@ struct GstBinClass
 
 struct GstBinPrivate;
 
+struct GstBitmask;
 
 struct GstBuffer
 {
@@ -4009,6 +4010,7 @@ struct GstDeviceProviderFactoryClass;
 
 struct GstDeviceProviderPrivate;
 
+struct GstDoubleRange;
 
 struct GstDynamicTypeFactory;
 
@@ -4275,6 +4277,7 @@ struct GstEvent
 	uint seqnum;
 }
 
+struct GstFlagSet;
 
 /**
  * A format definition
@@ -4299,7 +4302,9 @@ struct GstFormatDefinition
 	GQuark quark;
 }
 
+struct GstFraction;
 
+struct GstFractionRange;
 
 struct GstGhostPad
 {
@@ -4315,7 +4320,9 @@ struct GstGhostPadClass
 
 struct GstGhostPadPrivate;
 
+struct GstInt64Range;
 
+struct GstIntRange;
 
 struct GstIterator
 {
@@ -4756,7 +4763,9 @@ struct GstPadTemplateClass
 	void*[4] GstReserved;
 }
 
+struct GstParamArray;
 
+struct GstParamFraction;
 
 /**
  * A GParamSpec derived structure that contains the meta data for fractional
@@ -5463,6 +5472,7 @@ struct GstUri;
 
 struct GstValueArray;
 
+struct GstValueList;
 
 /**
  * VTable for the #GValue @type.

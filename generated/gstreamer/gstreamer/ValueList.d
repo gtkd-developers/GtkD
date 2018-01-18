@@ -35,6 +35,33 @@ public  import gstreamerc.gstreamertypes;
 /** */
 public class ValueList
 {
+	/** the main Gtk struct */
+	protected GstValueList* gstValueList;
+	protected bool ownedRef;
+
+	/** Get the main Gtk struct */
+	public GstValueList* getValueListStruct(bool transferOwnership = false)
+	{
+		if (transferOwnership)
+			ownedRef = false;
+		return gstValueList;
+	}
+
+	/** the main Gtk struct as a void* */
+	protected void* getStruct()
+	{
+		return cast(void*)gstValueList;
+	}
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GstValueList* gstValueList, bool ownedRef = false)
+	{
+		this.gstValueList = gstValueList;
+		this.ownedRef = ownedRef;
+	}
+
 
 	/** */
 	public static GType getType()
