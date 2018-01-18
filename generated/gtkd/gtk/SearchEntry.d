@@ -81,12 +81,6 @@ public class SearchEntry : Entry
 		return cast(void*)gtkSearchEntry;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkSearchEntry = cast(GtkSearchEntry*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

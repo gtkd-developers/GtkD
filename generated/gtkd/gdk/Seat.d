@@ -62,12 +62,6 @@ public class Seat : ObjectG
 		return cast(void*)gdkSeat;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gdkSeat = cast(GdkSeat*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -158,12 +158,6 @@ public class GLArea : Widget
 		return cast(void*)gtkGLArea;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkGLArea = cast(GtkGLArea*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

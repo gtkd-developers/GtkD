@@ -141,12 +141,6 @@ public class Application : GioApplication
 		return cast(void*)gtkApplication;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkApplication = cast(GtkApplication*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

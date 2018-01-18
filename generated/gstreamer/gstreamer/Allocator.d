@@ -66,12 +66,6 @@ public class Allocator : ObjectGst
 		return cast(void*)gstAllocator;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gstAllocator = cast(GstAllocator*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

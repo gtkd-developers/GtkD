@@ -73,12 +73,6 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 		return cast(void*)gdkPixbuf;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gdkPixbuf = cast(GdkPixbuf*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

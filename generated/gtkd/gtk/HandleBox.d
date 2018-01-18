@@ -81,12 +81,6 @@ public class HandleBox : Bin
 		return cast(void*)gtkHandleBox;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkHandleBox = cast(GtkHandleBox*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

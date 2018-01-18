@@ -170,12 +170,6 @@ public class DeviceManager : ObjectG
 		return cast(void*)gdkDeviceManager;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gdkDeviceManager = cast(GdkDeviceManager*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -74,12 +74,6 @@ public class Grid : Container, OrientableIF
 		return cast(void*)gtkGrid;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkGrid = cast(GtkGrid*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

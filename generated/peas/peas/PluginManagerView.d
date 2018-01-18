@@ -64,12 +64,6 @@ public class PluginManagerView : TreeView
 		return cast(void*)peasGtkPluginManagerView;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		peasGtkPluginManagerView = cast(PeasGtkPluginManagerView*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

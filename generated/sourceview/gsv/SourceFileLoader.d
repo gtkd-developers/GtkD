@@ -61,12 +61,6 @@ public class SourceFileLoader : ObjectG
 		return cast(void*)gtkSourceFileLoader;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkSourceFileLoader = cast(GtkSourceFileLoader*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

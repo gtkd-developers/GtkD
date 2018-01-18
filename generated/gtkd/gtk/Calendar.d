@@ -76,12 +76,6 @@ public class Calendar : Widget
 		return cast(void*)gtkCalendar;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkCalendar = cast(GtkCalendar*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

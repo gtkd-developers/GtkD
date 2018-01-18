@@ -66,12 +66,6 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 		return cast(void*)gDesktopAppInfo;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gDesktopAppInfo = cast(GDesktopAppInfo*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

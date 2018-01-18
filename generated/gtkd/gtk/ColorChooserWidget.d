@@ -76,12 +76,6 @@ public class ColorChooserWidget : Box, ColorChooserIF
 		return cast(void*)gtkColorChooserWidget;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkColorChooserWidget = cast(GtkColorChooserWidget*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

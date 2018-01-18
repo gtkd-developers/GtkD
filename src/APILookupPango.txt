@@ -59,14 +59,6 @@ extend: Attribute
 struct: AttrFontFeatures
 noCode: true
 
-struct: Attribute
-code: start
-	protected void setStruct(GObject* obj)
-	{
-		pangoAttribute = cast(PangoAttribute*)obj;
-	}
-code: end
-
 struct: AttrIterator
 class: PgAttributeIterator
 out: get_font language

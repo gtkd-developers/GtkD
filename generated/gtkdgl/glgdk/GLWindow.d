@@ -52,12 +52,6 @@ public class GLWindow : ObjectG, GLDrawableIF
 		return cast(void*)gdkGLWindow;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gdkGLWindow = cast(GdkGLWindow*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

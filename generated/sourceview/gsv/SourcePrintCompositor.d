@@ -55,12 +55,6 @@ public class SourcePrintCompositor : ObjectG
 		return cast(void*)gtkSourcePrintCompositor;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkSourcePrintCompositor = cast(GtkSourcePrintCompositor*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

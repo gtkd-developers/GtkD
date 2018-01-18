@@ -77,12 +77,6 @@ public class LinkButton : Button
 		return cast(void*)gtkLinkButton;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkLinkButton = cast(GtkLinkButton*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

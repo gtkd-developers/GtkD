@@ -78,12 +78,6 @@ public class Socket : ObjectAtk, ComponentIF
 		return cast(void*)atkSocket;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		atkSocket = cast(AtkSocket*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

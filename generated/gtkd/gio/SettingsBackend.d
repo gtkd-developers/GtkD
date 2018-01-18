@@ -78,12 +78,6 @@ public class SettingsBackend : ObjectG
 		return cast(void*)gSettingsBackend;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gSettingsBackend = cast(GSettingsBackend*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

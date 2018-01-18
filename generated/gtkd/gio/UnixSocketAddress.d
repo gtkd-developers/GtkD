@@ -68,12 +68,6 @@ public class UnixSocketAddress : SocketAddress
 		return cast(void*)gUnixSocketAddress;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gUnixSocketAddress = cast(GUnixSocketAddress*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

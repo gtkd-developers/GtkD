@@ -70,12 +70,6 @@ public class CellRendererCombo : CellRendererText
 		return cast(void*)gtkCellRendererCombo;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkCellRendererCombo = cast(GtkCellRendererCombo*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

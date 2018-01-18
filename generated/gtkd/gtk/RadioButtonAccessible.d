@@ -50,12 +50,6 @@ public class RadioButtonAccessible : ToggleButtonAccessible
 		return cast(void*)gtkRadioButtonAccessible;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkRadioButtonAccessible = cast(GtkRadioButtonAccessible*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

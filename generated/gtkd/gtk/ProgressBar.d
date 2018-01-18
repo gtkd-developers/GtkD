@@ -95,12 +95,6 @@ public class ProgressBar : Widget, OrientableIF
 		return cast(void*)gtkProgressBar;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkProgressBar = cast(GtkProgressBar*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

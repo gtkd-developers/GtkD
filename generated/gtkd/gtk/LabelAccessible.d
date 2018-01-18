@@ -54,12 +54,6 @@ public class LabelAccessible : WidgetAccessible, HypertextIF, TextIF
 		return cast(void*)gtkLabelAccessible;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkLabelAccessible = cast(GtkLabelAccessible*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

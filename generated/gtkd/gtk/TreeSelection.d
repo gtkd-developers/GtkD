@@ -82,12 +82,6 @@ public class TreeSelection : ObjectG
 		return cast(void*)gtkTreeSelection;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkTreeSelection = cast(GtkTreeSelection*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -473,12 +473,6 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		return cast(void*)gtkWidget;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkWidget = cast(GtkWidget*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

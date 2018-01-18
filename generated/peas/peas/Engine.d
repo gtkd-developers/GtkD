@@ -58,12 +58,6 @@ public class Engine : ObjectG
 		return cast(void*)peasEngine;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		peasEngine = cast(PeasEngine*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

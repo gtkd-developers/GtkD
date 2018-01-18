@@ -50,12 +50,6 @@ public class ScaleAccessible : RangeAccessible
 		return cast(void*)gtkScaleAccessible;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkScaleAccessible = cast(GtkScaleAccessible*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

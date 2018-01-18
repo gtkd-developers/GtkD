@@ -87,12 +87,6 @@ public class StatusIcon : ObjectG
 		return cast(void*)gtkStatusIcon;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkStatusIcon = cast(GtkStatusIcon*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

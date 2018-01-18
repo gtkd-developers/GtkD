@@ -56,12 +56,6 @@ public class EventController : ObjectG
 		return cast(void*)gtkEventController;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkEventController = cast(GtkEventController*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

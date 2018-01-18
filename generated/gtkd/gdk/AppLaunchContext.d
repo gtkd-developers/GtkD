@@ -77,12 +77,6 @@ public class AppLaunchContext : GioAppLaunchContext
 		return cast(void*)gdkAppLaunchContext;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gdkAppLaunchContext = cast(GdkAppLaunchContext*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -129,12 +129,6 @@ public class InfoBar : Box
 		return cast(void*)gtkInfoBar;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkInfoBar = cast(GtkInfoBar*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

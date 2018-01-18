@@ -51,12 +51,6 @@ public class ToplevelAccessible : ObjectAtk
 		return cast(void*)gtkToplevelAccessible;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkToplevelAccessible = cast(GtkToplevelAccessible*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -60,12 +60,6 @@ public class RadioAction : ToggleAction
 		return cast(void*)gtkRadioAction;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkRadioAction = cast(GtkRadioAction*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -129,12 +129,6 @@ public class StyleContext : ObjectG
 		return cast(void*)gtkStyleContext;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkStyleContext = cast(GtkStyleContext*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -54,12 +54,6 @@ public class ProxyAddressEnumerator : SocketAddressEnumerator
 		return cast(void*)gProxyAddressEnumerator;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gProxyAddressEnumerator = cast(GProxyAddressEnumerator*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

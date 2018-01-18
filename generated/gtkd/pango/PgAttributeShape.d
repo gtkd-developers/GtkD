@@ -55,12 +55,6 @@ public class PgAttributeShape : PgAttribute
 		return cast(void*)pangoAttrShape;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		pangoAttrShape = cast(PangoAttrShape*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

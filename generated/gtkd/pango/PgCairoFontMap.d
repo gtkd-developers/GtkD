@@ -59,12 +59,6 @@ public class PgCairoFontMap : PgFontMap
 		return cast(void*)pangoCairoFontMap;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		pangoCairoFontMap = cast(PangoCairoFontMap*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

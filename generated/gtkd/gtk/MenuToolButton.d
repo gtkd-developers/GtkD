@@ -80,12 +80,6 @@ public class MenuToolButton : ToolButton
 		return cast(void*)gtkMenuToolButton;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkMenuToolButton = cast(GtkMenuToolButton*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

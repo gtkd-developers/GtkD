@@ -180,12 +180,6 @@ public class BaseParse : Element
 		return cast(void*)gstBaseParse;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gstBaseParse = cast(GstBaseParse*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

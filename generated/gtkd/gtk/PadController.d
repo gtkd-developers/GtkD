@@ -99,12 +99,6 @@ public class PadController : EventController
 		return cast(void*)gtkPadController;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkPadController = cast(GtkPadController*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

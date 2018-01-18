@@ -66,12 +66,6 @@ public class SubprocessLauncher : ObjectG
 		return cast(void*)gSubprocessLauncher;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gSubprocessLauncher = cast(GSubprocessLauncher*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

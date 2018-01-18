@@ -61,12 +61,6 @@ public class CharsetConverter : ObjectG, ConverterIF, InitableIF
 		return cast(void*)gCharsetConverter;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gCharsetConverter = cast(GCharsetConverter*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

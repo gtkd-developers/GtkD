@@ -85,12 +85,6 @@ public class LockButton : Button
 		return cast(void*)gtkLockButton;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkLockButton = cast(GtkLockButton*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

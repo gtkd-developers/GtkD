@@ -60,12 +60,6 @@ public class Emblem : ObjectG, IconIF
 		return cast(void*)gEmblem;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gEmblem = cast(GEmblem*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

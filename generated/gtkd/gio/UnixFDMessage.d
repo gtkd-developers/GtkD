@@ -69,12 +69,6 @@ public class UnixFDMessage : SocketControlMessage
 		return cast(void*)gUnixFDMessage;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gUnixFDMessage = cast(GUnixFDMessage*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

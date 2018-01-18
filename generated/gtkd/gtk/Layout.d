@@ -70,12 +70,6 @@ public class Layout : Container, ScrollableIF
 		return cast(void*)gtkLayout;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkLayout = cast(GtkLayout*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -112,12 +112,6 @@ public class Action : ObjectG, BuildableIF
 		return cast(void*)gtkAction;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkAction = cast(GtkAction*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

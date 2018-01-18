@@ -341,12 +341,6 @@ public class Settings : ObjectG
 		return cast(void*)gSettings;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gSettings = cast(GSettings*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

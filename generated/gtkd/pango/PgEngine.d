@@ -53,12 +53,6 @@ public class PgEngine : ObjectG
 		return cast(void*)pangoEngine;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		pangoEngine = cast(PangoEngine*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

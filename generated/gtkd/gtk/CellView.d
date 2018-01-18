@@ -83,12 +83,6 @@ public class CellView : Widget, CellLayoutIF, OrientableIF
 		return cast(void*)gtkCellView;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkCellView = cast(GtkCellView*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

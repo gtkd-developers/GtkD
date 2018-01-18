@@ -166,12 +166,6 @@ public class BaseSink : Element
 		return cast(void*)gstBaseSink;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gstBaseSink = cast(GstBaseSink*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

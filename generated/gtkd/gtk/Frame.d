@@ -96,12 +96,6 @@ public class Frame : Bin
 		return cast(void*)gtkFrame;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkFrame = cast(GtkFrame*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -74,12 +74,6 @@ public class BufferedInputStream : FilterInputStream, SeekableIF
 		return cast(void*)gBufferedInputStream;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gBufferedInputStream = cast(GBufferedInputStream*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -53,12 +53,6 @@ public class VButtonBox : ButtonBox
 		return cast(void*)gtkVButtonBox;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkVButtonBox = cast(GtkVButtonBox*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

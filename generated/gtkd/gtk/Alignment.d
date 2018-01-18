@@ -71,12 +71,6 @@ public class Alignment : Bin
 		return cast(void*)gtkAlignment;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkAlignment = cast(GtkAlignment*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

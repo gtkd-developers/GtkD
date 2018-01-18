@@ -63,12 +63,6 @@ public class NetworkAddress : ObjectG, SocketConnectableIF
 		return cast(void*)gNetworkAddress;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gNetworkAddress = cast(GNetworkAddress*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

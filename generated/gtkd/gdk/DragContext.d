@@ -56,12 +56,6 @@ public class DragContext : ObjectG
 		return cast(void*)gdkDragContext;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gdkDragContext = cast(GdkDragContext*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

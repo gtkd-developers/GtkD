@@ -76,12 +76,6 @@ public class TextBuffer : ObjectG
 		return cast(void*)gtkTextBuffer;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkTextBuffer = cast(GtkTextBuffer*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

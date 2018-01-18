@@ -52,12 +52,6 @@ public class SourceStyleScheme : ObjectG
 		return cast(void*)gtkSourceStyleScheme;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkSourceStyleScheme = cast(GtkSourceStyleScheme*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

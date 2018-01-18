@@ -53,12 +53,6 @@ public class TracerRecord : ObjectGst
 		return cast(void*)gstTracerRecord;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gstTracerRecord = cast(GstTracerRecord*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

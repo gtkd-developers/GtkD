@@ -56,12 +56,6 @@ public class Region : ObjectG
 		return cast(void*)gtkSourceRegion;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkSourceRegion = cast(GtkSourceRegion*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

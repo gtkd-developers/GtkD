@@ -127,12 +127,6 @@ public class TestDBus : ObjectG
 		return cast(void*)gTestDBus;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gTestDBus = cast(GTestDBus*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

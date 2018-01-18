@@ -81,12 +81,6 @@ public class Style : ObjectG
 		return cast(void*)gtkStyle;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkStyle = cast(GtkStyle*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

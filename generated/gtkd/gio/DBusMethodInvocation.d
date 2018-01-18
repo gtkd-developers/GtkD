@@ -68,12 +68,6 @@ public class DBusMethodInvocation : ObjectG
 		return cast(void*)gDBusMethodInvocation;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gDBusMethodInvocation = cast(GDBusMethodInvocation*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

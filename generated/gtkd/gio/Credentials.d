@@ -87,12 +87,6 @@ public class Credentials : ObjectG
 		return cast(void*)gCredentials;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gCredentials = cast(GCredentials*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -53,12 +53,6 @@ public class SourceLanguageManager : ObjectG
 		return cast(void*)gtkSourceLanguageManager;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkSourceLanguageManager = cast(GtkSourceLanguageManager*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -57,12 +57,6 @@ public class MenuLinkIter : ObjectG
 		return cast(void*)gMenuLinkIter;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gMenuLinkIter = cast(GMenuLinkIter*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

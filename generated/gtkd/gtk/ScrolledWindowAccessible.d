@@ -50,12 +50,6 @@ public class ScrolledWindowAccessible : ContainerAccessible
 		return cast(void*)gtkScrolledWindowAccessible;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkScrolledWindowAccessible = cast(GtkScrolledWindowAccessible*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -50,12 +50,6 @@ public class ListBoxRowAccessible : ContainerAccessible
 		return cast(void*)gtkListBoxRowAccessible;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkListBoxRowAccessible = cast(GtkListBoxRowAccessible*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

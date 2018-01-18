@@ -60,12 +60,6 @@ public class GestureZoom : Gesture
 		return cast(void*)gtkGestureZoom;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkGestureZoom = cast(GtkGestureZoom*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

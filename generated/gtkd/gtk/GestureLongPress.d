@@ -64,12 +64,6 @@ public class GestureLongPress : GestureSingle
 		return cast(void*)gtkGestureLongPress;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkGestureLongPress = cast(GtkGestureLongPress*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

@@ -121,12 +121,6 @@ public class SizeGroup : ObjectG, BuildableIF
 		return cast(void*)gtkSizeGroup;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkSizeGroup = cast(GtkSizeGroup*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

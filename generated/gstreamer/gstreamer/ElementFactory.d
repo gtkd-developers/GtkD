@@ -81,12 +81,6 @@ public class ElementFactory : PluginFeature
 		return cast(void*)gstElementFactory;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gstElementFactory = cast(GstElementFactory*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

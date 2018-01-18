@@ -64,12 +64,6 @@ public class NetworkService : ObjectG, SocketConnectableIF
 		return cast(void*)gNetworkService;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gNetworkService = cast(GNetworkService*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

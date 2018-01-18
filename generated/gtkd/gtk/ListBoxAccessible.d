@@ -52,12 +52,6 @@ public class ListBoxAccessible : ContainerAccessible, SelectionIF
 		return cast(void*)gtkListBoxAccessible;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkListBoxAccessible = cast(GtkListBoxAccessible*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

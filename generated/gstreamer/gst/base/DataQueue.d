@@ -56,12 +56,6 @@ public class DataQueue : ObjectG
 		return cast(void*)gstDataQueue;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gstDataQueue = cast(GstDataQueue*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

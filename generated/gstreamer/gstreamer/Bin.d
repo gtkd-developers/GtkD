@@ -156,12 +156,6 @@ public class Bin : Element, ChildProxyIF
 		return cast(void*)gstBin;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gstBin = cast(GstBin*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

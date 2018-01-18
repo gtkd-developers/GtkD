@@ -56,12 +56,6 @@ public class GObjectAccessible : ObjectAtk
 		return cast(void*)atkGObjectAccessible;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		atkGObjectAccessible = cast(AtkGObjectAccessible*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

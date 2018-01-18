@@ -67,12 +67,6 @@ public class GestureMultiPress : GestureSingle
 		return cast(void*)gtkGestureMultiPress;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkGestureMultiPress = cast(GtkGestureMultiPress*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

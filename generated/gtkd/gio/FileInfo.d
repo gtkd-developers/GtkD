@@ -82,12 +82,6 @@ public class FileInfo : ObjectG
 		return cast(void*)gFileInfo;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gFileInfo = cast(GFileInfo*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

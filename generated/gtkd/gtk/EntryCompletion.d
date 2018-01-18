@@ -103,12 +103,6 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 		return cast(void*)gtkEntryCompletion;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkEntryCompletion = cast(GtkEntryCompletion*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

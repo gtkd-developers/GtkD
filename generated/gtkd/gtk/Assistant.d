@@ -86,12 +86,6 @@ public class Assistant : Window
 		return cast(void*)gtkAssistant;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkAssistant = cast(GtkAssistant*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

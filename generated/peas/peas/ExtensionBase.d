@@ -53,12 +53,6 @@ public class ExtensionBase : ObjectG
 		return cast(void*)peasExtensionBase;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		peasExtensionBase = cast(PeasExtensionBase*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

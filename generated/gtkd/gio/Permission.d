@@ -70,12 +70,6 @@ public class Permission : ObjectG
 		return cast(void*)gPermission;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gPermission = cast(GPermission*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

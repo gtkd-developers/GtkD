@@ -52,12 +52,6 @@ public class LevelBarAccessible : WidgetAccessible, ValueIF
 		return cast(void*)gtkLevelBarAccessible;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkLevelBarAccessible = cast(GtkLevelBarAccessible*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

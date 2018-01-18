@@ -261,12 +261,6 @@ public class Container : Widget
 		return cast(void*)gtkContainer;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkContainer = cast(GtkContainer*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

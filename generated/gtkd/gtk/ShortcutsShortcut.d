@@ -53,12 +53,6 @@ public class ShortcutsShortcut : Box
 		return cast(void*)gtkShortcutsShortcut;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkShortcutsShortcut = cast(GtkShortcutsShortcut*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

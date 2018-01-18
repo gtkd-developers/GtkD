@@ -52,12 +52,6 @@ public class LinkButtonAccessible : ButtonAccessible, HyperlinkImplIF
 		return cast(void*)gtkLinkButtonAccessible;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkLinkButtonAccessible = cast(GtkLinkButtonAccessible*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

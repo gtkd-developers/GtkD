@@ -55,12 +55,6 @@ public class ColorSelectionDialog : Dialog
 		return cast(void*)gtkColorSelectionDialog;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkColorSelectionDialog = cast(GtkColorSelectionDialog*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

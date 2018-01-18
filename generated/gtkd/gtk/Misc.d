@@ -66,12 +66,6 @@ public class Misc : Widget
 		return cast(void*)gtkMisc;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkMisc = cast(GtkMisc*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

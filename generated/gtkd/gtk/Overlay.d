@@ -80,12 +80,6 @@ public class Overlay : Bin
 		return cast(void*)gtkOverlay;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkOverlay = cast(GtkOverlay*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

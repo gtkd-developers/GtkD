@@ -127,12 +127,6 @@ public class PopoverMenu : Popover
 		return cast(void*)gtkPopoverMenu;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkPopoverMenu = cast(GtkPopoverMenu*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

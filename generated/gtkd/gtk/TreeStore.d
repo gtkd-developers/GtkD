@@ -92,12 +92,6 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 		return cast(void*)gtkTreeStore;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkTreeStore = cast(GtkTreeStore*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

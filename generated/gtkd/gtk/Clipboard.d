@@ -117,12 +117,6 @@ public class Clipboard : ObjectG
 		return cast(void*)gtkClipboard;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkClipboard = cast(GtkClipboard*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

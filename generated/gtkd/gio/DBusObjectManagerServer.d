@@ -81,12 +81,6 @@ public class DBusObjectManagerServer : ObjectG, DBusObjectManagerIF
 		return cast(void*)gDBusObjectManagerServer;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gDBusObjectManagerServer = cast(GDBusObjectManagerServer*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

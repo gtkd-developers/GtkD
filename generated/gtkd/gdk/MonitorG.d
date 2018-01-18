@@ -63,12 +63,6 @@ public class MonitorG : ObjectG
 		return cast(void*)gdkMonitor;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gdkMonitor = cast(GdkMonitor*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

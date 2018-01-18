@@ -59,12 +59,6 @@ public class VSeparator : Separator
 		return cast(void*)gtkVSeparator;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkVSeparator = cast(GtkVSeparator*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

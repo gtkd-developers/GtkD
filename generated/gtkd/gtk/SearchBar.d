@@ -79,12 +79,6 @@ public class SearchBar : Bin
 		return cast(void*)gtkSearchBar;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkSearchBar = cast(GtkSearchBar*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

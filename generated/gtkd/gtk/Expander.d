@@ -134,12 +134,6 @@ public class Expander : Bin
 		return cast(void*)gtkExpander;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkExpander = cast(GtkExpander*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

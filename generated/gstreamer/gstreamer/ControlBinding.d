@@ -57,12 +57,6 @@ public class ControlBinding : ObjectGst
 		return cast(void*)gstControlBinding;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gstControlBinding = cast(GstControlBinding*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

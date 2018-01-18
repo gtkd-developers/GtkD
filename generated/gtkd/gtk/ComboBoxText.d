@@ -109,12 +109,6 @@ public class ComboBoxText : ComboBox
 		return cast(void*)gtkComboBoxText;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkComboBoxText = cast(GtkComboBoxText*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

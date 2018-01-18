@@ -85,12 +85,6 @@ public class MenuShell : Container
 		return cast(void*)gtkMenuShell;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkMenuShell = cast(GtkMenuShell*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

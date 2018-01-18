@@ -60,12 +60,6 @@ public class Handle : ObjectG
 		return cast(void*)rsvgHandle;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		rsvgHandle = cast(RsvgHandle*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

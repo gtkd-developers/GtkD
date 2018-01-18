@@ -55,12 +55,6 @@ public class UnixMountMonitor : ObjectG
 		return cast(void*)gUnixMountMonitor;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gUnixMountMonitor = cast(GUnixMountMonitor*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

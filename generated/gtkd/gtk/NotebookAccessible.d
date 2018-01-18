@@ -52,12 +52,6 @@ public class NotebookAccessible : ContainerAccessible, SelectionIF
 		return cast(void*)gtkNotebookAccessible;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkNotebookAccessible = cast(GtkNotebookAccessible*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

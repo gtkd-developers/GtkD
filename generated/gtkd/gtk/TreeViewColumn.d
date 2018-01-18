@@ -73,12 +73,6 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 		return cast(void*)gtkTreeViewColumn;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkTreeViewColumn = cast(GtkTreeViewColumn*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

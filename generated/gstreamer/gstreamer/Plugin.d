@@ -76,12 +76,6 @@ public class Plugin : ObjectGst
 		return cast(void*)gstPlugin;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gstPlugin = cast(GstPlugin*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

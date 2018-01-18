@@ -65,12 +65,6 @@ public class SimpleIOStream : IOStream
 		return cast(void*)gSimpleIOStream;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gSimpleIOStream = cast(GSimpleIOStream*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

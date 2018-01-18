@@ -52,12 +52,6 @@ public class WidgetAccessible : Accessible, ComponentIF
 		return cast(void*)gtkWidgetAccessible;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkWidgetAccessible = cast(GtkWidgetAccessible*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */

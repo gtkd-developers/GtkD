@@ -66,12 +66,6 @@ public class SeparatorToolItem : ToolItem
 		return cast(void*)gtkSeparatorToolItem;
 	}
 
-	protected override void setStruct(GObject* obj)
-	{
-		gtkSeparatorToolItem = cast(GtkSeparatorToolItem*)obj;
-		super.setStruct(obj);
-	}
-
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
