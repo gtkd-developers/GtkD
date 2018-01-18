@@ -260,6 +260,27 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	}
 
 	/**
+	 * The ::open signal is emitted on the primary instance when there are
+	 * files to open. See g_application_open() for more information.
+	 *
+	 * Params:
+	 *     files = an array of #GFiles
+	 *     nFiles = the length of @files
+	 *     hint = a hint provided by the calling instance
+	 */
+	gulong addOnOpen(void delegate(FileIF[], string, Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		return Signals.connect(this, "open", delegate gulong (GFile* gfiles, int nFiles, string hint, Application app){
+			FileIF[] files = new FileIF[nFiles];
+			for(int i = 0; i < nFiles; i++)
+			{
+				files[i] = ObjectG.getInterfaceInstance!FileIF((cast(GObject**)gfiles)[i]);
+			}
+			return dlg(files, hint, app);
+			}, connectFlags ^ ConnectFlags.SWAPPED);
+	}
+
+	/**
 	 */
 
 	/** */
