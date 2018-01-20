@@ -328,7 +328,7 @@ code: start
 			else static if ( __traits(compiles, TemplateOf!Param) && __traits(isSame, TemplateOf!Param, glib.c.types.Scoped) )
 				return "getScopedGobject!("~fullyQualifiedName!(TemplateArgsOf!(Param)[0])~")(cast(typeof("~fullyQualifiedName!(TemplateArgsOf!(Param)[0])~".tupleof[0]))(g_type_is_a(param_values["~to!string(index)~"].gType, GType.POINTER) ? g_value_get_pointer(&param_values["~to!string(index)~"]) : (g_type_is_a(param_values["~to!string(index)~"].gType, GType.BOXED) ? g_value_get_boxed(&param_values["~to!string(index)~"]) : g_value_get_object(&param_values["~to!string(index)~"]))))";
 			else static if ( is(Param == interface) )
-				return "getInterfaceInstance!("~fullyQualifiedName!Param~")(cast(GObject*)g_value_get_object(&param_values["~to!string(index)~"]))";
+				return "ObjectG.getDObject!("~fullyQualifiedName!Param~")(cast(GObject*)g_value_get_object(&param_values["~to!string(index)~"]))";
 			else static if ( is(Param == class) )
 			{
 				static if ( is(Param == Variant) )
