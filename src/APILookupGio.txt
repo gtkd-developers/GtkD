@@ -25,32 +25,6 @@ file: Gio-2.0.gir
 
 struct: Application
 code: start
-	protected class ScopedOnCommandLineDelegateWrapper
-	{
-		int delegate(Scoped!ApplicationCommandLine, Application) dlg;
-		gulong handlerId;
-		
-		this(int delegate(Scoped!ApplicationCommandLine, Application) dlg)
-		{
-			this.dlg = dlg;
-			scopedOnCommandLineListeners ~= this;
-		}
-		
-		void remove(ScopedOnCommandLineDelegateWrapper source)
-		{
-			foreach(index, wrapper; scopedOnCommandLineListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					scopedOnCommandLineListeners[index] = null;
-					scopedOnCommandLineListeners = std.algorithm.remove(scopedOnCommandLineListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	ScopedOnCommandLineDelegateWrapper[] scopedOnCommandLineListeners;
-
 	/**
 	 * The ::command-line signal is emitted on the primary instance when
 	 * a commandline is not handled locally. See g_application_run() and
@@ -65,25 +39,7 @@ code: start
 	 */
 	gulong addOnCommandLine(int delegate(Scoped!ApplicationCommandLine, Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new ScopedOnCommandLineDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"command-line",
-			cast(GCallback)&callBackScopedCommandLine,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackScopedCommandLineDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-	
-	extern(C) static int callBackScopedCommandLine(GApplication* applicationStruct, GApplicationCommandLine* commandLine, ScopedOnCommandLineDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(getScopedGobject!ApplicationCommandLine(commandLine), wrapper.outer);
-	}
-	
-	extern(C) static void callBackScopedCommandLineDestroy(ScopedOnCommandLineDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "command-line", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
 	/**

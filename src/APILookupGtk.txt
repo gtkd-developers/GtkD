@@ -907,32 +907,6 @@ code: start
 		}
 	}
 
-	protected class OnChangedDelegateWrapper
-	{
-		void delegate(ComboBoxText) dlg;
-		gulong handlerId;
-		
-		this(void delegate(ComboBoxText) dlg)
-		{
-			this.dlg = dlg;
-			onChangedListeners ~= this;
-		}
-		
-		void remove(OnChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onChangedListeners[index] = null;
-					onChangedListeners = std.algorithm.remove(onChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnChangedDelegateWrapper[] onChangedListeners;
-
 	/**
 	 * The changed signal is emitted when the active
 	 * item is changed. The can be due to the user selecting
@@ -945,52 +919,8 @@ code: start
 	 */
 	gulong addOnChanged(void delegate(ComboBoxText) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"changed",
-			cast(GCallback)&callBackChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-	
-	extern(C) static void callBackChanged(GtkComboBoxText* comboboxTextStruct, OnChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-	
-	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnFormatEntryTextDelegateWrapper
-	{
-		string delegate(string, ComboBoxText) dlg;
-		gulong handlerId;
-		
-		this(string delegate(string, ComboBoxText) dlg)
-		{
-			this.dlg = dlg;
-			onFormatEntryTextListeners ~= this;
-		}
-		
-		void remove(OnFormatEntryTextDelegateWrapper source)
-		{
-			foreach(index, wrapper; onFormatEntryTextListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onFormatEntryTextListeners[index] = null;
-					onFormatEntryTextListeners = std.algorithm.remove(onFormatEntryTextListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnFormatEntryTextDelegateWrapper[] onFormatEntryTextListeners; 
 
 	/**
 	 * For combo boxes that are created with an entry (See GtkComboBox:has-entry).
@@ -1036,53 +966,9 @@ code: start
 	 */
 	gulong addOnFormatEntryText(string delegate(string, ComboBoxText) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnFormatEntryTextDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"format-entry-text",
-			cast(GCallback)&callBackFormatEntryText,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackFormatEntryTextDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "format-entry-text", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 	
-	extern(C) static string callBackFormatEntryText(GtkComboBoxText* comboboxStructText, char* path,OnFormatEntryTextDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(Str.toString(path), wrapper.outer);
-	}
-	
-	extern(C) static void callBackFormatEntryTextDestroy(OnFormatEntryTextDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnMoveActiveDelegateWrapper
-	{
-		void delegate(GtkScrollType, ComboBoxText) dlg;
-		gulong handlerId;
-		
-		this(void delegate(GtkScrollType, ComboBoxText) dlg)
-		{
-			this.dlg = dlg;
-			onMoveActiveListeners ~= this;
-		}
-		
-		void remove(OnMoveActiveDelegateWrapper source)
-		{
-			foreach(index, wrapper; onMoveActiveListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onMoveActiveListeners[index] = null;
-					onMoveActiveListeners = std.algorithm.remove(onMoveActiveListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnMoveActiveDelegateWrapper[] onMoveActiveListeners;
-
 	/**
 	 * The ::move-active signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -1095,52 +981,8 @@ code: start
 	 */
 	gulong addOnMoveActive(void delegate(GtkScrollType, ComboBoxText) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnMoveActiveDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"move-active",
-			cast(GCallback)&callBackMoveActive,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackMoveActiveDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "move-active", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-	
-	extern(C) static void callBackMoveActive(GtkComboBoxText* comboboxTextStruct, GtkScrollType scrollType,OnMoveActiveDelegateWrapper wrapper)
-	{
-		wrapper.dlg(scrollType, wrapper.outer);
-	}
-	
-	extern(C) static void callBackMoveActiveDestroy(OnMoveActiveDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnPopdownDelegateWrapper
-	{
-		bool delegate(ComboBoxText) dlg;
-		gulong handlerId;
-		
-		this(bool delegate(ComboBoxText) dlg)
-		{
-			this.dlg = dlg;
-			onPopdownListeners ~= this;
-		}
-		
-		void remove(OnPopdownDelegateWrapper source)
-		{
-			foreach(index, wrapper; onPopdownListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onPopdownListeners[index] = null;
-					onPopdownListeners = std.algorithm.remove(onPopdownListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnPopdownDelegateWrapper[] onPopdownListeners;
 
 	/**
 	 * The ::popdown signal is a
@@ -1153,52 +995,8 @@ code: start
 	 */
 	gulong addOnPopdown(bool delegate(ComboBoxText) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnPopdownDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"popdown",
-			cast(GCallback)&callBackPopdown,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackPopdownDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "popdown", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-	
-	extern(C) static int callBackPopdown(GtkComboBoxText* comboboxTextStruct,OnPopdownDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(wrapper.outer);
-	}
-	
-	extern(C) static void callBackPopdownDestroy(OnPopdownDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnPopupDelegateWrapper
-	{
-		void delegate(ComboBoxText) dlg;
-		gulong handlerId;
-		
-		this(void delegate(ComboBoxText) dlg)
-		{
-			this.dlg = dlg;
-			onPopupListeners ~= this;
-		}
-		
-		void remove(OnPopupDelegateWrapper source)
-		{
-			foreach(index, wrapper; onPopupListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onPopupListeners[index] = null;
-					onPopupListeners = std.algorithm.remove(onPopupListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnPopupDelegateWrapper[] onPopupListeners;
 
 	/**
 	 * The ::popup signal is a
@@ -1211,25 +1009,7 @@ code: start
 	 */
 	gulong addOnPopup(void delegate(ComboBoxText) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnPopupDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"popup",
-			cast(GCallback)&callBackPopup,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackPopupDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-	
-	extern(C) static void callBackPopup(GtkComboBoxText* comboboxTextStruct,OnPopupDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-	
-	extern(C) static void callBackPopupDestroy(OnPopupDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "popup", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 code: end
 
@@ -4782,32 +4562,6 @@ code: start
 		return 0;
 	}
 
-	protected class ScopedOnDrawDelegateWrapper
-	{
-		bool delegate(Scoped!Context, Widget) dlg;
-		gulong handlerId;
-		
-		this(bool delegate(Scoped!Context, Widget) dlg)
-		{
-			this.dlg = dlg;
-			scopedOnDrawListeners ~= this;
-		}
-		
-		void remove(ScopedOnDrawDelegateWrapper source)
-		{
-			foreach(index, wrapper; scopedOnDrawListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					scopedOnDrawListeners[index] = null;
-					scopedOnDrawListeners = std.algorithm.remove(scopedOnDrawListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	ScopedOnDrawDelegateWrapper[] scopedOnDrawListeners;
-
 	/**
 		* This signal is emitted when a widget is supposed to render itself.
 		* The @widget's top left corner must be painted at the origin of
@@ -4837,101 +4591,39 @@ code: start
 		*/
 	gulong addOnDraw(bool delegate(Scoped!Context, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new ScopedOnDrawDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"draw",
-			cast(GCallback)&callBackScopedDraw,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackDrawScopedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "draw", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-	
-	extern(C) static int callBackScopedDraw(GtkWidget* widgetStruct, cairo_t* cr, ScopedOnDrawDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(getScopedGobject!Context(cr), wrapper.outer);
-	}
-	
-	extern(C) static void callBackDrawScopedDestroy(ScopedOnDrawDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnDrawDelegateWrapper
-	{
-		bool delegate(Context, Widget) dlg;
-		gulong handlerId;
-		
-		this(bool delegate(Context, Widget) dlg)
-		{
-			this.dlg = dlg;
-			onDrawListeners ~= this;
-		}
-		
-		void remove(OnDrawDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDrawListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onDrawListeners[index] = null;
-					onDrawListeners = std.algorithm.remove(onDrawListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnDrawDelegateWrapper[] onDrawListeners;
 
 	/**
-		* This signal is emitted when a widget is supposed to render itself.
-		* The @widget's top left corner must be painted at the origin of
-		* the passed in context and be sized to the values returned by
-		* gtk_widget_get_allocated_width() and
-		* gtk_widget_get_allocated_height().
-		*
-		* Signal handlers connected to this signal can modify the cairo
-		* context passed as @cr in any way they like and don't need to
-		* restore it. The signal emission takes care of calling cairo_save()
-		* before and cairo_restore() after invoking the handler.
-		*
-		* The signal handler will get a @cr with a clip region already set to the
-		* widget's dirty region, i.e. to the area that needs repainting.  Complicated
-		* widgets that want to avoid redrawing themselves completely can get the full
-		* extents of the clip region with gdk_cairo_get_clip_rectangle(), or they can
-		* get a finer-grained representation of the dirty region with
-		* cairo_copy_clip_rectangle_list().
-		*
-		* Params:
-		*     cr = the cairo context to draw to
-		*
-		* Return: %TRUE to stop other handlers from being invoked for the event.
-		*     %FALSE to propagate the event further.
-		*
-		* Since: 3.0
-		*/
+	 * This signal is emitted when a widget is supposed to render itself.
+	 * The @widget's top left corner must be painted at the origin of
+	 * the passed in context and be sized to the values returned by
+	 * gtk_widget_get_allocated_width() and
+	 * gtk_widget_get_allocated_height().
+	 *
+	 * Signal handlers connected to this signal can modify the cairo
+	 * context passed as @cr in any way they like and don't need to
+	 * restore it. The signal emission takes care of calling cairo_save()
+	 * before and cairo_restore() after invoking the handler.
+	 *
+	 * The signal handler will get a @cr with a clip region already set to the
+	 * widget's dirty region, i.e. to the area that needs repainting.  Complicated
+	 * widgets that want to avoid redrawing themselves completely can get the full
+	 * extents of the clip region with gdk_cairo_get_clip_rectangle(), or they can
+	 * get a finer-grained representation of the dirty region with
+	 * cairo_copy_clip_rectangle_list().
+	 *
+	 * Params:
+	 *     cr = the cairo context to draw to
+	 *
+	 * Return: %TRUE to stop other handlers from being invoked for the event.
+	 *     %FALSE to propagate the event further.
+	 *
+	 * Since: 3.0
+	 */
 	deprecated gulong addOnDraw(bool delegate(Context, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnDrawDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"draw",
-			cast(GCallback)&callBackDraw,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackDrawDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-	
-	extern(C) static int callBackDraw(GtkWidget* widgetStruct, cairo_t* cr,OnDrawDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(new Context(cr), wrapper.outer);
-	}
-	
-	extern(C) static void callBackDrawDestroy(OnDrawDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "draw", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 code: end
 

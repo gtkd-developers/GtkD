@@ -295,32 +295,6 @@ public class ObjectG
 		return obj.doref();
 	}
 
-	protected class OnNotifyDelegateWrapper
-	{
-		void delegate(ParamSpec, ObjectG) dlg;
-		gulong handlerId;
-
-		this(void delegate(ParamSpec, ObjectG) dlg)
-		{
-			this.dlg = dlg;
-			onNotifyListeners ~= this;
-		}
-
-		void remove(OnNotifyDelegateWrapper source)
-		{
-			foreach(index, wrapper; onNotifyListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onNotifyListeners[index] = null;
-					onNotifyListeners = std.algorithm.remove(onNotifyListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnNotifyDelegateWrapper[] onNotifyListeners;
-
 	/**
 	 * The notify signal is emitted on an object when one of its
 	 * properties has been changed. Note that getting this signal
@@ -348,25 +322,7 @@ public class ObjectG
 		else
 			signalName = "notify::"~ property;
 
-		auto wrapper = new OnNotifyDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			signalName,
-			cast(GCallback)&callBackNotify,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackNotifyDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackNotify(GObject* objectgStruct, GParamSpec* pspec,OnNotifyDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(ParamSpec)(pspec), wrapper.outer);
-	}
-
-	extern(C) static void callBackNotifyDestroy(OnNotifyDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, signalName, dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
 	/**

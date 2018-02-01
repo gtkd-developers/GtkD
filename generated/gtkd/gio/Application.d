@@ -198,32 +198,6 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	// add the ActionMap capabilities
 	mixin ActionMapT!(GApplication);
 
-	protected class ScopedOnCommandLineDelegateWrapper
-	{
-		int delegate(Scoped!ApplicationCommandLine, Application) dlg;
-		gulong handlerId;
-
-		this(int delegate(Scoped!ApplicationCommandLine, Application) dlg)
-		{
-			this.dlg = dlg;
-			scopedOnCommandLineListeners ~= this;
-		}
-
-		void remove(ScopedOnCommandLineDelegateWrapper source)
-		{
-			foreach(index, wrapper; scopedOnCommandLineListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					scopedOnCommandLineListeners[index] = null;
-					scopedOnCommandLineListeners = std.algorithm.remove(scopedOnCommandLineListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	ScopedOnCommandLineDelegateWrapper[] scopedOnCommandLineListeners;
-
 	/**
 	 * The ::command-line signal is emitted on the primary instance when
 	 * a commandline is not handled locally. See g_application_run() and
@@ -238,25 +212,7 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 */
 	gulong addOnCommandLine(int delegate(Scoped!ApplicationCommandLine, Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new ScopedOnCommandLineDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"command-line",
-			cast(GCallback)&callBackScopedCommandLine,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackScopedCommandLineDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static int callBackScopedCommandLine(GApplication* applicationStruct, GApplicationCommandLine* commandLine, ScopedOnCommandLineDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(getScopedGobject!ApplicationCommandLine(commandLine), wrapper.outer);
-	}
-
-	extern(C) static void callBackScopedCommandLineDestroy(ScopedOnCommandLineDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "command-line", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
 	/**
@@ -271,12 +227,12 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	gulong addOnOpen(void delegate(FileIF[], string, Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "open", delegate void (GFile* gfiles, int nFiles, string hint, Application app){
-				FileIF[] files = new FileIF[nFiles];
-				for(int i = 0; i < nFiles; i++)
-				{
-					files[i] = ObjectG.getDObject!FileIF((cast(GFile**)gfiles)[i]);
-				}
-				dlg(files, hint, app);
+			FileIF[] files = new FileIF[nFiles];
+			for(int i = 0; i < nFiles; i++)
+			{
+				files[i] = ObjectG.getDObject!FileIF((cast(GFile**)gfiles)[i]);
+			}
+			dlg(files, hint, app);
 			}, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 

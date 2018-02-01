@@ -748,32 +748,6 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			return 0;
 		}
 
-		protected class ScopedOnDrawDelegateWrapper
-		{
-			bool delegate(Scoped!Context, Widget) dlg;
-			gulong handlerId;
-
-			this(bool delegate(Scoped!Context, Widget) dlg)
-			{
-				this.dlg = dlg;
-				scopedOnDrawListeners ~= this;
-			}
-
-			void remove(ScopedOnDrawDelegateWrapper source)
-			{
-				foreach(index, wrapper; scopedOnDrawListeners)
-				{
-					if (wrapper.handlerId == source.handlerId)
-					{
-						scopedOnDrawListeners[index] = null;
-						scopedOnDrawListeners = std.algorithm.remove(scopedOnDrawListeners, index);
-						break;
-					}
-				}
-			}
-		}
-		ScopedOnDrawDelegateWrapper[] scopedOnDrawListeners;
-
 		/**
 		 * This signal is emitted when a widget is supposed to render itself.
 		 * The @widget's top left corner must be painted at the origin of
@@ -803,52 +777,8 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		gulong addOnDraw(bool delegate(Scoped!Context, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			auto wrapper = new ScopedOnDrawDelegateWrapper(dlg);
-			wrapper.handlerId = Signals.connectData(
-				this,
-				"draw",
-				cast(GCallback)&callBackScopedDraw,
-				cast(void*)wrapper,
-				cast(GClosureNotify)&callBackDrawScopedDestroy,
-				connectFlags);
-			return wrapper.handlerId;
+			return Signals.connect(this, "draw", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 		}
-
-		extern(C) static int callBackScopedDraw(GtkWidget* widgetStruct, cairo_t* cr, ScopedOnDrawDelegateWrapper wrapper)
-		{
-			return wrapper.dlg(getScopedGobject!Context(cr), wrapper.outer);
-		}
-
-		extern(C) static void callBackDrawScopedDestroy(ScopedOnDrawDelegateWrapper wrapper, GClosure* closure)
-		{
-			wrapper.remove(wrapper);
-		}
-
-		protected class OnDrawDelegateWrapper
-		{
-			bool delegate(Context, Widget) dlg;
-			gulong handlerId;
-
-			this(bool delegate(Context, Widget) dlg)
-			{
-				this.dlg = dlg;
-				onDrawListeners ~= this;
-			}
-
-			void remove(OnDrawDelegateWrapper source)
-			{
-				foreach(index, wrapper; onDrawListeners)
-				{
-					if (wrapper.handlerId == source.handlerId)
-					{
-						onDrawListeners[index] = null;
-						onDrawListeners = std.algorithm.remove(onDrawListeners, index);
-						break;
-					}
-				}
-			}
-		}
-		OnDrawDelegateWrapper[] onDrawListeners;
 
 		/**
 		 * This signal is emitted when a widget is supposed to render itself.
@@ -879,25 +809,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		deprecated gulong addOnDraw(bool delegate(Context, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
-			auto wrapper = new OnDrawDelegateWrapper(dlg);
-			wrapper.handlerId = Signals.connectData(
-				this,
-				"draw",
-				cast(GCallback)&callBackDraw,
-				cast(void*)wrapper,
-				cast(GClosureNotify)&callBackDrawDestroy,
-				connectFlags);
-			return wrapper.handlerId;
-		}
-
-		extern(C) static int callBackDraw(GtkWidget* widgetStruct, cairo_t* cr,OnDrawDelegateWrapper wrapper)
-		{
-			return wrapper.dlg(new Context(cr), wrapper.outer);
-		}
-
-		extern(C) static void callBackDrawDestroy(OnDrawDelegateWrapper wrapper, GClosure* closure)
-		{
-			wrapper.remove(wrapper);
+			return Signals.connect(this, "draw", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 		}
 
 		/**
