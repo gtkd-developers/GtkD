@@ -215,9 +215,10 @@ code: start
 
 			if ( closure.derivativeFlag )
 			{
-				GValue instance = param_values[0];
-				param_values[0..n_param_values-1] = param_values[1..n_param_values];
-				param_values[n_param_values-1] = instance;
+				GValue[] swapped = new GValue[n_param_values];
+				swapped[0..n_param_values-1] = param_values[1..n_param_values];
+				swapped[n_param_values-1] = param_values[0];
+				param_values = swapped.ptr;
 			}
 
 			mixin(getCallbackCall!T());
