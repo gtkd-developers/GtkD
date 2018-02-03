@@ -133,11 +133,11 @@ class DClosure : Closure
 		{
 			static if ( __traits(compiles, TemplateOf!param) && __traits(isSame, TemplateOf!param, glib.c.types.Scoped) )
 				call ~= "import "~moduleName!(TemplateArgsOf!(param)[0])~";\n";
-			else static if ( is(param == class) || is(param == struct) || is(param == enum) )
+			else static if ( is(param == class) || is(param == interface) || is(param == struct) || is(param == enum) )
 				call ~= "import "~moduleName!param~";\n";
 		}
 		alias Ret = ReturnType!T;
-		static if ( is(Ret == class) || is(Ret == struct) || is(Ret == enum) )
+		static if ( is(Ret == class) || is(param == interface) || is(Ret == struct) || is(Ret == enum) )
 			call ~= "import "~moduleName!Ret~";\n";
 
 		static if ( !is(Ret == void) )
