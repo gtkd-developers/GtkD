@@ -135,10 +135,15 @@ class DClosure : Closure
 				call ~= "import "~moduleName!(TemplateArgsOf!(param)[0])~";\n";
 			else static if ( is(param == class) || is(param == interface) || is(param == struct) || is(param == enum) )
 				call ~= "import "~moduleName!param~";\n";
+			else static if ( isPointer!param && ( is(PointerTarget!param == struct) || is(PointerTarget!param == enum)) )
+				//The moduleName template gives an forward reference error here.
+			call ~= "import "~fullyQualifiedName!param.findSplitAfter(".c.types")[0]~";\n";
 		}
 		alias Ret = ReturnType!T;
 		static if ( is(Ret == class) || is(Ret == interface) || is(Ret == struct) || is(Ret == enum) )
 			call ~= "import "~moduleName!Ret~";\n";
+		else static if ( isPointer!Ret && ( is(PointerTarget!Ret == struct) || is(PointerTarget!Ret == enum)) )
+			call ~= "import "~fullyQualifiedName!Ret.findSplitAfter(".c.types")[0]~";\n";
 
 		static if ( !is(Ret == void) )
 			call ~= "auto ret = ";
