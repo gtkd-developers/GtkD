@@ -137,7 +137,7 @@ class DClosure : Closure
 				call ~= "import "~moduleName!param~";\n";
 		}
 		alias Ret = ReturnType!T;
-		static if ( is(Ret == class) || is(param == interface) || is(Ret == struct) || is(Ret == enum) )
+		static if ( is(Ret == class) || is(Ret == interface) || is(Ret == struct) || is(Ret == enum) )
 			call ~= "import "~moduleName!Ret~";\n";
 
 		static if ( !is(Ret == void) )
@@ -175,10 +175,12 @@ class DClosure : Closure
 			call ~= "g_value_set_double(return_value, ret);";
 		else static if ( is(Ret == string) )
 			call ~= "g_value_set_string(return_value, Str.toStringz(ret));";
+		else static if ( is(Ret == string[]) )
+			call ~= "g_value_set_pointer(return_value, Str.toStringzArray(ret));";
 		else static if ( is(Ret == enum) )
 			call ~= "g_type_is_a(return_value.gType, GType.ENUM) ? g_value_set_enum(return_value, ret) : g_value_set_flags(return_value, ret);";
 		else static if ( isPointer!Ret )
-			call ~= "auto var = ret; (g_type_is_a(return_value.gType, GType.POINTER) ? g_value_set_pointer(return_value, ret) : (g_type_is_a(return_value.gType, GType.BOXED) ? g_value_set_boxed(return_value, ret.get"~Ret.stringof~"Struct()) : g_value_set_object(return_value, ret.get"~Ret.stringof~"Struct()))";
+			call ~= "g_type_is_a(return_value.gType, GType.POINTER) ? g_value_set_pointer(return_value, ret) : (g_type_is_a(return_value.gType, GType.BOXED) ? g_value_set_boxed(return_value, ret) : g_value_set_object(return_value, ret));";
 		else static if ( is(Ret == interface) )
 			call ~= "g_value_set_object(return_value, (cast(ObjectG)ret).getObjectGStruct());";
 		else static if ( is(Ret == class) )
@@ -190,7 +192,7 @@ class DClosure : Closure
 			else static if ( is(Ret : ObjectG) )
 				call ~= "g_value_set_object(return_value, ret.getObjectGStruct());";
 			else
-				call ~= "(g_type_is_a(return_value.gType, GType.POINTER) ? g_value_set_pointer(return_value, ret.get"~Ret.stringof~"Struct()) : (g_type_is_a(return_value.gType, GType.BOXED) ? g_value_set_boxed(return_value, ret.get"~Ret.stringof~"Struct()) : g_value_set_object(return_value), ret.get"~Ret.stringof~"Struct())";
+				call ~= "g_type_is_a(return_value.gType, GType.POINTER) ? g_value_set_pointer(return_value, ret.get"~Ret.stringof~"Struct()) : (g_type_is_a(return_value.gType, GType.BOXED) ? g_value_set_boxed(return_value, ret.get"~Ret.stringof~"Struct()) : g_value_set_object(return_value, ret.get"~Ret.stringof~"Struct()));";
 		}
 
 		return call;
@@ -220,6 +222,8 @@ class DClosure : Closure
 			return "g_value_get_double(&param_values["~to!string(index)~"])";
 		else static if ( is(Param == string) )
 			return "Str.toString(g_value_get_string(&param_values["~to!string(index)~"]))";
+		else static if ( is(Param == string[]) )
+			return "Str.toStringArray(cast(const(char*)*)g_value_get_pointer(&param_values["~to!string(index)~"]))";
 		else static if ( is(Param == enum) )
 			return "cast("~fullyQualifiedName!Param~")(g_type_is_a(param_values["~to!string(index)~"].gType, GType.ENUM) ? g_value_get_enum(&param_values["~to!string(index)~"]) : g_value_get_flags(&param_values["~to!string(index)~"]))";
 		else static if ( isPointer!Param )
