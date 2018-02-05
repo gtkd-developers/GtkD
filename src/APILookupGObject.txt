@@ -144,6 +144,12 @@ code: start
 	struct DGClosure(T)
 	{
 		GClosure closure;
+		DGClosureWrapCall!(T)* wrap;
+		alias wrap this;
+	}
+
+	struct DGClosureWrapCall(T)
+	{
 		T callback;
 	}
 
@@ -190,25 +196,26 @@ code: start
 			if ( swap ) gClosure.derivativeFlag = true;
 
 			auto dClosure = cast(DGClosure!(T)*)gClosure;
+			dClosure.wrap = new DGClosureWrapCall!T;
 			dClosure.callback = callback;
 
 			static if ( isDelegate!T )
 			{
-				GC.addRoot(gClosure);
+				GC.addRoot(dClosure.wrap);
 				g_closure_add_finalize_notifier(gClosure, null, &d_finalize_nofify);
 			}
 
 			super(gClosure, true);
 		}
 
-		extern(C) static void d_finalize_nofify(void* data, GClosure* gClosure)
+		extern(C) static void d_finalize_nofify (void* data, GClosure* dClosure)
 		{
-			GC.removeRoot(gClosure);
+			GC.removeRoot((cast(DGClosure!(void*)*)dClosure).wrap);
 		}
 
 		extern(C) static void d_closure_marshal(T)(GClosure* closure, GValue* return_value, uint n_param_values, /*const*/ GValue* param_values, void* invocation_hint, void* marshal_data)
 		{
-			DGClosure!T* cl = cast(DGClosure!T*)closure;
+			DGClosure!(T)* cl = cast(DGClosure!(T)*)closure;
 
 			if ( Parameters!(T).length > n_param_values )
 				assert(false, "DClosure doesn't have enough parameters.");
@@ -239,7 +246,7 @@ code: start
 					call ~= "import "~moduleName!param~";\n";
 				else static if ( isPointer!param && ( is(PointerTarget!param == struct) || is(PointerTarget!param == enum)) )
 					//The moduleName template gives an forward reference error here.
-					call ~= "import "~fullyQualifiedName!param.findSplitAfter(".c.types")[0]~";\n";
+				call ~= "import "~fullyQualifiedName!param.findSplitAfter(".c.types")[0]~";\n";
 			}
 			alias Ret = ReturnType!T;
 			static if ( is(Ret == class) || is(Ret == interface) || is(Ret == struct) || is(Ret == enum) )
@@ -258,9 +265,6 @@ code: start
 				call ~= getValue!param(i);
 			}
 			call ~= ");\n";
-
-			static if ( is(Ret == void) )
-				return call;
 
 			static if ( is(Ret == bool) )
 				call ~= "g_value_set_boolean(return_value, ret);";

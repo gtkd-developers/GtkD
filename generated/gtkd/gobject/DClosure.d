@@ -43,6 +43,12 @@ private import std.typecons;
 struct DGClosure(T)
 {
 	GClosure closure;
+	DGClosureWrapCall!(T)* wrap;
+	alias wrap this;
+}
+
+struct DGClosureWrapCall(T)
+{
 	T callback;
 }
 
@@ -89,25 +95,26 @@ class DClosure : Closure
 		if ( swap ) gClosure.derivativeFlag = true;
 
 		auto dClosure = cast(DGClosure!(T)*)gClosure;
+		dClosure.wrap = new DGClosureWrapCall!T;
 		dClosure.callback = callback;
 
 		static if ( isDelegate!T )
 		{
-			GC.addRoot(gClosure);
+			GC.addRoot(dClosure.wrap);
 			g_closure_add_finalize_notifier(gClosure, null, &d_finalize_nofify);
 		}
 
 		super(gClosure, true);
 	}
 
-	extern(C) static void d_finalize_nofify(void* data, GClosure* gClosure)
+	extern(C) static void d_finalize_nofify (void* data, GClosure* dClosure)
 	{
-		GC.removeRoot(gClosure);
+		GC.removeRoot((cast(DGClosure!(void*)*)dClosure).wrap);
 	}
 
 	extern(C) static void d_closure_marshal(T)(GClosure* closure, GValue* return_value, uint n_param_values, /*const*/ GValue* param_values, void* invocation_hint, void* marshal_data)
 	{
-		DGClosure!T* cl = cast(DGClosure!T*)closure;
+		DGClosure!(T)* cl = cast(DGClosure!(T)*)closure;
 
 		if ( Parameters!(T).length > n_param_values )
 			assert(false, "DClosure doesn't have enough parameters.");
@@ -157,9 +164,6 @@ class DClosure : Closure
 			call ~= getValue!param(i);
 		}
 		call ~= ");\n";
-
-		static if ( is(Ret == void) )
-			return call;
 
 		static if ( is(Ret == bool) )
 			call ~= "g_value_set_boolean(return_value, ret);";
