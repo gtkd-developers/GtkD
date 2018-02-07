@@ -189,32 +189,6 @@ public class Overlay : Bin
 		gtk_overlay_set_overlay_pass_through(gtkOverlay, (widget is null) ? null : widget.getWidgetStruct(), passThrough);
 	}
 
-	protected class OnGetChildPositionDelegateWrapper
-	{
-		bool delegate(Widget, GdkRectangle*, Overlay) dlg;
-		gulong handlerId;
-
-		this(bool delegate(Widget, GdkRectangle*, Overlay) dlg)
-		{
-			this.dlg = dlg;
-			onGetChildPositionListeners ~= this;
-		}
-
-		void remove(OnGetChildPositionDelegateWrapper source)
-		{
-			foreach(index, wrapper; onGetChildPositionListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onGetChildPositionListeners[index] = null;
-					onGetChildPositionListeners = std.algorithm.remove(onGetChildPositionListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnGetChildPositionDelegateWrapper[] onGetChildPositionListeners;
-
 	/**
 	 * The ::get-child-position signal is emitted to determine
 	 * the position and size of any overlay child widgets. A
@@ -239,24 +213,6 @@ public class Overlay : Bin
 	 */
 	gulong addOnGetChildPosition(bool delegate(Widget, GdkRectangle*, Overlay) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnGetChildPositionDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"get-child-position",
-			cast(GCallback)&callBackGetChildPosition,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackGetChildPositionDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static int callBackGetChildPosition(GtkOverlay* overlayStruct, GtkWidget* widget, GdkRectangle* allocation, OnGetChildPositionDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(ObjectG.getDObject!(Widget)(widget), allocation, wrapper.outer);
-	}
-
-	extern(C) static void callBackGetChildPositionDestroy(OnGetChildPositionDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "get-child-position", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

@@ -182,32 +182,6 @@ public class SocketService : SocketListener
 		g_socket_service_stop(gSocketService);
 	}
 
-	protected class OnIncomingDelegateWrapper
-	{
-		bool delegate(SocketConnection, ObjectG, SocketService) dlg;
-		gulong handlerId;
-
-		this(bool delegate(SocketConnection, ObjectG, SocketService) dlg)
-		{
-			this.dlg = dlg;
-			onIncomingListeners ~= this;
-		}
-
-		void remove(OnIncomingDelegateWrapper source)
-		{
-			foreach(index, wrapper; onIncomingListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onIncomingListeners[index] = null;
-					onIncomingListeners = std.algorithm.remove(onIncomingListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnIncomingDelegateWrapper[] onIncomingListeners;
-
 	/**
 	 * The ::incoming signal is emitted when a new incoming connection
 	 * to @service needs to be handled. The handler must initiate the
@@ -228,24 +202,6 @@ public class SocketService : SocketListener
 	 */
 	gulong addOnIncoming(bool delegate(SocketConnection, ObjectG, SocketService) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnIncomingDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"incoming",
-			cast(GCallback)&callBackIncoming,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackIncomingDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static int callBackIncoming(GSocketService* socketserviceStruct, GSocketConnection* connection, GObject* sourceObject, OnIncomingDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(ObjectG.getDObject!(SocketConnection)(connection), ObjectG.getDObject!(ObjectG)(sourceObject), wrapper.outer);
-	}
-
-	extern(C) static void callBackIncomingDestroy(OnIncomingDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "incoming", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

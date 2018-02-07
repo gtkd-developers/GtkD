@@ -79,53 +79,9 @@ public class ShortcutsSection : Box
 		return gtk_shortcuts_section_get_type();
 	}
 
-	protected class OnChangeCurrentPageDelegateWrapper
-	{
-		bool delegate(int, ShortcutsSection) dlg;
-		gulong handlerId;
-
-		this(bool delegate(int, ShortcutsSection) dlg)
-		{
-			this.dlg = dlg;
-			onChangeCurrentPageListeners ~= this;
-		}
-
-		void remove(OnChangeCurrentPageDelegateWrapper source)
-		{
-			foreach(index, wrapper; onChangeCurrentPageListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onChangeCurrentPageListeners[index] = null;
-					onChangeCurrentPageListeners = std.algorithm.remove(onChangeCurrentPageListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnChangeCurrentPageDelegateWrapper[] onChangeCurrentPageListeners;
-
 	/** */
 	gulong addOnChangeCurrentPage(bool delegate(int, ShortcutsSection) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnChangeCurrentPageDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"change-current-page",
-			cast(GCallback)&callBackChangeCurrentPage,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackChangeCurrentPageDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static int callBackChangeCurrentPage(GtkShortcutsSection* shortcutssectionStruct, int object, OnChangeCurrentPageDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(object, wrapper.outer);
-	}
-
-	extern(C) static void callBackChangeCurrentPageDestroy(OnChangeCurrentPageDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "change-current-page", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

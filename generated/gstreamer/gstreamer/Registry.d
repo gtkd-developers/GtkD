@@ -499,32 +499,6 @@ public class Registry : ObjectGst
 		return gst_registry_scan_path(gstRegistry, Str.toStringz(path)) != 0;
 	}
 
-	protected class OnFeatureAddedDelegateWrapper
-	{
-		void delegate(PluginFeature, Registry) dlg;
-		gulong handlerId;
-
-		this(void delegate(PluginFeature, Registry) dlg)
-		{
-			this.dlg = dlg;
-			onFeatureAddedListeners ~= this;
-		}
-
-		void remove(OnFeatureAddedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onFeatureAddedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onFeatureAddedListeners[index] = null;
-					onFeatureAddedListeners = std.algorithm.remove(onFeatureAddedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnFeatureAddedDelegateWrapper[] onFeatureAddedListeners;
-
 	/**
 	 * Signals that a feature has been added to the registry (possibly
 	 * replacing a previously-added one by the same name)
@@ -534,52 +508,8 @@ public class Registry : ObjectGst
 	 */
 	gulong addOnFeatureAdded(void delegate(PluginFeature, Registry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnFeatureAddedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"feature-added",
-			cast(GCallback)&callBackFeatureAdded,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackFeatureAddedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "feature-added", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackFeatureAdded(GstRegistry* registryStruct, GstPluginFeature* feature, OnFeatureAddedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(PluginFeature)(feature), wrapper.outer);
-	}
-
-	extern(C) static void callBackFeatureAddedDestroy(OnFeatureAddedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnPluginAddedDelegateWrapper
-	{
-		void delegate(Plugin, Registry) dlg;
-		gulong handlerId;
-
-		this(void delegate(Plugin, Registry) dlg)
-		{
-			this.dlg = dlg;
-			onPluginAddedListeners ~= this;
-		}
-
-		void remove(OnPluginAddedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onPluginAddedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onPluginAddedListeners[index] = null;
-					onPluginAddedListeners = std.algorithm.remove(onPluginAddedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnPluginAddedDelegateWrapper[] onPluginAddedListeners;
 
 	/**
 	 * Signals that a plugin has been added to the registry (possibly
@@ -590,24 +520,6 @@ public class Registry : ObjectGst
 	 */
 	gulong addOnPluginAdded(void delegate(Plugin, Registry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnPluginAddedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"plugin-added",
-			cast(GCallback)&callBackPluginAdded,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackPluginAddedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackPluginAdded(GstRegistry* registryStruct, GstPlugin* plugin, OnPluginAddedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(Plugin)(plugin), wrapper.outer);
-	}
-
-	extern(C) static void callBackPluginAddedDestroy(OnPluginAddedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "plugin-added", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

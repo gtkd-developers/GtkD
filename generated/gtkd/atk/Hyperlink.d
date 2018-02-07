@@ -197,55 +197,11 @@ public class Hyperlink : ObjectG, ActionIF
 		return atk_hyperlink_is_valid(atkHyperlink) != 0;
 	}
 
-	protected class OnLinkActivatedDelegateWrapper
-	{
-		void delegate(Hyperlink) dlg;
-		gulong handlerId;
-
-		this(void delegate(Hyperlink) dlg)
-		{
-			this.dlg = dlg;
-			onLinkActivatedListeners ~= this;
-		}
-
-		void remove(OnLinkActivatedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onLinkActivatedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onLinkActivatedListeners[index] = null;
-					onLinkActivatedListeners = std.algorithm.remove(onLinkActivatedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnLinkActivatedDelegateWrapper[] onLinkActivatedListeners;
-
 	/**
 	 * The signal link-activated is emitted when a link is activated.
 	 */
 	gulong addOnLinkActivated(void delegate(Hyperlink) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnLinkActivatedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"link-activated",
-			cast(GCallback)&callBackLinkActivated,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackLinkActivatedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackLinkActivated(AtkHyperlink* hyperlinkStruct, OnLinkActivatedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackLinkActivatedDestroy(OnLinkActivatedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "link-activated", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

@@ -109,32 +109,6 @@ public template DBusObjectT(TStruct)
 		return Str.toString(g_dbus_object_get_object_path(getDBusObjectStruct()));
 	}
 
-	protected class OnInterfaceAddedDelegateWrapper
-	{
-		void delegate(DBusInterfaceIF, DBusObjectIF) dlg;
-		gulong handlerId;
-
-		this(void delegate(DBusInterfaceIF, DBusObjectIF) dlg)
-		{
-			this.dlg = dlg;
-			onInterfaceAddedListeners ~= this;
-		}
-
-		void remove(OnInterfaceAddedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onInterfaceAddedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onInterfaceAddedListeners[index] = null;
-					onInterfaceAddedListeners = std.algorithm.remove(onInterfaceAddedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnInterfaceAddedDelegateWrapper[] onInterfaceAddedListeners;
-
 	/**
 	 * Emitted when @interface is added to @object.
 	 *
@@ -145,52 +119,8 @@ public template DBusObjectT(TStruct)
 	 */
 	gulong addOnInterfaceAdded(void delegate(DBusInterfaceIF, DBusObjectIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnInterfaceAddedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"interface-added",
-			cast(GCallback)&callBackInterfaceAdded,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackInterfaceAddedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "interface-added", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackInterfaceAdded(GDBusObject* dbusobjectStruct, GDBusInterface* iface, OnInterfaceAddedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(DBusInterfaceIF)(iface), wrapper.outer);
-	}
-
-	extern(C) static void callBackInterfaceAddedDestroy(OnInterfaceAddedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnInterfaceRemovedDelegateWrapper
-	{
-		void delegate(DBusInterfaceIF, DBusObjectIF) dlg;
-		gulong handlerId;
-
-		this(void delegate(DBusInterfaceIF, DBusObjectIF) dlg)
-		{
-			this.dlg = dlg;
-			onInterfaceRemovedListeners ~= this;
-		}
-
-		void remove(OnInterfaceRemovedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onInterfaceRemovedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onInterfaceRemovedListeners[index] = null;
-					onInterfaceRemovedListeners = std.algorithm.remove(onInterfaceRemovedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnInterfaceRemovedDelegateWrapper[] onInterfaceRemovedListeners;
 
 	/**
 	 * Emitted when @interface is removed from @object.
@@ -202,24 +132,6 @@ public template DBusObjectT(TStruct)
 	 */
 	gulong addOnInterfaceRemoved(void delegate(DBusInterfaceIF, DBusObjectIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnInterfaceRemovedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"interface-removed",
-			cast(GCallback)&callBackInterfaceRemoved,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackInterfaceRemovedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackInterfaceRemoved(GDBusObject* dbusobjectStruct, GDBusInterface* iface, OnInterfaceRemovedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(DBusInterfaceIF)(iface), wrapper.outer);
-	}
-
-	extern(C) static void callBackInterfaceRemovedDestroy(OnInterfaceRemovedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "interface-removed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

@@ -300,135 +300,21 @@ public class Calendar : Widget
 		gtk_calendar_unmark_day(gtkCalendar, day);
 	}
 
-	protected class OnDaySelectedDelegateWrapper
-	{
-		void delegate(Calendar) dlg;
-		gulong handlerId;
-
-		this(void delegate(Calendar) dlg)
-		{
-			this.dlg = dlg;
-			onDaySelectedListeners ~= this;
-		}
-
-		void remove(OnDaySelectedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDaySelectedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onDaySelectedListeners[index] = null;
-					onDaySelectedListeners = std.algorithm.remove(onDaySelectedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnDaySelectedDelegateWrapper[] onDaySelectedListeners;
-
 	/**
 	 * Emitted when the user selects a day.
 	 */
 	gulong addOnDaySelected(void delegate(Calendar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnDaySelectedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"day-selected",
-			cast(GCallback)&callBackDaySelected,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackDaySelectedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "day-selected", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackDaySelected(GtkCalendar* calendarStruct, OnDaySelectedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackDaySelectedDestroy(OnDaySelectedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnDaySelectedDoubleClickDelegateWrapper
-	{
-		void delegate(Calendar) dlg;
-		gulong handlerId;
-
-		this(void delegate(Calendar) dlg)
-		{
-			this.dlg = dlg;
-			onDaySelectedDoubleClickListeners ~= this;
-		}
-
-		void remove(OnDaySelectedDoubleClickDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDaySelectedDoubleClickListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onDaySelectedDoubleClickListeners[index] = null;
-					onDaySelectedDoubleClickListeners = std.algorithm.remove(onDaySelectedDoubleClickListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnDaySelectedDoubleClickDelegateWrapper[] onDaySelectedDoubleClickListeners;
 
 	/**
 	 * Emitted when the user double-clicks a day.
 	 */
 	gulong addOnDaySelectedDoubleClick(void delegate(Calendar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnDaySelectedDoubleClickDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"day-selected-double-click",
-			cast(GCallback)&callBackDaySelectedDoubleClick,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackDaySelectedDoubleClickDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "day-selected-double-click", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackDaySelectedDoubleClick(GtkCalendar* calendarStruct, OnDaySelectedDoubleClickDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackDaySelectedDoubleClickDestroy(OnDaySelectedDoubleClickDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnMonthChangedDelegateWrapper
-	{
-		void delegate(Calendar) dlg;
-		gulong handlerId;
-
-		this(void delegate(Calendar) dlg)
-		{
-			this.dlg = dlg;
-			onMonthChangedListeners ~= this;
-		}
-
-		void remove(OnMonthChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onMonthChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onMonthChangedListeners[index] = null;
-					onMonthChangedListeners = std.algorithm.remove(onMonthChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnMonthChangedDelegateWrapper[] onMonthChangedListeners;
 
 	/**
 	 * Emitted when the user clicks a button to change the selected month on a
@@ -436,232 +322,38 @@ public class Calendar : Widget
 	 */
 	gulong addOnMonthChanged(void delegate(Calendar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnMonthChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"month-changed",
-			cast(GCallback)&callBackMonthChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackMonthChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "month-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackMonthChanged(GtkCalendar* calendarStruct, OnMonthChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackMonthChangedDestroy(OnMonthChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnNextMonthDelegateWrapper
-	{
-		void delegate(Calendar) dlg;
-		gulong handlerId;
-
-		this(void delegate(Calendar) dlg)
-		{
-			this.dlg = dlg;
-			onNextMonthListeners ~= this;
-		}
-
-		void remove(OnNextMonthDelegateWrapper source)
-		{
-			foreach(index, wrapper; onNextMonthListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onNextMonthListeners[index] = null;
-					onNextMonthListeners = std.algorithm.remove(onNextMonthListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnNextMonthDelegateWrapper[] onNextMonthListeners;
 
 	/**
 	 * Emitted when the user switched to the next month.
 	 */
 	gulong addOnNextMonth(void delegate(Calendar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnNextMonthDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"next-month",
-			cast(GCallback)&callBackNextMonth,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackNextMonthDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "next-month", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackNextMonth(GtkCalendar* calendarStruct, OnNextMonthDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackNextMonthDestroy(OnNextMonthDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnNextYearDelegateWrapper
-	{
-		void delegate(Calendar) dlg;
-		gulong handlerId;
-
-		this(void delegate(Calendar) dlg)
-		{
-			this.dlg = dlg;
-			onNextYearListeners ~= this;
-		}
-
-		void remove(OnNextYearDelegateWrapper source)
-		{
-			foreach(index, wrapper; onNextYearListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onNextYearListeners[index] = null;
-					onNextYearListeners = std.algorithm.remove(onNextYearListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnNextYearDelegateWrapper[] onNextYearListeners;
 
 	/**
 	 * Emitted when user switched to the next year.
 	 */
 	gulong addOnNextYear(void delegate(Calendar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnNextYearDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"next-year",
-			cast(GCallback)&callBackNextYear,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackNextYearDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "next-year", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackNextYear(GtkCalendar* calendarStruct, OnNextYearDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackNextYearDestroy(OnNextYearDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnPrevMonthDelegateWrapper
-	{
-		void delegate(Calendar) dlg;
-		gulong handlerId;
-
-		this(void delegate(Calendar) dlg)
-		{
-			this.dlg = dlg;
-			onPrevMonthListeners ~= this;
-		}
-
-		void remove(OnPrevMonthDelegateWrapper source)
-		{
-			foreach(index, wrapper; onPrevMonthListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onPrevMonthListeners[index] = null;
-					onPrevMonthListeners = std.algorithm.remove(onPrevMonthListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnPrevMonthDelegateWrapper[] onPrevMonthListeners;
 
 	/**
 	 * Emitted when the user switched to the previous month.
 	 */
 	gulong addOnPrevMonth(void delegate(Calendar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnPrevMonthDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"prev-month",
-			cast(GCallback)&callBackPrevMonth,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackPrevMonthDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "prev-month", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackPrevMonth(GtkCalendar* calendarStruct, OnPrevMonthDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackPrevMonthDestroy(OnPrevMonthDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnPrevYearDelegateWrapper
-	{
-		void delegate(Calendar) dlg;
-		gulong handlerId;
-
-		this(void delegate(Calendar) dlg)
-		{
-			this.dlg = dlg;
-			onPrevYearListeners ~= this;
-		}
-
-		void remove(OnPrevYearDelegateWrapper source)
-		{
-			foreach(index, wrapper; onPrevYearListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onPrevYearListeners[index] = null;
-					onPrevYearListeners = std.algorithm.remove(onPrevYearListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnPrevYearDelegateWrapper[] onPrevYearListeners;
 
 	/**
 	 * Emitted when user switched to the previous year.
 	 */
 	gulong addOnPrevYear(void delegate(Calendar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnPrevYearDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"prev-year",
-			cast(GCallback)&callBackPrevYear,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackPrevYearDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackPrevYear(GtkCalendar* calendarStruct, OnPrevYearDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackPrevYearDestroy(OnPrevYearDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "prev-year", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

@@ -296,53 +296,9 @@ public class RadioMenuItem : CheckMenuItem
 		gtk_radio_menu_item_set_group(gtkRadioMenuItem, (group is null) ? null : group.getListSGStruct());
 	}
 
-	protected class OnGroupChangedDelegateWrapper
-	{
-		void delegate(RadioMenuItem) dlg;
-		gulong handlerId;
-
-		this(void delegate(RadioMenuItem) dlg)
-		{
-			this.dlg = dlg;
-			onGroupChangedListeners ~= this;
-		}
-
-		void remove(OnGroupChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onGroupChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onGroupChangedListeners[index] = null;
-					onGroupChangedListeners = std.algorithm.remove(onGroupChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnGroupChangedDelegateWrapper[] onGroupChangedListeners;
-
 	/** */
 	gulong addOnGroupChanged(void delegate(RadioMenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnGroupChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"group-changed",
-			cast(GCallback)&callBackGroupChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackGroupChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackGroupChanged(GtkRadioMenuItem* radiomenuitemStruct, OnGroupChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackGroupChangedDestroy(OnGroupChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "group-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

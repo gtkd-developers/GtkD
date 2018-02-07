@@ -115,56 +115,12 @@ public class AppInfoMonitor : ObjectG
 		return ObjectG.getDObject!(AppInfoMonitor)(cast(GAppInfoMonitor*) p, true);
 	}
 
-	protected class OnChangedDelegateWrapper
-	{
-		void delegate(AppInfoMonitor) dlg;
-		gulong handlerId;
-
-		this(void delegate(AppInfoMonitor) dlg)
-		{
-			this.dlg = dlg;
-			onChangedListeners ~= this;
-		}
-
-		void remove(OnChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onChangedListeners[index] = null;
-					onChangedListeners = std.algorithm.remove(onChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnChangedDelegateWrapper[] onChangedListeners;
-
 	/**
 	 * Signal emitted when the app info database for changes (ie: newly installed
 	 * or removed applications).
 	 */
 	gulong addOnChanged(void delegate(AppInfoMonitor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"changed",
-			cast(GCallback)&callBackChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackChanged(GAppInfoMonitor* appinfomonitorStruct, OnChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

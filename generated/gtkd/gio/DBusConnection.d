@@ -1706,32 +1706,6 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 		return g_dbus_connection_unregister_subtree(gDBusConnection, registrationId) != 0;
 	}
 
-	protected class OnClosedDelegateWrapper
-	{
-		void delegate(bool, ErrorG, DBusConnection) dlg;
-		gulong handlerId;
-
-		this(void delegate(bool, ErrorG, DBusConnection) dlg)
-		{
-			this.dlg = dlg;
-			onClosedListeners ~= this;
-		}
-
-		void remove(OnClosedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onClosedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onClosedListeners[index] = null;
-					onClosedListeners = std.algorithm.remove(onClosedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnClosedDelegateWrapper[] onClosedListeners;
-
 	/**
 	 * Emitted when the connection is closed.
 	 *
@@ -1759,25 +1733,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 */
 	gulong addOnClosed(void delegate(bool, ErrorG, DBusConnection) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnClosedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"closed",
-			cast(GCallback)&callBackClosed,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackClosedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackClosed(GDBusConnection* dbusconnectionStruct, bool remotePeerVanished, GError* error, OnClosedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(remotePeerVanished, new ErrorG(error), wrapper.outer);
-	}
-
-	extern(C) static void callBackClosedDestroy(OnClosedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "closed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
 	/**

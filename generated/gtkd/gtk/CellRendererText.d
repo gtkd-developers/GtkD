@@ -120,32 +120,6 @@ public class CellRendererText : CellRenderer
 		gtk_cell_renderer_text_set_fixed_height_from_font(gtkCellRendererText, numberOfRows);
 	}
 
-	protected class OnEditedDelegateWrapper
-	{
-		void delegate(string, string, CellRendererText) dlg;
-		gulong handlerId;
-
-		this(void delegate(string, string, CellRendererText) dlg)
-		{
-			this.dlg = dlg;
-			onEditedListeners ~= this;
-		}
-
-		void remove(OnEditedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onEditedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onEditedListeners[index] = null;
-					onEditedListeners = std.algorithm.remove(onEditedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnEditedDelegateWrapper[] onEditedListeners;
-
 	/**
 	 * This signal is emitted after @renderer has been edited.
 	 *
@@ -158,24 +132,6 @@ public class CellRendererText : CellRenderer
 	 */
 	gulong addOnEdited(void delegate(string, string, CellRendererText) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnEditedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"edited",
-			cast(GCallback)&callBackEdited,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackEditedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackEdited(GtkCellRendererText* cellrenderertextStruct, char* path, char* newText, OnEditedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(Str.toString(path), Str.toString(newText), wrapper.outer);
-	}
-
-	extern(C) static void callBackEditedDestroy(OnEditedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "edited", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

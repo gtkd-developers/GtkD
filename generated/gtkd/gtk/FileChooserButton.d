@@ -251,32 +251,6 @@ public class FileChooserButton : Box, FileChooserIF
 		gtk_file_chooser_button_set_width_chars(gtkFileChooserButton, nChars);
 	}
 
-	protected class OnFileSetDelegateWrapper
-	{
-		void delegate(FileChooserButton) dlg;
-		gulong handlerId;
-
-		this(void delegate(FileChooserButton) dlg)
-		{
-			this.dlg = dlg;
-			onFileSetListeners ~= this;
-		}
-
-		void remove(OnFileSetDelegateWrapper source)
-		{
-			foreach(index, wrapper; onFileSetListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onFileSetListeners[index] = null;
-					onFileSetListeners = std.algorithm.remove(onFileSetListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnFileSetDelegateWrapper[] onFileSetListeners;
-
 	/**
 	 * The ::file-set signal is emitted when the user selects a file.
 	 *
@@ -287,24 +261,6 @@ public class FileChooserButton : Box, FileChooserIF
 	 */
 	gulong addOnFileSet(void delegate(FileChooserButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnFileSetDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"file-set",
-			cast(GCallback)&callBackFileSet,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackFileSetDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackFileSet(GtkFileChooserButton* filechooserbuttonStruct, OnFileSetDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackFileSetDestroy(OnFileSetDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "file-set", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

@@ -142,32 +142,6 @@ public class SourceCompletionInfo : Window
 		gtk_source_completion_info_set_widget(gtkSourceCompletionInfo, (widget is null) ? null : widget.getWidgetStruct());
 	}
 
-	protected class OnBeforeShowDelegateWrapper
-	{
-		void delegate(SourceCompletionInfo) dlg;
-		gulong handlerId;
-
-		this(void delegate(SourceCompletionInfo) dlg)
-		{
-			this.dlg = dlg;
-			onBeforeShowListeners ~= this;
-		}
-
-		void remove(OnBeforeShowDelegateWrapper source)
-		{
-			foreach(index, wrapper; onBeforeShowListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onBeforeShowListeners[index] = null;
-					onBeforeShowListeners = std.algorithm.remove(onBeforeShowListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnBeforeShowDelegateWrapper[] onBeforeShowListeners;
-
 	/**
 	 * This signal is emitted before any "show" management. You can connect
 	 * to this signal if you want to change some properties or position
@@ -177,24 +151,6 @@ public class SourceCompletionInfo : Window
 	 */
 	gulong addOnBeforeShow(void delegate(SourceCompletionInfo) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnBeforeShowDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"before-show",
-			cast(GCallback)&callBackBeforeShow,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackBeforeShowDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackBeforeShow(GtkSourceCompletionInfo* sourcecompletioninfoStruct, OnBeforeShowDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackBeforeShowDestroy(OnBeforeShowDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "before-show", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

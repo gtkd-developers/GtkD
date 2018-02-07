@@ -161,32 +161,6 @@ public class DBusAuthObserver : ObjectG
 		return g_dbus_auth_observer_authorize_authenticated_peer(gDBusAuthObserver, (stream is null) ? null : stream.getIOStreamStruct(), (credentials is null) ? null : credentials.getCredentialsStruct()) != 0;
 	}
 
-	protected class OnAllowMechanismDelegateWrapper
-	{
-		bool delegate(string, DBusAuthObserver) dlg;
-		gulong handlerId;
-
-		this(bool delegate(string, DBusAuthObserver) dlg)
-		{
-			this.dlg = dlg;
-			onAllowMechanismListeners ~= this;
-		}
-
-		void remove(OnAllowMechanismDelegateWrapper source)
-		{
-			foreach(index, wrapper; onAllowMechanismListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onAllowMechanismListeners[index] = null;
-					onAllowMechanismListeners = std.algorithm.remove(onAllowMechanismListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnAllowMechanismDelegateWrapper[] onAllowMechanismListeners;
-
 	/**
 	 * Emitted to check if @mechanism is allowed to be used.
 	 *
@@ -199,52 +173,8 @@ public class DBusAuthObserver : ObjectG
 	 */
 	gulong addOnAllowMechanism(bool delegate(string, DBusAuthObserver) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnAllowMechanismDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"allow-mechanism",
-			cast(GCallback)&callBackAllowMechanism,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackAllowMechanismDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "allow-mechanism", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static int callBackAllowMechanism(GDBusAuthObserver* dbusauthobserverStruct, char* mechanism, OnAllowMechanismDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(Str.toString(mechanism), wrapper.outer);
-	}
-
-	extern(C) static void callBackAllowMechanismDestroy(OnAllowMechanismDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnAuthorizeAuthenticatedPeerDelegateWrapper
-	{
-		bool delegate(IOStream, Credentials, DBusAuthObserver) dlg;
-		gulong handlerId;
-
-		this(bool delegate(IOStream, Credentials, DBusAuthObserver) dlg)
-		{
-			this.dlg = dlg;
-			onAuthorizeAuthenticatedPeerListeners ~= this;
-		}
-
-		void remove(OnAuthorizeAuthenticatedPeerDelegateWrapper source)
-		{
-			foreach(index, wrapper; onAuthorizeAuthenticatedPeerListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onAuthorizeAuthenticatedPeerListeners[index] = null;
-					onAuthorizeAuthenticatedPeerListeners = std.algorithm.remove(onAuthorizeAuthenticatedPeerListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnAuthorizeAuthenticatedPeerDelegateWrapper[] onAuthorizeAuthenticatedPeerListeners;
 
 	/**
 	 * Emitted to check if a peer that is successfully authenticated
@@ -260,24 +190,6 @@ public class DBusAuthObserver : ObjectG
 	 */
 	gulong addOnAuthorizeAuthenticatedPeer(bool delegate(IOStream, Credentials, DBusAuthObserver) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnAuthorizeAuthenticatedPeerDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"authorize-authenticated-peer",
-			cast(GCallback)&callBackAuthorizeAuthenticatedPeer,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackAuthorizeAuthenticatedPeerDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static int callBackAuthorizeAuthenticatedPeer(GDBusAuthObserver* dbusauthobserverStruct, GIOStream* stream, GCredentials* credentials, OnAuthorizeAuthenticatedPeerDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(ObjectG.getDObject!(IOStream)(stream), ObjectG.getDObject!(Credentials)(credentials), wrapper.outer);
-	}
-
-	extern(C) static void callBackAuthorizeAuthenticatedPeerDestroy(OnAuthorizeAuthenticatedPeerDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "authorize-authenticated-peer", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

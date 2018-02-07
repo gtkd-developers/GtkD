@@ -728,32 +728,6 @@ public class Clock : ObjectGst
 		return gst_clock_wait_for_sync(gstClock, timeout) != 0;
 	}
 
-	protected class OnSyncedDelegateWrapper
-	{
-		void delegate(bool, Clock) dlg;
-		gulong handlerId;
-
-		this(void delegate(bool, Clock) dlg)
-		{
-			this.dlg = dlg;
-			onSyncedListeners ~= this;
-		}
-
-		void remove(OnSyncedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onSyncedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onSyncedListeners[index] = null;
-					onSyncedListeners = std.algorithm.remove(onSyncedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnSyncedDelegateWrapper[] onSyncedListeners;
-
 	/**
 	 * Signaled on clocks with GST_CLOCK_FLAG_NEEDS_STARTUP_SYNC set once
 	 * the clock is synchronized, or when it completely lost synchronization.
@@ -769,24 +743,6 @@ public class Clock : ObjectGst
 	 */
 	gulong addOnSynced(void delegate(bool, Clock) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnSyncedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"synced",
-			cast(GCallback)&callBackSynced,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackSyncedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackSynced(GstClock* clockStruct, bool synced, OnSyncedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(synced, wrapper.outer);
-	}
-
-	extern(C) static void callBackSyncedDestroy(OnSyncedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "synced", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

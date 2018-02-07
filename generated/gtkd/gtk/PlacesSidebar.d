@@ -559,32 +559,6 @@ public class PlacesSidebar : ScrolledWindow
 		gtk_places_sidebar_set_show_trash(gtkPlacesSidebar, showTrash);
 	}
 
-	protected class OnDragActionAskDelegateWrapper
-	{
-		int delegate(int, PlacesSidebar) dlg;
-		gulong handlerId;
-
-		this(int delegate(int, PlacesSidebar) dlg)
-		{
-			this.dlg = dlg;
-			onDragActionAskListeners ~= this;
-		}
-
-		void remove(OnDragActionAskDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDragActionAskListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onDragActionAskListeners[index] = null;
-					onDragActionAskListeners = std.algorithm.remove(onDragActionAskListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnDragActionAskDelegateWrapper[] onDragActionAskListeners;
-
 	/**
 	 * The places sidebar emits this signal when it needs to ask the application
 	 * to pop up a menu to ask the user for which drag action to perform.
@@ -599,52 +573,8 @@ public class PlacesSidebar : ScrolledWindow
 	 */
 	gulong addOnDragActionAsk(int delegate(int, PlacesSidebar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnDragActionAskDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"drag-action-ask",
-			cast(GCallback)&callBackDragActionAsk,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackDragActionAskDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "drag-action-ask", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static int callBackDragActionAsk(GtkPlacesSidebar* placessidebarStruct, int actions, OnDragActionAskDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(actions, wrapper.outer);
-	}
-
-	extern(C) static void callBackDragActionAskDestroy(OnDragActionAskDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnDragActionRequestedDelegateWrapper
-	{
-		int delegate(DragContext, FileIF, ListG, PlacesSidebar) dlg;
-		gulong handlerId;
-
-		this(int delegate(DragContext, FileIF, ListG, PlacesSidebar) dlg)
-		{
-			this.dlg = dlg;
-			onDragActionRequestedListeners ~= this;
-		}
-
-		void remove(OnDragActionRequestedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDragActionRequestedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onDragActionRequestedListeners[index] = null;
-					onDragActionRequestedListeners = std.algorithm.remove(onDragActionRequestedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnDragActionRequestedDelegateWrapper[] onDragActionRequestedListeners;
 
 	/**
 	 * When the user starts a drag-and-drop operation and the sidebar needs
@@ -670,52 +600,8 @@ public class PlacesSidebar : ScrolledWindow
 	 */
 	gulong addOnDragActionRequested(int delegate(DragContext, FileIF, ListG, PlacesSidebar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnDragActionRequestedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"drag-action-requested",
-			cast(GCallback)&callBackDragActionRequested,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackDragActionRequestedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "drag-action-requested", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static int callBackDragActionRequested(GtkPlacesSidebar* placessidebarStruct, GdkDragContext* context, GFile* destFile, GList* sourceFileList, OnDragActionRequestedDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(ObjectG.getDObject!(DragContext)(context), ObjectG.getDObject!(FileIF)(destFile), new ListG(sourceFileList), wrapper.outer);
-	}
-
-	extern(C) static void callBackDragActionRequestedDestroy(OnDragActionRequestedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnDragPerformDropDelegateWrapper
-	{
-		void delegate(FileIF, ListG, int, PlacesSidebar) dlg;
-		gulong handlerId;
-
-		this(void delegate(FileIF, ListG, int, PlacesSidebar) dlg)
-		{
-			this.dlg = dlg;
-			onDragPerformDropListeners ~= this;
-		}
-
-		void remove(OnDragPerformDropDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDragPerformDropListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onDragPerformDropListeners[index] = null;
-					onDragPerformDropListeners = std.algorithm.remove(onDragPerformDropListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnDragPerformDropDelegateWrapper[] onDragPerformDropListeners;
 
 	/**
 	 * The places sidebar emits this signal when the user completes a
@@ -733,52 +619,8 @@ public class PlacesSidebar : ScrolledWindow
 	 */
 	gulong addOnDragPerformDrop(void delegate(FileIF, ListG, int, PlacesSidebar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnDragPerformDropDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"drag-perform-drop",
-			cast(GCallback)&callBackDragPerformDrop,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackDragPerformDropDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "drag-perform-drop", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackDragPerformDrop(GtkPlacesSidebar* placessidebarStruct, GFile* destFile, GList* sourceFileList, int action, OnDragPerformDropDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(FileIF)(destFile), new ListG(sourceFileList), action, wrapper.outer);
-	}
-
-	extern(C) static void callBackDragPerformDropDestroy(OnDragPerformDropDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnMountDelegateWrapper
-	{
-		void delegate(MountOperation, PlacesSidebar) dlg;
-		gulong handlerId;
-
-		this(void delegate(MountOperation, PlacesSidebar) dlg)
-		{
-			this.dlg = dlg;
-			onMountListeners ~= this;
-		}
-
-		void remove(OnMountDelegateWrapper source)
-		{
-			foreach(index, wrapper; onMountListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onMountListeners[index] = null;
-					onMountListeners = std.algorithm.remove(onMountListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnMountDelegateWrapper[] onMountListeners;
 
 	/**
 	 * The places sidebar emits this signal when it starts a new operation
@@ -793,52 +635,8 @@ public class PlacesSidebar : ScrolledWindow
 	 */
 	gulong addOnMount(void delegate(MountOperation, PlacesSidebar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnMountDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"mount",
-			cast(GCallback)&callBackMount,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackMountDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "mount", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackMount(GtkPlacesSidebar* placessidebarStruct, GMountOperation* mountOperation, OnMountDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(MountOperation)(mountOperation), wrapper.outer);
-	}
-
-	extern(C) static void callBackMountDestroy(OnMountDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnOpenLocationDelegateWrapper
-	{
-		void delegate(FileIF, GtkPlacesOpenFlags, PlacesSidebar) dlg;
-		gulong handlerId;
-
-		this(void delegate(FileIF, GtkPlacesOpenFlags, PlacesSidebar) dlg)
-		{
-			this.dlg = dlg;
-			onOpenLocationListeners ~= this;
-		}
-
-		void remove(OnOpenLocationDelegateWrapper source)
-		{
-			foreach(index, wrapper; onOpenLocationListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onOpenLocationListeners[index] = null;
-					onOpenLocationListeners = std.algorithm.remove(onOpenLocationListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnOpenLocationDelegateWrapper[] onOpenLocationListeners;
 
 	/**
 	 * The places sidebar emits this signal when the user selects a location
@@ -854,52 +652,8 @@ public class PlacesSidebar : ScrolledWindow
 	 */
 	gulong addOnOpenLocation(void delegate(FileIF, GtkPlacesOpenFlags, PlacesSidebar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnOpenLocationDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"open-location",
-			cast(GCallback)&callBackOpenLocation,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackOpenLocationDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "open-location", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackOpenLocation(GtkPlacesSidebar* placessidebarStruct, GFile* location, GtkPlacesOpenFlags openFlags, OnOpenLocationDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(FileIF)(location), openFlags, wrapper.outer);
-	}
-
-	extern(C) static void callBackOpenLocationDestroy(OnOpenLocationDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnPopulatePopupDelegateWrapper
-	{
-		void delegate(Widget, FileIF, VolumeIF, PlacesSidebar) dlg;
-		gulong handlerId;
-
-		this(void delegate(Widget, FileIF, VolumeIF, PlacesSidebar) dlg)
-		{
-			this.dlg = dlg;
-			onPopulatePopupListeners ~= this;
-		}
-
-		void remove(OnPopulatePopupDelegateWrapper source)
-		{
-			foreach(index, wrapper; onPopulatePopupListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onPopulatePopupListeners[index] = null;
-					onPopulatePopupListeners = std.algorithm.remove(onPopulatePopupListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnPopulatePopupDelegateWrapper[] onPopulatePopupListeners;
 
 	/**
 	 * The places sidebar emits this signal when the user invokes a contextual
@@ -939,52 +693,8 @@ public class PlacesSidebar : ScrolledWindow
 	 */
 	gulong addOnPopulatePopup(void delegate(Widget, FileIF, VolumeIF, PlacesSidebar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnPopulatePopupDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"populate-popup",
-			cast(GCallback)&callBackPopulatePopup,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackPopulatePopupDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "populate-popup", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackPopulatePopup(GtkPlacesSidebar* placessidebarStruct, GtkWidget* container, GFile* selectedItem, GVolume* selectedVolume, OnPopulatePopupDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(Widget)(container), ObjectG.getDObject!(FileIF)(selectedItem), ObjectG.getDObject!(VolumeIF)(selectedVolume), wrapper.outer);
-	}
-
-	extern(C) static void callBackPopulatePopupDestroy(OnPopulatePopupDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnShowConnectToServerDelegateWrapper
-	{
-		void delegate(PlacesSidebar) dlg;
-		gulong handlerId;
-
-		this(void delegate(PlacesSidebar) dlg)
-		{
-			this.dlg = dlg;
-			onShowConnectToServerListeners ~= this;
-		}
-
-		void remove(OnShowConnectToServerDelegateWrapper source)
-		{
-			foreach(index, wrapper; onShowConnectToServerListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onShowConnectToServerListeners[index] = null;
-					onShowConnectToServerListeners = std.algorithm.remove(onShowConnectToServerListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnShowConnectToServerDelegateWrapper[] onShowConnectToServerListeners;
 
 	/**
 	 * The places sidebar emits this signal when it needs the calling
@@ -998,52 +708,8 @@ public class PlacesSidebar : ScrolledWindow
 	 */
 	gulong addOnShowConnectToServer(void delegate(PlacesSidebar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnShowConnectToServerDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"show-connect-to-server",
-			cast(GCallback)&callBackShowConnectToServer,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackShowConnectToServerDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "show-connect-to-server", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackShowConnectToServer(GtkPlacesSidebar* placessidebarStruct, OnShowConnectToServerDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackShowConnectToServerDestroy(OnShowConnectToServerDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnShowEnterLocationDelegateWrapper
-	{
-		void delegate(PlacesSidebar) dlg;
-		gulong handlerId;
-
-		this(void delegate(PlacesSidebar) dlg)
-		{
-			this.dlg = dlg;
-			onShowEnterLocationListeners ~= this;
-		}
-
-		void remove(OnShowEnterLocationDelegateWrapper source)
-		{
-			foreach(index, wrapper; onShowEnterLocationListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onShowEnterLocationListeners[index] = null;
-					onShowEnterLocationListeners = std.algorithm.remove(onShowEnterLocationListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnShowEnterLocationDelegateWrapper[] onShowEnterLocationListeners;
 
 	/**
 	 * The places sidebar emits this signal when it needs the calling
@@ -1055,52 +721,8 @@ public class PlacesSidebar : ScrolledWindow
 	 */
 	gulong addOnShowEnterLocation(void delegate(PlacesSidebar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnShowEnterLocationDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"show-enter-location",
-			cast(GCallback)&callBackShowEnterLocation,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackShowEnterLocationDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "show-enter-location", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackShowEnterLocation(GtkPlacesSidebar* placessidebarStruct, OnShowEnterLocationDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackShowEnterLocationDestroy(OnShowEnterLocationDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnShowErrorMessageDelegateWrapper
-	{
-		void delegate(string, string, PlacesSidebar) dlg;
-		gulong handlerId;
-
-		this(void delegate(string, string, PlacesSidebar) dlg)
-		{
-			this.dlg = dlg;
-			onShowErrorMessageListeners ~= this;
-		}
-
-		void remove(OnShowErrorMessageDelegateWrapper source)
-		{
-			foreach(index, wrapper; onShowErrorMessageListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onShowErrorMessageListeners[index] = null;
-					onShowErrorMessageListeners = std.algorithm.remove(onShowErrorMessageListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnShowErrorMessageDelegateWrapper[] onShowErrorMessageListeners;
 
 	/**
 	 * The places sidebar emits this signal when it needs the calling
@@ -1116,52 +738,8 @@ public class PlacesSidebar : ScrolledWindow
 	 */
 	gulong addOnShowErrorMessage(void delegate(string, string, PlacesSidebar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnShowErrorMessageDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"show-error-message",
-			cast(GCallback)&callBackShowErrorMessage,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackShowErrorMessageDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "show-error-message", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackShowErrorMessage(GtkPlacesSidebar* placessidebarStruct, char* primary, char* secondary, OnShowErrorMessageDelegateWrapper wrapper)
-	{
-		wrapper.dlg(Str.toString(primary), Str.toString(secondary), wrapper.outer);
-	}
-
-	extern(C) static void callBackShowErrorMessageDestroy(OnShowErrorMessageDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnShowOtherLocationsDelegateWrapper
-	{
-		void delegate(PlacesSidebar) dlg;
-		gulong handlerId;
-
-		this(void delegate(PlacesSidebar) dlg)
-		{
-			this.dlg = dlg;
-			onShowOtherLocationsListeners ~= this;
-		}
-
-		void remove(OnShowOtherLocationsDelegateWrapper source)
-		{
-			foreach(index, wrapper; onShowOtherLocationsListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onShowOtherLocationsListeners[index] = null;
-					onShowOtherLocationsListeners = std.algorithm.remove(onShowOtherLocationsListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnShowOtherLocationsDelegateWrapper[] onShowOtherLocationsListeners;
 
 	/**
 	 * The places sidebar emits this signal when it needs the calling
@@ -1178,52 +756,8 @@ public class PlacesSidebar : ScrolledWindow
 	 */
 	gulong addOnShowOtherLocations(void delegate(PlacesSidebar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnShowOtherLocationsDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"show-other-locations",
-			cast(GCallback)&callBackShowOtherLocations,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackShowOtherLocationsDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "show-other-locations", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackShowOtherLocations(GtkPlacesSidebar* placessidebarStruct, OnShowOtherLocationsDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackShowOtherLocationsDestroy(OnShowOtherLocationsDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnShowOtherLocationsWithFlagsDelegateWrapper
-	{
-		void delegate(GtkPlacesOpenFlags, PlacesSidebar) dlg;
-		gulong handlerId;
-
-		this(void delegate(GtkPlacesOpenFlags, PlacesSidebar) dlg)
-		{
-			this.dlg = dlg;
-			onShowOtherLocationsWithFlagsListeners ~= this;
-		}
-
-		void remove(OnShowOtherLocationsWithFlagsDelegateWrapper source)
-		{
-			foreach(index, wrapper; onShowOtherLocationsWithFlagsListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onShowOtherLocationsWithFlagsListeners[index] = null;
-					onShowOtherLocationsWithFlagsListeners = std.algorithm.remove(onShowOtherLocationsWithFlagsListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnShowOtherLocationsWithFlagsDelegateWrapper[] onShowOtherLocationsWithFlagsListeners;
 
 	/**
 	 * The places sidebar emits this signal when it needs the calling
@@ -1239,52 +773,8 @@ public class PlacesSidebar : ScrolledWindow
 	 */
 	gulong addOnShowOtherLocationsWithFlags(void delegate(GtkPlacesOpenFlags, PlacesSidebar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnShowOtherLocationsWithFlagsDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"show-other-locations-with-flags",
-			cast(GCallback)&callBackShowOtherLocationsWithFlags,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackShowOtherLocationsWithFlagsDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "show-other-locations-with-flags", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackShowOtherLocationsWithFlags(GtkPlacesSidebar* placessidebarStruct, GtkPlacesOpenFlags openFlags, OnShowOtherLocationsWithFlagsDelegateWrapper wrapper)
-	{
-		wrapper.dlg(openFlags, wrapper.outer);
-	}
-
-	extern(C) static void callBackShowOtherLocationsWithFlagsDestroy(OnShowOtherLocationsWithFlagsDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnShowStarredLocationDelegateWrapper
-	{
-		void delegate(GtkPlacesOpenFlags, PlacesSidebar) dlg;
-		gulong handlerId;
-
-		this(void delegate(GtkPlacesOpenFlags, PlacesSidebar) dlg)
-		{
-			this.dlg = dlg;
-			onShowStarredLocationListeners ~= this;
-		}
-
-		void remove(OnShowStarredLocationDelegateWrapper source)
-		{
-			foreach(index, wrapper; onShowStarredLocationListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onShowStarredLocationListeners[index] = null;
-					onShowStarredLocationListeners = std.algorithm.remove(onShowStarredLocationListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnShowStarredLocationDelegateWrapper[] onShowStarredLocationListeners;
 
 	/**
 	 * The places sidebar emits this signal when it needs the calling
@@ -1296,52 +786,8 @@ public class PlacesSidebar : ScrolledWindow
 	 */
 	gulong addOnShowStarredLocation(void delegate(GtkPlacesOpenFlags, PlacesSidebar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnShowStarredLocationDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"show-starred-location",
-			cast(GCallback)&callBackShowStarredLocation,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackShowStarredLocationDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "show-starred-location", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackShowStarredLocation(GtkPlacesSidebar* placessidebarStruct, GtkPlacesOpenFlags object, OnShowStarredLocationDelegateWrapper wrapper)
-	{
-		wrapper.dlg(object, wrapper.outer);
-	}
-
-	extern(C) static void callBackShowStarredLocationDestroy(OnShowStarredLocationDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnUnmountDelegateWrapper
-	{
-		void delegate(MountOperation, PlacesSidebar) dlg;
-		gulong handlerId;
-
-		this(void delegate(MountOperation, PlacesSidebar) dlg)
-		{
-			this.dlg = dlg;
-			onUnmountListeners ~= this;
-		}
-
-		void remove(OnUnmountDelegateWrapper source)
-		{
-			foreach(index, wrapper; onUnmountListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onUnmountListeners[index] = null;
-					onUnmountListeners = std.algorithm.remove(onUnmountListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnUnmountDelegateWrapper[] onUnmountListeners;
 
 	/**
 	 * The places sidebar emits this signal when it starts a new operation
@@ -1356,24 +802,6 @@ public class PlacesSidebar : ScrolledWindow
 	 */
 	gulong addOnUnmount(void delegate(MountOperation, PlacesSidebar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnUnmountDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"unmount",
-			cast(GCallback)&callBackUnmount,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackUnmountDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackUnmount(GtkPlacesSidebar* placessidebarStruct, GMountOperation* mountOperation, OnUnmountDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(MountOperation)(mountOperation), wrapper.outer);
-	}
-
-	extern(C) static void callBackUnmountDestroy(OnUnmountDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "unmount", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

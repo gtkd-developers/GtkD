@@ -316,32 +316,6 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 		g_dbus_interface_skeleton_unexport_from_connection(gDBusInterfaceSkeleton, (connection is null) ? null : connection.getDBusConnectionStruct());
 	}
 
-	protected class OnGAuthorizeMethodDelegateWrapper
-	{
-		bool delegate(DBusMethodInvocation, DBusInterfaceSkeleton) dlg;
-		gulong handlerId;
-
-		this(bool delegate(DBusMethodInvocation, DBusInterfaceSkeleton) dlg)
-		{
-			this.dlg = dlg;
-			onGAuthorizeMethodListeners ~= this;
-		}
-
-		void remove(OnGAuthorizeMethodDelegateWrapper source)
-		{
-			foreach(index, wrapper; onGAuthorizeMethodListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onGAuthorizeMethodListeners[index] = null;
-					onGAuthorizeMethodListeners = std.algorithm.remove(onGAuthorizeMethodListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnGAuthorizeMethodDelegateWrapper[] onGAuthorizeMethodListeners;
-
 	/**
 	 * Emitted when a method is invoked by a remote caller and used to
 	 * determine if the method call is authorized.
@@ -386,24 +360,6 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 	 */
 	gulong addOnGAuthorizeMethod(bool delegate(DBusMethodInvocation, DBusInterfaceSkeleton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnGAuthorizeMethodDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"g-authorize-method",
-			cast(GCallback)&callBackGAuthorizeMethod,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackGAuthorizeMethodDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static int callBackGAuthorizeMethod(GDBusInterfaceSkeleton* dbusinterfaceskeletonStruct, GDBusMethodInvocation* invocation, OnGAuthorizeMethodDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(ObjectG.getDObject!(DBusMethodInvocation)(invocation), wrapper.outer);
-	}
-
-	extern(C) static void callBackGAuthorizeMethodDestroy(OnGAuthorizeMethodDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "g-authorize-method", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

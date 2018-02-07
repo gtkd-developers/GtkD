@@ -817,81 +817,11 @@ public class Menu : MenuShell
 		gtk_menu_set_title(gtkMenu, Str.toStringz(title));
 	}
 
-	protected class OnMoveScrollDelegateWrapper
-	{
-		void delegate(GtkScrollType, Menu) dlg;
-		gulong handlerId;
-
-		this(void delegate(GtkScrollType, Menu) dlg)
-		{
-			this.dlg = dlg;
-			onMoveScrollListeners ~= this;
-		}
-
-		void remove(OnMoveScrollDelegateWrapper source)
-		{
-			foreach(index, wrapper; onMoveScrollListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onMoveScrollListeners[index] = null;
-					onMoveScrollListeners = std.algorithm.remove(onMoveScrollListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnMoveScrollDelegateWrapper[] onMoveScrollListeners;
-
 	/** */
 	gulong addOnMoveScroll(void delegate(GtkScrollType, Menu) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnMoveScrollDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"move-scroll",
-			cast(GCallback)&callBackMoveScroll,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackMoveScrollDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "move-scroll", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackMoveScroll(GtkMenu* menuStruct, GtkScrollType scrollType, OnMoveScrollDelegateWrapper wrapper)
-	{
-		wrapper.dlg(scrollType, wrapper.outer);
-	}
-
-	extern(C) static void callBackMoveScrollDestroy(OnMoveScrollDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnPoppedUpDelegateWrapper
-	{
-		void delegate(void*, void*, bool, bool, Menu) dlg;
-		gulong handlerId;
-
-		this(void delegate(void*, void*, bool, bool, Menu) dlg)
-		{
-			this.dlg = dlg;
-			onPoppedUpListeners ~= this;
-		}
-
-		void remove(OnPoppedUpDelegateWrapper source)
-		{
-			foreach(index, wrapper; onPoppedUpListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onPoppedUpListeners[index] = null;
-					onPoppedUpListeners = std.algorithm.remove(onPoppedUpListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnPoppedUpDelegateWrapper[] onPoppedUpListeners;
 
 	/**
 	 * Emitted when the position of @menu is finalized after being popped up
@@ -929,24 +859,6 @@ public class Menu : MenuShell
 	 */
 	gulong addOnPoppedUp(void delegate(void*, void*, bool, bool, Menu) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnPoppedUpDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"popped-up",
-			cast(GCallback)&callBackPoppedUp,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackPoppedUpDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackPoppedUp(GtkMenu* menuStruct, void* flippedRect, void* finalRect, bool flippedX, bool flippedY, OnPoppedUpDelegateWrapper wrapper)
-	{
-		wrapper.dlg(flippedRect, finalRect, flippedX, flippedY, wrapper.outer);
-	}
-
-	extern(C) static void callBackPoppedUpDestroy(OnPoppedUpDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "popped-up", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

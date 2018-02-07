@@ -136,32 +136,6 @@ public class FileMonitor : ObjectG
 		g_file_monitor_set_rate_limit(gFileMonitor, limitMsecs);
 	}
 
-	protected class OnChangedDelegateWrapper
-	{
-		void delegate(FileIF, FileIF, GFileMonitorEvent, FileMonitor) dlg;
-		gulong handlerId;
-
-		this(void delegate(FileIF, FileIF, GFileMonitorEvent, FileMonitor) dlg)
-		{
-			this.dlg = dlg;
-			onChangedListeners ~= this;
-		}
-
-		void remove(OnChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onChangedListeners[index] = null;
-					onChangedListeners = std.algorithm.remove(onChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnChangedDelegateWrapper[] onChangedListeners;
-
 	/**
 	 * Emitted when @file has been changed.
 	 *
@@ -199,24 +173,6 @@ public class FileMonitor : ObjectG
 	 */
 	gulong addOnChanged(void delegate(FileIF, FileIF, GFileMonitorEvent, FileMonitor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"changed",
-			cast(GCallback)&callBackChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackChanged(GFileMonitor* filemonitorStruct, GFile* file, GFile* otherFile, GFileMonitorEvent eventType, OnChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(FileIF)(file), ObjectG.getDObject!(FileIF)(otherFile), eventType, wrapper.outer);
-	}
-
-	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

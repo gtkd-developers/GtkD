@@ -115,32 +115,6 @@ public class ThreadedSocketService : SocketService
 		this(cast(GThreadedSocketService*) p, true);
 	}
 
-	protected class OnRunDelegateWrapper
-	{
-		bool delegate(SocketConnection, ObjectG, ThreadedSocketService) dlg;
-		gulong handlerId;
-
-		this(bool delegate(SocketConnection, ObjectG, ThreadedSocketService) dlg)
-		{
-			this.dlg = dlg;
-			onRunListeners ~= this;
-		}
-
-		void remove(OnRunDelegateWrapper source)
-		{
-			foreach(index, wrapper; onRunListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onRunListeners[index] = null;
-					onRunListeners = std.algorithm.remove(onRunListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnRunDelegateWrapper[] onRunListeners;
-
 	/**
 	 * The ::run signal is emitted in a worker thread in response to an
 	 * incoming connection. This thread is dedicated to handling
@@ -155,24 +129,6 @@ public class ThreadedSocketService : SocketService
 	 */
 	gulong addOnRun(bool delegate(SocketConnection, ObjectG, ThreadedSocketService) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnRunDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"run",
-			cast(GCallback)&callBackRun,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackRunDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static int callBackRun(GThreadedSocketService* threadedsocketserviceStruct, GSocketConnection* connection, GObject* sourceObject, OnRunDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(ObjectG.getDObject!(SocketConnection)(connection), ObjectG.getDObject!(ObjectG)(sourceObject), wrapper.outer);
-	}
-
-	extern(C) static void callBackRunDestroy(OnRunDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "run", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

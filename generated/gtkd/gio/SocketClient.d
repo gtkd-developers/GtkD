@@ -870,32 +870,6 @@ public class SocketClient : ObjectG
 		g_socket_client_set_tls_validation_flags(gSocketClient, flags);
 	}
 
-	protected class OnDelegateWrapper
-	{
-		void delegate(GSocketClientEvent, SocketConnectableIF, IOStream, SocketClient) dlg;
-		gulong handlerId;
-
-		this(void delegate(GSocketClientEvent, SocketConnectableIF, IOStream, SocketClient) dlg)
-		{
-			this.dlg = dlg;
-			onListeners ~= this;
-		}
-
-		void remove(OnDelegateWrapper source)
-		{
-			foreach(index, wrapper; onListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onListeners[index] = null;
-					onListeners = std.algorithm.remove(onListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnDelegateWrapper[] onListeners;
-
 	/**
 	 * Emitted when @client's activity on @connectable changes state.
 	 * Among other things, this can be used to provide progress
@@ -956,24 +930,6 @@ public class SocketClient : ObjectG
 	 */
 	gulong addOn(void delegate(GSocketClientEvent, SocketConnectableIF, IOStream, SocketClient) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"event",
-			cast(GCallback)&callBack,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBack(GSocketClient* socketclientStruct, GSocketClientEvent event, GSocketConnectable* connectable, GIOStream* connection, OnDelegateWrapper wrapper)
-	{
-		wrapper.dlg(event, ObjectG.getDObject!(SocketConnectableIF)(connectable), ObjectG.getDObject!(IOStream)(connection), wrapper.outer);
-	}
-
-	extern(C) static void callBackDestroy(OnDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "event", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

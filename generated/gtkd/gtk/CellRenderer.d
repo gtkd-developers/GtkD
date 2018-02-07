@@ -499,32 +499,6 @@ public class CellRenderer : ObjectG
 		gtk_cell_renderer_stop_editing(gtkCellRenderer, canceled);
 	}
 
-	protected class OnEditingCanceledDelegateWrapper
-	{
-		void delegate(CellRenderer) dlg;
-		gulong handlerId;
-
-		this(void delegate(CellRenderer) dlg)
-		{
-			this.dlg = dlg;
-			onEditingCanceledListeners ~= this;
-		}
-
-		void remove(OnEditingCanceledDelegateWrapper source)
-		{
-			foreach(index, wrapper; onEditingCanceledListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onEditingCanceledListeners[index] = null;
-					onEditingCanceledListeners = std.algorithm.remove(onEditingCanceledListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnEditingCanceledDelegateWrapper[] onEditingCanceledListeners;
-
 	/**
 	 * This signal gets emitted when the user cancels the process of editing a
 	 * cell.  For example, an editable cell renderer could be written to cancel
@@ -536,52 +510,8 @@ public class CellRenderer : ObjectG
 	 */
 	gulong addOnEditingCanceled(void delegate(CellRenderer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnEditingCanceledDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"editing-canceled",
-			cast(GCallback)&callBackEditingCanceled,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackEditingCanceledDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "editing-canceled", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackEditingCanceled(GtkCellRenderer* cellrendererStruct, OnEditingCanceledDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackEditingCanceledDestroy(OnEditingCanceledDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnEditingStartedDelegateWrapper
-	{
-		void delegate(CellEditableIF, string, CellRenderer) dlg;
-		gulong handlerId;
-
-		this(void delegate(CellEditableIF, string, CellRenderer) dlg)
-		{
-			this.dlg = dlg;
-			onEditingStartedListeners ~= this;
-		}
-
-		void remove(OnEditingStartedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onEditingStartedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onEditingStartedListeners[index] = null;
-					onEditingStartedListeners = std.algorithm.remove(onEditingStartedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnEditingStartedDelegateWrapper[] onEditingStartedListeners;
 
 	/**
 	 * This signal gets emitted when a cell starts to be edited.
@@ -619,24 +549,6 @@ public class CellRenderer : ObjectG
 	 */
 	gulong addOnEditingStarted(void delegate(CellEditableIF, string, CellRenderer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnEditingStartedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"editing-started",
-			cast(GCallback)&callBackEditingStarted,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackEditingStartedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackEditingStarted(GtkCellRenderer* cellrendererStruct, GtkCellEditable* editable, char* path, OnEditingStartedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(CellEditableIF)(editable), Str.toString(path), wrapper.outer);
-	}
-
-	extern(C) static void callBackEditingStartedDestroy(OnEditingStartedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "editing-started", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

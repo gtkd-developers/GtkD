@@ -288,103 +288,15 @@ public class DeviceProvider : ObjectGst
 		gst_device_provider_unhide_provider(gstDeviceProvider, Str.toStringz(name));
 	}
 
-	protected class OnProviderHiddenDelegateWrapper
-	{
-		void delegate(string, DeviceProvider) dlg;
-		gulong handlerId;
-
-		this(void delegate(string, DeviceProvider) dlg)
-		{
-			this.dlg = dlg;
-			onProviderHiddenListeners ~= this;
-		}
-
-		void remove(OnProviderHiddenDelegateWrapper source)
-		{
-			foreach(index, wrapper; onProviderHiddenListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onProviderHiddenListeners[index] = null;
-					onProviderHiddenListeners = std.algorithm.remove(onProviderHiddenListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnProviderHiddenDelegateWrapper[] onProviderHiddenListeners;
-
 	/** */
 	gulong addOnProviderHidden(void delegate(string, DeviceProvider) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnProviderHiddenDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"provider-hidden",
-			cast(GCallback)&callBackProviderHidden,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackProviderHiddenDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "provider-hidden", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackProviderHidden(GstDeviceProvider* deviceproviderStruct, char* object, OnProviderHiddenDelegateWrapper wrapper)
-	{
-		wrapper.dlg(Str.toString(object), wrapper.outer);
-	}
-
-	extern(C) static void callBackProviderHiddenDestroy(OnProviderHiddenDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnProviderUnhiddenDelegateWrapper
-	{
-		void delegate(string, DeviceProvider) dlg;
-		gulong handlerId;
-
-		this(void delegate(string, DeviceProvider) dlg)
-		{
-			this.dlg = dlg;
-			onProviderUnhiddenListeners ~= this;
-		}
-
-		void remove(OnProviderUnhiddenDelegateWrapper source)
-		{
-			foreach(index, wrapper; onProviderUnhiddenListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onProviderUnhiddenListeners[index] = null;
-					onProviderUnhiddenListeners = std.algorithm.remove(onProviderUnhiddenListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnProviderUnhiddenDelegateWrapper[] onProviderUnhiddenListeners;
 
 	/** */
 	gulong addOnProviderUnhidden(void delegate(string, DeviceProvider) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnProviderUnhiddenDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"provider-unhidden",
-			cast(GCallback)&callBackProviderUnhidden,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackProviderUnhiddenDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackProviderUnhidden(GstDeviceProvider* deviceproviderStruct, char* object, OnProviderUnhiddenDelegateWrapper wrapper)
-	{
-		wrapper.dlg(Str.toString(object), wrapper.outer);
-	}
-
-	extern(C) static void callBackProviderUnhiddenDestroy(OnProviderUnhiddenDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "provider-unhidden", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

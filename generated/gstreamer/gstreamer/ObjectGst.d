@@ -656,32 +656,6 @@ public class ObjectGst : ObjectG
 		gst_object_unref(gstObject);
 	}
 
-	protected class OnDeepNotifyDelegateWrapper
-	{
-		void delegate(ObjectGst, ParamSpec, ObjectGst) dlg;
-		gulong handlerId;
-
-		this(void delegate(ObjectGst, ParamSpec, ObjectGst) dlg)
-		{
-			this.dlg = dlg;
-			onDeepNotifyListeners ~= this;
-		}
-
-		void remove(OnDeepNotifyDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDeepNotifyListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onDeepNotifyListeners[index] = null;
-					onDeepNotifyListeners = std.algorithm.remove(onDeepNotifyListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnDeepNotifyDelegateWrapper[] onDeepNotifyListeners;
-
 	/**
 	 * The deep notify signal is used to be notified of property changes. It is
 	 * typically attached to the toplevel bin to receive notifications from all
@@ -693,24 +667,6 @@ public class ObjectGst : ObjectG
 	 */
 	gulong addOnDeepNotify(void delegate(ObjectGst, ParamSpec, ObjectGst) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnDeepNotifyDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"deep-notify",
-			cast(GCallback)&callBackDeepNotify,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackDeepNotifyDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackDeepNotify(GstObject* objectgstStruct, GstObject* propObject, GParamSpec* prop, OnDeepNotifyDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(ObjectGst)(propObject), ObjectG.getDObject!(ParamSpec)(prop), wrapper.outer);
-	}
-
-	extern(C) static void callBackDeepNotifyDestroy(OnDeepNotifyDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "deep-notify", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

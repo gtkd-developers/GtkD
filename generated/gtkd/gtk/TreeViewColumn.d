@@ -739,53 +739,9 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 		gtk_tree_view_column_set_widget(gtkTreeViewColumn, (widget is null) ? null : widget.getWidgetStruct());
 	}
 
-	protected class OnClickedDelegateWrapper
-	{
-		void delegate(TreeViewColumn) dlg;
-		gulong handlerId;
-
-		this(void delegate(TreeViewColumn) dlg)
-		{
-			this.dlg = dlg;
-			onClickedListeners ~= this;
-		}
-
-		void remove(OnClickedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onClickedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onClickedListeners[index] = null;
-					onClickedListeners = std.algorithm.remove(onClickedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnClickedDelegateWrapper[] onClickedListeners;
-
 	/** */
 	gulong addOnClicked(void delegate(TreeViewColumn) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnClickedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"clicked",
-			cast(GCallback)&callBackClicked,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackClickedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackClicked(GtkTreeViewColumn* treeviewcolumnStruct, OnClickedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackClickedDestroy(OnClickedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "clicked", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

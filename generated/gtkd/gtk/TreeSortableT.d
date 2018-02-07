@@ -142,32 +142,6 @@ public template TreeSortableT(TStruct)
 		gtk_tree_sortable_sort_column_changed(getTreeSortableStruct());
 	}
 
-	protected class OnSortColumnChangedDelegateWrapper
-	{
-		void delegate(TreeSortableIF) dlg;
-		gulong handlerId;
-
-		this(void delegate(TreeSortableIF) dlg)
-		{
-			this.dlg = dlg;
-			onSortColumnChangedListeners ~= this;
-		}
-
-		void remove(OnSortColumnChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onSortColumnChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onSortColumnChangedListeners[index] = null;
-					onSortColumnChangedListeners = std.algorithm.remove(onSortColumnChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnSortColumnChangedDelegateWrapper[] onSortColumnChangedListeners;
-
 	/**
 	 * The ::sort-column-changed signal is emitted when the sort column
 	 * or sort order of @sortable is changed. The signal is emitted before
@@ -175,24 +149,6 @@ public template TreeSortableT(TStruct)
 	 */
 	gulong addOnSortColumnChanged(void delegate(TreeSortableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnSortColumnChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"sort-column-changed",
-			cast(GCallback)&callBackSortColumnChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackSortColumnChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackSortColumnChanged(GtkTreeSortable* treesortableStruct, OnSortColumnChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackSortColumnChangedDestroy(OnSortColumnChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "sort-column-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

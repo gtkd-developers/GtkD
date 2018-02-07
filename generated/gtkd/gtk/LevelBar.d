@@ -401,32 +401,6 @@ public class LevelBar : Widget, OrientableIF
 		gtk_level_bar_set_value(gtkLevelBar, value);
 	}
 
-	protected class OnOffsetChangedDelegateWrapper
-	{
-		void delegate(string, LevelBar) dlg;
-		gulong handlerId;
-
-		this(void delegate(string, LevelBar) dlg)
-		{
-			this.dlg = dlg;
-			onOffsetChangedListeners ~= this;
-		}
-
-		void remove(OnOffsetChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onOffsetChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onOffsetChangedListeners[index] = null;
-					onOffsetChangedListeners = std.algorithm.remove(onOffsetChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnOffsetChangedDelegateWrapper[] onOffsetChangedListeners;
-
 	/**
 	 * Emitted when an offset specified on the bar changes value as an
 	 * effect to gtk_level_bar_add_offset_value() being called.
@@ -442,24 +416,6 @@ public class LevelBar : Widget, OrientableIF
 	 */
 	gulong addOnOffsetChanged(void delegate(string, LevelBar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnOffsetChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"offset-changed",
-			cast(GCallback)&callBackOffsetChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackOffsetChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackOffsetChanged(GtkLevelBar* levelbarStruct, char* name, OnOffsetChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(Str.toString(name), wrapper.outer);
-	}
-
-	extern(C) static void callBackOffsetChangedDestroy(OnOffsetChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "offset-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

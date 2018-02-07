@@ -179,53 +179,9 @@ public class StreamCollection : ObjectGst
 		return Str.toString(gst_stream_collection_get_upstream_id(gstStreamCollection));
 	}
 
-	protected class OnStreamNotifyDelegateWrapper
-	{
-		void delegate(Stream, ParamSpec, StreamCollection) dlg;
-		gulong handlerId;
-
-		this(void delegate(Stream, ParamSpec, StreamCollection) dlg)
-		{
-			this.dlg = dlg;
-			onStreamNotifyListeners ~= this;
-		}
-
-		void remove(OnStreamNotifyDelegateWrapper source)
-		{
-			foreach(index, wrapper; onStreamNotifyListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onStreamNotifyListeners[index] = null;
-					onStreamNotifyListeners = std.algorithm.remove(onStreamNotifyListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnStreamNotifyDelegateWrapper[] onStreamNotifyListeners;
-
 	/** */
 	gulong addOnStreamNotify(void delegate(Stream, ParamSpec, StreamCollection) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnStreamNotifyDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"stream-notify",
-			cast(GCallback)&callBackStreamNotify,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackStreamNotifyDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackStreamNotify(GstStreamCollection* streamcollectionStruct, GstStream* object, GParamSpec* p0, OnStreamNotifyDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(Stream)(object), ObjectG.getDObject!(ParamSpec)(p0), wrapper.outer);
-	}
-
-	extern(C) static void callBackStreamNotifyDestroy(OnStreamNotifyDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "stream-notify", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

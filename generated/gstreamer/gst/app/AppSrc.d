@@ -391,83 +391,13 @@ public class AppSrc : BaseSrc, URIHandlerIF
 		gst_app_src_set_stream_type(gstAppSrc, type);
 	}
 
-	protected class OnEndOfStreamDelegateWrapper
-	{
-		GstFlowReturn delegate(AppSrc) dlg;
-		gulong handlerId;
-
-		this(GstFlowReturn delegate(AppSrc) dlg)
-		{
-			this.dlg = dlg;
-			onEndOfStreamListeners ~= this;
-		}
-
-		void remove(OnEndOfStreamDelegateWrapper source)
-		{
-			foreach(index, wrapper; onEndOfStreamListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onEndOfStreamListeners[index] = null;
-					onEndOfStreamListeners = std.algorithm.remove(onEndOfStreamListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnEndOfStreamDelegateWrapper[] onEndOfStreamListeners;
-
 	/**
 	 * Notify @appsrc that no more buffer are available.
 	 */
 	gulong addOnEndOfStream(GstFlowReturn delegate(AppSrc) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnEndOfStreamDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"end-of-stream",
-			cast(GCallback)&callBackEndOfStream,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackEndOfStreamDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "end-of-stream", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static GstFlowReturn callBackEndOfStream(GstAppSrc* appsrcStruct, OnEndOfStreamDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackEndOfStreamDestroy(OnEndOfStreamDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnEnoughDataDelegateWrapper
-	{
-		void delegate(AppSrc) dlg;
-		gulong handlerId;
-
-		this(void delegate(AppSrc) dlg)
-		{
-			this.dlg = dlg;
-			onEnoughDataListeners ~= this;
-		}
-
-		void remove(OnEnoughDataDelegateWrapper source)
-		{
-			foreach(index, wrapper; onEnoughDataListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onEnoughDataListeners[index] = null;
-					onEnoughDataListeners = std.algorithm.remove(onEnoughDataListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnEnoughDataDelegateWrapper[] onEnoughDataListeners;
 
 	/**
 	 * Signal that the source has enough data. It is recommended that the
@@ -476,52 +406,8 @@ public class AppSrc : BaseSrc, URIHandlerIF
 	 */
 	gulong addOnEnoughData(void delegate(AppSrc) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnEnoughDataDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"enough-data",
-			cast(GCallback)&callBackEnoughData,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackEnoughDataDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "enough-data", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackEnoughData(GstAppSrc* appsrcStruct, OnEnoughDataDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackEnoughDataDestroy(OnEnoughDataDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnNeedDataDelegateWrapper
-	{
-		void delegate(uint, AppSrc) dlg;
-		gulong handlerId;
-
-		this(void delegate(uint, AppSrc) dlg)
-		{
-			this.dlg = dlg;
-			onNeedDataListeners ~= this;
-		}
-
-		void remove(OnNeedDataDelegateWrapper source)
-		{
-			foreach(index, wrapper; onNeedDataListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onNeedDataListeners[index] = null;
-					onNeedDataListeners = std.algorithm.remove(onNeedDataListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnNeedDataDelegateWrapper[] onNeedDataListeners;
 
 	/**
 	 * Signal that the source needs more data. In the callback or from another
@@ -538,52 +424,8 @@ public class AppSrc : BaseSrc, URIHandlerIF
 	 */
 	gulong addOnNeedData(void delegate(uint, AppSrc) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnNeedDataDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"need-data",
-			cast(GCallback)&callBackNeedData,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackNeedDataDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "need-data", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackNeedData(GstAppSrc* appsrcStruct, uint length, OnNeedDataDelegateWrapper wrapper)
-	{
-		wrapper.dlg(length, wrapper.outer);
-	}
-
-	extern(C) static void callBackNeedDataDestroy(OnNeedDataDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnPushBufferDelegateWrapper
-	{
-		GstFlowReturn delegate(Buffer, AppSrc) dlg;
-		gulong handlerId;
-
-		this(GstFlowReturn delegate(Buffer, AppSrc) dlg)
-		{
-			this.dlg = dlg;
-			onPushBufferListeners ~= this;
-		}
-
-		void remove(OnPushBufferDelegateWrapper source)
-		{
-			foreach(index, wrapper; onPushBufferListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onPushBufferListeners[index] = null;
-					onPushBufferListeners = std.algorithm.remove(onPushBufferListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnPushBufferDelegateWrapper[] onPushBufferListeners;
 
 	/**
 	 * Adds a buffer to the queue of buffers that the appsrc element will
@@ -598,52 +440,8 @@ public class AppSrc : BaseSrc, URIHandlerIF
 	 */
 	gulong addOnPushBuffer(GstFlowReturn delegate(Buffer, AppSrc) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnPushBufferDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"push-buffer",
-			cast(GCallback)&callBackPushBuffer,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackPushBufferDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "push-buffer", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static GstFlowReturn callBackPushBuffer(GstAppSrc* appsrcStruct, GstBuffer* buffer, OnPushBufferDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(ObjectG.getDObject!(Buffer)(buffer), wrapper.outer);
-	}
-
-	extern(C) static void callBackPushBufferDestroy(OnPushBufferDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnPushSampleDelegateWrapper
-	{
-		GstFlowReturn delegate(Sample, AppSrc) dlg;
-		gulong handlerId;
-
-		this(GstFlowReturn delegate(Sample, AppSrc) dlg)
-		{
-			this.dlg = dlg;
-			onPushSampleListeners ~= this;
-		}
-
-		void remove(OnPushSampleDelegateWrapper source)
-		{
-			foreach(index, wrapper; onPushSampleListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onPushSampleListeners[index] = null;
-					onPushSampleListeners = std.algorithm.remove(onPushSampleListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnPushSampleDelegateWrapper[] onPushSampleListeners;
 
 	/**
 	 * Extract a buffer from the provided sample and adds the extracted buffer
@@ -665,52 +463,8 @@ public class AppSrc : BaseSrc, URIHandlerIF
 	 */
 	gulong addOnPushSample(GstFlowReturn delegate(Sample, AppSrc) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnPushSampleDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"push-sample",
-			cast(GCallback)&callBackPushSample,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackPushSampleDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "push-sample", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static GstFlowReturn callBackPushSample(GstAppSrc* appsrcStruct, GstSample* sample, OnPushSampleDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(ObjectG.getDObject!(Sample)(sample), wrapper.outer);
-	}
-
-	extern(C) static void callBackPushSampleDestroy(OnPushSampleDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnSeekDataDelegateWrapper
-	{
-		bool delegate(ulong, AppSrc) dlg;
-		gulong handlerId;
-
-		this(bool delegate(ulong, AppSrc) dlg)
-		{
-			this.dlg = dlg;
-			onSeekDataListeners ~= this;
-		}
-
-		void remove(OnSeekDataDelegateWrapper source)
-		{
-			foreach(index, wrapper; onSeekDataListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onSeekDataListeners[index] = null;
-					onSeekDataListeners = std.algorithm.remove(onSeekDataListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnSeekDataDelegateWrapper[] onSeekDataListeners;
 
 	/**
 	 * Seek to the given offset. The next push-buffer should produce buffers from
@@ -724,25 +478,7 @@ public class AppSrc : BaseSrc, URIHandlerIF
 	 */
 	gulong addOnSeekData(bool delegate(ulong, AppSrc) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnSeekDataDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"seek-data",
-			cast(GCallback)&callBackSeekData,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackSeekDataDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static int callBackSeekData(GstAppSrc* appsrcStruct, ulong offset, OnSeekDataDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(offset, wrapper.outer);
-	}
-
-	extern(C) static void callBackSeekDataDestroy(OnSeekDataDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "seek-data", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
 	/**

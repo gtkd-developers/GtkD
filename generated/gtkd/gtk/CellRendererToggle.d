@@ -176,32 +176,6 @@ public class CellRendererToggle : CellRenderer
 		gtk_cell_renderer_toggle_set_radio(gtkCellRendererToggle, radio);
 	}
 
-	protected class OnToggledDelegateWrapper
-	{
-		void delegate(string, CellRendererToggle) dlg;
-		gulong handlerId;
-
-		this(void delegate(string, CellRendererToggle) dlg)
-		{
-			this.dlg = dlg;
-			onToggledListeners ~= this;
-		}
-
-		void remove(OnToggledDelegateWrapper source)
-		{
-			foreach(index, wrapper; onToggledListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onToggledListeners[index] = null;
-					onToggledListeners = std.algorithm.remove(onToggledListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnToggledDelegateWrapper[] onToggledListeners;
-
 	/**
 	 * The ::toggled signal is emitted when the cell is toggled.
 	 *
@@ -215,24 +189,6 @@ public class CellRendererToggle : CellRenderer
 	 */
 	gulong addOnToggled(void delegate(string, CellRendererToggle) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnToggledDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"toggled",
-			cast(GCallback)&callBackToggled,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackToggledDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackToggled(GtkCellRendererToggle* cellrenderertoggleStruct, char* path, OnToggledDelegateWrapper wrapper)
-	{
-		wrapper.dlg(Str.toString(path), wrapper.outer);
-	}
-
-	extern(C) static void callBackToggledDestroy(OnToggledDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "toggled", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

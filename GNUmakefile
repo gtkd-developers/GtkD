@@ -452,6 +452,7 @@ endef
 define make-shared-lib
 	$(if $(findstring "dmd","$(DC)"),$(eval LDFLAGS+=-defaultlib=:libphobos2.so))
 	$(if $(findstring "gdc","$(DC)"),$(eval LDFLAGS+=-shared-libphobos))
+	#$(if $(findstring "ldc","$(DC)"),$(eval LDFLAGS+=-defaultlib=phobos2-ldc-shared,druntime-ldc-shared))
  
 	$(DC) -shared $(output) $(LDFLAGS) $1 $(LINKERFLAG)-soname=$@.$(SO_VERSION) $(subst $(SONAME_GTKD),,$^)
 endef

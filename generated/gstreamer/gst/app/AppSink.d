@@ -431,84 +431,14 @@ public class AppSink : BaseSink, URIHandlerIF
 		return ObjectG.getDObject!(Sample)(cast(GstSample*) p, true);
 	}
 
-	protected class OnEosDelegateWrapper
-	{
-		void delegate(AppSink) dlg;
-		gulong handlerId;
-
-		this(void delegate(AppSink) dlg)
-		{
-			this.dlg = dlg;
-			onEosListeners ~= this;
-		}
-
-		void remove(OnEosDelegateWrapper source)
-		{
-			foreach(index, wrapper; onEosListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onEosListeners[index] = null;
-					onEosListeners = std.algorithm.remove(onEosListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnEosDelegateWrapper[] onEosListeners;
-
 	/**
 	 * Signal that the end-of-stream has been reached. This signal is emitted from
 	 * the streaming thread.
 	 */
 	gulong addOnEos(void delegate(AppSink) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnEosDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"eos",
-			cast(GCallback)&callBackEos,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackEosDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "eos", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackEos(GstAppSink* appsinkStruct, OnEosDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackEosDestroy(OnEosDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnNewPrerollDelegateWrapper
-	{
-		GstFlowReturn delegate(AppSink) dlg;
-		gulong handlerId;
-
-		this(GstFlowReturn delegate(AppSink) dlg)
-		{
-			this.dlg = dlg;
-			onNewPrerollListeners ~= this;
-		}
-
-		void remove(OnNewPrerollDelegateWrapper source)
-		{
-			foreach(index, wrapper; onNewPrerollListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onNewPrerollListeners[index] = null;
-					onNewPrerollListeners = std.algorithm.remove(onNewPrerollListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnNewPrerollDelegateWrapper[] onNewPrerollListeners;
 
 	/**
 	 * Signal that a new preroll sample is available.
@@ -525,52 +455,8 @@ public class AppSink : BaseSink, URIHandlerIF
 	 */
 	gulong addOnNewPreroll(GstFlowReturn delegate(AppSink) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnNewPrerollDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"new-preroll",
-			cast(GCallback)&callBackNewPreroll,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackNewPrerollDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "new-preroll", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static GstFlowReturn callBackNewPreroll(GstAppSink* appsinkStruct, OnNewPrerollDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackNewPrerollDestroy(OnNewPrerollDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnNewSampleDelegateWrapper
-	{
-		GstFlowReturn delegate(AppSink) dlg;
-		gulong handlerId;
-
-		this(GstFlowReturn delegate(AppSink) dlg)
-		{
-			this.dlg = dlg;
-			onNewSampleListeners ~= this;
-		}
-
-		void remove(OnNewSampleDelegateWrapper source)
-		{
-			foreach(index, wrapper; onNewSampleListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onNewSampleListeners[index] = null;
-					onNewSampleListeners = std.algorithm.remove(onNewSampleListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnNewSampleDelegateWrapper[] onNewSampleListeners;
 
 	/**
 	 * Signal that a new sample is available.
@@ -587,52 +473,8 @@ public class AppSink : BaseSink, URIHandlerIF
 	 */
 	gulong addOnNewSample(GstFlowReturn delegate(AppSink) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnNewSampleDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"new-sample",
-			cast(GCallback)&callBackNewSample,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackNewSampleDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "new-sample", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static GstFlowReturn callBackNewSample(GstAppSink* appsinkStruct, OnNewSampleDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackNewSampleDestroy(OnNewSampleDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnPullPrerollDelegateWrapper
-	{
-		Sample delegate(AppSink) dlg;
-		gulong handlerId;
-
-		this(Sample delegate(AppSink) dlg)
-		{
-			this.dlg = dlg;
-			onPullPrerollListeners ~= this;
-		}
-
-		void remove(OnPullPrerollDelegateWrapper source)
-		{
-			foreach(index, wrapper; onPullPrerollListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onPullPrerollListeners[index] = null;
-					onPullPrerollListeners = std.algorithm.remove(onPullPrerollListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnPullPrerollDelegateWrapper[] onPullPrerollListeners;
 
 	/**
 	 * Get the last preroll sample in @appsink. This was the sample that caused the
@@ -656,53 +498,8 @@ public class AppSink : BaseSink, URIHandlerIF
 	 */
 	gulong addOnPullPreroll(Sample delegate(AppSink) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnPullPrerollDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"pull-preroll",
-			cast(GCallback)&callBackPullPreroll,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackPullPrerollDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "pull-preroll", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static GstSample* callBackPullPreroll(GstAppSink* appsinkStruct, OnPullPrerollDelegateWrapper wrapper)
-	{
-		auto r = wrapper.dlg(wrapper.outer);
-		return r.getSampleStruct();
-	}
-
-	extern(C) static void callBackPullPrerollDestroy(OnPullPrerollDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnPullSampleDelegateWrapper
-	{
-		Sample delegate(AppSink) dlg;
-		gulong handlerId;
-
-		this(Sample delegate(AppSink) dlg)
-		{
-			this.dlg = dlg;
-			onPullSampleListeners ~= this;
-		}
-
-		void remove(OnPullSampleDelegateWrapper source)
-		{
-			foreach(index, wrapper; onPullSampleListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onPullSampleListeners[index] = null;
-					onPullSampleListeners = std.algorithm.remove(onPullSampleListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnPullSampleDelegateWrapper[] onPullSampleListeners;
 
 	/**
 	 * This function blocks until a sample or EOS becomes available or the appsink
@@ -724,53 +521,8 @@ public class AppSink : BaseSink, URIHandlerIF
 	 */
 	gulong addOnPullSample(Sample delegate(AppSink) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnPullSampleDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"pull-sample",
-			cast(GCallback)&callBackPullSample,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackPullSampleDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "pull-sample", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static GstSample* callBackPullSample(GstAppSink* appsinkStruct, OnPullSampleDelegateWrapper wrapper)
-	{
-		auto r = wrapper.dlg(wrapper.outer);
-		return r.getSampleStruct();
-	}
-
-	extern(C) static void callBackPullSampleDestroy(OnPullSampleDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnTryPullPrerollDelegateWrapper
-	{
-		Sample delegate(ulong, AppSink) dlg;
-		gulong handlerId;
-
-		this(Sample delegate(ulong, AppSink) dlg)
-		{
-			this.dlg = dlg;
-			onTryPullPrerollListeners ~= this;
-		}
-
-		void remove(OnTryPullPrerollDelegateWrapper source)
-		{
-			foreach(index, wrapper; onTryPullPrerollListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onTryPullPrerollListeners[index] = null;
-					onTryPullPrerollListeners = std.algorithm.remove(onTryPullPrerollListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnTryPullPrerollDelegateWrapper[] onTryPullPrerollListeners;
 
 	/**
 	 * Get the last preroll sample in @appsink. This was the sample that caused the
@@ -800,53 +552,8 @@ public class AppSink : BaseSink, URIHandlerIF
 	 */
 	gulong addOnTryPullPreroll(Sample delegate(ulong, AppSink) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnTryPullPrerollDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"try-pull-preroll",
-			cast(GCallback)&callBackTryPullPreroll,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackTryPullPrerollDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "try-pull-preroll", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static GstSample* callBackTryPullPreroll(GstAppSink* appsinkStruct, ulong timeout, OnTryPullPrerollDelegateWrapper wrapper)
-	{
-		auto r = wrapper.dlg(timeout, wrapper.outer);
-		return r.getSampleStruct();
-	}
-
-	extern(C) static void callBackTryPullPrerollDestroy(OnTryPullPrerollDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnTryPullSampleDelegateWrapper
-	{
-		Sample delegate(ulong, AppSink) dlg;
-		gulong handlerId;
-
-		this(Sample delegate(ulong, AppSink) dlg)
-		{
-			this.dlg = dlg;
-			onTryPullSampleListeners ~= this;
-		}
-
-		void remove(OnTryPullSampleDelegateWrapper source)
-		{
-			foreach(index, wrapper; onTryPullSampleListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onTryPullSampleListeners[index] = null;
-					onTryPullSampleListeners = std.algorithm.remove(onTryPullSampleListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnTryPullSampleDelegateWrapper[] onTryPullSampleListeners;
 
 	/**
 	 * This function blocks until a sample or EOS becomes available or the appsink
@@ -874,25 +581,6 @@ public class AppSink : BaseSink, URIHandlerIF
 	 */
 	gulong addOnTryPullSample(Sample delegate(ulong, AppSink) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnTryPullSampleDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"try-pull-sample",
-			cast(GCallback)&callBackTryPullSample,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackTryPullSampleDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static GstSample* callBackTryPullSample(GstAppSink* appsinkStruct, ulong timeout, OnTryPullSampleDelegateWrapper wrapper)
-	{
-		auto r = wrapper.dlg(timeout, wrapper.outer);
-		return r.getSampleStruct();
-	}
-
-	extern(C) static void callBackTryPullSampleDestroy(OnTryPullSampleDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "try-pull-sample", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

@@ -113,32 +113,6 @@ public class CellRendererCombo : CellRendererText
 		this(cast(GtkCellRendererCombo*) p);
 	}
 
-	protected class OnChangedDelegateWrapper
-	{
-		void delegate(string, TreeIter, CellRendererCombo) dlg;
-		gulong handlerId;
-
-		this(void delegate(string, TreeIter, CellRendererCombo) dlg)
-		{
-			this.dlg = dlg;
-			onChangedListeners ~= this;
-		}
-
-		void remove(OnChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onChangedListeners[index] = null;
-					onChangedListeners = std.algorithm.remove(onChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnChangedDelegateWrapper[] onChangedListeners;
-
 	/**
 	 * This signal is emitted each time after the user selected an item in
 	 * the combo box, either by using the mouse or the arrow keys.  Contrary
@@ -162,24 +136,6 @@ public class CellRendererCombo : CellRendererText
 	 */
 	gulong addOnChanged(void delegate(string, TreeIter, CellRendererCombo) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"changed",
-			cast(GCallback)&callBackChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackChanged(GtkCellRendererCombo* cellrenderercomboStruct, char* pathString, GtkTreeIter* newIter, OnChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(Str.toString(pathString), ObjectG.getDObject!(TreeIter)(newIter), wrapper.outer);
-	}
-
-	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

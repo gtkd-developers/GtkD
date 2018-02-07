@@ -192,153 +192,21 @@ public class TextTagTable : ObjectG, BuildableIF
 		gtk_text_tag_table_remove(gtkTextTagTable, (tag is null) ? null : tag.getTextTagStruct());
 	}
 
-	protected class OnTagAddedDelegateWrapper
-	{
-		void delegate(TextTag, TextTagTable) dlg;
-		gulong handlerId;
-
-		this(void delegate(TextTag, TextTagTable) dlg)
-		{
-			this.dlg = dlg;
-			onTagAddedListeners ~= this;
-		}
-
-		void remove(OnTagAddedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onTagAddedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onTagAddedListeners[index] = null;
-					onTagAddedListeners = std.algorithm.remove(onTagAddedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnTagAddedDelegateWrapper[] onTagAddedListeners;
-
 	/** */
 	gulong addOnTagAdded(void delegate(TextTag, TextTagTable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnTagAddedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"tag-added",
-			cast(GCallback)&callBackTagAdded,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackTagAddedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "tag-added", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackTagAdded(GtkTextTagTable* texttagtableStruct, GtkTextTag* tag, OnTagAddedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(TextTag)(tag), wrapper.outer);
-	}
-
-	extern(C) static void callBackTagAddedDestroy(OnTagAddedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnTagChangedDelegateWrapper
-	{
-		void delegate(TextTag, bool, TextTagTable) dlg;
-		gulong handlerId;
-
-		this(void delegate(TextTag, bool, TextTagTable) dlg)
-		{
-			this.dlg = dlg;
-			onTagChangedListeners ~= this;
-		}
-
-		void remove(OnTagChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onTagChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onTagChangedListeners[index] = null;
-					onTagChangedListeners = std.algorithm.remove(onTagChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnTagChangedDelegateWrapper[] onTagChangedListeners;
 
 	/** */
 	gulong addOnTagChanged(void delegate(TextTag, bool, TextTagTable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnTagChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"tag-changed",
-			cast(GCallback)&callBackTagChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackTagChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "tag-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackTagChanged(GtkTextTagTable* texttagtableStruct, GtkTextTag* tag, bool sizeChanged, OnTagChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(TextTag)(tag), sizeChanged, wrapper.outer);
-	}
-
-	extern(C) static void callBackTagChangedDestroy(OnTagChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnTagRemovedDelegateWrapper
-	{
-		void delegate(TextTag, TextTagTable) dlg;
-		gulong handlerId;
-
-		this(void delegate(TextTag, TextTagTable) dlg)
-		{
-			this.dlg = dlg;
-			onTagRemovedListeners ~= this;
-		}
-
-		void remove(OnTagRemovedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onTagRemovedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onTagRemovedListeners[index] = null;
-					onTagRemovedListeners = std.algorithm.remove(onTagRemovedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnTagRemovedDelegateWrapper[] onTagRemovedListeners;
 
 	/** */
 	gulong addOnTagRemoved(void delegate(TextTag, TextTagTable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnTagRemovedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"tag-removed",
-			cast(GCallback)&callBackTagRemoved,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackTagRemovedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackTagRemoved(GtkTextTagTable* texttagtableStruct, GtkTextTag* tag, OnTagRemovedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(TextTag)(tag), wrapper.outer);
-	}
-
-	extern(C) static void callBackTagRemovedDestroy(OnTagRemovedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "tag-removed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

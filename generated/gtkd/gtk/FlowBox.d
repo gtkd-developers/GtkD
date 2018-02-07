@@ -649,32 +649,6 @@ public class FlowBox : Container, OrientableIF
 		gtk_flow_box_unselect_child(gtkFlowBox, (child is null) ? null : child.getFlowBoxChildStruct());
 	}
 
-	protected class OnActivateCursorChildDelegateWrapper
-	{
-		void delegate(FlowBox) dlg;
-		gulong handlerId;
-
-		this(void delegate(FlowBox) dlg)
-		{
-			this.dlg = dlg;
-			onActivateCursorChildListeners ~= this;
-		}
-
-		void remove(OnActivateCursorChildDelegateWrapper source)
-		{
-			foreach(index, wrapper; onActivateCursorChildListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onActivateCursorChildListeners[index] = null;
-					onActivateCursorChildListeners = std.algorithm.remove(onActivateCursorChildListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnActivateCursorChildDelegateWrapper[] onActivateCursorChildListeners;
-
 	/**
 	 * The ::activate-cursor-child signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -682,52 +656,8 @@ public class FlowBox : Container, OrientableIF
 	 */
 	gulong addOnActivateCursorChild(void delegate(FlowBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnActivateCursorChildDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"activate-cursor-child",
-			cast(GCallback)&callBackActivateCursorChild,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackActivateCursorChildDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "activate-cursor-child", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackActivateCursorChild(GtkFlowBox* flowboxStruct, OnActivateCursorChildDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackActivateCursorChildDestroy(OnActivateCursorChildDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnChildActivatedDelegateWrapper
-	{
-		void delegate(FlowBoxChild, FlowBox) dlg;
-		gulong handlerId;
-
-		this(void delegate(FlowBoxChild, FlowBox) dlg)
-		{
-			this.dlg = dlg;
-			onChildActivatedListeners ~= this;
-		}
-
-		void remove(OnChildActivatedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onChildActivatedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onChildActivatedListeners[index] = null;
-					onChildActivatedListeners = std.algorithm.remove(onChildActivatedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnChildActivatedDelegateWrapper[] onChildActivatedListeners;
 
 	/**
 	 * The ::child-activated signal is emitted when a child has been
@@ -738,52 +668,8 @@ public class FlowBox : Container, OrientableIF
 	 */
 	gulong addOnChildActivated(void delegate(FlowBoxChild, FlowBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnChildActivatedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"child-activated",
-			cast(GCallback)&callBackChildActivated,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackChildActivatedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "child-activated", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackChildActivated(GtkFlowBox* flowboxStruct, GtkFlowBoxChild* child, OnChildActivatedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(FlowBoxChild)(child), wrapper.outer);
-	}
-
-	extern(C) static void callBackChildActivatedDestroy(OnChildActivatedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnMoveCursorDelegateWrapper
-	{
-		bool delegate(GtkMovementStep, int, FlowBox) dlg;
-		gulong handlerId;
-
-		this(bool delegate(GtkMovementStep, int, FlowBox) dlg)
-		{
-			this.dlg = dlg;
-			onMoveCursorListeners ~= this;
-		}
-
-		void remove(OnMoveCursorDelegateWrapper source)
-		{
-			foreach(index, wrapper; onMoveCursorListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onMoveCursorListeners[index] = null;
-					onMoveCursorListeners = std.algorithm.remove(onMoveCursorListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnMoveCursorDelegateWrapper[] onMoveCursorListeners;
 
 	/**
 	 * The ::move-cursor signal is a
@@ -811,52 +697,8 @@ public class FlowBox : Container, OrientableIF
 	 */
 	gulong addOnMoveCursor(bool delegate(GtkMovementStep, int, FlowBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnMoveCursorDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"move-cursor",
-			cast(GCallback)&callBackMoveCursor,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackMoveCursorDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "move-cursor", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static int callBackMoveCursor(GtkFlowBox* flowboxStruct, GtkMovementStep step, int count, OnMoveCursorDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(step, count, wrapper.outer);
-	}
-
-	extern(C) static void callBackMoveCursorDestroy(OnMoveCursorDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnSelectAllDelegateWrapper
-	{
-		void delegate(FlowBox) dlg;
-		gulong handlerId;
-
-		this(void delegate(FlowBox) dlg)
-		{
-			this.dlg = dlg;
-			onSelectAllListeners ~= this;
-		}
-
-		void remove(OnSelectAllDelegateWrapper source)
-		{
-			foreach(index, wrapper; onSelectAllListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onSelectAllListeners[index] = null;
-					onSelectAllListeners = std.algorithm.remove(onSelectAllListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnSelectAllDelegateWrapper[] onSelectAllListeners;
 
 	/**
 	 * The ::select-all signal is a
@@ -868,52 +710,8 @@ public class FlowBox : Container, OrientableIF
 	 */
 	gulong addOnSelectAll(void delegate(FlowBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnSelectAllDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"select-all",
-			cast(GCallback)&callBackSelectAll,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackSelectAllDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "select-all", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackSelectAll(GtkFlowBox* flowboxStruct, OnSelectAllDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackSelectAllDestroy(OnSelectAllDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnSelectedChildrenChangedDelegateWrapper
-	{
-		void delegate(FlowBox) dlg;
-		gulong handlerId;
-
-		this(void delegate(FlowBox) dlg)
-		{
-			this.dlg = dlg;
-			onSelectedChildrenChangedListeners ~= this;
-		}
-
-		void remove(OnSelectedChildrenChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onSelectedChildrenChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onSelectedChildrenChangedListeners[index] = null;
-					onSelectedChildrenChangedListeners = std.algorithm.remove(onSelectedChildrenChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnSelectedChildrenChangedDelegateWrapper[] onSelectedChildrenChangedListeners;
 
 	/**
 	 * The ::selected-children-changed signal is emitted when the
@@ -925,52 +723,8 @@ public class FlowBox : Container, OrientableIF
 	 */
 	gulong addOnSelectedChildrenChanged(void delegate(FlowBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnSelectedChildrenChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"selected-children-changed",
-			cast(GCallback)&callBackSelectedChildrenChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackSelectedChildrenChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "selected-children-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackSelectedChildrenChanged(GtkFlowBox* flowboxStruct, OnSelectedChildrenChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackSelectedChildrenChangedDestroy(OnSelectedChildrenChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnToggleCursorChildDelegateWrapper
-	{
-		void delegate(FlowBox) dlg;
-		gulong handlerId;
-
-		this(void delegate(FlowBox) dlg)
-		{
-			this.dlg = dlg;
-			onToggleCursorChildListeners ~= this;
-		}
-
-		void remove(OnToggleCursorChildDelegateWrapper source)
-		{
-			foreach(index, wrapper; onToggleCursorChildListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onToggleCursorChildListeners[index] = null;
-					onToggleCursorChildListeners = std.algorithm.remove(onToggleCursorChildListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnToggleCursorChildDelegateWrapper[] onToggleCursorChildListeners;
 
 	/**
 	 * The ::toggle-cursor-child signal is a
@@ -981,52 +735,8 @@ public class FlowBox : Container, OrientableIF
 	 */
 	gulong addOnToggleCursorChild(void delegate(FlowBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnToggleCursorChildDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"toggle-cursor-child",
-			cast(GCallback)&callBackToggleCursorChild,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackToggleCursorChildDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "toggle-cursor-child", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackToggleCursorChild(GtkFlowBox* flowboxStruct, OnToggleCursorChildDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackToggleCursorChildDestroy(OnToggleCursorChildDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnUnselectAllDelegateWrapper
-	{
-		void delegate(FlowBox) dlg;
-		gulong handlerId;
-
-		this(void delegate(FlowBox) dlg)
-		{
-			this.dlg = dlg;
-			onUnselectAllListeners ~= this;
-		}
-
-		void remove(OnUnselectAllDelegateWrapper source)
-		{
-			foreach(index, wrapper; onUnselectAllListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onUnselectAllListeners[index] = null;
-					onUnselectAllListeners = std.algorithm.remove(onUnselectAllListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnUnselectAllDelegateWrapper[] onUnselectAllListeners;
 
 	/**
 	 * The ::unselect-all signal is a
@@ -1038,24 +748,6 @@ public class FlowBox : Container, OrientableIF
 	 */
 	gulong addOnUnselectAll(void delegate(FlowBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnUnselectAllDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"unselect-all",
-			cast(GCallback)&callBackUnselectAll,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackUnselectAllDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackUnselectAll(GtkFlowBox* flowboxStruct, OnUnselectAllDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackUnselectAllDestroy(OnUnselectAllDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "unselect-all", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

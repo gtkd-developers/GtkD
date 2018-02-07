@@ -368,56 +368,12 @@ public class ToolButton : ToolItem, ActionableIF
 		gtk_tool_button_set_use_underline(gtkToolButton, useUnderline);
 	}
 
-	protected class OnClickedDelegateWrapper
-	{
-		void delegate(ToolButton) dlg;
-		gulong handlerId;
-
-		this(void delegate(ToolButton) dlg)
-		{
-			this.dlg = dlg;
-			onClickedListeners ~= this;
-		}
-
-		void remove(OnClickedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onClickedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onClickedListeners[index] = null;
-					onClickedListeners = std.algorithm.remove(onClickedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnClickedDelegateWrapper[] onClickedListeners;
-
 	/**
 	 * This signal is emitted when the tool button is clicked with the mouse
 	 * or activated with the keyboard.
 	 */
 	gulong addOnClicked(void delegate(ToolButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnClickedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"clicked",
-			cast(GCallback)&callBackClicked,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackClickedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackClicked(GtkToolButton* toolbuttonStruct, OnClickedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackClickedDestroy(OnClickedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "clicked", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

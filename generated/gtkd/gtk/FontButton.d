@@ -138,6 +138,8 @@ public class FontButton : Button, FontChooserIF
 	 * style, size, weight) just query these properties from the
 	 * #PangoFontDescription object.
 	 *
+	 * Deprecated: Use gtk_font_chooser_get_font() instead
+	 *
 	 * Returns: an internal copy of the font name which must not be freed.
 	 *
 	 * Since: 2.4
@@ -209,6 +211,8 @@ public class FontButton : Button, FontChooserIF
 
 	/**
 	 * Sets or updates the currently-displayed font in font picker dialog.
+	 *
+	 * Deprecated: Use gtk_font_chooser_set_font() instead
 	 *
 	 * Params:
 	 *     fontname = Name of font to display in font chooser dialog
@@ -287,32 +291,6 @@ public class FontButton : Button, FontChooserIF
 		gtk_font_button_set_use_size(gtkFontButton, useSize);
 	}
 
-	protected class OnFontSetDelegateWrapper
-	{
-		void delegate(FontButton) dlg;
-		gulong handlerId;
-
-		this(void delegate(FontButton) dlg)
-		{
-			this.dlg = dlg;
-			onFontSetListeners ~= this;
-		}
-
-		void remove(OnFontSetDelegateWrapper source)
-		{
-			foreach(index, wrapper; onFontSetListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onFontSetListeners[index] = null;
-					onFontSetListeners = std.algorithm.remove(onFontSetListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnFontSetDelegateWrapper[] onFontSetListeners;
-
 	/**
 	 * The ::font-set signal is emitted when the user selects a font.
 	 * When handling this signal, use gtk_font_button_get_font_name()
@@ -320,30 +298,12 @@ public class FontButton : Button, FontChooserIF
 	 *
 	 * Note that this signal is only emitted when the user
 	 * changes the font. If you need to react to programmatic font changes
-	 * as well, use the notify::font-name signal.
+	 * as well, use the notify::font signal.
 	 *
 	 * Since: 2.4
 	 */
 	gulong addOnFontSet(void delegate(FontButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnFontSetDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"font-set",
-			cast(GCallback)&callBackFontSet,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackFontSetDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackFontSet(GtkFontButton* fontbuttonStruct, OnFontSetDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackFontSetDestroy(OnFontSetDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "font-set", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

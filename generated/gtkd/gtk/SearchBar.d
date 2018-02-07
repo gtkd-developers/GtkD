@@ -183,10 +183,19 @@ public class SearchBar : Bin
 	 * return gtk_search_bar_handle_event (bar, event);
 	 * }
 	 *
+	 * static void
+	 * create_toplevel (void)
+	 * {
+	 * GtkWidget *window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+	 * GtkWindow *search_bar = gtk_search_bar_new ();
+	 *
+	 * // Add more widgets to the window...
+	 *
 	 * g_signal_connect (window,
 	 * "key-press-event",
 	 * G_CALLBACK (on_key_press_event),
 	 * search_bar);
+	 * }
 	 * ]|
 	 *
 	 * Params:

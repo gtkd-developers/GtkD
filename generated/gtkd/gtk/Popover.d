@@ -481,53 +481,9 @@ public class Popover : Bin
 		gtk_popover_set_transitions_enabled(gtkPopover, transitionsEnabled);
 	}
 
-	protected class OnClosedDelegateWrapper
-	{
-		void delegate(Popover) dlg;
-		gulong handlerId;
-
-		this(void delegate(Popover) dlg)
-		{
-			this.dlg = dlg;
-			onClosedListeners ~= this;
-		}
-
-		void remove(OnClosedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onClosedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onClosedListeners[index] = null;
-					onClosedListeners = std.algorithm.remove(onClosedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnClosedDelegateWrapper[] onClosedListeners;
-
 	/** */
 	gulong addOnClosed(void delegate(Popover) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnClosedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"closed",
-			cast(GCallback)&callBackClosed,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackClosedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackClosed(GtkPopover* popoverStruct, OnClosedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackClosedDestroy(OnClosedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "closed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

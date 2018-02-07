@@ -139,32 +139,6 @@ public class GestureDrag : GestureSingle
 		return gtk_gesture_drag_get_start_point(gtkGestureDrag, &x, &y) != 0;
 	}
 
-	protected class OnDragBeginDelegateWrapper
-	{
-		void delegate(double, double, GestureDrag) dlg;
-		gulong handlerId;
-
-		this(void delegate(double, double, GestureDrag) dlg)
-		{
-			this.dlg = dlg;
-			onDragBeginListeners ~= this;
-		}
-
-		void remove(OnDragBeginDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDragBeginListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onDragBeginListeners[index] = null;
-					onDragBeginListeners = std.algorithm.remove(onDragBeginListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnDragBeginDelegateWrapper[] onDragBeginListeners;
-
 	/**
 	 * This signal is emitted whenever dragging starts.
 	 *
@@ -176,52 +150,8 @@ public class GestureDrag : GestureSingle
 	 */
 	gulong addOnDragBegin(void delegate(double, double, GestureDrag) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnDragBeginDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"drag-begin",
-			cast(GCallback)&callBackDragBegin,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackDragBeginDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "drag-begin", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackDragBegin(GtkGestureDrag* gesturedragStruct, double startX, double startY, OnDragBeginDelegateWrapper wrapper)
-	{
-		wrapper.dlg(startX, startY, wrapper.outer);
-	}
-
-	extern(C) static void callBackDragBeginDestroy(OnDragBeginDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnDragEndDelegateWrapper
-	{
-		void delegate(double, double, GestureDrag) dlg;
-		gulong handlerId;
-
-		this(void delegate(double, double, GestureDrag) dlg)
-		{
-			this.dlg = dlg;
-			onDragEndListeners ~= this;
-		}
-
-		void remove(OnDragEndDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDragEndListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onDragEndListeners[index] = null;
-					onDragEndListeners = std.algorithm.remove(onDragEndListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnDragEndDelegateWrapper[] onDragEndListeners;
 
 	/**
 	 * This signal is emitted whenever the dragging is finished.
@@ -234,52 +164,8 @@ public class GestureDrag : GestureSingle
 	 */
 	gulong addOnDragEnd(void delegate(double, double, GestureDrag) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnDragEndDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"drag-end",
-			cast(GCallback)&callBackDragEnd,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackDragEndDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "drag-end", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackDragEnd(GtkGestureDrag* gesturedragStruct, double offsetX, double offsetY, OnDragEndDelegateWrapper wrapper)
-	{
-		wrapper.dlg(offsetX, offsetY, wrapper.outer);
-	}
-
-	extern(C) static void callBackDragEndDestroy(OnDragEndDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnDragUpdateDelegateWrapper
-	{
-		void delegate(double, double, GestureDrag) dlg;
-		gulong handlerId;
-
-		this(void delegate(double, double, GestureDrag) dlg)
-		{
-			this.dlg = dlg;
-			onDragUpdateListeners ~= this;
-		}
-
-		void remove(OnDragUpdateDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDragUpdateListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onDragUpdateListeners[index] = null;
-					onDragUpdateListeners = std.algorithm.remove(onDragUpdateListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnDragUpdateDelegateWrapper[] onDragUpdateListeners;
 
 	/**
 	 * This signal is emitted whenever the dragging point moves.
@@ -292,24 +178,6 @@ public class GestureDrag : GestureSingle
 	 */
 	gulong addOnDragUpdate(void delegate(double, double, GestureDrag) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnDragUpdateDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"drag-update",
-			cast(GCallback)&callBackDragUpdate,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackDragUpdateDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackDragUpdate(GtkGestureDrag* gesturedragStruct, double offsetX, double offsetY, OnDragUpdateDelegateWrapper wrapper)
-	{
-		wrapper.dlg(offsetX, offsetY, wrapper.outer);
-	}
-
-	extern(C) static void callBackDragUpdateDestroy(OnDragUpdateDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "drag-update", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

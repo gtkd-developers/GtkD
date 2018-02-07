@@ -548,32 +548,6 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 		gtk_entry_completion_set_text_column(gtkEntryCompletion, column);
 	}
 
-	protected class OnActionActivatedDelegateWrapper
-	{
-		void delegate(int, EntryCompletion) dlg;
-		gulong handlerId;
-
-		this(void delegate(int, EntryCompletion) dlg)
-		{
-			this.dlg = dlg;
-			onActionActivatedListeners ~= this;
-		}
-
-		void remove(OnActionActivatedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onActionActivatedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onActionActivatedListeners[index] = null;
-					onActionActivatedListeners = std.algorithm.remove(onActionActivatedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnActionActivatedDelegateWrapper[] onActionActivatedListeners;
-
 	/**
 	 * Gets emitted when an action is activated.
 	 *
@@ -584,52 +558,8 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 */
 	gulong addOnActionActivated(void delegate(int, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnActionActivatedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"action-activated",
-			cast(GCallback)&callBackActionActivated,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackActionActivatedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "action-activated", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackActionActivated(GtkEntryCompletion* entrycompletionStruct, int index, OnActionActivatedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(index, wrapper.outer);
-	}
-
-	extern(C) static void callBackActionActivatedDestroy(OnActionActivatedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnCursorOnMatchDelegateWrapper
-	{
-		bool delegate(TreeModelIF, TreeIter, EntryCompletion) dlg;
-		gulong handlerId;
-
-		this(bool delegate(TreeModelIF, TreeIter, EntryCompletion) dlg)
-		{
-			this.dlg = dlg;
-			onCursorOnMatchListeners ~= this;
-		}
-
-		void remove(OnCursorOnMatchDelegateWrapper source)
-		{
-			foreach(index, wrapper; onCursorOnMatchListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onCursorOnMatchListeners[index] = null;
-					onCursorOnMatchListeners = std.algorithm.remove(onCursorOnMatchListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnCursorOnMatchDelegateWrapper[] onCursorOnMatchListeners;
 
 	/**
 	 * Gets emitted when a match from the cursor is on a match
@@ -650,52 +580,8 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 */
 	gulong addOnCursorOnMatch(bool delegate(TreeModelIF, TreeIter, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnCursorOnMatchDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"cursor-on-match",
-			cast(GCallback)&callBackCursorOnMatch,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackCursorOnMatchDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "cursor-on-match", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static int callBackCursorOnMatch(GtkEntryCompletion* entrycompletionStruct, GtkTreeModel* model, GtkTreeIter* iter, OnCursorOnMatchDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(ObjectG.getDObject!(TreeModelIF)(model), ObjectG.getDObject!(TreeIter)(iter), wrapper.outer);
-	}
-
-	extern(C) static void callBackCursorOnMatchDestroy(OnCursorOnMatchDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnInsertPrefixDelegateWrapper
-	{
-		bool delegate(string, EntryCompletion) dlg;
-		gulong handlerId;
-
-		this(bool delegate(string, EntryCompletion) dlg)
-		{
-			this.dlg = dlg;
-			onInsertPrefixListeners ~= this;
-		}
-
-		void remove(OnInsertPrefixDelegateWrapper source)
-		{
-			foreach(index, wrapper; onInsertPrefixListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onInsertPrefixListeners[index] = null;
-					onInsertPrefixListeners = std.algorithm.remove(onInsertPrefixListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnInsertPrefixDelegateWrapper[] onInsertPrefixListeners;
 
 	/**
 	 * Gets emitted when the inline autocompletion is triggered.
@@ -716,52 +602,8 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 */
 	gulong addOnInsertPrefix(bool delegate(string, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnInsertPrefixDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"insert-prefix",
-			cast(GCallback)&callBackInsertPrefix,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackInsertPrefixDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "insert-prefix", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static int callBackInsertPrefix(GtkEntryCompletion* entrycompletionStruct, char* prefix, OnInsertPrefixDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(Str.toString(prefix), wrapper.outer);
-	}
-
-	extern(C) static void callBackInsertPrefixDestroy(OnInsertPrefixDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnMatchSelectedDelegateWrapper
-	{
-		bool delegate(TreeModelIF, TreeIter, EntryCompletion) dlg;
-		gulong handlerId;
-
-		this(bool delegate(TreeModelIF, TreeIter, EntryCompletion) dlg)
-		{
-			this.dlg = dlg;
-			onMatchSelectedListeners ~= this;
-		}
-
-		void remove(OnMatchSelectedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onMatchSelectedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onMatchSelectedListeners[index] = null;
-					onMatchSelectedListeners = std.algorithm.remove(onMatchSelectedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnMatchSelectedDelegateWrapper[] onMatchSelectedListeners;
 
 	/**
 	 * Gets emitted when a match from the list is selected.
@@ -782,52 +624,8 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 */
 	gulong addOnMatchSelected(bool delegate(TreeModelIF, TreeIter, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnMatchSelectedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"match-selected",
-			cast(GCallback)&callBackMatchSelected,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackMatchSelectedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "match-selected", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static int callBackMatchSelected(GtkEntryCompletion* entrycompletionStruct, GtkTreeModel* model, GtkTreeIter* iter, OnMatchSelectedDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(ObjectG.getDObject!(TreeModelIF)(model), ObjectG.getDObject!(TreeIter)(iter), wrapper.outer);
-	}
-
-	extern(C) static void callBackMatchSelectedDestroy(OnMatchSelectedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnNoMatchesDelegateWrapper
-	{
-		void delegate(EntryCompletion) dlg;
-		gulong handlerId;
-
-		this(void delegate(EntryCompletion) dlg)
-		{
-			this.dlg = dlg;
-			onNoMatchesListeners ~= this;
-		}
-
-		void remove(OnNoMatchesDelegateWrapper source)
-		{
-			foreach(index, wrapper; onNoMatchesListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onNoMatchesListeners[index] = null;
-					onNoMatchesListeners = std.algorithm.remove(onNoMatchesListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnNoMatchesDelegateWrapper[] onNoMatchesListeners;
 
 	/**
 	 * Gets emitted when the filter model has zero
@@ -839,24 +637,6 @@ public class EntryCompletion : ObjectG, BuildableIF, CellLayoutIF
 	 */
 	gulong addOnNoMatches(void delegate(EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnNoMatchesDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"no-matches",
-			cast(GCallback)&callBackNoMatches,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackNoMatchesDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackNoMatches(GtkEntryCompletion* entrycompletionStruct, OnNoMatchesDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackNoMatchesDestroy(OnNoMatchesDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "no-matches", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

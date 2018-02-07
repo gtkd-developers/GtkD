@@ -56,12 +56,6 @@ private import std.algorithm;
  * connection as follows:
  * 
  * |[<!-- language="C" -->
- * expander = gtk_expander_new_with_mnemonic ("_More Options");
- * g_signal_connect (expander, "notify::expanded",
- * G_CALLBACK (expander_callback), NULL);
- * 
- * ...
- * 
  * static void
  * expander_callback (GObject    *object,
  * GParamSpec *param_spec,
@@ -79,6 +73,16 @@ private import std.algorithm;
  * {
  * // Hide or destroy widgets
  * }
+ * }
+ * 
+ * static void
+ * create_expander (void)
+ * {
+ * GtkWidget *expander = gtk_expander_new_with_mnemonic ("_More Options");
+ * g_signal_connect (expander, "notify::expanded",
+ * G_CALLBACK (expander_callback), NULL);
+ * 
+ * // ...
  * }
  * ]|
  * 
@@ -431,53 +435,9 @@ public class Expander : Bin
 		gtk_expander_set_use_underline(gtkExpander, useUnderline);
 	}
 
-	protected class OnActivateDelegateWrapper
-	{
-		void delegate(Expander) dlg;
-		gulong handlerId;
-
-		this(void delegate(Expander) dlg)
-		{
-			this.dlg = dlg;
-			onActivateListeners ~= this;
-		}
-
-		void remove(OnActivateDelegateWrapper source)
-		{
-			foreach(index, wrapper; onActivateListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onActivateListeners[index] = null;
-					onActivateListeners = std.algorithm.remove(onActivateListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnActivateDelegateWrapper[] onActivateListeners;
-
 	/** */
 	gulong addOnActivate(void delegate(Expander) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnActivateDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"activate",
-			cast(GCallback)&callBackActivate,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackActivateDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackActivate(GtkExpander* expanderStruct, OnActivateDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackActivateDestroy(OnActivateDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "activate", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

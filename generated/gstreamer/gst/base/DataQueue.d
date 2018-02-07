@@ -283,32 +283,6 @@ public class DataQueue : ObjectG
 		gst_data_queue_set_flushing(gstDataQueue, flushing);
 	}
 
-	protected class OnEmptyDelegateWrapper
-	{
-		void delegate(DataQueue) dlg;
-		gulong handlerId;
-
-		this(void delegate(DataQueue) dlg)
-		{
-			this.dlg = dlg;
-			onEmptyListeners ~= this;
-		}
-
-		void remove(OnEmptyDelegateWrapper source)
-		{
-			foreach(index, wrapper; onEmptyListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onEmptyListeners[index] = null;
-					onEmptyListeners = std.algorithm.remove(onEmptyListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnEmptyDelegateWrapper[] onEmptyListeners;
-
 	/**
 	 * Reports that the queue became empty (empty).
 	 * A queue is empty if the total amount of visible items inside it (num-visible, time,
@@ -317,52 +291,8 @@ public class DataQueue : ObjectG
 	 */
 	gulong addOnEmpty(void delegate(DataQueue) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnEmptyDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"empty",
-			cast(GCallback)&callBackEmpty,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackEmptyDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "empty", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackEmpty(GstDataQueue* dataqueueStruct, OnEmptyDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackEmptyDestroy(OnEmptyDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnFullDelegateWrapper
-	{
-		void delegate(DataQueue) dlg;
-		gulong handlerId;
-
-		this(void delegate(DataQueue) dlg)
-		{
-			this.dlg = dlg;
-			onFullListeners ~= this;
-		}
-
-		void remove(OnFullDelegateWrapper source)
-		{
-			foreach(index, wrapper; onFullListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onFullListeners[index] = null;
-					onFullListeners = std.algorithm.remove(onFullListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnFullDelegateWrapper[] onFullListeners;
 
 	/**
 	 * Reports that the queue became full (full).
@@ -372,24 +302,6 @@ public class DataQueue : ObjectG
 	 */
 	gulong addOnFull(void delegate(DataQueue) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnFullDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"full",
-			cast(GCallback)&callBackFull,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackFullDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackFull(GstDataQueue* dataqueueStruct, OnFullDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackFullDestroy(OnFullDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "full", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

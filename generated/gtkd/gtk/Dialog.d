@@ -454,14 +454,17 @@ public class Dialog : Window
 	 *
 	 * Typical usage of this function might be:
 	 * |[<!-- language="C" -->
-	 * gint result = gtk_dialog_run (GTK_DIALOG (dialog));
+	 * GtkWidget *dialog = gtk_dialog_new ();
+	 * // Set up dialog...
+	 *
+	 * int result = gtk_dialog_run (GTK_DIALOG (dialog));
 	 * switch (result)
 	 * {
 	 * case GTK_RESPONSE_ACCEPT:
-	 * do_application_specific_something ();
+	 * // do_application_specific_something ();
 	 * break;
 	 * default:
-	 * do_nothing_since_dialog_was_cancelled ();
+	 * // do_nothing_since_dialog_was_cancelled ();
 	 * break;
 	 * }
 	 * gtk_widget_destroy (dialog);
@@ -530,32 +533,6 @@ public class Dialog : Window
 		gtk_dialog_set_response_sensitive(gtkDialog, responseId, setting);
 	}
 
-	protected class OnCloseDelegateWrapper
-	{
-		void delegate(Dialog) dlg;
-		gulong handlerId;
-
-		this(void delegate(Dialog) dlg)
-		{
-			this.dlg = dlg;
-			onCloseListeners ~= this;
-		}
-
-		void remove(OnCloseDelegateWrapper source)
-		{
-			foreach(index, wrapper; onCloseListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onCloseListeners[index] = null;
-					onCloseListeners = std.algorithm.remove(onCloseListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnCloseDelegateWrapper[] onCloseListeners;
-
 	/**
 	 * The ::close signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -566,52 +543,8 @@ public class Dialog : Window
 	 */
 	gulong addOnClose(void delegate(Dialog) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnCloseDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"close",
-			cast(GCallback)&callBackClose,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackCloseDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "close", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackClose(GtkDialog* dialogStruct, OnCloseDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackCloseDestroy(OnCloseDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnResponseDelegateWrapper
-	{
-		void delegate(int, Dialog) dlg;
-		gulong handlerId;
-
-		this(void delegate(int, Dialog) dlg)
-		{
-			this.dlg = dlg;
-			onResponseListeners ~= this;
-		}
-
-		void remove(OnResponseDelegateWrapper source)
-		{
-			foreach(index, wrapper; onResponseListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onResponseListeners[index] = null;
-					onResponseListeners = std.algorithm.remove(onResponseListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnResponseDelegateWrapper[] onResponseListeners;
 
 	/**
 	 * Emitted when an action widget is clicked, the dialog receives a
@@ -624,25 +557,7 @@ public class Dialog : Window
 	 */
 	gulong addOnResponse(void delegate(int, Dialog) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnResponseDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"response",
-			cast(GCallback)&callBackResponse,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackResponseDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackResponse(GtkDialog* dialogStruct, int responseId, OnResponseDelegateWrapper wrapper)
-	{
-		wrapper.dlg(responseId, wrapper.outer);
-	}
-
-	extern(C) static void callBackResponseDestroy(OnResponseDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "response", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
 	/**

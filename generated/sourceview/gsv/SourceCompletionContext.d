@@ -121,32 +121,6 @@ public class SourceCompletionContext : ObjectG
 		return p;
 	}
 
-	protected class OnCancelledDelegateWrapper
-	{
-		void delegate(SourceCompletionContext) dlg;
-		gulong handlerId;
-
-		this(void delegate(SourceCompletionContext) dlg)
-		{
-			this.dlg = dlg;
-			onCancelledListeners ~= this;
-		}
-
-		void remove(OnCancelledDelegateWrapper source)
-		{
-			foreach(index, wrapper; onCancelledListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onCancelledListeners[index] = null;
-					onCancelledListeners = std.algorithm.remove(onCancelledListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnCancelledDelegateWrapper[] onCancelledListeners;
-
 	/**
 	 * Emitted when the current population of proposals has been cancelled.
 	 * Providers adding proposals asynchronously should connect to this signal
@@ -154,24 +128,6 @@ public class SourceCompletionContext : ObjectG
 	 */
 	gulong addOnCancelled(void delegate(SourceCompletionContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnCancelledDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"cancelled",
-			cast(GCallback)&callBackCancelled,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackCancelledDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackCancelled(GtkSourceCompletionContext* sourcecompletioncontextStruct, OnCancelledDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackCancelledDestroy(OnCancelledDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "cancelled", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

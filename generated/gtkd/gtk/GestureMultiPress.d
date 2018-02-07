@@ -147,32 +147,6 @@ public class GestureMultiPress : GestureSingle
 		gtk_gesture_multi_press_set_area(gtkGestureMultiPress, rect);
 	}
 
-	protected class OnPressedDelegateWrapper
-	{
-		void delegate(int, double, double, GestureMultiPress) dlg;
-		gulong handlerId;
-
-		this(void delegate(int, double, double, GestureMultiPress) dlg)
-		{
-			this.dlg = dlg;
-			onPressedListeners ~= this;
-		}
-
-		void remove(OnPressedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onPressedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onPressedListeners[index] = null;
-					onPressedListeners = std.algorithm.remove(onPressedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnPressedDelegateWrapper[] onPressedListeners;
-
 	/**
 	 * This signal is emitted whenever a button or touch press happens.
 	 *
@@ -185,52 +159,8 @@ public class GestureMultiPress : GestureSingle
 	 */
 	gulong addOnPressed(void delegate(int, double, double, GestureMultiPress) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnPressedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"pressed",
-			cast(GCallback)&callBackPressed,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackPressedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "pressed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackPressed(GtkGestureMultiPress* gesturemultipressStruct, int nPress, double x, double y, OnPressedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(nPress, x, y, wrapper.outer);
-	}
-
-	extern(C) static void callBackPressedDestroy(OnPressedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnReleasedDelegateWrapper
-	{
-		void delegate(int, double, double, GestureMultiPress) dlg;
-		gulong handlerId;
-
-		this(void delegate(int, double, double, GestureMultiPress) dlg)
-		{
-			this.dlg = dlg;
-			onReleasedListeners ~= this;
-		}
-
-		void remove(OnReleasedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onReleasedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onReleasedListeners[index] = null;
-					onReleasedListeners = std.algorithm.remove(onReleasedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnReleasedDelegateWrapper[] onReleasedListeners;
 
 	/**
 	 * This signal is emitted when a button or touch is released. @n_press
@@ -247,52 +177,8 @@ public class GestureMultiPress : GestureSingle
 	 */
 	gulong addOnReleased(void delegate(int, double, double, GestureMultiPress) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnReleasedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"released",
-			cast(GCallback)&callBackReleased,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackReleasedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "released", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackReleased(GtkGestureMultiPress* gesturemultipressStruct, int nPress, double x, double y, OnReleasedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(nPress, x, y, wrapper.outer);
-	}
-
-	extern(C) static void callBackReleasedDestroy(OnReleasedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnStoppedDelegateWrapper
-	{
-		void delegate(GestureMultiPress) dlg;
-		gulong handlerId;
-
-		this(void delegate(GestureMultiPress) dlg)
-		{
-			this.dlg = dlg;
-			onStoppedListeners ~= this;
-		}
-
-		void remove(OnStoppedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onStoppedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onStoppedListeners[index] = null;
-					onStoppedListeners = std.algorithm.remove(onStoppedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnStoppedDelegateWrapper[] onStoppedListeners;
 
 	/**
 	 * This signal is emitted whenever any time/distance threshold has
@@ -302,24 +188,6 @@ public class GestureMultiPress : GestureSingle
 	 */
 	gulong addOnStopped(void delegate(GestureMultiPress) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnStoppedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"stopped",
-			cast(GCallback)&callBackStopped,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackStoppedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackStopped(GtkGestureMultiPress* gesturemultipressStruct, OnStoppedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackStoppedDestroy(OnStoppedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "stopped", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

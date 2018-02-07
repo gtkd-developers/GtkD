@@ -109,8 +109,8 @@ private import std.algorithm;
  * "I’m the second radio button.");
  * 
  * // Pack them into a box, then show all the widgets
- * gtk_box_pack_start (GTK_BOX (box), radio1, TRUE, TRUE, 2);
- * gtk_box_pack_start (GTK_BOX (box), radio2, TRUE, TRUE, 2);
+ * gtk_box_pack_start (GTK_BOX (box), radio1);
+ * gtk_box_pack_start (GTK_BOX (box), radio2);
  * gtk_container_add (GTK_CONTAINER (window), box);
  * gtk_widget_show_all (window);
  * return;
@@ -329,9 +329,9 @@ public class RadioButton : CheckButton
 	 * GtkRadioButton *radio_button;
 	 * GtkRadioButton *last_button;
 	 *
-	 * while ( ...more buttons to add... )
+	 * while (some_condition)
 	 * {
-	 * radio_button = gtk_radio_button_new (...);
+	 * radio_button = gtk_radio_button_new (NULL);
 	 *
 	 * gtk_radio_button_join_group (radio_button, last_button);
 	 * last_button = radio_button;
@@ -364,32 +364,6 @@ public class RadioButton : CheckButton
 		gtk_radio_button_set_group(gtkRadioButton, (group is null) ? null : group.getListSGStruct());
 	}
 
-	protected class OnGroupChangedDelegateWrapper
-	{
-		void delegate(RadioButton) dlg;
-		gulong handlerId;
-
-		this(void delegate(RadioButton) dlg)
-		{
-			this.dlg = dlg;
-			onGroupChangedListeners ~= this;
-		}
-
-		void remove(OnGroupChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onGroupChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onGroupChangedListeners[index] = null;
-					onGroupChangedListeners = std.algorithm.remove(onGroupChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnGroupChangedDelegateWrapper[] onGroupChangedListeners;
-
 	/**
 	 * Emitted when the group of radio buttons that a radio button belongs
 	 * to changes. This is emitted when a radio button switches from
@@ -402,24 +376,6 @@ public class RadioButton : CheckButton
 	 */
 	gulong addOnGroupChanged(void delegate(RadioButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnGroupChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"group-changed",
-			cast(GCallback)&callBackGroupChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackGroupChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackGroupChanged(GtkRadioButton* radiobuttonStruct, OnGroupChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackGroupChangedDestroy(OnGroupChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "group-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

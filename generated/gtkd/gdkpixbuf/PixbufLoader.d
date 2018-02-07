@@ -333,32 +333,6 @@ public class PixbufLoader : ObjectG
 		return p;
 	}
 
-	protected class OnAreaPreparedDelegateWrapper
-	{
-		void delegate(PixbufLoader) dlg;
-		gulong handlerId;
-
-		this(void delegate(PixbufLoader) dlg)
-		{
-			this.dlg = dlg;
-			onAreaPreparedListeners ~= this;
-		}
-
-		void remove(OnAreaPreparedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onAreaPreparedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onAreaPreparedListeners[index] = null;
-					onAreaPreparedListeners = std.algorithm.remove(onAreaPreparedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnAreaPreparedDelegateWrapper[] onAreaPreparedListeners;
-
 	/**
 	 * This signal is emitted when the pixbuf loader has allocated the
 	 * pixbuf in the desired size.  After this signal is emitted,
@@ -367,52 +341,8 @@ public class PixbufLoader : ObjectG
 	 */
 	gulong addOnAreaPrepared(void delegate(PixbufLoader) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnAreaPreparedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"area-prepared",
-			cast(GCallback)&callBackAreaPrepared,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackAreaPreparedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "area-prepared", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackAreaPrepared(GdkPixbufLoader* pixbufloaderStruct, OnAreaPreparedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackAreaPreparedDestroy(OnAreaPreparedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnAreaUpdatedDelegateWrapper
-	{
-		void delegate(int, int, int, int, PixbufLoader) dlg;
-		gulong handlerId;
-
-		this(void delegate(int, int, int, int, PixbufLoader) dlg)
-		{
-			this.dlg = dlg;
-			onAreaUpdatedListeners ~= this;
-		}
-
-		void remove(OnAreaUpdatedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onAreaUpdatedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onAreaUpdatedListeners[index] = null;
-					onAreaUpdatedListeners = std.algorithm.remove(onAreaUpdatedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnAreaUpdatedDelegateWrapper[] onAreaUpdatedListeners;
 
 	/**
 	 * This signal is emitted when a significant area of the image being
@@ -429,52 +359,8 @@ public class PixbufLoader : ObjectG
 	 */
 	gulong addOnAreaUpdated(void delegate(int, int, int, int, PixbufLoader) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnAreaUpdatedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"area-updated",
-			cast(GCallback)&callBackAreaUpdated,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackAreaUpdatedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "area-updated", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackAreaUpdated(GdkPixbufLoader* pixbufloaderStruct, int x, int y, int width, int height, OnAreaUpdatedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(x, y, width, height, wrapper.outer);
-	}
-
-	extern(C) static void callBackAreaUpdatedDestroy(OnAreaUpdatedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnClosedDelegateWrapper
-	{
-		void delegate(PixbufLoader) dlg;
-		gulong handlerId;
-
-		this(void delegate(PixbufLoader) dlg)
-		{
-			this.dlg = dlg;
-			onClosedListeners ~= this;
-		}
-
-		void remove(OnClosedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onClosedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onClosedListeners[index] = null;
-					onClosedListeners = std.algorithm.remove(onClosedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnClosedDelegateWrapper[] onClosedListeners;
 
 	/**
 	 * This signal is emitted when gdk_pixbuf_loader_close() is called.
@@ -484,52 +370,8 @@ public class PixbufLoader : ObjectG
 	 */
 	gulong addOnClosed(void delegate(PixbufLoader) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnClosedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"closed",
-			cast(GCallback)&callBackClosed,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackClosedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "closed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackClosed(GdkPixbufLoader* pixbufloaderStruct, OnClosedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackClosedDestroy(OnClosedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnSizePreparedDelegateWrapper
-	{
-		void delegate(int, int, PixbufLoader) dlg;
-		gulong handlerId;
-
-		this(void delegate(int, int, PixbufLoader) dlg)
-		{
-			this.dlg = dlg;
-			onSizePreparedListeners ~= this;
-		}
-
-		void remove(OnSizePreparedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onSizePreparedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onSizePreparedListeners[index] = null;
-					onSizePreparedListeners = std.algorithm.remove(onSizePreparedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnSizePreparedDelegateWrapper[] onSizePreparedListeners;
 
 	/**
 	 * This signal is emitted when the pixbuf loader has been fed the
@@ -544,24 +386,6 @@ public class PixbufLoader : ObjectG
 	 */
 	gulong addOnSizePrepared(void delegate(int, int, PixbufLoader) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnSizePreparedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"size-prepared",
-			cast(GCallback)&callBackSizePrepared,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackSizePreparedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackSizePrepared(GdkPixbufLoader* pixbufloaderStruct, int width, int height, OnSizePreparedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(width, height, wrapper.outer);
-	}
-
-	extern(C) static void callBackSizePreparedDestroy(OnSizePreparedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "size-prepared", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

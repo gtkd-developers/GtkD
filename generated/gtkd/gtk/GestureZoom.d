@@ -115,32 +115,6 @@ public class GestureZoom : Gesture
 		return gtk_gesture_zoom_get_scale_delta(gtkGestureZoom);
 	}
 
-	protected class OnScaleChangedDelegateWrapper
-	{
-		void delegate(double, GestureZoom) dlg;
-		gulong handlerId;
-
-		this(void delegate(double, GestureZoom) dlg)
-		{
-			this.dlg = dlg;
-			onScaleChangedListeners ~= this;
-		}
-
-		void remove(OnScaleChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onScaleChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onScaleChangedListeners[index] = null;
-					onScaleChangedListeners = std.algorithm.remove(onScaleChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnScaleChangedDelegateWrapper[] onScaleChangedListeners;
-
 	/**
 	 * This signal is emitted whenever the distance between both tracked
 	 * sequences changes.
@@ -152,24 +126,6 @@ public class GestureZoom : Gesture
 	 */
 	gulong addOnScaleChanged(void delegate(double, GestureZoom) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnScaleChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"scale-changed",
-			cast(GCallback)&callBackScaleChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackScaleChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackScaleChanged(GtkGestureZoom* gesturezoomStruct, double scale, OnScaleChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(scale, wrapper.outer);
-	}
-
-	extern(C) static void callBackScaleChangedDestroy(OnScaleChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "scale-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

@@ -231,53 +231,9 @@ public class Device : ObjectGst
 		return gst_device_reconfigure_element(gstDevice, (element is null) ? null : element.getElementStruct()) != 0;
 	}
 
-	protected class OnRemovedDelegateWrapper
-	{
-		void delegate(Device) dlg;
-		gulong handlerId;
-
-		this(void delegate(Device) dlg)
-		{
-			this.dlg = dlg;
-			onRemovedListeners ~= this;
-		}
-
-		void remove(OnRemovedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onRemovedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onRemovedListeners[index] = null;
-					onRemovedListeners = std.algorithm.remove(onRemovedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnRemovedDelegateWrapper[] onRemovedListeners;
-
 	/** */
 	gulong addOnRemoved(void delegate(Device) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnRemovedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"removed",
-			cast(GCallback)&callBackRemoved,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackRemovedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackRemoved(GstDevice* deviceStruct, OnRemovedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackRemovedDestroy(OnRemovedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "removed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

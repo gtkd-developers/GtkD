@@ -1880,185 +1880,27 @@ public class TreeView : Container, ScrollableIF
 		gtk_tree_view_unset_rows_drag_source(gtkTreeView);
 	}
 
-	protected class OnColumnsChangedDelegateWrapper
-	{
-		void delegate(TreeView) dlg;
-		gulong handlerId;
-
-		this(void delegate(TreeView) dlg)
-		{
-			this.dlg = dlg;
-			onColumnsChangedListeners ~= this;
-		}
-
-		void remove(OnColumnsChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onColumnsChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onColumnsChangedListeners[index] = null;
-					onColumnsChangedListeners = std.algorithm.remove(onColumnsChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnColumnsChangedDelegateWrapper[] onColumnsChangedListeners;
-
 	/**
 	 * The number of columns of the treeview has changed.
 	 */
 	gulong addOnColumnsChanged(void delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnColumnsChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"columns-changed",
-			cast(GCallback)&callBackColumnsChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackColumnsChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "columns-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackColumnsChanged(GtkTreeView* treeviewStruct, OnColumnsChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackColumnsChangedDestroy(OnColumnsChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnCursorChangedDelegateWrapper
-	{
-		void delegate(TreeView) dlg;
-		gulong handlerId;
-
-		this(void delegate(TreeView) dlg)
-		{
-			this.dlg = dlg;
-			onCursorChangedListeners ~= this;
-		}
-
-		void remove(OnCursorChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onCursorChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onCursorChangedListeners[index] = null;
-					onCursorChangedListeners = std.algorithm.remove(onCursorChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnCursorChangedDelegateWrapper[] onCursorChangedListeners;
 
 	/**
 	 * The position of the cursor (focused cell) has changed.
 	 */
 	gulong addOnCursorChanged(void delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnCursorChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"cursor-changed",
-			cast(GCallback)&callBackCursorChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackCursorChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "cursor-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackCursorChanged(GtkTreeView* treeviewStruct, OnCursorChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackCursorChangedDestroy(OnCursorChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnExpandCollapseCursorRowDelegateWrapper
-	{
-		bool delegate(bool, bool, bool, TreeView) dlg;
-		gulong handlerId;
-
-		this(bool delegate(bool, bool, bool, TreeView) dlg)
-		{
-			this.dlg = dlg;
-			onExpandCollapseCursorRowListeners ~= this;
-		}
-
-		void remove(OnExpandCollapseCursorRowDelegateWrapper source)
-		{
-			foreach(index, wrapper; onExpandCollapseCursorRowListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onExpandCollapseCursorRowListeners[index] = null;
-					onExpandCollapseCursorRowListeners = std.algorithm.remove(onExpandCollapseCursorRowListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnExpandCollapseCursorRowDelegateWrapper[] onExpandCollapseCursorRowListeners;
 
 	/** */
 	gulong addOnExpandCollapseCursorRow(bool delegate(bool, bool, bool, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnExpandCollapseCursorRowDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"expand-collapse-cursor-row",
-			cast(GCallback)&callBackExpandCollapseCursorRow,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackExpandCollapseCursorRowDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "expand-collapse-cursor-row", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static int callBackExpandCollapseCursorRow(GtkTreeView* treeviewStruct, bool object, bool p0, bool p1, OnExpandCollapseCursorRowDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(object, p0, p1, wrapper.outer);
-	}
-
-	extern(C) static void callBackExpandCollapseCursorRowDestroy(OnExpandCollapseCursorRowDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnMoveCursorDelegateWrapper
-	{
-		bool delegate(GtkMovementStep, int, TreeView) dlg;
-		gulong handlerId;
-
-		this(bool delegate(GtkMovementStep, int, TreeView) dlg)
-		{
-			this.dlg = dlg;
-			onMoveCursorListeners ~= this;
-		}
-
-		void remove(OnMoveCursorDelegateWrapper source)
-		{
-			foreach(index, wrapper; onMoveCursorListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onMoveCursorListeners[index] = null;
-					onMoveCursorListeners = std.algorithm.remove(onMoveCursorListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnMoveCursorDelegateWrapper[] onMoveCursorListeners;
 
 	/**
 	 * The #GtkTreeView::move-cursor signal is a [keybinding
@@ -2086,52 +1928,8 @@ public class TreeView : Container, ScrollableIF
 	 */
 	gulong addOnMoveCursor(bool delegate(GtkMovementStep, int, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnMoveCursorDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"move-cursor",
-			cast(GCallback)&callBackMoveCursor,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackMoveCursorDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "move-cursor", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static int callBackMoveCursor(GtkTreeView* treeviewStruct, GtkMovementStep step, int direction, OnMoveCursorDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(step, direction, wrapper.outer);
-	}
-
-	extern(C) static void callBackMoveCursorDestroy(OnMoveCursorDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnRowActivatedDelegateWrapper
-	{
-		void delegate(TreePath, TreeViewColumn, TreeView) dlg;
-		gulong handlerId;
-
-		this(void delegate(TreePath, TreeViewColumn, TreeView) dlg)
-		{
-			this.dlg = dlg;
-			onRowActivatedListeners ~= this;
-		}
-
-		void remove(OnRowActivatedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onRowActivatedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onRowActivatedListeners[index] = null;
-					onRowActivatedListeners = std.algorithm.remove(onRowActivatedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnRowActivatedDelegateWrapper[] onRowActivatedListeners;
 
 	/**
 	 * The "row-activated" signal is emitted when the method
@@ -2152,52 +1950,8 @@ public class TreeView : Container, ScrollableIF
 	 */
 	gulong addOnRowActivated(void delegate(TreePath, TreeViewColumn, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnRowActivatedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"row-activated",
-			cast(GCallback)&callBackRowActivated,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackRowActivatedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "row-activated", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackRowActivated(GtkTreeView* treeviewStruct, GtkTreePath* path, GtkTreeViewColumn* column, OnRowActivatedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(TreePath)(path), ObjectG.getDObject!(TreeViewColumn)(column), wrapper.outer);
-	}
-
-	extern(C) static void callBackRowActivatedDestroy(OnRowActivatedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnRowCollapsedDelegateWrapper
-	{
-		void delegate(TreeIter, TreePath, TreeView) dlg;
-		gulong handlerId;
-
-		this(void delegate(TreeIter, TreePath, TreeView) dlg)
-		{
-			this.dlg = dlg;
-			onRowCollapsedListeners ~= this;
-		}
-
-		void remove(OnRowCollapsedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onRowCollapsedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onRowCollapsedListeners[index] = null;
-					onRowCollapsedListeners = std.algorithm.remove(onRowCollapsedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnRowCollapsedDelegateWrapper[] onRowCollapsedListeners;
 
 	/**
 	 * The given row has been collapsed (child nodes are hidden).
@@ -2208,52 +1962,8 @@ public class TreeView : Container, ScrollableIF
 	 */
 	gulong addOnRowCollapsed(void delegate(TreeIter, TreePath, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnRowCollapsedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"row-collapsed",
-			cast(GCallback)&callBackRowCollapsed,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackRowCollapsedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "row-collapsed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackRowCollapsed(GtkTreeView* treeviewStruct, GtkTreeIter* iter, GtkTreePath* path, OnRowCollapsedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(TreeIter)(iter), ObjectG.getDObject!(TreePath)(path), wrapper.outer);
-	}
-
-	extern(C) static void callBackRowCollapsedDestroy(OnRowCollapsedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnRowExpandedDelegateWrapper
-	{
-		void delegate(TreeIter, TreePath, TreeView) dlg;
-		gulong handlerId;
-
-		this(void delegate(TreeIter, TreePath, TreeView) dlg)
-		{
-			this.dlg = dlg;
-			onRowExpandedListeners ~= this;
-		}
-
-		void remove(OnRowExpandedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onRowExpandedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onRowExpandedListeners[index] = null;
-					onRowExpandedListeners = std.algorithm.remove(onRowExpandedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnRowExpandedDelegateWrapper[] onRowExpandedListeners;
 
 	/**
 	 * The given row has been expanded (child nodes are shown).
@@ -2264,252 +1974,32 @@ public class TreeView : Container, ScrollableIF
 	 */
 	gulong addOnRowExpanded(void delegate(TreeIter, TreePath, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnRowExpandedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"row-expanded",
-			cast(GCallback)&callBackRowExpanded,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackRowExpandedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "row-expanded", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackRowExpanded(GtkTreeView* treeviewStruct, GtkTreeIter* iter, GtkTreePath* path, OnRowExpandedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(TreeIter)(iter), ObjectG.getDObject!(TreePath)(path), wrapper.outer);
-	}
-
-	extern(C) static void callBackRowExpandedDestroy(OnRowExpandedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnSelectAllDelegateWrapper
-	{
-		bool delegate(TreeView) dlg;
-		gulong handlerId;
-
-		this(bool delegate(TreeView) dlg)
-		{
-			this.dlg = dlg;
-			onSelectAllListeners ~= this;
-		}
-
-		void remove(OnSelectAllDelegateWrapper source)
-		{
-			foreach(index, wrapper; onSelectAllListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onSelectAllListeners[index] = null;
-					onSelectAllListeners = std.algorithm.remove(onSelectAllListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnSelectAllDelegateWrapper[] onSelectAllListeners;
 
 	/** */
 	gulong addOnSelectAll(bool delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnSelectAllDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"select-all",
-			cast(GCallback)&callBackSelectAll,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackSelectAllDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "select-all", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static int callBackSelectAll(GtkTreeView* treeviewStruct, OnSelectAllDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackSelectAllDestroy(OnSelectAllDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnSelectCursorParentDelegateWrapper
-	{
-		bool delegate(TreeView) dlg;
-		gulong handlerId;
-
-		this(bool delegate(TreeView) dlg)
-		{
-			this.dlg = dlg;
-			onSelectCursorParentListeners ~= this;
-		}
-
-		void remove(OnSelectCursorParentDelegateWrapper source)
-		{
-			foreach(index, wrapper; onSelectCursorParentListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onSelectCursorParentListeners[index] = null;
-					onSelectCursorParentListeners = std.algorithm.remove(onSelectCursorParentListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnSelectCursorParentDelegateWrapper[] onSelectCursorParentListeners;
 
 	/** */
 	gulong addOnSelectCursorParent(bool delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnSelectCursorParentDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"select-cursor-parent",
-			cast(GCallback)&callBackSelectCursorParent,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackSelectCursorParentDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "select-cursor-parent", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static int callBackSelectCursorParent(GtkTreeView* treeviewStruct, OnSelectCursorParentDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackSelectCursorParentDestroy(OnSelectCursorParentDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnSelectCursorRowDelegateWrapper
-	{
-		bool delegate(bool, TreeView) dlg;
-		gulong handlerId;
-
-		this(bool delegate(bool, TreeView) dlg)
-		{
-			this.dlg = dlg;
-			onSelectCursorRowListeners ~= this;
-		}
-
-		void remove(OnSelectCursorRowDelegateWrapper source)
-		{
-			foreach(index, wrapper; onSelectCursorRowListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onSelectCursorRowListeners[index] = null;
-					onSelectCursorRowListeners = std.algorithm.remove(onSelectCursorRowListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnSelectCursorRowDelegateWrapper[] onSelectCursorRowListeners;
 
 	/** */
 	gulong addOnSelectCursorRow(bool delegate(bool, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnSelectCursorRowDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"select-cursor-row",
-			cast(GCallback)&callBackSelectCursorRow,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackSelectCursorRowDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "select-cursor-row", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static int callBackSelectCursorRow(GtkTreeView* treeviewStruct, bool object, OnSelectCursorRowDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(object, wrapper.outer);
-	}
-
-	extern(C) static void callBackSelectCursorRowDestroy(OnSelectCursorRowDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnStartInteractiveSearchDelegateWrapper
-	{
-		bool delegate(TreeView) dlg;
-		gulong handlerId;
-
-		this(bool delegate(TreeView) dlg)
-		{
-			this.dlg = dlg;
-			onStartInteractiveSearchListeners ~= this;
-		}
-
-		void remove(OnStartInteractiveSearchDelegateWrapper source)
-		{
-			foreach(index, wrapper; onStartInteractiveSearchListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onStartInteractiveSearchListeners[index] = null;
-					onStartInteractiveSearchListeners = std.algorithm.remove(onStartInteractiveSearchListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnStartInteractiveSearchDelegateWrapper[] onStartInteractiveSearchListeners;
 
 	/** */
 	gulong addOnStartInteractiveSearch(bool delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnStartInteractiveSearchDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"start-interactive-search",
-			cast(GCallback)&callBackStartInteractiveSearch,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackStartInteractiveSearchDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "start-interactive-search", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static int callBackStartInteractiveSearch(GtkTreeView* treeviewStruct, OnStartInteractiveSearchDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackStartInteractiveSearchDestroy(OnStartInteractiveSearchDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnTestCollapseRowDelegateWrapper
-	{
-		bool delegate(TreeIter, TreePath, TreeView) dlg;
-		gulong handlerId;
-
-		this(bool delegate(TreeIter, TreePath, TreeView) dlg)
-		{
-			this.dlg = dlg;
-			onTestCollapseRowListeners ~= this;
-		}
-
-		void remove(OnTestCollapseRowDelegateWrapper source)
-		{
-			foreach(index, wrapper; onTestCollapseRowListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onTestCollapseRowListeners[index] = null;
-					onTestCollapseRowListeners = std.algorithm.remove(onTestCollapseRowListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnTestCollapseRowDelegateWrapper[] onTestCollapseRowListeners;
 
 	/**
 	 * The given row is about to be collapsed (hide its children nodes). Use this
@@ -2523,52 +2013,8 @@ public class TreeView : Container, ScrollableIF
 	 */
 	gulong addOnTestCollapseRow(bool delegate(TreeIter, TreePath, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnTestCollapseRowDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"test-collapse-row",
-			cast(GCallback)&callBackTestCollapseRow,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackTestCollapseRowDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "test-collapse-row", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static int callBackTestCollapseRow(GtkTreeView* treeviewStruct, GtkTreeIter* iter, GtkTreePath* path, OnTestCollapseRowDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(ObjectG.getDObject!(TreeIter)(iter), ObjectG.getDObject!(TreePath)(path), wrapper.outer);
-	}
-
-	extern(C) static void callBackTestCollapseRowDestroy(OnTestCollapseRowDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnTestExpandRowDelegateWrapper
-	{
-		bool delegate(TreeIter, TreePath, TreeView) dlg;
-		gulong handlerId;
-
-		this(bool delegate(TreeIter, TreePath, TreeView) dlg)
-		{
-			this.dlg = dlg;
-			onTestExpandRowListeners ~= this;
-		}
-
-		void remove(OnTestExpandRowDelegateWrapper source)
-		{
-			foreach(index, wrapper; onTestExpandRowListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onTestExpandRowListeners[index] = null;
-					onTestExpandRowListeners = std.algorithm.remove(onTestExpandRowListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnTestExpandRowDelegateWrapper[] onTestExpandRowListeners;
 
 	/**
 	 * The given row is about to be expanded (show its children nodes). Use this
@@ -2582,124 +2028,18 @@ public class TreeView : Container, ScrollableIF
 	 */
 	gulong addOnTestExpandRow(bool delegate(TreeIter, TreePath, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnTestExpandRowDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"test-expand-row",
-			cast(GCallback)&callBackTestExpandRow,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackTestExpandRowDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "test-expand-row", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static int callBackTestExpandRow(GtkTreeView* treeviewStruct, GtkTreeIter* iter, GtkTreePath* path, OnTestExpandRowDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(ObjectG.getDObject!(TreeIter)(iter), ObjectG.getDObject!(TreePath)(path), wrapper.outer);
-	}
-
-	extern(C) static void callBackTestExpandRowDestroy(OnTestExpandRowDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnToggleCursorRowDelegateWrapper
-	{
-		bool delegate(TreeView) dlg;
-		gulong handlerId;
-
-		this(bool delegate(TreeView) dlg)
-		{
-			this.dlg = dlg;
-			onToggleCursorRowListeners ~= this;
-		}
-
-		void remove(OnToggleCursorRowDelegateWrapper source)
-		{
-			foreach(index, wrapper; onToggleCursorRowListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onToggleCursorRowListeners[index] = null;
-					onToggleCursorRowListeners = std.algorithm.remove(onToggleCursorRowListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnToggleCursorRowDelegateWrapper[] onToggleCursorRowListeners;
 
 	/** */
 	gulong addOnToggleCursorRow(bool delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnToggleCursorRowDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"toggle-cursor-row",
-			cast(GCallback)&callBackToggleCursorRow,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackToggleCursorRowDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "toggle-cursor-row", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static int callBackToggleCursorRow(GtkTreeView* treeviewStruct, OnToggleCursorRowDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackToggleCursorRowDestroy(OnToggleCursorRowDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnUnselectAllDelegateWrapper
-	{
-		bool delegate(TreeView) dlg;
-		gulong handlerId;
-
-		this(bool delegate(TreeView) dlg)
-		{
-			this.dlg = dlg;
-			onUnselectAllListeners ~= this;
-		}
-
-		void remove(OnUnselectAllDelegateWrapper source)
-		{
-			foreach(index, wrapper; onUnselectAllListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onUnselectAllListeners[index] = null;
-					onUnselectAllListeners = std.algorithm.remove(onUnselectAllListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnUnselectAllDelegateWrapper[] onUnselectAllListeners;
 
 	/** */
 	gulong addOnUnselectAll(bool delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnUnselectAllDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"unselect-all",
-			cast(GCallback)&callBackUnselectAll,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackUnselectAllDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static int callBackUnselectAll(GtkTreeView* treeviewStruct, OnUnselectAllDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackUnselectAllDestroy(OnUnselectAllDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "unselect-all", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

@@ -401,56 +401,12 @@ public class ColorSelection : Box
 		gtk_color_selection_set_previous_rgba(gtkColorSelection, (rgba is null) ? null : rgba.getRGBAStruct());
 	}
 
-	protected class OnColorChangedDelegateWrapper
-	{
-		void delegate(ColorSelection) dlg;
-		gulong handlerId;
-
-		this(void delegate(ColorSelection) dlg)
-		{
-			this.dlg = dlg;
-			onColorChangedListeners ~= this;
-		}
-
-		void remove(OnColorChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onColorChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onColorChangedListeners[index] = null;
-					onColorChangedListeners = std.algorithm.remove(onColorChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnColorChangedDelegateWrapper[] onColorChangedListeners;
-
 	/**
 	 * This signal is emitted when the color changes in the #GtkColorSelection
 	 * according to its update policy.
 	 */
 	gulong addOnColorChanged(void delegate(ColorSelection) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnColorChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"color-changed",
-			cast(GCallback)&callBackColorChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackColorChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackColorChanged(GtkColorSelection* colorselectionStruct, OnColorChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackColorChangedDestroy(OnColorChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "color-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

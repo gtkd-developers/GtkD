@@ -490,32 +490,6 @@ public class TlsConnection : IOStream
 		g_tls_connection_set_use_system_certdb(gTlsConnection, useSystemCertdb);
 	}
 
-	protected class OnAcceptCertificateDelegateWrapper
-	{
-		bool delegate(TlsCertificate, GTlsCertificateFlags, TlsConnection) dlg;
-		gulong handlerId;
-
-		this(bool delegate(TlsCertificate, GTlsCertificateFlags, TlsConnection) dlg)
-		{
-			this.dlg = dlg;
-			onAcceptCertificateListeners ~= this;
-		}
-
-		void remove(OnAcceptCertificateDelegateWrapper source)
-		{
-			foreach(index, wrapper; onAcceptCertificateListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onAcceptCertificateListeners[index] = null;
-					onAcceptCertificateListeners = std.algorithm.remove(onAcceptCertificateListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnAcceptCertificateDelegateWrapper[] onAcceptCertificateListeners;
-
 	/**
 	 * Emitted during the TLS handshake after the peer certificate has
 	 * been received. You can examine @peer_cert's certification path by
@@ -564,24 +538,6 @@ public class TlsConnection : IOStream
 	 */
 	gulong addOnAcceptCertificate(bool delegate(TlsCertificate, GTlsCertificateFlags, TlsConnection) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnAcceptCertificateDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"accept-certificate",
-			cast(GCallback)&callBackAcceptCertificate,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackAcceptCertificateDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static int callBackAcceptCertificate(GTlsConnection* tlsconnectionStruct, GTlsCertificate* peerCert, GTlsCertificateFlags errors, OnAcceptCertificateDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(ObjectG.getDObject!(TlsCertificate)(peerCert), errors, wrapper.outer);
-	}
-
-	extern(C) static void callBackAcceptCertificateDestroy(OnAcceptCertificateDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "accept-certificate", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

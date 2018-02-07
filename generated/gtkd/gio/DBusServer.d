@@ -217,32 +217,6 @@ public class DBusServer : ObjectG, InitableIF
 		g_dbus_server_stop(gDBusServer);
 	}
 
-	protected class OnNewConnectionDelegateWrapper
-	{
-		bool delegate(DBusConnection, DBusServer) dlg;
-		gulong handlerId;
-
-		this(bool delegate(DBusConnection, DBusServer) dlg)
-		{
-			this.dlg = dlg;
-			onNewConnectionListeners ~= this;
-		}
-
-		void remove(OnNewConnectionDelegateWrapper source)
-		{
-			foreach(index, wrapper; onNewConnectionListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onNewConnectionListeners[index] = null;
-					onNewConnectionListeners = std.algorithm.remove(onNewConnectionListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnNewConnectionDelegateWrapper[] onNewConnectionListeners;
-
 	/**
 	 * Emitted when a new authenticated connection has been made. Use
 	 * g_dbus_connection_get_peer_credentials() to figure out what
@@ -276,24 +250,6 @@ public class DBusServer : ObjectG, InitableIF
 	 */
 	gulong addOnNewConnection(bool delegate(DBusConnection, DBusServer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnNewConnectionDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"new-connection",
-			cast(GCallback)&callBackNewConnection,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackNewConnectionDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static int callBackNewConnection(GDBusServer* dbusserverStruct, GDBusConnection* connection, OnNewConnectionDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(ObjectG.getDObject!(DBusConnection)(connection), wrapper.outer);
-	}
-
-	extern(C) static void callBackNewConnectionDestroy(OnNewConnectionDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "new-connection", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

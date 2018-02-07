@@ -213,55 +213,11 @@ public class Plug : Window
 		return ObjectG.getDObject!(GdkWin)(cast(GdkWindow*) p);
 	}
 
-	protected class OnEmbeddedDelegateWrapper
-	{
-		void delegate(Plug) dlg;
-		gulong handlerId;
-
-		this(void delegate(Plug) dlg)
-		{
-			this.dlg = dlg;
-			onEmbeddedListeners ~= this;
-		}
-
-		void remove(OnEmbeddedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onEmbeddedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onEmbeddedListeners[index] = null;
-					onEmbeddedListeners = std.algorithm.remove(onEmbeddedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnEmbeddedDelegateWrapper[] onEmbeddedListeners;
-
 	/**
 	 * Gets emitted when the plug becomes embedded in a socket.
 	 */
 	gulong addOnEmbedded(void delegate(Plug) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnEmbeddedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"embedded",
-			cast(GCallback)&callBackEmbedded,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackEmbeddedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackEmbedded(GtkPlug* plugStruct, OnEmbeddedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackEmbeddedDestroy(OnEmbeddedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "embedded", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

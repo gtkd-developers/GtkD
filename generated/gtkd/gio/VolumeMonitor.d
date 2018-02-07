@@ -259,32 +259,6 @@ public class VolumeMonitor : ObjectG
 		return new ListG(cast(GList*) p, true);
 	}
 
-	protected class OnDriveChangedDelegateWrapper
-	{
-		void delegate(DriveIF, VolumeMonitor) dlg;
-		gulong handlerId;
-
-		this(void delegate(DriveIF, VolumeMonitor) dlg)
-		{
-			this.dlg = dlg;
-			onDriveChangedListeners ~= this;
-		}
-
-		void remove(OnDriveChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDriveChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onDriveChangedListeners[index] = null;
-					onDriveChangedListeners = std.algorithm.remove(onDriveChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnDriveChangedDelegateWrapper[] onDriveChangedListeners;
-
 	/**
 	 * Emitted when a drive changes.
 	 *
@@ -293,52 +267,8 @@ public class VolumeMonitor : ObjectG
 	 */
 	gulong addOnDriveChanged(void delegate(DriveIF, VolumeMonitor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnDriveChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"drive-changed",
-			cast(GCallback)&callBackDriveChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackDriveChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "drive-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackDriveChanged(GVolumeMonitor* volumemonitorStruct, GDrive* drive, OnDriveChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(DriveIF)(drive), wrapper.outer);
-	}
-
-	extern(C) static void callBackDriveChangedDestroy(OnDriveChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnDriveConnectedDelegateWrapper
-	{
-		void delegate(DriveIF, VolumeMonitor) dlg;
-		gulong handlerId;
-
-		this(void delegate(DriveIF, VolumeMonitor) dlg)
-		{
-			this.dlg = dlg;
-			onDriveConnectedListeners ~= this;
-		}
-
-		void remove(OnDriveConnectedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDriveConnectedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onDriveConnectedListeners[index] = null;
-					onDriveConnectedListeners = std.algorithm.remove(onDriveConnectedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnDriveConnectedDelegateWrapper[] onDriveConnectedListeners;
 
 	/**
 	 * Emitted when a drive is connected to the system.
@@ -348,52 +278,8 @@ public class VolumeMonitor : ObjectG
 	 */
 	gulong addOnDriveConnected(void delegate(DriveIF, VolumeMonitor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnDriveConnectedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"drive-connected",
-			cast(GCallback)&callBackDriveConnected,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackDriveConnectedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "drive-connected", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackDriveConnected(GVolumeMonitor* volumemonitorStruct, GDrive* drive, OnDriveConnectedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(DriveIF)(drive), wrapper.outer);
-	}
-
-	extern(C) static void callBackDriveConnectedDestroy(OnDriveConnectedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnDriveDisconnectedDelegateWrapper
-	{
-		void delegate(DriveIF, VolumeMonitor) dlg;
-		gulong handlerId;
-
-		this(void delegate(DriveIF, VolumeMonitor) dlg)
-		{
-			this.dlg = dlg;
-			onDriveDisconnectedListeners ~= this;
-		}
-
-		void remove(OnDriveDisconnectedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDriveDisconnectedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onDriveDisconnectedListeners[index] = null;
-					onDriveDisconnectedListeners = std.algorithm.remove(onDriveDisconnectedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnDriveDisconnectedDelegateWrapper[] onDriveDisconnectedListeners;
 
 	/**
 	 * Emitted when a drive is disconnected from the system.
@@ -403,52 +289,8 @@ public class VolumeMonitor : ObjectG
 	 */
 	gulong addOnDriveDisconnected(void delegate(DriveIF, VolumeMonitor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnDriveDisconnectedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"drive-disconnected",
-			cast(GCallback)&callBackDriveDisconnected,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackDriveDisconnectedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "drive-disconnected", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackDriveDisconnected(GVolumeMonitor* volumemonitorStruct, GDrive* drive, OnDriveDisconnectedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(DriveIF)(drive), wrapper.outer);
-	}
-
-	extern(C) static void callBackDriveDisconnectedDestroy(OnDriveDisconnectedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnDriveEjectButtonDelegateWrapper
-	{
-		void delegate(DriveIF, VolumeMonitor) dlg;
-		gulong handlerId;
-
-		this(void delegate(DriveIF, VolumeMonitor) dlg)
-		{
-			this.dlg = dlg;
-			onDriveEjectButtonListeners ~= this;
-		}
-
-		void remove(OnDriveEjectButtonDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDriveEjectButtonListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onDriveEjectButtonListeners[index] = null;
-					onDriveEjectButtonListeners = std.algorithm.remove(onDriveEjectButtonListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnDriveEjectButtonDelegateWrapper[] onDriveEjectButtonListeners;
 
 	/**
 	 * Emitted when the eject button is pressed on @drive.
@@ -460,52 +302,8 @@ public class VolumeMonitor : ObjectG
 	 */
 	gulong addOnDriveEjectButton(void delegate(DriveIF, VolumeMonitor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnDriveEjectButtonDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"drive-eject-button",
-			cast(GCallback)&callBackDriveEjectButton,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackDriveEjectButtonDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "drive-eject-button", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackDriveEjectButton(GVolumeMonitor* volumemonitorStruct, GDrive* drive, OnDriveEjectButtonDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(DriveIF)(drive), wrapper.outer);
-	}
-
-	extern(C) static void callBackDriveEjectButtonDestroy(OnDriveEjectButtonDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnDriveStopButtonDelegateWrapper
-	{
-		void delegate(DriveIF, VolumeMonitor) dlg;
-		gulong handlerId;
-
-		this(void delegate(DriveIF, VolumeMonitor) dlg)
-		{
-			this.dlg = dlg;
-			onDriveStopButtonListeners ~= this;
-		}
-
-		void remove(OnDriveStopButtonDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDriveStopButtonListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onDriveStopButtonListeners[index] = null;
-					onDriveStopButtonListeners = std.algorithm.remove(onDriveStopButtonListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnDriveStopButtonDelegateWrapper[] onDriveStopButtonListeners;
 
 	/**
 	 * Emitted when the stop button is pressed on @drive.
@@ -517,52 +315,8 @@ public class VolumeMonitor : ObjectG
 	 */
 	gulong addOnDriveStopButton(void delegate(DriveIF, VolumeMonitor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnDriveStopButtonDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"drive-stop-button",
-			cast(GCallback)&callBackDriveStopButton,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackDriveStopButtonDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "drive-stop-button", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackDriveStopButton(GVolumeMonitor* volumemonitorStruct, GDrive* drive, OnDriveStopButtonDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(DriveIF)(drive), wrapper.outer);
-	}
-
-	extern(C) static void callBackDriveStopButtonDestroy(OnDriveStopButtonDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnMountAddedDelegateWrapper
-	{
-		void delegate(MountIF, VolumeMonitor) dlg;
-		gulong handlerId;
-
-		this(void delegate(MountIF, VolumeMonitor) dlg)
-		{
-			this.dlg = dlg;
-			onMountAddedListeners ~= this;
-		}
-
-		void remove(OnMountAddedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onMountAddedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onMountAddedListeners[index] = null;
-					onMountAddedListeners = std.algorithm.remove(onMountAddedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnMountAddedDelegateWrapper[] onMountAddedListeners;
 
 	/**
 	 * Emitted when a mount is added.
@@ -572,52 +326,8 @@ public class VolumeMonitor : ObjectG
 	 */
 	gulong addOnMountAdded(void delegate(MountIF, VolumeMonitor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnMountAddedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"mount-added",
-			cast(GCallback)&callBackMountAdded,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackMountAddedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "mount-added", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackMountAdded(GVolumeMonitor* volumemonitorStruct, GMount* mount, OnMountAddedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(MountIF)(mount), wrapper.outer);
-	}
-
-	extern(C) static void callBackMountAddedDestroy(OnMountAddedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnMountChangedDelegateWrapper
-	{
-		void delegate(MountIF, VolumeMonitor) dlg;
-		gulong handlerId;
-
-		this(void delegate(MountIF, VolumeMonitor) dlg)
-		{
-			this.dlg = dlg;
-			onMountChangedListeners ~= this;
-		}
-
-		void remove(OnMountChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onMountChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onMountChangedListeners[index] = null;
-					onMountChangedListeners = std.algorithm.remove(onMountChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnMountChangedDelegateWrapper[] onMountChangedListeners;
 
 	/**
 	 * Emitted when a mount changes.
@@ -627,52 +337,8 @@ public class VolumeMonitor : ObjectG
 	 */
 	gulong addOnMountChanged(void delegate(MountIF, VolumeMonitor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnMountChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"mount-changed",
-			cast(GCallback)&callBackMountChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackMountChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "mount-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackMountChanged(GVolumeMonitor* volumemonitorStruct, GMount* mount, OnMountChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(MountIF)(mount), wrapper.outer);
-	}
-
-	extern(C) static void callBackMountChangedDestroy(OnMountChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnMountPreUnmountDelegateWrapper
-	{
-		void delegate(MountIF, VolumeMonitor) dlg;
-		gulong handlerId;
-
-		this(void delegate(MountIF, VolumeMonitor) dlg)
-		{
-			this.dlg = dlg;
-			onMountPreUnmountListeners ~= this;
-		}
-
-		void remove(OnMountPreUnmountDelegateWrapper source)
-		{
-			foreach(index, wrapper; onMountPreUnmountListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onMountPreUnmountListeners[index] = null;
-					onMountPreUnmountListeners = std.algorithm.remove(onMountPreUnmountListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnMountPreUnmountDelegateWrapper[] onMountPreUnmountListeners;
 
 	/**
 	 * Emitted when a mount is about to be removed.
@@ -682,52 +348,8 @@ public class VolumeMonitor : ObjectG
 	 */
 	gulong addOnMountPreUnmount(void delegate(MountIF, VolumeMonitor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnMountPreUnmountDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"mount-pre-unmount",
-			cast(GCallback)&callBackMountPreUnmount,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackMountPreUnmountDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "mount-pre-unmount", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackMountPreUnmount(GVolumeMonitor* volumemonitorStruct, GMount* mount, OnMountPreUnmountDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(MountIF)(mount), wrapper.outer);
-	}
-
-	extern(C) static void callBackMountPreUnmountDestroy(OnMountPreUnmountDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnMountRemovedDelegateWrapper
-	{
-		void delegate(MountIF, VolumeMonitor) dlg;
-		gulong handlerId;
-
-		this(void delegate(MountIF, VolumeMonitor) dlg)
-		{
-			this.dlg = dlg;
-			onMountRemovedListeners ~= this;
-		}
-
-		void remove(OnMountRemovedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onMountRemovedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onMountRemovedListeners[index] = null;
-					onMountRemovedListeners = std.algorithm.remove(onMountRemovedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnMountRemovedDelegateWrapper[] onMountRemovedListeners;
 
 	/**
 	 * Emitted when a mount is removed.
@@ -737,52 +359,8 @@ public class VolumeMonitor : ObjectG
 	 */
 	gulong addOnMountRemoved(void delegate(MountIF, VolumeMonitor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnMountRemovedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"mount-removed",
-			cast(GCallback)&callBackMountRemoved,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackMountRemovedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "mount-removed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackMountRemoved(GVolumeMonitor* volumemonitorStruct, GMount* mount, OnMountRemovedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(MountIF)(mount), wrapper.outer);
-	}
-
-	extern(C) static void callBackMountRemovedDestroy(OnMountRemovedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnVolumeAddedDelegateWrapper
-	{
-		void delegate(VolumeIF, VolumeMonitor) dlg;
-		gulong handlerId;
-
-		this(void delegate(VolumeIF, VolumeMonitor) dlg)
-		{
-			this.dlg = dlg;
-			onVolumeAddedListeners ~= this;
-		}
-
-		void remove(OnVolumeAddedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onVolumeAddedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onVolumeAddedListeners[index] = null;
-					onVolumeAddedListeners = std.algorithm.remove(onVolumeAddedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnVolumeAddedDelegateWrapper[] onVolumeAddedListeners;
 
 	/**
 	 * Emitted when a mountable volume is added to the system.
@@ -792,52 +370,8 @@ public class VolumeMonitor : ObjectG
 	 */
 	gulong addOnVolumeAdded(void delegate(VolumeIF, VolumeMonitor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnVolumeAddedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"volume-added",
-			cast(GCallback)&callBackVolumeAdded,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackVolumeAddedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "volume-added", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackVolumeAdded(GVolumeMonitor* volumemonitorStruct, GVolume* volume, OnVolumeAddedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(VolumeIF)(volume), wrapper.outer);
-	}
-
-	extern(C) static void callBackVolumeAddedDestroy(OnVolumeAddedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnVolumeChangedDelegateWrapper
-	{
-		void delegate(VolumeIF, VolumeMonitor) dlg;
-		gulong handlerId;
-
-		this(void delegate(VolumeIF, VolumeMonitor) dlg)
-		{
-			this.dlg = dlg;
-			onVolumeChangedListeners ~= this;
-		}
-
-		void remove(OnVolumeChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onVolumeChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onVolumeChangedListeners[index] = null;
-					onVolumeChangedListeners = std.algorithm.remove(onVolumeChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnVolumeChangedDelegateWrapper[] onVolumeChangedListeners;
 
 	/**
 	 * Emitted when mountable volume is changed.
@@ -847,52 +381,8 @@ public class VolumeMonitor : ObjectG
 	 */
 	gulong addOnVolumeChanged(void delegate(VolumeIF, VolumeMonitor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnVolumeChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"volume-changed",
-			cast(GCallback)&callBackVolumeChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackVolumeChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "volume-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackVolumeChanged(GVolumeMonitor* volumemonitorStruct, GVolume* volume, OnVolumeChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(VolumeIF)(volume), wrapper.outer);
-	}
-
-	extern(C) static void callBackVolumeChangedDestroy(OnVolumeChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnVolumeRemovedDelegateWrapper
-	{
-		void delegate(VolumeIF, VolumeMonitor) dlg;
-		gulong handlerId;
-
-		this(void delegate(VolumeIF, VolumeMonitor) dlg)
-		{
-			this.dlg = dlg;
-			onVolumeRemovedListeners ~= this;
-		}
-
-		void remove(OnVolumeRemovedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onVolumeRemovedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onVolumeRemovedListeners[index] = null;
-					onVolumeRemovedListeners = std.algorithm.remove(onVolumeRemovedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnVolumeRemovedDelegateWrapper[] onVolumeRemovedListeners;
 
 	/**
 	 * Emitted when a mountable volume is removed from the system.
@@ -902,24 +392,6 @@ public class VolumeMonitor : ObjectG
 	 */
 	gulong addOnVolumeRemoved(void delegate(VolumeIF, VolumeMonitor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnVolumeRemovedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"volume-removed",
-			cast(GCallback)&callBackVolumeRemoved,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackVolumeRemovedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackVolumeRemoved(GVolumeMonitor* volumemonitorStruct, GVolume* volume, OnVolumeRemovedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(VolumeIF)(volume), wrapper.outer);
-	}
-
-	extern(C) static void callBackVolumeRemovedDestroy(OnVolumeRemovedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "volume-removed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

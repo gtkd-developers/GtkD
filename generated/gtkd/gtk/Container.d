@@ -813,203 +813,27 @@ public class Container : Widget
 		gtk_container_unset_focus_chain(gtkContainer);
 	}
 
-	protected class OnAddDelegateWrapper
-	{
-		void delegate(Widget, Container) dlg;
-		gulong handlerId;
-
-		this(void delegate(Widget, Container) dlg)
-		{
-			this.dlg = dlg;
-			onAddListeners ~= this;
-		}
-
-		void remove(OnAddDelegateWrapper source)
-		{
-			foreach(index, wrapper; onAddListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onAddListeners[index] = null;
-					onAddListeners = std.algorithm.remove(onAddListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnAddDelegateWrapper[] onAddListeners;
-
 	/** */
 	gulong addOnAdd(void delegate(Widget, Container) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnAddDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"add",
-			cast(GCallback)&callBackAdd,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackAddDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "add", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackAdd(GtkContainer* containerStruct, GtkWidget* object, OnAddDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(Widget)(object), wrapper.outer);
-	}
-
-	extern(C) static void callBackAddDestroy(OnAddDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnCheckResizeDelegateWrapper
-	{
-		void delegate(Container) dlg;
-		gulong handlerId;
-
-		this(void delegate(Container) dlg)
-		{
-			this.dlg = dlg;
-			onCheckResizeListeners ~= this;
-		}
-
-		void remove(OnCheckResizeDelegateWrapper source)
-		{
-			foreach(index, wrapper; onCheckResizeListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onCheckResizeListeners[index] = null;
-					onCheckResizeListeners = std.algorithm.remove(onCheckResizeListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnCheckResizeDelegateWrapper[] onCheckResizeListeners;
 
 	/** */
 	gulong addOnCheckResize(void delegate(Container) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnCheckResizeDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"check-resize",
-			cast(GCallback)&callBackCheckResize,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackCheckResizeDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "check-resize", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackCheckResize(GtkContainer* containerStruct, OnCheckResizeDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackCheckResizeDestroy(OnCheckResizeDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnRemoveDelegateWrapper
-	{
-		void delegate(Widget, Container) dlg;
-		gulong handlerId;
-
-		this(void delegate(Widget, Container) dlg)
-		{
-			this.dlg = dlg;
-			onRemoveListeners ~= this;
-		}
-
-		void remove(OnRemoveDelegateWrapper source)
-		{
-			foreach(index, wrapper; onRemoveListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onRemoveListeners[index] = null;
-					onRemoveListeners = std.algorithm.remove(onRemoveListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnRemoveDelegateWrapper[] onRemoveListeners;
 
 	/** */
 	gulong addOnRemove(void delegate(Widget, Container) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnRemoveDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"remove",
-			cast(GCallback)&callBackRemove,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackRemoveDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "remove", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackRemove(GtkContainer* containerStruct, GtkWidget* object, OnRemoveDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(Widget)(object), wrapper.outer);
-	}
-
-	extern(C) static void callBackRemoveDestroy(OnRemoveDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnSetFocusChildDelegateWrapper
-	{
-		void delegate(Widget, Container) dlg;
-		gulong handlerId;
-
-		this(void delegate(Widget, Container) dlg)
-		{
-			this.dlg = dlg;
-			onSetFocusChildListeners ~= this;
-		}
-
-		void remove(OnSetFocusChildDelegateWrapper source)
-		{
-			foreach(index, wrapper; onSetFocusChildListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onSetFocusChildListeners[index] = null;
-					onSetFocusChildListeners = std.algorithm.remove(onSetFocusChildListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnSetFocusChildDelegateWrapper[] onSetFocusChildListeners;
 
 	/** */
 	gulong addOnSetFocusChild(void delegate(Widget, Container) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnSetFocusChildDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"set-focus-child",
-			cast(GCallback)&callBackSetFocusChild,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackSetFocusChildDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackSetFocusChild(GtkContainer* containerStruct, GtkWidget* object, OnSetFocusChildDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(Widget)(object), wrapper.outer);
-	}
-
-	extern(C) static void callBackSetFocusChildDestroy(OnSetFocusChildDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "set-focus-child", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

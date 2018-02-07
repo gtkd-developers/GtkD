@@ -251,32 +251,6 @@ public class AppChooserButton : ComboBox, AppChooserIF
 		gtk_app_chooser_button_set_show_dialog_item(gtkAppChooserButton, setting);
 	}
 
-	protected class OnCustomItemActivatedDelegateWrapper
-	{
-		void delegate(string, AppChooserButton) dlg;
-		gulong handlerId;
-
-		this(void delegate(string, AppChooserButton) dlg)
-		{
-			this.dlg = dlg;
-			onCustomItemActivatedListeners ~= this;
-		}
-
-		void remove(OnCustomItemActivatedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onCustomItemActivatedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onCustomItemActivatedListeners[index] = null;
-					onCustomItemActivatedListeners = std.algorithm.remove(onCustomItemActivatedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnCustomItemActivatedDelegateWrapper[] onCustomItemActivatedListeners;
-
 	/**
 	 * Emitted when a custom item, previously added with
 	 * gtk_app_chooser_button_append_custom_item(), is activated from the
@@ -287,24 +261,6 @@ public class AppChooserButton : ComboBox, AppChooserIF
 	 */
 	gulong addOnCustomItemActivated(void delegate(string, AppChooserButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnCustomItemActivatedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"custom-item-activated",
-			cast(GCallback)&callBackCustomItemActivated,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackCustomItemActivatedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackCustomItemActivated(GtkAppChooserButton* appchooserbuttonStruct, char* itemName, OnCustomItemActivatedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(Str.toString(itemName), wrapper.outer);
-	}
-
-	extern(C) static void callBackCustomItemActivatedDestroy(OnCustomItemActivatedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "custom-item-activated", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

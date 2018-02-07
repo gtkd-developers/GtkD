@@ -1205,32 +1205,6 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 		gtk_cell_area_stop_editing(gtkCellArea, canceled);
 	}
 
-	protected class OnAddEditableDelegateWrapper
-	{
-		void delegate(CellRenderer, CellEditableIF, GdkRectangle*, string, CellArea) dlg;
-		gulong handlerId;
-
-		this(void delegate(CellRenderer, CellEditableIF, GdkRectangle*, string, CellArea) dlg)
-		{
-			this.dlg = dlg;
-			onAddEditableListeners ~= this;
-		}
-
-		void remove(OnAddEditableDelegateWrapper source)
-		{
-			foreach(index, wrapper; onAddEditableListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onAddEditableListeners[index] = null;
-					onAddEditableListeners = std.algorithm.remove(onAddEditableListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnAddEditableDelegateWrapper[] onAddEditableListeners;
-
 	/**
 	 * Indicates that editing has started on @renderer and that @editable
 	 * should be added to the owning cell-layouting widget at @cell_area.
@@ -1246,52 +1220,8 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 */
 	gulong addOnAddEditable(void delegate(CellRenderer, CellEditableIF, GdkRectangle*, string, CellArea) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnAddEditableDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"add-editable",
-			cast(GCallback)&callBackAddEditable,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackAddEditableDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "add-editable", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackAddEditable(GtkCellArea* cellareaStruct, GtkCellRenderer* renderer, GtkCellEditable* editable, GdkRectangle* cellArea, char* path, OnAddEditableDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(CellRenderer)(renderer), ObjectG.getDObject!(CellEditableIF)(editable), cellArea, Str.toString(path), wrapper.outer);
-	}
-
-	extern(C) static void callBackAddEditableDestroy(OnAddEditableDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnApplyAttributesDelegateWrapper
-	{
-		void delegate(TreeModelIF, TreeIter, bool, bool, CellArea) dlg;
-		gulong handlerId;
-
-		this(void delegate(TreeModelIF, TreeIter, bool, bool, CellArea) dlg)
-		{
-			this.dlg = dlg;
-			onApplyAttributesListeners ~= this;
-		}
-
-		void remove(OnApplyAttributesDelegateWrapper source)
-		{
-			foreach(index, wrapper; onApplyAttributesListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onApplyAttributesListeners[index] = null;
-					onApplyAttributesListeners = std.algorithm.remove(onApplyAttributesListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnApplyAttributesDelegateWrapper[] onApplyAttributesListeners;
 
 	/**
 	 * This signal is emitted whenever applying attributes to @area from @model
@@ -1306,52 +1236,8 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 */
 	gulong addOnApplyAttributes(void delegate(TreeModelIF, TreeIter, bool, bool, CellArea) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnApplyAttributesDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"apply-attributes",
-			cast(GCallback)&callBackApplyAttributes,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackApplyAttributesDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "apply-attributes", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackApplyAttributes(GtkCellArea* cellareaStruct, GtkTreeModel* model, GtkTreeIter* iter, bool isExpander, bool isExpanded, OnApplyAttributesDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(TreeModelIF)(model), ObjectG.getDObject!(TreeIter)(iter), isExpander, isExpanded, wrapper.outer);
-	}
-
-	extern(C) static void callBackApplyAttributesDestroy(OnApplyAttributesDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnFocusChangedDelegateWrapper
-	{
-		void delegate(CellRenderer, string, CellArea) dlg;
-		gulong handlerId;
-
-		this(void delegate(CellRenderer, string, CellArea) dlg)
-		{
-			this.dlg = dlg;
-			onFocusChangedListeners ~= this;
-		}
-
-		void remove(OnFocusChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onFocusChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onFocusChangedListeners[index] = null;
-					onFocusChangedListeners = std.algorithm.remove(onFocusChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnFocusChangedDelegateWrapper[] onFocusChangedListeners;
 
 	/**
 	 * Indicates that focus changed on this @area. This signal
@@ -1371,52 +1257,8 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 */
 	gulong addOnFocusChanged(void delegate(CellRenderer, string, CellArea) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnFocusChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"focus-changed",
-			cast(GCallback)&callBackFocusChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackFocusChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "focus-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackFocusChanged(GtkCellArea* cellareaStruct, GtkCellRenderer* renderer, char* path, OnFocusChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(CellRenderer)(renderer), Str.toString(path), wrapper.outer);
-	}
-
-	extern(C) static void callBackFocusChangedDestroy(OnFocusChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnRemoveEditableDelegateWrapper
-	{
-		void delegate(CellRenderer, CellEditableIF, CellArea) dlg;
-		gulong handlerId;
-
-		this(void delegate(CellRenderer, CellEditableIF, CellArea) dlg)
-		{
-			this.dlg = dlg;
-			onRemoveEditableListeners ~= this;
-		}
-
-		void remove(OnRemoveEditableDelegateWrapper source)
-		{
-			foreach(index, wrapper; onRemoveEditableListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onRemoveEditableListeners[index] = null;
-					onRemoveEditableListeners = std.algorithm.remove(onRemoveEditableListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnRemoveEditableDelegateWrapper[] onRemoveEditableListeners;
 
 	/**
 	 * Indicates that editing finished on @renderer and that @editable
@@ -1430,24 +1272,6 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 */
 	gulong addOnRemoveEditable(void delegate(CellRenderer, CellEditableIF, CellArea) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnRemoveEditableDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"remove-editable",
-			cast(GCallback)&callBackRemoveEditable,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackRemoveEditableDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackRemoveEditable(GtkCellArea* cellareaStruct, GtkCellRenderer* renderer, GtkCellEditable* editable, OnRemoveEditableDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(CellRenderer)(renderer), ObjectG.getDObject!(CellEditableIF)(editable), wrapper.outer);
-	}
-
-	extern(C) static void callBackRemoveEditableDestroy(OnRemoveEditableDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "remove-editable", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

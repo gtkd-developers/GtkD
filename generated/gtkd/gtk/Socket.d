@@ -201,84 +201,14 @@ public class Socket : Container
 		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 
-	protected class OnPlugAddedDelegateWrapper
-	{
-		void delegate(Socket) dlg;
-		gulong handlerId;
-
-		this(void delegate(Socket) dlg)
-		{
-			this.dlg = dlg;
-			onPlugAddedListeners ~= this;
-		}
-
-		void remove(OnPlugAddedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onPlugAddedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onPlugAddedListeners[index] = null;
-					onPlugAddedListeners = std.algorithm.remove(onPlugAddedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnPlugAddedDelegateWrapper[] onPlugAddedListeners;
-
 	/**
 	 * This signal is emitted when a client is successfully
 	 * added to the socket.
 	 */
 	gulong addOnPlugAdded(void delegate(Socket) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnPlugAddedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"plug-added",
-			cast(GCallback)&callBackPlugAdded,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackPlugAddedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "plug-added", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackPlugAdded(GtkSocket* socketStruct, OnPlugAddedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackPlugAddedDestroy(OnPlugAddedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnPlugRemovedDelegateWrapper
-	{
-		bool delegate(Socket) dlg;
-		gulong handlerId;
-
-		this(bool delegate(Socket) dlg)
-		{
-			this.dlg = dlg;
-			onPlugRemovedListeners ~= this;
-		}
-
-		void remove(OnPlugRemovedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onPlugRemovedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onPlugRemovedListeners[index] = null;
-					onPlugRemovedListeners = std.algorithm.remove(onPlugRemovedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnPlugRemovedDelegateWrapper[] onPlugRemovedListeners;
 
 	/**
 	 * This signal is emitted when a client is removed from the socket.
@@ -289,24 +219,6 @@ public class Socket : Container
 	 */
 	gulong addOnPlugRemoved(bool delegate(Socket) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnPlugRemovedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"plug-removed",
-			cast(GCallback)&callBackPlugRemoved,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackPlugRemovedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static int callBackPlugRemoved(GtkSocket* socketStruct, OnPlugRemovedDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackPlugRemovedDestroy(OnPlugRemovedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "plug-removed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

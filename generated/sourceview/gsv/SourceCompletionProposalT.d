@@ -199,56 +199,12 @@ public template SourceCompletionProposalT(TStruct)
 		return gtk_source_completion_proposal_hash(getSourceCompletionProposalStruct());
 	}
 
-	protected class OnChangedDelegateWrapper
-	{
-		void delegate(SourceCompletionProposalIF) dlg;
-		gulong handlerId;
-
-		this(void delegate(SourceCompletionProposalIF) dlg)
-		{
-			this.dlg = dlg;
-			onChangedListeners ~= this;
-		}
-
-		void remove(OnChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onChangedListeners[index] = null;
-					onChangedListeners = std.algorithm.remove(onChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnChangedDelegateWrapper[] onChangedListeners;
-
 	/**
 	 * Emitted when the proposal has changed. The completion popup
 	 * will react to this by updating the shown information.
 	 */
 	gulong addOnChanged(void delegate(SourceCompletionProposalIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"changed",
-			cast(GCallback)&callBackChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackChanged(GtkSourceCompletionProposal* sourcecompletionproposalStruct, OnChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

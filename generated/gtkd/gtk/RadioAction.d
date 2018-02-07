@@ -239,32 +239,6 @@ public class RadioAction : ToggleAction
 		gtk_radio_action_set_group(gtkRadioAction, (group is null) ? null : group.getListSGStruct());
 	}
 
-	protected class OnChangedDelegateWrapper
-	{
-		void delegate(RadioAction, RadioAction) dlg;
-		gulong handlerId;
-
-		this(void delegate(RadioAction, RadioAction) dlg)
-		{
-			this.dlg = dlg;
-			onChangedListeners ~= this;
-		}
-
-		void remove(OnChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onChangedListeners[index] = null;
-					onChangedListeners = std.algorithm.remove(onChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnChangedDelegateWrapper[] onChangedListeners;
-
 	/**
 	 * The ::changed signal is emitted on every member of a radio group when the
 	 * active member is changed. The signal gets emitted after the ::activate signals
@@ -277,24 +251,6 @@ public class RadioAction : ToggleAction
 	 */
 	gulong addOnChanged(void delegate(RadioAction, RadioAction) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"changed",
-			cast(GCallback)&callBackChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackChanged(GtkRadioAction* radioactionStruct, GtkRadioAction* current, OnChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(RadioAction)(current), wrapper.outer);
-	}
-
-	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

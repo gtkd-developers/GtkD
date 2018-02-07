@@ -215,32 +215,6 @@ public class DisplayManager : ObjectG
 		gdk_display_manager_set_default_display(gdkDisplayManager, (display is null) ? null : display.getDisplayStruct());
 	}
 
-	protected class OnDisplayOpenedDelegateWrapper
-	{
-		void delegate(Display, DisplayManager) dlg;
-		gulong handlerId;
-
-		this(void delegate(Display, DisplayManager) dlg)
-		{
-			this.dlg = dlg;
-			onDisplayOpenedListeners ~= this;
-		}
-
-		void remove(OnDisplayOpenedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDisplayOpenedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onDisplayOpenedListeners[index] = null;
-					onDisplayOpenedListeners = std.algorithm.remove(onDisplayOpenedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnDisplayOpenedDelegateWrapper[] onDisplayOpenedListeners;
-
 	/**
 	 * The ::display-opened signal is emitted when a display is opened.
 	 *
@@ -251,24 +225,6 @@ public class DisplayManager : ObjectG
 	 */
 	gulong addOnDisplayOpened(void delegate(Display, DisplayManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnDisplayOpenedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"display-opened",
-			cast(GCallback)&callBackDisplayOpened,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackDisplayOpenedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackDisplayOpened(GdkDisplayManager* displaymanagerStruct, GdkDisplay* display, OnDisplayOpenedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(Display)(display), wrapper.outer);
-	}
-
-	extern(C) static void callBackDisplayOpenedDestroy(OnDisplayOpenedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "display-opened", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

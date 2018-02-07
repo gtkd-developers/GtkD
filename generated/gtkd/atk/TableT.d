@@ -517,32 +517,6 @@ public template TableT(TStruct)
 		atk_table_set_summary(getTableStruct(), (accessible is null) ? null : accessible.getObjectAtkStruct());
 	}
 
-	protected class OnColumnDeletedDelegateWrapper
-	{
-		void delegate(int, int, TableIF) dlg;
-		gulong handlerId;
-
-		this(void delegate(int, int, TableIF) dlg)
-		{
-			this.dlg = dlg;
-			onColumnDeletedListeners ~= this;
-		}
-
-		void remove(OnColumnDeletedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onColumnDeletedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onColumnDeletedListeners[index] = null;
-					onColumnDeletedListeners = std.algorithm.remove(onColumnDeletedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnColumnDeletedDelegateWrapper[] onColumnDeletedListeners;
-
 	/**
 	 * The "column-deleted" signal is emitted by an object which
 	 * implements the AtkTable interface when a column is deleted.
@@ -553,52 +527,8 @@ public template TableT(TStruct)
 	 */
 	gulong addOnColumnDeleted(void delegate(int, int, TableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnColumnDeletedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"column-deleted",
-			cast(GCallback)&callBackColumnDeleted,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackColumnDeletedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "column-deleted", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackColumnDeleted(AtkTable* tableStruct, int arg1, int arg2, OnColumnDeletedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(arg1, arg2, wrapper.outer);
-	}
-
-	extern(C) static void callBackColumnDeletedDestroy(OnColumnDeletedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnColumnInsertedDelegateWrapper
-	{
-		void delegate(int, int, TableIF) dlg;
-		gulong handlerId;
-
-		this(void delegate(int, int, TableIF) dlg)
-		{
-			this.dlg = dlg;
-			onColumnInsertedListeners ~= this;
-		}
-
-		void remove(OnColumnInsertedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onColumnInsertedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onColumnInsertedListeners[index] = null;
-					onColumnInsertedListeners = std.algorithm.remove(onColumnInsertedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnColumnInsertedDelegateWrapper[] onColumnInsertedListeners;
 
 	/**
 	 * The "column-inserted" signal is emitted by an object which
@@ -610,52 +540,8 @@ public template TableT(TStruct)
 	 */
 	gulong addOnColumnInserted(void delegate(int, int, TableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnColumnInsertedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"column-inserted",
-			cast(GCallback)&callBackColumnInserted,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackColumnInsertedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "column-inserted", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackColumnInserted(AtkTable* tableStruct, int arg1, int arg2, OnColumnInsertedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(arg1, arg2, wrapper.outer);
-	}
-
-	extern(C) static void callBackColumnInsertedDestroy(OnColumnInsertedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnColumnReorderedDelegateWrapper
-	{
-		void delegate(TableIF) dlg;
-		gulong handlerId;
-
-		this(void delegate(TableIF) dlg)
-		{
-			this.dlg = dlg;
-			onColumnReorderedListeners ~= this;
-		}
-
-		void remove(OnColumnReorderedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onColumnReorderedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onColumnReorderedListeners[index] = null;
-					onColumnReorderedListeners = std.algorithm.remove(onColumnReorderedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnColumnReorderedDelegateWrapper[] onColumnReorderedListeners;
 
 	/**
 	 * The "column-reordered" signal is emitted by an object which
@@ -664,52 +550,8 @@ public template TableT(TStruct)
 	 */
 	gulong addOnColumnReordered(void delegate(TableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnColumnReorderedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"column-reordered",
-			cast(GCallback)&callBackColumnReordered,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackColumnReorderedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "column-reordered", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackColumnReordered(AtkTable* tableStruct, OnColumnReorderedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackColumnReorderedDestroy(OnColumnReorderedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnModelChangedDelegateWrapper
-	{
-		void delegate(TableIF) dlg;
-		gulong handlerId;
-
-		this(void delegate(TableIF) dlg)
-		{
-			this.dlg = dlg;
-			onModelChangedListeners ~= this;
-		}
-
-		void remove(OnModelChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onModelChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onModelChangedListeners[index] = null;
-					onModelChangedListeners = std.algorithm.remove(onModelChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnModelChangedDelegateWrapper[] onModelChangedListeners;
 
 	/**
 	 * The "model-changed" signal is emitted by an object which
@@ -718,52 +560,8 @@ public template TableT(TStruct)
 	 */
 	gulong addOnModelChanged(void delegate(TableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnModelChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"model-changed",
-			cast(GCallback)&callBackModelChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackModelChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "model-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackModelChanged(AtkTable* tableStruct, OnModelChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackModelChangedDestroy(OnModelChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnRowDeletedDelegateWrapper
-	{
-		void delegate(int, int, TableIF) dlg;
-		gulong handlerId;
-
-		this(void delegate(int, int, TableIF) dlg)
-		{
-			this.dlg = dlg;
-			onRowDeletedListeners ~= this;
-		}
-
-		void remove(OnRowDeletedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onRowDeletedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onRowDeletedListeners[index] = null;
-					onRowDeletedListeners = std.algorithm.remove(onRowDeletedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnRowDeletedDelegateWrapper[] onRowDeletedListeners;
 
 	/**
 	 * The "row-deleted" signal is emitted by an object which
@@ -775,52 +573,8 @@ public template TableT(TStruct)
 	 */
 	gulong addOnRowDeleted(void delegate(int, int, TableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnRowDeletedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"row-deleted",
-			cast(GCallback)&callBackRowDeleted,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackRowDeletedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "row-deleted", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackRowDeleted(AtkTable* tableStruct, int arg1, int arg2, OnRowDeletedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(arg1, arg2, wrapper.outer);
-	}
-
-	extern(C) static void callBackRowDeletedDestroy(OnRowDeletedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnRowInsertedDelegateWrapper
-	{
-		void delegate(int, int, TableIF) dlg;
-		gulong handlerId;
-
-		this(void delegate(int, int, TableIF) dlg)
-		{
-			this.dlg = dlg;
-			onRowInsertedListeners ~= this;
-		}
-
-		void remove(OnRowInsertedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onRowInsertedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onRowInsertedListeners[index] = null;
-					onRowInsertedListeners = std.algorithm.remove(onRowInsertedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnRowInsertedDelegateWrapper[] onRowInsertedListeners;
 
 	/**
 	 * The "row-inserted" signal is emitted by an object which
@@ -832,52 +586,8 @@ public template TableT(TStruct)
 	 */
 	gulong addOnRowInserted(void delegate(int, int, TableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnRowInsertedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"row-inserted",
-			cast(GCallback)&callBackRowInserted,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackRowInsertedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "row-inserted", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackRowInserted(AtkTable* tableStruct, int arg1, int arg2, OnRowInsertedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(arg1, arg2, wrapper.outer);
-	}
-
-	extern(C) static void callBackRowInsertedDestroy(OnRowInsertedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnRowReorderedDelegateWrapper
-	{
-		void delegate(TableIF) dlg;
-		gulong handlerId;
-
-		this(void delegate(TableIF) dlg)
-		{
-			this.dlg = dlg;
-			onRowReorderedListeners ~= this;
-		}
-
-		void remove(OnRowReorderedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onRowReorderedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onRowReorderedListeners[index] = null;
-					onRowReorderedListeners = std.algorithm.remove(onRowReorderedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnRowReorderedDelegateWrapper[] onRowReorderedListeners;
 
 	/**
 	 * The "row-reordered" signal is emitted by an object which
@@ -886,24 +596,6 @@ public template TableT(TStruct)
 	 */
 	gulong addOnRowReordered(void delegate(TableIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnRowReorderedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"row-reordered",
-			cast(GCallback)&callBackRowReordered,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackRowReorderedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackRowReordered(AtkTable* tableStruct, OnRowReorderedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackRowReorderedDestroy(OnRowReorderedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "row-reordered", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

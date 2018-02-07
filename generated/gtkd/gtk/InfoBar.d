@@ -58,18 +58,19 @@ private import std.algorithm;
  * by using gtk_info_bar_set_message_type(). GTK+ may use the message type
  * to determine how the message is displayed.
  * 
- * A simple example for using a GtkInfoBar:
+ * A simple example for using a #GtkInfoBar:
  * |[<!-- language="C" -->
- * // set up info bar
- * GtkWidget *widget;
+ * GtkWidget *widget, *message_label, *content_area;
+ * GtkWidget *grid;
  * GtkInfoBar *bar;
  * 
+ * // set up info bar
  * widget = gtk_info_bar_new ();
  * bar = GTK_INFO_BAR (widget);
+ * grid = gtk_grid_new ();
  * 
  * gtk_widget_set_no_show_all (widget, TRUE);
  * message_label = gtk_label_new ("");
- * gtk_widget_show (message_label);
  * content_area = gtk_info_bar_get_content_area (bar);
  * gtk_container_add (GTK_CONTAINER (content_area),
  * message_label);
@@ -84,10 +85,10 @@ private import std.algorithm;
  * widget,
  * 0, 2, 1, 1);
  * 
- * ...
+ * // ...
  * 
  * // show an error message
- * gtk_label_set_text (GTK_LABEL (message_label), message);
+ * gtk_label_set_text (GTK_LABEL (message_label), "An error occurred!");
  * gtk_info_bar_set_message_type (bar,
  * GTK_MESSAGE_ERROR);
  * gtk_widget_show (bar);
@@ -398,32 +399,6 @@ public class InfoBar : Box
 		gtk_info_bar_set_show_close_button(gtkInfoBar, setting);
 	}
 
-	protected class OnCloseDelegateWrapper
-	{
-		void delegate(InfoBar) dlg;
-		gulong handlerId;
-
-		this(void delegate(InfoBar) dlg)
-		{
-			this.dlg = dlg;
-			onCloseListeners ~= this;
-		}
-
-		void remove(OnCloseDelegateWrapper source)
-		{
-			foreach(index, wrapper; onCloseListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onCloseListeners[index] = null;
-					onCloseListeners = std.algorithm.remove(onCloseListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnCloseDelegateWrapper[] onCloseListeners;
-
 	/**
 	 * The ::close signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -436,52 +411,8 @@ public class InfoBar : Box
 	 */
 	gulong addOnClose(void delegate(InfoBar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnCloseDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"close",
-			cast(GCallback)&callBackClose,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackCloseDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "close", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackClose(GtkInfoBar* infobarStruct, OnCloseDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackCloseDestroy(OnCloseDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnResponseDelegateWrapper
-	{
-		void delegate(int, InfoBar) dlg;
-		gulong handlerId;
-
-		this(void delegate(int, InfoBar) dlg)
-		{
-			this.dlg = dlg;
-			onResponseListeners ~= this;
-		}
-
-		void remove(OnResponseDelegateWrapper source)
-		{
-			foreach(index, wrapper; onResponseListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onResponseListeners[index] = null;
-					onResponseListeners = std.algorithm.remove(onResponseListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnResponseDelegateWrapper[] onResponseListeners;
 
 	/**
 	 * Emitted when an action widget is clicked or the application programmer
@@ -495,24 +426,6 @@ public class InfoBar : Box
 	 */
 	gulong addOnResponse(void delegate(int, InfoBar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnResponseDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"response",
-			cast(GCallback)&callBackResponse,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackResponseDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackResponse(GtkInfoBar* infobarStruct, int responseId, OnResponseDelegateWrapper wrapper)
-	{
-		wrapper.dlg(responseId, wrapper.outer);
-	}
-
-	extern(C) static void callBackResponseDestroy(OnResponseDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "response", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

@@ -282,56 +282,12 @@ public class ToggleButton : Button
 		gtk_toggle_button_toggled(gtkToggleButton);
 	}
 
-	protected class OnToggledDelegateWrapper
-	{
-		void delegate(ToggleButton) dlg;
-		gulong handlerId;
-
-		this(void delegate(ToggleButton) dlg)
-		{
-			this.dlg = dlg;
-			onToggledListeners ~= this;
-		}
-
-		void remove(OnToggledDelegateWrapper source)
-		{
-			foreach(index, wrapper; onToggledListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onToggledListeners[index] = null;
-					onToggledListeners = std.algorithm.remove(onToggledListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnToggledDelegateWrapper[] onToggledListeners;
-
 	/**
 	 * Should be connected if you wish to perform an action whenever the
 	 * #GtkToggleButton's state is changed.
 	 */
 	gulong addOnToggled(void delegate(ToggleButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnToggledDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"toggled",
-			cast(GCallback)&callBackToggled,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackToggledDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackToggled(GtkToggleButton* togglebuttonStruct, OnToggledDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackToggledDestroy(OnToggledDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "toggled", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

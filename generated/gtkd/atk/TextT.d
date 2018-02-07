@@ -489,32 +489,6 @@ public template TextT(TStruct)
 		return atk_text_set_selection(getTextStruct(), selectionNum, startOffset, endOffset) != 0;
 	}
 
-	protected class OnTextAttributesChangedDelegateWrapper
-	{
-		void delegate(TextIF) dlg;
-		gulong handlerId;
-
-		this(void delegate(TextIF) dlg)
-		{
-			this.dlg = dlg;
-			onTextAttributesChangedListeners ~= this;
-		}
-
-		void remove(OnTextAttributesChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onTextAttributesChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onTextAttributesChangedListeners[index] = null;
-					onTextAttributesChangedListeners = std.algorithm.remove(onTextAttributesChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnTextAttributesChangedDelegateWrapper[] onTextAttributesChangedListeners;
-
 	/**
 	 * The "text-attributes-changed" signal is emitted when the text
 	 * attributes of the text of an object which implements AtkText
@@ -522,52 +496,8 @@ public template TextT(TStruct)
 	 */
 	gulong addOnTextAttributesChanged(void delegate(TextIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnTextAttributesChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"text-attributes-changed",
-			cast(GCallback)&callBackTextAttributesChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackTextAttributesChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "text-attributes-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackTextAttributesChanged(AtkText* textStruct, OnTextAttributesChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackTextAttributesChangedDestroy(OnTextAttributesChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnTextCaretMovedDelegateWrapper
-	{
-		void delegate(int, TextIF) dlg;
-		gulong handlerId;
-
-		this(void delegate(int, TextIF) dlg)
-		{
-			this.dlg = dlg;
-			onTextCaretMovedListeners ~= this;
-		}
-
-		void remove(OnTextCaretMovedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onTextCaretMovedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onTextCaretMovedListeners[index] = null;
-					onTextCaretMovedListeners = std.algorithm.remove(onTextCaretMovedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnTextCaretMovedDelegateWrapper[] onTextCaretMovedListeners;
 
 	/**
 	 * The "text-caret-moved" signal is emitted when the caret
@@ -579,52 +509,8 @@ public template TextT(TStruct)
 	 */
 	gulong addOnTextCaretMoved(void delegate(int, TextIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnTextCaretMovedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"text-caret-moved",
-			cast(GCallback)&callBackTextCaretMoved,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackTextCaretMovedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "text-caret-moved", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackTextCaretMoved(AtkText* textStruct, int arg1, OnTextCaretMovedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(arg1, wrapper.outer);
-	}
-
-	extern(C) static void callBackTextCaretMovedDestroy(OnTextCaretMovedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnTextChangedDelegateWrapper
-	{
-		void delegate(int, int, TextIF) dlg;
-		gulong handlerId;
-
-		this(void delegate(int, int, TextIF) dlg)
-		{
-			this.dlg = dlg;
-			onTextChangedListeners ~= this;
-		}
-
-		void remove(OnTextChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onTextChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onTextChangedListeners[index] = null;
-					onTextChangedListeners = std.algorithm.remove(onTextChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnTextChangedDelegateWrapper[] onTextChangedListeners;
 
 	/**
 	 * The "text-changed" signal is emitted when the text of the
@@ -642,52 +528,8 @@ public template TextT(TStruct)
 	 */
 	gulong addOnTextChanged(void delegate(int, int, TextIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnTextChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"text-changed",
-			cast(GCallback)&callBackTextChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackTextChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "text-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackTextChanged(AtkText* textStruct, int arg1, int arg2, OnTextChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(arg1, arg2, wrapper.outer);
-	}
-
-	extern(C) static void callBackTextChangedDestroy(OnTextChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnTextInsertDelegateWrapper
-	{
-		void delegate(int, int, string, TextIF) dlg;
-		gulong handlerId;
-
-		this(void delegate(int, int, string, TextIF) dlg)
-		{
-			this.dlg = dlg;
-			onTextInsertListeners ~= this;
-		}
-
-		void remove(OnTextInsertDelegateWrapper source)
-		{
-			foreach(index, wrapper; onTextInsertListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onTextInsertListeners[index] = null;
-					onTextInsertListeners = std.algorithm.remove(onTextInsertListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnTextInsertDelegateWrapper[] onTextInsertListeners;
 
 	/**
 	 * The "text-insert" signal is emitted when a new text is
@@ -702,52 +544,8 @@ public template TextT(TStruct)
 	 */
 	gulong addOnTextInsert(void delegate(int, int, string, TextIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnTextInsertDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"text-insert",
-			cast(GCallback)&callBackTextInsert,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackTextInsertDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "text-insert", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackTextInsert(AtkText* textStruct, int arg1, int arg2, char* arg3, OnTextInsertDelegateWrapper wrapper)
-	{
-		wrapper.dlg(arg1, arg2, Str.toString(arg3), wrapper.outer);
-	}
-
-	extern(C) static void callBackTextInsertDestroy(OnTextInsertDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnTextRemoveDelegateWrapper
-	{
-		void delegate(int, int, string, TextIF) dlg;
-		gulong handlerId;
-
-		this(void delegate(int, int, string, TextIF) dlg)
-		{
-			this.dlg = dlg;
-			onTextRemoveListeners ~= this;
-		}
-
-		void remove(OnTextRemoveDelegateWrapper source)
-		{
-			foreach(index, wrapper; onTextRemoveListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onTextRemoveListeners[index] = null;
-					onTextRemoveListeners = std.algorithm.remove(onTextRemoveListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnTextRemoveDelegateWrapper[] onTextRemoveListeners;
 
 	/**
 	 * The "text-remove" signal is emitted when a new text is
@@ -762,52 +560,8 @@ public template TextT(TStruct)
 	 */
 	gulong addOnTextRemove(void delegate(int, int, string, TextIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnTextRemoveDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"text-remove",
-			cast(GCallback)&callBackTextRemove,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackTextRemoveDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "text-remove", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackTextRemove(AtkText* textStruct, int arg1, int arg2, char* arg3, OnTextRemoveDelegateWrapper wrapper)
-	{
-		wrapper.dlg(arg1, arg2, Str.toString(arg3), wrapper.outer);
-	}
-
-	extern(C) static void callBackTextRemoveDestroy(OnTextRemoveDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnTextSelectionChangedDelegateWrapper
-	{
-		void delegate(TextIF) dlg;
-		gulong handlerId;
-
-		this(void delegate(TextIF) dlg)
-		{
-			this.dlg = dlg;
-			onTextSelectionChangedListeners ~= this;
-		}
-
-		void remove(OnTextSelectionChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onTextSelectionChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onTextSelectionChangedListeners[index] = null;
-					onTextSelectionChangedListeners = std.algorithm.remove(onTextSelectionChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnTextSelectionChangedDelegateWrapper[] onTextSelectionChangedListeners;
 
 	/**
 	 * The "text-selection-changed" signal is emitted when the
@@ -815,24 +569,6 @@ public template TextT(TStruct)
 	 */
 	gulong addOnTextSelectionChanged(void delegate(TextIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnTextSelectionChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"text-selection-changed",
-			cast(GCallback)&callBackTextSelectionChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackTextSelectionChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackTextSelectionChanged(AtkText* textStruct, OnTextSelectionChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackTextSelectionChangedDestroy(OnTextSelectionChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "text-selection-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

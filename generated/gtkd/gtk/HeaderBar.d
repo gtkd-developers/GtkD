@@ -46,6 +46,10 @@ public  import gtkc.gtktypes;
  * 
  * GtkHeaderBar can add typical window frame controls, such as minimize,
  * maximize and close buttons, or the window icon.
+ * 
+ * For these reasons, GtkHeaderBar is the natural choice for use as the custom
+ * titlebar widget of a #GtkWindow (see gtk_window_set_titlebar()), as it gives
+ * features typical of titlebars while allowing the addition of child widgets.
  */
 public class HeaderBar : Container
 {

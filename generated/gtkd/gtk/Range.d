@@ -501,32 +501,6 @@ public class Range : Widget, OrientableIF
 		gtk_range_set_value(gtkRange, value);
 	}
 
-	protected class OnAdjustBoundsDelegateWrapper
-	{
-		void delegate(double, Range) dlg;
-		gulong handlerId;
-
-		this(void delegate(double, Range) dlg)
-		{
-			this.dlg = dlg;
-			onAdjustBoundsListeners ~= this;
-		}
-
-		void remove(OnAdjustBoundsDelegateWrapper source)
-		{
-			foreach(index, wrapper; onAdjustBoundsListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onAdjustBoundsListeners[index] = null;
-					onAdjustBoundsListeners = std.algorithm.remove(onAdjustBoundsListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnAdjustBoundsDelegateWrapper[] onAdjustBoundsListeners;
-
 	/**
 	 * Emitted before clamping a value, to give the application a
 	 * chance to adjust the bounds.
@@ -536,52 +510,8 @@ public class Range : Widget, OrientableIF
 	 */
 	gulong addOnAdjustBounds(void delegate(double, Range) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnAdjustBoundsDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"adjust-bounds",
-			cast(GCallback)&callBackAdjustBounds,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackAdjustBoundsDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "adjust-bounds", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackAdjustBounds(GtkRange* rangeStruct, double value, OnAdjustBoundsDelegateWrapper wrapper)
-	{
-		wrapper.dlg(value, wrapper.outer);
-	}
-
-	extern(C) static void callBackAdjustBoundsDestroy(OnAdjustBoundsDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnChangeValueDelegateWrapper
-	{
-		bool delegate(GtkScrollType, double, Range) dlg;
-		gulong handlerId;
-
-		this(bool delegate(GtkScrollType, double, Range) dlg)
-		{
-			this.dlg = dlg;
-			onChangeValueListeners ~= this;
-		}
-
-		void remove(OnChangeValueDelegateWrapper source)
-		{
-			foreach(index, wrapper; onChangeValueListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onChangeValueListeners[index] = null;
-					onChangeValueListeners = std.algorithm.remove(onChangeValueListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnChangeValueDelegateWrapper[] onChangeValueListeners;
 
 	/**
 	 * The #GtkRange::change-value signal is emitted when a scroll action is
@@ -608,52 +538,8 @@ public class Range : Widget, OrientableIF
 	 */
 	gulong addOnChangeValue(bool delegate(GtkScrollType, double, Range) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnChangeValueDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"change-value",
-			cast(GCallback)&callBackChangeValue,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackChangeValueDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "change-value", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static int callBackChangeValue(GtkRange* rangeStruct, GtkScrollType scroll, double value, OnChangeValueDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(scroll, value, wrapper.outer);
-	}
-
-	extern(C) static void callBackChangeValueDestroy(OnChangeValueDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnMoveSliderDelegateWrapper
-	{
-		void delegate(GtkScrollType, Range) dlg;
-		gulong handlerId;
-
-		this(void delegate(GtkScrollType, Range) dlg)
-		{
-			this.dlg = dlg;
-			onMoveSliderListeners ~= this;
-		}
-
-		void remove(OnMoveSliderDelegateWrapper source)
-		{
-			foreach(index, wrapper; onMoveSliderListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onMoveSliderListeners[index] = null;
-					onMoveSliderListeners = std.algorithm.remove(onMoveSliderListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnMoveSliderDelegateWrapper[] onMoveSliderListeners;
 
 	/**
 	 * Virtual function that moves the slider. Used for keybindings.
@@ -663,76 +549,14 @@ public class Range : Widget, OrientableIF
 	 */
 	gulong addOnMoveSlider(void delegate(GtkScrollType, Range) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnMoveSliderDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"move-slider",
-			cast(GCallback)&callBackMoveSlider,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackMoveSliderDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "move-slider", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackMoveSlider(GtkRange* rangeStruct, GtkScrollType step, OnMoveSliderDelegateWrapper wrapper)
-	{
-		wrapper.dlg(step, wrapper.outer);
-	}
-
-	extern(C) static void callBackMoveSliderDestroy(OnMoveSliderDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnValueChangedDelegateWrapper
-	{
-		void delegate(Range) dlg;
-		gulong handlerId;
-
-		this(void delegate(Range) dlg)
-		{
-			this.dlg = dlg;
-			onValueChangedListeners ~= this;
-		}
-
-		void remove(OnValueChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onValueChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onValueChangedListeners[index] = null;
-					onValueChangedListeners = std.algorithm.remove(onValueChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnValueChangedDelegateWrapper[] onValueChangedListeners;
 
 	/**
 	 * Emitted when the range value changes.
 	 */
 	gulong addOnValueChanged(void delegate(Range) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnValueChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"value-changed",
-			cast(GCallback)&callBackValueChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackValueChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackValueChanged(GtkRange* rangeStruct, OnValueChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackValueChangedDestroy(OnValueChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "value-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

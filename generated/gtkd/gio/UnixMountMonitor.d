@@ -144,107 +144,19 @@ public class UnixMountMonitor : ObjectG
 		g_unix_mount_monitor_set_rate_limit(gUnixMountMonitor, limitMsec);
 	}
 
-	protected class OnMountpointsChangedDelegateWrapper
-	{
-		void delegate(UnixMountMonitor) dlg;
-		gulong handlerId;
-
-		this(void delegate(UnixMountMonitor) dlg)
-		{
-			this.dlg = dlg;
-			onMountpointsChangedListeners ~= this;
-		}
-
-		void remove(OnMountpointsChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onMountpointsChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onMountpointsChangedListeners[index] = null;
-					onMountpointsChangedListeners = std.algorithm.remove(onMountpointsChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnMountpointsChangedDelegateWrapper[] onMountpointsChangedListeners;
-
 	/**
 	 * Emitted when the unix mount points have changed.
 	 */
 	gulong addOnMountpointsChanged(void delegate(UnixMountMonitor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnMountpointsChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"mountpoints-changed",
-			cast(GCallback)&callBackMountpointsChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackMountpointsChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "mountpoints-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackMountpointsChanged(GUnixMountMonitor* unixmountmonitorStruct, OnMountpointsChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackMountpointsChangedDestroy(OnMountpointsChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnMountsChangedDelegateWrapper
-	{
-		void delegate(UnixMountMonitor) dlg;
-		gulong handlerId;
-
-		this(void delegate(UnixMountMonitor) dlg)
-		{
-			this.dlg = dlg;
-			onMountsChangedListeners ~= this;
-		}
-
-		void remove(OnMountsChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onMountsChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onMountsChangedListeners[index] = null;
-					onMountsChangedListeners = std.algorithm.remove(onMountsChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnMountsChangedDelegateWrapper[] onMountsChangedListeners;
 
 	/**
 	 * Emitted when the unix mounts have changed.
 	 */
 	gulong addOnMountsChanged(void delegate(UnixMountMonitor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnMountsChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"mounts-changed",
-			cast(GCallback)&callBackMountsChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackMountsChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackMountsChanged(GUnixMountMonitor* unixmountmonitorStruct, OnMountsChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackMountsChangedDestroy(OnMountsChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "mounts-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

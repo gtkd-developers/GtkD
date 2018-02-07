@@ -448,32 +448,6 @@ public template ActionGroupT(TStruct)
 		return p;
 	}
 
-	protected class OnActionAddedDelegateWrapper
-	{
-		void delegate(string, ActionGroupIF) dlg;
-		gulong handlerId;
-
-		this(void delegate(string, ActionGroupIF) dlg)
-		{
-			this.dlg = dlg;
-			onActionAddedListeners ~= this;
-		}
-
-		void remove(OnActionAddedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onActionAddedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onActionAddedListeners[index] = null;
-					onActionAddedListeners = std.algorithm.remove(onActionAddedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnActionAddedDelegateWrapper[] onActionAddedListeners;
-
 	/**
 	 * Signals that a new action was just added to the group.
 	 * This signal is emitted after the action has been added
@@ -486,52 +460,8 @@ public template ActionGroupT(TStruct)
 	 */
 	gulong addOnActionAdded(void delegate(string, ActionGroupIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnActionAddedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"action-added",
-			cast(GCallback)&callBackActionAdded,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackActionAddedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "action-added", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackActionAdded(GActionGroup* actiongroupStruct, char* actionName, OnActionAddedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(Str.toString(actionName), wrapper.outer);
-	}
-
-	extern(C) static void callBackActionAddedDestroy(OnActionAddedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnActionEnabledChangedDelegateWrapper
-	{
-		void delegate(string, bool, ActionGroupIF) dlg;
-		gulong handlerId;
-
-		this(void delegate(string, bool, ActionGroupIF) dlg)
-		{
-			this.dlg = dlg;
-			onActionEnabledChangedListeners ~= this;
-		}
-
-		void remove(OnActionEnabledChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onActionEnabledChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onActionEnabledChangedListeners[index] = null;
-					onActionEnabledChangedListeners = std.algorithm.remove(onActionEnabledChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnActionEnabledChangedDelegateWrapper[] onActionEnabledChangedListeners;
 
 	/**
 	 * Signals that the enabled status of the named action has changed.
@@ -544,52 +474,8 @@ public template ActionGroupT(TStruct)
 	 */
 	gulong addOnActionEnabledChanged(void delegate(string, bool, ActionGroupIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnActionEnabledChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"action-enabled-changed",
-			cast(GCallback)&callBackActionEnabledChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackActionEnabledChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "action-enabled-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackActionEnabledChanged(GActionGroup* actiongroupStruct, char* actionName, bool enabled, OnActionEnabledChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(Str.toString(actionName), enabled, wrapper.outer);
-	}
-
-	extern(C) static void callBackActionEnabledChangedDestroy(OnActionEnabledChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnActionRemovedDelegateWrapper
-	{
-		void delegate(string, ActionGroupIF) dlg;
-		gulong handlerId;
-
-		this(void delegate(string, ActionGroupIF) dlg)
-		{
-			this.dlg = dlg;
-			onActionRemovedListeners ~= this;
-		}
-
-		void remove(OnActionRemovedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onActionRemovedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onActionRemovedListeners[index] = null;
-					onActionRemovedListeners = std.algorithm.remove(onActionRemovedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnActionRemovedDelegateWrapper[] onActionRemovedListeners;
 
 	/**
 	 * Signals that an action is just about to be removed from the group.
@@ -603,52 +489,8 @@ public template ActionGroupT(TStruct)
 	 */
 	gulong addOnActionRemoved(void delegate(string, ActionGroupIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnActionRemovedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"action-removed",
-			cast(GCallback)&callBackActionRemoved,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackActionRemovedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "action-removed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackActionRemoved(GActionGroup* actiongroupStruct, char* actionName, OnActionRemovedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(Str.toString(actionName), wrapper.outer);
-	}
-
-	extern(C) static void callBackActionRemovedDestroy(OnActionRemovedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnActionStateChangedDelegateWrapper
-	{
-		void delegate(string, Variant, ActionGroupIF) dlg;
-		gulong handlerId;
-
-		this(void delegate(string, Variant, ActionGroupIF) dlg)
-		{
-			this.dlg = dlg;
-			onActionStateChangedListeners ~= this;
-		}
-
-		void remove(OnActionStateChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onActionStateChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onActionStateChangedListeners[index] = null;
-					onActionStateChangedListeners = std.algorithm.remove(onActionStateChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnActionStateChangedDelegateWrapper[] onActionStateChangedListeners;
 
 	/**
 	 * Signals that the state of the named action has changed.
@@ -661,24 +503,6 @@ public template ActionGroupT(TStruct)
 	 */
 	gulong addOnActionStateChanged(void delegate(string, Variant, ActionGroupIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnActionStateChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"action-state-changed",
-			cast(GCallback)&callBackActionStateChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackActionStateChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackActionStateChanged(GActionGroup* actiongroupStruct, char* actionName, GVariant* value, OnActionStateChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(Str.toString(actionName), new Variant(value), wrapper.outer);
-	}
-
-	extern(C) static void callBackActionStateChangedDestroy(OnActionStateChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "action-state-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

@@ -189,32 +189,6 @@ public class PadTemplate : ObjectGst
 		gst_pad_template_pad_created(gstPadTemplate, (pad is null) ? null : pad.getPadStruct());
 	}
 
-	protected class OnPadCreatedDelegateWrapper
-	{
-		void delegate(Pad, PadTemplate) dlg;
-		gulong handlerId;
-
-		this(void delegate(Pad, PadTemplate) dlg)
-		{
-			this.dlg = dlg;
-			onPadCreatedListeners ~= this;
-		}
-
-		void remove(OnPadCreatedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onPadCreatedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onPadCreatedListeners[index] = null;
-					onPadCreatedListeners = std.algorithm.remove(onPadCreatedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnPadCreatedDelegateWrapper[] onPadCreatedListeners;
-
 	/**
 	 * This signal is fired when an element creates a pad from this template.
 	 *
@@ -223,24 +197,6 @@ public class PadTemplate : ObjectGst
 	 */
 	gulong addOnPadCreated(void delegate(Pad, PadTemplate) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnPadCreatedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"pad-created",
-			cast(GCallback)&callBackPadCreated,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackPadCreatedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackPadCreated(GstPadTemplate* padtemplateStruct, GstPad* pad, OnPadCreatedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(Pad)(pad), wrapper.outer);
-	}
-
-	extern(C) static void callBackPadCreatedDestroy(OnPadCreatedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "pad-created", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

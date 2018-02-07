@@ -101,32 +101,6 @@ public template HypertextT(TStruct)
 		return atk_hypertext_get_n_links(getHypertextStruct());
 	}
 
-	protected class OnLinkSelectedDelegateWrapper
-	{
-		void delegate(int, HypertextIF) dlg;
-		gulong handlerId;
-
-		this(void delegate(int, HypertextIF) dlg)
-		{
-			this.dlg = dlg;
-			onLinkSelectedListeners ~= this;
-		}
-
-		void remove(OnLinkSelectedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onLinkSelectedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onLinkSelectedListeners[index] = null;
-					onLinkSelectedListeners = std.algorithm.remove(onLinkSelectedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnLinkSelectedDelegateWrapper[] onLinkSelectedListeners;
-
 	/**
 	 * The "link-selected" signal is emitted by an AtkHyperText
 	 * object when one of the hyperlinks associated with the object
@@ -137,24 +111,6 @@ public template HypertextT(TStruct)
 	 */
 	gulong addOnLinkSelected(void delegate(int, HypertextIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnLinkSelectedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"link-selected",
-			cast(GCallback)&callBackLinkSelected,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackLinkSelectedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackLinkSelected(AtkHypertext* hypertextStruct, int arg1, OnLinkSelectedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(arg1, wrapper.outer);
-	}
-
-	extern(C) static void callBackLinkSelectedDestroy(OnLinkSelectedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "link-selected", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

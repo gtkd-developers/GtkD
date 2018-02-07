@@ -211,32 +211,6 @@ public template ListModelT(TStruct)
 		g_list_model_items_changed(getListModelStruct(), position, removed, added);
 	}
 
-	protected class OnItemsChangedDelegateWrapper
-	{
-		void delegate(uint, uint, uint, ListModelIF) dlg;
-		gulong handlerId;
-
-		this(void delegate(uint, uint, uint, ListModelIF) dlg)
-		{
-			this.dlg = dlg;
-			onItemsChangedListeners ~= this;
-		}
-
-		void remove(OnItemsChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onItemsChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onItemsChangedListeners[index] = null;
-					onItemsChangedListeners = std.algorithm.remove(onItemsChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnItemsChangedDelegateWrapper[] onItemsChangedListeners;
-
 	/**
 	 * This signal is emitted whenever items were added or removed to
 	 * @list. At @position, @removed items were removed and @added items
@@ -251,24 +225,6 @@ public template ListModelT(TStruct)
 	 */
 	gulong addOnItemsChanged(void delegate(uint, uint, uint, ListModelIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnItemsChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"items-changed",
-			cast(GCallback)&callBackItemsChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackItemsChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackItemsChanged(GListModel* listmodelStruct, uint position, uint removed, uint added, OnItemsChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(position, removed, added, wrapper.outer);
-	}
-
-	extern(C) static void callBackItemsChangedDestroy(OnItemsChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "items-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

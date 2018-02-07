@@ -27,6 +27,8 @@ module gtk.ListBoxRow;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gobject.Signals;
+private import gtk.ActionableIF;
+private import gtk.ActionableT;
 private import gtk.Bin;
 private import gtk.Widget;
 private import gtk.c.functions;
@@ -36,7 +38,7 @@ private import std.algorithm;
 
 
 /** */
-public class ListBoxRow : Bin
+public class ListBoxRow : Bin, ActionableIF
 {
 	/** the main Gtk struct */
 	protected GtkListBoxRow* gtkListBoxRow;
@@ -63,6 +65,9 @@ public class ListBoxRow : Bin
 		this.gtkListBoxRow = gtkListBoxRow;
 		super(cast(GtkBin*)gtkListBoxRow, ownedRef);
 	}
+
+	// add the Actionable capabilities
+	mixin ActionableT!(GtkListBoxRow);
 
 
 	/** */
@@ -230,53 +235,9 @@ public class ListBoxRow : Bin
 		gtk_list_box_row_set_selectable(gtkListBoxRow, selectable);
 	}
 
-	protected class OnActivateDelegateWrapper
-	{
-		void delegate(ListBoxRow) dlg;
-		gulong handlerId;
-
-		this(void delegate(ListBoxRow) dlg)
-		{
-			this.dlg = dlg;
-			onActivateListeners ~= this;
-		}
-
-		void remove(OnActivateDelegateWrapper source)
-		{
-			foreach(index, wrapper; onActivateListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onActivateListeners[index] = null;
-					onActivateListeners = std.algorithm.remove(onActivateListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnActivateDelegateWrapper[] onActivateListeners;
-
 	/** */
 	gulong addOnActivate(void delegate(ListBoxRow) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnActivateDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"activate",
-			cast(GCallback)&callBackActivate,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackActivateDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackActivate(GtkListBoxRow* listboxrowStruct, OnActivateDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackActivateDestroy(OnActivateDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "activate", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

@@ -228,32 +228,6 @@ public class MenuToolButton : ToolButton
 		gtk_menu_tool_button_set_menu(gtkMenuToolButton, (menu is null) ? null : menu.getWidgetStruct());
 	}
 
-	protected class OnShowMenuDelegateWrapper
-	{
-		void delegate(MenuToolButton) dlg;
-		gulong handlerId;
-
-		this(void delegate(MenuToolButton) dlg)
-		{
-			this.dlg = dlg;
-			onShowMenuListeners ~= this;
-		}
-
-		void remove(OnShowMenuDelegateWrapper source)
-		{
-			foreach(index, wrapper; onShowMenuListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onShowMenuListeners[index] = null;
-					onShowMenuListeners = std.algorithm.remove(onShowMenuListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnShowMenuDelegateWrapper[] onShowMenuListeners;
-
 	/**
 	 * The ::show-menu signal is emitted before the menu is shown.
 	 *
@@ -266,24 +240,6 @@ public class MenuToolButton : ToolButton
 	 */
 	gulong addOnShowMenu(void delegate(MenuToolButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnShowMenuDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"show-menu",
-			cast(GCallback)&callBackShowMenu,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackShowMenuDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackShowMenu(GtkMenuToolButton* menutoolbuttonStruct, OnShowMenuDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackShowMenuDestroy(OnShowMenuDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "show-menu", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

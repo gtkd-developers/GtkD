@@ -380,32 +380,6 @@ public class Cancellable : ObjectG
 		return new Source(cast(GSource*) p, true);
 	}
 
-	protected class OnCancelledDelegateWrapper
-	{
-		void delegate(Cancellable) dlg;
-		gulong handlerId;
-
-		this(void delegate(Cancellable) dlg)
-		{
-			this.dlg = dlg;
-			onCancelledListeners ~= this;
-		}
-
-		void remove(OnCancelledDelegateWrapper source)
-		{
-			foreach(index, wrapper; onCancelledListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onCancelledListeners[index] = null;
-					onCancelledListeners = std.algorithm.remove(onCancelledListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnCancelledDelegateWrapper[] onCancelledListeners;
-
 	/**
 	 * Emitted when the operation has been cancelled.
 	 *
@@ -461,24 +435,6 @@ public class Cancellable : ObjectG
 	 */
 	gulong addOnCancelled(void delegate(Cancellable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnCancelledDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"cancelled",
-			cast(GCallback)&callBackCancelled,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackCancelledDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackCancelled(GCancellable* cancellableStruct, OnCancelledDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackCancelledDestroy(OnCancelledDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "cancelled", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

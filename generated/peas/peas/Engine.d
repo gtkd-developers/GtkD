@@ -390,32 +390,6 @@ public class Engine : ObjectG
 		return peas_engine_unload_plugin(peasEngine, (info is null) ? null : info.getPluginInfoStruct()) != 0;
 	}
 
-	protected class OnLoadPluginDelegateWrapper
-	{
-		void delegate(PluginInfo, Engine) dlg;
-		gulong handlerId;
-
-		this(void delegate(PluginInfo, Engine) dlg)
-		{
-			this.dlg = dlg;
-			onLoadPluginListeners ~= this;
-		}
-
-		void remove(OnLoadPluginDelegateWrapper source)
-		{
-			foreach(index, wrapper; onLoadPluginListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onLoadPluginListeners[index] = null;
-					onLoadPluginListeners = std.algorithm.remove(onLoadPluginListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnLoadPluginDelegateWrapper[] onLoadPluginListeners;
-
 	/**
 	 * The load-plugin signal is emitted when a plugin is being loaded.
 	 *
@@ -430,52 +404,8 @@ public class Engine : ObjectG
 	 */
 	gulong addOnLoadPlugin(void delegate(PluginInfo, Engine) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnLoadPluginDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"load-plugin",
-			cast(GCallback)&callBackLoadPlugin,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackLoadPluginDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "load-plugin", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackLoadPlugin(PeasEngine* engineStruct, PeasPluginInfo* info, OnLoadPluginDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(PluginInfo)(info), wrapper.outer);
-	}
-
-	extern(C) static void callBackLoadPluginDestroy(OnLoadPluginDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnUnloadPluginDelegateWrapper
-	{
-		void delegate(PluginInfo, Engine) dlg;
-		gulong handlerId;
-
-		this(void delegate(PluginInfo, Engine) dlg)
-		{
-			this.dlg = dlg;
-			onUnloadPluginListeners ~= this;
-		}
-
-		void remove(OnUnloadPluginDelegateWrapper source)
-		{
-			foreach(index, wrapper; onUnloadPluginListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onUnloadPluginListeners[index] = null;
-					onUnloadPluginListeners = std.algorithm.remove(onUnloadPluginListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnUnloadPluginDelegateWrapper[] onUnloadPluginListeners;
 
 	/**
 	 * The unload-plugin signal is emitted when a plugin is being unloaded.
@@ -491,24 +421,6 @@ public class Engine : ObjectG
 	 */
 	gulong addOnUnloadPlugin(void delegate(PluginInfo, Engine) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnUnloadPluginDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"unload-plugin",
-			cast(GCallback)&callBackUnloadPlugin,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackUnloadPluginDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackUnloadPlugin(PeasEngine* engineStruct, PeasPluginInfo* info, OnUnloadPluginDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(PluginInfo)(info), wrapper.outer);
-	}
-
-	extern(C) static void callBackUnloadPluginDestroy(OnUnloadPluginDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "unload-plugin", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

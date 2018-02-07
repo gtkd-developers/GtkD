@@ -286,32 +286,6 @@ public class AppChooserWidget : Box, AppChooserIF
 		gtk_app_chooser_widget_set_show_recommended(gtkAppChooserWidget, setting);
 	}
 
-	protected class OnApplicationActivatedDelegateWrapper
-	{
-		void delegate(AppInfoIF, AppChooserWidget) dlg;
-		gulong handlerId;
-
-		this(void delegate(AppInfoIF, AppChooserWidget) dlg)
-		{
-			this.dlg = dlg;
-			onApplicationActivatedListeners ~= this;
-		}
-
-		void remove(OnApplicationActivatedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onApplicationActivatedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onApplicationActivatedListeners[index] = null;
-					onApplicationActivatedListeners = std.algorithm.remove(onApplicationActivatedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnApplicationActivatedDelegateWrapper[] onApplicationActivatedListeners;
-
 	/**
 	 * Emitted when an application item is activated from the widget's list.
 	 *
@@ -324,52 +298,8 @@ public class AppChooserWidget : Box, AppChooserIF
 	 */
 	gulong addOnApplicationActivated(void delegate(AppInfoIF, AppChooserWidget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnApplicationActivatedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"application-activated",
-			cast(GCallback)&callBackApplicationActivated,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackApplicationActivatedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "application-activated", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackApplicationActivated(GtkAppChooserWidget* appchooserwidgetStruct, GAppInfo* application, OnApplicationActivatedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(AppInfoIF)(application), wrapper.outer);
-	}
-
-	extern(C) static void callBackApplicationActivatedDestroy(OnApplicationActivatedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnApplicationSelectedDelegateWrapper
-	{
-		void delegate(AppInfoIF, AppChooserWidget) dlg;
-		gulong handlerId;
-
-		this(void delegate(AppInfoIF, AppChooserWidget) dlg)
-		{
-			this.dlg = dlg;
-			onApplicationSelectedListeners ~= this;
-		}
-
-		void remove(OnApplicationSelectedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onApplicationSelectedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onApplicationSelectedListeners[index] = null;
-					onApplicationSelectedListeners = std.algorithm.remove(onApplicationSelectedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnApplicationSelectedDelegateWrapper[] onApplicationSelectedListeners;
 
 	/**
 	 * Emitted when an application item is selected from the widget's list.
@@ -379,52 +309,8 @@ public class AppChooserWidget : Box, AppChooserIF
 	 */
 	gulong addOnApplicationSelected(void delegate(AppInfoIF, AppChooserWidget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnApplicationSelectedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"application-selected",
-			cast(GCallback)&callBackApplicationSelected,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackApplicationSelectedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "application-selected", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackApplicationSelected(GtkAppChooserWidget* appchooserwidgetStruct, GAppInfo* application, OnApplicationSelectedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(AppInfoIF)(application), wrapper.outer);
-	}
-
-	extern(C) static void callBackApplicationSelectedDestroy(OnApplicationSelectedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnPopulatePopupDelegateWrapper
-	{
-		void delegate(Menu, AppInfoIF, AppChooserWidget) dlg;
-		gulong handlerId;
-
-		this(void delegate(Menu, AppInfoIF, AppChooserWidget) dlg)
-		{
-			this.dlg = dlg;
-			onPopulatePopupListeners ~= this;
-		}
-
-		void remove(OnPopulatePopupDelegateWrapper source)
-		{
-			foreach(index, wrapper; onPopulatePopupListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onPopulatePopupListeners[index] = null;
-					onPopulatePopupListeners = std.algorithm.remove(onPopulatePopupListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnPopulatePopupDelegateWrapper[] onPopulatePopupListeners;
 
 	/**
 	 * Emitted when a context menu is about to popup over an application item.
@@ -438,24 +324,6 @@ public class AppChooserWidget : Box, AppChooserIF
 	 */
 	gulong addOnPopulatePopup(void delegate(Menu, AppInfoIF, AppChooserWidget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnPopulatePopupDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"populate-popup",
-			cast(GCallback)&callBackPopulatePopup,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackPopulatePopupDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackPopulatePopup(GtkAppChooserWidget* appchooserwidgetStruct, GtkMenu* menu, GAppInfo* application, OnPopulatePopupDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(Menu)(menu), ObjectG.getDObject!(AppInfoIF)(application), wrapper.outer);
-	}
-
-	extern(C) static void callBackPopulatePopupDestroy(OnPopulatePopupDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "populate-popup", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

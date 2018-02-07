@@ -399,32 +399,6 @@ public class TreeSelection : ObjectG
 		gtk_tree_selection_unselect_range(gtkTreeSelection, (startPath is null) ? null : startPath.getTreePathStruct(), (endPath is null) ? null : endPath.getTreePathStruct());
 	}
 
-	protected class OnChangedDelegateWrapper
-	{
-		void delegate(TreeSelection) dlg;
-		gulong handlerId;
-
-		this(void delegate(TreeSelection) dlg)
-		{
-			this.dlg = dlg;
-			onChangedListeners ~= this;
-		}
-
-		void remove(OnChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onChangedListeners[index] = null;
-					onChangedListeners = std.algorithm.remove(onChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnChangedDelegateWrapper[] onChangedListeners;
-
 	/**
 	 * Emitted whenever the selection has (possibly) changed. Please note that
 	 * this signal is mostly a hint.  It may only be emitted once when a range
@@ -433,24 +407,6 @@ public class TreeSelection : ObjectG
 	 */
 	gulong addOnChanged(void delegate(TreeSelection) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"changed",
-			cast(GCallback)&callBackChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackChanged(GtkTreeSelection* treeselectionStruct, OnChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

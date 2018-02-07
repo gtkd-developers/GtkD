@@ -169,32 +169,6 @@ public template DocumentT(TStruct)
 		return atk_document_set_attribute_value(getDocumentStruct(), Str.toStringz(attributeName), Str.toStringz(attributeValue)) != 0;
 	}
 
-	protected class OnLoadCompleteDelegateWrapper
-	{
-		void delegate(DocumentIF) dlg;
-		gulong handlerId;
-
-		this(void delegate(DocumentIF) dlg)
-		{
-			this.dlg = dlg;
-			onLoadCompleteListeners ~= this;
-		}
-
-		void remove(OnLoadCompleteDelegateWrapper source)
-		{
-			foreach(index, wrapper; onLoadCompleteListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onLoadCompleteListeners[index] = null;
-					onLoadCompleteListeners = std.algorithm.remove(onLoadCompleteListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnLoadCompleteDelegateWrapper[] onLoadCompleteListeners;
-
 	/**
 	 * The 'load-complete' signal is emitted when a pending load of
 	 * a static document has completed.  This signal is to be
@@ -208,52 +182,8 @@ public template DocumentT(TStruct)
 	 */
 	gulong addOnLoadComplete(void delegate(DocumentIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnLoadCompleteDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"load-complete",
-			cast(GCallback)&callBackLoadComplete,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackLoadCompleteDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "load-complete", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackLoadComplete(AtkDocument* documentStruct, OnLoadCompleteDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackLoadCompleteDestroy(OnLoadCompleteDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnLoadStoppedDelegateWrapper
-	{
-		void delegate(DocumentIF) dlg;
-		gulong handlerId;
-
-		this(void delegate(DocumentIF) dlg)
-		{
-			this.dlg = dlg;
-			onLoadStoppedListeners ~= this;
-		}
-
-		void remove(OnLoadStoppedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onLoadStoppedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onLoadStoppedListeners[index] = null;
-					onLoadStoppedListeners = std.algorithm.remove(onLoadStoppedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnLoadStoppedDelegateWrapper[] onLoadStoppedListeners;
 
 	/**
 	 * The 'load-stopped' signal is emitted when a pending load of
@@ -265,52 +195,8 @@ public template DocumentT(TStruct)
 	 */
 	gulong addOnLoadStopped(void delegate(DocumentIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnLoadStoppedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"load-stopped",
-			cast(GCallback)&callBackLoadStopped,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackLoadStoppedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "load-stopped", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackLoadStopped(AtkDocument* documentStruct, OnLoadStoppedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackLoadStoppedDestroy(OnLoadStoppedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnPageChangedDelegateWrapper
-	{
-		void delegate(int, DocumentIF) dlg;
-		gulong handlerId;
-
-		this(void delegate(int, DocumentIF) dlg)
-		{
-			this.dlg = dlg;
-			onPageChangedListeners ~= this;
-		}
-
-		void remove(OnPageChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onPageChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onPageChangedListeners[index] = null;
-					onPageChangedListeners = std.algorithm.remove(onPageChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnPageChangedDelegateWrapper[] onPageChangedListeners;
 
 	/**
 	 * The 'page-changed' signal is emitted when the current page of
@@ -325,52 +211,8 @@ public template DocumentT(TStruct)
 	 */
 	gulong addOnPageChanged(void delegate(int, DocumentIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnPageChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"page-changed",
-			cast(GCallback)&callBackPageChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackPageChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "page-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackPageChanged(AtkDocument* documentStruct, int pageNumber, OnPageChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(pageNumber, wrapper.outer);
-	}
-
-	extern(C) static void callBackPageChangedDestroy(OnPageChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnReloadDelegateWrapper
-	{
-		void delegate(DocumentIF) dlg;
-		gulong handlerId;
-
-		this(void delegate(DocumentIF) dlg)
-		{
-			this.dlg = dlg;
-			onReloadListeners ~= this;
-		}
-
-		void remove(OnReloadDelegateWrapper source)
-		{
-			foreach(index, wrapper; onReloadListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onReloadListeners[index] = null;
-					onReloadListeners = std.algorithm.remove(onReloadListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnReloadDelegateWrapper[] onReloadListeners;
 
 	/**
 	 * The 'reload' signal is emitted when the contents of a
@@ -381,24 +223,6 @@ public template DocumentT(TStruct)
 	 */
 	gulong addOnReload(void delegate(DocumentIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnReloadDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"reload",
-			cast(GCallback)&callBackReload,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackReloadDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackReload(AtkDocument* documentStruct, OnReloadDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackReloadDestroy(OnReloadDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "reload", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

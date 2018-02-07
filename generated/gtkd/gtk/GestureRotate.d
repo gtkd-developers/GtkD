@@ -114,32 +114,6 @@ public class GestureRotate : Gesture
 		return gtk_gesture_rotate_get_angle_delta(gtkGestureRotate);
 	}
 
-	protected class OnAngleChangedDelegateWrapper
-	{
-		void delegate(double, double, GestureRotate) dlg;
-		gulong handlerId;
-
-		this(void delegate(double, double, GestureRotate) dlg)
-		{
-			this.dlg = dlg;
-			onAngleChangedListeners ~= this;
-		}
-
-		void remove(OnAngleChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onAngleChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onAngleChangedListeners[index] = null;
-					onAngleChangedListeners = std.algorithm.remove(onAngleChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnAngleChangedDelegateWrapper[] onAngleChangedListeners;
-
 	/**
 	 * This signal is emitted when the angle between both tracked points
 	 * changes.
@@ -152,24 +126,6 @@ public class GestureRotate : Gesture
 	 */
 	gulong addOnAngleChanged(void delegate(double, double, GestureRotate) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnAngleChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"angle-changed",
-			cast(GCallback)&callBackAngleChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackAngleChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackAngleChanged(GtkGestureRotate* gesturerotateStruct, double angle, double angleDelta, OnAngleChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(angle, angleDelta, wrapper.outer);
-	}
-
-	extern(C) static void callBackAngleChangedDestroy(OnAngleChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "angle-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

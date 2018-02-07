@@ -112,32 +112,6 @@ public class FileChooserWidget : Box, FileChooserIF
 		this(cast(GtkFileChooserWidget*) p);
 	}
 
-	protected class OnDesktopFolderDelegateWrapper
-	{
-		void delegate(FileChooserWidget) dlg;
-		gulong handlerId;
-
-		this(void delegate(FileChooserWidget) dlg)
-		{
-			this.dlg = dlg;
-			onDesktopFolderListeners ~= this;
-		}
-
-		void remove(OnDesktopFolderDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDesktopFolderListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onDesktopFolderListeners[index] = null;
-					onDesktopFolderListeners = std.algorithm.remove(onDesktopFolderListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnDesktopFolderDelegateWrapper[] onDesktopFolderListeners;
-
 	/**
 	 * The ::desktop-folder signal is a [keybinding signal][GtkBindingSignal]
 	 * which gets emitted when the user asks for it.
@@ -149,52 +123,8 @@ public class FileChooserWidget : Box, FileChooserIF
 	 */
 	gulong addOnDesktopFolder(void delegate(FileChooserWidget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnDesktopFolderDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"desktop-folder",
-			cast(GCallback)&callBackDesktopFolder,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackDesktopFolderDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "desktop-folder", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackDesktopFolder(GtkFileChooserWidget* filechooserwidgetStruct, OnDesktopFolderDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackDesktopFolderDestroy(OnDesktopFolderDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnDownFolderDelegateWrapper
-	{
-		void delegate(FileChooserWidget) dlg;
-		gulong handlerId;
-
-		this(void delegate(FileChooserWidget) dlg)
-		{
-			this.dlg = dlg;
-			onDownFolderListeners ~= this;
-		}
-
-		void remove(OnDownFolderDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDownFolderListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onDownFolderListeners[index] = null;
-					onDownFolderListeners = std.algorithm.remove(onDownFolderListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnDownFolderDelegateWrapper[] onDownFolderListeners;
 
 	/**
 	 * The ::down-folder signal is a [keybinding signal][GtkBindingSignal]
@@ -210,52 +140,8 @@ public class FileChooserWidget : Box, FileChooserIF
 	 */
 	gulong addOnDownFolder(void delegate(FileChooserWidget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnDownFolderDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"down-folder",
-			cast(GCallback)&callBackDownFolder,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackDownFolderDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "down-folder", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackDownFolder(GtkFileChooserWidget* filechooserwidgetStruct, OnDownFolderDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackDownFolderDestroy(OnDownFolderDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnHomeFolderDelegateWrapper
-	{
-		void delegate(FileChooserWidget) dlg;
-		gulong handlerId;
-
-		this(void delegate(FileChooserWidget) dlg)
-		{
-			this.dlg = dlg;
-			onHomeFolderListeners ~= this;
-		}
-
-		void remove(OnHomeFolderDelegateWrapper source)
-		{
-			foreach(index, wrapper; onHomeFolderListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onHomeFolderListeners[index] = null;
-					onHomeFolderListeners = std.algorithm.remove(onHomeFolderListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnHomeFolderDelegateWrapper[] onHomeFolderListeners;
 
 	/**
 	 * The ::home-folder signal is a [keybinding signal][GtkBindingSignal]
@@ -268,52 +154,8 @@ public class FileChooserWidget : Box, FileChooserIF
 	 */
 	gulong addOnHomeFolder(void delegate(FileChooserWidget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnHomeFolderDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"home-folder",
-			cast(GCallback)&callBackHomeFolder,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackHomeFolderDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "home-folder", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackHomeFolder(GtkFileChooserWidget* filechooserwidgetStruct, OnHomeFolderDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackHomeFolderDestroy(OnHomeFolderDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnLocationPopupDelegateWrapper
-	{
-		void delegate(string, FileChooserWidget) dlg;
-		gulong handlerId;
-
-		this(void delegate(string, FileChooserWidget) dlg)
-		{
-			this.dlg = dlg;
-			onLocationPopupListeners ~= this;
-		}
-
-		void remove(OnLocationPopupDelegateWrapper source)
-		{
-			foreach(index, wrapper; onLocationPopupListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onLocationPopupListeners[index] = null;
-					onLocationPopupListeners = std.algorithm.remove(onLocationPopupListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnLocationPopupDelegateWrapper[] onLocationPopupListeners;
 
 	/**
 	 * The ::location-popup signal is a [keybinding signal][GtkBindingSignal]
@@ -333,52 +175,8 @@ public class FileChooserWidget : Box, FileChooserIF
 	 */
 	gulong addOnLocationPopup(void delegate(string, FileChooserWidget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnLocationPopupDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"location-popup",
-			cast(GCallback)&callBackLocationPopup,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackLocationPopupDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "location-popup", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackLocationPopup(GtkFileChooserWidget* filechooserwidgetStruct, char* path, OnLocationPopupDelegateWrapper wrapper)
-	{
-		wrapper.dlg(Str.toString(path), wrapper.outer);
-	}
-
-	extern(C) static void callBackLocationPopupDestroy(OnLocationPopupDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnLocationPopupOnPasteDelegateWrapper
-	{
-		void delegate(FileChooserWidget) dlg;
-		gulong handlerId;
-
-		this(void delegate(FileChooserWidget) dlg)
-		{
-			this.dlg = dlg;
-			onLocationPopupOnPasteListeners ~= this;
-		}
-
-		void remove(OnLocationPopupOnPasteDelegateWrapper source)
-		{
-			foreach(index, wrapper; onLocationPopupOnPasteListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onLocationPopupOnPasteListeners[index] = null;
-					onLocationPopupOnPasteListeners = std.algorithm.remove(onLocationPopupOnPasteListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnLocationPopupOnPasteDelegateWrapper[] onLocationPopupOnPasteListeners;
 
 	/**
 	 * The ::location-popup-on-paste signal is a [keybinding signal][GtkBindingSignal]
@@ -391,52 +189,8 @@ public class FileChooserWidget : Box, FileChooserIF
 	 */
 	gulong addOnLocationPopupOnPaste(void delegate(FileChooserWidget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnLocationPopupOnPasteDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"location-popup-on-paste",
-			cast(GCallback)&callBackLocationPopupOnPaste,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackLocationPopupOnPasteDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "location-popup-on-paste", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackLocationPopupOnPaste(GtkFileChooserWidget* filechooserwidgetStruct, OnLocationPopupOnPasteDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackLocationPopupOnPasteDestroy(OnLocationPopupOnPasteDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnLocationTogglePopupDelegateWrapper
-	{
-		void delegate(FileChooserWidget) dlg;
-		gulong handlerId;
-
-		this(void delegate(FileChooserWidget) dlg)
-		{
-			this.dlg = dlg;
-			onLocationTogglePopupListeners ~= this;
-		}
-
-		void remove(OnLocationTogglePopupDelegateWrapper source)
-		{
-			foreach(index, wrapper; onLocationTogglePopupListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onLocationTogglePopupListeners[index] = null;
-					onLocationTogglePopupListeners = std.algorithm.remove(onLocationTogglePopupListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnLocationTogglePopupDelegateWrapper[] onLocationTogglePopupListeners;
 
 	/**
 	 * The ::location-toggle-popup signal is a [keybinding signal][GtkBindingSignal]
@@ -449,52 +203,8 @@ public class FileChooserWidget : Box, FileChooserIF
 	 */
 	gulong addOnLocationTogglePopup(void delegate(FileChooserWidget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnLocationTogglePopupDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"location-toggle-popup",
-			cast(GCallback)&callBackLocationTogglePopup,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackLocationTogglePopupDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "location-toggle-popup", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackLocationTogglePopup(GtkFileChooserWidget* filechooserwidgetStruct, OnLocationTogglePopupDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackLocationTogglePopupDestroy(OnLocationTogglePopupDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnPlacesShortcutDelegateWrapper
-	{
-		void delegate(FileChooserWidget) dlg;
-		gulong handlerId;
-
-		this(void delegate(FileChooserWidget) dlg)
-		{
-			this.dlg = dlg;
-			onPlacesShortcutListeners ~= this;
-		}
-
-		void remove(OnPlacesShortcutDelegateWrapper source)
-		{
-			foreach(index, wrapper; onPlacesShortcutListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onPlacesShortcutListeners[index] = null;
-					onPlacesShortcutListeners = std.algorithm.remove(onPlacesShortcutListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnPlacesShortcutDelegateWrapper[] onPlacesShortcutListeners;
 
 	/**
 	 * The ::places-shortcut signal is a [keybinding signal][GtkBindingSignal]
@@ -506,52 +216,8 @@ public class FileChooserWidget : Box, FileChooserIF
 	 */
 	gulong addOnPlacesShortcut(void delegate(FileChooserWidget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnPlacesShortcutDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"places-shortcut",
-			cast(GCallback)&callBackPlacesShortcut,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackPlacesShortcutDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "places-shortcut", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackPlacesShortcut(GtkFileChooserWidget* filechooserwidgetStruct, OnPlacesShortcutDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackPlacesShortcutDestroy(OnPlacesShortcutDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnQuickBookmarkDelegateWrapper
-	{
-		void delegate(int, FileChooserWidget) dlg;
-		gulong handlerId;
-
-		this(void delegate(int, FileChooserWidget) dlg)
-		{
-			this.dlg = dlg;
-			onQuickBookmarkListeners ~= this;
-		}
-
-		void remove(OnQuickBookmarkDelegateWrapper source)
-		{
-			foreach(index, wrapper; onQuickBookmarkListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onQuickBookmarkListeners[index] = null;
-					onQuickBookmarkListeners = std.algorithm.remove(onQuickBookmarkListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnQuickBookmarkDelegateWrapper[] onQuickBookmarkListeners;
 
 	/**
 	 * The ::quick-bookmark signal is a [keybinding signal][GtkBindingSignal]
@@ -572,52 +238,8 @@ public class FileChooserWidget : Box, FileChooserIF
 	 */
 	gulong addOnQuickBookmark(void delegate(int, FileChooserWidget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnQuickBookmarkDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"quick-bookmark",
-			cast(GCallback)&callBackQuickBookmark,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackQuickBookmarkDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "quick-bookmark", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackQuickBookmark(GtkFileChooserWidget* filechooserwidgetStruct, int bookmarkIndex, OnQuickBookmarkDelegateWrapper wrapper)
-	{
-		wrapper.dlg(bookmarkIndex, wrapper.outer);
-	}
-
-	extern(C) static void callBackQuickBookmarkDestroy(OnQuickBookmarkDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnRecentShortcutDelegateWrapper
-	{
-		void delegate(FileChooserWidget) dlg;
-		gulong handlerId;
-
-		this(void delegate(FileChooserWidget) dlg)
-		{
-			this.dlg = dlg;
-			onRecentShortcutListeners ~= this;
-		}
-
-		void remove(OnRecentShortcutDelegateWrapper source)
-		{
-			foreach(index, wrapper; onRecentShortcutListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onRecentShortcutListeners[index] = null;
-					onRecentShortcutListeners = std.algorithm.remove(onRecentShortcutListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnRecentShortcutDelegateWrapper[] onRecentShortcutListeners;
 
 	/**
 	 * The ::recent-shortcut signal is a [keybinding signal][GtkBindingSignal]
@@ -629,52 +251,8 @@ public class FileChooserWidget : Box, FileChooserIF
 	 */
 	gulong addOnRecentShortcut(void delegate(FileChooserWidget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnRecentShortcutDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"recent-shortcut",
-			cast(GCallback)&callBackRecentShortcut,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackRecentShortcutDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "recent-shortcut", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackRecentShortcut(GtkFileChooserWidget* filechooserwidgetStruct, OnRecentShortcutDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackRecentShortcutDestroy(OnRecentShortcutDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnSearchShortcutDelegateWrapper
-	{
-		void delegate(FileChooserWidget) dlg;
-		gulong handlerId;
-
-		this(void delegate(FileChooserWidget) dlg)
-		{
-			this.dlg = dlg;
-			onSearchShortcutListeners ~= this;
-		}
-
-		void remove(OnSearchShortcutDelegateWrapper source)
-		{
-			foreach(index, wrapper; onSearchShortcutListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onSearchShortcutListeners[index] = null;
-					onSearchShortcutListeners = std.algorithm.remove(onSearchShortcutListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnSearchShortcutDelegateWrapper[] onSearchShortcutListeners;
 
 	/**
 	 * The ::search-shortcut signal is a [keybinding signal][GtkBindingSignal]
@@ -686,52 +264,8 @@ public class FileChooserWidget : Box, FileChooserIF
 	 */
 	gulong addOnSearchShortcut(void delegate(FileChooserWidget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnSearchShortcutDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"search-shortcut",
-			cast(GCallback)&callBackSearchShortcut,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackSearchShortcutDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "search-shortcut", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackSearchShortcut(GtkFileChooserWidget* filechooserwidgetStruct, OnSearchShortcutDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackSearchShortcutDestroy(OnSearchShortcutDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnShowHiddenDelegateWrapper
-	{
-		void delegate(FileChooserWidget) dlg;
-		gulong handlerId;
-
-		this(void delegate(FileChooserWidget) dlg)
-		{
-			this.dlg = dlg;
-			onShowHiddenListeners ~= this;
-		}
-
-		void remove(OnShowHiddenDelegateWrapper source)
-		{
-			foreach(index, wrapper; onShowHiddenListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onShowHiddenListeners[index] = null;
-					onShowHiddenListeners = std.algorithm.remove(onShowHiddenListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnShowHiddenDelegateWrapper[] onShowHiddenListeners;
 
 	/**
 	 * The ::show-hidden signal is a [keybinding signal][GtkBindingSignal]
@@ -743,52 +277,8 @@ public class FileChooserWidget : Box, FileChooserIF
 	 */
 	gulong addOnShowHidden(void delegate(FileChooserWidget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnShowHiddenDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"show-hidden",
-			cast(GCallback)&callBackShowHidden,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackShowHiddenDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "show-hidden", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackShowHidden(GtkFileChooserWidget* filechooserwidgetStruct, OnShowHiddenDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackShowHiddenDestroy(OnShowHiddenDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnUpFolderDelegateWrapper
-	{
-		void delegate(FileChooserWidget) dlg;
-		gulong handlerId;
-
-		this(void delegate(FileChooserWidget) dlg)
-		{
-			this.dlg = dlg;
-			onUpFolderListeners ~= this;
-		}
-
-		void remove(OnUpFolderDelegateWrapper source)
-		{
-			foreach(index, wrapper; onUpFolderListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onUpFolderListeners[index] = null;
-					onUpFolderListeners = std.algorithm.remove(onUpFolderListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnUpFolderDelegateWrapper[] onUpFolderListeners;
 
 	/**
 	 * The ::up-folder signal is a [keybinding signal][GtkBindingSignal]
@@ -801,24 +291,6 @@ public class FileChooserWidget : Box, FileChooserIF
 	 */
 	gulong addOnUpFolder(void delegate(FileChooserWidget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnUpFolderDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"up-folder",
-			cast(GCallback)&callBackUpFolder,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackUpFolderDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackUpFolder(GtkFileChooserWidget* filechooserwidgetStruct, OnUpFolderDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackUpFolderDestroy(OnUpFolderDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "up-folder", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

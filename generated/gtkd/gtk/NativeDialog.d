@@ -282,32 +282,6 @@ public class NativeDialog : ObjectG
 		gtk_native_dialog_show(gtkNativeDialog);
 	}
 
-	protected class OnResponseDelegateWrapper
-	{
-		void delegate(int, NativeDialog) dlg;
-		gulong handlerId;
-
-		this(void delegate(int, NativeDialog) dlg)
-		{
-			this.dlg = dlg;
-			onResponseListeners ~= this;
-		}
-
-		void remove(OnResponseDelegateWrapper source)
-		{
-			foreach(index, wrapper; onResponseListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onResponseListeners[index] = null;
-					onResponseListeners = std.algorithm.remove(onResponseListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnResponseDelegateWrapper[] onResponseListeners;
-
 	/**
 	 * Emitted when the user responds to the dialog.
 	 *
@@ -323,24 +297,6 @@ public class NativeDialog : ObjectG
 	 */
 	gulong addOnResponse(void delegate(int, NativeDialog) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnResponseDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"response",
-			cast(GCallback)&callBackResponse,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackResponseDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackResponse(GtkNativeDialog* nativedialogStruct, int responseId, OnResponseDelegateWrapper wrapper)
-	{
-		wrapper.dlg(responseId, wrapper.outer);
-	}
-
-	extern(C) static void callBackResponseDestroy(OnResponseDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "response", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

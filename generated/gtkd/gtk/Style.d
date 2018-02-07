@@ -346,32 +346,6 @@ public class Style : ObjectG
 		gtk_style_set_background(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType);
 	}
 
-	protected class OnRealizeDelegateWrapper
-	{
-		void delegate(Style) dlg;
-		gulong handlerId;
-
-		this(void delegate(Style) dlg)
-		{
-			this.dlg = dlg;
-			onRealizeListeners ~= this;
-		}
-
-		void remove(OnRealizeDelegateWrapper source)
-		{
-			foreach(index, wrapper; onRealizeListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onRealizeListeners[index] = null;
-					onRealizeListeners = std.algorithm.remove(onRealizeListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnRealizeDelegateWrapper[] onRealizeListeners;
-
 	/**
 	 * Emitted when the style has been initialized for a particular
 	 * visual. Connecting to this signal is probably seldom
@@ -382,52 +356,8 @@ public class Style : ObjectG
 	 */
 	gulong addOnRealize(void delegate(Style) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnRealizeDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"realize",
-			cast(GCallback)&callBackRealize,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackRealizeDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "realize", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackRealize(GtkStyle* styleStruct, OnRealizeDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackRealizeDestroy(OnRealizeDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnUnrealizeDelegateWrapper
-	{
-		void delegate(Style) dlg;
-		gulong handlerId;
-
-		this(void delegate(Style) dlg)
-		{
-			this.dlg = dlg;
-			onUnrealizeListeners ~= this;
-		}
-
-		void remove(OnUnrealizeDelegateWrapper source)
-		{
-			foreach(index, wrapper; onUnrealizeListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onUnrealizeListeners[index] = null;
-					onUnrealizeListeners = std.algorithm.remove(onUnrealizeListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnUnrealizeDelegateWrapper[] onUnrealizeListeners;
 
 	/**
 	 * Emitted when the aspects of the style specific to a particular visual
@@ -439,25 +369,7 @@ public class Style : ObjectG
 	 */
 	gulong addOnUnrealize(void delegate(Style) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnUnrealizeDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"unrealize",
-			cast(GCallback)&callBackUnrealize,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackUnrealizeDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackUnrealize(GtkStyle* styleStruct, OnUnrealizeDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackUnrealizeDestroy(OnUnrealizeDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "unrealize", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
 	/**

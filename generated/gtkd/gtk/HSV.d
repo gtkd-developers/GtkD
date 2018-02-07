@@ -198,104 +198,16 @@ public class HSV : Widget
 		gtk_hsv_set_metrics(gtkHSV, size, ringWidth);
 	}
 
-	protected class OnChangedDelegateWrapper
-	{
-		void delegate(HSV) dlg;
-		gulong handlerId;
-
-		this(void delegate(HSV) dlg)
-		{
-			this.dlg = dlg;
-			onChangedListeners ~= this;
-		}
-
-		void remove(OnChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onChangedListeners[index] = null;
-					onChangedListeners = std.algorithm.remove(onChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnChangedDelegateWrapper[] onChangedListeners;
-
 	/** */
 	gulong addOnChanged(void delegate(HSV) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"changed",
-			cast(GCallback)&callBackChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackChanged(GtkHSV* hsvStruct, OnChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnMoveDelegateWrapper
-	{
-		void delegate(GtkDirectionType, HSV) dlg;
-		gulong handlerId;
-
-		this(void delegate(GtkDirectionType, HSV) dlg)
-		{
-			this.dlg = dlg;
-			onMoveListeners ~= this;
-		}
-
-		void remove(OnMoveDelegateWrapper source)
-		{
-			foreach(index, wrapper; onMoveListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onMoveListeners[index] = null;
-					onMoveListeners = std.algorithm.remove(onMoveListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnMoveDelegateWrapper[] onMoveListeners;
 
 	/** */
 	gulong addOnMove(void delegate(GtkDirectionType, HSV) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnMoveDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"move",
-			cast(GCallback)&callBackMove,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackMoveDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackMove(GtkHSV* hsvStruct, GtkDirectionType object, OnMoveDelegateWrapper wrapper)
-	{
-		wrapper.dlg(object, wrapper.outer);
-	}
-
-	extern(C) static void callBackMoveDestroy(OnMoveDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "move", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
 	/**

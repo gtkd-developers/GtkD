@@ -286,32 +286,6 @@ public class CssProvider : ObjectG, StyleProviderIF
 		return Str.toString(retStr);
 	}
 
-	protected class OnParsingErrorDelegateWrapper
-	{
-		void delegate(CssSection, ErrorG, CssProvider) dlg;
-		gulong handlerId;
-
-		this(void delegate(CssSection, ErrorG, CssProvider) dlg)
-		{
-			this.dlg = dlg;
-			onParsingErrorListeners ~= this;
-		}
-
-		void remove(OnParsingErrorDelegateWrapper source)
-		{
-			foreach(index, wrapper; onParsingErrorListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onParsingErrorListeners[index] = null;
-					onParsingErrorListeners = std.algorithm.remove(onParsingErrorListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnParsingErrorDelegateWrapper[] onParsingErrorListeners;
-
 	/**
 	 * Signals that a parsing error occurred. the @path, @line and @position
 	 * describe the actual location of the error as accurately as possible.
@@ -331,24 +305,6 @@ public class CssProvider : ObjectG, StyleProviderIF
 	 */
 	gulong addOnParsingError(void delegate(CssSection, ErrorG, CssProvider) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnParsingErrorDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"parsing-error",
-			cast(GCallback)&callBackParsingError,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackParsingErrorDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackParsingError(GtkCssProvider* cssproviderStruct, GtkCssSection* section, GError* error, OnParsingErrorDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(CssSection)(section), new ErrorG(error), wrapper.outer);
-	}
-
-	extern(C) static void callBackParsingErrorDestroy(OnParsingErrorDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "parsing-error", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

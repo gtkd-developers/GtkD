@@ -580,56 +580,12 @@ public class Resolver : ObjectG
 		g_resolver_set_default(gResolver);
 	}
 
-	protected class OnReloadDelegateWrapper
-	{
-		void delegate(Resolver) dlg;
-		gulong handlerId;
-
-		this(void delegate(Resolver) dlg)
-		{
-			this.dlg = dlg;
-			onReloadListeners ~= this;
-		}
-
-		void remove(OnReloadDelegateWrapper source)
-		{
-			foreach(index, wrapper; onReloadListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onReloadListeners[index] = null;
-					onReloadListeners = std.algorithm.remove(onReloadListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnReloadDelegateWrapper[] onReloadListeners;
-
 	/**
 	 * Emitted when the resolver notices that the system resolver
 	 * configuration has changed.
 	 */
 	gulong addOnReload(void delegate(Resolver) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnReloadDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"reload",
-			cast(GCallback)&callBackReload,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackReloadDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackReload(GResolver* resolverStruct, OnReloadDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackReloadDestroy(OnReloadDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "reload", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

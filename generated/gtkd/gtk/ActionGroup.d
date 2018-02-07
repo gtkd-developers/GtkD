@@ -514,32 +514,6 @@ public class ActionGroup : ObjectG, BuildableIF
 		return Str.toString(gtk_action_group_translate_string(gtkActionGroup, Str.toStringz(str)));
 	}
 
-	protected class OnConnectProxyDelegateWrapper
-	{
-		void delegate(Action, Widget, ActionGroup) dlg;
-		gulong handlerId;
-
-		this(void delegate(Action, Widget, ActionGroup) dlg)
-		{
-			this.dlg = dlg;
-			onConnectProxyListeners ~= this;
-		}
-
-		void remove(OnConnectProxyDelegateWrapper source)
-		{
-			foreach(index, wrapper; onConnectProxyListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onConnectProxyListeners[index] = null;
-					onConnectProxyListeners = std.algorithm.remove(onConnectProxyListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnConnectProxyDelegateWrapper[] onConnectProxyListeners;
-
 	/**
 	 * The ::connect-proxy signal is emitted after connecting a proxy to
 	 * an action in the group. Note that the proxy may have been connected
@@ -561,52 +535,8 @@ public class ActionGroup : ObjectG, BuildableIF
 	 */
 	gulong addOnConnectProxy(void delegate(Action, Widget, ActionGroup) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnConnectProxyDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"connect-proxy",
-			cast(GCallback)&callBackConnectProxy,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackConnectProxyDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "connect-proxy", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackConnectProxy(GtkActionGroup* actiongroupStruct, GtkAction* action, GtkWidget* proxy, OnConnectProxyDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(Action)(action), ObjectG.getDObject!(Widget)(proxy), wrapper.outer);
-	}
-
-	extern(C) static void callBackConnectProxyDestroy(OnConnectProxyDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnDisconnectProxyDelegateWrapper
-	{
-		void delegate(Action, Widget, ActionGroup) dlg;
-		gulong handlerId;
-
-		this(void delegate(Action, Widget, ActionGroup) dlg)
-		{
-			this.dlg = dlg;
-			onDisconnectProxyListeners ~= this;
-		}
-
-		void remove(OnDisconnectProxyDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDisconnectProxyListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onDisconnectProxyListeners[index] = null;
-					onDisconnectProxyListeners = std.algorithm.remove(onDisconnectProxyListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnDisconnectProxyDelegateWrapper[] onDisconnectProxyListeners;
 
 	/**
 	 * The ::disconnect-proxy signal is emitted after disconnecting a proxy
@@ -624,52 +554,8 @@ public class ActionGroup : ObjectG, BuildableIF
 	 */
 	gulong addOnDisconnectProxy(void delegate(Action, Widget, ActionGroup) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnDisconnectProxyDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"disconnect-proxy",
-			cast(GCallback)&callBackDisconnectProxy,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackDisconnectProxyDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "disconnect-proxy", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackDisconnectProxy(GtkActionGroup* actiongroupStruct, GtkAction* action, GtkWidget* proxy, OnDisconnectProxyDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(Action)(action), ObjectG.getDObject!(Widget)(proxy), wrapper.outer);
-	}
-
-	extern(C) static void callBackDisconnectProxyDestroy(OnDisconnectProxyDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnPostActivateDelegateWrapper
-	{
-		void delegate(Action, ActionGroup) dlg;
-		gulong handlerId;
-
-		this(void delegate(Action, ActionGroup) dlg)
-		{
-			this.dlg = dlg;
-			onPostActivateListeners ~= this;
-		}
-
-		void remove(OnPostActivateDelegateWrapper source)
-		{
-			foreach(index, wrapper; onPostActivateListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onPostActivateListeners[index] = null;
-					onPostActivateListeners = std.algorithm.remove(onPostActivateListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnPostActivateDelegateWrapper[] onPostActivateListeners;
 
 	/**
 	 * The ::post-activate signal is emitted just after the @action in the
@@ -685,52 +571,8 @@ public class ActionGroup : ObjectG, BuildableIF
 	 */
 	gulong addOnPostActivate(void delegate(Action, ActionGroup) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnPostActivateDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"post-activate",
-			cast(GCallback)&callBackPostActivate,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackPostActivateDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "post-activate", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackPostActivate(GtkActionGroup* actiongroupStruct, GtkAction* action, OnPostActivateDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(Action)(action), wrapper.outer);
-	}
-
-	extern(C) static void callBackPostActivateDestroy(OnPostActivateDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnPreActivateDelegateWrapper
-	{
-		void delegate(Action, ActionGroup) dlg;
-		gulong handlerId;
-
-		this(void delegate(Action, ActionGroup) dlg)
-		{
-			this.dlg = dlg;
-			onPreActivateListeners ~= this;
-		}
-
-		void remove(OnPreActivateDelegateWrapper source)
-		{
-			foreach(index, wrapper; onPreActivateListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onPreActivateListeners[index] = null;
-					onPreActivateListeners = std.algorithm.remove(onPreActivateListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnPreActivateDelegateWrapper[] onPreActivateListeners;
 
 	/**
 	 * The ::pre-activate signal is emitted just before the @action in the
@@ -746,24 +588,6 @@ public class ActionGroup : ObjectG, BuildableIF
 	 */
 	gulong addOnPreActivate(void delegate(Action, ActionGroup) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnPreActivateDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"pre-activate",
-			cast(GCallback)&callBackPreActivate,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackPreActivateDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackPreActivate(GtkActionGroup* actiongroupStruct, GtkAction* action, OnPreActivateDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(Action)(action), wrapper.outer);
-	}
-
-	extern(C) static void callBackPreActivateDestroy(OnPreActivateDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "pre-activate", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

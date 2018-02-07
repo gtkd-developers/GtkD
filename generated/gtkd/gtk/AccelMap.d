@@ -369,32 +369,6 @@ public class AccelMap : ObjectG
 		gtk_accel_map_unlock_path(Str.toStringz(accelPath));
 	}
 
-	protected class OnChangedDelegateWrapper
-	{
-		void delegate(string, uint, GdkModifierType, AccelMap) dlg;
-		gulong handlerId;
-
-		this(void delegate(string, uint, GdkModifierType, AccelMap) dlg)
-		{
-			this.dlg = dlg;
-			onChangedListeners ~= this;
-		}
-
-		void remove(OnChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onChangedListeners[index] = null;
-					onChangedListeners = std.algorithm.remove(onChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnChangedDelegateWrapper[] onChangedListeners;
-
 	/**
 	 * Notifies of a change in the global accelerator map.
 	 * The path is also used as the detail for the signal,
@@ -410,24 +384,6 @@ public class AccelMap : ObjectG
 	 */
 	gulong addOnChanged(void delegate(string, uint, GdkModifierType, AccelMap) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"changed",
-			cast(GCallback)&callBackChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackChanged(GtkAccelMap* accelmapStruct, char* accelPath, uint accelKey, GdkModifierType accelMods, OnChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(Str.toString(accelPath), accelKey, accelMods, wrapper.outer);
-	}
-
-	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

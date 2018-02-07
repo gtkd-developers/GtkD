@@ -167,56 +167,12 @@ public template SelectionT(TStruct)
 		return atk_selection_select_all_selection(getSelectionStruct()) != 0;
 	}
 
-	protected class OnSelectionChangedDelegateWrapper
-	{
-		void delegate(SelectionIF) dlg;
-		gulong handlerId;
-
-		this(void delegate(SelectionIF) dlg)
-		{
-			this.dlg = dlg;
-			onSelectionChangedListeners ~= this;
-		}
-
-		void remove(OnSelectionChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onSelectionChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onSelectionChangedListeners[index] = null;
-					onSelectionChangedListeners = std.algorithm.remove(onSelectionChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnSelectionChangedDelegateWrapper[] onSelectionChangedListeners;
-
 	/**
 	 * The "selection-changed" signal is emitted by an object which
 	 * implements AtkSelection interface when the selection changes.
 	 */
 	gulong addOnSelectionChanged(void delegate(SelectionIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnSelectionChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"selection-changed",
-			cast(GCallback)&callBackSelectionChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackSelectionChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackSelectionChanged(AtkSelection* selectionStruct, OnSelectionChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackSelectionChangedDestroy(OnSelectionChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "selection-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

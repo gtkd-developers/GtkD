@@ -37,8 +37,8 @@ private import std.algorithm;
 /**
  * GdkMonitor objects represent the individual outputs that are
  * associated with a #GdkDisplay. GdkDisplay has APIs to enumerate
- * monitors with gdk_display_get_monitors() and to find particular
- * monitors with gdk_display_get_primary_monitor() or
+ * monitors with gdk_display_get_n_monitors() and gdk_display_get_monitor(), and
+ * to find particular monitors with gdk_display_get_primary_monitor() or
  * gdk_display_get_monitor_at_window().
  * 
  * GdkMonitor was introduced in GTK+ 3.22 and supersedes earlier
@@ -241,53 +241,9 @@ public class MonitorG : ObjectG
 		return gdk_monitor_is_primary(gdkMonitor) != 0;
 	}
 
-	protected class OnInvalidateDelegateWrapper
-	{
-		void delegate(MonitorG) dlg;
-		gulong handlerId;
-
-		this(void delegate(MonitorG) dlg)
-		{
-			this.dlg = dlg;
-			onInvalidateListeners ~= this;
-		}
-
-		void remove(OnInvalidateDelegateWrapper source)
-		{
-			foreach(index, wrapper; onInvalidateListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onInvalidateListeners[index] = null;
-					onInvalidateListeners = std.algorithm.remove(onInvalidateListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnInvalidateDelegateWrapper[] onInvalidateListeners;
-
 	/** */
 	gulong addOnInvalidate(void delegate(MonitorG) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnInvalidateDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"invalidate",
-			cast(GCallback)&callBackInvalidate,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackInvalidateDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackInvalidate(GdkMonitor* monitorgStruct, OnInvalidateDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackInvalidateDestroy(OnInvalidateDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "invalidate", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

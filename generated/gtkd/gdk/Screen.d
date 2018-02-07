@@ -787,32 +787,6 @@ public class Screen : ObjectG
 		gdk_screen_set_resolution(gdkScreen, dpi);
 	}
 
-	protected class OnCompositedChangedDelegateWrapper
-	{
-		void delegate(Screen) dlg;
-		gulong handlerId;
-
-		this(void delegate(Screen) dlg)
-		{
-			this.dlg = dlg;
-			onCompositedChangedListeners ~= this;
-		}
-
-		void remove(OnCompositedChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onCompositedChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onCompositedChangedListeners[index] = null;
-					onCompositedChangedListeners = std.algorithm.remove(onCompositedChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnCompositedChangedDelegateWrapper[] onCompositedChangedListeners;
-
 	/**
 	 * The ::composited-changed signal is emitted when the composited
 	 * status of the screen changes
@@ -821,52 +795,8 @@ public class Screen : ObjectG
 	 */
 	gulong addOnCompositedChanged(void delegate(Screen) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnCompositedChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"composited-changed",
-			cast(GCallback)&callBackCompositedChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackCompositedChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "composited-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackCompositedChanged(GdkScreen* screenStruct, OnCompositedChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackCompositedChangedDestroy(OnCompositedChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnMonitorsChangedDelegateWrapper
-	{
-		void delegate(Screen) dlg;
-		gulong handlerId;
-
-		this(void delegate(Screen) dlg)
-		{
-			this.dlg = dlg;
-			onMonitorsChangedListeners ~= this;
-		}
-
-		void remove(OnMonitorsChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onMonitorsChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onMonitorsChangedListeners[index] = null;
-					onMonitorsChangedListeners = std.algorithm.remove(onMonitorsChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnMonitorsChangedDelegateWrapper[] onMonitorsChangedListeners;
 
 	/**
 	 * The ::monitors-changed signal is emitted when the number, size
@@ -879,52 +809,8 @@ public class Screen : ObjectG
 	 */
 	gulong addOnMonitorsChanged(void delegate(Screen) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnMonitorsChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"monitors-changed",
-			cast(GCallback)&callBackMonitorsChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackMonitorsChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "monitors-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackMonitorsChanged(GdkScreen* screenStruct, OnMonitorsChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackMonitorsChangedDestroy(OnMonitorsChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnSizeChangedDelegateWrapper
-	{
-		void delegate(Screen) dlg;
-		gulong handlerId;
-
-		this(void delegate(Screen) dlg)
-		{
-			this.dlg = dlg;
-			onSizeChangedListeners ~= this;
-		}
-
-		void remove(OnSizeChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onSizeChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onSizeChangedListeners[index] = null;
-					onSizeChangedListeners = std.algorithm.remove(onSizeChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnSizeChangedDelegateWrapper[] onSizeChangedListeners;
 
 	/**
 	 * The ::size-changed signal is emitted when the pixel width or
@@ -934,24 +820,6 @@ public class Screen : ObjectG
 	 */
 	gulong addOnSizeChanged(void delegate(Screen) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnSizeChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"size-changed",
-			cast(GCallback)&callBackSizeChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackSizeChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackSizeChanged(GdkScreen* screenStruct, OnSizeChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackSizeChangedDestroy(OnSizeChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "size-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

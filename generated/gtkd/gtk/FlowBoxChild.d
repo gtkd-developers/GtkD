@@ -144,32 +144,6 @@ public class FlowBoxChild : Bin
 		return gtk_flow_box_child_is_selected(gtkFlowBoxChild) != 0;
 	}
 
-	protected class OnActivateDelegateWrapper
-	{
-		void delegate(FlowBoxChild) dlg;
-		gulong handlerId;
-
-		this(void delegate(FlowBoxChild) dlg)
-		{
-			this.dlg = dlg;
-			onActivateListeners ~= this;
-		}
-
-		void remove(OnActivateDelegateWrapper source)
-		{
-			foreach(index, wrapper; onActivateListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onActivateListeners[index] = null;
-					onActivateListeners = std.algorithm.remove(onActivateListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnActivateDelegateWrapper[] onActivateListeners;
-
 	/**
 	 * The ::activate signal is emitted when the user activates
 	 * a child widget in a #GtkFlowBox, either by clicking or
@@ -181,24 +155,6 @@ public class FlowBoxChild : Bin
 	 */
 	gulong addOnActivate(void delegate(FlowBoxChild) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnActivateDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"activate",
-			cast(GCallback)&callBackActivate,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackActivateDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackActivate(GtkFlowBoxChild* flowboxchildStruct, OnActivateDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackActivateDestroy(OnActivateDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "activate", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

@@ -366,108 +366,20 @@ public class Adjustment : ObjectG
 		gtk_adjustment_value_changed(gtkAdjustment);
 	}
 
-	protected class OnChangedDelegateWrapper
-	{
-		void delegate(Adjustment) dlg;
-		gulong handlerId;
-
-		this(void delegate(Adjustment) dlg)
-		{
-			this.dlg = dlg;
-			onChangedListeners ~= this;
-		}
-
-		void remove(OnChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onChangedListeners[index] = null;
-					onChangedListeners = std.algorithm.remove(onChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnChangedDelegateWrapper[] onChangedListeners;
-
 	/**
 	 * Emitted when one or more of the #GtkAdjustment properties have been
 	 * changed, other than the #GtkAdjustment:value property.
 	 */
 	gulong addOnChanged(void delegate(Adjustment) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"changed",
-			cast(GCallback)&callBackChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackChanged(GtkAdjustment* adjustmentStruct, OnChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnValueChangedDelegateWrapper
-	{
-		void delegate(Adjustment) dlg;
-		gulong handlerId;
-
-		this(void delegate(Adjustment) dlg)
-		{
-			this.dlg = dlg;
-			onValueChangedListeners ~= this;
-		}
-
-		void remove(OnValueChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onValueChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onValueChangedListeners[index] = null;
-					onValueChangedListeners = std.algorithm.remove(onValueChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnValueChangedDelegateWrapper[] onValueChangedListeners;
 
 	/**
 	 * Emitted when the #GtkAdjustment:value property has been changed.
 	 */
 	gulong addOnValueChanged(void delegate(Adjustment) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnValueChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"value-changed",
-			cast(GCallback)&callBackValueChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackValueChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackValueChanged(GtkAdjustment* adjustmentStruct, OnValueChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackValueChangedDestroy(OnValueChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "value-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

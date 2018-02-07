@@ -550,32 +550,6 @@ public template RecentChooserT(TStruct)
 		gtk_recent_chooser_unselect_uri(getRecentChooserStruct(), Str.toStringz(uri));
 	}
 
-	protected class OnItemActivatedDelegateWrapper
-	{
-		void delegate(RecentChooserIF) dlg;
-		gulong handlerId;
-
-		this(void delegate(RecentChooserIF) dlg)
-		{
-			this.dlg = dlg;
-			onItemActivatedListeners ~= this;
-		}
-
-		void remove(OnItemActivatedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onItemActivatedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onItemActivatedListeners[index] = null;
-					onItemActivatedListeners = std.algorithm.remove(onItemActivatedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnItemActivatedDelegateWrapper[] onItemActivatedListeners;
-
 	/**
 	 * This signal is emitted when the user "activates" a recent item
 	 * in the recent chooser.  This can happen by double-clicking on an item
@@ -586,52 +560,8 @@ public template RecentChooserT(TStruct)
 	 */
 	gulong addOnItemActivated(void delegate(RecentChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnItemActivatedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"item-activated",
-			cast(GCallback)&callBackItemActivated,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackItemActivatedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "item-activated", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackItemActivated(GtkRecentChooser* recentchooserStruct, OnItemActivatedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackItemActivatedDestroy(OnItemActivatedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnSelectionChangedDelegateWrapper
-	{
-		void delegate(RecentChooserIF) dlg;
-		gulong handlerId;
-
-		this(void delegate(RecentChooserIF) dlg)
-		{
-			this.dlg = dlg;
-			onSelectionChangedListeners ~= this;
-		}
-
-		void remove(OnSelectionChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onSelectionChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onSelectionChangedListeners[index] = null;
-					onSelectionChangedListeners = std.algorithm.remove(onSelectionChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnSelectionChangedDelegateWrapper[] onSelectionChangedListeners;
 
 	/**
 	 * This signal is emitted when there is a change in the set of
@@ -643,24 +573,6 @@ public template RecentChooserT(TStruct)
 	 */
 	gulong addOnSelectionChanged(void delegate(RecentChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnSelectionChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"selection-changed",
-			cast(GCallback)&callBackSelectionChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackSelectionChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackSelectionChanged(GtkRecentChooser* recentchooserStruct, OnSelectionChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackSelectionChangedDestroy(OnSelectionChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "selection-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

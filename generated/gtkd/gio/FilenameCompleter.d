@@ -140,55 +140,11 @@ public class FilenameCompleter : ObjectG
 		g_filename_completer_set_dirs_only(gFilenameCompleter, dirsOnly);
 	}
 
-	protected class OnGotCompletionDataDelegateWrapper
-	{
-		void delegate(FilenameCompleter) dlg;
-		gulong handlerId;
-
-		this(void delegate(FilenameCompleter) dlg)
-		{
-			this.dlg = dlg;
-			onGotCompletionDataListeners ~= this;
-		}
-
-		void remove(OnGotCompletionDataDelegateWrapper source)
-		{
-			foreach(index, wrapper; onGotCompletionDataListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onGotCompletionDataListeners[index] = null;
-					onGotCompletionDataListeners = std.algorithm.remove(onGotCompletionDataListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnGotCompletionDataDelegateWrapper[] onGotCompletionDataListeners;
-
 	/**
 	 * Emitted when the file name completion information comes available.
 	 */
 	gulong addOnGotCompletionData(void delegate(FilenameCompleter) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnGotCompletionDataDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"got-completion-data",
-			cast(GCallback)&callBackGotCompletionData,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackGotCompletionDataDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackGotCompletionData(GFilenameCompleter* filenamecompleterStruct, OnGotCompletionDataDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackGotCompletionDataDestroy(OnGotCompletionDataDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "got-completion-data", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

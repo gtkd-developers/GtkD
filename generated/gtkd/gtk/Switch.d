@@ -174,32 +174,6 @@ public class Switch : Widget, ActionableIF, ActivatableIF
 		gtk_switch_set_state(gtkSwitch, state);
 	}
 
-	protected class OnActivateDelegateWrapper
-	{
-		void delegate(Switch) dlg;
-		gulong handlerId;
-
-		this(void delegate(Switch) dlg)
-		{
-			this.dlg = dlg;
-			onActivateListeners ~= this;
-		}
-
-		void remove(OnActivateDelegateWrapper source)
-		{
-			foreach(index, wrapper; onActivateListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onActivateListeners[index] = null;
-					onActivateListeners = std.algorithm.remove(onActivateListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnActivateDelegateWrapper[] onActivateListeners;
-
 	/**
 	 * The ::activate signal on GtkSwitch is an action signal and
 	 * emitting it causes the switch to animate.
@@ -208,52 +182,8 @@ public class Switch : Widget, ActionableIF, ActivatableIF
 	 */
 	gulong addOnActivate(void delegate(Switch) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnActivateDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"activate",
-			cast(GCallback)&callBackActivate,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackActivateDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "activate", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackActivate(GtkSwitch* switchStruct, OnActivateDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackActivateDestroy(OnActivateDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnStateSetDelegateWrapper
-	{
-		bool delegate(bool, Switch) dlg;
-		gulong handlerId;
-
-		this(bool delegate(bool, Switch) dlg)
-		{
-			this.dlg = dlg;
-			onStateSetListeners ~= this;
-		}
-
-		void remove(OnStateSetDelegateWrapper source)
-		{
-			foreach(index, wrapper; onStateSetListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onStateSetListeners[index] = null;
-					onStateSetListeners = std.algorithm.remove(onStateSetListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnStateSetDelegateWrapper[] onStateSetListeners;
 
 	/**
 	 * The ::state-set signal on GtkSwitch is emitted to change the underlying
@@ -279,24 +209,6 @@ public class Switch : Widget, ActionableIF, ActivatableIF
 	 */
 	gulong addOnStateSet(bool delegate(bool, Switch) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnStateSetDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"state-set",
-			cast(GCallback)&callBackStateSet,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackStateSetDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static int callBackStateSet(GtkSwitch* switchStruct, bool state, OnStateSetDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(state, wrapper.outer);
-	}
-
-	extern(C) static void callBackStateSetDestroy(OnStateSetDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "state-set", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

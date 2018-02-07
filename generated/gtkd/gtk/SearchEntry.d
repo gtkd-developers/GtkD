@@ -146,32 +146,6 @@ public class SearchEntry : Entry
 		return gtk_search_entry_handle_event(gtkSearchEntry, (event is null) ? null : event.getEventStruct()) != 0;
 	}
 
-	protected class OnNextMatchDelegateWrapper
-	{
-		void delegate(SearchEntry) dlg;
-		gulong handlerId;
-
-		this(void delegate(SearchEntry) dlg)
-		{
-			this.dlg = dlg;
-			onNextMatchListeners ~= this;
-		}
-
-		void remove(OnNextMatchDelegateWrapper source)
-		{
-			foreach(index, wrapper; onNextMatchListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onNextMatchListeners[index] = null;
-					onNextMatchListeners = std.algorithm.remove(onNextMatchListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnNextMatchDelegateWrapper[] onNextMatchListeners;
-
 	/**
 	 * The ::next-match signal is a [keybinding signal][GtkBindingSignal]
 	 * which gets emitted when the user initiates a move to the next match
@@ -186,52 +160,8 @@ public class SearchEntry : Entry
 	 */
 	gulong addOnNextMatch(void delegate(SearchEntry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnNextMatchDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"next-match",
-			cast(GCallback)&callBackNextMatch,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackNextMatchDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "next-match", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackNextMatch(GtkSearchEntry* searchentryStruct, OnNextMatchDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackNextMatchDestroy(OnNextMatchDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnPreviousMatchDelegateWrapper
-	{
-		void delegate(SearchEntry) dlg;
-		gulong handlerId;
-
-		this(void delegate(SearchEntry) dlg)
-		{
-			this.dlg = dlg;
-			onPreviousMatchListeners ~= this;
-		}
-
-		void remove(OnPreviousMatchDelegateWrapper source)
-		{
-			foreach(index, wrapper; onPreviousMatchListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onPreviousMatchListeners[index] = null;
-					onPreviousMatchListeners = std.algorithm.remove(onPreviousMatchListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnPreviousMatchDelegateWrapper[] onPreviousMatchListeners;
 
 	/**
 	 * The ::previous-match signal is a [keybinding signal][GtkBindingSignal]
@@ -247,52 +177,8 @@ public class SearchEntry : Entry
 	 */
 	gulong addOnPreviousMatch(void delegate(SearchEntry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnPreviousMatchDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"previous-match",
-			cast(GCallback)&callBackPreviousMatch,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackPreviousMatchDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "previous-match", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackPreviousMatch(GtkSearchEntry* searchentryStruct, OnPreviousMatchDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackPreviousMatchDestroy(OnPreviousMatchDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnSearchChangedDelegateWrapper
-	{
-		void delegate(SearchEntry) dlg;
-		gulong handlerId;
-
-		this(void delegate(SearchEntry) dlg)
-		{
-			this.dlg = dlg;
-			onSearchChangedListeners ~= this;
-		}
-
-		void remove(OnSearchChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onSearchChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onSearchChangedListeners[index] = null;
-					onSearchChangedListeners = std.algorithm.remove(onSearchChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnSearchChangedDelegateWrapper[] onSearchChangedListeners;
 
 	/**
 	 * The #GtkSearchEntry::search-changed signal is emitted with a short
@@ -302,52 +188,8 @@ public class SearchEntry : Entry
 	 */
 	gulong addOnSearchChanged(void delegate(SearchEntry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnSearchChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"search-changed",
-			cast(GCallback)&callBackSearchChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackSearchChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "search-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackSearchChanged(GtkSearchEntry* searchentryStruct, OnSearchChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackSearchChangedDestroy(OnSearchChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnStopSearchDelegateWrapper
-	{
-		void delegate(SearchEntry) dlg;
-		gulong handlerId;
-
-		this(void delegate(SearchEntry) dlg)
-		{
-			this.dlg = dlg;
-			onStopSearchListeners ~= this;
-		}
-
-		void remove(OnStopSearchDelegateWrapper source)
-		{
-			foreach(index, wrapper; onStopSearchListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onStopSearchListeners[index] = null;
-					onStopSearchListeners = std.algorithm.remove(onStopSearchListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnStopSearchDelegateWrapper[] onStopSearchListeners;
 
 	/**
 	 * The ::stop-search signal is a [keybinding signal][GtkBindingSignal]
@@ -362,24 +204,6 @@ public class SearchEntry : Entry
 	 */
 	gulong addOnStopSearch(void delegate(SearchEntry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnStopSearchDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"stop-search",
-			cast(GCallback)&callBackStopSearch,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackStopSearchDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackStopSearch(GtkSearchEntry* searchentryStruct, OnStopSearchDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackStopSearchDestroy(OnStopSearchDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "stop-search", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

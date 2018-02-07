@@ -3198,32 +3198,6 @@ public class Window : ObjectG
 		gdk_window_withdraw(gdkWindow);
 	}
 
-	protected class OnCreateSurfaceDelegateWrapper
-	{
-		Surface delegate(int, int, Window) dlg;
-		gulong handlerId;
-
-		this(Surface delegate(int, int, Window) dlg)
-		{
-			this.dlg = dlg;
-			onCreateSurfaceListeners ~= this;
-		}
-
-		void remove(OnCreateSurfaceDelegateWrapper source)
-		{
-			foreach(index, wrapper; onCreateSurfaceListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onCreateSurfaceListeners[index] = null;
-					onCreateSurfaceListeners = std.algorithm.remove(onCreateSurfaceListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnCreateSurfaceDelegateWrapper[] onCreateSurfaceListeners;
-
 	/**
 	 * The ::create-surface signal is emitted when an offscreen window
 	 * needs its surface (re)created, which happens either when the
@@ -3246,53 +3220,8 @@ public class Window : ObjectG
 	 */
 	gulong addOnCreateSurface(Surface delegate(int, int, Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnCreateSurfaceDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"create-surface",
-			cast(GCallback)&callBackCreateSurface,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackCreateSurfaceDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "create-surface", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static cairo_surface_t* callBackCreateSurface(GdkWindow* windowStruct, int width, int height, OnCreateSurfaceDelegateWrapper wrapper)
-	{
-		auto r = wrapper.dlg(width, height, wrapper.outer);
-		return r.getSurfaceStruct();
-	}
-
-	extern(C) static void callBackCreateSurfaceDestroy(OnCreateSurfaceDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnFromEmbedderDelegateWrapper
-	{
-		void delegate(double, double, void*, void*, Window) dlg;
-		gulong handlerId;
-
-		this(void delegate(double, double, void*, void*, Window) dlg)
-		{
-			this.dlg = dlg;
-			onFromEmbedderListeners ~= this;
-		}
-
-		void remove(OnFromEmbedderDelegateWrapper source)
-		{
-			foreach(index, wrapper; onFromEmbedderListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onFromEmbedderListeners[index] = null;
-					onFromEmbedderListeners = std.algorithm.remove(onFromEmbedderListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnFromEmbedderDelegateWrapper[] onFromEmbedderListeners;
 
 	/**
 	 * The ::from-embedder signal is emitted to translate coordinates
@@ -3312,52 +3241,8 @@ public class Window : ObjectG
 	 */
 	gulong addOnFromEmbedder(void delegate(double, double, void*, void*, Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnFromEmbedderDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"from-embedder",
-			cast(GCallback)&callBackFromEmbedder,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackFromEmbedderDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "from-embedder", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackFromEmbedder(GdkWindow* windowStruct, double embedderX, double embedderY, void* offscreenX, void* offscreenY, OnFromEmbedderDelegateWrapper wrapper)
-	{
-		wrapper.dlg(embedderX, embedderY, offscreenX, offscreenY, wrapper.outer);
-	}
-
-	extern(C) static void callBackFromEmbedderDestroy(OnFromEmbedderDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnMovedToRectDelegateWrapper
-	{
-		void delegate(void*, void*, bool, bool, Window) dlg;
-		gulong handlerId;
-
-		this(void delegate(void*, void*, bool, bool, Window) dlg)
-		{
-			this.dlg = dlg;
-			onMovedToRectListeners ~= this;
-		}
-
-		void remove(OnMovedToRectDelegateWrapper source)
-		{
-			foreach(index, wrapper; onMovedToRectListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onMovedToRectListeners[index] = null;
-					onMovedToRectListeners = std.algorithm.remove(onMovedToRectListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnMovedToRectDelegateWrapper[] onMovedToRectListeners;
 
 	/**
 	 * Emitted when the position of @window is finalized after being moved to a
@@ -3384,52 +3269,8 @@ public class Window : ObjectG
 	 */
 	gulong addOnMovedToRect(void delegate(void*, void*, bool, bool, Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnMovedToRectDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"moved-to-rect",
-			cast(GCallback)&callBackMovedToRect,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackMovedToRectDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "moved-to-rect", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackMovedToRect(GdkWindow* windowStruct, void* flippedRect, void* finalRect, bool flippedX, bool flippedY, OnMovedToRectDelegateWrapper wrapper)
-	{
-		wrapper.dlg(flippedRect, finalRect, flippedX, flippedY, wrapper.outer);
-	}
-
-	extern(C) static void callBackMovedToRectDestroy(OnMovedToRectDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnPickEmbeddedChildDelegateWrapper
-	{
-		Window delegate(double, double, Window) dlg;
-		gulong handlerId;
-
-		this(Window delegate(double, double, Window) dlg)
-		{
-			this.dlg = dlg;
-			onPickEmbeddedChildListeners ~= this;
-		}
-
-		void remove(OnPickEmbeddedChildDelegateWrapper source)
-		{
-			foreach(index, wrapper; onPickEmbeddedChildListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onPickEmbeddedChildListeners[index] = null;
-					onPickEmbeddedChildListeners = std.algorithm.remove(onPickEmbeddedChildListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnPickEmbeddedChildDelegateWrapper[] onPickEmbeddedChildListeners;
 
 	/**
 	 * The ::pick-embedded-child signal is emitted to find an embedded
@@ -3446,53 +3287,8 @@ public class Window : ObjectG
 	 */
 	gulong addOnPickEmbeddedChild(Window delegate(double, double, Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnPickEmbeddedChildDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"pick-embedded-child",
-			cast(GCallback)&callBackPickEmbeddedChild,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackPickEmbeddedChildDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "pick-embedded-child", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static GdkWindow* callBackPickEmbeddedChild(GdkWindow* windowStruct, double x, double y, OnPickEmbeddedChildDelegateWrapper wrapper)
-	{
-		auto r = wrapper.dlg(x, y, wrapper.outer);
-		return r.getWindowStruct();
-	}
-
-	extern(C) static void callBackPickEmbeddedChildDestroy(OnPickEmbeddedChildDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnToEmbedderDelegateWrapper
-	{
-		void delegate(double, double, void*, void*, Window) dlg;
-		gulong handlerId;
-
-		this(void delegate(double, double, void*, void*, Window) dlg)
-		{
-			this.dlg = dlg;
-			onToEmbedderListeners ~= this;
-		}
-
-		void remove(OnToEmbedderDelegateWrapper source)
-		{
-			foreach(index, wrapper; onToEmbedderListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onToEmbedderListeners[index] = null;
-					onToEmbedderListeners = std.algorithm.remove(onToEmbedderListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnToEmbedderDelegateWrapper[] onToEmbedderListeners;
 
 	/**
 	 * The ::to-embedder signal is emitted to translate coordinates
@@ -3512,25 +3308,7 @@ public class Window : ObjectG
 	 */
 	gulong addOnToEmbedder(void delegate(double, double, void*, void*, Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnToEmbedderDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"to-embedder",
-			cast(GCallback)&callBackToEmbedder,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackToEmbedderDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackToEmbedder(GdkWindow* windowStruct, double offscreenX, double offscreenY, void* embedderX, void* embedderY, OnToEmbedderDelegateWrapper wrapper)
-	{
-		wrapper.dlg(offscreenX, offscreenY, embedderX, embedderY, wrapper.outer);
-	}
-
-	extern(C) static void callBackToEmbedderDestroy(OnToEmbedderDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "to-embedder", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
 	/**

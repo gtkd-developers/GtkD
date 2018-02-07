@@ -546,32 +546,6 @@ public class ToolItem : Bin, ActivatableIF
 		gtk_tool_item_toolbar_reconfigured(gtkToolItem);
 	}
 
-	protected class OnCreateMenuProxyDelegateWrapper
-	{
-		bool delegate(ToolItem) dlg;
-		gulong handlerId;
-
-		this(bool delegate(ToolItem) dlg)
-		{
-			this.dlg = dlg;
-			onCreateMenuProxyListeners ~= this;
-		}
-
-		void remove(OnCreateMenuProxyDelegateWrapper source)
-		{
-			foreach(index, wrapper; onCreateMenuProxyListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onCreateMenuProxyListeners[index] = null;
-					onCreateMenuProxyListeners = std.algorithm.remove(onCreateMenuProxyListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnCreateMenuProxyDelegateWrapper[] onCreateMenuProxyListeners;
-
 	/**
 	 * This signal is emitted when the toolbar needs information from @tool_item
 	 * about whether the item should appear in the toolbar overflow menu. In
@@ -597,52 +571,8 @@ public class ToolItem : Bin, ActivatableIF
 	 */
 	gulong addOnCreateMenuProxy(bool delegate(ToolItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnCreateMenuProxyDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"create-menu-proxy",
-			cast(GCallback)&callBackCreateMenuProxy,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackCreateMenuProxyDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "create-menu-proxy", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static int callBackCreateMenuProxy(GtkToolItem* toolitemStruct, OnCreateMenuProxyDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackCreateMenuProxyDestroy(OnCreateMenuProxyDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnToolbarReconfiguredDelegateWrapper
-	{
-		void delegate(ToolItem) dlg;
-		gulong handlerId;
-
-		this(void delegate(ToolItem) dlg)
-		{
-			this.dlg = dlg;
-			onToolbarReconfiguredListeners ~= this;
-		}
-
-		void remove(OnToolbarReconfiguredDelegateWrapper source)
-		{
-			foreach(index, wrapper; onToolbarReconfiguredListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onToolbarReconfiguredListeners[index] = null;
-					onToolbarReconfiguredListeners = std.algorithm.remove(onToolbarReconfiguredListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnToolbarReconfiguredDelegateWrapper[] onToolbarReconfiguredListeners;
 
 	/**
 	 * This signal is emitted when some property of the toolbar that the
@@ -657,24 +587,6 @@ public class ToolItem : Bin, ActivatableIF
 	 */
 	gulong addOnToolbarReconfigured(void delegate(ToolItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnToolbarReconfiguredDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"toolbar-reconfigured",
-			cast(GCallback)&callBackToolbarReconfigured,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackToolbarReconfiguredDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackToolbarReconfigured(GtkToolItem* toolitemStruct, OnToolbarReconfiguredDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackToolbarReconfiguredDestroy(OnToolbarReconfiguredDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "toolbar-reconfigured", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

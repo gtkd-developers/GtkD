@@ -182,32 +182,6 @@ public class DBusObjectSkeleton : ObjectG, DBusObjectIF
 		g_dbus_object_skeleton_set_object_path(gDBusObjectSkeleton, Str.toStringz(objectPath));
 	}
 
-	protected class OnAuthorizeMethodDelegateWrapper
-	{
-		bool delegate(DBusInterfaceSkeleton, DBusMethodInvocation, DBusObjectSkeleton) dlg;
-		gulong handlerId;
-
-		this(bool delegate(DBusInterfaceSkeleton, DBusMethodInvocation, DBusObjectSkeleton) dlg)
-		{
-			this.dlg = dlg;
-			onAuthorizeMethodListeners ~= this;
-		}
-
-		void remove(OnAuthorizeMethodDelegateWrapper source)
-		{
-			foreach(index, wrapper; onAuthorizeMethodListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onAuthorizeMethodListeners[index] = null;
-					onAuthorizeMethodListeners = std.algorithm.remove(onAuthorizeMethodListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnAuthorizeMethodDelegateWrapper[] onAuthorizeMethodListeners;
-
 	/**
 	 * Emitted when a method is invoked by a remote caller and used to
 	 * determine if the method call is authorized.
@@ -228,24 +202,6 @@ public class DBusObjectSkeleton : ObjectG, DBusObjectIF
 	 */
 	gulong addOnAuthorizeMethod(bool delegate(DBusInterfaceSkeleton, DBusMethodInvocation, DBusObjectSkeleton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnAuthorizeMethodDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"authorize-method",
-			cast(GCallback)&callBackAuthorizeMethod,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackAuthorizeMethodDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static int callBackAuthorizeMethod(GDBusObjectSkeleton* dbusobjectskeletonStruct, GDBusInterfaceSkeleton* iface, GDBusMethodInvocation* invocation, OnAuthorizeMethodDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(ObjectG.getDObject!(DBusInterfaceSkeleton)(iface), ObjectG.getDObject!(DBusMethodInvocation)(invocation), wrapper.outer);
-	}
-
-	extern(C) static void callBackAuthorizeMethodDestroy(OnAuthorizeMethodDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "authorize-method", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

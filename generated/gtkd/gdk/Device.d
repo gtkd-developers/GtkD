@@ -769,32 +769,6 @@ public class Device : ObjectG
 		gdk_device_warp(gdkDevice, (screen is null) ? null : screen.getScreenStruct(), x, y);
 	}
 
-	protected class OnChangedDelegateWrapper
-	{
-		void delegate(Device) dlg;
-		gulong handlerId;
-
-		this(void delegate(Device) dlg)
-		{
-			this.dlg = dlg;
-			onChangedListeners ~= this;
-		}
-
-		void remove(OnChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onChangedListeners[index] = null;
-					onChangedListeners = std.algorithm.remove(onChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnChangedDelegateWrapper[] onChangedListeners;
-
 	/**
 	 * The ::changed signal is emitted either when the #GdkDevice
 	 * has changed the number of either axes or keys. For example
@@ -806,52 +780,8 @@ public class Device : ObjectG
 	 */
 	gulong addOnChanged(void delegate(Device) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"changed",
-			cast(GCallback)&callBackChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackChanged(GdkDevice* deviceStruct, OnChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnToolChangedDelegateWrapper
-	{
-		void delegate(DeviceTool, Device) dlg;
-		gulong handlerId;
-
-		this(void delegate(DeviceTool, Device) dlg)
-		{
-			this.dlg = dlg;
-			onToolChangedListeners ~= this;
-		}
-
-		void remove(OnToolChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onToolChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onToolChangedListeners[index] = null;
-					onToolChangedListeners = std.algorithm.remove(onToolChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnToolChangedDelegateWrapper[] onToolChangedListeners;
 
 	/**
 	 * The ::tool-changed signal is emitted on pen/eraser
@@ -864,24 +794,6 @@ public class Device : ObjectG
 	 */
 	gulong addOnToolChanged(void delegate(DeviceTool, Device) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnToolChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"tool-changed",
-			cast(GCallback)&callBackToolChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackToolChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackToolChanged(GdkDevice* deviceStruct, GdkDeviceTool* tool, OnToolChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(DeviceTool)(tool), wrapper.outer);
-	}
-
-	extern(C) static void callBackToolChangedDestroy(OnToolChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "tool-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

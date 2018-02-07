@@ -254,32 +254,6 @@ public class ColorButton : Button, ColorChooserIF
 		gtk_color_button_set_title(gtkColorButton, Str.toStringz(title));
 	}
 
-	protected class OnColorSetDelegateWrapper
-	{
-		void delegate(ColorButton) dlg;
-		gulong handlerId;
-
-		this(void delegate(ColorButton) dlg)
-		{
-			this.dlg = dlg;
-			onColorSetListeners ~= this;
-		}
-
-		void remove(OnColorSetDelegateWrapper source)
-		{
-			foreach(index, wrapper; onColorSetListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onColorSetListeners[index] = null;
-					onColorSetListeners = std.algorithm.remove(onColorSetListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnColorSetDelegateWrapper[] onColorSetListeners;
-
 	/**
 	 * The ::color-set signal is emitted when the user selects a color.
 	 * When handling this signal, use gtk_color_button_get_rgba() to
@@ -293,24 +267,6 @@ public class ColorButton : Button, ColorChooserIF
 	 */
 	gulong addOnColorSet(void delegate(ColorButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnColorSetDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"color-set",
-			cast(GCallback)&callBackColorSet,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackColorSetDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackColorSet(GtkColorButton* colorbuttonStruct, OnColorSetDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackColorSetDestroy(OnColorSetDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "color-set", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

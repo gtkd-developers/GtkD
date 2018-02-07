@@ -281,32 +281,6 @@ public template ComponentT(TStruct)
 		return atk_component_set_size(getComponentStruct(), width, height) != 0;
 	}
 
-	protected class OnBoundsChangedDelegateWrapper
-	{
-		void delegate(Rectangle, ComponentIF) dlg;
-		gulong handlerId;
-
-		this(void delegate(Rectangle, ComponentIF) dlg)
-		{
-			this.dlg = dlg;
-			onBoundsChangedListeners ~= this;
-		}
-
-		void remove(OnBoundsChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onBoundsChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onBoundsChangedListeners[index] = null;
-					onBoundsChangedListeners = std.algorithm.remove(onBoundsChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnBoundsChangedDelegateWrapper[] onBoundsChangedListeners;
-
 	/**
 	 * The 'bounds-changed" signal is emitted when the bposition or
 	 * size of the component changes.
@@ -316,24 +290,6 @@ public template ComponentT(TStruct)
 	 */
 	gulong addOnBoundsChanged(void delegate(Rectangle, ComponentIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnBoundsChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"bounds-changed",
-			cast(GCallback)&callBackBoundsChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackBoundsChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackBoundsChanged(AtkComponent* componentStruct, AtkRectangle* arg1, OnBoundsChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(Rectangle)(arg1), wrapper.outer);
-	}
-
-	extern(C) static void callBackBoundsChangedDestroy(OnBoundsChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "bounds-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

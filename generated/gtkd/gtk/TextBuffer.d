@@ -1296,7 +1296,7 @@ public class TextBuffer : ObjectG
 	}
 
 	/**
-	 * Pastes the contents of a clipboard. If @override_location is %NULL, the
+	 * Pastes the contents of a clipboard. If @override_location is %NULL, the
 	 * pasted text will be inserted at the cursor position, or the buffer selection
 	 * will be replaced if the selection is non-empty.
 	 *
@@ -1584,32 +1584,6 @@ public class TextBuffer : ObjectG
 		gtk_text_buffer_unregister_serialize_format(gtkTextBuffer, format);
 	}
 
-	protected class OnApplyTagDelegateWrapper
-	{
-		void delegate(TextTag, TextIter, TextIter, TextBuffer) dlg;
-		gulong handlerId;
-
-		this(void delegate(TextTag, TextIter, TextIter, TextBuffer) dlg)
-		{
-			this.dlg = dlg;
-			onApplyTagListeners ~= this;
-		}
-
-		void remove(OnApplyTagDelegateWrapper source)
-		{
-			foreach(index, wrapper; onApplyTagListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onApplyTagListeners[index] = null;
-					onApplyTagListeners = std.algorithm.remove(onApplyTagListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnApplyTagDelegateWrapper[] onApplyTagListeners;
-
 	/**
 	 * The ::apply-tag signal is emitted to apply a tag to a
 	 * range of text in a #GtkTextBuffer.
@@ -1630,52 +1604,8 @@ public class TextBuffer : ObjectG
 	 */
 	gulong addOnApplyTag(void delegate(TextTag, TextIter, TextIter, TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnApplyTagDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"apply-tag",
-			cast(GCallback)&callBackApplyTag,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackApplyTagDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "apply-tag", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackApplyTag(GtkTextBuffer* textbufferStruct, GtkTextTag* tag, GtkTextIter* start, GtkTextIter* end, OnApplyTagDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(TextTag)(tag), ObjectG.getDObject!(TextIter)(start), ObjectG.getDObject!(TextIter)(end), wrapper.outer);
-	}
-
-	extern(C) static void callBackApplyTagDestroy(OnApplyTagDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnBeginUserActionDelegateWrapper
-	{
-		void delegate(TextBuffer) dlg;
-		gulong handlerId;
-
-		this(void delegate(TextBuffer) dlg)
-		{
-			this.dlg = dlg;
-			onBeginUserActionListeners ~= this;
-		}
-
-		void remove(OnBeginUserActionDelegateWrapper source)
-		{
-			foreach(index, wrapper; onBeginUserActionListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onBeginUserActionListeners[index] = null;
-					onBeginUserActionListeners = std.algorithm.remove(onBeginUserActionListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnBeginUserActionDelegateWrapper[] onBeginUserActionListeners;
 
 	/**
 	 * The ::begin-user-action signal is emitted at the beginning of a single
@@ -1691,52 +1621,8 @@ public class TextBuffer : ObjectG
 	 */
 	gulong addOnBeginUserAction(void delegate(TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnBeginUserActionDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"begin-user-action",
-			cast(GCallback)&callBackBeginUserAction,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackBeginUserActionDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "begin-user-action", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackBeginUserAction(GtkTextBuffer* textbufferStruct, OnBeginUserActionDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackBeginUserActionDestroy(OnBeginUserActionDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnChangedDelegateWrapper
-	{
-		void delegate(TextBuffer) dlg;
-		gulong handlerId;
-
-		this(void delegate(TextBuffer) dlg)
-		{
-			this.dlg = dlg;
-			onChangedListeners ~= this;
-		}
-
-		void remove(OnChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onChangedListeners[index] = null;
-					onChangedListeners = std.algorithm.remove(onChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnChangedDelegateWrapper[] onChangedListeners;
 
 	/**
 	 * The ::changed signal is emitted when the content of a #GtkTextBuffer
@@ -1744,52 +1630,8 @@ public class TextBuffer : ObjectG
 	 */
 	gulong addOnChanged(void delegate(TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"changed",
-			cast(GCallback)&callBackChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackChanged(GtkTextBuffer* textbufferStruct, OnChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackChangedDestroy(OnChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnDeleteRangeDelegateWrapper
-	{
-		void delegate(TextIter, TextIter, TextBuffer) dlg;
-		gulong handlerId;
-
-		this(void delegate(TextIter, TextIter, TextBuffer) dlg)
-		{
-			this.dlg = dlg;
-			onDeleteRangeListeners ~= this;
-		}
-
-		void remove(OnDeleteRangeDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDeleteRangeListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onDeleteRangeListeners[index] = null;
-					onDeleteRangeListeners = std.algorithm.remove(onDeleteRangeListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnDeleteRangeDelegateWrapper[] onDeleteRangeListeners;
 
 	/**
 	 * The ::delete-range signal is emitted to delete a range
@@ -1810,52 +1652,8 @@ public class TextBuffer : ObjectG
 	 */
 	gulong addOnDeleteRange(void delegate(TextIter, TextIter, TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnDeleteRangeDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"delete-range",
-			cast(GCallback)&callBackDeleteRange,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackDeleteRangeDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "delete-range", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackDeleteRange(GtkTextBuffer* textbufferStruct, GtkTextIter* start, GtkTextIter* end, OnDeleteRangeDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(TextIter)(start), ObjectG.getDObject!(TextIter)(end), wrapper.outer);
-	}
-
-	extern(C) static void callBackDeleteRangeDestroy(OnDeleteRangeDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnEndUserActionDelegateWrapper
-	{
-		void delegate(TextBuffer) dlg;
-		gulong handlerId;
-
-		this(void delegate(TextBuffer) dlg)
-		{
-			this.dlg = dlg;
-			onEndUserActionListeners ~= this;
-		}
-
-		void remove(OnEndUserActionDelegateWrapper source)
-		{
-			foreach(index, wrapper; onEndUserActionListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onEndUserActionListeners[index] = null;
-					onEndUserActionListeners = std.algorithm.remove(onEndUserActionListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnEndUserActionDelegateWrapper[] onEndUserActionListeners;
 
 	/**
 	 * The ::end-user-action signal is emitted at the end of a single
@@ -1872,52 +1670,8 @@ public class TextBuffer : ObjectG
 	 */
 	gulong addOnEndUserAction(void delegate(TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnEndUserActionDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"end-user-action",
-			cast(GCallback)&callBackEndUserAction,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackEndUserActionDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "end-user-action", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackEndUserAction(GtkTextBuffer* textbufferStruct, OnEndUserActionDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackEndUserActionDestroy(OnEndUserActionDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnInsertChildAnchorDelegateWrapper
-	{
-		void delegate(TextIter, TextChildAnchor, TextBuffer) dlg;
-		gulong handlerId;
-
-		this(void delegate(TextIter, TextChildAnchor, TextBuffer) dlg)
-		{
-			this.dlg = dlg;
-			onInsertChildAnchorListeners ~= this;
-		}
-
-		void remove(OnInsertChildAnchorDelegateWrapper source)
-		{
-			foreach(index, wrapper; onInsertChildAnchorListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onInsertChildAnchorListeners[index] = null;
-					onInsertChildAnchorListeners = std.algorithm.remove(onInsertChildAnchorListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnInsertChildAnchorDelegateWrapper[] onInsertChildAnchorListeners;
 
 	/**
 	 * The ::insert-child-anchor signal is emitted to insert a
@@ -1937,52 +1691,8 @@ public class TextBuffer : ObjectG
 	 */
 	gulong addOnInsertChildAnchor(void delegate(TextIter, TextChildAnchor, TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnInsertChildAnchorDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"insert-child-anchor",
-			cast(GCallback)&callBackInsertChildAnchor,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackInsertChildAnchorDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "insert-child-anchor", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackInsertChildAnchor(GtkTextBuffer* textbufferStruct, GtkTextIter* location, GtkTextChildAnchor* anchor, OnInsertChildAnchorDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(TextIter)(location), ObjectG.getDObject!(TextChildAnchor)(anchor), wrapper.outer);
-	}
-
-	extern(C) static void callBackInsertChildAnchorDestroy(OnInsertChildAnchorDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnInsertPixbufDelegateWrapper
-	{
-		void delegate(TextIter, Pixbuf, TextBuffer) dlg;
-		gulong handlerId;
-
-		this(void delegate(TextIter, Pixbuf, TextBuffer) dlg)
-		{
-			this.dlg = dlg;
-			onInsertPixbufListeners ~= this;
-		}
-
-		void remove(OnInsertPixbufDelegateWrapper source)
-		{
-			foreach(index, wrapper; onInsertPixbufListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onInsertPixbufListeners[index] = null;
-					onInsertPixbufListeners = std.algorithm.remove(onInsertPixbufListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnInsertPixbufDelegateWrapper[] onInsertPixbufListeners;
 
 	/**
 	 * The ::insert-pixbuf signal is emitted to insert a #GdkPixbuf
@@ -2001,52 +1711,8 @@ public class TextBuffer : ObjectG
 	 */
 	gulong addOnInsertPixbuf(void delegate(TextIter, Pixbuf, TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnInsertPixbufDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"insert-pixbuf",
-			cast(GCallback)&callBackInsertPixbuf,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackInsertPixbufDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "insert-pixbuf", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackInsertPixbuf(GtkTextBuffer* textbufferStruct, GtkTextIter* location, GdkPixbuf* pixbuf, OnInsertPixbufDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(TextIter)(location), ObjectG.getDObject!(Pixbuf)(pixbuf), wrapper.outer);
-	}
-
-	extern(C) static void callBackInsertPixbufDestroy(OnInsertPixbufDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnInsertTextDelegateWrapper
-	{
-		void delegate(TextIter, string, int, TextBuffer) dlg;
-		gulong handlerId;
-
-		this(void delegate(TextIter, string, int, TextBuffer) dlg)
-		{
-			this.dlg = dlg;
-			onInsertTextListeners ~= this;
-		}
-
-		void remove(OnInsertTextDelegateWrapper source)
-		{
-			foreach(index, wrapper; onInsertTextListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onInsertTextListeners[index] = null;
-					onInsertTextListeners = std.algorithm.remove(onInsertTextListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnInsertTextDelegateWrapper[] onInsertTextListeners;
 
 	/**
 	 * The ::insert-text signal is emitted to insert text in a #GtkTextBuffer.
@@ -2068,52 +1734,8 @@ public class TextBuffer : ObjectG
 	 */
 	gulong addOnInsertText(void delegate(TextIter, string, int, TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnInsertTextDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"insert-text",
-			cast(GCallback)&callBackInsertText,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackInsertTextDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "insert-text", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackInsertText(GtkTextBuffer* textbufferStruct, GtkTextIter* location, char* text, int len, OnInsertTextDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(TextIter)(location), Str.toString(text), len, wrapper.outer);
-	}
-
-	extern(C) static void callBackInsertTextDestroy(OnInsertTextDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnMarkDeletedDelegateWrapper
-	{
-		void delegate(TextMark, TextBuffer) dlg;
-		gulong handlerId;
-
-		this(void delegate(TextMark, TextBuffer) dlg)
-		{
-			this.dlg = dlg;
-			onMarkDeletedListeners ~= this;
-		}
-
-		void remove(OnMarkDeletedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onMarkDeletedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onMarkDeletedListeners[index] = null;
-					onMarkDeletedListeners = std.algorithm.remove(onMarkDeletedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnMarkDeletedDelegateWrapper[] onMarkDeletedListeners;
 
 	/**
 	 * The ::mark-deleted signal is emitted as notification
@@ -2127,52 +1749,8 @@ public class TextBuffer : ObjectG
 	 */
 	gulong addOnMarkDeleted(void delegate(TextMark, TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnMarkDeletedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"mark-deleted",
-			cast(GCallback)&callBackMarkDeleted,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackMarkDeletedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "mark-deleted", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackMarkDeleted(GtkTextBuffer* textbufferStruct, GtkTextMark* mark, OnMarkDeletedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(TextMark)(mark), wrapper.outer);
-	}
-
-	extern(C) static void callBackMarkDeletedDestroy(OnMarkDeletedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnMarkSetDelegateWrapper
-	{
-		void delegate(TextIter, TextMark, TextBuffer) dlg;
-		gulong handlerId;
-
-		this(void delegate(TextIter, TextMark, TextBuffer) dlg)
-		{
-			this.dlg = dlg;
-			onMarkSetListeners ~= this;
-		}
-
-		void remove(OnMarkSetDelegateWrapper source)
-		{
-			foreach(index, wrapper; onMarkSetListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onMarkSetListeners[index] = null;
-					onMarkSetListeners = std.algorithm.remove(onMarkSetListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnMarkSetDelegateWrapper[] onMarkSetListeners;
 
 	/**
 	 * The ::mark-set signal is emitted as notification
@@ -2188,52 +1766,8 @@ public class TextBuffer : ObjectG
 	 */
 	gulong addOnMarkSet(void delegate(TextIter, TextMark, TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnMarkSetDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"mark-set",
-			cast(GCallback)&callBackMarkSet,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackMarkSetDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "mark-set", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackMarkSet(GtkTextBuffer* textbufferStruct, GtkTextIter* location, GtkTextMark* mark, OnMarkSetDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(TextIter)(location), ObjectG.getDObject!(TextMark)(mark), wrapper.outer);
-	}
-
-	extern(C) static void callBackMarkSetDestroy(OnMarkSetDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnModifiedChangedDelegateWrapper
-	{
-		void delegate(TextBuffer) dlg;
-		gulong handlerId;
-
-		this(void delegate(TextBuffer) dlg)
-		{
-			this.dlg = dlg;
-			onModifiedChangedListeners ~= this;
-		}
-
-		void remove(OnModifiedChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onModifiedChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onModifiedChangedListeners[index] = null;
-					onModifiedChangedListeners = std.algorithm.remove(onModifiedChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnModifiedChangedDelegateWrapper[] onModifiedChangedListeners;
 
 	/**
 	 * The ::modified-changed signal is emitted when the modified bit of a
@@ -2244,52 +1778,8 @@ public class TextBuffer : ObjectG
 	 */
 	gulong addOnModifiedChanged(void delegate(TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnModifiedChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"modified-changed",
-			cast(GCallback)&callBackModifiedChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackModifiedChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "modified-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackModifiedChanged(GtkTextBuffer* textbufferStruct, OnModifiedChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackModifiedChangedDestroy(OnModifiedChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnPasteDoneDelegateWrapper
-	{
-		void delegate(Clipboard, TextBuffer) dlg;
-		gulong handlerId;
-
-		this(void delegate(Clipboard, TextBuffer) dlg)
-		{
-			this.dlg = dlg;
-			onPasteDoneListeners ~= this;
-		}
-
-		void remove(OnPasteDoneDelegateWrapper source)
-		{
-			foreach(index, wrapper; onPasteDoneListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onPasteDoneListeners[index] = null;
-					onPasteDoneListeners = std.algorithm.remove(onPasteDoneListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnPasteDoneDelegateWrapper[] onPasteDoneListeners;
 
 	/**
 	 * The paste-done signal is emitted after paste operation has been completed.
@@ -2303,52 +1793,8 @@ public class TextBuffer : ObjectG
 	 */
 	gulong addOnPasteDone(void delegate(Clipboard, TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnPasteDoneDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"paste-done",
-			cast(GCallback)&callBackPasteDone,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackPasteDoneDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "paste-done", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackPasteDone(GtkTextBuffer* textbufferStruct, GtkClipboard* clipboard, OnPasteDoneDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(Clipboard)(clipboard), wrapper.outer);
-	}
-
-	extern(C) static void callBackPasteDoneDestroy(OnPasteDoneDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnRemoveTagDelegateWrapper
-	{
-		void delegate(TextTag, TextIter, TextIter, TextBuffer) dlg;
-		gulong handlerId;
-
-		this(void delegate(TextTag, TextIter, TextIter, TextBuffer) dlg)
-		{
-			this.dlg = dlg;
-			onRemoveTagListeners ~= this;
-		}
-
-		void remove(OnRemoveTagDelegateWrapper source)
-		{
-			foreach(index, wrapper; onRemoveTagListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onRemoveTagListeners[index] = null;
-					onRemoveTagListeners = std.algorithm.remove(onRemoveTagListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnRemoveTagDelegateWrapper[] onRemoveTagListeners;
 
 	/**
 	 * The ::remove-tag signal is emitted to remove all occurrences of @tag from
@@ -2368,24 +1814,6 @@ public class TextBuffer : ObjectG
 	 */
 	gulong addOnRemoveTag(void delegate(TextTag, TextIter, TextIter, TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnRemoveTagDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"remove-tag",
-			cast(GCallback)&callBackRemoveTag,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackRemoveTagDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackRemoveTag(GtkTextBuffer* textbufferStruct, GtkTextTag* tag, GtkTextIter* start, GtkTextIter* end, OnRemoveTagDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(TextTag)(tag), ObjectG.getDObject!(TextIter)(start), ObjectG.getDObject!(TextIter)(end), wrapper.outer);
-	}
-
-	extern(C) static void callBackRemoveTagDestroy(OnRemoveTagDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "remove-tag", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

@@ -325,32 +325,6 @@ public template FontChooserT(TStruct)
 		gtk_font_chooser_set_show_preview_entry(getFontChooserStruct(), showPreviewEntry);
 	}
 
-	protected class OnFontActivatedDelegateWrapper
-	{
-		void delegate(string, FontChooserIF) dlg;
-		gulong handlerId;
-
-		this(void delegate(string, FontChooserIF) dlg)
-		{
-			this.dlg = dlg;
-			onFontActivatedListeners ~= this;
-		}
-
-		void remove(OnFontActivatedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onFontActivatedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onFontActivatedListeners[index] = null;
-					onFontActivatedListeners = std.algorithm.remove(onFontActivatedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnFontActivatedDelegateWrapper[] onFontActivatedListeners;
-
 	/**
 	 * Emitted when a font is activated.
 	 * This usually happens when the user double clicks an item,
@@ -362,24 +336,6 @@ public template FontChooserT(TStruct)
 	 */
 	gulong addOnFontActivated(void delegate(string, FontChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnFontActivatedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"font-activated",
-			cast(GCallback)&callBackFontActivated,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackFontActivatedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackFontActivated(GtkFontChooser* fontchooserStruct, char* fontname, OnFontActivatedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(Str.toString(fontname), wrapper.outer);
-	}
-
-	extern(C) static void callBackFontActivatedDestroy(OnFontActivatedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "font-activated", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

@@ -358,32 +358,6 @@ public class MenuModel : ObjectG
 		return ObjectG.getDObject!(MenuLinkIter)(cast(GMenuLinkIter*) p, true);
 	}
 
-	protected class OnItemsChangedDelegateWrapper
-	{
-		void delegate(int, int, int, MenuModel) dlg;
-		gulong handlerId;
-
-		this(void delegate(int, int, int, MenuModel) dlg)
-		{
-			this.dlg = dlg;
-			onItemsChangedListeners ~= this;
-		}
-
-		void remove(OnItemsChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onItemsChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onItemsChangedListeners[index] = null;
-					onItemsChangedListeners = std.algorithm.remove(onItemsChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnItemsChangedDelegateWrapper[] onItemsChangedListeners;
-
 	/**
 	 * Emitted when a change has occured to the menu.
 	 *
@@ -413,24 +387,6 @@ public class MenuModel : ObjectG
 	 */
 	gulong addOnItemsChanged(void delegate(int, int, int, MenuModel) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnItemsChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"items-changed",
-			cast(GCallback)&callBackItemsChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackItemsChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackItemsChanged(GMenuModel* menumodelStruct, int position, int removed, int added, OnItemsChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(position, removed, added, wrapper.outer);
-	}
-
-	extern(C) static void callBackItemsChangedDestroy(OnItemsChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "items-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

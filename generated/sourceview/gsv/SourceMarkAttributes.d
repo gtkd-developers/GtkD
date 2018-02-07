@@ -307,32 +307,6 @@ public class SourceMarkAttributes : ObjectG
 		gtk_source_mark_attributes_set_stock_id(gtkSourceMarkAttributes, Str.toStringz(stockId));
 	}
 
-	protected class OnQueryTooltipMarkupDelegateWrapper
-	{
-		string delegate(SourceMark, SourceMarkAttributes) dlg;
-		gulong handlerId;
-
-		this(string delegate(SourceMark, SourceMarkAttributes) dlg)
-		{
-			this.dlg = dlg;
-			onQueryTooltipMarkupListeners ~= this;
-		}
-
-		void remove(OnQueryTooltipMarkupDelegateWrapper source)
-		{
-			foreach(index, wrapper; onQueryTooltipMarkupListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onQueryTooltipMarkupListeners[index] = null;
-					onQueryTooltipMarkupListeners = std.algorithm.remove(onQueryTooltipMarkupListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnQueryTooltipMarkupDelegateWrapper[] onQueryTooltipMarkupListeners;
-
 	/**
 	 * The code should connect to this signal to provide a tooltip for given
 	 * @mark. The tooltip can contain a markup.
@@ -345,52 +319,8 @@ public class SourceMarkAttributes : ObjectG
 	 */
 	gulong addOnQueryTooltipMarkup(string delegate(SourceMark, SourceMarkAttributes) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnQueryTooltipMarkupDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"query-tooltip-markup",
-			cast(GCallback)&callBackQueryTooltipMarkup,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackQueryTooltipMarkupDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "query-tooltip-markup", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static string callBackQueryTooltipMarkup(GtkSourceMarkAttributes* sourcemarkattributesStruct, GtkSourceMark* mark, OnQueryTooltipMarkupDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(ObjectG.getDObject!(SourceMark)(mark), wrapper.outer);
-	}
-
-	extern(C) static void callBackQueryTooltipMarkupDestroy(OnQueryTooltipMarkupDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnQueryTooltipTextDelegateWrapper
-	{
-		string delegate(SourceMark, SourceMarkAttributes) dlg;
-		gulong handlerId;
-
-		this(string delegate(SourceMark, SourceMarkAttributes) dlg)
-		{
-			this.dlg = dlg;
-			onQueryTooltipTextListeners ~= this;
-		}
-
-		void remove(OnQueryTooltipTextDelegateWrapper source)
-		{
-			foreach(index, wrapper; onQueryTooltipTextListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onQueryTooltipTextListeners[index] = null;
-					onQueryTooltipTextListeners = std.algorithm.remove(onQueryTooltipTextListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnQueryTooltipTextDelegateWrapper[] onQueryTooltipTextListeners;
 
 	/**
 	 * The code should connect to this signal to provide a tooltip for given
@@ -404,24 +334,6 @@ public class SourceMarkAttributes : ObjectG
 	 */
 	gulong addOnQueryTooltipText(string delegate(SourceMark, SourceMarkAttributes) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnQueryTooltipTextDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"query-tooltip-text",
-			cast(GCallback)&callBackQueryTooltipText,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackQueryTooltipTextDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static string callBackQueryTooltipText(GtkSourceMarkAttributes* sourcemarkattributesStruct, GtkSourceMark* mark, OnQueryTooltipTextDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(ObjectG.getDObject!(SourceMark)(mark), wrapper.outer);
-	}
-
-	extern(C) static void callBackQueryTooltipTextDestroy(OnQueryTooltipTextDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "query-tooltip-text", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

@@ -147,32 +147,6 @@ public template ColorChooserT(TStruct)
 		gtk_color_chooser_set_use_alpha(getColorChooserStruct(), useAlpha);
 	}
 
-	protected class OnColorActivatedDelegateWrapper
-	{
-		void delegate(RGBA, ColorChooserIF) dlg;
-		gulong handlerId;
-
-		this(void delegate(RGBA, ColorChooserIF) dlg)
-		{
-			this.dlg = dlg;
-			onColorActivatedListeners ~= this;
-		}
-
-		void remove(OnColorActivatedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onColorActivatedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onColorActivatedListeners[index] = null;
-					onColorActivatedListeners = std.algorithm.remove(onColorActivatedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnColorActivatedDelegateWrapper[] onColorActivatedListeners;
-
 	/**
 	 * Emitted when a color is activated from the color chooser.
 	 * This usually happens when the user clicks a color swatch,
@@ -186,24 +160,6 @@ public template ColorChooserT(TStruct)
 	 */
 	gulong addOnColorActivated(void delegate(RGBA, ColorChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnColorActivatedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"color-activated",
-			cast(GCallback)&callBackColorActivated,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackColorActivatedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackColorActivated(GtkColorChooser* colorchooserStruct, GdkRGBA* color, OnColorActivatedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(RGBA)(color), wrapper.outer);
-	}
-
-	extern(C) static void callBackColorActivatedDestroy(OnColorActivatedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "color-activated", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

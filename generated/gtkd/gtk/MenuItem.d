@@ -56,6 +56,8 @@ private import std.algorithm;
  * 
  * An example for setting markup and accelerator on a MenuItem:
  * |[<!-- language="C" -->
+ * GtkWidget *menu_item = gtk_menu_item_new_with_label ("Example Menu Item");
+ * 
  * GtkWidget *child = gtk_bin_get_child (GTK_BIN (menu_item));
  * gtk_label_set_markup (GTK_LABEL (child), "<i>new label</i> with <b>markup</b>");
  * gtk_accel_label_set_accel (GTK_ACCEL_LABEL (child), GDK_KEY_1, 0);
@@ -479,83 +481,13 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 		gtk_menu_item_toggle_size_request(gtkMenuItem, &requisition);
 	}
 
-	protected class OnActivateDelegateWrapper
-	{
-		void delegate(MenuItem) dlg;
-		gulong handlerId;
-
-		this(void delegate(MenuItem) dlg)
-		{
-			this.dlg = dlg;
-			onActivateListeners ~= this;
-		}
-
-		void remove(OnActivateDelegateWrapper source)
-		{
-			foreach(index, wrapper; onActivateListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onActivateListeners[index] = null;
-					onActivateListeners = std.algorithm.remove(onActivateListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnActivateDelegateWrapper[] onActivateListeners;
-
 	/**
 	 * Emitted when the item is activated.
 	 */
 	gulong addOnActivate(void delegate(MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnActivateDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"activate",
-			cast(GCallback)&callBackActivate,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackActivateDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "activate", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackActivate(GtkMenuItem* menuitemStruct, OnActivateDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackActivateDestroy(OnActivateDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnActivateItemDelegateWrapper
-	{
-		void delegate(MenuItem) dlg;
-		gulong handlerId;
-
-		this(void delegate(MenuItem) dlg)
-		{
-			this.dlg = dlg;
-			onActivateItemListeners ~= this;
-		}
-
-		void remove(OnActivateItemDelegateWrapper source)
-		{
-			foreach(index, wrapper; onActivateItemListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onActivateItemListeners[index] = null;
-					onActivateItemListeners = std.algorithm.remove(onActivateItemListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnActivateItemDelegateWrapper[] onActivateItemListeners;
 
 	/**
 	 * Emitted when the item is activated, but also if the menu item has a
@@ -564,224 +496,30 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 	 */
 	gulong addOnActivateItem(void delegate(MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnActivateItemDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"activate-item",
-			cast(GCallback)&callBackActivateItem,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackActivateItemDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "activate-item", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackActivateItem(GtkMenuItem* menuitemStruct, OnActivateItemDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackActivateItemDestroy(OnActivateItemDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnDeselectDelegateWrapper
-	{
-		void delegate(MenuItem) dlg;
-		gulong handlerId;
-
-		this(void delegate(MenuItem) dlg)
-		{
-			this.dlg = dlg;
-			onDeselectListeners ~= this;
-		}
-
-		void remove(OnDeselectDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDeselectListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onDeselectListeners[index] = null;
-					onDeselectListeners = std.algorithm.remove(onDeselectListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnDeselectDelegateWrapper[] onDeselectListeners;
 
 	/** */
 	gulong addOnDeselect(void delegate(MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnDeselectDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"deselect",
-			cast(GCallback)&callBackDeselect,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackDeselectDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "deselect", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackDeselect(GtkMenuItem* menuitemStruct, OnDeselectDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackDeselectDestroy(OnDeselectDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnSelectDelegateWrapper
-	{
-		void delegate(MenuItem) dlg;
-		gulong handlerId;
-
-		this(void delegate(MenuItem) dlg)
-		{
-			this.dlg = dlg;
-			onSelectListeners ~= this;
-		}
-
-		void remove(OnSelectDelegateWrapper source)
-		{
-			foreach(index, wrapper; onSelectListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onSelectListeners[index] = null;
-					onSelectListeners = std.algorithm.remove(onSelectListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnSelectDelegateWrapper[] onSelectListeners;
 
 	/** */
 	gulong addOnSelect(void delegate(MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnSelectDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"select",
-			cast(GCallback)&callBackSelect,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackSelectDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "select", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackSelect(GtkMenuItem* menuitemStruct, OnSelectDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackSelectDestroy(OnSelectDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnToggleSizeAllocateDelegateWrapper
-	{
-		void delegate(int, MenuItem) dlg;
-		gulong handlerId;
-
-		this(void delegate(int, MenuItem) dlg)
-		{
-			this.dlg = dlg;
-			onToggleSizeAllocateListeners ~= this;
-		}
-
-		void remove(OnToggleSizeAllocateDelegateWrapper source)
-		{
-			foreach(index, wrapper; onToggleSizeAllocateListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onToggleSizeAllocateListeners[index] = null;
-					onToggleSizeAllocateListeners = std.algorithm.remove(onToggleSizeAllocateListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnToggleSizeAllocateDelegateWrapper[] onToggleSizeAllocateListeners;
 
 	/** */
 	gulong addOnToggleSizeAllocate(void delegate(int, MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnToggleSizeAllocateDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"toggle-size-allocate",
-			cast(GCallback)&callBackToggleSizeAllocate,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackToggleSizeAllocateDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "toggle-size-allocate", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackToggleSizeAllocate(GtkMenuItem* menuitemStruct, int object, OnToggleSizeAllocateDelegateWrapper wrapper)
-	{
-		wrapper.dlg(object, wrapper.outer);
-	}
-
-	extern(C) static void callBackToggleSizeAllocateDestroy(OnToggleSizeAllocateDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnToggleSizeRequestDelegateWrapper
-	{
-		void delegate(void*, MenuItem) dlg;
-		gulong handlerId;
-
-		this(void delegate(void*, MenuItem) dlg)
-		{
-			this.dlg = dlg;
-			onToggleSizeRequestListeners ~= this;
-		}
-
-		void remove(OnToggleSizeRequestDelegateWrapper source)
-		{
-			foreach(index, wrapper; onToggleSizeRequestListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onToggleSizeRequestListeners[index] = null;
-					onToggleSizeRequestListeners = std.algorithm.remove(onToggleSizeRequestListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnToggleSizeRequestDelegateWrapper[] onToggleSizeRequestListeners;
 
 	/** */
 	gulong addOnToggleSizeRequest(void delegate(void*, MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnToggleSizeRequestDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"toggle-size-request",
-			cast(GCallback)&callBackToggleSizeRequest,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackToggleSizeRequestDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackToggleSizeRequest(GtkMenuItem* menuitemStruct, void* object, OnToggleSizeRequestDelegateWrapper wrapper)
-	{
-		wrapper.dlg(object, wrapper.outer);
-	}
-
-	extern(C) static void callBackToggleSizeRequestDestroy(OnToggleSizeRequestDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "toggle-size-request", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

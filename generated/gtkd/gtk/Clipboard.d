@@ -805,32 +805,6 @@ public class Clipboard : ObjectG
 		return gtk_clipboard_wait_is_uris_available(gtkClipboard) != 0;
 	}
 
-	protected class OnOwnerChangeDelegateWrapper
-	{
-		void delegate(GdkEventOwnerChange*, Clipboard) dlg;
-		gulong handlerId;
-
-		this(void delegate(GdkEventOwnerChange*, Clipboard) dlg)
-		{
-			this.dlg = dlg;
-			onOwnerChangeListeners ~= this;
-		}
-
-		void remove(OnOwnerChangeDelegateWrapper source)
-		{
-			foreach(index, wrapper; onOwnerChangeListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onOwnerChangeListeners[index] = null;
-					onOwnerChangeListeners = std.algorithm.remove(onOwnerChangeListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnOwnerChangeDelegateWrapper[] onOwnerChangeListeners;
-
 	/**
 	 * The ::owner-change signal is emitted when GTK+ receives an
 	 * event that indicates that the ownership of the selection
@@ -843,52 +817,9 @@ public class Clipboard : ObjectG
 	 */
 	gulong addOnOwnerChange(void delegate(GdkEventOwnerChange*, Clipboard) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnOwnerChangeDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"owner-change",
-			cast(GCallback)&callBackOwnerChange,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackOwnerChangeDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "owner-change", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
-	extern(C) static void callBackOwnerChange(GtkClipboard* clipboardStruct, GdkEventOwnerChange* event, OnOwnerChangeDelegateWrapper wrapper)
-	{
-		wrapper.dlg(event, wrapper.outer);
-	}
-
-	extern(C) static void callBackOwnerChangeDestroy(OnOwnerChangeDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnOwnerChangeGenericDelegateWrapper
-	{
-		void delegate(Event, Clipboard) dlg;
-		gulong handlerId;
-
-		this(void delegate(Event, Clipboard) dlg)
-		{
-			this.dlg = dlg;
-			onOwnerChangeGenericListeners ~= this;
-		}
-
-		void remove(OnOwnerChangeGenericDelegateWrapper source)
-		{
-			foreach(index, wrapper; onOwnerChangeGenericListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onOwnerChangeGenericListeners[index] = null;
-					onOwnerChangeGenericListeners = std.algorithm.remove(onOwnerChangeGenericListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnOwnerChangeGenericDelegateWrapper[] onOwnerChangeGenericListeners;
 
 	/**
 	 * The ::owner-change signal is emitted when GTK+ receives an
@@ -902,24 +833,6 @@ public class Clipboard : ObjectG
 	 */
 	gulong addOnOwnerChange(void delegate(Event, Clipboard) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnOwnerChangeGenericDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"owner-change",
-			cast(GCallback)&callBackOwnerChangeGeneric,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackOwnerChangeGenericDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackOwnerChangeGeneric(GtkClipboard* clipboardStruct, GdkEvent* event, OnOwnerChangeGenericDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
-	}
-
-	extern(C) static void callBackOwnerChangeGenericDestroy(OnOwnerChangeGenericDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "owner-change", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

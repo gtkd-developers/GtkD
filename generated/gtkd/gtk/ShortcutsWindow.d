@@ -109,32 +109,6 @@ public class ShortcutsWindow : Window
 		return gtk_shortcuts_window_get_type();
 	}
 
-	protected class OnCloseDelegateWrapper
-	{
-		void delegate(ShortcutsWindow) dlg;
-		gulong handlerId;
-
-		this(void delegate(ShortcutsWindow) dlg)
-		{
-			this.dlg = dlg;
-			onCloseListeners ~= this;
-		}
-
-		void remove(OnCloseDelegateWrapper source)
-		{
-			foreach(index, wrapper; onCloseListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onCloseListeners[index] = null;
-					onCloseListeners = std.algorithm.remove(onCloseListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnCloseDelegateWrapper[] onCloseListeners;
-
 	/**
 	 * The ::close signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -145,52 +119,8 @@ public class ShortcutsWindow : Window
 	 */
 	gulong addOnClose(void delegate(ShortcutsWindow) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnCloseDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"close",
-			cast(GCallback)&callBackClose,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackCloseDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "close", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackClose(GtkShortcutsWindow* shortcutswindowStruct, OnCloseDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackCloseDestroy(OnCloseDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnSearchDelegateWrapper
-	{
-		void delegate(ShortcutsWindow) dlg;
-		gulong handlerId;
-
-		this(void delegate(ShortcutsWindow) dlg)
-		{
-			this.dlg = dlg;
-			onSearchListeners ~= this;
-		}
-
-		void remove(OnSearchDelegateWrapper source)
-		{
-			foreach(index, wrapper; onSearchListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onSearchListeners[index] = null;
-					onSearchListeners = std.algorithm.remove(onSearchListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnSearchDelegateWrapper[] onSearchListeners;
 
 	/**
 	 * The ::search signal is a
@@ -201,24 +131,6 @@ public class ShortcutsWindow : Window
 	 */
 	gulong addOnSearch(void delegate(ShortcutsWindow) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnSearchDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"search",
-			cast(GCallback)&callBackSearch,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackSearchDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackSearch(GtkShortcutsWindow* shortcutswindowStruct, OnSearchDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackSearchDestroy(OnSearchDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "search", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

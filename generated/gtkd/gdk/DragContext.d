@@ -278,32 +278,6 @@ public class DragContext : ObjectG
 		gdk_drag_context_set_hotspot(gdkDragContext, hotX, hotY);
 	}
 
-	protected class OnActionChangedDelegateWrapper
-	{
-		void delegate(GdkDragAction, DragContext) dlg;
-		gulong handlerId;
-
-		this(void delegate(GdkDragAction, DragContext) dlg)
-		{
-			this.dlg = dlg;
-			onActionChangedListeners ~= this;
-		}
-
-		void remove(OnActionChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onActionChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onActionChangedListeners[index] = null;
-					onActionChangedListeners = std.algorithm.remove(onActionChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnActionChangedDelegateWrapper[] onActionChangedListeners;
-
 	/**
 	 * A new action is being chosen for the drag and drop operation.
 	 *
@@ -318,52 +292,8 @@ public class DragContext : ObjectG
 	 */
 	gulong addOnActionChanged(void delegate(GdkDragAction, DragContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnActionChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"action-changed",
-			cast(GCallback)&callBackActionChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackActionChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "action-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackActionChanged(GdkDragContext* dragcontextStruct, GdkDragAction action, OnActionChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(action, wrapper.outer);
-	}
-
-	extern(C) static void callBackActionChangedDestroy(OnActionChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnCancelDelegateWrapper
-	{
-		void delegate(GdkDragCancelReason, DragContext) dlg;
-		gulong handlerId;
-
-		this(void delegate(GdkDragCancelReason, DragContext) dlg)
-		{
-			this.dlg = dlg;
-			onCancelListeners ~= this;
-		}
-
-		void remove(OnCancelDelegateWrapper source)
-		{
-			foreach(index, wrapper; onCancelListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onCancelListeners[index] = null;
-					onCancelListeners = std.algorithm.remove(onCancelListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnCancelDelegateWrapper[] onCancelListeners;
 
 	/**
 	 * The drag and drop operation was cancelled.
@@ -379,52 +309,8 @@ public class DragContext : ObjectG
 	 */
 	gulong addOnCancel(void delegate(GdkDragCancelReason, DragContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnCancelDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"cancel",
-			cast(GCallback)&callBackCancel,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackCancelDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "cancel", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackCancel(GdkDragContext* dragcontextStruct, GdkDragCancelReason reason, OnCancelDelegateWrapper wrapper)
-	{
-		wrapper.dlg(reason, wrapper.outer);
-	}
-
-	extern(C) static void callBackCancelDestroy(OnCancelDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnDndFinishedDelegateWrapper
-	{
-		void delegate(DragContext) dlg;
-		gulong handlerId;
-
-		this(void delegate(DragContext) dlg)
-		{
-			this.dlg = dlg;
-			onDndFinishedListeners ~= this;
-		}
-
-		void remove(OnDndFinishedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDndFinishedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onDndFinishedListeners[index] = null;
-					onDndFinishedListeners = std.algorithm.remove(onDndFinishedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnDndFinishedDelegateWrapper[] onDndFinishedListeners;
 
 	/**
 	 * The drag and drop operation was finished, the drag destination
@@ -439,52 +325,8 @@ public class DragContext : ObjectG
 	 */
 	gulong addOnDndFinished(void delegate(DragContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnDndFinishedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"dnd-finished",
-			cast(GCallback)&callBackDndFinished,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackDndFinishedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "dnd-finished", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackDndFinished(GdkDragContext* dragcontextStruct, OnDndFinishedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackDndFinishedDestroy(OnDndFinishedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnDropPerformedDelegateWrapper
-	{
-		void delegate(int, DragContext) dlg;
-		gulong handlerId;
-
-		this(void delegate(int, DragContext) dlg)
-		{
-			this.dlg = dlg;
-			onDropPerformedListeners ~= this;
-		}
-
-		void remove(OnDropPerformedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onDropPerformedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onDropPerformedListeners[index] = null;
-					onDropPerformedListeners = std.algorithm.remove(onDropPerformedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnDropPerformedDelegateWrapper[] onDropPerformedListeners;
 
 	/**
 	 * The drag and drop operation was performed on an accepting client.
@@ -500,25 +342,7 @@ public class DragContext : ObjectG
 	 */
 	gulong addOnDropPerformed(void delegate(int, DragContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnDropPerformedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"drop-performed",
-			cast(GCallback)&callBackDropPerformed,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackDropPerformedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackDropPerformed(GdkDragContext* dragcontextStruct, int time, OnDropPerformedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(time, wrapper.outer);
-	}
-
-	extern(C) static void callBackDropPerformedDestroy(OnDropPerformedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "drop-performed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
 	/**

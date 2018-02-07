@@ -391,32 +391,6 @@ public class SourceGutterRenderer : ObjectG
 		gtk_source_gutter_renderer_set_visible(gtkSourceGutterRenderer, visible);
 	}
 
-	protected class OnActivateDelegateWrapper
-	{
-		void delegate(TextIter, GdkRectangle*, Event, SourceGutterRenderer) dlg;
-		gulong handlerId;
-
-		this(void delegate(TextIter, GdkRectangle*, Event, SourceGutterRenderer) dlg)
-		{
-			this.dlg = dlg;
-			onActivateListeners ~= this;
-		}
-
-		void remove(OnActivateDelegateWrapper source)
-		{
-			foreach(index, wrapper; onActivateListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onActivateListeners[index] = null;
-					onActivateListeners = std.algorithm.remove(onActivateListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnActivateDelegateWrapper[] onActivateListeners;
-
 	/**
 	 * The ::activate signal is emitted when the renderer is
 	 * activated.
@@ -428,52 +402,8 @@ public class SourceGutterRenderer : ObjectG
 	 */
 	gulong addOnActivate(void delegate(TextIter, GdkRectangle*, Event, SourceGutterRenderer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnActivateDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"activate",
-			cast(GCallback)&callBackActivate,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackActivateDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "activate", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackActivate(GtkSourceGutterRenderer* sourcegutterrendererStruct, GtkTextIter* iter, GdkRectangle* area, GdkEvent* event, OnActivateDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(TextIter)(iter), area, ObjectG.getDObject!(Event)(event), wrapper.outer);
-	}
-
-	extern(C) static void callBackActivateDestroy(OnActivateDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnQueryActivatableDelegateWrapper
-	{
-		bool delegate(TextIter, GdkRectangle*, Event, SourceGutterRenderer) dlg;
-		gulong handlerId;
-
-		this(bool delegate(TextIter, GdkRectangle*, Event, SourceGutterRenderer) dlg)
-		{
-			this.dlg = dlg;
-			onQueryActivatableListeners ~= this;
-		}
-
-		void remove(OnQueryActivatableDelegateWrapper source)
-		{
-			foreach(index, wrapper; onQueryActivatableListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onQueryActivatableListeners[index] = null;
-					onQueryActivatableListeners = std.algorithm.remove(onQueryActivatableListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnQueryActivatableDelegateWrapper[] onQueryActivatableListeners;
 
 	/**
 	 * The ::query-activatable signal is emitted when the renderer
@@ -486,52 +416,8 @@ public class SourceGutterRenderer : ObjectG
 	 */
 	gulong addOnQueryActivatable(bool delegate(TextIter, GdkRectangle*, Event, SourceGutterRenderer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnQueryActivatableDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"query-activatable",
-			cast(GCallback)&callBackQueryActivatable,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackQueryActivatableDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "query-activatable", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static int callBackQueryActivatable(GtkSourceGutterRenderer* sourcegutterrendererStruct, GtkTextIter* iter, GdkRectangle* area, GdkEvent* event, OnQueryActivatableDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(ObjectG.getDObject!(TextIter)(iter), area, ObjectG.getDObject!(Event)(event), wrapper.outer);
-	}
-
-	extern(C) static void callBackQueryActivatableDestroy(OnQueryActivatableDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnQueryDataDelegateWrapper
-	{
-		void delegate(TextIter, TextIter, GtkSourceGutterRendererState, SourceGutterRenderer) dlg;
-		gulong handlerId;
-
-		this(void delegate(TextIter, TextIter, GtkSourceGutterRendererState, SourceGutterRenderer) dlg)
-		{
-			this.dlg = dlg;
-			onQueryDataListeners ~= this;
-		}
-
-		void remove(OnQueryDataDelegateWrapper source)
-		{
-			foreach(index, wrapper; onQueryDataListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onQueryDataListeners[index] = null;
-					onQueryDataListeners = std.algorithm.remove(onQueryDataListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnQueryDataDelegateWrapper[] onQueryDataListeners;
 
 	/**
 	 * The ::query-data signal is emitted when the renderer needs
@@ -546,52 +432,8 @@ public class SourceGutterRenderer : ObjectG
 	 */
 	gulong addOnQueryData(void delegate(TextIter, TextIter, GtkSourceGutterRendererState, SourceGutterRenderer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnQueryDataDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"query-data",
-			cast(GCallback)&callBackQueryData,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackQueryDataDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "query-data", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackQueryData(GtkSourceGutterRenderer* sourcegutterrendererStruct, GtkTextIter* start, GtkTextIter* end, GtkSourceGutterRendererState state, OnQueryDataDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(TextIter)(start), ObjectG.getDObject!(TextIter)(end), state, wrapper.outer);
-	}
-
-	extern(C) static void callBackQueryDataDestroy(OnQueryDataDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnQueryTooltipDelegateWrapper
-	{
-		bool delegate(TextIter, GdkRectangle*, int, int, Tooltip, SourceGutterRenderer) dlg;
-		gulong handlerId;
-
-		this(bool delegate(TextIter, GdkRectangle*, int, int, Tooltip, SourceGutterRenderer) dlg)
-		{
-			this.dlg = dlg;
-			onQueryTooltipListeners ~= this;
-		}
-
-		void remove(OnQueryTooltipDelegateWrapper source)
-		{
-			foreach(index, wrapper; onQueryTooltipListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onQueryTooltipListeners[index] = null;
-					onQueryTooltipListeners = std.algorithm.remove(onQueryTooltipListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnQueryTooltipDelegateWrapper[] onQueryTooltipListeners;
 
 	/**
 	 * The ::query-tooltip signal is emitted when the renderer can
@@ -606,52 +448,8 @@ public class SourceGutterRenderer : ObjectG
 	 */
 	gulong addOnQueryTooltip(bool delegate(TextIter, GdkRectangle*, int, int, Tooltip, SourceGutterRenderer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnQueryTooltipDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"query-tooltip",
-			cast(GCallback)&callBackQueryTooltip,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackQueryTooltipDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "query-tooltip", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static int callBackQueryTooltip(GtkSourceGutterRenderer* sourcegutterrendererStruct, GtkTextIter* iter, GdkRectangle* area, int x, int y, GtkTooltip* tooltip, OnQueryTooltipDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(ObjectG.getDObject!(TextIter)(iter), area, x, y, ObjectG.getDObject!(Tooltip)(tooltip), wrapper.outer);
-	}
-
-	extern(C) static void callBackQueryTooltipDestroy(OnQueryTooltipDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnQueueDrawDelegateWrapper
-	{
-		void delegate(SourceGutterRenderer) dlg;
-		gulong handlerId;
-
-		this(void delegate(SourceGutterRenderer) dlg)
-		{
-			this.dlg = dlg;
-			onQueueDrawListeners ~= this;
-		}
-
-		void remove(OnQueueDrawDelegateWrapper source)
-		{
-			foreach(index, wrapper; onQueueDrawListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onQueueDrawListeners[index] = null;
-					onQueueDrawListeners = std.algorithm.remove(onQueueDrawListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnQueueDrawDelegateWrapper[] onQueueDrawListeners;
 
 	/**
 	 * The ::queue-draw signal is emitted when the renderer needs
@@ -661,24 +459,6 @@ public class SourceGutterRenderer : ObjectG
 	 */
 	gulong addOnQueueDraw(void delegate(SourceGutterRenderer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnQueueDrawDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"queue-draw",
-			cast(GCallback)&callBackQueueDraw,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackQueueDrawDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackQueueDraw(GtkSourceGutterRenderer* sourcegutterrendererStruct, OnQueueDrawDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackQueueDrawDestroy(OnQueueDrawDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "queue-draw", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

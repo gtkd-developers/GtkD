@@ -1532,16 +1532,17 @@ public class Window : Bin
 	 * When using client side decorations, GTK+ will do its best to adjust
 	 * the given size so that the resulting window size matches the
 	 * requested size without the title bar, borders and shadows added for
-	 * the client side decorations, but there is no garantee that the
+	 * the client side decorations, but there is no guarantee that the
 	 * result will be totally accurate because these widgets added for
 	 * client side decorations depend on the theme and may not be realized
 	 * or visible at the time gtk_window_resize() is issued.
 	 *
-	 * Typically, gtk_window_resize() will compensate for the GtkHeaderBar
-	 * height only if it's known at the time the resulting GtkWindow
-	 * configuration is issued.
+	 * If the GtkWindow has a titlebar widget (see gtk_window_set_titlebar()), then
+	 * typically, gtk_window_resize() will compensate for the height of the titlebar
+	 * widget only if the height is known when the resulting GtkWindow configuration
+	 * is issued.
 	 * For example, if new widgets are added after the GtkWindow configuration
-	 * and cause the GtkHeaderBar to grow in height, this will result in a
+	 * and cause the titlebar widget to grow in height, this will result in a
 	 * window content smaller that specified by gtk_window_resize() and not
 	 * a larger window.
 	 *
@@ -2304,6 +2305,9 @@ public class Window : Bin
 	/**
 	 * Sets a custom titlebar for @window.
 	 *
+	 * A typical widget used here is #GtkHeaderBar, as it provides various features
+	 * expected of a titlebar while allowing the addition of child widgets to it.
+	 *
 	 * If you set a custom titlebar, GTK+ will do its best to convince
 	 * the window manager not to put its own titlebar on the window.
 	 * Depending on the system, this function may not work for a window
@@ -2469,32 +2473,6 @@ public class Window : Bin
 		gtk_window_unstick(gtkWindow);
 	}
 
-	protected class OnActivateDefaultDelegateWrapper
-	{
-		void delegate(Window) dlg;
-		gulong handlerId;
-
-		this(void delegate(Window) dlg)
-		{
-			this.dlg = dlg;
-			onActivateDefaultListeners ~= this;
-		}
-
-		void remove(OnActivateDefaultDelegateWrapper source)
-		{
-			foreach(index, wrapper; onActivateDefaultListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onActivateDefaultListeners[index] = null;
-					onActivateDefaultListeners = std.algorithm.remove(onActivateDefaultListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnActivateDefaultDelegateWrapper[] onActivateDefaultListeners;
-
 	/**
 	 * The ::activate-default signal is a
 	 * [keybinding signal][GtkBindingSignal]
@@ -2503,52 +2481,8 @@ public class Window : Bin
 	 */
 	gulong addOnActivateDefault(void delegate(Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnActivateDefaultDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"activate-default",
-			cast(GCallback)&callBackActivateDefault,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackActivateDefaultDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "activate-default", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackActivateDefault(GtkWindow* windowStruct, OnActivateDefaultDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackActivateDefaultDestroy(OnActivateDefaultDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnActivateFocusDelegateWrapper
-	{
-		void delegate(Window) dlg;
-		gulong handlerId;
-
-		this(void delegate(Window) dlg)
-		{
-			this.dlg = dlg;
-			onActivateFocusListeners ~= this;
-		}
-
-		void remove(OnActivateFocusDelegateWrapper source)
-		{
-			foreach(index, wrapper; onActivateFocusListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onActivateFocusListeners[index] = null;
-					onActivateFocusListeners = std.algorithm.remove(onActivateFocusListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnActivateFocusDelegateWrapper[] onActivateFocusListeners;
 
 	/**
 	 * The ::activate-focus signal is a
@@ -2558,52 +2492,8 @@ public class Window : Bin
 	 */
 	gulong addOnActivateFocus(void delegate(Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnActivateFocusDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"activate-focus",
-			cast(GCallback)&callBackActivateFocus,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackActivateFocusDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "activate-focus", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackActivateFocus(GtkWindow* windowStruct, OnActivateFocusDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackActivateFocusDestroy(OnActivateFocusDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnEnableDebuggingDelegateWrapper
-	{
-		bool delegate(bool, Window) dlg;
-		gulong handlerId;
-
-		this(bool delegate(bool, Window) dlg)
-		{
-			this.dlg = dlg;
-			onEnableDebuggingListeners ~= this;
-		}
-
-		void remove(OnEnableDebuggingDelegateWrapper source)
-		{
-			foreach(index, wrapper; onEnableDebuggingListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onEnableDebuggingListeners[index] = null;
-					onEnableDebuggingListeners = std.algorithm.remove(onEnableDebuggingListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnEnableDebuggingDelegateWrapper[] onEnableDebuggingListeners;
 
 	/**
 	 * The ::enable-debugging signal is a [keybinding signal][GtkBindingSignal]
@@ -2622,52 +2512,8 @@ public class Window : Bin
 	 */
 	gulong addOnEnableDebugging(bool delegate(bool, Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnEnableDebuggingDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"enable-debugging",
-			cast(GCallback)&callBackEnableDebugging,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackEnableDebuggingDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "enable-debugging", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static int callBackEnableDebugging(GtkWindow* windowStruct, bool toggle, OnEnableDebuggingDelegateWrapper wrapper)
-	{
-		return wrapper.dlg(toggle, wrapper.outer);
-	}
-
-	extern(C) static void callBackEnableDebuggingDestroy(OnEnableDebuggingDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnKeysChangedDelegateWrapper
-	{
-		void delegate(Window) dlg;
-		gulong handlerId;
-
-		this(void delegate(Window) dlg)
-		{
-			this.dlg = dlg;
-			onKeysChangedListeners ~= this;
-		}
-
-		void remove(OnKeysChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onKeysChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onKeysChangedListeners[index] = null;
-					onKeysChangedListeners = std.algorithm.remove(onKeysChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnKeysChangedDelegateWrapper[] onKeysChangedListeners;
 
 	/**
 	 * The ::keys-changed signal gets emitted when the set of accelerators
@@ -2675,75 +2521,13 @@ public class Window : Bin
 	 */
 	gulong addOnKeysChanged(void delegate(Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnKeysChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"keys-changed",
-			cast(GCallback)&callBackKeysChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackKeysChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "keys-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackKeysChanged(GtkWindow* windowStruct, OnKeysChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(wrapper.outer);
-	}
-
-	extern(C) static void callBackKeysChangedDestroy(OnKeysChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnSetFocusDelegateWrapper
-	{
-		void delegate(Widget, Window) dlg;
-		gulong handlerId;
-
-		this(void delegate(Widget, Window) dlg)
-		{
-			this.dlg = dlg;
-			onSetFocusListeners ~= this;
-		}
-
-		void remove(OnSetFocusDelegateWrapper source)
-		{
-			foreach(index, wrapper; onSetFocusListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onSetFocusListeners[index] = null;
-					onSetFocusListeners = std.algorithm.remove(onSetFocusListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnSetFocusDelegateWrapper[] onSetFocusListeners;
 
 	/** */
 	gulong addOnSetFocus(void delegate(Widget, Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnSetFocusDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"set-focus",
-			cast(GCallback)&callBackSetFocus,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackSetFocusDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackSetFocus(GtkWindow* windowStruct, GtkWidget* object, OnSetFocusDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(Widget)(object), wrapper.outer);
-	}
-
-	extern(C) static void callBackSetFocusDestroy(OnSetFocusDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "set-focus", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
 	/**

@@ -208,32 +208,6 @@ public template NetworkMonitorT(TStruct)
 		return g_network_monitor_get_network_metered(getNetworkMonitorStruct()) != 0;
 	}
 
-	protected class OnNetworkChangedDelegateWrapper
-	{
-		void delegate(bool, NetworkMonitorIF) dlg;
-		gulong handlerId;
-
-		this(void delegate(bool, NetworkMonitorIF) dlg)
-		{
-			this.dlg = dlg;
-			onNetworkChangedListeners ~= this;
-		}
-
-		void remove(OnNetworkChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onNetworkChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onNetworkChangedListeners[index] = null;
-					onNetworkChangedListeners = std.algorithm.remove(onNetworkChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnNetworkChangedDelegateWrapper[] onNetworkChangedListeners;
-
 	/**
 	 * Emitted when the network configuration changes. If @available is
 	 * %TRUE, then some hosts may be reachable that were not reachable
@@ -248,24 +222,6 @@ public template NetworkMonitorT(TStruct)
 	 */
 	gulong addOnNetworkChanged(void delegate(bool, NetworkMonitorIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnNetworkChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"network-changed",
-			cast(GCallback)&callBackNetworkChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackNetworkChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackNetworkChanged(GNetworkMonitor* networkmonitorStruct, bool available, OnNetworkChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(available, wrapper.outer);
-	}
-
-	extern(C) static void callBackNetworkChangedDestroy(OnNetworkChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "network-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

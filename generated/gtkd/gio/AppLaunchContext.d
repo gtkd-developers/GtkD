@@ -199,32 +199,6 @@ public class AppLaunchContext : ObjectG
 		g_app_launch_context_unsetenv(gAppLaunchContext, Str.toStringz(variable));
 	}
 
-	protected class OnLaunchFailedDelegateWrapper
-	{
-		void delegate(string, AppLaunchContext) dlg;
-		gulong handlerId;
-
-		this(void delegate(string, AppLaunchContext) dlg)
-		{
-			this.dlg = dlg;
-			onLaunchFailedListeners ~= this;
-		}
-
-		void remove(OnLaunchFailedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onLaunchFailedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onLaunchFailedListeners[index] = null;
-					onLaunchFailedListeners = std.algorithm.remove(onLaunchFailedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnLaunchFailedDelegateWrapper[] onLaunchFailedListeners;
-
 	/**
 	 * The ::launch-failed signal is emitted when a #GAppInfo launch
 	 * fails. The startup notification id is provided, so that the launcher
@@ -237,52 +211,8 @@ public class AppLaunchContext : ObjectG
 	 */
 	gulong addOnLaunchFailed(void delegate(string, AppLaunchContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnLaunchFailedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"launch-failed",
-			cast(GCallback)&callBackLaunchFailed,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackLaunchFailedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
+		return Signals.connect(this, "launch-failed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
-	extern(C) static void callBackLaunchFailed(GAppLaunchContext* applaunchcontextStruct, char* startupNotifyId, OnLaunchFailedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(Str.toString(startupNotifyId), wrapper.outer);
-	}
-
-	extern(C) static void callBackLaunchFailedDestroy(OnLaunchFailedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
-	}
-
-	protected class OnLaunchedDelegateWrapper
-	{
-		void delegate(AppInfoIF, Variant, AppLaunchContext) dlg;
-		gulong handlerId;
-
-		this(void delegate(AppInfoIF, Variant, AppLaunchContext) dlg)
-		{
-			this.dlg = dlg;
-			onLaunchedListeners ~= this;
-		}
-
-		void remove(OnLaunchedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onLaunchedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onLaunchedListeners[index] = null;
-					onLaunchedListeners = std.algorithm.remove(onLaunchedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnLaunchedDelegateWrapper[] onLaunchedListeners;
 
 	/**
 	 * The ::launched signal is emitted when a #GAppInfo is successfully
@@ -299,24 +229,6 @@ public class AppLaunchContext : ObjectG
 	 */
 	gulong addOnLaunched(void delegate(AppInfoIF, Variant, AppLaunchContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnLaunchedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"launched",
-			cast(GCallback)&callBackLaunched,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackLaunchedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackLaunched(GAppLaunchContext* applaunchcontextStruct, GAppInfo* info, GVariant* platformData, OnLaunchedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(ObjectG.getDObject!(AppInfoIF)(info), new Variant(platformData), wrapper.outer);
-	}
-
-	extern(C) static void callBackLaunchedDestroy(OnLaunchedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "launched", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

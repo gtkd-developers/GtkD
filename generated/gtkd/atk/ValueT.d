@@ -384,32 +384,6 @@ public template ValueT(TStruct)
 		atk_value_set_value(getValueStruct(), newValue);
 	}
 
-	protected class OnValueChangedDelegateWrapper
-	{
-		void delegate(double, string, ValueIF) dlg;
-		gulong handlerId;
-
-		this(void delegate(double, string, ValueIF) dlg)
-		{
-			this.dlg = dlg;
-			onValueChangedListeners ~= this;
-		}
-
-		void remove(OnValueChangedDelegateWrapper source)
-		{
-			foreach(index, wrapper; onValueChangedListeners)
-			{
-				if (wrapper.handlerId == source.handlerId)
-				{
-					onValueChangedListeners[index] = null;
-					onValueChangedListeners = std.algorithm.remove(onValueChangedListeners, index);
-					break;
-				}
-			}
-		}
-	}
-	OnValueChangedDelegateWrapper[] onValueChangedListeners;
-
 	/**
 	 * The 'value-changed' signal is emitted when the current value
 	 * that represent the object changes. @value is the numerical
@@ -433,24 +407,6 @@ public template ValueT(TStruct)
 	 */
 	gulong addOnValueChanged(void delegate(double, string, ValueIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnValueChangedDelegateWrapper(dlg);
-		wrapper.handlerId = Signals.connectData(
-			this,
-			"value-changed",
-			cast(GCallback)&callBackValueChanged,
-			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackValueChangedDestroy,
-			connectFlags);
-		return wrapper.handlerId;
-	}
-
-	extern(C) static void callBackValueChanged(AtkValue* valueStruct, double value, char* text, OnValueChangedDelegateWrapper wrapper)
-	{
-		wrapper.dlg(value, Str.toString(text), wrapper.outer);
-	}
-
-	extern(C) static void callBackValueChangedDestroy(OnValueChangedDelegateWrapper wrapper, GClosure* closure)
-	{
-		wrapper.remove(wrapper);
+		return Signals.connect(this, "value-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }
