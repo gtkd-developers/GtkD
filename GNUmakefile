@@ -115,12 +115,12 @@ PICOBJECTS_PEASD = $(patsubst %.o,%.pic.o,$(OBJECTS_PEASD))
 USE_RUNTIME_LINKER = $(shell grep "Linker" generated/gtkd/gtkc/atk.d)
 
 ifeq ($(USE_RUNTIME_LINKER),)
-    SOFLAGS_GTKD = $(subst -l,$(LINKERFLAG)-l,$(shell pkg-config --libs gtk+-3.0 librsvg-2.0))
-    SOFLAGS_GTKDGL = $(LINKERFLAG)-L. $(LINKERFLAG)./libgtkd-$(MAJOR).so $(subst -l,$(LINKERFLAG)-l,$(shell pkg-config --libs gtkglext-3.0))
-    SOFLAGS_GTKDSV = $(LINKERFLAG)-L. $(LINKERFLAG)./libgtkd-$(MAJOR).so $(subst -l,$(LINKERFLAG)-l,$(shell pkg-config --libs gtksourceview-3.0))
-    SOFLAGS_GSTREAMERD = $(LINKERFLAG)-L. $(LINKERFLAG)./libgtkd-$(MAJOR).so $(subst -l,$(LINKERFLAG)-l,$(shell pkg-config --libs gstreamer-base-1.0))
-    SOFLAGS_VTED = $(LINKERFLAG)-L. $(LINKERFLAG)./libgtkd-$(MAJOR).so $(subst -l,$(LINKERFLAG)-l,$(shell pkg-config --libs vte-2.91))
-    SOFLAGS_PEASD = $(LINKERFLAG)-L. $(LINKERFLAG)./libgtkd-$(MAJOR).so $(subst -l,$(LINKERFLAG)-l,$(shell pkg-config --libs-only-l libpeas-1.0))
+    SOFLAGS_GTKD = $(shell pkg-config --libs gtk+-3.0 librsvg-2.0 | sed 's/-[lL]/-L&/g')
+    SOFLAGS_GTKDGL = $(LINKERFLAG)-L. $(LINKERFLAG)./libgtkd-$(MAJOR).so $(shell pkg-config --libs gtkglext-3.0 | sed 's/-[lL]/-L&/g')
+    SOFLAGS_GTKDSV = $(LINKERFLAG)-L. $(LINKERFLAG)./libgtkd-$(MAJOR).so $(shell pkg-config --libs gtksourceview-3.0 | sed 's/-[lL]/-L&/g')
+    SOFLAGS_GSTREAMERD = $(LINKERFLAG)-L. $(LINKERFLAG)./libgtkd-$(MAJOR).so $(shell pkg-config --libs gstreamer-base-1.0 | sed 's/-[lL]/-L&/g')
+    SOFLAGS_VTED = $(LINKERFLAG)-L. $(LINKERFLAG)./libgtkd-$(MAJOR).so $(shell pkg-config --libs vte-2.91 | sed 's/-[lL]/-L&/g')
+    SOFLAGS_PEASD = $(LINKERFLAG)-L. $(LINKERFLAG)./libgtkd-$(MAJOR).so $(shell pkg-config --libs-only-l libpeas-1.0 | sed 's/-[lL]/-L&/g')
 endif
 
 #######################################################################
