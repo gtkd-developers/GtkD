@@ -7832,6 +7832,71 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			wrapper.remove(wrapper);
 		}
 
+		protected class OnEventDelegateWrapper
+		{
+			bool delegate(Event, Widget) dlg;
+			gulong handlerId;
+
+			this(bool delegate(Event, Widget) dlg)
+			{
+				this.dlg = dlg;
+				onEventListeners ~= this;
+			}
+
+			void remove(OnEventDelegateWrapper source)
+			{
+				foreach(index, wrapper; onEventListeners)
+				{
+					if (wrapper.handlerId == source.handlerId)
+					{
+						onEventListeners[index] = null;
+						onEventListeners = std.algorithm.remove(onEventListeners, index);
+						break;
+					}
+				}
+			}
+		}
+		OnEventDelegateWrapper[] onEventListeners;
+
+		/**
+		 * The GTK+ main loop will emit three signals for each GDK event delivered
+		 * to a widget: one generic ::event signal, another, more specific,
+		 * signal that matches the type of event delivered (e.g.
+		 * #GtkWidget::key-press-event) and finally a generic
+		 * #GtkWidget::event-after signal.
+		 *
+		 * Params:
+		 *     event = the #GdkEvent which triggered this signal
+		 *
+		 * Returns: %TRUE to stop other handlers from being invoked for the event
+		 *     and to cancel the emission of the second specific ::event signal.
+		 *     %FALSE to propagate the event further and to allow the emission of
+		 *     the second signal. The ::event-after signal is emitted regardless of
+		 *     the return value.
+		 */
+		gulong addOnEvent(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+		{
+			auto wrapper = new OnEventDelegateWrapper(dlg);
+			wrapper.handlerId = Signals.connectData(
+				this,
+				"event",
+				cast(GCallback)&callBackEvent,
+				cast(void*)wrapper,
+				cast(GClosureNotify)&callBackEventDestroy,
+				connectFlags);
+			return wrapper.handlerId;
+		}
+
+		extern(C) static int callBackEvent(GtkWidget* widgetStruct, GdkEvent* event, OnEventDelegateWrapper wrapper)
+		{
+			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
+		}
+
+		extern(C) static void callBackEventDestroy(OnEventDelegateWrapper wrapper, GClosure* closure)
+		{
+			wrapper.remove(wrapper);
+		}
+
 		protected class OnEventAfterDelegateWrapper
 		{
 			void delegate(Event, Widget) dlg;
