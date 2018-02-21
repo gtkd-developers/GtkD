@@ -180,7 +180,7 @@ public class TextTag : ObjectG
 		gtk_text_tag_set_priority(gtkTextTag, priority);
 	}
 
-	protected class OnDelegateWrapper
+	protected class OnEventDelegateWrapper
 	{
 		bool delegate(ObjectG, Event, TextIter, TextTag) dlg;
 		gulong handlerId;
@@ -188,23 +188,23 @@ public class TextTag : ObjectG
 		this(bool delegate(ObjectG, Event, TextIter, TextTag) dlg)
 		{
 			this.dlg = dlg;
-			onListeners ~= this;
+			onEventListeners ~= this;
 		}
 
-		void remove(OnDelegateWrapper source)
+		void remove(OnEventDelegateWrapper source)
 		{
-			foreach(index, wrapper; onListeners)
+			foreach(index, wrapper; onEventListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					onListeners[index] = null;
-					onListeners = std.algorithm.remove(onListeners, index);
+					onEventListeners[index] = null;
+					onEventListeners = std.algorithm.remove(onEventListeners, index);
 					break;
 				}
 			}
 		}
 	}
-	OnDelegateWrapper[] onListeners;
+	OnEventDelegateWrapper[] onEventListeners;
 
 	/**
 	 * The ::event signal is emitted when an event occurs on a region of the
@@ -218,25 +218,25 @@ public class TextTag : ObjectG
 	 * Returns: %TRUE to stop other handlers from being invoked for the
 	 *     event. %FALSE to propagate the event further.
 	 */
-	gulong addOn(bool delegate(ObjectG, Event, TextIter, TextTag) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnEvent(bool delegate(ObjectG, Event, TextIter, TextTag) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnDelegateWrapper(dlg);
+		auto wrapper = new OnEventDelegateWrapper(dlg);
 		wrapper.handlerId = Signals.connectData(
 			this,
 			"event",
-			cast(GCallback)&callBack,
+			cast(GCallback)&callBackEvent,
 			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackDestroy,
+			cast(GClosureNotify)&callBackEventDestroy,
 			connectFlags);
 		return wrapper.handlerId;
 	}
 
-	extern(C) static int callBack(GtkTextTag* texttagStruct, GObject* object, GdkEvent* event, GtkTextIter* iter, OnDelegateWrapper wrapper)
+	extern(C) static int callBackEvent(GtkTextTag* texttagStruct, GObject* object, GdkEvent* event, GtkTextIter* iter, OnEventDelegateWrapper wrapper)
 	{
 		return wrapper.dlg(ObjectG.getDObject!(ObjectG)(object), ObjectG.getDObject!(Event)(event), ObjectG.getDObject!(TextIter)(iter), wrapper.outer);
 	}
 
-	extern(C) static void callBackDestroy(OnDelegateWrapper wrapper, GClosure* closure)
+	extern(C) static void callBackEventDestroy(OnEventDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
 	}

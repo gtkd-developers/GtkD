@@ -876,7 +876,7 @@ public class SocketClient : ObjectG
 		g_socket_client_set_tls_validation_flags(gSocketClient, flags);
 	}
 
-	protected class OnDelegateWrapper
+	protected class OnEventDelegateWrapper
 	{
 		void delegate(GSocketClientEvent, SocketConnectableIF, IOStream, SocketClient) dlg;
 		gulong handlerId;
@@ -884,23 +884,23 @@ public class SocketClient : ObjectG
 		this(void delegate(GSocketClientEvent, SocketConnectableIF, IOStream, SocketClient) dlg)
 		{
 			this.dlg = dlg;
-			onListeners ~= this;
+			onEventListeners ~= this;
 		}
 
-		void remove(OnDelegateWrapper source)
+		void remove(OnEventDelegateWrapper source)
 		{
-			foreach(index, wrapper; onListeners)
+			foreach(index, wrapper; onEventListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					onListeners[index] = null;
-					onListeners = std.algorithm.remove(onListeners, index);
+					onEventListeners[index] = null;
+					onEventListeners = std.algorithm.remove(onEventListeners, index);
 					break;
 				}
 			}
 		}
 	}
-	OnDelegateWrapper[] onListeners;
+	OnEventDelegateWrapper[] onEventListeners;
 
 	/**
 	 * Emitted when @client's activity on @connectable changes state.
@@ -960,25 +960,25 @@ public class SocketClient : ObjectG
 	 *
 	 * Since: 2.32
 	 */
-	gulong addOn(void delegate(GSocketClientEvent, SocketConnectableIF, IOStream, SocketClient) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnEvent(void delegate(GSocketClientEvent, SocketConnectableIF, IOStream, SocketClient) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnDelegateWrapper(dlg);
+		auto wrapper = new OnEventDelegateWrapper(dlg);
 		wrapper.handlerId = Signals.connectData(
 			this,
 			"event",
-			cast(GCallback)&callBack,
+			cast(GCallback)&callBackEvent,
 			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackDestroy,
+			cast(GClosureNotify)&callBackEventDestroy,
 			connectFlags);
 		return wrapper.handlerId;
 	}
 
-	extern(C) static void callBack(GSocketClient* socketclientStruct, GSocketClientEvent event, GSocketConnectable* connectable, GIOStream* connection, OnDelegateWrapper wrapper)
+	extern(C) static void callBackEvent(GSocketClient* socketclientStruct, GSocketClientEvent event, GSocketConnectable* connectable, GIOStream* connection, OnEventDelegateWrapper wrapper)
 	{
 		wrapper.dlg(event, ObjectG.getDObject!(SocketConnectableIF)(connectable), ObjectG.getDObject!(IOStream)(connection), wrapper.outer);
 	}
 
-	extern(C) static void callBackDestroy(OnDelegateWrapper wrapper, GClosure* closure)
+	extern(C) static void callBackEventDestroy(OnEventDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
 	}

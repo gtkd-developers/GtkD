@@ -500,7 +500,7 @@ public class SocketListener : ObjectG
 		g_socket_listener_set_backlog(gSocketListener, listenBacklog);
 	}
 
-	protected class OnDelegateWrapper
+	protected class OnEventDelegateWrapper
 	{
 		void delegate(GSocketListenerEvent, Socket, SocketListener) dlg;
 		gulong handlerId;
@@ -508,23 +508,23 @@ public class SocketListener : ObjectG
 		this(void delegate(GSocketListenerEvent, Socket, SocketListener) dlg)
 		{
 			this.dlg = dlg;
-			onListeners ~= this;
+			onEventListeners ~= this;
 		}
 
-		void remove(OnDelegateWrapper source)
+		void remove(OnEventDelegateWrapper source)
 		{
-			foreach(index, wrapper; onListeners)
+			foreach(index, wrapper; onEventListeners)
 			{
 				if (wrapper.handlerId == source.handlerId)
 				{
-					onListeners[index] = null;
-					onListeners = std.algorithm.remove(onListeners, index);
+					onEventListeners[index] = null;
+					onEventListeners = std.algorithm.remove(onEventListeners, index);
 					break;
 				}
 			}
 		}
 	}
-	OnDelegateWrapper[] onListeners;
+	OnEventDelegateWrapper[] onEventListeners;
 
 	/**
 	 * Emitted when @listener's activity on @socket changes state.
@@ -538,25 +538,25 @@ public class SocketListener : ObjectG
 	 *
 	 * Since: 2.46
 	 */
-	gulong addOn(void delegate(GSocketListenerEvent, Socket, SocketListener) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnEvent(void delegate(GSocketListenerEvent, Socket, SocketListener) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		auto wrapper = new OnDelegateWrapper(dlg);
+		auto wrapper = new OnEventDelegateWrapper(dlg);
 		wrapper.handlerId = Signals.connectData(
 			this,
 			"event",
-			cast(GCallback)&callBack,
+			cast(GCallback)&callBackEvent,
 			cast(void*)wrapper,
-			cast(GClosureNotify)&callBackDestroy,
+			cast(GClosureNotify)&callBackEventDestroy,
 			connectFlags);
 		return wrapper.handlerId;
 	}
 
-	extern(C) static void callBack(GSocketListener* socketlistenerStruct, GSocketListenerEvent event, GSocket* socket, OnDelegateWrapper wrapper)
+	extern(C) static void callBackEvent(GSocketListener* socketlistenerStruct, GSocketListenerEvent event, GSocket* socket, OnEventDelegateWrapper wrapper)
 	{
 		wrapper.dlg(event, ObjectG.getDObject!(Socket)(socket), wrapper.outer);
 	}
 
-	extern(C) static void callBackDestroy(OnDelegateWrapper wrapper, GClosure* closure)
+	extern(C) static void callBackEventDestroy(OnEventDelegateWrapper wrapper, GClosure* closure)
 	{
 		wrapper.remove(wrapper);
 	}
