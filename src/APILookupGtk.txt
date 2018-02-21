@@ -4780,6 +4780,7 @@ structWrap: Gdk.Window GdkWin
 noCode: set_state
 noCode: get_state
 noSignal: draw
+noSignal: event
 code: start
 	public GtkWidgetClass* getWidgetClass()
 	{

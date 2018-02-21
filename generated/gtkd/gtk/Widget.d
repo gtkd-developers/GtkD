@@ -428,6 +428,12 @@ private import std.conv;
  * gtk_widget_class_bind_template_child_private (GTK_WIDGET_CLASS (klass),
  * FooWidget, goodbye_button);
  * }
+ * 
+ * static void
+ * foo_widget_init (FooWidget *widget)
+ * {
+ * 
+ * }
  * ]|
  * 
  * You can also use gtk_widget_class_bind_template_callback() to connect a signal
@@ -1403,7 +1409,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * button is held down for some time.  Try to save the last event that you got
 		 * from the mouse, using gdk_event_copy(), and pass it to this function
 		 * (remember to free the event with gdk_event_free() when you are done).
-		 * If you can really not pass a real event, pass #NULL instead.
+		 * If you really cannot pass a real event, pass %NULL instead.
 		 *
 		 * Params:
 		 *     targets = The targets (data formats) in which the
@@ -2464,7 +2470,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * Unrealized widgets do not have a frame clock.
 		 *
 		 * Returns: a #GdkFrameClock,
-		 *     or #NULL if widget is unrealized
+		 *     or %NULL if widget is unrealized
 		 *
 		 * Since: 3.8
 		 */
@@ -3349,13 +3355,20 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * inside a #GtkSocket within the same application.
 		 *
 		 * To reliably find the toplevel #GtkWindow, use
-		 * gtk_widget_get_toplevel() and call gtk_widget_is_toplevel()
-		 * on the result.
+		 * gtk_widget_get_toplevel() and call GTK_IS_WINDOW()
+		 * on the result. For instance, to get the title of a widget's toplevel
+		 * window, one might use:
 		 * |[<!-- language="C" -->
-		 * GtkWidget *toplevel = gtk_widget_get_toplevel (widget);
-		 * if (gtk_widget_is_toplevel (toplevel))
+		 * static const char *
+		 * get_widget_toplevel_title (GtkWidget *widget)
 		 * {
-		 * // Perform action on toplevel.
+		 * GtkWidget *toplevel = gtk_widget_get_toplevel (widget);
+		 * if (GTK_IS_WINDOW (toplevel))
+		 * {
+		 * return gtk_window_get_title (GTK_WINDOW (toplevel));
+		 * }
+		 *
+		 * return NULL;
 		 * }
 		 * ]|
 		 *
@@ -7815,71 +7828,6 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		}
 
 		extern(C) static void callBackEnterNotifyEventGenericDestroy(OnEnterNotifyEventGenericDelegateWrapper wrapper, GClosure* closure)
-		{
-			wrapper.remove(wrapper);
-		}
-
-		protected class OnDelegateWrapper
-		{
-			bool delegate(Event, Widget) dlg;
-			gulong handlerId;
-
-			this(bool delegate(Event, Widget) dlg)
-			{
-				this.dlg = dlg;
-				onListeners ~= this;
-			}
-
-			void remove(OnDelegateWrapper source)
-			{
-				foreach(index, wrapper; onListeners)
-				{
-					if (wrapper.handlerId == source.handlerId)
-					{
-						onListeners[index] = null;
-						onListeners = std.algorithm.remove(onListeners, index);
-						break;
-					}
-				}
-			}
-		}
-		OnDelegateWrapper[] onListeners;
-
-		/**
-		 * The GTK+ main loop will emit three signals for each GDK event delivered
-		 * to a widget: one generic ::event signal, another, more specific,
-		 * signal that matches the type of event delivered (e.g.
-		 * #GtkWidget::key-press-event) and finally a generic
-		 * #GtkWidget::event-after signal.
-		 *
-		 * Params:
-		 *     event = the #GdkEvent which triggered this signal
-		 *
-		 * Returns: %TRUE to stop other handlers from being invoked for the event
-		 *     and to cancel the emission of the second specific ::event signal.
-		 *     %FALSE to propagate the event further and to allow the emission of
-		 *     the second signal. The ::event-after signal is emitted regardless of
-		 *     the return value.
-		 */
-		gulong addOn(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-		{
-			auto wrapper = new OnDelegateWrapper(dlg);
-			wrapper.handlerId = Signals.connectData(
-				this,
-				"event",
-				cast(GCallback)&callBack,
-				cast(void*)wrapper,
-				cast(GClosureNotify)&callBackDestroy,
-				connectFlags);
-			return wrapper.handlerId;
-		}
-
-		extern(C) static int callBack(GtkWidget* widgetStruct, GdkEvent* event, OnDelegateWrapper wrapper)
-		{
-			return wrapper.dlg(ObjectG.getDObject!(Event)(event), wrapper.outer);
-		}
-
-		extern(C) static void callBackDestroy(OnDelegateWrapper wrapper, GClosure* closure)
 		{
 			wrapper.remove(wrapper);
 		}
