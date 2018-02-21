@@ -186,7 +186,7 @@ public class TextTag : ObjectG
 	 * Returns: %TRUE to stop other handlers from being invoked for the
 	 *     event. %FALSE to propagate the event further.
 	 */
-	gulong addOn(bool delegate(ObjectG, Event, TextIter, TextTag) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnEvent(bool delegate(ObjectG, Event, TextIter, TextTag) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "event", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}

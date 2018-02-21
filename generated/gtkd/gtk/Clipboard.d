@@ -820,7 +820,6 @@ public class Clipboard : ObjectG
 		return Signals.connect(this, "owner-change", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
-
 	/**
 	 * The ::owner-change signal is emitted when GTK+ receives an
 	 * event that indicates that the ownership of the selection

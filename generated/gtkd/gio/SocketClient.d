@@ -928,7 +928,7 @@ public class SocketClient : ObjectG
 	 *
 	 * Since: 2.32
 	 */
-	gulong addOn(void delegate(GSocketClientEvent, SocketConnectableIF, IOStream, SocketClient) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnEvent(void delegate(GSocketClientEvent, SocketConnectableIF, IOStream, SocketClient) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "event", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}

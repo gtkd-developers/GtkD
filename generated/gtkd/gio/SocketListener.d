@@ -506,7 +506,7 @@ public class SocketListener : ObjectG
 	 *
 	 * Since: 2.46
 	 */
-	gulong addOn(void delegate(GSocketListenerEvent, Socket, SocketListener) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnEvent(void delegate(GSocketListenerEvent, Socket, SocketListener) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "event", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}

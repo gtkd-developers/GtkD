@@ -5954,7 +5954,6 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			return Signals.connect(this, "button-press-event", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 		}
 
-
 		/**
 		 * The ::button-press-event signal will be emitted when a button
 		 * (typically from a mouse) is pressed.
@@ -5998,7 +5997,6 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			addEvents(EventMask.BUTTON_RELEASE_MASK);
 			return Signals.connect(this, "button-release-event", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 		}
-
 
 		/**
 		 * The ::button-release-event signal will be emitted when a button
@@ -6084,7 +6082,6 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			return Signals.connect(this, "configure-event", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 		}
 
-
 		/**
 		 * The ::configure-event signal will be emitted when the size, position or
 		 * stacking of the @widget's window has changed.
@@ -6122,7 +6119,6 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		{
 			return Signals.connect(this, "damage-event", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 		}
-
 
 		/**
 		 * Emitted when a redirected window belonging to @widget gets drawn into.
@@ -6532,7 +6528,6 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			return Signals.connect(this, "enter-notify-event", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 		}
 
-
 		/**
 		 * The ::enter-notify-event will be emitted when the pointer enters
 		 * the @widget's window.
@@ -6571,7 +6566,7 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 *     the second signal. The ::event-after signal is emitted regardless of
 		 *     the return value.
 		 */
-		gulong addOn(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+		gulong addOnEvent(bool delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 		{
 			return Signals.connect(this, "event", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 		}
@@ -6617,7 +6612,6 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			return Signals.connect(this, "focus-in-event", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 		}
 
-
 		/**
 		 * The ::focus-in-event signal will be emitted when the keyboard focus
 		 * enters the @widget's window.
@@ -6657,7 +6651,6 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			addEvents(EventMask.FOCUS_CHANGE_MASK);
 			return Signals.connect(this, "focus-out-event", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 		}
-
 
 		/**
 		 * The ::focus-out-event signal will be emitted when the keyboard focus
@@ -6699,7 +6692,6 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		{
 			return Signals.connect(this, "grab-broken-event", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 		}
-
 
 		/**
 		 * Emitted when a pointer or keyboard grab on a window belonging
@@ -6793,7 +6785,6 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			return Signals.connect(this, "key-press-event", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 		}
 
-
 		/**
 		 * The ::key-press-event signal is emitted when a key is pressed. The signal
 		 * emission will reoccur at the key-repeat rate when the key is kept pressed.
@@ -6834,7 +6825,6 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			addEvents(EventMask.KEY_RELEASE_MASK);
 			return Signals.connect(this, "key-release-event", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 		}
-
 
 		/**
 		 * The ::key-release-event signal is emitted when a key is released.
@@ -6896,7 +6886,6 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			return Signals.connect(this, "leave-notify-event", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 		}
 
-
 		/**
 		 * The ::leave-notify-event will be emitted when the pointer leaves
 		 * the @widget's window.
@@ -6954,7 +6943,6 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			return Signals.connect(this, "map-event", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 		}
 
-
 		/**
 		 * The ::map-event signal will be emitted when the @widget's window is
 		 * mapped. A window is mapped when it becomes visible on the screen.
@@ -7010,7 +6998,6 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			addEvents(EventMask.POINTER_MOTION_MASK);
 			return Signals.connect(this, "motion-notify-event", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 		}
-
 
 		/**
 		 * The ::motion-notify-event signal is emitted when the pointer moves
@@ -7089,7 +7076,6 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			return Signals.connect(this, "property-notify-event", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 		}
 
-
 		/**
 		 * The ::property-notify-event signal will be emitted when a property on
 		 * the @widget's window has been changed or deleted.
@@ -7129,7 +7115,6 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			return Signals.connect(this, "proximity-in-event", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 		}
 
-
 		/**
 		 * To receive this signal the #GdkWindow associated to the widget needs
 		 * to enable the #GDK_PROXIMITY_IN_MASK mask.
@@ -7167,7 +7152,6 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			addEvents(EventMask.PROXIMITY_OUT_MASK);
 			return Signals.connect(this, "proximity-out-event", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 		}
-
 
 		/**
 		 * To receive this signal the #GdkWindow associated to the widget needs
@@ -7265,7 +7249,6 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			return Signals.connect(this, "scroll-event", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 		}
 
-
 		/**
 		 * The ::scroll-event signal is emitted when a button in the 4 to 7
 		 * range is pressed. Wheel mice are usually configured to generate
@@ -7305,7 +7288,6 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			return Signals.connect(this, "selection-clear-event", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 		}
 
-
 		/**
 		 * The ::selection-clear-event signal will be emitted when the
 		 * the @widget's window has lost ownership of a selection.
@@ -7335,7 +7317,6 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		{
 			return Signals.connect(this, "selection-notify-event", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 		}
-
 
 		/**
 		 * Returns: %TRUE to stop other handlers from being invoked for the event. %FALSE to propagate the event further.
@@ -7367,7 +7348,6 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		{
 			return Signals.connect(this, "selection-request-event", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 		}
-
 
 		/**
 		 * The ::selection-request-event signal will be emitted when
@@ -7511,7 +7491,6 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			return Signals.connect(this, "unmap-event", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 		}
 
-
 		/**
 		 * The ::unmap-event signal will be emitted when the @widget's window is
 		 * unmapped. A window is unmapped when it becomes invisible on the screen.
@@ -7567,7 +7546,6 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 			return Signals.connect(this, "visibility-notify-event", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 		}
 
-
 		/**
 		 * The ::visibility-notify-event will be emitted when the @widget's
 		 * window is obscured or unobscured.
@@ -7612,7 +7590,6 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		{
 			return Signals.connect(this, "window-state-event", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 		}
-
 
 		/**
 		 * The ::window-state-event will be emitted when the state of the

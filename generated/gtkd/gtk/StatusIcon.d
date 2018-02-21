@@ -821,7 +821,6 @@ public class StatusIcon : ObjectG
 		return Signals.connect(this, "button-press-event", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
-
 	/**
 	 * The ::button-press-event signal will be emitted when a button
 	 * (typically from a mouse) is pressed.
@@ -863,7 +862,6 @@ public class StatusIcon : ObjectG
 	{
 		return Signals.connect(this, "button-release-event", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
 
 	/**
 	 * The ::button-release-event signal will be emitted when a button
@@ -964,7 +962,6 @@ public class StatusIcon : ObjectG
 	{
 		return Signals.connect(this, "scroll-event", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
 
 	/**
 	 * The ::scroll-event signal is emitted when a button in the 4 to 7

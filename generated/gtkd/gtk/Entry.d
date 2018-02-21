@@ -1601,7 +1601,6 @@ public class Entry : Widget, CellEditableIF, EditableIF
 		return Signals.connect(this, "icon-press", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
-
 	/**
 	 * The ::icon-press signal is emitted when an activatable icon
 	 * is clicked.
@@ -1631,7 +1630,6 @@ public class Entry : Widget, CellEditableIF, EditableIF
 	{
 		return Signals.connect(this, "icon-release", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
 
 	/**
 	 * The ::icon-release signal is emitted on the button release from a

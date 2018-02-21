@@ -564,7 +564,6 @@ public class Gesture : EventController
 		return Signals.connect(this, "begin", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
-
 	/**
 	 * This signal is emitted when the gesture is recognized. This means the
 	 * number of touch sequences matches #GtkGesture:n-points, and the #GtkGesture::check
@@ -601,7 +600,6 @@ public class Gesture : EventController
 	{
 		return Signals.connect(this, "cancel", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
 
 	/**
 	 * This signal is emitted whenever a sequence is cancelled. This usually
@@ -642,7 +640,6 @@ public class Gesture : EventController
 		return Signals.connect(this, "end", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
-
 	/**
 	 * This signal is emitted when @gesture either stopped recognizing the event
 	 * sequences as something to be handled (the #GtkGesture::check handler returned
@@ -680,7 +677,6 @@ public class Gesture : EventController
 		return Signals.connect(this, "sequence-state-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
-
 	/**
 	 * This signal is emitted whenever a sequence state changes. See
 	 * gtk_gesture_set_sequence_state() to know more about the expectable
@@ -710,7 +706,6 @@ public class Gesture : EventController
 	{
 		return Signals.connect(this, "update", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
-
 
 	/**
 	 * This signal is emitted whenever an event is handled while the gesture is
