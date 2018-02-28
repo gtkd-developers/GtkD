@@ -1,6 +1,19 @@
 GtkD ChangeLog
 ==============
 
+Release: 3.8.0
+--------------
+-Implement a DClosure. #225
+-Add a Signals.connect overload for D functions and delegates.
+-Bring back the OpCast changes for ObjectG.
+-Add ldc support to the Build.d script.
+-Clean up Idles and Timeouts when they are destroyed on the C side.
+-Add missing properties for gtk.TreeIter.
+
+Release: 3.7.4
+--------------
+-Fix building with dmd 2.079.
+
 Release: 3.7.3
 --------------
 -Use the Slice allocator to allocate structs. #221
