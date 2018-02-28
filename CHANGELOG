@@ -3,6 +3,10 @@ GtkD ChangeLog
 
 Release: 3.7.3
 --------------
+-Fix building with dmd 2.079.
+
+Release: 3.7.3
+--------------
 -Use the Slice allocator to allocate structs. #221
 
 Release: 3.7.2
