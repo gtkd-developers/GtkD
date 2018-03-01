@@ -1,7 +1,12 @@
 GtkD ChangeLog
 ==============
 
-Release: 3.7.3
+Release: 3.7.4
+--------------
+-Check for null when returning an object in gtkd.Implement.
+-Handle out parameters correctly in gtkd.Implement.
+
+Release: 3.7.4
 --------------
 -Fix building with dmd 2.079.
 
