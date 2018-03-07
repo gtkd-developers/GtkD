@@ -54,6 +54,14 @@ ifeq ("$(OS)","Linux")
     LDFLAGS+=$(LINKERFLAG)-ldl
 endif
 
+ifeq ("$(OS)","Darwin")
+    SO_POSTFIX=$(SO_VERSION).dylib
+    SONAME=$(LINKERFLAG)-install_name="$@" $(LINKERFLAG)-current_version=$(GTKD_VERSION) $(LINKERFLAG)-compatibility_version=$(MAJOR).0
+else
+    SO_POSTFIX=so
+    SONAME=$(LINKERFLAG)-soname=$@.$(SO_VERSION)
+endif
+
 AR=ar
 RANLIB=ranlib
 
@@ -75,52 +83,52 @@ MINOR =  $(word 2,$(subst ., ,$(GTKD_VERSION)))
 BUGFIX = $(word 3,$(subst ., ,$(GTKD_VERSION)))
 
 LIBNAME_GTKD = libgtkd-$(MAJOR).a
-SONAME_GTKD = libgtkd-$(MAJOR).so
+SONAME_GTKD = libgtkd-$(MAJOR).$(SO_POSTFIX)
 SOURCES_GTKD = $(wildcard generated/gtkd/*/*.d) $(wildcard generated/gtkd/*/c/*.d)
 OBJECTS_GTKD = $(patsubst %.d,%.o,$(SOURCES_GTKD))
 PICOBJECTS_GTKD = $(patsubst %.o,%.pic.o,$(OBJECTS_GTKD))
 
 LIBNAME_GTKDGL = libgtkdgl-$(MAJOR).a
-SONAME_GTKDGL = libgtkdgl-$(MAJOR).so
+SONAME_GTKDGL = libgtkdgl-$(MAJOR).$(SO_POSTFIX)
 SOURCES_GTKDGL = $(wildcard generated/gtkdgl/*/*.d) $(wildcard generated/gtkdgl/*/c/*.d)
 OBJECTS_GTKDGL = $(patsubst %.d,%.o,$(SOURCES_GTKDGL))
 PICOBJECTS_GTKDGL = $(patsubst %.o,%.pic.o,$(OBJECTS_GTKDGL))
 
 LIBNAME_GTKDSV = libgtkdsv-$(MAJOR).a
-SONAME_GTKDSV = libgtkdsv-$(MAJOR).so
+SONAME_GTKDSV = libgtkdsv-$(MAJOR).$(SO_POSTFIX)
 SOURCES_GTKDSV = $(wildcard generated/sourceview/*/*.d) $(wildcard generated/sourceview/*/c/*.d)
 OBJECTS_GTKDSV = $(patsubst %.d,%.o,$(SOURCES_GTKDSV))
 PICOBJECTS_GTKDSV = $(patsubst %.o,%.pic.o,$(OBJECTS_GTKDSV))
 
 LIBNAME_GSTREAMERD = libgstreamerd-$(MAJOR).a
-SONAME_GSTREAMERD = libgstreamerd-$(MAJOR).so
+SONAME_GSTREAMERD = libgstreamerd-$(MAJOR).$(SO_POSTFIX)
 SOURCES_GSTREAMERD = $(wildcard generated/gstreamer/*/*.d) $(wildcard generated/gstreamer/*/c/*.d) $(wildcard generated/gstreamer/gst/*/*.d) $(wildcard generated/gstreamer/gst/*/c/*.d)
 OBJECTS_GSTREAMERD = $(patsubst %.d,%.o,$(SOURCES_GSTREAMERD))
 PICOBJECTS_GSTREAMERD = $(patsubst %.o,%.pic.o,$(OBJECTS_GSTREAMERD))
 
 LIBNAME_VTED = libvted-$(MAJOR).a
-SONAME_VTED = libvted-$(MAJOR).so
+SONAME_VTED = libvted-$(MAJOR).$(SO_POSTFIX)
 SOURCES_VTED = $(wildcard generated/vte/*/*.d) $(wildcard generated/vte/*/c/*.d)
 OBJECTS_VTED = $(patsubst %.d,%.o,$(SOURCES_VTED))
 PICOBJECTS_VTED = $(patsubst %.o,%.pic.o,$(OBJECTS_VTED))
 
 LIBNAME_PEASD = libpeasd-$(MAJOR).a
-SONAME_PEASD = libpeasd-$(MAJOR).so
+SONAME_PEASD = libpeasd-$(MAJOR).$(SO_POSTFIX)
 SOURCES_PEASD = $(wildcard generated/peas/*/*.d) $(wildcard generated/peas/*/c/*.d)
 OBJECTS_PEASD = $(patsubst %.d,%.o,$(SOURCES_PEASD))
 PICOBJECTS_PEASD = $(patsubst %.o,%.pic.o,$(OBJECTS_PEASD))
 
 #######################################################################
 
-USE_RUNTIME_LINKER = $(shell grep "Linker" generated/gtkd/gtkc/atk.d)
+USE_RUNTIME_LINKER = $(shell grep "Linker" generated/gtkd/atk/c/functions.d)
 
 ifeq ($(USE_RUNTIME_LINKER),)
     SOFLAGS_GTKD = $(shell pkg-config --libs gtk+-3.0 librsvg-2.0 | sed 's/-[lL]/$(LINKERFLAG)&/g')
-    SOFLAGS_GTKDGL = $(LINKERFLAG)-L. $(LINKERFLAG)./libgtkd-$(MAJOR).so $(shell pkg-config --libs gtkglext-3.0 | sed 's/-[lL]/$(LINKERFLAG)&/g')
-    SOFLAGS_GTKDSV = $(LINKERFLAG)-L. $(LINKERFLAG)./libgtkd-$(MAJOR).so $(shell pkg-config --libs gtksourceview-3.0 | sed 's/-[lL]/$(LINKERFLAG)&/g')
-    SOFLAGS_GSTREAMERD = $(LINKERFLAG)-L. $(LINKERFLAG)./libgtkd-$(MAJOR).so $(shell pkg-config --libs gstreamer-base-1.0 | sed 's/-[lL]/$(LINKERFLAG)&/g')
-    SOFLAGS_VTED = $(LINKERFLAG)-L. $(LINKERFLAG)./libgtkd-$(MAJOR).so $(shell pkg-config --libs vte-2.91 | sed 's/-[lL]/$(LINKERFLAG)&/g')
-    SOFLAGS_PEASD = $(LINKERFLAG)-L. $(LINKERFLAG)./libgtkd-$(MAJOR).so $(shell pkg-config --libs-only-l libpeas-1.0 | sed 's/-[lL]/$(LINKERFLAG)&/g')
+    SOFLAGS_GTKDGL = $(LINKERFLAG)-L. $(LINKERFLAG)./libgtkd-$(MAJOR).$(SO_POSTFIX) $(shell pkg-config --libs gtkglext-3.0 | sed 's/-[lL]/$(LINKERFLAG)&/g')
+    SOFLAGS_GTKDSV = $(LINKERFLAG)-L. $(LINKERFLAG)./libgtkd-$(MAJOR).$(SO_POSTFIX) $(shell pkg-config --libs gtksourceview-3.0 | sed 's/-[lL]/$(LINKERFLAG)&/g')
+    SOFLAGS_GSTREAMERD = $(LINKERFLAG)-L. $(LINKERFLAG)./libgtkd-$(MAJOR).$(SO_POSTFIX) $(shell pkg-config --libs gstreamer-base-1.0 | sed 's/-[lL]/$(LINKERFLAG)&/g')
+    SOFLAGS_VTED = $(LINKERFLAG)-L. $(LINKERFLAG)./libgtkd-$(MAJOR).$(SO_POSTFIX) $(shell pkg-config --libs vte-2.91 | sed 's/-[lL]/$(LINKERFLAG)&/g')
+    SOFLAGS_PEASD = $(LINKERFLAG)-L. $(LINKERFLAG)./libgtkd-$(MAJOR).$(SO_POSTFIX) $(shell pkg-config --libs-only-l libpeas-1.0 | sed 's/-[lL]/$(LINKERFLAG)&/g')
 endif
 
 #######################################################################
@@ -241,7 +249,7 @@ $(BINNAME_DEMO): $(OBJECTS_DEMO)
 	$(if $(wildcard $(SONAME_GTKD)),$(eval LDFLAGS+= $(LINKERFLAG)-rpath=./))
 	$(if $(wildcard $(SONAME_GTKD)),$(if $(findstring "gdc","$(DC)"),$(eval LDFLAGS+=-shared-libphobos)))
 	$(if $(wildcard $(SONAME_GTKD)),$(if $(wildcard $(SONAME_GTKD).$(SO_VERSION)),,$(shell ln -s $(SONAME_GTKD) $(SONAME_GTKD).$(SO_VERSION))))
-	$(DC) $(OBJECTS_DEMO) $(output) $(if $(wildcard $(SONAME_GTKD)),$(LINKERFLAG)./libgtkd-$(MAJOR).so,$(LINKERFLAG)./libgtkd-$(MAJOR).a) $(LDFLAGS)
+	$(DC) $(OBJECTS_DEMO) $(output) $(if $(wildcard $(SONAME_GTKD)),$(LINKERFLAG)./libgtkd-$(MAJOR).$(SO_POSTFIX),$(LINKERFLAG)./libgtkd-$(MAJOR).a) $(LDFLAGS)
 
 #######################################################################
 
@@ -450,11 +458,11 @@ define make-lib
 endef
 
 define make-shared-lib
-	$(if $(findstring "dmd","$(DC)"),$(eval LDFLAGS+=-defaultlib=:libphobos2.so))
+	$(if $(filter-out "Darwin","$(OS)"), $(if $(findstring "dmd","$(DC)"),$(eval LDFLAGS+=-defaultlib=:libphobos2.so)))
 	$(if $(findstring "gdc","$(DC)"),$(eval LDFLAGS+=-shared-libphobos))
-	#$(if $(findstring "ldc","$(DC)"),$(eval LDFLAGS+=-defaultlib=phobos2-ldc-shared,druntime-ldc-shared))
- 
-	$(DC) -shared $(output) $(LDFLAGS) $1 $(LINKERFLAG)-soname=$@.$(SO_VERSION) $(subst $(SONAME_GTKD),,$^)
+	$(if $(findstring "ldc","$(DC)"),$(eval LDFLAGS+=-link-defaultlib-shared))
+
+	$(DC) -shared $(output) $(LDFLAGS) $1 $(SONAME) $(subst $(SONAME_GTKD),,$^)
 endef
 
 define install-so
