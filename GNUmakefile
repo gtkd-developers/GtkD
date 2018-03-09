@@ -56,7 +56,7 @@ endif
 
 ifeq ("$(OS)","Darwin")
     SO_POSTFIX=$(SO_VERSION).dylib
-    SONAME=$(LINKERFLAG)-dylib_install_name="$@" $(LINKERFLAG)-dylib_current_version=$(GTKD_VERSION) $(LINKERFLAG)-dylib_compatibility_version=$(MAJOR).0
+    SONAME=$(LINKERFLAG)-dylib_install_name $(LINKERFLAG)"$@" $(LINKERFLAG)-dylib_current_version $(LINKERFLAG)$(GTKD_VERSION) $(LINKERFLAG)-dylib_compatibility_version $(LINKERFLAG)$(MAJOR).0
 else
     SO_POSTFIX=so
     SONAME=$(LINKERFLAG)-soname=$@.$(SO_VERSION)
