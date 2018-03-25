@@ -83,11 +83,22 @@ public class Value
 
 	/** */
 	this(GOBJECT)(GOBJECT obj)
-	if ( is(GOBJECT : ObjectG) )
+	if ( is(GOBJECT == class) && hasMember!(GOBJECT, "getType") )
 	{
 		this();
 		init(GOBJECT.getType());
-		setObject(obj);
+
+		static if ( is(GOBJECT : GObject) )
+		{
+			setObject(obj);
+		}
+		else
+		{
+			if ( Type.isA(gValue.gType, GType.BOXED) )
+				setBoxed(obj.tupleof[0]);
+			else
+				setPointer(obj.tupleof[0]);
+		}
 	}
 
 
