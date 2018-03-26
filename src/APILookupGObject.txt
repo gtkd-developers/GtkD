@@ -784,6 +784,7 @@ code: start
 code: end
 
 struct: Value
+import: gobject.Type
 import: std.traits
 code: start
 	/** */
