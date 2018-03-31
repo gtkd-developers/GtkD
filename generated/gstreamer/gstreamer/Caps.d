@@ -354,8 +354,8 @@ public class Caps
 	 * Params:
 	 *     index = the index of the structure
 	 *
-	 * Returns: a pointer to the #GstCapsFeatures corresponding
-	 *     to @index
+	 * Returns: a pointer to the #GstCapsFeatures
+	 *     corresponding to @index
 	 *
 	 * Since: 1.2
 	 */
@@ -784,8 +784,8 @@ public class Caps
 	 * Params:
 	 *     index = Index of the structure to retrieve
 	 *
-	 * Returns: a pointer to the #GstStructure corresponding
-	 *     to @index.
+	 * Returns: a pointer to the #GstStructure
+	 *     corresponding to @index.
 	 */
 	public Structure stealStructure(uint index)
 	{

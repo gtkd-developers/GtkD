@@ -97,7 +97,7 @@ private import std.algorithm;
  * ## An example for file descriptor passing # {#gdbus-unix-fd-client}
  * 
  * Here is an example for passing UNIX file descriptors:
- * [gdbus-unix-fd-client.c](https://git.gnome.org/browse/glib/tree/gio/tests/gdbus-unix-fd-client.c)
+ * [gdbus-unix-fd-client.c](https://git.gnome.org/browse/glib/tree/gio/tests/gdbus-example-unix-fd-client.c)
  * 
  * ## An example for exporting a GObject # {#gdbus-export}
  * 
@@ -423,7 +423,9 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 *
 	 * If @reply_type is non-%NULL then the reply will be checked for having this type and an
 	 * error will be raised if it does not match.  Said another way, if you give a @reply_type
-	 * then any non-%NULL return value will be of this type.
+	 * then any non-%NULL return value will be of this type. Unless it’s
+	 * %G_VARIANT_TYPE_UNIT, the @reply_type will be a tuple containing one or more
+	 * values.
 	 *
 	 * If the @parameters #GVariant is floating, it is consumed. This allows
 	 * convenient 'inline' use of g_variant_new(), e.g.:
@@ -463,7 +465,8 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 *     methodName = the name of the method to invoke
 	 *     parameters = a #GVariant tuple with parameters for the method
 	 *         or %NULL if not passing parameters
-	 *     replyType = the expected type of the reply, or %NULL
+	 *     replyType = the expected type of the reply (which will be a
+	 *         tuple), or %NULL
 	 *     flags = flags from the #GDBusCallFlags enumeration
 	 *     timeoutMsec = the timeout in milliseconds, -1 to use the default
 	 *         timeout or %G_MAXINT for no timeout
@@ -808,7 +811,9 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 *
 	 * If the parameters GVariant is floating, it is consumed.
 	 *
-	 * This can only fail if @parameters is not compatible with the D-Bus protocol.
+	 * This can only fail if @parameters is not compatible with the D-Bus protocol
+	 * (%G_IO_ERROR_INVALID_ARGUMENT), or if @connection has been closed
+	 * (%G_IO_ERROR_CLOSED).
 	 *
 	 * Params:
 	 *     destinationBusName = the unique bus name for the destination

@@ -164,7 +164,13 @@ public class FlowCombiner
 		ownedRef = false;
 	}
 
-	/** */
+	/**
+	 * Increments the reference count on the #GstFlowCombiner.
+	 *
+	 * Returns: the #GstFlowCombiner.
+	 *
+	 * Since: 1.12.1
+	 */
 	public FlowCombiner doref()
 	{
 		auto p = gst_flow_combiner_ref(gstFlowCombiner);
@@ -200,7 +206,11 @@ public class FlowCombiner
 		gst_flow_combiner_reset(gstFlowCombiner);
 	}
 
-	/** */
+	/**
+	 * Decrements the reference count on the #GstFlowCombiner.
+	 *
+	 * Since: 1.12.1
+	 */
 	public void unref()
 	{
 		gst_flow_combiner_unref(gstFlowCombiner);

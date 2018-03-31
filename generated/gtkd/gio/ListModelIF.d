@@ -109,7 +109,7 @@ public interface ListModelIF{
 	 *
 	 * Since: 2.44
 	 */
-	public ObjectG getItem(uint position);
+	public void* getItem(uint position);
 
 	/**
 	 * Gets the type of the items in @list. All items returned from

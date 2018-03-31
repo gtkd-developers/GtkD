@@ -186,9 +186,9 @@ public template AppInfoT(TStruct)
 	/**
 	 * Checks if two #GAppInfos are equal.
 	 *
-	 * Note that the check <em>may not</em> compare each individual field, and
-	 * only does an identity check. In case detecting changes in the contents
-	 * is needed, program code must additionally compare relevant fields.
+	 * Note that the check <emphasis>may not</emphasis> compare each individual
+	 * field, and only does an identity check. In case detecting changes in the
+	 * contents is needed, program code must additionally compare relevant fields.
 	 *
 	 * Params:
 	 *     appinfo2 = the second #GAppInfo.
@@ -313,7 +313,7 @@ public template AppInfoT(TStruct)
 
 	/**
 	 * Launches the application. Passes @files to the launched application
-	 * as arguments, using the optional @launch_context to get information
+	 * as arguments, using the optional @context to get information
 	 * about the details of the launcher (like what screen it is on).
 	 * On error, @error will be set accordingly.
 	 *
@@ -338,21 +338,21 @@ public template AppInfoT(TStruct)
 	 * process. This can be used to ignore `GIO_LAUNCHED_DESKTOP_FILE`,
 	 * should it be inherited by further processes. The `DISPLAY` and
 	 * `DESKTOP_STARTUP_ID` environment variables are also set, based
-	 * on information provided in @launch_context.
+	 * on information provided in @context.
 	 *
 	 * Params:
 	 *     files = a #GList of #GFile objects
-	 *     launchContext = a #GAppLaunchContext or %NULL
+	 *     context = a #GAppLaunchContext or %NULL
 	 *
 	 * Returns: %TRUE on successful launch, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
-	public bool launch(ListG files, AppLaunchContext launchContext)
+	public bool launch(ListG files, AppLaunchContext context)
 	{
 		GError* err = null;
 
-		auto p = g_app_info_launch(getAppInfoStruct(), (files is null) ? null : files.getListGStruct(), (launchContext is null) ? null : launchContext.getAppLaunchContextStruct(), &err) != 0;
+		auto p = g_app_info_launch(getAppInfoStruct(), (files is null) ? null : files.getListGStruct(), (context is null) ? null : context.getAppLaunchContextStruct(), &err) != 0;
 
 		if (err !is null)
 		{
@@ -364,7 +364,7 @@ public template AppInfoT(TStruct)
 
 	/**
 	 * Launches the application. This passes the @uris to the launched application
-	 * as arguments, using the optional @launch_context to get information
+	 * as arguments, using the optional @context to get information
 	 * about the details of the launcher (like what screen it is on).
 	 * On error, @error will be set accordingly.
 	 *
@@ -376,17 +376,17 @@ public template AppInfoT(TStruct)
 	 *
 	 * Params:
 	 *     uris = a #GList containing URIs to launch.
-	 *     launchContext = a #GAppLaunchContext or %NULL
+	 *     context = a #GAppLaunchContext or %NULL
 	 *
 	 * Returns: %TRUE on successful launch, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
-	public bool launchUris(ListG uris, AppLaunchContext launchContext)
+	public bool launchUris(ListG uris, AppLaunchContext context)
 	{
 		GError* err = null;
 
-		auto p = g_app_info_launch_uris(getAppInfoStruct(), (uris is null) ? null : uris.getListGStruct(), (launchContext is null) ? null : launchContext.getAppLaunchContextStruct(), &err) != 0;
+		auto p = g_app_info_launch_uris(getAppInfoStruct(), (uris is null) ? null : uris.getListGStruct(), (context is null) ? null : context.getAppLaunchContextStruct(), &err) != 0;
 
 		if (err !is null)
 		{

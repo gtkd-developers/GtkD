@@ -72,6 +72,7 @@ shared static this()
 	Linker.link(gst_app_src_get_size, "gst_app_src_get_size", LIBRARY_GSTAPP);
 	Linker.link(gst_app_src_get_stream_type, "gst_app_src_get_stream_type", LIBRARY_GSTAPP);
 	Linker.link(gst_app_src_push_buffer, "gst_app_src_push_buffer", LIBRARY_GSTAPP);
+	Linker.link(gst_app_src_push_buffer_list, "gst_app_src_push_buffer_list", LIBRARY_GSTAPP);
 	Linker.link(gst_app_src_push_sample, "gst_app_src_push_sample", LIBRARY_GSTAPP);
 	Linker.link(gst_app_src_set_callbacks, "gst_app_src_set_callbacks", LIBRARY_GSTAPP);
 	Linker.link(gst_app_src_set_duration, "gst_app_src_set_duration", LIBRARY_GSTAPP);
@@ -121,6 +122,7 @@ __gshared extern(C)
 	long function(GstAppSrc* appsrc) c_gst_app_src_get_size;
 	GstAppStreamType function(GstAppSrc* appsrc) c_gst_app_src_get_stream_type;
 	GstFlowReturn function(GstAppSrc* appsrc, GstBuffer* buffer) c_gst_app_src_push_buffer;
+	GstFlowReturn function(GstAppSrc* appsrc, GstBufferList* bufferList) c_gst_app_src_push_buffer_list;
 	GstFlowReturn function(GstAppSrc* appsrc, GstSample* sample) c_gst_app_src_push_sample;
 	void function(GstAppSrc* appsrc, GstAppSrcCallbacks* callbacks, void* userData, GDestroyNotify notify) c_gst_app_src_set_callbacks;
 	void function(GstAppSrc* appsrc, GstClockTime duration) c_gst_app_src_set_duration;
@@ -168,6 +170,7 @@ alias c_gst_app_src_get_max_bytes gst_app_src_get_max_bytes;
 alias c_gst_app_src_get_size gst_app_src_get_size;
 alias c_gst_app_src_get_stream_type gst_app_src_get_stream_type;
 alias c_gst_app_src_push_buffer gst_app_src_push_buffer;
+alias c_gst_app_src_push_buffer_list gst_app_src_push_buffer_list;
 alias c_gst_app_src_push_sample gst_app_src_push_sample;
 alias c_gst_app_src_set_callbacks gst_app_src_set_callbacks;
 alias c_gst_app_src_set_duration gst_app_src_set_duration;

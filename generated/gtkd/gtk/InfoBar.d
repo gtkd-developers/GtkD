@@ -312,6 +312,16 @@ public class InfoBar : Box
 	}
 
 	/**
+	 * Returns: the current value of the GtkInfoBar:revealed property.
+	 *
+	 * Since: 3.22.29
+	 */
+	public bool getRevealed()
+	{
+		return gtk_info_bar_get_revealed(gtkInfoBar) != 0;
+	}
+
+	/**
 	 * Returns whether the widget will display a standard close button.
 	 *
 	 * Returns: %TRUE if the widget displays standard close button
@@ -383,6 +393,23 @@ public class InfoBar : Box
 	public void setResponseSensitive(int responseId, bool setting)
 	{
 		gtk_info_bar_set_response_sensitive(gtkInfoBar, responseId, setting);
+	}
+
+	/**
+	 * Sets the GtkInfoBar:revealed property to @revealed. This will cause
+	 * @info_bar to show up with a slide-in transition.
+	 *
+	 * Note that this property does not automatically show @info_bar and thus won’t
+	 * have any effect if it is invisible.
+	 *
+	 * Params:
+	 *     revealed = The new value of the property
+	 *
+	 * Since: 3.22.29
+	 */
+	public void setRevealed(bool revealed)
+	{
+		gtk_info_bar_set_revealed(gtkInfoBar, revealed);
 	}
 
 	/**

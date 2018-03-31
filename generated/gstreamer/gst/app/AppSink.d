@@ -202,12 +202,14 @@ public class AppSink : BaseSink, URIHandlerIF
 
 	/**
 	 * Get the last preroll sample in @appsink. This was the sample that caused the
-	 * appsink to preroll in the PAUSED state. This sample can be pulled many times
-	 * and remains available to the application even after EOS.
+	 * appsink to preroll in the PAUSED state.
 	 *
 	 * This function is typically used when dealing with a pipeline in the PAUSED
 	 * state. Calling this function after doing a seek will give the sample right
 	 * after the seek position.
+	 *
+	 * Calling this function will clear the internal reference to the preroll
+	 * buffer.
 	 *
 	 * Note that the preroll sample will also be returned as the first sample
 	 * when calling gst_app_sink_pull_sample().
@@ -360,12 +362,14 @@ public class AppSink : BaseSink, URIHandlerIF
 
 	/**
 	 * Get the last preroll sample in @appsink. This was the sample that caused the
-	 * appsink to preroll in the PAUSED state. This sample can be pulled many times
-	 * and remains available to the application even after EOS.
+	 * appsink to preroll in the PAUSED state.
 	 *
 	 * This function is typically used when dealing with a pipeline in the PAUSED
 	 * state. Calling this function after doing a seek will give the sample right
 	 * after the seek position.
+	 *
+	 * Calling this function will clear the internal reference to the preroll
+	 * buffer.
 	 *
 	 * Note that the preroll sample will also be returned as the first sample
 	 * when calling gst_app_sink_pull_sample().
@@ -478,12 +482,14 @@ public class AppSink : BaseSink, URIHandlerIF
 
 	/**
 	 * Get the last preroll sample in @appsink. This was the sample that caused the
-	 * appsink to preroll in the PAUSED state. This sample can be pulled many times
-	 * and remains available to the application even after EOS.
+	 * appsink to preroll in the PAUSED state.
 	 *
 	 * This function is typically used when dealing with a pipeline in the PAUSED
 	 * state. Calling this function after doing a seek will give the sample right
 	 * after the seek position.
+	 *
+	 * Calling this function will clear the internal reference to the preroll
+	 * buffer.
 	 *
 	 * Note that the preroll sample will also be returned as the first sample
 	 * when calling gst_app_sink_pull_sample() or the "pull-sample" action signal.
@@ -526,12 +532,14 @@ public class AppSink : BaseSink, URIHandlerIF
 
 	/**
 	 * Get the last preroll sample in @appsink. This was the sample that caused the
-	 * appsink to preroll in the PAUSED state. This sample can be pulled many times
-	 * and remains available to the application even after EOS.
+	 * appsink to preroll in the PAUSED state.
 	 *
 	 * This function is typically used when dealing with a pipeline in the PAUSED
 	 * state. Calling this function after doing a seek will give the sample right
 	 * after the seek position.
+	 *
+	 * Calling this function will clear the internal reference to the preroll
+	 * buffer.
 	 *
 	 * Note that the preroll sample will also be returned as the first sample
 	 * when calling gst_app_sink_pull_sample() or the "pull-sample" action signal.

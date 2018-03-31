@@ -35,9 +35,8 @@ public  import gtkc.gobjecttypes;
 /**
  * The class structure for the GObject type.
  * 
- * <example>
- * <title>Implementing singletons using a constructor</title>
- * <programlisting>
+ * |[<!-- language="C" -->
+ * // Example of implementing a singleton using a constructor.
  * static MySingleton *the_singleton = NULL;
  * 
  * static GObject*
@@ -59,7 +58,7 @@ public  import gtkc.gobjecttypes;
  * 
  * return object;
  * }
- * </programlisting></example>
+ * ]|
  */
 public class ObjectClass
 {

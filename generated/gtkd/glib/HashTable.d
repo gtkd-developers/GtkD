@@ -75,6 +75,10 @@ public class HashTable
 	 * corresponding value it is able to be stored more efficiently.  See
 	 * the discussion in the section description.
 	 *
+	 * Starting from GLib 2.40, this function returns a boolean value to
+	 * indicate whether the newly added value was already in the hash table
+	 * or not.
+	 *
 	 * Params:
 	 *     key = a key to insert
 	 *
@@ -303,6 +307,10 @@ public class HashTable
 	 * @key_destroy_func when creating the #GHashTable, the passed
 	 * key is freed using that function.
 	 *
+	 * Starting from GLib 2.40, this function returns a boolean value to
+	 * indicate whether the newly added value was already in the hash table
+	 * or not.
+	 *
 	 * Params:
 	 *     key = a key to insert
 	 *     value = the value to associate with the key
@@ -491,6 +499,10 @@ public class HashTable
 	 * the #GHashTable, the old value is freed using that function.
 	 * If you supplied a @key_destroy_func when creating the
 	 * #GHashTable, the old key is freed using that function.
+	 *
+	 * Starting from GLib 2.40, this function returns a boolean value to
+	 * indicate whether the newly added value was already in the hash table
+	 * or not.
 	 *
 	 * Params:
 	 *     key = a key to insert

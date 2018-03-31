@@ -84,8 +84,8 @@ public class ParseContext
 	 *
 	 * Free-function: gst_parse_context_free
 	 *
-	 * Returns: a newly-allocated parse context. Free with
-	 *     gst_parse_context_free() when no longer needed.
+	 * Returns: a newly-allocated parse context. Free
+	 *     with gst_parse_context_free() when no longer needed.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */

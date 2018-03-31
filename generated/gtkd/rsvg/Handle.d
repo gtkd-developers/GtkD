@@ -353,17 +353,23 @@ public class Handle : ObjectG
 	}
 
 	/**
-	 * Returns the pixbuf loaded by @handle.  The pixbuf returned will be reffed, so
-	 * the caller of this function must assume that ref.  If insufficient data has
-	 * been read to create the pixbuf, or an error occurred in loading, then %NULL
-	 * will be returned.  Note that the pixbuf may not be complete until
-	 * @rsvg_handle_close has been called.
+	 * Creates a #GdkPixbuf the same size as the entire SVG loaded into @handle, but
+	 * only renders the sub-element that has the specified @id (and all its
+	 * sub-sub-elements recursively).  If @id is #NULL, this function renders the
+	 * whole SVG.
+	 *
+	 * If you need to render an image which is only big enough to fit a particular
+	 * sub-element of the SVG, consider using rsvg_handle_render_cairo_sub(), upon a
+	 * surface that is just the size returned by rsvg_handle_get_dimensions_sub().
+	 * You will need to offset the rendering by the amount returned in
+	 * rsvg_handle_get_position_sub().
 	 *
 	 * Params:
 	 *     id = An element's id within the SVG, starting with "##", for
 	 *         example, "##layer1"; or %NULL to use the whole SVG.
 	 *
-	 * Returns: the pixbuf loaded by @handle, or %NULL.
+	 * Returns: a pixbuf, or %NULL if an error occurs
+	 *     during rendering.
 	 *
 	 * Since: 2.14
 	 */
@@ -571,9 +577,13 @@ public class Handle : ObjectG
 	}
 
 	/**
-	 * Sets the DPI for the all future outgoing pixbufs. Common values are
-	 * 75, 90, and 300 DPI. Passing a number <= 0 to @dpi will
-	 * reset the DPI to whatever the default value happens to be.
+	 * Do not use this function.  Create an #RsvgHandle and call
+	 * rsvg_handle_set_dpi() on it instead.
+	 *
+	 * Deprecated: This function used to set a global default DPI.  However,
+	 * it only worked if it was called before any #RsvgHandle objects had been
+	 * created; it would not work after that.  To avoid global mutable state, please
+	 * use rsvg_handle_set_dpi() instead.
 	 *
 	 * Params:
 	 *     dpi = Dots Per Inch (aka Pixels Per Inch)
@@ -586,9 +596,13 @@ public class Handle : ObjectG
 	}
 
 	/**
-	 * Sets the DPI for the all future outgoing pixbufs. Common values are
-	 * 75, 90, and 300 DPI. Passing a number <= 0 to @dpi will
-	 * reset the DPI to whatever the default value happens to be.
+	 * Do not use this function.  Create an #RsvgHandle and call
+	 * rsvg_handle_set_dpi_x_y() on it instead.
+	 *
+	 * Deprecated: This function used to set a global default DPI.  However,
+	 * it only worked if it was called before any #RsvgHandle objects had been
+	 * created; it would not work after that.  To avoid global mutable state, please
+	 * use rsvg_handle_set_dpi() instead.
 	 *
 	 * Params:
 	 *     dpiX = Dots Per Inch (aka Pixels Per Inch)

@@ -127,7 +127,8 @@ public struct Meta
 	 *     freeFunc = a #GstMetaFreeFunction
 	 *     transformFunc = a #GstMetaTransformFunction
 	 *
-	 * Returns: a #GstMetaInfo that can be used to access metadata.
+	 * Returns: a #GstMetaInfo that can be used to
+	 *     access metadata.
 	 */
 	public static GstMetaInfo* register(GType api, string impl, size_t size, GstMetaInitFunction initFunc, GstMetaFreeFunction freeFunc, GstMetaTransformFunction transformFunc)
 	{

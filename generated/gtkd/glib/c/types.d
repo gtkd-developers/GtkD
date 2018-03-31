@@ -282,7 +282,9 @@ public enum GConvertError
 	 */
 	NO_CONVERSION = 0,
 	/**
-	 * Invalid byte sequence in conversion input.
+	 * Invalid byte sequence in conversion input;
+	 * or the character sequence could not be represented in the target
+	 * character set.
 	 */
 	ILLEGAL_SEQUENCE = 1,
 	/**
@@ -305,6 +307,12 @@ public enum GConvertError
 	 * No memory available. Since: 2.40
 	 */
 	NO_MEMORY = 6,
+	/**
+	 * An embedded NUL character is present in
+	 * conversion output where a NUL-terminated string is expected.
+	 * Since: 2.56
+	 */
+	EMBEDDED_NUL = 7,
 }
 alias GConvertError ConvertError;
 
@@ -685,6 +693,11 @@ public enum GFormatSizeFlags
 	 * Network and storage sizes should be reported in the normal SI units.
 	 */
 	IEC_UNITS = 2,
+	/**
+	 * set the size as a quantity in bits, rather than
+	 * bytes, and return units in bits. For example, ‘Mb’ rather than ‘MB’.
+	 */
+	BITS = 4,
 }
 alias GFormatSizeFlags FormatSizeFlags;
 
@@ -1404,7 +1417,7 @@ public enum GRegexCompileFlags
 	 */
 	MULTILINE = 2,
 	/**
-	 * A dot metacharater (".") in the pattern matches all
+	 * A dot metacharacter (".") in the pattern matches all
 	 * characters, including newlines. Without it, newlines are excluded.
 	 * This option can be changed within a pattern by a ("?s") option setting.
 	 */
@@ -1423,7 +1436,7 @@ public enum GRegexCompileFlags
 	 * it is constrained to match only at the first matching point in the
 	 * string that is being searched. This effect can also be achieved by
 	 * appropriate constructs in the pattern itself such as the "^"
-	 * metacharater.
+	 * metacharacter.
 	 */
 	ANCHORED = 16,
 	/**
@@ -1802,7 +1815,7 @@ public enum GRegexMatchFlags
 	 * it is constrained to match only at the first matching point in the
 	 * string that is being searched. This effect can also be achieved by
 	 * appropriate constructs in the pattern itself such as the "^"
-	 * metacharater.
+	 * metacharacter.
 	 */
 	ANCHORED = 16,
 	/**
@@ -2156,6 +2169,15 @@ public enum GTestLogType
 }
 alias GTestLogType TestLogType;
 
+public enum GTestResult
+{
+	SUCCESS = 0,
+	SKIPPED = 1,
+	FAILURE = 2,
+	INCOMPLETE = 3,
+}
+alias GTestResult TestResult;
+
 /**
  * Flags to pass to g_test_trap_subprocess() to control input and output.
  *
@@ -2193,7 +2215,7 @@ alias GTestSubprocessFlags TestSubprocessFlags;
  *
  * Deprecated: #GTestTrapFlags is used only with g_test_trap_fork(),
  * which is deprecated. g_test_trap_subprocess() uses
- * #GTestTrapSubprocessFlags.
+ * #GTestSubprocessFlags.
  */
 public enum GTestTrapFlags
 {
@@ -3192,15 +3214,23 @@ public enum GUnicodeScript
 	OSAGE = 136,
 	/**
 	 * Tangut. Since: 2.50
-	 * @G_UNICODE_SCRIPT_MASARAM_GONDI,        Masaram Gondi. Since: 2.54
-	 * @G_UNICODE_SCRIPT_NUSHU,                Nushu. Since: 2.54
-	 * @G_UNICODE_SCRIPT_SOYOMBO,              Soyombo. Since: 2.54
-	 * @G_UNICODE_SCRIPT_ZANABAZAR_SQUARE      Zanabazar Square. Since: 2.54
 	 */
 	TANGUT = 137,
+	/**
+	 * Masaram Gondi. Since: 2.54
+	 */
 	MASARAM_GONDI = 138,
+	/**
+	 * Nushu. Since: 2.54
+	 */
 	NUSHU = 139,
+	/**
+	 * Soyombo. Since: 2.54
+	 */
 	SOYOMBO = 140,
+	/**
+	 * Zanabazar Square. Since: 2.54
+	 */
 	ZANABAZAR_SQUARE = 141,
 }
 alias GUnicodeScript UnicodeScript;
@@ -4634,6 +4664,19 @@ struct GModule;
 public alias extern(C) void function(GPid pid, int status, void* userData) GChildWatchFunc;
 
 /**
+ * Specifies the type of function passed to g_clear_handle_id().
+ * The implementation is expected to free the resource identified
+ * by @handle_id; for instance, if @handle_id is a #GSource ID,
+ * g_source_remove() can be used.
+ *
+ * Params:
+ *     handleId = the handle ID to clear
+ *
+ * Since: 2.56
+ */
+public alias extern(C) void function(uint handleId) GClearHandleFunc;
+
+/**
  * Specifies the type of a comparison function used to compare two
  * values.  The function should return a negative integer if the first
  * value comes before the second, 0 if they are equal, or a positive
@@ -4708,7 +4751,8 @@ public alias extern(C) void function(void* data) GDestroyNotify;
  *
  * Params:
  *     data = the data to duplicate
- *     userData = user data that was specified in g_datalist_id_dup_data()
+ *     userData = user data that was specified in
+ *         g_datalist_id_dup_data()
  *
  * Returns: a duplicate of data
  */
@@ -4788,7 +4832,7 @@ public alias extern(C) int function(void* key, void* value, void* userData) GHRF
  * g_direct_hash() is also the appropriate hash function for keys
  * of the form `GINT_TO_POINTER (n)` (or similar macros).
  *
- * <!-- FIXME: Need more here. --> A good hash functions should produce
+ * A good hash functions should produce
  * hash values that are evenly distributed over a fairly large range.
  * The modulus is taken with the hash table size (a prime number) to
  * find the 'bucket' to place each key into. The function should also
@@ -5782,19 +5826,27 @@ enum LITTLE_ENDIAN = 1234;
 alias G_LITTLE_ENDIAN = LITTLE_ENDIAN;
 
 /**
- * Defines the log domain.
+ * Defines the log domain. See [Log Domains](#log-domains).
  *
  * Libraries should define this so that any messages
  * which they log can be differentiated from messages from other
  * libraries and application code. But be careful not to define
  * it in any public header files.
  *
- * For example, GTK+ uses this in its Makefile.am:
+ * Log domains must be unique, and it is recommended that they are the
+ * application or library name, optionally followed by a hyphen and a sub-domain
+ * name. For example, `bloatpad` or `bloatpad-io`.
+ *
+ * If undefined, it defaults to the default %NULL (or `""`) log domain; this is
+ * not advisable, as it cannot be filtered against using the `G_MESSAGES_DEBUG`
+ * environment variable.
+ *
+ * For example, GTK+ uses this in its `Makefile.am`:
  * |[
  * AM_CPPFLAGS = -DG_LOG_DOMAIN=\"Gtk\"
  * ]|
  *
- * Applications can choose to leave it as the default %NULL (or "")
+ * Applications can choose to leave it as the default %NULL (or `""`)
  * domain. However, defining the domain offers the same advantages as
  * above.
  */
@@ -5807,7 +5859,7 @@ alias G_LOG_DOMAIN = LOG_DOMAIN;
  * This is not used if structured logging is enabled; see
  * [Using Structured Logging][using-structured-logging].
  */
-enum LOG_FATAL_MASK = 0;
+enum LOG_FATAL_MASK = 5;
 alias G_LOG_FATAL_MASK = LOG_FATAL_MASK;
 
 /**
@@ -5916,7 +5968,7 @@ alias G_MININT8 = MININT8;
  * application compile time, rather than from the library
  * linked against at application run time.
  */
-enum MINOR_VERSION = 54;
+enum MINOR_VERSION = 56;
 alias GLIB_MINOR_VERSION = MINOR_VERSION;
 
 enum MODULE_SUFFIX = "so";

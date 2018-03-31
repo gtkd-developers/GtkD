@@ -341,7 +341,10 @@ public class VolumeMonitor : ObjectG
 	}
 
 	/**
-	 * Emitted when a mount is about to be removed.
+	 * May be emitted when a mount is about to be removed.
+	 *
+	 * This signal depends on the backend and is only emitted if
+	 * GIO was used to unmount.
 	 *
 	 * Params:
 	 *     mount = a #GMount that is being unmounted.

@@ -120,11 +120,14 @@ public template TlsClientConnectionT(TStruct)
 	}
 
 	/**
-	 * Gets whether @conn will use SSL 3.0 rather than the
-	 * highest-supported version of TLS; see
-	 * g_tls_client_connection_set_use_ssl3().
+	 * Gets whether @conn will force the lowest-supported TLS protocol
+	 * version rather than attempt to negotiate the highest mutually-
+	 * supported version of TLS; see g_tls_client_connection_set_use_ssl3().
 	 *
-	 * Returns: whether @conn will use SSL 3.0
+	 * Deprecated: SSL 3.0 is insecure, and this function does not
+	 * actually indicate whether it is enabled.
+	 *
+	 * Returns: whether @conn will use the lowest-supported TLS protocol version
 	 *
 	 * Since: 2.28
 	 */
@@ -162,14 +165,20 @@ public template TlsClientConnectionT(TStruct)
 	}
 
 	/**
-	 * If @use_ssl3 is %TRUE, this forces @conn to use SSL 3.0 rather than
-	 * trying to properly negotiate the right version of TLS or SSL to use.
-	 * This can be used when talking to servers that do not implement the
-	 * fallbacks correctly and which will therefore fail to handshake with
-	 * a "modern" TLS handshake attempt.
+	 * If @use_ssl3 is %TRUE, this forces @conn to use the lowest-supported
+	 * TLS protocol version rather than trying to properly negotiate the
+	 * highest mutually-supported protocol version with the peer. This can
+	 * be used when talking to broken TLS servers that exhibit protocol
+	 * version intolerance.
+	 *
+	 * Be aware that SSL 3.0 is generally disabled by the #GTlsBackend, so
+	 * the lowest-supported protocol version is probably not SSL 3.0.
+	 *
+	 * Deprecated: SSL 3.0 is insecure, and this function does not
+	 * generally enable or disable it, despite its name.
 	 *
 	 * Params:
-	 *     useSsl3 = whether to use SSL 3.0
+	 *     useSsl3 = whether to use the lowest-supported protocol version
 	 *
 	 * Since: 2.28
 	 */

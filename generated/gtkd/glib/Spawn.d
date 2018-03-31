@@ -350,14 +350,15 @@ public class Spawn
 	 * If you are writing a GTK+ application, and the program you are spawning is a
 	 * graphical application too, then to ensure that the spawned program opens its
 	 * windows on the right screen, you may want to use #GdkAppLaunchContext,
-	 * #GAppLaunchcontext, or set the %DISPLAY environment variable.
+	 * #GAppLaunchContext, or set the %DISPLAY environment variable.
 	 *
 	 * Note that the returned @child_pid on Windows is a handle to the child
 	 * process and not its identifier. Process handles and process identifiers
 	 * are different concepts on Windows.
 	 *
 	 * Params:
-	 *     workingDirectory = child's current working directory, or %NULL to inherit parent's
+	 *     workingDirectory = child's current working
+	 *         directory, or %NULL to inherit parent's
 	 *     argv = child's argument vector
 	 *     envp = child's environment, or %NULL to inherit parent's
 	 *     flags = flags from #GSpawnFlags
@@ -567,7 +568,8 @@ public class Spawn
 	 * the child is stored there; see the documentation of
 	 * g_spawn_check_exit_status() for how to use and interpret this.
 	 * Note that it is invalid to pass %G_SPAWN_DO_NOT_REAP_CHILD in
-	 * @flags.
+	 * @flags, and on POSIX platforms, the same restrictions as for
+	 * g_child_watch_source_new() apply.
 	 *
 	 * If an error occurs, no data is returned in @standard_output,
 	 * @standard_error, or @exit_status.
@@ -577,7 +579,8 @@ public class Spawn
 	 * how these functions work on Windows.
 	 *
 	 * Params:
-	 *     workingDirectory = child's current working directory, or %NULL to inherit parent's
+	 *     workingDirectory = child's current working
+	 *         directory, or %NULL to inherit parent's
 	 *     argv = child's argument vector
 	 *     envp = child's environment, or %NULL to inherit parent's
 	 *     flags = flags from #GSpawnFlags

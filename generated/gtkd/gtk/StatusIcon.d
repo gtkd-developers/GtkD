@@ -49,24 +49,31 @@ private import std.algorithm;
  * 
  * A #GtkStatusIcon object can be used to display an icon in a “system tray”.
  * The icon can have a tooltip, and the user can interact with it by
- * activating it or popping up a context menu. Critical information should
- * not solely be displayed in a #GtkStatusIcon, since it may not be
- * visible (e.g. when the user doesn’t have a notification area on his panel).
- * This can be checked with gtk_status_icon_is_embedded().
+ * activating it or popping up a context menu.
+ * 
+ * It is very important to notice that status icons depend on the existence
+ * of a notification area being available to the user; you should not use status
+ * icons as the only way to convey critical information regarding your application,
+ * as the notification area may not exist on the user's environment, or may have
+ * been removed. You should always check that a status icon has been embedded into
+ * a notification area by using gtk_status_icon_is_embedded(), and gracefully
+ * recover if the function returns %FALSE.
  * 
  * On X11, the implementation follows the
  * [FreeDesktop System Tray Specification](http://www.freedesktop.org/wiki/Specifications/systemtray-spec).
  * Implementations of the “tray” side of this specification can
  * be found e.g. in the GNOME 2 and KDE panel applications.
  * 
- * Note that a GtkStatusIcon is not a widget, but just
- * a #GObject. Making it a widget would be impractical, since the system tray
- * on Win32 doesn’t allow to embed arbitrary widgets.
+ * Note that a GtkStatusIcon is not a widget, but just a #GObject. Making it a
+ * widget would be impractical, since the system tray on Windows doesn’t allow
+ * to embed arbitrary widgets.
  * 
  * GtkStatusIcon has been deprecated in 3.14. You should consider using
  * notifications or more modern platform-specific APIs instead. GLib provides
- * the #GNotification API which works well with #GtkApplication. Also see this
- * [HowDoI](https://wiki.gnome.org/HowDoI/GNotification).
+ * the #GNotification API which works well with #GtkApplication on multiple
+ * platforms and environments, and should be the preferred mechanism to notify
+ * the users of transient status updates. See this [HowDoI](https://wiki.gnome.org/HowDoI/GNotification)
+ * for code examples.
  */
 public class StatusIcon : ObjectG
 {
@@ -163,7 +170,8 @@ public class StatusIcon : ObjectG
 	/**
 	 * Creates an empty status icon object.
 	 *
-	 * Deprecated: Use notifications
+	 * Deprecated: Use #GNotification and #GtkApplication to
+	 * provide status notifications
 	 *
 	 * Returns: a new #GtkStatusIcon
 	 *
@@ -187,7 +195,8 @@ public class StatusIcon : ObjectG
 	 * Creates a status icon displaying a #GIcon. If the icon is a
 	 * themed icon, it will be updated when the theme changes.
 	 *
-	 * Deprecated: Use notifications
+	 * Deprecated: Use #GNotification and #GtkApplication to
+	 * provide status notifications
 	 *
 	 * Params:
 	 *     icon = a #GIcon
@@ -216,7 +225,8 @@ public class StatusIcon : ObjectG
 	 * The image will be scaled down to fit in the available
 	 * space in the notification area, if necessary.
 	 *
-	 * Deprecated: Use notifications
+	 * Deprecated: Use #GNotification and #GtkApplication to
+	 * provide status notifications
 	 *
 	 * Params:
 	 *     pixbuf = a #GdkPixbuf
@@ -243,7 +253,9 @@ public class StatusIcon : ObjectG
 	 * Menu positioning function to use with gtk_menu_popup()
 	 * to position @menu aligned to the status icon @user_data.
 	 *
-	 * Deprecated: Use notifications
+	 * Deprecated: Use #GNotification and #GtkApplication to
+	 * provide status notifications; notifications do not have menus,
+	 * but can have buttons, and actions associated with each button
 	 *
 	 * Params:
 	 *     menu = the #GtkMenu
@@ -279,7 +291,10 @@ public class StatusIcon : ObjectG
 	 * is embedded in a notification area, see
 	 * gtk_status_icon_is_embedded().
 	 *
-	 * Deprecated: Use notifications
+	 * Deprecated: Use #GNotification and #GtkApplication to
+	 * provide status notifications; there is no direct replacement
+	 * for this function, as the platform is responsible for the
+	 * presentation of notifications
 	 *
 	 * Params:
 	 *     screen = return location for
@@ -316,7 +331,9 @@ public class StatusIcon : ObjectG
 	 *
 	 * If this function fails, @icon is left unchanged;
 	 *
-	 * Deprecated: Use notifications
+	 * Deprecated: Use #GNotification and #GtkApplication to
+	 * provide status notifications; there is no direct replacement
+	 * for this function
 	 *
 	 * Returns: the displayed icon, or %NULL if the image is empty
 	 *
@@ -338,7 +355,9 @@ public class StatusIcon : ObjectG
 	 * Returns the current value of the has-tooltip property.
 	 * See #GtkStatusIcon:has-tooltip for more information.
 	 *
-	 * Deprecated: Use notifications
+	 * Deprecated: Use #GNotification and #GtkApplication to
+	 * provide status notifications; there is no direct replacement
+	 * for this function
 	 *
 	 * Returns: current value of has-tooltip on @status_icon.
 	 *
@@ -356,7 +375,9 @@ public class StatusIcon : ObjectG
 	 * The returned string is owned by the #GtkStatusIcon and should not
 	 * be freed or modified.
 	 *
-	 * Deprecated: Use notifications
+	 * Deprecated: Use #GNotification and #GtkApplication to
+	 * provide status notifications; there is no direct replacement
+	 * for this function
 	 *
 	 * Returns: name of the displayed icon, or %NULL if the image is empty.
 	 *
@@ -374,7 +395,9 @@ public class StatusIcon : ObjectG
 	 * The caller of this function does not own a reference to the
 	 * returned pixbuf.
 	 *
-	 * Deprecated: Use notifications
+	 * Deprecated: Use #GNotification and #GtkApplication to
+	 * provide status notifications; there is no direct replacement
+	 * for this function
 	 *
 	 * Returns: the displayed pixbuf,
 	 *     or %NULL if the image is empty.
@@ -396,7 +419,9 @@ public class StatusIcon : ObjectG
 	/**
 	 * Returns the #GdkScreen associated with @status_icon.
 	 *
-	 * Deprecated: Use notifications
+	 * Deprecated: Use #GNotification and #GtkApplication to
+	 * provide status notifications; there is no direct replacement
+	 * for this function, as notifications are managed by the platform
 	 *
 	 * Returns: a #GdkScreen.
 	 *
@@ -424,7 +449,10 @@ public class StatusIcon : ObjectG
 	 * Note that the returned size is only meaningful while the
 	 * status icon is embedded (see gtk_status_icon_is_embedded()).
 	 *
-	 * Deprecated: Use notifications
+	 * Deprecated: Use #GNotification and #GtkApplication to
+	 * provide status notifications; there is no direct replacement
+	 * for this function, as the representation of a notification
+	 * is left to the platform
 	 *
 	 * Returns: the size that is available for the image
 	 *
@@ -459,7 +487,10 @@ public class StatusIcon : ObjectG
 	 * to store image data. If the #GtkStatusIcon has no image data,
 	 * the return value will be %GTK_IMAGE_EMPTY.
 	 *
-	 * Deprecated: Use notifications
+	 * Deprecated: Use #GNotification and #GtkApplication to
+	 * provide status notifications; there is no direct replacement
+	 * for this function, and #GNotification only supports #GIcon
+	 * instances
 	 *
 	 * Returns: the image representation being used
 	 *
@@ -473,7 +504,9 @@ public class StatusIcon : ObjectG
 	/**
 	 * Gets the title of this tray icon. See gtk_status_icon_set_title().
 	 *
-	 * Deprecated: Use notifications
+	 * Deprecated: Use #GNotification and #GtkApplication to
+	 * provide status notifications; there is no direct replacement
+	 * for this function
 	 *
 	 * Returns: the title of the status icon
 	 *
@@ -487,7 +520,9 @@ public class StatusIcon : ObjectG
 	/**
 	 * Gets the contents of the tooltip for @status_icon.
 	 *
-	 * Deprecated: Use notifications
+	 * Deprecated: Use #GNotification and #GtkApplication to
+	 * provide status notifications; there is no direct replacement
+	 * for this function
 	 *
 	 * Returns: the tooltip text, or %NULL. You should free the
 	 *     returned string with g_free() when done.
@@ -505,7 +540,9 @@ public class StatusIcon : ObjectG
 	/**
 	 * Gets the contents of the tooltip for @status_icon.
 	 *
-	 * Deprecated: Use notifications
+	 * Deprecated: Use #GNotification and #GtkApplication to
+	 * provide status notifications; there is no direct replacement
+	 * for this function
 	 *
 	 * Returns: the tooltip text, or %NULL. You should free the
 	 *     returned string with g_free() when done.
@@ -526,7 +563,9 @@ public class StatusIcon : ObjectG
 	 * the user can actually see the icon, see also
 	 * gtk_status_icon_is_embedded().
 	 *
-	 * Deprecated: Use notifications
+	 * Deprecated: Use #GNotification and #GtkApplication to
+	 * provide status notifications; there is no direct replacement
+	 * for this function
 	 *
 	 * Returns: %TRUE if the status icon is visible
 	 *
@@ -539,6 +578,7 @@ public class StatusIcon : ObjectG
 
 	/**
 	 * This function is only useful on the X11/freedesktop.org platform.
+	 *
 	 * It returns a window ID for the widget in the underlying
 	 * status icon implementation.  This is useful for the Galago
 	 * notification service, which can send a window ID in the protocol
@@ -549,7 +589,9 @@ public class StatusIcon : ObjectG
 	 * more likely to be met by one of the non-X11 specific methods, such
 	 * as gtk_status_icon_position_menu().
 	 *
-	 * Deprecated: Use notifications
+	 * Deprecated: Use #GNotification and #GtkApplication to
+	 * provide status notifications; there is no direct replacement
+	 * for this function
 	 *
 	 * Returns: An 32 bit unsigned integer identifier for the
 	 *     underlying X11 Window
@@ -565,7 +607,9 @@ public class StatusIcon : ObjectG
 	 * Returns whether the status icon is embedded in a notification
 	 * area.
 	 *
-	 * Deprecated: Use notifications
+	 * Deprecated: Use #GNotification and #GtkApplication to
+	 * provide status notifications; there is no direct replacement
+	 * for this function
 	 *
 	 * Returns: %TRUE if the status icon is embedded in
 	 *     a notification area.
@@ -581,7 +625,9 @@ public class StatusIcon : ObjectG
 	 * Makes @status_icon display the file @filename.
 	 * See gtk_status_icon_new_from_file() for details.
 	 *
-	 * Deprecated: Use notifications
+	 * Deprecated: Use #GNotification and #GtkApplication to
+	 * provide status notifications; you can use g_notification_set_icon()
+	 * to associate a #GIcon with a notification
 	 *
 	 * Params:
 	 *     filename = a filename
@@ -597,7 +643,9 @@ public class StatusIcon : ObjectG
 	 * Makes @status_icon display the #GIcon.
 	 * See gtk_status_icon_new_from_gicon() for details.
 	 *
-	 * Deprecated: Use notifications
+	 * Deprecated: Use #GNotification and #GtkApplication to
+	 * provide status notifications; you can use g_notification_set_icon()
+	 * to associate a #GIcon with a notification
 	 *
 	 * Params:
 	 *     icon = a GIcon
@@ -614,7 +662,9 @@ public class StatusIcon : ObjectG
 	 * current icon theme.
 	 * See gtk_status_icon_new_from_icon_name() for details.
 	 *
-	 * Deprecated: Use notifications
+	 * Deprecated: Use #GNotification and #GtkApplication to
+	 * provide status notifications; you can use g_notification_set_icon()
+	 * to associate a #GIcon with a notification
 	 *
 	 * Params:
 	 *     iconName = an icon name
@@ -630,7 +680,9 @@ public class StatusIcon : ObjectG
 	 * Makes @status_icon display @pixbuf.
 	 * See gtk_status_icon_new_from_pixbuf() for details.
 	 *
-	 * Deprecated: Use notifications
+	 * Deprecated: Use #GNotification and #GtkApplication to
+	 * provide status notifications; you can use g_notification_set_icon()
+	 * to associate a #GIcon with a notification
 	 *
 	 * Params:
 	 *     pixbuf = a #GdkPixbuf or %NULL
@@ -662,7 +714,10 @@ public class StatusIcon : ObjectG
 	 * Sets the has-tooltip property on @status_icon to @has_tooltip.
 	 * See #GtkStatusIcon:has-tooltip for more information.
 	 *
-	 * Deprecated: Use notifications
+	 * Deprecated: Use #GNotification and #GtkApplication to
+	 * provide status notifications; there is no direct replacement
+	 * for this function, but notifications can display an arbitrary
+	 * amount of text using g_notification_set_body()
 	 *
 	 * Params:
 	 *     hasTooltip = whether or not @status_icon has a tooltip
@@ -680,7 +735,10 @@ public class StatusIcon : ObjectG
 	 * used for sorting the icons in the tray and will not be shown to
 	 * the user.
 	 *
-	 * Deprecated: Use notifications
+	 * Deprecated: Use #GNotification and #GtkApplication to
+	 * provide status notifications; there is no direct replacement
+	 * for this function, as notifications are associated with a
+	 * unique application identifier by #GApplication
 	 *
 	 * Params:
 	 *     name = the name
@@ -697,7 +755,10 @@ public class StatusIcon : ObjectG
 	 * the icon is already mapped, it will be unmapped, and
 	 * then remapped on the new screen.
 	 *
-	 * Deprecated: Use notifications
+	 * Deprecated: Use #GNotification and #GtkApplication to
+	 * provide status notifications; there is no direct replacement
+	 * for this function, as GTK typically only has one #GdkScreen
+	 * and notifications are managed by the platform
 	 *
 	 * Params:
 	 *     screen = a #GdkScreen
@@ -715,7 +776,9 @@ public class StatusIcon : ObjectG
 	 * describing the tray icon. It may be used by tools like screen
 	 * readers to render the tray icon.
 	 *
-	 * Deprecated: Use notifications
+	 * Deprecated: Use #GNotification and #GtkApplication to
+	 * provide status notifications; you should use g_notification_set_title()
+	 * and g_notification_set_body() to present text inside your notification
 	 *
 	 * Params:
 	 *     title = the title
@@ -737,7 +800,9 @@ public class StatusIcon : ObjectG
 	 * See also the #GtkStatusIcon:tooltip-markup property and
 	 * gtk_tooltip_set_markup().
 	 *
-	 * Deprecated: Use notifications
+	 * Deprecated: Use #GNotification and #GtkApplication to
+	 * provide status notifications; there is no direct replacement
+	 * for this function
 	 *
 	 * Params:
 	 *     markup = the contents of the tooltip for @status_icon, or %NULL
@@ -759,7 +824,9 @@ public class StatusIcon : ObjectG
 	 * See also the #GtkStatusIcon:tooltip-text property and
 	 * gtk_tooltip_set_text().
 	 *
-	 * Deprecated: Use notifications
+	 * Deprecated: Use #GNotification and #GtkApplication to
+	 * provide status notifications; there is no direct replacement
+	 * for this function
 	 *
 	 * Params:
 	 *     text = the contents of the tooltip for @status_icon
@@ -774,7 +841,9 @@ public class StatusIcon : ObjectG
 	/**
 	 * Shows or hides a status icon.
 	 *
-	 * Deprecated: Use notifications
+	 * Deprecated: Use #GNotification and #GtkApplication to
+	 * provide status notifications; there is no direct replacement
+	 * for this function, as notifications are managed by the platform
 	 *
 	 * Params:
 	 *     visible = %TRUE to show the status icon, %FALSE to hide it

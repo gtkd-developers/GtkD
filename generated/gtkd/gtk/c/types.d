@@ -1637,6 +1637,10 @@ public enum GtkLicense
 	 * The GNU Affero General Public License, version 3.0 or later. Since: 3.22.
 	 */
 	AGPL_3_0 = 13,
+	/**
+	 * The GNU Affero General Public License, version 3.0 only. Since: 3.22.27.
+	 */
+	AGPL_3_0_ONLY = 14,
 }
 alias GtkLicense License;
 
@@ -11691,7 +11695,7 @@ public alias extern(C) void function(GtkClipboard* clipboard, GtkSelectionData* 
  *
  * Since: 2.10
  */
-public alias extern(C) void function(GtkClipboard* clipboard, GdkAtom format, ubyte* text, size_t length, void* data) GtkClipboardRichTextReceivedFunc;
+public alias extern(C) void function(GtkClipboard* clipboard, GdkAtom format, const(char)* text, size_t length, void* data) GtkClipboardRichTextReceivedFunc;
 
 /**
  * A function to be called when the results of gtk_clipboard_request_targets()
@@ -12307,7 +12311,7 @@ public alias extern(C) void function(GtkTreeView* treeView, GtkWidget* searchDia
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum BINARY_AGE = 2226;
+enum BINARY_AGE = 2229;
 alias GTK_BINARY_AGE = BINARY_AGE;
 
 /**
@@ -12322,7 +12326,7 @@ alias GTK_INPUT_ERROR = INPUT_ERROR;
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum INTERFACE_AGE = 26;
+enum INTERFACE_AGE = 29;
 alias GTK_INTERFACE_AGE = INTERFACE_AGE;
 
 /**
@@ -12362,7 +12366,7 @@ alias GTK_MAX_COMPOSE_LEN = MAX_COMPOSE_LEN;
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum MICRO_VERSION = 26;
+enum MICRO_VERSION = 29;
 alias GTK_MICRO_VERSION = MICRO_VERSION;
 
 /**

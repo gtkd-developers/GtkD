@@ -70,7 +70,8 @@ public interface SeekableIF{
 	public bool canSeek();
 
 	/**
-	 * Tests if the stream can be truncated.
+	 * Tests if the length of the stream can be adjusted with
+	 * g_seekable_truncate().
 	 *
 	 * Returns: %TRUE if the stream can be truncated, %FALSE otherwise.
 	 */
@@ -113,7 +114,9 @@ public interface SeekableIF{
 	public long tell();
 
 	/**
-	 * Truncates a stream with a given #offset.
+	 * Sets the length of the stream to @offset. If the stream was previously
+	 * larger than @offset, the extra data is discarded. If the stream was
+	 * previouly shorter than @offset, it is extended with NUL ('\0') bytes.
 	 *
 	 * If @cancellable is not %NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
@@ -122,7 +125,7 @@ public interface SeekableIF{
 	 * partial result will be returned, without an error.
 	 *
 	 * Params:
-	 *     offset = a #goffset.
+	 *     offset = new length for @seekable, in bytes.
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
 	 * Returns: %TRUE if successful. If an error

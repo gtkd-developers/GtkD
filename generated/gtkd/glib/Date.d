@@ -328,6 +328,27 @@ public final class Date
 	}
 
 	/**
+	 * Copies a GDate to a newly-allocated GDate. If the input was invalid
+	 * (as determined by g_date_valid()), the invalid state will be copied
+	 * as is into the new object.
+	 *
+	 * Returns: a newly-allocated #GDate initialized from @date
+	 *
+	 * Since: 2.56
+	 */
+	public Date copy()
+	{
+		auto p = g_date_copy(gDate);
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return new Date(cast(GDate*) p, true);
+	}
+
+	/**
 	 * Computes the number of days between two dates.
 	 * If @date2 is prior to @date1, the returned value is negative.
 	 * Both dates must be valid.

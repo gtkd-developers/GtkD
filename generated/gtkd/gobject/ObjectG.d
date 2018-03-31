@@ -482,6 +482,8 @@ public class ObjectG
 	 * #GTypeInfo.) It must not be called after after @class_init has
 	 * been called for any object types implementing this interface.
 	 *
+	 * If @pspec is a floating reference, it will be consumed.
+	 *
 	 * Params:
 	 *     gIface = any interface vtable for the
 	 *         interface, or the default
@@ -680,8 +682,8 @@ public class ObjectG
 	 *         from the @target to the @source, or %NULL to use the default
 	 *     userData = custom data to be passed to the transformation functions,
 	 *         or %NULL
-	 *     notify = function to be called when disposing the binding, to free the
-	 *         resources used by the transformation functions
+	 *     notify = a function to call when disposing the binding, to free
+	 *         resources used by the transformation functions, or %NULL if not required
 	 *
 	 * Returns: the #GBinding instance representing the
 	 *     binding between the two #GObject instances. The binding is released
@@ -839,7 +841,8 @@ public class ObjectG
 	 * Params:
 	 *     key = name of the key for that association
 	 *
-	 * Returns: the data if found, or %NULL if no such data exists.
+	 * Returns: the data if found,
+	 *     or %NULL if no such data exists.
 	 */
 	public void* getData(string key)
 	{
@@ -1007,6 +1010,11 @@ public class ObjectG
 	/**
 	 * Increases the reference count of @object.
 	 *
+	 * Since GLib 2.56, if `GLIB_VERSION_MAX_ALLOWED` is 2.56 or greater, the type
+	 * of @object will be propagated to the return type (using the GCC typeof()
+	 * extension), so any casting the caller needs to do on the return type must be
+	 * explicit.
+	 *
 	 * Returns: the same @object
 	 */
 	public ObjectG doref()
@@ -1030,6 +1038,9 @@ public class ObjectG
 	 * reference by clearing the floating flag while leaving the reference
 	 * count unchanged.  If the object is not floating, then this call
 	 * adds a new normal reference increasing the reference count by one.
+	 *
+	 * Since GLib 2.56, the type of @object will be propagated to the return type
+	 * under the same conditions as for g_object_ref().
 	 *
 	 * Returns: @object
 	 *
@@ -1089,7 +1100,7 @@ public class ObjectG
 	 * If the previous value was replaced then ownership of the
 	 * old value (@oldval) is passed to the caller, including
 	 * the registered destroy notify for it (passed out in @old_destroy).
-	 * Its up to the caller to free this as he wishes, which may
+	 * It’s up to the caller to free this as needed, which may
 	 * or may not include using @old_destroy as sometimes replacement
 	 * should not destroy the object in the normal way.
 	 *
@@ -1105,9 +1116,9 @@ public class ObjectG
 	 *
 	 * Since: 2.34
 	 */
-	public bool replaceData(string key, void* oldval, void* newval, GDestroyNotify destroy, GDestroyNotify* oldDestroy)
+	public bool replaceData(string key, void* oldval, void* newval, GDestroyNotify destroy, out GDestroyNotify oldDestroy)
 	{
-		return g_object_replace_data(gObject, Str.toStringz(key), oldval, newval, destroy, oldDestroy) != 0;
+		return g_object_replace_data(gObject, Str.toStringz(key), oldval, newval, destroy, &oldDestroy) != 0;
 	}
 
 	/**
@@ -1121,7 +1132,7 @@ public class ObjectG
 	 * If the previous value was replaced then ownership of the
 	 * old value (@oldval) is passed to the caller, including
 	 * the registered destroy notify for it (passed out in @old_destroy).
-	 * Its up to the caller to free this as he wishes, which may
+	 * It’s up to the caller to free this as needed, which may
 	 * or may not include using @old_destroy as sometimes replacement
 	 * should not destroy the object in the normal way.
 	 *
@@ -1137,9 +1148,9 @@ public class ObjectG
 	 *
 	 * Since: 2.34
 	 */
-	public bool replaceQdata(GQuark quark, void* oldval, void* newval, GDestroyNotify destroy, GDestroyNotify* oldDestroy)
+	public bool replaceQdata(GQuark quark, void* oldval, void* newval, GDestroyNotify destroy, out GDestroyNotify oldDestroy)
 	{
-		return g_object_replace_qdata(gObject, quark, oldval, newval, destroy, oldDestroy) != 0;
+		return g_object_replace_qdata(gObject, quark, oldval, newval, destroy, &oldDestroy) != 0;
 	}
 
 	/**
@@ -1278,7 +1289,8 @@ public class ObjectG
 	 * Params:
 	 *     key = name of the key
 	 *
-	 * Returns: the data if found, or %NULL if no such data exists.
+	 * Returns: the data if found, or %NULL
+	 *     if no such data exists.
 	 */
 	public void* stealData(string key)
 	{

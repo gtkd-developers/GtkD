@@ -251,6 +251,12 @@ public class Bytes
 	 * A reference to @bytes will be held by the newly created #GBytes until
 	 * the byte data is no longer needed.
 	 *
+	 * Since 2.56, if @offset is 0 and @length matches the size of @bytes, then
+	 * @bytes will be returned with the reference count incremented by 1. If @bytes
+	 * is a slice of another #GBytes, then the resulting #GBytes will reference
+	 * the same #GBytes instead of @bytes. This allows consumers to simplify the
+	 * usage of #GBytes when asynchronously writing to streams.
+	 *
 	 * Params:
 	 *     offset = offset which subsection starts at
 	 *     length = length of subsection
@@ -292,7 +298,7 @@ public class Bytes
 
 	/**
 	 * Releases a reference on @bytes.  This may result in the bytes being
-	 * freed.
+	 * freed. If @bytes is %NULL, it will return immediately.
 	 *
 	 * Since: 2.32
 	 */

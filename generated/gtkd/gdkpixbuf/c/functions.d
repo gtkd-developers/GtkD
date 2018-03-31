@@ -189,9 +189,9 @@ __gshared extern(C)
 	GdkPixbuf* function(GdkColorspace colorspace, int hasAlpha, int bitsPerSample, int width, int height) c_gdk_pixbuf_new;
 	GdkPixbuf* function(GBytes* data, GdkColorspace colorspace, int hasAlpha, int bitsPerSample, int width, int height, int rowstride) c_gdk_pixbuf_new_from_bytes;
 	GdkPixbuf* function(char* data, GdkColorspace colorspace, int hasAlpha, int bitsPerSample, int width, int height, int rowstride, GdkPixbufDestroyNotify destroyFn, void* destroyFnData) c_gdk_pixbuf_new_from_data;
-	GdkPixbuf* function(const(char)* filename, GError** err) c_gdk_pixbuf_new_from_file;
-	GdkPixbuf* function(const(char)* filename, int width, int height, int preserveAspectRatio, GError** err) c_gdk_pixbuf_new_from_file_at_scale;
-	GdkPixbuf* function(const(char)* filename, int width, int height, GError** err) c_gdk_pixbuf_new_from_file_at_size;
+	GdkPixbuf* function(char* filename, GError** err) c_gdk_pixbuf_new_from_file;
+	GdkPixbuf* function(char* filename, int width, int height, int preserveAspectRatio, GError** err) c_gdk_pixbuf_new_from_file_at_scale;
+	GdkPixbuf* function(char* filename, int width, int height, GError** err) c_gdk_pixbuf_new_from_file_at_size;
 	GdkPixbuf* function(int dataLength, ubyte* data, int copyPixels, GError** err) c_gdk_pixbuf_new_from_inline;
 	GdkPixbuf* function(const(char)* resourcePath, GError** err) c_gdk_pixbuf_new_from_resource;
 	GdkPixbuf* function(const(char)* resourcePath, int width, int height, int preserveAspectRatio, GError** err) c_gdk_pixbuf_new_from_resource_at_scale;
@@ -201,8 +201,8 @@ __gshared extern(C)
 	GdkPixbuf* function(char** data) c_gdk_pixbuf_new_from_xpm_data;
 	int function(GdkColorspace colorspace, int hasAlpha, int bitsPerSample, int width, int height) c_gdk_pixbuf_calculate_rowstride;
 	GdkPixbuf* function(GdkPixdata* pixdata, int copyPixels, GError** err) c_gdk_pixbuf_from_pixdata;
-	GdkPixbufFormat* function(const(char)* filename, int* width, int* height) c_gdk_pixbuf_get_file_info;
-	void function(const(char)* filename, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_gdk_pixbuf_get_file_info_async;
+	GdkPixbufFormat* function(char* filename, int* width, int* height) c_gdk_pixbuf_get_file_info;
+	void function(char* filename, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_gdk_pixbuf_get_file_info_async;
 	GdkPixbufFormat* function(GAsyncResult* asyncResult, int* width, int* height, GError** err) c_gdk_pixbuf_get_file_info_finish;
 	GSList* function() c_gdk_pixbuf_get_formats;
 	void function(GInputStream* stream, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_gdk_pixbuf_new_from_stream_async;
@@ -237,7 +237,7 @@ __gshared extern(C)
 	int function(GdkPixbuf* pixbuf, const(char)* key) c_gdk_pixbuf_remove_option;
 	GdkPixbuf* function(GdkPixbuf* src, GdkPixbufRotation angle) c_gdk_pixbuf_rotate_simple;
 	void function(GdkPixbuf* src, GdkPixbuf* dest, float saturation, int pixelate) c_gdk_pixbuf_saturate_and_pixelate;
-	int function(GdkPixbuf* pixbuf, const(char)* filename, const(char)* type, GError** error, ... ) c_gdk_pixbuf_save;
+	int function(GdkPixbuf* pixbuf, char* filename, const(char)* type, GError** error, ... ) c_gdk_pixbuf_save;
 	int function(GdkPixbuf* pixbuf, char** buffer, size_t* bufferSize, const(char)* type, GError** error, ... ) c_gdk_pixbuf_save_to_buffer;
 	int function(GdkPixbuf* pixbuf, char** buffer, size_t* bufferSize, const(char)* type, char** optionKeys, char** optionValues, GError** err) c_gdk_pixbuf_save_to_bufferv;
 	int function(GdkPixbuf* pixbuf, GdkPixbufSaveFunc saveFunc, void* userData, const(char)* type, GError** error, ... ) c_gdk_pixbuf_save_to_callback;
@@ -246,7 +246,7 @@ __gshared extern(C)
 	void function(GdkPixbuf* pixbuf, GOutputStream* stream, const(char)* type, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData, ... ) c_gdk_pixbuf_save_to_stream_async;
 	int function(GdkPixbuf* pixbuf, GOutputStream* stream, const(char)* type, char** optionKeys, char** optionValues, GCancellable* cancellable, GError** err) c_gdk_pixbuf_save_to_streamv;
 	void function(GdkPixbuf* pixbuf, GOutputStream* stream, const(char)* type, char** optionKeys, char** optionValues, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_gdk_pixbuf_save_to_streamv_async;
-	int function(GdkPixbuf* pixbuf, const(char)* filename, const(char)* type, char** optionKeys, char** optionValues, GError** err) c_gdk_pixbuf_savev;
+	int function(GdkPixbuf* pixbuf, char* filename, const(char)* type, char** optionKeys, char** optionValues, GError** err) c_gdk_pixbuf_savev;
 	void function(GdkPixbuf* src, GdkPixbuf* dest, int destX, int destY, int destWidth, int destHeight, double offsetX, double offsetY, double scaleX, double scaleY, GdkInterpType interpType) c_gdk_pixbuf_scale;
 	GdkPixbuf* function(GdkPixbuf* src, int destWidth, int destHeight, GdkInterpType interpType) c_gdk_pixbuf_scale_simple;
 	int function(GdkPixbuf* pixbuf, const(char)* key, const(char)* value) c_gdk_pixbuf_set_option;
@@ -255,7 +255,7 @@ __gshared extern(C)
 	// gdkpixbuf.PixbufAnimation
 
 	GType function() c_gdk_pixbuf_animation_get_type;
-	GdkPixbufAnimation* function(const(char)* filename, GError** err) c_gdk_pixbuf_animation_new_from_file;
+	GdkPixbufAnimation* function(char* filename, GError** err) c_gdk_pixbuf_animation_new_from_file;
 	GdkPixbufAnimation* function(const(char)* resourcePath, GError** err) c_gdk_pixbuf_animation_new_from_resource;
 	GdkPixbufAnimation* function(GInputStream* stream, GCancellable* cancellable, GError** err) c_gdk_pixbuf_animation_new_from_stream;
 	GdkPixbufAnimation* function(GAsyncResult* asyncResult, GError** err) c_gdk_pixbuf_animation_new_from_stream_finish;

@@ -190,8 +190,7 @@ public struct Util
 	 * provided list @envp.
 	 *
 	 * Params:
-	 *     envp = an environment
-	 *         list (eg, as returned from g_get_environ()), or %NULL
+	 *     envp = an environment list (eg, as returned from g_get_environ()), or %NULL
 	 *         for an empty environment list
 	 *     variable = the environment variable to get
 	 *
@@ -212,16 +211,15 @@ public struct Util
 	 * @envp to @value.
 	 *
 	 * Params:
-	 *     envp = an
-	 *         environment list that can be freed using g_strfreev() (e.g., as
+	 *     envp = an environment list that can be freed using g_strfreev() (e.g., as
 	 *         returned from g_get_environ()), or %NULL for an empty
 	 *         environment list
-	 *     variable = the environment variable to set, must not contain '='
+	 *     variable = the environment variable to set, must not
+	 *         contain '='
 	 *     value = the value for to set the variable to
 	 *     overwrite = whether to change the variable if it already exists
 	 *
-	 * Returns: the
-	 *     updated environment list. Free it using g_strfreev().
+	 * Returns: the updated environment list. Free it using g_strfreev().
 	 *
 	 * Since: 2.32
 	 */
@@ -238,13 +236,12 @@ public struct Util
 	 * environment @envp.
 	 *
 	 * Params:
-	 *     envp = an environment
-	 *         list that can be freed using g_strfreev() (e.g., as returned from g_get_environ()),
-	 *         or %NULL for an empty environment list
-	 *     variable = the environment variable to remove, must not contain '='
+	 *     envp = an environment list that can be freed using g_strfreev() (e.g., as
+	 *         returned from g_get_environ()), or %NULL for an empty environment list
+	 *     variable = the environment variable to remove, must not
+	 *         contain '='
 	 *
-	 * Returns: the
-	 *     updated environment list. Free it using g_strfreev().
+	 * Returns: the updated environment list. Free it using g_strfreev().
 	 *
 	 * Since: 2.32
 	 */
@@ -401,8 +398,7 @@ public struct Util
 	 * The return value is freshly allocated and it should be freed with
 	 * g_strfreev() when it is no longer needed.
 	 *
-	 * Returns: the list of
-	 *     environment variables
+	 * Returns: the list of environment variables
 	 *
 	 * Since: 2.28
 	 */
@@ -478,6 +474,8 @@ public struct Util
 	 * string is owned by GLib and should not be modified or freed. If no
 	 * name can be determined, a default fixed string "localhost" is
 	 * returned.
+	 *
+	 * The encoding of the returned string is UTF-8.
 	 *
 	 * Returns: the host name of the machine.
 	 *
@@ -785,8 +783,8 @@ public struct Util
 	 * use cases for environment variables in GLib-using programs you want
 	 * the UTF-8 encoding that this function and g_getenv() provide.
 	 *
-	 * Returns: a %NULL-terminated
-	 *     list of strings which must be freed with g_strfreev().
+	 * Returns: a %NULL-terminated list of strings which must be freed with
+	 *     g_strfreev().
 	 *
 	 * Since: 2.8
 	 */
@@ -889,7 +887,7 @@ public struct Util
 	 * an absolute file name one that either begins with a directory
 	 * separator such as "\Users\tml" or begins with the root on a drive,
 	 * for example "C:\Windows". The first case also includes UNC paths
-	 * such as "\\myserver\docs\foo". In all cases, either slashes or
+	 * such as "\\\\myserver\docs\foo". In all cases, either slashes or
 	 * backslashes are accepted.
 	 *
 	 * Note that a file name relative to the current drive root does not
@@ -1029,7 +1027,8 @@ public struct Util
 	 * array directly to execvpe(), g_spawn_async(), or the like.
 	 *
 	 * Params:
-	 *     variable = the environment variable to set, must not contain '='.
+	 *     variable = the environment variable to set, must not
+	 *         contain '='.
 	 *     value = the value for to set the variable to.
 	 *     overwrite = whether to change the variable if it already exists.
 	 *
@@ -1081,7 +1080,8 @@ public struct Util
 	 * array directly to execvpe(), g_spawn_async(), or the like.
 	 *
 	 * Params:
-	 *     variable = the environment variable to remove, must not contain '='
+	 *     variable = the environment variable to remove, must
+	 *         not contain '='
 	 *
 	 * Since: 2.4
 	 */

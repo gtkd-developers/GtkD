@@ -771,17 +771,13 @@ public enum AtkRole
 	 */
 	DESCRIPTION_LIST = 114,
 	/**
-	 * An object that represents the term, or
-	 * name, part of a term-description group in a description
-	 * list. @Since: ATK-2.12
+	 * An object that represents a term or phrase
+	 * with a corresponding definition. @Since: ATK-2.12
 	 */
 	DESCRIPTION_TERM = 115,
 	/**
 	 * An object that represents the
-	 * description, definition or value of a term-description group in a
-	 * description list. The values within a group are alternatives,
-	 * meaning that you can have several ATK_ROLE_DESCRIPTION_VALUE for a
-	 * given ATK_ROLE_DESCRIPTION_TERM. @Since: ATK-2.12
+	 * description, definition or value of a term. @Since: ATK-2.12
 	 */
 	DESCRIPTION_VALUE = 116,
 	/**
@@ -2967,7 +2963,7 @@ public alias extern(C) void function(AtkObject* obj, AtkPropertyValues* vals) At
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum BINARY_AGE = 22611;
+enum BINARY_AGE = 22811;
 alias ATK_BINARY_AGE = BINARY_AGE;
 
 /**
@@ -2999,7 +2995,7 @@ alias ATK_MICRO_VERSION = MICRO_VERSION;
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum MINOR_VERSION = 26;
+enum MINOR_VERSION = 28;
 alias ATK_MINOR_VERSION = MINOR_VERSION;
 
 /**

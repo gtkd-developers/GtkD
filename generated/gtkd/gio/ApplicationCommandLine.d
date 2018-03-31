@@ -266,8 +266,7 @@ public class ApplicationCommandLine : ObjectG
 	 * The return value is %NULL-terminated and should be freed using
 	 * g_strfreev().
 	 *
-	 * Returns: the string array
-	 *     containing the arguments (the argv)
+	 * Returns: the string array containing the arguments (the argv)
 	 *
 	 * Since: 2.28
 	 */
@@ -317,8 +316,7 @@ public class ApplicationCommandLine : ObjectG
 	 * See g_application_command_line_getenv() if you are only interested
 	 * in the value of a single environment variable.
 	 *
-	 * Returns: the environment
-	 *     strings, or %NULL if they were not sent
+	 * Returns: the environment strings, or %NULL if they were not sent
 	 *
 	 * Since: 2.28
 	 */

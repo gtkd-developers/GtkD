@@ -329,7 +329,8 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 * Possible errors are in the #GDK_PIXBUF_ERROR and #G_FILE_ERROR domains.
 	 *
 	 * Params:
-	 *     filename = Name of file to load, in the GLib file name encoding
+	 *     filename = Name of file to load, in the GLib file
+	 *         name encoding
 	 *
 	 * Returns: A newly-created pixbuf with a reference count of 1, or %NULL if
 	 *     any of several error conditions occurred:  the file could not be opened,
@@ -373,7 +374,8 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 * allowed since 2.8.
 	 *
 	 * Params:
-	 *     filename = Name of file to load, in the GLib file name encoding
+	 *     filename = Name of file to load, in the GLib file
+	 *         name encoding
 	 *     width = The width the image should have or -1 to not constrain the width
 	 *     height = The height the image should have or -1 to not constrain the height
 	 *     preserveAspectRatio = %TRUE to preserve the image's aspect ratio
@@ -420,7 +422,8 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 * gdk_pixbuf_new_from_file_at_scale().
 	 *
 	 * Params:
-	 *     filename = Name of file to load, in the GLib file name encoding
+	 *     filename = Name of file to load, in the GLib file
+	 *         name encoding
 	 *     width = The width the image should have or -1 to not constrain the width
 	 *     height = The height the image should have or -1 to not constrain the height
 	 *
@@ -1294,7 +1297,7 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	 * Queries a pointer to the pixel data of a pixbuf.
 	 *
 	 * Returns: A pointer to the pixbuf's
-	 *     pixel data.  Please see the section on [image data](image-data)
+	 *     pixel data.  Please see the section on [image data][image-data]
 	 *     for information about how the pixel data is stored in memory.
 	 *
 	 *     This function will cause an implicit copy of the pixbuf data if the

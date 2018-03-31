@@ -639,11 +639,11 @@ public struct Str
 	 * call g_str_tokenize_and_fold() on the search term and
 	 * perform lookups into that index.
 	 *
-	 * As some examples, searching for "fred" would match the potential hit
-	 * "Smith, Fred" and also "Frédéric".  Searching for "Fréd" would match
-	 * "Frédéric" but not "Frederic" (due to the one-directional nature of
-	 * accent matching).  Searching "fo" would match "Foo" and "Bar Foo
-	 * Baz", but not "SFO" (because no word as "fo" as a prefix).
+	 * As some examples, searching for ‘fred’ would match the potential hit
+	 * ‘Smith, Fred’ and also ‘Frédéric’.  Searching for ‘Fréd’ would match
+	 * ‘Frédéric’ but not ‘Frederic’ (due to the one-directional nature of
+	 * accent matching).  Searching ‘fo’ would match ‘Foo’ and ‘Bar Foo
+	 * Baz’, but not ‘SFO’ (because no word has ‘fo’ as a prefix).
 	 *
 	 * Params:
 	 *     searchTerm = the search term from the user
@@ -1468,6 +1468,8 @@ public struct Str
 	 * string to hold the output, instead of putting the output in a buffer
 	 * you allocate in advance.
 	 *
+	 * `glib/gprintf.h` must be explicitly included in order to use this function.
+	 *
 	 * Params:
 	 *     str = the return location for the newly-allocated string.
 	 *     format = a standard printf() format string, but notice
@@ -1486,6 +1488,8 @@ public struct Str
 	/**
 	 * An implementation of the standard vprintf() function which supports
 	 * positional parameters, as specified in the Single Unix Specification.
+	 *
+	 * `glib/gprintf.h` must be explicitly included in order to use this function.
 	 *
 	 * Params:
 	 *     format = a standard printf() format string, but notice
@@ -1540,6 +1544,8 @@ public struct Str
 	 * An implementation of the standard vsprintf() function which supports
 	 * positional parameters, as specified in the Single Unix Specification.
 	 *
+	 * `glib/gprintf.h` must be explicitly included in order to use this function.
+	 *
 	 * Params:
 	 *     str = the buffer to hold the output.
 	 *     format = a standard printf() format string, but notice
@@ -1558,6 +1564,8 @@ public struct Str
 	/**
 	 * An implementation of the standard fprintf() function which supports
 	 * positional parameters, as specified in the Single Unix Specification.
+	 *
+	 * `glib/gprintf.h` must be explicitly included in order to use this function.
 	 *
 	 * Params:
 	 *     file = the stream to write to.

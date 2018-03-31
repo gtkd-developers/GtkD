@@ -85,6 +85,9 @@ public class ElementClass
 	 * functions of classes. If a pad template with the same name as an already
 	 * existing one is added the old one is replaced by the new one.
 	 *
+	 * @templ's reference count will be incremented, and any floating
+	 * reference will be removed (see gst_object_ref_sink())
+	 *
 	 * Params:
 	 *     templ = a #GstPadTemplate to add to the element class.
 	 */
@@ -124,6 +127,23 @@ public class ElementClass
 	public void addStaticPadTemplate(StaticPadTemplate staticTempl)
 	{
 		gst_element_class_add_static_pad_template(gstElementClass, (staticTempl is null) ? null : staticTempl.getStaticPadTemplateStruct());
+	}
+
+	/**
+	 * Adds a pad template to an element class based on the static pad template
+	 * @templ. This is mainly used in the _class_init functions of element
+	 * implementations. If a pad template with the same name already exists,
+	 * the old one is replaced by the new one.
+	 *
+	 * Params:
+	 *     staticTempl = #GstStaticPadTemplate to add as pad template to the element class.
+	 *     padType = The #GType of the pad to create
+	 *
+	 * Since: 1.14
+	 */
+	public void addStaticPadTemplateWithGtype(StaticPadTemplate staticTempl, GType padType)
+	{
+		gst_element_class_add_static_pad_template_with_gtype(gstElementClass, (staticTempl is null) ? null : staticTempl.getStaticPadTemplateStruct(), padType);
 	}
 
 	/**

@@ -116,7 +116,8 @@ public class DBusActionGroup : ObjectG, ActionGroupIF, RemoteActionGroupIF
 	 *
 	 * Params:
 	 *     connection = A #GDBusConnection
-	 *     busName = the bus name which exports the action group
+	 *     busName = the bus name which exports the action
+	 *         group or %NULL if @connection is not a message bus connection
 	 *     objectPath = the object path at which the action group is exported
 	 *
 	 * Returns: a #GDBusActionGroup

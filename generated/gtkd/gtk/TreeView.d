@@ -1205,10 +1205,14 @@ public class TreeView : Container, ScrollableIF
 	 * Params:
 	 *     x = The x position to be identified (relative to bin_window)
 	 *     y = The y position to be identified (relative to bin_window)
-	 *     path = A pointer to a #GtkTreePath pointer to be filled in, or %NULL
-	 *     column = A pointer to a #GtkTreeViewColumn pointer to be filled in, or %NULL
-	 *     cellX = A pointer where the X coordinate relative to the cell can be placed, or %NULL
-	 *     cellY = A pointer where the Y coordinate relative to the cell can be placed, or %NULL
+	 *     path = A pointer to a #GtkTreePath pointer to
+	 *         be filled in, or %NULL
+	 *     column = A pointer to a
+	 *         #GtkTreeViewColumn pointer to be filled in, or %NULL
+	 *     cellX = A pointer where the X coordinate relative to the
+	 *         cell can be placed, or %NULL
+	 *     cellY = A pointer where the Y coordinate relative to the
+	 *         cell can be placed, or %NULL
 	 *
 	 * Returns: %TRUE if the area at the given coordinates is blank,
 	 *     %FALSE otherwise.

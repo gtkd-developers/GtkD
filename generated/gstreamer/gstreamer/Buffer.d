@@ -28,6 +28,7 @@ private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gstreamer.AllocationParams;
 private import gstreamer.Allocator;
+private import gstreamer.Caps;
 private import gstreamer.Memory;
 private import gstreamer.ParentBufferMeta;
 private import gstreamer.ProtectionMeta;
@@ -340,6 +341,25 @@ public class Buffer
 	}
 
 	/**
+	 * Add a #GstReferenceTimestampMeta to @buffer that holds a @timestamp and
+	 * optionally @duration based on a specific timestamp @reference. See the
+	 * documentation of #GstReferenceTimestampMeta for details.
+	 *
+	 * Params:
+	 *     reference = identifier for the timestamp reference.
+	 *     timestamp = timestamp
+	 *     duration = duration, or %GST_CLOCK_TIME_NONE
+	 *
+	 * Returns: The #GstReferenceTimestampMeta that was added to the buffer
+	 *
+	 * Since: 1.14
+	 */
+	public GstReferenceTimestampMeta* addReferenceTimestampMeta(Caps reference, GstClockTime timestamp, GstClockTime duration)
+	{
+		return gst_buffer_add_reference_timestamp_meta(gstBuffer, (reference is null) ? null : reference.getCapsStruct(), timestamp, duration);
+	}
+
+	/**
 	 * Append all the memory from @buf2 to @buf1. The result buffer will contain a
 	 * concatenation of the memory of @buf1 and @buf2.
 	 *
@@ -500,7 +520,7 @@ public class Buffer
 	 *     offset = the offset to extract
 	 *     size = the size to extract
 	 *     dest = A pointer where
-	 *         the destination array will be written.
+	 *         the destination array will be written. Might be %NULL if the size is 0.
 	 *
 	 * Since: 1.0.10
 	 */
@@ -670,6 +690,39 @@ public class Buffer
 	}
 
 	/**
+	 *
+	 * Params:
+	 *     apiType = the #GType of an API
+	 * Returns: number of metas of type @api_type on @buffer.
+	 *
+	 * Since: 1.14
+	 */
+	public uint getNMeta(GType apiType)
+	{
+		return gst_buffer_get_n_meta(gstBuffer, apiType);
+	}
+
+	/**
+	 * Find the first #GstReferenceTimestampMeta on @buffer that conforms to
+	 * @reference. Conformance is tested by checking if the meta's reference is a
+	 * subset of @reference.
+	 *
+	 * Buffers can contain multiple #GstReferenceTimestampMeta metadata items.
+	 *
+	 * Params:
+	 *     reference = a reference #GstCaps
+	 *
+	 * Returns: the #GstReferenceTimestampMeta or %NULL when there
+	 *     is no such metadata on @buffer.
+	 *
+	 * Since: 1.14
+	 */
+	public GstReferenceTimestampMeta* getReferenceTimestampMeta(Caps reference)
+	{
+		return gst_buffer_get_reference_timestamp_meta(gstBuffer, (reference is null) ? null : reference.getCapsStruct());
+	}
+
+	/**
 	 * Get the total size of the memory blocks in @buffer.
 	 *
 	 * Returns: total size of the memory blocks in @buffer.
@@ -793,9 +846,9 @@ public class Buffer
 	 * Returns: The next #GstMeta or %NULL
 	 *     when there are no more items.
 	 */
-	public GstMeta* iterateMeta(void** state)
+	public GstMeta* iterateMeta(out void* state)
 	{
-		return gst_buffer_iterate_meta(gstBuffer, state);
+		return gst_buffer_iterate_meta(gstBuffer, &state);
 	}
 
 	/**
@@ -814,9 +867,9 @@ public class Buffer
 	 *
 	 * Since: 1.12
 	 */
-	public GstMeta* iterateMetaFiltered(void** state, GType metaApiType)
+	public GstMeta* iterateMetaFiltered(out void* state, GType metaApiType)
 	{
-		return gst_buffer_iterate_meta_filtered(gstBuffer, state, metaApiType);
+		return gst_buffer_iterate_meta_filtered(gstBuffer, &state, metaApiType);
 	}
 
 	/**

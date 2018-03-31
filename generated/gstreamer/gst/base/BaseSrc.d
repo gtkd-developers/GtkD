@@ -30,6 +30,7 @@ private import gst.base.c.functions;
 public  import gst.base.c.types;
 private import gstreamer.AllocationParams;
 private import gstreamer.Allocator;
+private import gstreamer.BufferList;
 private import gstreamer.BufferPool;
 private import gstreamer.Caps;
 private import gstreamer.Element;
@@ -447,6 +448,34 @@ public class BaseSrc : Element
 	public GstFlowReturn startWait()
 	{
 		return gst_base_src_start_wait(gstBaseSrc);
+	}
+
+	/**
+	 * Subclasses can call this from their create virtual method implementation
+	 * to submit a buffer list to be pushed out later. This is useful in
+	 * cases where the create function wants to produce multiple buffers to be
+	 * pushed out in one go in form of a #GstBufferList, which can reduce overhead
+	 * drastically, especially for packetised inputs (for data streams where
+	 * the packetisation/chunking is not important it is usually more efficient
+	 * to return larger buffers instead).
+	 *
+	 * Subclasses that use this function from their create function must return
+	 * %GST_FLOW_OK and no buffer from their create virtual method implementation.
+	 * If a buffer is returned after a buffer list has also been submitted via this
+	 * function the behaviour is undefined.
+	 *
+	 * Subclasses must only call this function once per create function call and
+	 * subclasses must only call this function when the source operates in push
+	 * mode.
+	 *
+	 * Params:
+	 *     bufferList = a #GstBufferList
+	 *
+	 * Since: 1.14
+	 */
+	public void submitBufferList(BufferList bufferList)
+	{
+		gst_base_src_submit_buffer_list(gstBaseSrc, (bufferList is null) ? null : bufferList.getBufferListStruct());
 	}
 
 	/**

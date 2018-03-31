@@ -3562,7 +3562,7 @@ struct GdkEventTouchpadPinch
 	/**
 	 * the current phase of the gesture
 	 */
-	TouchpadGesturePhase phase;
+	byte phase;
 	/**
 	 * The number of fingers triggering the pinch
 	 */
@@ -3635,7 +3635,7 @@ struct GdkEventTouchpadSwipe
 	/**
 	 * the current phase of the gesture
 	 */
-	TouchpadGesturePhase phase;
+	byte phase;
 	/**
 	 * The number of fingers triggering the swipe
 	 */

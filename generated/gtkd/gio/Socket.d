@@ -872,7 +872,7 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	}
 
 	/**
-	 * Try to get the remove address of a connected socket. This is only
+	 * Try to get the remote address of a connected socket. This is only
 	 * useful for connection oriented sockets that have been connected.
 	 *
 	 * Returns: a #GSocketAddress or %NULL on error.
@@ -982,6 +982,9 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 * in RFC 4604 is used. Note that on older platforms this may fail
 	 * with a %G_IO_ERROR_NOT_SUPPORTED error.
 	 *
+	 * To bind to a given source-specific multicast address, use
+	 * g_socket_join_multicast_group_ssm() instead.
+	 *
 	 * Params:
 	 *     group = a #GInetAddress specifying the group address to join.
 	 *     sourceSpecific = %TRUE if source-specific multicast should be used
@@ -1008,12 +1011,58 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	}
 
 	/**
+	 * Registers @socket to receive multicast messages sent to @group.
+	 * @socket must be a %G_SOCKET_TYPE_DATAGRAM socket, and must have
+	 * been bound to an appropriate interface and port with
+	 * g_socket_bind().
+	 *
+	 * If @iface is %NULL, the system will automatically pick an interface
+	 * to bind to based on @group.
+	 *
+	 * If @source_specific is not %NULL, use source-specific multicast as
+	 * defined in RFC 4604. Note that on older platforms this may fail
+	 * with a %G_IO_ERROR_NOT_SUPPORTED error.
+	 *
+	 * Note that this function can be called multiple times for the same
+	 * @group with different @source_specific in order to receive multicast
+	 * packets from more than one source.
+	 *
+	 * Params:
+	 *     group = a #GInetAddress specifying the group address to join.
+	 *     sourceSpecific = a #GInetAddress specifying the
+	 *         source-specific multicast address or %NULL to ignore.
+	 *     iface = Name of the interface to use, or %NULL
+	 *
+	 * Returns: %TRUE on success, %FALSE on error.
+	 *
+	 * Since: 2.56
+	 *
+	 * Throws: GException on failure.
+	 */
+	public bool joinMulticastGroupSsm(InetAddress group, InetAddress sourceSpecific, string iface)
+	{
+		GError* err = null;
+
+		auto p = g_socket_join_multicast_group_ssm(gSocket, (group is null) ? null : group.getInetAddressStruct(), (sourceSpecific is null) ? null : sourceSpecific.getInetAddressStruct(), Str.toStringz(iface), &err) != 0;
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		return p;
+	}
+
+	/**
 	 * Removes @socket from the multicast group defined by @group, @iface,
 	 * and @source_specific (which must all have the same values they had
 	 * when you joined the group).
 	 *
 	 * @socket remains bound to its address and port, and can still receive
 	 * unicast messages after calling this.
+	 *
+	 * To unbind to a given source-specific multicast address, use
+	 * g_socket_leave_multicast_group_ssm() instead.
 	 *
 	 * Params:
 	 *     group = a #GInetAddress specifying the group address to leave.
@@ -1031,6 +1080,40 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 		GError* err = null;
 
 		auto p = g_socket_leave_multicast_group(gSocket, (group is null) ? null : group.getInetAddressStruct(), sourceSpecific, Str.toStringz(iface), &err) != 0;
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		return p;
+	}
+
+	/**
+	 * Removes @socket from the multicast group defined by @group, @iface,
+	 * and @source_specific (which must all have the same values they had
+	 * when you joined the group).
+	 *
+	 * @socket remains bound to its address and port, and can still receive
+	 * unicast messages after calling this.
+	 *
+	 * Params:
+	 *     group = a #GInetAddress specifying the group address to leave.
+	 *     sourceSpecific = a #GInetAddress specifying the
+	 *         source-specific multicast address or %NULL to ignore.
+	 *     iface = Name of the interface to use, or %NULL
+	 *
+	 * Returns: %TRUE on success, %FALSE on error.
+	 *
+	 * Since: 2.56
+	 *
+	 * Throws: GException on failure.
+	 */
+	public bool leaveMulticastGroupSsm(InetAddress group, InetAddress sourceSpecific, string iface)
+	{
+		GError* err = null;
+
+		auto p = g_socket_leave_multicast_group_ssm(gSocket, (group is null) ? null : group.getInetAddressStruct(), (sourceSpecific is null) ? null : sourceSpecific.getInetAddressStruct(), Str.toStringz(iface), &err) != 0;
 
 		if (err !is null)
 		{

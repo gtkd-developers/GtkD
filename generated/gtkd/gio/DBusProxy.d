@@ -54,7 +54,7 @@ private import std.algorithm;
  * both well-known and unique names.
  * 
  * By default, #GDBusProxy will cache all properties (and listen to
- * changes) of the remote object, and proxy all signals that gets
+ * changes) of the remote object, and proxy all signals that get
  * emitted. This behaviour can be changed by passing suitable
  * #GDBusProxyFlags when the proxy is created. If the proxy is for a
  * well-known name, the property cache is flushed when the name owner
@@ -190,7 +190,8 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 *     interfaceName = A D-Bus interface name.
 	 *     cancellable = A #GCancellable or %NULL.
 	 *
-	 * Returns: A #GDBusProxy or %NULL if error is set. Free with g_object_unref().
+	 * Returns: A #GDBusProxy or %NULL if error is set.
+	 *     Free with g_object_unref().
 	 *
 	 * Since: 2.26
 	 *
@@ -245,7 +246,8 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 *     interfaceName = A D-Bus interface name.
 	 *     cancellable = A #GCancellable or %NULL.
 	 *
-	 * Returns: A #GDBusProxy or %NULL if error is set. Free with g_object_unref().
+	 * Returns: A #GDBusProxy or %NULL if error is set.
+	 *     Free with g_object_unref().
 	 *
 	 * Since: 2.26
 	 *
@@ -618,9 +620,9 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 * Params:
 	 *     propertyName = Property name.
 	 *
-	 * Returns: A reference to the #GVariant instance that holds the value
-	 *     for @property_name or %NULL if the value is not in the cache. The
-	 *     returned reference must be freed with g_variant_unref().
+	 * Returns: A reference to the #GVariant instance
+	 *     that holds the value for @property_name or %NULL if the value is not in
+	 *     the cache. The returned reference must be freed with g_variant_unref().
 	 *
 	 * Since: 2.26
 	 */
@@ -639,7 +641,8 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	/**
 	 * Gets the names of all cached properties on @proxy.
 	 *
-	 * Returns: A %NULL-terminated array of strings or %NULL if
+	 * Returns: A
+	 *     %NULL-terminated array of strings or %NULL if
 	 *     @proxy has no cached properties. Free the returned array with
 	 *     g_strfreev().
 	 *
@@ -705,8 +708,8 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 * that @proxy conforms to. See the #GDBusProxy:g-interface-info
 	 * property for more details.
 	 *
-	 * Returns: A #GDBusInterfaceInfo or %NULL. Do not unref the returned
-	 *     object, it is owned by @proxy.
+	 * Returns: A #GDBusInterfaceInfo or %NULL.
+	 *     Do not unref the returned object, it is owned by @proxy.
 	 *
 	 * Since: 2.26
 	 */
@@ -719,7 +722,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusInterfaceInfo)(cast(GDBusInterfaceInfo*) p, true);
+		return ObjectG.getDObject!(DBusInterfaceInfo)(cast(GDBusInterfaceInfo*) p);
 	}
 
 	/**
@@ -752,7 +755,8 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 * #GObject::notify signal to track changes to the
 	 * #GDBusProxy:g-name-owner property.
 	 *
-	 * Returns: The name owner or %NULL if no name owner exists. Free with g_free().
+	 * Returns: The name owner or %NULL if no name
+	 *     owner exists. Free with g_free().
 	 *
 	 * Since: 2.26
 	 */
@@ -845,7 +849,8 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 * details.
 	 *
 	 * Params:
-	 *     info = Minimum interface this proxy conforms to or %NULL to unset.
+	 *     info = Minimum interface this proxy conforms to
+	 *         or %NULL to unset.
 	 *
 	 * Since: 2.26
 	 */

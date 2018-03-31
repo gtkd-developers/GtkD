@@ -480,6 +480,9 @@ public class DataInputStream : BufferedInputStream
 	 * g_data_input_stream_read_upto() instead, but note that that function
 	 * does not consume the stop character.
 	 *
+	 * Deprecated: Use g_data_input_stream_read_upto() instead, which has more
+	 * consistent behaviour regarding the stop character.
+	 *
 	 * Params:
 	 *     stopChars = characters to terminate the read.
 	 *     length = a #gsize to get the length of the data read in.
@@ -524,6 +527,9 @@ public class DataInputStream : BufferedInputStream
 	 * will be marked as deprecated in a future release.  Use
 	 * g_data_input_stream_read_upto_async() instead.
 	 *
+	 * Deprecated: Use g_data_input_stream_read_upto_async() instead, which
+	 * has more consistent behaviour regarding the stop character.
+	 *
 	 * Params:
 	 *     stopChars = characters to terminate the read.
 	 *     ioPriority = the [I/O priority][io-priority] of the request
@@ -541,6 +547,9 @@ public class DataInputStream : BufferedInputStream
 	/**
 	 * Finish an asynchronous call started by
 	 * g_data_input_stream_read_until_async().
+	 *
+	 * Deprecated: Use g_data_input_stream_read_upto_finish() instead, which
+	 * has more consistent behaviour regarding the stop character.
 	 *
 	 * Params:
 	 *     result = the #GAsyncResult that was provided to the callback.
@@ -581,6 +590,8 @@ public class DataInputStream : BufferedInputStream
 	 *
 	 * Note that @stop_chars may contain '\0' if @stop_chars_len is
 	 * specified.
+	 *
+	 * The returned string will always be nul-terminated on success.
 	 *
 	 * Params:
 	 *     stopChars = characters to terminate the read
@@ -652,6 +663,8 @@ public class DataInputStream : BufferedInputStream
 	 * Note that this function does not consume the stop character. You
 	 * have to use g_data_input_stream_read_byte() to get it before calling
 	 * g_data_input_stream_read_upto_async() again.
+	 *
+	 * The returned string will always be nul-terminated on success.
 	 *
 	 * Params:
 	 *     result = the #GAsyncResult that was provided to the callback

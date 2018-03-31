@@ -177,6 +177,9 @@ public class ObjectGst : ObjectG
 	 * is not floating, then this call adds a new normal reference increasing the
 	 * reference count by one.
 	 *
+	 * For more background on "floating references" please see the #GObject
+	 * documentation.
+	 *
 	 * Params:
 	 *     object = a #GstObject to sink
 	 */
@@ -214,7 +217,8 @@ public class ObjectGst : ObjectG
 	 * Attach the #GstControlBinding to the object. If there already was a
 	 * #GstControlBinding for this property it will be replaced.
 	 *
-	 * The @object will take ownership of the @binding.
+	 * The object's reference count will be incremented, and any floating
+	 * reference will be removed (see gst_object_ref_sink())
 	 *
 	 * Params:
 	 *     binding = the #GstControlBinding that should be used

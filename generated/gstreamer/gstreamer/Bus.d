@@ -255,6 +255,9 @@ public class Bus : ObjectGst
 	 * from @func. If the watch was added to the default main context it is also
 	 * possible to remove the watch using g_source_remove().
 	 *
+	 * The bus watch will take its own reference to the @bus, so it is safe to unref
+	 * @bus using gst_object_unref() after setting the bus watch.
+	 *
 	 * MT safe.
 	 *
 	 * Params:
@@ -344,6 +347,26 @@ public class Bus : ObjectGst
 	public void enableSyncMessageEmission()
 	{
 		gst_bus_enable_sync_message_emission(gstBus);
+	}
+
+	/**
+	 * Gets the file descriptor from the bus which can be used to get notified about
+	 * messages being available with functions like g_poll(), and allows integration
+	 * into other event loops based on file descriptors.
+	 * Whenever a message is available, the POLLIN / %G_IO_IN event is set.
+	 *
+	 * Warning: NEVER read or write anything to the returned fd but only use it
+	 * for getting notifications via g_poll() or similar and then use the normal
+	 * GstBus API, e.g. gst_bus_pop().
+	 *
+	 * Params:
+	 *     fd = A GPollFD to fill
+	 *
+	 * Since: 1.14
+	 */
+	public void getPollfd(GPollFD* fd)
+	{
+		gst_bus_get_pollfd(gstBus, fd);
 	}
 
 	/**

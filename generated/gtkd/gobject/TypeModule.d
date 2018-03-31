@@ -107,6 +107,9 @@ public class TypeModule : ObjectG, TypePluginIF
 	 * As long as any instances of the type exist, the type plugin will
 	 * not be unloaded.
 	 *
+	 * Since 2.56 if @module is %NULL this will call g_type_add_interface_static()
+	 * instead. This can be used when making a static build of the module.
+	 *
 	 * Params:
 	 *     instanceType = type to which to add the interface.
 	 *     interfaceType = interface type to add
@@ -125,6 +128,9 @@ public class TypeModule : ObjectG, TypePluginIF
 	 *
 	 * As long as any instances of the type exist, the type plugin will
 	 * not be unloaded.
+	 *
+	 * Since 2.56 if @module is %NULL this will call g_type_register_static()
+	 * instead. This can be used when making a static build of the module.
 	 *
 	 * Params:
 	 *     name = name for the type
@@ -150,6 +156,9 @@ public class TypeModule : ObjectG, TypePluginIF
 	 *
 	 * As long as any instances of the type exist, the type plugin will
 	 * not be unloaded.
+	 *
+	 * Since 2.56 if @module is %NULL this will call g_type_register_static()
+	 * instead. This can be used when making a static build of the module.
 	 *
 	 * Params:
 	 *     name = name for the type
@@ -179,6 +188,9 @@ public class TypeModule : ObjectG, TypePluginIF
 	 *
 	 * As long as any instances of the type exist, the type plugin will
 	 * not be unloaded.
+	 *
+	 * Since 2.56 if @module is %NULL this will call g_type_register_static()
+	 * instead. This can be used when making a static build of the module.
 	 *
 	 * Params:
 	 *     parentType = the type for the parent class

@@ -168,7 +168,8 @@ public struct Memory
 	 * in GLib and GIO, because those use the GLib allocators before main is
 	 * reached. Therefore this function is now deprecated and is just a stub.
 	 *
-	 * Deprecated: Use other memory profiling tools instead
+	 * Deprecated: This function now does nothing. Use other memory
+	 * profiling tools instead
 	 *
 	 * Params:
 	 *     vtable = table of memory allocation routines.

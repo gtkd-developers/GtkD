@@ -96,4 +96,17 @@ public class TracerFactory : PluginFeature
 
 		return new ListG(cast(GList*) p, true);
 	}
+
+	/**
+	 * Get the #GType for elements managed by this factory. The type can
+	 * only be retrieved if the element factory is loaded, which can be
+	 * assured with gst_plugin_feature_load().
+	 *
+	 * Returns: the #GType for tracers managed by this factory or 0 if
+	 *     the factory is not loaded.
+	 */
+	public GType getTracerType()
+	{
+		return gst_tracer_factory_get_tracer_type(gstTracerFactory);
+	}
 }

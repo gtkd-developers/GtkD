@@ -55,6 +55,10 @@ public struct DataList
 	 * from any modifications during invocation of this function, it should
 	 * not be called.
 	 *
+	 * @func can make changes to @datalist, but the iteration will not
+	 * reflect changes made during the g_datalist_foreach() call, other
+	 * than skipping over elements that are removed.
+	 *
 	 * Params:
 	 *     datalist = a datalist.
 	 *     func = the function to call for each data element.
@@ -73,7 +77,8 @@ public struct DataList
 	 *     datalist = a datalist.
 	 *     key = the string identifying a data element.
 	 *
-	 * Returns: the data element, or %NULL if it is not found.
+	 * Returns: the data element, or %NULL if it
+	 *     is not found.
 	 */
 	public static void* getData(GData** datalist, string key)
 	{
@@ -135,7 +140,8 @@ public struct DataList
 	 *     datalist = a datalist.
 	 *     keyId = the #GQuark identifying a data element.
 	 *
-	 * Returns: the data element, or %NULL if it is not found.
+	 * Returns: the data element, or %NULL if
+	 *     it is not found.
 	 */
 	public static void* idGetData(GData** datalist, GQuark keyId)
 	{
@@ -150,7 +156,8 @@ public struct DataList
 	 *     datalist = a datalist.
 	 *     keyId = the #GQuark identifying a data element.
 	 *
-	 * Returns: the data previously stored at @key_id, or %NULL if none.
+	 * Returns: the data previously stored at @key_id,
+	 *     or %NULL if none.
 	 */
 	public static void* idRemoveNoNotify(GData** datalist, GQuark keyId)
 	{
@@ -167,7 +174,7 @@ public struct DataList
 	 *
 	 * If the previous value was replaced then ownership of the
 	 * old value (@oldval) is passed to the caller, including
-	 * the registred destroy notify for it (passed out in @old_destroy).
+	 * the registered destroy notify for it (passed out in @old_destroy).
 	 * Its up to the caller to free this as he wishes, which may
 	 * or may not include using @old_destroy as sometimes replacement
 	 * should not destroy the object in the normal way.
@@ -185,9 +192,9 @@ public struct DataList
 	 *
 	 * Since: 2.34
 	 */
-	public static bool idReplaceData(GData** datalist, GQuark keyId, void* oldval, void* newval, GDestroyNotify destroy, GDestroyNotify* oldDestroy)
+	public static bool idReplaceData(GData** datalist, GQuark keyId, void* oldval, void* newval, GDestroyNotify destroy, out GDestroyNotify oldDestroy)
 	{
-		return g_datalist_id_replace_data(datalist, keyId, oldval, newval, destroy, oldDestroy) != 0;
+		return g_datalist_id_replace_data(datalist, keyId, oldval, newval, destroy, &oldDestroy) != 0;
 	}
 
 	/**

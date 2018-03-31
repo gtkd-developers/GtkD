@@ -96,7 +96,7 @@ public class Sequence
 
 	/**
 	 * Calls @func for each item in the sequence passing @user_data
-	 * to the function.
+	 * to the function. @func must not modify the sequence itself.
 	 *
 	 * Params:
 	 *     func = the function to call for each item in @seq
@@ -207,6 +207,10 @@ public class Sequence
 	 * if the first item comes before the second, and a positive value
 	 * if the second  item comes before the first.
 	 *
+	 * Note that when adding a large amount of data to a #GSequence,
+	 * it is more efficient to do unsorted insertions and then call
+	 * g_sequence_sort() or g_sequence_sort_iter().
+	 *
 	 * Params:
 	 *     data = the data to insert
 	 *     cmpFunc = the function used to compare items in the sequence
@@ -242,6 +246,10 @@ public class Sequence
 	 * return 0 if the iterators are equal, a negative value if the
 	 * first iterator comes before the second, and a positive value
 	 * if the second iterator comes before the first.
+	 *
+	 * Note that when adding a large amount of data to a #GSequence,
+	 * it is more efficient to do unsorted insertions and then call
+	 * g_sequence_sort() or g_sequence_sort_iter().
 	 *
 	 * Params:
 	 *     data = data for the new item
@@ -293,10 +301,7 @@ public class Sequence
 	 * the second item comes before the first.
 	 *
 	 * This function will fail if the data contained in the sequence is
-	 * unsorted.  Use g_sequence_insert_sorted() or
-	 * g_sequence_insert_sorted_iter() to add data to your sequence or, if
-	 * you want to add a large amount of data, call g_sequence_sort() after
-	 * doing unsorted insertions.
+	 * unsorted.
 	 *
 	 * Params:
 	 *     data = data to lookup
@@ -331,10 +336,7 @@ public class Sequence
 	 * value if the second iterator comes before the first.
 	 *
 	 * This function will fail if the data contained in the sequence is
-	 * unsorted.  Use g_sequence_insert_sorted() or
-	 * g_sequence_insert_sorted_iter() to add data to your sequence or, if
-	 * you want to add a large amount of data, call g_sequence_sort() after
-	 * doing unsorted insertions.
+	 * unsorted.
 	 *
 	 * Params:
 	 *     data = data to lookup
@@ -394,10 +396,7 @@ public class Sequence
 	 * consider using g_sequence_lookup().
 	 *
 	 * This function will fail if the data contained in the sequence is
-	 * unsorted.  Use g_sequence_insert_sorted() or
-	 * g_sequence_insert_sorted_iter() to add data to your sequence or, if
-	 * you want to add a large amount of data, call g_sequence_sort() after
-	 * doing unsorted insertions.
+	 * unsorted.
 	 *
 	 * Params:
 	 *     data = data for the new item
@@ -434,10 +433,7 @@ public class Sequence
 	 * consider using g_sequence_lookup_iter().
 	 *
 	 * This function will fail if the data contained in the sequence is
-	 * unsorted.  Use g_sequence_insert_sorted() or
-	 * g_sequence_insert_sorted_iter() to add data to your sequence or, if
-	 * you want to add a large amount of data, call g_sequence_sort() after
-	 * doing unsorted insertions.
+	 * unsorted.
 	 *
 	 * Params:
 	 *     data = data for the new item
@@ -503,7 +499,8 @@ public class Sequence
 
 	/**
 	 * Calls @func for each item in the range (@begin, @end) passing
-	 * @user_data to the function.
+	 * @user_data to the function. @func must not modify the sequence
+	 * itself.
 	 *
 	 * Params:
 	 *     begin = a #GSequenceIter

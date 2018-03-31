@@ -121,6 +121,9 @@ public interface PollableOutputStreamIF{
 	 * may happen if you call this method after a source triggers due
 	 * to having been cancelled.
 	 *
+	 * Also note that if %G_IO_ERROR_WOULD_BLOCK is returned some underlying
+	 * transports like D/TLS require that you send the same @buffer and @count.
+	 *
 	 * Params:
 	 *     buffer = a buffer to write
 	 *         data from

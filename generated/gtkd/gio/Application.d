@@ -734,6 +734,10 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 * calling only the 'shutdown' function before doing so.
 	 *
 	 * The hold count is ignored.
+	 * Take care if your code has called g_application_hold() on the application and
+	 * is therefore still expecting it to exist.
+	 * (Note that you may have called g_application_hold() indirectly, for example
+	 * through gtk_application_add_window().)
 	 *
 	 * The result of calling g_application_run() again after it returns is
 	 * unspecified.
@@ -1031,6 +1035,57 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	public void setInactivityTimeout(uint inactivityTimeout)
 	{
 		g_application_set_inactivity_timeout(gApplication, inactivityTimeout);
+	}
+
+	/**
+	 * Adds a description to the @application option context.
+	 *
+	 * See g_option_context_set_description() for more information.
+	 *
+	 * Params:
+	 *     description = a string to be shown in `--help` output
+	 *         after the list of options, or %NULL
+	 *
+	 * Since: 2.56
+	 */
+	public void setOptionContextDescription(string description)
+	{
+		g_application_set_option_context_description(gApplication, Str.toStringz(description));
+	}
+
+	/**
+	 * Sets the parameter string to be used by the commandline handling of @application.
+	 *
+	 * This function registers the argument to be passed to g_option_context_new()
+	 * when the internal #GOptionContext of @application is created.
+	 *
+	 * See g_option_context_new() for more information about @parameter_string.
+	 *
+	 * Params:
+	 *     parameterString = a string which is displayed
+	 *         in the first line of `--help` output, after the usage summary `programname [OPTION...]`.
+	 *
+	 * Since: 2.56
+	 */
+	public void setOptionContextParameterString(string parameterString)
+	{
+		g_application_set_option_context_parameter_string(gApplication, Str.toStringz(parameterString));
+	}
+
+	/**
+	 * Adds a summary to the @application option context.
+	 *
+	 * See g_option_context_set_summary() for more information.
+	 *
+	 * Params:
+	 *     summary = a string to be shown in `--help` output
+	 *         before the list of options, or %NULL
+	 *
+	 * Since: 2.56
+	 */
+	public void setOptionContextSummary(string summary)
+	{
+		g_application_set_option_context_summary(gApplication, Str.toStringz(summary));
 	}
 
 	/**

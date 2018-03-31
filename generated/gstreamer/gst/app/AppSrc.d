@@ -30,6 +30,7 @@ private import gst.app.c.functions;
 public  import gst.app.c.types;
 private import gst.base.BaseSrc;
 private import gstreamer.Buffer;
+private import gstreamer.BufferList;
 private import gstreamer.Caps;
 private import gstreamer.Sample;
 private import gstreamer.URIHandlerIF;
@@ -211,11 +212,11 @@ public class AppSrc : BaseSrc, URIHandlerIF
 	 *
 	 * Params:
 	 *     min = the min latency
-	 *     max = the min latency
+	 *     max = the max latency
 	 */
-	public void getLatency(ulong* min, ulong* max)
+	public void getLatency(out ulong min, out ulong max)
 	{
-		gst_app_src_get_latency(gstAppSrc, min, max);
+		gst_app_src_get_latency(gstAppSrc, &min, &max);
 	}
 
 	/**
@@ -267,6 +268,28 @@ public class AppSrc : BaseSrc, URIHandlerIF
 	public GstFlowReturn pushBuffer(Buffer buffer)
 	{
 		return gst_app_src_push_buffer(gstAppSrc, (buffer is null) ? null : buffer.getBufferStruct());
+	}
+
+	/**
+	 * Adds a buffer list to the queue of buffers and buffer lists that the
+	 * appsrc element will push to its source pad.  This function takes ownership
+	 * of @buffer_list.
+	 *
+	 * When the block property is TRUE, this function can block until free
+	 * space becomes available in the queue.
+	 *
+	 * Params:
+	 *     bufferList = a #GstBufferList to push
+	 *
+	 * Returns: #GST_FLOW_OK when the buffer list was successfuly queued.
+	 *     #GST_FLOW_FLUSHING when @appsrc is not PAUSED or PLAYING.
+	 *     #GST_FLOW_EOS when EOS occured.
+	 *
+	 * Since: 1.14
+	 */
+	public GstFlowReturn pushBufferList(BufferList bufferList)
+	{
+		return gst_app_src_push_buffer_list(gstAppSrc, (bufferList is null) ? null : bufferList.getBufferListStruct());
 	}
 
 	/**
@@ -345,7 +368,7 @@ public class AppSrc : BaseSrc, URIHandlerIF
 	 *
 	 * Params:
 	 *     min = the min latency
-	 *     max = the min latency
+	 *     max = the max latency
 	 */
 	public void setLatency(ulong min, ulong max)
 	{
@@ -441,6 +464,25 @@ public class AppSrc : BaseSrc, URIHandlerIF
 	gulong addOnPushBuffer(GstFlowReturn delegate(Buffer, AppSrc) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "push-buffer", dlg, connectFlags ^ ConnectFlags.SWAPPED);
+	}
+
+	/**
+	 * Adds a buffer list to the queue of buffers and buffer lists that the
+	 * appsrc element will push to its source pad. This function does not take
+	 * ownership of the buffer list so the buffer list needs to be unreffed
+	 * after calling this function.
+	 *
+	 * When the block property is TRUE, this function can block until free space
+	 * becomes available in the queue.
+	 *
+	 * Params:
+	 *     bufferList = a buffer list to push
+	 *
+	 * Since: 1.14
+	 */
+	gulong addOnPushBufferList(GstFlowReturn delegate(BufferList, AppSrc) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		return Signals.connect(this, "push-buffer-list", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
 	/**

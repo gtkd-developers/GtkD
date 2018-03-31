@@ -109,7 +109,8 @@ public class Plugin : ObjectGst
 	 * Params:
 	 *     name = name of plugin to load
 	 *
-	 * Returns: a reference to a loaded plugin, or %NULL on error.
+	 * Returns: a reference to a loaded plugin, or
+	 *     %NULL on error.
 	 */
 	public static Plugin loadByName(string name)
 	{
@@ -422,7 +423,8 @@ public class Plugin : ObjectGst
 	 * plugin = loaded_plugin;
 	 * ]|
 	 *
-	 * Returns: a reference to a loaded plugin, or %NULL on error.
+	 * Returns: a reference to a loaded plugin, or
+	 *     %NULL on error.
 	 */
 	public Plugin load()
 	{

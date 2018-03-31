@@ -284,7 +284,7 @@ public class MainContext
 	 * invocation of @function.
 	 *
 	 * This function is the same as g_main_context_invoke() except that it
-	 * lets you specify the priority incase @function ends up being
+	 * lets you specify the priority in case @function ends up being
 	 * scheduled as an idle and also lets you give a #GDestroyNotify for @data.
 	 *
 	 * @notify should not assume that it is called from any particular

@@ -1241,6 +1241,9 @@ public struct Unicode
 	 * must be valid UTF-8 encoded text. (Use g_utf8_validate() on all
 	 * text before trying to use UTF-8 utility functions with it.)
 	 *
+	 * Note you must ensure @dest is at least 4 * @n to fit the
+	 * largest possible UTF-8 characters
+	 *
 	 * Params:
 	 *     dest = buffer to fill with characters from @src
 	 *     src = UTF-8 encoded string

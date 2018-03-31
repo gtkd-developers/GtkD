@@ -99,7 +99,8 @@ public class MiniObject
 	 *
 	 * MT safe
 	 *
-	 * Returns: the new mini-object.
+	 * Returns: the new mini-object if copying is
+	 *     possible, %NULL otherwise.
 	 */
 	public MiniObject copy()
 	{

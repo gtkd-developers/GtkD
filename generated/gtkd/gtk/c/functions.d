@@ -2021,11 +2021,13 @@ shared static this()
 	Linker.link(gtk_info_bar_get_action_area, "gtk_info_bar_get_action_area", LIBRARY_GTK);
 	Linker.link(gtk_info_bar_get_content_area, "gtk_info_bar_get_content_area", LIBRARY_GTK);
 	Linker.link(gtk_info_bar_get_message_type, "gtk_info_bar_get_message_type", LIBRARY_GTK);
+	Linker.link(gtk_info_bar_get_revealed, "gtk_info_bar_get_revealed", LIBRARY_GTK);
 	Linker.link(gtk_info_bar_get_show_close_button, "gtk_info_bar_get_show_close_button", LIBRARY_GTK);
 	Linker.link(gtk_info_bar_response, "gtk_info_bar_response", LIBRARY_GTK);
 	Linker.link(gtk_info_bar_set_default_response, "gtk_info_bar_set_default_response", LIBRARY_GTK);
 	Linker.link(gtk_info_bar_set_message_type, "gtk_info_bar_set_message_type", LIBRARY_GTK);
 	Linker.link(gtk_info_bar_set_response_sensitive, "gtk_info_bar_set_response_sensitive", LIBRARY_GTK);
+	Linker.link(gtk_info_bar_set_revealed, "gtk_info_bar_set_revealed", LIBRARY_GTK);
 	Linker.link(gtk_info_bar_set_show_close_button, "gtk_info_bar_set_show_close_button", LIBRARY_GTK);
 
 	// gtk.Invisible
@@ -7179,11 +7181,13 @@ __gshared extern(C)
 	GtkWidget* function(GtkInfoBar* infoBar) c_gtk_info_bar_get_action_area;
 	GtkWidget* function(GtkInfoBar* infoBar) c_gtk_info_bar_get_content_area;
 	GtkMessageType function(GtkInfoBar* infoBar) c_gtk_info_bar_get_message_type;
+	int function(GtkInfoBar* infoBar) c_gtk_info_bar_get_revealed;
 	int function(GtkInfoBar* infoBar) c_gtk_info_bar_get_show_close_button;
 	void function(GtkInfoBar* infoBar, int responseId) c_gtk_info_bar_response;
 	void function(GtkInfoBar* infoBar, int responseId) c_gtk_info_bar_set_default_response;
 	void function(GtkInfoBar* infoBar, GtkMessageType messageType) c_gtk_info_bar_set_message_type;
 	void function(GtkInfoBar* infoBar, int responseId, int setting) c_gtk_info_bar_set_response_sensitive;
+	void function(GtkInfoBar* infoBar, int revealed) c_gtk_info_bar_set_revealed;
 	void function(GtkInfoBar* infoBar, int setting) c_gtk_info_bar_set_show_close_button;
 
 	// gtk.Invisible
@@ -12335,11 +12339,13 @@ alias c_gtk_info_bar_add_buttons gtk_info_bar_add_buttons;
 alias c_gtk_info_bar_get_action_area gtk_info_bar_get_action_area;
 alias c_gtk_info_bar_get_content_area gtk_info_bar_get_content_area;
 alias c_gtk_info_bar_get_message_type gtk_info_bar_get_message_type;
+alias c_gtk_info_bar_get_revealed gtk_info_bar_get_revealed;
 alias c_gtk_info_bar_get_show_close_button gtk_info_bar_get_show_close_button;
 alias c_gtk_info_bar_response gtk_info_bar_response;
 alias c_gtk_info_bar_set_default_response gtk_info_bar_set_default_response;
 alias c_gtk_info_bar_set_message_type gtk_info_bar_set_message_type;
 alias c_gtk_info_bar_set_response_sensitive gtk_info_bar_set_response_sensitive;
+alias c_gtk_info_bar_set_revealed gtk_info_bar_set_revealed;
 alias c_gtk_info_bar_set_show_close_button gtk_info_bar_set_show_close_button;
 
 // gtk.Invisible

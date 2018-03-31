@@ -236,7 +236,7 @@ public class BufferedInputStream : FilterInputStream, SeekableIF
 	 * Params:
 	 *     result = a #GAsyncResult
 	 *
-	 * Returns: a #gssize of the read stream, or %-1 on an error.
+	 * Returns: a #gssize of the read stream, or `-1` on an error.
 	 *
 	 * Throws: GException on failure.
 	 */

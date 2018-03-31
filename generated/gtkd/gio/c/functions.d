@@ -165,6 +165,9 @@ shared static this()
 	Linker.link(g_application_set_default, "g_application_set_default", LIBRARY_GIO);
 	Linker.link(g_application_set_flags, "g_application_set_flags", LIBRARY_GIO);
 	Linker.link(g_application_set_inactivity_timeout, "g_application_set_inactivity_timeout", LIBRARY_GIO);
+	Linker.link(g_application_set_option_context_description, "g_application_set_option_context_description", LIBRARY_GIO);
+	Linker.link(g_application_set_option_context_parameter_string, "g_application_set_option_context_parameter_string", LIBRARY_GIO);
+	Linker.link(g_application_set_option_context_summary, "g_application_set_option_context_summary", LIBRARY_GIO);
 	Linker.link(g_application_set_resource_base_path, "g_application_set_resource_base_path", LIBRARY_GIO);
 	Linker.link(g_application_unbind_busy_property, "g_application_unbind_busy_property", LIBRARY_GIO);
 	Linker.link(g_application_unmark_busy, "g_application_unmark_busy", LIBRARY_GIO);
@@ -677,6 +680,7 @@ shared static this()
 	Linker.link(g_desktop_app_info_get_generic_name, "g_desktop_app_info_get_generic_name", LIBRARY_GIO);
 	Linker.link(g_desktop_app_info_get_is_hidden, "g_desktop_app_info_get_is_hidden", LIBRARY_GIO);
 	Linker.link(g_desktop_app_info_get_keywords, "g_desktop_app_info_get_keywords", LIBRARY_GIO);
+	Linker.link(g_desktop_app_info_get_locale_string, "g_desktop_app_info_get_locale_string", LIBRARY_GIO);
 	Linker.link(g_desktop_app_info_get_nodisplay, "g_desktop_app_info_get_nodisplay", LIBRARY_GIO);
 	Linker.link(g_desktop_app_info_get_show_in, "g_desktop_app_info_get_show_in", LIBRARY_GIO);
 	Linker.link(g_desktop_app_info_get_startup_wm_class, "g_desktop_app_info_get_startup_wm_class", LIBRARY_GIO);
@@ -784,6 +788,7 @@ shared static this()
 	// gio.File
 
 	Linker.link(g_file_get_type, "g_file_get_type", LIBRARY_GIO);
+	Linker.link(g_file_new_build_filename, "g_file_new_build_filename", LIBRARY_GIO);
 	Linker.link(g_file_new_for_commandline_arg, "g_file_new_for_commandline_arg", LIBRARY_GIO);
 	Linker.link(g_file_new_for_commandline_arg_and_cwd, "g_file_new_for_commandline_arg_and_cwd", LIBRARY_GIO);
 	Linker.link(g_file_new_for_path, "g_file_new_for_path", LIBRARY_GIO);
@@ -832,6 +837,9 @@ shared static this()
 	Linker.link(g_file_has_uri_scheme, "g_file_has_uri_scheme", LIBRARY_GIO);
 	Linker.link(g_file_hash, "g_file_hash", LIBRARY_GIO);
 	Linker.link(g_file_is_native, "g_file_is_native", LIBRARY_GIO);
+	Linker.link(g_file_load_bytes, "g_file_load_bytes", LIBRARY_GIO);
+	Linker.link(g_file_load_bytes_async, "g_file_load_bytes_async", LIBRARY_GIO);
+	Linker.link(g_file_load_bytes_finish, "g_file_load_bytes_finish", LIBRARY_GIO);
 	Linker.link(g_file_load_contents, "g_file_load_contents", LIBRARY_GIO);
 	Linker.link(g_file_load_contents_async, "g_file_load_contents_async", LIBRARY_GIO);
 	Linker.link(g_file_load_contents_finish, "g_file_load_contents_finish", LIBRARY_GIO);
@@ -856,6 +864,7 @@ shared static this()
 	Linker.link(g_file_open_readwrite, "g_file_open_readwrite", LIBRARY_GIO);
 	Linker.link(g_file_open_readwrite_async, "g_file_open_readwrite_async", LIBRARY_GIO);
 	Linker.link(g_file_open_readwrite_finish, "g_file_open_readwrite_finish", LIBRARY_GIO);
+	Linker.link(g_file_peek_path, "g_file_peek_path", LIBRARY_GIO);
 	Linker.link(g_file_poll_mountable, "g_file_poll_mountable", LIBRARY_GIO);
 	Linker.link(g_file_poll_mountable_finish, "g_file_poll_mountable_finish", LIBRARY_GIO);
 	Linker.link(g_file_query_default_handler, "g_file_query_default_handler", LIBRARY_GIO);
@@ -1793,7 +1802,9 @@ shared static this()
 	Linker.link(g_socket_is_closed, "g_socket_is_closed", LIBRARY_GIO);
 	Linker.link(g_socket_is_connected, "g_socket_is_connected", LIBRARY_GIO);
 	Linker.link(g_socket_join_multicast_group, "g_socket_join_multicast_group", LIBRARY_GIO);
+	Linker.link(g_socket_join_multicast_group_ssm, "g_socket_join_multicast_group_ssm", LIBRARY_GIO);
 	Linker.link(g_socket_leave_multicast_group, "g_socket_leave_multicast_group", LIBRARY_GIO);
+	Linker.link(g_socket_leave_multicast_group_ssm, "g_socket_leave_multicast_group_ssm", LIBRARY_GIO);
 	Linker.link(g_socket_listen, "g_socket_listen", LIBRARY_GIO);
 	Linker.link(g_socket_receive, "g_socket_receive", LIBRARY_GIO);
 	Linker.link(g_socket_receive_from, "g_socket_receive_from", LIBRARY_GIO);
@@ -2476,15 +2487,15 @@ __gshared extern(C)
 	// gio.AppInfo
 
 	GType function() c_g_app_info_get_type;
-	GAppInfo* function(const(char)* commandline, const(char)* applicationName, GAppInfoCreateFlags flags, GError** err) c_g_app_info_create_from_commandline;
+	GAppInfo* function(char* commandline, const(char)* applicationName, GAppInfoCreateFlags flags, GError** err) c_g_app_info_create_from_commandline;
 	GList* function() c_g_app_info_get_all;
 	GList* function(const(char)* contentType) c_g_app_info_get_all_for_type;
 	GAppInfo* function(const(char)* contentType, int mustSupportUris) c_g_app_info_get_default_for_type;
 	GAppInfo* function(const(char)* uriScheme) c_g_app_info_get_default_for_uri_scheme;
 	GList* function(const(char)* contentType) c_g_app_info_get_fallback_for_type;
 	GList* function(const(char)* contentType) c_g_app_info_get_recommended_for_type;
-	int function(const(char)* uri, GAppLaunchContext* launchContext, GError** err) c_g_app_info_launch_default_for_uri;
-	void function(const(char)* uri, GAppLaunchContext* launchContext, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_app_info_launch_default_for_uri_async;
+	int function(const(char)* uri, GAppLaunchContext* context, GError** err) c_g_app_info_launch_default_for_uri;
+	void function(const(char)* uri, GAppLaunchContext* context, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_app_info_launch_default_for_uri_async;
 	int function(GAsyncResult* result, GError** err) c_g_app_info_launch_default_for_uri_finish;
 	void function(const(char)* contentType) c_g_app_info_reset_type_associations;
 	int function(GAppInfo* appinfo, const(char)* contentType, GError** err) c_g_app_info_add_supports_type;
@@ -2501,8 +2512,8 @@ __gshared extern(C)
 	const(char)* function(GAppInfo* appinfo) c_g_app_info_get_id;
 	const(char)* function(GAppInfo* appinfo) c_g_app_info_get_name;
 	char** function(GAppInfo* appinfo) c_g_app_info_get_supported_types;
-	int function(GAppInfo* appinfo, GList* files, GAppLaunchContext* launchContext, GError** err) c_g_app_info_launch;
-	int function(GAppInfo* appinfo, GList* uris, GAppLaunchContext* launchContext, GError** err) c_g_app_info_launch_uris;
+	int function(GAppInfo* appinfo, GList* files, GAppLaunchContext* context, GError** err) c_g_app_info_launch;
+	int function(GAppInfo* appinfo, GList* uris, GAppLaunchContext* context, GError** err) c_g_app_info_launch_uris;
 	int function(GAppInfo* appinfo, const(char)* contentType, GError** err) c_g_app_info_remove_supports_type;
 	int function(GAppInfo* appinfo, char* extension, GError** err) c_g_app_info_set_as_default_for_extension;
 	int function(GAppInfo* appinfo, const(char)* contentType, GError** err) c_g_app_info_set_as_default_for_type;
@@ -2524,8 +2535,8 @@ __gshared extern(C)
 	char** function(GAppLaunchContext* context) c_g_app_launch_context_get_environment;
 	char* function(GAppLaunchContext* context, GAppInfo* info, GList* files) c_g_app_launch_context_get_startup_notify_id;
 	void function(GAppLaunchContext* context, const(char)* startupNotifyId) c_g_app_launch_context_launch_failed;
-	void function(GAppLaunchContext* context, const(char)* variable, const(char)* value) c_g_app_launch_context_setenv;
-	void function(GAppLaunchContext* context, const(char)* variable) c_g_app_launch_context_unsetenv;
+	void function(GAppLaunchContext* context, char* variable, char* value) c_g_app_launch_context_setenv;
+	void function(GAppLaunchContext* context, char* variable) c_g_app_launch_context_unsetenv;
 
 	// gio.Application
 
@@ -2560,6 +2571,9 @@ __gshared extern(C)
 	void function(GApplication* application) c_g_application_set_default;
 	void function(GApplication* application, GApplicationFlags flags) c_g_application_set_flags;
 	void function(GApplication* application, uint inactivityTimeout) c_g_application_set_inactivity_timeout;
+	void function(GApplication* application, const(char)* description) c_g_application_set_option_context_description;
+	void function(GApplication* application, const(char)* parameterString) c_g_application_set_option_context_parameter_string;
+	void function(GApplication* application, const(char)* summary) c_g_application_set_option_context_summary;
 	void function(GApplication* application, const(char)* resourcePath) c_g_application_set_resource_base_path;
 	void function(GApplication* application, void* object, const(char)* property) c_g_application_unbind_busy_property;
 	void function(GApplication* application) c_g_application_unmark_busy;
@@ -2568,7 +2582,7 @@ __gshared extern(C)
 	// gio.ApplicationCommandLine
 
 	GType function() c_g_application_command_line_get_type;
-	GFile* function(GApplicationCommandLine* cmdline, const(char)* arg) c_g_application_command_line_create_file_for_arg;
+	GFile* function(GApplicationCommandLine* cmdline, char* arg) c_g_application_command_line_create_file_for_arg;
 	char** function(GApplicationCommandLine* cmdline, int* argc) c_g_application_command_line_get_arguments;
 	char* function(GApplicationCommandLine* cmdline) c_g_application_command_line_get_cwd;
 	char** function(GApplicationCommandLine* cmdline) c_g_application_command_line_get_environ;
@@ -2577,7 +2591,7 @@ __gshared extern(C)
 	GVariantDict* function(GApplicationCommandLine* cmdline) c_g_application_command_line_get_options_dict;
 	GVariant* function(GApplicationCommandLine* cmdline) c_g_application_command_line_get_platform_data;
 	GInputStream* function(GApplicationCommandLine* cmdline) c_g_application_command_line_get_stdin;
-	const(char)* function(GApplicationCommandLine* cmdline, const(char)* name) c_g_application_command_line_getenv;
+	const(char)* function(GApplicationCommandLine* cmdline, char* name) c_g_application_command_line_getenv;
 	void function(GApplicationCommandLine* cmdline, const(char)* format, ... ) c_g_application_command_line_print;
 	void function(GApplicationCommandLine* cmdline, const(char)* format, ... ) c_g_application_command_line_printerr;
 	void function(GApplicationCommandLine* cmdline, int exitStatus) c_g_application_command_line_set_exit_status;
@@ -3072,6 +3086,7 @@ __gshared extern(C)
 	const(char)* function(GDesktopAppInfo* info) c_g_desktop_app_info_get_generic_name;
 	int function(GDesktopAppInfo* info) c_g_desktop_app_info_get_is_hidden;
 	char** function(GDesktopAppInfo* info) c_g_desktop_app_info_get_keywords;
+	char* function(GDesktopAppInfo* info, const(char)* key) c_g_desktop_app_info_get_locale_string;
 	int function(GDesktopAppInfo* info) c_g_desktop_app_info_get_nodisplay;
 	int function(GDesktopAppInfo* info, const(char)* desktopEnv) c_g_desktop_app_info_get_show_in;
 	const(char)* function(GDesktopAppInfo* info) c_g_desktop_app_info_get_startup_wm_class;
@@ -3179,8 +3194,9 @@ __gshared extern(C)
 	// gio.File
 
 	GType function() c_g_file_get_type;
-	GFile* function(const(char)* arg) c_g_file_new_for_commandline_arg;
-	GFile* function(const(char)* arg, char* cwd) c_g_file_new_for_commandline_arg_and_cwd;
+	GFile* function(char* firstElement, ... ) c_g_file_new_build_filename;
+	GFile* function(char* arg) c_g_file_new_for_commandline_arg;
+	GFile* function(char* arg, char* cwd) c_g_file_new_for_commandline_arg_and_cwd;
 	GFile* function(char* path) c_g_file_new_for_path;
 	GFile* function(const(char)* uri) c_g_file_new_for_uri;
 	GFile* function(char* tmpl, GFileIOStream** iostream, GError** err) c_g_file_new_tmp;
@@ -3227,6 +3243,9 @@ __gshared extern(C)
 	int function(GFile* file, const(char)* uriScheme) c_g_file_has_uri_scheme;
 	uint function(void* file) c_g_file_hash;
 	int function(GFile* file) c_g_file_is_native;
+	GBytes* function(GFile* file, GCancellable* cancellable, char** etagOut, GError** err) c_g_file_load_bytes;
+	void function(GFile* file, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_load_bytes_async;
+	GBytes* function(GFile* file, GAsyncResult* result, char** etagOut, GError** err) c_g_file_load_bytes_finish;
 	int function(GFile* file, GCancellable* cancellable, char** contents, size_t* length, char** etagOut, GError** err) c_g_file_load_contents;
 	void function(GFile* file, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_load_contents_async;
 	int function(GFile* file, GAsyncResult* res, char** contents, size_t* length, char** etagOut, GError** err) c_g_file_load_contents_finish;
@@ -3251,6 +3270,7 @@ __gshared extern(C)
 	GFileIOStream* function(GFile* file, GCancellable* cancellable, GError** err) c_g_file_open_readwrite;
 	void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_open_readwrite_async;
 	GFileIOStream* function(GFile* file, GAsyncResult* res, GError** err) c_g_file_open_readwrite_finish;
+	char* function(GFile* file) c_g_file_peek_path;
 	void function(GFile* file, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_poll_mountable;
 	int function(GFile* file, GAsyncResult* result, GError** err) c_g_file_poll_mountable_finish;
 	GAppInfo* function(GFile* file, GCancellable* cancellable, GError** err) c_g_file_query_default_handler;
@@ -4188,7 +4208,9 @@ __gshared extern(C)
 	int function(GSocket* socket) c_g_socket_is_closed;
 	int function(GSocket* socket) c_g_socket_is_connected;
 	int function(GSocket* socket, GInetAddress* group, int sourceSpecific, const(char)* iface, GError** err) c_g_socket_join_multicast_group;
+	int function(GSocket* socket, GInetAddress* group, GInetAddress* sourceSpecific, const(char)* iface, GError** err) c_g_socket_join_multicast_group_ssm;
 	int function(GSocket* socket, GInetAddress* group, int sourceSpecific, const(char)* iface, GError** err) c_g_socket_leave_multicast_group;
+	int function(GSocket* socket, GInetAddress* group, GInetAddress* sourceSpecific, const(char)* iface, GError** err) c_g_socket_leave_multicast_group_ssm;
 	int function(GSocket* socket, GError** err) c_g_socket_listen;
 	ptrdiff_t function(GSocket* socket, char* buffer, size_t size, GCancellable* cancellable, GError** err) c_g_socket_receive;
 	ptrdiff_t function(GSocket* socket, GSocketAddress** address, char* buffer, size_t size, GCancellable* cancellable, GError** err) c_g_socket_receive_from;
@@ -4369,7 +4391,7 @@ __gshared extern(C)
 
 	GType function() c_g_subprocess_launcher_get_type;
 	GSubprocessLauncher* function(GSubprocessFlags flags) c_g_subprocess_launcher_new;
-	const(char)* function(GSubprocessLauncher* self, const(char)* variable) c_g_subprocess_launcher_getenv;
+	char* function(GSubprocessLauncher* self, char* variable) c_g_subprocess_launcher_getenv;
 	void function(GSubprocessLauncher* self, GSpawnChildSetupFunc childSetup, void* userData, GDestroyNotify destroyNotify) c_g_subprocess_launcher_set_child_setup;
 	void function(GSubprocessLauncher* self, char* cwd) c_g_subprocess_launcher_set_cwd;
 	void function(GSubprocessLauncher* self, char** env) c_g_subprocess_launcher_set_environ;
@@ -4377,14 +4399,14 @@ __gshared extern(C)
 	void function(GSubprocessLauncher* self, char* path) c_g_subprocess_launcher_set_stderr_file_path;
 	void function(GSubprocessLauncher* self, const(char)* path) c_g_subprocess_launcher_set_stdin_file_path;
 	void function(GSubprocessLauncher* self, char* path) c_g_subprocess_launcher_set_stdout_file_path;
-	void function(GSubprocessLauncher* self, const(char)* variable, const(char)* value, int overwrite) c_g_subprocess_launcher_setenv;
+	void function(GSubprocessLauncher* self, char* variable, char* value, int overwrite) c_g_subprocess_launcher_setenv;
 	GSubprocess* function(GSubprocessLauncher* self, GError** error, const(char)* argv0, ... ) c_g_subprocess_launcher_spawn;
 	GSubprocess* function(GSubprocessLauncher* self, char** argv, GError** err) c_g_subprocess_launcher_spawnv;
 	void function(GSubprocessLauncher* self, int sourceFd, int targetFd) c_g_subprocess_launcher_take_fd;
 	void function(GSubprocessLauncher* self, int fd) c_g_subprocess_launcher_take_stderr_fd;
 	void function(GSubprocessLauncher* self, int fd) c_g_subprocess_launcher_take_stdin_fd;
 	void function(GSubprocessLauncher* self, int fd) c_g_subprocess_launcher_take_stdout_fd;
-	void function(GSubprocessLauncher* self, const(char)* variable) c_g_subprocess_launcher_unsetenv;
+	void function(GSubprocessLauncher* self, char* variable) c_g_subprocess_launcher_unsetenv;
 
 	// gio.Task
 
@@ -4953,6 +4975,9 @@ alias c_g_application_set_application_id g_application_set_application_id;
 alias c_g_application_set_default g_application_set_default;
 alias c_g_application_set_flags g_application_set_flags;
 alias c_g_application_set_inactivity_timeout g_application_set_inactivity_timeout;
+alias c_g_application_set_option_context_description g_application_set_option_context_description;
+alias c_g_application_set_option_context_parameter_string g_application_set_option_context_parameter_string;
+alias c_g_application_set_option_context_summary g_application_set_option_context_summary;
 alias c_g_application_set_resource_base_path g_application_set_resource_base_path;
 alias c_g_application_unbind_busy_property g_application_unbind_busy_property;
 alias c_g_application_unmark_busy g_application_unmark_busy;
@@ -5465,6 +5490,7 @@ alias c_g_desktop_app_info_get_filename g_desktop_app_info_get_filename;
 alias c_g_desktop_app_info_get_generic_name g_desktop_app_info_get_generic_name;
 alias c_g_desktop_app_info_get_is_hidden g_desktop_app_info_get_is_hidden;
 alias c_g_desktop_app_info_get_keywords g_desktop_app_info_get_keywords;
+alias c_g_desktop_app_info_get_locale_string g_desktop_app_info_get_locale_string;
 alias c_g_desktop_app_info_get_nodisplay g_desktop_app_info_get_nodisplay;
 alias c_g_desktop_app_info_get_show_in g_desktop_app_info_get_show_in;
 alias c_g_desktop_app_info_get_startup_wm_class g_desktop_app_info_get_startup_wm_class;
@@ -5572,6 +5598,7 @@ alias c_g_emblemed_icon_get_icon g_emblemed_icon_get_icon;
 // gio.File
 
 alias c_g_file_get_type g_file_get_type;
+alias c_g_file_new_build_filename g_file_new_build_filename;
 alias c_g_file_new_for_commandline_arg g_file_new_for_commandline_arg;
 alias c_g_file_new_for_commandline_arg_and_cwd g_file_new_for_commandline_arg_and_cwd;
 alias c_g_file_new_for_path g_file_new_for_path;
@@ -5620,6 +5647,9 @@ alias c_g_file_has_prefix g_file_has_prefix;
 alias c_g_file_has_uri_scheme g_file_has_uri_scheme;
 alias c_g_file_hash g_file_hash;
 alias c_g_file_is_native g_file_is_native;
+alias c_g_file_load_bytes g_file_load_bytes;
+alias c_g_file_load_bytes_async g_file_load_bytes_async;
+alias c_g_file_load_bytes_finish g_file_load_bytes_finish;
 alias c_g_file_load_contents g_file_load_contents;
 alias c_g_file_load_contents_async g_file_load_contents_async;
 alias c_g_file_load_contents_finish g_file_load_contents_finish;
@@ -5644,6 +5674,7 @@ alias c_g_file_move g_file_move;
 alias c_g_file_open_readwrite g_file_open_readwrite;
 alias c_g_file_open_readwrite_async g_file_open_readwrite_async;
 alias c_g_file_open_readwrite_finish g_file_open_readwrite_finish;
+alias c_g_file_peek_path g_file_peek_path;
 alias c_g_file_poll_mountable g_file_poll_mountable;
 alias c_g_file_poll_mountable_finish g_file_poll_mountable_finish;
 alias c_g_file_query_default_handler g_file_query_default_handler;
@@ -6581,7 +6612,9 @@ alias c_g_socket_get_ttl g_socket_get_ttl;
 alias c_g_socket_is_closed g_socket_is_closed;
 alias c_g_socket_is_connected g_socket_is_connected;
 alias c_g_socket_join_multicast_group g_socket_join_multicast_group;
+alias c_g_socket_join_multicast_group_ssm g_socket_join_multicast_group_ssm;
 alias c_g_socket_leave_multicast_group g_socket_leave_multicast_group;
+alias c_g_socket_leave_multicast_group_ssm g_socket_leave_multicast_group_ssm;
 alias c_g_socket_listen g_socket_listen;
 alias c_g_socket_receive g_socket_receive;
 alias c_g_socket_receive_from g_socket_receive_from;

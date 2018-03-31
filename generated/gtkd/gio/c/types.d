@@ -2216,7 +2216,7 @@ alias GSocketType SocketType;
 /**
  * Flags to define the behaviour of a #GSubprocess.
  *
- * Note that the default for stdin is to redirect from /dev/null.  For
+ * Note that the default for stdin is to redirect from `/dev/null`.  For
  * stdout and stderr the default are for them to inherit the
  * corresponding descriptor from the calling process.
  *
@@ -2251,7 +2251,7 @@ public enum GSubprocessFlags
 	STDOUT_PIPE = 4,
 	/**
 	 * silence the stdout of the spawned
-	 * process (ie: redirect to /dev/null).
+	 * process (ie: redirect to `/dev/null`).
 	 */
 	STDOUT_SILENCE = 8,
 	/**
@@ -2262,7 +2262,7 @@ public enum GSubprocessFlags
 	STDERR_PIPE = 16,
 	/**
 	 * silence the stderr of the spawned
-	 * process (ie: redirect to /dev/null).
+	 * process (ie: redirect to `/dev/null`).
 	 */
 	STDERR_SILENCE = 32,
 	/**
@@ -2387,7 +2387,7 @@ public enum GTlsCertificateRequestFlags
 alias GTlsCertificateRequestFlags TlsCertificateRequestFlags;
 
 /**
- * Flags for g_tls_database_lookup_certificate_handle(),
+ * Flags for g_tls_database_lookup_certificate_for_handle(),
  * g_tls_database_lookup_certificate_issuer(),
  * and g_tls_database_lookup_certificates_issued_by().
  *
@@ -2886,12 +2886,12 @@ struct GAppInfoIface
 	 * Params:
 	 *     appinfo = a #GAppInfo
 	 *     files = a #GList of #GFile objects
-	 *     launchContext = a #GAppLaunchContext or %NULL
+	 *     context = a #GAppLaunchContext or %NULL
 	 * Returns: %TRUE on successful launch, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
-	extern(C) int function(GAppInfo* appinfo, GList* files, GAppLaunchContext* launchContext, GError** err) launch;
+	extern(C) int function(GAppInfo* appinfo, GList* files, GAppLaunchContext* context, GError** err) launch;
 	/**
 	 *
 	 * Params:
@@ -2911,12 +2911,12 @@ struct GAppInfoIface
 	 * Params:
 	 *     appinfo = a #GAppInfo
 	 *     uris = a #GList containing URIs to launch.
-	 *     launchContext = a #GAppLaunchContext or %NULL
+	 *     context = a #GAppLaunchContext or %NULL
 	 * Returns: %TRUE on successful launch, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
-	extern(C) int function(GAppInfo* appinfo, GList* uris, GAppLaunchContext* launchContext, GError** err) launchUris;
+	extern(C) int function(GAppInfo* appinfo, GList* uris, GAppLaunchContext* context, GError** err) launchUris;
 	/**
 	 *
 	 * Params:
@@ -3198,8 +3198,8 @@ struct GAsyncResultIface
 	 *
 	 * Params:
 	 *     res = a #GAsyncResult
-	 * Returns: a new reference to the source object for the @res,
-	 *     or %NULL if there is none.
+	 * Returns: a new reference to the source
+	 *     object for the @res, or %NULL if there is none.
 	 */
 	extern(C) GObject* function(GAsyncResult* res) getSourceObject;
 	/**
@@ -3241,7 +3241,7 @@ struct GBufferedInputStreamClass
 	 * Params:
 	 *     stream = a #GBufferedInputStream
 	 *     result = a #GAsyncResult
-	 * Returns: a #gssize of the read stream, or %-1 on an error.
+	 * Returns: a #gssize of the read stream, or `-1` on an error.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -6102,7 +6102,13 @@ struct GListModelInterface
 	 * Returns: the number of items in @list.
 	 */
 	extern(C) uint function(GListModel* list) getNItems;
-	/** */
+	/**
+	 *
+	 * Params:
+	 *     list = a #GListModel
+	 *     position = the position of the item to fetch
+	 * Returns: the object at @position.
+	 */
 	extern(C) void* function(GListModel* list, uint position) getItem;
 }
 
@@ -6527,13 +6533,13 @@ struct GMountOperationClass
 	/** */
 	extern(C) void function(GMountOperation* op, const(char)* message, const(char)* defaultUser, const(char)* defaultDomain, GAskPasswordFlags flags) askPassword;
 	/** */
-	extern(C) void function(GMountOperation* op, const(char)* message, const(char)* choices) askQuestion;
+	extern(C) void function(GMountOperation* op, const(char)* message, char* choices) askQuestion;
 	/** */
 	extern(C) void function(GMountOperation* op, GMountOperationResult result) reply;
 	/** */
 	extern(C) void function(GMountOperation* op) aborted;
 	/** */
-	extern(C) void function(GMountOperation* op, const(char)* message, GArray* processes, const(char)* choices) showProcesses;
+	extern(C) void function(GMountOperation* op, const(char)* message, GArray* processes, char** choices) showProcesses;
 	/** */
 	extern(C) void function(GMountOperation* op, const(char)* message, long timeLeft, long bytesLeft) showUnmountProgress;
 	/** */
@@ -6602,7 +6608,7 @@ struct GNetworkMonitorInterface
 	 */
 	GTypeInterface gIface;
 	/** */
-	extern(C) void function(GNetworkMonitor* monitor, int available) networkChanged;
+	extern(C) void function(GNetworkMonitor* monitor, int networkAvailable) networkChanged;
 	/**
 	 *
 	 * Params:
@@ -7336,7 +7342,7 @@ struct GSeekableIface
 	 *
 	 * Params:
 	 *     seekable = a #GSeekable.
-	 *     offset = a #goffset.
+	 *     offset = new length for @seekable, in bytes.
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 * Returns: %TRUE if successful. If an error
 	 *     has occurred, this function will return %FALSE and set @error
@@ -7708,7 +7714,7 @@ struct GSocketListenerClass
 	/** */
 	extern(C) void function(GSocketListener* listener) changed;
 	/** */
-	extern(C) void function(GSocketListener* listener, GSocketListenerEvent* event, GSocket* socket) event;
+	extern(C) void function(GSocketListener* listener, GSocketListenerEvent event, GSocket* socket) event;
 	/** */
 	extern(C) void function() GReserved2;
 	/** */
@@ -8726,7 +8732,13 @@ struct GZlibDecompressorClass
 
 /**
  * Type definition for a function that will be called back when an asynchronous
- * operation within GIO has been completed.
+ * operation within GIO has been completed. #GAsyncReadyCallback
+ * callbacks from #GTask are guaranteed to be invoked in a later
+ * iteration of the
+ * [thread-default main context][g-main-context-push-thread-default]
+ * where the #GTask was created. All other users of
+ * #GAsyncReadyCallback must likewise call it asynchronously in a
+ * later iteration of the main context.
  *
  * Params:
  *     sourceObject = the object the asynchronous operation was started with.
@@ -8788,7 +8800,7 @@ public alias extern(C) void function(GDBusConnection* connection, const(char)* n
 /**
  * Invoked when the name being watched is known not to have to have a owner.
  *
- * This is also invoked when the #GDBusConection on which the watch was
+ * This is also invoked when the #GDBusConnection on which the watch was
  * established has been closed.  In that case, @connection will be
  * %NULL.
  *
@@ -8885,7 +8897,7 @@ public alias extern(C) int function(GDBusConnection* connection, const(char)* se
  * gboolean         incoming,
  * gpointer         user_data)
  * {
- * /<!-- -->* inspect @message *<!-- -->/
+ * // inspect @message
  * return message;
  * }
  * ]|
@@ -8918,10 +8930,10 @@ public alias extern(C) int function(GDBusConnection* connection, const(char)* se
  *
  * error = NULL;
  * copy = g_dbus_message_copy (message, &error);
- * /<!-- -->* handle @error being is set *<!-- -->/
+ * // handle @error being set
  * g_object_unref (message);
  *
- * /<!-- -->* modify @copy *<!-- -->/
+ * // modify @copy
  *
  * return copy;
  * }

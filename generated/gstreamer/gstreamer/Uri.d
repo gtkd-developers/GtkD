@@ -220,8 +220,8 @@ public class Uri
 	 *
 	 * See more about Media Fragments URI 1.0 (W3C) at https://www.w3.org/TR/media-frags/
 	 *
-	 * Returns: The fragment hash table
-	 *     from the URI.
+	 * Returns: The
+	 *     fragment hash table from the URI.
 	 *
 	 * Since: 1.12
 	 */
@@ -240,8 +240,8 @@ public class Uri
 	/**
 	 * Extract the path string from the URI object.
 	 *
-	 * Returns: The path from the URI. Once finished with the
-	 *     string should be g_free()'d.
+	 * Returns: (nullable): The path from the URI. Once finished
+	 *     with the string should be g_free()'d.
 	 *
 	 * Since: 1.6
 	 */
@@ -277,8 +277,8 @@ public class Uri
 	/**
 	 * Extract the path string from the URI object as a percent encoded URI path.
 	 *
-	 * Returns: The path from the URI. Once finished with the
-	 *     string should be g_free()'d.
+	 * Returns: The path from the URI. Once finished
+	 *     with the string should be g_free()'d.
 	 *
 	 * Since: 1.6
 	 */
@@ -326,8 +326,8 @@ public class Uri
 	/**
 	 * Get a percent encoded URI query string from the @uri.
 	 *
-	 * Returns: A percent encoded query string. Use g_free() when
-	 *     no longer needed.
+	 * Returns: A percent encoded query string. Use
+	 *     g_free() when no longer needed.
 	 *
 	 * Since: 1.6
 	 */
@@ -347,8 +347,8 @@ public class Uri
 	 * no longer required. Modifying this hash table will modify the query in the
 	 * URI.
 	 *
-	 * Returns: The query hash table
-	 *     from the URI.
+	 * Returns: The query
+	 *     hash table from the URI.
 	 *
 	 * Since: 1.6
 	 */
@@ -447,8 +447,8 @@ public class Uri
 	 *     refUri = The reference URI to join onto the
 	 *         base URI.
 	 *
-	 * Returns: A #GstUri which represents the base with the
-	 *     reference URI joined on.
+	 * Returns: A #GstUri which represents the base
+	 *     with the reference URI joined on.
 	 *
 	 * Since: 1.6
 	 */
@@ -766,6 +766,8 @@ public class Uri
 	 *
 	 * Free-function: g_free
 	 *
+	 * Deprecated: Use GstURI instead.
+	 *
 	 * Params:
 	 *     protocol = Protocol for URI
 	 *     location = Location for URI
@@ -815,9 +817,9 @@ public class Uri
 	 * Params:
 	 *     uri = A URI string
 	 *
-	 * Returns: the location for this URI. Returns %NULL if the
-	 *     URI isn't valid. If the URI does not contain a location, an empty
-	 *     string is returned.
+	 * Returns: the location for this URI. Returns
+	 *     %NULL if the URI isn't valid. If the URI does not contain a location, an
+	 *     empty string is returned.
 	 */
 	public static string getLocation(string uri)
 	{

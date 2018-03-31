@@ -419,6 +419,10 @@ public enum PangoFontMask
 	 * the font gravity is specified (Since: 1.16.)
 	 */
 	GRAVITY = 64,
+	/**
+	 * OpenType font variations are specified (Since: 1.42)
+	 */
+	VARIATIONS = 128,
 }
 
 /**

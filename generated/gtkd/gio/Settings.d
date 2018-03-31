@@ -63,7 +63,7 @@ private import std.algorithm;
  * that describes the keys in your settings and their types and default
  * values, as well as some other information.
  * 
- * Normally, a schema has as fixed path that determines where the settings
+ * Normally, a schema has a fixed path that determines where the settings
  * are stored in the conceptual global tree of settings. However, schemas
  * can also be '[relocatable][gsettings-relocatable]', i.e. not equipped with
  * a fixed path. This is
@@ -535,7 +535,7 @@ public class Settings : ObjectG
 	}
 
 	/**
-	 * <!-- -->
+	 * Deprecated.
 	 *
 	 * Deprecated: Use g_settings_schema_source_list_schemas() instead
 	 *
@@ -551,7 +551,7 @@ public class Settings : ObjectG
 	}
 
 	/**
-	 * <!-- -->
+	 * Deprecated.
 	 *
 	 * Deprecated: Use g_settings_schema_source_list_schemas() instead.
 	 * If you used g_settings_list_schemas() to check for the presence of
@@ -632,7 +632,7 @@ public class Settings : ObjectG
 	 * a boolean property by that name). See g_settings_bind_writable()
 	 * for more details about writable bindings.
 	 *
-	 * Note that the lifecycle of the binding is tied to the object,
+	 * Note that the lifecycle of the binding is tied to @object,
 	 * and that you can have only one binding per object property.
 	 * If you bind the same property twice on the same object, the second
 	 * binding overrides the first one.
@@ -657,7 +657,7 @@ public class Settings : ObjectG
 	 * The binding uses the provided mapping functions to map between
 	 * settings and property values.
 	 *
-	 * Note that the lifecycle of the binding is tied to the object,
+	 * Note that the lifecycle of the binding is tied to @object,
 	 * and that you can have only one binding per object property.
 	 * If you bind the same property twice on the same object, the second
 	 * binding overrides the first one.
@@ -695,7 +695,7 @@ public class Settings : ObjectG
 	 * value as it passes from the setting to the object, i.e. @property
 	 * will be set to %TRUE if the key is not writable.
 	 *
-	 * Note that the lifecycle of the binding is tied to the object,
+	 * Note that the lifecycle of the binding is tied to @object,
 	 * and that you can have only one binding per object property.
 	 * If you bind the same property twice on the same object, the second
 	 * binding overrides the first one.

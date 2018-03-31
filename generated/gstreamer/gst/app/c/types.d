@@ -183,7 +183,17 @@ struct GstAppSrcClass
 	 *     #GST_FLOW_EOS when EOS occured.
 	 */
 	extern(C) GstFlowReturn function(GstAppSrc* appsrc, GstSample* sample) pushSample;
-	void*[3] GstReserved;
+	/**
+	 *
+	 * Params:
+	 *     appsrc = a #GstAppSrc
+	 *     bufferList = a #GstBufferList to push
+	 * Returns: #GST_FLOW_OK when the buffer list was successfuly queued.
+	 *     #GST_FLOW_FLUSHING when @appsrc is not PAUSED or PLAYING.
+	 *     #GST_FLOW_EOS when EOS occured.
+	 */
+	extern(C) GstFlowReturn function(GstAppSrc* appsrc, GstBufferList* bufferList) pushBufferList;
+	void*[2] GstReserved;
 }
 
 struct GstAppSrcPrivate;

@@ -321,6 +321,22 @@ public class PgFontDescription
 	}
 
 	/**
+	 * Gets the variations field of a font description. See
+	 * pango_font_description_set_variations().
+	 *
+	 * Returns: the varitions field for the font
+	 *     description, or %NULL if not previously set.  This
+	 *     has the same life-time as the font description itself
+	 *     and should not be freed.
+	 *
+	 * Since: 1.42
+	 */
+	public string getVariations()
+	{
+		return Str.toString(pango_font_description_get_variations(pangoFontDescription));
+	}
+
+	/**
 	 * Gets the weight field of a font description. See
 	 * pango_font_description_set_weight().
 	 *
@@ -506,6 +522,41 @@ public class PgFontDescription
 	public void setVariant(PangoVariant variant)
 	{
 		pango_font_description_set_variant(pangoFontDescription, variant);
+	}
+
+	/**
+	 * Sets the variations field of a font description. OpenType
+	 * font variations allow to select a font instance by specifying
+	 * values for a number of axes, such as width or weight.
+	 *
+	 * The format of the variations string is AXIS1=VALUE,AXIS2=VALUE...,
+	 * with each AXIS a 4 character tag that identifies a font axis,
+	 * and each VALUE a floating point number. Unknown axes are ignored,
+	 * and values are clamped to their allowed range.
+	 *
+	 * Pango does not currently have a way to find supported axes of
+	 * a font. Both harfbuzz or freetype have API for this.
+	 *
+	 * Since: 1.42
+	 */
+	public void setVariations(string settings)
+	{
+		pango_font_description_set_variations(pangoFontDescription, Str.toStringz(settings));
+	}
+
+	/**
+	 * Like pango_font_description_set_variations(), except that no
+	 * copy of @variations is made. The caller must make sure that the
+	 * string passed in stays around until @desc has been freed
+	 * or the name is set again. This function can be used if
+	 * @variations is a static string such as a C string literal, or
+	 * if @desc is only needed temporarily.
+	 *
+	 * Since: 1.42
+	 */
+	public void setVariationsStatic(string settings)
+	{
+		pango_font_description_set_variations_static(pangoFontDescription, Str.toStringz(settings));
 	}
 
 	/**

@@ -215,6 +215,7 @@ shared static this()
 	Linker.link(pango_font_description_get_stretch, "pango_font_description_get_stretch", LIBRARY_PANGO);
 	Linker.link(pango_font_description_get_style, "pango_font_description_get_style", LIBRARY_PANGO);
 	Linker.link(pango_font_description_get_variant, "pango_font_description_get_variant", LIBRARY_PANGO);
+	Linker.link(pango_font_description_get_variations, "pango_font_description_get_variations", LIBRARY_PANGO);
 	Linker.link(pango_font_description_get_weight, "pango_font_description_get_weight", LIBRARY_PANGO);
 	Linker.link(pango_font_description_hash, "pango_font_description_hash", LIBRARY_PANGO);
 	Linker.link(pango_font_description_merge, "pango_font_description_merge", LIBRARY_PANGO);
@@ -227,6 +228,8 @@ shared static this()
 	Linker.link(pango_font_description_set_stretch, "pango_font_description_set_stretch", LIBRARY_PANGO);
 	Linker.link(pango_font_description_set_style, "pango_font_description_set_style", LIBRARY_PANGO);
 	Linker.link(pango_font_description_set_variant, "pango_font_description_set_variant", LIBRARY_PANGO);
+	Linker.link(pango_font_description_set_variations, "pango_font_description_set_variations", LIBRARY_PANGO);
+	Linker.link(pango_font_description_set_variations_static, "pango_font_description_set_variations_static", LIBRARY_PANGO);
 	Linker.link(pango_font_description_set_weight, "pango_font_description_set_weight", LIBRARY_PANGO);
 	Linker.link(pango_font_description_to_filename, "pango_font_description_to_filename", LIBRARY_PANGO);
 	Linker.link(pango_font_description_to_string, "pango_font_description_to_string", LIBRARY_PANGO);
@@ -764,6 +767,7 @@ __gshared extern(C)
 	PangoStretch function(PangoFontDescription* desc) c_pango_font_description_get_stretch;
 	PangoStyle function(PangoFontDescription* desc) c_pango_font_description_get_style;
 	PangoVariant function(PangoFontDescription* desc) c_pango_font_description_get_variant;
+	const(char)* function(PangoFontDescription* desc) c_pango_font_description_get_variations;
 	PangoWeight function(PangoFontDescription* desc) c_pango_font_description_get_weight;
 	uint function(PangoFontDescription* desc) c_pango_font_description_hash;
 	void function(PangoFontDescription* desc, PangoFontDescription* descToMerge, int replaceExisting) c_pango_font_description_merge;
@@ -776,6 +780,8 @@ __gshared extern(C)
 	void function(PangoFontDescription* desc, PangoStretch stretch) c_pango_font_description_set_stretch;
 	void function(PangoFontDescription* desc, PangoStyle style) c_pango_font_description_set_style;
 	void function(PangoFontDescription* desc, PangoVariant variant) c_pango_font_description_set_variant;
+	void function(PangoFontDescription* desc, const(char)* settings) c_pango_font_description_set_variations;
+	void function(PangoFontDescription* desc, const(char)* settings) c_pango_font_description_set_variations_static;
 	void function(PangoFontDescription* desc, PangoWeight weight) c_pango_font_description_set_weight;
 	char* function(PangoFontDescription* desc) c_pango_font_description_to_filename;
 	char* function(PangoFontDescription* desc) c_pango_font_description_to_string;
@@ -1311,6 +1317,7 @@ alias c_pango_font_description_get_size_is_absolute pango_font_description_get_s
 alias c_pango_font_description_get_stretch pango_font_description_get_stretch;
 alias c_pango_font_description_get_style pango_font_description_get_style;
 alias c_pango_font_description_get_variant pango_font_description_get_variant;
+alias c_pango_font_description_get_variations pango_font_description_get_variations;
 alias c_pango_font_description_get_weight pango_font_description_get_weight;
 alias c_pango_font_description_hash pango_font_description_hash;
 alias c_pango_font_description_merge pango_font_description_merge;
@@ -1323,6 +1330,8 @@ alias c_pango_font_description_set_size pango_font_description_set_size;
 alias c_pango_font_description_set_stretch pango_font_description_set_stretch;
 alias c_pango_font_description_set_style pango_font_description_set_style;
 alias c_pango_font_description_set_variant pango_font_description_set_variant;
+alias c_pango_font_description_set_variations pango_font_description_set_variations;
+alias c_pango_font_description_set_variations_static pango_font_description_set_variations_static;
 alias c_pango_font_description_set_weight pango_font_description_set_weight;
 alias c_pango_font_description_to_filename pango_font_description_to_filename;
 alias c_pango_font_description_to_string pango_font_description_to_string;

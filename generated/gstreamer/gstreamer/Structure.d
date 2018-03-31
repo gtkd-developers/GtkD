@@ -766,7 +766,8 @@ public class Structure
 	 * Params:
 	 *     fieldname = the name of the field to get
 	 *
-	 * Returns: the #GValue corresponding to the field with the given name.
+	 * Returns: the #GValue corresponding to the field with the given
+	 *     name.
 	 */
 	public Value getValue(string fieldname)
 	{
@@ -842,8 +843,8 @@ public class Structure
 	 * Params:
 	 *     field = the #GQuark of the field to get
 	 *
-	 * Returns: the #GValue corresponding to the field with the given name
-	 *     identifier.
+	 * Returns: the #GValue corresponding to the field with the given
+	 *     name identifier.
 	 */
 	public Value idGetValue(GQuark field)
 	{

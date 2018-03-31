@@ -31,6 +31,7 @@ private import gobject.Signals;
 private import gstreamer.Caps;
 private import gstreamer.ObjectGst;
 private import gstreamer.Pad;
+private import gstreamer.StaticPadTemplate;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
 public  import gstreamerc.gstreamertypes;
@@ -155,6 +156,60 @@ public class PadTemplate : ObjectGst
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by new");
+		}
+
+		this(cast(GstPadTemplate*) p);
+	}
+
+	/**
+	 * Converts a #GstStaticPadTemplate into a #GstPadTemplate with a type.
+	 *
+	 * Params:
+	 *     padTemplate = the static pad template
+	 *     padType = The #GType of the pad to create
+	 *
+	 * Returns: a new #GstPadTemplate.
+	 *
+	 * Since: 1.14
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(StaticPadTemplate padTemplate, GType padType)
+	{
+		auto p = gst_pad_template_new_from_static_pad_template_with_gtype((padTemplate is null) ? null : padTemplate.getStaticPadTemplateStruct(), padType);
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_from_static_pad_template_with_gtype");
+		}
+
+		this(cast(GstPadTemplate*) p);
+	}
+
+	/**
+	 * Creates a new pad template with a name according to the given template
+	 * and with the given arguments.
+	 *
+	 * Params:
+	 *     nameTemplate = the name template.
+	 *     direction = the #GstPadDirection of the template.
+	 *     presence = the #GstPadPresence of the pad.
+	 *     caps = a #GstCaps set for the template.
+	 *     padType = The #GType of the pad to create
+	 *
+	 * Returns: a new #GstPadTemplate.
+	 *
+	 * Since: 1.14
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(string nameTemplate, GstPadDirection direction, GstPadPresence presence, Caps caps, GType padType)
+	{
+		auto p = gst_pad_template_new_with_gtype(Str.toStringz(nameTemplate), direction, presence, (caps is null) ? null : caps.getCapsStruct(), padType);
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_with_gtype");
 		}
 
 		this(cast(GstPadTemplate*) p);

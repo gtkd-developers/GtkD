@@ -48,10 +48,10 @@ public struct DBusUtilities
 	 * Escape @string so it can appear in a D-Bus address as the value
 	 * part of a key-value pair.
 	 *
-	 * For instance, if @string is "/run/bus-for-:0",
-	 * this function would return "/run/bus-for-%3A0",
+	 * For instance, if @string is `/run/bus-for-:0`,
+	 * this function would return `/run/bus-for-%3A0`,
 	 * which could be used in a D-Bus address like
-	 * "unix:nonce-tcp:host=127.0.0.1,port=42,noncefile=/run/bus-for-%3A0".
+	 * `unix:nonce-tcp:host=127.0.0.1,port=42,noncefile=/run/bus-for-%3A0`.
 	 *
 	 * Params:
 	 *     str = an unescaped string to be included in a D-Bus address

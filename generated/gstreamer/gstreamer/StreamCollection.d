@@ -113,7 +113,7 @@ public class StreamCollection : ObjectGst
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstStreamCollection*) p);
+		this(cast(GstStreamCollection*) p, true);
 	}
 
 	/**

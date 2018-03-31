@@ -1321,9 +1321,10 @@ public class Message
 	/**
 	 * Extracts the object managing the streaming thread from @message.
 	 *
-	 * Returns: a GValue containing the object that manages the streaming thread.
-	 *     This object is usually of type GstTask but other types can be added in the
-	 *     future. The object remains valid as long as @message is valid.
+	 * Returns: a GValue containing the object that manages the
+	 *     streaming thread. This object is usually of type GstTask but other types can
+	 *     be added in the future. The object remains valid as long as @message is
+	 *     valid.
 	 */
 	public Value getStreamStatusObject()
 	{
@@ -1340,9 +1341,9 @@ public class Message
 	/**
 	 * Access the structure of the message.
 	 *
-	 * Returns: The structure of the message. The structure is
-	 *     still owned by the message, which means that you should not free it and
-	 *     that the pointer becomes invalid when you free the message.
+	 * Returns: The structure of the message. The
+	 *     structure is still owned by the message, which means that you should not
+	 *     free it and that the pointer becomes invalid when you free the message.
 	 *
 	 *     MT safe.
 	 */
@@ -1700,11 +1701,12 @@ public class Message
 	 * Params:
 	 *     object = location where to store a
 	 *         pointer to the object whose property got changed, or %NULL
-	 *     propertyName = return location for the name of the
-	 *         property that got changed, or %NULL
-	 *     propertyValue = return location for the new value of
-	 *         the property that got changed, or %NULL. This will only be set if the
-	 *         property notify watch was told to include the value when it was set up
+	 *     propertyName = return location for
+	 *         the name of the property that got changed, or %NULL
+	 *     propertyValue = return location for
+	 *         the new value of the property that got changed, or %NULL. This will
+	 *         only be set if the property notify watch was told to include the value
+	 *         when it was set up
 	 *
 	 * Since: 1.10
 	 */
@@ -2290,6 +2292,31 @@ public class Message
 		}
 
 		return ObjectG.getDObject!(Stream)(cast(GstStream*) p, true);
+	}
+
+	/**
+	 * Get a writable version of the structure.
+	 *
+	 * Returns: The structure of the message. The structure
+	 *     is still owned by the message, which means that you should not free
+	 *     it and that the pointer becomes invalid when you free the message.
+	 *     This function checks if @message is writable and will never return
+	 *     %NULL.
+	 *
+	 *     MT safe.
+	 *
+	 * Since: 1.14
+	 */
+	public Structure writableStructure()
+	{
+		auto p = gst_message_writable_structure(gstMessage);
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Structure)(cast(GstStructure*) p);
 	}
 
 	/**

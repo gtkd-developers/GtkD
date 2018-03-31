@@ -182,7 +182,9 @@ public class Registry : ObjectGst
 
 	/**
 	 * Add the feature to the registry. The feature-added signal will be emitted.
-	 * This function sinks @feature.
+	 *
+	 * @feature's reference count will be incremented, and any floating
+	 * reference will be removed (see gst_object_ref_sink())
 	 *
 	 * Params:
 	 *     feature = the feature to add
@@ -198,7 +200,9 @@ public class Registry : ObjectGst
 
 	/**
 	 * Add the plugin to the registry. The plugin-added signal will be emitted.
-	 * This function will sink @plugin.
+	 *
+	 * @plugin's reference count will be incremented, and any floating
+	 * reference will be removed (see gst_object_ref_sink())
 	 *
 	 * Params:
 	 *     plugin = the plugin to add

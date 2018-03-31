@@ -247,7 +247,12 @@ public class UnixMountEntry
 	}
 
 	/**
-	 * Checks if a unix mount is a system path.
+	 * Checks if a Unix mount is a system mount. This is the Boolean OR of
+	 * g_unix_is_system_fs_type(), g_unix_is_system_device_path() and
+	 * g_unix_is_mount_path_system_internal() on @mount_entry’s properties.
+	 *
+	 * The definition of what a ‘system’ mount entry is may change over time as new
+	 * file system types and device paths are ignored.
 	 *
 	 * Returns: %TRUE if the unix mount is for a system path.
 	 */

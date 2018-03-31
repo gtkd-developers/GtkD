@@ -377,6 +377,9 @@ public class ListSG
 	/**
 	 * Calls a function for each element of a #GSList.
 	 *
+	 * It is safe for @func to remove the element from @list, but it must
+	 * not modify any part of the list after that element.
+	 *
 	 * Params:
 	 *     func = the function to call with each element's data
 	 *     userData = user data to pass to the function
@@ -411,6 +414,9 @@ public class ListSG
 	/**
 	 * Convenience method, which frees all the memory used by a #GSList, and
 	 * calls the specified destroy function on every element's data.
+	 *
+	 * @free_func must not modify the list (eg, by removing the freed
+	 * element from it).
 	 *
 	 * Params:
 	 *     freeFunc = the function to be called to free each element's data
@@ -739,7 +745,8 @@ public class ListSG
 	}
 
 	/**
-	 * Sorts a #GSList using the given comparison function.
+	 * Sorts a #GSList using the given comparison function. The algorithm
+	 * used is a stable sort.
 	 *
 	 * Params:
 	 *     compareFunc = the comparison function used to sort the #GSList.

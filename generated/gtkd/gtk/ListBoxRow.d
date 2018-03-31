@@ -235,7 +235,14 @@ public class ListBoxRow : Bin, ActionableIF
 		gtk_list_box_row_set_selectable(gtkListBoxRow, selectable);
 	}
 
-	/** */
+	/**
+	 * This is a keybinding signal, which will cause this row to be activated.
+	 *
+	 * If you want to be notified when the user activates a row (by key or not),
+	 * use the #GtkListBox::row-activated signal on the row’s parent #GtkListBox.
+	 *
+	 * Since: 3.10
+	 */
 	gulong addOnActivate(void delegate(ListBoxRow) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "activate", dlg, connectFlags ^ ConnectFlags.SWAPPED);

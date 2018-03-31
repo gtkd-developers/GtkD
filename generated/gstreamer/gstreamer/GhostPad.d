@@ -138,7 +138,7 @@ public class GhostPad : ProxyPad
 			throw new ConstructionException("null returned by new_from_template");
 		}
 
-		this(cast(GstGhostPad*) p, true);
+		this(cast(GstGhostPad*) p);
 	}
 
 	/**
@@ -166,7 +166,7 @@ public class GhostPad : ProxyPad
 			throw new ConstructionException("null returned by new_no_target");
 		}
 
-		this(cast(GstGhostPad*) p, true);
+		this(cast(GstGhostPad*) p);
 	}
 
 	/**
@@ -191,7 +191,7 @@ public class GhostPad : ProxyPad
 			throw new ConstructionException("null returned by new_no_target_from_template");
 		}
 
-		this(cast(GstGhostPad*) p, true);
+		this(cast(GstGhostPad*) p);
 	}
 
 	/**

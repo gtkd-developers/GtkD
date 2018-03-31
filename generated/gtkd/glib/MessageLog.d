@@ -211,7 +211,7 @@ public struct MessageLog
 	}
 
 	/**
-	 * Like g_log_sets_handler(), but takes a destroy notify for the @user_data.
+	 * Like g_log_set_handler(), but takes a destroy notify for the @user_data.
 	 *
 	 * This has no effect if structured logging is enabled; see
 	 * [Using Structured Logging][using-structured-logging].

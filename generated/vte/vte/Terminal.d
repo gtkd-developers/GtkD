@@ -225,11 +225,10 @@ public class Terminal : Widget, ScrollableIF
 	 *
 	 * Params:
 	 *     text = data to send to the child
-	 *     length = length of @text in bytes, or -1 if @text is NUL-terminated
 	 */
-	public void feedChild(string text, ptrdiff_t length)
+	public void feedChild(string text)
 	{
-		vte_terminal_feed_child(vteTerminal, Str.toStringz(text), length);
+		vte_terminal_feed_child(vteTerminal, Str.toStringz(text), cast(ptrdiff_t)text.length);
 	}
 
 	/**
@@ -244,8 +243,9 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * Checks whether or not the terminal will attempt to draw bold text by
-	 * repainting text with a one-pixel offset.
+	 * Checks whether or not the terminal will attempt to draw bold text,
+	 * either by using a bold font variant or by repainting text with a different
+	 * offset.
 	 *
 	 * Returns: %TRUE if bolding is enabled, %FALSE if not
 	 */
@@ -278,7 +278,44 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
+	 * Checks whether the SGR 1 attribute also switches to the bright counterpart
+	 * of the first 8 palette colors, in addition to making them bold (legacy behavior)
+	 * or if SGR 1 only enables bold and leaves the color intact.
+	 *
+	 * Returns: %TRUE if bold also enables bright, %FALSE if not
+	 *
+	 * Since: 0.52
+	 */
+	public bool getBoldIsBright()
+	{
+		return vte_terminal_get_bold_is_bright(vteTerminal) != 0;
+	}
+
+	/**
+	 * Returns: the terminal's cell height scale
+	 *
+	 * Since: 0.52
+	 */
+	public double getCellHeightScale()
+	{
+		return vte_terminal_get_cell_height_scale(vteTerminal);
+	}
+
+	/**
+	 * Returns: the terminal's cell width scale
+	 *
+	 * Since: 0.52
+	 */
+	public double getCellWidthScale()
+	{
+		return vte_terminal_get_cell_width_scale(vteTerminal);
+	}
+
+	/**
 	 * Returns: the height of a character cell
+	 *
+	 *     Note that this method should rather be called vte_terminal_get_cell_height,
+	 *     because the return value takes cell-height-scale into account.
 	 */
 	public glong getCharHeight()
 	{
@@ -287,6 +324,9 @@ public class Terminal : Widget, ScrollableIF
 
 	/**
 	 * Returns: the width of a character cell
+	 *
+	 *     Note that this method should rather be called vte_terminal_get_cell_width,
+	 *     because the return value takes cell-width-scale into account.
 	 */
 	public glong getCharWidth()
 	{
@@ -500,6 +540,40 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
+	 * Returns: whether or not the terminal will forcibly scroll to the bottom of
+	 *     the viewable history when the user presses a key.  Modifier keys do not
+	 *     trigger this behavior.
+	 *
+	 * Since: 0.52
+	 */
+	public bool getScrollOnKeystroke()
+	{
+		return vte_terminal_get_scroll_on_keystroke(vteTerminal) != 0;
+	}
+
+	/**
+	 * Returns: whether or not the terminal will forcibly scroll to the bottom of
+	 *     the viewable history when the new data is received from the child.
+	 *
+	 * Since: 0.52
+	 */
+	public bool getScrollOnOutput()
+	{
+		return vte_terminal_get_scroll_on_output(vteTerminal) != 0;
+	}
+
+	/**
+	 * Returns: length of the scrollback buffer used by the terminal.
+	 *     A negative value means "infinite scrollback".
+	 *
+	 * Since: 0.52
+	 */
+	public glong getScrollbackLines()
+	{
+		return vte_terminal_get_scrollback_lines(vteTerminal);
+	}
+
+	/**
 	 * Extracts a view of the visible part of the terminal.  If @is_selected is not
 	 * %NULL, characters will only be read if @is_selected returns %TRUE after being
 	 * passed the column and row, respectively.  A #VteCharAttributes structure
@@ -523,6 +597,18 @@ public class Terminal : Widget, ScrollableIF
 
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
+	}
+
+	/**
+	 * Checks whether or not the terminal will allow blinking text.
+	 *
+	 * Returns: the blinking setting
+	 *
+	 * Since: 0.52
+	 */
+	public VteTextBlinkMode getTextBlinkMode()
+	{
+		return vte_terminal_get_text_blink_mode(vteTerminal);
 	}
 
 	/**
@@ -1023,6 +1109,53 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
+	 * Sets whether the SGR 1 attribute also switches to the bright counterpart
+	 * of the first 8 palette colors, in addition to making them bold (legacy behavior)
+	 * or if SGR 1 only enables bold and leaves the color intact.
+	 *
+	 * Params:
+	 *     boldIsBright = %TRUE if bold should also enable bright
+	 *
+	 * Since: 0.52
+	 */
+	public void setBoldIsBright(bool boldIsBright)
+	{
+		vte_terminal_set_bold_is_bright(vteTerminal, boldIsBright);
+	}
+
+	/**
+	 * Sets the terminal's cell height scale to @scale.
+	 *
+	 * This can be used to increase the line spacing. (The font's height is not affected.)
+	 * Valid values go from 1.0 (default) to 2.0 ("double spacing").
+	 *
+	 * Params:
+	 *     scale = the cell height scale
+	 *
+	 * Since: 0.52
+	 */
+	public void setCellHeightScale(double scale)
+	{
+		vte_terminal_set_cell_height_scale(vteTerminal, scale);
+	}
+
+	/**
+	 * Sets the terminal's cell width scale to @scale.
+	 *
+	 * This can be used to increase the letter spacing. (The font's width is not affected.)
+	 * Valid values go from 1.0 (default) to 2.0.
+	 *
+	 * Params:
+	 *     scale = the cell width scale
+	 *
+	 * Since: 0.52
+	 */
+	public void setCellWidthScale(double scale)
+	{
+		vte_terminal_set_cell_width_scale(vteTerminal, scale);
+	}
+
+	/**
 	 * This setting controls whether ambiguous-width characters are narrow or wide
 	 * when using the UTF-8 encoding (vte_terminal_set_encoding()). In all other encodings,
 	 * the width of ambiguous-width characters is fixed.
@@ -1033,6 +1166,20 @@ public class Terminal : Widget, ScrollableIF
 	public void setCjkAmbiguousWidth(int width)
 	{
 		vte_terminal_set_cjk_ambiguous_width(vteTerminal, width);
+	}
+
+	/**
+	 * Sets whether to paint the background with the background colour.
+	 * The default is %TRUE.
+	 *
+	 * This function is rarely useful. One use for it is to add a background
+	 * image to the terminal.
+	 *
+	 * Since: 0.52
+	 */
+	public void setClearBackground(bool setting)
+	{
+		vte_terminal_set_clear_background(vteTerminal, setting);
 	}
 
 	/**
@@ -1374,6 +1521,19 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
+	 * Controls whether or not the terminal will allow blinking text.
+	 *
+	 * Params:
+	 *     textBlinkMode = the #VteTextBlinkMode to use
+	 *
+	 * Since: 0.52
+	 */
+	public void setTextBlinkMode(VteTextBlinkMode textBlinkMode)
+	{
+		vte_terminal_set_text_blink_mode(vteTerminal, textBlinkMode);
+	}
+
+	/**
 	 * With this function you can provide a set of characters which will
 	 * be considered parts of a word when doing word-wise selection, in
 	 * addition to the default which only considers alphanumeric characters
@@ -1414,6 +1574,10 @@ public class Terminal : Widget, ScrollableIF
 	 * in this case, if spawning was successful, the child process will be aborted
 	 * automatically.
 	 *
+	 * Beginning with 0.52, sets PWD to @working_directory in order to preserve symlink components.
+	 * The caller should also make sure that symlinks were preserved while constructing the value of @working_directory,
+	 * e.g. by using vte_terminal_get_current_directory_uri(), g_get_current_dir() or get_current_dir_name().
+	 *
 	 * Params:
 	 *     ptyFlags = flags from #VtePtyFlags
 	 *     workingDirectory = the name of a directory the command should start
@@ -1452,6 +1616,10 @@ public class Terminal : Widget, ScrollableIF
 	 * descriptor.
 	 *
 	 * See vte_pty_new(), g_spawn_async() and vte_terminal_watch_child() for more information.
+	 *
+	 * Beginning with 0.52, sets PWD to @working_directory in order to preserve symlink components.
+	 * The caller should also make sure that symlinks were preserved while constructing the value of @working_directory,
+	 * e.g. by using vte_terminal_get_current_directory_uri(), g_get_current_dir() or get_current_dir_name().
 	 *
 	 * Deprecated: Use vte_terminal_spawn_async() instead.
 	 *
@@ -1562,8 +1730,10 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * Emitted whenever selection of a new font causes the values of the
-	 * %char_width or %char_height fields to change.
+	 * Emitted whenever the cell size changes, e.g. due to a change in
+	 * font, font-scale or cell-width/height-scale.
+	 *
+	 * Note that this signal should rather be called "cell-size-changed".
 	 *
 	 * Params:
 	 *     width = the new character cell width

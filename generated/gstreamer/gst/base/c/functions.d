@@ -71,6 +71,24 @@ shared static this()
 	Linker.link(gst_adapter_take_list, "gst_adapter_take_list", LIBRARY_GSTBASE);
 	Linker.link(gst_adapter_unmap, "gst_adapter_unmap", LIBRARY_GSTBASE);
 
+	// gst.base.Aggregator
+
+	Linker.link(gst_aggregator_get_type, "gst_aggregator_get_type", LIBRARY_GSTBASE);
+	Linker.link(gst_aggregator_finish_buffer, "gst_aggregator_finish_buffer", LIBRARY_GSTBASE);
+	Linker.link(gst_aggregator_get_allocator, "gst_aggregator_get_allocator", LIBRARY_GSTBASE);
+	Linker.link(gst_aggregator_get_buffer_pool, "gst_aggregator_get_buffer_pool", LIBRARY_GSTBASE);
+	Linker.link(gst_aggregator_get_latency, "gst_aggregator_get_latency", LIBRARY_GSTBASE);
+	Linker.link(gst_aggregator_set_latency, "gst_aggregator_set_latency", LIBRARY_GSTBASE);
+	Linker.link(gst_aggregator_set_src_caps, "gst_aggregator_set_src_caps", LIBRARY_GSTBASE);
+
+	// gst.base.AggregatorPad
+
+	Linker.link(gst_aggregator_pad_get_type, "gst_aggregator_pad_get_type", LIBRARY_GSTBASE);
+	Linker.link(gst_aggregator_pad_drop_buffer, "gst_aggregator_pad_drop_buffer", LIBRARY_GSTBASE);
+	Linker.link(gst_aggregator_pad_is_eos, "gst_aggregator_pad_is_eos", LIBRARY_GSTBASE);
+	Linker.link(gst_aggregator_pad_peek_buffer, "gst_aggregator_pad_peek_buffer", LIBRARY_GSTBASE);
+	Linker.link(gst_aggregator_pad_pop_buffer, "gst_aggregator_pad_pop_buffer", LIBRARY_GSTBASE);
+
 	// gst.base.BaseParse
 
 	Linker.link(gst_base_parse_get_type, "gst_base_parse_get_type", LIBRARY_GSTBASE);
@@ -154,6 +172,7 @@ shared static this()
 	Linker.link(gst_base_src_set_live, "gst_base_src_set_live", LIBRARY_GSTBASE);
 	Linker.link(gst_base_src_start_complete, "gst_base_src_start_complete", LIBRARY_GSTBASE);
 	Linker.link(gst_base_src_start_wait, "gst_base_src_start_wait", LIBRARY_GSTBASE);
+	Linker.link(gst_base_src_submit_buffer_list, "gst_base_src_submit_buffer_list", LIBRARY_GSTBASE);
 	Linker.link(gst_base_src_wait_playing, "gst_base_src_wait_playing", LIBRARY_GSTBASE);
 
 	// gst.base.BaseTransform
@@ -381,8 +400,12 @@ shared static this()
 	Linker.link(gst_queue_array_is_empty, "gst_queue_array_is_empty", LIBRARY_GSTBASE);
 	Linker.link(gst_queue_array_peek_head, "gst_queue_array_peek_head", LIBRARY_GSTBASE);
 	Linker.link(gst_queue_array_peek_head_struct, "gst_queue_array_peek_head_struct", LIBRARY_GSTBASE);
+	Linker.link(gst_queue_array_peek_tail, "gst_queue_array_peek_tail", LIBRARY_GSTBASE);
+	Linker.link(gst_queue_array_peek_tail_struct, "gst_queue_array_peek_tail_struct", LIBRARY_GSTBASE);
 	Linker.link(gst_queue_array_pop_head, "gst_queue_array_pop_head", LIBRARY_GSTBASE);
 	Linker.link(gst_queue_array_pop_head_struct, "gst_queue_array_pop_head_struct", LIBRARY_GSTBASE);
+	Linker.link(gst_queue_array_pop_tail, "gst_queue_array_pop_tail", LIBRARY_GSTBASE);
+	Linker.link(gst_queue_array_pop_tail_struct, "gst_queue_array_pop_tail_struct", LIBRARY_GSTBASE);
 	Linker.link(gst_queue_array_push_tail, "gst_queue_array_push_tail", LIBRARY_GSTBASE);
 	Linker.link(gst_queue_array_push_tail_struct, "gst_queue_array_push_tail_struct", LIBRARY_GSTBASE);
 	Linker.link(gst_queue_array_new, "gst_queue_array_new", LIBRARY_GSTBASE);
@@ -433,6 +456,24 @@ __gshared extern(C)
 	GstBufferList* function(GstAdapter* adapter, size_t nbytes) c_gst_adapter_take_buffer_list;
 	GList* function(GstAdapter* adapter, size_t nbytes) c_gst_adapter_take_list;
 	void function(GstAdapter* adapter) c_gst_adapter_unmap;
+
+	// gst.base.Aggregator
+
+	GType function() c_gst_aggregator_get_type;
+	GstFlowReturn function(GstAggregator* aggregator, GstBuffer* buffer) c_gst_aggregator_finish_buffer;
+	void function(GstAggregator* self, GstAllocator** allocator, GstAllocationParams* params) c_gst_aggregator_get_allocator;
+	GstBufferPool* function(GstAggregator* self) c_gst_aggregator_get_buffer_pool;
+	GstClockTime function(GstAggregator* self) c_gst_aggregator_get_latency;
+	void function(GstAggregator* self, GstClockTime minLatency, GstClockTime maxLatency) c_gst_aggregator_set_latency;
+	void function(GstAggregator* self, GstCaps* caps) c_gst_aggregator_set_src_caps;
+
+	// gst.base.AggregatorPad
+
+	GType function() c_gst_aggregator_pad_get_type;
+	int function(GstAggregatorPad* pad) c_gst_aggregator_pad_drop_buffer;
+	int function(GstAggregatorPad* pad) c_gst_aggregator_pad_is_eos;
+	GstBuffer* function(GstAggregatorPad* pad) c_gst_aggregator_pad_peek_buffer;
+	GstBuffer* function(GstAggregatorPad* pad) c_gst_aggregator_pad_pop_buffer;
 
 	// gst.base.BaseParse
 
@@ -517,6 +558,7 @@ __gshared extern(C)
 	void function(GstBaseSrc* src, int live) c_gst_base_src_set_live;
 	void function(GstBaseSrc* basesrc, GstFlowReturn ret) c_gst_base_src_start_complete;
 	GstFlowReturn function(GstBaseSrc* basesrc) c_gst_base_src_start_wait;
+	void function(GstBaseSrc* src, GstBufferList* bufferList) c_gst_base_src_submit_buffer_list;
 	GstFlowReturn function(GstBaseSrc* src) c_gst_base_src_wait_playing;
 
 	// gst.base.BaseTransform
@@ -744,8 +786,12 @@ __gshared extern(C)
 	int function(GstQueueArray* array) c_gst_queue_array_is_empty;
 	void* function(GstQueueArray* array) c_gst_queue_array_peek_head;
 	void* function(GstQueueArray* array) c_gst_queue_array_peek_head_struct;
+	void* function(GstQueueArray* array) c_gst_queue_array_peek_tail;
+	void* function(GstQueueArray* array) c_gst_queue_array_peek_tail_struct;
 	void* function(GstQueueArray* array) c_gst_queue_array_pop_head;
 	void* function(GstQueueArray* array) c_gst_queue_array_pop_head_struct;
+	void* function(GstQueueArray* array) c_gst_queue_array_pop_tail;
+	void* function(GstQueueArray* array) c_gst_queue_array_pop_tail_struct;
 	void function(GstQueueArray* array, void* data) c_gst_queue_array_push_tail;
 	void function(GstQueueArray* array, void* pStruct) c_gst_queue_array_push_tail_struct;
 	GstQueueArray* function(uint initialSize) c_gst_queue_array_new;
@@ -794,6 +840,24 @@ alias c_gst_adapter_take_buffer_fast gst_adapter_take_buffer_fast;
 alias c_gst_adapter_take_buffer_list gst_adapter_take_buffer_list;
 alias c_gst_adapter_take_list gst_adapter_take_list;
 alias c_gst_adapter_unmap gst_adapter_unmap;
+
+// gst.base.Aggregator
+
+alias c_gst_aggregator_get_type gst_aggregator_get_type;
+alias c_gst_aggregator_finish_buffer gst_aggregator_finish_buffer;
+alias c_gst_aggregator_get_allocator gst_aggregator_get_allocator;
+alias c_gst_aggregator_get_buffer_pool gst_aggregator_get_buffer_pool;
+alias c_gst_aggregator_get_latency gst_aggregator_get_latency;
+alias c_gst_aggregator_set_latency gst_aggregator_set_latency;
+alias c_gst_aggregator_set_src_caps gst_aggregator_set_src_caps;
+
+// gst.base.AggregatorPad
+
+alias c_gst_aggregator_pad_get_type gst_aggregator_pad_get_type;
+alias c_gst_aggregator_pad_drop_buffer gst_aggregator_pad_drop_buffer;
+alias c_gst_aggregator_pad_is_eos gst_aggregator_pad_is_eos;
+alias c_gst_aggregator_pad_peek_buffer gst_aggregator_pad_peek_buffer;
+alias c_gst_aggregator_pad_pop_buffer gst_aggregator_pad_pop_buffer;
 
 // gst.base.BaseParse
 
@@ -878,6 +942,7 @@ alias c_gst_base_src_set_format gst_base_src_set_format;
 alias c_gst_base_src_set_live gst_base_src_set_live;
 alias c_gst_base_src_start_complete gst_base_src_start_complete;
 alias c_gst_base_src_start_wait gst_base_src_start_wait;
+alias c_gst_base_src_submit_buffer_list gst_base_src_submit_buffer_list;
 alias c_gst_base_src_wait_playing gst_base_src_wait_playing;
 
 // gst.base.BaseTransform
@@ -1105,8 +1170,12 @@ alias c_gst_queue_array_get_length gst_queue_array_get_length;
 alias c_gst_queue_array_is_empty gst_queue_array_is_empty;
 alias c_gst_queue_array_peek_head gst_queue_array_peek_head;
 alias c_gst_queue_array_peek_head_struct gst_queue_array_peek_head_struct;
+alias c_gst_queue_array_peek_tail gst_queue_array_peek_tail;
+alias c_gst_queue_array_peek_tail_struct gst_queue_array_peek_tail_struct;
 alias c_gst_queue_array_pop_head gst_queue_array_pop_head;
 alias c_gst_queue_array_pop_head_struct gst_queue_array_pop_head_struct;
+alias c_gst_queue_array_pop_tail gst_queue_array_pop_tail;
+alias c_gst_queue_array_pop_tail_struct gst_queue_array_pop_tail_struct;
 alias c_gst_queue_array_push_tail gst_queue_array_push_tail;
 alias c_gst_queue_array_push_tail_struct gst_queue_array_push_tail_struct;
 alias c_gst_queue_array_new gst_queue_array_new;

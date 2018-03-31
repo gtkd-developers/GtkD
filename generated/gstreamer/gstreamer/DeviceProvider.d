@@ -119,6 +119,9 @@ public class DeviceProvider : ObjectGst
 	 *
 	 * This is for use by subclasses.
 	 *
+	 * @device's reference count will be incremented, and any floating reference
+	 * will be removed (see gst_object_ref_sink()).
+	 *
 	 * Params:
 	 *     device = a #GstDevice that has been added
 	 *
@@ -220,6 +223,21 @@ public class DeviceProvider : ObjectGst
 
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
+	}
+
+	/**
+	 * Get metadata with @key in @provider.
+	 *
+	 * Params:
+	 *     key = the key to get
+	 *
+	 * Returns: the metadata for @key.
+	 *
+	 * Since: 1.14
+	 */
+	public string getMetadata(string key)
+	{
+		return Str.toString(gst_device_provider_get_metadata(gstDeviceProvider, Str.toStringz(key)));
 	}
 
 	/**

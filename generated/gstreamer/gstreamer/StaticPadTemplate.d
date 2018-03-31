@@ -145,7 +145,7 @@ public final class StaticPadTemplate
 			return null;
 		}
 
-		return ObjectG.getDObject!(PadTemplate)(cast(GstPadTemplate*) p, true);
+		return ObjectG.getDObject!(PadTemplate)(cast(GstPadTemplate*) p);
 	}
 
 	/**

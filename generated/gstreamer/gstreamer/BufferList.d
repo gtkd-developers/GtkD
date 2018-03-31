@@ -129,6 +129,19 @@ public class BufferList
 	}
 
 	/**
+	 * Calculates the size of the data contained in buffer list by adding the
+	 * size of all buffers.
+	 *
+	 * Returns: the size of the data contained in buffer list in bytes.
+	 *
+	 * Since: 1.14
+	 */
+	public size_t calculateSize()
+	{
+		return gst_buffer_list_calculate_size(gstBufferList);
+	}
+
+	/**
 	 * Create a copy of the given buffer list. This will make a newly allocated
 	 * copy of the buffer that the source buffer list contains.
 	 *
@@ -170,6 +183,9 @@ public class BufferList
 	/**
 	 * Get the buffer at @idx.
 	 *
+	 * You must make sure that @idx does not exceed the number of
+	 * buffers available.
+	 *
 	 * Params:
 	 *     idx = the index
 	 *
@@ -180,6 +196,33 @@ public class BufferList
 	public Buffer get(uint idx)
 	{
 		auto p = gst_buffer_list_get(gstBufferList, idx);
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p);
+	}
+
+	/**
+	 * Gets the buffer at @idx, ensuring it is a writable buffer.
+	 *
+	 * You must make sure that @idx does not exceed the number of
+	 * buffers available.
+	 *
+	 * Params:
+	 *     idx = the index
+	 *
+	 * Returns: the buffer at @idx in @group.
+	 *     The returned  buffer remains valid as long as @list is valid and
+	 *     the buffer is not removed from the list.
+	 *
+	 * Since: 1.14
+	 */
+	public Buffer getWritable(uint idx)
+	{
+		auto p = gst_buffer_list_get_writable(gstBufferList, idx);
 
 		if(p is null)
 		{

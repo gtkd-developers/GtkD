@@ -257,10 +257,11 @@ public class Value
 	}
 
 	/**
-	 * Get the contents of a variant #GValue, increasing its refcount.
+	 * Get the contents of a variant #GValue, increasing its refcount. The returned
+	 * #GVariant is never floating.
 	 *
-	 * Returns: variant contents of @value, should be unrefed using
-	 *     g_variant_unref() when no longer needed
+	 * Returns: variant contents of @value (may be %NULL);
+	 *     should be unreffed using g_variant_unref() when no longer needed
 	 *
 	 * Since: 2.26
 	 */
@@ -513,7 +514,7 @@ public class Value
 	/**
 	 * Get the contents of a variant #GValue.
 	 *
-	 * Returns: variant contents of @value
+	 * Returns: variant contents of @value (may be %NULL)
 	 *
 	 * Since: 2.26
 	 */

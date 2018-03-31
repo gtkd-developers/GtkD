@@ -118,7 +118,8 @@ public class SubprocessLauncher : ObjectG
 	 * Params:
 	 *     variable = the environment variable to get
 	 *
-	 * Returns: the value of the environment variable, %NULL if unset
+	 * Returns: the value of the environment variable,
+	 *     %NULL if unset
 	 *
 	 * Since: 2.40
 	 */
@@ -303,7 +304,8 @@ public class SubprocessLauncher : ObjectG
 	 * On Windows, they should be in UTF-8.
 	 *
 	 * Params:
-	 *     variable = the environment variable to set, must not contain '='
+	 *     variable = the environment variable to set,
+	 *         must not contain '='
 	 *     value = the new value for the variable
 	 *     overwrite = whether to change the variable if it already exists
 	 *
@@ -463,7 +465,8 @@ public class SubprocessLauncher : ObjectG
 	 * containing '='. On Windows, it should be in UTF-8.
 	 *
 	 * Params:
-	 *     variable = the environment variable to unset, must not contain '='
+	 *     variable = the environment variable to unset,
+	 *         must not contain '='
 	 *
 	 * Since: 2.40
 	 */

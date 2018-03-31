@@ -822,7 +822,7 @@ public struct Signals
 	 *     structOffset = the offset of the member function of @itype's class
 	 *         structure which is to be invoked by the new closure
 	 *
-	 * Returns: a new #GCClosure
+	 * Returns: a floating reference to a new #GCClosure
 	 */
 	public static Closure typeCclosureNew(GType itype, uint structOffset)
 	{
@@ -833,6 +833,6 @@ public struct Signals
 			return null;
 		}
 
-		return ObjectG.getDObject!(Closure)(cast(GClosure*) p, true);
+		return ObjectG.getDObject!(Closure)(cast(GClosure*) p);
 	}
 }

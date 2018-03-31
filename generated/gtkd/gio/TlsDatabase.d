@@ -178,7 +178,7 @@ public class TlsDatabase : ObjectG
 
 	/**
 	 * Finish an asynchronous lookup of a certificate by its handle. See
-	 * g_tls_database_lookup_certificate_handle() for more information.
+	 * g_tls_database_lookup_certificate_by_handle() for more information.
 	 *
 	 * If the handle is no longer valid, or does not point to a certificate in
 	 * this database, then %NULL will be returned.
@@ -405,7 +405,7 @@ public class TlsDatabase : ObjectG
 	 * adding any missing certificates to the chain.
 	 *
 	 * @chain is a chain of #GTlsCertificate objects each pointing to the next
-	 * certificate in the chain by its %issuer property. The chain may initially
+	 * certificate in the chain by its #GTlsCertificate:issuer property. The chain may initially
 	 * consist of one or more certificates. After the verification process is
 	 * complete, @chain may be modified by adding missing certificates, or removing
 	 * extra certificates. If a certificate anchor was found, then it is added to

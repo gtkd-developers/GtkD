@@ -80,6 +80,8 @@ public class Keymap : ObjectG
 	/**
 	 * Returns the #GdkKeymap attached to the default display.
 	 *
+	 * Deprecated: Use gdk_keymap_get_for_display() instead
+	 *
 	 * Returns: the #GdkKeymap attached to the default display.
 	 */
 	public static Keymap getDefault()

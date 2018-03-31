@@ -43,6 +43,13 @@ public  import gtkc.glibtypes;
  * GLib provides g_convert() and g_locale_to_utf8() which are likely
  * more convenient than the raw iconv wrappers.
  *
+ * Note that the behaviour of iconv() for characters which are valid in the
+ * input character set, but which have no representation in the output character
+ * set, is implementation defined. This function may return success (with a
+ * positive number of non-reversible conversions as replacement characters were
+ * used), or it may return -1 and set an error such as %EILSEQ, in such a
+ * situation.
+ *
  * Params:
  *     inbuf = bytes to convert
  *     outbuf = converted output bytes

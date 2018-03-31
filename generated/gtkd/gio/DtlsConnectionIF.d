@@ -322,7 +322,7 @@ public interface DtlsConnectionIF{
 	/**
 	 * Sets the certificate database that is used to verify peer certificates.
 	 * This is set to the default database by default. See
-	 * g_dtls_backend_get_default_database(). If set to %NULL, then
+	 * g_tls_backend_get_default_database(). If set to %NULL, then
 	 * peer certificate validation will always set the
 	 * %G_TLS_CERTIFICATE_UNKNOWN_CA error (meaning
 	 * #GDtlsConnection::accept-certificate will always be emitted on

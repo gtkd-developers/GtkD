@@ -173,6 +173,9 @@ public class QueueG
 	 * Calls @func for each element in the queue passing @user_data to the
 	 * function.
 	 *
+	 * It is safe for @func to remove the element from @queue, but it must
+	 * not modify any part of the queue after that element.
+	 *
 	 * Params:
 	 *     func = the function to call for each element's data
 	 *     userData = user data to pass to @func
@@ -201,6 +204,9 @@ public class QueueG
 	/**
 	 * Convenience method, which frees all the memory used by a #GQueue,
 	 * and calls the specified destroy function on every element's data.
+	 *
+	 * @free_func should not modify the queue (eg, by removing the freed
+	 * element from it).
 	 *
 	 * Params:
 	 *     freeFunc = the function to be called to free each element's data

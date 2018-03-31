@@ -125,7 +125,7 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 	 *
 	 * For example, an exported D-Bus interface may queue up property
 	 * changes and emit the
-	 * `org.freedesktop.DBus.Properties::PropertiesChanged`
+	 * `org.freedesktop.DBus.Properties.PropertiesChanged`
 	 * signal later (e.g. in an idle handler). This technique is useful
 	 * for collapsing multiple property changes into one.
 	 *

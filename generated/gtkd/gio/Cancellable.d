@@ -191,11 +191,11 @@ public class Cancellable : ObjectG
 	 * signal handler is removed. See #GCancellable::cancelled for
 	 * details on how to use this.
 	 *
-	 * If @cancellable is %NULL or @handler_id is %0 this function does
+	 * If @cancellable is %NULL or @handler_id is `0` this function does
 	 * nothing.
 	 *
 	 * Params:
-	 *     handlerId = Handler id of the handler to be disconnected, or %0.
+	 *     handlerId = Handler id of the handler to be disconnected, or `0`.
 	 *
 	 * Since: 2.22
 	 */

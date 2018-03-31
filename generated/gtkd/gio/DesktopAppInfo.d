@@ -337,6 +337,28 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	}
 
 	/**
+	 * Looks up a localized string value in the keyfile backing @info
+	 * translated to the current locale.
+	 *
+	 * The @key is looked up in the "Desktop Entry" group.
+	 *
+	 * Params:
+	 *     key = the key to look up
+	 *
+	 * Returns: a newly allocated string, or %NULL if the key
+	 *     is not found
+	 *
+	 * Since: 2.56
+	 */
+	public string getLocaleString(string key)
+	{
+		auto retStr = g_desktop_app_info_get_locale_string(gDesktopAppInfo, Str.toStringz(key));
+
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
+	}
+
+	/**
 	 * Gets the value of the NoDisplay key, which helps determine if the
 	 * application info should be shown in menus. See
 	 * #G_KEY_FILE_DESKTOP_KEY_NO_DISPLAY and g_app_info_should_show().

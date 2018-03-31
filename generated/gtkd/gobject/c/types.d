@@ -1888,6 +1888,8 @@ public alias extern(C) void function(GClosure* closure, GValue* returnValue, voi
  * The type of value transformation functions which can be registered with
  * g_value_register_transform_func().
  *
+ * @dest_value will be initialized to the correct destination type.
+ *
  * Params:
  *     srcValue = Source value.
  *     destValue = Target value.
@@ -1917,7 +1919,7 @@ alias G_PARAM_MASK = PARAM_MASK;
  *
  * Since 2.13.0
  */
-enum PARAM_STATIC_STRINGS = 0;
+enum PARAM_STATIC_STRINGS = 224;
 alias G_PARAM_STATIC_STRINGS = PARAM_STATIC_STRINGS;
 
 /**

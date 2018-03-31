@@ -216,6 +216,10 @@ public class Resource
 	 * If you want to use this resource in the global resource namespace you need
 	 * to register it with g_resources_register().
 	 *
+	 * Note: @data must be backed by memory that is at least pointer aligned.
+	 * Otherwise this function will internally create a copy of the memory since
+	 * GLib 2.56, or in older versions fail and exit the process.
+	 *
 	 * Params:
 	 *     data = A #GBytes
 	 *

@@ -191,6 +191,30 @@ public class QueueArray
 	}
 
 	/**
+	 * Returns the tail of the queue @array, but does not remove it from the queue.
+	 *
+	 * Returns: The tail of the queue
+	 *
+	 * Since: 1.14
+	 */
+	public void* peekTail()
+	{
+		return gst_queue_array_peek_tail(gstQueueArray);
+	}
+
+	/**
+	 * Returns the tail of the queue @array, but does not remove it from the queue.
+	 *
+	 * Returns: The tail of the queue
+	 *
+	 * Since: 1.14
+	 */
+	public void* peekTailStruct()
+	{
+		return gst_queue_array_peek_tail_struct(gstQueueArray);
+	}
+
+	/**
 	 * Returns and head of the queue @array and removes
 	 * it from the queue.
 	 *
@@ -215,6 +239,32 @@ public class QueueArray
 	public void* popHeadStruct()
 	{
 		return gst_queue_array_pop_head_struct(gstQueueArray);
+	}
+
+	/**
+	 * Returns the tail of the queue @array and removes
+	 * it from the queue.
+	 *
+	 * Returns: The tail of the queue
+	 *
+	 * Since: 1.14
+	 */
+	public void* popTail()
+	{
+		return gst_queue_array_pop_tail(gstQueueArray);
+	}
+
+	/**
+	 * Returns the tail of the queue @array and removes
+	 * it from the queue.
+	 *
+	 * Returns: The tail of the queue
+	 *
+	 * Since: 1.14
+	 */
+	public void* popTailStruct()
+	{
+		return gst_queue_array_pop_tail_struct(gstQueueArray);
 	}
 
 	/**

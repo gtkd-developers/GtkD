@@ -209,14 +209,10 @@ public template NetworkMonitorT(TStruct)
 	}
 
 	/**
-	 * Emitted when the network configuration changes. If @available is
-	 * %TRUE, then some hosts may be reachable that were not reachable
-	 * before, while others that were reachable before may no longer be
-	 * reachable. If @available is %FALSE, then no remote hosts are
-	 * reachable.
+	 * Emitted when the network configuration changes.
 	 *
 	 * Params:
-	 *     available = the current value of #GNetworkMonitor:network-available
+	 *     networkAvailable = the current value of #GNetworkMonitor:network-available
 	 *
 	 * Since: 2.32
 	 */

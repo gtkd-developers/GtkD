@@ -1674,6 +1674,13 @@ public class Variant
 	 * data from untrusted sources and you want to ensure your serialised
 	 * output is definitely in normal form.
 	 *
+	 * If @value is already in normal form, a new reference will be returned
+	 * (which will be floating if @value is floating). If it is not in normal form,
+	 * the newly created #GVariant will be returned with a single non-floating
+	 * reference. Typically, g_variant_take_ref() should be called on the return
+	 * value from this function to guarantee ownership of a single non-floating
+	 * reference to it.
+	 *
 	 * Returns: a trusted #GVariant
 	 *
 	 * Since: 2.24

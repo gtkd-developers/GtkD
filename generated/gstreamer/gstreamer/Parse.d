@@ -144,9 +144,10 @@ public struct Parse
 	 * Params:
 	 *     pipelineDescription = the command line describing the pipeline
 	 *
-	 * Returns: a new element on success, %NULL on failure. If
-	 *     more than one toplevel element is specified by the @pipeline_description,
-	 *     all elements are put into a #GstPipeline, which than is returned.
+	 * Returns: a new element on success, %NULL on
+	 *     failure. If more than one toplevel element is specified by the
+	 *     @pipeline_description, all elements are put into a #GstPipeline, which
+	 *     than is returned.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -181,11 +182,11 @@ public struct Parse
 	 *         gst_parse_context_new(), or %NULL
 	 *     flags = parsing options, or #GST_PARSE_FLAG_NONE
 	 *
-	 * Returns: a new element on success, %NULL on failure. If
-	 *     more than one toplevel element is specified by the @pipeline_description,
-	 *     all elements are put into a #GstPipeline, which then is returned (unless
-	 *     the GST_PARSE_FLAG_PLACE_IN_BIN flag is set, in which case they are put
-	 *     in a #GstBin instead).
+	 * Returns: a new element on success, %NULL on
+	 *     failure. If more than one toplevel element is specified by the
+	 *     @pipeline_description, all elements are put into a #GstPipeline, which
+	 *     then is returned (unless the GST_PARSE_FLAG_PLACE_IN_BIN flag is set, in
+	 *     which case they are put in a #GstBin instead).
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -216,7 +217,8 @@ public struct Parse
 	 * Params:
 	 *     argv = null-terminated array of arguments
 	 *
-	 * Returns: a new element on success and %NULL on failure.
+	 * Returns: a new element on success and %NULL
+	 *     on failure.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -250,10 +252,11 @@ public struct Parse
 	 *         gst_parse_context_new(), or %NULL
 	 *     flags = parsing options, or #GST_PARSE_FLAG_NONE
 	 *
-	 * Returns: a new element on success; on failure, either %NULL
-	 *     or a partially-constructed bin or element will be returned and @error will
-	 *     be set (unless you passed #GST_PARSE_FLAG_FATAL_ERRORS in @flags, then
-	 *     %NULL will always be returned on failure)
+	 * Returns: a new element on success; on
+	 *     failure, either %NULL or a partially-constructed bin or element will be
+	 *     returned and @error will be set (unless you passed
+	 *     #GST_PARSE_FLAG_FATAL_ERRORS in @flags, then %NULL will always be returned
+	 *     on failure)
 	 *
 	 * Throws: GException on failure.
 	 */

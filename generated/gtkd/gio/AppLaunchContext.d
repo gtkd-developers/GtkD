@@ -123,8 +123,7 @@ public class AppLaunchContext : ObjectG
 	 * This is a %NULL-terminated array of strings, where each string has
 	 * the form `KEY=VALUE`.
 	 *
-	 * Returns: the
-	 *     child's environment
+	 * Returns: the child's environment
 	 *
 	 * Since: 2.32
 	 */

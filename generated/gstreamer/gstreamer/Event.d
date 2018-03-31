@@ -673,13 +673,16 @@ public class Event
 	 * The list of @streams corresponds to the "Stream ID" of each stream to be
 	 * activated. Those ID can be obtained via the #GstStream objects present
 	 * in #GST_EVENT_STREAM_START, #GST_EVENT_STREAM_COLLECTION or
-	 * #GST_MESSSAGE_STREAM_COLLECTION.
+	 * #GST_MESSAGE_STREAM_COLLECTION.
+	 *
+	 * Note: The list of @streams can not be empty.
 	 *
 	 * Params:
 	 *     streams = the list of streams to
 	 *         activate
 	 *
-	 * Returns: a new select-streams event.
+	 * Returns: a new select-streams event or %NULL in case of
+	 *     an error (like an empty streams list).
 	 *
 	 * Since: 1.10
 	 *
@@ -980,9 +983,9 @@ public class Event
 	/**
 	 * Access the structure of the event.
 	 *
-	 * Returns: The structure of the event. The structure is still
-	 *     owned by the event, which means that you should not free it and
-	 *     that the pointer becomes invalid when you free the event.
+	 * Returns: The structure of the event. The
+	 *     structure is still owned by the event, which means that you should not free
+	 *     it and that the pointer becomes invalid when you free the event.
 	 *
 	 *     MT safe.
 	 */
@@ -1116,15 +1119,17 @@ public class Event
 	 *
 	 * Since: 1.6
 	 */
-	public void parseProtection(out string systemId, out Buffer data, string[] origin)
+	public void parseProtection(out string systemId, out Buffer data, out string origin)
 	{
 		char* outsystemId = null;
 		GstBuffer* outdata = null;
+		char* outorigin = null;
 
-		gst_event_parse_protection(gstEvent, &outsystemId, &outdata, Str.toStringzArray(origin));
+		gst_event_parse_protection(gstEvent, &outsystemId, &outdata, &outorigin);
 
 		systemId = Str.toString(outsystemId);
 		data = ObjectG.getDObject!(Buffer)(outdata);
+		origin = Str.toString(outorigin);
 	}
 
 	/**

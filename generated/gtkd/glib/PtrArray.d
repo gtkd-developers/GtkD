@@ -127,7 +127,8 @@ public class PtrArray
 	}
 
 	/**
-	 * Calls a function for each element of a #GPtrArray.
+	 * Calls a function for each element of a #GPtrArray. @func must not
+	 * add elements to or remove elements from the array.
 	 *
 	 * Params:
 	 *     func = the function to call for each array element

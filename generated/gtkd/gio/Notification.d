@@ -262,6 +262,9 @@ public class Notification : ObjectG
 	/**
 	 * Deprecated in favor of g_notification_set_priority().
 	 *
+	 * Deprecated: Since 2.42, this has been deprecated in favour of
+	 * g_notification_set_priority().
+	 *
 	 * Params:
 	 *     urgent = %TRUE if @notification is urgent
 	 *

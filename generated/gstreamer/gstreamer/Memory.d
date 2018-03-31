@@ -170,9 +170,9 @@ public class Memory
 	 *
 	 * Returns: the current sizes of @mem
 	 */
-	public size_t getSizes(size_t* offset, size_t* maxsize)
+	public size_t getSizes(out size_t offset, out size_t maxsize)
 	{
-		return gst_memory_get_sizes(gstMemory, offset, maxsize);
+		return gst_memory_get_sizes(gstMemory, &offset, &maxsize);
 	}
 
 	/**
@@ -207,9 +207,9 @@ public class Memory
 	 *
 	 * Returns: %TRUE if the memory is contiguous and of a common parent.
 	 */
-	public bool isSpan(Memory mem2, size_t* offset)
+	public bool isSpan(Memory mem2, out size_t offset)
 	{
-		return gst_memory_is_span(gstMemory, (mem2 is null) ? null : mem2.getMemoryStruct(), offset) != 0;
+		return gst_memory_is_span(gstMemory, (mem2 is null) ? null : mem2.getMemoryStruct(), &offset) != 0;
 	}
 
 	/**

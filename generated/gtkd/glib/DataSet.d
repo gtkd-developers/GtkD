@@ -48,8 +48,12 @@ public struct DataSet
 	/**
 	 * Calls the given function for each data element which is associated
 	 * with the given location. Note that this function is NOT thread-safe.
-	 * So unless @datalist can be protected from any modifications during
-	 * invocation of this function, it should not be called.
+	 * So unless @dataset_location can be protected from any modifications
+	 * during invocation of this function, it should not be called.
+	 *
+	 * @func can make changes to the dataset, but the iteration will not
+	 * reflect changes made during the g_dataset_foreach() call, other
+	 * than skipping over elements that are removed.
 	 *
 	 * Params:
 	 *     datasetLocation = the location identifying the dataset.
@@ -68,8 +72,8 @@ public struct DataSet
 	 *     datasetLocation = the location identifying the dataset.
 	 *     keyId = the #GQuark id to identify the data element.
 	 *
-	 * Returns: the data element corresponding to the #GQuark, or %NULL if
-	 *     it is not found.
+	 * Returns: the data element corresponding to
+	 *     the #GQuark, or %NULL if it is not found.
 	 */
 	public static void* idGetData(void* datasetLocation, GQuark keyId)
 	{
@@ -84,7 +88,8 @@ public struct DataSet
 	 *     datasetLocation = the location identifying the dataset.
 	 *     keyId = the #GQuark ID identifying the data element.
 	 *
-	 * Returns: the data previously stored at @key_id, or %NULL if none.
+	 * Returns: the data previously stored at @key_id,
+	 *     or %NULL if none.
 	 */
 	public static void* idRemoveNoNotify(void* datasetLocation, GQuark keyId)
 	{

@@ -124,6 +124,95 @@ struct GstAdapter;
 
 struct GstAdapterClass;
 
+struct GstAggregator
+{
+	GstElement parent;
+	/**
+	 * the aggregator's source pad
+	 */
+	GstPad* srcpad;
+	GstAggregatorPrivate* priv;
+	void*[20] GstReserved;
+}
+
+/**
+ * The aggregator base class will handle in a thread-safe way all manners of
+ * concurrent flushes, seeks, pad additions and removals, leaving to the
+ * subclass the responsibility of clipping buffers, and aggregating buffers in
+ * the way the implementor sees fit.
+ *
+ * It will also take care of event ordering (stream-start, segment, eos).
+ *
+ * Basically, a simple implementation will override @aggregate, and call
+ * _finish_buffer from inside that function.
+ */
+struct GstAggregatorClass
+{
+	GstElementClass parentClass;
+	/** */
+	extern(C) GstFlowReturn function(GstAggregator* aggregator) flush;
+	/** */
+	extern(C) GstBuffer* function(GstAggregator* aggregator, GstAggregatorPad* aggregatorPad, GstBuffer* buf) clip;
+	/** */
+	extern(C) GstFlowReturn function(GstAggregator* aggregator, GstBuffer* buffer) finishBuffer;
+	/** */
+	extern(C) int function(GstAggregator* aggregator, GstAggregatorPad* aggregatorPad, GstEvent* event) sinkEvent;
+	/** */
+	extern(C) int function(GstAggregator* aggregator, GstAggregatorPad* aggregatorPad, GstQuery* query) sinkQuery;
+	/** */
+	extern(C) int function(GstAggregator* aggregator, GstEvent* event) srcEvent;
+	/** */
+	extern(C) int function(GstAggregator* aggregator, GstQuery* query) srcQuery;
+	/** */
+	extern(C) int function(GstAggregator* aggregator, GstPadMode mode, int active) srcActivate;
+	/** */
+	extern(C) GstFlowReturn function(GstAggregator* aggregator, int timeout) aggregate;
+	/** */
+	extern(C) int function(GstAggregator* aggregator) stop;
+	/** */
+	extern(C) int function(GstAggregator* aggregator) start;
+	/** */
+	extern(C) GstClockTime function(GstAggregator* aggregator) getNextTime;
+	/** */
+	extern(C) GstAggregatorPad* function(GstAggregator* self, GstPadTemplate* templ, const(char)* reqName, GstCaps* caps) createNewPad;
+	/** */
+	extern(C) GstFlowReturn function(GstAggregator* self, GstCaps* caps, GstCaps** ret) updateSrcCaps;
+	/** */
+	extern(C) GstCaps* function(GstAggregator* self, GstCaps* caps) fixateSrcCaps;
+	/** */
+	extern(C) int function(GstAggregator* self, GstCaps* caps) negotiatedSrcCaps;
+	/** */
+	extern(C) int function(GstAggregator* self, GstQuery* query) decideAllocation;
+	/** */
+	extern(C) int function(GstAggregator* self, GstAggregatorPad* pad, GstQuery* decideQuery, GstQuery* query) proposeAllocation;
+	void*[20] GstReserved;
+}
+
+struct GstAggregatorPad
+{
+	GstPad parent;
+	/**
+	 * last segment received.
+	 */
+	GstSegment segment;
+	GstAggregatorPadPrivate* priv;
+	void*[4] GstReserved;
+}
+
+struct GstAggregatorPadClass
+{
+	GstPadClass parentClass;
+	/** */
+	extern(C) GstFlowReturn function(GstAggregatorPad* aggpad, GstAggregator* aggregator) flush;
+	/** */
+	extern(C) int function(GstAggregatorPad* aggpad, GstAggregator* aggregator, GstBuffer* buffer) skipBuffer;
+	void*[20] GstReserved;
+}
+
+struct GstAggregatorPadPrivate;
+
+struct GstAggregatorPrivate;
+
 struct GstBaseParse
 {
 	/**

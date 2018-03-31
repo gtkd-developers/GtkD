@@ -60,7 +60,7 @@ public struct UnixUtils
 	 * Params:
 	 *     fd = a file descriptor
 	 *     condition = IO conditions to watch for on @fd
-	 *     funct = a #GPollFDFunc
+	 *     funct = a #GUnixFDSourceFunc
 	 *     userData = data to pass to @function
 	 *
 	 * Returns: the ID (greater than 0) of the event source

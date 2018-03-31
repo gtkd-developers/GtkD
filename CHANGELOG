@@ -3,6 +3,7 @@ GtkD ChangeLog
 
 Release: 3.8.0
 --------------
+-Update the libraries to the latest versions.
 -Implement a DClosure. #225
 -Add a Signals.connect overload for D functions and delegates.
 -Bring back the OpCast changes for ObjectG.

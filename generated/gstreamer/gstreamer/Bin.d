@@ -288,7 +288,8 @@ public class Bin : Element, ChildProxyIF
 	 * Params:
 	 *     iface = the #GType of an interface
 	 *
-	 * Returns: A #GstElement inside the bin implementing the interface
+	 * Returns: A #GstElement inside the bin
+	 *     implementing the interface
 	 */
 	public Element getByInterface(GType iface)
 	{

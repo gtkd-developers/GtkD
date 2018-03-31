@@ -608,9 +608,9 @@ public class Query
 	/**
 	 * Get the structure of a query.
 	 *
-	 * Returns: the #GstStructure of the query. The structure is
-	 *     still owned by the query and will therefore be freed when the query
-	 *     is unreffed.
+	 * Returns: the #GstStructure of the query. The
+	 *     structure is still owned by the query and will therefore be freed when the
+	 *     query is unreffed.
 	 */
 	public Structure getStructure()
 	{
@@ -1312,7 +1312,7 @@ public class Query
 	 * Params:
 	 *     index = index to modify
 	 *     pool = the #GstBufferPool
-	 *     size = the size
+	 *     size = the buffer size
 	 *     minBuffers = the min buffers
 	 *     maxBuffers = the max buffers
 	 */

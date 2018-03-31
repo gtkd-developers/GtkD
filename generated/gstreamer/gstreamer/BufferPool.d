@@ -129,7 +129,7 @@ public class BufferPool : ObjectGst
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstBufferPool*) p);
+		this(cast(GstBufferPool*) p, true);
 	}
 
 	/**

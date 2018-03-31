@@ -134,7 +134,7 @@ public class ParamSpec
 	/**
 	 * Gets the default value of @pspec as a pointer to a #GValue.
 	 *
-	 * The #GValue will remain value for the life of @pspec.
+	 * The #GValue will remain valid for the life of @pspec.
 	 *
 	 * Returns: a pointer to a #GValue which must not be modified
 	 *

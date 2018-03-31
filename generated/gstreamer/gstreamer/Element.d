@@ -224,7 +224,8 @@ public class Element : ObjectGst
 	 *     uri = URI to create an element for
 	 *     elementname = Name of created element, can be %NULL.
 	 *
-	 * Returns: a new element or %NULL if none could be created
+	 * Returns: a new element or %NULL if none
+	 *     could be created
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -417,6 +418,8 @@ public class Element : ObjectGst
 	 * This method is used internally and should normally not be called by plugins
 	 * or applications.
 	 *
+	 * This function must be called with STATE_LOCK held.
+	 *
 	 * Params:
 	 *     ret = The previous state return value
 	 *
@@ -440,6 +443,72 @@ public class Element : ObjectGst
 	}
 
 	/**
+	 * Call @func with @user_data for each of @element's pads. @func will be called
+	 * exactly once for each pad that exists at the time of this call, unless
+	 * one of the calls to @func returns %FALSE in which case we will stop
+	 * iterating pads and return early. If new pads are added or pads are removed
+	 * while pads are being iterated, this will not be taken into account until
+	 * next time this function is used.
+	 *
+	 * Params:
+	 *     func = function to call for each pad
+	 *     userData = user data passed to @func
+	 *
+	 * Returns: %FALSE if @element had no pads or if one of the calls to @func
+	 *     returned %FALSE.
+	 *
+	 * Since: 1.14
+	 */
+	public bool foreachPad(GstElementForeachPadFunc func, void* userData)
+	{
+		return gst_element_foreach_pad(gstElement, func, userData) != 0;
+	}
+
+	/**
+	 * Call @func with @user_data for each of @element's sink pads. @func will be
+	 * called exactly once for each sink pad that exists at the time of this call,
+	 * unless one of the calls to @func returns %FALSE in which case we will stop
+	 * iterating pads and return early. If new sink pads are added or sink pads
+	 * are removed while the sink pads are being iterated, this will not be taken
+	 * into account until next time this function is used.
+	 *
+	 * Params:
+	 *     func = function to call for each sink pad
+	 *     userData = user data passed to @func
+	 *
+	 * Returns: %FALSE if @element had no sink pads or if one of the calls to @func
+	 *     returned %FALSE.
+	 *
+	 * Since: 1.14
+	 */
+	public bool foreachSinkPad(GstElementForeachPadFunc func, void* userData)
+	{
+		return gst_element_foreach_sink_pad(gstElement, func, userData) != 0;
+	}
+
+	/**
+	 * Call @func with @user_data for each of @element's source pads. @func will be
+	 * called exactly once for each source pad that exists at the time of this call,
+	 * unless one of the calls to @func returns %FALSE in which case we will stop
+	 * iterating pads and return early. If new source pads are added or source pads
+	 * are removed while the source pads are being iterated, this will not be taken
+	 * into account until next time this function is used.
+	 *
+	 * Params:
+	 *     func = function to call for each source pad
+	 *     userData = user data passed to @func
+	 *
+	 * Returns: %FALSE if @element had no source pads or if one of the calls
+	 *     to @func returned %FALSE.
+	 *
+	 * Since: 1.14
+	 */
+	public bool foreachSrcPad(GstElementForeachPadFunc func, void* userData)
+	{
+		return gst_element_foreach_src_pad(gstElement, func, userData) != 0;
+	}
+
+	/**
 	 * Returns the base time of the element. The base time is the
 	 * absolute time of the clock when this element was last put to
 	 * PLAYING. Subtracting the base time from the clock time gives
@@ -458,7 +527,8 @@ public class Element : ObjectGst
 	 * Returns the bus of the element. Note that only a #GstPipeline will provide a
 	 * bus for the application.
 	 *
-	 * Returns: the element's #GstBus. unref after usage.
+	 * Returns: the element's #GstBus. unref after
+	 *     usage.
 	 *
 	 *     MT safe.
 	 */
@@ -632,6 +702,66 @@ public class Element : ObjectGst
 		}
 
 		return ObjectG.getDObject!(ElementFactory)(cast(GstElementFactory*) p);
+	}
+
+	/**
+	 * Get metadata with @key in @klass.
+	 *
+	 * Params:
+	 *     key = the key to get
+	 *
+	 * Returns: the metadata for @key.
+	 *
+	 * Since: 1.14
+	 */
+	public string getMetadata(string key)
+	{
+		return Str.toString(gst_element_get_metadata(gstElement, Str.toStringz(key)));
+	}
+
+	/**
+	 * Retrieves a padtemplate from @element with the given name.
+	 *
+	 * Params:
+	 *     name = the name of the #GstPadTemplate to get.
+	 *
+	 * Returns: the #GstPadTemplate with the
+	 *     given name, or %NULL if none was found. No unreferencing is
+	 *     necessary.
+	 *
+	 * Since: 1.14
+	 */
+	public PadTemplate getPadTemplate(string name)
+	{
+		auto p = gst_element_get_pad_template(gstElement, Str.toStringz(name));
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(PadTemplate)(cast(GstPadTemplate*) p);
+	}
+
+	/**
+	 * Retrieves a list of the pad templates associated with @element. The
+	 * list must not be modified by the calling code.
+	 *
+	 * Returns: the #GList of
+	 *     pad templates.
+	 *
+	 * Since: 1.14
+	 */
+	public ListG getPadTemplateList()
+	{
+		auto p = gst_element_get_pad_template_list(gstElement);
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return new ListG(cast(GList*) p);
 	}
 
 	/**

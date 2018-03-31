@@ -296,17 +296,17 @@ public interface AppInfoIF{
 	 *
 	 * Params:
 	 *     uri = the uri to show
-	 *     launchContext = an optional #GAppLaunchContext
+	 *     context = an optional #GAppLaunchContext
 	 *
 	 * Returns: %TRUE on success, %FALSE on error.
 	 *
 	 * Throws: GException on failure.
 	 */
-	public static bool launchDefaultForUri(string uri, AppLaunchContext launchContext)
+	public static bool launchDefaultForUri(string uri, AppLaunchContext context)
 	{
 		GError* err = null;
 
-		auto p = g_app_info_launch_default_for_uri(Str.toStringz(uri), (launchContext is null) ? null : launchContext.getAppLaunchContextStruct(), &err) != 0;
+		auto p = g_app_info_launch_default_for_uri(Str.toStringz(uri), (context is null) ? null : context.getAppLaunchContextStruct(), &err) != 0;
 
 		if (err !is null)
 		{
@@ -326,14 +326,16 @@ public interface AppInfoIF{
 	 *
 	 * Params:
 	 *     uri = the uri to show
+	 *     context = an optional #GAppLaunchContext
+	 *     cancellable = a #GCancellable
 	 *     callback = a #GASyncReadyCallback to call when the request is done
 	 *     userData = data to pass to @callback
 	 *
 	 * Since: 2.50
 	 */
-	public static void launchDefaultForUriAsync(string uri, AppLaunchContext launchContext, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	public static void launchDefaultForUriAsync(string uri, AppLaunchContext context, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
-		g_app_info_launch_default_for_uri_async(Str.toStringz(uri), (launchContext is null) ? null : launchContext.getAppLaunchContextStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+		g_app_info_launch_default_for_uri_async(Str.toStringz(uri), (context is null) ? null : context.getAppLaunchContextStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
 	}
 
 	/**
@@ -433,9 +435,9 @@ public interface AppInfoIF{
 	/**
 	 * Checks if two #GAppInfos are equal.
 	 *
-	 * Note that the check <em>may not</em> compare each individual field, and
-	 * only does an identity check. In case detecting changes in the contents
-	 * is needed, program code must additionally compare relevant fields.
+	 * Note that the check <emphasis>may not</emphasis> compare each individual
+	 * field, and only does an identity check. In case detecting changes in the
+	 * contents is needed, program code must additionally compare relevant fields.
 	 *
 	 * Params:
 	 *     appinfo2 = the second #GAppInfo.
@@ -526,7 +528,7 @@ public interface AppInfoIF{
 
 	/**
 	 * Launches the application. Passes @files to the launched application
-	 * as arguments, using the optional @launch_context to get information
+	 * as arguments, using the optional @context to get information
 	 * about the details of the launcher (like what screen it is on).
 	 * On error, @error will be set accordingly.
 	 *
@@ -551,21 +553,21 @@ public interface AppInfoIF{
 	 * process. This can be used to ignore `GIO_LAUNCHED_DESKTOP_FILE`,
 	 * should it be inherited by further processes. The `DISPLAY` and
 	 * `DESKTOP_STARTUP_ID` environment variables are also set, based
-	 * on information provided in @launch_context.
+	 * on information provided in @context.
 	 *
 	 * Params:
 	 *     files = a #GList of #GFile objects
-	 *     launchContext = a #GAppLaunchContext or %NULL
+	 *     context = a #GAppLaunchContext or %NULL
 	 *
 	 * Returns: %TRUE on successful launch, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
-	public bool launch(ListG files, AppLaunchContext launchContext);
+	public bool launch(ListG files, AppLaunchContext context);
 
 	/**
 	 * Launches the application. This passes the @uris to the launched application
-	 * as arguments, using the optional @launch_context to get information
+	 * as arguments, using the optional @context to get information
 	 * about the details of the launcher (like what screen it is on).
 	 * On error, @error will be set accordingly.
 	 *
@@ -577,13 +579,13 @@ public interface AppInfoIF{
 	 *
 	 * Params:
 	 *     uris = a #GList containing URIs to launch.
-	 *     launchContext = a #GAppLaunchContext or %NULL
+	 *     context = a #GAppLaunchContext or %NULL
 	 *
 	 * Returns: %TRUE on successful launch, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
-	public bool launchUris(ListG uris, AppLaunchContext launchContext);
+	public bool launchUris(ListG uris, AppLaunchContext context);
 
 	/**
 	 * Removes a supported type from an application, if possible.

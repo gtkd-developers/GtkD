@@ -40,6 +40,8 @@ shared static this()
 	// gstinterfaces.VideoOverlay
 
 	Linker.link(gst_video_overlay_get_type, "gst_video_overlay_get_type", LIBRARY_GSTINTERFACES);
+	Linker.link(gst_video_overlay_install_properties, "gst_video_overlay_install_properties", LIBRARY_GSTINTERFACES);
+	Linker.link(gst_video_overlay_set_property, "gst_video_overlay_set_property", LIBRARY_GSTINTERFACES);
 	Linker.link(gst_video_overlay_expose, "gst_video_overlay_expose", LIBRARY_GSTINTERFACES);
 	Linker.link(gst_video_overlay_got_window_handle, "gst_video_overlay_got_window_handle", LIBRARY_GSTINTERFACES);
 	Linker.link(gst_video_overlay_handle_events, "gst_video_overlay_handle_events", LIBRARY_GSTINTERFACES);
@@ -54,6 +56,8 @@ __gshared extern(C)
 	// gstinterfaces.VideoOverlay
 
 	GType function() c_gst_video_overlay_get_type;
+	void function(GObjectClass* oclass, int lastPropId) c_gst_video_overlay_install_properties;
+	int function(GObject* object, int lastPropId, uint propertyId, GValue* value) c_gst_video_overlay_set_property;
 	void function(GstVideoOverlay* overlay) c_gst_video_overlay_expose;
 	void function(GstVideoOverlay* overlay, size_t handle) c_gst_video_overlay_got_window_handle;
 	void function(GstVideoOverlay* overlay, int handleEvents) c_gst_video_overlay_handle_events;
@@ -66,6 +70,8 @@ __gshared extern(C)
 // gstinterfaces.VideoOverlay
 
 alias c_gst_video_overlay_get_type gst_video_overlay_get_type;
+alias c_gst_video_overlay_install_properties gst_video_overlay_install_properties;
+alias c_gst_video_overlay_set_property gst_video_overlay_set_property;
 alias c_gst_video_overlay_expose gst_video_overlay_expose;
 alias c_gst_video_overlay_got_window_handle gst_video_overlay_got_window_handle;
 alias c_gst_video_overlay_handle_events gst_video_overlay_handle_events;

@@ -311,9 +311,9 @@ public class MainLoop
 	 * don't want to run the full main loop.
 	 *
 	 * Each element of @fds is a #GPollFD describing a single file
-	 * descriptor to poll. The %fd field indicates the file descriptor,
-	 * and the %events field indicates the events to poll for. On return,
-	 * the %revents fields will be filled with the events that actually
+	 * descriptor to poll. The @fd field indicates the file descriptor,
+	 * and the @events field indicates the events to poll for. On return,
+	 * the @revents fields will be filled with the events that actually
 	 * occurred.
 	 *
 	 * On POSIX systems, the file descriptors in @fds can be any sort of
@@ -327,7 +327,7 @@ public class MainLoop
 	 *     nfds = the number of file descriptors in @fds
 	 *     timeout = amount of time to wait, in milliseconds, or -1 to wait forever
 	 *
-	 * Returns: the number of entries in @fds whose %revents fields
+	 * Returns: the number of entries in @fds whose @revents fields
 	 *     were filled in, or 0 if the operation timed out, or -1 on error or
 	 *     if the call was interrupted.
 	 *

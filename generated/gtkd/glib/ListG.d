@@ -410,6 +410,9 @@ public class ListG
 	/**
 	 * Calls a function for each element of a #GList.
 	 *
+	 * It is safe for @func to remove the element from @list, but it must
+	 * not modify any part of the list after that element.
+	 *
 	 * Params:
 	 *     func = the function to call with each element's data
 	 *     userData = user data to pass to the function
@@ -446,6 +449,9 @@ public class ListG
 	/**
 	 * Convenience method, which frees all the memory used by a #GList,
 	 * and calls @free_func on every element's data.
+	 *
+	 * @free_func must not modify the list (eg, by removing the freed
+	 * element from it).
 	 *
 	 * Params:
 	 *     freeFunc = the function to be called to free each element's data

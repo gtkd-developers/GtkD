@@ -177,7 +177,8 @@ public class RWLock
 	 * thread will block. Read locks can be taken recursively.
 	 *
 	 * It is implementation-defined how many threads are allowed to
-	 * hold read locks on the same lock simultaneously.
+	 * hold read locks on the same lock simultaneously. If the limit is hit,
+	 * or if a deadlock is detected, a critical warning will be emitted.
 	 *
 	 * Since: 2.32
 	 */

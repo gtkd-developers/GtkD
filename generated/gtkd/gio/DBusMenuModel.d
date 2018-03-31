@@ -104,6 +104,7 @@ public class DBusMenuModel : MenuModel
 	 * Params:
 	 *     connection = a #GDBusConnection
 	 *     busName = the bus name which exports the menu model
+	 *         or %NULL if @connection is not a message bus connection
 	 *     objectPath = the object path at which the menu model is exported
 	 *
 	 * Returns: a #GDBusMenuModel object. Free with

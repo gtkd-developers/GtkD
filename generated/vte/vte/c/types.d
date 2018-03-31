@@ -188,6 +188,33 @@ public enum VteRegexError
 alias VteRegexError RegexError;
 
 /**
+ * An enumerated type which can be used to indicate whether the terminal allows
+ * the text contents to be blinked.
+ *
+ * Since: 0.52
+ */
+public enum VteTextBlinkMode
+{
+	/**
+	 * Do not blink the text.
+	 */
+	NEVER = 0,
+	/**
+	 * Allow blinking text only if the terminal is focused.
+	 */
+	FOCUSED = 1,
+	/**
+	 * Allow blinking text only if the terminal is unfocused.
+	 */
+	UNFOCUSED = 2,
+	/**
+	 * Allow blinking text. This is the default.
+	 */
+	ALWAYS = 3,
+}
+alias VteTextBlinkMode TextBlinkMode;
+
+/**
  * A flag type to determine how terminal contents should be written
  * to an output stream.
  */
@@ -336,14 +363,14 @@ alias VTE_MAJOR_VERSION = MAJOR_VERSION;
  * The micro version number of the VTE library
  * (e.g. in version 3.1.4 this is 4).
  */
-enum MICRO_VERSION = 3;
+enum MICRO_VERSION = 0;
 alias VTE_MICRO_VERSION = MICRO_VERSION;
 
 /**
  * The minor version number of the VTE library
  * (e.g. in version 3.1.4 this is 1).
  */
-enum MINOR_VERSION = 50;
+enum MINOR_VERSION = 52;
 alias VTE_MINOR_VERSION = MINOR_VERSION;
 
 enum REGEX_FLAGS_DEFAULT = 1075314688;

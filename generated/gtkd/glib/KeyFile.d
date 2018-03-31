@@ -447,9 +447,42 @@ public class KeyFile
 	}
 
 	/**
+	 * Returns the actual locale which the result of
+	 * g_key_file_get_locale_string() or g_key_file_get_locale_string_list()
+	 * came from.
+	 *
+	 * If calling g_key_file_get_locale_string() or
+	 * g_key_file_get_locale_string_list() with exactly the same @key_file,
+	 * @group_name, @key and @locale, the result of those functions will
+	 * have originally been tagged with the locale that is the result of
+	 * this function.
+	 *
+	 * Params:
+	 *     groupName = a group name
+	 *     key = a key
+	 *     locale = a locale identifier or %NULL
+	 *
+	 * Returns: the locale from the file, or %NULL if the key was not
+	 *     found or the entry in the file was was untranslated
+	 *
+	 * Since: 2.56
+	 */
+	public string getLocaleForKey(string groupName, string key, string locale)
+	{
+		auto retStr = g_key_file_get_locale_for_key(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(locale));
+
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
+	}
+
+	/**
 	 * Returns the value associated with @key under @group_name
 	 * translated in the given @locale if available.  If @locale is
 	 * %NULL then the current locale is assumed.
+	 *
+	 * If @locale is to be non-%NULL, or if the current locale will change over
+	 * the lifetime of the #GKeyFile, it must be loaded with
+	 * %G_KEY_FILE_KEEP_TRANSLATIONS in order to load strings for all locales.
 	 *
 	 * If @key cannot be found then %NULL is returned and @error is set
 	 * to #G_KEY_FILE_ERROR_KEY_NOT_FOUND. If the value associated
@@ -487,6 +520,10 @@ public class KeyFile
 	 * Returns the values associated with @key under @group_name
 	 * translated in the given @locale if available.  If @locale is
 	 * %NULL then the current locale is assumed.
+	 *
+	 * If @locale is to be non-%NULL, or if the current locale will change over
+	 * the lifetime of the #GKeyFile, it must be loaded with
+	 * %G_KEY_FILE_KEEP_TRANSLATIONS in order to load strings for all locales.
 	 *
 	 * If @key cannot be found then %NULL is returned and @error is set
 	 * to #G_KEY_FILE_ERROR_KEY_NOT_FOUND. If the values associated

@@ -433,14 +433,14 @@ public class Segment
 	 * Convert @running_time into a position in the segment so that
 	 * gst_segment_to_running_time() with that position returns @running_time.
 	 *
+	 * Deprecated: Use gst_segment_position_from_running_time() instead.
+	 *
 	 * Params:
 	 *     format = the format of the segment.
 	 *     runningTime = the running_time in the segment
 	 *
 	 * Returns: the position in the segment for @running_time. This function returns
 	 *     -1 when @running_time is -1 or when it is not inside @segment.
-	 *
-	 *     Deprecated. Use gst_segment_position_from_running_time() instead.
 	 */
 	public ulong toPosition(GstFormat format, ulong runningTime)
 	{

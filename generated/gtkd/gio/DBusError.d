@@ -187,13 +187,12 @@ public struct DBusError
 	 *     errorDomainQuarkName = The error domain name.
 	 *     quarkVolatile = A pointer where to store the #GQuark.
 	 *     entries = A pointer to @num_entries #GDBusErrorEntry struct items.
-	 *     numEntries = Number of items to register.
 	 *
 	 * Since: 2.26
 	 */
-	public static void registerErrorDomain(string errorDomainQuarkName, size_t* quarkVolatile, GDBusErrorEntry* entries, uint numEntries)
+	public static void registerErrorDomain(string errorDomainQuarkName, size_t* quarkVolatile, GDBusErrorEntry[] entries)
 	{
-		g_dbus_error_register_error_domain(Str.toStringz(errorDomainQuarkName), quarkVolatile, entries, numEntries);
+		g_dbus_error_register_error_domain(Str.toStringz(errorDomainQuarkName), quarkVolatile, entries.ptr, cast(uint)entries.length);
 	}
 
 	/**

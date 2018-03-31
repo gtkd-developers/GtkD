@@ -53,11 +53,13 @@ public  import gtkc.giotypes;
  * Eventually, you will call a method such as
  * g_task_return_pointer() or g_task_return_error(), which will
  * save the value you give it and then invoke the task's callback
- * function (waiting until the next iteration of the main
- * loop first, if necessary). The caller will pass the #GTask back
- * to the operation's finish function (as a #GAsyncResult), and
- * you can use g_task_propagate_pointer() or the like to extract
- * the return value.
+ * function in the
+ * [thread-default main context][g-main-context-push-thread-default]
+ * where it was created (waiting until the next iteration of the main
+ * loop first, if necessary). The caller will pass the #GTask back to
+ * the operation's finish function (as a #GAsyncResult), and you can
+ * can use g_task_propagate_pointer() or the like to extract the
+ * return value.
  * 
  * Here is an example for using GTask as a GAsyncResult:
  * |[<!-- language="C" -->
@@ -296,9 +298,10 @@ public  import gtkc.giotypes;
  * ## Asynchronous operations from synchronous ones
  * 
  * You can use g_task_run_in_thread() to turn a synchronous
- * operation into an asynchronous one, by running it in a thread
- * which will then dispatch the result back to the caller's
- * #GMainContext when it completes.
+ * operation into an asynchronous one, by running it in a thread.
+ * When it completes, the result will be dispatched to the
+ * [thread-default main context][g-main-context-push-thread-default]
+ * where the #GTask was created.
  * 
  * Running a task in a thread:
  * |[<!-- language="C" -->
@@ -510,7 +513,7 @@ public  import gtkc.giotypes;
  * whether the task's callback can be invoked directly, or
  * if it needs to be sent to another #GMainContext, or delayed
  * until the next iteration of the current #GMainContext.)
- * - The "finish" functions for #GTask-based operations are generally
+ * - The "finish" functions for #GTask based operations are generally
  * much simpler than #GSimpleAsyncResult ones, normally consisting
  * of only a single call to g_task_propagate_pointer() or the like.
  * Since g_task_propagate_pointer() "steals" the return value from

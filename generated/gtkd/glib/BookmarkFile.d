@@ -619,8 +619,8 @@ public class BookmarkFile
 	 * #GBookmarkFileError.
 	 *
 	 * Params:
-	 *     data = desktop bookmarks loaded in memory
-	 *     length = the length of @data in bytes
+	 *     data = desktop bookmarks
+	 *         loaded in memory
 	 *
 	 * Returns: %TRUE if a desktop bookmark could be loaded.
 	 *
@@ -628,11 +628,11 @@ public class BookmarkFile
 	 *
 	 * Throws: GException on failure.
 	 */
-	public bool loadFromData(string data, size_t length)
+	public bool loadFromData(string data)
 	{
 		GError* err = null;
 
-		auto p = g_bookmark_file_load_from_data(gBookmarkFile, Str.toStringz(data), length, &err) != 0;
+		auto p = g_bookmark_file_load_from_data(gBookmarkFile, Str.toStringz(data), cast(size_t)data.length, &err) != 0;
 
 		if (err !is null)
 		{
@@ -931,7 +931,8 @@ public class BookmarkFile
 	 *
 	 * Params:
 	 *     uri = an item's URI
-	 *     groups = an array of group names, or %NULL to remove all groups
+	 *     groups = an array of
+	 *         group names, or %NULL to remove all groups
 	 *
 	 * Since: 2.12
 	 */
@@ -1056,18 +1057,15 @@ public class BookmarkFile
 	/**
 	 * This function outputs @bookmark as a string.
 	 *
-	 * Params:
-	 *     length = return location for the length of the returned string, or %NULL
-	 *
-	 * Returns: a newly allocated string holding
-	 *     the contents of the #GBookmarkFile
+	 * Returns: a newly allocated string holding the contents of the #GBookmarkFile
 	 *
 	 * Since: 2.12
 	 *
 	 * Throws: GException on failure.
 	 */
-	public string toData(out size_t length)
+	public string toData()
 	{
+		size_t length;
 		GError* err = null;
 
 		auto retStr = g_bookmark_file_to_data(gBookmarkFile, &length, &err);
@@ -1078,7 +1076,7 @@ public class BookmarkFile
 		}
 
 		scope(exit) Str.freeString(retStr);
-		return Str.toString(retStr);
+		return Str.toString(retStr, length);
 	}
 
 	/**

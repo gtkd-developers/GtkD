@@ -98,7 +98,7 @@ public template TlsBackendT(TStruct)
 	 * Gets the #GType of @backend’s #GDtlsClientConnection implementation.
 	 *
 	 * Returns: the #GType of @backend’s #GDtlsClientConnection
-	 *     implementation.
+	 *     implementation, or %G_TYPE_INVALID if this backend doesn’t support DTLS.
 	 *
 	 * Since: 2.48
 	 */
@@ -111,7 +111,7 @@ public template TlsBackendT(TStruct)
 	 * Gets the #GType of @backend’s #GDtlsServerConnection implementation.
 	 *
 	 * Returns: the #GType of @backend’s #GDtlsServerConnection
-	 *     implementation.
+	 *     implementation, or %G_TYPE_INVALID if this backend doesn’t support DTLS.
 	 *
 	 * Since: 2.48
 	 */

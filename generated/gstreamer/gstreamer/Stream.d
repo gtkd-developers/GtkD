@@ -48,6 +48,8 @@ public  import gstreamerc.gstreamertypes;
  * 
  * Elements can subclass a #GstStream for internal usage (to contain information
  * pertinent to streams of data).
+ *
+ * Since: 1.10
  */
 public class Stream : ObjectGst
 {
@@ -110,7 +112,7 @@ public class Stream : ObjectGst
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GstStream*) p);
+		this(cast(GstStream*) p, true);
 	}
 
 	/**

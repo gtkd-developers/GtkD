@@ -85,7 +85,8 @@ public class PixbufAnimation : ObjectG
 	 * are in the #GDK_PIXBUF_ERROR and #G_FILE_ERROR domains.
 	 *
 	 * Params:
-	 *     filename = Name of file to load, in the GLib file name encoding
+	 *     filename = Name of file to load, in the GLib file
+	 *         name encoding
 	 *
 	 * Returns: A newly-created animation with a reference count of 1, or %NULL
 	 *     if any of several error conditions ocurred:  the file could not be opened,

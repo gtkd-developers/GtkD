@@ -90,7 +90,8 @@ public class Device : ObjectGst
 	 *     name = name of new element, or %NULL to automatically
 	 *         create a unique name.
 	 *
-	 * Returns: a new #GstElement configured to use this device
+	 * Returns: a new #GstElement configured to use
+	 *     this device
 	 *
 	 * Since: 1.4
 	 */

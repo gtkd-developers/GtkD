@@ -37,7 +37,7 @@ public  import gtkc.giotypes;
 
 /**
  * Enumerator type for objects that contain or generate
- * #GSocketAddress<!-- -->es.
+ * #GSocketAddress instances.
  */
 public class SocketAddressEnumerator : ObjectG
 {

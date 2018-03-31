@@ -200,6 +200,7 @@ shared static this()
 	Linker.link(g_date_clamp, "g_date_clamp", LIBRARY_GLIB);
 	Linker.link(g_date_clear, "g_date_clear", LIBRARY_GLIB);
 	Linker.link(g_date_compare, "g_date_compare", LIBRARY_GLIB);
+	Linker.link(g_date_copy, "g_date_copy", LIBRARY_GLIB);
 	Linker.link(g_date_days_between, "g_date_days_between", LIBRARY_GLIB);
 	Linker.link(g_date_free, "g_date_free", LIBRARY_GLIB);
 	Linker.link(g_date_get_day, "g_date_get_day", LIBRARY_GLIB);
@@ -243,6 +244,7 @@ shared static this()
 	// glib.DateTime
 
 	Linker.link(g_date_time_new, "g_date_time_new", LIBRARY_GLIB);
+	Linker.link(g_date_time_new_from_iso8601, "g_date_time_new_from_iso8601", LIBRARY_GLIB);
 	Linker.link(g_date_time_new_from_timeval_local, "g_date_time_new_from_timeval_local", LIBRARY_GLIB);
 	Linker.link(g_date_time_new_from_timeval_utc, "g_date_time_new_from_timeval_utc", LIBRARY_GLIB);
 	Linker.link(g_date_time_new_from_unix_local, "g_date_time_new_from_unix_local", LIBRARY_GLIB);
@@ -460,6 +462,7 @@ shared static this()
 	Linker.link(g_key_file_get_integer, "g_key_file_get_integer", LIBRARY_GLIB);
 	Linker.link(g_key_file_get_integer_list, "g_key_file_get_integer_list", LIBRARY_GLIB);
 	Linker.link(g_key_file_get_keys, "g_key_file_get_keys", LIBRARY_GLIB);
+	Linker.link(g_key_file_get_locale_for_key, "g_key_file_get_locale_for_key", LIBRARY_GLIB);
 	Linker.link(g_key_file_get_locale_string, "g_key_file_get_locale_string", LIBRARY_GLIB);
 	Linker.link(g_key_file_get_locale_string_list, "g_key_file_get_locale_string_list", LIBRARY_GLIB);
 	Linker.link(g_key_file_get_start_group, "g_key_file_get_start_group", LIBRARY_GLIB);
@@ -1835,7 +1838,7 @@ __gshared extern(C)
 	int function(GBookmarkFile* bookmark, const(char)* uri, const(char)* name, GError** err) c_g_bookmark_file_has_application;
 	int function(GBookmarkFile* bookmark, const(char)* uri, const(char)* group, GError** err) c_g_bookmark_file_has_group;
 	int function(GBookmarkFile* bookmark, const(char)* uri) c_g_bookmark_file_has_item;
-	int function(GBookmarkFile* bookmark, const(char)* data, size_t length, GError** err) c_g_bookmark_file_load_from_data;
+	int function(GBookmarkFile* bookmark, char* data, size_t length, GError** err) c_g_bookmark_file_load_from_data;
 	int function(GBookmarkFile* bookmark, char* file, char** fullPath, GError** err) c_g_bookmark_file_load_from_data_dirs;
 	int function(GBookmarkFile* bookmark, char* filename, GError** err) c_g_bookmark_file_load_from_file;
 	int function(GBookmarkFile* bookmark, const(char)* oldUri, const(char)* newUri, GError** err) c_g_bookmark_file_move_item;
@@ -1926,6 +1929,7 @@ __gshared extern(C)
 	void function(GDate* date, GDate* minDate, GDate* maxDate) c_g_date_clamp;
 	void function(GDate* date, uint nDates) c_g_date_clear;
 	int function(GDate* lhs, GDate* rhs) c_g_date_compare;
+	GDate* function(GDate* date) c_g_date_copy;
 	int function(GDate* date1, GDate* date2) c_g_date_days_between;
 	void function(GDate* date) c_g_date_free;
 	GDateDay function(GDate* date) c_g_date_get_day;
@@ -1969,6 +1973,7 @@ __gshared extern(C)
 	// glib.DateTime
 
 	GDateTime* function(GTimeZone* tz, int year, int month, int day, int hour, int minute, double seconds) c_g_date_time_new;
+	GDateTime* function(const(char)* text, GTimeZone* defaultTz) c_g_date_time_new_from_iso8601;
 	GDateTime* function(GTimeVal* tv) c_g_date_time_new_from_timeval_local;
 	GDateTime* function(GTimeVal* tv) c_g_date_time_new_from_timeval_utc;
 	GDateTime* function(long t) c_g_date_time_new_from_unix_local;
@@ -2186,6 +2191,7 @@ __gshared extern(C)
 	int function(GKeyFile* keyFile, const(char)* groupName, const(char)* key, GError** err) c_g_key_file_get_integer;
 	int* function(GKeyFile* keyFile, const(char)* groupName, const(char)* key, size_t* length, GError** err) c_g_key_file_get_integer_list;
 	char** function(GKeyFile* keyFile, const(char)* groupName, size_t* length, GError** err) c_g_key_file_get_keys;
+	char* function(GKeyFile* keyFile, const(char)* groupName, const(char)* key, const(char)* locale) c_g_key_file_get_locale_for_key;
 	char* function(GKeyFile* keyFile, const(char)* groupName, const(char)* key, const(char)* locale, GError** err) c_g_key_file_get_locale_string;
 	char** function(GKeyFile* keyFile, const(char)* groupName, const(char)* key, const(char)* locale, size_t* length, GError** err) c_g_key_file_get_locale_string_list;
 	char* function(GKeyFile* keyFile) c_g_key_file_get_start_group;
@@ -3085,8 +3091,8 @@ __gshared extern(C)
 	int function(char* workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, GPid* childPid, int* standardInput, int* standardOutput, int* standardError, GError** err) c_g_spawn_async_with_pipes;
 	int function(int exitStatus, GError** err) c_g_spawn_check_exit_status;
 	void function(GPid pid) c_g_spawn_close_pid;
-	int function(const(char)* commandLine, GError** err) c_g_spawn_command_line_async;
-	int function(const(char)* commandLine, char** standardOutput, char** standardError, int* exitStatus, GError** err) c_g_spawn_command_line_sync;
+	int function(char* commandLine, GError** err) c_g_spawn_command_line_async;
+	int function(char* commandLine, char** standardOutput, char** standardError, int* exitStatus, GError** err) c_g_spawn_command_line_sync;
 	GQuark function() c_g_spawn_error_quark;
 	GQuark function() c_g_spawn_exit_error_quark;
 	int function(char* workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, char** standardOutput, char** standardError, int* exitStatus, GError** err) c_g_spawn_sync;
@@ -3106,10 +3112,10 @@ __gshared extern(C)
 	char function(char c) c_g_ascii_tolower;
 	char function(char c) c_g_ascii_toupper;
 	int function(char c) c_g_ascii_xdigit_value;
-	int function(char* format, ... ) c_g_printf;
+	int function(const(char)* format, ... ) c_g_printf;
 	size_t function(const(char)* format, void* args) c_g_printf_string_upper_bound;
-	int function(char* str, gulong n, char* format, ... ) c_g_snprintf;
-	int function(char* str, char* format, ... ) c_g_sprintf;
+	int function(char* str, gulong n, const(char)* format, ... ) c_g_snprintf;
+	int function(char* str, const(char)* format, ... ) c_g_sprintf;
 	char* function(char* dest, const(char)* src) c_g_stpcpy;
 	int function(const(char)* str, const(char)* prefix) c_g_str_has_prefix;
 	int function(const(char)* str, const(char)* suffix) c_g_str_has_suffix;
@@ -3152,12 +3158,12 @@ __gshared extern(C)
 	GType function() c_g_strv_get_type;
 	uint function(char** strArray) c_g_strv_length;
 	int function(const(char)* strv, const(char)* str) c_g_strv_contains;
-	int function(char** str, char* format, void* args) c_g_vasprintf;
-	int function(char* format, void* args) c_g_vprintf;
-	int function(char* str, gulong n, char* format, void* args) c_g_vsnprintf;
-	int function(char* str, char* format, void* args) c_g_vsprintf;
-	int function(FILE* file, char* format, ... ) c_g_fprintf;
-	int function(FILE* file, char* format, void* args) c_g_vfprintf;
+	int function(char** str, const(char)* format, void* args) c_g_vasprintf;
+	int function(const(char)* format, void* args) c_g_vprintf;
+	int function(char* str, gulong n, const(char)* format, void* args) c_g_vsnprintf;
+	int function(char* str, const(char)* format, void* args) c_g_vsprintf;
+	int function(FILE* file, const(char)* format, ... ) c_g_fprintf;
+	int function(FILE* file, const(char)* format, void* args) c_g_vfprintf;
 	int function(const(char)* str, uint base, long min, long max, long* outNum, GError** err) c_g_ascii_string_to_signed;
 	int function(const(char)* str, uint base, ulong min, ulong max, ulong* outNum, GError** err) c_g_ascii_string_to_unsigned;
 
@@ -3180,9 +3186,9 @@ __gshared extern(C)
 	int function(gulong mask, int nthBit) c_g_bit_nth_msf;
 	uint function(gulong number) c_g_bit_storage;
 	char* function(char* separator, char* firstElement, ... ) c_g_build_path;
-	const(char)* function(char** envp, const(char)* variable) c_g_environ_getenv;
-	char** function(char** envp, const(char)* variable, const(char)* value, int overwrite) c_g_environ_setenv;
-	char** function(char** envp, const(char)* variable) c_g_environ_unsetenv;
+	char* function(char** envp, char* variable) c_g_environ_getenv;
+	char** function(char** envp, char* variable, char* value, int overwrite) c_g_environ_setenv;
+	char** function(char** envp, char* variable) c_g_environ_unsetenv;
 	char* function(char* program) c_g_find_program_in_path;
 	char* function(ulong size) c_g_format_size;
 	char* function(long size) c_g_format_size_for_display;
@@ -3203,7 +3209,7 @@ __gshared extern(C)
 	char* function() c_g_get_user_name;
 	char* function() c_g_get_user_runtime_dir;
 	char* function(GUserDirectory directory) c_g_get_user_special_dir;
-	const(char)* function(const(char)* variable) c_g_getenv;
+	char* function(char* variable) c_g_getenv;
 	char** function() c_g_listenv;
 	void function(void** nullifyLocation) c_g_nullify_pointer;
 	uint function(const(char)* str, GDebugKey* keys, uint nkeys) c_g_parse_debug_string;
@@ -3215,9 +3221,9 @@ __gshared extern(C)
 	void function() c_g_reload_user_special_dirs_cache;
 	void function(const(char)* applicationName) c_g_set_application_name;
 	void function(const(char)* prgname) c_g_set_prgname;
-	int function(const(char)* variable, const(char)* value, int overwrite) c_g_setenv;
+	int function(char* variable, char* value, int overwrite) c_g_setenv;
 	uint function(uint num) c_g_spaced_primes_closest;
-	void function(const(char)* variable) c_g_unsetenv;
+	void function(char* variable) c_g_unsetenv;
 
 	// glib.Atomic
 
@@ -3241,10 +3247,10 @@ __gshared extern(C)
 
 	// glib.CharacterSet
 
-	char* function(const(char)* str, ptrdiff_t len, const(char)* toCodeset, const(char)* fromCodeset, size_t* bytesRead, size_t* bytesWritten, GError** err) c_g_convert;
+	char* function(char* str, ptrdiff_t len, const(char)* toCodeset, const(char)* fromCodeset, size_t* bytesRead, size_t* bytesWritten, GError** err) c_g_convert;
 	GQuark function() c_g_convert_error_quark;
-	char* function(const(char)* str, ptrdiff_t len, const(char)* toCodeset, const(char)* fromCodeset, const(char)* fallback, size_t* bytesRead, size_t* bytesWritten, GError** err) c_g_convert_with_fallback;
-	char* function(const(char)* str, ptrdiff_t len, GIConv converter, size_t* bytesRead, size_t* bytesWritten, GError** err) c_g_convert_with_iconv;
+	char* function(char* str, ptrdiff_t len, const(char)* toCodeset, const(char)* fromCodeset, const(char)* fallback, size_t* bytesRead, size_t* bytesWritten, GError** err) c_g_convert_with_fallback;
+	char* function(char* str, ptrdiff_t len, GIConv converter, size_t* bytesRead, size_t* bytesWritten, GError** err) c_g_convert_with_iconv;
 	char* function(char* filename) c_g_filename_display_basename;
 	char* function(char* filename) c_g_filename_display_name;
 	char* function(const(char)* utf8string, ptrdiff_t len, size_t* bytesRead, size_t* bytesWritten, GError** err) c_g_filename_from_utf8;
@@ -3253,7 +3259,7 @@ __gshared extern(C)
 	char* function() c_g_get_codeset;
 	int function(char*** charsets) c_g_get_filename_charsets;
 	char* function(const(char)* utf8string, ptrdiff_t len, size_t* bytesRead, size_t* bytesWritten, GError** err) c_g_locale_from_utf8;
-	char* function(const(char)* opsysstring, ptrdiff_t len, size_t* bytesRead, size_t* bytesWritten, GError** err) c_g_locale_to_utf8;
+	char* function(char* opsysstring, ptrdiff_t len, size_t* bytesRead, size_t* bytesWritten, GError** err) c_g_locale_to_utf8;
 
 	// glib.Child
 
@@ -3377,9 +3383,9 @@ __gshared extern(C)
 	// glib.ShellUtils
 
 	GQuark function() c_g_shell_error_quark;
-	int function(const(char)* commandLine, int* argcp, char*** argvp, GError** err) c_g_shell_parse_argv;
-	char* function(const(char)* unquotedString) c_g_shell_quote;
-	char* function(const(char)* quotedString, GError** err) c_g_shell_unquote;
+	int function(char* commandLine, int* argcp, char*** argvp, GError** err) c_g_shell_parse_argv;
+	char* function(char* unquotedString) c_g_shell_quote;
+	char* function(char* quotedString, GError** err) c_g_shell_unquote;
 
 	// glib.Unicode
 
@@ -3644,6 +3650,7 @@ alias c_g_date_add_years g_date_add_years;
 alias c_g_date_clamp g_date_clamp;
 alias c_g_date_clear g_date_clear;
 alias c_g_date_compare g_date_compare;
+alias c_g_date_copy g_date_copy;
 alias c_g_date_days_between g_date_days_between;
 alias c_g_date_free g_date_free;
 alias c_g_date_get_day g_date_get_day;
@@ -3687,6 +3694,7 @@ alias c_g_date_valid_year g_date_valid_year;
 // glib.DateTime
 
 alias c_g_date_time_new g_date_time_new;
+alias c_g_date_time_new_from_iso8601 g_date_time_new_from_iso8601;
 alias c_g_date_time_new_from_timeval_local g_date_time_new_from_timeval_local;
 alias c_g_date_time_new_from_timeval_utc g_date_time_new_from_timeval_utc;
 alias c_g_date_time_new_from_unix_local g_date_time_new_from_unix_local;
@@ -3904,6 +3912,7 @@ alias c_g_key_file_get_int64 g_key_file_get_int64;
 alias c_g_key_file_get_integer g_key_file_get_integer;
 alias c_g_key_file_get_integer_list g_key_file_get_integer_list;
 alias c_g_key_file_get_keys g_key_file_get_keys;
+alias c_g_key_file_get_locale_for_key g_key_file_get_locale_for_key;
 alias c_g_key_file_get_locale_string g_key_file_get_locale_string;
 alias c_g_key_file_get_locale_string_list g_key_file_get_locale_string_list;
 alias c_g_key_file_get_start_group g_key_file_get_start_group;

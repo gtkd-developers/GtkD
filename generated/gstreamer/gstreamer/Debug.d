@@ -52,7 +52,17 @@ public struct Debug
 		gst_debug_add_log_function(func, userData, notify);
 	}
 
-	/** */
+	/**
+	 * To aid debugging applications one can use this method to obtain the whole
+	 * network of gstreamer elements that form the pipeline into an dot file.
+	 * This data can be processed with graphviz to get an image.
+	 *
+	 * Params:
+	 *     bin = the top-level pipeline that should be analyzed
+	 *
+	 * Returns: a string containing the pipeline in graphviz
+	 *     dot format.
+	 */
 	public static string binToDotData(Bin bin, GstDebugGraphDetails details)
 	{
 		auto retStr = gst_debug_bin_to_dot_data((bin is null) ? null : bin.getBinStruct(), details);
@@ -61,13 +71,31 @@ public struct Debug
 		return Str.toString(retStr);
 	}
 
-	/** */
+	/**
+	 * To aid debugging applications one can use this method to write out the whole
+	 * network of gstreamer elements that form the pipeline into an dot file.
+	 * This file can be processed with graphviz to get an image.
+	 * <informalexample><programlisting>
+	 * dot -Tpng -oimage.png graph_lowlevel.dot
+	 * </programlisting></informalexample>
+	 *
+	 * Params:
+	 *     bin = the top-level pipeline that should be analyzed
+	 *     fileName = output base filename (e.g. "myplayer")
+	 */
 	public static void binToDotFile(Bin bin, GstDebugGraphDetails details, string fileName)
 	{
 		gst_debug_bin_to_dot_file((bin is null) ? null : bin.getBinStruct(), details, Str.toStringz(fileName));
 	}
 
-	/** */
+	/**
+	 * This works like gst_debug_bin_to_dot_file(), but adds the current timestamp
+	 * to the filename, so that it can be used to take multiple snapshots.
+	 *
+	 * Params:
+	 *     bin = the top-level pipeline that should be analyzed
+	 *     fileName = output base filename (e.g. "myplayer")
+	 */
 	public static void binToDotFileWithTs(Bin bin, GstDebugGraphDetails details, string fileName)
 	{
 		gst_debug_bin_to_dot_file_with_ts((bin is null) ? null : bin.getBinStruct(), details, Str.toStringz(fileName));

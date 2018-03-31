@@ -88,9 +88,10 @@ public class ProtectionMeta
 	 *         that contains the UUID values of each protection system that is to be
 	 *         checked.
 	 *
-	 * Returns: One of the strings from @system_identifiers that
-	 *     indicates the highest ranked element that implements the protection system
-	 *     indicated by that system ID, or %NULL if no element has been found.
+	 * Returns: One of the strings from
+	 *     @system_identifiers that indicates the highest ranked element that
+	 *     implements the protection system indicated by that system ID, or %NULL if no
+	 *     element has been found.
 	 *
 	 * Since: 1.6
 	 */

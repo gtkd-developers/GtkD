@@ -175,8 +175,9 @@ public final class Node
 	}
 
 	/**
-	 * Calls a function for each of the children of a #GNode.
-	 * Note that it doesn't descend beneath the child nodes.
+	 * Calls a function for each of the children of a #GNode. Note that it
+	 * doesn't descend beneath the child nodes. @func must not do anything
+	 * that would modify the structure of the tree.
 	 *
 	 * Params:
 	 *     flags = which types of children are to be visited, one of
@@ -543,6 +544,7 @@ public final class Node
 	 * Traverses a tree starting at the given root #GNode.
 	 * It calls the given function for each node visited.
 	 * The traversal can be halted at any point by returning %TRUE from @func.
+	 * @func must not do anything that would modify the structure of the tree.
 	 *
 	 * Params:
 	 *     order = the order in which nodes are visited - %G_IN_ORDER,

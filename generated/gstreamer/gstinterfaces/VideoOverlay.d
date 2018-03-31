@@ -24,6 +24,9 @@
 
 module gstinterfaces.VideoOverlay;
 
+private import gobject.ObjectClass;
+private import gobject.ObjectG;
+private import gobject.Value;
 private import gstinterfaces.c.functions;
 public  import gstinterfaces.c.types;
 private import gstreamer.Element;
@@ -336,6 +339,44 @@ public class VideoOverlay
 	public static GType getType()
 	{
 		return gst_video_overlay_get_type();
+	}
+
+	/**
+	 * This helper shall be used by classes implementing the #GstVideoOverlay
+	 * interface that want the render rectangle to be controllable using
+	 * properties. This helper will install "render-rectangle" property into the
+	 * class.
+	 *
+	 * Since 1.14
+	 *
+	 * Params:
+	 *     oclass = The class on which the properties will be installed
+	 *     lastPropId = The first free property ID to use
+	 */
+	public static void installProperties(ObjectClass oclass, int lastPropId)
+	{
+		gst_video_overlay_install_properties((oclass is null) ? null : oclass.getObjectClassStruct(), lastPropId);
+	}
+
+	/**
+	 * This helper shall be used by classes implementing the #GstVideoOverlay
+	 * interface that want the render rectangle to be controllable using
+	 * properties. This helper will parse and set the render rectangle calling
+	 * gst_video_overlay_set_render_rectangle().
+	 *
+	 * Params:
+	 *     object = The instance on which the property is set
+	 *     lastPropId = The highest property ID.
+	 *     propertyId = The property ID
+	 *     value = The #GValue to be set
+	 *
+	 * Returns: %TRUE if the @property_id matches the GstVideoOverlay property
+	 *
+	 *     Since 1.14
+	 */
+	public static bool setProperty(ObjectG object, int lastPropId, uint propertyId, Value value)
+	{
+		return gst_video_overlay_set_property((object is null) ? null : object.getObjectGStruct(), lastPropId, propertyId, (value is null) ? null : value.getValueStruct()) != 0;
 	}
 
 	/**

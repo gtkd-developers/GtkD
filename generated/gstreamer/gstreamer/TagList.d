@@ -439,10 +439,20 @@ public class TagList
 		return gst_tag_list_get_int(gstTagList, Str.toStringz(tag), &value) != 0;
 	}
 
-	/** */
-	public bool getInt64(string tag, long* value)
+	/**
+	 * Copies the contents for the given tag into the value, merging multiple values
+	 * into one if multiple values are associated with the tag.
+	 *
+	 * Params:
+	 *     tag = tag to read out
+	 *     value = location for the result
+	 *
+	 * Returns: %TRUE, if a value was copied, %FALSE if the tag didn't exist in the
+	 *     given list.
+	 */
+	public bool getInt64(string tag, out long value)
 	{
-		return gst_tag_list_get_int64(gstTagList, Str.toStringz(tag), value) != 0;
+		return gst_tag_list_get_int64(gstTagList, Str.toStringz(tag), &value) != 0;
 	}
 
 	/**

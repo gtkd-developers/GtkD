@@ -106,16 +106,9 @@ public template ListModelT(TStruct)
 	 *
 	 * Since: 2.44
 	 */
-	public ObjectG getItem(uint position)
+	public void* getItem(uint position)
 	{
-		auto p = g_list_model_get_item(getListModelStruct(), position);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p, true);
+		return g_list_model_get_item(getListModelStruct(), position);
 	}
 
 	/**
