@@ -272,7 +272,7 @@ public class ObjectG
 		p[0..ci.initializer.length] = ci.initializer;
 		iface = cast(Impl)p;
 		iface.gObject = instance;
-		iface.doref();
+		iface.addToggleRef(cast(GToggleNotify)&toggleNotify, cast(void*)iface);
 
 		return iface;
 	}
