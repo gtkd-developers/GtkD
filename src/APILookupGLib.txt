@@ -708,6 +708,26 @@ class: Pattern
 
 struct: PtrArray
 class: PtrArray
+code: start
+	/**
+	 * Number of pointers in the array
+	 */
+	public uint len() pure
+	{
+		return gPtrArray.len;
+	}
+
+	/**
+	 * Returns the pointer at the given index of the pointer array.
+	 *
+	 * This does not perform bounds checking on the given index, so
+	 * you are responsible for checking it against the array length.
+	 */
+	public void* index(uint idx)
+	{
+		return (gPtrArray.pdata)[idx];
+	}
+code: end
 
 struct: Queue
 class: QueueG
