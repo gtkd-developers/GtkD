@@ -89,7 +89,7 @@ public class Value
 		this();
 		init(GOBJECT.getType());
 
-		static if ( is(GOBJECT : GObject) )
+		static if ( is(GOBJECT : ObjectG) )
 		{
 			setObject(obj);
 		}
