@@ -158,6 +158,9 @@ public class ObjectG
 	/** */
 	T opCast(T)()
 	{
+		if ( !this )
+			return null;
+
 		static if ( is(T : ObjectG)
 			&& !is(T == interface)
 			&& is(typeof(new T(cast(typeof(T.tupleof[0]))gObject, false))) )
@@ -204,6 +207,13 @@ public class ObjectG
 		}
 		else
 			return cast(T)super;
+	}
+
+	unittest
+	{
+		ObjectG obj = null;
+
+		assert( (cast(Binding)obj) is null );
 	}
 
 	/**
