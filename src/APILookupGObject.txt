@@ -369,7 +369,6 @@ code: end
 struct: Object
 import: core.memory
 import: gobject.Signals
-import: gtkd.Loader
 import: std.algorithm
 import: std.traits
 merge: InitiallyUnowned
