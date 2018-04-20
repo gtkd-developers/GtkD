@@ -1,6 +1,16 @@
 GtkD ChangeLog
 ==============
 
+Release: 3.8.2
+--------------
+-Check for null in the ObjectG opCast, so we can cast objects that are null.
+-Add len and index methods to PtrArray
+
+Release: 3.8.1
+--------------
+-Fix the gobject.Value constructor for Objects. #239
+-Also use toggle references for getInterfaceInstance. #239
+
 Release: 3.8.0
 --------------
 -Update the libraries to the latest versions.
