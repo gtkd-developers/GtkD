@@ -125,7 +125,7 @@ void build(string dir, string lib)
 	}
 	else
 	{
-		std.file.write("build.rf", format("-m64 -c -lib %s %s -Igenerated/gtkd -%s%s.lib %s", dcflags, ldflags, OUTPUT ,lib, dFiles(dir)));
+		std.file.write("build.rf", format("-m64 -c -lib %s %s -Igenerated/gtkd %s%s.lib %s", dcflags, ldflags, OUTPUT ,lib, dFiles(dir)));
 		auto pid = spawnProcess([DC, "@build.rf"]);
 
 		if ( wait(pid) != 0 )
