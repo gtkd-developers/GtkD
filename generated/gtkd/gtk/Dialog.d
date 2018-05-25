@@ -192,7 +192,7 @@ public class Dialog : Window
 	 */
 	this(string title, Window parent, GtkDialogFlags flags, string[] buttonsText, ResponseType[] responses)
 	{
-		auto p = gtk_dialog_new_with_buttons(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), flags, Str.toStringz(buttonsText[0]), responses[0], null);
+		auto p = gtk_dialog_new_with_buttons(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), flags, null);
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gtk_dialog_new_with_buttons");
@@ -200,13 +200,13 @@ public class Dialog : Window
 
 		this(cast(GtkDialog*)p);
 
-		addButtons(buttonsText[1 .. $], responses[1 .. $]);
+		addButtons(buttonsText[], responses[]);
 	}
 
 	/** ditto */
 	this(string title, Window parent, GtkDialogFlags flags, StockID[] stockIDs, ResponseType[] responses)
 	{
-		auto p = gtk_dialog_new_with_buttons(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), flags, Str.toStringz(stockIDs[0]), responses[0], null);
+		auto p = gtk_dialog_new_with_buttons(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), flags, null);
 		if(p is null)
 		{
 			throw new ConstructionException("null returned by gtk_dialog_new_with_buttons");
@@ -214,7 +214,7 @@ public class Dialog : Window
 
 		this(cast(GtkDialog*)p);
 
-		addButtons(stockIDs[1 .. $], responses[1 .. $]);
+		addButtons(stockIDs, responses);
 	}
 
 	/** */
