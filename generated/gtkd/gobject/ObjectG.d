@@ -151,7 +151,11 @@ public class ObjectG
 				isGcRoot = false;
 			}
 
-			g_object_remove_toggle_ref(gObject, cast(GToggleNotify)&toggleNotify, cast(void*)this);
+			// We only have a toggle ref if the C object hods a reference to the D object.
+			if ( g_object_get_data(gObject, cast(char*)"GObject") is cast(void*)this )
+				g_object_remove_toggle_ref(gObject, cast(GToggleNotify)&toggleNotify, cast(void*)this);
+			else
+				g_object_unref(gObject);
 		}
 	}
 
@@ -282,7 +286,7 @@ public class ObjectG
 		p[0..ci.initializer.length] = ci.initializer;
 		iface = cast(Impl)p;
 		iface.gObject = instance;
-		iface.addToggleRef(cast(GToggleNotify)&toggleNotify, cast(void*)iface);
+		iface.doref();
 
 		return iface;
 	}
