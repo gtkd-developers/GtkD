@@ -34,24 +34,19 @@ deliverable or statically link to GtkD – please pay attention to the license.
 
 ### Linux / Posix
 
-Using the GNU make to compile GtkD on these Operating systems, calling make
-with no options will build GtkD, GtkD-Sourceview and one of the demos.
-Optionally these options are available:
+GtkD uses [meson](http://mesonbuild.com) as a build system. To build GtkD simply
+run:
 
-Option | Meaning
---- | ---
-all | build everything.
-libs | build all the static libraries.
-shared | build all the shared libraries.
-[shared-]gtkd | build gtkd.
-[shared-]gtkdsv | build gtkd-sourceview.
-[shared-]gstreamer | build gstreamer.
-[shared-]vte | build vte.
-[shared-]peas | build peas.
+```
+meson build --prefix=/my/prefix/
+cd build
+ninja
+ninja install
+```
 
-install and uninstall options are also available for the options mentioned above.
-
-Or you can use one of the build options also available for Windows.
+All the demos and binaries will be placed in your build directory and the
+library will be installed in your $prefix/lib directory (you can change this
+with --libdir option).
 
 ### OSX
 
