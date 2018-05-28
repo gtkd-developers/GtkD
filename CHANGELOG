@@ -1,6 +1,12 @@
 GtkD ChangeLog
 ==============
 
+Release: 3.8.3
+--------------
+-Make sure we only use one toggle reference per GObject.
+-Allow empty arrays in the Dialog constructor.
+-Fix Windows build script. #242
+
 Release: 3.8.2
 --------------
 -Check for null in the ObjectG opCast, so we can cast objects that are null.
