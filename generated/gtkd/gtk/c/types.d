@@ -12311,7 +12311,7 @@ public alias extern(C) void function(GtkTreeView* treeView, GtkWidget* searchDia
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum BINARY_AGE = 2229;
+enum BINARY_AGE = 2230;
 alias GTK_BINARY_AGE = BINARY_AGE;
 
 /**
@@ -12326,7 +12326,7 @@ alias GTK_INPUT_ERROR = INPUT_ERROR;
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum INTERFACE_AGE = 29;
+enum INTERFACE_AGE = 30;
 alias GTK_INTERFACE_AGE = INTERFACE_AGE;
 
 /**
@@ -12366,7 +12366,7 @@ alias GTK_MAX_COMPOSE_LEN = MAX_COMPOSE_LEN;
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum MICRO_VERSION = 29;
+enum MICRO_VERSION = 30;
 alias GTK_MICRO_VERSION = MICRO_VERSION;
 
 /**

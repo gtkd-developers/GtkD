@@ -82,6 +82,16 @@ public class AggregatorPad : Pad
 	}
 
 	/**
+	 * Returns: %TRUE if the pad has a buffer available as the next thing.
+	 *
+	 * Since: 1.14.1
+	 */
+	public bool hasBuffer()
+	{
+		return gst_aggregator_pad_has_buffer(gstAggregatorPad) != 0;
+	}
+
+	/**
 	 * Returns: %TRUE if the pad is EOS, otherwise %FALSE.
 	 */
 	public bool isEos()

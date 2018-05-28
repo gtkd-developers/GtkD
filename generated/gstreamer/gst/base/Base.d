@@ -114,7 +114,7 @@ public struct Base
 	 *
 	 * Params:
 	 *     obj = object doing the typefinding, or %NULL (used for logging)
-	 *     data = a pointer with data to typefind
+	 *     data = * a pointer with data to typefind
 	 *     prob = location to store the probability of the found
 	 *         caps, or %NULL
 	 *

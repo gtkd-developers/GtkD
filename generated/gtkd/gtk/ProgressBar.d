@@ -277,7 +277,7 @@ public class ProgressBar : Widget, OrientableIF
 	 * %TRUE and #GtkProgressBar:text to the empty string (not %NULL).
 	 *
 	 * Params:
-	 *     showText = whether to show superimposed text
+	 *     showText = whether to show text
 	 *
 	 * Since: 3.0
 	 */

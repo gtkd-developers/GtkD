@@ -85,6 +85,7 @@ shared static this()
 
 	Linker.link(gst_aggregator_pad_get_type, "gst_aggregator_pad_get_type", LIBRARY_GSTBASE);
 	Linker.link(gst_aggregator_pad_drop_buffer, "gst_aggregator_pad_drop_buffer", LIBRARY_GSTBASE);
+	Linker.link(gst_aggregator_pad_has_buffer, "gst_aggregator_pad_has_buffer", LIBRARY_GSTBASE);
 	Linker.link(gst_aggregator_pad_is_eos, "gst_aggregator_pad_is_eos", LIBRARY_GSTBASE);
 	Linker.link(gst_aggregator_pad_peek_buffer, "gst_aggregator_pad_peek_buffer", LIBRARY_GSTBASE);
 	Linker.link(gst_aggregator_pad_pop_buffer, "gst_aggregator_pad_pop_buffer", LIBRARY_GSTBASE);
@@ -471,6 +472,7 @@ __gshared extern(C)
 
 	GType function() c_gst_aggregator_pad_get_type;
 	int function(GstAggregatorPad* pad) c_gst_aggregator_pad_drop_buffer;
+	int function(GstAggregatorPad* pad) c_gst_aggregator_pad_has_buffer;
 	int function(GstAggregatorPad* pad) c_gst_aggregator_pad_is_eos;
 	GstBuffer* function(GstAggregatorPad* pad) c_gst_aggregator_pad_peek_buffer;
 	GstBuffer* function(GstAggregatorPad* pad) c_gst_aggregator_pad_pop_buffer;
@@ -697,7 +699,7 @@ __gshared extern(C)
 	int function(GstByteWriter* writer, byte val) c_gst_byte_writer_put_int8;
 	int function(GstByteWriter* writer, ushort* data) c_gst_byte_writer_put_string_utf16;
 	int function(GstByteWriter* writer, uint* data) c_gst_byte_writer_put_string_utf32;
-	int function(GstByteWriter* writer, char* data) c_gst_byte_writer_put_string_utf8;
+	int function(GstByteWriter* writer, const(char)* data) c_gst_byte_writer_put_string_utf8;
 	int function(GstByteWriter* writer, ushort val) c_gst_byte_writer_put_uint16_be;
 	int function(GstByteWriter* writer, ushort val) c_gst_byte_writer_put_uint16_le;
 	int function(GstByteWriter* writer, uint val) c_gst_byte_writer_put_uint24_be;
@@ -855,6 +857,7 @@ alias c_gst_aggregator_set_src_caps gst_aggregator_set_src_caps;
 
 alias c_gst_aggregator_pad_get_type gst_aggregator_pad_get_type;
 alias c_gst_aggregator_pad_drop_buffer gst_aggregator_pad_drop_buffer;
+alias c_gst_aggregator_pad_has_buffer gst_aggregator_pad_has_buffer;
 alias c_gst_aggregator_pad_is_eos gst_aggregator_pad_is_eos;
 alias c_gst_aggregator_pad_peek_buffer gst_aggregator_pad_peek_buffer;
 alias c_gst_aggregator_pad_pop_buffer gst_aggregator_pad_pop_buffer;

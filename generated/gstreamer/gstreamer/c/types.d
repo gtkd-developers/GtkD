@@ -6647,7 +6647,7 @@ alias GST_ELEMENT_FACTORY_TYPE_AUDIO_ENCODER = ELEMENT_FACTORY_TYPE_AUDIO_ENCODE
 /**
  * All elements used to 'decode' streams (decoders, demuxers, parsers, depayloaders)
  */
-enum ELEMENT_FACTORY_TYPE_DECODABLE = 353UL;
+enum ELEMENT_FACTORY_TYPE_DECODABLE = 1377UL;
 alias GST_ELEMENT_FACTORY_TYPE_DECODABLE = ELEMENT_FACTORY_TYPE_DECODABLE;
 
 enum ELEMENT_FACTORY_TYPE_DECODER = 1UL;
@@ -6861,7 +6861,7 @@ alias GST_NSECOND = NSECOND;
  * Use this flag on GObject properties to signal they can make sense to be.
  * controlled over time. This hint is used by the GstController.
  */
-enum PARAM_CONTROLLABLE = 2;
+enum PARAM_CONTROLLABLE = 512;
 alias GST_PARAM_CONTROLLABLE = PARAM_CONTROLLABLE;
 
 /**
@@ -6869,7 +6869,7 @@ alias GST_PARAM_CONTROLLABLE = PARAM_CONTROLLABLE;
  * they can be changed when the element is in the PAUSED or lower state.
  * This flag implies GST_PARAM_MUTABLE_READY.
  */
-enum PARAM_MUTABLE_PAUSED = 8;
+enum PARAM_MUTABLE_PAUSED = 2048;
 alias GST_PARAM_MUTABLE_PAUSED = PARAM_MUTABLE_PAUSED;
 
 /**
@@ -6877,20 +6877,20 @@ alias GST_PARAM_MUTABLE_PAUSED = PARAM_MUTABLE_PAUSED;
  * they can be changed when the element is in the PLAYING or lower state.
  * This flag implies GST_PARAM_MUTABLE_PAUSED.
  */
-enum PARAM_MUTABLE_PLAYING = 16;
+enum PARAM_MUTABLE_PLAYING = 4096;
 alias GST_PARAM_MUTABLE_PLAYING = PARAM_MUTABLE_PLAYING;
 
 /**
  * Use this flag on GObject properties of GstElements to indicate that
  * they can be changed when the element is in the READY or lower state.
  */
-enum PARAM_MUTABLE_READY = 4;
+enum PARAM_MUTABLE_READY = 1024;
 alias GST_PARAM_MUTABLE_READY = PARAM_MUTABLE_READY;
 
 /**
  * Bits based on GST_PARAM_USER_SHIFT can be used by 3rd party applications.
  */
-enum PARAM_USER_SHIFT = 256;
+enum PARAM_USER_SHIFT = 65536;
 alias GST_PARAM_USER_SHIFT = PARAM_USER_SHIFT;
 
 /**
@@ -7638,7 +7638,7 @@ alias GST_VERSION_MAJOR = VERSION_MAJOR;
 /**
  * The micro version of GStreamer at compile time:
  */
-enum VERSION_MICRO = 0;
+enum VERSION_MICRO = 1;
 alias GST_VERSION_MICRO = VERSION_MICRO;
 
 /**

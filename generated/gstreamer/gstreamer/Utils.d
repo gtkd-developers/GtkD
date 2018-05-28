@@ -84,11 +84,10 @@ public struct Utils
 	 *
 	 * Params:
 	 *     mem = a pointer to the memory to dump
-	 *     size = the size of the memory block to dump
 	 */
-	public static void dumpMem(char* mem, uint size)
+	public static void dumpMem(char[] mem)
 	{
-		gst_util_dump_mem(mem, size);
+		gst_util_dump_mem(mem.ptr, cast(uint)mem.length);
 	}
 
 	/**

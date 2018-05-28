@@ -42,7 +42,7 @@ public struct Str
 	 * Convert C-style 0 terminated string s to char[] string.
 	 * copied from phobos
 	 */
-	public static string toString(const(char)* s, size_t len = 0)
+	public static string toString(const(char)* s, size_t len = 0) pure
 	{
 		if ( s is null )
 			return cast(string)null;
@@ -57,7 +57,7 @@ public struct Str
 	 * Convert array of chars s[] to a C-style 0 terminated string.
 	 * copied from phobos
 	 */
-	public static char* toStringz(string s)
+	public static char* toStringz(string s) pure
 	{
 		if ( s is null ) return null;
 		char[] copy;
@@ -78,7 +78,7 @@ public struct Str
 	}
 
 	/** */
-	public static char** toStringzArray(string[] args)
+	public static char** toStringzArray(string[] args) pure
 	{
 		if ( args is null )
 		{
@@ -96,7 +96,7 @@ public struct Str
 	}
 
 	/** */
-	public static char*** toStringzArray(string[][] args)
+	public static char*** toStringzArray(string[][] args) pure
 	{
 		if ( args is null )
 		{
@@ -114,7 +114,7 @@ public struct Str
 	}
 
 	/** */
-	public static string[] toStringArray(const(char*)* args)
+	public static string[] toStringArray(const(char*)* args) pure
 	{
 		if ( args is null )
 		{
@@ -132,7 +132,7 @@ public struct Str
 	}
 
 	/** */
-	public static string[] toStringArray(const(char*)* args, size_t len)
+	public static string[] toStringArray(const(char*)* args, size_t len) pure
 	{
 		string[] argv = new string[len];
 
@@ -145,7 +145,7 @@ public struct Str
 	}
 
 	/** */
-	public static string[][] toStringArray(char*** args)
+	public static string[][] toStringArray(char*** args) pure
 	{
 		string[][] argv;
 

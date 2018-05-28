@@ -62,6 +62,27 @@ public class PtrArray
 		this.ownedRef = ownedRef;
 	}
 
+	/**
+	 * Number of pointers in the array
+	 */
+	public uint len() pure
+	{
+		return gPtrArray.len;
+	}
+
+	/**
+	 * Returns the pointer at the given index of the pointer array.
+	 *
+	 * This does not perform bounds checking on the given index, so
+	 * you are responsible for checking it against the array length.
+	 */
+	public void* index(uint idx)
+	{
+		return (gPtrArray.pdata)[idx];
+	}
+
+	/**
+	 */
 
 	/**
 	 * Adds a pointer to the end of the pointer array. The array will grow

@@ -406,7 +406,7 @@ alias GDK_PIXBUF_MAJOR = PIXBUF_MAJOR;
  * Micro version of gdk-pixbuf library, that is the "2" in
  * "0.8.2" for example.
  */
-enum PIXBUF_MICRO = 11;
+enum PIXBUF_MICRO = 12;
 alias GDK_PIXBUF_MICRO = PIXBUF_MICRO;
 
 /**
@@ -421,7 +421,7 @@ alias GDK_PIXBUF_MINOR = PIXBUF_MINOR;
  * This is the version being compiled against; contrast with
  * #gdk_pixbuf_version.
  */
-enum PIXBUF_VERSION = "2.36.11";
+enum PIXBUF_VERSION = "2.36.12";
 alias GDK_PIXBUF_VERSION = PIXBUF_VERSION;
 
 /**

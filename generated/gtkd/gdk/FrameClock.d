@@ -212,18 +212,18 @@ public class FrameClock : ObjectG
 	 *
 	 * Params:
 	 *     baseTime = base time for determining a presentaton time
-	 *     refreshIntervalReturn = a location to store the determined refresh
-	 *         interval, or %NULL. A default refresh interval of 1/60th of
-	 *         a second will be stored if no history is present.
+	 *     refreshIntervalReturn = a location to store the
+	 *         determined refresh interval, or %NULL. A default refresh interval of
+	 *         1/60th of a second will be stored if no history is present.
 	 *     presentationTimeReturn = a location to store the next
 	 *         candidate presentation time after the given base time.
 	 *         0 will be will be stored if no history is present.
 	 *
 	 * Since: 3.8
 	 */
-	public void getRefreshInfo(long baseTime, long* refreshIntervalReturn, long* presentationTimeReturn)
+	public void getRefreshInfo(long baseTime, out long refreshIntervalReturn, out long presentationTimeReturn)
 	{
-		gdk_frame_clock_get_refresh_info(gdkFrameClock, baseTime, refreshIntervalReturn, presentationTimeReturn);
+		gdk_frame_clock_get_refresh_info(gdkFrameClock, baseTime, &refreshIntervalReturn, &presentationTimeReturn);
 	}
 
 	/**

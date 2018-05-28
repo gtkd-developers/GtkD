@@ -439,8 +439,7 @@ public class ByteWriter
 	 * Writes a NUL-terminated UTF8 string to @writer (including the terminator).
 	 *
 	 * Params:
-	 *     data = UTF8 string to
-	 *         write
+	 *     data = UTF8 string to write
 	 *
 	 * Returns: %TRUE if the value could be written
 	 */

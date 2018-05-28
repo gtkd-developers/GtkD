@@ -177,7 +177,7 @@ public class GLArea : Widget
 	/**
 	 * Creates a new #GtkGLArea widget.
 	 *
-	 * Returns: the newly created #GtkGLArea
+	 * Returns: a new #GtkGLArea
 	 *
 	 * Since: 3.16
 	 *
@@ -192,7 +192,7 @@ public class GLArea : Widget
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkGLArea*) p, true);
+		this(cast(GtkGLArea*) p);
 	}
 
 	/**

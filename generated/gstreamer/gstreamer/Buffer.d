@@ -502,14 +502,13 @@ public class Buffer
 	 * Params:
 	 *     offset = the offset to extract
 	 *     dest = the destination address
-	 *     size = the size to extract
 	 *
 	 * Returns: The amount of bytes extracted. This value can be lower than @size
 	 *     when @buffer did not contain enough data.
 	 */
-	public size_t extract(size_t offset, void* dest, size_t size)
+	public size_t extract(size_t offset, ubyte[] dest)
 	{
-		return gst_buffer_extract(gstBuffer, offset, dest, size);
+		return gst_buffer_extract(gstBuffer, offset, dest.ptr, cast(size_t)dest.length);
 	}
 
 	/**
