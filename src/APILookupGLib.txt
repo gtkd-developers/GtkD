@@ -1192,7 +1192,7 @@ code: start
 		{
 			return null;
 		}
-		char** argv = (new char*[args.length]).ptr;
+		char** argv = (new char*[args.length + 1]).ptr;
 		int argc = 0;
 		foreach (string p; args)
 		{
@@ -1210,7 +1210,7 @@ code: start
 		{
 			return null;
 		}
-		char**[] argv = new char**[args.length];
+		char**[] argv = new char**[args.length + 1];
 		int argc = 0;
 		foreach( string[] p; args )
 		{
