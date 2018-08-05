@@ -167,13 +167,13 @@ public class Notification : ObjectG
 	 * Sets the body of @notification to @body.
 	 *
 	 * Params:
-	 *     bod = the new body for @notification, or %NULL
+	 *     body_ = the new body for @notification, or %NULL
 	 *
 	 * Since: 2.40
 	 */
-	public void setBody(string bod)
+	public void setBody(string body_)
 	{
-		g_notification_set_body(gNotification, Str.toStringz(bod));
+		g_notification_set_body(gNotification, Str.toStringz(body_));
 	}
 
 	/**

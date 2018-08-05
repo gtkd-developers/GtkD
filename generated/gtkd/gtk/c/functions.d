@@ -5228,7 +5228,7 @@ __gshared extern(C)
 	void function(GtkAboutDialog* about, const(char)* iconName) c_gtk_about_dialog_set_logo_icon_name;
 	void function(GtkAboutDialog* about, const(char)* name) c_gtk_about_dialog_set_program_name;
 	void function(GtkAboutDialog* about, const(char)* translatorCredits) c_gtk_about_dialog_set_translator_credits;
-	void function(GtkAboutDialog* about, const(char)* versio) c_gtk_about_dialog_set_version;
+	void function(GtkAboutDialog* about, const(char)* version_) c_gtk_about_dialog_set_version;
 	void function(GtkAboutDialog* about, const(char)* website) c_gtk_about_dialog_set_website;
 	void function(GtkAboutDialog* about, const(char)* websiteLabel) c_gtk_about_dialog_set_website_label;
 	void function(GtkAboutDialog* about, int wrapLicense) c_gtk_about_dialog_set_wrap_license;
@@ -5265,7 +5265,7 @@ __gshared extern(C)
 	// gtk.AccelLabel
 
 	GType function() c_gtk_accel_label_get_type;
-	GtkWidget* function(const(char)* str) c_gtk_accel_label_new;
+	GtkWidget* function(const(char)* string_) c_gtk_accel_label_new;
 	void function(GtkAccelLabel* accelLabel, uint* acceleratorKey, GdkModifierType* acceleratorMods) c_gtk_accel_label_get_accel;
 	GtkWidget* function(GtkAccelLabel* accelLabel) c_gtk_accel_label_get_accel_widget;
 	uint function(GtkAccelLabel* accelLabel) c_gtk_accel_label_get_accel_width;
@@ -5378,7 +5378,7 @@ __gshared extern(C)
 	void function(GtkActionGroup* actionGroup, GtkTranslateFunc func, void* data, GDestroyNotify notify) c_gtk_action_group_set_translate_func;
 	void function(GtkActionGroup* actionGroup, const(char)* domain) c_gtk_action_group_set_translation_domain;
 	void function(GtkActionGroup* actionGroup, int visible) c_gtk_action_group_set_visible;
-	const(char)* function(GtkActionGroup* actionGroup, const(char)* str) c_gtk_action_group_translate_string;
+	const(char)* function(GtkActionGroup* actionGroup, const(char)* string_) c_gtk_action_group_translate_string;
 
 	// gtk.Actionable
 
@@ -5632,7 +5632,7 @@ __gshared extern(C)
 	GtkBuilder* function() c_gtk_builder_new;
 	GtkBuilder* function(const(char)* filename) c_gtk_builder_new_from_file;
 	GtkBuilder* function(const(char)* resourcePath) c_gtk_builder_new_from_resource;
-	GtkBuilder* function(const(char)* str, ptrdiff_t length) c_gtk_builder_new_from_string;
+	GtkBuilder* function(const(char)* string_, ptrdiff_t length) c_gtk_builder_new_from_string;
 	void function(GtkBuilder* builder, const(char)* callbackName, GCallback callbackSymbol) c_gtk_builder_add_callback_symbol;
 	void function(GtkBuilder* builder, const(char)* firstCallbackName, GCallback firstCallbackSymbol, ... ) c_gtk_builder_add_callback_symbols;
 	uint function(GtkBuilder* builder, const(char)* filename, GError** err) c_gtk_builder_add_from_file;
@@ -5653,8 +5653,8 @@ __gshared extern(C)
 	GCallback function(GtkBuilder* builder, const(char)* callbackName) c_gtk_builder_lookup_callback_symbol;
 	void function(GtkBuilder* builder, GtkApplication* application) c_gtk_builder_set_application;
 	void function(GtkBuilder* builder, const(char)* domain) c_gtk_builder_set_translation_domain;
-	int function(GtkBuilder* builder, GParamSpec* pspec, const(char)* str, GValue* value, GError** err) c_gtk_builder_value_from_string;
-	int function(GtkBuilder* builder, GType type, const(char)* str, GValue* value, GError** err) c_gtk_builder_value_from_string_type;
+	int function(GtkBuilder* builder, GParamSpec* pspec, const(char)* string_, GValue* value, GError** err) c_gtk_builder_value_from_string;
+	int function(GtkBuilder* builder, GType type, const(char)* string_, GValue* value, GError** err) c_gtk_builder_value_from_string_type;
 
 	// gtk.Button
 
@@ -5793,8 +5793,8 @@ __gshared extern(C)
 	GType function() c_gtk_cell_area_box_get_type;
 	GtkCellArea* function() c_gtk_cell_area_box_new;
 	int function(GtkCellAreaBox* box) c_gtk_cell_area_box_get_spacing;
-	void function(GtkCellAreaBox* box, GtkCellRenderer* renderer, int expand, int alig, int fixed) c_gtk_cell_area_box_pack_end;
-	void function(GtkCellAreaBox* box, GtkCellRenderer* renderer, int expand, int alig, int fixed) c_gtk_cell_area_box_pack_start;
+	void function(GtkCellAreaBox* box, GtkCellRenderer* renderer, int expand, int align_, int fixed) c_gtk_cell_area_box_pack_end;
+	void function(GtkCellAreaBox* box, GtkCellRenderer* renderer, int expand, int align_, int fixed) c_gtk_cell_area_box_pack_start;
 	void function(GtkCellAreaBox* box, int spacing) c_gtk_cell_area_box_set_spacing;
 
 	// gtk.CellAreaClass
@@ -8933,9 +8933,9 @@ __gshared extern(C)
 	void function(GtkTextBuffer* buffer, const(char)* name, GtkTextIter* where) c_gtk_text_buffer_move_mark_by_name;
 	void function(GtkTextBuffer* buffer, GtkClipboard* clipboard, GtkTextIter* overrideLocation, int defaultEditable) c_gtk_text_buffer_paste_clipboard;
 	void function(GtkTextBuffer* buffer, GtkTextIter* where) c_gtk_text_buffer_place_cursor;
-	GdkAtom function(GtkTextBuffer* buffer, const(char)* mimeType, GtkTextBufferDeserializeFunc funct, void* userData, GDestroyNotify userDataDestroy) c_gtk_text_buffer_register_deserialize_format;
+	GdkAtom function(GtkTextBuffer* buffer, const(char)* mimeType, GtkTextBufferDeserializeFunc function_, void* userData, GDestroyNotify userDataDestroy) c_gtk_text_buffer_register_deserialize_format;
 	GdkAtom function(GtkTextBuffer* buffer, const(char)* tagsetName) c_gtk_text_buffer_register_deserialize_tagset;
-	GdkAtom function(GtkTextBuffer* buffer, const(char)* mimeType, GtkTextBufferSerializeFunc funct, void* userData, GDestroyNotify userDataDestroy) c_gtk_text_buffer_register_serialize_format;
+	GdkAtom function(GtkTextBuffer* buffer, const(char)* mimeType, GtkTextBufferSerializeFunc function_, void* userData, GDestroyNotify userDataDestroy) c_gtk_text_buffer_register_serialize_format;
 	GdkAtom function(GtkTextBuffer* buffer, const(char)* tagsetName) c_gtk_text_buffer_register_serialize_tagset;
 	void function(GtkTextBuffer* buffer, GtkTextIter* start, GtkTextIter* end) c_gtk_text_buffer_remove_all_tags;
 	void function(GtkTextBuffer* buffer, GtkClipboard* clipboard) c_gtk_text_buffer_remove_selection_clipboard;
@@ -10012,7 +10012,7 @@ __gshared extern(C)
 	void function(GtkWidget* widget, int focusOnClick) c_gtk_widget_set_focus_on_click;
 	void function(GtkWidget* widget, PangoFontMap* fontMap) c_gtk_widget_set_font_map;
 	void function(GtkWidget* widget, cairo_font_options_t* options) c_gtk_widget_set_font_options;
-	void function(GtkWidget* widget, GtkAlign alig) c_gtk_widget_set_halign;
+	void function(GtkWidget* widget, GtkAlign align_) c_gtk_widget_set_halign;
 	void function(GtkWidget* widget, int hasTooltip) c_gtk_widget_set_has_tooltip;
 	void function(GtkWidget* widget, int hasWindow) c_gtk_widget_set_has_window;
 	void function(GtkWidget* widget, int expand) c_gtk_widget_set_hexpand;
@@ -10041,7 +10041,7 @@ __gshared extern(C)
 	void function(GtkWidget* widget, const(char)* markup) c_gtk_widget_set_tooltip_markup;
 	void function(GtkWidget* widget, const(char)* text) c_gtk_widget_set_tooltip_text;
 	void function(GtkWidget* widget, GtkWindow* customWindow) c_gtk_widget_set_tooltip_window;
-	void function(GtkWidget* widget, GtkAlign alig) c_gtk_widget_set_valign;
+	void function(GtkWidget* widget, GtkAlign align_) c_gtk_widget_set_valign;
 	void function(GtkWidget* widget, int expand) c_gtk_widget_set_vexpand;
 	void function(GtkWidget* widget, int set) c_gtk_widget_set_vexpand_set;
 	void function(GtkWidget* widget, int visible) c_gtk_widget_set_visible;
@@ -10316,7 +10316,7 @@ __gshared extern(C)
 	void function(GtkWidget* widget, double percentage) c_gtk_test_slider_set_perc;
 	int function(GtkSpinButton* spinner, uint button, int upwards) c_gtk_test_spin_button_click;
 	char* function(GtkWidget* widget) c_gtk_test_text_get;
-	void function(GtkWidget* widget, const(char)* str) c_gtk_test_text_set;
+	void function(GtkWidget* widget, const(char)* string_) c_gtk_test_text_set;
 	int function(GtkWidget* widget, uint button, GdkModifierType modifiers) c_gtk_test_widget_click;
 	int function(GtkWidget* widget, uint keyval, GdkModifierType modifiers) c_gtk_test_widget_send_key;
 	void function(GtkWidget* widget) c_gtk_test_widget_wait_for_draw;

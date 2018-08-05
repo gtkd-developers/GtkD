@@ -70,7 +70,7 @@ public class Timer
 	 *
 	 * Since: 2.4
 	 */
-	public void continu()
+	public void continue_()
 	{
 		g_timer_continue(gTimer);
 	}

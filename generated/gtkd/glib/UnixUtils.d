@@ -60,16 +60,16 @@ public struct UnixUtils
 	 * Params:
 	 *     fd = a file descriptor
 	 *     condition = IO conditions to watch for on @fd
-	 *     funct = a #GUnixFDSourceFunc
+	 *     function_ = a #GUnixFDSourceFunc
 	 *     userData = data to pass to @function
 	 *
 	 * Returns: the ID (greater than 0) of the event source
 	 *
 	 * Since: 2.36
 	 */
-	public static uint fdAdd(int fd, GIOCondition condition, GUnixFDSourceFunc funct, void* userData)
+	public static uint fdAdd(int fd, GIOCondition condition, GUnixFDSourceFunc function_, void* userData)
 	{
-		return g_unix_fd_add(fd, condition, funct, userData);
+		return g_unix_fd_add(fd, condition, function_, userData);
 	}
 
 	/**
@@ -84,7 +84,7 @@ public struct UnixUtils
 	 *     priority = the priority of the source
 	 *     fd = a file descriptor
 	 *     condition = IO conditions to watch for on @fd
-	 *     funct = a #GUnixFDSourceFunc
+	 *     function_ = a #GUnixFDSourceFunc
 	 *     userData = data to pass to @function
 	 *     notify = function to call when the idle is removed, or %NULL
 	 *
@@ -92,9 +92,9 @@ public struct UnixUtils
 	 *
 	 * Since: 2.36
 	 */
-	public static uint fdAddFull(int priority, int fd, GIOCondition condition, GUnixFDSourceFunc funct, void* userData, GDestroyNotify notify)
+	public static uint fdAddFull(int priority, int fd, GIOCondition condition, GUnixFDSourceFunc function_, void* userData, GDestroyNotify notify)
 	{
-		return g_unix_fd_add_full(priority, fd, condition, funct, userData, notify);
+		return g_unix_fd_add_full(priority, fd, condition, function_, userData, notify);
 	}
 
 	/**

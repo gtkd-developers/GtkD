@@ -38,16 +38,16 @@ public  import gtkc.gdktypes;
  * See gdk_threads_add_idle_full().
  *
  * Params:
- *     funct = function to call
+ *     function_ = function to call
  *     data = data to pass to @function
  *
  * Returns: the ID (greater than 0) of the event source.
  *
  * Since: 2.12
  */
-public uint threadsAddIdle(GSourceFunc funct, void* data)
+public uint threadsAddIdle(GSourceFunc function_, void* data)
 {
-	return gdk_threads_add_idle(funct, data);
+	return gdk_threads_add_idle(function_, data);
 }
 
 /**
@@ -96,7 +96,7 @@ public uint threadsAddIdle(GSourceFunc funct, void* data)
  * Params:
  *     priority = the priority of the idle source. Typically this will be in the
  *         range between #G_PRIORITY_DEFAULT_IDLE and #G_PRIORITY_HIGH_IDLE
- *     funct = function to call
+ *     function_ = function to call
  *     data = data to pass to @function
  *     notify = function to call when the idle is removed, or %NULL
  *
@@ -104,9 +104,9 @@ public uint threadsAddIdle(GSourceFunc funct, void* data)
  *
  * Since: 2.12
  */
-public uint threadsAddIdleFull(int priority, GSourceFunc funct, void* data, GDestroyNotify notify)
+public uint threadsAddIdleFull(int priority, GSourceFunc function_, void* data, GDestroyNotify notify)
 {
-	return gdk_threads_add_idle_full(priority, funct, data, notify);
+	return gdk_threads_add_idle_full(priority, function_, data, notify);
 }
 
 /**
@@ -118,16 +118,16 @@ public uint threadsAddIdleFull(int priority, GSourceFunc funct, void* data, GDes
  * Params:
  *     interval = the time between calls to the function, in milliseconds
  *         (1/1000ths of a second)
- *     funct = function to call
+ *     function_ = function to call
  *     data = data to pass to @function
  *
  * Returns: the ID (greater than 0) of the event source.
  *
  * Since: 2.12
  */
-public uint threadsAddTimeout(uint interval, GSourceFunc funct, void* data)
+public uint threadsAddTimeout(uint interval, GSourceFunc function_, void* data)
 {
-	return gdk_threads_add_timeout(interval, funct, data);
+	return gdk_threads_add_timeout(interval, function_, data);
 }
 
 /**
@@ -180,7 +180,7 @@ public uint threadsAddTimeout(uint interval, GSourceFunc funct, void* data)
  *         range between #G_PRIORITY_DEFAULT_IDLE and #G_PRIORITY_HIGH_IDLE.
  *     interval = the time between calls to the function, in milliseconds
  *         (1/1000ths of a second)
- *     funct = function to call
+ *     function_ = function to call
  *     data = data to pass to @function
  *     notify = function to call when the timeout is removed, or %NULL
  *
@@ -188,9 +188,9 @@ public uint threadsAddTimeout(uint interval, GSourceFunc funct, void* data)
  *
  * Since: 2.12
  */
-public uint threadsAddTimeoutFull(int priority, uint interval, GSourceFunc funct, void* data, GDestroyNotify notify)
+public uint threadsAddTimeoutFull(int priority, uint interval, GSourceFunc function_, void* data, GDestroyNotify notify)
 {
-	return gdk_threads_add_timeout_full(priority, interval, funct, data, notify);
+	return gdk_threads_add_timeout_full(priority, interval, function_, data, notify);
 }
 
 /**
@@ -201,16 +201,16 @@ public uint threadsAddTimeoutFull(int priority, uint interval, GSourceFunc funct
  *
  * Params:
  *     interval = the time between calls to the function, in seconds
- *     funct = function to call
+ *     function_ = function to call
  *     data = data to pass to @function
  *
  * Returns: the ID (greater than 0) of the event source.
  *
  * Since: 2.14
  */
-public uint threadsAddTimeoutSeconds(uint interval, GSourceFunc funct, void* data)
+public uint threadsAddTimeoutSeconds(uint interval, GSourceFunc function_, void* data)
 {
-	return gdk_threads_add_timeout_seconds(interval, funct, data);
+	return gdk_threads_add_timeout_seconds(interval, function_, data);
 }
 
 /**
@@ -222,7 +222,7 @@ public uint threadsAddTimeoutSeconds(uint interval, GSourceFunc funct, void* dat
  *     priority = the priority of the timeout source. Typically this will be in the
  *         range between #G_PRIORITY_DEFAULT_IDLE and #G_PRIORITY_HIGH_IDLE.
  *     interval = the time between calls to the function, in seconds
- *     funct = function to call
+ *     function_ = function to call
  *     data = data to pass to @function
  *     notify = function to call when the timeout is removed, or %NULL
  *
@@ -230,9 +230,9 @@ public uint threadsAddTimeoutSeconds(uint interval, GSourceFunc funct, void* dat
  *
  * Since: 2.14
  */
-public uint threadsAddTimeoutSecondsFull(int priority, uint interval, GSourceFunc funct, void* data, GDestroyNotify notify)
+public uint threadsAddTimeoutSecondsFull(int priority, uint interval, GSourceFunc function_, void* data, GDestroyNotify notify)
 {
-	return gdk_threads_add_timeout_seconds_full(priority, interval, funct, data, notify);
+	return gdk_threads_add_timeout_seconds_full(priority, interval, function_, data, notify);
 }
 
 /**

@@ -1188,7 +1188,7 @@ __gshared extern(C)
 	void function(GdkGeometry* geometry, GdkWindowHints flags, int width, int height, int* newWidth, int* newHeight) c_gdk_window_constrain_size;
 	void function() c_gdk_window_process_all_updates;
 	void function(int setting) c_gdk_window_set_debug_updates;
-	void function(GdkWindow* window, GdkFilterFunc funct, void* data) c_gdk_window_add_filter;
+	void function(GdkWindow* window, GdkFilterFunc function_, void* data) c_gdk_window_add_filter;
 	void function(GdkWindow* window) c_gdk_window_beep;
 	GdkDrawingContext* function(GdkWindow* window, cairo_region_t* region) c_gdk_window_begin_draw_frame;
 	void function(GdkWindow* window, int button, int rootX, int rootY, uint timestamp) c_gdk_window_begin_move_drag;
@@ -1287,7 +1287,7 @@ __gshared extern(C)
 	void function(GdkWindow* window, int updateChildren) c_gdk_window_process_updates;
 	void function(GdkWindow* window) c_gdk_window_raise;
 	void function(GdkWindow* window) c_gdk_window_register_dnd;
-	void function(GdkWindow* window, GdkFilterFunc funct, void* data) c_gdk_window_remove_filter;
+	void function(GdkWindow* window, GdkFilterFunc function_, void* data) c_gdk_window_remove_filter;
 	void function(GdkWindow* window, GdkWindow* newParent, int x, int y) c_gdk_window_reparent;
 	void function(GdkWindow* window, int width, int height) c_gdk_window_resize;
 	void function(GdkWindow* window, GdkWindow* sibling, int above) c_gdk_window_restack;
@@ -1396,12 +1396,12 @@ __gshared extern(C)
 
 	// gdk.Threads
 
-	uint function(GSourceFunc funct, void* data) c_gdk_threads_add_idle;
-	uint function(int priority, GSourceFunc funct, void* data, GDestroyNotify notify) c_gdk_threads_add_idle_full;
-	uint function(uint interval, GSourceFunc funct, void* data) c_gdk_threads_add_timeout;
-	uint function(int priority, uint interval, GSourceFunc funct, void* data, GDestroyNotify notify) c_gdk_threads_add_timeout_full;
-	uint function(uint interval, GSourceFunc funct, void* data) c_gdk_threads_add_timeout_seconds;
-	uint function(int priority, uint interval, GSourceFunc funct, void* data, GDestroyNotify notify) c_gdk_threads_add_timeout_seconds_full;
+	uint function(GSourceFunc function_, void* data) c_gdk_threads_add_idle;
+	uint function(int priority, GSourceFunc function_, void* data, GDestroyNotify notify) c_gdk_threads_add_idle_full;
+	uint function(uint interval, GSourceFunc function_, void* data) c_gdk_threads_add_timeout;
+	uint function(int priority, uint interval, GSourceFunc function_, void* data, GDestroyNotify notify) c_gdk_threads_add_timeout_full;
+	uint function(uint interval, GSourceFunc function_, void* data) c_gdk_threads_add_timeout_seconds;
+	uint function(int priority, uint interval, GSourceFunc function_, void* data, GDestroyNotify notify) c_gdk_threads_add_timeout_seconds_full;
 	void function() c_gdk_threads_enter;
 	void function() c_gdk_threads_init;
 	void function() c_gdk_threads_leave;

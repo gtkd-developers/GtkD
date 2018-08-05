@@ -293,15 +293,15 @@ public struct PgMiscellaneous
 	 *
 	 * Params:
 	 *     pos = in/out string position
-	 *     output = an int into which to write the result
+	 *     out_ = an int into which to write the result
 	 *
 	 * Returns: %FALSE if a parse error occurred.
 	 */
-	public static bool scanInt(ref string pos, out int output)
+	public static bool scanInt(ref string pos, out int out_)
 	{
 		char* outpos = Str.toStringz(pos);
 
-		auto p = pango_scan_int(&outpos, &output) != 0;
+		auto p = pango_scan_int(&outpos, &out_) != 0;
 
 		pos = Str.toString(outpos);
 
@@ -316,19 +316,19 @@ public struct PgMiscellaneous
 	 *
 	 * Params:
 	 *     pos = in/out string position
-	 *     output = a #GString into which to write the result
+	 *     out_ = a #GString into which to write the result
 	 *
 	 * Returns: %FALSE if a parse error occurred.
 	 */
-	public static bool scanString(ref string pos, out StringG output)
+	public static bool scanString(ref string pos, out StringG out_)
 	{
 		char* outpos = Str.toStringz(pos);
-		GString* outoutput = sliceNew!GString();
+		GString* outout_ = sliceNew!GString();
 
-		auto p = pango_scan_string(&outpos, outoutput) != 0;
+		auto p = pango_scan_string(&outpos, outout_) != 0;
 
 		pos = Str.toString(outpos);
-		output = new StringG(outoutput, true);
+		out_ = new StringG(outout_, true);
 
 		return p;
 	}
@@ -340,19 +340,19 @@ public struct PgMiscellaneous
 	 *
 	 * Params:
 	 *     pos = in/out string position
-	 *     output = a #GString into which to write the result
+	 *     out_ = a #GString into which to write the result
 	 *
 	 * Returns: %FALSE if a parse error occurred.
 	 */
-	public static bool scanWord(ref string pos, out StringG output)
+	public static bool scanWord(ref string pos, out StringG out_)
 	{
 		char* outpos = Str.toStringz(pos);
-		GString* outoutput = sliceNew!GString();
+		GString* outout_ = sliceNew!GString();
 
-		auto p = pango_scan_word(&outpos, outoutput) != 0;
+		auto p = pango_scan_word(&outpos, outout_) != 0;
 
 		pos = Str.toString(outpos);
-		output = new StringG(outoutput, true);
+		out_ = new StringG(outout_, true);
 
 		return p;
 	}

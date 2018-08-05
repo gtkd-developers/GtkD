@@ -159,14 +159,14 @@ public class Idle
 	 * use a custom main context.
 	 *
 	 * Params:
-	 *     funct = function to call
+	 *     function_ = function to call
 	 *     data = data to pass to @function.
 	 *
 	 * Returns: the ID (greater than 0) of the event source.
 	 */
-	public static uint add(GSourceFunc funct, void* data)
+	public static uint add(GSourceFunc function_, void* data)
 	{
-		return g_idle_add(funct, data);
+		return g_idle_add(function_, data);
 	}
 
 	/**
@@ -186,15 +186,15 @@ public class Idle
 	 * Params:
 	 *     priority = the priority of the idle source. Typically this will be in the
 	 *         range between #G_PRIORITY_DEFAULT_IDLE and #G_PRIORITY_HIGH_IDLE.
-	 *     funct = function to call
+	 *     function_ = function to call
 	 *     data = data to pass to @function
 	 *     notify = function to call when the idle is removed, or %NULL
 	 *
 	 * Returns: the ID (greater than 0) of the event source.
 	 */
-	public static uint addFull(int priority, GSourceFunc funct, void* data, GDestroyNotify notify)
+	public static uint addFull(int priority, GSourceFunc function_, void* data, GDestroyNotify notify)
 	{
-		return g_idle_add_full(priority, funct, data, notify);
+		return g_idle_add_full(priority, function_, data, notify);
 	}
 
 	/**

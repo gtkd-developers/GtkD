@@ -822,16 +822,16 @@ public struct Util
 	 * are printed out to standard error.
 	 *
 	 * Params:
-	 *     str = a list of debug options separated by colons, spaces, or
+	 *     string_ = a list of debug options separated by colons, spaces, or
 	 *         commas, or %NULL.
 	 *     keys = pointer to an array of #GDebugKey which associate
 	 *         strings with bit flags.
 	 *
 	 * Returns: the combined set of bit flags.
 	 */
-	public static uint parseDebugString(string str, GDebugKey[] keys)
+	public static uint parseDebugString(string string_, GDebugKey[] keys)
 	{
-		return g_parse_debug_string(Str.toStringz(str), keys.ptr, cast(uint)keys.length);
+		return g_parse_debug_string(Str.toStringz(string_), keys.ptr, cast(uint)keys.length);
 	}
 
 	/**

@@ -161,7 +161,7 @@ public class CClosure
 	 *     returnValue = a #GValue to store the return
 	 *         value. May be %NULL if the callback of @closure doesn't return a
 	 *         value.
-	 *     instanc = the instance on which the closure is invoked.
+	 *     instance_ = the instance on which the closure is invoked.
 	 *     args = va_list of arguments to be passed to the closure.
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
@@ -169,9 +169,9 @@ public class CClosure
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
-	public static void marshalBOOLEANBOXEDBOXEDv(Closure closure, Value returnValue, TypeInstance instanc, void* args, void* marshalData, GType[] paramTypes)
+	public static void marshalBOOLEANBOXEDBOXEDv(Closure closure, Value returnValue, TypeInstance instance_, void* args, void* marshalData, GType[] paramTypes)
 	{
-		g_cclosure_marshal_BOOLEAN__BOXED_BOXEDv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instanc is null) ? null : instanc.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
+		g_cclosure_marshal_BOOLEAN__BOXED_BOXEDv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instance_ is null) ? null : instance_.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
 	}
 
 	/**
@@ -206,7 +206,7 @@ public class CClosure
 	 *     returnValue = a #GValue to store the return
 	 *         value. May be %NULL if the callback of @closure doesn't return a
 	 *         value.
-	 *     instanc = the instance on which the closure is invoked.
+	 *     instance_ = the instance on which the closure is invoked.
 	 *     args = va_list of arguments to be passed to the closure.
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
@@ -214,9 +214,9 @@ public class CClosure
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
-	public static void marshalBOOLEANFLAGSv(Closure closure, Value returnValue, TypeInstance instanc, void* args, void* marshalData, GType[] paramTypes)
+	public static void marshalBOOLEANFLAGSv(Closure closure, Value returnValue, TypeInstance instance_, void* args, void* marshalData, GType[] paramTypes)
 	{
-		g_cclosure_marshal_BOOLEAN__FLAGSv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instanc is null) ? null : instanc.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
+		g_cclosure_marshal_BOOLEAN__FLAGSv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instance_ is null) ? null : instance_.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
 	}
 
 	/**
@@ -250,7 +250,7 @@ public class CClosure
 	 *     returnValue = a #GValue to store the return
 	 *         value. May be %NULL if the callback of @closure doesn't return a
 	 *         value.
-	 *     instanc = the instance on which the closure is invoked.
+	 *     instance_ = the instance on which the closure is invoked.
 	 *     args = va_list of arguments to be passed to the closure.
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
@@ -258,9 +258,9 @@ public class CClosure
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
-	public static void marshalSTRINGOBJECTPOINTERv(Closure closure, Value returnValue, TypeInstance instanc, void* args, void* marshalData, GType[] paramTypes)
+	public static void marshalSTRINGOBJECTPOINTERv(Closure closure, Value returnValue, TypeInstance instance_, void* args, void* marshalData, GType[] paramTypes)
 	{
-		g_cclosure_marshal_STRING__OBJECT_POINTERv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instanc is null) ? null : instanc.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
+		g_cclosure_marshal_STRING__OBJECT_POINTERv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instance_ is null) ? null : instance_.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
 	}
 
 	/**
@@ -293,7 +293,7 @@ public class CClosure
 	 *     returnValue = a #GValue to store the return
 	 *         value. May be %NULL if the callback of @closure doesn't return a
 	 *         value.
-	 *     instanc = the instance on which the closure is invoked.
+	 *     instance_ = the instance on which the closure is invoked.
 	 *     args = va_list of arguments to be passed to the closure.
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
@@ -301,9 +301,9 @@ public class CClosure
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
-	public static void marshalVOIDBOOLEANv(Closure closure, Value returnValue, TypeInstance instanc, void* args, void* marshalData, GType[] paramTypes)
+	public static void marshalVOIDBOOLEANv(Closure closure, Value returnValue, TypeInstance instance_, void* args, void* marshalData, GType[] paramTypes)
 	{
-		g_cclosure_marshal_VOID__BOOLEANv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instanc is null) ? null : instanc.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
+		g_cclosure_marshal_VOID__BOOLEANv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instance_ is null) ? null : instance_.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
 	}
 
 	/**
@@ -336,7 +336,7 @@ public class CClosure
 	 *     returnValue = a #GValue to store the return
 	 *         value. May be %NULL if the callback of @closure doesn't return a
 	 *         value.
-	 *     instanc = the instance on which the closure is invoked.
+	 *     instance_ = the instance on which the closure is invoked.
 	 *     args = va_list of arguments to be passed to the closure.
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
@@ -344,9 +344,9 @@ public class CClosure
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
-	public static void marshalVOIDBOXEDv(Closure closure, Value returnValue, TypeInstance instanc, void* args, void* marshalData, GType[] paramTypes)
+	public static void marshalVOIDBOXEDv(Closure closure, Value returnValue, TypeInstance instance_, void* args, void* marshalData, GType[] paramTypes)
 	{
-		g_cclosure_marshal_VOID__BOXEDv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instanc is null) ? null : instanc.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
+		g_cclosure_marshal_VOID__BOXEDv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instance_ is null) ? null : instance_.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
 	}
 
 	/**
@@ -379,7 +379,7 @@ public class CClosure
 	 *     returnValue = a #GValue to store the return
 	 *         value. May be %NULL if the callback of @closure doesn't return a
 	 *         value.
-	 *     instanc = the instance on which the closure is invoked.
+	 *     instance_ = the instance on which the closure is invoked.
 	 *     args = va_list of arguments to be passed to the closure.
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
@@ -387,9 +387,9 @@ public class CClosure
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
-	public static void marshalVOIDCHARv(Closure closure, Value returnValue, TypeInstance instanc, void* args, void* marshalData, GType[] paramTypes)
+	public static void marshalVOIDCHARv(Closure closure, Value returnValue, TypeInstance instance_, void* args, void* marshalData, GType[] paramTypes)
 	{
-		g_cclosure_marshal_VOID__CHARv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instanc is null) ? null : instanc.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
+		g_cclosure_marshal_VOID__CHARv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instance_ is null) ? null : instance_.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
 	}
 
 	/**
@@ -422,7 +422,7 @@ public class CClosure
 	 *     returnValue = a #GValue to store the return
 	 *         value. May be %NULL if the callback of @closure doesn't return a
 	 *         value.
-	 *     instanc = the instance on which the closure is invoked.
+	 *     instance_ = the instance on which the closure is invoked.
 	 *     args = va_list of arguments to be passed to the closure.
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
@@ -430,9 +430,9 @@ public class CClosure
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
-	public static void marshalVOIDDOUBLEv(Closure closure, Value returnValue, TypeInstance instanc, void* args, void* marshalData, GType[] paramTypes)
+	public static void marshalVOIDDOUBLEv(Closure closure, Value returnValue, TypeInstance instance_, void* args, void* marshalData, GType[] paramTypes)
 	{
-		g_cclosure_marshal_VOID__DOUBLEv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instanc is null) ? null : instanc.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
+		g_cclosure_marshal_VOID__DOUBLEv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instance_ is null) ? null : instance_.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
 	}
 
 	/**
@@ -465,7 +465,7 @@ public class CClosure
 	 *     returnValue = a #GValue to store the return
 	 *         value. May be %NULL if the callback of @closure doesn't return a
 	 *         value.
-	 *     instanc = the instance on which the closure is invoked.
+	 *     instance_ = the instance on which the closure is invoked.
 	 *     args = va_list of arguments to be passed to the closure.
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
@@ -473,9 +473,9 @@ public class CClosure
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
-	public static void marshalVOIDENUMv(Closure closure, Value returnValue, TypeInstance instanc, void* args, void* marshalData, GType[] paramTypes)
+	public static void marshalVOIDENUMv(Closure closure, Value returnValue, TypeInstance instance_, void* args, void* marshalData, GType[] paramTypes)
 	{
-		g_cclosure_marshal_VOID__ENUMv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instanc is null) ? null : instanc.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
+		g_cclosure_marshal_VOID__ENUMv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instance_ is null) ? null : instance_.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
 	}
 
 	/**
@@ -508,7 +508,7 @@ public class CClosure
 	 *     returnValue = a #GValue to store the return
 	 *         value. May be %NULL if the callback of @closure doesn't return a
 	 *         value.
-	 *     instanc = the instance on which the closure is invoked.
+	 *     instance_ = the instance on which the closure is invoked.
 	 *     args = va_list of arguments to be passed to the closure.
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
@@ -516,9 +516,9 @@ public class CClosure
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
-	public static void marshalVOIDFLAGSv(Closure closure, Value returnValue, TypeInstance instanc, void* args, void* marshalData, GType[] paramTypes)
+	public static void marshalVOIDFLAGSv(Closure closure, Value returnValue, TypeInstance instance_, void* args, void* marshalData, GType[] paramTypes)
 	{
-		g_cclosure_marshal_VOID__FLAGSv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instanc is null) ? null : instanc.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
+		g_cclosure_marshal_VOID__FLAGSv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instance_ is null) ? null : instance_.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
 	}
 
 	/**
@@ -551,7 +551,7 @@ public class CClosure
 	 *     returnValue = a #GValue to store the return
 	 *         value. May be %NULL if the callback of @closure doesn't return a
 	 *         value.
-	 *     instanc = the instance on which the closure is invoked.
+	 *     instance_ = the instance on which the closure is invoked.
 	 *     args = va_list of arguments to be passed to the closure.
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
@@ -559,9 +559,9 @@ public class CClosure
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
-	public static void marshalVOIDFLOATv(Closure closure, Value returnValue, TypeInstance instanc, void* args, void* marshalData, GType[] paramTypes)
+	public static void marshalVOIDFLOATv(Closure closure, Value returnValue, TypeInstance instance_, void* args, void* marshalData, GType[] paramTypes)
 	{
-		g_cclosure_marshal_VOID__FLOATv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instanc is null) ? null : instanc.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
+		g_cclosure_marshal_VOID__FLOATv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instance_ is null) ? null : instance_.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
 	}
 
 	/**
@@ -594,7 +594,7 @@ public class CClosure
 	 *     returnValue = a #GValue to store the return
 	 *         value. May be %NULL if the callback of @closure doesn't return a
 	 *         value.
-	 *     instanc = the instance on which the closure is invoked.
+	 *     instance_ = the instance on which the closure is invoked.
 	 *     args = va_list of arguments to be passed to the closure.
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
@@ -602,9 +602,9 @@ public class CClosure
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
-	public static void marshalVOIDINTv(Closure closure, Value returnValue, TypeInstance instanc, void* args, void* marshalData, GType[] paramTypes)
+	public static void marshalVOIDINTv(Closure closure, Value returnValue, TypeInstance instance_, void* args, void* marshalData, GType[] paramTypes)
 	{
-		g_cclosure_marshal_VOID__INTv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instanc is null) ? null : instanc.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
+		g_cclosure_marshal_VOID__INTv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instance_ is null) ? null : instance_.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
 	}
 
 	/**
@@ -637,7 +637,7 @@ public class CClosure
 	 *     returnValue = a #GValue to store the return
 	 *         value. May be %NULL if the callback of @closure doesn't return a
 	 *         value.
-	 *     instanc = the instance on which the closure is invoked.
+	 *     instance_ = the instance on which the closure is invoked.
 	 *     args = va_list of arguments to be passed to the closure.
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
@@ -645,9 +645,9 @@ public class CClosure
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
-	public static void marshalVOIDLONGv(Closure closure, Value returnValue, TypeInstance instanc, void* args, void* marshalData, GType[] paramTypes)
+	public static void marshalVOIDLONGv(Closure closure, Value returnValue, TypeInstance instance_, void* args, void* marshalData, GType[] paramTypes)
 	{
-		g_cclosure_marshal_VOID__LONGv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instanc is null) ? null : instanc.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
+		g_cclosure_marshal_VOID__LONGv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instance_ is null) ? null : instance_.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
 	}
 
 	/**
@@ -680,7 +680,7 @@ public class CClosure
 	 *     returnValue = a #GValue to store the return
 	 *         value. May be %NULL if the callback of @closure doesn't return a
 	 *         value.
-	 *     instanc = the instance on which the closure is invoked.
+	 *     instance_ = the instance on which the closure is invoked.
 	 *     args = va_list of arguments to be passed to the closure.
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
@@ -688,9 +688,9 @@ public class CClosure
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
-	public static void marshalVOIDOBJECTv(Closure closure, Value returnValue, TypeInstance instanc, void* args, void* marshalData, GType[] paramTypes)
+	public static void marshalVOIDOBJECTv(Closure closure, Value returnValue, TypeInstance instance_, void* args, void* marshalData, GType[] paramTypes)
 	{
-		g_cclosure_marshal_VOID__OBJECTv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instanc is null) ? null : instanc.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
+		g_cclosure_marshal_VOID__OBJECTv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instance_ is null) ? null : instance_.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
 	}
 
 	/**
@@ -723,7 +723,7 @@ public class CClosure
 	 *     returnValue = a #GValue to store the return
 	 *         value. May be %NULL if the callback of @closure doesn't return a
 	 *         value.
-	 *     instanc = the instance on which the closure is invoked.
+	 *     instance_ = the instance on which the closure is invoked.
 	 *     args = va_list of arguments to be passed to the closure.
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
@@ -731,9 +731,9 @@ public class CClosure
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
-	public static void marshalVOIDPARAMv(Closure closure, Value returnValue, TypeInstance instanc, void* args, void* marshalData, GType[] paramTypes)
+	public static void marshalVOIDPARAMv(Closure closure, Value returnValue, TypeInstance instance_, void* args, void* marshalData, GType[] paramTypes)
 	{
-		g_cclosure_marshal_VOID__PARAMv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instanc is null) ? null : instanc.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
+		g_cclosure_marshal_VOID__PARAMv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instance_ is null) ? null : instance_.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
 	}
 
 	/**
@@ -770,7 +770,7 @@ public class CClosure
 	 *     returnValue = a #GValue to store the return
 	 *         value. May be %NULL if the callback of @closure doesn't return a
 	 *         value.
-	 *     instanc = the instance on which the closure is invoked.
+	 *     instance_ = the instance on which the closure is invoked.
 	 *     args = va_list of arguments to be passed to the closure.
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
@@ -778,9 +778,9 @@ public class CClosure
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
-	public static void marshalVOIDPOINTERv(Closure closure, Value returnValue, TypeInstance instanc, void* args, void* marshalData, GType[] paramTypes)
+	public static void marshalVOIDPOINTERv(Closure closure, Value returnValue, TypeInstance instance_, void* args, void* marshalData, GType[] paramTypes)
 	{
-		g_cclosure_marshal_VOID__POINTERv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instanc is null) ? null : instanc.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
+		g_cclosure_marshal_VOID__POINTERv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instance_ is null) ? null : instance_.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
 	}
 
 	/**
@@ -813,7 +813,7 @@ public class CClosure
 	 *     returnValue = a #GValue to store the return
 	 *         value. May be %NULL if the callback of @closure doesn't return a
 	 *         value.
-	 *     instanc = the instance on which the closure is invoked.
+	 *     instance_ = the instance on which the closure is invoked.
 	 *     args = va_list of arguments to be passed to the closure.
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
@@ -821,9 +821,9 @@ public class CClosure
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
-	public static void marshalVOIDSTRINGv(Closure closure, Value returnValue, TypeInstance instanc, void* args, void* marshalData, GType[] paramTypes)
+	public static void marshalVOIDSTRINGv(Closure closure, Value returnValue, TypeInstance instance_, void* args, void* marshalData, GType[] paramTypes)
 	{
-		g_cclosure_marshal_VOID__STRINGv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instanc is null) ? null : instanc.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
+		g_cclosure_marshal_VOID__STRINGv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instance_ is null) ? null : instance_.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
 	}
 
 	/**
@@ -856,7 +856,7 @@ public class CClosure
 	 *     returnValue = a #GValue to store the return
 	 *         value. May be %NULL if the callback of @closure doesn't return a
 	 *         value.
-	 *     instanc = the instance on which the closure is invoked.
+	 *     instance_ = the instance on which the closure is invoked.
 	 *     args = va_list of arguments to be passed to the closure.
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
@@ -864,9 +864,9 @@ public class CClosure
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
-	public static void marshalVOIDUCHARv(Closure closure, Value returnValue, TypeInstance instanc, void* args, void* marshalData, GType[] paramTypes)
+	public static void marshalVOIDUCHARv(Closure closure, Value returnValue, TypeInstance instance_, void* args, void* marshalData, GType[] paramTypes)
 	{
-		g_cclosure_marshal_VOID__UCHARv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instanc is null) ? null : instanc.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
+		g_cclosure_marshal_VOID__UCHARv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instance_ is null) ? null : instance_.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
 	}
 
 	/**
@@ -921,7 +921,7 @@ public class CClosure
 	 *     returnValue = a #GValue to store the return
 	 *         value. May be %NULL if the callback of @closure doesn't return a
 	 *         value.
-	 *     instanc = the instance on which the closure is invoked.
+	 *     instance_ = the instance on which the closure is invoked.
 	 *     args = va_list of arguments to be passed to the closure.
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
@@ -929,9 +929,9 @@ public class CClosure
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
-	public static void marshalVOIDUINTPOINTERv(Closure closure, Value returnValue, TypeInstance instanc, void* args, void* marshalData, GType[] paramTypes)
+	public static void marshalVOIDUINTPOINTERv(Closure closure, Value returnValue, TypeInstance instance_, void* args, void* marshalData, GType[] paramTypes)
 	{
-		g_cclosure_marshal_VOID__UINT_POINTERv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instanc is null) ? null : instanc.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
+		g_cclosure_marshal_VOID__UINT_POINTERv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instance_ is null) ? null : instance_.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
 	}
 
 	/**
@@ -942,7 +942,7 @@ public class CClosure
 	 *     returnValue = a #GValue to store the return
 	 *         value. May be %NULL if the callback of @closure doesn't return a
 	 *         value.
-	 *     instanc = the instance on which the closure is invoked.
+	 *     instance_ = the instance on which the closure is invoked.
 	 *     args = va_list of arguments to be passed to the closure.
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
@@ -950,9 +950,9 @@ public class CClosure
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
-	public static void marshalVOIDUINTv(Closure closure, Value returnValue, TypeInstance instanc, void* args, void* marshalData, GType[] paramTypes)
+	public static void marshalVOIDUINTv(Closure closure, Value returnValue, TypeInstance instance_, void* args, void* marshalData, GType[] paramTypes)
 	{
-		g_cclosure_marshal_VOID__UINTv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instanc is null) ? null : instanc.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
+		g_cclosure_marshal_VOID__UINTv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instance_ is null) ? null : instance_.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
 	}
 
 	/**
@@ -985,7 +985,7 @@ public class CClosure
 	 *     returnValue = a #GValue to store the return
 	 *         value. May be %NULL if the callback of @closure doesn't return a
 	 *         value.
-	 *     instanc = the instance on which the closure is invoked.
+	 *     instance_ = the instance on which the closure is invoked.
 	 *     args = va_list of arguments to be passed to the closure.
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
@@ -993,9 +993,9 @@ public class CClosure
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
-	public static void marshalVOIDULONGv(Closure closure, Value returnValue, TypeInstance instanc, void* args, void* marshalData, GType[] paramTypes)
+	public static void marshalVOIDULONGv(Closure closure, Value returnValue, TypeInstance instance_, void* args, void* marshalData, GType[] paramTypes)
 	{
-		g_cclosure_marshal_VOID__ULONGv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instanc is null) ? null : instanc.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
+		g_cclosure_marshal_VOID__ULONGv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instance_ is null) ? null : instance_.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
 	}
 
 	/**
@@ -1028,7 +1028,7 @@ public class CClosure
 	 *     returnValue = a #GValue to store the return
 	 *         value. May be %NULL if the callback of @closure doesn't return a
 	 *         value.
-	 *     instanc = the instance on which the closure is invoked.
+	 *     instance_ = the instance on which the closure is invoked.
 	 *     args = va_list of arguments to be passed to the closure.
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
@@ -1036,9 +1036,9 @@ public class CClosure
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
-	public static void marshalVOIDVARIANTv(Closure closure, Value returnValue, TypeInstance instanc, void* args, void* marshalData, GType[] paramTypes)
+	public static void marshalVOIDVARIANTv(Closure closure, Value returnValue, TypeInstance instance_, void* args, void* marshalData, GType[] paramTypes)
 	{
-		g_cclosure_marshal_VOID__VARIANTv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instanc is null) ? null : instanc.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
+		g_cclosure_marshal_VOID__VARIANTv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instance_ is null) ? null : instance_.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
 	}
 
 	/**
@@ -1070,7 +1070,7 @@ public class CClosure
 	 *     returnValue = a #GValue to store the return
 	 *         value. May be %NULL if the callback of @closure doesn't return a
 	 *         value.
-	 *     instanc = the instance on which the closure is invoked.
+	 *     instance_ = the instance on which the closure is invoked.
 	 *     args = va_list of arguments to be passed to the closure.
 	 *     marshalData = additional data specified when
 	 *         registering the marshaller, see g_closure_set_marshal() and
@@ -1078,9 +1078,9 @@ public class CClosure
 	 *     paramTypes = the #GType of each argument from
 	 *         @args.
 	 */
-	public static void marshalVOIDVOIDv(Closure closure, Value returnValue, TypeInstance instanc, void* args, void* marshalData, GType[] paramTypes)
+	public static void marshalVOIDVOIDv(Closure closure, Value returnValue, TypeInstance instance_, void* args, void* marshalData, GType[] paramTypes)
 	{
-		g_cclosure_marshal_VOID__VOIDv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instanc is null) ? null : instanc.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
+		g_cclosure_marshal_VOID__VOIDv((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instance_ is null) ? null : instance_.getTypeInstanceStruct(), args, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
 	}
 
 	/**
@@ -1119,7 +1119,7 @@ public class CClosure
 	 *     returnValue = a #GValue to store the return
 	 *         value. May be %NULL if the callback of @closure doesn't return a
 	 *         value.
-	 *     instanc = the instance on which the closure is
+	 *     instance_ = the instance on which the closure is
 	 *         invoked.
 	 *     argsList = va_list of arguments to be passed to the closure.
 	 *     marshalData = additional data specified when
@@ -1130,8 +1130,8 @@ public class CClosure
 	 *
 	 * Since: 2.30
 	 */
-	public static void marshalGenericVa(Closure closure, Value returnValue, TypeInstance instanc, void* argsList, void* marshalData, GType[] paramTypes)
+	public static void marshalGenericVa(Closure closure, Value returnValue, TypeInstance instance_, void* argsList, void* marshalData, GType[] paramTypes)
 	{
-		g_cclosure_marshal_generic_va((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instanc is null) ? null : instanc.getTypeInstanceStruct(), argsList, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
+		g_cclosure_marshal_generic_va((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), (instance_ is null) ? null : instance_.getTypeInstanceStruct(), argsList, marshalData, cast(int)paramTypes.length, paramTypes.ptr);
 	}
 }

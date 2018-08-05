@@ -1431,7 +1431,7 @@ public class TextView : Container, ScrollableIF
 	 * This signal has no default bindings.
 	 *
 	 * Params:
-	 *     str = the string to insert
+	 *     string_ = the string to insert
 	 */
 	gulong addOnInsertAtCursor(void delegate(string, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

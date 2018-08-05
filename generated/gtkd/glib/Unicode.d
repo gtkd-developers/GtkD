@@ -720,12 +720,12 @@ public struct Unicode
 	 * manual for more information.
 	 *
 	 * Params:
-	 *     str = a UCS-4 encoded string.
+	 *     string_ = a UCS-4 encoded string.
 	 *     len = the maximum length of @string to use.
 	 */
-	public static void unicodeCanonicalOrdering(dchar* str, size_t len)
+	public static void unicodeCanonicalOrdering(dchar* string_, size_t len)
 	{
-		g_unicode_canonical_ordering(str, len);
+		g_unicode_canonical_ordering(string_, len);
 	}
 
 	/**

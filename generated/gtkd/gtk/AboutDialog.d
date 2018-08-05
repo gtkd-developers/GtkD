@@ -535,13 +535,13 @@ public class AboutDialog : Dialog
 	 * Sets the version string to display in the about dialog.
 	 *
 	 * Params:
-	 *     versio = the version string
+	 *     version_ = the version string
 	 *
 	 * Since: 2.6
 	 */
-	public void setVersion(string versio)
+	public void setVersion(string version_)
 	{
-		gtk_about_dialog_set_version(gtkAboutDialog, Str.toStringz(versio));
+		gtk_about_dialog_set_version(gtkAboutDialog, Str.toStringz(version_));
 	}
 
 	/**

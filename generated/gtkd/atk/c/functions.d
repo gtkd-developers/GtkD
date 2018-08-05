@@ -461,10 +461,10 @@ __gshared extern(C)
 	void function(AtkEditableText* text, int startPos, int endPos) c_atk_editable_text_copy_text;
 	void function(AtkEditableText* text, int startPos, int endPos) c_atk_editable_text_cut_text;
 	void function(AtkEditableText* text, int startPos, int endPos) c_atk_editable_text_delete_text;
-	void function(AtkEditableText* text, const(char)* str, int length, int* position) c_atk_editable_text_insert_text;
+	void function(AtkEditableText* text, const(char)* string_, int length, int* position) c_atk_editable_text_insert_text;
 	void function(AtkEditableText* text, int position) c_atk_editable_text_paste_text;
 	int function(AtkEditableText* text, AtkAttributeSet* attribSet, int startOffset, int endOffset) c_atk_editable_text_set_run_attributes;
-	void function(AtkEditableText* text, const(char)* str) c_atk_editable_text_set_text_contents;
+	void function(AtkEditableText* text, const(char)* string_) c_atk_editable_text_set_text_contents;
 
 	// atk.GObjectAccessible
 

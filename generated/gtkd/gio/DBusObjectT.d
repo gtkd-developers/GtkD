@@ -113,7 +113,7 @@ public template DBusObjectT(TStruct)
 	 * Emitted when @interface is added to @object.
 	 *
 	 * Params:
-	 *     iface = The #GDBusInterface that was added.
+	 *     interface_ = The #GDBusInterface that was added.
 	 *
 	 * Since: 2.30
 	 */
@@ -126,7 +126,7 @@ public template DBusObjectT(TStruct)
 	 * Emitted when @interface is removed from @object.
 	 *
 	 * Params:
-	 *     iface = The #GDBusInterface that was removed.
+	 *     interface_ = The #GDBusInterface that was removed.
 	 *
 	 * Since: 2.30
 	 */

@@ -326,7 +326,7 @@ public class Regex
 	 * freeing or modifying @string then the behaviour is undefined.
 	 *
 	 * Params:
-	 *     str = the string to scan for matches
+	 *     string_ = the string to scan for matches
 	 *     matchOptions = match options
 	 *     matchInfo = pointer to location where to store
 	 *         the #GMatchInfo, or %NULL if you do not need it
@@ -335,11 +335,11 @@ public class Regex
 	 *
 	 * Since: 2.14
 	 */
-	public bool match(string str, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
+	public bool match(string string_, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
 	{
 		GMatchInfo* outmatchInfo = null;
 
-		auto p = g_regex_match(gRegex, Str.toStringz(str), matchOptions, &outmatchInfo) != 0;
+		auto p = g_regex_match(gRegex, Str.toStringz(string_), matchOptions, &outmatchInfo) != 0;
 
 		matchInfo = new MatchInfo(outmatchInfo);
 
@@ -363,7 +363,7 @@ public class Regex
 	 * freeing or modifying @string then the behaviour is undefined.
 	 *
 	 * Params:
-	 *     str = the string to scan for matches
+	 *     string_ = the string to scan for matches
 	 *     matchOptions = match options
 	 *     matchInfo = pointer to location where to store
 	 *         the #GMatchInfo, or %NULL if you do not need it
@@ -372,11 +372,11 @@ public class Regex
 	 *
 	 * Since: 2.14
 	 */
-	public bool matchAll(string str, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
+	public bool matchAll(string string_, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
 	{
 		GMatchInfo* outmatchInfo = null;
 
-		auto p = g_regex_match_all(gRegex, Str.toStringz(str), matchOptions, &outmatchInfo) != 0;
+		auto p = g_regex_match_all(gRegex, Str.toStringz(string_), matchOptions, &outmatchInfo) != 0;
 
 		matchInfo = new MatchInfo(outmatchInfo);
 
@@ -422,7 +422,7 @@ public class Regex
 	 * freeing or modifying @string then the behaviour is undefined.
 	 *
 	 * Params:
-	 *     str = the string to scan for matches
+	 *     string_ = the string to scan for matches
 	 *     startPosition = starting index of the string to match, in bytes
 	 *     matchOptions = match options
 	 *     matchInfo = pointer to location where to store
@@ -434,12 +434,12 @@ public class Regex
 	 *
 	 * Throws: GException on failure.
 	 */
-	public bool matchAllFull(string str, int startPosition, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
+	public bool matchAllFull(string string_, int startPosition, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
 	{
 		GMatchInfo* outmatchInfo = null;
 		GError* err = null;
 
-		auto p = g_regex_match_all_full(gRegex, Str.toStringz(str), cast(ptrdiff_t)str.length, startPosition, matchOptions, &outmatchInfo, &err) != 0;
+		auto p = g_regex_match_all_full(gRegex, Str.toStringz(string_), cast(ptrdiff_t)string_.length, startPosition, matchOptions, &outmatchInfo, &err) != 0;
 
 		if (err !is null)
 		{
@@ -503,7 +503,7 @@ public class Regex
 	 * ]|
 	 *
 	 * Params:
-	 *     str = the string to scan for matches
+	 *     string_ = the string to scan for matches
 	 *     startPosition = starting index of the string to match, in bytes
 	 *     matchOptions = match options
 	 *     matchInfo = pointer to location where to store
@@ -515,12 +515,12 @@ public class Regex
 	 *
 	 * Throws: GException on failure.
 	 */
-	public bool matchFull(string str, int startPosition, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
+	public bool matchFull(string string_, int startPosition, GRegexMatchFlags matchOptions, out MatchInfo matchInfo)
 	{
 		GMatchInfo* outmatchInfo = null;
 		GError* err = null;
 
-		auto p = g_regex_match_full(gRegex, Str.toStringz(str), cast(ptrdiff_t)str.length, startPosition, matchOptions, &outmatchInfo, &err) != 0;
+		auto p = g_regex_match_full(gRegex, Str.toStringz(string_), cast(ptrdiff_t)string_.length, startPosition, matchOptions, &outmatchInfo, &err) != 0;
 
 		if (err !is null)
 		{
@@ -580,7 +580,7 @@ public class Regex
 	 * begins with any kind of lookbehind assertion, such as "\b".
 	 *
 	 * Params:
-	 *     str = the string to perform matches against
+	 *     string_ = the string to perform matches against
 	 *     startPosition = starting index of the string to match, in bytes
 	 *     replacement = text to replace each match with
 	 *     matchOptions = options for the match
@@ -591,11 +591,11 @@ public class Regex
 	 *
 	 * Throws: GException on failure.
 	 */
-	public string replace(string str, int startPosition, string replacement, GRegexMatchFlags matchOptions)
+	public string replace(string string_, int startPosition, string replacement, GRegexMatchFlags matchOptions)
 	{
 		GError* err = null;
 
-		auto retStr = g_regex_replace(gRegex, Str.toStringz(str), cast(ptrdiff_t)str.length, startPosition, Str.toStringz(replacement), matchOptions, &err);
+		auto retStr = g_regex_replace(gRegex, Str.toStringz(string_), cast(ptrdiff_t)string_.length, startPosition, Str.toStringz(replacement), matchOptions, &err);
 
 		if (err !is null)
 		{
@@ -654,7 +654,7 @@ public class Regex
 	 * ]|
 	 *
 	 * Params:
-	 *     str = string to perform matches against
+	 *     string_ = string to perform matches against
 	 *     startPosition = starting index of the string to match, in bytes
 	 *     matchOptions = options for the match
 	 *     eval = a function to call for each match
@@ -666,11 +666,11 @@ public class Regex
 	 *
 	 * Throws: GException on failure.
 	 */
-	public string replaceEval(string str, int startPosition, GRegexMatchFlags matchOptions, GRegexEvalCallback eval, void* userData)
+	public string replaceEval(string string_, int startPosition, GRegexMatchFlags matchOptions, GRegexEvalCallback eval, void* userData)
 	{
 		GError* err = null;
 
-		auto retStr = g_regex_replace_eval(gRegex, Str.toStringz(str), cast(ptrdiff_t)str.length, startPosition, matchOptions, eval, userData, &err);
+		auto retStr = g_regex_replace_eval(gRegex, Str.toStringz(string_), cast(ptrdiff_t)string_.length, startPosition, matchOptions, eval, userData, &err);
 
 		if (err !is null)
 		{
@@ -692,7 +692,7 @@ public class Regex
 	 * assertion, such as "\b".
 	 *
 	 * Params:
-	 *     str = the string to perform matches against
+	 *     string_ = the string to perform matches against
 	 *     startPosition = starting index of the string to match, in bytes
 	 *     replacement = text to replace each match with
 	 *     matchOptions = options for the match
@@ -703,11 +703,11 @@ public class Regex
 	 *
 	 * Throws: GException on failure.
 	 */
-	public string replaceLiteral(string str, int startPosition, string replacement, GRegexMatchFlags matchOptions)
+	public string replaceLiteral(string string_, int startPosition, string replacement, GRegexMatchFlags matchOptions)
 	{
 		GError* err = null;
 
-		auto retStr = g_regex_replace_literal(gRegex, Str.toStringz(str), cast(ptrdiff_t)str.length, startPosition, Str.toStringz(replacement), matchOptions, &err);
+		auto retStr = g_regex_replace_literal(gRegex, Str.toStringz(string_), cast(ptrdiff_t)string_.length, startPosition, Str.toStringz(replacement), matchOptions, &err);
 
 		if (err !is null)
 		{
@@ -738,7 +738,7 @@ public class Regex
 	 * "a", "b" and "c".
 	 *
 	 * Params:
-	 *     str = the string to split with the pattern
+	 *     string_ = the string to split with the pattern
 	 *     matchOptions = match time option flags
 	 *
 	 * Returns: a %NULL-terminated gchar ** array. Free
@@ -746,9 +746,9 @@ public class Regex
 	 *
 	 * Since: 2.14
 	 */
-	public string[] split(string str, GRegexMatchFlags matchOptions)
+	public string[] split(string string_, GRegexMatchFlags matchOptions)
 	{
-		auto retStr = g_regex_split(gRegex, Str.toStringz(str), matchOptions);
+		auto retStr = g_regex_split(gRegex, Str.toStringz(string_), matchOptions);
 
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);
@@ -778,7 +778,7 @@ public class Regex
 	 * that begins with any kind of lookbehind assertion, such as "\b".
 	 *
 	 * Params:
-	 *     str = the string to split with the pattern
+	 *     string_ = the string to split with the pattern
 	 *     startPosition = starting index of the string to match, in bytes
 	 *     matchOptions = match time option flags
 	 *     maxTokens = the maximum number of tokens to split @string into.
@@ -791,11 +791,11 @@ public class Regex
 	 *
 	 * Throws: GException on failure.
 	 */
-	public string[] splitFull(string str, int startPosition, GRegexMatchFlags matchOptions, int maxTokens)
+	public string[] splitFull(string string_, int startPosition, GRegexMatchFlags matchOptions, int maxTokens)
 	{
 		GError* err = null;
 
-		auto retStr = g_regex_split_full(gRegex, Str.toStringz(str), cast(ptrdiff_t)str.length, startPosition, matchOptions, maxTokens, &err);
+		auto retStr = g_regex_split_full(gRegex, Str.toStringz(string_), cast(ptrdiff_t)string_.length, startPosition, matchOptions, maxTokens, &err);
 
 		if (err !is null)
 		{
@@ -870,16 +870,16 @@ public class Regex
 	 * In this case the output string will be of course equal to @string.
 	 *
 	 * Params:
-	 *     str = the string to escape
+	 *     string_ = the string to escape
 	 *     length = the length of @string
 	 *
 	 * Returns: a newly-allocated escaped string
 	 *
 	 * Since: 2.30
 	 */
-	public static string escapeNul(string str, int length)
+	public static string escapeNul(string string_, int length)
 	{
-		auto retStr = g_regex_escape_nul(Str.toStringz(str), length);
+		auto retStr = g_regex_escape_nul(Str.toStringz(string_), length);
 
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
@@ -895,15 +895,15 @@ public class Regex
 	 * in @length.
 	 *
 	 * Params:
-	 *     str = the string to escape
+	 *     string_ = the string to escape
 	 *
 	 * Returns: a newly-allocated escaped string
 	 *
 	 * Since: 2.14
 	 */
-	public static string escapeString(string str)
+	public static string escapeString(string string_)
 	{
-		auto retStr = g_regex_escape_string(Str.toStringz(str), cast(int)str.length);
+		auto retStr = g_regex_escape_string(Str.toStringz(string_), cast(int)string_.length);
 
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
@@ -923,7 +923,7 @@ public class Regex
 	 *
 	 * Params:
 	 *     pattern = the regular expression
-	 *     str = the string to scan for matches
+	 *     string_ = the string to scan for matches
 	 *     compileOptions = compile options for the regular expression, or 0
 	 *     matchOptions = match options, or 0
 	 *
@@ -931,9 +931,9 @@ public class Regex
 	 *
 	 * Since: 2.14
 	 */
-	public static bool matchSimple(string pattern, string str, GRegexCompileFlags compileOptions, GRegexMatchFlags matchOptions)
+	public static bool matchSimple(string pattern, string string_, GRegexCompileFlags compileOptions, GRegexMatchFlags matchOptions)
 	{
-		return g_regex_match_simple(Str.toStringz(pattern), Str.toStringz(str), compileOptions, matchOptions) != 0;
+		return g_regex_match_simple(Str.toStringz(pattern), Str.toStringz(string_), compileOptions, matchOptions) != 0;
 	}
 
 	/**
@@ -967,7 +967,7 @@ public class Regex
 	 *
 	 * Params:
 	 *     pattern = the regular expression
-	 *     str = the string to scan for matches
+	 *     string_ = the string to scan for matches
 	 *     compileOptions = compile options for the regular expression, or 0
 	 *     matchOptions = match options, or 0
 	 *
@@ -976,9 +976,9 @@ public class Regex
 	 *
 	 * Since: 2.14
 	 */
-	public static string[] splitSimple(string pattern, string str, GRegexCompileFlags compileOptions, GRegexMatchFlags matchOptions)
+	public static string[] splitSimple(string pattern, string string_, GRegexCompileFlags compileOptions, GRegexMatchFlags matchOptions)
 	{
-		auto retStr = g_regex_split_simple(Str.toStringz(pattern), Str.toStringz(str), compileOptions, matchOptions);
+		auto retStr = g_regex_split_simple(Str.toStringz(pattern), Str.toStringz(string_), compileOptions, matchOptions);
 
 		scope(exit) Str.freeStringArray(retStr);
 		return Str.toStringArray(retStr);

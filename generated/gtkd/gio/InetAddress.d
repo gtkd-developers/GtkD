@@ -145,7 +145,7 @@ public class InetAddress : ObjectG
 	 * Parses @string as an IP address and creates a new #GInetAddress.
 	 *
 	 * Params:
-	 *     str = a string representation of an IP address
+	 *     string_ = a string representation of an IP address
 	 *
 	 * Returns: a new #GInetAddress corresponding to @string, or %NULL if
 	 *     @string could not be parsed.
@@ -155,9 +155,9 @@ public class InetAddress : ObjectG
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(string str)
+	public this(string string_)
 	{
-		auto p = g_inet_address_new_from_string(Str.toStringz(str));
+		auto p = g_inet_address_new_from_string(Str.toStringz(string_));
 
 		if(p is null)
 		{

@@ -84,7 +84,7 @@ public struct Str
 		{
 			return null;
 		}
-		char** argv = (new char*[args.length]).ptr;
+		char** argv = (new char*[args.length + 1]).ptr;
 		int argc = 0;
 		foreach (string p; args)
 		{
@@ -102,7 +102,7 @@ public struct Str
 		{
 			return null;
 		}
-		char**[] argv = new char**[args.length];
+		char**[] argv = new char**[args.length + 1];
 		int argc = 0;
 		foreach( string[] p; args )
 		{
@@ -713,7 +713,7 @@ public struct Str
 	 * known.
 	 *
 	 * Params:
-	 *     str = a string
+	 *     string_ = a string
 	 *     translitLocale = the language code (like 'de' or
 	 *         'en_GB') from which @string originates
 	 *     asciiAlternates = a
@@ -723,11 +723,11 @@ public struct Str
 	 *
 	 * Since: 2.40
 	 */
-	public static string[] tokenizeAndFold(string str, string translitLocale, out string[] asciiAlternates)
+	public static string[] tokenizeAndFold(string string_, string translitLocale, out string[] asciiAlternates)
 	{
 		char** outasciiAlternates = null;
 
-		auto retStr = g_str_tokenize_and_fold(Str.toStringz(str), Str.toStringz(translitLocale), &outasciiAlternates);
+		auto retStr = g_str_tokenize_and_fold(Str.toStringz(string_), Str.toStringz(translitLocale), &outasciiAlternates);
 
 		asciiAlternates = Str.toStringArray(outasciiAlternates);
 
@@ -745,15 +745,15 @@ public struct Str
 	 * ]|
 	 *
 	 * Params:
-	 *     str = a nul-terminated array of bytes
+	 *     string_ = a nul-terminated array of bytes
 	 *     validChars = bytes permitted in @string
 	 *     substitutor = replacement character for disallowed bytes
 	 *
 	 * Returns: @string
 	 */
-	public static string strcanon(string str, string validChars, char substitutor)
+	public static string strcanon(string string_, string validChars, char substitutor)
 	{
-		auto retStr = g_strcanon(Str.toStringz(str), Str.toStringz(validChars), substitutor);
+		auto retStr = g_strcanon(Str.toStringz(string_), Str.toStringz(validChars), substitutor);
 
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
@@ -790,13 +790,13 @@ public struct Str
 	 * Also see g_strchug() and g_strstrip().
 	 *
 	 * Params:
-	 *     str = a string to remove the trailing whitespace from
+	 *     string_ = a string to remove the trailing whitespace from
 	 *
 	 * Returns: @string
 	 */
-	public static string strchomp(string str)
+	public static string strchomp(string string_)
 	{
-		auto retStr = g_strchomp(Str.toStringz(str));
+		auto retStr = g_strchomp(Str.toStringz(string_));
 
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
@@ -815,13 +815,13 @@ public struct Str
 	 * Also see g_strchomp() and g_strstrip().
 	 *
 	 * Params:
-	 *     str = a string to remove the leading whitespace from
+	 *     string_ = a string to remove the leading whitespace from
 	 *
 	 * Returns: @string
 	 */
-	public static string strchug(string str)
+	public static string strchug(string string_)
 	{
-		auto retStr = g_strchug(Str.toStringz(str));
+		auto retStr = g_strchug(Str.toStringz(string_));
 
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
@@ -875,16 +875,16 @@ public struct Str
 	 * ]|
 	 *
 	 * Params:
-	 *     str = the string to convert
+	 *     string_ = the string to convert
 	 *     delimiters = a string containing the current delimiters,
 	 *         or %NULL to use the standard delimiters defined in #G_STR_DELIMITERS
 	 *     newDelimiter = the new delimiter character
 	 *
 	 * Returns: @string
 	 */
-	public static string strdelimit(string str, string delimiters, char newDelimiter)
+	public static string strdelimit(string string_, string delimiters, char newDelimiter)
 	{
-		auto retStr = g_strdelimit(Str.toStringz(str), Str.toStringz(delimiters), newDelimiter);
+		auto retStr = g_strdelimit(Str.toStringz(string_), Str.toStringz(delimiters), newDelimiter);
 
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
@@ -898,13 +898,13 @@ public struct Str
 	 * instead.
 	 *
 	 * Params:
-	 *     str = the string to convert.
+	 *     string_ = the string to convert.
 	 *
 	 * Returns: the string
 	 */
-	public static string strdown(string str)
+	public static string strdown(string string_)
 	{
-		auto retStr = g_strdown(Str.toStringz(str));
+		auto retStr = g_strdown(Str.toStringz(string_));
 
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
@@ -1208,13 +1208,13 @@ public struct Str
 	 * g_utf8_strreverse().
 	 *
 	 * Params:
-	 *     str = the string to reverse
+	 *     string_ = the string to reverse
 	 *
 	 * Returns: the same pointer passed in as @string
 	 */
-	public static string strreverse(string str)
+	public static string strreverse(string string_)
 	{
-		auto retStr = g_strreverse(Str.toStringz(str));
+		auto retStr = g_strreverse(Str.toStringz(string_));
 
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
@@ -1294,7 +1294,7 @@ public struct Str
 	 * before calling g_strsplit().
 	 *
 	 * Params:
-	 *     str = a string to split
+	 *     string_ = a string to split
 	 *     delimiter = a string which specifies the places at which to split
 	 *         the string. The delimiter is not included in any of the resulting
 	 *         strings, unless @max_tokens is reached.
@@ -1304,9 +1304,9 @@ public struct Str
 	 * Returns: a newly-allocated %NULL-terminated array of strings. Use
 	 *     g_strfreev() to free it.
 	 */
-	public static string[] strsplit(string str, string delimiter, int maxTokens)
+	public static string[] strsplit(string string_, string delimiter, int maxTokens)
 	{
-		return Str.toStringArray(g_strsplit(Str.toStringz(str), Str.toStringz(delimiter), maxTokens));
+		return Str.toStringArray(g_strsplit(Str.toStringz(string_), Str.toStringz(delimiter), maxTokens));
 	}
 
 	/**
@@ -1333,7 +1333,7 @@ public struct Str
 	 * to delimit UTF-8 strings for anything but ASCII characters.
 	 *
 	 * Params:
-	 *     str = The string to be tokenized
+	 *     string_ = The string to be tokenized
 	 *     delimiters = A nul-terminated string containing bytes that are used
 	 *         to split the string.
 	 *     maxTokens = The maximum number of tokens to split @string into.
@@ -1344,9 +1344,9 @@ public struct Str
 	 *
 	 * Since: 2.4
 	 */
-	public static string[] strsplitSet(string str, string delimiters, int maxTokens)
+	public static string[] strsplitSet(string string_, string delimiters, int maxTokens)
 	{
-		return Str.toStringArray(g_strsplit_set(Str.toStringz(str), Str.toStringz(delimiters), maxTokens));
+		return Str.toStringArray(g_strsplit_set(Str.toStringz(string_), Str.toStringz(delimiters), maxTokens));
 	}
 
 	/**
@@ -1411,13 +1411,13 @@ public struct Str
 	 * or g_utf8_strup() instead.
 	 *
 	 * Params:
-	 *     str = the string to convert
+	 *     string_ = the string to convert
 	 *
 	 * Returns: the string
 	 */
-	public static string strup(string str)
+	public static string strup(string string_)
 	{
-		auto retStr = g_strup(Str.toStringz(str));
+		auto retStr = g_strup(Str.toStringz(string_));
 
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
@@ -1471,7 +1471,7 @@ public struct Str
 	 * `glib/gprintf.h` must be explicitly included in order to use this function.
 	 *
 	 * Params:
-	 *     str = the return location for the newly-allocated string.
+	 *     string_ = the return location for the newly-allocated string.
 	 *     format = a standard printf() format string, but notice
 	 *         [string precision pitfalls][string-precision]
 	 *     args = the list of arguments to insert in the output.
@@ -1480,9 +1480,9 @@ public struct Str
 	 *
 	 * Since: 2.4
 	 */
-	public static int vasprintf(string[] str, string format, void* args)
+	public static int vasprintf(string[] string_, string format, void* args)
 	{
-		return g_vasprintf(Str.toStringzArray(str), Str.toStringz(format), args);
+		return g_vasprintf(Str.toStringzArray(string_), Str.toStringz(format), args);
 	}
 
 	/**
@@ -1525,7 +1525,7 @@ public struct Str
 	 * the Single Unix Specification.
 	 *
 	 * Params:
-	 *     str = the buffer to hold the output.
+	 *     string_ = the buffer to hold the output.
 	 *     n = the maximum number of bytes to produce (including the
 	 *         terminating nul character).
 	 *     format = a standard printf() format string, but notice
@@ -1535,9 +1535,9 @@ public struct Str
 	 * Returns: the number of bytes which would be produced if the buffer
 	 *     was large enough.
 	 */
-	public static int vsnprintf(string str, gulong n, string format, void* args)
+	public static int vsnprintf(string string_, gulong n, string format, void* args)
 	{
-		return g_vsnprintf(Str.toStringz(str), n, Str.toStringz(format), args);
+		return g_vsnprintf(Str.toStringz(string_), n, Str.toStringz(format), args);
 	}
 
 	/**
@@ -1547,7 +1547,7 @@ public struct Str
 	 * `glib/gprintf.h` must be explicitly included in order to use this function.
 	 *
 	 * Params:
-	 *     str = the buffer to hold the output.
+	 *     string_ = the buffer to hold the output.
 	 *     format = a standard printf() format string, but notice
 	 *         [string precision pitfalls][string-precision]
 	 *     args = the list of arguments to insert in the output.
@@ -1556,9 +1556,9 @@ public struct Str
 	 *
 	 * Since: 2.2
 	 */
-	public static int vsprintf(string str, string format, void* args)
+	public static int vsprintf(string string_, string format, void* args)
 	{
-		return g_vsprintf(Str.toStringz(str), Str.toStringz(format), args);
+		return g_vsprintf(Str.toStringz(string_), Str.toStringz(format), args);
 	}
 
 	/**

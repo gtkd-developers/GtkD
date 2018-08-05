@@ -1567,9 +1567,9 @@ struct AtkEditableTextIface
 	 */
 	extern(C) int function(AtkEditableText* text, AtkAttributeSet* attribSet, int startOffset, int endOffset) setRunAttributes;
 	/** */
-	extern(C) void function(AtkEditableText* text, const(char)* str) setTextContents;
+	extern(C) void function(AtkEditableText* text, const(char)* string_) setTextContents;
 	/** */
-	extern(C) void function(AtkEditableText* text, const(char)* str, int length, int* position) insertText;
+	extern(C) void function(AtkEditableText* text, const(char)* string_, int length, int* position) insertText;
 	/** */
 	extern(C) void function(AtkEditableText* text, int startPos, int endPos) copyText;
 	/** */
@@ -1777,7 +1777,7 @@ struct AtkKeyEventStruct
 	 * Alphanumeric and printable keys will have the symbolic key name in this string member, for instance "A". "0",
 	 * "semicolon", "aacute".  Keypad keys have the prefix "KP".
 	 */
-	char* str;
+	char* string_;
 	/**
 	 * The raw hardware code that generated the key event.  This field is raraly useful.
 	 */

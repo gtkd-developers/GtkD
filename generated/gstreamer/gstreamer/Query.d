@@ -1021,11 +1021,11 @@ public class Query
 	 *     flags = #GstSchedulingFlags
 	 *     minsize = the suggested minimum size of pull requests
 	 *     maxsize = the suggested maximum size of pull requests:
-	 *     alig = the suggested alignment of pull requests
+	 *     align_ = the suggested alignment of pull requests
 	 */
-	public void parseScheduling(out GstSchedulingFlags flags, out int minsize, out int maxsize, out int alig)
+	public void parseScheduling(out GstSchedulingFlags flags, out int minsize, out int maxsize, out int align_)
 	{
-		gst_query_parse_scheduling(gstQuery, &flags, &minsize, &maxsize, &alig);
+		gst_query_parse_scheduling(gstQuery, &flags, &minsize, &maxsize, &align_);
 	}
 
 	/**
@@ -1340,11 +1340,11 @@ public class Query
 	 *     flags = #GstSchedulingFlags
 	 *     minsize = the suggested minimum size of pull requests
 	 *     maxsize = the suggested maximum size of pull requests
-	 *     alig = the suggested alignment of pull requests
+	 *     align_ = the suggested alignment of pull requests
 	 */
-	public void setScheduling(GstSchedulingFlags flags, int minsize, int maxsize, int alig)
+	public void setScheduling(GstSchedulingFlags flags, int minsize, int maxsize, int align_)
 	{
-		gst_query_set_scheduling(gstQuery, flags, minsize, maxsize, alig);
+		gst_query_set_scheduling(gstQuery, flags, minsize, maxsize, align_);
 	}
 
 	/**

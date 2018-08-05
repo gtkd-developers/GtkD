@@ -1545,18 +1545,18 @@ public class Message
 	 *
 	 * Params:
 	 *     gerror = location for the GError
-	 *     dbg = location for the debug message,
+	 *     debug_ = location for the debug message,
 	 *         or %NULL
 	 */
-	public void parseError(out ErrorG gerror, out string dbg)
+	public void parseError(out ErrorG gerror, out string debug_)
 	{
 		GError* outgerror = null;
-		char* outdbg = null;
+		char* outdebug_ = null;
 
-		gst_message_parse_error(gstMessage, &outgerror, &outdbg);
+		gst_message_parse_error(gstMessage, &outgerror, &outdebug_);
 
 		gerror = new ErrorG(outgerror);
-		dbg = Str.toString(outdbg);
+		debug_ = Str.toString(outdebug_);
 	}
 
 	/**
@@ -1623,18 +1623,18 @@ public class Message
 	 *
 	 * Params:
 	 *     gerror = location for the GError
-	 *     dbg = location for the debug message,
+	 *     debug_ = location for the debug message,
 	 *         or %NULL
 	 */
-	public void parseInfo(out ErrorG gerror, out string dbg)
+	public void parseInfo(out ErrorG gerror, out string debug_)
 	{
 		GError* outgerror = null;
-		char* outdbg = null;
+		char* outdebug_ = null;
 
-		gst_message_parse_info(gstMessage, &outgerror, &outdbg);
+		gst_message_parse_info(gstMessage, &outgerror, &outdebug_);
 
 		gerror = new ErrorG(outgerror);
-		dbg = Str.toString(outdbg);
+		debug_ = Str.toString(outdebug_);
 	}
 
 	/**
@@ -2111,18 +2111,18 @@ public class Message
 	 *
 	 * Params:
 	 *     gerror = location for the GError
-	 *     dbg = location for the debug message,
+	 *     debug_ = location for the debug message,
 	 *         or %NULL
 	 */
-	public void parseWarning(out ErrorG gerror, out string dbg)
+	public void parseWarning(out ErrorG gerror, out string debug_)
 	{
 		GError* outgerror = null;
-		char* outdbg = null;
+		char* outdebug_ = null;
 
-		gst_message_parse_warning(gstMessage, &outgerror, &outdbg);
+		gst_message_parse_warning(gstMessage, &outgerror, &outdebug_);
 
 		gerror = new ErrorG(outgerror);
-		dbg = Str.toString(outdbg);
+		debug_ = Str.toString(outdebug_);
 	}
 
 	/**

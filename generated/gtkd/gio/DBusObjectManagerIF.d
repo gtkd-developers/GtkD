@@ -116,7 +116,7 @@ public interface DBusObjectManagerIF{
 	 *
 	 * Params:
 	 *     object = The #GDBusObject on which an interface was added.
-	 *     iface = The #GDBusInterface that was added.
+	 *     interface_ = The #GDBusInterface that was added.
 	 *
 	 * Since: 2.30
 	 */
@@ -130,7 +130,7 @@ public interface DBusObjectManagerIF{
 	 *
 	 * Params:
 	 *     object = The #GDBusObject on which an interface was removed.
-	 *     iface = The #GDBusInterface that was removed.
+	 *     interface_ = The #GDBusInterface that was removed.
 	 *
 	 * Since: 2.30
 	 */

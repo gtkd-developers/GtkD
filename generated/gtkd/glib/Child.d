@@ -60,16 +60,16 @@ public struct Child
 	 *     pid = process id to watch. On POSIX the positive pid of a child
 	 *         process. On Windows a handle for a process (which doesn't have to be
 	 *         a child).
-	 *     funct = function to call
+	 *     function_ = function to call
 	 *     data = data to pass to @function
 	 *
 	 * Returns: the ID (greater than 0) of the event source.
 	 *
 	 * Since: 2.4
 	 */
-	public static uint childWatchAdd(GPid pid, GChildWatchFunc funct, void* data)
+	public static uint childWatchAdd(GPid pid, GChildWatchFunc function_, void* data)
 	{
-		return g_child_watch_add(pid, funct, data);
+		return g_child_watch_add(pid, function_, data);
 	}
 
 	/**
@@ -103,7 +103,7 @@ public struct Child
 	 *         range between #G_PRIORITY_DEFAULT_IDLE and #G_PRIORITY_HIGH_IDLE.
 	 *     pid = process to watch. On POSIX the positive pid of a child process. On
 	 *         Windows a handle for a process (which doesn't have to be a child).
-	 *     funct = function to call
+	 *     function_ = function to call
 	 *     data = data to pass to @function
 	 *     notify = function to call when the idle is removed, or %NULL
 	 *
@@ -111,9 +111,9 @@ public struct Child
 	 *
 	 * Since: 2.4
 	 */
-	public static uint childWatchAddFull(int priority, GPid pid, GChildWatchFunc funct, void* data, GDestroyNotify notify)
+	public static uint childWatchAddFull(int priority, GPid pid, GChildWatchFunc function_, void* data, GDestroyNotify notify)
 	{
-		return g_child_watch_add_full(priority, pid, funct, data, notify);
+		return g_child_watch_add_full(priority, pid, function_, data, notify);
 	}
 
 	/**

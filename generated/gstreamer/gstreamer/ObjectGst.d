@@ -239,11 +239,11 @@ public class ObjectGst : ObjectG
 	 *
 	 * Params:
 	 *     error = the GError.
-	 *     dbg = an additional debug information string, or %NULL
+	 *     debug_ = an additional debug information string, or %NULL
 	 */
-	public void defaultError(ErrorG error, string dbg)
+	public void defaultError(ErrorG error, string debug_)
 	{
-		gst_object_default_error(gstObject, (error is null) ? null : error.getErrorGStruct(), Str.toStringz(dbg));
+		gst_object_default_error(gstObject, (error is null) ? null : error.getErrorGStruct(), Str.toStringz(debug_));
 	}
 
 	/**

@@ -1278,9 +1278,9 @@ struct GTypeModuleClass
 	 */
 	GObjectClass parentClass;
 	/** */
-	extern(C) int function(GTypeModule* modul) load;
+	extern(C) int function(GTypeModule* module_) load;
 	/** */
-	extern(C) void function(GTypeModule* modul) unload;
+	extern(C) void function(GTypeModule* module_) unload;
 	/** */
 	extern(C) void function() reserved1;
 	/** */
@@ -1390,7 +1390,7 @@ struct GTypeValueTable
 struct GValue
 {
 	GType gType;
-	ValueDataUnion[2] data;
+	_Value__data__union[2] data;
 }
 
 struct GValueArray
@@ -1415,7 +1415,7 @@ struct GWeakRef
 	Priv priv;
 }
 
-struct ValueDataUnion
+struct _Value__data__union
 {
 	union
 	{
@@ -1670,11 +1670,11 @@ public alias extern(C) void function(void* data, GClosure* closure) GClosureNoti
  * zeros before this function is called.
  *
  * Params:
- *     instanc = The instance to initialize
+ *     instance_ = The instance to initialize
  *     gClass = The class of the type the instance is
  *         created for
  */
-public alias extern(C) void function(GTypeInstance* instanc, void* gClass) GInstanceInitFunc;
+public alias extern(C) void function(GTypeInstance* instance_, void* gClass) GInstanceInitFunc;
 
 /**
  * A callback function used by the type system to finalize an interface.
@@ -1872,7 +1872,7 @@ public alias extern(C) void function(GTypePlugin* plugin) GTypePluginUse;
  *     returnValue = a #GValue to store the return
  *         value. May be %NULL if the callback of @closure doesn't return a
  *         value.
- *     instanc = the instance on which the closure is
+ *     instance_ = the instance on which the closure is
  *         invoked.
  *     args = va_list of arguments to be passed to the closure.
  *     marshalData = additional data specified when
@@ -1882,7 +1882,7 @@ public alias extern(C) void function(GTypePlugin* plugin) GTypePluginUse;
  *     paramTypes = the #GType of each argument from
  *         @args.
  */
-public alias extern(C) void function(GClosure* closure, GValue* returnValue, void* instanc, void* args, void* marshalData, int nParams, GType* paramTypes) GVaClosureMarshal;
+public alias extern(C) void function(GClosure* closure, GValue* returnValue, void* instance_, void* args, void* marshalData, int nParams, GType* paramTypes) GVaClosureMarshal;
 
 /**
  * The type of value transformation functions which can be registered with

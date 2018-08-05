@@ -187,7 +187,7 @@ public struct Signals
 	 * Connects a closure to a signal for a particular object.
 	 *
 	 * Params:
-	 *     instanc = the instance to connect to.
+	 *     instance_ = the instance to connect to.
 	 *     detailedSignal = a string of the form "signal-name::detail".
 	 *     closure = the closure to connect.
 	 *     after = whether the handler should be called before or after the
@@ -195,16 +195,16 @@ public struct Signals
 	 *
 	 * Returns: the handler ID (always greater than 0 for successful connections)
 	 */
-	public static gulong connectClosure(ObjectG instanc, string detailedSignal, Closure closure, bool after)
+	public static gulong connectClosure(ObjectG instance_, string detailedSignal, Closure closure, bool after)
 	{
-		return g_signal_connect_closure((instanc is null) ? null : instanc.getObjectGStruct(), Str.toStringz(detailedSignal), (closure is null) ? null : closure.getClosureStruct(), after);
+		return g_signal_connect_closure((instance_ is null) ? null : instance_.getObjectGStruct(), Str.toStringz(detailedSignal), (closure is null) ? null : closure.getClosureStruct(), after);
 	}
 
 	/**
 	 * Connects a closure to a signal for a particular object.
 	 *
 	 * Params:
-	 *     instanc = the instance to connect to.
+	 *     instance_ = the instance to connect to.
 	 *     signalId = the id of the signal.
 	 *     detail = the detail.
 	 *     closure = the closure to connect.
@@ -213,9 +213,9 @@ public struct Signals
 	 *
 	 * Returns: the handler ID (always greater than 0 for successful connections)
 	 */
-	public static gulong connectClosureById(ObjectG instanc, uint signalId, GQuark detail, Closure closure, bool after)
+	public static gulong connectClosureById(ObjectG instance_, uint signalId, GQuark detail, Closure closure, bool after)
 	{
-		return g_signal_connect_closure_by_id((instanc is null) ? null : instanc.getObjectGStruct(), signalId, detail, (closure is null) ? null : closure.getClosureStruct(), after);
+		return g_signal_connect_closure_by_id((instance_ is null) ? null : instance_.getObjectGStruct(), signalId, detail, (closure is null) ? null : closure.getClosureStruct(), after);
 	}
 
 	/**
@@ -226,7 +226,7 @@ public struct Signals
 	 * `..._swapped()` variants of this function.
 	 *
 	 * Params:
-	 *     instanc = the instance to connect to.
+	 *     instance_ = the instance to connect to.
 	 *     detailedSignal = a string of the form "signal-name::detail".
 	 *     cHandler = the #GCallback to connect.
 	 *     data = data to pass to @c_handler calls.
@@ -235,9 +235,9 @@ public struct Signals
 	 *
 	 * Returns: the handler ID (always greater than 0 for successful connections)
 	 */
-	public static gulong connectData(ObjectG instanc, string detailedSignal, GCallback cHandler, void* data, GClosureNotify destroyData, GConnectFlags connectFlags)
+	public static gulong connectData(ObjectG instance_, string detailedSignal, GCallback cHandler, void* data, GClosureNotify destroyData, GConnectFlags connectFlags)
 	{
-		return g_signal_connect_data((instanc is null) ? null : instanc.getObjectGStruct(), Str.toStringz(detailedSignal), cHandler, data, destroyData, connectFlags);
+		return g_signal_connect_data((instance_ is null) ? null : instance_.getObjectGStruct(), Str.toStringz(detailedSignal), cHandler, data, destroyData, connectFlags);
 	}
 
 	/**
@@ -251,7 +251,7 @@ public struct Signals
 	 * is not safe).
 	 *
 	 * Params:
-	 *     instanc = the instance to connect to.
+	 *     instance_ = the instance to connect to.
 	 *     detailedSignal = a string of the form "signal-name::detail".
 	 *     cHandler = the #GCallback to connect.
 	 *     gobject = the object to pass as data
@@ -260,9 +260,9 @@ public struct Signals
 	 *
 	 * Returns: the handler id.
 	 */
-	public static gulong connectObject(TypeInstance instanc, string detailedSignal, GCallback cHandler, ObjectG gobject, GConnectFlags connectFlags)
+	public static gulong connectObject(TypeInstance instance_, string detailedSignal, GCallback cHandler, ObjectG gobject, GConnectFlags connectFlags)
 	{
-		return g_signal_connect_object((instanc is null) ? null : instanc.getTypeInstanceStruct(), Str.toStringz(detailedSignal), cHandler, (gobject is null) ? null : gobject.getObjectGStruct(), connectFlags);
+		return g_signal_connect_object((instance_ is null) ? null : instance_.getTypeInstanceStruct(), Str.toStringz(detailedSignal), cHandler, (gobject is null) ? null : gobject.getObjectGStruct(), connectFlags);
 	}
 
 	/**
@@ -272,7 +272,7 @@ public struct Signals
 	 * if no handlers are connected, in contrast to g_signal_emitv().
 	 *
 	 * Params:
-	 *     instanc = the instance the signal is being
+	 *     instance_ = the instance the signal is being
 	 *         emitted on.
 	 *     signalId = the signal id
 	 *     detail = the detail
@@ -280,9 +280,9 @@ public struct Signals
 	 *         location for the return value. If the return type of the signal
 	 *         is #G_TYPE_NONE, the return value location can be omitted.
 	 */
-	public static void emitValist(TypeInstance instanc, uint signalId, GQuark detail, void* varArgs)
+	public static void emitValist(TypeInstance instance_, uint signalId, GQuark detail, void* varArgs)
 	{
-		g_signal_emit_valist((instanc is null) ? null : instanc.getTypeInstanceStruct(), signalId, detail, varArgs);
+		g_signal_emit_valist((instance_ is null) ? null : instance_.getTypeInstanceStruct(), signalId, detail, varArgs);
 	}
 
 	/**
@@ -316,13 +316,13 @@ public struct Signals
 	 * Returns the invocation hint of the innermost signal emission of instance.
 	 *
 	 * Params:
-	 *     instanc = the instance to query
+	 *     instance_ = the instance to query
 	 *
 	 * Returns: the invocation hint of the innermost signal  emission.
 	 */
-	public static GSignalInvocationHint* getInvocationHint(ObjectG instanc)
+	public static GSignalInvocationHint* getInvocationHint(ObjectG instance_)
 	{
-		return g_signal_get_invocation_hint((instanc is null) ? null : instanc.getObjectGStruct());
+		return g_signal_get_invocation_hint((instance_ is null) ? null : instance_.getObjectGStruct());
 	}
 
 	/**
@@ -336,12 +336,12 @@ public struct Signals
 	 * signal of @instance.
 	 *
 	 * Params:
-	 *     instanc = The instance to block the signal handler of.
+	 *     instance_ = The instance to block the signal handler of.
 	 *     handlerId = Handler id of the handler to be blocked.
 	 */
-	public static void handlerBlock(ObjectG instanc, gulong handlerId)
+	public static void handlerBlock(ObjectG instance_, gulong handlerId)
 	{
-		g_signal_handler_block((instanc is null) ? null : instanc.getObjectGStruct(), handlerId);
+		g_signal_handler_block((instance_ is null) ? null : instance_.getObjectGStruct(), handlerId);
 	}
 
 	/**
@@ -353,12 +353,12 @@ public struct Signals
 	 * signal of @instance.
 	 *
 	 * Params:
-	 *     instanc = The instance to remove the signal handler from.
+	 *     instance_ = The instance to remove the signal handler from.
 	 *     handlerId = Handler id of the handler to be disconnected.
 	 */
-	public static void handlerDisconnect(ObjectG instanc, gulong handlerId)
+	public static void handlerDisconnect(ObjectG instance_, gulong handlerId)
 	{
-		g_signal_handler_disconnect((instanc is null) ? null : instanc.getObjectGStruct(), handlerId);
+		g_signal_handler_disconnect((instance_ is null) ? null : instance_.getObjectGStruct(), handlerId);
 	}
 
 	/**
@@ -369,7 +369,7 @@ public struct Signals
 	 * If no handler was found, 0 is returned.
 	 *
 	 * Params:
-	 *     instanc = The instance owning the signal handler to be found.
+	 *     instance_ = The instance owning the signal handler to be found.
 	 *     mask = Mask indicating which of @signal_id, @detail, @closure, @func
 	 *         and/or @data the handler has to match.
 	 *     signalId = Signal the handler has to be connected to.
@@ -380,23 +380,23 @@ public struct Signals
 	 *
 	 * Returns: A valid non-0 signal handler id for a successful match.
 	 */
-	public static gulong handlerFind(ObjectG instanc, GSignalMatchType mask, uint signalId, GQuark detail, Closure closure, void* func, void* data)
+	public static gulong handlerFind(ObjectG instance_, GSignalMatchType mask, uint signalId, GQuark detail, Closure closure, void* func, void* data)
 	{
-		return g_signal_handler_find((instanc is null) ? null : instanc.getObjectGStruct(), mask, signalId, detail, (closure is null) ? null : closure.getClosureStruct(), func, data);
+		return g_signal_handler_find((instance_ is null) ? null : instance_.getObjectGStruct(), mask, signalId, detail, (closure is null) ? null : closure.getClosureStruct(), func, data);
 	}
 
 	/**
 	 * Returns whether @handler_id is the ID of a handler connected to @instance.
 	 *
 	 * Params:
-	 *     instanc = The instance where a signal handler is sought.
+	 *     instance_ = The instance where a signal handler is sought.
 	 *     handlerId = the handler ID.
 	 *
 	 * Returns: whether @handler_id identifies a handler connected to @instance.
 	 */
-	public static bool handlerIsConnected(ObjectG instanc, gulong handlerId)
+	public static bool handlerIsConnected(ObjectG instance_, gulong handlerId)
 	{
-		return g_signal_handler_is_connected((instanc is null) ? null : instanc.getObjectGStruct(), handlerId) != 0;
+		return g_signal_handler_is_connected((instance_ is null) ? null : instance_.getObjectGStruct(), handlerId) != 0;
 	}
 
 	/**
@@ -415,12 +415,12 @@ public struct Signals
 	 * connected to a signal of @instance and is currently blocked.
 	 *
 	 * Params:
-	 *     instanc = The instance to unblock the signal handler of.
+	 *     instance_ = The instance to unblock the signal handler of.
 	 *     handlerId = Handler id of the handler to be unblocked.
 	 */
-	public static void handlerUnblock(ObjectG instanc, gulong handlerId)
+	public static void handlerUnblock(ObjectG instance_, gulong handlerId)
 	{
-		g_signal_handler_unblock((instanc is null) ? null : instanc.getObjectGStruct(), handlerId);
+		g_signal_handler_unblock((instance_ is null) ? null : instance_.getObjectGStruct(), handlerId);
 	}
 
 	/**
@@ -433,7 +433,7 @@ public struct Signals
 	 * otherwise.
 	 *
 	 * Params:
-	 *     instanc = The instance to block handlers from.
+	 *     instance_ = The instance to block handlers from.
 	 *     mask = Mask indicating which of @signal_id, @detail, @closure, @func
 	 *         and/or @data the handlers have to match.
 	 *     signalId = Signal the handlers have to be connected to.
@@ -444,9 +444,9 @@ public struct Signals
 	 *
 	 * Returns: The number of handlers that matched.
 	 */
-	public static uint handlersBlockMatched(ObjectG instanc, GSignalMatchType mask, uint signalId, GQuark detail, Closure closure, void* func, void* data)
+	public static uint handlersBlockMatched(ObjectG instance_, GSignalMatchType mask, uint signalId, GQuark detail, Closure closure, void* func, void* data)
 	{
-		return g_signal_handlers_block_matched((instanc is null) ? null : instanc.getObjectGStruct(), mask, signalId, detail, (closure is null) ? null : closure.getClosureStruct(), func, data);
+		return g_signal_handlers_block_matched((instance_ is null) ? null : instance_.getObjectGStruct(), mask, signalId, detail, (closure is null) ? null : closure.getClosureStruct(), func, data);
 	}
 
 	/**
@@ -455,11 +455,11 @@ public struct Signals
 	 * and should not be used outside of the type system.
 	 *
 	 * Params:
-	 *     instanc = The instance whose signal handlers are destroyed
+	 *     instance_ = The instance whose signal handlers are destroyed
 	 */
-	public static void handlersDestroy(ObjectG instanc)
+	public static void handlersDestroy(ObjectG instance_)
 	{
-		g_signal_handlers_destroy((instanc is null) ? null : instanc.getObjectGStruct());
+		g_signal_handlers_destroy((instance_ is null) ? null : instance_.getObjectGStruct());
 	}
 
 	/**
@@ -473,7 +473,7 @@ public struct Signals
 	 * disconnected handlers otherwise.
 	 *
 	 * Params:
-	 *     instanc = The instance to remove handlers from.
+	 *     instance_ = The instance to remove handlers from.
 	 *     mask = Mask indicating which of @signal_id, @detail, @closure, @func
 	 *         and/or @data the handlers have to match.
 	 *     signalId = Signal the handlers have to be connected to.
@@ -484,9 +484,9 @@ public struct Signals
 	 *
 	 * Returns: The number of handlers that matched.
 	 */
-	public static uint handlersDisconnectMatched(ObjectG instanc, GSignalMatchType mask, uint signalId, GQuark detail, Closure closure, void* func, void* data)
+	public static uint handlersDisconnectMatched(ObjectG instance_, GSignalMatchType mask, uint signalId, GQuark detail, Closure closure, void* func, void* data)
 	{
-		return g_signal_handlers_disconnect_matched((instanc is null) ? null : instanc.getObjectGStruct(), mask, signalId, detail, (closure is null) ? null : closure.getClosureStruct(), func, data);
+		return g_signal_handlers_disconnect_matched((instance_ is null) ? null : instance_.getObjectGStruct(), mask, signalId, detail, (closure is null) ? null : closure.getClosureStruct(), func, data);
 	}
 
 	/**
@@ -500,7 +500,7 @@ public struct Signals
 	 * not currently blocked.
 	 *
 	 * Params:
-	 *     instanc = The instance to unblock handlers from.
+	 *     instance_ = The instance to unblock handlers from.
 	 *     mask = Mask indicating which of @signal_id, @detail, @closure, @func
 	 *         and/or @data the handlers have to match.
 	 *     signalId = Signal the handlers have to be connected to.
@@ -511,9 +511,9 @@ public struct Signals
 	 *
 	 * Returns: The number of handlers that matched.
 	 */
-	public static uint handlersUnblockMatched(ObjectG instanc, GSignalMatchType mask, uint signalId, GQuark detail, Closure closure, void* func, void* data)
+	public static uint handlersUnblockMatched(ObjectG instance_, GSignalMatchType mask, uint signalId, GQuark detail, Closure closure, void* func, void* data)
 	{
-		return g_signal_handlers_unblock_matched((instanc is null) ? null : instanc.getObjectGStruct(), mask, signalId, detail, (closure is null) ? null : closure.getClosureStruct(), func, data);
+		return g_signal_handlers_unblock_matched((instance_ is null) ? null : instance_.getObjectGStruct(), mask, signalId, detail, (closure is null) ? null : closure.getClosureStruct(), func, data);
 	}
 
 	/**
@@ -535,7 +535,7 @@ public struct Signals
 	 * of building the arguments.
 	 *
 	 * Params:
-	 *     instanc = the object whose signal handlers are sought.
+	 *     instance_ = the object whose signal handlers are sought.
 	 *     signalId = the signal id.
 	 *     detail = the detail.
 	 *     mayBeBlocked = whether blocked handlers should count as match.
@@ -543,9 +543,9 @@ public struct Signals
 	 * Returns: %TRUE if a handler is connected to the signal, %FALSE
 	 *     otherwise.
 	 */
-	public static bool hasHandlerPending(ObjectG instanc, uint signalId, GQuark detail, bool mayBeBlocked)
+	public static bool hasHandlerPending(ObjectG instance_, uint signalId, GQuark detail, bool mayBeBlocked)
 	{
-		return g_signal_has_handler_pending((instanc is null) ? null : instanc.getObjectGStruct(), signalId, detail, mayBeBlocked) != 0;
+		return g_signal_has_handler_pending((instance_ is null) ? null : instance_.getObjectGStruct(), signalId, detail, mayBeBlocked) != 0;
 	}
 
 	/**
@@ -788,13 +788,13 @@ public struct Signals
 	 * Prints a warning if used on a signal which isn't being emitted.
 	 *
 	 * Params:
-	 *     instanc = the object whose signal handlers you wish to stop.
+	 *     instance_ = the object whose signal handlers you wish to stop.
 	 *     signalId = the signal identifier, as returned by g_signal_lookup().
 	 *     detail = the detail which the signal was emitted with.
 	 */
-	public static void stopEmission(ObjectG instanc, uint signalId, GQuark detail)
+	public static void stopEmission(ObjectG instance_, uint signalId, GQuark detail)
 	{
-		g_signal_stop_emission((instanc is null) ? null : instanc.getObjectGStruct(), signalId, detail);
+		g_signal_stop_emission((instance_ is null) ? null : instance_.getObjectGStruct(), signalId, detail);
 	}
 
 	/**
@@ -804,12 +804,12 @@ public struct Signals
 	 * signal id for you.
 	 *
 	 * Params:
-	 *     instanc = the object whose signal handlers you wish to stop.
+	 *     instance_ = the object whose signal handlers you wish to stop.
 	 *     detailedSignal = a string of the form "signal-name::detail".
 	 */
-	public static void stopEmissionByName(ObjectG instanc, string detailedSignal)
+	public static void stopEmissionByName(ObjectG instance_, string detailedSignal)
 	{
-		g_signal_stop_emission_by_name((instanc is null) ? null : instanc.getObjectGStruct(), Str.toStringz(detailedSignal));
+		g_signal_stop_emission_by_name((instance_ is null) ? null : instance_.getObjectGStruct(), Str.toStringz(detailedSignal));
 	}
 
 	/**

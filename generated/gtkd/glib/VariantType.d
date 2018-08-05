@@ -836,7 +836,7 @@ public class VariantType
 	 * see g_variant_type_string_is_valid().
 	 *
 	 * Params:
-	 *     str = a pointer to any string
+	 *     string_ = a pointer to any string
 	 *     limit = the end of @string, or %NULL
 	 *     endptr = location to store the end pointer, or %NULL
 	 *
@@ -844,11 +844,11 @@ public class VariantType
 	 *
 	 * Since: 2.24
 	 */
-	public static bool stringScan(string str, string limit, out string endptr)
+	public static bool stringScan(string string_, string limit, out string endptr)
 	{
 		char* outendptr = null;
 
-		auto p = g_variant_type_string_scan(Str.toStringz(str), Str.toStringz(limit), &outendptr) != 0;
+		auto p = g_variant_type_string_scan(Str.toStringz(string_), Str.toStringz(limit), &outendptr) != 0;
 
 		endptr = Str.toString(outendptr);
 

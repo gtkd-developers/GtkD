@@ -194,14 +194,14 @@ __gshared extern(C)
 	PeasObjectModule* function(const(char)* moduleName, const(char)* path, int resident) c_peas_object_module_new;
 	PeasObjectModule* function(const(char)* moduleName, const(char)* symbol) c_peas_object_module_new_embedded;
 	PeasObjectModule* function(const(char)* moduleName, const(char)* path, int resident, int localLinkage) c_peas_object_module_new_full;
-	GObject* function(PeasObjectModule* modul, GType extenType, uint nParameters, GParameter* parameters) c_peas_object_module_create_object;
-	GModule* function(PeasObjectModule* modul) c_peas_object_module_get_library;
-	const(char)* function(PeasObjectModule* modul) c_peas_object_module_get_module_name;
-	const(char)* function(PeasObjectModule* modul) c_peas_object_module_get_path;
-	const(char)* function(PeasObjectModule* modul) c_peas_object_module_get_symbol;
-	int function(PeasObjectModule* modul, GType extenType) c_peas_object_module_provides_object;
-	void function(PeasObjectModule* modul, GType extenType, PeasFactoryFunc factoryFunc, void* userData, GDestroyNotify destroyFunc) c_peas_object_module_register_extension_factory;
-	void function(PeasObjectModule* modul, GType extenType, GType implType) c_peas_object_module_register_extension_type;
+	GObject* function(PeasObjectModule* module_, GType extenType, uint nParameters, GParameter* parameters) c_peas_object_module_create_object;
+	GModule* function(PeasObjectModule* module_) c_peas_object_module_get_library;
+	const(char)* function(PeasObjectModule* module_) c_peas_object_module_get_module_name;
+	const(char)* function(PeasObjectModule* module_) c_peas_object_module_get_path;
+	const(char)* function(PeasObjectModule* module_) c_peas_object_module_get_symbol;
+	int function(PeasObjectModule* module_, GType extenType) c_peas_object_module_provides_object;
+	void function(PeasObjectModule* module_, GType extenType, PeasFactoryFunc factoryFunc, void* userData, GDestroyNotify destroyFunc) c_peas_object_module_register_extension_factory;
+	void function(PeasObjectModule* module_, GType extenType, GType implType) c_peas_object_module_register_extension_type;
 
 	// peas.PluginInfo
 

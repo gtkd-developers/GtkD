@@ -884,7 +884,7 @@ public void setTranslationDomain(string domain)
  *
  * Params:
  *     pspec = the #GParamSpec for the property
- *     str = the string representation of the value
+ *     string_ = the string representation of the value
  *     value = the #GValue to store the result in
  *
  * Returns: %TRUE on success
@@ -893,12 +893,12 @@ public void setTranslationDomain(string domain)
  *
  * Throws: GException on failure.
  */
-public bool valueFromString(ParamSpec pspec, string str, out Value value)
+public bool valueFromString(ParamSpec pspec, string string_, out Value value)
 {
 	GValue* outvalue = sliceNew!GValue();
 	GError* err = null;
 
-	auto p = gtk_builder_value_from_string(gtkBuilder, (pspec is null) ? null : pspec.getParamSpecStruct(), Str.toStringz(str), outvalue, &err) != 0;
+	auto p = gtk_builder_value_from_string(gtkBuilder, (pspec is null) ? null : pspec.getParamSpecStruct(), Str.toStringz(string_), outvalue, &err) != 0;
 
 	if (err !is null)
 	{
@@ -921,7 +921,7 @@ public bool valueFromString(ParamSpec pspec, string str, out Value value)
  *
  * Params:
  *     type = the #GType of the value
- *     str = the string representation of the value
+ *     string_ = the string representation of the value
  *     value = the #GValue to store the result in
  *
  * Returns: %TRUE on success
@@ -930,12 +930,12 @@ public bool valueFromString(ParamSpec pspec, string str, out Value value)
  *
  * Throws: GException on failure.
  */
-public bool valueFromStringType(GType type, string str, out Value value)
+public bool valueFromStringType(GType type, string string_, out Value value)
 {
 	GValue* outvalue = sliceNew!GValue();
 	GError* err = null;
 
-	auto p = gtk_builder_value_from_string_type(gtkBuilder, type, Str.toStringz(str), outvalue, &err) != 0;
+	auto p = gtk_builder_value_from_string_type(gtkBuilder, type, Str.toStringz(string_), outvalue, &err) != 0;
 
 	if (err !is null)
 	{

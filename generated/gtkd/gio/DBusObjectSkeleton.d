@@ -119,13 +119,13 @@ public class DBusObjectSkeleton : ObjectG, DBusObjectIF
 	 * it until removed.
 	 *
 	 * Params:
-	 *     iface = A #GDBusInterfaceSkeleton.
+	 *     interface_ = A #GDBusInterfaceSkeleton.
 	 *
 	 * Since: 2.30
 	 */
-	public void addInterface(DBusInterfaceSkeleton iface)
+	public void addInterface(DBusInterfaceSkeleton interface_)
 	{
-		g_dbus_object_skeleton_add_interface(gDBusObjectSkeleton, (iface is null) ? null : iface.getDBusInterfaceSkeletonStruct());
+		g_dbus_object_skeleton_add_interface(gDBusObjectSkeleton, (interface_ is null) ? null : interface_.getDBusInterfaceSkeletonStruct());
 	}
 
 	/**
@@ -144,13 +144,13 @@ public class DBusObjectSkeleton : ObjectG, DBusObjectIF
 	 * Removes @interface_ from @object.
 	 *
 	 * Params:
-	 *     iface = A #GDBusInterfaceSkeleton.
+	 *     interface_ = A #GDBusInterfaceSkeleton.
 	 *
 	 * Since: 2.30
 	 */
-	public void removeInterface(DBusInterfaceSkeleton iface)
+	public void removeInterface(DBusInterfaceSkeleton interface_)
 	{
-		g_dbus_object_skeleton_remove_interface(gDBusObjectSkeleton, (iface is null) ? null : iface.getDBusInterfaceSkeletonStruct());
+		g_dbus_object_skeleton_remove_interface(gDBusObjectSkeleton, (interface_ is null) ? null : interface_.getDBusInterfaceSkeletonStruct());
 	}
 
 	/**
@@ -193,7 +193,7 @@ public class DBusObjectSkeleton : ObjectG, DBusObjectIF
 	 * The default class handler just returns %TRUE.
 	 *
 	 * Params:
-	 *     iface = The #GDBusInterfaceSkeleton that @invocation is for.
+	 *     interface_ = The #GDBusInterfaceSkeleton that @invocation is for.
 	 *     invocation = A #GDBusMethodInvocation.
 	 *
 	 * Returns: %TRUE if the call is authorized, %FALSE otherwise.

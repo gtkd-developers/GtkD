@@ -873,13 +873,13 @@ public class Caps
 	 * when there are nested #GstCaps / #GstStructure deeper than one level.
 	 *
 	 * Params:
-	 *     str = a string to convert to #GstCaps
+	 *     string_ = a string to convert to #GstCaps
 	 *
 	 * Returns: a newly allocated #GstCaps
 	 */
-	public static Caps fromString(string str)
+	public static Caps fromString(string string_)
 	{
-		auto p = gst_caps_from_string(Str.toStringz(str));
+		auto p = gst_caps_from_string(Str.toStringz(string_));
 
 		if(p is null)
 		{

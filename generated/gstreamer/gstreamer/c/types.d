@@ -3376,7 +3376,7 @@ struct GstAllocationParams
 	/**
 	 * the desired alignment of the memory
 	 */
-	size_t alig;
+	size_t align_;
 	/**
 	 * the desired prefix
 	 */
@@ -4495,7 +4495,7 @@ struct GstMemory
 	/**
 	 * the alignment of the memory
 	 */
-	size_t alig;
+	size_t align_;
 	/**
 	 * the offset where valid data starts
 	 */
@@ -4985,7 +4985,7 @@ struct GstPluginDesc
 	/**
 	 * version of the plugin
 	 */
-	const(char)* versio;
+	const(char)* version_;
 	/**
 	 * effective license of plugin
 	 */
@@ -4997,7 +4997,7 @@ struct GstPluginDesc
 	/**
 	 * shipped package plugin belongs to
 	 */
-	const(char)* p;
+	const(char)* package_;
 	/**
 	 * URL to provider of plugin
 	 */
@@ -5273,7 +5273,7 @@ struct GstStaticCaps
 	/**
 	 * a string describing a caps
 	 */
-	const(char)* str;
+	const(char)* string_;
 	void*[4] GstReserved;
 }
 
@@ -5900,13 +5900,13 @@ public alias extern(C) void function(GstIterator* it) GstIteratorResyncFunction;
  *     category = a #GstDebugCategory
  *     level = a #GstDebugLevel
  *     file = file name
- *     funct = function name
+ *     function_ = function name
  *     line = line number
  *     object = a #GObject
  *     message = the message
  *     userData = user data for the log function
  */
-public alias extern(C) void function(GstDebugCategory* category, GstDebugLevel level, const(char)* file, const(char)* funct, int line, GObject* object, GstDebugMessage* message, void* userData) GstLogFunction;
+public alias extern(C) void function(GstDebugCategory* category, GstDebugLevel level, const(char)* file, const(char)* function_, int line, GObject* object, GstDebugMessage* message, void* userData) GstLogFunction;
 
 /**
  * Copy @size bytes from @mem starting at @offset and return them wrapped in a
@@ -7638,7 +7638,7 @@ alias GST_VERSION_MAJOR = VERSION_MAJOR;
 /**
  * The micro version of GStreamer at compile time:
  */
-enum VERSION_MICRO = 1;
+enum VERSION_MICRO = 2;
 alias GST_VERSION_MICRO = VERSION_MICRO;
 
 /**

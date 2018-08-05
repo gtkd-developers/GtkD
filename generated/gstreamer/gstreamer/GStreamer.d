@@ -219,7 +219,7 @@ public struct GStreamer
 	 *     micro = pointer to a guint to store the micro version number
 	 *     nano = pointer to a guint to store the nano version number
 	 */
-	public static void versio(out uint major, out uint minor, out uint micro, out uint nano)
+	public static void version_(out uint major, out uint minor, out uint micro, out uint nano)
 	{
 		gst_version(&major, &minor, &micro, &nano);
 	}

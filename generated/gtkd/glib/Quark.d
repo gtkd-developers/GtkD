@@ -41,15 +41,15 @@ public struct Quark
 	 * therefore @string must not be freed or modified.
 	 *
 	 * Params:
-	 *     str = a static string
+	 *     string_ = a static string
 	 *
 	 * Returns: a canonical representation for the string
 	 *
 	 * Since: 2.10
 	 */
-	public static string internStaticString(string str)
+	public static string internStaticString(string string_)
 	{
-		return Str.toString(g_intern_static_string(Str.toStringz(str)));
+		return Str.toString(g_intern_static_string(Str.toStringz(string_)));
 	}
 
 	/**
@@ -58,15 +58,15 @@ public struct Quark
 	 * using strcmp().
 	 *
 	 * Params:
-	 *     str = a string
+	 *     string_ = a string
 	 *
 	 * Returns: a canonical representation for the string
 	 *
 	 * Since: 2.10
 	 */
-	public static string internString(string str)
+	public static string internString(string string_)
 	{
-		return Str.toString(g_intern_string(Str.toStringz(str)));
+		return Str.toString(g_intern_string(Str.toStringz(string_)));
 	}
 
 	/**
@@ -84,13 +84,13 @@ public struct Quark
 	 * function in GTK+ theme engines).
 	 *
 	 * Params:
-	 *     str = a string
+	 *     string_ = a string
 	 *
 	 * Returns: the #GQuark identifying the string, or 0 if @string is %NULL
 	 */
-	public static GQuark quarkFromStaticString(string str)
+	public static GQuark quarkFromStaticString(string string_)
 	{
-		return g_quark_from_static_string(Str.toStringz(str));
+		return g_quark_from_static_string(Str.toStringz(string_));
 	}
 
 	/**
@@ -99,13 +99,13 @@ public struct Quark
 	 * using a copy of the string.
 	 *
 	 * Params:
-	 *     str = a string
+	 *     string_ = a string
 	 *
 	 * Returns: the #GQuark identifying the string, or 0 if @string is %NULL
 	 */
-	public static GQuark quarkFromString(string str)
+	public static GQuark quarkFromString(string string_)
 	{
-		return g_quark_from_string(Str.toStringz(str));
+		return g_quark_from_string(Str.toStringz(string_));
 	}
 
 	/**
@@ -129,13 +129,13 @@ public struct Quark
 	 * use g_quark_from_string() or g_quark_from_static_string().
 	 *
 	 * Params:
-	 *     str = a string
+	 *     string_ = a string
 	 *
 	 * Returns: the #GQuark associated with the string, or 0 if @string is
 	 *     %NULL or there is no #GQuark associated with it
 	 */
-	public static GQuark quarkTryString(string str)
+	public static GQuark quarkTryString(string string_)
 	{
-		return g_quark_try_string(Str.toStringz(str));
+		return g_quark_try_string(Str.toStringz(string_));
 	}
 }

@@ -849,7 +849,7 @@ public class Variant
 	 * [format string][gvariant-format-strings-maybe-types].
 	 *
 	 * Params:
-	 *     str = a normal UTF-8 nul-terminated string
+	 *     string_ = a normal UTF-8 nul-terminated string
 	 *
 	 * Returns: a floating reference to a new string #GVariant instance
 	 *
@@ -857,9 +857,9 @@ public class Variant
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(string str)
+	public this(string string_)
 	{
-		auto p = g_variant_new_string(Str.toStringz(str));
+		auto p = g_variant_new_string(Str.toStringz(string_));
 
 		if(p is null)
 		{
@@ -2144,7 +2144,7 @@ public class Variant
 	 * a new empty #GString is allocated and it is returned.
 	 *
 	 * Params:
-	 *     str = a #GString, or %NULL
+	 *     string_ = a #GString, or %NULL
 	 *     typeAnnotate = %TRUE if type information should be included in
 	 *         the output
 	 *
@@ -2152,9 +2152,9 @@ public class Variant
 	 *
 	 * Since: 2.24
 	 */
-	public StringG printString(StringG str, bool typeAnnotate)
+	public StringG printString(StringG string_, bool typeAnnotate)
 	{
-		auto p = g_variant_print_string(gVariant, (str is null) ? null : str.getStringGStruct(), typeAnnotate);
+		auto p = g_variant_print_string(gVariant, (string_ is null) ? null : string_.getStringGStruct(), typeAnnotate);
 
 		if(p is null)
 		{
@@ -2317,15 +2317,15 @@ public class Variant
 	 * (including the one following the final '/' character) may be empty.
 	 *
 	 * Params:
-	 *     str = a normal C nul-terminated string
+	 *     string_ = a normal C nul-terminated string
 	 *
 	 * Returns: %TRUE if @string is a D-Bus object path
 	 *
 	 * Since: 2.24
 	 */
-	public static bool isObjectPath(string str)
+	public static bool isObjectPath(string string_)
 	{
-		return g_variant_is_object_path(Str.toStringz(str)) != 0;
+		return g_variant_is_object_path(Str.toStringz(string_)) != 0;
 	}
 
 	/**
@@ -2337,15 +2337,15 @@ public class Variant
 	 * strings in sequence.
 	 *
 	 * Params:
-	 *     str = a normal C nul-terminated string
+	 *     string_ = a normal C nul-terminated string
 	 *
 	 * Returns: %TRUE if @string is a D-Bus type signature
 	 *
 	 * Since: 2.24
 	 */
-	public static bool isSignature(string str)
+	public static bool isSignature(string string_)
 	{
-		return g_variant_is_signature(Str.toStringz(str)) != 0;
+		return g_variant_is_signature(Str.toStringz(string_)) != 0;
 	}
 
 	/**

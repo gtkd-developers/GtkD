@@ -88,13 +88,13 @@ public interface EditableTextIF{
 	 * Insert text at a given position.
 	 *
 	 * Params:
-	 *     str = the text to insert
+	 *     string_ = the text to insert
 	 *     length = the length of text to insert, in bytes
 	 *     position = The caller initializes this to
 	 *         the position at which to insert the text. After the call it
 	 *         points at the position after the newly inserted text.
 	 */
-	public void insertText(string str, int length, int* position);
+	public void insertText(string string_, int length, int* position);
 
 	/**
 	 * Paste text from clipboard to specified @position.
@@ -124,7 +124,7 @@ public interface EditableTextIF{
 	 * Set text contents of @text.
 	 *
 	 * Params:
-	 *     str = string to set for text contents of @text
+	 *     string_ = string to set for text contents of @text
 	 */
-	public void setTextContents(string str);
+	public void setTextContents(string string_);
 }

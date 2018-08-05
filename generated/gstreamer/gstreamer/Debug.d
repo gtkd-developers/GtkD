@@ -227,16 +227,16 @@ public struct Debug
 	 *     category = category to log
 	 *     level = level of the message
 	 *     file = the file that emitted the message, usually the __FILE__ identifier
-	 *     funct = the function that emitted the message
+	 *     function_ = the function that emitted the message
 	 *     line = the line from that the message was emitted, usually __LINE__
 	 *     object = the object this message relates to,
 	 *         or %NULL if none
 	 *     message = the actual message
 	 *     userData = the FILE* to log to
 	 */
-	public static void logDefault(DebugCategory category, GstDebugLevel level, string file, string funct, int line, ObjectG object, GstDebugMessage* message, void* userData)
+	public static void logDefault(DebugCategory category, GstDebugLevel level, string file, string function_, int line, ObjectG object, GstDebugMessage* message, void* userData)
 	{
-		gst_debug_log_default((category is null) ? null : category.getDebugCategoryStruct(), level, Str.toStringz(file), Str.toStringz(funct), line, (object is null) ? null : object.getObjectGStruct(), message, userData);
+		gst_debug_log_default((category is null) ? null : category.getDebugCategoryStruct(), level, Str.toStringz(file), Str.toStringz(function_), line, (object is null) ? null : object.getObjectGStruct(), message, userData);
 	}
 
 	/**
@@ -246,16 +246,16 @@ public struct Debug
 	 *     category = category to log
 	 *     level = level of the message is in
 	 *     file = the file that emitted the message, usually the __FILE__ identifier
-	 *     funct = the function that emitted the message
+	 *     function_ = the function that emitted the message
 	 *     line = the line from that the message was emitted, usually __LINE__
 	 *     object = the object this message relates to,
 	 *         or %NULL if none
 	 *     format = a printf style format string
 	 *     args = optional arguments for the format
 	 */
-	public static void logValist(DebugCategory category, GstDebugLevel level, string file, string funct, int line, ObjectG object, string format, void* args)
+	public static void logValist(DebugCategory category, GstDebugLevel level, string file, string function_, int line, ObjectG object, string format, void* args)
 	{
-		gst_debug_log_valist((category is null) ? null : category.getDebugCategoryStruct(), level, Str.toStringz(file), Str.toStringz(funct), line, (object is null) ? null : object.getObjectGStruct(), Str.toStringz(format), args);
+		gst_debug_log_valist((category is null) ? null : category.getDebugCategoryStruct(), level, Str.toStringz(file), Str.toStringz(function_), line, (object is null) ? null : object.getObjectGStruct(), Str.toStringz(format), args);
 	}
 
 	/**

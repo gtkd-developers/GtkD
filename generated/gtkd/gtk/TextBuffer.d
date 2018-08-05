@@ -1337,7 +1337,7 @@ public class TextBuffer : ObjectG
 	 *
 	 * Params:
 	 *     mimeType = the format’s mime-type
-	 *     funct = the deserialize function to register
+	 *     function_ = the deserialize function to register
 	 *     userData = @function’s user_data
 	 *     userDataDestroy = a function to call when @user_data is no longer needed
 	 *
@@ -1346,9 +1346,9 @@ public class TextBuffer : ObjectG
 	 *
 	 * Since: 2.10
 	 */
-	public GdkAtom registerDeserializeFormat(string mimeType, GtkTextBufferDeserializeFunc funct, void* userData, GDestroyNotify userDataDestroy)
+	public GdkAtom registerDeserializeFormat(string mimeType, GtkTextBufferDeserializeFunc function_, void* userData, GDestroyNotify userDataDestroy)
 	{
-		return gtk_text_buffer_register_deserialize_format(gtkTextBuffer, Str.toStringz(mimeType), funct, userData, userDataDestroy);
+		return gtk_text_buffer_register_deserialize_format(gtkTextBuffer, Str.toStringz(mimeType), function_, userData, userDataDestroy);
 	}
 
 	/**
@@ -1375,7 +1375,7 @@ public class TextBuffer : ObjectG
 	 *
 	 * Params:
 	 *     mimeType = the format’s mime-type
-	 *     funct = the serialize function to register
+	 *     function_ = the serialize function to register
 	 *     userData = @function’s user_data
 	 *     userDataDestroy = a function to call when @user_data is no longer needed
 	 *
@@ -1384,9 +1384,9 @@ public class TextBuffer : ObjectG
 	 *
 	 * Since: 2.10
 	 */
-	public GdkAtom registerSerializeFormat(string mimeType, GtkTextBufferSerializeFunc funct, void* userData, GDestroyNotify userDataDestroy)
+	public GdkAtom registerSerializeFormat(string mimeType, GtkTextBufferSerializeFunc function_, void* userData, GDestroyNotify userDataDestroy)
 	{
-		return gtk_text_buffer_register_serialize_format(gtkTextBuffer, Str.toStringz(mimeType), funct, userData, userDataDestroy);
+		return gtk_text_buffer_register_serialize_format(gtkTextBuffer, Str.toStringz(mimeType), function_, userData, userDataDestroy);
 	}
 
 	/**

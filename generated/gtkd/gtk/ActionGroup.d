@@ -503,15 +503,15 @@ public class ActionGroup : ObjectG, BuildableIF
 	 * is mainly intended for language bindings.
 	 *
 	 * Params:
-	 *     str = a string
+	 *     string_ = a string
 	 *
 	 * Returns: the translation of @string
 	 *
 	 * Since: 2.6
 	 */
-	public string translateString(string str)
+	public string translateString(string string_)
 	{
-		return Str.toString(gtk_action_group_translate_string(gtkActionGroup, Str.toStringz(str)));
+		return Str.toString(gtk_action_group_translate_string(gtkActionGroup, Str.toStringz(string_)));
 	}
 
 	/**

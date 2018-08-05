@@ -561,7 +561,7 @@ struct GstBitReader
 	/**
 	 * Current byte position
 	 */
-	uint _byte;
+	uint byte_;
 	/**
 	 * Bit position in the current byte
 	 */
@@ -583,7 +583,7 @@ struct GstByteReader
 	/**
 	 * Current byte position
 	 */
-	uint _byte;
+	uint byte_;
 	void*[4] GstReserved;
 }
 

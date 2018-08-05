@@ -122,16 +122,16 @@ public class Toc
 	 * Create a new #GstToc structure.
 	 *
 	 * Params:
-	 *     scop = scope of this TOC
+	 *     scope_ = scope of this TOC
 	 *
 	 * Returns: newly allocated #GstToc structure, free it
 	 *     with gst_toc_unref().
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(GstTocScope scop)
+	public this(GstTocScope scope_)
 	{
-		auto p = gst_toc_new(scop);
+		auto p = gst_toc_new(scope_);
 
 		if(p is null)
 		{

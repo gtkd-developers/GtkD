@@ -136,15 +136,15 @@ public class AccelLabel : Label
 	 * Creates a new #GtkAccelLabel.
 	 *
 	 * Params:
-	 *     str = the label string. Must be non-%NULL.
+	 *     string_ = the label string. Must be non-%NULL.
 	 *
 	 * Returns: a new #GtkAccelLabel.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(string str)
+	public this(string string_)
 	{
-		auto p = gtk_accel_label_new(Str.toStringz(str));
+		auto p = gtk_accel_label_new(Str.toStringz(string_));
 
 		if(p is null)
 		{

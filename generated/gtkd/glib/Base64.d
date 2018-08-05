@@ -143,7 +143,7 @@ public struct Base64
 	 *
 	 * Params:
 	 *     breakLines = whether to break long lines
-	 *     output = pointer to destination buffer
+	 *     out_ = pointer to destination buffer
 	 *     state = Saved state from g_base64_encode_step()
 	 *     save = Saved state from g_base64_encode_step()
 	 *
@@ -151,9 +151,9 @@ public struct Base64
 	 *
 	 * Since: 2.12
 	 */
-	public static size_t encodeClose(bool breakLines, out char[] output, ref int state, ref int save)
+	public static size_t encodeClose(bool breakLines, out char[] out_, ref int state, ref int save)
 	{
-		return g_base64_encode_close(breakLines, output.ptr, &state, &save);
+		return g_base64_encode_close(breakLines, out_.ptr, &state, &save);
 	}
 
 	/**
@@ -178,9 +178,9 @@ public struct Base64
 	 * or certain other protocols.
 	 *
 	 * Params:
-	 *     inn = the binary data to encode
+	 *     in_ = the binary data to encode
 	 *     breakLines = whether to break long lines
-	 *     output = pointer to destination buffer
+	 *     out_ = pointer to destination buffer
 	 *     state = Saved state between steps, initialize to 0
 	 *     save = Saved state between steps, initialize to 0
 	 *
@@ -188,8 +188,8 @@ public struct Base64
 	 *
 	 * Since: 2.12
 	 */
-	public static size_t encodeStep(char[] inn, bool breakLines, out char[] output, ref int state, ref int save)
+	public static size_t encodeStep(char[] in_, bool breakLines, out char[] out_, ref int state, ref int save)
 	{
-		return g_base64_encode_step(inn.ptr, cast(size_t)inn.length, breakLines, output.ptr, &state, &save);
+		return g_base64_encode_step(in_.ptr, cast(size_t)in_.length, breakLines, out_.ptr, &state, &save);
 	}
 }

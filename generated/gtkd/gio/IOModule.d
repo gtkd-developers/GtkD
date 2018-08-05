@@ -141,7 +141,7 @@ public class IOModule : TypeModule
 	 * Params:
 	 *     dirname = pathname for a directory containing modules
 	 *         to load.
-	 *     scop = a scope to use when scanning the modules.
+	 *     scope_ = a scope to use when scanning the modules.
 	 *
 	 * Returns: a list of #GIOModules loaded
 	 *     from the directory,
@@ -152,9 +152,9 @@ public class IOModule : TypeModule
 	 *
 	 * Since: 2.30
 	 */
-	public static ListG loadAllInDirectoryWithScope(string dirname, IOModuleScope scop)
+	public static ListG loadAllInDirectoryWithScope(string dirname, IOModuleScope scope_)
 	{
-		auto p = g_io_modules_load_all_in_directory_with_scope(Str.toStringz(dirname), (scop is null) ? null : scop.getIOModuleScopeStruct());
+		auto p = g_io_modules_load_all_in_directory_with_scope(Str.toStringz(dirname), (scope_ is null) ? null : scope_.getIOModuleScopeStruct());
 
 		if(p is null)
 		{
@@ -204,12 +204,12 @@ public class IOModule : TypeModule
 	 * Params:
 	 *     dirname = pathname for a directory containing modules
 	 *         to scan.
-	 *     scop = a scope to use when scanning the modules
+	 *     scope_ = a scope to use when scanning the modules
 	 *
 	 * Since: 2.30
 	 */
-	public static void scanAllInDirectoryWithScope(string dirname, IOModuleScope scop)
+	public static void scanAllInDirectoryWithScope(string dirname, IOModuleScope scope_)
 	{
-		g_io_modules_scan_all_in_directory_with_scope(Str.toStringz(dirname), (scop is null) ? null : scop.getIOModuleScopeStruct());
+		g_io_modules_scan_all_in_directory_with_scope(Str.toStringz(dirname), (scope_ is null) ? null : scope_.getIOModuleScopeStruct());
 	}
 }

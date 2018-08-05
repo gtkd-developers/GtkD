@@ -184,13 +184,13 @@ public class Memory
 	 *     allocator = the #GstAllocator
 	 *     parent = the parent of @mem
 	 *     maxsize = the total size of the memory
-	 *     alig = the alignment of the memory
+	 *     align_ = the alignment of the memory
 	 *     offset = The offset in the memory
 	 *     size = the size of valid data in the memory
 	 */
-	public void init(GstMemoryFlags flags, Allocator allocator, Memory parent, size_t maxsize, size_t alig, size_t offset, size_t size)
+	public void init(GstMemoryFlags flags, Allocator allocator, Memory parent, size_t maxsize, size_t align_, size_t offset, size_t size)
 	{
-		gst_memory_init(gstMemory, flags, (allocator is null) ? null : allocator.getAllocatorStruct(), (parent is null) ? null : parent.getMemoryStruct(), maxsize, alig, offset, size);
+		gst_memory_init(gstMemory, flags, (allocator is null) ? null : allocator.getAllocatorStruct(), (parent is null) ? null : parent.getMemoryStruct(), maxsize, align_, offset, size);
 	}
 
 	/**

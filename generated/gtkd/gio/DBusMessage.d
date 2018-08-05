@@ -140,7 +140,7 @@ public class DBusMessage : ObjectG
 	 * Params:
 	 *     name = A valid D-Bus name or %NULL.
 	 *     path = A valid object path.
-	 *     iface = A valid D-Bus interface name or %NULL.
+	 *     interface_ = A valid D-Bus interface name or %NULL.
 	 *     method = A valid method name.
 	 *
 	 * Returns: A #GDBusMessage. Free with g_object_unref().
@@ -149,9 +149,9 @@ public class DBusMessage : ObjectG
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(string name, string path, string iface, string method)
+	public this(string name, string path, string interface_, string method)
 	{
-		auto p = g_dbus_message_new_method_call(Str.toStringz(name), Str.toStringz(path), Str.toStringz(iface), Str.toStringz(method));
+		auto p = g_dbus_message_new_method_call(Str.toStringz(name), Str.toStringz(path), Str.toStringz(interface_), Str.toStringz(method));
 
 		if(p is null)
 		{
@@ -166,7 +166,7 @@ public class DBusMessage : ObjectG
 	 *
 	 * Params:
 	 *     path = A valid object path.
-	 *     iface = A valid D-Bus interface name.
+	 *     interface_ = A valid D-Bus interface name.
 	 *     signal = A valid signal name.
 	 *
 	 * Returns: A #GDBusMessage. Free with g_object_unref().
@@ -175,9 +175,9 @@ public class DBusMessage : ObjectG
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(string path, string iface, string signal)
+	public this(string path, string interface_, string signal)
 	{
-		auto p = g_dbus_message_new_signal(Str.toStringz(path), Str.toStringz(iface), Str.toStringz(signal));
+		auto p = g_dbus_message_new_signal(Str.toStringz(path), Str.toStringz(interface_), Str.toStringz(signal));
 
 		if(p is null)
 		{
@@ -645,13 +645,13 @@ public class DBusMessage : ObjectG
 	 * If @body is floating, @message assumes ownership of @body.
 	 *
 	 * Params:
-	 *     bod = Either %NULL or a #GVariant that is a tuple.
+	 *     body_ = Either %NULL or a #GVariant that is a tuple.
 	 *
 	 * Since: 2.26
 	 */
-	public void setBody(Variant bod)
+	public void setBody(Variant body_)
 	{
-		g_dbus_message_set_body(gDBusMessage, (bod is null) ? null : bod.getVariantStruct());
+		g_dbus_message_set_body(gDBusMessage, (body_ is null) ? null : body_.getVariantStruct());
 	}
 
 	/**

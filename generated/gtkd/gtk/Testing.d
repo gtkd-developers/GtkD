@@ -296,13 +296,13 @@ public struct Testing
 	 *
 	 * Params:
 	 *     widget = valid widget pointer.
-	 *     str = a 0-terminated C string
+	 *     string_ = a 0-terminated C string
 	 *
 	 * Since: 2.14
 	 */
-	public static void textSet(Widget widget, string str)
+	public static void textSet(Widget widget, string string_)
 	{
-		gtk_test_text_set((widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(str));
+		gtk_test_text_set((widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(string_));
 	}
 
 	/**

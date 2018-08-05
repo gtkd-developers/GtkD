@@ -2914,7 +2914,7 @@ struct GdkEventFocus
 	 * %TRUE if the window has gained the keyboard focus, %FALSE if
 	 * it has lost the focus.
 	 */
-	short inn;
+	short in_;
 }
 
 /**
@@ -3008,7 +3008,7 @@ struct GdkEventKey
 	 * NUL byte, in which case looking at @length is necessary to distinguish
 	 * it from the an empty translation.
 	 */
-	char* str;
+	char* string_;
 	/**
 	 * the raw code of the key that was pressed or released.
 	 */

@@ -214,14 +214,14 @@ public class Timeout
 	 * Params:
 	 *     interval = the time between calls to the function, in milliseconds
 	 *         (1/1000ths of a second)
-	 *     funct = function to call
+	 *     function_ = function to call
 	 *     data = data to pass to @function
 	 *
 	 * Returns: the ID (greater than 0) of the event source.
 	 */
-	public static uint add(uint interval, GSourceFunc funct, void* data)
+	public static uint add(uint interval, GSourceFunc function_, void* data)
 	{
-		return g_timeout_add(interval, funct, data);
+		return g_timeout_add(interval, function_, data);
 	}
 
 	/**
@@ -255,15 +255,15 @@ public class Timeout
 	 *         the range between #G_PRIORITY_DEFAULT and #G_PRIORITY_HIGH.
 	 *     interval = the time between calls to the function, in milliseconds
 	 *         (1/1000ths of a second)
-	 *     funct = function to call
+	 *     function_ = function to call
 	 *     data = data to pass to @function
 	 *     notify = function to call when the timeout is removed, or %NULL
 	 *
 	 * Returns: the ID (greater than 0) of the event source.
 	 */
-	public static uint addFull(int priority, uint interval, GSourceFunc funct, void* data, GDestroyNotify notify)
+	public static uint addFull(int priority, uint interval, GSourceFunc function_, void* data, GDestroyNotify notify)
 	{
-		return g_timeout_add_full(priority, interval, funct, data, notify);
+		return g_timeout_add_full(priority, interval, function_, data, notify);
 	}
 
 	/**
@@ -289,16 +289,16 @@ public class Timeout
 	 *
 	 * Params:
 	 *     interval = the time between calls to the function, in seconds
-	 *     funct = function to call
+	 *     function_ = function to call
 	 *     data = data to pass to @function
 	 *
 	 * Returns: the ID (greater than 0) of the event source.
 	 *
 	 * Since: 2.14
 	 */
-	public static uint addSeconds(uint interval, GSourceFunc funct, void* data)
+	public static uint addSeconds(uint interval, GSourceFunc function_, void* data)
 	{
-		return g_timeout_add_seconds(interval, funct, data);
+		return g_timeout_add_seconds(interval, function_, data);
 	}
 
 	/**
@@ -343,7 +343,7 @@ public class Timeout
 	 *     priority = the priority of the timeout source. Typically this will be in
 	 *         the range between #G_PRIORITY_DEFAULT and #G_PRIORITY_HIGH.
 	 *     interval = the time between calls to the function, in seconds
-	 *     funct = function to call
+	 *     function_ = function to call
 	 *     data = data to pass to @function
 	 *     notify = function to call when the timeout is removed, or %NULL
 	 *
@@ -351,9 +351,9 @@ public class Timeout
 	 *
 	 * Since: 2.14
 	 */
-	public static uint addSecondsFull(int priority, uint interval, GSourceFunc funct, void* data, GDestroyNotify notify)
+	public static uint addSecondsFull(int priority, uint interval, GSourceFunc function_, void* data, GDestroyNotify notify)
 	{
-		return g_timeout_add_seconds_full(priority, interval, funct, data, notify);
+		return g_timeout_add_seconds_full(priority, interval, function_, data, notify);
 	}
 
 	/**

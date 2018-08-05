@@ -867,14 +867,14 @@ __gshared extern(C)
 
 	GType function() c_pango_glyph_string_get_type;
 	PangoGlyphString* function() c_pango_glyph_string_new;
-	PangoGlyphString* function(PangoGlyphString* str) c_pango_glyph_string_copy;
+	PangoGlyphString* function(PangoGlyphString* string_) c_pango_glyph_string_copy;
 	void function(PangoGlyphString* glyphs, PangoFont* font, PangoRectangle* inkRect, PangoRectangle* logicalRect) c_pango_glyph_string_extents;
 	void function(PangoGlyphString* glyphs, int start, int end, PangoFont* font, PangoRectangle* inkRect, PangoRectangle* logicalRect) c_pango_glyph_string_extents_range;
-	void function(PangoGlyphString* str) c_pango_glyph_string_free;
+	void function(PangoGlyphString* string_) c_pango_glyph_string_free;
 	void function(PangoGlyphString* glyphs, const(char)* text, int length, int embeddingLevel, int* logicalWidths) c_pango_glyph_string_get_logical_widths;
 	int function(PangoGlyphString* glyphs) c_pango_glyph_string_get_width;
 	void function(PangoGlyphString* glyphs, char* text, int length, PangoAnalysis* analysis, int index, int trailing, int* xPos) c_pango_glyph_string_index_to_x;
-	void function(PangoGlyphString* str, int newLen) c_pango_glyph_string_set_size;
+	void function(PangoGlyphString* string_, int newLen) c_pango_glyph_string_set_size;
 	void function(PangoGlyphString* glyphs, char* text, int length, PangoAnalysis* analysis, int xPos, int* index, int* trailing) c_pango_glyph_string_x_to_index;
 
 	// pango.PgItem
@@ -997,7 +997,7 @@ __gshared extern(C)
 	PangoEngine* function(PangoMap* map, PangoScript script) c_pango_map_get_engine;
 	void function(PangoMap* map, PangoScript script, GSList** exactEngines, GSList** fallbackEngines) c_pango_map_get_engines;
 	PangoMap* function(PangoLanguage* language, uint engineTypeId, uint renderTypeId) c_pango_find_map;
-	void function(PangoIncludedModule* modul) c_pango_module_register;
+	void function(PangoIncludedModule* module_) c_pango_module_register;
 
 	// pango.PgMatrix
 
@@ -1090,9 +1090,9 @@ __gshared extern(C)
 	int function(const(char)* str, PangoVariant* variant, int warn) c_pango_parse_variant;
 	int function(const(char)* str, PangoWeight* weight, int warn) c_pango_parse_weight;
 	void function(int* thickness, int* position) c_pango_quantize_line_geometry;
-	int function(char** pos, int* output) c_pango_scan_int;
-	int function(char** pos, GString* output) c_pango_scan_string;
-	int function(char** pos, GString* output) c_pango_scan_word;
+	int function(char** pos, int* out_) c_pango_scan_int;
+	int function(char** pos, GString* out_) c_pango_scan_string;
+	int function(char** pos, GString* out_) c_pango_scan_word;
 	int function(char** pos) c_pango_skip_space;
 	char** function(const(char)* str) c_pango_split_file_list;
 	char* function(const(char)* str) c_pango_trim_string;

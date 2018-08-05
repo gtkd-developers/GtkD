@@ -2220,9 +2220,9 @@ __gshared extern(C)
 	void function(GKeyFile* keyFile, const(char)* groupName, const(char)* key, int value) c_g_key_file_set_integer;
 	void function(GKeyFile* keyFile, const(char)* groupName, const(char)* key, int* list, size_t length) c_g_key_file_set_integer_list;
 	void function(GKeyFile* keyFile, char separator) c_g_key_file_set_list_separator;
-	void function(GKeyFile* keyFile, const(char)* groupName, const(char)* key, const(char)* locale, const(char)* str) c_g_key_file_set_locale_string;
+	void function(GKeyFile* keyFile, const(char)* groupName, const(char)* key, const(char)* locale, const(char)* string_) c_g_key_file_set_locale_string;
 	void function(GKeyFile* keyFile, const(char)* groupName, const(char)* key, const(char)* locale, char** list, size_t length) c_g_key_file_set_locale_string_list;
-	void function(GKeyFile* keyFile, const(char)* groupName, const(char)* key, const(char)* str) c_g_key_file_set_string;
+	void function(GKeyFile* keyFile, const(char)* groupName, const(char)* key, const(char)* string_) c_g_key_file_set_string;
 	void function(GKeyFile* keyFile, const(char)* groupName, const(char)* key, char** list, size_t length) c_g_key_file_set_string_list;
 	void function(GKeyFile* keyFile, const(char)* groupName, const(char)* key, ulong value) c_g_key_file_set_uint64;
 	void function(GKeyFile* keyFile, const(char)* groupName, const(char)* key, const(char)* value) c_g_key_file_set_value;
@@ -2275,8 +2275,8 @@ __gshared extern(C)
 	GSource* function(GMainContext* context, uint sourceId) c_g_main_context_find_source_by_id;
 	GSource* function(GMainContext* context, void* userData) c_g_main_context_find_source_by_user_data;
 	GPollFunc function(GMainContext* context) c_g_main_context_get_poll_func;
-	void function(GMainContext* context, GSourceFunc funct, void* data) c_g_main_context_invoke;
-	void function(GMainContext* context, int priority, GSourceFunc funct, void* data, GDestroyNotify notify) c_g_main_context_invoke_full;
+	void function(GMainContext* context, GSourceFunc function_, void* data) c_g_main_context_invoke;
+	void function(GMainContext* context, int priority, GSourceFunc function_, void* data, GDestroyNotify notify) c_g_main_context_invoke_full;
 	int function(GMainContext* context) c_g_main_context_is_owner;
 	int function(GMainContext* context, int mayBlock) c_g_main_context_iteration;
 	int function(GMainContext* context) c_g_main_context_pending;
@@ -2442,9 +2442,9 @@ __gshared extern(C)
 	int function(GPatternSpec* pspec1, GPatternSpec* pspec2) c_g_pattern_spec_equal;
 	void function(GPatternSpec* pspec) c_g_pattern_spec_free;
 	GPatternSpec* function(const(char)* pattern) c_g_pattern_spec_new;
-	int function(GPatternSpec* pspec, uint stringLength, const(char)* str, const(char)* stringReversed) c_g_pattern_match;
-	int function(const(char)* pattern, const(char)* str) c_g_pattern_match_simple;
-	int function(GPatternSpec* pspec, const(char)* str) c_g_pattern_match_string;
+	int function(GPatternSpec* pspec, uint stringLength, const(char)* string_, const(char)* stringReversed) c_g_pattern_match;
+	int function(const(char)* pattern, const(char)* string_) c_g_pattern_match_simple;
+	int function(GPatternSpec* pspec, const(char)* string_) c_g_pattern_match_string;
 
 	// glib.Private
 
@@ -2568,23 +2568,23 @@ __gshared extern(C)
 	int function(GRegex* regex) c_g_regex_get_max_lookbehind;
 	const(char)* function(GRegex* regex) c_g_regex_get_pattern;
 	int function(GRegex* regex, const(char)* name) c_g_regex_get_string_number;
-	int function(GRegex* regex, const(char)* str, GRegexMatchFlags matchOptions, GMatchInfo** matchInfo) c_g_regex_match;
-	int function(GRegex* regex, const(char)* str, GRegexMatchFlags matchOptions, GMatchInfo** matchInfo) c_g_regex_match_all;
-	int function(GRegex* regex, char* str, ptrdiff_t stringLen, int startPosition, GRegexMatchFlags matchOptions, GMatchInfo** matchInfo, GError** err) c_g_regex_match_all_full;
-	int function(GRegex* regex, char* str, ptrdiff_t stringLen, int startPosition, GRegexMatchFlags matchOptions, GMatchInfo** matchInfo, GError** err) c_g_regex_match_full;
+	int function(GRegex* regex, const(char)* string_, GRegexMatchFlags matchOptions, GMatchInfo** matchInfo) c_g_regex_match;
+	int function(GRegex* regex, const(char)* string_, GRegexMatchFlags matchOptions, GMatchInfo** matchInfo) c_g_regex_match_all;
+	int function(GRegex* regex, char* string_, ptrdiff_t stringLen, int startPosition, GRegexMatchFlags matchOptions, GMatchInfo** matchInfo, GError** err) c_g_regex_match_all_full;
+	int function(GRegex* regex, char* string_, ptrdiff_t stringLen, int startPosition, GRegexMatchFlags matchOptions, GMatchInfo** matchInfo, GError** err) c_g_regex_match_full;
 	GRegex* function(GRegex* regex) c_g_regex_ref;
-	char* function(GRegex* regex, char* str, ptrdiff_t stringLen, int startPosition, const(char)* replacement, GRegexMatchFlags matchOptions, GError** err) c_g_regex_replace;
-	char* function(GRegex* regex, char* str, ptrdiff_t stringLen, int startPosition, GRegexMatchFlags matchOptions, GRegexEvalCallback eval, void* userData, GError** err) c_g_regex_replace_eval;
-	char* function(GRegex* regex, char* str, ptrdiff_t stringLen, int startPosition, const(char)* replacement, GRegexMatchFlags matchOptions, GError** err) c_g_regex_replace_literal;
-	char** function(GRegex* regex, const(char)* str, GRegexMatchFlags matchOptions) c_g_regex_split;
-	char** function(GRegex* regex, char* str, ptrdiff_t stringLen, int startPosition, GRegexMatchFlags matchOptions, int maxTokens, GError** err) c_g_regex_split_full;
+	char* function(GRegex* regex, char* string_, ptrdiff_t stringLen, int startPosition, const(char)* replacement, GRegexMatchFlags matchOptions, GError** err) c_g_regex_replace;
+	char* function(GRegex* regex, char* string_, ptrdiff_t stringLen, int startPosition, GRegexMatchFlags matchOptions, GRegexEvalCallback eval, void* userData, GError** err) c_g_regex_replace_eval;
+	char* function(GRegex* regex, char* string_, ptrdiff_t stringLen, int startPosition, const(char)* replacement, GRegexMatchFlags matchOptions, GError** err) c_g_regex_replace_literal;
+	char** function(GRegex* regex, const(char)* string_, GRegexMatchFlags matchOptions) c_g_regex_split;
+	char** function(GRegex* regex, char* string_, ptrdiff_t stringLen, int startPosition, GRegexMatchFlags matchOptions, int maxTokens, GError** err) c_g_regex_split_full;
 	void function(GRegex* regex) c_g_regex_unref;
 	int function(const(char)* replacement, int* hasReferences, GError** err) c_g_regex_check_replacement;
 	GQuark function() c_g_regex_error_quark;
-	char* function(const(char)* str, int length) c_g_regex_escape_nul;
-	char* function(char* str, int length) c_g_regex_escape_string;
-	int function(const(char)* pattern, const(char)* str, GRegexCompileFlags compileOptions, GRegexMatchFlags matchOptions) c_g_regex_match_simple;
-	char** function(const(char)* pattern, const(char)* str, GRegexCompileFlags compileOptions, GRegexMatchFlags matchOptions) c_g_regex_split_simple;
+	char* function(const(char)* string_, int length) c_g_regex_escape_nul;
+	char* function(char* string_, int length) c_g_regex_escape_string;
+	int function(const(char)* pattern, const(char)* string_, GRegexCompileFlags compileOptions, GRegexMatchFlags matchOptions) c_g_regex_match_simple;
+	char** function(const(char)* pattern, const(char)* string_, GRegexCompileFlags compileOptions, GRegexMatchFlags matchOptions) c_g_regex_split_simple;
 
 	// glib.ListSG
 
@@ -2724,37 +2724,37 @@ __gshared extern(C)
 
 	// glib.StringG
 
-	GString* function(GString* str, const(char)* val) c_g_string_append;
-	GString* function(GString* str, char c) c_g_string_append_c;
-	GString* function(GString* str, const(char)* val, ptrdiff_t len) c_g_string_append_len;
-	void function(GString* str, const(char)* format, ... ) c_g_string_append_printf;
-	GString* function(GString* str, dchar wc) c_g_string_append_unichar;
-	GString* function(GString* str, const(char)* unescaped, const(char)* reservedCharsAllowed, int allowUtf8) c_g_string_append_uri_escaped;
-	void function(GString* str, const(char)* format, void* args) c_g_string_append_vprintf;
-	GString* function(GString* str) c_g_string_ascii_down;
-	GString* function(GString* str) c_g_string_ascii_up;
-	GString* function(GString* str, const(char)* rval) c_g_string_assign;
-	GString* function(GString* str) c_g_string_down;
+	GString* function(GString* string_, const(char)* val) c_g_string_append;
+	GString* function(GString* string_, char c) c_g_string_append_c;
+	GString* function(GString* string_, const(char)* val, ptrdiff_t len) c_g_string_append_len;
+	void function(GString* string_, const(char)* format, ... ) c_g_string_append_printf;
+	GString* function(GString* string_, dchar wc) c_g_string_append_unichar;
+	GString* function(GString* string_, const(char)* unescaped, const(char)* reservedCharsAllowed, int allowUtf8) c_g_string_append_uri_escaped;
+	void function(GString* string_, const(char)* format, void* args) c_g_string_append_vprintf;
+	GString* function(GString* string_) c_g_string_ascii_down;
+	GString* function(GString* string_) c_g_string_ascii_up;
+	GString* function(GString* string_, const(char)* rval) c_g_string_assign;
+	GString* function(GString* string_) c_g_string_down;
 	int function(GString* v, GString* v2) c_g_string_equal;
-	GString* function(GString* str, ptrdiff_t pos, ptrdiff_t len) c_g_string_erase;
-	char* function(GString* str, int freeSegment) c_g_string_free;
-	GBytes* function(GString* str) c_g_string_free_to_bytes;
+	GString* function(GString* string_, ptrdiff_t pos, ptrdiff_t len) c_g_string_erase;
+	char* function(GString* string_, int freeSegment) c_g_string_free;
+	GBytes* function(GString* string_) c_g_string_free_to_bytes;
 	uint function(GString* str) c_g_string_hash;
-	GString* function(GString* str, ptrdiff_t pos, const(char)* val) c_g_string_insert;
-	GString* function(GString* str, ptrdiff_t pos, char c) c_g_string_insert_c;
-	GString* function(GString* str, ptrdiff_t pos, const(char)* val, ptrdiff_t len) c_g_string_insert_len;
-	GString* function(GString* str, ptrdiff_t pos, dchar wc) c_g_string_insert_unichar;
-	GString* function(GString* str, size_t pos, const(char)* val) c_g_string_overwrite;
-	GString* function(GString* str, size_t pos, const(char)* val, ptrdiff_t len) c_g_string_overwrite_len;
-	GString* function(GString* str, const(char)* val) c_g_string_prepend;
-	GString* function(GString* str, char c) c_g_string_prepend_c;
-	GString* function(GString* str, const(char)* val, ptrdiff_t len) c_g_string_prepend_len;
-	GString* function(GString* str, dchar wc) c_g_string_prepend_unichar;
-	void function(GString* str, const(char)* format, ... ) c_g_string_printf;
-	GString* function(GString* str, size_t len) c_g_string_set_size;
-	GString* function(GString* str, size_t len) c_g_string_truncate;
-	GString* function(GString* str) c_g_string_up;
-	void function(GString* str, const(char)* format, void* args) c_g_string_vprintf;
+	GString* function(GString* string_, ptrdiff_t pos, const(char)* val) c_g_string_insert;
+	GString* function(GString* string_, ptrdiff_t pos, char c) c_g_string_insert_c;
+	GString* function(GString* string_, ptrdiff_t pos, const(char)* val, ptrdiff_t len) c_g_string_insert_len;
+	GString* function(GString* string_, ptrdiff_t pos, dchar wc) c_g_string_insert_unichar;
+	GString* function(GString* string_, size_t pos, const(char)* val) c_g_string_overwrite;
+	GString* function(GString* string_, size_t pos, const(char)* val, ptrdiff_t len) c_g_string_overwrite_len;
+	GString* function(GString* string_, const(char)* val) c_g_string_prepend;
+	GString* function(GString* string_, char c) c_g_string_prepend_c;
+	GString* function(GString* string_, const(char)* val, ptrdiff_t len) c_g_string_prepend_len;
+	GString* function(GString* string_, dchar wc) c_g_string_prepend_unichar;
+	void function(GString* string_, const(char)* format, ... ) c_g_string_printf;
+	GString* function(GString* string_, size_t len) c_g_string_set_size;
+	GString* function(GString* string_, size_t len) c_g_string_truncate;
+	GString* function(GString* string_) c_g_string_up;
+	void function(GString* string_, const(char)* format, void* args) c_g_string_vprintf;
 	GString* function(const(char)* init) c_g_string_new;
 	GString* function(const(char)* init, ptrdiff_t len) c_g_string_new_len;
 	GString* function(size_t dflSize) c_g_string_sized_new;
@@ -2763,9 +2763,9 @@ __gshared extern(C)
 
 	void function(GStringChunk* chunk) c_g_string_chunk_clear;
 	void function(GStringChunk* chunk) c_g_string_chunk_free;
-	char* function(GStringChunk* chunk, const(char)* str) c_g_string_chunk_insert;
-	char* function(GStringChunk* chunk, const(char)* str) c_g_string_chunk_insert_const;
-	char* function(GStringChunk* chunk, const(char)* str, ptrdiff_t len) c_g_string_chunk_insert_len;
+	char* function(GStringChunk* chunk, const(char)* string_) c_g_string_chunk_insert;
+	char* function(GStringChunk* chunk, const(char)* string_) c_g_string_chunk_insert_const;
+	char* function(GStringChunk* chunk, const(char)* string_, ptrdiff_t len) c_g_string_chunk_insert_len;
 	GStringChunk* function(size_t size) c_g_string_chunk_new;
 
 	// glib.TestLogBuffer
@@ -2887,7 +2887,7 @@ __gshared extern(C)
 	GVariant* function(GVariantType* childType, GVariant** children, size_t nChildren) c_g_variant_new_array;
 	GVariant* function(int value) c_g_variant_new_boolean;
 	GVariant* function(char value) c_g_variant_new_byte;
-	GVariant* function(char* str) c_g_variant_new_bytestring;
+	GVariant* function(char* string_) c_g_variant_new_bytestring;
 	GVariant* function(char** strv, ptrdiff_t length) c_g_variant_new_bytestring_array;
 	GVariant* function(GVariant* key, GVariant* value) c_g_variant_new_dict_entry;
 	GVariant* function(double value) c_g_variant_new_double;
@@ -2905,9 +2905,9 @@ __gshared extern(C)
 	GVariant* function(const(char)* format, void** app) c_g_variant_new_parsed_va;
 	GVariant* function(const(char)* formatString, ... ) c_g_variant_new_printf;
 	GVariant* function(const(char)* signature) c_g_variant_new_signature;
-	GVariant* function(const(char)* str) c_g_variant_new_string;
+	GVariant* function(const(char)* string_) c_g_variant_new_string;
 	GVariant* function(char** strv, ptrdiff_t length) c_g_variant_new_strv;
-	GVariant* function(char* str) c_g_variant_new_take_string;
+	GVariant* function(char* string_) c_g_variant_new_take_string;
 	GVariant* function(GVariant** children, size_t nChildren) c_g_variant_new_tuple;
 	GVariant* function(ushort value) c_g_variant_new_uint16;
 	GVariant* function(uint value) c_g_variant_new_uint32;
@@ -2962,14 +2962,14 @@ __gshared extern(C)
 	GVariant* function(GVariant* dictionary, const(char)* key, GVariantType* expectedType) c_g_variant_lookup_value;
 	size_t function(GVariant* value) c_g_variant_n_children;
 	char* function(GVariant* value, int typeAnnotate) c_g_variant_print;
-	GString* function(GVariant* value, GString* str, int typeAnnotate) c_g_variant_print_string;
+	GString* function(GVariant* value, GString* string_, int typeAnnotate) c_g_variant_print_string;
 	GVariant* function(GVariant* value) c_g_variant_ref;
 	GVariant* function(GVariant* value) c_g_variant_ref_sink;
 	void function(GVariant* value, void* data) c_g_variant_store;
 	GVariant* function(GVariant* value) c_g_variant_take_ref;
 	void function(GVariant* value) c_g_variant_unref;
-	int function(const(char)* str) c_g_variant_is_object_path;
-	int function(const(char)* str) c_g_variant_is_signature;
+	int function(const(char)* string_) c_g_variant_is_object_path;
+	int function(const(char)* string_) c_g_variant_is_signature;
 	GVariant* function(GVariantType* type, const(char)* text, const(char)* limit, char** endptr, GError** err) c_g_variant_parse;
 	char* function(GError* error, const(char)* sourceStr) c_g_variant_parse_error_print_context;
 	GQuark function() c_g_variant_parse_error_quark;
@@ -3045,14 +3045,14 @@ __gshared extern(C)
 	GVariantType* function(GVariantType* type) c_g_variant_type_value;
 	GVariantType* function(const(char)* arg0) c_g_variant_type_checked_;
 	int function(const(char)* typeString) c_g_variant_type_string_is_valid;
-	int function(const(char)* str, const(char)* limit, char** endptr) c_g_variant_type_string_scan;
+	int function(const(char)* string_, const(char)* limit, char** endptr) c_g_variant_type_string_scan;
 
 	// glib.Module
 
-	int function(GModule* modul) c_g_module_close;
-	void function(GModule* modul) c_g_module_make_resident;
-	const(char)* function(GModule* modul) c_g_module_name;
-	int function(GModule* modul, const(char)* symbolName, void** symbol) c_g_module_symbol;
+	int function(GModule* module_) c_g_module_close;
+	void function(GModule* module_) c_g_module_make_resident;
+	const(char)* function(GModule* module_) c_g_module_name;
+	int function(GModule* module_, const(char)* symbolName, void** symbol) c_g_module_symbol;
 	char* function(const(char)* directory, const(char)* moduleName) c_g_module_build_path;
 	const(char)* function() c_g_module_error;
 	GModule* function(const(char)* fileName, GModuleFlags flags) c_g_module_open;
@@ -3060,17 +3060,17 @@ __gshared extern(C)
 
 	// glib.Base64
 
-	size_t function(char* inn, size_t len, char* output, int* state, uint* save) c_g_base64_decode_step;
+	size_t function(char* in_, size_t len, char* out_, int* state, uint* save) c_g_base64_decode_step;
 	char* function(char* text, size_t* outLen) c_g_base64_decode_inplace;
 	char* function(const(char)* text, size_t* outLen) c_g_base64_decode;
 	char* function(char* data, size_t len) c_g_base64_encode;
-	size_t function(int breakLines, char* output, int* state, int* save) c_g_base64_encode_close;
-	size_t function(char* inn, size_t len, int breakLines, char* output, int* state, int* save) c_g_base64_encode_step;
+	size_t function(int breakLines, char* out_, int* state, int* save) c_g_base64_encode_close;
+	size_t function(char* in_, size_t len, int breakLines, char* out_, int* state, int* save) c_g_base64_encode_step;
 
 	// glib.Idle
 
-	uint function(GSourceFunc funct, void* data) c_g_idle_add;
-	uint function(int priority, GSourceFunc funct, void* data, GDestroyNotify notify) c_g_idle_add_full;
+	uint function(GSourceFunc function_, void* data) c_g_idle_add;
+	uint function(int priority, GSourceFunc function_, void* data, GDestroyNotify notify) c_g_idle_add_full;
 	int function(void* data) c_g_idle_remove_by_data;
 	GSource* function() c_g_idle_source_new;
 
@@ -3114,24 +3114,24 @@ __gshared extern(C)
 	int function(char c) c_g_ascii_xdigit_value;
 	int function(const(char)* format, ... ) c_g_printf;
 	size_t function(const(char)* format, void* args) c_g_printf_string_upper_bound;
-	int function(char* str, gulong n, const(char)* format, ... ) c_g_snprintf;
-	int function(char* str, const(char)* format, ... ) c_g_sprintf;
+	int function(char* string_, gulong n, const(char)* format, ... ) c_g_snprintf;
+	int function(char* string_, const(char)* format, ... ) c_g_sprintf;
 	char* function(char* dest, const(char)* src) c_g_stpcpy;
 	int function(const(char)* str, const(char)* prefix) c_g_str_has_prefix;
 	int function(const(char)* str, const(char)* suffix) c_g_str_has_suffix;
 	int function(const(char)* str) c_g_str_is_ascii;
 	int function(const(char)* searchTerm, const(char)* potentialHit, int acceptAlternates) c_g_str_match_string;
 	char* function(const(char)* str, const(char)* fromLocale) c_g_str_to_ascii;
-	char** function(const(char)* str, const(char)* translitLocale, char*** asciiAlternates) c_g_str_tokenize_and_fold;
-	char* function(char* str, const(char)* validChars, char substitutor) c_g_strcanon;
+	char** function(const(char)* string_, const(char)* translitLocale, char*** asciiAlternates) c_g_str_tokenize_and_fold;
+	char* function(char* string_, const(char)* validChars, char substitutor) c_g_strcanon;
 	int function(const(char)* s1, const(char)* s2) c_g_strcasecmp;
-	char* function(char* str) c_g_strchomp;
-	char* function(char* str) c_g_strchug;
+	char* function(char* string_) c_g_strchomp;
+	char* function(char* string_) c_g_strchug;
 	int function(const(char)* str1, const(char)* str2) c_g_strcmp0;
 	char* function(const(char)* source) c_g_strcompress;
 	char* function(const(char)* string1, ... ) c_g_strconcat;
-	char* function(char* str, const(char)* delimiters, char newDelimiter) c_g_strdelimit;
-	char* function(char* str) c_g_strdown;
+	char* function(char* string_, const(char)* delimiters, char newDelimiter) c_g_strdelimit;
+	char* function(char* string_) c_g_strdown;
 	char* function(const(char)* str) c_g_strdup;
 	char* function(const(char)* format, ... ) c_g_strdup_printf;
 	char* function(const(char)* format, void* args) c_g_strdup_vprintf;
@@ -3146,22 +3146,22 @@ __gshared extern(C)
 	int function(const(char)* s1, const(char)* s2, uint n) c_g_strncasecmp;
 	char* function(const(char)* str, size_t n) c_g_strndup;
 	char* function(size_t length, char fillChar) c_g_strnfill;
-	char* function(char* str) c_g_strreverse;
+	char* function(char* string_) c_g_strreverse;
 	char* function(const(char)* haystack, const(char)* needle) c_g_strrstr;
 	char* function(const(char)* haystack, ptrdiff_t haystackLen, const(char)* needle) c_g_strrstr_len;
 	const(char)* function(int signum) c_g_strsignal;
-	char** function(const(char)* str, const(char)* delimiter, int maxTokens) c_g_strsplit;
-	char** function(const(char)* str, const(char)* delimiters, int maxTokens) c_g_strsplit_set;
+	char** function(const(char)* string_, const(char)* delimiter, int maxTokens) c_g_strsplit;
+	char** function(const(char)* string_, const(char)* delimiters, int maxTokens) c_g_strsplit_set;
 	char* function(const(char)* haystack, ptrdiff_t haystackLen, const(char)* needle) c_g_strstr_len;
 	double function(const(char)* nptr, char** endptr) c_g_strtod;
-	char* function(char* str) c_g_strup;
+	char* function(char* string_) c_g_strup;
 	GType function() c_g_strv_get_type;
 	uint function(char** strArray) c_g_strv_length;
 	int function(const(char)* strv, const(char)* str) c_g_strv_contains;
-	int function(char** str, const(char)* format, void* args) c_g_vasprintf;
+	int function(char** string_, const(char)* format, void* args) c_g_vasprintf;
 	int function(const(char)* format, void* args) c_g_vprintf;
-	int function(char* str, gulong n, const(char)* format, void* args) c_g_vsnprintf;
-	int function(char* str, const(char)* format, void* args) c_g_vsprintf;
+	int function(char* string_, gulong n, const(char)* format, void* args) c_g_vsnprintf;
+	int function(char* string_, const(char)* format, void* args) c_g_vsprintf;
 	int function(FILE* file, const(char)* format, ... ) c_g_fprintf;
 	int function(FILE* file, const(char)* format, void* args) c_g_vfprintf;
 	int function(const(char)* str, uint base, long min, long max, long* outNum, GError** err) c_g_ascii_string_to_signed;
@@ -3169,10 +3169,10 @@ __gshared extern(C)
 
 	// glib.Timeout
 
-	uint function(uint interval, GSourceFunc funct, void* data) c_g_timeout_add;
-	uint function(int priority, uint interval, GSourceFunc funct, void* data, GDestroyNotify notify) c_g_timeout_add_full;
-	uint function(uint interval, GSourceFunc funct, void* data) c_g_timeout_add_seconds;
-	uint function(int priority, uint interval, GSourceFunc funct, void* data, GDestroyNotify notify) c_g_timeout_add_seconds_full;
+	uint function(uint interval, GSourceFunc function_, void* data) c_g_timeout_add;
+	uint function(int priority, uint interval, GSourceFunc function_, void* data, GDestroyNotify notify) c_g_timeout_add_full;
+	uint function(uint interval, GSourceFunc function_, void* data) c_g_timeout_add_seconds;
+	uint function(int priority, uint interval, GSourceFunc function_, void* data, GDestroyNotify notify) c_g_timeout_add_seconds_full;
 	GSource* function(uint interval) c_g_timeout_source_new;
 	GSource* function(uint interval) c_g_timeout_source_new_seconds;
 
@@ -3212,7 +3212,7 @@ __gshared extern(C)
 	char* function(char* variable) c_g_getenv;
 	char** function() c_g_listenv;
 	void function(void** nullifyLocation) c_g_nullify_pointer;
-	uint function(const(char)* str, GDebugKey* keys, uint nkeys) c_g_parse_debug_string;
+	uint function(const(char)* string_, GDebugKey* keys, uint nkeys) c_g_parse_debug_string;
 	char* function(char* fileName) c_g_path_get_basename;
 	char* function(char* fileName) c_g_path_get_dirname;
 	int function(char* fileName) c_g_path_is_absolute;
@@ -3263,8 +3263,8 @@ __gshared extern(C)
 
 	// glib.Child
 
-	uint function(GPid pid, GChildWatchFunc funct, void* data) c_g_child_watch_add;
-	uint function(int priority, GPid pid, GChildWatchFunc funct, void* data, GDestroyNotify notify) c_g_child_watch_add_full;
+	uint function(GPid pid, GChildWatchFunc function_, void* data) c_g_child_watch_add;
+	uint function(int priority, GPid pid, GChildWatchFunc function_, void* data, GDestroyNotify notify) c_g_child_watch_add_full;
 	GSource* function(GPid pid) c_g_child_watch_source_new;
 
 	// glib.DataList
@@ -3373,12 +3373,12 @@ __gshared extern(C)
 
 	// glib.Quark
 
-	const(char)* function(const(char)* str) c_g_intern_static_string;
-	const(char)* function(const(char)* str) c_g_intern_string;
-	GQuark function(const(char)* str) c_g_quark_from_static_string;
-	GQuark function(const(char)* str) c_g_quark_from_string;
+	const(char)* function(const(char)* string_) c_g_intern_static_string;
+	const(char)* function(const(char)* string_) c_g_intern_string;
+	GQuark function(const(char)* string_) c_g_quark_from_static_string;
+	GQuark function(const(char)* string_) c_g_quark_from_string;
 	const(char)* function(GQuark quark) c_g_quark_to_string;
-	GQuark function(const(char)* str) c_g_quark_try_string;
+	GQuark function(const(char)* string_) c_g_quark_try_string;
 
 	// glib.ShellUtils
 
@@ -3424,7 +3424,7 @@ __gshared extern(C)
 	int function(dchar ch) c_g_unichar_validate;
 	int function(dchar c) c_g_unichar_xdigit_value;
 	dchar* function(dchar ch, size_t* resultLen) c_g_unicode_canonical_decomposition;
-	void function(dchar* str, size_t len) c_g_unicode_canonical_ordering;
+	void function(dchar* string_, size_t len) c_g_unicode_canonical_ordering;
 	GUnicodeScript function(uint iso15924) c_g_unicode_script_from_iso15924;
 	uint function(GUnicodeScript script) c_g_unicode_script_to_iso15924;
 	dchar* function(wchar* str, glong len, glong* itemsRead, glong* itemsWritten, GError** err) c_g_utf16_to_ucs4;
@@ -3458,8 +3458,8 @@ __gshared extern(C)
 	// glib.UnixUtils
 
 	GQuark function() c_g_unix_error_quark;
-	uint function(int fd, GIOCondition condition, GUnixFDSourceFunc funct, void* userData) c_g_unix_fd_add;
-	uint function(int priority, int fd, GIOCondition condition, GUnixFDSourceFunc funct, void* userData, GDestroyNotify notify) c_g_unix_fd_add_full;
+	uint function(int fd, GIOCondition condition, GUnixFDSourceFunc function_, void* userData) c_g_unix_fd_add;
+	uint function(int priority, int fd, GIOCondition condition, GUnixFDSourceFunc function_, void* userData, GDestroyNotify notify) c_g_unix_fd_add_full;
 	GSource* function(int fd, GIOCondition condition) c_g_unix_fd_source_new;
 	int function(int* fds, int flags, GError** err) c_g_unix_open_pipe;
 	int function(int fd, int nonblock, GError** err) c_g_unix_set_fd_nonblocking;

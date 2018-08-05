@@ -183,19 +183,19 @@ public struct Type
 	 * G_TYPE_CHECK_INSTANCE() macro.
 	 *
 	 * Params:
-	 *     instanc = a valid #GTypeInstance structure
+	 *     instance_ = a valid #GTypeInstance structure
 	 *
 	 * Returns: %TRUE if @instance is valid, %FALSE otherwise
 	 */
-	public static bool checkInstance(TypeInstance instanc)
+	public static bool checkInstance(TypeInstance instance_)
 	{
-		return g_type_check_instance((instanc is null) ? null : instanc.getTypeInstanceStruct()) != 0;
+		return g_type_check_instance((instance_ is null) ? null : instance_.getTypeInstanceStruct()) != 0;
 	}
 
 	/** */
-	public static TypeInstance checkInstanceCast(TypeInstance instanc, GType ifaceType)
+	public static TypeInstance checkInstanceCast(TypeInstance instance_, GType ifaceType)
 	{
-		auto p = g_type_check_instance_cast((instanc is null) ? null : instanc.getTypeInstanceStruct(), ifaceType);
+		auto p = g_type_check_instance_cast((instance_ is null) ? null : instance_.getTypeInstanceStruct(), ifaceType);
 
 		if(p is null)
 		{
@@ -206,15 +206,15 @@ public struct Type
 	}
 
 	/** */
-	public static bool checkInstanceIsA(TypeInstance instanc, GType ifaceType)
+	public static bool checkInstanceIsA(TypeInstance instance_, GType ifaceType)
 	{
-		return g_type_check_instance_is_a((instanc is null) ? null : instanc.getTypeInstanceStruct(), ifaceType) != 0;
+		return g_type_check_instance_is_a((instance_ is null) ? null : instance_.getTypeInstanceStruct(), ifaceType) != 0;
 	}
 
 	/** */
-	public static bool checkInstanceIsFundamentallyA(TypeInstance instanc, GType fundamentalType)
+	public static bool checkInstanceIsFundamentallyA(TypeInstance instance_, GType fundamentalType)
 	{
-		return g_type_check_instance_is_fundamentally_a((instanc is null) ? null : instanc.getTypeInstanceStruct(), fundamentalType) != 0;
+		return g_type_check_instance_is_fundamentally_a((instance_ is null) ? null : instance_.getTypeInstanceStruct(), fundamentalType) != 0;
 	}
 
 	/** */
@@ -412,11 +412,11 @@ public struct Type
 	 * implementors of fundamental types.
 	 *
 	 * Params:
-	 *     instanc = an instance of a type
+	 *     instance_ = an instance of a type
 	 */
-	public static void freeInstance(TypeInstance instanc)
+	public static void freeInstance(TypeInstance instance_)
 	{
-		g_type_free_instance((instanc is null) ? null : instanc.getTypeInstanceStruct());
+		g_type_free_instance((instance_ is null) ? null : instance_.getTypeInstanceStruct());
 	}
 
 	/**
@@ -610,9 +610,9 @@ public struct Type
 	}
 
 	/** */
-	public static string nameFromInstance(TypeInstance instanc)
+	public static string nameFromInstance(TypeInstance instance_)
 	{
-		return Str.toString(g_type_name_from_instance((instanc is null) ? null : instanc.getTypeInstanceStruct()));
+		return Str.toString(g_type_name_from_instance((instance_ is null) ? null : instance_.getTypeInstanceStruct()));
 	}
 
 	/**

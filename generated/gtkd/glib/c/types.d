@@ -5094,9 +5094,9 @@ public alias extern(C) int function(GPollFD* ufds, uint nfsd, int timeout) GPoll
  * These are called with the complete formatted string to output.
  *
  * Params:
- *     str = the message to output
+ *     string_ = the message to output
  */
-public alias extern(C) void function(const(char)* str) GPrintFunc;
+public alias extern(C) void function(const(char)* string_) GPrintFunc;
 
 /**
  * Specifies the type of the function passed to g_regex_replace_eval().
@@ -5320,11 +5320,11 @@ public alias extern(C) void function() GVoidFunc;
  * error.
  *
  * Params:
- *     modul = the #GModule corresponding to the module which has just been loaded
+ *     module_ = the #GModule corresponding to the module which has just been loaded
  *
  * Returns: %NULL on success, or a string describing the initialization error
  */
-public alias extern(C) const(char)* function(GModule* modul) GModuleCheckInit;
+public alias extern(C) const(char)* function(GModule* module_) GModuleCheckInit;
 
 /**
  * Specifies the type of the module function called when it is unloaded.
@@ -5333,9 +5333,9 @@ public alias extern(C) const(char)* function(GModule* modul) GModuleCheckInit;
  * It is passed the #GModule structure.
  *
  * Params:
- *     modul = the #GModule about to be unloaded
+ *     module_ = the #GModule about to be unloaded
  */
-public alias extern(C) void function(GModule* modul) GModuleUnload;
+public alias extern(C) void function(GModule* module_) GModuleUnload;
 
 enum ANALYZER_ANALYZING = 1;
 alias G_ANALYZER_ANALYZING = ANALYZER_ANALYZING;

@@ -172,18 +172,18 @@ public class Plugin : ObjectGst
 	 *         case a similar plugin with the same name ever gets added to GStreamer)
 	 *     description = description of the plugin
 	 *     initFunc = pointer to the init function of this plugin.
-	 *     versio = version string of the plugin
+	 *     version_ = version string of the plugin
 	 *     license = effective license of plugin. Must be one of the approved licenses
 	 *         (see #GstPluginDesc above) or the plugin will not be registered.
 	 *     source = source module plugin belongs to
-	 *     p = shipped package plugin belongs to
+	 *     package_ = shipped package plugin belongs to
 	 *     origin = URL to provider of plugin
 	 *
 	 * Returns: %TRUE if the plugin was registered correctly, otherwise %FALSE.
 	 */
-	public static bool registerStatic(int majorVersion, int minorVersion, string name, string description, GstPluginInitFunc initFunc, string versio, string license, string source, string p, string origin)
+	public static bool registerStatic(int majorVersion, int minorVersion, string name, string description, GstPluginInitFunc initFunc, string version_, string license, string source, string package_, string origin)
 	{
-		return gst_plugin_register_static(majorVersion, minorVersion, Str.toStringz(name), Str.toStringz(description), initFunc, Str.toStringz(versio), Str.toStringz(license), Str.toStringz(source), Str.toStringz(p), Str.toStringz(origin)) != 0;
+		return gst_plugin_register_static(majorVersion, minorVersion, Str.toStringz(name), Str.toStringz(description), initFunc, Str.toStringz(version_), Str.toStringz(license), Str.toStringz(source), Str.toStringz(package_), Str.toStringz(origin)) != 0;
 	}
 
 	/**
@@ -207,19 +207,19 @@ public class Plugin : ObjectGst
 	 *     description = description of the plugin
 	 *     initFullFunc = pointer to the init function with user data
 	 *         of this plugin.
-	 *     versio = version string of the plugin
+	 *     version_ = version string of the plugin
 	 *     license = effective license of plugin. Must be one of the approved licenses
 	 *         (see #GstPluginDesc above) or the plugin will not be registered.
 	 *     source = source module plugin belongs to
-	 *     p = shipped package plugin belongs to
+	 *     package_ = shipped package plugin belongs to
 	 *     origin = URL to provider of plugin
 	 *     userData = gpointer to user data
 	 *
 	 * Returns: %TRUE if the plugin was registered correctly, otherwise %FALSE.
 	 */
-	public static bool registerStaticFull(int majorVersion, int minorVersion, string name, string description, GstPluginInitFullFunc initFullFunc, string versio, string license, string source, string p, string origin, void* userData)
+	public static bool registerStaticFull(int majorVersion, int minorVersion, string name, string description, GstPluginInitFullFunc initFullFunc, string version_, string license, string source, string package_, string origin, void* userData)
 	{
-		return gst_plugin_register_static_full(majorVersion, minorVersion, Str.toStringz(name), Str.toStringz(description), initFullFunc, Str.toStringz(versio), Str.toStringz(license), Str.toStringz(source), Str.toStringz(p), Str.toStringz(origin), userData) != 0;
+		return gst_plugin_register_static_full(majorVersion, minorVersion, Str.toStringz(name), Str.toStringz(description), initFullFunc, Str.toStringz(version_), Str.toStringz(license), Str.toStringz(source), Str.toStringz(package_), Str.toStringz(origin), userData) != 0;
 	}
 
 	/**

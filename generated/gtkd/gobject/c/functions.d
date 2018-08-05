@@ -520,51 +520,51 @@ __gshared extern(C)
 	// gobject.CClosure
 
 	void function(GClosure* closure, GValue* returnValue, uint nParamValues, GValue* paramValues, void* invocationHint, void* marshalData) c_g_cclosure_marshal_BOOLEAN__BOXED_BOXED;
-	void function(GClosure* closure, GValue* returnValue, void* instanc, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_BOOLEAN__BOXED_BOXEDv;
+	void function(GClosure* closure, GValue* returnValue, void* instance_, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_BOOLEAN__BOXED_BOXEDv;
 	void function(GClosure* closure, GValue* returnValue, uint nParamValues, GValue* paramValues, void* invocationHint, void* marshalData) c_g_cclosure_marshal_BOOLEAN__FLAGS;
-	void function(GClosure* closure, GValue* returnValue, void* instanc, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_BOOLEAN__FLAGSv;
+	void function(GClosure* closure, GValue* returnValue, void* instance_, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_BOOLEAN__FLAGSv;
 	void function(GClosure* closure, GValue* returnValue, uint nParamValues, GValue* paramValues, void* invocationHint, void* marshalData) c_g_cclosure_marshal_STRING__OBJECT_POINTER;
-	void function(GClosure* closure, GValue* returnValue, void* instanc, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_STRING__OBJECT_POINTERv;
+	void function(GClosure* closure, GValue* returnValue, void* instance_, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_STRING__OBJECT_POINTERv;
 	void function(GClosure* closure, GValue* returnValue, uint nParamValues, GValue* paramValues, void* invocationHint, void* marshalData) c_g_cclosure_marshal_VOID__BOOLEAN;
-	void function(GClosure* closure, GValue* returnValue, void* instanc, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__BOOLEANv;
+	void function(GClosure* closure, GValue* returnValue, void* instance_, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__BOOLEANv;
 	void function(GClosure* closure, GValue* returnValue, uint nParamValues, GValue* paramValues, void* invocationHint, void* marshalData) c_g_cclosure_marshal_VOID__BOXED;
-	void function(GClosure* closure, GValue* returnValue, void* instanc, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__BOXEDv;
+	void function(GClosure* closure, GValue* returnValue, void* instance_, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__BOXEDv;
 	void function(GClosure* closure, GValue* returnValue, uint nParamValues, GValue* paramValues, void* invocationHint, void* marshalData) c_g_cclosure_marshal_VOID__CHAR;
-	void function(GClosure* closure, GValue* returnValue, void* instanc, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__CHARv;
+	void function(GClosure* closure, GValue* returnValue, void* instance_, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__CHARv;
 	void function(GClosure* closure, GValue* returnValue, uint nParamValues, GValue* paramValues, void* invocationHint, void* marshalData) c_g_cclosure_marshal_VOID__DOUBLE;
-	void function(GClosure* closure, GValue* returnValue, void* instanc, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__DOUBLEv;
+	void function(GClosure* closure, GValue* returnValue, void* instance_, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__DOUBLEv;
 	void function(GClosure* closure, GValue* returnValue, uint nParamValues, GValue* paramValues, void* invocationHint, void* marshalData) c_g_cclosure_marshal_VOID__ENUM;
-	void function(GClosure* closure, GValue* returnValue, void* instanc, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__ENUMv;
+	void function(GClosure* closure, GValue* returnValue, void* instance_, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__ENUMv;
 	void function(GClosure* closure, GValue* returnValue, uint nParamValues, GValue* paramValues, void* invocationHint, void* marshalData) c_g_cclosure_marshal_VOID__FLAGS;
-	void function(GClosure* closure, GValue* returnValue, void* instanc, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__FLAGSv;
+	void function(GClosure* closure, GValue* returnValue, void* instance_, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__FLAGSv;
 	void function(GClosure* closure, GValue* returnValue, uint nParamValues, GValue* paramValues, void* invocationHint, void* marshalData) c_g_cclosure_marshal_VOID__FLOAT;
-	void function(GClosure* closure, GValue* returnValue, void* instanc, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__FLOATv;
+	void function(GClosure* closure, GValue* returnValue, void* instance_, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__FLOATv;
 	void function(GClosure* closure, GValue* returnValue, uint nParamValues, GValue* paramValues, void* invocationHint, void* marshalData) c_g_cclosure_marshal_VOID__INT;
-	void function(GClosure* closure, GValue* returnValue, void* instanc, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__INTv;
+	void function(GClosure* closure, GValue* returnValue, void* instance_, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__INTv;
 	void function(GClosure* closure, GValue* returnValue, uint nParamValues, GValue* paramValues, void* invocationHint, void* marshalData) c_g_cclosure_marshal_VOID__LONG;
-	void function(GClosure* closure, GValue* returnValue, void* instanc, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__LONGv;
+	void function(GClosure* closure, GValue* returnValue, void* instance_, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__LONGv;
 	void function(GClosure* closure, GValue* returnValue, uint nParamValues, GValue* paramValues, void* invocationHint, void* marshalData) c_g_cclosure_marshal_VOID__OBJECT;
-	void function(GClosure* closure, GValue* returnValue, void* instanc, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__OBJECTv;
+	void function(GClosure* closure, GValue* returnValue, void* instance_, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__OBJECTv;
 	void function(GClosure* closure, GValue* returnValue, uint nParamValues, GValue* paramValues, void* invocationHint, void* marshalData) c_g_cclosure_marshal_VOID__PARAM;
-	void function(GClosure* closure, GValue* returnValue, void* instanc, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__PARAMv;
+	void function(GClosure* closure, GValue* returnValue, void* instance_, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__PARAMv;
 	void function(GClosure* closure, GValue* returnValue, uint nParamValues, GValue* paramValues, void* invocationHint, void* marshalData) c_g_cclosure_marshal_VOID__POINTER;
-	void function(GClosure* closure, GValue* returnValue, void* instanc, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__POINTERv;
+	void function(GClosure* closure, GValue* returnValue, void* instance_, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__POINTERv;
 	void function(GClosure* closure, GValue* returnValue, uint nParamValues, GValue* paramValues, void* invocationHint, void* marshalData) c_g_cclosure_marshal_VOID__STRING;
-	void function(GClosure* closure, GValue* returnValue, void* instanc, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__STRINGv;
+	void function(GClosure* closure, GValue* returnValue, void* instance_, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__STRINGv;
 	void function(GClosure* closure, GValue* returnValue, uint nParamValues, GValue* paramValues, void* invocationHint, void* marshalData) c_g_cclosure_marshal_VOID__UCHAR;
-	void function(GClosure* closure, GValue* returnValue, void* instanc, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__UCHARv;
+	void function(GClosure* closure, GValue* returnValue, void* instance_, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__UCHARv;
 	void function(GClosure* closure, GValue* returnValue, uint nParamValues, GValue* paramValues, void* invocationHint, void* marshalData) c_g_cclosure_marshal_VOID__UINT;
 	void function(GClosure* closure, GValue* returnValue, uint nParamValues, GValue* paramValues, void* invocationHint, void* marshalData) c_g_cclosure_marshal_VOID__UINT_POINTER;
-	void function(GClosure* closure, GValue* returnValue, void* instanc, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__UINT_POINTERv;
-	void function(GClosure* closure, GValue* returnValue, void* instanc, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__UINTv;
+	void function(GClosure* closure, GValue* returnValue, void* instance_, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__UINT_POINTERv;
+	void function(GClosure* closure, GValue* returnValue, void* instance_, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__UINTv;
 	void function(GClosure* closure, GValue* returnValue, uint nParamValues, GValue* paramValues, void* invocationHint, void* marshalData) c_g_cclosure_marshal_VOID__ULONG;
-	void function(GClosure* closure, GValue* returnValue, void* instanc, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__ULONGv;
+	void function(GClosure* closure, GValue* returnValue, void* instance_, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__ULONGv;
 	void function(GClosure* closure, GValue* returnValue, uint nParamValues, GValue* paramValues, void* invocationHint, void* marshalData) c_g_cclosure_marshal_VOID__VARIANT;
-	void function(GClosure* closure, GValue* returnValue, void* instanc, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__VARIANTv;
+	void function(GClosure* closure, GValue* returnValue, void* instance_, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__VARIANTv;
 	void function(GClosure* closure, GValue* returnValue, uint nParamValues, GValue* paramValues, void* invocationHint, void* marshalData) c_g_cclosure_marshal_VOID__VOID;
-	void function(GClosure* closure, GValue* returnValue, void* instanc, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__VOIDv;
+	void function(GClosure* closure, GValue* returnValue, void* instance_, void* args, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_VOID__VOIDv;
 	void function(GClosure* closure, GValue* returnGvalue, uint nParamValues, GValue* paramValues, void* invocationHint, void* marshalData) c_g_cclosure_marshal_generic;
-	void function(GClosure* closure, GValue* returnValue, void* instanc, void* argsList, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_generic_va;
+	void function(GClosure* closure, GValue* returnValue, void* instance_, void* argsList, void* marshalData, int nParams, GType* paramTypes) c_g_cclosure_marshal_generic_va;
 	GClosure* function(GCallback callbackFunc, void* userData, GClosureNotify destroyData) c_g_cclosure_new;
 	GClosure* function(GCallback callbackFunc, GObject* object) c_g_cclosure_new_object;
 	GClosure* function(GCallback callbackFunc, GObject* object) c_g_cclosure_new_object_swap;
@@ -701,7 +701,7 @@ __gshared extern(C)
 
 	// gobject.TypeInstance
 
-	void* function(GTypeInstance* instanc, GType privateType) c_g_type_instance_get_private;
+	void* function(GTypeInstance* instance_, GType privateType) c_g_type_instance_get_private;
 
 	// gobject.TypeInterface
 
@@ -714,13 +714,13 @@ __gshared extern(C)
 	// gobject.TypeModule
 
 	GType function() c_g_type_module_get_type;
-	void function(GTypeModule* modul, GType instanceType, GType interfaceType, GInterfaceInfo* interfaceInfo) c_g_type_module_add_interface;
-	GType function(GTypeModule* modul, const(char)* name, GEnumValue* constStaticValues) c_g_type_module_register_enum;
-	GType function(GTypeModule* modul, const(char)* name, GFlagsValue* constStaticValues) c_g_type_module_register_flags;
-	GType function(GTypeModule* modul, GType parentType, const(char)* typeName, GTypeInfo* typeInfo, GTypeFlags flags) c_g_type_module_register_type;
-	void function(GTypeModule* modul, const(char)* name) c_g_type_module_set_name;
-	void function(GTypeModule* modul) c_g_type_module_unuse;
-	int function(GTypeModule* modul) c_g_type_module_use;
+	void function(GTypeModule* module_, GType instanceType, GType interfaceType, GInterfaceInfo* interfaceInfo) c_g_type_module_add_interface;
+	GType function(GTypeModule* module_, const(char)* name, GEnumValue* constStaticValues) c_g_type_module_register_enum;
+	GType function(GTypeModule* module_, const(char)* name, GFlagsValue* constStaticValues) c_g_type_module_register_flags;
+	GType function(GTypeModule* module_, GType parentType, const(char)* typeName, GTypeInfo* typeInfo, GTypeFlags flags) c_g_type_module_register_type;
+	void function(GTypeModule* module_, const(char)* name) c_g_type_module_set_name;
+	void function(GTypeModule* module_) c_g_type_module_unuse;
+	int function(GTypeModule* module_) c_g_type_module_use;
 
 	// gobject.TypePlugin
 
@@ -766,7 +766,7 @@ __gshared extern(C)
 	gulong function(GValue* value) c_g_value_get_ulong;
 	GVariant* function(GValue* value) c_g_value_get_variant;
 	GValue* function(GValue* value, GType gType) c_g_value_init;
-	void function(GValue* value, void* instanc) c_g_value_init_from_instance;
+	void function(GValue* value, void* instance_) c_g_value_init_from_instance;
 	void* function(GValue* value) c_g_value_peek_pointer;
 	GValue* function(GValue* value) c_g_value_reset;
 	void function(GValue* value, int vBoolean) c_g_value_set_boolean;
@@ -778,7 +778,7 @@ __gshared extern(C)
 	void function(GValue* value, uint vFlags) c_g_value_set_flags;
 	void function(GValue* value, float vFloat) c_g_value_set_float;
 	void function(GValue* value, GType vGtype) c_g_value_set_gtype;
-	void function(GValue* value, void* instanc) c_g_value_set_instance;
+	void function(GValue* value, void* instance_) c_g_value_set_instance;
 	void function(GValue* value, int vInt) c_g_value_set_int;
 	void function(GValue* value, long vInt64) c_g_value_set_int64;
 	void function(GValue* value, glong vLong) c_g_value_set_long;
@@ -859,26 +859,26 @@ __gshared extern(C)
 	int function(GSignalInvocationHint* ihint, GValue* returnAccu, GValue* handlerReturn, void* dummy) c_g_signal_accumulator_true_handled;
 	gulong function(uint signalId, GQuark detail, GSignalEmissionHook hookFunc, void* hookData, GDestroyNotify dataDestroy) c_g_signal_add_emission_hook;
 	void function(GValue* instanceAndParams, GValue* returnValue) c_g_signal_chain_from_overridden;
-	void function(void* instanc, ... ) c_g_signal_chain_from_overridden_handler;
-	gulong function(void* instanc, const(char)* detailedSignal, GClosure* closure, int after) c_g_signal_connect_closure;
-	gulong function(void* instanc, uint signalId, GQuark detail, GClosure* closure, int after) c_g_signal_connect_closure_by_id;
-	gulong function(void* instanc, const(char)* detailedSignal, GCallback cHandler, void* data, GClosureNotify destroyData, GConnectFlags connectFlags) c_g_signal_connect_data;
-	gulong function(void* instanc, const(char)* detailedSignal, GCallback cHandler, void* gobject, GConnectFlags connectFlags) c_g_signal_connect_object;
-	void function(void* instanc, uint signalId, GQuark detail, ... ) c_g_signal_emit;
-	void function(void* instanc, const(char)* detailedSignal, ... ) c_g_signal_emit_by_name;
-	void function(void* instanc, uint signalId, GQuark detail, void* varArgs) c_g_signal_emit_valist;
+	void function(void* instance_, ... ) c_g_signal_chain_from_overridden_handler;
+	gulong function(void* instance_, const(char)* detailedSignal, GClosure* closure, int after) c_g_signal_connect_closure;
+	gulong function(void* instance_, uint signalId, GQuark detail, GClosure* closure, int after) c_g_signal_connect_closure_by_id;
+	gulong function(void* instance_, const(char)* detailedSignal, GCallback cHandler, void* data, GClosureNotify destroyData, GConnectFlags connectFlags) c_g_signal_connect_data;
+	gulong function(void* instance_, const(char)* detailedSignal, GCallback cHandler, void* gobject, GConnectFlags connectFlags) c_g_signal_connect_object;
+	void function(void* instance_, uint signalId, GQuark detail, ... ) c_g_signal_emit;
+	void function(void* instance_, const(char)* detailedSignal, ... ) c_g_signal_emit_by_name;
+	void function(void* instance_, uint signalId, GQuark detail, void* varArgs) c_g_signal_emit_valist;
 	void function(GValue* instanceAndParams, uint signalId, GQuark detail, GValue* returnValue) c_g_signal_emitv;
-	GSignalInvocationHint* function(void* instanc) c_g_signal_get_invocation_hint;
-	void function(void* instanc, gulong handlerId) c_g_signal_handler_block;
-	void function(void* instanc, gulong handlerId) c_g_signal_handler_disconnect;
-	gulong function(void* instanc, GSignalMatchType mask, uint signalId, GQuark detail, GClosure* closure, void* func, void* data) c_g_signal_handler_find;
-	int function(void* instanc, gulong handlerId) c_g_signal_handler_is_connected;
-	void function(void* instanc, gulong handlerId) c_g_signal_handler_unblock;
-	uint function(void* instanc, GSignalMatchType mask, uint signalId, GQuark detail, GClosure* closure, void* func, void* data) c_g_signal_handlers_block_matched;
-	void function(void* instanc) c_g_signal_handlers_destroy;
-	uint function(void* instanc, GSignalMatchType mask, uint signalId, GQuark detail, GClosure* closure, void* func, void* data) c_g_signal_handlers_disconnect_matched;
-	uint function(void* instanc, GSignalMatchType mask, uint signalId, GQuark detail, GClosure* closure, void* func, void* data) c_g_signal_handlers_unblock_matched;
-	int function(void* instanc, uint signalId, GQuark detail, int mayBeBlocked) c_g_signal_has_handler_pending;
+	GSignalInvocationHint* function(void* instance_) c_g_signal_get_invocation_hint;
+	void function(void* instance_, gulong handlerId) c_g_signal_handler_block;
+	void function(void* instance_, gulong handlerId) c_g_signal_handler_disconnect;
+	gulong function(void* instance_, GSignalMatchType mask, uint signalId, GQuark detail, GClosure* closure, void* func, void* data) c_g_signal_handler_find;
+	int function(void* instance_, gulong handlerId) c_g_signal_handler_is_connected;
+	void function(void* instance_, gulong handlerId) c_g_signal_handler_unblock;
+	uint function(void* instance_, GSignalMatchType mask, uint signalId, GQuark detail, GClosure* closure, void* func, void* data) c_g_signal_handlers_block_matched;
+	void function(void* instance_) c_g_signal_handlers_destroy;
+	uint function(void* instance_, GSignalMatchType mask, uint signalId, GQuark detail, GClosure* closure, void* func, void* data) c_g_signal_handlers_disconnect_matched;
+	uint function(void* instance_, GSignalMatchType mask, uint signalId, GQuark detail, GClosure* closure, void* func, void* data) c_g_signal_handlers_unblock_matched;
+	int function(void* instance_, uint signalId, GQuark detail, int mayBeBlocked) c_g_signal_has_handler_pending;
 	uint* function(GType itype, uint* nIds) c_g_signal_list_ids;
 	uint function(const(char)* name, GType itype) c_g_signal_lookup;
 	const(char)* function(uint signalId) c_g_signal_name;
@@ -892,8 +892,8 @@ __gshared extern(C)
 	void function(uint signalId, GSignalQuery* query) c_g_signal_query;
 	void function(uint signalId, gulong hookId) c_g_signal_remove_emission_hook;
 	void function(uint signalId, GType instanceType, GSignalCVaMarshaller vaMarshaller) c_g_signal_set_va_marshaller;
-	void function(void* instanc, uint signalId, GQuark detail) c_g_signal_stop_emission;
-	void function(void* instanc, const(char)* detailedSignal) c_g_signal_stop_emission_by_name;
+	void function(void* instance_, uint signalId, GQuark detail) c_g_signal_stop_emission;
+	void function(void* instance_, const(char)* detailedSignal) c_g_signal_stop_emission_by_name;
 	GClosure* function(GType itype, uint structOffset) c_g_signal_type_cclosure_new;
 
 	// gobject.Type
@@ -906,10 +906,10 @@ __gshared extern(C)
 	void function(GType instanceType, GType interfaceType, GInterfaceInfo* info) c_g_type_add_interface_static;
 	GTypeClass* function(GTypeClass* gClass, GType isAType) c_g_type_check_class_cast;
 	int function(GTypeClass* gClass, GType isAType) c_g_type_check_class_is_a;
-	int function(GTypeInstance* instanc) c_g_type_check_instance;
-	GTypeInstance* function(GTypeInstance* instanc, GType ifaceType) c_g_type_check_instance_cast;
-	int function(GTypeInstance* instanc, GType ifaceType) c_g_type_check_instance_is_a;
-	int function(GTypeInstance* instanc, GType fundamentalType) c_g_type_check_instance_is_fundamentally_a;
+	int function(GTypeInstance* instance_) c_g_type_check_instance;
+	GTypeInstance* function(GTypeInstance* instance_, GType ifaceType) c_g_type_check_instance_cast;
+	int function(GTypeInstance* instance_, GType ifaceType) c_g_type_check_instance_is_a;
+	int function(GTypeInstance* instance_, GType fundamentalType) c_g_type_check_instance_is_fundamentally_a;
 	int function(GType type) c_g_type_check_is_value_type;
 	int function(GValue* value) c_g_type_check_value;
 	int function(GValue* value, GType type) c_g_type_check_value_holds;
@@ -920,7 +920,7 @@ __gshared extern(C)
 	void function(void* gIface) c_g_type_default_interface_unref;
 	uint function(GType type) c_g_type_depth;
 	void function(GType type) c_g_type_ensure;
-	void function(GTypeInstance* instanc) c_g_type_free_instance;
+	void function(GTypeInstance* instance_) c_g_type_free_instance;
 	GType function(const(char)* name) c_g_type_from_name;
 	GType function(GType typeId) c_g_type_fundamental;
 	GType function() c_g_type_fundamental_next;
@@ -933,7 +933,7 @@ __gshared extern(C)
 	int function(GType type, GType isAType) c_g_type_is_a;
 	const(char)* function(GType type) c_g_type_name;
 	const(char)* function(GTypeClass* gClass) c_g_type_name_from_class;
-	const(char)* function(GTypeInstance* instanc) c_g_type_name_from_instance;
+	const(char)* function(GTypeInstance* instance_) c_g_type_name_from_instance;
 	GType function(GType leafType, GType rootType) c_g_type_next_base;
 	GType function(GType type) c_g_type_parent;
 	GQuark function(GType type) c_g_type_qname;

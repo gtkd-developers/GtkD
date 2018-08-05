@@ -2782,10 +2782,10 @@ __gshared extern(C)
 	// gio.DBusInterface
 
 	GType function() c_g_dbus_interface_get_type;
-	GDBusObject* function(GDBusInterface* iface) c_g_dbus_interface_dup_object;
-	GDBusInterfaceInfo* function(GDBusInterface* iface) c_g_dbus_interface_get_info;
-	GDBusObject* function(GDBusInterface* iface) c_g_dbus_interface_get_object;
-	void function(GDBusInterface* iface, GDBusObject* object) c_g_dbus_interface_set_object;
+	GDBusObject* function(GDBusInterface* interface_) c_g_dbus_interface_dup_object;
+	GDBusInterfaceInfo* function(GDBusInterface* interface_) c_g_dbus_interface_get_info;
+	GDBusObject* function(GDBusInterface* interface_) c_g_dbus_interface_get_object;
+	void function(GDBusInterface* interface_, GDBusObject* object) c_g_dbus_interface_set_object;
 
 	// gio.DBusInterfaceInfo
 
@@ -2802,19 +2802,19 @@ __gshared extern(C)
 	// gio.DBusInterfaceSkeleton
 
 	GType function() c_g_dbus_interface_skeleton_get_type;
-	int function(GDBusInterfaceSkeleton* iface, GDBusConnection* connection, const(char)* objectPath, GError** err) c_g_dbus_interface_skeleton_export;
-	void function(GDBusInterfaceSkeleton* iface) c_g_dbus_interface_skeleton_flush;
-	GDBusConnection* function(GDBusInterfaceSkeleton* iface) c_g_dbus_interface_skeleton_get_connection;
-	GList* function(GDBusInterfaceSkeleton* iface) c_g_dbus_interface_skeleton_get_connections;
-	GDBusInterfaceSkeletonFlags function(GDBusInterfaceSkeleton* iface) c_g_dbus_interface_skeleton_get_flags;
-	GDBusInterfaceInfo* function(GDBusInterfaceSkeleton* iface) c_g_dbus_interface_skeleton_get_info;
-	const(char)* function(GDBusInterfaceSkeleton* iface) c_g_dbus_interface_skeleton_get_object_path;
-	GVariant* function(GDBusInterfaceSkeleton* iface) c_g_dbus_interface_skeleton_get_properties;
-	GDBusInterfaceVTable* function(GDBusInterfaceSkeleton* iface) c_g_dbus_interface_skeleton_get_vtable;
-	int function(GDBusInterfaceSkeleton* iface, GDBusConnection* connection) c_g_dbus_interface_skeleton_has_connection;
-	void function(GDBusInterfaceSkeleton* iface, GDBusInterfaceSkeletonFlags flags) c_g_dbus_interface_skeleton_set_flags;
-	void function(GDBusInterfaceSkeleton* iface) c_g_dbus_interface_skeleton_unexport;
-	void function(GDBusInterfaceSkeleton* iface, GDBusConnection* connection) c_g_dbus_interface_skeleton_unexport_from_connection;
+	int function(GDBusInterfaceSkeleton* interface_, GDBusConnection* connection, const(char)* objectPath, GError** err) c_g_dbus_interface_skeleton_export;
+	void function(GDBusInterfaceSkeleton* interface_) c_g_dbus_interface_skeleton_flush;
+	GDBusConnection* function(GDBusInterfaceSkeleton* interface_) c_g_dbus_interface_skeleton_get_connection;
+	GList* function(GDBusInterfaceSkeleton* interface_) c_g_dbus_interface_skeleton_get_connections;
+	GDBusInterfaceSkeletonFlags function(GDBusInterfaceSkeleton* interface_) c_g_dbus_interface_skeleton_get_flags;
+	GDBusInterfaceInfo* function(GDBusInterfaceSkeleton* interface_) c_g_dbus_interface_skeleton_get_info;
+	const(char)* function(GDBusInterfaceSkeleton* interface_) c_g_dbus_interface_skeleton_get_object_path;
+	GVariant* function(GDBusInterfaceSkeleton* interface_) c_g_dbus_interface_skeleton_get_properties;
+	GDBusInterfaceVTable* function(GDBusInterfaceSkeleton* interface_) c_g_dbus_interface_skeleton_get_vtable;
+	int function(GDBusInterfaceSkeleton* interface_, GDBusConnection* connection) c_g_dbus_interface_skeleton_has_connection;
+	void function(GDBusInterfaceSkeleton* interface_, GDBusInterfaceSkeletonFlags flags) c_g_dbus_interface_skeleton_set_flags;
+	void function(GDBusInterfaceSkeleton* interface_) c_g_dbus_interface_skeleton_unexport;
+	void function(GDBusInterfaceSkeleton* interface_, GDBusConnection* connection) c_g_dbus_interface_skeleton_unexport_from_connection;
 
 	// gio.DBusMenuModel
 
@@ -2826,8 +2826,8 @@ __gshared extern(C)
 	GType function() c_g_dbus_message_get_type;
 	GDBusMessage* function() c_g_dbus_message_new;
 	GDBusMessage* function(char* blob, size_t blobLen, GDBusCapabilityFlags capabilities, GError** err) c_g_dbus_message_new_from_blob;
-	GDBusMessage* function(const(char)* name, const(char)* path, const(char)* iface, const(char)* method) c_g_dbus_message_new_method_call;
-	GDBusMessage* function(const(char)* path, const(char)* iface, const(char)* signal) c_g_dbus_message_new_signal;
+	GDBusMessage* function(const(char)* name, const(char)* path, const(char)* interface_, const(char)* method) c_g_dbus_message_new_method_call;
+	GDBusMessage* function(const(char)* path, const(char)* interface_, const(char)* signal) c_g_dbus_message_new_signal;
 	ptrdiff_t function(char* blob, size_t blobLen, GError** err) c_g_dbus_message_bytes_needed;
 	GDBusMessage* function(GDBusMessage* message, GError** err) c_g_dbus_message_copy;
 	const(char)* function(GDBusMessage* message) c_g_dbus_message_get_arg0;
@@ -2855,7 +2855,7 @@ __gshared extern(C)
 	GDBusMessage* function(GDBusMessage* methodCallMessage, const(char)* errorName, const(char)* errorMessageFormat, void* varArgs) c_g_dbus_message_new_method_error_valist;
 	GDBusMessage* function(GDBusMessage* methodCallMessage) c_g_dbus_message_new_method_reply;
 	char* function(GDBusMessage* message, uint indent) c_g_dbus_message_print;
-	void function(GDBusMessage* message, GVariant* bod) c_g_dbus_message_set_body;
+	void function(GDBusMessage* message, GVariant* body_) c_g_dbus_message_set_body;
 	void function(GDBusMessage* message, GDBusMessageByteOrder byteOrder) c_g_dbus_message_set_byte_order;
 	void function(GDBusMessage* message, const(char)* value) c_g_dbus_message_set_destination;
 	void function(GDBusMessage* message, const(char)* value) c_g_dbus_message_set_error_name;
@@ -2961,9 +2961,9 @@ __gshared extern(C)
 
 	GType function() c_g_dbus_object_skeleton_get_type;
 	GDBusObjectSkeleton* function(const(char)* objectPath) c_g_dbus_object_skeleton_new;
-	void function(GDBusObjectSkeleton* object, GDBusInterfaceSkeleton* iface) c_g_dbus_object_skeleton_add_interface;
+	void function(GDBusObjectSkeleton* object, GDBusInterfaceSkeleton* interface_) c_g_dbus_object_skeleton_add_interface;
 	void function(GDBusObjectSkeleton* object) c_g_dbus_object_skeleton_flush;
-	void function(GDBusObjectSkeleton* object, GDBusInterfaceSkeleton* iface) c_g_dbus_object_skeleton_remove_interface;
+	void function(GDBusObjectSkeleton* object, GDBusInterfaceSkeleton* interface_) c_g_dbus_object_skeleton_remove_interface;
 	void function(GDBusObjectSkeleton* object, const(char)* interfaceName) c_g_dbus_object_skeleton_remove_interface_by_name;
 	void function(GDBusObjectSkeleton* object, const(char)* objectPath) c_g_dbus_object_skeleton_set_object_path;
 
@@ -3076,7 +3076,7 @@ __gshared extern(C)
 	GDesktopAppInfo* function(const(char)* desktopId) c_g_desktop_app_info_new;
 	GDesktopAppInfo* function(char* filename) c_g_desktop_app_info_new_from_filename;
 	GDesktopAppInfo* function(GKeyFile* keyFile) c_g_desktop_app_info_new_from_keyfile;
-	GList* function(const(char)* iface) c_g_desktop_app_info_get_implementations;
+	GList* function(const(char)* interface_) c_g_desktop_app_info_get_implementations;
 	char*** function(const(char)* searchString) c_g_desktop_app_info_search;
 	void function(const(char)* desktopEnv) c_g_desktop_app_info_set_desktop_env;
 	char* function(GDesktopAppInfo* info, const(char)* actionName) c_g_desktop_app_info_get_action_name;
@@ -3516,14 +3516,14 @@ __gshared extern(C)
 	GType function() c_g_io_module_get_type;
 	GIOModule* function(char* filename) c_g_io_module_new;
 	GList* function(char* dirname) c_g_io_modules_load_all_in_directory;
-	GList* function(char* dirname, GIOModuleScope* scop) c_g_io_modules_load_all_in_directory_with_scope;
+	GList* function(char* dirname, GIOModuleScope* scope_) c_g_io_modules_load_all_in_directory_with_scope;
 	void function(char* dirname) c_g_io_modules_scan_all_in_directory;
-	void function(char* dirname, GIOModuleScope* scop) c_g_io_modules_scan_all_in_directory_with_scope;
+	void function(char* dirname, GIOModuleScope* scope_) c_g_io_modules_scan_all_in_directory_with_scope;
 
 	// gio.IOModuleScope
 
-	void function(GIOModuleScope* scop, const(char)* basename) c_g_io_module_scope_block;
-	void function(GIOModuleScope* scop) c_g_io_module_scope_free;
+	void function(GIOModuleScope* scope_, const(char)* basename) c_g_io_module_scope_block;
+	void function(GIOModuleScope* scope_) c_g_io_module_scope_free;
 	GIOModuleScope* function(GIOModuleScopeFlags flags) c_g_io_module_scope_new;
 
 	// gio.IOSchedulerJob
@@ -3563,7 +3563,7 @@ __gshared extern(C)
 	GType function() c_g_inet_address_get_type;
 	GInetAddress* function(GSocketFamily family) c_g_inet_address_new_any;
 	GInetAddress* function(ubyte* bytes, GSocketFamily family) c_g_inet_address_new_from_bytes;
-	GInetAddress* function(const(char)* str) c_g_inet_address_new_from_string;
+	GInetAddress* function(const(char)* string_) c_g_inet_address_new_from_string;
 	GInetAddress* function(GSocketFamily family) c_g_inet_address_new_loopback;
 	int function(GInetAddress* address, GInetAddress* otherAddress) c_g_inet_address_equal;
 	GSocketFamily function(GInetAddress* address) c_g_inet_address_get_family;
@@ -3843,7 +3843,7 @@ __gshared extern(C)
 	void function(GNotification* notification, const(char)* label, const(char)* detailedAction) c_g_notification_add_button;
 	void function(GNotification* notification, const(char)* label, const(char)* action, const(char)* targetFormat, ... ) c_g_notification_add_button_with_target;
 	void function(GNotification* notification, const(char)* label, const(char)* action, GVariant* target) c_g_notification_add_button_with_target_value;
-	void function(GNotification* notification, const(char)* bod) c_g_notification_set_body;
+	void function(GNotification* notification, const(char)* body_) c_g_notification_set_body;
 	void function(GNotification* notification, const(char)* detailedAction) c_g_notification_set_default_action;
 	void function(GNotification* notification, const(char)* action, const(char)* targetFormat, ... ) c_g_notification_set_default_action_and_target;
 	void function(GNotification* notification, const(char)* action, GVariant* target) c_g_notification_set_default_action_and_target_value;
@@ -4824,7 +4824,7 @@ __gshared extern(C)
 
 	// gio.DBusUtilities
 
-	char* function(const(char)* str) c_g_dbus_address_escape_value;
+	char* function(const(char)* string_) c_g_dbus_address_escape_value;
 	char* function(GBusType busType, GCancellable* cancellable, GError** err) c_g_dbus_address_get_for_bus_sync;
 	void function(const(char)* address, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_dbus_address_get_stream;
 	GIOStream* function(GAsyncResult* res, char** outGuid, GError** err) c_g_dbus_address_get_stream_finish;
@@ -4832,13 +4832,13 @@ __gshared extern(C)
 	char* function() c_g_dbus_generate_guid;
 	GVariant* function(GValue* gvalue, GVariantType* type) c_g_dbus_gvalue_to_gvariant;
 	void function(GVariant* value, GValue* outGvalue) c_g_dbus_gvariant_to_gvalue;
-	int function(const(char)* str) c_g_dbus_is_address;
-	int function(const(char)* str) c_g_dbus_is_guid;
-	int function(const(char)* str) c_g_dbus_is_interface_name;
-	int function(const(char)* str) c_g_dbus_is_member_name;
-	int function(const(char)* str) c_g_dbus_is_name;
-	int function(const(char)* str, GError** err) c_g_dbus_is_supported_address;
-	int function(const(char)* str) c_g_dbus_is_unique_name;
+	int function(const(char)* string_) c_g_dbus_is_address;
+	int function(const(char)* string_) c_g_dbus_is_guid;
+	int function(const(char)* string_) c_g_dbus_is_interface_name;
+	int function(const(char)* string_) c_g_dbus_is_member_name;
+	int function(const(char)* string_) c_g_dbus_is_name;
+	int function(const(char)* string_, GError** err) c_g_dbus_is_supported_address;
+	int function(const(char)* string_) c_g_dbus_is_unique_name;
 
 	// gio.ErrorGIO
 

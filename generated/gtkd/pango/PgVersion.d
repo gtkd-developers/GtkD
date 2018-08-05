@@ -47,7 +47,7 @@ public struct PgVersion
 	 *
 	 * Since: 1.16
 	 */
-	public static int versio()
+	public static int version_()
 	{
 		return pango_version();
 	}

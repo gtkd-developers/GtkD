@@ -1181,18 +1181,18 @@ public class Structure
 	 * Free-function: gst_structure_free
 	 *
 	 * Params:
-	 *     str = a string representation of a #GstStructure.
+	 *     string_ = a string representation of a #GstStructure.
 	 *     end = pointer to store the end of the string in.
 	 *
 	 * Returns: a new #GstStructure or %NULL
 	 *     when the string could not be parsed. Free with
 	 *     gst_structure_free() after use.
 	 */
-	public static Structure fromString(string str, out string end)
+	public static Structure fromString(string string_, out string end)
 	{
 		char* outend = null;
 
-		auto p = gst_structure_from_string(Str.toStringz(str), &outend);
+		auto p = gst_structure_from_string(Str.toStringz(string_), &outend);
 
 		end = Str.toString(outend);
 

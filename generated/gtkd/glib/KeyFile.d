@@ -1242,13 +1242,13 @@ public class KeyFile
 	 *     groupName = a group name
 	 *     key = a key
 	 *     locale = a locale identifier
-	 *     str = a string
+	 *     string_ = a string
 	 *
 	 * Since: 2.6
 	 */
-	public void setLocaleString(string groupName, string key, string locale, string str)
+	public void setLocaleString(string groupName, string key, string locale, string string_)
 	{
-		g_key_file_set_locale_string(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(locale), Str.toStringz(str));
+		g_key_file_set_locale_string(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(locale), Str.toStringz(string_));
 	}
 
 	/**
@@ -1279,13 +1279,13 @@ public class KeyFile
 	 * Params:
 	 *     groupName = a group name
 	 *     key = a key
-	 *     str = a string
+	 *     string_ = a string
 	 *
 	 * Since: 2.6
 	 */
-	public void setString(string groupName, string key, string str)
+	public void setString(string groupName, string key, string string_)
 	{
-		g_key_file_set_string(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(str));
+		g_key_file_set_string(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(string_));
 	}
 
 	/**

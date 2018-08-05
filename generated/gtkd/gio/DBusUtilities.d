@@ -54,7 +54,7 @@ public struct DBusUtilities
 	 * `unix:nonce-tcp:host=127.0.0.1,port=42,noncefile=/run/bus-for-%3A0`.
 	 *
 	 * Params:
-	 *     str = an unescaped string to be included in a D-Bus address
+	 *     string_ = an unescaped string to be included in a D-Bus address
 	 *         as the value in a key-value pair
 	 *
 	 * Returns: a copy of @string with all
@@ -62,9 +62,9 @@ public struct DBusUtilities
 	 *
 	 * Since: 2.36
 	 */
-	public static string addressEscapeValue(string str)
+	public static string addressEscapeValue(string string_)
 	{
-		auto retStr = g_dbus_address_escape_value(Str.toStringz(str));
+		auto retStr = g_dbus_address_escape_value(Str.toStringz(string_));
 
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
@@ -315,15 +315,15 @@ public struct DBusUtilities
 	 * checks.
 	 *
 	 * Params:
-	 *     str = A string.
+	 *     string_ = A string.
 	 *
 	 * Returns: %TRUE if @string is a valid D-Bus address, %FALSE otherwise.
 	 *
 	 * Since: 2.26
 	 */
-	public static bool isAddress(string str)
+	public static bool isAddress(string string_)
 	{
-		return g_dbus_is_address(Str.toStringz(str)) != 0;
+		return g_dbus_is_address(Str.toStringz(string_)) != 0;
 	}
 
 	/**
@@ -333,60 +333,60 @@ public struct DBusUtilities
 	 * GUID (for example, D-Bus GUIDs are not RFC-4122 compliant).
 	 *
 	 * Params:
-	 *     str = The string to check.
+	 *     string_ = The string to check.
 	 *
 	 * Returns: %TRUE if @string is a guid, %FALSE otherwise.
 	 *
 	 * Since: 2.26
 	 */
-	public static bool isGuid(string str)
+	public static bool isGuid(string string_)
 	{
-		return g_dbus_is_guid(Str.toStringz(str)) != 0;
+		return g_dbus_is_guid(Str.toStringz(string_)) != 0;
 	}
 
 	/**
 	 * Checks if @string is a valid D-Bus interface name.
 	 *
 	 * Params:
-	 *     str = The string to check.
+	 *     string_ = The string to check.
 	 *
 	 * Returns: %TRUE if valid, %FALSE otherwise.
 	 *
 	 * Since: 2.26
 	 */
-	public static bool isInterfaceName(string str)
+	public static bool isInterfaceName(string string_)
 	{
-		return g_dbus_is_interface_name(Str.toStringz(str)) != 0;
+		return g_dbus_is_interface_name(Str.toStringz(string_)) != 0;
 	}
 
 	/**
 	 * Checks if @string is a valid D-Bus member (e.g. signal or method) name.
 	 *
 	 * Params:
-	 *     str = The string to check.
+	 *     string_ = The string to check.
 	 *
 	 * Returns: %TRUE if valid, %FALSE otherwise.
 	 *
 	 * Since: 2.26
 	 */
-	public static bool isMemberName(string str)
+	public static bool isMemberName(string string_)
 	{
-		return g_dbus_is_member_name(Str.toStringz(str)) != 0;
+		return g_dbus_is_member_name(Str.toStringz(string_)) != 0;
 	}
 
 	/**
 	 * Checks if @string is a valid D-Bus bus name (either unique or well-known).
 	 *
 	 * Params:
-	 *     str = The string to check.
+	 *     string_ = The string to check.
 	 *
 	 * Returns: %TRUE if valid, %FALSE otherwise.
 	 *
 	 * Since: 2.26
 	 */
-	public static bool isName(string str)
+	public static bool isName(string string_)
 	{
-		return g_dbus_is_name(Str.toStringz(str)) != 0;
+		return g_dbus_is_name(Str.toStringz(string_)) != 0;
 	}
 
 	/**
@@ -396,7 +396,7 @@ public struct DBusUtilities
 	 * [D-Bus address format](https://dbus.freedesktop.org/doc/dbus-specification.html#addresses).
 	 *
 	 * Params:
-	 *     str = A string.
+	 *     string_ = A string.
 	 *
 	 * Returns: %TRUE if @string is a valid D-Bus address that is
 	 *     supported by this library, %FALSE if @error is set.
@@ -405,11 +405,11 @@ public struct DBusUtilities
 	 *
 	 * Throws: GException on failure.
 	 */
-	public static bool isSupportedAddress(string str)
+	public static bool isSupportedAddress(string string_)
 	{
 		GError* err = null;
 
-		auto p = g_dbus_is_supported_address(Str.toStringz(str), &err) != 0;
+		auto p = g_dbus_is_supported_address(Str.toStringz(string_), &err) != 0;
 
 		if (err !is null)
 		{
@@ -423,14 +423,14 @@ public struct DBusUtilities
 	 * Checks if @string is a valid D-Bus unique bus name.
 	 *
 	 * Params:
-	 *     str = The string to check.
+	 *     string_ = The string to check.
 	 *
 	 * Returns: %TRUE if valid, %FALSE otherwise.
 	 *
 	 * Since: 2.26
 	 */
-	public static bool isUniqueName(string str)
+	public static bool isUniqueName(string string_)
 	{
-		return g_dbus_is_unique_name(Str.toStringz(str)) != 0;
+		return g_dbus_is_unique_name(Str.toStringz(string_)) != 0;
 	}
 }

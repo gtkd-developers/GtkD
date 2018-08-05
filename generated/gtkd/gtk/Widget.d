@@ -5013,11 +5013,11 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * See the #GtkWidget:halign property.
 		 *
 		 * Params:
-		 *     alig = the horizontal alignment
+		 *     align_ = the horizontal alignment
 		 */
-		public void setHalign(GtkAlign alig)
+		public void setHalign(GtkAlign align_)
 		{
-			gtk_widget_set_halign(gtkWidget, alig);
+			gtk_widget_set_halign(gtkWidget, align_);
 		}
 
 		/**
@@ -5551,11 +5551,11 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 * See the #GtkWidget:valign property.
 		 *
 		 * Params:
-		 *     alig = the vertical alignment
+		 *     align_ = the vertical alignment
 		 */
-		public void setValign(GtkAlign alig)
+		public void setValign(GtkAlign align_)
 		{
-			gtk_widget_set_valign(gtkWidget, alig);
+			gtk_widget_set_valign(gtkWidget, align_);
 		}
 
 		/**

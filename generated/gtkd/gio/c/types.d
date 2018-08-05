@@ -3482,28 +3482,28 @@ struct GDBusInterfaceIface
 	/**
 	 *
 	 * Params:
-	 *     iface = An exported D-Bus interface.
+	 *     interface_ = An exported D-Bus interface.
 	 * Returns: A #GDBusInterfaceInfo. Do not free.
 	 */
-	extern(C) GDBusInterfaceInfo* function(GDBusInterface* iface) getInfo;
+	extern(C) GDBusInterfaceInfo* function(GDBusInterface* interface_) getInfo;
 	/**
 	 *
 	 * Params:
-	 *     iface = An exported D-Bus interface
+	 *     interface_ = An exported D-Bus interface
 	 * Returns: A #GDBusObject or %NULL. The returned
 	 *     reference belongs to @interface_ and should not be freed.
 	 */
-	extern(C) GDBusObject* function(GDBusInterface* iface) getObject;
+	extern(C) GDBusObject* function(GDBusInterface* interface_) getObject;
 	/** */
-	extern(C) void function(GDBusInterface* iface, GDBusObject* object) setObject;
+	extern(C) void function(GDBusInterface* interface_, GDBusObject* object) setObject;
 	/**
 	 *
 	 * Params:
-	 *     iface = An exported D-Bus interface.
+	 *     interface_ = An exported D-Bus interface.
 	 * Returns: A #GDBusObject or %NULL. The returned
 	 *     reference should be freed with g_object_unref().
 	 */
-	extern(C) GDBusObject* function(GDBusInterface* iface) dupObject;
+	extern(C) GDBusObject* function(GDBusInterface* interface_) dupObject;
 }
 
 struct GDBusInterfaceInfo
@@ -3554,31 +3554,31 @@ struct GDBusInterfaceSkeletonClass
 	/**
 	 *
 	 * Params:
-	 *     iface = A #GDBusInterfaceSkeleton.
+	 *     interface_ = A #GDBusInterfaceSkeleton.
 	 * Returns: A #GDBusInterfaceInfo (never %NULL). Do not free.
 	 */
-	extern(C) GDBusInterfaceInfo* function(GDBusInterfaceSkeleton* iface) getInfo;
+	extern(C) GDBusInterfaceInfo* function(GDBusInterfaceSkeleton* interface_) getInfo;
 	/**
 	 *
 	 * Params:
-	 *     iface = A #GDBusInterfaceSkeleton.
+	 *     interface_ = A #GDBusInterfaceSkeleton.
 	 * Returns: A #GDBusInterfaceVTable (never %NULL).
 	 */
-	extern(C) GDBusInterfaceVTable* function(GDBusInterfaceSkeleton* iface) getVtable;
+	extern(C) GDBusInterfaceVTable* function(GDBusInterfaceSkeleton* interface_) getVtable;
 	/**
 	 *
 	 * Params:
-	 *     iface = A #GDBusInterfaceSkeleton.
+	 *     interface_ = A #GDBusInterfaceSkeleton.
 	 * Returns: A #GVariant of type
 	 *     ['a{sv}'][G-VARIANT-TYPE-VARDICT:CAPS].
 	 *     Free with g_variant_unref().
 	 */
-	extern(C) GVariant* function(GDBusInterfaceSkeleton* iface) getProperties;
+	extern(C) GVariant* function(GDBusInterfaceSkeleton* interface_) getProperties;
 	/** */
-	extern(C) void function(GDBusInterfaceSkeleton* iface) flush;
+	extern(C) void function(GDBusInterfaceSkeleton* interface_) flush;
 	void*[8] vfuncPadding;
 	/** */
-	extern(C) int function(GDBusInterfaceSkeleton* iface, GDBusMethodInvocation* invocation) gAuthorizeMethod;
+	extern(C) int function(GDBusInterfaceSkeleton* interface_, GDBusMethodInvocation* invocation) gAuthorizeMethod;
 	void*[8] signalPadding;
 }
 
@@ -3739,9 +3739,9 @@ struct GDBusObjectIface
 	 */
 	extern(C) GDBusInterface* function(GDBusObject* object, const(char)* interfaceName) getInterface;
 	/** */
-	extern(C) void function(GDBusObject* object, GDBusInterface* iface) interfaceAdded;
+	extern(C) void function(GDBusObject* object, GDBusInterface* interface_) interfaceAdded;
 	/** */
-	extern(C) void function(GDBusObject* object, GDBusInterface* iface) interfaceRemoved;
+	extern(C) void function(GDBusObject* object, GDBusInterface* interface_) interfaceRemoved;
 }
 
 struct GDBusObjectManager;
@@ -3824,9 +3824,9 @@ struct GDBusObjectManagerIface
 	/** */
 	extern(C) void function(GDBusObjectManager* manager, GDBusObject* object) objectRemoved;
 	/** */
-	extern(C) void function(GDBusObjectManager* manager, GDBusObject* object, GDBusInterface* iface) interfaceAdded;
+	extern(C) void function(GDBusObjectManager* manager, GDBusObject* object, GDBusInterface* interface_) interfaceAdded;
 	/** */
-	extern(C) void function(GDBusObjectManager* manager, GDBusObject* object, GDBusInterface* iface) interfaceRemoved;
+	extern(C) void function(GDBusObjectManager* manager, GDBusObject* object, GDBusInterface* interface_) interfaceRemoved;
 }
 
 struct GDBusObjectManagerServer
@@ -3891,7 +3891,7 @@ struct GDBusObjectSkeletonClass
 	 */
 	GObjectClass parentClass;
 	/** */
-	extern(C) int function(GDBusObjectSkeleton* object, GDBusInterfaceSkeleton* iface, GDBusMethodInvocation* invocation) authorizeMethod;
+	extern(C) int function(GDBusObjectSkeleton* object, GDBusInterfaceSkeleton* interface_, GDBusMethodInvocation* invocation) authorizeMethod;
 	void*[8] padding;
 }
 
@@ -5827,7 +5827,7 @@ struct GIconIface
 	 */
 	extern(C) int function(GIcon* icon, GPtrArray* tokens, int* outVersion) toTokens;
 	/** */
-	extern(C) GIcon* function(char** tokens, int numTokens, int versio, GError** err) fromTokens;
+	extern(C) GIcon* function(char** tokens, int numTokens, int version_, GError** err) fromTokens;
 	/**
 	 *
 	 * Params:

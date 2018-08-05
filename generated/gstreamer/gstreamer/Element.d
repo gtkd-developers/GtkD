@@ -1106,16 +1106,16 @@ public class Element : ObjectGst
 	 *     text = an allocated text string to be used
 	 *         as a replacement for the default message connected to code,
 	 *         or %NULL
-	 *     dbg = an allocated debug message to be
+	 *     debug_ = an allocated debug message to be
 	 *         used as a replacement for the default debugging information,
 	 *         or %NULL
 	 *     file = the source code file where the error was generated
-	 *     funct = the source code function where the error was generated
+	 *     function_ = the source code function where the error was generated
 	 *     line = the source code line where the error was generated
 	 */
-	public void messageFull(GstMessageType type, GQuark domain, int code, string text, string dbg, string file, string funct, int line)
+	public void messageFull(GstMessageType type, GQuark domain, int code, string text, string debug_, string file, string function_, int line)
 	{
-		gst_element_message_full(gstElement, type, domain, code, Str.toStringz(text), Str.toStringz(dbg), Str.toStringz(file), Str.toStringz(funct), line);
+		gst_element_message_full(gstElement, type, domain, code, Str.toStringz(text), Str.toStringz(debug_), Str.toStringz(file), Str.toStringz(function_), line);
 	}
 
 	/**
@@ -1131,19 +1131,19 @@ public class Element : ObjectGst
 	 *     text = an allocated text string to be used
 	 *         as a replacement for the default message connected to code,
 	 *         or %NULL
-	 *     dbg = an allocated debug message to be
+	 *     debug_ = an allocated debug message to be
 	 *         used as a replacement for the default debugging information,
 	 *         or %NULL
 	 *     file = the source code file where the error was generated
-	 *     funct = the source code function where the error was generated
+	 *     function_ = the source code function where the error was generated
 	 *     line = the source code line where the error was generated
 	 *     structure = optional details structure
 	 *
 	 * Since: 1.10
 	 */
-	public void messageFullWithDetails(GstMessageType type, GQuark domain, int code, string text, string dbg, string file, string funct, int line, Structure structure)
+	public void messageFullWithDetails(GstMessageType type, GQuark domain, int code, string text, string debug_, string file, string function_, int line, Structure structure)
 	{
-		gst_element_message_full_with_details(gstElement, type, domain, code, Str.toStringz(text), Str.toStringz(dbg), Str.toStringz(file), Str.toStringz(funct), line, (structure is null) ? null : structure.getStructureStruct(true));
+		gst_element_message_full_with_details(gstElement, type, domain, code, Str.toStringz(text), Str.toStringz(debug_), Str.toStringz(file), Str.toStringz(function_), line, (structure is null) ? null : structure.getStructureStruct(true));
 	}
 
 	/**

@@ -12048,7 +12048,7 @@ public alias extern(C) int function(GtkRecentFilterInfo* filterInfo, void* userD
 public alias extern(C) int function(GtkRecentInfo* a, GtkRecentInfo* b, void* userData) GtkRecentSortFunc;
 
 /** */
-public alias extern(C) int function(const(char)* str, GValue* value, GError** err) GtkStylePropertyParser;
+public alias extern(C) int function(const(char)* string_, GValue* value, GError** err) GtkStylePropertyParser;
 
 /**
  * A function that is called to deserialize rich text that has been

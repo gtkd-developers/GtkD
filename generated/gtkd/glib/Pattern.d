@@ -140,14 +140,14 @@ public class Pattern
 	 *     pspec = a #GPatternSpec
 	 *     stringLength = the length of @string (in bytes, i.e. strlen(),
 	 *         not g_utf8_strlen())
-	 *     str = the UTF-8 encoded string to match
+	 *     string_ = the UTF-8 encoded string to match
 	 *     stringReversed = the reverse of @string or %NULL
 	 *
 	 * Returns: %TRUE if @string matches @pspec
 	 */
-	public static bool patternMatch(Pattern pspec, uint stringLength, string str, string stringReversed)
+	public static bool patternMatch(Pattern pspec, uint stringLength, string string_, string stringReversed)
 	{
-		return g_pattern_match((pspec is null) ? null : pspec.getPatternStruct(), stringLength, Str.toStringz(str), Str.toStringz(stringReversed)) != 0;
+		return g_pattern_match((pspec is null) ? null : pspec.getPatternStruct(), stringLength, Str.toStringz(string_), Str.toStringz(stringReversed)) != 0;
 	}
 
 	/**
@@ -158,13 +158,13 @@ public class Pattern
 	 *
 	 * Params:
 	 *     pattern = the UTF-8 encoded pattern
-	 *     str = the UTF-8 encoded string to match
+	 *     string_ = the UTF-8 encoded string to match
 	 *
 	 * Returns: %TRUE if @string matches @pspec
 	 */
-	public static bool patternMatchSimple(string pattern, string str)
+	public static bool patternMatchSimple(string pattern, string string_)
 	{
-		return g_pattern_match_simple(Str.toStringz(pattern), Str.toStringz(str)) != 0;
+		return g_pattern_match_simple(Str.toStringz(pattern), Str.toStringz(string_)) != 0;
 	}
 
 	/**
@@ -174,12 +174,12 @@ public class Pattern
 	 *
 	 * Params:
 	 *     pspec = a #GPatternSpec
-	 *     str = the UTF-8 encoded string to match
+	 *     string_ = the UTF-8 encoded string to match
 	 *
 	 * Returns: %TRUE if @string matches @pspec
 	 */
-	public static bool patternMatchString(Pattern pspec, string str)
+	public static bool patternMatchString(Pattern pspec, string string_)
 	{
-		return g_pattern_match_string((pspec is null) ? null : pspec.getPatternStruct(), Str.toStringz(str)) != 0;
+		return g_pattern_match_string((pspec is null) ? null : pspec.getPatternStruct(), Str.toStringz(string_)) != 0;
 	}
 }

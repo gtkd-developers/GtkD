@@ -877,11 +877,11 @@ public class TagList
 	 * of a taglist is stream scope.
 	 *
 	 * Params:
-	 *     scop = new scope for @list
+	 *     scope_ = new scope for @list
 	 */
-	public void setScope(GstTagScope scop)
+	public void setScope(GstTagScope scope_)
 	{
-		gst_tag_list_set_scope(gstTagList, scop);
+		gst_tag_list_set_scope(gstTagList, scope_);
 	}
 
 	/**

@@ -109,14 +109,14 @@ public class StringChunk
 	 * duplicates.
 	 *
 	 * Params:
-	 *     str = the string to add
+	 *     string_ = the string to add
 	 *
 	 * Returns: a pointer to the copy of @string within
 	 *     the #GStringChunk
 	 */
-	public string insert(string str)
+	public string insert(string string_)
 	{
-		auto retStr = g_string_chunk_insert(gStringChunk, Str.toStringz(str));
+		auto retStr = g_string_chunk_insert(gStringChunk, Str.toStringz(string_));
 
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
@@ -138,14 +138,14 @@ public class StringChunk
 	 * if they do match.
 	 *
 	 * Params:
-	 *     str = the string to add
+	 *     string_ = the string to add
 	 *
 	 * Returns: a pointer to the new or existing copy of @string
 	 *     within the #GStringChunk
 	 */
-	public string insertConst(string str)
+	public string insertConst(string string_)
 	{
-		auto retStr = g_string_chunk_insert_const(gStringChunk, Str.toStringz(str));
+		auto retStr = g_string_chunk_insert_const(gStringChunk, Str.toStringz(string_));
 
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
@@ -163,7 +163,7 @@ public class StringChunk
 	 * though you should not change anything after the end of the string.
 	 *
 	 * Params:
-	 *     str = bytes to insert
+	 *     string_ = bytes to insert
 	 *     len = number of bytes of @string to insert, or -1 to insert a
 	 *         nul-terminated string
 	 *
@@ -171,9 +171,9 @@ public class StringChunk
 	 *
 	 * Since: 2.4
 	 */
-	public string insertLen(string str, ptrdiff_t len)
+	public string insertLen(string string_, ptrdiff_t len)
 	{
-		auto retStr = g_string_chunk_insert_len(gStringChunk, Str.toStringz(str), len);
+		auto retStr = g_string_chunk_insert_len(gStringChunk, Str.toStringz(string_), len);
 
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);

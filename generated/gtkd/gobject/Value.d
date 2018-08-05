@@ -560,13 +560,13 @@ public class Value
 	 * g_value_init() and g_value_set_instance().
 	 *
 	 * Params:
-	 *     instanc = the instance
+	 *     instance_ = the instance
 	 *
 	 * Since: 2.42
 	 */
-	public void initFromInstance(TypeInstance instanc)
+	public void initFromInstance(TypeInstance instance_)
 	{
-		g_value_init_from_instance(gValue, (instanc is null) ? null : instanc.getTypeInstanceStruct());
+		g_value_init_from_instance(gValue, (instance_ is null) ? null : instance_.getTypeInstanceStruct());
 	}
 
 	/**
@@ -709,11 +709,11 @@ public class Value
 	 * value_table's collect_value() function.
 	 *
 	 * Params:
-	 *     instanc = the instance
+	 *     instance_ = the instance
 	 */
-	public void setInstance(void* instanc)
+	public void setInstance(void* instance_)
 	{
-		g_value_set_instance(gValue, instanc);
+		g_value_set_instance(gValue, instance_);
 	}
 
 	/**

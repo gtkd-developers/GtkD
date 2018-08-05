@@ -133,10 +133,10 @@ public class PgMap
 	 * Do not use.  Does not do anything.
 	 *
 	 * Params:
-	 *     modul = a #PangoIncludedModule
+	 *     module_ = a #PangoIncludedModule
 	 */
-	public static void moduleRegister(PangoIncludedModule* modul)
+	public static void moduleRegister(PangoIncludedModule* module_)
 	{
-		pango_module_register(modul);
+		pango_module_register(module_);
 	}
 }

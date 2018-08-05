@@ -269,14 +269,14 @@ public class MainContext
 	 * loop (and may prevent this call from returning).
 	 *
 	 * Params:
-	 *     funct = function to call
+	 *     function_ = function to call
 	 *     data = data to pass to @function
 	 *
 	 * Since: 2.28
 	 */
-	public void invoke(GSourceFunc funct, void* data)
+	public void invoke(GSourceFunc function_, void* data)
 	{
-		g_main_context_invoke(gMainContext, funct, data);
+		g_main_context_invoke(gMainContext, function_, data);
 	}
 
 	/**
@@ -292,15 +292,15 @@ public class MainContext
 	 *
 	 * Params:
 	 *     priority = the priority at which to run @function
-	 *     funct = function to call
+	 *     function_ = function to call
 	 *     data = data to pass to @function
 	 *     notify = a function to call when @data is no longer in use, or %NULL.
 	 *
 	 * Since: 2.28
 	 */
-	public void invokeFull(int priority, GSourceFunc funct, void* data, GDestroyNotify notify)
+	public void invokeFull(int priority, GSourceFunc function_, void* data, GDestroyNotify notify)
 	{
-		g_main_context_invoke_full(gMainContext, priority, funct, data, notify);
+		g_main_context_invoke_full(gMainContext, priority, function_, data, notify);
 	}
 
 	/**
@@ -578,7 +578,7 @@ public class MainContext
 	 *
 	 * Returns: the global default main context.
 	 */
-	public static MainContext defaulx()
+	public static MainContext default_()
 	{
 		auto p = g_main_context_default();
 

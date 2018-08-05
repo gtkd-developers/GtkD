@@ -215,12 +215,12 @@ public class Window : ObjectG
 	 * XFreeEventData() must not be called within @function.
 	 *
 	 * Params:
-	 *     funct = filter callback
+	 *     function_ = filter callback
 	 *     data = data to pass to filter callback
 	 */
-	public void addFilter(GdkFilterFunc funct, void* data)
+	public void addFilter(GdkFilterFunc function_, void* data)
 	{
-		gdk_window_add_filter(gdkWindow, funct, data);
+		gdk_window_add_filter(gdkWindow, function_, data);
 	}
 
 	/**
@@ -2116,12 +2116,12 @@ public class Window : ObjectG
 	 * Remove a filter previously added with gdk_window_add_filter().
 	 *
 	 * Params:
-	 *     funct = previously-added filter function
+	 *     function_ = previously-added filter function
 	 *     data = user data for previously-added filter function
 	 */
-	public void removeFilter(GdkFilterFunc funct, void* data)
+	public void removeFilter(GdkFilterFunc function_, void* data)
 	{
-		gdk_window_remove_filter(gdkWindow, funct, data);
+		gdk_window_remove_filter(gdkWindow, function_, data);
 	}
 
 	/**

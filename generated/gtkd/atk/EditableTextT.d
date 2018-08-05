@@ -94,15 +94,15 @@ public template EditableTextT(TStruct)
 	 * Insert text at a given position.
 	 *
 	 * Params:
-	 *     str = the text to insert
+	 *     string_ = the text to insert
 	 *     length = the length of text to insert, in bytes
 	 *     position = The caller initializes this to
 	 *         the position at which to insert the text. After the call it
 	 *         points at the position after the newly inserted text.
 	 */
-	public void insertText(string str, int length, int* position)
+	public void insertText(string string_, int length, int* position)
 	{
-		atk_editable_text_insert_text(getEditableTextStruct(), Str.toStringz(str), length, position);
+		atk_editable_text_insert_text(getEditableTextStruct(), Str.toStringz(string_), length, position);
 	}
 
 	/**
@@ -139,10 +139,10 @@ public template EditableTextT(TStruct)
 	 * Set text contents of @text.
 	 *
 	 * Params:
-	 *     str = string to set for text contents of @text
+	 *     string_ = string to set for text contents of @text
 	 */
-	public void setTextContents(string str)
+	public void setTextContents(string string_)
 	{
-		atk_editable_text_set_text_contents(getEditableTextStruct(), Str.toStringz(str));
+		atk_editable_text_set_text_contents(getEditableTextStruct(), Str.toStringz(string_));
 	}
 }

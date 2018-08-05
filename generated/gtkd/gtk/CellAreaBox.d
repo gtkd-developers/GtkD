@@ -135,14 +135,14 @@ public class CellAreaBox : CellArea, OrientableIF
 	 *     renderer = the #GtkCellRenderer to add
 	 *     expand = whether @renderer should receive extra space when the area receives
 	 *         more than its natural size
-	 *     alig = whether @renderer should be aligned in adjacent rows
+	 *     align_ = whether @renderer should be aligned in adjacent rows
 	 *     fixed = whether @renderer should have the same size in all rows
 	 *
 	 * Since: 3.0
 	 */
-	public void packEnd(CellRenderer renderer, bool expand, bool alig, bool fixed)
+	public void packEnd(CellRenderer renderer, bool expand, bool align_, bool fixed)
 	{
-		gtk_cell_area_box_pack_end(gtkCellAreaBox, (renderer is null) ? null : renderer.getCellRendererStruct(), expand, alig, fixed);
+		gtk_cell_area_box_pack_end(gtkCellAreaBox, (renderer is null) ? null : renderer.getCellRendererStruct(), expand, align_, fixed);
 	}
 
 	/**
@@ -155,14 +155,14 @@ public class CellAreaBox : CellArea, OrientableIF
 	 *     renderer = the #GtkCellRenderer to add
 	 *     expand = whether @renderer should receive extra space when the area receives
 	 *         more than its natural size
-	 *     alig = whether @renderer should be aligned in adjacent rows
+	 *     align_ = whether @renderer should be aligned in adjacent rows
 	 *     fixed = whether @renderer should have the same size in all rows
 	 *
 	 * Since: 3.0
 	 */
-	public void packStart(CellRenderer renderer, bool expand, bool alig, bool fixed)
+	public void packStart(CellRenderer renderer, bool expand, bool align_, bool fixed)
 	{
-		gtk_cell_area_box_pack_start(gtkCellAreaBox, (renderer is null) ? null : renderer.getCellRendererStruct(), expand, alig, fixed);
+		gtk_cell_area_box_pack_start(gtkCellAreaBox, (renderer is null) ? null : renderer.getCellRendererStruct(), expand, align_, fixed);
 	}
 
 	/**

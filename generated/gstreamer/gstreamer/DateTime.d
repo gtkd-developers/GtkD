@@ -223,16 +223,16 @@ public class DateTime
 	 * Free-function: gst_date_time_unref
 	 *
 	 * Params:
-	 *     str = ISO 8601-formatted datetime string.
+	 *     string_ = ISO 8601-formatted datetime string.
 	 *
 	 * Returns: a newly created #GstDateTime,
 	 *     or %NULL on error
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(string str)
+	public this(string string_)
 	{
-		auto p = gst_date_time_new_from_iso8601_string(Str.toStringz(str));
+		auto p = gst_date_time_new_from_iso8601_string(Str.toStringz(string_));
 
 		if(p is null)
 		{

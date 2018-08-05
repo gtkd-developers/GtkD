@@ -363,7 +363,7 @@ alias VTE_MAJOR_VERSION = MAJOR_VERSION;
  * The micro version number of the VTE library
  * (e.g. in version 3.1.4 this is 4).
  */
-enum MICRO_VERSION = 1;
+enum MICRO_VERSION = 2;
 alias VTE_MICRO_VERSION = MICRO_VERSION;
 
 /**

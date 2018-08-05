@@ -1957,7 +1957,7 @@ struct PangoIncludedModule
 	/** */
 	extern(C) void function(PangoEngineInfo** engines, int* nEngines) list;
 	/** */
-	extern(C) void function(GTypeModule* modul) init;
+	extern(C) void function(GTypeModule* module_) init;
 	/** */
 	extern(C) void function() exit;
 	/** */

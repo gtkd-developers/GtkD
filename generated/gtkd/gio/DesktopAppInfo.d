@@ -172,16 +172,16 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	 * the Implements= line of the desktop file of the application.
 	 *
 	 * Params:
-	 *     iface = the name of the interface
+	 *     interface_ = the name of the interface
 	 *
 	 * Returns: a list of #GDesktopAppInfo
 	 *     objects.
 	 *
 	 * Since: 2.42
 	 */
-	public static ListG getImplementations(string iface)
+	public static ListG getImplementations(string interface_)
 	{
-		auto p = g_desktop_app_info_get_implementations(Str.toStringz(iface));
+		auto p = g_desktop_app_info_get_implementations(Str.toStringz(interface_));
 
 		if(p is null)
 		{

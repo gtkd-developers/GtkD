@@ -2030,7 +2030,7 @@ __gshared extern(C)
 	GstCaps* function(GstCaps* minuend, GstCaps* subtrahend) c_gst_caps_subtract;
 	char* function(GstCaps* caps) c_gst_caps_to_string;
 	GstCaps* function(GstCaps* caps) c_gst_caps_truncate;
-	GstCaps* function(const(char)* str) c_gst_caps_from_string;
+	GstCaps* function(const(char)* string_) c_gst_caps_from_string;
 
 	// gstreamer.CapsFeatures
 
@@ -2139,7 +2139,7 @@ __gshared extern(C)
 	GType function() c_gst_date_time_get_type;
 	GstDateTime* function(float tzoffset, int year, int month, int day, int hour, int minute, double seconds) c_gst_date_time_new;
 	GstDateTime* function(GDateTime* dt) c_gst_date_time_new_from_g_date_time;
-	GstDateTime* function(const(char)* str) c_gst_date_time_new_from_iso8601_string;
+	GstDateTime* function(const(char)* string_) c_gst_date_time_new_from_iso8601_string;
 	GstDateTime* function(long secs) c_gst_date_time_new_from_unix_epoch_local_time;
 	GstDateTime* function(long secs) c_gst_date_time_new_from_unix_epoch_utc;
 	GstDateTime* function(int year, int month, int day, int hour, int minute, double seconds) c_gst_date_time_new_local_time;
@@ -2298,8 +2298,8 @@ __gshared extern(C)
 	int function(GstElement* src, const(char)* srcpadname, GstElement* dest, const(char)* destpadname, GstCaps* filter) c_gst_element_link_pads_filtered;
 	int function(GstElement* src, const(char)* srcpadname, GstElement* dest, const(char)* destpadname, GstPadLinkCheck flags) c_gst_element_link_pads_full;
 	void function(GstElement* element) c_gst_element_lost_state;
-	void function(GstElement* element, GstMessageType type, GQuark domain, int code, char* text, char* dbg, const(char)* file, const(char)* funct, int line) c_gst_element_message_full;
-	void function(GstElement* element, GstMessageType type, GQuark domain, int code, char* text, char* dbg, const(char)* file, const(char)* funct, int line, GstStructure* structure) c_gst_element_message_full_with_details;
+	void function(GstElement* element, GstMessageType type, GQuark domain, int code, char* text, char* debug_, const(char)* file, const(char)* function_, int line) c_gst_element_message_full;
+	void function(GstElement* element, GstMessageType type, GQuark domain, int code, char* text, char* debug_, const(char)* file, const(char)* function_, int line, GstStructure* structure) c_gst_element_message_full_with_details;
 	void function(GstElement* element) c_gst_element_no_more_pads;
 	int function(GstElement* element, GstMessage* message) c_gst_element_post_message;
 	GstClock* function(GstElement* element) c_gst_element_provide_clock;
@@ -2481,7 +2481,7 @@ __gshared extern(C)
 	GstMemory* function(GstMemoryFlags flags, void* data, size_t maxsize, size_t offset, size_t size, void* userData, GDestroyNotify notify) c_gst_memory_new_wrapped;
 	GstMemory* function(GstMemory* mem, ptrdiff_t offset, ptrdiff_t size) c_gst_memory_copy;
 	size_t function(GstMemory* mem, size_t* offset, size_t* maxsize) c_gst_memory_get_sizes;
-	void function(GstMemory* mem, GstMemoryFlags flags, GstAllocator* allocator, GstMemory* parent, size_t maxsize, size_t alig, size_t offset, size_t size) c_gst_memory_init;
+	void function(GstMemory* mem, GstMemoryFlags flags, GstAllocator* allocator, GstMemory* parent, size_t maxsize, size_t align_, size_t offset, size_t size) c_gst_memory_init;
 	int function(GstMemory* mem1, GstMemory* mem2, size_t* offset) c_gst_memory_is_span;
 	int function(GstMemory* mem, const(char)* memType) c_gst_memory_is_type;
 	GstMemory* function(GstMemory* mem, GstMapInfo* info, GstMapFlags flags) c_gst_memory_make_mapped;
@@ -2505,11 +2505,11 @@ __gshared extern(C)
 	GstMessage* function(GstObject* src) c_gst_message_new_duration_changed;
 	GstMessage* function(GstObject* src, GstStructure* structure) c_gst_message_new_element;
 	GstMessage* function(GstObject* src) c_gst_message_new_eos;
-	GstMessage* function(GstObject* src, GError* error, const(char)* dbg) c_gst_message_new_error;
-	GstMessage* function(GstObject* src, GError* error, const(char)* dbg, GstStructure* details) c_gst_message_new_error_with_details;
+	GstMessage* function(GstObject* src, GError* error, const(char)* debug_) c_gst_message_new_error;
+	GstMessage* function(GstObject* src, GError* error, const(char)* debug_, GstStructure* details) c_gst_message_new_error_with_details;
 	GstMessage* function(GstObject* src, GstContext* context) c_gst_message_new_have_context;
-	GstMessage* function(GstObject* src, GError* error, const(char)* dbg) c_gst_message_new_info;
-	GstMessage* function(GstObject* src, GError* error, const(char)* dbg, GstStructure* details) c_gst_message_new_info_with_details;
+	GstMessage* function(GstObject* src, GError* error, const(char)* debug_) c_gst_message_new_info;
+	GstMessage* function(GstObject* src, GError* error, const(char)* debug_, GstStructure* details) c_gst_message_new_info_with_details;
 	GstMessage* function(GstObject* src) c_gst_message_new_latency;
 	GstMessage* function(GstObject* src, const(char)* contextType) c_gst_message_new_need_context;
 	GstMessage* function(GstObject* src, GstClock* clock) c_gst_message_new_new_clock;
@@ -2532,8 +2532,8 @@ __gshared extern(C)
 	GstMessage* function(GstObject* src, GstStructureChangeType type, GstElement* owner, int busy) c_gst_message_new_structure_change;
 	GstMessage* function(GstObject* src, GstTagList* tagList) c_gst_message_new_tag;
 	GstMessage* function(GstObject* src, GstToc* toc, int updated) c_gst_message_new_toc;
-	GstMessage* function(GstObject* src, GError* error, const(char)* dbg) c_gst_message_new_warning;
-	GstMessage* function(GstObject* src, GError* error, const(char)* dbg, GstStructure* details) c_gst_message_new_warning_with_details;
+	GstMessage* function(GstObject* src, GError* error, const(char)* debug_) c_gst_message_new_warning;
+	GstMessage* function(GstObject* src, GError* error, const(char)* debug_, GstStructure* details) c_gst_message_new_warning_with_details;
 	void function(GstMessage* message, const(char)* location, GstTagList* tagList, GstStructure* entryStruct) c_gst_message_add_redirect_entry;
 	size_t function(GstMessage* message) c_gst_message_get_num_redirect_entries;
 	uint function(GstMessage* message) c_gst_message_get_seqnum;
@@ -2548,11 +2548,11 @@ __gshared extern(C)
 	int function(GstMessage* message, char** contextType) c_gst_message_parse_context_type;
 	void function(GstMessage* message, GstDevice** device) c_gst_message_parse_device_added;
 	void function(GstMessage* message, GstDevice** device) c_gst_message_parse_device_removed;
-	void function(GstMessage* message, GError** gerror, char** dbg) c_gst_message_parse_error;
+	void function(GstMessage* message, GError** gerror, char** debug_) c_gst_message_parse_error;
 	void function(GstMessage* message, GstStructure** structure) c_gst_message_parse_error_details;
 	int function(GstMessage* message, uint* groupId) c_gst_message_parse_group_id;
 	void function(GstMessage* message, GstContext** context) c_gst_message_parse_have_context;
-	void function(GstMessage* message, GError** gerror, char** dbg) c_gst_message_parse_info;
+	void function(GstMessage* message, GError** gerror, char** debug_) c_gst_message_parse_info;
 	void function(GstMessage* message, GstStructure** structure) c_gst_message_parse_info_details;
 	void function(GstMessage* message, GstClock** clock) c_gst_message_parse_new_clock;
 	void function(GstMessage* message, GstProgressType* type, char** code, char** text) c_gst_message_parse_progress;
@@ -2574,7 +2574,7 @@ __gshared extern(C)
 	void function(GstMessage* message, GstStructureChangeType* type, GstElement** owner, int* busy) c_gst_message_parse_structure_change;
 	void function(GstMessage* message, GstTagList** tagList) c_gst_message_parse_tag;
 	void function(GstMessage* message, GstToc** toc, int* updated) c_gst_message_parse_toc;
-	void function(GstMessage* message, GError** gerror, char** dbg) c_gst_message_parse_warning;
+	void function(GstMessage* message, GError** gerror, char** debug_) c_gst_message_parse_warning;
 	void function(GstMessage* message, GstStructure** structure) c_gst_message_parse_warning_details;
 	void function(GstMessage* message, GstBufferingMode mode, int avgIn, int avgOut, long bufferingLeft) c_gst_message_set_buffering_stats;
 	void function(GstMessage* message, uint groupId) c_gst_message_set_group_id;
@@ -2624,7 +2624,7 @@ __gshared extern(C)
 	void* function(void* object) c_gst_object_ref_sink;
 	int function(GstObject** oldobj, GstObject* newobj) c_gst_object_replace;
 	int function(GstObject* object, GstControlBinding* binding) c_gst_object_add_control_binding;
-	void function(GstObject* source, GError* error, const(char)* dbg) c_gst_object_default_error;
+	void function(GstObject* source, GError* error, const(char)* debug_) c_gst_object_default_error;
 	GstControlBinding* function(GstObject* object, const(char)* propertyName) c_gst_object_get_control_binding;
 	GstClockTime function(GstObject* object) c_gst_object_get_control_rate;
 	int function(GstObject* object, const(char)* propertyName, GstClockTime timestamp, GstClockTime interval, uint nValues, GValue* values) c_gst_object_get_g_value_array;
@@ -2805,8 +2805,8 @@ __gshared extern(C)
 	void function(GList* list) c_gst_plugin_list_free;
 	GstPlugin* function(const(char)* name) c_gst_plugin_load_by_name;
 	GstPlugin* function(char* filename, GError** err) c_gst_plugin_load_file;
-	int function(int majorVersion, int minorVersion, const(char)* name, const(char)* description, GstPluginInitFunc initFunc, const(char)* versio, const(char)* license, const(char)* source, const(char)* p, const(char)* origin) c_gst_plugin_register_static;
-	int function(int majorVersion, int minorVersion, const(char)* name, const(char)* description, GstPluginInitFullFunc initFullFunc, const(char)* versio, const(char)* license, const(char)* source, const(char)* p, const(char)* origin, void* userData) c_gst_plugin_register_static_full;
+	int function(int majorVersion, int minorVersion, const(char)* name, const(char)* description, GstPluginInitFunc initFunc, const(char)* version_, const(char)* license, const(char)* source, const(char)* package_, const(char)* origin) c_gst_plugin_register_static;
+	int function(int majorVersion, int minorVersion, const(char)* name, const(char)* description, GstPluginInitFullFunc initFullFunc, const(char)* version_, const(char)* license, const(char)* source, const(char)* package_, const(char)* origin, void* userData) c_gst_plugin_register_static_full;
 	void function(GstPlugin* plugin, char** envVars, char** paths, char** names, GstPluginDependencyFlags flags) c_gst_plugin_add_dependency;
 	void function(GstPlugin* plugin, const(char)* envVars, const(char)* paths, const(char)* names, GstPluginDependencyFlags flags) c_gst_plugin_add_dependency_simple;
 	GstStructure* function(GstPlugin* plugin) c_gst_plugin_get_cache_data;
@@ -2959,7 +2959,7 @@ __gshared extern(C)
 	void function(GstQuery* query, uint nth, GstFormat* format) c_gst_query_parse_nth_format;
 	GstPadMode function(GstQuery* query, uint index) c_gst_query_parse_nth_scheduling_mode;
 	void function(GstQuery* query, GstFormat* format, long* cur) c_gst_query_parse_position;
-	void function(GstQuery* query, GstSchedulingFlags* flags, int* minsize, int* maxsize, int* alig) c_gst_query_parse_scheduling;
+	void function(GstQuery* query, GstSchedulingFlags* flags, int* minsize, int* maxsize, int* align_) c_gst_query_parse_scheduling;
 	void function(GstQuery* query, GstFormat* format, int* seekable, long* segmentStart, long* segmentEnd) c_gst_query_parse_seeking;
 	void function(GstQuery* query, double* rate, GstFormat* format, long* startValue, long* stopValue) c_gst_query_parse_segment;
 	void function(GstQuery* query, char** uri) c_gst_query_parse_uri;
@@ -2982,7 +2982,7 @@ __gshared extern(C)
 	void function(GstQuery* query, uint index, GstAllocator* allocator, GstAllocationParams* params) c_gst_query_set_nth_allocation_param;
 	void function(GstQuery* query, uint index, GstBufferPool* pool, uint size, uint minBuffers, uint maxBuffers) c_gst_query_set_nth_allocation_pool;
 	void function(GstQuery* query, GstFormat format, long cur) c_gst_query_set_position;
-	void function(GstQuery* query, GstSchedulingFlags flags, int minsize, int maxsize, int alig) c_gst_query_set_scheduling;
+	void function(GstQuery* query, GstSchedulingFlags flags, int minsize, int maxsize, int align_) c_gst_query_set_scheduling;
 	void function(GstQuery* query, GstFormat format, int seekable, long segmentStart, long segmentEnd) c_gst_query_set_seeking;
 	void function(GstQuery* query, double rate, GstFormat format, long startValue, long stopValue) c_gst_query_set_segment;
 	void function(GstQuery* query, const(char)* uri) c_gst_query_set_uri;
@@ -3092,7 +3092,7 @@ __gshared extern(C)
 	GType function() c_gst_structure_get_type;
 	GstStructure* function(const(char)* name, const(char)* firstfield, ... ) c_gst_structure_new;
 	GstStructure* function(const(char)* name) c_gst_structure_new_empty;
-	GstStructure* function(const(char)* str) c_gst_structure_new_from_string;
+	GstStructure* function(const(char)* string_) c_gst_structure_new_from_string;
 	GstStructure* function(GQuark nameQuark, GQuark fieldQuark, ... ) c_gst_structure_new_id;
 	GstStructure* function(GQuark quark) c_gst_structure_new_id_empty;
 	GstStructure* function(const(char)* name, const(char)* firstfield, void* varargs) c_gst_structure_new_valist;
@@ -3160,7 +3160,7 @@ __gshared extern(C)
 	void function(GstStructure* structure, const(char)* fieldname, GValue* value) c_gst_structure_set_value;
 	void function(GstStructure* structure, const(char)* fieldname, GValue* value) c_gst_structure_take_value;
 	char* function(GstStructure* structure) c_gst_structure_to_string;
-	GstStructure* function(const(char)* str, char** end) c_gst_structure_from_string;
+	GstStructure* function(const(char)* string_, char** end) c_gst_structure_from_string;
 
 	// gstreamer.SystemClock
 
@@ -3216,7 +3216,7 @@ __gshared extern(C)
 	const(char)* function(GstTagList* list, uint index) c_gst_tag_list_nth_tag_name;
 	int function(GstTagList* list, const(char)* tag, uint index, char** value) c_gst_tag_list_peek_string_index;
 	void function(GstTagList* list, const(char)* tag) c_gst_tag_list_remove_tag;
-	void function(GstTagList* list, GstTagScope scop) c_gst_tag_list_set_scope;
+	void function(GstTagList* list, GstTagScope scope_) c_gst_tag_list_set_scope;
 	char* function(GstTagList* list) c_gst_tag_list_to_string;
 	int function(GValue* dest, GstTagList* list, const(char)* tag) c_gst_tag_list_copy_value;
 	int function(const(char)* tag) c_gst_tag_exists;
@@ -3272,7 +3272,7 @@ __gshared extern(C)
 	// gstreamer.Toc
 
 	GType function() c_gst_toc_get_type;
-	GstToc* function(GstTocScope scop) c_gst_toc_new;
+	GstToc* function(GstTocScope scope_) c_gst_toc_new;
 	void function(GstToc* toc, GstTocEntry* entry) c_gst_toc_append_entry;
 	void function(GstToc* toc) c_gst_toc_dump;
 	GstTocEntry* function(GstToc* toc, const(char)* uid) c_gst_toc_find_entry;
@@ -3436,9 +3436,9 @@ __gshared extern(C)
 	int function() c_gst_debug_is_active;
 	int function() c_gst_debug_is_colored;
 	const(char)* function(GstDebugLevel level) c_gst_debug_level_get_name;
-	void function(GstDebugCategory* category, GstDebugLevel level, const(char)* file, const(char)* funct, int line, GObject* object, const(char)* format, ... ) c_gst_debug_log;
-	void function(GstDebugCategory* category, GstDebugLevel level, const(char)* file, const(char)* funct, int line, GObject* object, GstDebugMessage* message, void* userData) c_gst_debug_log_default;
-	void function(GstDebugCategory* category, GstDebugLevel level, const(char)* file, const(char)* funct, int line, GObject* object, const(char)* format, void* args) c_gst_debug_log_valist;
+	void function(GstDebugCategory* category, GstDebugLevel level, const(char)* file, const(char)* function_, int line, GObject* object, const(char)* format, ... ) c_gst_debug_log;
+	void function(GstDebugCategory* category, GstDebugLevel level, const(char)* file, const(char)* function_, int line, GObject* object, GstDebugMessage* message, void* userData) c_gst_debug_log_default;
+	void function(GstDebugCategory* category, GstDebugLevel level, const(char)* file, const(char)* function_, int line, GObject* object, const(char)* format, void* args) c_gst_debug_log_valist;
 	void function() c_gst_debug_print_stack_trace;
 	uint function(GstLogFunction func) c_gst_debug_remove_log_function;
 	uint function(void* data) c_gst_debug_remove_log_function_by_data;
