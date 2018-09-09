@@ -894,6 +894,60 @@ code: start
 			setDouble(value);
 		}
 	}
+
+	/**
+	 * The GType of the contianed value.
+	 */
+	public @property GType gType()
+	{
+		return gValue.gType;
+	}
+
+	/**
+	 * Retrieves a TYPE from Value, the Value must contain the appropriate type.
+	 */
+	public TYPE get(TYPE)()
+	{
+		static if ( is(TYPE == bool) )
+			return getBoolean();
+		else static if ( is(TYPE == byte) )
+			return getSchar();
+		else static if ( is(TYPE == ubyte) )
+			return getUchar();
+		else static if ( is(TYPE == int) )
+			return getInt();
+		else static if ( is(TYPE == uint) )
+			return getUint();
+		else static if ( is(TYPE == long) )
+			return getInt64();
+		else static if ( is(TYPE == ulong) )
+			return getUint64();
+		else static if ( is(TYPE == float) )
+			return getFloat();
+		else static if ( is(TYPE == double) )
+			return getDouble();
+		else static if ( is(TYPE == string) )
+			return getString();
+		else static if ( is(TYPE == string[]) )
+			return Str.toStringArray(cast(const(char*)*)getPointer());
+		else static if ( is(TYPE == enum) )
+			return cast(TYPE)(Type.isA(gValue.gType, GType.ENUM) ? getEnum() : getFlags());
+		else static if ( isPointer!TYPE )
+			return cast(TYPE)(Type.isA(gValue.gType, GType.POINTER) ? getPointer() : (Type.isA(gValue.gType, GType.BOXED) ? getBoxed() : g_value_get_object(gValue)));
+		else static if ( is(TYPE == interface) )
+			return cast(TYPE)getObject();
+		else static if ( is(TYPE == class) )
+		{
+			static if ( is(TYPE == Variant) )
+				return getVariant();
+			else static if ( is(TYPE== ParamSpec) )
+				return getParam();
+			else static if ( is(TYPE : ObjectG) )
+				return cast(TYPE)getObject();
+			else
+				return ObjectG.getDObject!(TYPE)(cast(typeof(TYPE.tupleof[0]))(Type.isA(gValue.gType, GType.POINTER) ? getPointer() : (Type.isA(gValue.gType, GType.BOXED) ? getBoxed() : g_value_get_object(gValue))));
+		}
+	}
 code: end
 
 struct: WeakRef
