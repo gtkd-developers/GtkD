@@ -25,8 +25,8 @@
 module gtk.BindingEntry;
 
 private import glib.ListSG;
+private import glib.MemorySlice;
 private import glib.Str;
-private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.BindingSet;
 private import gtk.c.functions;

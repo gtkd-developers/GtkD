@@ -27,8 +27,8 @@ module gio.DBusPropertyInfo;
 private import gio.DBusAnnotationInfo;
 private import gio.c.functions;
 public  import gio.c.types;
+private import glib.MemorySlice;
 private import glib.Str;
-private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.giotypes;
 private import gtkd.Loader;
@@ -164,6 +164,7 @@ public final class DBusPropertyInfo
 		return g_dbus_property_info_get_type();
 	}
 
+	alias doref = ref_;
 	/**
 	 * If @info is statically allocated does nothing. Otherwise increases
 	 * the reference count.
@@ -172,7 +173,7 @@ public final class DBusPropertyInfo
 	 *
 	 * Since: 2.26
 	 */
-	public DBusPropertyInfo doref()
+	public DBusPropertyInfo ref_()
 	{
 		auto p = g_dbus_property_info_ref(gDBusPropertyInfo);
 

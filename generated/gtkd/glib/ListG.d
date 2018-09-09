@@ -407,6 +407,7 @@ public class ListG
 		return new ListG(cast(GList*) p);
 	}
 
+	alias foreac = foreach_;
 	/**
 	 * Calls a function for each element of a #GList.
 	 *
@@ -417,7 +418,7 @@ public class ListG
 	 *     func = the function to call with each element's data
 	 *     userData = user data to pass to the function
 	 */
-	public void foreac(GFunc func, void* userData)
+	public void foreach_(GFunc func, void* userData)
 	{
 		g_list_foreach(gList, func, userData);
 	}

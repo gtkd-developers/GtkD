@@ -1867,7 +1867,7 @@ __gshared extern(C)
 	GstBuffer* function(void* data, size_t size) c_gst_buffer_new_wrapped;
 	GstBuffer* function(GstMemoryFlags flags, void* data, size_t maxsize, size_t offset, size_t size, void* userData, GDestroyNotify notify) c_gst_buffer_new_wrapped_full;
 	GstMeta* function(GstBuffer* buffer, GstMetaInfo* info, void* params) c_gst_buffer_add_meta;
-	GstParentBufferMeta* function(GstBuffer* buffer, GstBuffer* doref) c_gst_buffer_add_parent_buffer_meta;
+	GstParentBufferMeta* function(GstBuffer* buffer, GstBuffer* ref_) c_gst_buffer_add_parent_buffer_meta;
 	GstProtectionMeta* function(GstBuffer* buffer, GstStructure* info) c_gst_buffer_add_protection_meta;
 	GstReferenceTimestampMeta* function(GstBuffer* buffer, GstCaps* reference, GstClockTime timestamp, GstClockTime duration) c_gst_buffer_add_reference_timestamp_meta;
 	GstBuffer* function(GstBuffer* buf1, GstBuffer* buf2) c_gst_buffer_append;

@@ -418,6 +418,7 @@ public class MatchInfo
 		return p;
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increases reference count of @match_info by 1.
 	 *
@@ -425,7 +426,7 @@ public class MatchInfo
 	 *
 	 * Since: 2.30
 	 */
-	public MatchInfo doref()
+	public MatchInfo ref_()
 	{
 		auto p = g_match_info_ref(gMatchInfo);
 

@@ -53,6 +53,9 @@ import gtk.ListStore;
 import gdk.RGBA;
 import gdk.Color;
 
+import pango.PgFontDescription;
+import std.stdio;
+
 enum {
     COLUMN_NAME,
     COLUMN_TEXT,
@@ -61,6 +64,7 @@ enum {
     COLUMN_BOOL_VISIBLE,
     COLUMN_TEXT_COLOR,
     COLUMN_TEXT_COLOR_RGBA,
+    COLUMN_TEXT_FONT_DESCRIPTION,
 }
 
 void main(string[] args){
@@ -73,6 +77,7 @@ void main(string[] args){
         GType.INT,
         Color.getType(),
         RGBA.getType(),
+        PgFontDescription.getType(),
         ] );
 
     void appendRecord( string name, string value, bool isBoolean, RGBA rgba, Color color ){
@@ -84,6 +89,7 @@ void main(string[] args){
         store.setValue( it, COLUMN_BOOL_VISIBLE, isBoolean  );
         store.setValue( it, COLUMN_TEXT_COLOR_RGBA, rgba );
         store.setValue( it, COLUMN_TEXT_COLOR, color );
+        store.setValue( it, COLUMN_TEXT_FONT_DESCRIPTION, new PgFontDescription() );
     }
     // fill store with data
     appendRecord( "Loops", "10", false, new RGBA(1.0,0.0,0.0,1.0), new Color(64,64,64) );
@@ -126,6 +132,17 @@ void main(string[] args){
         auto path = new TreePath( p );
         auto it = new TreeIter( store, path );
         store.setValue(it, COLUMN_BOOL, it.getValueInt( COLUMN_BOOL ) ? 0 : 1 );
+
+        auto val = store.getValue(it, COLUMN_TEXT_FONT_DESCRIPTION);
+
+        import gobject.Type;
+
+        writeln(Type.isA(PgFontDescription.getType(), GType.BOXED));
+        writeln(PgFontDescription.getType(), " ", val.gType);
+
+        auto font = val.get!PgFontDescription();
+
+        writeln(font.getFamily());
     });
 
     // change the text in the store on end of edit

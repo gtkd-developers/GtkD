@@ -255,6 +255,7 @@ public class SettingsSchemaKey
 		return g_settings_schema_key_range_check(gSettingsSchemaKey, (value is null) ? null : value.getVariantStruct()) != 0;
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increase the reference count of @key, returning a new reference.
 	 *
@@ -262,7 +263,7 @@ public class SettingsSchemaKey
 	 *
 	 * Since: 2.40
 	 */
-	public SettingsSchemaKey doref()
+	public SettingsSchemaKey ref_()
 	{
 		auto p = g_settings_schema_key_ref(gSettingsSchemaKey);
 

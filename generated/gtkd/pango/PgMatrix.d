@@ -24,7 +24,7 @@
 
 module pango.PgMatrix;
 
-private import glib.c.functions;
+private import glib.MemorySlice;
 private import gobject.ObjectG;
 public  import gtkc.pangotypes;
 private import gtkd.Loader;

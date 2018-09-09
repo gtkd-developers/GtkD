@@ -226,12 +226,13 @@ public class ParamSpec
 		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increments the reference count of @pspec.
 	 *
 	 * Returns: the #GParamSpec that was passed into this function
 	 */
-	public ParamSpec doref()
+	public ParamSpec ref_()
 	{
 		auto p = g_param_spec_ref(gParamSpec);
 

@@ -45,6 +45,7 @@ public struct DataSet
 		g_dataset_destroy(datasetLocation);
 	}
 
+	alias foreac = foreach_;
 	/**
 	 * Calls the given function for each data element which is associated
 	 * with the given location. Note that this function is NOT thread-safe.
@@ -60,7 +61,7 @@ public struct DataSet
 	 *     func = the function to call for each data element.
 	 *     userData = user data to pass to the function.
 	 */
-	public static void foreac(void* datasetLocation, GDataForeachFunc func, void* userData)
+	public static void foreach_(void* datasetLocation, GDataForeachFunc func, void* userData)
 	{
 		g_dataset_foreach(datasetLocation, func, userData);
 	}

@@ -75,6 +75,7 @@ public class PgFontset : ObjectG
 		return pango_fontset_get_type();
 	}
 
+	alias foreac = foreach_;
 	/**
 	 * Iterates through all the fonts in a fontset, calling @func for
 	 * each one. If @func returns %TRUE, that stops the iteration.
@@ -85,7 +86,7 @@ public class PgFontset : ObjectG
 	 *
 	 * Since: 1.4
 	 */
-	public void foreac(PangoFontsetForeachFunc func, void* data)
+	public void foreach_(PangoFontsetForeachFunc func, void* data)
 	{
 		pango_fontset_foreach(pangoFontset, func, data);
 	}

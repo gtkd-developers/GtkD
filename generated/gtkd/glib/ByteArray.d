@@ -196,6 +196,7 @@ public class ByteArray
 		return new ByteArray(cast(GByteArray*) p);
 	}
 
+	alias doref = ref_;
 	/**
 	 * Atomically increments the reference count of @array by one.
 	 * This function is thread-safe and may be called from any thread.
@@ -204,7 +205,7 @@ public class ByteArray
 	 *
 	 * Since: 2.22
 	 */
-	public ByteArray doref()
+	public ByteArray ref_()
 	{
 		auto p = g_byte_array_ref(gByteArray);
 

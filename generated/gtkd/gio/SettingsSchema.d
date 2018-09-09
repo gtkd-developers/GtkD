@@ -277,6 +277,7 @@ public class SettingsSchema
 		return Str.toStringArray(retStr);
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increase the reference count of @schema, returning a new reference.
 	 *
@@ -284,7 +285,7 @@ public class SettingsSchema
 	 *
 	 * Since: 2.32
 	 */
-	public SettingsSchema doref()
+	public SettingsSchema ref_()
 	{
 		auto p = g_settings_schema_ref(gSettingsSchema);
 

@@ -503,6 +503,7 @@ public interface FileIF{
 	 */
 	public FileIOStream createReadwriteFinish(AsyncResultIF res);
 
+	alias delet = delete_;
 	/**
 	 * Deletes a file. If the @file is a directory, it will only be
 	 * deleted if it is empty. This has the same semantics as g_unlink().
@@ -519,7 +520,7 @@ public interface FileIF{
 	 *
 	 * Throws: GException on failure.
 	 */
-	public bool delet(Cancellable cancellable);
+	public bool delete_(Cancellable cancellable);
 
 	/**
 	 * Asynchronously delete a file. If the @file is a directory, it will

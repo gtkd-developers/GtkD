@@ -195,6 +195,7 @@ public class TagList
 		gst_tag_list_add_value(gstTagList, mode, Str.toStringz(tag), (value is null) ? null : value.getValueStruct());
 	}
 
+	alias foreac = foreach_;
 	/**
 	 * Calls the given function for each tag inside the tag list. Note that if there
 	 * is no tag, the function won't be called at all.
@@ -203,7 +204,7 @@ public class TagList
 	 *     func = function to be called for each tag
 	 *     userData = user specified data
 	 */
-	public void foreac(GstTagForeachFunc func, void* userData)
+	public void foreach_(GstTagForeachFunc func, void* userData)
 	{
 		gst_tag_list_foreach(gstTagList, func, userData);
 	}

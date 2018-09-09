@@ -24,8 +24,8 @@
 
 module gst.mpegts.TOT;
 
+private import glib.MemorySlice;
 private import glib.PtrArray;
-private import glib.c.functions;
 private import gobject.ObjectG;
 private import gst.mpegts.c.functions;
 public  import gst.mpegts.c.types;
@@ -68,7 +68,7 @@ public final class TOT
 	~this ()
 	{
 		if ( Linker.isLoaded(LIBRARY_GSTMPEGTS) && ownedRef )
-			g_free(gstMpegtsTOT);
+			sliceFree(gstMpegtsTOT);
 	}
 
 

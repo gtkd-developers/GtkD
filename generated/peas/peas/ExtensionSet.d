@@ -138,6 +138,7 @@ public class ExtensionSet : ObjectG
 		this(cast(PeasExtensionSet*) p, true);
 	}
 
+	alias foreac = foreach_;
 	/**
 	 * Calls @func for each #PeasExtension.
 	 *
@@ -147,7 +148,7 @@ public class ExtensionSet : ObjectG
 	 *
 	 * Since: 1.2
 	 */
-	public void foreac(PeasExtensionSetForeachFunc func, void* data)
+	public void foreach_(PeasExtensionSetForeachFunc func, void* data)
 	{
 		peas_extension_set_foreach(peasExtensionSet, func, data);
 	}

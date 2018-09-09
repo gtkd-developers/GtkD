@@ -277,6 +277,7 @@ public class Bytes
 		return new Bytes(cast(GBytes*) p, true);
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increase the reference count on @bytes.
 	 *
@@ -284,7 +285,7 @@ public class Bytes
 	 *
 	 * Since: 2.32
 	 */
-	public Bytes doref()
+	public Bytes ref_()
 	{
 		auto p = g_bytes_ref(gBytes);
 

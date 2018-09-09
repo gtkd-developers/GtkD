@@ -335,6 +335,7 @@ public class Iterator
 		return gst_iterator_fold(gstIterator, func, (ret is null) ? null : ret.getValueStruct(), userData);
 	}
 
+	alias foreac = foreach_;
 	/**
 	 * Iterate over all element of @it and call the given function @func for
 	 * each element.
@@ -348,7 +349,7 @@ public class Iterator
 	 *
 	 *     MT safe.
 	 */
-	public GstIteratorResult foreac(GstIteratorForeachFunction func, void* userData)
+	public GstIteratorResult foreach_(GstIteratorForeachFunction func, void* userData)
 	{
 		return gst_iterator_foreach(gstIterator, func, userData);
 	}

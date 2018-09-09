@@ -149,6 +149,7 @@ public class HashTable
 		return g_hash_table_find(gHashTable, predicate, userData);
 	}
 
+	alias foreac = foreach_;
 	/**
 	 * Calls the given function for each of the key/value pairs in the
 	 * #GHashTable.  The function is passed the key and value of each
@@ -164,7 +165,7 @@ public class HashTable
 	 *     func = the function to call for each key/value pair
 	 *     userData = user data to pass to the function
 	 */
-	public void foreac(GHFunc func, void* userData)
+	public void foreach_(GHFunc func, void* userData)
 	{
 		g_hash_table_foreach(gHashTable, func, userData);
 	}
@@ -438,6 +439,7 @@ public class HashTable
 		this(cast(GHashTable*) p);
 	}
 
+	alias doref = ref_;
 	/**
 	 * Atomically increments the reference count of @hash_table by one.
 	 * This function is MT-safe and may be called from any thread.
@@ -446,7 +448,7 @@ public class HashTable
 	 *
 	 * Since: 2.10
 	 */
-	public HashTable doref()
+	public HashTable ref_()
 	{
 		auto p = g_hash_table_ref(gHashTable);
 

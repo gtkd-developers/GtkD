@@ -282,6 +282,7 @@ public interface TreeModelIF{
 		return gtk_tree_model_get_type();
 	}
 
+	alias foreac = foreach_;
 	/**
 	 * Calls func on each node in model in a depth-first fashion.
 	 *
@@ -292,7 +293,7 @@ public interface TreeModelIF{
 	 *     func = a function to be called on each row
 	 *     userData = user data to passed to @func
 	 */
-	public void foreac(GtkTreeModelForeachFunc func, void* userData);
+	public void foreach_(GtkTreeModelForeachFunc func, void* userData);
 
 	/**
 	 * Returns the type of the column.

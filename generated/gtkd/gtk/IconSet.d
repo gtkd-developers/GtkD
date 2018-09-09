@@ -216,6 +216,7 @@ public class IconSet
 		sizes = outsizes[0 .. nSizes];
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increments the reference count on @icon_set.
 	 *
@@ -223,7 +224,7 @@ public class IconSet
 	 *
 	 * Returns: @icon_set.
 	 */
-	public IconSet doref()
+	public IconSet ref_()
 	{
 		auto p = gtk_icon_set_ref(gtkIconSet);
 

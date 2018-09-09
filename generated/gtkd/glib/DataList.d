@@ -47,6 +47,7 @@ public struct DataList
 		g_datalist_clear(datalist);
 	}
 
+	alias foreac = foreach_;
 	/**
 	 * Calls the given function for each data element of the datalist. The
 	 * function is called with each data element's #GQuark id and data,
@@ -64,7 +65,7 @@ public struct DataList
 	 *     func = the function to call for each data element.
 	 *     userData = user data to pass to the function.
 	 */
-	public static void foreac(GData** datalist, GDataForeachFunc func, void* userData)
+	public static void foreach_(GData** datalist, GDataForeachFunc func, void* userData)
 	{
 		g_datalist_foreach(datalist, func, userData);
 	}

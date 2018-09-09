@@ -4390,7 +4390,7 @@ struct GSource
 struct GSourceCallbackFuncs
 {
 	/** */
-	extern(C) void function(void* cbData) doref;
+	extern(C) void function(void* cbData) ref_;
 	/** */
 	extern(C) void function(void* cbData) unref;
 	/** */
@@ -5934,7 +5934,7 @@ alias G_MAXUINT8 = MAXUINT8;
  * application compile time, rather than from the library
  * linked against at application run time.
  */
-enum MICRO_VERSION = 1;
+enum MICRO_VERSION = 2;
 alias GLIB_MICRO_VERSION = MICRO_VERSION;
 
 /**

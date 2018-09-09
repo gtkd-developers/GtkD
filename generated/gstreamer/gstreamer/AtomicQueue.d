@@ -144,10 +144,11 @@ public class AtomicQueue
 		gst_atomic_queue_push(gstAtomicQueue, data);
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increase the refcount of @queue.
 	 */
-	public void doref()
+	public void ref_()
 	{
 		gst_atomic_queue_ref(gstAtomicQueue);
 	}

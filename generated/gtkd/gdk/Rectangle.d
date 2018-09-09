@@ -69,6 +69,7 @@ public bool intersect(GdkRectangle* src1, GdkRectangle* src2, out GdkRectangle d
 	return gdk_rectangle_intersect(src1, src2, &dest) != 0;
 }
 
+alias unio = union_;
 /**
  * Calculates the union of two rectangles.
  * The union of rectangles @src1 and @src2 is the smallest rectangle which
@@ -82,7 +83,7 @@ public bool intersect(GdkRectangle* src1, GdkRectangle* src2, out GdkRectangle d
  *     src2 = a #GdkRectangle
  *     dest = return location for the union of @src1 and @src2
  */
-public void unio(GdkRectangle* src1, GdkRectangle* src2, out GdkRectangle dest)
+public void union_(GdkRectangle* src1, GdkRectangle* src2, out GdkRectangle dest)
 {
 	gdk_rectangle_union(src1, src2, &dest);
 }

@@ -161,6 +161,7 @@ public class BufferList
 		return ObjectG.getDObject!(BufferList)(cast(GstBufferList*) p, true);
 	}
 
+	alias foreac = foreach_;
 	/**
 	 * Call @func with @data for each buffer in @list.
 	 *
@@ -175,7 +176,7 @@ public class BufferList
 	 * Returns: %TRUE when @func returned %TRUE for each buffer in @list or when
 	 *     @list is empty.
 	 */
-	public bool foreac(GstBufferListFunc func, void* userData)
+	public bool foreach_(GstBufferListFunc func, void* userData)
 	{
 		return gst_buffer_list_foreach(gstBufferList, func, userData) != 0;
 	}

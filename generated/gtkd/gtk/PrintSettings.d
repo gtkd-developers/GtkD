@@ -223,6 +223,7 @@ public class PrintSettings : ObjectG
 		return ObjectG.getDObject!(PrintSettings)(cast(GtkPrintSettings*) p, true);
 	}
 
+	alias foreac = foreach_;
 	/**
 	 * Calls @func for each key-value pair of @settings.
 	 *
@@ -232,7 +233,7 @@ public class PrintSettings : ObjectG
 	 *
 	 * Since: 2.10
 	 */
-	public void foreac(GtkPrintSettingsFunc func, void* userData)
+	public void foreach_(GtkPrintSettingsFunc func, void* userData)
 	{
 		gtk_print_settings_foreach(gtkPrintSettings, func, userData);
 	}

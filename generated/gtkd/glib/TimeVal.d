@@ -73,7 +73,7 @@ public final class TimeVal
 	~this ()
 	{
 		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
-			g_free(gTimeVal);
+			sliceFree(gTimeVal);
 	}
 
 

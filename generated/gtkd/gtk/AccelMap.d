@@ -191,6 +191,7 @@ public class AccelMap : ObjectG
 		return gtk_accel_map_change_entry(Str.toStringz(accelPath), accelKey, accelMods, replace) != 0;
 	}
 
+	alias foreac = foreach_;
 	/**
 	 * Loops over the entries in the accelerator map whose accel path
 	 * doesn’t match any of the filters added with gtk_accel_map_add_filter(),
@@ -204,7 +205,7 @@ public class AccelMap : ObjectG
 	 *     foreachFunc = function to be executed for each accel
 	 *         map entry which is not filtered out
 	 */
-	public static void foreac(void* data, GtkAccelMapForeach foreachFunc)
+	public static void foreach_(void* data, GtkAccelMapForeach foreachFunc)
 	{
 		gtk_accel_map_foreach(data, foreachFunc);
 	}

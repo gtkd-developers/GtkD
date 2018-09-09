@@ -775,6 +775,7 @@ public struct ValueGst
 		return p;
 	}
 
+	alias unio = union_;
 	/**
 	 * Creates a GValue corresponding to the union of @value1 and @value2.
 	 *
@@ -785,7 +786,7 @@ public struct ValueGst
 	 *
 	 * Returns: %TRUE if the union succeeded.
 	 */
-	public static bool unio(out Value dest, Value value1, Value value2)
+	public static bool union_(out Value dest, Value value1, Value value2)
 	{
 		GValue* outdest = sliceNew!GValue();
 

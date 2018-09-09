@@ -24,7 +24,7 @@
 
 module gstreamer.ReferenceTimestampMeta;
 
-private import glib.c.functions;
+private import glib.MemorySlice;
 private import gobject.ObjectG;
 private import gstreamer.Caps;
 private import gstreamer.c.functions;

@@ -627,6 +627,7 @@ public template FileT(TStruct)
 		return ObjectG.getDObject!(FileIOStream)(cast(GFileIOStream*) p, true);
 	}
 
+	alias delet = delete_;
 	/**
 	 * Deletes a file. If the @file is a directory, it will only be
 	 * deleted if it is empty. This has the same semantics as g_unlink().
@@ -643,7 +644,7 @@ public template FileT(TStruct)
 	 *
 	 * Throws: GException on failure.
 	 */
-	public bool delet(Cancellable cancellable)
+	public bool delete_(Cancellable cancellable)
 	{
 		GError* err = null;
 

@@ -532,6 +532,7 @@ public class Regex
 		return p;
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increases reference count of @regex by 1.
 	 *
@@ -539,7 +540,7 @@ public class Regex
 	 *
 	 * Since: 2.14
 	 */
-	public Regex doref()
+	public Regex ref_()
 	{
 		auto p = g_regex_ref(gRegex);
 

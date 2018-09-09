@@ -25,8 +25,8 @@
 module gst.mpegts.NIT;
 
 private import glib.ConstructionException;
+private import glib.MemorySlice;
 private import glib.PtrArray;
-private import glib.c.functions;
 private import gobject.ObjectG;
 private import gst.mpegts.c.functions;
 public  import gst.mpegts.c.types;
@@ -68,7 +68,7 @@ public final class NIT
 	~this ()
 	{
 		if ( Linker.isLoaded(LIBRARY_GSTMPEGTS) && ownedRef )
-			g_free(gstMpegtsNIT);
+			sliceFree(gstMpegtsNIT);
 	}
 
 

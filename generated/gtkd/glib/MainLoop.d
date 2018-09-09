@@ -137,12 +137,13 @@ public class MainLoop
 		g_main_loop_quit(gMainLoop);
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increases the reference count on a #GMainLoop object by one.
 	 *
 	 * Returns: @loop
 	 */
-	public MainLoop doref()
+	public MainLoop ref_()
 	{
 		auto p = g_main_loop_ref(gMainLoop);
 

@@ -25,6 +25,7 @@
 module glib.Date;
 
 private import glib.ConstructionException;
+private import glib.MemorySlice;
 private import glib.Str;
 private import glib.TimeVal;
 private import glib.c.functions;

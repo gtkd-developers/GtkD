@@ -316,6 +316,7 @@ public class Caps
 		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
 	}
 
+	alias foreac = foreach_;
 	/**
 	 * Calls the provided function once for each structure and caps feature in the
 	 * #GstCaps. The function must not modify the fields.
@@ -330,7 +331,7 @@ public class Caps
 	 *
 	 * Since: 1.6
 	 */
-	public bool foreac(GstCapsForeachFunc func, void* userData)
+	public bool foreach_(GstCapsForeachFunc func, void* userData)
 	{
 		return gst_caps_foreach(gstCaps, func, userData) != 0;
 	}

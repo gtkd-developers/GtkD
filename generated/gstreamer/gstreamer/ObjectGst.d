@@ -487,6 +487,7 @@ public class ObjectGst : ObjectG
 		return gst_object_has_as_parent(gstObject, (parent is null) ? null : parent.getObjectGstStruct()) != 0;
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increments the reference count on @object. This function
 	 * does not take the lock on @object because it relies on
@@ -498,7 +499,7 @@ public class ObjectGst : ObjectG
 	 *
 	 * Returns: A pointer to @object
 	 */
-	public override ObjectGst doref()
+	public override ObjectGst ref_()
 	{
 		auto p = gst_object_ref(gstObject);
 

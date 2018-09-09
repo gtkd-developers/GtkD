@@ -169,6 +169,7 @@ public class QueueG
 		return new ListG(cast(GList*) p);
 	}
 
+	alias foreac = foreach_;
 	/**
 	 * Calls @func for each element in the queue passing @user_data to the
 	 * function.
@@ -182,7 +183,7 @@ public class QueueG
 	 *
 	 * Since: 2.4
 	 */
-	public void foreac(GFunc func, void* userData)
+	public void foreach_(GFunc func, void* userData)
 	{
 		g_queue_foreach(gQueue, func, userData);
 	}

@@ -25,7 +25,7 @@
 module pango.PgLayoutLine;
 
 private import glib.ListSG;
-private import glib.c.functions;
+private import glib.MemorySlice;
 private import gobject.ObjectG;
 public  import gtkc.pangotypes;
 private import gtkd.Loader;
@@ -255,6 +255,7 @@ public final class PgLayoutLine
 		pango_layout_line_index_to_x(pangoLayoutLine, index, trailing, &xPos);
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increase the reference count of a #PangoLayoutLine by one.
 	 *
@@ -262,7 +263,7 @@ public final class PgLayoutLine
 	 *
 	 * Since: 1.10
 	 */
-	public PgLayoutLine doref()
+	public PgLayoutLine ref_()
 	{
 		auto p = pango_layout_line_ref(pangoLayoutLine);
 

@@ -24,8 +24,8 @@
 
 module gst.mpegts.AtscVCT;
 
+private import glib.MemorySlice;
 private import glib.PtrArray;
-private import glib.c.functions;
 private import gst.mpegts.c.functions;
 public  import gst.mpegts.c.types;
 private import gtkd.Loader;
@@ -68,7 +68,7 @@ public final class AtscVCT
 	~this ()
 	{
 		if ( Linker.isLoaded(LIBRARY_GSTMPEGTS) && ownedRef )
-			g_free(gstMpegtsAtscVCT);
+			sliceFree(gstMpegtsAtscVCT);
 	}
 
 

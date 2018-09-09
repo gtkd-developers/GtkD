@@ -218,12 +218,13 @@ public class TargetList
 		return gtk_target_list_find(gtkTargetList, target, &info) != 0;
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increases the reference count of a #GtkTargetList by one.
 	 *
 	 * Returns: the passed in #GtkTargetList.
 	 */
-	public TargetList doref()
+	public TargetList ref_()
 	{
 		auto p = gtk_target_list_ref(gtkTargetList);
 

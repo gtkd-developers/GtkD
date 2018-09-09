@@ -25,8 +25,8 @@
 module gst.mpegts.PMT;
 
 private import glib.ConstructionException;
+private import glib.MemorySlice;
 private import glib.PtrArray;
-private import glib.c.functions;
 private import gobject.ObjectG;
 private import gst.mpegts.c.functions;
 public  import gst.mpegts.c.types;
@@ -71,7 +71,7 @@ public final class PMT
 	~this ()
 	{
 		if ( Linker.isLoaded(LIBRARY_GSTMPEGTS) && ownedRef )
-			g_free(gstMpegtsPMT);
+			sliceFree(gstMpegtsPMT);
 	}
 
 

@@ -281,6 +281,7 @@ public class TimeZone
 		return g_time_zone_is_dst(gTimeZone, interval) != 0;
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increases the reference count on @tz.
 	 *
@@ -288,7 +289,7 @@ public class TimeZone
 	 *
 	 * Since: 2.26
 	 */
-	public TimeZone doref()
+	public TimeZone ref_()
 	{
 		auto p = g_time_zone_ref(gTimeZone);
 

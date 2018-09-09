@@ -487,6 +487,7 @@ public class RecentInfo
 		return gtk_recent_info_match(gtkRecentInfo, (infoB is null) ? null : infoB.getRecentInfoStruct()) != 0;
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increases the reference count of @recent_info by one.
 	 *
@@ -495,7 +496,7 @@ public class RecentInfo
 	 *
 	 * Since: 2.10
 	 */
-	public RecentInfo doref()
+	public RecentInfo ref_()
 	{
 		auto p = gtk_recent_info_ref(gtkRecentInfo);
 

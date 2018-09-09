@@ -30,9 +30,9 @@ private import gio.DBusPropertyInfo;
 private import gio.DBusSignalInfo;
 private import gio.c.functions;
 public  import gio.c.types;
+private import glib.MemorySlice;
 private import glib.Str;
 private import glib.StringG;
-private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.giotypes;
 private import gtkd.Loader;
@@ -346,6 +346,7 @@ public final class DBusInterfaceInfo
 		return ObjectG.getDObject!(DBusSignalInfo)(cast(GDBusSignalInfo*) p);
 	}
 
+	alias doref = ref_;
 	/**
 	 * If @info is statically allocated does nothing. Otherwise increases
 	 * the reference count.
@@ -354,7 +355,7 @@ public final class DBusInterfaceInfo
 	 *
 	 * Since: 2.26
 	 */
-	public DBusInterfaceInfo doref()
+	public DBusInterfaceInfo ref_()
 	{
 		auto p = g_dbus_interface_info_ref(gDBusInterfaceInfo);
 

@@ -28,8 +28,8 @@ private import gio.DBusAnnotationInfo;
 private import gio.DBusArgInfo;
 private import gio.c.functions;
 public  import gio.c.types;
+private import glib.MemorySlice;
 private import glib.Str;
-private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.giotypes;
 private import gtkd.Loader;
@@ -191,6 +191,7 @@ public final class DBusMethodInfo
 		return g_dbus_method_info_get_type();
 	}
 
+	alias doref = ref_;
 	/**
 	 * If @info is statically allocated does nothing. Otherwise increases
 	 * the reference count.
@@ -199,7 +200,7 @@ public final class DBusMethodInfo
 	 *
 	 * Since: 2.26
 	 */
-	public DBusMethodInfo doref()
+	public DBusMethodInfo ref_()
 	{
 		auto p = g_dbus_method_info_ref(gDBusMethodInfo);
 

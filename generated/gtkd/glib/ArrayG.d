@@ -200,6 +200,7 @@ public class ArrayG
 		return new ArrayG(cast(GArray*) p);
 	}
 
+	alias doref = ref_;
 	/**
 	 * Atomically increments the reference count of @array by one.
 	 * This function is thread-safe and may be called from any thread.
@@ -208,7 +209,7 @@ public class ArrayG
 	 *
 	 * Since: 2.22
 	 */
-	public ArrayG doref()
+	public ArrayG ref_()
 	{
 		auto p = g_array_ref(gArray);
 

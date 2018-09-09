@@ -147,6 +147,7 @@ public class PtrArray
 		return g_ptr_array_find_with_equal_func(gPtrArray, needle, equalFunc, &index) != 0;
 	}
 
+	alias foreac = foreach_;
 	/**
 	 * Calls a function for each element of a #GPtrArray. @func must not
 	 * add elements to or remove elements from the array.
@@ -157,7 +158,7 @@ public class PtrArray
 	 *
 	 * Since: 2.4
 	 */
-	public void foreac(GFunc func, void* userData)
+	public void foreach_(GFunc func, void* userData)
 	{
 		g_ptr_array_foreach(gPtrArray, func, userData);
 	}
@@ -283,6 +284,7 @@ public class PtrArray
 		this(cast(GPtrArray*) p);
 	}
 
+	alias doref = ref_;
 	/**
 	 * Atomically increments the reference count of @array by one.
 	 * This function is thread-safe and may be called from any thread.
@@ -291,7 +293,7 @@ public class PtrArray
 	 *
 	 * Since: 2.22
 	 */
-	public PtrArray doref()
+	public PtrArray ref_()
 	{
 		auto p = g_ptr_array_ref(gPtrArray);
 

@@ -213,12 +213,13 @@ public class PgFontMetrics
 		return pango_font_metrics_get_underline_thickness(pangoFontMetrics);
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increase the reference count of a font metrics structure by one.
 	 *
 	 * Returns: @metrics
 	 */
-	public PgFontMetrics doref()
+	public PgFontMetrics ref_()
 	{
 		auto p = pango_font_metrics_ref(pangoFontMetrics);
 

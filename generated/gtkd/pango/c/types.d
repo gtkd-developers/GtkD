@@ -1834,7 +1834,7 @@ struct PangoFontsetClass
 	/** */
 	extern(C) PangoLanguage* function(PangoFontset* fontset) getLanguage;
 	/** */
-	extern(C) void function(PangoFontset* fontset, PangoFontsetForeachFunc func, void* data) foreac;
+	extern(C) void function(PangoFontset* fontset, PangoFontsetForeachFunc func, void* data) foreach_;
 	/** */
 	extern(C) void function() PangoReserved1;
 	/** */

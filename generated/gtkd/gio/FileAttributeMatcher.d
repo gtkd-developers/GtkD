@@ -177,12 +177,13 @@ public class FileAttributeMatcher
 		return g_file_attribute_matcher_matches_only(gFileAttributeMatcher, Str.toStringz(attribute)) != 0;
 	}
 
+	alias doref = ref_;
 	/**
 	 * References a file attribute matcher.
 	 *
 	 * Returns: a #GFileAttributeMatcher.
 	 */
-	public FileAttributeMatcher doref()
+	public FileAttributeMatcher ref_()
 	{
 		auto p = g_file_attribute_matcher_ref(gFileAttributeMatcher);
 

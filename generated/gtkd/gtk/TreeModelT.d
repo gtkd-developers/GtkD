@@ -302,6 +302,7 @@ public template TreeModelT(TStruct)
 	/**
 	 */
 
+	alias foreac = foreach_;
 	/**
 	 * Calls func on each node in model in a depth-first fashion.
 	 *
@@ -312,7 +313,7 @@ public template TreeModelT(TStruct)
 	 *     func = a function to be called on each row
 	 *     userData = user data to passed to @func
 	 */
-	public void foreac(GtkTreeModelForeachFunc func, void* userData)
+	public void foreach_(GtkTreeModelForeachFunc func, void* userData)
 	{
 		gtk_tree_model_foreach(getTreeModelStruct(), func, userData);
 	}

@@ -297,15 +297,15 @@ public class Buffer
 	 * @ref until the buffer is freed.
 	 *
 	 * Params:
-	 *     doref = a #GstBuffer to ref
+	 *     ref_ = a #GstBuffer to ref
 	 *
 	 * Returns: The #GstParentBufferMeta that was added to the buffer
 	 *
 	 * Since: 1.6
 	 */
-	public ParentBufferMeta addParentBufferMeta(Buffer doref)
+	public ParentBufferMeta addParentBufferMeta(Buffer ref_)
 	{
-		auto p = gst_buffer_add_parent_buffer_meta(gstBuffer, (doref is null) ? null : doref.getBufferStruct());
+		auto p = gst_buffer_add_parent_buffer_meta(gstBuffer, (ref_ is null) ? null : ref_.getBufferStruct());
 
 		if(p is null)
 		{

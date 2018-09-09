@@ -358,6 +358,7 @@ public class Cursor : ObjectG
 		return new Surface(cast(cairo_surface_t*) p);
 	}
 
+	alias doref = ref_;
 	/**
 	 * Adds a reference to @cursor.
 	 *
@@ -365,7 +366,7 @@ public class Cursor : ObjectG
 	 *
 	 * Returns: Same @cursor that was passed in
 	 */
-	public override Cursor doref()
+	public override Cursor ref_()
 	{
 		auto p = gdk_cursor_ref(gdkCursor);
 

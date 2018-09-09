@@ -85,6 +85,7 @@ public class BBTree
 		g_tree_destroy(gTree);
 	}
 
+	alias foreac = foreach_;
 	/**
 	 * Calls the given function for each of the key/value pairs in the #GTree.
 	 * The function is passed the key and value of each pair, and the given
@@ -100,7 +101,7 @@ public class BBTree
 	 *         If this function returns %TRUE, the traversal is stopped.
 	 *     userData = user data to pass to the function
 	 */
-	public void foreac(GTraverseFunc func, void* userData)
+	public void foreach_(GTraverseFunc func, void* userData)
 	{
 		g_tree_foreach(gTree, func, userData);
 	}
@@ -184,6 +185,7 @@ public class BBTree
 		return g_tree_nnodes(gTree);
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increments the reference count of @tree by one.
 	 *
@@ -193,7 +195,7 @@ public class BBTree
 	 *
 	 * Since: 2.22
 	 */
-	public BBTree doref()
+	public BBTree ref_()
 	{
 		auto p = g_tree_ref(gTree);
 

@@ -139,6 +139,7 @@ public class OptionGroup
 		ownedRef = false;
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increments the reference count of @group by one.
 	 *
@@ -146,7 +147,7 @@ public class OptionGroup
 	 *
 	 * Since: 2.44
 	 */
-	public OptionGroup doref()
+	public OptionGroup ref_()
 	{
 		auto p = g_option_group_ref(gOptionGroup);
 

@@ -305,13 +305,14 @@ public class Closure
 		returnValue = ObjectG.getDObject!(Value)(outreturnValue, true);
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increments the reference count on a closure to force it staying
 	 * alive while the caller holds a pointer to it.
 	 *
 	 * Returns: The @closure passed in, for convenience
 	 */
-	public Closure doref()
+	public Closure ref_()
 	{
 		auto p = g_closure_ref(gClosure);
 

@@ -337,6 +337,7 @@ public class VariantDict
 		return new Variant(cast(GVariant*) p, true);
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increases the reference count on @dict.
 	 *
@@ -347,7 +348,7 @@ public class VariantDict
 	 *
 	 * Since: 2.40
 	 */
-	public VariantDict doref()
+	public VariantDict ref_()
 	{
 		auto p = g_variant_dict_ref(gVariantDict);
 

@@ -24,8 +24,8 @@
 
 module gst.mpegts.T2DeliverySystemDescriptor;
 
+private import glib.MemorySlice;
 private import glib.PtrArray;
-private import glib.c.functions;
 private import gst.mpegts.c.functions;
 public  import gst.mpegts.c.types;
 private import gtkd.Loader;

@@ -133,6 +133,7 @@ public class TextTagTable : ObjectG, BuildableIF
 		return gtk_text_tag_table_add(gtkTextTagTable, (tag is null) ? null : tag.getTextTagStruct()) != 0;
 	}
 
+	alias foreac = foreach_;
 	/**
 	 * Calls @func on each tag in @table, with user data @data.
 	 * Note that the table may not be modified while iterating
@@ -142,7 +143,7 @@ public class TextTagTable : ObjectG, BuildableIF
 	 *     func = a function to call on each tag
 	 *     data = user data
 	 */
-	public void foreac(GtkTextTagTableForeach func, void* data)
+	public void foreach_(GtkTextTagTableForeach func, void* data)
 	{
 		gtk_text_tag_table_foreach(gtkTextTagTable, func, data);
 	}

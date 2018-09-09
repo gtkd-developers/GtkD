@@ -29,9 +29,9 @@ private import gdkpixbuf.c.functions;
 public  import gdkpixbuf.c.types;
 private import glib.ErrorG;
 private import glib.GException;
+private import glib.MemorySlice;
 private import glib.Str;
 private import glib.StringG;
-private import glib.c.functions;
 public  import gtkc.gdkpixbuftypes;
 private import gtkd.Loader;
 
@@ -72,7 +72,7 @@ public final class Pixdata
 	~this ()
 	{
 		if ( Linker.isLoaded(LIBRARY_GDKPIXBUF) && ownedRef )
-			g_free(gdkPixdata);
+			sliceFree(gdkPixdata);
 	}
 
 

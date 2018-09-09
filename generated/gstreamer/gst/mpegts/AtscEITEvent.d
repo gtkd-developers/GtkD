@@ -24,8 +24,8 @@
 
 module gst.mpegts.AtscEITEvent;
 
+private import glib.MemorySlice;
 private import glib.PtrArray;
-private import glib.c.functions;
 private import gst.mpegts.c.functions;
 public  import gst.mpegts.c.types;
 private import gtkd.Loader;
@@ -66,7 +66,7 @@ public final class AtscEITEvent
 	~this ()
 	{
 		if ( Linker.isLoaded(LIBRARY_GSTMPEGTS) && ownedRef )
-			g_free(gstMpegtsAtscEITEvent);
+			sliceFree(gstMpegtsAtscEITEvent);
 	}
 
 

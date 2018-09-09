@@ -428,6 +428,7 @@ public class Resource
 		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) p, true);
 	}
 
+	alias doref = ref_;
 	/**
 	 * Atomically increments the reference count of @resource by one. This
 	 * function is MT-safe and may be called from any thread.
@@ -436,7 +437,7 @@ public class Resource
 	 *
 	 * Since: 2.32
 	 */
-	public Resource doref()
+	public Resource ref_()
 	{
 		auto p = g_resource_ref(gResource);
 

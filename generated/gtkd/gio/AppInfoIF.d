@@ -412,6 +412,7 @@ public interface AppInfoIF{
 	 */
 	public bool canRemoveSupportsType();
 
+	alias delet = delete_;
 	/**
 	 * Tries to delete a #GAppInfo.
 	 *
@@ -423,7 +424,7 @@ public interface AppInfoIF{
 	 *
 	 * Since: 2.20
 	 */
-	public bool delet();
+	public bool delete_();
 
 	/**
 	 * Creates a duplicate of a #GAppInfo.

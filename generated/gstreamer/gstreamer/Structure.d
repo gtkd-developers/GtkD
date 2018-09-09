@@ -359,6 +359,7 @@ public class Structure
 		return gst_structure_fixate_field_string(gstStructure, Str.toStringz(fieldName), Str.toStringz(target)) != 0;
 	}
 
+	alias foreac = foreach_;
 	/**
 	 * Calls the provided function once for each field in the #GstStructure. The
 	 * function must not modify the fields. Also see gst_structure_map_in_place()
@@ -371,7 +372,7 @@ public class Structure
 	 * Returns: %TRUE if the supplied function returns %TRUE For each of the fields,
 	 *     %FALSE otherwise.
 	 */
-	public bool foreac(GstStructureForeachFunc func, void* userData)
+	public bool foreach_(GstStructureForeachFunc func, void* userData)
 	{
 		return gst_structure_foreach(gstStructure, func, userData) != 0;
 	}

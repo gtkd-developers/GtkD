@@ -24,8 +24,8 @@
 
 module gstreamer.Meta;
 
+private import glib.MemorySlice;
 private import glib.Str;
-private import glib.c.functions;
 private import gstreamer.c.functions;
 public  import gstreamer.c.types;
 public  import gstreamerc.gstreamertypes;

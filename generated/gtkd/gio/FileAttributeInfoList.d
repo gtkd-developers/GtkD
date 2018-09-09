@@ -27,8 +27,8 @@ module gio.FileAttributeInfoList;
 private import gio.c.functions;
 public  import gio.c.types;
 private import glib.ConstructionException;
+private import glib.MemorySlice;
 private import glib.Str;
-private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.giotypes;
 private import gtkd.Loader;
@@ -160,12 +160,13 @@ public final class FileAttributeInfoList
 		return g_file_attribute_info_list_lookup(gFileAttributeInfoList, Str.toStringz(name));
 	}
 
+	alias doref = ref_;
 	/**
 	 * References a file attribute info list.
 	 *
 	 * Returns: #GFileAttributeInfoList or %NULL on error.
 	 */
-	public FileAttributeInfoList doref()
+	public FileAttributeInfoList ref_()
 	{
 		auto p = g_file_attribute_info_list_ref(gFileAttributeInfoList);
 

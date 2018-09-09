@@ -26,8 +26,8 @@ module gtk.BindingSet;
 
 private import glib.ConstructionException;
 private import glib.ListSG;
+private import glib.MemorySlice;
 private import glib.Str;
-private import glib.c.functions;
 private import gobject.ObjectG;
 private import gtk.c.functions;
 public  import gtk.c.types;
@@ -75,7 +75,7 @@ public final class BindingSet
 	~this ()
 	{
 		if ( Linker.isLoaded(LIBRARY_GTK) && ownedRef )
-			g_free(gtkBindingSet);
+			sliceFree(gtkBindingSet);
 	}
 
 

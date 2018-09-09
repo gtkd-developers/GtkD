@@ -25,6 +25,7 @@
 module glib.Node;
 
 private import glib.ConstructionException;
+private import glib.MemorySlice;
 private import glib.c.functions;
 public  import glib.c.types;
 public  import gtkc.glibtypes;
@@ -66,7 +67,7 @@ public final class Node
 	~this ()
 	{
 		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
-			g_free(gNode);
+			sliceFree(gNode);
 	}
 
 

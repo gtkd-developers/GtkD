@@ -705,6 +705,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 		return gtk_cell_area_focus(gtkCellArea, direction) != 0;
 	}
 
+	alias foreac = foreach_;
 	/**
 	 * Calls @callback for every #GtkCellRenderer in @area.
 	 *
@@ -714,7 +715,7 @@ public class CellArea : ObjectG, BuildableIF, CellLayoutIF
 	 *
 	 * Since: 3.0
 	 */
-	public void foreac(GtkCellCallback callback, void* callbackData)
+	public void foreach_(GtkCellCallback callback, void* callbackData)
 	{
 		gtk_cell_area_foreach(gtkCellArea, callback, callbackData);
 	}

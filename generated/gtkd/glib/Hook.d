@@ -25,6 +25,7 @@
 module glib.Hook;
 
 private import glib.HookList;
+private import glib.MemorySlice;
 private import glib.c.functions;
 public  import glib.c.types;
 public  import gtkc.glibtypes;
@@ -66,7 +67,7 @@ public final class Hook
 	~this ()
 	{
 		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
-			g_free(gHook);
+			sliceFree(gHook);
 	}
 
 
@@ -470,6 +471,7 @@ public final class Hook
 		g_hook_prepend((hookList is null) ? null : hookList.getHookListStruct(), (hook is null) ? null : hook.getHookStruct());
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increments the reference count for a #GHook.
 	 *
@@ -479,7 +481,7 @@ public final class Hook
 	 *
 	 * Returns: the @hook that was passed in (since 2.6)
 	 */
-	public static Hook doref(HookList hookList, Hook hook)
+	public static Hook ref_(HookList hookList, Hook hook)
 	{
 		auto p = g_hook_ref((hookList is null) ? null : hookList.getHookListStruct(), (hook is null) ? null : hook.getHookStruct());
 

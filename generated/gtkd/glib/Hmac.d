@@ -140,6 +140,7 @@ public class Hmac
 		return Str.toString(g_hmac_get_string(gHmac));
 	}
 
+	alias doref = ref_;
 	/**
 	 * Atomically increments the reference count of @hmac by one.
 	 *
@@ -149,7 +150,7 @@ public class Hmac
 	 *
 	 * Since: 2.30
 	 */
-	public Hmac doref()
+	public Hmac ref_()
 	{
 		auto p = g_hmac_ref(gHmac);
 

@@ -135,8 +135,9 @@ public class Regex
 		return p;
 	}
 
+	alias doref = ref_;
 	/** */
-	public Regex doref()
+	public Regex ref_()
 	{
 		auto p = vte_regex_ref(vteRegex);
 

@@ -27,6 +27,7 @@ module glib.ThreadPool;
 private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
+private import glib.MemorySlice;
 private import glib.c.functions;
 public  import glib.c.types;
 public  import gtkc.glibtypes;
@@ -70,7 +71,7 @@ public final class ThreadPool
 	~this ()
 	{
 		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
-			g_free(gThreadPool);
+			sliceFree(gThreadPool);
 	}
 
 

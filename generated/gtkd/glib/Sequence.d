@@ -94,6 +94,7 @@ public class Sequence
 		return new SequenceIter(cast(GSequenceIter*) p);
 	}
 
+	alias foreac = foreach_;
 	/**
 	 * Calls @func for each item in the sequence passing @user_data
 	 * to the function. @func must not modify the sequence itself.
@@ -104,7 +105,7 @@ public class Sequence
 	 *
 	 * Since: 2.14
 	 */
-	public void foreac(GFunc func, void* userData)
+	public void foreach_(GFunc func, void* userData)
 	{
 		g_sequence_foreach(gSequence, func, userData);
 	}

@@ -222,6 +222,7 @@ public class PgAttributeList
 		pango_attr_list_insert_before(pangoAttrList, (attr is null) ? null : attr.getPgAttributeStruct());
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increase the reference count of the given attribute list by one.
 	 *
@@ -229,7 +230,7 @@ public class PgAttributeList
 	 *
 	 * Since: 1.10
 	 */
-	public PgAttributeList doref()
+	public PgAttributeList ref_()
 	{
 		auto p = pango_attr_list_ref(pangoAttrList);
 

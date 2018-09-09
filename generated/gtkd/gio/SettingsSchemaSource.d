@@ -208,6 +208,7 @@ public class SettingsSchemaSource
 		return ObjectG.getDObject!(SettingsSchema)(cast(GSettingsSchema*) p, true);
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increase the reference count of @source, returning a new reference.
 	 *
@@ -215,7 +216,7 @@ public class SettingsSchemaSource
 	 *
 	 * Since: 2.32
 	 */
-	public SettingsSchemaSource doref()
+	public SettingsSchemaSource ref_()
 	{
 		auto p = g_settings_schema_source_ref(gSettingsSchemaSource);
 

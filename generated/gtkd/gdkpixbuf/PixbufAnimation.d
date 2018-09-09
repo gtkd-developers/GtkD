@@ -323,6 +323,7 @@ public class PixbufAnimation : ObjectG
 		return gdk_pixbuf_animation_is_static_image(gdkPixbufAnimation) != 0;
 	}
 
+	alias doref = ref_;
 	/**
 	 * Adds a reference to an animation.
 	 *
@@ -330,7 +331,7 @@ public class PixbufAnimation : ObjectG
 	 *
 	 * Returns: The same as the @animation argument.
 	 */
-	public override PixbufAnimation doref()
+	public override PixbufAnimation ref_()
 	{
 		auto p = gdk_pixbuf_animation_ref(gdkPixbufAnimation);
 

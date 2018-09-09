@@ -238,6 +238,7 @@ public class MappedFile
 		return g_mapped_file_get_length(gMappedFile);
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increments the reference count of @file by one.  It is safe to call
 	 * this function from any thread.
@@ -246,7 +247,7 @@ public class MappedFile
 	 *
 	 * Since: 2.22
 	 */
-	public MappedFile doref()
+	public MappedFile ref_()
 	{
 		auto p = g_mapped_file_ref(gMappedFile);
 

@@ -119,12 +119,13 @@ public class PgCoverage
 		pango_coverage_max(pangoCoverage, (other is null) ? null : other.getPgCoverageStruct());
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increase the reference count on the #PangoCoverage by one
 	 *
 	 * Returns: @coverage
 	 */
-	public PgCoverage doref()
+	public PgCoverage ref_()
 	{
 		auto p = pango_coverage_ref(pangoCoverage);
 

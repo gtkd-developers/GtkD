@@ -450,12 +450,13 @@ public class MainContext
 		return g_main_context_query(gMainContext, maxPriority, &timeout, fds.ptr, cast(int)fds.length);
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increases the reference count on a #GMainContext object by one.
 	 *
 	 * Returns: the @context that was passed in (since 2.6)
 	 */
-	public MainContext doref()
+	public MainContext ref_()
 	{
 		auto p = g_main_context_ref(gMainContext);
 

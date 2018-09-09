@@ -24,9 +24,9 @@
 
 module gtk.RcProperty;
 
+private import glib.MemorySlice;
 private import glib.Str;
 private import glib.StringG;
-private import glib.c.functions;
 private import gobject.ObjectG;
 private import gobject.ParamSpec;
 private import gobject.Value;

@@ -4978,7 +4978,7 @@ struct GtkCellAreaClass
 	/** */
 	extern(C) void function(GtkCellArea* area, GtkCellRenderer* renderer) remove;
 	/** */
-	extern(C) void function(GtkCellArea* area, GtkCellCallback callback, void* callbackData) foreac;
+	extern(C) void function(GtkCellArea* area, GtkCellCallback callback, void* callbackData) foreach_;
 	/** */
 	extern(C) void function(GtkCellArea* area, GtkCellAreaContext* context, GtkWidget* widget, GdkRectangle* cellArea, GdkRectangle* backgroundArea, GtkCellAllocCallback callback, void* callbackData) foreachAlloc;
 	/**

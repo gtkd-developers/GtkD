@@ -932,6 +932,7 @@ public class KeyFile
 		return p;
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increases the reference count of @key_file.
 	 *
@@ -939,7 +940,7 @@ public class KeyFile
 	 *
 	 * Since: 2.32
 	 */
-	public KeyFile doref()
+	public KeyFile ref_()
 	{
 		auto p = g_key_file_ref(gKeyFile);
 

@@ -164,6 +164,7 @@ public class FlowCombiner
 		ownedRef = false;
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increments the reference count on the #GstFlowCombiner.
 	 *
@@ -171,7 +172,7 @@ public class FlowCombiner
 	 *
 	 * Since: 1.12.1
 	 */
-	public FlowCombiner doref()
+	public FlowCombiner ref_()
 	{
 		auto p = gst_flow_combiner_ref(gstFlowCombiner);
 

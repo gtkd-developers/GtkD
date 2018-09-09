@@ -456,12 +456,15 @@ public class Handle : ObjectG
 	}
 
 	/**
-	 * Draws a SVG to a Cairo surface
+	 * Draws a loaded SVG handle to a Cairo context.  Drawing will occur with
+	 * respect to the @cr's current transformation:  for example, if the @cr has a
+	 * rotated current transformation matrix, the whole SVG will be rotated in the
+	 * rendered version.
 	 *
 	 * Params:
 	 *     cr = A Cairo renderer
 	 *
-	 * Returns: %TRUE if drawing succeeded.
+	 * Returns: %TRUE if drawing succeeded; %FALSE otherwise.
 	 *
 	 * Since: 2.14
 	 */
@@ -471,7 +474,10 @@ public class Handle : ObjectG
 	}
 
 	/**
-	 * Draws a subset of a SVG to a Cairo surface
+	 * Draws a subset of a loaded SVG handle to a Cairo context.  Drawing will occur with
+	 * respect to the @cr's current transformation:  for example, if the @cr has a
+	 * rotated current transformation matrix, the whole SVG will be rotated in the
+	 * rendered version.
 	 *
 	 * Params:
 	 *     cr = A Cairo renderer
@@ -479,7 +485,7 @@ public class Handle : ObjectG
 	 *         the whole SVG. For example, if you have a layer called "layer1"
 	 *         that you wish to render, pass "##layer1" as the id.
 	 *
-	 * Returns: %TRUE if drawing succeeded.
+	 * Returns: %TRUE if drawing succeeded; %FALSE otherwise.
 	 *
 	 * Since: 2.14
 	 */

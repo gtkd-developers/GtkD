@@ -461,12 +461,13 @@ public class IOChannel
 		return p;
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increments the reference count of a #GIOChannel.
 	 *
 	 * Returns: the @channel that was passed in (since 2.6)
 	 */
-	public IOChannel doref()
+	public IOChannel ref_()
 	{
 		auto p = g_io_channel_ref(gIOChannel);
 

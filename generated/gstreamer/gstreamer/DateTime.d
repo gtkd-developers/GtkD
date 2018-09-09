@@ -513,12 +513,13 @@ public class DateTime
 		return gst_date_time_has_year(gstDateTime) != 0;
 	}
 
+	alias doref = ref_;
 	/**
 	 * Atomically increments the reference count of @datetime by one.
 	 *
 	 * Returns: the reference @datetime
 	 */
-	public DateTime doref()
+	public DateTime ref_()
 	{
 		auto p = gst_date_time_ref(gstDateTime);
 

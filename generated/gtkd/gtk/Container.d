@@ -447,6 +447,7 @@ public class Container : Widget
 		gtk_container_forall(gtkContainer, callback, callbackData);
 	}
 
+	alias foreac = foreach_;
 	/**
 	 * Invokes @callback on each non-internal child of @container.
 	 * See gtk_container_forall() for details on what constitutes
@@ -462,7 +463,7 @@ public class Container : Widget
 	 *     callback = a callback
 	 *     callbackData = callback user data
 	 */
-	public void foreac(GtkCallback callback, void* callbackData)
+	public void foreach_(GtkCallback callback, void* callbackData)
 	{
 		gtk_container_foreach(gtkContainer, callback, callbackData);
 	}

@@ -26,7 +26,7 @@ module atk.Rectangle;
 
 private import atk.c.functions;
 public  import atk.c.types;
-private import glib.c.functions;
+private import glib.MemorySlice;
 public  import gtkc.atktypes;
 private import gtkd.Loader;
 
@@ -67,7 +67,7 @@ public final class Rectangle
 	~this ()
 	{
 		if ( Linker.isLoaded(LIBRARY_ATK) && ownedRef )
-			g_free(atkRectangle);
+			sliceFree(atkRectangle);
 	}
 
 

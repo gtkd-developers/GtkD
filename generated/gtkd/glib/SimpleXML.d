@@ -408,6 +408,7 @@ public class SimpleXML
 		g_markup_parse_context_push(gMarkupParseContext, parser, userData);
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increases the reference count of @context.
 	 *
@@ -415,7 +416,7 @@ public class SimpleXML
 	 *
 	 * Since: 2.36
 	 */
-	public SimpleXML doref()
+	public SimpleXML ref_()
 	{
 		auto p = g_markup_parse_context_ref(gMarkupParseContext);
 

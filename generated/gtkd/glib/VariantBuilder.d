@@ -295,6 +295,7 @@ public class VariantBuilder
 		g_variant_builder_open(gVariantBuilder, (type is null) ? null : type.getVariantTypeStruct());
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increases the reference count on @builder.
 	 *
@@ -305,7 +306,7 @@ public class VariantBuilder
 	 *
 	 * Since: 2.24
 	 */
-	public VariantBuilder doref()
+	public VariantBuilder ref_()
 	{
 		auto p = g_variant_builder_ref(gVariantBuilder);
 

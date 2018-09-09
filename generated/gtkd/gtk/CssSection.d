@@ -206,6 +206,7 @@ public class CssSection
 		return gtk_css_section_get_start_position(gtkCssSection);
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increments the reference count on @section.
 	 *
@@ -213,7 +214,7 @@ public class CssSection
 	 *
 	 * Since: 3.2
 	 */
-	public CssSection doref()
+	public CssSection ref_()
 	{
 		auto p = gtk_css_section_ref(gtkCssSection);
 

@@ -176,6 +176,7 @@ public class Gradient
 		gtk_gradient_add_color_stop(gtkGradient, offset, (color is null) ? null : color.getSymbolicColorStruct());
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increases the reference count of @gradient.
 	 *
@@ -185,7 +186,7 @@ public class Gradient
 	 *
 	 * Since: 3.0
 	 */
-	public Gradient doref()
+	public Gradient ref_()
 	{
 		auto p = gtk_gradient_ref(gtkGradient);
 

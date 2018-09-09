@@ -1021,6 +1021,7 @@ public class ObjectG
 		g_object_notify_by_pspec(gObject, (pspec is null) ? null : pspec.getParamSpecStruct());
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increases the reference count of @object.
 	 *
@@ -1031,7 +1032,7 @@ public class ObjectG
 	 *
 	 * Returns: the same @object
 	 */
-	public ObjectG doref()
+	public ObjectG ref_()
 	{
 		auto p = g_object_ref(gObject);
 

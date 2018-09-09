@@ -28,7 +28,6 @@ private import gdk.c.functions;
 public  import gdk.c.types;
 private import glib.MemorySlice;
 private import glib.Str;
-private import glib.c.functions;
 private import gobject.ObjectG;
 public  import gtkc.gdktypes;
 private import gtkd.Loader;

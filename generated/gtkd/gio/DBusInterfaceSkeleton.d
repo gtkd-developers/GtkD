@@ -85,6 +85,7 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 		return g_dbus_interface_skeleton_get_type();
 	}
 
+	alias expor = export_;
 	/**
 	 * Exports @interface_ at @object_path on @connection.
 	 *
@@ -105,7 +106,7 @@ public class DBusInterfaceSkeleton : ObjectG, DBusInterfaceIF
 	 *
 	 * Throws: GException on failure.
 	 */
-	public bool expor(DBusConnection connection, string objectPath)
+	public bool export_(DBusConnection connection, string objectPath)
 	{
 		GError* err = null;
 

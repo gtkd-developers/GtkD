@@ -260,13 +260,14 @@ public class AsyncQueue
 		g_async_queue_push_unlocked(gAsyncQueue, data);
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increases the reference count of the asynchronous @queue by 1.
 	 * You do not need to hold the lock to call this function.
 	 *
 	 * Returns: the @queue that was passed in (since 2.6)
 	 */
-	public AsyncQueue doref()
+	public AsyncQueue ref_()
 	{
 		auto p = g_async_queue_ref(gAsyncQueue);
 

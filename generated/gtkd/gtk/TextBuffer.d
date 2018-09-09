@@ -455,6 +455,7 @@ public class TextBuffer : ObjectG
 		gtk_text_buffer_cut_clipboard(gtkTextBuffer, (clipboard is null) ? null : clipboard.getClipboardStruct(), defaultEditable);
 	}
 
+	alias delet = delete_;
 	/**
 	 * Deletes text between @start and @end. The order of @start and @end
 	 * is not actually relevant; gtk_text_buffer_delete() will reorder
@@ -468,7 +469,7 @@ public class TextBuffer : ObjectG
 	 *     start = a position in @buffer
 	 *     end = another position in @buffer
 	 */
-	public void delet(TextIter start, TextIter end)
+	public void delete_(TextIter start, TextIter end)
 	{
 		gtk_text_buffer_delete(gtkTextBuffer, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct());
 	}

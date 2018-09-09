@@ -24,6 +24,7 @@
 
 module glib.Once;
 
+private import glib.MemorySlice;
 private import glib.c.functions;
 public  import glib.c.types;
 public  import gtkc.glibtypes;
@@ -69,7 +70,7 @@ public final class Once
 	~this ()
 	{
 		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
-			g_free(gOnce);
+			sliceFree(gOnce);
 	}
 
 

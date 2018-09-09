@@ -748,6 +748,7 @@ public class WidgetPath
 		gtk_widget_path_prepend_type(gtkWidgetPath, type);
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increments the reference count on @path.
 	 *
@@ -755,7 +756,7 @@ public class WidgetPath
 	 *
 	 * Since: 3.2
 	 */
-	public WidgetPath doref()
+	public WidgetPath ref_()
 	{
 		auto p = gtk_widget_path_ref(gtkWidgetPath);
 

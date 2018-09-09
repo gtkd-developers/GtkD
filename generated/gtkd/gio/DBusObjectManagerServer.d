@@ -130,6 +130,7 @@ public class DBusObjectManagerServer : ObjectG, DBusObjectManagerIF
 		this(cast(GDBusObjectManagerServer*) p, true);
 	}
 
+	alias expor = export_;
 	/**
 	 * Exports @object on @manager.
 	 *
@@ -147,7 +148,7 @@ public class DBusObjectManagerServer : ObjectG, DBusObjectManagerIF
 	 *
 	 * Since: 2.30
 	 */
-	public void expor(DBusObjectSkeleton object)
+	public void export_(DBusObjectSkeleton object)
 	{
 		g_dbus_object_manager_server_export(gDBusObjectManagerServer, (object is null) ? null : object.getDBusObjectSkeletonStruct());
 	}

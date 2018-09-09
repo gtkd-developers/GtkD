@@ -148,6 +148,7 @@ public class Thread
 		return g_thread_join(gThread);
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increase the reference count on @thread.
 	 *
@@ -155,7 +156,7 @@ public class Thread
 	 *
 	 * Since: 2.32
 	 */
-	public Thread doref()
+	public Thread ref_()
 	{
 		auto p = g_thread_ref(gThread);
 

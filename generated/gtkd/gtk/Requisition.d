@@ -25,7 +25,7 @@
 module gtk.Requisition;
 
 private import glib.ConstructionException;
-private import glib.c.functions;
+private import glib.MemorySlice;
 private import gobject.ObjectG;
 private import gtk.c.functions;
 public  import gtk.c.types;

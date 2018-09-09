@@ -24,7 +24,7 @@
 
 module gstreamer.ParentBufferMeta;
 
-private import glib.c.functions;
+private import glib.MemorySlice;
 private import gobject.ObjectG;
 private import gstreamer.Buffer;
 private import gstreamer.c.functions;
@@ -77,7 +77,7 @@ public final class ParentBufferMeta
 	~this ()
 	{
 		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
-			g_free(gstParentBufferMeta);
+			sliceFree(gstParentBufferMeta);
 	}
 
 

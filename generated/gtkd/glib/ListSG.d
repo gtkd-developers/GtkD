@@ -374,6 +374,7 @@ public class ListSG
 		return new ListSG(cast(GSList*) p);
 	}
 
+	alias foreac = foreach_;
 	/**
 	 * Calls a function for each element of a #GSList.
 	 *
@@ -384,7 +385,7 @@ public class ListSG
 	 *     func = the function to call with each element's data
 	 *     userData = user data to pass to the function
 	 */
-	public void foreac(GFunc func, void* userData)
+	public void foreach_(GFunc func, void* userData)
 	{
 		g_slist_foreach(gSList, func, userData);
 	}

@@ -199,6 +199,7 @@ public class MiniObject
 		return ObjectG.getDObject!(MiniObject)(cast(GstMiniObject*) p, true);
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increase the reference count of the mini-object.
 	 *
@@ -211,7 +212,7 @@ public class MiniObject
 	 *
 	 * Returns: the mini-object.
 	 */
-	public MiniObject doref()
+	public MiniObject ref_()
 	{
 		auto p = gst_mini_object_ref(gstMiniObject);
 

@@ -150,6 +150,7 @@ public template AppInfoT(TStruct)
 		return g_app_info_can_remove_supports_type(getAppInfoStruct()) != 0;
 	}
 
+	alias delet = delete_;
 	/**
 	 * Tries to delete a #GAppInfo.
 	 *
@@ -161,7 +162,7 @@ public template AppInfoT(TStruct)
 	 *
 	 * Since: 2.20
 	 */
-	public bool delet()
+	public bool delete_()
 	{
 		return g_app_info_delete(getAppInfoStruct()) != 0;
 	}

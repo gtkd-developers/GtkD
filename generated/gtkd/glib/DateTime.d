@@ -973,6 +973,7 @@ public class DateTime
 		return g_date_time_is_daylight_savings(gDateTime) != 0;
 	}
 
+	alias doref = ref_;
 	/**
 	 * Atomically increments the reference count of @datetime by one.
 	 *
@@ -980,7 +981,7 @@ public class DateTime
 	 *
 	 * Since: 2.26
 	 */
-	public DateTime doref()
+	public DateTime ref_()
 	{
 		auto p = g_date_time_ref(gDateTime);
 

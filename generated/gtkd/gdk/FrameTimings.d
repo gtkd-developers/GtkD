@@ -181,6 +181,7 @@ public class FrameTimings
 		return gdk_frame_timings_get_refresh_interval(gdkFrameTimings);
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increases the reference count of @timings.
 	 *
@@ -188,7 +189,7 @@ public class FrameTimings
 	 *
 	 * Since: 3.8
 	 */
-	public FrameTimings doref()
+	public FrameTimings ref_()
 	{
 		auto p = gdk_frame_timings_ref(gdkFrameTimings);
 

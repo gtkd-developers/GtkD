@@ -455,12 +455,13 @@ public class Source
 		return g_source_query_unix_fd(gSource, tag);
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increases the reference count on a source by one.
 	 *
 	 * Returns: @source
 	 */
-	public Source doref()
+	public Source ref_()
 	{
 		auto p = g_source_ref(gSource);
 

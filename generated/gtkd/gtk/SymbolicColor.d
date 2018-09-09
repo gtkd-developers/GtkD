@@ -247,6 +247,7 @@ public class SymbolicColor
 		this(cast(GtkSymbolicColor*) p);
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increases the reference count of @color
 	 *
@@ -256,7 +257,7 @@ public class SymbolicColor
 	 *
 	 * Since: 3.0
 	 */
-	public SymbolicColor doref()
+	public SymbolicColor ref_()
 	{
 		auto p = gtk_symbolic_color_ref(gtkSymbolicColor);
 

@@ -2164,6 +2164,7 @@ public class Variant
 		return new StringG(cast(GString*) p, true);
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increases the reference count of @value.
 	 *
@@ -2171,7 +2172,7 @@ public class Variant
 	 *
 	 * Since: 2.24
 	 */
-	public Variant doref()
+	public Variant ref_()
 	{
 		auto p = g_variant_ref(gVariant);
 

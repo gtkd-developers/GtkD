@@ -131,12 +131,13 @@ public class TextAttributes
 		gtk_text_attributes_copy_values(gtkTextAttributes, (dest is null) ? null : dest.getTextAttributesStruct());
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increments the reference count on @values.
 	 *
 	 * Returns: the #GtkTextAttributes that were passed in
 	 */
-	public TextAttributes doref()
+	public TextAttributes ref_()
 	{
 		auto p = gtk_text_attributes_ref(gtkTextAttributes);
 

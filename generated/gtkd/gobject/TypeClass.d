@@ -273,6 +273,7 @@ public class TypeClass
 		return ObjectG.getDObject!(TypeClass)(cast(GTypeClass*) p);
 	}
 
+	alias doref = ref_;
 	/**
 	 * Increments the reference count of the class structure belonging to
 	 * @type. This function will demand-create the class if it doesn't
@@ -284,7 +285,7 @@ public class TypeClass
 	 * Returns: the #GTypeClass
 	 *     structure for the given type ID
 	 */
-	public static TypeClass doref(GType type)
+	public static TypeClass ref_(GType type)
 	{
 		auto p = g_type_class_ref(type);
 
