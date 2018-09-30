@@ -22,8 +22,10 @@
 # must start with wrap
 wrap: gdkpixbuf
 file: GdkPixbuf-2.0.gir
+file: GdkPixdata-2.0.gir
 
 struct: Pixbuf
+array: new_from_inline data data_length
 noCode: save_to_bufferv
 noCode: ref
 noCode: unref
@@ -220,3 +222,5 @@ noCode: true
 
 struct: Pixdata
 noProperty: pixel_data
+
+move: pixbuf_from_pixdata Pixbuf from_pixdata
