@@ -52,7 +52,7 @@ public:
 	extern(C):
 
 	version(Windows)
-		import std.c.windows.windows;
+		import core.sys.windows.windows;
 
 	/* *********************************************************** */
 
