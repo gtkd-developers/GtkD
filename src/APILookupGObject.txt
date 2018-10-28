@@ -181,7 +181,7 @@ code: start
 		*                 the first parameter, but when using delegates it usually isn't used.
 		*/
 		this(T)(T callback, bool swap = false)
-			if ( isCallable!T )
+		if ( isCallable!T )
 		{
 			GClosure* gClosure = g_closure_new_simple(DGClosure!(T).sizeof, null);
 			g_closure_ref(gClosure);
@@ -192,7 +192,14 @@ code: start
 			auto dClosure = cast(DGClosure!(T)*)gClosure;
 			dClosure.callback = callback;
 
+			GC.addRange(gClosure, DGClosure!(T).sizeof, typeid(DGClosure!(T)));
+
 			super(gClosure, true);
+		}
+
+		~this()
+		{
+			GC.removeRoot(gClosure);
 		}
 
 		extern(C) static void d_closure_marshal(T)(GClosure* closure, GValue* return_value, uint n_param_values, /*const*/ GValue* param_values, void* invocation_hint, void* marshal_data)

@@ -91,7 +91,14 @@ class DClosure : Closure
 		auto dClosure = cast(DGClosure!(T)*)gClosure;
 		dClosure.callback = callback;
 
+		GC.addRange(gClosure, DGClosure!(T).sizeof, typeid(DGClosure!(T)));
+
 		super(gClosure, true);
+	}
+
+	~this()
+	{
+		GC.removeRoot(gClosure);
 	}
 
 	extern(C) static void d_closure_marshal(T)(GClosure* closure, GValue* return_value, uint n_param_values, /*const*/ GValue* param_values, void* invocation_hint, void* marshal_data)
