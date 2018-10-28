@@ -144,20 +144,6 @@ code: start
 	struct DGClosure(T)
 	{
 		GClosure closure;
-
-		static if ( isDelegate!T )
-		{
-			DGClosureWrapDelegate!(T)* wrap;
-			alias wrap this;
-		}
-		else
-		{
-			T callback;
-		}
-	}
-
-	struct DGClosureWrapDelegate(T)
-	{
 		T callback;
 	}
 
@@ -204,21 +190,9 @@ code: start
 			if ( swap ) gClosure.derivativeFlag = true;
 
 			auto dClosure = cast(DGClosure!(T)*)gClosure;
-
-			static if ( isDelegate!T )
-			{
-				dClosure.wrap = new DGClosureWrapDelegate!T;
-				GC.addRoot(dClosure.wrap);
-				g_closure_add_finalize_notifier(gClosure, null, &d_finalize_nofify);
-			}
-
 			dClosure.callback = callback;
-			super(gClosure, true);
-		}
 
-		extern(C) static void d_finalize_nofify(void* data, GClosure* dClosure)
-		{
-			GC.removeRoot((cast(DGClosure!(void delegate())*)dClosure).wrap);
+			super(gClosure, true);
 		}
 
 		extern(C) static void d_closure_marshal(T)(GClosure* closure, GValue* return_value, uint n_param_values, /*const*/ GValue* param_values, void* invocation_hint, void* marshal_data)
@@ -368,6 +342,7 @@ code: end
 
 struct: Object
 import: core.memory
+import: gobject.DClosure
 import: gobject.Signals
 import: std.algorithm
 import: std.traits
@@ -378,6 +353,7 @@ inout: clear_object object_ptr
 
 code: start
 	protected bool isGcRoot;
+	package DClosure[gulong] signals;
 
 	/**
 	 * Sets our main struct and passes store it on the gobject.
@@ -726,6 +702,8 @@ noCode: true
 struct: Signals
 import: gobject.DClosure
 import: std.traits
+move: signal_handler_disconnect Signals handler_disconnect
+noCode: handler_disconnect
 code: start
 	/**
 	 * Connects a callback to a signal for a particular object.
@@ -746,12 +724,34 @@ code: start
 		bool after = (connectFlags & ConnectFlags.AFTER) != false;
 		bool swap = (connectFlags & ConnectFlags.SWAPPED) != false;
 
-		return Signals.connectClosure(instance, detailedSignal, new DClosure(callback, swap), after);
+		DClosure closure = new DClosure(callback, swap);
+		gulong id = Signals.connectClosure(instance, detailedSignal, closure, after);
+
+		instance.signals[id] = closure;
+		return id;
 	}
 
 	deprecated public static gulong connectData(void* instanc, string detailedSignal, GCallback cHandler, Object data, GClosureNotify destroyData, GConnectFlags connectFlags)
 	{
 		return g_signal_connect_data(instanc, Str.toStringz(detailedSignal), cHandler, cast(void*)data, destroyData, connectFlags);
+	}
+
+	/**
+	 * Disconnects a handler from an instance so it will not be called during
+	 * any future or currently ongoing emissions of the signal it has been
+	 * connected to. The @handler_id becomes invalid and may be reused.
+	 *
+	 * The @handler_id has to be a valid signal handler id, connected to a
+	 * signal of @instance.
+	 *
+	 * Params:
+	 *     instance = The instance to remove the signal handler from.
+	 *     handlerId = Handler id of the handler to be disconnected.
+	 */
+	public static void handlerDisconnect(ObjectG instance, gulong handlerId)
+	{
+		instance.signals.remove(handlerId);
+		g_signal_handler_disconnect((instance is null) ? null : instance.getObjectGStruct(), handlerId);
 	}
 
 	/**
@@ -1034,7 +1034,6 @@ move: signal_emit_valist Signals emit_valist
 move: signal_emitv Signals emitv
 move: signal_get_invocation_hint Signals get_invocation_hint
 move: signal_handler_block Signals handler_block
-move: signal_handler_disconnect Signals handler_disconnect
 move: signal_handler_find Signals handler_find
 move: signal_handler_is_connected Signals handler_is_connected
 move: signal_handler_unblock Signals handler_unblock

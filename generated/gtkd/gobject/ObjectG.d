@@ -29,6 +29,7 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.Binding;
 private import gobject.Closure;
+private import gobject.DClosure;
 private import gobject.ObjectG;
 private import gobject.ParamSpec;
 private import gobject.Signals;
@@ -67,6 +68,7 @@ public class ObjectG
 	}
 
 	protected bool isGcRoot;
+	package DClosure[gulong] signals;
 
 	/**
 	 * Sets our main struct and passes store it on the gobject.

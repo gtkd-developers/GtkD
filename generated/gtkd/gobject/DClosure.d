@@ -43,20 +43,6 @@ private import std.typecons;
 struct DGClosure(T)
 {
 	GClosure closure;
-
-	static if ( isDelegate!T )
-	{
-		DGClosureWrapDelegate!(T)* wrap;
-		alias wrap this;
-	}
-	else
-	{
-		T callback;
-	}
-}
-
-struct DGClosureWrapDelegate(T)
-{
 	T callback;
 }
 
@@ -103,21 +89,9 @@ class DClosure : Closure
 		if ( swap ) gClosure.derivativeFlag = true;
 
 		auto dClosure = cast(DGClosure!(T)*)gClosure;
-
-		static if ( isDelegate!T )
-		{
-			dClosure.wrap = new DGClosureWrapDelegate!T;
-			GC.addRoot(dClosure.wrap);
-			g_closure_add_finalize_notifier(gClosure, null, &d_finalize_nofify);
-		}
-
 		dClosure.callback = callback;
-		super(gClosure, true);
-	}
 
-	extern(C) static void d_finalize_nofify(void* data, GClosure* dClosure)
-	{
-		GC.removeRoot((cast(DGClosure!(void delegate())*)dClosure).wrap);
+		super(gClosure, true);
 	}
 
 	extern(C) static void d_closure_marshal(T)(GClosure* closure, GValue* return_value, uint n_param_values, /*const*/ GValue* param_values, void* invocation_hint, void* marshal_data)

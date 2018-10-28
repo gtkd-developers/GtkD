@@ -58,12 +58,34 @@ public struct Signals
 		bool after = (connectFlags & ConnectFlags.AFTER) != false;
 		bool swap = (connectFlags & ConnectFlags.SWAPPED) != false;
 
-		return Signals.connectClosure(instance, detailedSignal, new DClosure(callback, swap), after);
+		DClosure closure = new DClosure(callback, swap);
+		gulong id = Signals.connectClosure(instance, detailedSignal, closure, after);
+
+		instance.signals[id] = closure;
+		return id;
 	}
 
 	deprecated public static gulong connectData(void* instanc, string detailedSignal, GCallback cHandler, Object data, GClosureNotify destroyData, GConnectFlags connectFlags)
 	{
 		return g_signal_connect_data(instanc, Str.toStringz(detailedSignal), cHandler, cast(void*)data, destroyData, connectFlags);
+	}
+
+	/**
+	 * Disconnects a handler from an instance so it will not be called during
+	 * any future or currently ongoing emissions of the signal it has been
+	 * connected to. The @handler_id becomes invalid and may be reused.
+	 *
+	 * The @handler_id has to be a valid signal handler id, connected to a
+	 * signal of @instance.
+	 *
+	 * Params:
+	 *     instance = The instance to remove the signal handler from.
+	 *     handlerId = Handler id of the handler to be disconnected.
+	 */
+	public static void handlerDisconnect(ObjectG instance, gulong handlerId)
+	{
+		instance.signals.remove(handlerId);
+		g_signal_handler_disconnect((instance is null) ? null : instance.getObjectGStruct(), handlerId);
 	}
 
 	/**
@@ -342,23 +364,6 @@ public struct Signals
 	public static void handlerBlock(ObjectG instance_, gulong handlerId)
 	{
 		g_signal_handler_block((instance_ is null) ? null : instance_.getObjectGStruct(), handlerId);
-	}
-
-	/**
-	 * Disconnects a handler from an instance so it will not be called during
-	 * any future or currently ongoing emissions of the signal it has been
-	 * connected to. The @handler_id becomes invalid and may be reused.
-	 *
-	 * The @handler_id has to be a valid signal handler id, connected to a
-	 * signal of @instance.
-	 *
-	 * Params:
-	 *     instance_ = The instance to remove the signal handler from.
-	 *     handlerId = Handler id of the handler to be disconnected.
-	 */
-	public static void handlerDisconnect(ObjectG instance_, gulong handlerId)
-	{
-		g_signal_handler_disconnect((instance_ is null) ? null : instance_.getObjectGStruct(), handlerId);
 	}
 
 	/**
