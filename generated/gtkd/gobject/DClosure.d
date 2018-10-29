@@ -98,7 +98,7 @@ class DClosure : Closure
 
 	~this()
 	{
-		GC.removeRoot(gClosure);
+		GC.removeRange(gClosure);
 	}
 
 	extern(C) static void d_closure_marshal(T)(GClosure* closure, GValue* return_value, uint n_param_values, /*const*/ GValue* param_values, void* invocation_hint, void* marshal_data)
