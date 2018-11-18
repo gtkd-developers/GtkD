@@ -421,7 +421,7 @@ void main(string[] args)
 	GStreamer.init(args);
 
 	writeln("Checking version of GStreamer...");
-	GStreamer.versio(major, minor, micro, nano);
+	GStreamer.version_(major, minor, micro, nano);
 	writefln("The installed version of GStreamer is %s.%s.%s", major, minor, micro );
 
 	GstMediaPlayer gstMediaPlayer = new GstMediaPlayer(args);
