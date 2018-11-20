@@ -27,6 +27,7 @@ module gobject.ObjectG;
 private import core.memory;
 private import glib.ConstructionException;
 private import glib.Str;
+private import glib.c.functions : g_datalist_get_flags;
 private import gobject.Binding;
 private import gobject.Closure;
 private import gobject.DClosure;
@@ -39,7 +40,6 @@ private import gobject.c.functions;
 public  import gobject.c.types;
 public  import gtkc.gobjecttypes;
 private import gtkd.Loader;
-private import std.algorithm;
 private import std.traits;
 
 
@@ -113,7 +113,7 @@ public class ObjectG
 				obj.isGcRoot = false;
 			}
 
-			if ( obj.gObject.refCount > 0 )
+			if ( obj.hasToggleRef() )
 				obj.removeToggleRef(cast(GToggleNotify)&toggleNotify, cast(void*)obj);
 
 			obj.gObject = null;
@@ -153,8 +153,7 @@ public class ObjectG
 				isGcRoot = false;
 			}
 
-			// We only have a toggle ref if the C object hods a reference to the D object.
-			if ( g_object_get_data(gObject, cast(char*)"GObject") is cast(void*)this )
+			if ( hasToggleRef() )
 				g_object_remove_toggle_ref(gObject, cast(GToggleNotify)&toggleNotify, cast(void*)this);
 			else
 				g_object_unref(gObject);
@@ -190,9 +189,13 @@ public class ObjectG
 				GC.removeRoot(cast(void*)this);
 				isGcRoot = false;
 			}
-			//Add a reference for the original D object before we remove the toggle reference.
-			g_object_ref(gObject);
-			g_object_remove_toggle_ref(gObject, cast(GToggleNotify)&toggleNotify, cast(void*)this);
+
+			if ( hasToggleRef() )
+			{
+				//Add a reference for the original D object before we remove the toggle reference.
+				g_object_ref(gObject);
+				g_object_remove_toggle_ref(gObject, cast(GToggleNotify)&toggleNotify, cast(void*)this);
+			}
 
 			//The new object handles the memory management.
 			return new T(cast(typeof(T.tupleof[0]))gObject, false);
@@ -291,6 +294,31 @@ public class ObjectG
 		iface.doref();
 
 		return iface;
+	}
+
+	/**
+	 * Is there a toggle ref connected to this object.
+	 */
+	private bool hasToggleRef()
+	{
+		enum TOGGLE_REF_FLAG = 0x1;
+
+		return (g_datalist_get_flags(&gObject.qdata) & TOGGLE_REF_FLAG) != 0;
+	}
+
+	public void removeGcRoot()
+	{
+		if ( hasToggleRef() )
+		{
+			g_object_ref(gObject);
+			g_object_remove_toggle_ref(gObject, cast(GToggleNotify)&toggleNotify, cast(void*)this);
+		}
+
+		if ( isGcRoot )
+		{
+			GC.removeRoot(cast(void*)this);
+			isGcRoot = false;
+		}
 	}
 
 	/** */

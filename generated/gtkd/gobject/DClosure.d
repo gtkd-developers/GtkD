@@ -54,6 +54,8 @@ struct DGClosure(T)
  */
 class DClosure : Closure
 {
+	private void* callback;
+
 	/** Get the main Gtk struct */
 	public GClosure* getDClosureStruct(bool transferOwnership = false)
 	{
@@ -91,14 +93,14 @@ class DClosure : Closure
 		auto dClosure = cast(DGClosure!(T)*)gClosure;
 		dClosure.callback = callback;
 
-		GC.addRange(gClosure, DGClosure!(T).sizeof, typeid(DGClosure!(T)));
+		static if ( isDelegate!T )
+			this.callback = callback.ptr;
+		else static if ( isFunctionPointer!T )
+			this.callback = callback;
+		else
+			this.callback = &callback;
 
 		super(gClosure, true);
-	}
-
-	~this()
-	{
-		GC.removeRange(gClosure);
 	}
 
 	extern(C) static void d_closure_marshal(T)(GClosure* closure, GValue* return_value, uint n_param_values, /*const*/ GValue* param_values, void* invocation_hint, void* marshal_data)

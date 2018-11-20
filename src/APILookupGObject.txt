@@ -155,6 +155,8 @@ code: start
 	*/
 	class DClosure : Closure
 	{
+		private void* callback;
+
 		/** Get the main Gtk struct */
 		public GClosure* getDClosureStruct(bool transferOwnership = false)
 		{
@@ -192,14 +194,14 @@ code: start
 			auto dClosure = cast(DGClosure!(T)*)gClosure;
 			dClosure.callback = callback;
 
-			GC.addRange(gClosure, DGClosure!(T).sizeof, typeid(DGClosure!(T)));
+			static if ( isDelegate!T )
+				this.callback = callback.ptr;
+			else static if ( isFunctionPointer!T )
+				this.callback = callback;
+			else
+				this.callback = &callback;
 
 			super(gClosure, true);
-		}
-
-		~this()
-		{
-			GC.removeRange(gClosure);
 		}
 
 		extern(C) static void d_closure_marshal(T)(GClosure* closure, GValue* return_value, uint n_param_values, /*const*/ GValue* param_values, void* invocation_hint, void* marshal_data)
@@ -349,9 +351,9 @@ code: end
 
 struct: Object
 import: core.memory
+import: glib.c.functions : g_datalist_get_flags
 import: gobject.DClosure
 import: gobject.Signals
-import: std.algorithm
 import: std.traits
 merge: InitiallyUnowned
 noSignal: notify
@@ -405,7 +407,7 @@ code: start
 				obj.isGcRoot = false;
 			}
 
-			if ( obj.gObject.refCount > 0 )
+			if ( obj.hasToggleRef() )
 				obj.removeToggleRef(cast(GToggleNotify)&toggleNotify, cast(void*)obj);
 
 			obj.gObject = null;
@@ -445,8 +447,7 @@ code: start
 				isGcRoot = false;
 			}
 
-			// We only have a toggle ref if the C object hods a reference to the D object.
-			if ( g_object_get_data(gObject, cast(char*)"GObject") is cast(void*)this )
+			if ( hasToggleRef() )
 				g_object_remove_toggle_ref(gObject, cast(GToggleNotify)&toggleNotify, cast(void*)this);
 			else
 				g_object_unref(gObject);
@@ -482,9 +483,13 @@ code: start
 				GC.removeRoot(cast(void*)this);
 				isGcRoot = false;
 			}
-			//Add a reference for the original D object before we remove the toggle reference.
-			g_object_ref(gObject);
-			g_object_remove_toggle_ref(gObject, cast(GToggleNotify)&toggleNotify, cast(void*)this);
+
+			if ( hasToggleRef() )
+			{
+				//Add a reference for the original D object before we remove the toggle reference.
+				g_object_ref(gObject);
+				g_object_remove_toggle_ref(gObject, cast(GToggleNotify)&toggleNotify, cast(void*)this);
+			}
 
 			//The new object handles the memory management.
 			return new T(cast(typeof(T.tupleof[0]))gObject, false);
@@ -583,6 +588,31 @@ code: start
 		iface.doref();
 
 		return iface;
+	}
+
+	/**
+	 * Is there a toggle ref connected to this object.
+	 */
+	private bool hasToggleRef()
+	{
+		enum TOGGLE_REF_FLAG = 0x1;
+
+		return (g_datalist_get_flags(&gObject.qdata) & TOGGLE_REF_FLAG) != 0;
+	}
+
+	public void removeGcRoot()
+	{
+		if ( hasToggleRef() )
+		{
+			g_object_ref(gObject);
+			g_object_remove_toggle_ref(gObject, cast(GToggleNotify)&toggleNotify, cast(void*)this);
+		}
+
+		if ( isGcRoot )
+		{
+			GC.removeRoot(cast(void*)this);
+			isGcRoot = false;
+		}
 	}
 
 	/** */
