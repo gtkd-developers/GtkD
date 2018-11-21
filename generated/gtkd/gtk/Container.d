@@ -268,6 +268,32 @@ public class Container : Widget
 	{
 		this.gtkContainer = gtkContainer;
 		super(cast(GtkWidget*)gtkContainer, ownedRef);
+
+		Signals.connect(this, "add", cast(GCallback)&gtkd_container_add, null);
+		Signals.connect(this, "remove", cast(GCallback)&gtkd_container_remove, null);
+	}
+
+	Widget[] children;
+
+	static extern(C) void gtkd_container_add(GtkContainer* c, GtkWidget* w)
+	{
+		Container container = ObjectG.getDObject!(Container)(c);
+		Widget widget = ObjectG.getDObject!(Widget)(w);
+
+		container.children ~= widget;
+		widget.removeGcRoot();
+	}
+
+	static extern(C) void gtkd_container_remove(GtkContainer* c, GtkWidget* w)
+	{
+		import gobject.c.functions : g_object_get_data;
+
+		if ( auto container = cast(Container)g_object_get_data(cast(GObject*)c, "GObject") )
+			if ( auto widget = cast(Widget)g_object_get_data(cast(GObject*)w, "GObject") )
+		{
+			import std.algorithm : remove;
+			container.children.remove!(a => a is widget)();
+		}
 	}
 
 	/**
