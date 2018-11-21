@@ -2300,3 +2300,4 @@ public enum GdkKeysyms
 	GDK_zerosuperior = 16785520,
 	GDK_zstroke = 16777654,
 }
+alias Keysyms = GdkKeysyms;
