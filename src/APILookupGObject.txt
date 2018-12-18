@@ -597,7 +597,11 @@ code: start
 	{
 		enum TOGGLE_REF_FLAG = 0x1;
 
-		return (g_datalist_get_flags(&gObject.qdata) & TOGGLE_REF_FLAG) != 0;
+		if ( (g_datalist_get_flags(&gObject.qdata) & TOGGLE_REF_FLAG) != 0 )
+			//TODO: Assumes we always have the gObject data set if the toggleRef is connected to this instance.
+			return (g_object_get_data(gObject, cast(char*)"GObject") is cast(void*)this);
+		else
+			return false;
 	}
 
 	public void removeGcRoot()
