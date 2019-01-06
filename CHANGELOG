@@ -1,6 +1,20 @@
 GtkD ChangeLog
 ==============
 
+Release: 3.8.5
+--------------
+-Set the correct version number.
+
+Release: 3.8.4
+--------------
+-Fix a memory leak when signals are used on a widget in a container. #254
+-Update the GdkPixbuf Lookup file for the canges in 2.38. #250
+-Add a get template for gobject.Value.
+-Don't hardcode pkg-config #249
+-All function names and parameters that are D keywords are now post fixed with an underscore.
+-This is instead of the more random substitutes used previously.
+-Fix an out-of-bounds write in toStringzArray #248
+
 Release: 3.8.3
 --------------
 -Make sure we only use one toggle reference per GObject.
