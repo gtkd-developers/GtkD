@@ -83,7 +83,7 @@ WHITE = <font color=white>$0</font>
 
 D_CODE = <pre class=\"d_code\">$0</pre>
 DDOC_BACKQUOTED = $(D_INLINECODE $0)
-D_INLINECODE = <pre style=\"display:inline;\" class=\"d_inline_code\">$0</pre>
+D_INLINECODE = <pre style="display:inline;" class="d_inline_code">$0</pre>
 D_COMMENT = $(GREEN $0)
 D_STRING  = $(RED $0)
 D_KEYWORD = $(BLUE $0)

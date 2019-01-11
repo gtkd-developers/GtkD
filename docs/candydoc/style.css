@@ -167,3 +167,12 @@ pre.d_code
 	border: dotted 1px #9c9;
 	background-color: #eeffee;
 }
+
+pre.d_inline_code
+{
+        padding: 1px;
+	border: dotted 1px #9c9;
+	background-color: #eeffee;
+}
+
+
