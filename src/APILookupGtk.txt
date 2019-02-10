@@ -4589,41 +4589,41 @@ code: start
 	bool delegate(Widget, FrameClock)[] tickCallbackListeners;
 	extern(C) static int gtkTickCallback(GtkWidget* widgetStruct, GdkFrameClock* frameClock, Widget _widget)
 	{
-		foreach ( dlg ; _widget.tickCallbackListeners )
-		{
-			if(dlg(_widget, new FrameClock(frameClock)))
-				return 1;
-		}
-		return 0;
+		import std.algorithm.iteration : filter;
+		import std.array : array;
+		_widget.tickCallbackListeners = _widget.tickCallbackListeners.filter!((dlg) {
+			return dlg(_widget, ObjectG.getDObject!(FrameClock)(frameClock));
+		}).array();
+		return !!_widget.tickCallbackListeners.length;
 	}
 
 	/**
-		* This signal is emitted when a widget is supposed to render itself.
-		* The @widget's top left corner must be painted at the origin of
-		* the passed in context and be sized to the values returned by
-		* gtk_widget_get_allocated_width() and
-		* gtk_widget_get_allocated_height().
-		*
-		* Signal handlers connected to this signal can modify the cairo
-		* context passed as @cr in any way they like and don't need to
-		* restore it. The signal emission takes care of calling cairo_save()
-		* before and cairo_restore() after invoking the handler.
-		*
-		* The signal handler will get a @cr with a clip region already set to the
-		* widget's dirty region, i.e. to the area that needs repainting.  Complicated
-		* widgets that want to avoid redrawing themselves completely can get the full
-		* extents of the clip region with gdk_cairo_get_clip_rectangle(), or they can
-		* get a finer-grained representation of the dirty region with
-		* cairo_copy_clip_rectangle_list().
-		*
-		* Params:
-		*     cr = the cairo context to draw to
-		*
-		* Return: %TRUE to stop other handlers from being invoked for the event.
-		*     %FALSE to propagate the event further.
-		*
-		* Since: 3.0
-		*/
+	* This signal is emitted when a widget is supposed to render itself.
+	* The @widget's top left corner must be painted at the origin of
+	* the passed in context and be sized to the values returned by
+	* gtk_widget_get_allocated_width() and
+	* gtk_widget_get_allocated_height().
+	*
+	* Signal handlers connected to this signal can modify the cairo
+	* context passed as @cr in any way they like and don't need to
+	* restore it. The signal emission takes care of calling cairo_save()
+	* before and cairo_restore() after invoking the handler.
+	*
+	* The signal handler will get a @cr with a clip region already set to the
+	* widget's dirty region, i.e. to the area that needs repainting.  Complicated
+	* widgets that want to avoid redrawing themselves completely can get the full
+	* extents of the clip region with gdk_cairo_get_clip_rectangle(), or they can
+	* get a finer-grained representation of the dirty region with
+	* cairo_copy_clip_rectangle_list().
+	*
+	* Params:
+	*     cr = the cairo context to draw to
+	*
+	* Return: %TRUE to stop other handlers from being invoked for the event.
+	*     %FALSE to propagate the event further.
+	*
+	* Since: 3.0
+	*/
 	gulong addOnDraw(bool delegate(Scoped!Context, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "draw", dlg, connectFlags ^ ConnectFlags.SWAPPED);

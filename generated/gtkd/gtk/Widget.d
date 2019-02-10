@@ -294,7 +294,7 @@ private import std.conv;
  * 
  * An example of a UI definition fragment specifying an accessible:
  * |[
- * <object class="GtkButton" id="label1"/>
+ * <object class="GtkLabel" id="label1"/>
  * <property name="label">I am a Label for a Button</property>
  * </object>
  * <object class="GtkButton" id="button1">
@@ -746,12 +746,12 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		bool delegate(Widget, FrameClock)[] tickCallbackListeners;
 		extern(C) static int gtkTickCallback(GtkWidget* widgetStruct, GdkFrameClock* frameClock, Widget _widget)
 		{
-			foreach ( dlg ; _widget.tickCallbackListeners )
-			{
-				if(dlg(_widget, new FrameClock(frameClock)))
-					return 1;
-			}
-			return 0;
+			import std.algorithm.iteration : filter;
+			import std.array : array;
+			_widget.tickCallbackListeners = _widget.tickCallbackListeners.filter!((dlg) {
+				return dlg(_widget, ObjectG.getDObject!(FrameClock)(frameClock));
+				}).array();
+			return !!_widget.tickCallbackListeners.length;
 		}
 
 		/**
