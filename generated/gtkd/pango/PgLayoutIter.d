@@ -226,7 +226,7 @@ public class PgLayoutIter
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgLayoutLine)(cast(PangoLayoutLine*) p, true);
+		return ObjectG.getDObject!(PgLayoutLine)(cast(PangoLayoutLine*) p);
 	}
 
 	/**

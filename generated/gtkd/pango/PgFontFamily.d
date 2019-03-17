@@ -109,6 +109,19 @@ public class PgFontFamily : ObjectG
 	}
 
 	/**
+	 * A variable font is a font which has axes that can be modified to
+	 * produce different faces.
+	 *
+	 * Returns: %TRUE if the family is variable
+	 *
+	 * Since: 1.44
+	 */
+	public bool isVariable()
+	{
+		return pango_font_family_is_variable(pangoFontFamily) != 0;
+	}
+
+	/**
 	 * Lists the different font faces that make up @family. The faces
 	 * in a family share a common design, but differ in slant, weight,
 	 * width and other aspects.

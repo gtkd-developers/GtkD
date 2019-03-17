@@ -100,7 +100,7 @@ Gdk | 3.22
 Glib | 2.60
 GObject | 2.60
 Gio | 2.60
-Pango | 1.42
+Pango | 1.43
 Atk | 2.32
 Gdk-pixbuf | 2.38
 Cairo | 1.12.2

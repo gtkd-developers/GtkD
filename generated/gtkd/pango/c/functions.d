@@ -249,6 +249,7 @@ shared static this()
 	Linker.link(pango_font_family_get_type, "pango_font_family_get_type", LIBRARY_PANGO);
 	Linker.link(pango_font_family_get_name, "pango_font_family_get_name", LIBRARY_PANGO);
 	Linker.link(pango_font_family_is_monospace, "pango_font_family_is_monospace", LIBRARY_PANGO);
+	Linker.link(pango_font_family_is_variable, "pango_font_family_is_variable", LIBRARY_PANGO);
 	Linker.link(pango_font_family_list_faces, "pango_font_family_list_faces", LIBRARY_PANGO);
 
 	// pango.PgFontMap
@@ -801,6 +802,7 @@ __gshared extern(C)
 	GType function() c_pango_font_family_get_type;
 	const(char)* function(PangoFontFamily* family) c_pango_font_family_get_name;
 	int function(PangoFontFamily* family) c_pango_font_family_is_monospace;
+	int function(PangoFontFamily* family) c_pango_font_family_is_variable;
 	void function(PangoFontFamily* family, PangoFontFace*** faces, int* nFaces) c_pango_font_family_list_faces;
 
 	// pango.PgFontMap
@@ -1351,6 +1353,7 @@ alias c_pango_font_face_list_sizes pango_font_face_list_sizes;
 alias c_pango_font_family_get_type pango_font_family_get_type;
 alias c_pango_font_family_get_name pango_font_family_get_name;
 alias c_pango_font_family_is_monospace pango_font_family_is_monospace;
+alias c_pango_font_family_is_variable pango_font_family_is_variable;
 alias c_pango_font_family_list_faces pango_font_family_list_faces;
 
 // pango.PgFontMap

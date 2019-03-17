@@ -196,6 +196,8 @@ public enum PangoAttrType
  * type of a Unicode character as specified by the
  * <ulink url="http://www.unicode.org/reports/tr9/">Unicode bidirectional algorithm</ulink>.
  *
+ * Deprecated: Use fribidi for this information
+ *
  * Since: 1.22
  */
 public enum PangoBidiType
@@ -323,6 +325,10 @@ public enum PangoCoverageLevel
  * enumeration as the writing direction of a block of
  * text and are no longer used; See #PangoGravity for how
  * vertical text is handled in Pango.
+ *
+ * If you are interested in text direction, you should
+ * really use fribidi directly. PangoDirection is only
+ * retained because it is used in some public apis.
  */
 public enum PangoDirection
 {
@@ -1720,12 +1726,17 @@ struct PangoFontFamilyClass
 	 * Returns: %TRUE if the family is monospace.
 	 */
 	extern(C) int function(PangoFontFamily* family) isMonospace;
+	/**
+	 *
+	 * Params:
+	 *     family = a #PangoFontFamily
+	 * Returns: %TRUE if the family is variable
+	 */
+	extern(C) int function(PangoFontFamily* family) isVariable;
 	/** */
 	extern(C) void function() PangoReserved2;
 	/** */
 	extern(C) void function() PangoReserved3;
-	/** */
-	extern(C) void function() PangoReserved4;
 }
 
 struct PangoFontMap
