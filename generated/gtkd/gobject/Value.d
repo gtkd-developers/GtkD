@@ -581,7 +581,7 @@ public class Value
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) p);
 	}
 
 	/**

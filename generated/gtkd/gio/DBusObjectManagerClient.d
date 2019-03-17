@@ -442,7 +442,7 @@ public class DBusObjectManagerClient : ObjectG, AsyncInitableIF, DBusObjectManag
 	 * Params:
 	 *     objectProxy = The #GDBusObjectProxy on which an interface has properties that are changing.
 	 *     interfaceProxy = The #GDBusProxy that has properties that are changing.
-	 *     changedProperties = A #GVariant containing the properties that changed.
+	 *     changedProperties = A #GVariant containing the properties that changed (type: `a{sv}`).
 	 *     invalidatedProperties = A %NULL terminated
 	 *         array of properties that were invalidated.
 	 *

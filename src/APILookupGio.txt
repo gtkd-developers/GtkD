@@ -470,6 +470,11 @@ move: content_type_is_unknown ContentType is_unknown
 move: content_types_get_registered ContentType
 version 2.52: move: content_type_is_mime_type ContentType is_mime_type
 
+version 2.60: start
+	move: content_type_get_mime_dirs ContentType get_mime_dirs
+	move: content_type_set_mime_dirs ContentType set_mime_dirs
+version: end
+
 move: dbus_error_encode_gerror DBusError encode_gerror
 move: dbus_error_get_remote_error DBusError get_remote_error
 move: dbus_error_is_remote_error DBusError is_remote_error
@@ -556,4 +561,7 @@ version !Windows: start
 		move: unix_mount_copy UnixMountEntry copy
 		move: unix_mount_for UnixMountEntry mount_for
 	version: end
+
+	version 2.58: move: unix_mount_get_options UnixMountEntry get_options
+	version 2.60: move: unix_mount_get_root_path UnixMountEntry get_root_path
 version: end

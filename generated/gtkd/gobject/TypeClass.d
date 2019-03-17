@@ -134,6 +134,9 @@ public class TypeClass
 	 * }
 	 * ]|
 	 *
+	 * Deprecated: Use the G_ADD_PRIVATE() macro with the `G_DEFINE_*`
+	 * family of macros to add instance private data to a type
+	 *
 	 * Params:
 	 *     privateSize = size of private structure
 	 *

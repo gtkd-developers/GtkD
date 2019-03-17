@@ -60,8 +60,7 @@ private import std.algorithm;
  * well-known name, the property cache is flushed when the name owner
  * vanishes and reloaded when a name owner appears.
  * 
- * If a #GDBusProxy is used for a well-known name, the owner of the
- * name is tracked and can be read from
+ * The unique name owner of the proxy's name is tracked and can be read from
  * #GDBusProxy:g-name-owner. Connect to the #GObject::notify signal to
  * get notified of changes. Additionally, only signals and property
  * changes emitted from the current name owner are considered and
@@ -227,6 +226,10 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 * match rules for signals. Connect to the #GDBusProxy::g-signal signal
 	 * to handle signals from the remote object.
 	 *
+	 * If both %G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES and
+	 * %G_DBUS_PROXY_FLAGS_DO_NOT_CONNECT_SIGNALS are set, this constructor is
+	 * guaranteed to return immediately without blocking.
+	 *
 	 * If @name is a well-known name and the
 	 * %G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START and %G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START_AT_CONSTRUCTION
 	 * flags aren't set and no name owner currently exists, the message bus
@@ -284,6 +287,10 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 * If the %G_DBUS_PROXY_FLAGS_DO_NOT_CONNECT_SIGNALS flag is not set, also sets up
 	 * match rules for signals. Connect to the #GDBusProxy::g-signal signal
 	 * to handle signals from the remote object.
+	 *
+	 * If both %G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES and
+	 * %G_DBUS_PROXY_FLAGS_DO_NOT_CONNECT_SIGNALS are set, this constructor is
+	 * guaranteed to complete immediately without blocking.
 	 *
 	 * If @name is a well-known name and the
 	 * %G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START and %G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START_AT_CONSTRUCTION
@@ -874,7 +881,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 * `org.freedesktop.DBus.Properties` interface.
 	 *
 	 * Params:
-	 *     changedProperties = A #GVariant containing the properties that changed
+	 *     changedProperties = A #GVariant containing the properties that changed (type: `a{sv}`)
 	 *     invalidatedProperties = A %NULL terminated array of properties that was invalidated
 	 *
 	 * Since: 2.26

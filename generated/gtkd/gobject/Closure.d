@@ -25,7 +25,6 @@
 module gobject.Closure;
 
 private import glib.ConstructionException;
-private import glib.MemorySlice;
 private import glib.Source;
 private import gobject.ObjectG;
 private import gobject.Value;
@@ -49,7 +48,9 @@ private import gtkd.Loader;
  * library provides the #GCClosure type for this purpose. Bindings for
  * other languages need marshallers which convert between #GValues
  * and suitable representations in the runtime of the language in
- * order to use functions written in that languages as callbacks.
+ * order to use functions written in that language as callbacks. Use
+ * g_closure_set_marshal() to set the marshaller on such a custom
+ * closure implementation.
  * 
  * Within GObject, closures play an important role in the
  * implementation of signals. When a signal is registered, the
@@ -290,19 +291,15 @@ public class Closure
 	 *         invoke the callback of @closure
 	 *     invocationHint = a context-dependent invocation hint
 	 */
-	public void invoke(out Value returnValue, Value[] paramValues, void* invocationHint)
+	public void invoke(ref Value returnValue, Value[] paramValues, void* invocationHint)
 	{
-		GValue* outreturnValue = sliceNew!GValue();
-
 		GValue[] paramValuesArray = new GValue[paramValues.length];
 		for ( int i = 0; i < paramValues.length; i++ )
 		{
 			paramValuesArray[i] = *(paramValues[i].getValueStruct());
 		}
 
-		g_closure_invoke(gClosure, outreturnValue, cast(uint)paramValues.length, paramValuesArray.ptr, invocationHint);
-
-		returnValue = ObjectG.getDObject!(Value)(outreturnValue, true);
+		g_closure_invoke(gClosure, (returnValue is null) ? null : returnValue.getValueStruct(), cast(uint)paramValues.length, paramValuesArray.ptr, invocationHint);
 	}
 
 	alias doref = ref_;

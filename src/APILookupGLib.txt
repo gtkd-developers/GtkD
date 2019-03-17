@@ -1105,7 +1105,7 @@ code: start
 		bool delegate(string) readError = null )
 	{
 		string commandLine;
-		foreach ( int count, string arg; argv)
+		foreach ( count, string arg; argv)
 		{
 			if ( count > 0 )
 			{
@@ -1684,6 +1684,10 @@ move: get_filename_charsets CharacterSet
 move: locale_from_utf8 CharacterSet
 move: locale_to_utf8 CharacterSet
 
+version 2.58: start
+	move:get_language_names_with_category CharacterSet
+version: end
+
 move: child_watch_add Child
 move: child_watch_add_full Child
 move: child_watch_source_new Child
@@ -1858,6 +1862,10 @@ move: spawn_error_quark Spawn error_quark
 move: spawn_exit_error_quark Spawn exit_error_quark
 move: spawn_sync Spawn sync
 
+version 2.58: start
+	move: spawn_async_with_fds Spawn async_with_fds
+version: end
+
 struct: Spawn
 noCode: async_with_pipes
 
@@ -1934,6 +1942,8 @@ version 2.54: start
 	move: ascii_string_to_signed Str
 	move: ascii_string_to_unsigned Str
 version: end
+
+version 2.60: move: strv_equal Str
 
 move: string_new String
 move: string_new_len String
@@ -2024,6 +2034,7 @@ move: utf8_to_ucs4_fast Unicode
 move: utf8_to_utf16 Unicode
 move: utf8_validate Unicode
 version 2.52: move: utf8_make_valid Unicode
+version 2.60: move: utf8_validate_len Unicode
 
 version !Windows: start
 	move: unix_error_quark UnixUtils error_quark
@@ -2094,5 +2105,9 @@ move: set_prgname Util
 move: setenv Util
 move: spaced_primes_closest Util
 move: unsetenv Util
+
+version 2.58: start
+	move: canonicalize_filename Util
+version: end
 
 move: check_version Version

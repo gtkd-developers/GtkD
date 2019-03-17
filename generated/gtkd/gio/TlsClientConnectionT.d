@@ -165,14 +165,19 @@ public template TlsClientConnectionT(TStruct)
 	}
 
 	/**
-	 * If @use_ssl3 is %TRUE, this forces @conn to use the lowest-supported
-	 * TLS protocol version rather than trying to properly negotiate the
-	 * highest mutually-supported protocol version with the peer. This can
-	 * be used when talking to broken TLS servers that exhibit protocol
-	 * version intolerance.
+	 * Since 2.42.1, if @use_ssl3 is %TRUE, this forces @conn to use the
+	 * lowest-supported TLS protocol version rather than trying to properly
+	 * negotiate the highest mutually-supported protocol version with the
+	 * peer. Be aware that SSL 3.0 is generally disabled by the
+	 * #GTlsBackend, so the lowest-supported protocol version is probably
+	 * not SSL 3.0.
 	 *
-	 * Be aware that SSL 3.0 is generally disabled by the #GTlsBackend, so
-	 * the lowest-supported protocol version is probably not SSL 3.0.
+	 * Since 2.58, this may additionally cause an RFC 7507 fallback SCSV to
+	 * be sent to the server, causing modern TLS servers to immediately
+	 * terminate the connection. You should generally only use this function
+	 * if you need to connect to broken servers that exhibit TLS protocol
+	 * version intolerance, and when an initial attempt to connect to a
+	 * server normally has already failed.
 	 *
 	 * Deprecated: SSL 3.0 is insecure, and this function does not
 	 * generally enable or disable it, despite its name.

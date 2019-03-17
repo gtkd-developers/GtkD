@@ -143,7 +143,7 @@ public class OptionGroup
 	/**
 	 * Increments the reference count of @group by one.
 	 *
-	 * Returns: a #GoptionGroup
+	 * Returns: a #GOptionGroup
 	 *
 	 * Since: 2.44
 	 */

@@ -56,6 +56,10 @@ addEnums: start
 	}
 addEnums: end
 
+struct: Closure
+# technically out but the caller needs to init the value with the expected type.
+ref: invoke return_value
+
 struct: CClosure
 class: CClosure
 import: glib.ConstructionException

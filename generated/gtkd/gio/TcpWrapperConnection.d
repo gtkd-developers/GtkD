@@ -41,6 +41,8 @@ public  import gtkc.giotypes;
  * #GSocketConnection. This is used by #GSocketClient so that it can
  * always return a #GSocketConnection, even when the connection it has
  * actually created is not directly a #GSocketConnection.
+ *
+ * Since: 2.28
  */
 public class TcpWrapperConnection : TcpConnection
 {

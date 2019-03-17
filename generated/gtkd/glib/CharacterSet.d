@@ -448,13 +448,22 @@ public struct CharacterSet
 	 * `G_FILENAME_ENCODING` value, the actual file names present
 	 * on a system might be in any random encoding or just gibberish.
 	 *
+	 * Params:
+	 *     filenameCharsets = return location for the %NULL-terminated list of encoding names
+	 *
 	 * Returns: %TRUE if the filename encoding is UTF-8.
 	 *
 	 * Since: 2.6
 	 */
-	public static bool getFilenameCharsets(string[][] charsets)
+	public static bool getFilenameCharsets(out string[] filenameCharsets)
 	{
-		return g_get_filename_charsets(Str.toStringzArray(charsets)) != 0;
+		char** outfilenameCharsets = null;
+
+		auto p = g_get_filename_charsets(&outfilenameCharsets) != 0;
+
+		filenameCharsets = Str.toStringArray(outfilenameCharsets);
+
+		return p;
 	}
 
 	/**
@@ -547,5 +556,31 @@ public struct CharacterSet
 
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
+	}
+
+	/**
+	 * Computes a list of applicable locale names with a locale category name,
+	 * which can be used to construct the fallback locale-dependent filenames
+	 * or search paths. The returned list is sorted from most desirable to
+	 * least desirable and always contains the default locale "C".
+	 *
+	 * This function consults the environment variables `LANGUAGE`, `LC_ALL`,
+	 * @category_name, and `LANG` to find the list of locales specified by the
+	 * user.
+	 *
+	 * g_get_language_names() returns g_get_language_names_with_category("LC_MESSAGES").
+	 *
+	 * Params:
+	 *     categoryName = a locale category name
+	 *
+	 * Returns: a %NULL-terminated array of strings owned by
+	 *     the thread g_get_language_names_with_category was called from.
+	 *     It must not be modified or freed. It must be copied if planned to be used in another thread.
+	 *
+	 * Since: 2.58
+	 */
+	public static string[] getLanguageNamesWithCategory(string categoryName)
+	{
+		return Str.toStringArray(g_get_language_names_with_category(Str.toStringz(categoryName)));
 	}
 }

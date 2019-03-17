@@ -125,7 +125,8 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	 * Params:
 	 *     desktopId = the desktop file id
 	 *
-	 * Returns: a new #GDesktopAppInfo, or %NULL if no desktop file with that id
+	 * Returns: a new #GDesktopAppInfo, or %NULL if no desktop
+	 *     file with that id exists.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -436,6 +437,29 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	}
 
 	/**
+	 * Looks up a string list value in the keyfile backing @info.
+	 *
+	 * The @key is looked up in the "Desktop Entry" group.
+	 *
+	 * Params:
+	 *     key = the key to look up
+	 *
+	 * Returns: a %NULL-terminated string array or %NULL if the specified
+	 *     key cannot be found. The array should be freed with g_strfreev().
+	 *
+	 * Since: 2.60.0
+	 */
+	public string[] getStringList(string key)
+	{
+		size_t length;
+
+		auto retStr = g_desktop_app_info_get_string_list(gDesktopAppInfo, Str.toStringz(key), &length);
+
+		scope(exit) Str.freeStringArray(retStr);
+		return Str.toStringArray(retStr, length);
+	}
+
+	/**
 	 * Returns whether @key exists in the "Desktop Entry" group
 	 * of the keyfile backing @info.
 	 *
@@ -486,11 +510,12 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 	 * launch applications.  Ordinary applications should use
 	 * g_app_info_launch_uris().
 	 *
-	 * If the application is launched via traditional UNIX fork()/exec()
-	 * then @spawn_flags, @user_setup and @user_setup_data are used for the
-	 * call to g_spawn_async().  Additionally, @pid_callback (with
-	 * @pid_callback_data) will be called to inform about the PID of the
-	 * created process.
+	 * If the application is launched via GSpawn, then @spawn_flags, @user_setup
+	 * and @user_setup_data are used for the call to g_spawn_async().
+	 * Additionally, @pid_callback (with @pid_callback_data) will be called to
+	 * inform about the PID of the created process. See g_spawn_async_with_pipes()
+	 * for information on certain parameter conditions that can enable an
+	 * optimized posix_spawn() codepath to be used.
 	 *
 	 * If application launching occurs via some other mechanism (eg: D-Bus
 	 * activation) then @spawn_flags, @user_setup, @user_setup_data,
@@ -515,6 +540,47 @@ public class DesktopAppInfo : ObjectG, AppInfoIF
 		GError* err = null;
 
 		auto p = g_desktop_app_info_launch_uris_as_manager(gDesktopAppInfo, (uris is null) ? null : uris.getListGStruct(), (launchContext is null) ? null : launchContext.getAppLaunchContextStruct(), spawnFlags, userSetup, userSetupData, pidCallback, pidCallbackData, &err) != 0;
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		return p;
+	}
+
+	/**
+	 * Equivalent to g_desktop_app_info_launch_uris_as_manager() but allows
+	 * you to pass in file descriptors for the stdin, stdout and stderr streams
+	 * of the launched process.
+	 *
+	 * If application launching occurs via some non-spawn mechanism (e.g. D-Bus
+	 * activation) then @stdin_fd, @stdout_fd and @stderr_fd are ignored.
+	 *
+	 * Params:
+	 *     uris = List of URIs
+	 *     launchContext = a #GAppLaunchContext
+	 *     spawnFlags = #GSpawnFlags, used for each process
+	 *     userSetup = a #GSpawnChildSetupFunc, used once
+	 *         for each process.
+	 *     userSetupData = User data for @user_setup
+	 *     pidCallback = Callback for child processes
+	 *     pidCallbackData = User data for @callback
+	 *     stdinFd = file descriptor to use for child's stdin, or -1
+	 *     stdoutFd = file descriptor to use for child's stdout, or -1
+	 *     stderrFd = file descriptor to use for child's stderr, or -1
+	 *
+	 * Returns: %TRUE on successful launch, %FALSE otherwise.
+	 *
+	 * Since: 2.58
+	 *
+	 * Throws: GException on failure.
+	 */
+	public bool launchUrisAsManagerWithFds(ListG uris, AppLaunchContext launchContext, GSpawnFlags spawnFlags, GSpawnChildSetupFunc userSetup, void* userSetupData, GDesktopAppLaunchCallback pidCallback, void* pidCallbackData, int stdinFd, int stdoutFd, int stderrFd)
+	{
+		GError* err = null;
+
+		auto p = g_desktop_app_info_launch_uris_as_manager_with_fds(gDesktopAppInfo, (uris is null) ? null : uris.getListGStruct(), (launchContext is null) ? null : launchContext.getAppLaunchContextStruct(), spawnFlags, userSetup, userSetupData, pidCallback, pidCallbackData, stdinFd, stdoutFd, stderrFd, &err) != 0;
 
 		if (err !is null)
 		{

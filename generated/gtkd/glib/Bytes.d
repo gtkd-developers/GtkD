@@ -159,13 +159,20 @@ public class Bytes
 	/**
 	 * Compares the two #GBytes values.
 	 *
-	 * This function can be used to sort GBytes instances in lexographical order.
+	 * This function can be used to sort GBytes instances in lexicographical order.
+	 *
+	 * If @bytes1 and @bytes2 have different length but the shorter one is a
+	 * prefix of the longer one then the shorter one is considered to be less than
+	 * the longer one. Otherwise the first byte where both differ is used for
+	 * comparison. If @bytes1 has a smaller value at that position it is
+	 * considered less, otherwise greater than @bytes2.
 	 *
 	 * Params:
 	 *     bytes2 = a pointer to a #GBytes to compare with @bytes1
 	 *
-	 * Returns: a negative value if bytes2 is lesser, a positive value if bytes2 is
-	 *     greater, and zero if bytes2 is equal to bytes1
+	 * Returns: a negative value if @bytes1 is less than @bytes2, a positive value
+	 *     if @bytes1 is greater than @bytes2, and zero if @bytes1 is equal to
+	 *     @bytes2
 	 *
 	 * Since: 2.32
 	 */

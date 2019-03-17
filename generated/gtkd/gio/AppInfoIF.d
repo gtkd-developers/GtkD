@@ -294,6 +294,10 @@ public interface AppInfoIF{
 	 * is done on the uri to detect the type of the file if
 	 * required.
 	 *
+	 * The D-Bus–activated applications don't have to be started if your application
+	 * terminates too soon after this function. To prevent this, use
+	 * g_app_info_launch_default_for_uri() instead.
+	 *
 	 * Params:
 	 *     uri = the uri to show
 	 *     context = an optional #GAppLaunchContext
@@ -324,11 +328,15 @@ public interface AppInfoIF{
 	 * sandboxed and the portal may present an application chooser
 	 * dialog to the user.
 	 *
+	 * This is also useful if you want to be sure that the D-Bus–activated
+	 * applications are really started before termination and if you are interested
+	 * in receiving error information from their activation.
+	 *
 	 * Params:
 	 *     uri = the uri to show
 	 *     context = an optional #GAppLaunchContext
 	 *     cancellable = a #GCancellable
-	 *     callback = a #GASyncReadyCallback to call when the request is done
+	 *     callback = a #GAsyncReadyCallback to call when the request is done
 	 *     userData = data to pass to @callback
 	 *
 	 * Since: 2.50
@@ -587,6 +595,39 @@ public interface AppInfoIF{
 	 * Throws: GException on failure.
 	 */
 	public bool launchUris(ListG uris, AppLaunchContext context);
+
+	/**
+	 * Async version of g_app_info_launch_uris().
+	 *
+	 * The @callback is invoked immediately after the application launch, but it
+	 * waits for activation in case of D-Bus–activated applications and also provides
+	 * extended error information for sandboxed applications, see notes for
+	 * g_app_info_launch_default_for_uri_async().
+	 *
+	 * Params:
+	 *     uris = a #GList containing URIs to launch.
+	 *     context = a #GAppLaunchContext or %NULL
+	 *     cancellable = a #GCancellable
+	 *     callback = a #GAsyncReadyCallback to call when the request is done
+	 *     userData = data to pass to @callback
+	 *
+	 * Since: 2.60
+	 */
+	public void launchUrisAsync(ListG uris, AppLaunchContext context, Cancellable cancellable, GAsyncReadyCallback callback, void* userData);
+
+	/**
+	 * Finishes a g_app_info_launch_uris_async() operation.
+	 *
+	 * Params:
+	 *     result = a #GAsyncResult
+	 *
+	 * Returns: %TRUE on successful launch, %FALSE otherwise.
+	 *
+	 * Since: 2.60
+	 *
+	 * Throws: GException on failure.
+	 */
+	public bool launchUrisFinish(AsyncResultIF result);
 
 	/**
 	 * Removes a supported type from an application, if possible.

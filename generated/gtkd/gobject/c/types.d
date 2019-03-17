@@ -1134,33 +1134,10 @@ struct GSignalQuery
 	GType* paramTypes;
 }
 
-/**
- * A union holding one collected value.
- */
 struct GTypeCValue
 {
 	union
 	{
-		/**
-		 * the field for holding integer values
-		 */
-		int vInt;
-		/**
-		 * the field for holding long integer values
-		 */
-		glong vLong;
-		/**
-		 * the field for holding 64 bit integer values
-		 */
-		long vInt64;
-		/**
-		 * the field for holding floating point values
-		 */
-		double vDouble;
-		/**
-		 * the field for holding pointers
-		 */
-		void* vPointer;
 	}
 }
 
@@ -1992,13 +1969,6 @@ alias G_TYPE_RESERVED_GLIB_LAST = TYPE_RESERVED_GLIB_LAST;
  */
 enum TYPE_RESERVED_USER_FIRST = 49;
 alias G_TYPE_RESERVED_USER_FIRST = TYPE_RESERVED_USER_FIRST;
-
-/**
- * The maximal number of #GTypeCValues which can be collected for a
- * single #GValue.
- */
-enum VALUE_COLLECT_FORMAT_MAX_LENGTH = 8;
-alias G_VALUE_COLLECT_FORMAT_MAX_LENGTH = VALUE_COLLECT_FORMAT_MAX_LENGTH;
 
 /**
  * If passed to G_VALUE_COLLECT(), allocated data won't be copied

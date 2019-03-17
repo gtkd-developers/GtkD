@@ -58,7 +58,7 @@ public  import gtkc.giotypes;
  * where it was created (waiting until the next iteration of the main
  * loop first, if necessary). The caller will pass the #GTask back to
  * the operation's finish function (as a #GAsyncResult), and you can
- * can use g_task_propagate_pointer() or the like to extract the
+ * use g_task_propagate_pointer() or the like to extract the
  * return value.
  * 
  * Here is an example for using GTask as a GAsyncResult:
@@ -668,6 +668,9 @@ public class Task : ObjectG, AsyncResultIF
 	 * #GMainContext with @task's [priority][io-priority], and sets @source's
 	 * callback to @callback, with @task as the callback's `user_data`.
 	 *
+	 * It will set the @source’s name to the task’s name (as set with
+	 * g_task_set_name()), if one has been set.
+	 *
 	 * This takes a reference on @task until @source is destroyed.
 	 *
 	 * Params:
@@ -748,6 +751,18 @@ public class Task : ObjectG, AsyncResultIF
 		}
 
 		return new MainContext(cast(GMainContext*) p);
+	}
+
+	/**
+	 * Gets @task’s name. See g_task_set_name().
+	 *
+	 * Returns: @task’s name, or %NULL
+	 *
+	 * Since: 2.60
+	 */
+	public string getName()
+	{
+		return Str.toString(g_task_get_name(gTask));
 	}
 
 	/**
@@ -1094,6 +1109,27 @@ public class Task : ObjectG, AsyncResultIF
 	public void setCheckCancellable(bool checkCancellable)
 	{
 		g_task_set_check_cancellable(gTask, checkCancellable);
+	}
+
+	/**
+	 * Sets @task’s name, used in debugging and profiling. The name defaults to
+	 * %NULL.
+	 *
+	 * The task name should describe in a human readable way what the task does.
+	 * For example, ‘Open file’ or ‘Connect to network host’. It is used to set the
+	 * name of the #GSource used for idle completion of the task.
+	 *
+	 * This function may only be called before the @task is first used in a thread
+	 * other than the one it was constructed in.
+	 *
+	 * Params:
+	 *     name = a human readable name for the task, or %NULL to unset it
+	 *
+	 * Since: 2.60
+	 */
+	public void setName(string name)
+	{
+		g_task_set_name(gTask, Str.toStringz(name));
 	}
 
 	/**

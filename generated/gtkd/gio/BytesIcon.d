@@ -39,6 +39,8 @@ public  import gtkc.giotypes;
 /**
  * #GBytesIcon specifies an image held in memory in a common format (usually
  * png) to be used as icon.
+ *
+ * Since: 2.38
  */
 public class BytesIcon : ObjectG, IconIF, LoadableIconIF
 {

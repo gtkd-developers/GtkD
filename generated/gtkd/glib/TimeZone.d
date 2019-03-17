@@ -161,6 +161,34 @@ public class TimeZone
 	}
 
 	/**
+	 * Creates a #GTimeZone corresponding to the given constant offset from UTC,
+	 * in seconds.
+	 *
+	 * This is equivalent to calling g_time_zone_new() with a string in the form
+	 * `[+|-]hh[:mm[:ss]]`.
+	 *
+	 * Params:
+	 *     seconds = offset to UTC, in seconds
+	 *
+	 * Returns: a timezone at the given offset from UTC
+	 *
+	 * Since: 2.58
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(int seconds)
+	{
+		auto p = g_time_zone_new_offset(seconds);
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_offset");
+		}
+
+		this(cast(GTimeZone*) p);
+	}
+
+	/**
 	 * Finds an interval within @tz that corresponds to the given @time_,
 	 * possibly adjusting @time_ if required to fit into an interval.
 	 * The meaning of @time_ depends on @type.
@@ -242,6 +270,25 @@ public class TimeZone
 	public string getAbbreviation(int interval)
 	{
 		return Str.toString(g_time_zone_get_abbreviation(gTimeZone, interval));
+	}
+
+	/**
+	 * Get the identifier of this #GTimeZone, as passed to g_time_zone_new().
+	 * If the identifier passed at construction time was not recognised, `UTC` will
+	 * be returned. If it was %NULL, the identifier of the local timezone at
+	 * construction time will be returned.
+	 *
+	 * The identifier will be returned in the same format as provided at
+	 * construction time: if provided as a time offset, that will be returned by
+	 * this function.
+	 *
+	 * Returns: identifier for this timezone
+	 *
+	 * Since: 2.58
+	 */
+	public string getIdentifier()
+	{
+		return Str.toString(g_time_zone_get_identifier(gTimeZone));
 	}
 
 	/**

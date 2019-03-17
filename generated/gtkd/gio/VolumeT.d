@@ -59,10 +59,10 @@ public  import std.algorithm;
  * for credentials.
  * 
  * The callback will be fired when the operation has resolved (either
- * with success or failure), and a #GAsyncReady structure will be
+ * with success or failure), and a #GAsyncResult instance will be
  * passed to the callback.  That callback should then call
  * g_volume_mount_finish() with the #GVolume instance and the
- * #GAsyncReady data to see if the operation was completed
+ * #GAsyncResult data to see if the operation was completed
  * successfully.  If an @error is present when g_volume_mount_finish()
  * is called, then it will be filled with any error information.
  * 
@@ -75,7 +75,7 @@ public  import std.algorithm;
  * different kinds of identifiers, such as Hal UDIs, filesystem labels,
  * traditional Unix devices (e.g. `/dev/sda2`), UUIDs. GIO uses predefined
  * strings as names for the different kinds of identifiers:
- * #G_VOLUME_IDENTIFIER_KIND_HAL_UDI, #G_VOLUME_IDENTIFIER_KIND_LABEL, etc.
+ * #G_VOLUME_IDENTIFIER_KIND_UUID, #G_VOLUME_IDENTIFIER_KIND_LABEL, etc.
  * Use g_volume_get_identifier() to obtain an identifier for a volume.
  * 
  * 
@@ -315,7 +315,7 @@ public template VolumeT(TStruct)
 	 *     kind = the kind of identifier to return
 	 *
 	 * Returns: a newly allocated string containing the
-	 *     requested identfier, or %NULL if the #GVolume
+	 *     requested identifier, or %NULL if the #GVolume
 	 *     doesn't have this kind of identifier
 	 */
 	public string getIdentifier(string kind)
@@ -398,7 +398,8 @@ public template VolumeT(TStruct)
 	 * considered an opaque string. Returns %NULL if there is no UUID
 	 * available.
 	 *
-	 * Returns: the UUID for @volume or %NULL if no UUID can be computed.
+	 * Returns: the UUID for @volume or %NULL if no UUID
+	 *     can be computed.
 	 *     The returned string should be freed with g_free()
 	 *     when no longer needed.
 	 */

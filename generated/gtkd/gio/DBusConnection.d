@@ -384,7 +384,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 * dispatched anywhere else - not even the standard dispatch machinery
 	 * (that API such as g_dbus_connection_signal_subscribe() and
 	 * g_dbus_connection_send_message_with_reply() relies on) will see the
-	 * message. Similary, if a filter consumes an outgoing message, the
+	 * message. Similarly, if a filter consumes an outgoing message, the
 	 * message will not be sent to the other peer.
 	 *
 	 * If @user_data_free_func is non-%NULL, it will be called (in the
@@ -778,7 +778,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	}
 
 	/**
-	 * Synchronously closees @connection. The calling thread is blocked
+	 * Synchronously closes @connection. The calling thread is blocked
 	 * until this is done. See g_dbus_connection_close() for the
 	 * asynchronous version of this method and more details about what it
 	 * does.
@@ -1039,6 +1039,18 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	public bool getExitOnClose()
 	{
 		return g_dbus_connection_get_exit_on_close(gDBusConnection) != 0;
+	}
+
+	/**
+	 * Gets the flags used to construct this connection
+	 *
+	 * Returns: zero or more flags from the #GDBusConnectionFlags enumeration
+	 *
+	 * Since: 2.60
+	 */
+	public GDBusConnectionFlags getFlags()
+	{
+		return g_dbus_connection_get_flags(gDBusConnection);
 	}
 
 	/**
@@ -1588,6 +1600,11 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 * needed. (It is not guaranteed to be called synchronously when the
 	 * signal is unsubscribed from, and may be called after @connection
 	 * has been destroyed.)
+	 *
+	 * The returned subscription identifier is an opaque value which is guaranteed
+	 * to never be zero.
+	 *
+	 * This function can never fail.
 	 *
 	 * Params:
 	 *     sender = sender name to match on (unique or well-known name)

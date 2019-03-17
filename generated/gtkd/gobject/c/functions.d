@@ -385,6 +385,7 @@ shared static this()
 
 	// gobject.Signals
 
+	Linker.link(g_signal_handler_disconnect, "g_signal_handler_disconnect", LIBRARY_GOBJECT);
 	Linker.link(g_signal_accumulator_first_wins, "g_signal_accumulator_first_wins", LIBRARY_GOBJECT);
 	Linker.link(g_signal_accumulator_true_handled, "g_signal_accumulator_true_handled", LIBRARY_GOBJECT);
 	Linker.link(g_signal_add_emission_hook, "g_signal_add_emission_hook", LIBRARY_GOBJECT);
@@ -400,7 +401,6 @@ shared static this()
 	Linker.link(g_signal_emitv, "g_signal_emitv", LIBRARY_GOBJECT);
 	Linker.link(g_signal_get_invocation_hint, "g_signal_get_invocation_hint", LIBRARY_GOBJECT);
 	Linker.link(g_signal_handler_block, "g_signal_handler_block", LIBRARY_GOBJECT);
-	Linker.link(g_signal_handler_disconnect, "g_signal_handler_disconnect", LIBRARY_GOBJECT);
 	Linker.link(g_signal_handler_find, "g_signal_handler_find", LIBRARY_GOBJECT);
 	Linker.link(g_signal_handler_is_connected, "g_signal_handler_is_connected", LIBRARY_GOBJECT);
 	Linker.link(g_signal_handler_unblock, "g_signal_handler_unblock", LIBRARY_GOBJECT);
@@ -855,6 +855,7 @@ __gshared extern(C)
 
 	// gobject.Signals
 
+	void function(void* instance_, gulong handlerId) c_g_signal_handler_disconnect;
 	int function(GSignalInvocationHint* ihint, GValue* returnAccu, GValue* handlerReturn, void* dummy) c_g_signal_accumulator_first_wins;
 	int function(GSignalInvocationHint* ihint, GValue* returnAccu, GValue* handlerReturn, void* dummy) c_g_signal_accumulator_true_handled;
 	gulong function(uint signalId, GQuark detail, GSignalEmissionHook hookFunc, void* hookData, GDestroyNotify dataDestroy) c_g_signal_add_emission_hook;
@@ -870,7 +871,6 @@ __gshared extern(C)
 	void function(GValue* instanceAndParams, uint signalId, GQuark detail, GValue* returnValue) c_g_signal_emitv;
 	GSignalInvocationHint* function(void* instance_) c_g_signal_get_invocation_hint;
 	void function(void* instance_, gulong handlerId) c_g_signal_handler_block;
-	void function(void* instance_, gulong handlerId) c_g_signal_handler_disconnect;
 	gulong function(void* instance_, GSignalMatchType mask, uint signalId, GQuark detail, GClosure* closure, void* func, void* data) c_g_signal_handler_find;
 	int function(void* instance_, gulong handlerId) c_g_signal_handler_is_connected;
 	void function(void* instance_, gulong handlerId) c_g_signal_handler_unblock;
@@ -1323,6 +1323,7 @@ alias c_g_weak_ref_set g_weak_ref_set;
 
 // gobject.Signals
 
+alias c_g_signal_handler_disconnect g_signal_handler_disconnect;
 alias c_g_signal_accumulator_first_wins g_signal_accumulator_first_wins;
 alias c_g_signal_accumulator_true_handled g_signal_accumulator_true_handled;
 alias c_g_signal_add_emission_hook g_signal_add_emission_hook;
@@ -1338,7 +1339,6 @@ alias c_g_signal_emit_valist g_signal_emit_valist;
 alias c_g_signal_emitv g_signal_emitv;
 alias c_g_signal_get_invocation_hint g_signal_get_invocation_hint;
 alias c_g_signal_handler_block g_signal_handler_block;
-alias c_g_signal_handler_disconnect g_signal_handler_disconnect;
 alias c_g_signal_handler_find g_signal_handler_find;
 alias c_g_signal_handler_is_connected g_signal_handler_is_connected;
 alias c_g_signal_handler_unblock g_signal_handler_unblock;

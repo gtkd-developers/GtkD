@@ -87,15 +87,15 @@ public class ArrayG
 
 	/**
 	 * Frees the memory allocated for the #GArray. If @free_segment is
-	 * %TRUE it frees the memory block holding the elements as well and
-	 * also each element if @array has a @element_free_func set. Pass
+	 * %TRUE it frees the memory block holding the elements as well. Pass
 	 * %FALSE if you want to free the #GArray wrapper but preserve the
-	 * underlying array for use elsewhere. If the reference count of @array
-	 * is greater than one, the #GArray wrapper is preserved but the size
-	 * of @array will be set to zero.
+	 * underlying array for use elsewhere. If the reference count of
+	 * @array is greater than one, the #GArray wrapper is preserved but
+	 * the size of  @array will be set to zero.
 	 *
-	 * If array elements contain dynamically-allocated memory, they should
-	 * be freed separately.
+	 * If array contents point to dynamically-allocated memory, they should
+	 * be freed separately if @free_seg is %TRUE and no @clear_func
+	 * function has been set for @array.
 	 *
 	 * This function is not thread-safe. If using a #GArray from multiple
 	 * threads, use only the atomic g_array_ref() and g_array_unref()
@@ -129,6 +129,14 @@ public class ArrayG
 
 	/**
 	 * Inserts @len elements into a #GArray at the given index.
+	 *
+	 * If @index_ is greater than the array’s current length, the array is expanded.
+	 * The elements between the old end of the array and the newly inserted elements
+	 * will be initialised to zero if the array was configured to clear elements;
+	 * otherwise their values will be undefined.
+	 *
+	 * @data may be %NULL if (and only if) @len is zero. If @len is zero, this
+	 * function is a no-op.
 	 *
 	 * Params:
 	 *     index = the index to place the elements at
@@ -178,13 +186,16 @@ public class ArrayG
 	/**
 	 * Adds @len elements onto the start of the array.
 	 *
+	 * @data may be %NULL if (and only if) @len is zero. If @len is zero, this
+	 * function is a no-op.
+	 *
 	 * This operation is slower than g_array_append_vals() since the
 	 * existing elements in the array have to be moved to make space for
 	 * the new elements.
 	 *
 	 * Params:
 	 *     data = a pointer to the elements to prepend to the start of the array
-	 *     len = the number of elements to prepend
+	 *     len = the number of elements to prepend, which may be zero
 	 *
 	 * Returns: the #GArray
 	 */

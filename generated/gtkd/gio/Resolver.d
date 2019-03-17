@@ -340,6 +340,102 @@ public class Resolver : ObjectG
 	}
 
 	/**
+	 * This differs from g_resolver_lookup_by_name() in that you can modify
+	 * the lookup behavior with @flags. For example this can be used to limit
+	 * results with #G_RESOLVER_NAME_LOOKUP_FLAGS_IPV4_ONLY.
+	 *
+	 * Params:
+	 *     hostname = the hostname to look up
+	 *     flags = extra #GResolverNameLookupFlags for the lookup
+	 *     cancellable = a #GCancellable, or %NULL
+	 *
+	 * Returns: a non-empty #GList
+	 *     of #GInetAddress, or %NULL on error. You
+	 *     must unref each of the addresses and free the list when you are
+	 *     done with it. (You can use g_resolver_free_addresses() to do this.)
+	 *
+	 * Since: 2.60
+	 *
+	 * Throws: GException on failure.
+	 */
+	public ListG lookupByNameWithFlags(string hostname, GResolverNameLookupFlags flags, Cancellable cancellable)
+	{
+		GError* err = null;
+
+		auto p = g_resolver_lookup_by_name_with_flags(gResolver, Str.toStringz(hostname), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return new ListG(cast(GList*) p, true);
+	}
+
+	/**
+	 * Begins asynchronously resolving @hostname to determine its
+	 * associated IP address(es), and eventually calls @callback, which
+	 * must call g_resolver_lookup_by_name_with_flags_finish() to get the result.
+	 * See g_resolver_lookup_by_name() for more details.
+	 *
+	 * Params:
+	 *     hostname = the hostname to look up the address of
+	 *     flags = extra #GResolverNameLookupFlags for the lookup
+	 *     cancellable = a #GCancellable, or %NULL
+	 *     callback = callback to call after resolution completes
+	 *     userData = data for @callback
+	 *
+	 * Since: 2.60
+	 */
+	public void lookupByNameWithFlagsAsync(string hostname, GResolverNameLookupFlags flags, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		g_resolver_lookup_by_name_with_flags_async(gResolver, Str.toStringz(hostname), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+
+	/**
+	 * Retrieves the result of a call to
+	 * g_resolver_lookup_by_name_with_flags_async().
+	 *
+	 * If the DNS resolution failed, @error (if non-%NULL) will be set to
+	 * a value from #GResolverError. If the operation was cancelled,
+	 * @error will be set to %G_IO_ERROR_CANCELLED.
+	 *
+	 * Params:
+	 *     result = the result passed to your #GAsyncReadyCallback
+	 *
+	 * Returns: a #GList
+	 *     of #GInetAddress, or %NULL on error. See g_resolver_lookup_by_name()
+	 *     for more details.
+	 *
+	 * Since: 2.60
+	 *
+	 * Throws: GException on failure.
+	 */
+	public ListG lookupByNameWithFlagsFinish(AsyncResultIF result)
+	{
+		GError* err = null;
+
+		auto p = g_resolver_lookup_by_name_with_flags_finish(gResolver, (result is null) ? null : result.getAsyncResultStruct(), &err);
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return new ListG(cast(GList*) p, true);
+	}
+
+	/**
 	 * Synchronously performs a DNS record lookup for the given @rrname and returns
 	 * a list of records as #GVariant tuples. See #GResolverRecordType for
 	 * information on what the records contain for each @record_type.

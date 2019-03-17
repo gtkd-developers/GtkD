@@ -247,7 +247,7 @@ public class Timeout
 	 * context. You can do these steps manually if you need greater control or to
 	 * use a custom main context.
 	 *
-	 * The interval given in terms of monotonic time, not wall clock time.
+	 * The interval given is in terms of monotonic time, not wall clock time.
 	 * See g_get_monotonic_time().
 	 *
 	 * Params:
@@ -393,7 +393,7 @@ public class Timeout
 	 * The scheduling granularity/accuracy of this timeout source will be
 	 * in seconds.
 	 *
-	 * The interval given in terms of monotonic time, not wall clock time.
+	 * The interval given is in terms of monotonic time, not wall clock time.
 	 * See g_get_monotonic_time().
 	 *
 	 * Params:

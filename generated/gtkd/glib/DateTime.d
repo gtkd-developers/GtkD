@@ -827,6 +827,25 @@ public class DateTime
 	}
 
 	/**
+	 * Get the time zone for this @datetime.
+	 *
+	 * Returns: the time zone
+	 *
+	 * Since: 2.58
+	 */
+	public TimeZone getTimezone()
+	{
+		auto p = g_date_time_get_timezone(gDateTime);
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return new TimeZone(cast(GTimeZone*) p);
+	}
+
+	/**
 	 * Determines the time zone abbreviation to be used at the time and in
 	 * the time zone of @datetime.
 	 *

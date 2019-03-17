@@ -42,6 +42,8 @@ public  import gtkc.giotypes;
  * prefixed names (e.g. by prepending "app." or "win.").
  * This is the motivation for the 'Map' part of the interface
  * name.
+ *
+ * Since: 2.32
  */
 public interface ActionMapIF{
 	/** Get the main Gtk struct */

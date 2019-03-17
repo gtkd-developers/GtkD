@@ -524,6 +524,8 @@ public class MainContext
 	 * that owner releases ownership or until @cond is signaled, then
 	 * try again (once) to become the owner.
 	 *
+	 * Deprecated: Use g_main_context_is_owner() and separate locking instead.
+	 *
 	 * Params:
 	 *     cond = a condition variable
 	 *     mutex = a mutex, currently held

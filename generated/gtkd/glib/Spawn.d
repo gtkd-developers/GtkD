@@ -302,7 +302,7 @@ public class Spawn
 	bool delegate(string) readError = null )
 	{
 		string commandLine;
-		foreach ( int count, string arg; argv)
+		foreach ( count, string arg; argv)
 		{
 			if ( count > 0 )
 			{
@@ -609,6 +609,58 @@ public class Spawn
 
 		standardOutput = Str.toString(outstandardOutput);
 		standardError = Str.toString(outstandardError);
+
+		return p;
+	}
+
+	/**
+	 * Identical to g_spawn_async_with_pipes() but instead of
+	 * creating pipes for the stdin/stdout/stderr, you can pass existing
+	 * file descriptors into this function through the @stdin_fd,
+	 * @stdout_fd and @stderr_fd parameters. The following @flags
+	 * also have their behaviour slightly tweaked as a result:
+	 *
+	 * %G_SPAWN_STDOUT_TO_DEV_NULL means that the child's standard output
+	 * will be discarded, instead of going to the same location as the parent's
+	 * standard output. If you use this flag, @standard_output must be -1.
+	 * %G_SPAWN_STDERR_TO_DEV_NULL means that the child's standard error
+	 * will be discarded, instead of going to the same location as the parent's
+	 * standard error. If you use this flag, @standard_error must be -1.
+	 * %G_SPAWN_CHILD_INHERITS_STDIN means that the child will inherit the parent's
+	 * standard input (by default, the child's standard input is attached to
+	 * /dev/null). If you use this flag, @standard_input must be -1.
+	 *
+	 * It is valid to pass the same fd in multiple parameters (e.g. you can pass
+	 * a single fd for both stdout and stderr).
+	 *
+	 * Params:
+	 *     workingDirectory = child's current working directory, or %NULL to inherit parent's, in the GLib file name encoding
+	 *     argv = child's argument vector, in the GLib file name encoding
+	 *     envp = child's environment, or %NULL to inherit parent's, in the GLib file name encoding
+	 *     flags = flags from #GSpawnFlags
+	 *     childSetup = function to run in the child just before exec()
+	 *     userData = user data for @child_setup
+	 *     childPid = return location for child process ID, or %NULL
+	 *     stdinFd = file descriptor to use for child's stdin, or -1
+	 *     stdoutFd = file descriptor to use for child's stdout, or -1
+	 *     stderrFd = file descriptor to use for child's stderr, or -1
+	 *
+	 * Returns: %TRUE on success, %FALSE if an error was set
+	 *
+	 * Since: 2.58
+	 *
+	 * Throws: GException on failure.
+	 */
+	public static bool asyncWithFds(string workingDirectory, string[] argv, string[] envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, out GPid childPid, int stdinFd, int stdoutFd, int stderrFd)
+	{
+		GError* err = null;
+
+		auto p = g_spawn_async_with_fds(Str.toStringz(workingDirectory), Str.toStringzArray(argv), Str.toStringzArray(envp), flags, childSetup, userData, &childPid, stdinFd, stdoutFd, stderrFd, &err) != 0;
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
 
 		return p;
 	}

@@ -352,6 +352,11 @@ public class SettingsBackend : ObjectG
 	 * characters in your path names or '=' in your key names you may be in
 	 * trouble.
 	 *
+	 * The backend reads default values from a keyfile called `defaults` in
+	 * the directory specified by the #GKeyfileSettingsBackend:defaults-dir property,
+	 * and a list of locked keys from a text file with the name `locks` in
+	 * the same location.
+	 *
 	 * Params:
 	 *     filename = the filename of the keyfile
 	 *     rootPath = the path under which all settings keys appear

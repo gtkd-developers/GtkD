@@ -42,7 +42,7 @@ public  import gtkc.giotypes;
  * address families.
  * 
  * See #GSrvTarget for more information about SRV records, and see
- * #GSocketConnectable for and example of using the connectable
+ * #GSocketConnectable for an example of using the connectable
  * interface.
  */
 public class NetworkService : ObjectG, SocketConnectableIF

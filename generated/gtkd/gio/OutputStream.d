@@ -756,4 +756,246 @@ public class OutputStream : ObjectG
 
 		return p;
 	}
+
+	/**
+	 * Tries to write the bytes contained in the @n_vectors @vectors into the
+	 * stream. Will block during the operation.
+	 *
+	 * If @n_vectors is 0 or the sum of all bytes in @vectors is 0, returns 0 and
+	 * does nothing.
+	 *
+	 * On success, the number of bytes written to the stream is returned.
+	 * It is not an error if this is not the same as the requested size, as it
+	 * can happen e.g. on a partial I/O error, or if there is not enough
+	 * storage in the stream. All writes block until at least one byte
+	 * is written or an error occurs; 0 is never returned (unless
+	 * @n_vectors is 0 or the sum of all bytes in @vectors is 0).
+	 *
+	 * If @cancellable is not %NULL, then the operation can be cancelled by
+	 * triggering the cancellable object from another thread. If the operation
+	 * was cancelled, the error %G_IO_ERROR_CANCELLED will be returned. If an
+	 * operation was partially finished when the operation was cancelled the
+	 * partial result will be returned, without an error.
+	 *
+	 * Some implementations of g_output_stream_writev() may have limitations on the
+	 * aggregate buffer size, and will return %G_IO_ERROR_INVALID_ARGUMENT if these
+	 * are exceeded. For example, when writing to a local file on UNIX platforms,
+	 * the aggregate buffer size must not exceed %G_MAXSSIZE bytes.
+	 *
+	 * Params:
+	 *     vectors = the buffer containing the #GOutputVectors to write.
+	 *     bytesWritten = location to store the number of bytes that were
+	 *         written to the stream
+	 *     cancellable = optional cancellable object
+	 *
+	 * Returns: %TRUE on success, %FALSE if there was an error
+	 *
+	 * Since: 2.60
+	 *
+	 * Throws: GException on failure.
+	 */
+	public bool writev(GOutputVector[] vectors, out size_t bytesWritten, Cancellable cancellable)
+	{
+		GError* err = null;
+
+		auto p = g_output_stream_writev(gOutputStream, vectors.ptr, cast(size_t)vectors.length, &bytesWritten, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		return p;
+	}
+
+	/**
+	 * Tries to write the bytes contained in the @n_vectors @vectors into the
+	 * stream. Will block during the operation.
+	 *
+	 * This function is similar to g_output_stream_writev(), except it tries to
+	 * write as many bytes as requested, only stopping on an error.
+	 *
+	 * On a successful write of all @n_vectors vectors, %TRUE is returned, and
+	 * @bytes_written is set to the sum of all the sizes of @vectors.
+	 *
+	 * If there is an error during the operation %FALSE is returned and @error
+	 * is set to indicate the error status.
+	 *
+	 * As a special exception to the normal conventions for functions that
+	 * use #GError, if this function returns %FALSE (and sets @error) then
+	 * @bytes_written will be set to the number of bytes that were
+	 * successfully written before the error was encountered.  This
+	 * functionality is only available from C. If you need it from another
+	 * language then you must write your own loop around
+	 * g_output_stream_write().
+	 *
+	 * The content of the individual elements of @vectors might be changed by this
+	 * function.
+	 *
+	 * Params:
+	 *     vectors = the buffer containing the #GOutputVectors to write.
+	 *     bytesWritten = location to store the number of bytes that were
+	 *         written to the stream
+	 *     cancellable = optional #GCancellable object, %NULL to ignore.
+	 *
+	 * Returns: %TRUE on success, %FALSE if there was an error
+	 *
+	 * Since: 2.60
+	 *
+	 * Throws: GException on failure.
+	 */
+	public bool writevAll(GOutputVector[] vectors, out size_t bytesWritten, Cancellable cancellable)
+	{
+		GError* err = null;
+
+		auto p = g_output_stream_writev_all(gOutputStream, vectors.ptr, cast(size_t)vectors.length, &bytesWritten, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		return p;
+	}
+
+	/**
+	 * Request an asynchronous write of the bytes contained in the @n_vectors @vectors into
+	 * the stream. When the operation is finished @callback will be called.
+	 * You can then call g_output_stream_writev_all_finish() to get the result of the
+	 * operation.
+	 *
+	 * This is the asynchronous version of g_output_stream_writev_all().
+	 *
+	 * Call g_output_stream_writev_all_finish() to collect the result.
+	 *
+	 * Any outstanding I/O request with higher priority (lower numerical
+	 * value) will be executed before an outstanding request with lower
+	 * priority. Default priority is %G_PRIORITY_DEFAULT.
+	 *
+	 * Note that no copy of @vectors will be made, so it must stay valid
+	 * until @callback is called. The content of the individual elements
+	 * of @vectors might be changed by this function.
+	 *
+	 * Params:
+	 *     vectors = the buffer containing the #GOutputVectors to write.
+	 *     ioPriority = the I/O priority of the request
+	 *     cancellable = optional #GCancellable object, %NULL to ignore
+	 *     callback = callback to call when the request is satisfied
+	 *     userData = the data to pass to callback function
+	 *
+	 * Since: 2.60
+	 */
+	public void writevAllAsync(GOutputVector[] vectors, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		g_output_stream_writev_all_async(gOutputStream, vectors.ptr, cast(size_t)vectors.length, ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+
+	/**
+	 * Finishes an asynchronous stream write operation started with
+	 * g_output_stream_writev_all_async().
+	 *
+	 * As a special exception to the normal conventions for functions that
+	 * use #GError, if this function returns %FALSE (and sets @error) then
+	 * @bytes_written will be set to the number of bytes that were
+	 * successfully written before the error was encountered.  This
+	 * functionality is only available from C.  If you need it from another
+	 * language then you must write your own loop around
+	 * g_output_stream_writev_async().
+	 *
+	 * Params:
+	 *     result = a #GAsyncResult
+	 *     bytesWritten = location to store the number of bytes that were written to the stream
+	 *
+	 * Returns: %TRUE on success, %FALSE if there was an error
+	 *
+	 * Since: 2.60
+	 *
+	 * Throws: GException on failure.
+	 */
+	public bool writevAllFinish(AsyncResultIF result, out size_t bytesWritten)
+	{
+		GError* err = null;
+
+		auto p = g_output_stream_writev_all_finish(gOutputStream, (result is null) ? null : result.getAsyncResultStruct(), &bytesWritten, &err) != 0;
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		return p;
+	}
+
+	/**
+	 * Request an asynchronous write of the bytes contained in @n_vectors @vectors into
+	 * the stream. When the operation is finished @callback will be called.
+	 * You can then call g_output_stream_writev_finish() to get the result of the
+	 * operation.
+	 *
+	 * During an async request no other sync and async calls are allowed,
+	 * and will result in %G_IO_ERROR_PENDING errors.
+	 *
+	 * On success, the number of bytes written will be passed to the
+	 * @callback. It is not an error if this is not the same as the
+	 * requested size, as it can happen e.g. on a partial I/O error,
+	 * but generally we try to write as many bytes as requested.
+	 *
+	 * You are guaranteed that this method will never fail with
+	 * %G_IO_ERROR_WOULD_BLOCK — if @stream can't accept more data, the
+	 * method will just wait until this changes.
+	 *
+	 * Any outstanding I/O request with higher priority (lower numerical
+	 * value) will be executed before an outstanding request with lower
+	 * priority. Default priority is %G_PRIORITY_DEFAULT.
+	 *
+	 * The asynchronous methods have a default fallback that uses threads
+	 * to implement asynchronicity, so they are optional for inheriting
+	 * classes. However, if you override one you must override all.
+	 *
+	 * For the synchronous, blocking version of this function, see
+	 * g_output_stream_writev().
+	 *
+	 * Note that no copy of @vectors will be made, so it must stay valid
+	 * until @callback is called.
+	 *
+	 * Params:
+	 *     vectors = the buffer containing the #GOutputVectors to write.
+	 *     ioPriority = the I/O priority of the request.
+	 *     cancellable = optional #GCancellable object, %NULL to ignore.
+	 *     callback = callback to call when the request is satisfied
+	 *     userData = the data to pass to callback function
+	 *
+	 * Since: 2.60
+	 */
+	public void writevAsync(GOutputVector[] vectors, int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		g_output_stream_writev_async(gOutputStream, vectors.ptr, cast(size_t)vectors.length, ioPriority, (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+
+	/**
+	 * Finishes a stream writev operation.
+	 *
+	 * Params:
+	 *     result = a #GAsyncResult.
+	 *     bytesWritten = location to store the number of bytes that were written to the stream
+	 *
+	 * Returns: %TRUE on success, %FALSE if there was an error
+	 *
+	 * Since: 2.60
+	 *
+	 * Throws: GException on failure.
+	 */
+	public bool writevFinish(AsyncResultIF result, out size_t bytesWritten)
+	{
+		GError* err = null;
+
+		auto p = g_output_stream_writev_finish(gOutputStream, (result is null) ? null : result.getAsyncResultStruct(), &bytesWritten, &err) != 0;
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		return p;
+	}
 }

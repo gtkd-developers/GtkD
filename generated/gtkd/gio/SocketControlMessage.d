@@ -51,6 +51,8 @@ public  import gtkc.giotypes;
  * this class and implement the deserialize method. Also, make sure your
  * class is registered with the GType typesystem before calling
  * g_socket_receive_message() to read such a message.
+ *
+ * Since: 2.22
  */
 public class SocketControlMessage : ObjectG
 {

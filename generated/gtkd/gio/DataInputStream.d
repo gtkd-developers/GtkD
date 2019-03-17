@@ -128,7 +128,7 @@ public class DataInputStream : BufferedInputStream
 	 * Params:
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Returns: a signed 16-bit/2-byte value read from @stream or %0 if
+	 * Returns: a signed 16-bit/2-byte value read from @stream or `0` if
 	 *     an error occurred.
 	 *
 	 * Throws: GException on failure.
@@ -160,7 +160,7 @@ public class DataInputStream : BufferedInputStream
 	 * Params:
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Returns: a signed 32-bit/4-byte value read from the @stream or %0 if
+	 * Returns: a signed 32-bit/4-byte value read from the @stream or `0` if
 	 *     an error occurred.
 	 *
 	 * Throws: GException on failure.
@@ -192,7 +192,7 @@ public class DataInputStream : BufferedInputStream
 	 * Params:
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Returns: a signed 64-bit/8-byte value read from @stream or %0 if
+	 * Returns: a signed 64-bit/8-byte value read from @stream or `0` if
 	 *     an error occurred.
 	 *
 	 * Throws: GException on failure.
@@ -384,7 +384,7 @@ public class DataInputStream : BufferedInputStream
 	 * Params:
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Returns: an unsigned 16-bit/2-byte value read from the @stream or %0 if
+	 * Returns: an unsigned 16-bit/2-byte value read from the @stream or `0` if
 	 *     an error occurred.
 	 *
 	 * Throws: GException on failure.
@@ -416,7 +416,7 @@ public class DataInputStream : BufferedInputStream
 	 * Params:
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Returns: an unsigned 32-bit/4-byte value read from the @stream or %0 if
+	 * Returns: an unsigned 32-bit/4-byte value read from the @stream or `0` if
 	 *     an error occurred.
 	 *
 	 * Throws: GException on failure.
@@ -448,7 +448,7 @@ public class DataInputStream : BufferedInputStream
 	 * Params:
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Returns: an unsigned 64-bit/8-byte read from @stream or %0 if
+	 * Returns: an unsigned 64-bit/8-byte read from @stream or `0` if
 	 *     an error occurred.
 	 *
 	 * Throws: GException on failure.

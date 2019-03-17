@@ -431,26 +431,26 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	}
 
 	/**
-	 * Waits for up to @timeout microseconds for @condition to become true
+	 * Waits for up to @timeout_us microseconds for @condition to become true
 	 * on @socket. If the condition is met, %TRUE is returned.
 	 *
 	 * If @cancellable is cancelled before the condition is met, or if
-	 * @timeout (or the socket's #GSocket:timeout) is reached before the
+	 * @timeout_us (or the socket's #GSocket:timeout) is reached before the
 	 * condition is met, then %FALSE is returned and @error, if non-%NULL,
 	 * is set to the appropriate value (%G_IO_ERROR_CANCELLED or
 	 * %G_IO_ERROR_TIMED_OUT).
 	 *
 	 * If you don't want a timeout, use g_socket_condition_wait().
-	 * (Alternatively, you can pass -1 for @timeout.)
+	 * (Alternatively, you can pass -1 for @timeout_us.)
 	 *
-	 * Note that although @timeout is in microseconds for consistency with
+	 * Note that although @timeout_us is in microseconds for consistency with
 	 * other GLib APIs, this function actually only has millisecond
-	 * resolution, and the behavior is undefined if @timeout is not an
+	 * resolution, and the behavior is undefined if @timeout_us is not an
 	 * exact number of milliseconds.
 	 *
 	 * Params:
 	 *     condition = a #GIOCondition mask to wait for
-	 *     timeout = the maximum time (in microseconds) to wait, or -1
+	 *     timeoutUs = the maximum time (in microseconds) to wait, or -1
 	 *     cancellable = a #GCancellable, or %NULL
 	 *
 	 * Returns: %TRUE if the condition was met, %FALSE otherwise
@@ -459,11 +459,11 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 	 *
 	 * Throws: GException on failure.
 	 */
-	public bool conditionTimedWait(GIOCondition condition, long timeout, Cancellable cancellable)
+	public bool conditionTimedWait(GIOCondition condition, long timeoutUs, Cancellable cancellable)
 	{
 		GError* err = null;
 
-		auto p = g_socket_condition_timed_wait(gSocket, condition, timeout, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto p = g_socket_condition_timed_wait(gSocket, condition, timeoutUs, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
@@ -1564,6 +1564,53 @@ public class Socket : ObjectG, DatagramBasedIF, InitableIF
 		GError* err = null;
 
 		auto p = g_socket_send_message(gSocket, (address is null) ? null : address.getSocketAddressStruct(), vectors.ptr, cast(int)vectors.length, messagesArray.ptr, cast(int)messages.length, flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		return p;
+	}
+
+	/**
+	 * This behaves exactly the same as g_socket_send_message(), except that
+	 * the choice of timeout behavior is determined by the @timeout_us argument
+	 * rather than by @socket's properties.
+	 *
+	 * On error %G_POLLABLE_RETURN_FAILED is returned and @error is set accordingly, or
+	 * if the socket is currently not writable %G_POLLABLE_RETURN_WOULD_BLOCK is
+	 * returned. @bytes_written will contain 0 in both cases.
+	 *
+	 * Params:
+	 *     address = a #GSocketAddress, or %NULL
+	 *     vectors = an array of #GOutputVector structs
+	 *     messages = a pointer to an
+	 *         array of #GSocketControlMessages, or %NULL.
+	 *     flags = an int containing #GSocketMsgFlags flags
+	 *     timeoutUs = the maximum time (in microseconds) to wait, or -1
+	 *     bytesWritten = location to store the number of bytes that were written to the socket
+	 *     cancellable = a %GCancellable or %NULL
+	 *
+	 * Returns: %G_POLLABLE_RETURN_OK if all data was successfully written,
+	 *     %G_POLLABLE_RETURN_WOULD_BLOCK if the socket is currently not writable, or
+	 *     %G_POLLABLE_RETURN_FAILED if an error happened and @error is set.
+	 *
+	 * Since: 2.60
+	 *
+	 * Throws: GException on failure.
+	 */
+	public GPollableReturn sendMessageWithTimeout(SocketAddress address, GOutputVector[] vectors, SocketControlMessage[] messages, int flags, long timeoutUs, out size_t bytesWritten, Cancellable cancellable)
+	{
+		GSocketControlMessage*[] messagesArray = new GSocketControlMessage*[messages.length];
+		for ( int i = 0; i < messages.length; i++ )
+		{
+			messagesArray[i] = messages[i].getSocketControlMessageStruct();
+		}
+
+		GError* err = null;
+
+		auto p = g_socket_send_message_with_timeout(gSocket, (address is null) ? null : address.getSocketAddressStruct(), vectors.ptr, cast(int)vectors.length, messagesArray.ptr, cast(int)messages.length, flags, timeoutUs, &bytesWritten, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{

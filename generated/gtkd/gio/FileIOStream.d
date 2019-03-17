@@ -60,6 +60,8 @@ public  import gtkc.giotypes;
  * The default implementation of all the #GFileIOStream operations
  * and the implementation of #GSeekable just call into the same operations
  * on the output stream.
+ *
+ * Since: 2.22
  */
 public class FileIOStream : IOStream, SeekableIF
 {

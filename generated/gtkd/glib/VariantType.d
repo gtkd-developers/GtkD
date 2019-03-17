@@ -113,7 +113,10 @@ private import gtkd.Loader;
  * 
  * The above definition is recursive to arbitrary depth. "aaaaai" and
  * "(ui(nq((y)))s)" are both valid type strings, as is
- * "a(aa(ui)(qna{ya(yd)}))".
+ * "a(aa(ui)(qna{ya(yd)}))". In order to not hit memory limits, #GVariant
+ * imposes a limit on recursion depth of 65 nested containers. This is the
+ * limit in the D-Bus specification (64) plus one to allow a #GDBusMessage to
+ * be nested in a top-level tuple.
  * 
  * The meaning of each of the characters is as follows:
  * - `b`: the type string of %G_VARIANT_TYPE_BOOLEAN; a boolean value.
@@ -801,6 +804,12 @@ public class VariantType
 		}
 
 		return new VariantType(cast(GVariantType*) p);
+	}
+
+	/** */
+	public static size_t stringGetDepth(string typeString)
+	{
+		return g_variant_type_string_get_depth_(Str.toStringz(typeString));
 	}
 
 	/**

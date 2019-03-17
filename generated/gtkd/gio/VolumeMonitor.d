@@ -47,6 +47,9 @@ private import std.algorithm;
  * [thread-default-context aware][g-main-context-push-thread-default],
  * and so should not be used other than from the main thread, with no
  * thread-default-context active.
+ * 
+ * In order to receive updates about volumes and mounts monitored through GVFS,
+ * a main loop must be running.
  */
 public class VolumeMonitor : ObjectG
 {
@@ -115,7 +118,7 @@ public class VolumeMonitor : ObjectG
 	 * also listen for the "removed" signal on the returned object
 	 * and give up its reference when handling that signal
 	 *
-	 * Similary, if implementing g_volume_monitor_adopt_orphan_mount(),
+	 * Similarly, if implementing g_volume_monitor_adopt_orphan_mount(),
 	 * the implementor must take a reference to @mount and return it in
 	 * its g_volume_get_mount() implemented. Also, the implementor must
 	 * listen for the "unmounted" signal on @mount and give up its

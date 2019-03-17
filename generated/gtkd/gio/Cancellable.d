@@ -219,7 +219,7 @@ public class Cancellable : ObjectG
 	 *
 	 * See also g_cancellable_make_pollfd().
 	 *
-	 * Returns: A valid file descriptor. %-1 if the file descriptor
+	 * Returns: A valid file descriptor. `-1` if the file descriptor
 	 *     is not supported, or on errors.
 	 */
 	public int getFd()

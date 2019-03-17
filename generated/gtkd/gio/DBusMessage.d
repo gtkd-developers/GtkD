@@ -103,8 +103,11 @@ public class DBusMessage : ObjectG
 	 * order that the message was in can be retrieved using
 	 * g_dbus_message_get_byte_order().
 	 *
+	 * If the @blob cannot be parsed, contains invalid fields, or contains invalid
+	 * headers, %G_IO_ERROR_INVALID_ARGUMENT will be returned.
+	 *
 	 * Params:
-	 *     blob = A blob represent a binary D-Bus message.
+	 *     blob = A blob representing a binary D-Bus message.
 	 *     capabilities = A #GDBusCapabilityFlags describing what protocol features are supported.
 	 *
 	 * Returns: A new #GDBusMessage or %NULL if @error is set. Free with
@@ -192,7 +195,7 @@ public class DBusMessage : ObjectG
 	 * completely deserialize the D-Bus message stored at @blob.
 	 *
 	 * Params:
-	 *     blob = A blob represent a binary D-Bus message.
+	 *     blob = A blob representing a binary D-Bus message.
 	 *
 	 * Returns: Number of bytes needed or -1 if @error is set (e.g. if
 	 *     @blob contains invalid data or not enough data is available to
@@ -332,6 +335,9 @@ public class DBusMessage : ObjectG
 	/**
 	 * Gets a header field on @message.
 	 *
+	 * The caller is responsible for checking the type of the returned #GVariant
+	 * matches what is expected.
+	 *
 	 * Params:
 	 *     headerField = A 8-bit unsigned integer (typically a value from the #GDBusMessageHeaderField enumeration)
 	 *
@@ -349,7 +355,7 @@ public class DBusMessage : ObjectG
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) p);
 	}
 
 	/**

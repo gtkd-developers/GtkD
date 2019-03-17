@@ -1300,6 +1300,22 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	}
 
 	/**
+	 * The ::name-lost signal is emitted only on the registered primary instance
+	 * when a new instance has taken over. This can only happen if the application
+	 * is using the %G_APPLICATION_ALLOW_REPLACEMENT flag.
+	 *
+	 * The default handler for this signal calls g_application_quit().
+	 *
+	 * Returns: %TRUE if the signal has been handled
+	 *
+	 * Since: 2.60
+	 */
+	gulong addOnNameLost(bool delegate(Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		return Signals.connect(this, "name-lost", dlg, connectFlags ^ ConnectFlags.SWAPPED);
+	}
+
+	/**
 	 * The ::open signal is emitted on the primary instance when there are
 	 * files to open. See g_application_open() for more information.
 	 *

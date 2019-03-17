@@ -193,7 +193,9 @@ public class KeyFile
 	 * @group_name. If both @key and @group_name are %NULL, then
 	 * @comment will be read from above the first group in the file.
 	 *
-	 * Note that the returned string includes the '#' comment markers.
+	 * Note that the returned string does not include the '#' comment markers,
+	 * but does include any whitespace after them (on each line). It includes
+	 * the line breaks between lines, but does not include the final line break.
 	 *
 	 * Params:
 	 *     groupName = a group name, or %NULL

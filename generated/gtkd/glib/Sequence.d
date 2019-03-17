@@ -199,14 +199,14 @@ public class Sequence
 	}
 
 	/**
-	 * Inserts @data into @sequence using @func to determine the new
+	 * Inserts @data into @seq using @cmp_func to determine the new
 	 * position. The sequence must already be sorted according to @cmp_func;
 	 * otherwise the new position of @data is undefined.
 	 *
-	 * @cmp_func is called with two items of the @seq and @user_data.
+	 * @cmp_func is called with two items of the @seq, and @cmp_data.
 	 * It should return 0 if the items are equal, a negative value
 	 * if the first item comes before the second, and a positive value
-	 * if the second  item comes before the first.
+	 * if the second item comes before the first.
 	 *
 	 * Note that when adding a large amount of data to a #GSequence,
 	 * it is more efficient to do unsorted insertions and then call
@@ -243,11 +243,6 @@ public class Sequence
 	 * value if the first iterator comes before the second, and a
 	 * positive value if the second iterator comes before the first.
 	 *
-	 * It is called with two iterators pointing into @seq. It should
-	 * return 0 if the iterators are equal, a negative value if the
-	 * first iterator comes before the second, and a positive value
-	 * if the second iterator comes before the first.
-	 *
 	 * Note that when adding a large amount of data to a #GSequence,
 	 * it is more efficient to do unsorted insertions and then call
 	 * g_sequence_sort() or g_sequence_sort_iter().
@@ -255,7 +250,7 @@ public class Sequence
 	 * Params:
 	 *     data = data for the new item
 	 *     iterCmp = the function used to compare iterators in the sequence
-	 *     cmpData = user data passed to @cmp_func
+	 *     cmpData = user data passed to @iter_cmp
 	 *
 	 * Returns: a #GSequenceIter pointing to the new item
 	 *
@@ -296,7 +291,7 @@ public class Sequence
 	 * returned. In that case, you can use g_sequence_iter_next() and
 	 * g_sequence_iter_prev() to get others.
 	 *
-	 * @cmp_func is called with two items of the @seq and @user_data.
+	 * @cmp_func is called with two items of the @seq, and @cmp_data.
 	 * It should return 0 if the items are equal, a negative value if
 	 * the first item comes before the second, and a positive value if
 	 * the second item comes before the first.
@@ -345,7 +340,7 @@ public class Sequence
 	 *     cmpData = user data passed to @iter_cmp
 	 *
 	 * Returns: an #GSequenceIter pointing to the position of
-	 *     the first item found equal to @data according to @cmp_func
+	 *     the first item found equal to @data according to @iter_cmp
 	 *     and @cmp_data, or %NULL if no such item exists
 	 *
 	 * Since: 2.28
@@ -388,7 +383,7 @@ public class Sequence
 	 * Returns an iterator pointing to the position where @data would
 	 * be inserted according to @cmp_func and @cmp_data.
 	 *
-	 * @cmp_func is called with two items of the @seq and @user_data.
+	 * @cmp_func is called with two items of the @seq, and @cmp_data.
 	 * It should return 0 if the items are equal, a negative value if
 	 * the first item comes before the second, and a positive value if
 	 * the second item comes before the first.
@@ -480,7 +475,7 @@ public class Sequence
 
 	/**
 	 * Like g_sequence_sort(), but uses a #GSequenceIterCompareFunc instead
-	 * of a GCompareDataFunc as the compare function
+	 * of a #GCompareDataFunc as the compare function
 	 *
 	 * @cmp_func is called with two iterators pointing into @seq. It should
 	 * return 0 if the iterators are equal, a negative value if the first
@@ -573,13 +568,13 @@ public class Sequence
 	}
 
 	/**
-	 * Inserts the (@begin, @end) range at the destination pointed to by ptr.
+	 * Inserts the (@begin, @end) range at the destination pointed to by @dest.
 	 * The @begin and @end iters must point into the same sequence. It is
 	 * allowed for @dest to point to a different sequence than the one pointed
 	 * into by @begin and @end.
 	 *
-	 * If @dest is NULL, the range indicated by @begin and @end is
-	 * removed from the sequence. If @dest iter points to a place within
+	 * If @dest is %NULL, the range indicated by @begin and @end is
+	 * removed from the sequence. If @dest points to a place within
 	 * the (@begin, @end) range, the range does not move.
 	 *
 	 * Params:
@@ -700,12 +695,13 @@ public class Sequence
 	}
 
 	/**
-	 * Moves the data pointed to a new position as indicated by @cmp_func. This
+	 * Moves the data pointed to by @iter to a new position as indicated by
+	 * @cmp_func. This
 	 * function should be called for items in a sequence already sorted according
 	 * to @cmp_func whenever some aspect of an item changes so that @cmp_func
 	 * may return different values for that item.
 	 *
-	 * @cmp_func is called with two items of the @seq and @user_data.
+	 * @cmp_func is called with two items of the @seq, and @cmp_data.
 	 * It should return 0 if the items are equal, a negative value if
 	 * the first item comes before the second, and a positive value if
 	 * the second item comes before the first.
@@ -727,7 +723,8 @@ public class Sequence
 	 * a #GSequenceIterCompareFunc instead of a #GCompareDataFunc as
 	 * the compare function.
 	 *
-	 * @iter_cmp is called with two iterators pointing into @seq. It should
+	 * @iter_cmp is called with two iterators pointing into the #GSequence that
+	 * @iter points into. It should
 	 * return 0 if the iterators are equal, a negative value if the first
 	 * iterator comes before the second, and a positive value if the second
 	 * iterator comes before the first.

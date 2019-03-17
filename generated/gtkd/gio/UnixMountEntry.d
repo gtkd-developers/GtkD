@@ -376,4 +376,38 @@ public class UnixMountEntry
 
 		return ObjectG.getDObject!(UnixMountEntry)(cast(GUnixMountEntry*) p, true);
 	}
+
+	/**
+	 * Gets a comma-separated list of mount options for the unix mount. For example,
+	 * `rw,relatime,seclabel,data=ordered`.
+	 *
+	 * This is similar to g_unix_mount_point_get_options(), but it takes
+	 * a #GUnixMountEntry as an argument.
+	 *
+	 * Returns: a string containing the options, or %NULL if not
+	 *     available.
+	 *
+	 * Since: 2.58
+	 */
+	public string getOptions()
+	{
+		return Str.toString(g_unix_mount_get_options(gUnixMountEntry));
+	}
+
+	/**
+	 * Gets the root of the mount within the filesystem. This is useful e.g. for
+	 * mounts created by bind operation, or btrfs subvolumes.
+	 *
+	 * For example, the root path is equal to "/" for mount created by
+	 * "mount /dev/sda1 /mnt/foo" and "/bar" for
+	 * "mount --bind /mnt/foo/bar /mnt/bar".
+	 *
+	 * Returns: a string containing the root, or %NULL if not supported.
+	 *
+	 * Since: 2.60
+	 */
+	public string getRootPath()
+	{
+		return Str.toString(g_unix_mount_get_root_path(gUnixMountEntry));
+	}
 }

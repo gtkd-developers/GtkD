@@ -295,6 +295,9 @@ public class Subprocess : ObjectG, InitableIF
 	 * Like g_subprocess_communicate(), but validates the output of the
 	 * process as UTF-8, and returns it as a regular NUL terminated string.
 	 *
+	 * On error, @stdout_buf and @stderr_buf will be set to undefined values and
+	 * should not be used.
+	 *
 	 * Params:
 	 *     stdinBuf = data to send to the stdin of the subprocess, or %NULL
 	 *     cancellable = a #GCancellable

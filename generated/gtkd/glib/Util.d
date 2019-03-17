@@ -290,7 +290,9 @@ public struct Util
 	 * Formats a size (for example the size of a file) into a human readable
 	 * string.  Sizes are rounded to the nearest size prefix (kB, MB, GB)
 	 * and are displayed rounded to the nearest tenth. E.g. the file size
-	 * 3292528 bytes will be converted into the string "3.2 MB".
+	 * 3292528 bytes will be converted into the string "3.2 MB". The returned string
+	 * is UTF-8, and may use a non-breaking space to separate the number and units,
+	 * to ensure they aren’t separated when line wrapped.
 	 *
 	 * The prefix units base is 1000 (i.e. 1 kB is 1000 bytes).
 	 *
@@ -857,7 +859,9 @@ public struct Util
 	}
 
 	/**
-	 * Gets the directory components of a file name.
+	 * Gets the directory components of a file name. For example, the directory
+	 * component of `/usr/bin/test` is `/usr/bin`. The directory component of `/`
+	 * is `/`.
 	 *
 	 * If the file name has no directory components "." is returned.
 	 * The returned string should be freed when no longer needed.
@@ -950,7 +954,7 @@ public struct Util
 	 * that the latest on-disk version is used. Call this only
 	 * if you just changed the data on disk yourself.
 	 *
-	 * Due to threadsafety issues this may cause leaking of strings
+	 * Due to thread safety issues this may cause leaking of strings
 	 * that were previously returned from g_get_user_special_dir()
 	 * that can't be freed. We ensure to only leak the data for
 	 * the directories that actually changed value though.
@@ -1088,5 +1092,39 @@ public struct Util
 	public static void unsetenv(string variable)
 	{
 		g_unsetenv(Str.toStringz(variable));
+	}
+
+	/**
+	 * Gets the canonical file name from @filename. All triple slashes are turned into
+	 * single slashes, and all `..` and `.`s resolved against @relative_to.
+	 *
+	 * Symlinks are not followed, and the returned path is guaranteed to be absolute.
+	 *
+	 * If @filename is an absolute path, @relative_to is ignored. Otherwise,
+	 * @relative_to will be prepended to @filename to make it absolute. @relative_to
+	 * must be an absolute path, or %NULL. If @relative_to is %NULL, it'll fallback
+	 * to g_get_current_dir().
+	 *
+	 * This function never fails, and will canonicalize file paths even if they don't
+	 * exist.
+	 *
+	 * No file system I/O is done.
+	 *
+	 * Params:
+	 *     filename = the name of the file
+	 *     relativeTo = the relative directory, or %NULL
+	 *         to use the current working directory
+	 *
+	 * Returns: a newly allocated string with the
+	 *     canonical file path
+	 *
+	 * Since: 2.58
+	 */
+	public static string canonicalizeFilename(string filename, string relativeTo)
+	{
+		auto retStr = g_canonicalize_filename(Str.toStringz(filename), Str.toStringz(relativeTo));
+
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 }

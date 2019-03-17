@@ -84,6 +84,20 @@ public class QueueG
 	}
 
 	/**
+	 * Convenience method, which frees all the memory used by a #GQueue,
+	 * and calls the provided @free_func on each item in the #GQueue.
+	 *
+	 * Params:
+	 *     freeFunc = the function to be called to free memory allocated
+	 *
+	 * Since: 2.60
+	 */
+	public void clearFull(GDestroyNotify freeFunc)
+	{
+		g_queue_clear_full(gQueue, freeFunc);
+	}
+
+	/**
 	 * Copies a @queue. Note that is a shallow copy. If the elements in the
 	 * queue consist of pointers to data, the pointers are copied, but the
 	 * actual data is not.

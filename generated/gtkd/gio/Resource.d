@@ -141,7 +141,7 @@ private import gtkd.Loader;
  * When debugging a program or testing a change to an installed version, it is often useful to be able to
  * replace resources in the program or library, without recompiling, for debugging or quick hacking and testing
  * purposes. Since GLib 2.50, it is possible to use the `G_RESOURCE_OVERLAYS` environment variable to selectively overlay
- * resources with replacements from the filesystem.  It is a colon-separated list of substitutions to perform
+ * resources with replacements from the filesystem.  It is a %G_SEARCHPATH_SEPARATOR-separated list of substitutions to perform
  * during resource lookups.
  * 
  * A substitution has the form
@@ -219,6 +219,8 @@ public class Resource
 	 * Note: @data must be backed by memory that is at least pointer aligned.
 	 * Otherwise this function will internally create a copy of the memory since
 	 * GLib 2.56, or in older versions fail and exit the process.
+	 *
+	 * If @data is empty or corrupt, %G_RESOURCE_ERROR_INTERNAL will be returned.
 	 *
 	 * Params:
 	 *     data = A #GBytes
@@ -468,6 +470,11 @@ public class Resource
 	 *
 	 * If you want to use this resource in the global resource namespace you need
 	 * to register it with g_resources_register().
+	 *
+	 * If @filename is empty or the data in it is corrupt,
+	 * %G_RESOURCE_ERROR_INTERNAL will be returned. If @filename doesn’t exist, or
+	 * there is an error in reading it, an error from g_mapped_file_new() will be
+	 * returned.
 	 *
 	 * Params:
 	 *     filename = the path of a filename to load, in the GLib filename encoding

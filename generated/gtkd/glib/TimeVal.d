@@ -39,7 +39,9 @@ private import gtkd.Loader;
  * 
  * GLib is attempting to unify around the use of 64bit integers to
  * represent microsecond-precision time. As such, this type will be
- * removed from a future version of GLib.
+ * removed from a future version of GLib. A consequence of using `glong` for
+ * `tv_sec` is that on 32-bit systems `GTimeVal` is subject to the year 2038
+ * problem.
  */
 public final class TimeVal
 {
@@ -140,10 +142,12 @@ public final class TimeVal
 	 * variation of ISO 8601 format is required.
 	 *
 	 * If @time_ represents a date which is too large to fit into a `struct tm`,
-	 * %NULL will be returned. This is platform dependent, but it is safe to assume
-	 * years up to 3000 are supported. The return value of g_time_val_to_iso8601()
-	 * has been nullable since GLib 2.54; before then, GLib would crash under the
-	 * same conditions.
+	 * %NULL will be returned. This is platform dependent. Note also that since
+	 * `GTimeVal` stores the number of seconds as a `glong`, on 32-bit systems it
+	 * is subject to the year 2038 problem.
+	 *
+	 * The return value of g_time_val_to_iso8601() has been nullable since GLib
+	 * 2.54; before then, GLib would crash under the same conditions.
 	 *
 	 * Returns: a newly allocated string containing an ISO 8601 date,
 	 *     or %NULL if @time_ was too large
@@ -166,6 +170,8 @@ public final class TimeVal
 	 * seconds. It can optionally include fractions of a second and a time
 	 * zone indicator. (In the absence of any time zone indication, the
 	 * timestamp is assumed to be in local time.)
+	 *
+	 * Any leading or trailing space in @iso_date is ignored.
 	 *
 	 * Params:
 	 *     isoDate = an ISO 8601 encoded date string

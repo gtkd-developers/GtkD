@@ -553,6 +553,34 @@ public class HashTable
 	}
 
 	/**
+	 * Looks up a key in the #GHashTable, stealing the original key and the
+	 * associated value and returning %TRUE if the key was found. If the key was
+	 * not found, %FALSE is returned.
+	 *
+	 * If found, the stolen key and value are removed from the hash table without
+	 * calling the key and value destroy functions, and ownership is transferred to
+	 * the caller of this method; as with g_hash_table_steal().
+	 *
+	 * You can pass %NULL for @lookup_key, provided the hash and equal functions
+	 * of @hash_table are %NULL-safe.
+	 *
+	 * Params:
+	 *     lookupKey = the key to look up
+	 *     stolenKey = return location for the
+	 *         original key
+	 *     stolenValue = return location
+	 *         for the value associated with the key
+	 *
+	 * Returns: %TRUE if the key was found in the #GHashTable
+	 *
+	 * Since: 2.58
+	 */
+	public bool stealExtended(void* lookupKey, out void* stolenKey, out void* stolenValue)
+	{
+		return g_hash_table_steal_extended(gHashTable, lookupKey, &stolenKey, &stolenValue) != 0;
+	}
+
+	/**
 	 * Atomically decrements the reference count of @hash_table by one.
 	 * If the reference count drops to 0, all keys and values will be
 	 * destroyed, and all memory allocated by the hash table is released.
@@ -728,9 +756,9 @@ public class HashTable
 	 * @key_equal_func parameter, when using non-%NULL strings as keys in a
 	 * #GHashTable.
 	 *
-	 * Note that this function is primarily meant as a hash table comparison
-	 * function. For a general-purpose, %NULL-safe string comparison function,
-	 * see g_strcmp0().
+	 * This function is typically used for hash table comparisons, but can be used
+	 * for general purpose comparisons of non-%NULL strings. For a %NULL-safe string
+	 * comparison function, see g_strcmp0().
 	 *
 	 * Params:
 	 *     v1 = a key

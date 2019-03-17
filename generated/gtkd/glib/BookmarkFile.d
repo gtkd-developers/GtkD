@@ -169,8 +169,8 @@ public class BookmarkFile
 	}
 
 	/**
-	 * Gets the registration informations of @app_name for the bookmark for
-	 * @uri.  See g_bookmark_file_set_app_info() for more informations about
+	 * Gets the registration information of @app_name for the bookmark for
+	 * @uri.  See g_bookmark_file_set_app_info() for more information about
 	 * the returned data.
 	 *
 	 * The string returned in @app_exec must be freed.
@@ -646,7 +646,7 @@ public class BookmarkFile
 	 * This function looks for a desktop bookmark file named @file in the
 	 * paths returned from g_get_user_data_dir() and g_get_system_data_dirs(),
 	 * loads the file into @bookmark and returns the file's full path in
-	 * @full_path.  If the file could not be loaded then an %error is
+	 * @full_path.  If the file could not be loaded then @error is
 	 * set to either a #GFileError or #GBookmarkFileError.
 	 *
 	 * Params:

@@ -45,6 +45,9 @@ public  import gtkc.giotypes;
  * from a certificate or key store. It is an abstract base class which
  * TLS library specific subtypes override.
  * 
+ * A #GTlsDatabase may be accessed from multiple threads by the TLS backend.
+ * All implementations are required to be fully thread-safe.
+ * 
  * Most common client applications will not directly interact with
  * #GTlsDatabase. It is used internally by #GTlsConnection.
  *
@@ -215,7 +218,7 @@ public class TlsDatabase : ObjectG
 	/**
 	 * Lookup the issuer of @certificate in the database.
 	 *
-	 * The %issuer property
+	 * The #GTlsCertificate:issuer property
 	 * of @certificate is not modified, and the two certificates are not hooked
 	 * into a chain.
 	 *

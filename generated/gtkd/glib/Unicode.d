@@ -1515,4 +1515,29 @@ public struct Unicode
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
 	}
+
+	/**
+	 * Validates UTF-8 encoded text.
+	 *
+	 * As with g_utf8_validate(), but @max_len must be set, and hence this function
+	 * will always return %FALSE if any of the bytes of @str are nul.
+	 *
+	 * Params:
+	 *     str = a pointer to character data
+	 *     end = return location for end of valid data
+	 *
+	 * Returns: %TRUE if the text was valid UTF-8
+	 *
+	 * Since: 2.60
+	 */
+	public static bool utf8ValidateLen(string str, out string end)
+	{
+		char* outend = null;
+
+		auto p = g_utf8_validate_len(Str.toStringz(str), cast(size_t)str.length, &outend) != 0;
+
+		end = Str.toString(outend);
+
+		return p;
+	}
 }

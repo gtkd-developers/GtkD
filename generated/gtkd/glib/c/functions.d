@@ -274,6 +274,7 @@ shared static this()
 	Linker.link(g_date_time_get_month, "g_date_time_get_month", LIBRARY_GLIB);
 	Linker.link(g_date_time_get_second, "g_date_time_get_second", LIBRARY_GLIB);
 	Linker.link(g_date_time_get_seconds, "g_date_time_get_seconds", LIBRARY_GLIB);
+	Linker.link(g_date_time_get_timezone, "g_date_time_get_timezone", LIBRARY_GLIB);
 	Linker.link(g_date_time_get_timezone_abbreviation, "g_date_time_get_timezone_abbreviation", LIBRARY_GLIB);
 	Linker.link(g_date_time_get_utc_offset, "g_date_time_get_utc_offset", LIBRARY_GLIB);
 	Linker.link(g_date_time_get_week_numbering_year, "g_date_time_get_week_numbering_year", LIBRARY_GLIB);
@@ -338,6 +339,7 @@ shared static this()
 	Linker.link(g_hash_table_size, "g_hash_table_size", LIBRARY_GLIB);
 	Linker.link(g_hash_table_steal, "g_hash_table_steal", LIBRARY_GLIB);
 	Linker.link(g_hash_table_steal_all, "g_hash_table_steal_all", LIBRARY_GLIB);
+	Linker.link(g_hash_table_steal_extended, "g_hash_table_steal_extended", LIBRARY_GLIB);
 	Linker.link(g_hash_table_unref, "g_hash_table_unref", LIBRARY_GLIB);
 	Linker.link(g_direct_equal, "g_direct_equal", LIBRARY_GLIB);
 	Linker.link(g_direct_hash, "g_direct_hash", LIBRARY_GLIB);
@@ -745,11 +747,14 @@ shared static this()
 	Linker.link(g_ptr_array_sized_new, "g_ptr_array_sized_new", LIBRARY_GLIB);
 	Linker.link(g_ptr_array_sort, "g_ptr_array_sort", LIBRARY_GLIB);
 	Linker.link(g_ptr_array_sort_with_data, "g_ptr_array_sort_with_data", LIBRARY_GLIB);
+	Linker.link(g_ptr_array_steal_index, "g_ptr_array_steal_index", LIBRARY_GLIB);
+	Linker.link(g_ptr_array_steal_index_fast, "g_ptr_array_steal_index_fast", LIBRARY_GLIB);
 	Linker.link(g_ptr_array_unref, "g_ptr_array_unref", LIBRARY_GLIB);
 
 	// glib.QueueG
 
 	Linker.link(g_queue_clear, "g_queue_clear", LIBRARY_GLIB);
+	Linker.link(g_queue_clear_full, "g_queue_clear_full", LIBRARY_GLIB);
 	Linker.link(g_queue_copy, "g_queue_copy", LIBRARY_GLIB);
 	Linker.link(g_queue_delete_link, "g_queue_delete_link", LIBRARY_GLIB);
 	Linker.link(g_queue_find, "g_queue_find", LIBRARY_GLIB);
@@ -1106,10 +1111,12 @@ shared static this()
 
 	Linker.link(g_time_zone_new, "g_time_zone_new", LIBRARY_GLIB);
 	Linker.link(g_time_zone_new_local, "g_time_zone_new_local", LIBRARY_GLIB);
+	Linker.link(g_time_zone_new_offset, "g_time_zone_new_offset", LIBRARY_GLIB);
 	Linker.link(g_time_zone_new_utc, "g_time_zone_new_utc", LIBRARY_GLIB);
 	Linker.link(g_time_zone_adjust_time, "g_time_zone_adjust_time", LIBRARY_GLIB);
 	Linker.link(g_time_zone_find_interval, "g_time_zone_find_interval", LIBRARY_GLIB);
 	Linker.link(g_time_zone_get_abbreviation, "g_time_zone_get_abbreviation", LIBRARY_GLIB);
+	Linker.link(g_time_zone_get_identifier, "g_time_zone_get_identifier", LIBRARY_GLIB);
 	Linker.link(g_time_zone_get_offset, "g_time_zone_get_offset", LIBRARY_GLIB);
 	Linker.link(g_time_zone_is_dst, "g_time_zone_is_dst", LIBRARY_GLIB);
 	Linker.link(g_time_zone_ref, "g_time_zone_ref", LIBRARY_GLIB);
@@ -1315,6 +1322,7 @@ shared static this()
 	Linker.link(g_variant_type_peek_string, "g_variant_type_peek_string", LIBRARY_GLIB);
 	Linker.link(g_variant_type_value, "g_variant_type_value", LIBRARY_GLIB);
 	Linker.link(g_variant_type_checked_, "g_variant_type_checked_", LIBRARY_GLIB);
+	Linker.link(g_variant_type_string_get_depth_, "g_variant_type_string_get_depth_", LIBRARY_GLIB);
 	Linker.link(g_variant_type_string_is_valid, "g_variant_type_string_is_valid", LIBRARY_GLIB);
 	Linker.link(g_variant_type_string_scan, "g_variant_type_string_scan", LIBRARY_GLIB);
 
@@ -1367,6 +1375,7 @@ shared static this()
 	Linker.link(g_spawn_error_quark, "g_spawn_error_quark", LIBRARY_GLIB);
 	Linker.link(g_spawn_exit_error_quark, "g_spawn_exit_error_quark", LIBRARY_GLIB);
 	Linker.link(g_spawn_sync, "g_spawn_sync", LIBRARY_GLIB);
+	Linker.link(g_spawn_async_with_fds, "g_spawn_async_with_fds", LIBRARY_GLIB);
 
 	// glib.Str
 
@@ -1437,6 +1446,7 @@ shared static this()
 	Linker.link(g_vfprintf, "g_vfprintf", LIBRARY_GLIB);
 	Linker.link(g_ascii_string_to_signed, "g_ascii_string_to_signed", LIBRARY_GLIB);
 	Linker.link(g_ascii_string_to_unsigned, "g_ascii_string_to_unsigned", LIBRARY_GLIB);
+	Linker.link(g_strv_equal, "g_strv_equal", LIBRARY_GLIB);
 
 	// glib.Timeout
 
@@ -1495,6 +1505,7 @@ shared static this()
 	Linker.link(g_setenv, "g_setenv", LIBRARY_GLIB);
 	Linker.link(g_spaced_primes_closest, "g_spaced_primes_closest", LIBRARY_GLIB);
 	Linker.link(g_unsetenv, "g_unsetenv", LIBRARY_GLIB);
+	Linker.link(g_canonicalize_filename, "g_canonicalize_filename", LIBRARY_GLIB);
 
 	// glib.Atomic
 
@@ -1531,6 +1542,7 @@ shared static this()
 	Linker.link(g_get_filename_charsets, "g_get_filename_charsets", LIBRARY_GLIB);
 	Linker.link(g_locale_from_utf8, "g_locale_from_utf8", LIBRARY_GLIB);
 	Linker.link(g_locale_to_utf8, "g_locale_to_utf8", LIBRARY_GLIB);
+	Linker.link(g_get_language_names_with_category, "g_get_language_names_with_category", LIBRARY_GLIB);
 
 	// glib.Child
 
@@ -1725,6 +1737,7 @@ shared static this()
 	Linker.link(g_utf8_to_utf16, "g_utf8_to_utf16", LIBRARY_GLIB);
 	Linker.link(g_utf8_validate, "g_utf8_validate", LIBRARY_GLIB);
 	Linker.link(g_utf8_make_valid, "g_utf8_make_valid", LIBRARY_GLIB);
+	Linker.link(g_utf8_validate_len, "g_utf8_validate_len", LIBRARY_GLIB);
 
 	// glib.UnixUtils
 
@@ -2003,6 +2016,7 @@ __gshared extern(C)
 	int function(GDateTime* datetime) c_g_date_time_get_month;
 	int function(GDateTime* datetime) c_g_date_time_get_second;
 	double function(GDateTime* datetime) c_g_date_time_get_seconds;
+	GTimeZone* function(GDateTime* datetime) c_g_date_time_get_timezone;
 	const(char)* function(GDateTime* datetime) c_g_date_time_get_timezone_abbreviation;
 	GTimeSpan function(GDateTime* datetime) c_g_date_time_get_utc_offset;
 	int function(GDateTime* datetime) c_g_date_time_get_week_numbering_year;
@@ -2067,6 +2081,7 @@ __gshared extern(C)
 	uint function(GHashTable* hashTable) c_g_hash_table_size;
 	int function(GHashTable* hashTable, void* key) c_g_hash_table_steal;
 	void function(GHashTable* hashTable) c_g_hash_table_steal_all;
+	int function(GHashTable* hashTable, void* lookupKey, void** stolenKey, void** stolenValue) c_g_hash_table_steal_extended;
 	void function(GHashTable* hashTable) c_g_hash_table_unref;
 	int function(void* v1, void* v2) c_g_direct_equal;
 	uint function(void* v) c_g_direct_hash;
@@ -2474,11 +2489,14 @@ __gshared extern(C)
 	GPtrArray* function(uint reservedSize) c_g_ptr_array_sized_new;
 	void function(GPtrArray* array, GCompareFunc compareFunc) c_g_ptr_array_sort;
 	void function(GPtrArray* array, GCompareDataFunc compareFunc, void* userData) c_g_ptr_array_sort_with_data;
+	void* function(GPtrArray* array, uint index) c_g_ptr_array_steal_index;
+	void* function(GPtrArray* array, uint index) c_g_ptr_array_steal_index_fast;
 	void function(GPtrArray* array) c_g_ptr_array_unref;
 
 	// glib.QueueG
 
 	void function(GQueue* queue) c_g_queue_clear;
+	void function(GQueue* queue, GDestroyNotify freeFunc) c_g_queue_clear_full;
 	GQueue* function(GQueue* queue) c_g_queue_copy;
 	void function(GQueue* queue, GList* link) c_g_queue_delete_link;
 	GList* function(GQueue* queue, void* data) c_g_queue_find;
@@ -2835,10 +2853,12 @@ __gshared extern(C)
 
 	GTimeZone* function(const(char)* identifier) c_g_time_zone_new;
 	GTimeZone* function() c_g_time_zone_new_local;
+	GTimeZone* function(int seconds) c_g_time_zone_new_offset;
 	GTimeZone* function() c_g_time_zone_new_utc;
 	int function(GTimeZone* tz, GTimeType type, long* time) c_g_time_zone_adjust_time;
 	int function(GTimeZone* tz, GTimeType type, long time) c_g_time_zone_find_interval;
 	const(char)* function(GTimeZone* tz, int interval) c_g_time_zone_get_abbreviation;
+	const(char)* function(GTimeZone* tz) c_g_time_zone_get_identifier;
 	int function(GTimeZone* tz, int interval) c_g_time_zone_get_offset;
 	int function(GTimeZone* tz, int interval) c_g_time_zone_is_dst;
 	GTimeZone* function(GTimeZone* tz) c_g_time_zone_ref;
@@ -2886,7 +2906,7 @@ __gshared extern(C)
 	GVariant* function(const(char)* formatString, ... ) c_g_variant_new;
 	GVariant* function(GVariantType* childType, GVariant** children, size_t nChildren) c_g_variant_new_array;
 	GVariant* function(int value) c_g_variant_new_boolean;
-	GVariant* function(char value) c_g_variant_new_byte;
+	GVariant* function(ubyte value) c_g_variant_new_byte;
 	GVariant* function(char* string_) c_g_variant_new_bytestring;
 	GVariant* function(char** strv, ptrdiff_t length) c_g_variant_new_bytestring_array;
 	GVariant* function(GVariant* key, GVariant* value) c_g_variant_new_dict_entry;
@@ -2926,7 +2946,7 @@ __gshared extern(C)
 	int function(void* one, void* two) c_g_variant_equal;
 	void function(GVariant* value, const(char)* formatString, ... ) c_g_variant_get;
 	int function(GVariant* value) c_g_variant_get_boolean;
-	char function(GVariant* value) c_g_variant_get_byte;
+	ubyte function(GVariant* value) c_g_variant_get_byte;
 	char* function(GVariant* value) c_g_variant_get_bytestring;
 	char** function(GVariant* value, size_t* length) c_g_variant_get_bytestring_array;
 	void function(GVariant* value, size_t index, const(char)* formatString, ... ) c_g_variant_get_child;
@@ -3044,6 +3064,7 @@ __gshared extern(C)
 	const(char)* function(GVariantType* type) c_g_variant_type_peek_string;
 	GVariantType* function(GVariantType* type) c_g_variant_type_value;
 	GVariantType* function(const(char)* arg0) c_g_variant_type_checked_;
+	size_t function(const(char)* typeString) c_g_variant_type_string_get_depth_;
 	int function(const(char)* typeString) c_g_variant_type_string_is_valid;
 	int function(const(char)* string_, const(char)* limit, char** endptr) c_g_variant_type_string_scan;
 
@@ -3096,6 +3117,7 @@ __gshared extern(C)
 	GQuark function() c_g_spawn_error_quark;
 	GQuark function() c_g_spawn_exit_error_quark;
 	int function(char* workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, char** standardOutput, char** standardError, int* exitStatus, GError** err) c_g_spawn_sync;
+	int function(char* workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, GPid* childPid, int stdinFd, int stdoutFd, int stderrFd, GError** err) c_g_spawn_async_with_fds;
 
 	// glib.Str
 
@@ -3166,6 +3188,7 @@ __gshared extern(C)
 	int function(FILE* file, const(char)* format, void* args) c_g_vfprintf;
 	int function(const(char)* str, uint base, long min, long max, long* outNum, GError** err) c_g_ascii_string_to_signed;
 	int function(const(char)* str, uint base, ulong min, ulong max, ulong* outNum, GError** err) c_g_ascii_string_to_unsigned;
+	int function(const(char)* strv1, const(char)* strv2) c_g_strv_equal;
 
 	// glib.Timeout
 
@@ -3224,6 +3247,7 @@ __gshared extern(C)
 	int function(char* variable, char* value, int overwrite) c_g_setenv;
 	uint function(uint num) c_g_spaced_primes_closest;
 	void function(char* variable) c_g_unsetenv;
+	char* function(char* filename, char* relativeTo) c_g_canonicalize_filename;
 
 	// glib.Atomic
 
@@ -3257,9 +3281,10 @@ __gshared extern(C)
 	char* function(char* opsysstring, ptrdiff_t len, size_t* bytesRead, size_t* bytesWritten, GError** err) c_g_filename_to_utf8;
 	int function(char** charset) c_g_get_charset;
 	char* function() c_g_get_codeset;
-	int function(char*** charsets) c_g_get_filename_charsets;
+	int function(char*** filenameCharsets) c_g_get_filename_charsets;
 	char* function(const(char)* utf8string, ptrdiff_t len, size_t* bytesRead, size_t* bytesWritten, GError** err) c_g_locale_from_utf8;
 	char* function(char* opsysstring, ptrdiff_t len, size_t* bytesRead, size_t* bytesWritten, GError** err) c_g_locale_to_utf8;
+	char** function(const(char)* categoryName) c_g_get_language_names_with_category;
 
 	// glib.Child
 
@@ -3454,6 +3479,7 @@ __gshared extern(C)
 	wchar* function(const(char)* str, glong len, glong* itemsRead, glong* itemsWritten, GError** err) c_g_utf8_to_utf16;
 	int function(char* str, ptrdiff_t maxLen, char** end) c_g_utf8_validate;
 	char* function(const(char)* str, ptrdiff_t len) c_g_utf8_make_valid;
+	int function(char* str, size_t maxLen, char** end) c_g_utf8_validate_len;
 
 	// glib.UnixUtils
 
@@ -3724,6 +3750,7 @@ alias c_g_date_time_get_minute g_date_time_get_minute;
 alias c_g_date_time_get_month g_date_time_get_month;
 alias c_g_date_time_get_second g_date_time_get_second;
 alias c_g_date_time_get_seconds g_date_time_get_seconds;
+alias c_g_date_time_get_timezone g_date_time_get_timezone;
 alias c_g_date_time_get_timezone_abbreviation g_date_time_get_timezone_abbreviation;
 alias c_g_date_time_get_utc_offset g_date_time_get_utc_offset;
 alias c_g_date_time_get_week_numbering_year g_date_time_get_week_numbering_year;
@@ -3788,6 +3815,7 @@ alias c_g_hash_table_replace g_hash_table_replace;
 alias c_g_hash_table_size g_hash_table_size;
 alias c_g_hash_table_steal g_hash_table_steal;
 alias c_g_hash_table_steal_all g_hash_table_steal_all;
+alias c_g_hash_table_steal_extended g_hash_table_steal_extended;
 alias c_g_hash_table_unref g_hash_table_unref;
 alias c_g_direct_equal g_direct_equal;
 alias c_g_direct_hash g_direct_hash;
@@ -4195,11 +4223,14 @@ alias c_g_ptr_array_set_size g_ptr_array_set_size;
 alias c_g_ptr_array_sized_new g_ptr_array_sized_new;
 alias c_g_ptr_array_sort g_ptr_array_sort;
 alias c_g_ptr_array_sort_with_data g_ptr_array_sort_with_data;
+alias c_g_ptr_array_steal_index g_ptr_array_steal_index;
+alias c_g_ptr_array_steal_index_fast g_ptr_array_steal_index_fast;
 alias c_g_ptr_array_unref g_ptr_array_unref;
 
 // glib.QueueG
 
 alias c_g_queue_clear g_queue_clear;
+alias c_g_queue_clear_full g_queue_clear_full;
 alias c_g_queue_copy g_queue_copy;
 alias c_g_queue_delete_link g_queue_delete_link;
 alias c_g_queue_find g_queue_find;
@@ -4556,10 +4587,12 @@ alias c_g_usleep g_usleep;
 
 alias c_g_time_zone_new g_time_zone_new;
 alias c_g_time_zone_new_local g_time_zone_new_local;
+alias c_g_time_zone_new_offset g_time_zone_new_offset;
 alias c_g_time_zone_new_utc g_time_zone_new_utc;
 alias c_g_time_zone_adjust_time g_time_zone_adjust_time;
 alias c_g_time_zone_find_interval g_time_zone_find_interval;
 alias c_g_time_zone_get_abbreviation g_time_zone_get_abbreviation;
+alias c_g_time_zone_get_identifier g_time_zone_get_identifier;
 alias c_g_time_zone_get_offset g_time_zone_get_offset;
 alias c_g_time_zone_is_dst g_time_zone_is_dst;
 alias c_g_time_zone_ref g_time_zone_ref;
@@ -4765,6 +4798,7 @@ alias c_g_variant_type_next g_variant_type_next;
 alias c_g_variant_type_peek_string g_variant_type_peek_string;
 alias c_g_variant_type_value g_variant_type_value;
 alias c_g_variant_type_checked_ g_variant_type_checked_;
+alias c_g_variant_type_string_get_depth_ g_variant_type_string_get_depth_;
 alias c_g_variant_type_string_is_valid g_variant_type_string_is_valid;
 alias c_g_variant_type_string_scan g_variant_type_string_scan;
 
@@ -4817,6 +4851,7 @@ alias c_g_spawn_command_line_sync g_spawn_command_line_sync;
 alias c_g_spawn_error_quark g_spawn_error_quark;
 alias c_g_spawn_exit_error_quark g_spawn_exit_error_quark;
 alias c_g_spawn_sync g_spawn_sync;
+alias c_g_spawn_async_with_fds g_spawn_async_with_fds;
 
 // glib.Str
 
@@ -4887,6 +4922,7 @@ alias c_g_fprintf g_fprintf;
 alias c_g_vfprintf g_vfprintf;
 alias c_g_ascii_string_to_signed g_ascii_string_to_signed;
 alias c_g_ascii_string_to_unsigned g_ascii_string_to_unsigned;
+alias c_g_strv_equal g_strv_equal;
 
 // glib.Timeout
 
@@ -4945,6 +4981,7 @@ alias c_g_set_prgname g_set_prgname;
 alias c_g_setenv g_setenv;
 alias c_g_spaced_primes_closest g_spaced_primes_closest;
 alias c_g_unsetenv g_unsetenv;
+alias c_g_canonicalize_filename g_canonicalize_filename;
 
 // glib.Atomic
 
@@ -4981,6 +5018,7 @@ alias c_g_get_codeset g_get_codeset;
 alias c_g_get_filename_charsets g_get_filename_charsets;
 alias c_g_locale_from_utf8 g_locale_from_utf8;
 alias c_g_locale_to_utf8 g_locale_to_utf8;
+alias c_g_get_language_names_with_category g_get_language_names_with_category;
 
 // glib.Child
 
@@ -5175,6 +5213,7 @@ alias c_g_utf8_to_ucs4_fast g_utf8_to_ucs4_fast;
 alias c_g_utf8_to_utf16 g_utf8_to_utf16;
 alias c_g_utf8_validate g_utf8_validate;
 alias c_g_utf8_make_valid g_utf8_make_valid;
+alias c_g_utf8_validate_len g_utf8_validate_len;
 
 // glib.UnixUtils
 

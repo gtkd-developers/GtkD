@@ -424,6 +424,11 @@ public struct Str
 	 * changing the current locale, since that would not be
 	 * thread-safe.
 	 *
+	 * Note that input with a leading minus sign (`-`) is accepted, and will return
+	 * the negation of the parsed number, unless that would overflow a #guint64.
+	 * Critically, this means you cannot assume that a short fixed length input will
+	 * never result in a low return value, as the input could have a leading `-`.
+	 *
 	 * This function is typically used when reading configuration
 	 * files or other non-user input that should be locale independent.
 	 * To handle input from the user you should normally use the
@@ -671,12 +676,12 @@ public struct Str
 	 * If the source language of @str is known, it can used to improve the
 	 * accuracy of the translation by passing it as @from_locale.  It should
 	 * be a valid POSIX locale string (of the form
-	 * "language[_territory][.codeset][@modifier]").
+	 * `language[_territory][.codeset][@modifier]`).
 	 *
 	 * If @from_locale is %NULL then the current locale is used.
 	 *
 	 * If you want to do translation for no specific locale, and you want it
-	 * to be done independently of the currently locale, specify "C" for
+	 * to be done independently of the currently locale, specify `"C"` for
 	 * @from_locale.
 	 *
 	 * Params:
@@ -1431,7 +1436,7 @@ public struct Str
 
 	/**
 	 * Returns the length of the given %NULL-terminated
-	 * string array @str_array.
+	 * string array @str_array. @str_array must not be %NULL.
 	 *
 	 * Params:
 	 *     strArray = a %NULL-terminated array of strings
@@ -1639,7 +1644,8 @@ public struct Str
 	 * @base that is within inclusive bounds limited by @min and @max. If
 	 * this is true, then the converted number is stored in @out_num. An
 	 * empty string is not a valid input. A string with leading or
-	 * trailing whitespace is also an invalid input.
+	 * trailing whitespace is also an invalid input. A string with a leading sign
+	 * (`-` or `+`) is not a valid input for the unsigned parser.
 	 *
 	 * @base can be between 2 and 36 inclusive. Hexadecimal numbers must
 	 * not be prefixed with "0x" or "0X". Such a problem does not exist
@@ -1680,5 +1686,26 @@ public struct Str
 		}
 
 		return p;
+	}
+
+	/**
+	 * Checks if @strv1 and @strv2 contain exactly the same elements in exactly the
+	 * same order. Elements are compared using g_str_equal(). To match independently
+	 * of order, sort the arrays first (using g_qsort_with_data() or similar).
+	 *
+	 * Two empty arrays are considered equal. Neither @strv1 not @strv2 may be
+	 * %NULL.
+	 *
+	 * Params:
+	 *     strv1 = a %NULL-terminated array of strings
+	 *     strv2 = another %NULL-terminated array of strings
+	 *
+	 * Returns: %TRUE if @strv1 and @strv2 are equal
+	 *
+	 * Since: 2.60
+	 */
+	public static bool strvEqual(string strv1, string strv2)
+	{
+		return g_strv_equal(Str.toStringz(strv1), Str.toStringz(strv2)) != 0;
 	}
 }

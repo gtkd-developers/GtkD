@@ -108,6 +108,8 @@ shared static this()
 	Linker.link(g_app_info_get_supported_types, "g_app_info_get_supported_types", LIBRARY_GIO);
 	Linker.link(g_app_info_launch, "g_app_info_launch", LIBRARY_GIO);
 	Linker.link(g_app_info_launch_uris, "g_app_info_launch_uris", LIBRARY_GIO);
+	Linker.link(g_app_info_launch_uris_async, "g_app_info_launch_uris_async", LIBRARY_GIO);
+	Linker.link(g_app_info_launch_uris_finish, "g_app_info_launch_uris_finish", LIBRARY_GIO);
 	Linker.link(g_app_info_remove_supports_type, "g_app_info_remove_supports_type", LIBRARY_GIO);
 	Linker.link(g_app_info_set_as_default_for_extension, "g_app_info_set_as_default_for_extension", LIBRARY_GIO);
 	Linker.link(g_app_info_set_as_default_for_type, "g_app_info_set_as_default_for_type", LIBRARY_GIO);
@@ -347,6 +349,7 @@ shared static this()
 	Linker.link(g_dbus_connection_flush_sync, "g_dbus_connection_flush_sync", LIBRARY_GIO);
 	Linker.link(g_dbus_connection_get_capabilities, "g_dbus_connection_get_capabilities", LIBRARY_GIO);
 	Linker.link(g_dbus_connection_get_exit_on_close, "g_dbus_connection_get_exit_on_close", LIBRARY_GIO);
+	Linker.link(g_dbus_connection_get_flags, "g_dbus_connection_get_flags", LIBRARY_GIO);
 	Linker.link(g_dbus_connection_get_guid, "g_dbus_connection_get_guid", LIBRARY_GIO);
 	Linker.link(g_dbus_connection_get_last_serial, "g_dbus_connection_get_last_serial", LIBRARY_GIO);
 	Linker.link(g_dbus_connection_get_peer_credentials, "g_dbus_connection_get_peer_credentials", LIBRARY_GIO);
@@ -685,9 +688,11 @@ shared static this()
 	Linker.link(g_desktop_app_info_get_show_in, "g_desktop_app_info_get_show_in", LIBRARY_GIO);
 	Linker.link(g_desktop_app_info_get_startup_wm_class, "g_desktop_app_info_get_startup_wm_class", LIBRARY_GIO);
 	Linker.link(g_desktop_app_info_get_string, "g_desktop_app_info_get_string", LIBRARY_GIO);
+	Linker.link(g_desktop_app_info_get_string_list, "g_desktop_app_info_get_string_list", LIBRARY_GIO);
 	Linker.link(g_desktop_app_info_has_key, "g_desktop_app_info_has_key", LIBRARY_GIO);
 	Linker.link(g_desktop_app_info_launch_action, "g_desktop_app_info_launch_action", LIBRARY_GIO);
 	Linker.link(g_desktop_app_info_launch_uris_as_manager, "g_desktop_app_info_launch_uris_as_manager", LIBRARY_GIO);
+	Linker.link(g_desktop_app_info_launch_uris_as_manager_with_fds, "g_desktop_app_info_launch_uris_as_manager_with_fds", LIBRARY_GIO);
 	Linker.link(g_desktop_app_info_list_actions, "g_desktop_app_info_list_actions", LIBRARY_GIO);
 
 	// gio.DesktopAppInfoLookup
@@ -747,6 +752,7 @@ shared static this()
 	Linker.link(g_dtls_connection_get_certificate, "g_dtls_connection_get_certificate", LIBRARY_GIO);
 	Linker.link(g_dtls_connection_get_database, "g_dtls_connection_get_database", LIBRARY_GIO);
 	Linker.link(g_dtls_connection_get_interaction, "g_dtls_connection_get_interaction", LIBRARY_GIO);
+	Linker.link(g_dtls_connection_get_negotiated_protocol, "g_dtls_connection_get_negotiated_protocol", LIBRARY_GIO);
 	Linker.link(g_dtls_connection_get_peer_certificate, "g_dtls_connection_get_peer_certificate", LIBRARY_GIO);
 	Linker.link(g_dtls_connection_get_peer_certificate_errors, "g_dtls_connection_get_peer_certificate_errors", LIBRARY_GIO);
 	Linker.link(g_dtls_connection_get_rehandshake_mode, "g_dtls_connection_get_rehandshake_mode", LIBRARY_GIO);
@@ -754,6 +760,7 @@ shared static this()
 	Linker.link(g_dtls_connection_handshake, "g_dtls_connection_handshake", LIBRARY_GIO);
 	Linker.link(g_dtls_connection_handshake_async, "g_dtls_connection_handshake_async", LIBRARY_GIO);
 	Linker.link(g_dtls_connection_handshake_finish, "g_dtls_connection_handshake_finish", LIBRARY_GIO);
+	Linker.link(g_dtls_connection_set_advertised_protocols, "g_dtls_connection_set_advertised_protocols", LIBRARY_GIO);
 	Linker.link(g_dtls_connection_set_certificate, "g_dtls_connection_set_certificate", LIBRARY_GIO);
 	Linker.link(g_dtls_connection_set_database, "g_dtls_connection_set_database", LIBRARY_GIO);
 	Linker.link(g_dtls_connection_set_interaction, "g_dtls_connection_set_interaction", LIBRARY_GIO);
@@ -868,6 +875,8 @@ shared static this()
 	Linker.link(g_file_poll_mountable, "g_file_poll_mountable", LIBRARY_GIO);
 	Linker.link(g_file_poll_mountable_finish, "g_file_poll_mountable_finish", LIBRARY_GIO);
 	Linker.link(g_file_query_default_handler, "g_file_query_default_handler", LIBRARY_GIO);
+	Linker.link(g_file_query_default_handler_async, "g_file_query_default_handler_async", LIBRARY_GIO);
+	Linker.link(g_file_query_default_handler_finish, "g_file_query_default_handler_finish", LIBRARY_GIO);
 	Linker.link(g_file_query_exists, "g_file_query_exists", LIBRARY_GIO);
 	Linker.link(g_file_query_file_type, "g_file_query_file_type", LIBRARY_GIO);
 	Linker.link(g_file_query_filesystem_info, "g_file_query_filesystem_info", LIBRARY_GIO);
@@ -1383,15 +1392,21 @@ shared static this()
 	Linker.link(g_mount_operation_get_anonymous, "g_mount_operation_get_anonymous", LIBRARY_GIO);
 	Linker.link(g_mount_operation_get_choice, "g_mount_operation_get_choice", LIBRARY_GIO);
 	Linker.link(g_mount_operation_get_domain, "g_mount_operation_get_domain", LIBRARY_GIO);
+	Linker.link(g_mount_operation_get_is_tcrypt_hidden_volume, "g_mount_operation_get_is_tcrypt_hidden_volume", LIBRARY_GIO);
+	Linker.link(g_mount_operation_get_is_tcrypt_system_volume, "g_mount_operation_get_is_tcrypt_system_volume", LIBRARY_GIO);
 	Linker.link(g_mount_operation_get_password, "g_mount_operation_get_password", LIBRARY_GIO);
 	Linker.link(g_mount_operation_get_password_save, "g_mount_operation_get_password_save", LIBRARY_GIO);
+	Linker.link(g_mount_operation_get_pim, "g_mount_operation_get_pim", LIBRARY_GIO);
 	Linker.link(g_mount_operation_get_username, "g_mount_operation_get_username", LIBRARY_GIO);
 	Linker.link(g_mount_operation_reply, "g_mount_operation_reply", LIBRARY_GIO);
 	Linker.link(g_mount_operation_set_anonymous, "g_mount_operation_set_anonymous", LIBRARY_GIO);
 	Linker.link(g_mount_operation_set_choice, "g_mount_operation_set_choice", LIBRARY_GIO);
 	Linker.link(g_mount_operation_set_domain, "g_mount_operation_set_domain", LIBRARY_GIO);
+	Linker.link(g_mount_operation_set_is_tcrypt_hidden_volume, "g_mount_operation_set_is_tcrypt_hidden_volume", LIBRARY_GIO);
+	Linker.link(g_mount_operation_set_is_tcrypt_system_volume, "g_mount_operation_set_is_tcrypt_system_volume", LIBRARY_GIO);
 	Linker.link(g_mount_operation_set_password, "g_mount_operation_set_password", LIBRARY_GIO);
 	Linker.link(g_mount_operation_set_password_save, "g_mount_operation_set_password_save", LIBRARY_GIO);
+	Linker.link(g_mount_operation_set_pim, "g_mount_operation_set_pim", LIBRARY_GIO);
 	Linker.link(g_mount_operation_set_username, "g_mount_operation_set_username", LIBRARY_GIO);
 
 	// gio.NativeVolumeMonitor
@@ -1474,6 +1489,12 @@ shared static this()
 	Linker.link(g_output_stream_write_bytes_async, "g_output_stream_write_bytes_async", LIBRARY_GIO);
 	Linker.link(g_output_stream_write_bytes_finish, "g_output_stream_write_bytes_finish", LIBRARY_GIO);
 	Linker.link(g_output_stream_write_finish, "g_output_stream_write_finish", LIBRARY_GIO);
+	Linker.link(g_output_stream_writev, "g_output_stream_writev", LIBRARY_GIO);
+	Linker.link(g_output_stream_writev_all, "g_output_stream_writev_all", LIBRARY_GIO);
+	Linker.link(g_output_stream_writev_all_async, "g_output_stream_writev_all_async", LIBRARY_GIO);
+	Linker.link(g_output_stream_writev_all_finish, "g_output_stream_writev_all_finish", LIBRARY_GIO);
+	Linker.link(g_output_stream_writev_async, "g_output_stream_writev_async", LIBRARY_GIO);
+	Linker.link(g_output_stream_writev_finish, "g_output_stream_writev_finish", LIBRARY_GIO);
 
 	// gio.Permission
 
@@ -1504,6 +1525,7 @@ shared static this()
 	Linker.link(g_pollable_output_stream_create_source, "g_pollable_output_stream_create_source", LIBRARY_GIO);
 	Linker.link(g_pollable_output_stream_is_writable, "g_pollable_output_stream_is_writable", LIBRARY_GIO);
 	Linker.link(g_pollable_output_stream_write_nonblocking, "g_pollable_output_stream_write_nonblocking", LIBRARY_GIO);
+	Linker.link(g_pollable_output_stream_writev_nonblocking, "g_pollable_output_stream_writev_nonblocking", LIBRARY_GIO);
 
 	// gio.PropertyAction
 
@@ -1562,6 +1584,9 @@ shared static this()
 	Linker.link(g_resolver_lookup_by_name, "g_resolver_lookup_by_name", LIBRARY_GIO);
 	Linker.link(g_resolver_lookup_by_name_async, "g_resolver_lookup_by_name_async", LIBRARY_GIO);
 	Linker.link(g_resolver_lookup_by_name_finish, "g_resolver_lookup_by_name_finish", LIBRARY_GIO);
+	Linker.link(g_resolver_lookup_by_name_with_flags, "g_resolver_lookup_by_name_with_flags", LIBRARY_GIO);
+	Linker.link(g_resolver_lookup_by_name_with_flags_async, "g_resolver_lookup_by_name_with_flags_async", LIBRARY_GIO);
+	Linker.link(g_resolver_lookup_by_name_with_flags_finish, "g_resolver_lookup_by_name_with_flags_finish", LIBRARY_GIO);
 	Linker.link(g_resolver_lookup_records, "g_resolver_lookup_records", LIBRARY_GIO);
 	Linker.link(g_resolver_lookup_records_async, "g_resolver_lookup_records_async", LIBRARY_GIO);
 	Linker.link(g_resolver_lookup_records_finish, "g_resolver_lookup_records_finish", LIBRARY_GIO);
@@ -1813,6 +1838,7 @@ shared static this()
 	Linker.link(g_socket_receive_with_blocking, "g_socket_receive_with_blocking", LIBRARY_GIO);
 	Linker.link(g_socket_send, "g_socket_send", LIBRARY_GIO);
 	Linker.link(g_socket_send_message, "g_socket_send_message", LIBRARY_GIO);
+	Linker.link(g_socket_send_message_with_timeout, "g_socket_send_message_with_timeout", LIBRARY_GIO);
 	Linker.link(g_socket_send_messages, "g_socket_send_messages", LIBRARY_GIO);
 	Linker.link(g_socket_send_to, "g_socket_send_to", LIBRARY_GIO);
 	Linker.link(g_socket_send_with_blocking, "g_socket_send_with_blocking", LIBRARY_GIO);
@@ -2014,6 +2040,7 @@ shared static this()
 	Linker.link(g_task_get_check_cancellable, "g_task_get_check_cancellable", LIBRARY_GIO);
 	Linker.link(g_task_get_completed, "g_task_get_completed", LIBRARY_GIO);
 	Linker.link(g_task_get_context, "g_task_get_context", LIBRARY_GIO);
+	Linker.link(g_task_get_name, "g_task_get_name", LIBRARY_GIO);
 	Linker.link(g_task_get_priority, "g_task_get_priority", LIBRARY_GIO);
 	Linker.link(g_task_get_return_on_cancel, "g_task_get_return_on_cancel", LIBRARY_GIO);
 	Linker.link(g_task_get_source_object, "g_task_get_source_object", LIBRARY_GIO);
@@ -2032,6 +2059,7 @@ shared static this()
 	Linker.link(g_task_run_in_thread, "g_task_run_in_thread", LIBRARY_GIO);
 	Linker.link(g_task_run_in_thread_sync, "g_task_run_in_thread_sync", LIBRARY_GIO);
 	Linker.link(g_task_set_check_cancellable, "g_task_set_check_cancellable", LIBRARY_GIO);
+	Linker.link(g_task_set_name, "g_task_set_name", LIBRARY_GIO);
 	Linker.link(g_task_set_priority, "g_task_set_priority", LIBRARY_GIO);
 	Linker.link(g_task_set_return_on_cancel, "g_task_set_return_on_cancel", LIBRARY_GIO);
 	Linker.link(g_task_set_source_tag, "g_task_set_source_tag", LIBRARY_GIO);
@@ -2087,6 +2115,7 @@ shared static this()
 	Linker.link(g_tls_backend_get_dtls_server_connection_type, "g_tls_backend_get_dtls_server_connection_type", LIBRARY_GIO);
 	Linker.link(g_tls_backend_get_file_database_type, "g_tls_backend_get_file_database_type", LIBRARY_GIO);
 	Linker.link(g_tls_backend_get_server_connection_type, "g_tls_backend_get_server_connection_type", LIBRARY_GIO);
+	Linker.link(g_tls_backend_set_default_database, "g_tls_backend_set_default_database", LIBRARY_GIO);
 	Linker.link(g_tls_backend_supports_dtls, "g_tls_backend_supports_dtls", LIBRARY_GIO);
 	Linker.link(g_tls_backend_supports_tls, "g_tls_backend_supports_tls", LIBRARY_GIO);
 
@@ -2121,6 +2150,7 @@ shared static this()
 	Linker.link(g_tls_connection_get_certificate, "g_tls_connection_get_certificate", LIBRARY_GIO);
 	Linker.link(g_tls_connection_get_database, "g_tls_connection_get_database", LIBRARY_GIO);
 	Linker.link(g_tls_connection_get_interaction, "g_tls_connection_get_interaction", LIBRARY_GIO);
+	Linker.link(g_tls_connection_get_negotiated_protocol, "g_tls_connection_get_negotiated_protocol", LIBRARY_GIO);
 	Linker.link(g_tls_connection_get_peer_certificate, "g_tls_connection_get_peer_certificate", LIBRARY_GIO);
 	Linker.link(g_tls_connection_get_peer_certificate_errors, "g_tls_connection_get_peer_certificate_errors", LIBRARY_GIO);
 	Linker.link(g_tls_connection_get_rehandshake_mode, "g_tls_connection_get_rehandshake_mode", LIBRARY_GIO);
@@ -2129,6 +2159,7 @@ shared static this()
 	Linker.link(g_tls_connection_handshake, "g_tls_connection_handshake", LIBRARY_GIO);
 	Linker.link(g_tls_connection_handshake_async, "g_tls_connection_handshake_async", LIBRARY_GIO);
 	Linker.link(g_tls_connection_handshake_finish, "g_tls_connection_handshake_finish", LIBRARY_GIO);
+	Linker.link(g_tls_connection_set_advertised_protocols, "g_tls_connection_set_advertised_protocols", LIBRARY_GIO);
 	Linker.link(g_tls_connection_set_certificate, "g_tls_connection_set_certificate", LIBRARY_GIO);
 	Linker.link(g_tls_connection_set_database, "g_tls_connection_set_database", LIBRARY_GIO);
 	Linker.link(g_tls_connection_set_interaction, "g_tls_connection_set_interaction", LIBRARY_GIO);
@@ -2260,6 +2291,8 @@ shared static this()
 	Linker.link(g_unix_mounts_get, "g_unix_mounts_get", LIBRARY_GIO);
 	Linker.link(g_unix_mount_copy, "g_unix_mount_copy", LIBRARY_GIO);
 	Linker.link(g_unix_mount_for, "g_unix_mount_for", LIBRARY_GIO);
+	Linker.link(g_unix_mount_get_options, "g_unix_mount_get_options", LIBRARY_GIO);
+	Linker.link(g_unix_mount_get_root_path, "g_unix_mount_get_root_path", LIBRARY_GIO);
 
 	// gio.UnixMountMonitor
 
@@ -2403,6 +2436,8 @@ shared static this()
 	Linker.link(g_content_type_is_unknown, "g_content_type_is_unknown", LIBRARY_GIO);
 	Linker.link(g_content_types_get_registered, "g_content_types_get_registered", LIBRARY_GIO);
 	Linker.link(g_content_type_is_mime_type, "g_content_type_is_mime_type", LIBRARY_GIO);
+	Linker.link(g_content_type_get_mime_dirs, "g_content_type_get_mime_dirs", LIBRARY_GIO);
+	Linker.link(g_content_type_set_mime_dirs, "g_content_type_set_mime_dirs", LIBRARY_GIO);
 
 	// gio.DBusError
 
@@ -2514,6 +2549,8 @@ __gshared extern(C)
 	char** function(GAppInfo* appinfo) c_g_app_info_get_supported_types;
 	int function(GAppInfo* appinfo, GList* files, GAppLaunchContext* context, GError** err) c_g_app_info_launch;
 	int function(GAppInfo* appinfo, GList* uris, GAppLaunchContext* context, GError** err) c_g_app_info_launch_uris;
+	void function(GAppInfo* appinfo, GList* uris, GAppLaunchContext* context, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_app_info_launch_uris_async;
+	int function(GAppInfo* appinfo, GAsyncResult* result, GError** err) c_g_app_info_launch_uris_finish;
 	int function(GAppInfo* appinfo, const(char)* contentType, GError** err) c_g_app_info_remove_supports_type;
 	int function(GAppInfo* appinfo, char* extension, GError** err) c_g_app_info_set_as_default_for_extension;
 	int function(GAppInfo* appinfo, const(char)* contentType, GError** err) c_g_app_info_set_as_default_for_type;
@@ -2753,6 +2790,7 @@ __gshared extern(C)
 	int function(GDBusConnection* connection, GCancellable* cancellable, GError** err) c_g_dbus_connection_flush_sync;
 	GDBusCapabilityFlags function(GDBusConnection* connection) c_g_dbus_connection_get_capabilities;
 	int function(GDBusConnection* connection) c_g_dbus_connection_get_exit_on_close;
+	GDBusConnectionFlags function(GDBusConnection* connection) c_g_dbus_connection_get_flags;
 	const(char)* function(GDBusConnection* connection) c_g_dbus_connection_get_guid;
 	uint function(GDBusConnection* connection) c_g_dbus_connection_get_last_serial;
 	GCredentials* function(GDBusConnection* connection) c_g_dbus_connection_get_peer_credentials;
@@ -3091,9 +3129,11 @@ __gshared extern(C)
 	int function(GDesktopAppInfo* info, const(char)* desktopEnv) c_g_desktop_app_info_get_show_in;
 	const(char)* function(GDesktopAppInfo* info) c_g_desktop_app_info_get_startup_wm_class;
 	char* function(GDesktopAppInfo* info, const(char)* key) c_g_desktop_app_info_get_string;
+	char** function(GDesktopAppInfo* info, const(char)* key, size_t* length) c_g_desktop_app_info_get_string_list;
 	int function(GDesktopAppInfo* info, const(char)* key) c_g_desktop_app_info_has_key;
 	void function(GDesktopAppInfo* info, const(char)* actionName, GAppLaunchContext* launchContext) c_g_desktop_app_info_launch_action;
 	int function(GDesktopAppInfo* appinfo, GList* uris, GAppLaunchContext* launchContext, GSpawnFlags spawnFlags, GSpawnChildSetupFunc userSetup, void* userSetupData, GDesktopAppLaunchCallback pidCallback, void* pidCallbackData, GError** err) c_g_desktop_app_info_launch_uris_as_manager;
+	int function(GDesktopAppInfo* appinfo, GList* uris, GAppLaunchContext* launchContext, GSpawnFlags spawnFlags, GSpawnChildSetupFunc userSetup, void* userSetupData, GDesktopAppLaunchCallback pidCallback, void* pidCallbackData, int stdinFd, int stdoutFd, int stderrFd, GError** err) c_g_desktop_app_info_launch_uris_as_manager_with_fds;
 	char** function(GDesktopAppInfo* info) c_g_desktop_app_info_list_actions;
 
 	// gio.DesktopAppInfoLookup
@@ -3153,6 +3193,7 @@ __gshared extern(C)
 	GTlsCertificate* function(GDtlsConnection* conn) c_g_dtls_connection_get_certificate;
 	GTlsDatabase* function(GDtlsConnection* conn) c_g_dtls_connection_get_database;
 	GTlsInteraction* function(GDtlsConnection* conn) c_g_dtls_connection_get_interaction;
+	const(char)* function(GDtlsConnection* conn) c_g_dtls_connection_get_negotiated_protocol;
 	GTlsCertificate* function(GDtlsConnection* conn) c_g_dtls_connection_get_peer_certificate;
 	GTlsCertificateFlags function(GDtlsConnection* conn) c_g_dtls_connection_get_peer_certificate_errors;
 	GTlsRehandshakeMode function(GDtlsConnection* conn) c_g_dtls_connection_get_rehandshake_mode;
@@ -3160,6 +3201,7 @@ __gshared extern(C)
 	int function(GDtlsConnection* conn, GCancellable* cancellable, GError** err) c_g_dtls_connection_handshake;
 	void function(GDtlsConnection* conn, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_dtls_connection_handshake_async;
 	int function(GDtlsConnection* conn, GAsyncResult* result, GError** err) c_g_dtls_connection_handshake_finish;
+	void function(GDtlsConnection* conn, char** protocols) c_g_dtls_connection_set_advertised_protocols;
 	void function(GDtlsConnection* conn, GTlsCertificate* certificate) c_g_dtls_connection_set_certificate;
 	void function(GDtlsConnection* conn, GTlsDatabase* database) c_g_dtls_connection_set_database;
 	void function(GDtlsConnection* conn, GTlsInteraction* interaction) c_g_dtls_connection_set_interaction;
@@ -3274,6 +3316,8 @@ __gshared extern(C)
 	void function(GFile* file, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_poll_mountable;
 	int function(GFile* file, GAsyncResult* result, GError** err) c_g_file_poll_mountable_finish;
 	GAppInfo* function(GFile* file, GCancellable* cancellable, GError** err) c_g_file_query_default_handler;
+	void function(GFile* file, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_file_query_default_handler_async;
+	GAppInfo* function(GFile* file, GAsyncResult* result, GError** err) c_g_file_query_default_handler_finish;
 	int function(GFile* file, GCancellable* cancellable) c_g_file_query_exists;
 	GFileType function(GFile* file, GFileQueryInfoFlags flags, GCancellable* cancellable) c_g_file_query_file_type;
 	GFileInfo* function(GFile* file, const(char)* attributes, GCancellable* cancellable, GError** err) c_g_file_query_filesystem_info;
@@ -3789,15 +3833,21 @@ __gshared extern(C)
 	int function(GMountOperation* op) c_g_mount_operation_get_anonymous;
 	int function(GMountOperation* op) c_g_mount_operation_get_choice;
 	const(char)* function(GMountOperation* op) c_g_mount_operation_get_domain;
+	int function(GMountOperation* op) c_g_mount_operation_get_is_tcrypt_hidden_volume;
+	int function(GMountOperation* op) c_g_mount_operation_get_is_tcrypt_system_volume;
 	const(char)* function(GMountOperation* op) c_g_mount_operation_get_password;
 	GPasswordSave function(GMountOperation* op) c_g_mount_operation_get_password_save;
+	uint function(GMountOperation* op) c_g_mount_operation_get_pim;
 	const(char)* function(GMountOperation* op) c_g_mount_operation_get_username;
 	void function(GMountOperation* op, GMountOperationResult result) c_g_mount_operation_reply;
 	void function(GMountOperation* op, int anonymous) c_g_mount_operation_set_anonymous;
 	void function(GMountOperation* op, int choice) c_g_mount_operation_set_choice;
 	void function(GMountOperation* op, const(char)* domain) c_g_mount_operation_set_domain;
+	void function(GMountOperation* op, int hiddenVolume) c_g_mount_operation_set_is_tcrypt_hidden_volume;
+	void function(GMountOperation* op, int systemVolume) c_g_mount_operation_set_is_tcrypt_system_volume;
 	void function(GMountOperation* op, const(char)* password) c_g_mount_operation_set_password;
 	void function(GMountOperation* op, GPasswordSave save) c_g_mount_operation_set_password_save;
+	void function(GMountOperation* op, uint pim) c_g_mount_operation_set_pim;
 	void function(GMountOperation* op, const(char)* username) c_g_mount_operation_set_username;
 
 	// gio.NativeVolumeMonitor
@@ -3880,6 +3930,12 @@ __gshared extern(C)
 	void function(GOutputStream* stream, GBytes* bytes, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_output_stream_write_bytes_async;
 	ptrdiff_t function(GOutputStream* stream, GAsyncResult* result, GError** err) c_g_output_stream_write_bytes_finish;
 	ptrdiff_t function(GOutputStream* stream, GAsyncResult* result, GError** err) c_g_output_stream_write_finish;
+	int function(GOutputStream* stream, GOutputVector* vectors, size_t nVectors, size_t* bytesWritten, GCancellable* cancellable, GError** err) c_g_output_stream_writev;
+	int function(GOutputStream* stream, GOutputVector* vectors, size_t nVectors, size_t* bytesWritten, GCancellable* cancellable, GError** err) c_g_output_stream_writev_all;
+	void function(GOutputStream* stream, GOutputVector* vectors, size_t nVectors, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_output_stream_writev_all_async;
+	int function(GOutputStream* stream, GAsyncResult* result, size_t* bytesWritten, GError** err) c_g_output_stream_writev_all_finish;
+	void function(GOutputStream* stream, GOutputVector* vectors, size_t nVectors, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_output_stream_writev_async;
+	int function(GOutputStream* stream, GAsyncResult* result, size_t* bytesWritten, GError** err) c_g_output_stream_writev_finish;
 
 	// gio.Permission
 
@@ -3910,6 +3966,7 @@ __gshared extern(C)
 	GSource* function(GPollableOutputStream* stream, GCancellable* cancellable) c_g_pollable_output_stream_create_source;
 	int function(GPollableOutputStream* stream) c_g_pollable_output_stream_is_writable;
 	ptrdiff_t function(GPollableOutputStream* stream, void* buffer, size_t count, GCancellable* cancellable, GError** err) c_g_pollable_output_stream_write_nonblocking;
+	GPollableReturn function(GPollableOutputStream* stream, GOutputVector* vectors, size_t nVectors, size_t* bytesWritten, GCancellable* cancellable, GError** err) c_g_pollable_output_stream_writev_nonblocking;
 
 	// gio.PropertyAction
 
@@ -3968,6 +4025,9 @@ __gshared extern(C)
 	GList* function(GResolver* resolver, const(char)* hostname, GCancellable* cancellable, GError** err) c_g_resolver_lookup_by_name;
 	void function(GResolver* resolver, const(char)* hostname, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_resolver_lookup_by_name_async;
 	GList* function(GResolver* resolver, GAsyncResult* result, GError** err) c_g_resolver_lookup_by_name_finish;
+	GList* function(GResolver* resolver, const(char)* hostname, GResolverNameLookupFlags flags, GCancellable* cancellable, GError** err) c_g_resolver_lookup_by_name_with_flags;
+	void function(GResolver* resolver, const(char)* hostname, GResolverNameLookupFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_resolver_lookup_by_name_with_flags_async;
+	GList* function(GResolver* resolver, GAsyncResult* result, GError** err) c_g_resolver_lookup_by_name_with_flags_finish;
 	GList* function(GResolver* resolver, const(char)* rrname, GResolverRecordType recordType, GCancellable* cancellable, GError** err) c_g_resolver_lookup_records;
 	void function(GResolver* resolver, const(char)* rrname, GResolverRecordType recordType, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_resolver_lookup_records_async;
 	GList* function(GResolver* resolver, GAsyncResult* result, GError** err) c_g_resolver_lookup_records_finish;
@@ -4183,7 +4243,7 @@ __gshared extern(C)
 	int function(GSocket* socket, GError** err) c_g_socket_check_connect_result;
 	int function(GSocket* socket, GError** err) c_g_socket_close;
 	GIOCondition function(GSocket* socket, GIOCondition condition) c_g_socket_condition_check;
-	int function(GSocket* socket, GIOCondition condition, long timeout, GCancellable* cancellable, GError** err) c_g_socket_condition_timed_wait;
+	int function(GSocket* socket, GIOCondition condition, long timeoutUs, GCancellable* cancellable, GError** err) c_g_socket_condition_timed_wait;
 	int function(GSocket* socket, GIOCondition condition, GCancellable* cancellable, GError** err) c_g_socket_condition_wait;
 	int function(GSocket* socket, GSocketAddress* address, GCancellable* cancellable, GError** err) c_g_socket_connect;
 	GSocketConnection* function(GSocket* socket) c_g_socket_connection_factory_create_connection;
@@ -4219,6 +4279,7 @@ __gshared extern(C)
 	ptrdiff_t function(GSocket* socket, char* buffer, size_t size, int blocking, GCancellable* cancellable, GError** err) c_g_socket_receive_with_blocking;
 	ptrdiff_t function(GSocket* socket, char* buffer, size_t size, GCancellable* cancellable, GError** err) c_g_socket_send;
 	ptrdiff_t function(GSocket* socket, GSocketAddress* address, GOutputVector* vectors, int numVectors, GSocketControlMessage** messages, int numMessages, int flags, GCancellable* cancellable, GError** err) c_g_socket_send_message;
+	GPollableReturn function(GSocket* socket, GSocketAddress* address, GOutputVector* vectors, int numVectors, GSocketControlMessage** messages, int numMessages, int flags, long timeoutUs, size_t* bytesWritten, GCancellable* cancellable, GError** err) c_g_socket_send_message_with_timeout;
 	int function(GSocket* socket, GOutputMessage* messages, uint numMessages, int flags, GCancellable* cancellable, GError** err) c_g_socket_send_messages;
 	ptrdiff_t function(GSocket* socket, GSocketAddress* address, char* buffer, size_t size, GCancellable* cancellable, GError** err) c_g_socket_send_to;
 	ptrdiff_t function(GSocket* socket, char* buffer, size_t size, int blocking, GCancellable* cancellable, GError** err) c_g_socket_send_with_blocking;
@@ -4420,6 +4481,7 @@ __gshared extern(C)
 	int function(GTask* task) c_g_task_get_check_cancellable;
 	int function(GTask* task) c_g_task_get_completed;
 	GMainContext* function(GTask* task) c_g_task_get_context;
+	const(char)* function(GTask* task) c_g_task_get_name;
 	int function(GTask* task) c_g_task_get_priority;
 	int function(GTask* task) c_g_task_get_return_on_cancel;
 	void* function(GTask* task) c_g_task_get_source_object;
@@ -4438,6 +4500,7 @@ __gshared extern(C)
 	void function(GTask* task, GTaskThreadFunc taskFunc) c_g_task_run_in_thread;
 	void function(GTask* task, GTaskThreadFunc taskFunc) c_g_task_run_in_thread_sync;
 	void function(GTask* task, int checkCancellable) c_g_task_set_check_cancellable;
+	void function(GTask* task, const(char)* name) c_g_task_set_name;
 	void function(GTask* task, int priority) c_g_task_set_priority;
 	int function(GTask* task, int returnOnCancel) c_g_task_set_return_on_cancel;
 	void function(GTask* task, void* sourceTag) c_g_task_set_source_tag;
@@ -4493,6 +4556,7 @@ __gshared extern(C)
 	GType function(GTlsBackend* backend) c_g_tls_backend_get_dtls_server_connection_type;
 	GType function(GTlsBackend* backend) c_g_tls_backend_get_file_database_type;
 	GType function(GTlsBackend* backend) c_g_tls_backend_get_server_connection_type;
+	void function(GTlsBackend* backend, GTlsDatabase* database) c_g_tls_backend_set_default_database;
 	int function(GTlsBackend* backend) c_g_tls_backend_supports_dtls;
 	int function(GTlsBackend* backend) c_g_tls_backend_supports_tls;
 
@@ -4527,6 +4591,7 @@ __gshared extern(C)
 	GTlsCertificate* function(GTlsConnection* conn) c_g_tls_connection_get_certificate;
 	GTlsDatabase* function(GTlsConnection* conn) c_g_tls_connection_get_database;
 	GTlsInteraction* function(GTlsConnection* conn) c_g_tls_connection_get_interaction;
+	const(char)* function(GTlsConnection* conn) c_g_tls_connection_get_negotiated_protocol;
 	GTlsCertificate* function(GTlsConnection* conn) c_g_tls_connection_get_peer_certificate;
 	GTlsCertificateFlags function(GTlsConnection* conn) c_g_tls_connection_get_peer_certificate_errors;
 	GTlsRehandshakeMode function(GTlsConnection* conn) c_g_tls_connection_get_rehandshake_mode;
@@ -4535,6 +4600,7 @@ __gshared extern(C)
 	int function(GTlsConnection* conn, GCancellable* cancellable, GError** err) c_g_tls_connection_handshake;
 	void function(GTlsConnection* conn, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_g_tls_connection_handshake_async;
 	int function(GTlsConnection* conn, GAsyncResult* result, GError** err) c_g_tls_connection_handshake_finish;
+	void function(GTlsConnection* conn, char** protocols) c_g_tls_connection_set_advertised_protocols;
 	void function(GTlsConnection* conn, GTlsCertificate* certificate) c_g_tls_connection_set_certificate;
 	void function(GTlsConnection* conn, GTlsDatabase* database) c_g_tls_connection_set_database;
 	void function(GTlsConnection* conn, GTlsInteraction* interaction) c_g_tls_connection_set_interaction;
@@ -4666,6 +4732,8 @@ __gshared extern(C)
 	GList* function(ulong* timeRead) c_g_unix_mounts_get;
 	GUnixMountEntry* function(GUnixMountEntry* mountEntry) c_g_unix_mount_copy;
 	GUnixMountEntry* function(char* filePath, ulong* timeRead) c_g_unix_mount_for;
+	const(char)* function(GUnixMountEntry* mountEntry) c_g_unix_mount_get_options;
+	const(char)* function(GUnixMountEntry* mountEntry) c_g_unix_mount_get_root_path;
 
 	// gio.UnixMountMonitor
 
@@ -4809,6 +4877,8 @@ __gshared extern(C)
 	int function(const(char)* type) c_g_content_type_is_unknown;
 	GList* function() c_g_content_types_get_registered;
 	int function(const(char)* type, const(char)* mimeType) c_g_content_type_is_mime_type;
+	char** function() c_g_content_type_get_mime_dirs;
+	void function(char** dirs) c_g_content_type_set_mime_dirs;
 
 	// gio.DBusError
 
@@ -4918,6 +4988,8 @@ alias c_g_app_info_get_name g_app_info_get_name;
 alias c_g_app_info_get_supported_types g_app_info_get_supported_types;
 alias c_g_app_info_launch g_app_info_launch;
 alias c_g_app_info_launch_uris g_app_info_launch_uris;
+alias c_g_app_info_launch_uris_async g_app_info_launch_uris_async;
+alias c_g_app_info_launch_uris_finish g_app_info_launch_uris_finish;
 alias c_g_app_info_remove_supports_type g_app_info_remove_supports_type;
 alias c_g_app_info_set_as_default_for_extension g_app_info_set_as_default_for_extension;
 alias c_g_app_info_set_as_default_for_type g_app_info_set_as_default_for_type;
@@ -5157,6 +5229,7 @@ alias c_g_dbus_connection_flush_finish g_dbus_connection_flush_finish;
 alias c_g_dbus_connection_flush_sync g_dbus_connection_flush_sync;
 alias c_g_dbus_connection_get_capabilities g_dbus_connection_get_capabilities;
 alias c_g_dbus_connection_get_exit_on_close g_dbus_connection_get_exit_on_close;
+alias c_g_dbus_connection_get_flags g_dbus_connection_get_flags;
 alias c_g_dbus_connection_get_guid g_dbus_connection_get_guid;
 alias c_g_dbus_connection_get_last_serial g_dbus_connection_get_last_serial;
 alias c_g_dbus_connection_get_peer_credentials g_dbus_connection_get_peer_credentials;
@@ -5495,9 +5568,11 @@ alias c_g_desktop_app_info_get_nodisplay g_desktop_app_info_get_nodisplay;
 alias c_g_desktop_app_info_get_show_in g_desktop_app_info_get_show_in;
 alias c_g_desktop_app_info_get_startup_wm_class g_desktop_app_info_get_startup_wm_class;
 alias c_g_desktop_app_info_get_string g_desktop_app_info_get_string;
+alias c_g_desktop_app_info_get_string_list g_desktop_app_info_get_string_list;
 alias c_g_desktop_app_info_has_key g_desktop_app_info_has_key;
 alias c_g_desktop_app_info_launch_action g_desktop_app_info_launch_action;
 alias c_g_desktop_app_info_launch_uris_as_manager g_desktop_app_info_launch_uris_as_manager;
+alias c_g_desktop_app_info_launch_uris_as_manager_with_fds g_desktop_app_info_launch_uris_as_manager_with_fds;
 alias c_g_desktop_app_info_list_actions g_desktop_app_info_list_actions;
 
 // gio.DesktopAppInfoLookup
@@ -5557,6 +5632,7 @@ alias c_g_dtls_connection_emit_accept_certificate g_dtls_connection_emit_accept_
 alias c_g_dtls_connection_get_certificate g_dtls_connection_get_certificate;
 alias c_g_dtls_connection_get_database g_dtls_connection_get_database;
 alias c_g_dtls_connection_get_interaction g_dtls_connection_get_interaction;
+alias c_g_dtls_connection_get_negotiated_protocol g_dtls_connection_get_negotiated_protocol;
 alias c_g_dtls_connection_get_peer_certificate g_dtls_connection_get_peer_certificate;
 alias c_g_dtls_connection_get_peer_certificate_errors g_dtls_connection_get_peer_certificate_errors;
 alias c_g_dtls_connection_get_rehandshake_mode g_dtls_connection_get_rehandshake_mode;
@@ -5564,6 +5640,7 @@ alias c_g_dtls_connection_get_require_close_notify g_dtls_connection_get_require
 alias c_g_dtls_connection_handshake g_dtls_connection_handshake;
 alias c_g_dtls_connection_handshake_async g_dtls_connection_handshake_async;
 alias c_g_dtls_connection_handshake_finish g_dtls_connection_handshake_finish;
+alias c_g_dtls_connection_set_advertised_protocols g_dtls_connection_set_advertised_protocols;
 alias c_g_dtls_connection_set_certificate g_dtls_connection_set_certificate;
 alias c_g_dtls_connection_set_database g_dtls_connection_set_database;
 alias c_g_dtls_connection_set_interaction g_dtls_connection_set_interaction;
@@ -5678,6 +5755,8 @@ alias c_g_file_peek_path g_file_peek_path;
 alias c_g_file_poll_mountable g_file_poll_mountable;
 alias c_g_file_poll_mountable_finish g_file_poll_mountable_finish;
 alias c_g_file_query_default_handler g_file_query_default_handler;
+alias c_g_file_query_default_handler_async g_file_query_default_handler_async;
+alias c_g_file_query_default_handler_finish g_file_query_default_handler_finish;
 alias c_g_file_query_exists g_file_query_exists;
 alias c_g_file_query_file_type g_file_query_file_type;
 alias c_g_file_query_filesystem_info g_file_query_filesystem_info;
@@ -6193,15 +6272,21 @@ alias c_g_mount_operation_new g_mount_operation_new;
 alias c_g_mount_operation_get_anonymous g_mount_operation_get_anonymous;
 alias c_g_mount_operation_get_choice g_mount_operation_get_choice;
 alias c_g_mount_operation_get_domain g_mount_operation_get_domain;
+alias c_g_mount_operation_get_is_tcrypt_hidden_volume g_mount_operation_get_is_tcrypt_hidden_volume;
+alias c_g_mount_operation_get_is_tcrypt_system_volume g_mount_operation_get_is_tcrypt_system_volume;
 alias c_g_mount_operation_get_password g_mount_operation_get_password;
 alias c_g_mount_operation_get_password_save g_mount_operation_get_password_save;
+alias c_g_mount_operation_get_pim g_mount_operation_get_pim;
 alias c_g_mount_operation_get_username g_mount_operation_get_username;
 alias c_g_mount_operation_reply g_mount_operation_reply;
 alias c_g_mount_operation_set_anonymous g_mount_operation_set_anonymous;
 alias c_g_mount_operation_set_choice g_mount_operation_set_choice;
 alias c_g_mount_operation_set_domain g_mount_operation_set_domain;
+alias c_g_mount_operation_set_is_tcrypt_hidden_volume g_mount_operation_set_is_tcrypt_hidden_volume;
+alias c_g_mount_operation_set_is_tcrypt_system_volume g_mount_operation_set_is_tcrypt_system_volume;
 alias c_g_mount_operation_set_password g_mount_operation_set_password;
 alias c_g_mount_operation_set_password_save g_mount_operation_set_password_save;
+alias c_g_mount_operation_set_pim g_mount_operation_set_pim;
 alias c_g_mount_operation_set_username g_mount_operation_set_username;
 
 // gio.NativeVolumeMonitor
@@ -6284,6 +6369,12 @@ alias c_g_output_stream_write_bytes g_output_stream_write_bytes;
 alias c_g_output_stream_write_bytes_async g_output_stream_write_bytes_async;
 alias c_g_output_stream_write_bytes_finish g_output_stream_write_bytes_finish;
 alias c_g_output_stream_write_finish g_output_stream_write_finish;
+alias c_g_output_stream_writev g_output_stream_writev;
+alias c_g_output_stream_writev_all g_output_stream_writev_all;
+alias c_g_output_stream_writev_all_async g_output_stream_writev_all_async;
+alias c_g_output_stream_writev_all_finish g_output_stream_writev_all_finish;
+alias c_g_output_stream_writev_async g_output_stream_writev_async;
+alias c_g_output_stream_writev_finish g_output_stream_writev_finish;
 
 // gio.Permission
 
@@ -6314,6 +6405,7 @@ alias c_g_pollable_output_stream_can_poll g_pollable_output_stream_can_poll;
 alias c_g_pollable_output_stream_create_source g_pollable_output_stream_create_source;
 alias c_g_pollable_output_stream_is_writable g_pollable_output_stream_is_writable;
 alias c_g_pollable_output_stream_write_nonblocking g_pollable_output_stream_write_nonblocking;
+alias c_g_pollable_output_stream_writev_nonblocking g_pollable_output_stream_writev_nonblocking;
 
 // gio.PropertyAction
 
@@ -6372,6 +6464,9 @@ alias c_g_resolver_lookup_by_address_finish g_resolver_lookup_by_address_finish;
 alias c_g_resolver_lookup_by_name g_resolver_lookup_by_name;
 alias c_g_resolver_lookup_by_name_async g_resolver_lookup_by_name_async;
 alias c_g_resolver_lookup_by_name_finish g_resolver_lookup_by_name_finish;
+alias c_g_resolver_lookup_by_name_with_flags g_resolver_lookup_by_name_with_flags;
+alias c_g_resolver_lookup_by_name_with_flags_async g_resolver_lookup_by_name_with_flags_async;
+alias c_g_resolver_lookup_by_name_with_flags_finish g_resolver_lookup_by_name_with_flags_finish;
 alias c_g_resolver_lookup_records g_resolver_lookup_records;
 alias c_g_resolver_lookup_records_async g_resolver_lookup_records_async;
 alias c_g_resolver_lookup_records_finish g_resolver_lookup_records_finish;
@@ -6623,6 +6718,7 @@ alias c_g_socket_receive_messages g_socket_receive_messages;
 alias c_g_socket_receive_with_blocking g_socket_receive_with_blocking;
 alias c_g_socket_send g_socket_send;
 alias c_g_socket_send_message g_socket_send_message;
+alias c_g_socket_send_message_with_timeout g_socket_send_message_with_timeout;
 alias c_g_socket_send_messages g_socket_send_messages;
 alias c_g_socket_send_to g_socket_send_to;
 alias c_g_socket_send_with_blocking g_socket_send_with_blocking;
@@ -6824,6 +6920,7 @@ alias c_g_task_get_cancellable g_task_get_cancellable;
 alias c_g_task_get_check_cancellable g_task_get_check_cancellable;
 alias c_g_task_get_completed g_task_get_completed;
 alias c_g_task_get_context g_task_get_context;
+alias c_g_task_get_name g_task_get_name;
 alias c_g_task_get_priority g_task_get_priority;
 alias c_g_task_get_return_on_cancel g_task_get_return_on_cancel;
 alias c_g_task_get_source_object g_task_get_source_object;
@@ -6842,6 +6939,7 @@ alias c_g_task_return_pointer g_task_return_pointer;
 alias c_g_task_run_in_thread g_task_run_in_thread;
 alias c_g_task_run_in_thread_sync g_task_run_in_thread_sync;
 alias c_g_task_set_check_cancellable g_task_set_check_cancellable;
+alias c_g_task_set_name g_task_set_name;
 alias c_g_task_set_priority g_task_set_priority;
 alias c_g_task_set_return_on_cancel g_task_set_return_on_cancel;
 alias c_g_task_set_source_tag g_task_set_source_tag;
@@ -6897,6 +6995,7 @@ alias c_g_tls_backend_get_dtls_client_connection_type g_tls_backend_get_dtls_cli
 alias c_g_tls_backend_get_dtls_server_connection_type g_tls_backend_get_dtls_server_connection_type;
 alias c_g_tls_backend_get_file_database_type g_tls_backend_get_file_database_type;
 alias c_g_tls_backend_get_server_connection_type g_tls_backend_get_server_connection_type;
+alias c_g_tls_backend_set_default_database g_tls_backend_set_default_database;
 alias c_g_tls_backend_supports_dtls g_tls_backend_supports_dtls;
 alias c_g_tls_backend_supports_tls g_tls_backend_supports_tls;
 
@@ -6931,6 +7030,7 @@ alias c_g_tls_connection_emit_accept_certificate g_tls_connection_emit_accept_ce
 alias c_g_tls_connection_get_certificate g_tls_connection_get_certificate;
 alias c_g_tls_connection_get_database g_tls_connection_get_database;
 alias c_g_tls_connection_get_interaction g_tls_connection_get_interaction;
+alias c_g_tls_connection_get_negotiated_protocol g_tls_connection_get_negotiated_protocol;
 alias c_g_tls_connection_get_peer_certificate g_tls_connection_get_peer_certificate;
 alias c_g_tls_connection_get_peer_certificate_errors g_tls_connection_get_peer_certificate_errors;
 alias c_g_tls_connection_get_rehandshake_mode g_tls_connection_get_rehandshake_mode;
@@ -6939,6 +7039,7 @@ alias c_g_tls_connection_get_use_system_certdb g_tls_connection_get_use_system_c
 alias c_g_tls_connection_handshake g_tls_connection_handshake;
 alias c_g_tls_connection_handshake_async g_tls_connection_handshake_async;
 alias c_g_tls_connection_handshake_finish g_tls_connection_handshake_finish;
+alias c_g_tls_connection_set_advertised_protocols g_tls_connection_set_advertised_protocols;
 alias c_g_tls_connection_set_certificate g_tls_connection_set_certificate;
 alias c_g_tls_connection_set_database g_tls_connection_set_database;
 alias c_g_tls_connection_set_interaction g_tls_connection_set_interaction;
@@ -7070,6 +7171,8 @@ alias c_g_unix_mounts_changed_since g_unix_mounts_changed_since;
 alias c_g_unix_mounts_get g_unix_mounts_get;
 alias c_g_unix_mount_copy g_unix_mount_copy;
 alias c_g_unix_mount_for g_unix_mount_for;
+alias c_g_unix_mount_get_options g_unix_mount_get_options;
+alias c_g_unix_mount_get_root_path g_unix_mount_get_root_path;
 
 // gio.UnixMountMonitor
 
@@ -7213,6 +7316,8 @@ alias c_g_content_type_is_a g_content_type_is_a;
 alias c_g_content_type_is_unknown g_content_type_is_unknown;
 alias c_g_content_types_get_registered g_content_types_get_registered;
 alias c_g_content_type_is_mime_type g_content_type_is_mime_type;
+alias c_g_content_type_get_mime_dirs g_content_type_get_mime_dirs;
+alias c_g_content_type_set_mime_dirs g_content_type_set_mime_dirs;
 
 // gio.DBusError
 

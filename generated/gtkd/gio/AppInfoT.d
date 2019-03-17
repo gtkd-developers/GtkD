@@ -398,6 +398,54 @@ public template AppInfoT(TStruct)
 	}
 
 	/**
+	 * Async version of g_app_info_launch_uris().
+	 *
+	 * The @callback is invoked immediately after the application launch, but it
+	 * waits for activation in case of D-Bus–activated applications and also provides
+	 * extended error information for sandboxed applications, see notes for
+	 * g_app_info_launch_default_for_uri_async().
+	 *
+	 * Params:
+	 *     uris = a #GList containing URIs to launch.
+	 *     context = a #GAppLaunchContext or %NULL
+	 *     cancellable = a #GCancellable
+	 *     callback = a #GAsyncReadyCallback to call when the request is done
+	 *     userData = data to pass to @callback
+	 *
+	 * Since: 2.60
+	 */
+	public void launchUrisAsync(ListG uris, AppLaunchContext context, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	{
+		g_app_info_launch_uris_async(getAppInfoStruct(), (uris is null) ? null : uris.getListGStruct(), (context is null) ? null : context.getAppLaunchContextStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+	}
+
+	/**
+	 * Finishes a g_app_info_launch_uris_async() operation.
+	 *
+	 * Params:
+	 *     result = a #GAsyncResult
+	 *
+	 * Returns: %TRUE on successful launch, %FALSE otherwise.
+	 *
+	 * Since: 2.60
+	 *
+	 * Throws: GException on failure.
+	 */
+	public bool launchUrisFinish(AsyncResultIF result)
+	{
+		GError* err = null;
+
+		auto p = g_app_info_launch_uris_finish(getAppInfoStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		return p;
+	}
+
+	/**
 	 * Removes a supported type from an application, if possible.
 	 *
 	 * Params:

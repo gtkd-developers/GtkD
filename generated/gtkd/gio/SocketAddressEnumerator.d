@@ -36,8 +36,20 @@ public  import gtkc.giotypes;
 
 
 /**
- * Enumerator type for objects that contain or generate
- * #GSocketAddress instances.
+ * #GSocketAddressEnumerator is an enumerator type for #GSocketAddress
+ * instances. It is returned by enumeration functions such as
+ * g_socket_connectable_enumerate(), which returns a #GSocketAddressEnumerator
+ * to list all the #GSocketAddresses which could be used to connect to that
+ * #GSocketConnectable.
+ * 
+ * Enumeration is typically a blocking operation, so the asynchronous methods
+ * g_socket_address_enumerator_next_async() and
+ * g_socket_address_enumerator_next_finish() should be used where possible.
+ * 
+ * Each #GSocketAddressEnumerator can only be enumerated once. Once
+ * g_socket_address_enumerator_next() has returned %NULL (and no error), further
+ * enumeration with that #GSocketAddressEnumerator is not possible, and it can
+ * be unreffed.
  */
 public class SocketAddressEnumerator : ObjectG
 {
@@ -121,6 +133,8 @@ public class SocketAddressEnumerator : ObjectG
 	 * Asynchronously retrieves the next #GSocketAddress from @enumerator
 	 * and then calls @callback, which must call
 	 * g_socket_address_enumerator_next_finish() to get the result.
+	 *
+	 * It is an error to call this multiple times before the previous callback has finished.
 	 *
 	 * Params:
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.

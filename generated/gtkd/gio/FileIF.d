@@ -558,6 +558,11 @@ public interface FileIF{
 	 * the actual file or directory represented by the #GFile; see
 	 * g_file_copy() if attempting to copy a file.
 	 *
+	 * g_file_dup() is useful when a second handle is needed to the same underlying
+	 * file, for use in a separate thread (#GFile is not thread-safe). For use
+	 * within the same thread, use g_object_ref() to increment the existing object’s
+	 * reference count.
+	 *
 	 * This call does no blocking I/O.
 	 *
 	 * Returns: a new #GFile that is a duplicate
@@ -1012,7 +1017,7 @@ public interface FileIF{
 	/**
 	 * Checks to see if a file is native to the platform.
 	 *
-	 * A native file s one expressed in the platform-native filename format,
+	 * A native file is one expressed in the platform-native filename format,
 	 * e.g. "C:\Windows" or "/usr/bin/". This does not mean the file is local,
 	 * as it might be on a locally mounted remote filesystem.
 	 *
@@ -1742,6 +1747,34 @@ public interface FileIF{
 	 * Throws: GException on failure.
 	 */
 	public AppInfoIF queryDefaultHandler(Cancellable cancellable);
+
+	/**
+	 * Async version of g_file_query_default_handler().
+	 *
+	 * Params:
+	 *     cancellable = optional #GCancellable object, %NULL to ignore
+	 *     callback = a #GAsyncReadyCallback to call when the request is done
+	 *     userData = data to pass to @callback
+	 *
+	 * Since: 2.60
+	 */
+	public void queryDefaultHandlerAsync(int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData);
+
+	/**
+	 * Finishes a g_file_query_default_handler_async() operation.
+	 *
+	 * Params:
+	 *     result = a #GAsyncResult
+	 *
+	 * Returns: a #GAppInfo if the handle was found,
+	 *     %NULL if there were errors.
+	 *     When you are done with it, release it with g_object_unref()
+	 *
+	 * Since: 2.60
+	 *
+	 * Throws: GException on failure.
+	 */
+	public AppInfoIF queryDefaultHandlerFinish(AsyncResultIF result);
 
 	/**
 	 * Utility function to check if a particular file exists. This is

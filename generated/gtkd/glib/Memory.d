@@ -43,7 +43,11 @@ public struct Memory
 	 * pointer is set to %NULL.
 	 *
 	 * A macro is also included that allows this function to be used without
-	 * pointer casts.
+	 * pointer casts. This will mask any warnings about incompatible function types
+	 * or calling conventions, so you must ensure that your @destroy function is
+	 * compatible with being called as `GDestroyNotify` using the standard calling
+	 * convention for the platform that GLib was compiled for; otherwise the program
+	 * will experience undefined behaviour.
 	 *
 	 * Params:
 	 *     pp = a pointer to a variable, struct member etc. holding a

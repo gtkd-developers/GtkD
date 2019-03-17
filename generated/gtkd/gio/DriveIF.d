@@ -208,13 +208,15 @@ public interface DriveIF{
 	public IconIF getIcon();
 
 	/**
-	 * Gets the identifier of the given kind for @drive.
+	 * Gets the identifier of the given kind for @drive. The only
+	 * identifier currently available is
+	 * #G_DRIVE_IDENTIFIER_KIND_UNIX_DEVICE.
 	 *
 	 * Params:
 	 *     kind = the kind of identifier to return
 	 *
 	 * Returns: a newly allocated string containing the
-	 *     requested identfier, or %NULL if the #GDrive
+	 *     requested identifier, or %NULL if the #GDrive
 	 *     doesn't have this kind of identifier.
 	 */
 	public string getIdentifier(string kind);

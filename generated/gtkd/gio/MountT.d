@@ -213,7 +213,8 @@ public template MountT(TStruct)
 	 * This is a convenience method for getting the #GVolume and then
 	 * using that object to get the #GDrive.
 	 *
-	 * Returns: a #GDrive or %NULL if @mount is not associated with a volume or a drive.
+	 * Returns: a #GDrive or %NULL if @mount is not
+	 *     associated with a volume or a drive.
 	 *     The returned object should be unreffed with
 	 *     g_object_unref() when no longer needed.
 	 */
@@ -321,7 +322,8 @@ public template MountT(TStruct)
 	 * considered an opaque string. Returns %NULL if there is no UUID
 	 * available.
 	 *
-	 * Returns: the UUID for @mount or %NULL if no UUID can be computed.
+	 * Returns: the UUID for @mount or %NULL if no UUID
+	 *     can be computed.
 	 *     The returned string should be freed with g_free()
 	 *     when no longer needed.
 	 */
@@ -336,7 +338,8 @@ public template MountT(TStruct)
 	/**
 	 * Gets the volume for the @mount.
 	 *
-	 * Returns: a #GVolume or %NULL if @mount is not associated with a volume.
+	 * Returns: a #GVolume or %NULL if @mount is not
+	 *     associated with a volume.
 	 *     The returned object should be unreffed with
 	 *     g_object_unref() when no longer needed.
 	 */

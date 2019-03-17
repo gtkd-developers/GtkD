@@ -349,7 +349,8 @@ public class PtrArray
 	 * Removes the pointer at the given index from the pointer array.
 	 * The following elements are moved down one place. If @array has
 	 * a non-%NULL #GDestroyNotify function it is called for the removed
-	 * element.
+	 * element. If so, the return value from this function will potentially point
+	 * to freed memory (depending on the #GDestroyNotify implementation).
 	 *
 	 * Params:
 	 *     index = the index of the pointer to remove
@@ -366,7 +367,9 @@ public class PtrArray
 	 * The last element in the array is used to fill in the space, so
 	 * this function does not preserve the order of the array. But it
 	 * is faster than g_ptr_array_remove_index(). If @array has a non-%NULL
-	 * #GDestroyNotify function it is called for the removed element.
+	 * #GDestroyNotify function it is called for the removed element. If so, the
+	 * return value from this function will potentially point to freed memory
+	 * (depending on the #GDestroyNotify implementation).
 	 *
 	 * Params:
 	 *     index = the index of the pointer to remove
@@ -494,6 +497,44 @@ public class PtrArray
 	public void sortWithData(GCompareDataFunc compareFunc, void* userData)
 	{
 		g_ptr_array_sort_with_data(gPtrArray, compareFunc, userData);
+	}
+
+	/**
+	 * Removes the pointer at the given index from the pointer array.
+	 * The following elements are moved down one place. The #GDestroyNotify for
+	 * @array is *not* called on the removed element; ownership is transferred to
+	 * the caller of this function.
+	 *
+	 * Params:
+	 *     index = the index of the pointer to steal
+	 *
+	 * Returns: the pointer which was removed
+	 *
+	 * Since: 2.58
+	 */
+	public void* stealIndex(uint index)
+	{
+		return g_ptr_array_steal_index(gPtrArray, index);
+	}
+
+	/**
+	 * Removes the pointer at the given index from the pointer array.
+	 * The last element in the array is used to fill in the space, so
+	 * this function does not preserve the order of the array. But it
+	 * is faster than g_ptr_array_steal_index(). The #GDestroyNotify for @array is
+	 * *not* called on the removed element; ownership is transferred to the caller
+	 * of this function.
+	 *
+	 * Params:
+	 *     index = the index of the pointer to steal
+	 *
+	 * Returns: the pointer which was removed
+	 *
+	 * Since: 2.58
+	 */
+	public void* stealIndexFast(uint index)
+	{
+		return g_ptr_array_steal_index_fast(gPtrArray, index);
 	}
 
 	/**

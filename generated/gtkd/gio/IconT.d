@@ -128,8 +128,8 @@ public template IconT(TStruct)
 	 * native, the returned string is the result of g_file_get_uri()
 	 * (such as `sftp://path/to/my%20icon.png`).
 	 *
-	 * - If @icon is a #GThemedIcon with exactly one name, the encoding is
-	 * simply the name (such as `network-server`).
+	 * - If @icon is a #GThemedIcon with exactly one name and no fallbacks,
+	 * the encoding is simply the name (such as `network-server`).
 	 *
 	 * Returns: An allocated NUL-terminated UTF8 string or
 	 *     %NULL if @icon can't be serialized. Use g_free() to free.

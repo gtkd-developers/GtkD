@@ -507,7 +507,7 @@ public class Variant
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(char value)
+	public this(ubyte value)
 	{
 		auto p = g_variant_new_byte(value);
 
@@ -618,6 +618,10 @@ public class Variant
 	 *
 	 * A reference is taken on @bytes.
 	 *
+	 * The data in @bytes must be aligned appropriately for the @type being loaded.
+	 * Otherwise this function will internally create a copy of the memory (since
+	 * GLib 2.60) or (in older versions) fail and exit the process.
+	 *
 	 * Params:
 	 *     type = a #GVariantType
 	 *     bytes = a #GBytes
@@ -666,6 +670,11 @@ public class Variant
 	 * @notify will be called with @user_data when @data is no longer
 	 * needed.  The exact time of this call is unspecified and might even be
 	 * before this function returns.
+	 *
+	 * Note: @data must be backed by memory that is aligned appropriately for the
+	 * @type being loaded. Otherwise this function will internally create a copy of
+	 * the memory (since GLib 2.60) or (in older versions) fail and exit the
+	 * process.
 	 *
 	 * Params:
 	 *     type = a definite #GVariantType
@@ -1360,11 +1369,11 @@ public class Variant
 	 * It is an error to call this function with a @value of any type
 	 * other than %G_VARIANT_TYPE_BYTE.
 	 *
-	 * Returns: a #guchar
+	 * Returns: a #guint8
 	 *
 	 * Since: 2.24
 	 */
-	public char getByte()
+	public ubyte getByte()
 	{
 		return g_variant_get_byte(gVariant);
 	}
@@ -1432,6 +1441,11 @@ public class Variant
 	 *
 	 * The returned value is never floating.  You should free it with
 	 * g_variant_unref() when you're done with it.
+	 *
+	 * There may be implementation specific restrictions on deeply nested values,
+	 * which would result in the unit tuple being returned as the child value,
+	 * instead of further nested children. #GVariant is guaranteed to handle
+	 * nesting up to at least 64 levels.
 	 *
 	 * This function is O(1).
 	 *
@@ -1543,7 +1557,7 @@ public class Variant
 	 * the appropriate type:
 	 * - %G_VARIANT_TYPE_INT16 (etc.): #gint16 (etc.)
 	 * - %G_VARIANT_TYPE_BOOLEAN: #guchar (not #gboolean!)
-	 * - %G_VARIANT_TYPE_BYTE: #guchar
+	 * - %G_VARIANT_TYPE_BYTE: #guint8
 	 * - %G_VARIANT_TYPE_HANDLE: #guint32
 	 * - %G_VARIANT_TYPE_DOUBLE: #gdouble
 	 *
@@ -1998,6 +2012,9 @@ public class Variant
 	 * being trusted.  If the value was already marked as being trusted then
 	 * this function will immediately return %TRUE.
 	 *
+	 * There may be implementation specific restrictions on deeply nested values.
+	 * GVariant is guaranteed to handle nesting up to at least 64 levels.
+	 *
 	 * Returns: %TRUE if @value is in normal form
 	 *
 	 * Since: 2.24
@@ -2059,7 +2076,7 @@ public class Variant
 	 * string specifies what type of value is expected to be inside of the
 	 * variant. If the value inside the variant has a different type then
 	 * %NULL is returned. In the event that @dictionary has a value type other
-	 * than v then @expected_type must directly match the key type and it is
+	 * than v then @expected_type must directly match the value type and it is
 	 * used to unpack the value directly or an error occurs.
 	 *
 	 * In either case, if @key is not found in @dictionary, %NULL is returned.
@@ -2312,10 +2329,10 @@ public class Variant
 	 * should ensure that a string is a valid D-Bus object path before
 	 * passing it to g_variant_new_object_path().
 	 *
-	 * A valid object path starts with '/' followed by zero or more
-	 * sequences of characters separated by '/' characters.  Each sequence
-	 * must contain only the characters "[A-Z][a-z][0-9]_".  No sequence
-	 * (including the one following the final '/' character) may be empty.
+	 * A valid object path starts with `/` followed by zero or more
+	 * sequences of characters separated by `/` characters.  Each sequence
+	 * must contain only the characters `[A-Z][a-z][0-9]_`.  No sequence
+	 * (including the one following the final `/` character) may be empty.
 	 *
 	 * Params:
 	 *     string_ = a normal C nul-terminated string

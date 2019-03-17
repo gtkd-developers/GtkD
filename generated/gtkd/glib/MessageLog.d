@@ -39,7 +39,7 @@ public struct MessageLog
 	 * allows to install an alternate default log handler.
 	 * This is used if no log handler has been set for the particular log
 	 * domain and log level combination. It outputs the message to stderr
-	 * or stdout and if the log level is fatal it calls abort(). It automatically
+	 * or stdout and if the log level is fatal it calls G_BREAKPOINT(). It automatically
 	 * prints a new-line character after the message, so one does not need to be
 	 * manually included in @message.
 	 *
@@ -150,6 +150,11 @@ public struct MessageLog
 	 * g_log_set_writer_func(). See
 	 * [Using Structured Logging][using-structured-logging].
 	 *
+	 * This function is mostly intended to be used with
+	 * %G_LOG_LEVEL_CRITICAL.  You should typically not set
+	 * %G_LOG_LEVEL_WARNING, %G_LOG_LEVEL_MESSAGE, %G_LOG_LEVEL_INFO or
+	 * %G_LOG_LEVEL_DEBUG as fatal except inside of test programs.
+	 *
 	 * Params:
 	 *     logDomain = the log domain
 	 *     fatalMask = the new fatal mask
@@ -239,8 +244,9 @@ public struct MessageLog
 	/**
 	 * Logs an error or debugging message.
 	 *
-	 * If the log level has been set as fatal, the abort()
-	 * function is called to terminate the program.
+	 * If the log level has been set as fatal, G_BREAKPOINT() is called
+	 * to terminate the program. See the documentation for G_BREAKPOINT() for
+	 * details of the debugging options this provides.
 	 *
 	 * If g_log_default_handler() is used as the log handler function, a new-line
 	 * character will automatically be appended to @..., and need not be entered

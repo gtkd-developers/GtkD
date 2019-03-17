@@ -137,6 +137,22 @@ public alias int GPid;
 public alias uint GQuark;
 
 /**
+ * Opaque type. See g_rec_mutex_locker_new() for details.
+ */
+public alias void GRecMutexLocker;
+
+/**
+ * A typedef for a reference-counted string. A pointer to a #GRefString can be
+ * treated like a standard `char*` array by all code, but can additionally have
+ * `g_ref_string_*()` methods called on it. `g_ref_string_*()` methods cannot be
+ * called on `char*` arrays not allocated using g_ref_string_new().
+ *
+ * If using #GRefString with autocleanups, g_autoptr() must be used rather than
+ * g_autofree(), so that the reference counting metadata is also freed.
+ */
+public alias char GRefString;
+
+/**
  * A typedef alias for gchar**. This is mostly useful when used together with
  * g_auto().
  */
@@ -3232,6 +3248,34 @@ public enum GUnicodeScript
 	 * Zanabazar Square. Since: 2.54
 	 */
 	ZANABAZAR_SQUARE = 141,
+	/**
+	 * Dogra. Since: 2.58
+	 */
+	DOGRA = 142,
+	/**
+	 * Gunjala Gondi. Since: 2.58
+	 */
+	GUNJALA_GONDI = 143,
+	/**
+	 * Hanifi Rohingya. Since: 2.58
+	 */
+	HANIFI_ROHINGYA = 144,
+	/**
+	 * Makasar. Since: 2.58
+	 */
+	MAKASAR = 145,
+	/**
+	 * Medefaidrin. Since: 2.58
+	 */
+	MEDEFAIDRIN = 146,
+	/**
+	 * Old Sogdian. Since: 2.58
+	 */
+	OLD_SOGDIAN = 147,
+	/**
+	 * Sogdian. Since: 2.58
+	 */
+	SOGDIAN = 148,
 }
 alias GUnicodeScript UnicodeScript;
 
@@ -4492,7 +4536,7 @@ struct GTestLogMsg
 	uint nStrings;
 	char** strings;
 	uint nNums;
-	long* nums;
+	real nums;
 }
 
 struct GTestSuite;
@@ -5152,6 +5196,10 @@ public alias extern(C) void function() GSourceDummyMarshal;
 /**
  * Specifies the type of function passed to g_timeout_add(),
  * g_timeout_add_full(), g_idle_add(), and g_idle_add_full().
+ *
+ * When calling g_source_set_callback(), you may need to cast a function of a
+ * different type to this type. Use G_SOURCE_FUNC() to avoid warnings about
+ * incompatible function types.
  *
  * Params:
  *     userData = data passed to the function, set when the source was
@@ -5934,7 +5982,7 @@ alias G_MAXUINT8 = MAXUINT8;
  * application compile time, rather than from the library
  * linked against at application run time.
  */
-enum MICRO_VERSION = 2;
+enum MICRO_VERSION = 0;
 alias GLIB_MICRO_VERSION = MICRO_VERSION;
 
 /**
@@ -5968,7 +6016,7 @@ alias G_MININT8 = MININT8;
  * application compile time, rather than from the library
  * linked against at application run time.
  */
-enum MINOR_VERSION = 56;
+enum MINOR_VERSION = 60;
 alias GLIB_MINOR_VERSION = MINOR_VERSION;
 
 enum MODULE_SUFFIX = "so";
@@ -6105,6 +6153,33 @@ alias GLIB_SYSDEF_MSG_OOB = SYSDEF_MSG_OOB;
 
 enum SYSDEF_MSG_PEEK = 2;
 alias GLIB_SYSDEF_MSG_PEEK = SYSDEF_MSG_PEEK;
+
+/**
+ * Creates a unique temporary directory for each unit test and uses
+ * g_set_user_dirs() to set XDG directories to point into subdirectories of it
+ * for the duration of the unit test. The directory tree is cleaned up after the
+ * test finishes successfully. Note that this doesn’t take effect until
+ * g_test_run() is called, so calls to (for example) g_get_user_home_dir() will
+ * return the system-wide value when made in a test program’s main() function.
+ *
+ * The following functions will return subdirectories of the temporary directory
+ * when this option is used. The specific subdirectory paths in use are not
+ * guaranteed to be stable API — always use a getter function to retrieve them.
+ *
+ * - g_get_home_dir()
+ * - g_get_user_cache_dir()
+ * - g_get_system_config_dirs()
+ * - g_get_user_config_dir()
+ * - g_get_system_data_dirs()
+ * - g_get_user_data_dir()
+ * - g_get_user_runtime_dir()
+ *
+ * The subdirectories may not be created by the test harness; as with normal
+ * calls to functions like g_get_user_cache_dir(), the caller must be prepared
+ * to create the directory if it doesn’t exist.
+ */
+enum TEST_OPTION_ISOLATE_DIRS = "isolate_dirs";
+alias G_TEST_OPTION_ISOLATE_DIRS = TEST_OPTION_ISOLATE_DIRS;
 
 /**
  * Evaluates to a time span of one day.

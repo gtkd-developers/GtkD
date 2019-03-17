@@ -146,6 +146,26 @@ public template TlsBackendT(TStruct)
 	}
 
 	/**
+	 * Set the default #GTlsDatabase used to verify TLS connections
+	 *
+	 * Any subsequent call to g_tls_backend_get_default_database() will return
+	 * the database set in this call.  Existing databases and connections are not
+	 * modified.
+	 *
+	 * Setting a %NULL default database will reset to using the system default
+	 * database as if g_tls_backend_set_default_database() had never been called.
+	 *
+	 * Params:
+	 *     database = the #GTlsDatabase
+	 *
+	 * Since: 2.60
+	 */
+	public void setDefaultDatabase(TlsDatabase database)
+	{
+		g_tls_backend_set_default_database(getTlsBackendStruct(), (database is null) ? null : database.getTlsDatabaseStruct());
+	}
+
+	/**
 	 * Checks if DTLS is supported. DTLS support may not be available even if TLS
 	 * support is available, and vice-versa.
 	 *
