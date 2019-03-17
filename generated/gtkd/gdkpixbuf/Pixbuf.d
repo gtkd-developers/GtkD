@@ -704,41 +704,6 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	}
 
 	/**
-	 * Converts a #GdkPixdata to a #GdkPixbuf. If @copy_pixels is %TRUE or
-	 * if the pixel data is run-length-encoded, the pixel data is copied into
-	 * newly-allocated memory; otherwise it is reused.
-	 *
-	 * Deprecated: Use #GResource instead.
-	 *
-	 * Params:
-	 *     pixdata = a #GdkPixdata to convert into a #GdkPixbuf.
-	 *     copyPixels = whether to copy raw pixel data; run-length encoded
-	 *         pixel data is always copied.
-	 *
-	 * Returns: a new #GdkPixbuf.
-	 *
-	 * Throws: GException on failure.
-	 */
-	public static Pixbuf fromPixdata(Pixdata pixdata, bool copyPixels)
-	{
-		GError* err = null;
-
-		auto p = gdk_pixbuf_from_pixdata((pixdata is null) ? null : pixdata.getPixdataStruct(), copyPixels, &err);
-
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
-	}
-
-	/**
 	 * Parses an image file far enough to determine its format and size.
 	 *
 	 * Params:
@@ -1366,6 +1331,11 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	}
 
 	/**
+	 * Provides a #GBytes buffer containing the raw pixel data; the data
+	 * must not be modified.  This function allows skipping the implicit
+	 * copy that must be made if gdk_pixbuf_get_pixels() is called on a
+	 * read-only pixbuf.
+	 *
 	 * Returns: A new reference to a read-only copy of
 	 *     the pixel data.  Note that for mutable pixbufs, this function will
 	 *     incur a one-time copy of the pixel data for conversion into the
@@ -1386,10 +1356,12 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	}
 
 	/**
-	 * Returns a read-only pointer to the raw pixel data; must not be
+	 * Provides a read-only pointer to the raw pixel data; must not be
 	 * modified.  This function allows skipping the implicit copy that
 	 * must be made if gdk_pixbuf_get_pixels() is called on a read-only
 	 * pixbuf.
+	 *
+	 * Returns: a read-only pointer to the raw pixel data
 	 *
 	 * Since: 2.32
 	 */
@@ -1665,5 +1637,40 @@ public class Pixbuf : ObjectG, IconIF, LoadableIconIF
 	public bool setOption(string key, string value)
 	{
 		return gdk_pixbuf_set_option(gdkPixbuf, Str.toStringz(key), Str.toStringz(value)) != 0;
+	}
+
+	/**
+	 * Converts a #GdkPixdata to a #GdkPixbuf. If @copy_pixels is %TRUE or
+	 * if the pixel data is run-length-encoded, the pixel data is copied into
+	 * newly-allocated memory; otherwise it is reused.
+	 *
+	 * Deprecated: Use #GResource instead.
+	 *
+	 * Params:
+	 *     pixdata = a #GdkPixdata to convert into a #GdkPixbuf.
+	 *     copyPixels = whether to copy raw pixel data; run-length encoded
+	 *         pixel data is always copied.
+	 *
+	 * Returns: a new #GdkPixbuf.
+	 *
+	 * Throws: GException on failure.
+	 */
+	public static Pixbuf fromPixdata(Pixdata pixdata, bool copyPixels)
+	{
+		GError* err = null;
+
+		auto p = gdk_pixbuf_from_pixdata((pixdata is null) ? null : pixdata.getPixdataStruct(), copyPixels, &err);
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
 	}
 }

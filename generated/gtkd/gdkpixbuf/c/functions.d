@@ -54,7 +54,6 @@ shared static this()
 	Linker.link(gdk_pixbuf_new_from_stream_finish, "gdk_pixbuf_new_from_stream_finish", LIBRARY_GDKPIXBUF);
 	Linker.link(gdk_pixbuf_new_from_xpm_data, "gdk_pixbuf_new_from_xpm_data", LIBRARY_GDKPIXBUF);
 	Linker.link(gdk_pixbuf_calculate_rowstride, "gdk_pixbuf_calculate_rowstride", LIBRARY_GDKPIXBUF);
-	Linker.link(gdk_pixbuf_from_pixdata, "gdk_pixbuf_from_pixdata", LIBRARY_GDKPIXBUF);
 	Linker.link(gdk_pixbuf_get_file_info, "gdk_pixbuf_get_file_info", LIBRARY_GDKPIXBUF);
 	Linker.link(gdk_pixbuf_get_file_info_async, "gdk_pixbuf_get_file_info_async", LIBRARY_GDKPIXBUF);
 	Linker.link(gdk_pixbuf_get_file_info_finish, "gdk_pixbuf_get_file_info_finish", LIBRARY_GDKPIXBUF);
@@ -105,6 +104,7 @@ shared static this()
 	Linker.link(gdk_pixbuf_scale_simple, "gdk_pixbuf_scale_simple", LIBRARY_GDKPIXBUF);
 	Linker.link(gdk_pixbuf_set_option, "gdk_pixbuf_set_option", LIBRARY_GDKPIXBUF);
 	Linker.link(gdk_pixbuf_unref, "gdk_pixbuf_unref", LIBRARY_GDKPIXBUF);
+	Linker.link(gdk_pixbuf_from_pixdata, "gdk_pixbuf_from_pixdata", LIBRARY_GDKPIXBUF);
 
 	// gdkpixbuf.PixbufAnimation
 
@@ -200,7 +200,6 @@ __gshared extern(C)
 	GdkPixbuf* function(GAsyncResult* asyncResult, GError** err) c_gdk_pixbuf_new_from_stream_finish;
 	GdkPixbuf* function(char** data) c_gdk_pixbuf_new_from_xpm_data;
 	int function(GdkColorspace colorspace, int hasAlpha, int bitsPerSample, int width, int height) c_gdk_pixbuf_calculate_rowstride;
-	GdkPixbuf* function(GdkPixdata* pixdata, int copyPixels, GError** err) c_gdk_pixbuf_from_pixdata;
 	GdkPixbufFormat* function(char* filename, int* width, int* height) c_gdk_pixbuf_get_file_info;
 	void function(char* filename, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) c_gdk_pixbuf_get_file_info_async;
 	GdkPixbufFormat* function(GAsyncResult* asyncResult, int* width, int* height, GError** err) c_gdk_pixbuf_get_file_info_finish;
@@ -251,6 +250,7 @@ __gshared extern(C)
 	GdkPixbuf* function(GdkPixbuf* src, int destWidth, int destHeight, GdkInterpType interpType) c_gdk_pixbuf_scale_simple;
 	int function(GdkPixbuf* pixbuf, const(char)* key, const(char)* value) c_gdk_pixbuf_set_option;
 	void function(GdkPixbuf* pixbuf) c_gdk_pixbuf_unref;
+	GdkPixbuf* function(GdkPixdata* pixdata, int copyPixels, GError** err) c_gdk_pixbuf_from_pixdata;
 
 	// gdkpixbuf.PixbufAnimation
 
@@ -344,7 +344,6 @@ alias c_gdk_pixbuf_new_from_stream_at_scale gdk_pixbuf_new_from_stream_at_scale;
 alias c_gdk_pixbuf_new_from_stream_finish gdk_pixbuf_new_from_stream_finish;
 alias c_gdk_pixbuf_new_from_xpm_data gdk_pixbuf_new_from_xpm_data;
 alias c_gdk_pixbuf_calculate_rowstride gdk_pixbuf_calculate_rowstride;
-alias c_gdk_pixbuf_from_pixdata gdk_pixbuf_from_pixdata;
 alias c_gdk_pixbuf_get_file_info gdk_pixbuf_get_file_info;
 alias c_gdk_pixbuf_get_file_info_async gdk_pixbuf_get_file_info_async;
 alias c_gdk_pixbuf_get_file_info_finish gdk_pixbuf_get_file_info_finish;
@@ -395,6 +394,7 @@ alias c_gdk_pixbuf_scale gdk_pixbuf_scale;
 alias c_gdk_pixbuf_scale_simple gdk_pixbuf_scale_simple;
 alias c_gdk_pixbuf_set_option gdk_pixbuf_set_option;
 alias c_gdk_pixbuf_unref gdk_pixbuf_unref;
+alias c_gdk_pixbuf_from_pixdata gdk_pixbuf_from_pixdata;
 
 // gdkpixbuf.PixbufAnimation
 

@@ -49,10 +49,8 @@ alias GdkColorspace Colorspace;
  * scaling down. @GDK_INTERP_BILINEAR is the best choice if you
  * aren't sure what to choose, it has a good speed/quality balance.
  *
- * <note>
- * Cubic filtering is missing from the list; hyperbolic
+ * **Note**: Cubic filtering is missing from the list; hyperbolic
  * interpolation is just as fast and results in higher quality.
- * </note>
  */
 public enum GdkInterpType
 {
@@ -84,6 +82,9 @@ public enum GdkInterpType
 	 * Wolberg's "Digital Image Warping", and is formally defined as the
 	 * hyperbolic-filter sampling the ideal hyperbolic-filter interpolated
 	 * image (the filter is designed to be idempotent for 1:1 pixel mapping).
+	 * **Deprecated**: this interpolation filter is deprecated, as in reality
+	 * it has a lower quality than the @GDK_INTERP_BILINEAR filter
+	 * (Since: 2.38)
 	 */
 	HYPER = 3,
 }
@@ -390,12 +391,6 @@ enum PIXBUF_FEATURES_H = 1;
 alias GDK_PIXBUF_FEATURES_H = PIXBUF_FEATURES_H;
 
 /**
- * Magic number for #GdkPixdata structures.
- */
-enum PIXBUF_MAGIC_NUMBER = 1197763408;
-alias GDK_PIXBUF_MAGIC_NUMBER = PIXBUF_MAGIC_NUMBER;
-
-/**
  * Major version of gdk-pixbuf library, that is the "0" in
  * "0.8.2" for example.
  */
@@ -406,14 +401,14 @@ alias GDK_PIXBUF_MAJOR = PIXBUF_MAJOR;
  * Micro version of gdk-pixbuf library, that is the "2" in
  * "0.8.2" for example.
  */
-enum PIXBUF_MICRO = 12;
+enum PIXBUF_MICRO = 1;
 alias GDK_PIXBUF_MICRO = PIXBUF_MICRO;
 
 /**
  * Minor version of gdk-pixbuf library, that is the "8" in
  * "0.8.2" for example.
  */
-enum PIXBUF_MINOR = 36;
+enum PIXBUF_MINOR = 38;
 alias GDK_PIXBUF_MINOR = PIXBUF_MINOR;
 
 /**
@@ -421,8 +416,14 @@ alias GDK_PIXBUF_MINOR = PIXBUF_MINOR;
  * This is the version being compiled against; contrast with
  * #gdk_pixbuf_version.
  */
-enum PIXBUF_VERSION = "2.36.12";
+enum PIXBUF_VERSION = "2.38.1";
 alias GDK_PIXBUF_VERSION = PIXBUF_VERSION;
+
+/**
+ * Magic number for #GdkPixdata structures.
+ */
+enum PIXBUF_MAGIC_NUMBER = 1197763408;
+alias GDK_PIXBUF_MAGIC_NUMBER = PIXBUF_MAGIC_NUMBER;
 
 /**
  * The length of a #GdkPixdata structure without the @pixel_data pointer.
