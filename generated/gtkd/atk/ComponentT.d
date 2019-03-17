@@ -234,6 +234,44 @@ public template ComponentT(TStruct)
 	}
 
 	/**
+	 * Makes @component visible on the screen by scrolling all necessary parents.
+	 *
+	 * Contrary to atk_component_set_position, this does not actually move
+	 * @component in its parent, this only makes the parents scroll so that the
+	 * object shows up on the screen, given its current position within the parents.
+	 *
+	 * Params:
+	 *     type = specify where the object should be made visible.
+	 *
+	 * Returns: whether scrolling was successful.
+	 *
+	 * Since: 2.30
+	 */
+	public bool scrollTo(AtkScrollType type)
+	{
+		return atk_component_scroll_to(getComponentStruct(), type) != 0;
+	}
+
+	/**
+	 * Makes an object visible on the screen at a given position by scrolling all
+	 * necessary parents.
+	 *
+	 * Params:
+	 *     coords = specify whether coordinates are relative to the screen or to the
+	 *         parent object.
+	 *     x = x-position where to scroll to
+	 *     y = y-position where to scroll to
+	 *
+	 * Returns: whether scrolling was successful.
+	 *
+	 * Since: 2.30
+	 */
+	public bool scrollToPoint(AtkCoordType coords, int x, int y)
+	{
+		return atk_component_scroll_to_point(getComponentStruct(), coords, x, y) != 0;
+	}
+
+	/**
 	 * Sets the extents of @component.
 	 *
 	 * Params:
@@ -252,13 +290,16 @@ public template ComponentT(TStruct)
 	}
 
 	/**
-	 * Sets the postition of @component.
+	 * Sets the position of @component.
+	 *
+	 * Contrary to atk_component_scroll_to, this does not trigger any scrolling,
+	 * this just moves @component in its parent.
 	 *
 	 * Params:
 	 *     x = x coordinate
 	 *     y = y coordinate
 	 *     coordType = specifies whether the coordinates are relative to the screen
-	 *         or to the components top level window
+	 *         or to the component's top level window
 	 *
 	 * Returns: %TRUE or %FALSE whether or not the position was set or not
 	 */

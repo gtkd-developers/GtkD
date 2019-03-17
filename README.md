@@ -101,7 +101,7 @@ Glib | 2.60
 GObject | 2.60
 Gio | 2.60
 Pango | 1.42
-Atk | 2.28
+Atk | 2.32
 Gdk-pixbuf | 2.36
 Cairo | 1.12.2
 GtksourceView | 3.24

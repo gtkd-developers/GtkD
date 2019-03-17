@@ -462,7 +462,7 @@ public class ObjectAtk : ObjectG
 	 * Params:
 	 *     arg1 = the newly focused object.
 	 */
-	gulong addOnActiveDescendantChanged(void delegate(void*, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnActiveDescendantChanged(void delegate(ObjectAtk, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "active-descendant-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
@@ -481,7 +481,7 @@ public class ObjectAtk : ObjectG
 	 *         available for the implementor. In that case this pointer can be
 	 *         NULL.
 	 */
-	gulong addOnChildrenChanged(void delegate(uint, void*, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnChildrenChanged(void delegate(uint, ObjectAtk, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "children-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
@@ -517,8 +517,8 @@ public class ObjectAtk : ObjectG
 	 * notify doesn't support emission hooks.
 	 *
 	 * Params:
-	 *     arg1 = an #AtkPropertyValues containing the new value of the
-	 *         property which changed.
+	 *     arg1 = an #AtkPropertyValues containing the new
+	 *         value of the property which changed.
 	 */
 	gulong addOnPropertyChange(void delegate(void*, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
