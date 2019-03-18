@@ -104,6 +104,7 @@ Pango | 1.43
 Atk | 2.32
 Gdk-pixbuf | 2.38
 Cairo | 1.12.2
+LibRsvg | 2.44
 GtksourceView | 3.24
 GStreamer | 1.14
 Vte3 | 0.52

@@ -553,6 +553,12 @@ code: start
 
 code: end
 
+version 3.24: start
+	struct: CellAccessibleParent
+	out: get_cell_position row
+	out: get_cell_position column
+version: end
+
 struct: CellView
 noCode: new_with_text
 noCode: new_with_markup
