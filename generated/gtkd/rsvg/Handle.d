@@ -583,6 +583,17 @@ public class Handle : ObjectG
 	}
 
 	/**
+	 * This function should not be called from normal programs.
+	 * See xmlCleanupParser() for more information.
+	 *
+	 * Since: 2.36
+	 */
+	public static void cleanup()
+	{
+		rsvg_cleanup();
+	}
+
+	/**
 	 * Do not use this function.  Create an #RsvgHandle and call
 	 * rsvg_handle_set_dpi() on it instead.
 	 *

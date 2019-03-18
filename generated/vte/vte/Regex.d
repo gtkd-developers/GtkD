@@ -150,6 +150,22 @@ public class Regex
 	}
 
 	/** */
+	public string substitute(string subject, string replacement, uint flags)
+	{
+		GError* err = null;
+
+		auto retStr = vte_regex_substitute(vteRegex, Str.toStringz(subject), Str.toStringz(replacement), flags, &err);
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
+	}
+
+	/** */
 	public Regex unref()
 	{
 		auto p = vte_regex_unref(vteRegex);

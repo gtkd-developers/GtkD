@@ -237,7 +237,8 @@ struct VteCharAttributes
 	mixin(bitfields!(
 		uint, "underline", 1,
 		uint, "strikethrough", 1,
-		uint, "", 30
+		uint, "columns", 4,
+		uint, "", 26
 	));
 }
 
@@ -363,14 +364,14 @@ alias VTE_MAJOR_VERSION = MAJOR_VERSION;
  * The micro version number of the VTE library
  * (e.g. in version 3.1.4 this is 4).
  */
-enum MICRO_VERSION = 2;
+enum MICRO_VERSION = 0;
 alias VTE_MICRO_VERSION = MICRO_VERSION;
 
 /**
  * The minor version number of the VTE library
  * (e.g. in version 3.1.4 this is 1).
  */
-enum MINOR_VERSION = 52;
+enum MINOR_VERSION = 56;
 alias VTE_MINOR_VERSION = MINOR_VERSION;
 
 enum REGEX_FLAGS_DEFAULT = 1075314688;
@@ -378,3 +379,9 @@ alias VTE_REGEX_FLAGS_DEFAULT = REGEX_FLAGS_DEFAULT;
 
 enum SPAWN_NO_PARENT_ENVV = 33554432;
 alias VTE_SPAWN_NO_PARENT_ENVV = SPAWN_NO_PARENT_ENVV;
+
+enum TEST_FLAGS_ALL = 18446744073709551615UL;
+alias VTE_TEST_FLAGS_ALL = TEST_FLAGS_ALL;
+
+enum TEST_FLAGS_NONE = 0UL;
+alias VTE_TEST_FLAGS_NONE = TEST_FLAGS_NONE;

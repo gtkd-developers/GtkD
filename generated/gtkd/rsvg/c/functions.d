@@ -63,6 +63,7 @@ shared static this()
 	Linker.link(rsvg_handle_set_dpi, "rsvg_handle_set_dpi", LIBRARY_RSVG);
 	Linker.link(rsvg_handle_set_dpi_x_y, "rsvg_handle_set_dpi_x_y", LIBRARY_RSVG);
 	Linker.link(rsvg_handle_write, "rsvg_handle_write", LIBRARY_RSVG);
+	Linker.link(rsvg_cleanup, "rsvg_cleanup", LIBRARY_RSVG);
 	Linker.link(rsvg_set_default_dpi, "rsvg_set_default_dpi", LIBRARY_RSVG);
 	Linker.link(rsvg_set_default_dpi_x_y, "rsvg_set_default_dpi_x_y", LIBRARY_RSVG);
 }
@@ -96,6 +97,7 @@ __gshared extern(C)
 	void function(RsvgHandle* handle, double dpi) c_rsvg_handle_set_dpi;
 	void function(RsvgHandle* handle, double dpiX, double dpiY) c_rsvg_handle_set_dpi_x_y;
 	int function(RsvgHandle* handle, char* buf, size_t count, GError** err) c_rsvg_handle_write;
+	void function() c_rsvg_cleanup;
 	void function(double dpi) c_rsvg_set_default_dpi;
 	void function(double dpiX, double dpiY) c_rsvg_set_default_dpi_x_y;
 }
@@ -127,5 +129,6 @@ alias c_rsvg_handle_set_base_uri rsvg_handle_set_base_uri;
 alias c_rsvg_handle_set_dpi rsvg_handle_set_dpi;
 alias c_rsvg_handle_set_dpi_x_y rsvg_handle_set_dpi_x_y;
 alias c_rsvg_handle_write rsvg_handle_write;
+alias c_rsvg_cleanup rsvg_cleanup;
 alias c_rsvg_set_default_dpi rsvg_set_default_dpi;
 alias c_rsvg_set_default_dpi_x_y rsvg_set_default_dpi_x_y;

@@ -334,14 +334,42 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * Returns whether ambiguous-width characters are narrow or wide when using
-	 * the UTF-8 encoding (vte_terminal_set_encoding()).
+	 * Returns whether ambiguous-width characters are narrow or wide.
+	 * (Note that when using a non-UTF-8 encoding set via vte_terminal_set_encoding(),
+	 * the width of ambiguous-width characters is fixed and determined by the encoding
+	 * itself.)
 	 *
 	 * Returns: 1 if ambiguous-width characters are narrow, or 2 if they are wide
 	 */
 	public int getCjkAmbiguousWidth()
 	{
 		return vte_terminal_get_cjk_ambiguous_width(vteTerminal);
+	}
+
+	/**
+	 * Returns the background colour, as used by @terminal when
+	 * drawing the background, which may be different from
+	 * the color set by vte_terminal_set_color_background().
+	 *
+	 * Note: you must only call this function while handling the
+	 * GtkWidget::draw signal.
+	 *
+	 * This function is rarely useful. One use for it is if you disable
+	 * drawing the background (see vte_terminal_set_clear_background())
+	 * and then need to draw the background yourself.
+	 *
+	 * Params:
+	 *     color = a location to store a #GdbRGBA color
+	 *
+	 * Since: 0.54
+	 */
+	public void getColorBackgroundForDraw(out RGBA color)
+	{
+		GdkRGBA* outcolor = sliceNew!GdkRGBA();
+
+		vte_terminal_get_color_background_for_draw(vteTerminal, outcolor);
+
+		color = ObjectG.getDObject!(RGBA)(outcolor, true);
 	}
 
 	/**
@@ -406,7 +434,9 @@ public class Terminal : Widget, ScrollableIF
 
 	/**
 	 * Determines the name of the encoding in which the terminal expects data to be
-	 * encoded.
+	 * encoded, or %NULL if UTF-8 is in use.
+	 *
+	 * Deprecated: Support for non-UTF-8 is deprecated.
 	 *
 	 * Returns: the current encoding for the terminal
 	 */
@@ -476,7 +506,7 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * Returns: the icon title
+	 * Returns: %NULL
 	 */
 	public string getIconTitle()
 	{
@@ -616,9 +646,9 @@ public class Terminal : Widget, ScrollableIF
 	 * %NULL, characters will only be read if @is_selected returns %TRUE after being
 	 * passed the column and row, respectively.  A #VteCharAttributes structure
 	 * is added to @attributes for each byte added to the returned string detailing
-	 * the character's position, colors, and other characteristics. This function
-	 * differs from vte_terminal_get_text() in that trailing spaces at the end of
-	 * lines are included.
+	 * the character's position, colors, and other characteristics.
+	 *
+	 * Deprecated: Use vte_terminal_get_text() instead.
 	 *
 	 * Params:
 	 *     isSelected = a #VteSelectionFunc callback
@@ -672,7 +702,7 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * Returns: the window title
+	 * Returns: the window title, or %NULL
 	 */
 	public string getWindowTitle()
 	{
@@ -834,7 +864,7 @@ public class Terminal : Widget, ScrollableIF
 	 * Sets which cursor the terminal will use if the pointer is over the pattern
 	 * specified by @tag.  The terminal keeps a reference to @cursor.
 	 *
-	 * Deprecated: Use vte_terminal_match_set_cursor_type() or vte_terminal_match_set_cursor_named() instead.
+	 * Deprecated: Use vte_terminal_match_set_cursor_name() instead.
 	 *
 	 * Params:
 	 *     tag = the tag of the regex which should use the specified cursor
@@ -863,6 +893,8 @@ public class Terminal : Widget, ScrollableIF
 	 * Sets which cursor the terminal will use if the pointer is over the pattern
 	 * specified by @tag.
 	 *
+	 * Deprecated: Use vte_terminal_match_set_cursor_name() instead.
+	 *
 	 * Params:
 	 *     tag = the tag of the regex which should use the specified cursor
 	 *     cursorType = a #GdkCursorType
@@ -874,8 +906,7 @@ public class Terminal : Widget, ScrollableIF
 
 	/**
 	 * Sends the contents of the #GDK_SELECTION_CLIPBOARD selection to the
-	 * terminal's child.  If necessary, the data is converted from UTF-8 to the
-	 * terminal's current encoding. It's called on paste menu item, or when
+	 * terminal's child. It's called on paste menu item, or when
 	 * user presses Shift+Insert.
 	 */
 	public void pasteClipboard()
@@ -885,8 +916,7 @@ public class Terminal : Widget, ScrollableIF
 
 	/**
 	 * Sends the contents of the #GDK_SELECTION_PRIMARY selection to the terminal's
-	 * child.  If necessary, the data is converted from UTF-8 to the terminal's
-	 * current encoding.  The terminal will call also paste the
+	 * child. The terminal will call also paste the
 	 * #GDK_SELECTION_PRIMARY selection when the user clicks with the the second
 	 * mouse button.
 	 */
@@ -1156,9 +1186,10 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * This setting controls whether ambiguous-width characters are narrow or wide
-	 * when using the UTF-8 encoding (vte_terminal_set_encoding()). In all other encodings,
-	 * the width of ambiguous-width characters is fixed.
+	 * This setting controls whether ambiguous-width characters are narrow or wide.
+	 * (Note that when using a non-UTF-8 encoding set via vte_terminal_set_encoding(),
+	 * the width of ambiguous-width characters is fixed and determined by the encoding
+	 * itself.)
 	 *
 	 * Params:
 	 *     width = either 1 (narrow) or 2 (wide)
@@ -1349,6 +1380,12 @@ public class Terminal : Widget, ScrollableIF
 	 * Changes the encoding the terminal will expect data from the child to
 	 * be encoded with.  For certain terminal types, applications executing in the
 	 * terminal can change the encoding. If @codeset is %NULL, it uses "UTF-8".
+	 *
+	 * Note: Support for non-UTF-8 is deprecated and may get removed altogether.
+	 * Instead of this function, you should use a wrapper like luit(1) when
+	 * spawning the child process.
+	 *
+	 * Deprecated: Support for non-UTF-8 is deprecated.
 	 *
 	 * Params:
 	 *     codeset = a valid #GIConv target, or %NULL to use UTF-8
@@ -1829,9 +1866,9 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * Emitted whenever the terminal's current encoding has changed, either
-	 * as a result of receiving a control sequence which toggled between the
-	 * local and UTF-8 encodings, or at the parent application's request.
+	 * Emitted whenever the terminal's current encoding has changed.
+	 *
+	 * Note: support for non-UTF-8 is deprecated.
 	 */
 	gulong addOnEncodingChanged(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -1869,7 +1906,9 @@ public class Terminal : Widget, ScrollableIF
 	}
 
 	/**
-	 * Emitted when the terminal's %icon_title field is modified.
+	 *
+	 *
+	 * Deprecated: This signal is never emitted.
 	 */
 	gulong addOnIconTitleChanged(void delegate(Terminal) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

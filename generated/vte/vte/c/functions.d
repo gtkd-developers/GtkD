@@ -58,6 +58,7 @@ shared static this()
 	Linker.link(vte_regex_new_for_search, "vte_regex_new_for_search", LIBRARY_VTE);
 	Linker.link(vte_regex_jit, "vte_regex_jit", LIBRARY_VTE);
 	Linker.link(vte_regex_ref, "vte_regex_ref", LIBRARY_VTE);
+	Linker.link(vte_regex_substitute, "vte_regex_substitute", LIBRARY_VTE);
 	Linker.link(vte_regex_unref, "vte_regex_unref", LIBRARY_VTE);
 
 	// vte.Terminal
@@ -81,6 +82,7 @@ shared static this()
 	Linker.link(vte_terminal_get_char_height, "vte_terminal_get_char_height", LIBRARY_VTE);
 	Linker.link(vte_terminal_get_char_width, "vte_terminal_get_char_width", LIBRARY_VTE);
 	Linker.link(vte_terminal_get_cjk_ambiguous_width, "vte_terminal_get_cjk_ambiguous_width", LIBRARY_VTE);
+	Linker.link(vte_terminal_get_color_background_for_draw, "vte_terminal_get_color_background_for_draw", LIBRARY_VTE);
 	Linker.link(vte_terminal_get_column_count, "vte_terminal_get_column_count", LIBRARY_VTE);
 	Linker.link(vte_terminal_get_current_directory_uri, "vte_terminal_get_current_directory_uri", LIBRARY_VTE);
 	Linker.link(vte_terminal_get_current_file_uri, "vte_terminal_get_current_file_uri", LIBRARY_VTE);
@@ -204,6 +206,7 @@ __gshared extern(C)
 	VteRegex* function(const(char)* pattern, ptrdiff_t patternLength, uint flags, GError** err) c_vte_regex_new_for_search;
 	int function(VteRegex* regex, uint flags, GError** err) c_vte_regex_jit;
 	VteRegex* function(VteRegex* regex) c_vte_regex_ref;
+	char* function(VteRegex* regex, const(char)* subject, const(char)* replacement, uint flags, GError** err) c_vte_regex_substitute;
 	VteRegex* function(VteRegex* regex) c_vte_regex_unref;
 
 	// vte.Terminal
@@ -227,6 +230,7 @@ __gshared extern(C)
 	glong function(VteTerminal* terminal) c_vte_terminal_get_char_height;
 	glong function(VteTerminal* terminal) c_vte_terminal_get_char_width;
 	int function(VteTerminal* terminal) c_vte_terminal_get_cjk_ambiguous_width;
+	void function(VteTerminal* terminal, GdkRGBA* color) c_vte_terminal_get_color_background_for_draw;
 	glong function(VteTerminal* terminal) c_vte_terminal_get_column_count;
 	const(char)* function(VteTerminal* terminal) c_vte_terminal_get_current_directory_uri;
 	const(char)* function(VteTerminal* terminal) c_vte_terminal_get_current_file_uri;
@@ -348,6 +352,7 @@ alias c_vte_regex_new_for_match vte_regex_new_for_match;
 alias c_vte_regex_new_for_search vte_regex_new_for_search;
 alias c_vte_regex_jit vte_regex_jit;
 alias c_vte_regex_ref vte_regex_ref;
+alias c_vte_regex_substitute vte_regex_substitute;
 alias c_vte_regex_unref vte_regex_unref;
 
 // vte.Terminal
@@ -371,6 +376,7 @@ alias c_vte_terminal_get_cell_width_scale vte_terminal_get_cell_width_scale;
 alias c_vte_terminal_get_char_height vte_terminal_get_char_height;
 alias c_vte_terminal_get_char_width vte_terminal_get_char_width;
 alias c_vte_terminal_get_cjk_ambiguous_width vte_terminal_get_cjk_ambiguous_width;
+alias c_vte_terminal_get_color_background_for_draw vte_terminal_get_color_background_for_draw;
 alias c_vte_terminal_get_column_count vte_terminal_get_column_count;
 alias c_vte_terminal_get_current_directory_uri vte_terminal_get_current_directory_uri;
 alias c_vte_terminal_get_current_file_uri vte_terminal_get_current_file_uri;

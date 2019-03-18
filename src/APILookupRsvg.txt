@@ -23,5 +23,6 @@
 wrap: rsvg
 file: Rsvg-2.0.gir
 
+move: cleanup Handle
 move: set_default_dpi Handle
 move: set_default_dpi_x_y Handle
