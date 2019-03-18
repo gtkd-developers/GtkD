@@ -576,6 +576,7 @@ shared static this()
 	Linker.link(gdk_window_move, "gdk_window_move", LIBRARY_GDK);
 	Linker.link(gdk_window_move_region, "gdk_window_move_region", LIBRARY_GDK);
 	Linker.link(gdk_window_move_resize, "gdk_window_move_resize", LIBRARY_GDK);
+	Linker.link(gdk_window_move_to_rect, "gdk_window_move_to_rect", LIBRARY_GDK);
 	Linker.link(gdk_window_peek_children, "gdk_window_peek_children", LIBRARY_GDK);
 	Linker.link(gdk_window_process_updates, "gdk_window_process_updates", LIBRARY_GDK);
 	Linker.link(gdk_window_raise, "gdk_window_raise", LIBRARY_GDK);
@@ -1283,6 +1284,7 @@ __gshared extern(C)
 	void function(GdkWindow* window, int x, int y) c_gdk_window_move;
 	void function(GdkWindow* window, cairo_region_t* region, int dx, int dy) c_gdk_window_move_region;
 	void function(GdkWindow* window, int x, int y, int width, int height) c_gdk_window_move_resize;
+	void function(GdkWindow* window, GdkRectangle* rect, GdkGravity rectAnchor, GdkGravity windowAnchor, GdkAnchorHints anchorHints, int rectAnchorDx, int rectAnchorDy) c_gdk_window_move_to_rect;
 	GList* function(GdkWindow* window) c_gdk_window_peek_children;
 	void function(GdkWindow* window, int updateChildren) c_gdk_window_process_updates;
 	void function(GdkWindow* window) c_gdk_window_raise;
@@ -1988,6 +1990,7 @@ alias c_gdk_window_merge_child_shapes gdk_window_merge_child_shapes;
 alias c_gdk_window_move gdk_window_move;
 alias c_gdk_window_move_region gdk_window_move_region;
 alias c_gdk_window_move_resize gdk_window_move_resize;
+alias c_gdk_window_move_to_rect gdk_window_move_to_rect;
 alias c_gdk_window_peek_children gdk_window_peek_children;
 alias c_gdk_window_process_updates gdk_window_process_updates;
 alias c_gdk_window_raise gdk_window_raise;

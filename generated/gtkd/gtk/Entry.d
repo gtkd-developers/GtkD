@@ -90,7 +90,7 @@ private import std.algorithm;
  * # CSS nodes
  * 
  * |[<!-- language="plain" -->
- * entry
+ * entry[.read-only][.flat][.warning][.error]
  * ├── image.left
  * ├── image.right
  * ├── undershoot.left

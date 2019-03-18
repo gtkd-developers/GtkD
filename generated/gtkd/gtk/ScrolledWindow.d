@@ -388,7 +388,7 @@ public class ScrolledWindow : Bin
 
 	/**
 	 * Reports whether the natural height of the child will be calculated and propagated
-	 * through the scrolled windows requested natural height.
+	 * through the scrolled window’s requested natural height.
 	 *
 	 * Returns: whether natural height propagation is enabled.
 	 *
@@ -401,7 +401,7 @@ public class ScrolledWindow : Bin
 
 	/**
 	 * Reports whether the natural width of the child will be calculated and propagated
-	 * through the scrolled windows requested natural width.
+	 * through the scrolled window’s requested natural width.
 	 *
 	 * Returns: whether natural width propagation is enabled.
 	 *
@@ -635,7 +635,7 @@ public class ScrolledWindow : Bin
 
 	/**
 	 * Sets whether the natural height of the child should be calculated and propagated
-	 * through the scrolled windows requested natural height.
+	 * through the scrolled window’s requested natural height.
 	 *
 	 * Params:
 	 *     propagate = whether to propagate natural height
@@ -649,7 +649,7 @@ public class ScrolledWindow : Bin
 
 	/**
 	 * Sets whether the natural width of the child should be calculated and propagated
-	 * through the scrolled windows requested natural width.
+	 * through the scrolled window’s requested natural width.
 	 *
 	 * Params:
 	 *     propagate = whether to propagate natural width
@@ -701,7 +701,7 @@ public class ScrolledWindow : Bin
 
 	/**
 	 * The ::edge-overshot signal is emitted whenever user initiated scrolling
-	 * makes the scrolledwindow firmly surpass (ie. with some edge resistance)
+	 * makes the scrolled window firmly surpass (i.e. with some edge resistance)
 	 * the lower or upper limits defined by the adjustment in that orientation.
 	 *
 	 * A similar behavior without edge resistance is provided by the
@@ -722,7 +722,7 @@ public class ScrolledWindow : Bin
 
 	/**
 	 * The ::edge-reached signal is emitted whenever user-initiated scrolling
-	 * makes the scrolledwindow exactly reaches the lower or upper limits
+	 * makes the scrolled window exactly reach the lower or upper limits
 	 * defined by the adjustment in that orientation.
 	 *
 	 * A similar behavior with edge resistance is provided by the
@@ -746,9 +746,9 @@ public class ScrolledWindow : Bin
 	 * [keybinding signal][GtkBindingSignal] which gets
 	 * emitted when focus is moved away from the scrolled window by a
 	 * keybinding. The #GtkWidget::move-focus signal is emitted with
-	 * @direction_type on this scrolled windows toplevel parent in the
+	 * @direction_type on this scrolled window’s toplevel parent in the
 	 * container hierarchy. The default bindings for this signal are
-	 * `Tab + Ctrl` and `Tab + Ctrl + Shift`.
+	 * `Ctrl + Tab` to move forward and `Ctrl + Shift + Tab` to move backward.
 	 *
 	 * Params:
 	 *     directionType = either %GTK_DIR_TAB_FORWARD or
@@ -764,7 +764,7 @@ public class ScrolledWindow : Bin
 	 * [keybinding signal][GtkBindingSignal]
 	 * which gets emitted when a keybinding that scrolls is pressed.
 	 * The horizontal or vertical adjustment is updated which triggers a
-	 * signal that the scrolled windows child may listen to and scroll itself.
+	 * signal that the scrolled window’s child may listen to and scroll itself.
 	 *
 	 * Params:
 	 *     scroll = a #GtkScrollType describing how much to scroll

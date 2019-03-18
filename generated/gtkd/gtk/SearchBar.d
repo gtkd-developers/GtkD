@@ -58,7 +58,7 @@ public  import gtkc.gtktypes;
  * 
  * ## Creating a search bar
  * 
- * [A simple example](https://git.gnome.org/browse/gtk+/tree/examples/search-bar.c)
+ * [A simple example](https://gitlab.gnome.org/GNOME/gtk/blob/gtk-3-24/examples/search-bar.c)
  */
 public class SearchBar : Bin
 {

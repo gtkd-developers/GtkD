@@ -293,7 +293,7 @@ public class FontButton : Button, FontChooserIF
 
 	/**
 	 * The ::font-set signal is emitted when the user selects a font.
-	 * When handling this signal, use gtk_font_button_get_font_name()
+	 * When handling this signal, use gtk_font_chooser_get_font()
 	 * to find out which font was just selected.
 	 *
 	 * Note that this signal is only emitted when the user

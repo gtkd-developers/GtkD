@@ -126,6 +126,15 @@ public interface FontChooserIF{
 	public PgFontFamily getFontFamily();
 
 	/**
+	 * Gets the currently-selected font features.
+	 *
+	 * Returns: the currently selected font features
+	 *
+	 * Since: 3.24
+	 */
+	public string getFontFeatures();
+
+	/**
 	 * Gets the custom font map of this font chooser widget,
 	 * or %NULL if it does not have one.
 	 *
@@ -144,6 +153,24 @@ public interface FontChooserIF{
 	 * Since: 3.2
 	 */
 	public int getFontSize();
+
+	/**
+	 * Gets the language that is used for font features.
+	 *
+	 * Returns: the currently selected language
+	 *
+	 * Since: 3.24
+	 */
+	public string getLanguage();
+
+	/**
+	 * Returns the current level of granularity for selecting fonts.
+	 *
+	 * Returns: the current granularity level
+	 *
+	 * Since: 3.24
+	 */
+	public GtkFontChooserLevel getLevel();
 
 	/**
 	 * Gets the text displayed in the preview area.
@@ -230,6 +257,26 @@ public interface FontChooserIF{
 	 * Since: 3.18
 	 */
 	public void setFontMap(PgFontMap fontmap);
+
+	/**
+	 * Sets the language to use for font features.
+	 *
+	 * Params:
+	 *     language = a language
+	 *
+	 * Since: 3.24
+	 */
+	public void setLanguage(string language);
+
+	/**
+	 * Sets the desired level of granularity for selecting fonts.
+	 *
+	 * Params:
+	 *     level = the desired level of granularity
+	 *
+	 * Since: 3.24
+	 */
+	public void setLevel(GtkFontChooserLevel level);
 
 	/**
 	 * Sets the text displayed in the preview area.

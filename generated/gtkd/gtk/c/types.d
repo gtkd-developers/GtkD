@@ -955,6 +955,41 @@ public enum GtkEntryIconPosition
 alias GtkEntryIconPosition EntryIconPosition;
 
 /**
+ * Describes the behavior of a #GtkEventControllerScroll.
+ *
+ * Since: 3.24
+ */
+public enum GtkEventControllerScrollFlags
+{
+	/**
+	 * Don't emit scroll.
+	 */
+	NONE = 0,
+	/**
+	 * Emit scroll with vertical deltas.
+	 */
+	VERTICAL = 1,
+	/**
+	 * Emit scroll with horizontal deltas.
+	 */
+	HORIZONTAL = 2,
+	/**
+	 * Only emit deltas that are multiples of 1.
+	 */
+	DISCRETE = 4,
+	/**
+	 * Emit #GtkEventControllerScroll::decelerate
+	 * after continuous scroll finishes.
+	 */
+	KINETIC = 8,
+	/**
+	 * Emit scroll on both axes.
+	 */
+	BOTH_AXES = 3,
+}
+alias GtkEventControllerScrollFlags EventControllerScrollFlags;
+
+/**
  * Describes the state of a #GdkEventSequence in a #GtkGesture.
  *
  * Since: 3.14
@@ -1112,6 +1147,35 @@ public enum GtkFileFilterFlags
 	MIME_TYPE = 8,
 }
 alias GtkFileFilterFlags FileFilterFlags;
+
+/**
+ * This enumeration specifies the granularity of font selection
+ * that is desired in a font chooser.
+ *
+ * This enumeration may be extended in the future; applications should
+ * ignore unknown values.
+ */
+public enum GtkFontChooserLevel
+{
+	/**
+	 * Allow selecting a font family
+	 */
+	FAMILY = 0,
+	/**
+	 * Allow selecting a specific font face
+	 */
+	STYLE = 1,
+	/**
+	 * Allow selecting a specific font size
+	 */
+	SIZE = 2,
+	VARIATIONS = 4,
+	/**
+	 * Allow selecting specific OpenType font features
+	 */
+	FEATURES = 8,
+}
+alias GtkFontChooserLevel FontChooserLevel;
 
 /**
  * Style for input method preedit. See also
@@ -4939,6 +5003,12 @@ struct GtkCellAccessibleParentIface
 	extern(C) void function(GtkCellAccessibleParent* parent, GtkCellAccessible* cell) edit;
 	/** */
 	extern(C) void function(GtkCellAccessibleParent* parent, GtkCellAccessible* cell, AtkRelationSet* relationset) updateRelationset;
+	/** */
+	extern(C) void function(GtkCellAccessibleParent* parent, GtkCellAccessible* cell, int* row, int* column) getCellPosition;
+	/** */
+	extern(C) GPtrArray* function(GtkCellAccessibleParent* parent, GtkCellAccessible* cell) getColumnHeaderCells;
+	/** */
+	extern(C) GPtrArray* function(GtkCellAccessibleParent* parent, GtkCellAccessible* cell) getRowHeaderCells;
 }
 
 struct GtkCellAccessiblePrivate;
@@ -5245,7 +5315,8 @@ struct GtkCellRendererClass
 	 *     backgroundArea = background area as passed to gtk_cell_renderer_render()
 	 *     cellArea = cell area as passed to gtk_cell_renderer_render()
 	 *     flags = render flags
-	 * Returns: A new #GtkCellEditable, or %NULL
+	 * Returns: A new #GtkCellEditable for editing this
+	 *     @cell, or %NULL if editing is not possible
 	 */
 	extern(C) GtkCellEditable* function(GtkCellRenderer* cell, GdkEvent* event, GtkWidget* widget, const(char)* path, GdkRectangle* backgroundArea, GdkRectangle* cellArea, GtkCellRendererState flags) startEditing;
 	/** */
@@ -6112,6 +6183,18 @@ struct GtkEventController;
 
 struct GtkEventControllerClass;
 
+struct GtkEventControllerKey;
+
+struct GtkEventControllerKeyClass;
+
+struct GtkEventControllerMotion;
+
+struct GtkEventControllerMotionClass;
+
+struct GtkEventControllerScroll;
+
+struct GtkEventControllerScrollClass;
+
 struct GtkExpander
 {
 	GtkBin bin;
@@ -6167,10 +6250,14 @@ struct GtkFileChooserButtonClass
 	GtkBoxClass parentClass;
 	/** */
 	extern(C) void function(GtkFileChooserButton* fc) fileSet;
-	void* GtkReserved1;
-	void* GtkReserved2;
-	void* GtkReserved3;
-	void* GtkReserved4;
+	/** */
+	extern(C) void function() GtkReserved1;
+	/** */
+	extern(C) void function() GtkReserved2;
+	/** */
+	extern(C) void function() GtkReserved3;
+	/** */
+	extern(C) void function() GtkReserved4;
 }
 
 struct GtkFileChooserButtonPrivate;
@@ -6618,6 +6705,10 @@ struct GtkGestureRotateClass;
 struct GtkGestureSingle;
 
 struct GtkGestureSingleClass;
+
+struct GtkGestureStylus;
+
+struct GtkGestureStylusClass;
 
 struct GtkGestureSwipe;
 
@@ -9374,10 +9465,14 @@ struct GtkStatusIconClass
 	extern(C) int function(GtkStatusIcon* statusIcon, GdkEventScroll* event) scrollEvent;
 	/** */
 	extern(C) int function(GtkStatusIcon* statusIcon, int x, int y, int keyboardMode, GtkTooltip* tooltip) queryTooltip;
-	void* GtkReserved1;
-	void* GtkReserved2;
-	void* GtkReserved3;
-	void* GtkReserved4;
+	/** */
+	extern(C) void function() GtkReserved1;
+	/** */
+	extern(C) void function() GtkReserved2;
+	/** */
+	extern(C) void function() GtkReserved3;
+	/** */
+	extern(C) void function() GtkReserved4;
 }
 
 struct GtkStatusIconPrivate;
@@ -12311,7 +12406,7 @@ public alias extern(C) void function(GtkTreeView* treeView, GtkWidget* searchDia
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum BINARY_AGE = 2230;
+enum BINARY_AGE = 2407;
 alias GTK_BINARY_AGE = BINARY_AGE;
 
 /**
@@ -12326,7 +12421,7 @@ alias GTK_INPUT_ERROR = INPUT_ERROR;
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum INTERFACE_AGE = 30;
+enum INTERFACE_AGE = 3;
 alias GTK_INTERFACE_AGE = INTERFACE_AGE;
 
 /**
@@ -12366,7 +12461,7 @@ alias GTK_MAX_COMPOSE_LEN = MAX_COMPOSE_LEN;
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum MICRO_VERSION = 30;
+enum MICRO_VERSION = 7;
 alias GTK_MICRO_VERSION = MICRO_VERSION;
 
 /**
@@ -12374,7 +12469,7 @@ alias GTK_MICRO_VERSION = MICRO_VERSION;
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum MINOR_VERSION = 22;
+enum MINOR_VERSION = 24;
 alias GTK_MINOR_VERSION = MINOR_VERSION;
 
 /**
@@ -12543,7 +12638,7 @@ alias GTK_PRINT_SETTINGS_WIN32_DRIVER_VERSION = PRINT_SETTINGS_WIN32_DRIVER_VERS
  * This priority is higher than %GDK_PRIORITY_REDRAW to avoid
  * resizing a widget which was just redrawn.
  */
-enum PRIORITY_RESIZE = 10;
+enum PRIORITY_RESIZE = 110;
 alias GTK_PRIORITY_RESIZE = PRIORITY_RESIZE;
 
 /**
@@ -13368,7 +13463,7 @@ alias GTK_STYLE_PROVIDER_PRIORITY_THEME = STYLE_PROVIDER_PRIORITY_THEME;
 
 /**
  * The priority used for the style information from
- * `~/.gtk-3.0.css`.
+ * `XDG_CONFIG_HOME/gtk-3.0/gtk.css`.
  *
  * You should not use priorities higher than this, to
  * give the user the last word.
@@ -13412,7 +13507,7 @@ alias GTK_STYLE_REGION_TAB = STYLE_REGION_TAB;
  * The priority at which the text view validates onscreen lines
  * in an idle job in the background.
  */
-enum TEXT_VIEW_PRIORITY_VALIDATE = 5;
+enum TEXT_VIEW_PRIORITY_VALIDATE = 125;
 alias GTK_TEXT_VIEW_PRIORITY_VALIDATE = TEXT_VIEW_PRIORITY_VALIDATE;
 
 /**

@@ -417,14 +417,14 @@ public class IconTheme : ObjectG
 	 *
 	 * Since: 2.4
 	 */
-	public void getSearchPath(out string path)
+	public void getSearchPath(out string[] path)
 	{
-		char* outpath = null;
+		char** outpath = null;
 		int nElements;
 
 		gtk_icon_theme_get_search_path(gtkIconTheme, &outpath, &nElements);
 
-		path = Str.toString(outpath, nElements);
+		path = Str.toStringArray(outpath, nElements);
 	}
 
 	/**

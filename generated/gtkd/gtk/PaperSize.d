@@ -216,7 +216,7 @@ public class PaperSize
 	 *
 	 * Params:
 	 *     keyFile = the #GKeyFile to retrieve the papersize from
-	 *     groupName = the name ofthe group in the key file to read,
+	 *     groupName = the name of the group in the key file to read,
 	 *         or %NULL to read the first group
 	 *
 	 * Returns: a new #GtkPaperSize object with the restored

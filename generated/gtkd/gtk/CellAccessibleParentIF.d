@@ -25,6 +25,7 @@
 module gtk.CellAccessibleParentIF;
 
 private import atk.RelationSet;
+private import glib.PtrArray;
 private import gtk.CellAccessible;
 private import gtk.c.functions;
 public  import gtk.c.types;
@@ -62,10 +63,19 @@ public interface CellAccessibleParentIF{
 	public void getCellExtents(CellAccessible cell, int* x, int* y, int* width, int* height, AtkCoordType coordType);
 
 	/** */
+	public void getCellPosition(CellAccessible cell, out int row, out int column);
+
+	/** */
 	public int getChildIndex(CellAccessible cell);
 
 	/** */
+	public PtrArray getColumnHeaderCells(CellAccessible cell);
+
+	/** */
 	public GtkCellRendererState getRendererState(CellAccessible cell);
+
+	/** */
+	public PtrArray getRowHeaderCells(CellAccessible cell);
 
 	/** */
 	public bool grabFocus(CellAccessible cell);

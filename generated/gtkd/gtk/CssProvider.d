@@ -126,6 +126,8 @@ public class CssProvider : ObjectG, StyleProviderIF
 	 * Returns the provider containing the style settings used as a
 	 * fallback for all widgets.
 	 *
+	 * Deprecated: Use gtk_css_provider_new() instead.
+	 *
 	 * Returns: The provider used for fallback styling.
 	 *     This memory is owned by GTK+, and you must not free it.
 	 */

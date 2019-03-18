@@ -159,6 +159,21 @@ public template FontChooserT(TStruct)
 	}
 
 	/**
+	 * Gets the currently-selected font features.
+	 *
+	 * Returns: the currently selected font features
+	 *
+	 * Since: 3.24
+	 */
+	public string getFontFeatures()
+	{
+		auto retStr = gtk_font_chooser_get_font_features(getFontChooserStruct());
+
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
+	}
+
+	/**
 	 * Gets the custom font map of this font chooser widget,
 	 * or %NULL if it does not have one.
 	 *
@@ -189,6 +204,33 @@ public template FontChooserT(TStruct)
 	public int getFontSize()
 	{
 		return gtk_font_chooser_get_font_size(getFontChooserStruct());
+	}
+
+	/**
+	 * Gets the language that is used for font features.
+	 *
+	 * Returns: the currently selected language
+	 *
+	 * Since: 3.24
+	 */
+	public string getLanguage()
+	{
+		auto retStr = gtk_font_chooser_get_language(getFontChooserStruct());
+
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
+	}
+
+	/**
+	 * Returns the current level of granularity for selecting fonts.
+	 *
+	 * Returns: the current granularity level
+	 *
+	 * Since: 3.24
+	 */
+	public GtkFontChooserLevel getLevel()
+	{
+		return gtk_font_chooser_get_level(getFontChooserStruct());
 	}
 
 	/**
@@ -296,6 +338,32 @@ public template FontChooserT(TStruct)
 	public override void setFontMap(PgFontMap fontmap)
 	{
 		gtk_font_chooser_set_font_map(getFontChooserStruct(), (fontmap is null) ? null : fontmap.getPgFontMapStruct());
+	}
+
+	/**
+	 * Sets the language to use for font features.
+	 *
+	 * Params:
+	 *     language = a language
+	 *
+	 * Since: 3.24
+	 */
+	public void setLanguage(string language)
+	{
+		gtk_font_chooser_set_language(getFontChooserStruct(), Str.toStringz(language));
+	}
+
+	/**
+	 * Sets the desired level of granularity for selecting fonts.
+	 *
+	 * Params:
+	 *     level = the desired level of granularity
+	 *
+	 * Since: 3.24
+	 */
+	public void setLevel(GtkFontChooserLevel level)
+	{
+		gtk_font_chooser_set_level(getFontChooserStruct(), level);
 	}
 
 	/**

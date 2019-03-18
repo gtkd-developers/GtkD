@@ -482,6 +482,8 @@ public class Container : Widget
 	 * added to the container by the application with explicit add()
 	 * calls.
 	 *
+	 * It is permissible to remove the child from the @callback handler.
+	 *
 	 * Most applications should use gtk_container_foreach(),
 	 * rather than gtk_container_forall().
 	 *
@@ -529,6 +531,9 @@ public class Container : Widget
 	 * set, GTK+ computes the focus chain based on the positions
 	 * of the children. In that case, GTK+ stores %NULL in
 	 * @focusable_widgets and returns %FALSE.
+	 *
+	 * Deprecated: For overriding focus behavior, use the
+	 * GtkWidgetClass::focus signal.
 	 *
 	 * Params:
 	 *     focusableWidgets = location
@@ -731,6 +736,9 @@ public class Container : Widget
 	 * in the chain that isn’t always packed. The necessary checks are done
 	 * when the focus chain is actually traversed.
 	 *
+	 * Deprecated: For overriding focus behavior, use the
+	 * GtkWidgetClass::focus signal.
+	 *
 	 * Params:
 	 *     focusableWidgets = the new focus chain
 	 */
@@ -834,6 +842,9 @@ public class Container : Widget
 
 	/**
 	 * Removes a focus chain explicitly set with gtk_container_set_focus_chain().
+	 *
+	 * Deprecated: For overriding focus behavior, use the
+	 * GtkWidgetClass::focus signal.
 	 */
 	public void unsetFocusChain()
 	{

@@ -481,7 +481,12 @@ public class Popover : Bin
 		gtk_popover_set_transitions_enabled(gtkPopover, transitionsEnabled);
 	}
 
-	/** */
+	/**
+	 * This signal is emitted when the popover is dismissed either through
+	 * API or user interaction.
+	 *
+	 * Since: 3.12
+	 */
 	gulong addOnClosed(void delegate(Popover) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "closed", dlg, connectFlags ^ ConnectFlags.SWAPPED);

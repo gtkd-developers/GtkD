@@ -28,6 +28,8 @@ private import atk.ActionIF;
 private import atk.ActionT;
 private import atk.ComponentIF;
 private import atk.ComponentT;
+private import atk.TableCellIF;
+private import atk.TableCellT;
 private import gtk.Accessible;
 private import gtk.c.functions;
 public  import gtk.c.types;
@@ -35,7 +37,7 @@ public  import gtkc.gtktypes;
 
 
 /** */
-public class CellAccessible : Accessible, ActionIF, ComponentIF
+public class CellAccessible : Accessible, ActionIF, ComponentIF, TableCellIF
 {
 	/** the main Gtk struct */
 	protected GtkCellAccessible* gtkCellAccessible;
@@ -68,6 +70,9 @@ public class CellAccessible : Accessible, ActionIF, ComponentIF
 
 	// add the Component capabilities
 	mixin ComponentT!(GtkCellAccessible);
+
+	// add the TableCell capabilities
+	mixin TableCellT!(GtkCellAccessible);
 
 
 	/** */

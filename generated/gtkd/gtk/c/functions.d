@@ -575,8 +575,11 @@ shared static this()
 	Linker.link(gtk_cell_accessible_parent_expand_collapse, "gtk_cell_accessible_parent_expand_collapse", LIBRARY_GTK);
 	Linker.link(gtk_cell_accessible_parent_get_cell_area, "gtk_cell_accessible_parent_get_cell_area", LIBRARY_GTK);
 	Linker.link(gtk_cell_accessible_parent_get_cell_extents, "gtk_cell_accessible_parent_get_cell_extents", LIBRARY_GTK);
+	Linker.link(gtk_cell_accessible_parent_get_cell_position, "gtk_cell_accessible_parent_get_cell_position", LIBRARY_GTK);
 	Linker.link(gtk_cell_accessible_parent_get_child_index, "gtk_cell_accessible_parent_get_child_index", LIBRARY_GTK);
+	Linker.link(gtk_cell_accessible_parent_get_column_header_cells, "gtk_cell_accessible_parent_get_column_header_cells", LIBRARY_GTK);
 	Linker.link(gtk_cell_accessible_parent_get_renderer_state, "gtk_cell_accessible_parent_get_renderer_state", LIBRARY_GTK);
+	Linker.link(gtk_cell_accessible_parent_get_row_header_cells, "gtk_cell_accessible_parent_get_row_header_cells", LIBRARY_GTK);
 	Linker.link(gtk_cell_accessible_parent_grab_focus, "gtk_cell_accessible_parent_grab_focus", LIBRARY_GTK);
 	Linker.link(gtk_cell_accessible_parent_update_relationset, "gtk_cell_accessible_parent_update_relationset", LIBRARY_GTK);
 
@@ -1244,6 +1247,27 @@ shared static this()
 	Linker.link(gtk_event_controller_reset, "gtk_event_controller_reset", LIBRARY_GTK);
 	Linker.link(gtk_event_controller_set_propagation_phase, "gtk_event_controller_set_propagation_phase", LIBRARY_GTK);
 
+	// gtk.EventControllerKey
+
+	Linker.link(gtk_event_controller_key_get_type, "gtk_event_controller_key_get_type", LIBRARY_GTK);
+	Linker.link(gtk_event_controller_key_new, "gtk_event_controller_key_new", LIBRARY_GTK);
+	Linker.link(gtk_event_controller_key_forward, "gtk_event_controller_key_forward", LIBRARY_GTK);
+	Linker.link(gtk_event_controller_key_get_group, "gtk_event_controller_key_get_group", LIBRARY_GTK);
+	Linker.link(gtk_event_controller_key_get_im_context, "gtk_event_controller_key_get_im_context", LIBRARY_GTK);
+	Linker.link(gtk_event_controller_key_set_im_context, "gtk_event_controller_key_set_im_context", LIBRARY_GTK);
+
+	// gtk.EventControllerMotion
+
+	Linker.link(gtk_event_controller_motion_get_type, "gtk_event_controller_motion_get_type", LIBRARY_GTK);
+	Linker.link(gtk_event_controller_motion_new, "gtk_event_controller_motion_new", LIBRARY_GTK);
+
+	// gtk.EventControllerScroll
+
+	Linker.link(gtk_event_controller_scroll_get_type, "gtk_event_controller_scroll_get_type", LIBRARY_GTK);
+	Linker.link(gtk_event_controller_scroll_new, "gtk_event_controller_scroll_new", LIBRARY_GTK);
+	Linker.link(gtk_event_controller_scroll_get_flags, "gtk_event_controller_scroll_get_flags", LIBRARY_GTK);
+	Linker.link(gtk_event_controller_scroll_set_flags, "gtk_event_controller_scroll_set_flags", LIBRARY_GTK);
+
 	// gtk.Expander
 
 	Linker.link(gtk_expander_get_type, "gtk_expander_get_type", LIBRARY_GTK);
@@ -1466,14 +1490,19 @@ shared static this()
 	Linker.link(gtk_font_chooser_get_font_desc, "gtk_font_chooser_get_font_desc", LIBRARY_GTK);
 	Linker.link(gtk_font_chooser_get_font_face, "gtk_font_chooser_get_font_face", LIBRARY_GTK);
 	Linker.link(gtk_font_chooser_get_font_family, "gtk_font_chooser_get_font_family", LIBRARY_GTK);
+	Linker.link(gtk_font_chooser_get_font_features, "gtk_font_chooser_get_font_features", LIBRARY_GTK);
 	Linker.link(gtk_font_chooser_get_font_map, "gtk_font_chooser_get_font_map", LIBRARY_GTK);
 	Linker.link(gtk_font_chooser_get_font_size, "gtk_font_chooser_get_font_size", LIBRARY_GTK);
+	Linker.link(gtk_font_chooser_get_language, "gtk_font_chooser_get_language", LIBRARY_GTK);
+	Linker.link(gtk_font_chooser_get_level, "gtk_font_chooser_get_level", LIBRARY_GTK);
 	Linker.link(gtk_font_chooser_get_preview_text, "gtk_font_chooser_get_preview_text", LIBRARY_GTK);
 	Linker.link(gtk_font_chooser_get_show_preview_entry, "gtk_font_chooser_get_show_preview_entry", LIBRARY_GTK);
 	Linker.link(gtk_font_chooser_set_filter_func, "gtk_font_chooser_set_filter_func", LIBRARY_GTK);
 	Linker.link(gtk_font_chooser_set_font, "gtk_font_chooser_set_font", LIBRARY_GTK);
 	Linker.link(gtk_font_chooser_set_font_desc, "gtk_font_chooser_set_font_desc", LIBRARY_GTK);
 	Linker.link(gtk_font_chooser_set_font_map, "gtk_font_chooser_set_font_map", LIBRARY_GTK);
+	Linker.link(gtk_font_chooser_set_language, "gtk_font_chooser_set_language", LIBRARY_GTK);
+	Linker.link(gtk_font_chooser_set_level, "gtk_font_chooser_set_level", LIBRARY_GTK);
 	Linker.link(gtk_font_chooser_set_preview_text, "gtk_font_chooser_set_preview_text", LIBRARY_GTK);
 	Linker.link(gtk_font_chooser_set_show_preview_entry, "gtk_font_chooser_set_show_preview_entry", LIBRARY_GTK);
 
@@ -1622,6 +1651,14 @@ shared static this()
 	Linker.link(gtk_gesture_single_set_button, "gtk_gesture_single_set_button", LIBRARY_GTK);
 	Linker.link(gtk_gesture_single_set_exclusive, "gtk_gesture_single_set_exclusive", LIBRARY_GTK);
 	Linker.link(gtk_gesture_single_set_touch_only, "gtk_gesture_single_set_touch_only", LIBRARY_GTK);
+
+	// gtk.GestureStylus
+
+	Linker.link(gtk_gesture_stylus_get_type, "gtk_gesture_stylus_get_type", LIBRARY_GTK);
+	Linker.link(gtk_gesture_stylus_new, "gtk_gesture_stylus_new", LIBRARY_GTK);
+	Linker.link(gtk_gesture_stylus_get_axes, "gtk_gesture_stylus_get_axes", LIBRARY_GTK);
+	Linker.link(gtk_gesture_stylus_get_axis, "gtk_gesture_stylus_get_axis", LIBRARY_GTK);
+	Linker.link(gtk_gesture_stylus_get_device_tool, "gtk_gesture_stylus_get_device_tool", LIBRARY_GTK);
 
 	// gtk.GestureSwipe
 
@@ -5735,8 +5772,11 @@ __gshared extern(C)
 	void function(GtkCellAccessibleParent* parent, GtkCellAccessible* cell) c_gtk_cell_accessible_parent_expand_collapse;
 	void function(GtkCellAccessibleParent* parent, GtkCellAccessible* cell, GdkRectangle* cellRect) c_gtk_cell_accessible_parent_get_cell_area;
 	void function(GtkCellAccessibleParent* parent, GtkCellAccessible* cell, int* x, int* y, int* width, int* height, AtkCoordType coordType) c_gtk_cell_accessible_parent_get_cell_extents;
+	void function(GtkCellAccessibleParent* parent, GtkCellAccessible* cell, int* row, int* column) c_gtk_cell_accessible_parent_get_cell_position;
 	int function(GtkCellAccessibleParent* parent, GtkCellAccessible* cell) c_gtk_cell_accessible_parent_get_child_index;
+	GPtrArray* function(GtkCellAccessibleParent* parent, GtkCellAccessible* cell) c_gtk_cell_accessible_parent_get_column_header_cells;
 	GtkCellRendererState function(GtkCellAccessibleParent* parent, GtkCellAccessible* cell) c_gtk_cell_accessible_parent_get_renderer_state;
+	GPtrArray* function(GtkCellAccessibleParent* parent, GtkCellAccessible* cell) c_gtk_cell_accessible_parent_get_row_header_cells;
 	int function(GtkCellAccessibleParent* parent, GtkCellAccessible* cell) c_gtk_cell_accessible_parent_grab_focus;
 	void function(GtkCellAccessibleParent* parent, GtkCellAccessible* cell, AtkRelationSet* relationset) c_gtk_cell_accessible_parent_update_relationset;
 
@@ -6404,6 +6444,27 @@ __gshared extern(C)
 	void function(GtkEventController* controller) c_gtk_event_controller_reset;
 	void function(GtkEventController* controller, GtkPropagationPhase phase) c_gtk_event_controller_set_propagation_phase;
 
+	// gtk.EventControllerKey
+
+	GType function() c_gtk_event_controller_key_get_type;
+	GtkEventController* function(GtkWidget* widget) c_gtk_event_controller_key_new;
+	int function(GtkEventControllerKey* controller, GtkWidget* widget) c_gtk_event_controller_key_forward;
+	uint function(GtkEventControllerKey* controller) c_gtk_event_controller_key_get_group;
+	GtkIMContext* function(GtkEventControllerKey* controller) c_gtk_event_controller_key_get_im_context;
+	void function(GtkEventControllerKey* controller, GtkIMContext* imContext) c_gtk_event_controller_key_set_im_context;
+
+	// gtk.EventControllerMotion
+
+	GType function() c_gtk_event_controller_motion_get_type;
+	GtkEventController* function(GtkWidget* widget) c_gtk_event_controller_motion_new;
+
+	// gtk.EventControllerScroll
+
+	GType function() c_gtk_event_controller_scroll_get_type;
+	GtkEventController* function(GtkWidget* widget, GtkEventControllerScrollFlags flags) c_gtk_event_controller_scroll_new;
+	GtkEventControllerScrollFlags function(GtkEventControllerScroll* controller) c_gtk_event_controller_scroll_get_flags;
+	void function(GtkEventControllerScroll* controller, GtkEventControllerScrollFlags flags) c_gtk_event_controller_scroll_set_flags;
+
 	// gtk.Expander
 
 	GType function() c_gtk_expander_get_type;
@@ -6626,14 +6687,19 @@ __gshared extern(C)
 	PangoFontDescription* function(GtkFontChooser* fontchooser) c_gtk_font_chooser_get_font_desc;
 	PangoFontFace* function(GtkFontChooser* fontchooser) c_gtk_font_chooser_get_font_face;
 	PangoFontFamily* function(GtkFontChooser* fontchooser) c_gtk_font_chooser_get_font_family;
+	char* function(GtkFontChooser* fontchooser) c_gtk_font_chooser_get_font_features;
 	PangoFontMap* function(GtkFontChooser* fontchooser) c_gtk_font_chooser_get_font_map;
 	int function(GtkFontChooser* fontchooser) c_gtk_font_chooser_get_font_size;
+	char* function(GtkFontChooser* fontchooser) c_gtk_font_chooser_get_language;
+	GtkFontChooserLevel function(GtkFontChooser* fontchooser) c_gtk_font_chooser_get_level;
 	char* function(GtkFontChooser* fontchooser) c_gtk_font_chooser_get_preview_text;
 	int function(GtkFontChooser* fontchooser) c_gtk_font_chooser_get_show_preview_entry;
 	void function(GtkFontChooser* fontchooser, GtkFontFilterFunc filter, void* userData, GDestroyNotify destroy) c_gtk_font_chooser_set_filter_func;
 	void function(GtkFontChooser* fontchooser, const(char)* fontname) c_gtk_font_chooser_set_font;
 	void function(GtkFontChooser* fontchooser, PangoFontDescription* fontDesc) c_gtk_font_chooser_set_font_desc;
 	void function(GtkFontChooser* fontchooser, PangoFontMap* fontmap) c_gtk_font_chooser_set_font_map;
+	void function(GtkFontChooser* fontchooser, const(char)* language) c_gtk_font_chooser_set_language;
+	void function(GtkFontChooser* fontchooser, GtkFontChooserLevel level) c_gtk_font_chooser_set_level;
 	void function(GtkFontChooser* fontchooser, const(char)* text) c_gtk_font_chooser_set_preview_text;
 	void function(GtkFontChooser* fontchooser, int showPreviewEntry) c_gtk_font_chooser_set_show_preview_entry;
 
@@ -6782,6 +6848,14 @@ __gshared extern(C)
 	void function(GtkGestureSingle* gesture, uint button) c_gtk_gesture_single_set_button;
 	void function(GtkGestureSingle* gesture, int exclusive) c_gtk_gesture_single_set_exclusive;
 	void function(GtkGestureSingle* gesture, int touchOnly) c_gtk_gesture_single_set_touch_only;
+
+	// gtk.GestureStylus
+
+	GType function() c_gtk_gesture_stylus_get_type;
+	GtkGesture* function(GtkWidget* widget) c_gtk_gesture_stylus_new;
+	int function(GtkGestureStylus* gesture, GdkAxisUse* axes, double** values) c_gtk_gesture_stylus_get_axes;
+	int function(GtkGestureStylus* gesture, GdkAxisUse axis, double* value) c_gtk_gesture_stylus_get_axis;
+	GdkDeviceTool* function(GtkGestureStylus* gesture) c_gtk_gesture_stylus_get_device_tool;
 
 	// gtk.GestureSwipe
 
@@ -7025,7 +7099,7 @@ __gshared extern(C)
 	GtkIconInfo* function(GtkIconTheme* iconTheme, char** iconNames, int size, int scale, GtkIconLookupFlags flags) c_gtk_icon_theme_choose_icon_for_scale;
 	char* function(GtkIconTheme* iconTheme) c_gtk_icon_theme_get_example_icon_name;
 	int* function(GtkIconTheme* iconTheme, const(char)* iconName) c_gtk_icon_theme_get_icon_sizes;
-	void function(GtkIconTheme* iconTheme, char** path, int* nElements) c_gtk_icon_theme_get_search_path;
+	void function(GtkIconTheme* iconTheme, char*** path, int* nElements) c_gtk_icon_theme_get_search_path;
 	int function(GtkIconTheme* iconTheme, const(char)* iconName) c_gtk_icon_theme_has_icon;
 	GList* function(GtkIconTheme* iconTheme) c_gtk_icon_theme_list_contexts;
 	GList* function(GtkIconTheme* iconTheme, const(char)* context) c_gtk_icon_theme_list_icons;
@@ -10893,8 +10967,11 @@ alias c_gtk_cell_accessible_parent_edit gtk_cell_accessible_parent_edit;
 alias c_gtk_cell_accessible_parent_expand_collapse gtk_cell_accessible_parent_expand_collapse;
 alias c_gtk_cell_accessible_parent_get_cell_area gtk_cell_accessible_parent_get_cell_area;
 alias c_gtk_cell_accessible_parent_get_cell_extents gtk_cell_accessible_parent_get_cell_extents;
+alias c_gtk_cell_accessible_parent_get_cell_position gtk_cell_accessible_parent_get_cell_position;
 alias c_gtk_cell_accessible_parent_get_child_index gtk_cell_accessible_parent_get_child_index;
+alias c_gtk_cell_accessible_parent_get_column_header_cells gtk_cell_accessible_parent_get_column_header_cells;
 alias c_gtk_cell_accessible_parent_get_renderer_state gtk_cell_accessible_parent_get_renderer_state;
+alias c_gtk_cell_accessible_parent_get_row_header_cells gtk_cell_accessible_parent_get_row_header_cells;
 alias c_gtk_cell_accessible_parent_grab_focus gtk_cell_accessible_parent_grab_focus;
 alias c_gtk_cell_accessible_parent_update_relationset gtk_cell_accessible_parent_update_relationset;
 
@@ -11562,6 +11639,27 @@ alias c_gtk_event_controller_handle_event gtk_event_controller_handle_event;
 alias c_gtk_event_controller_reset gtk_event_controller_reset;
 alias c_gtk_event_controller_set_propagation_phase gtk_event_controller_set_propagation_phase;
 
+// gtk.EventControllerKey
+
+alias c_gtk_event_controller_key_get_type gtk_event_controller_key_get_type;
+alias c_gtk_event_controller_key_new gtk_event_controller_key_new;
+alias c_gtk_event_controller_key_forward gtk_event_controller_key_forward;
+alias c_gtk_event_controller_key_get_group gtk_event_controller_key_get_group;
+alias c_gtk_event_controller_key_get_im_context gtk_event_controller_key_get_im_context;
+alias c_gtk_event_controller_key_set_im_context gtk_event_controller_key_set_im_context;
+
+// gtk.EventControllerMotion
+
+alias c_gtk_event_controller_motion_get_type gtk_event_controller_motion_get_type;
+alias c_gtk_event_controller_motion_new gtk_event_controller_motion_new;
+
+// gtk.EventControllerScroll
+
+alias c_gtk_event_controller_scroll_get_type gtk_event_controller_scroll_get_type;
+alias c_gtk_event_controller_scroll_new gtk_event_controller_scroll_new;
+alias c_gtk_event_controller_scroll_get_flags gtk_event_controller_scroll_get_flags;
+alias c_gtk_event_controller_scroll_set_flags gtk_event_controller_scroll_set_flags;
+
 // gtk.Expander
 
 alias c_gtk_expander_get_type gtk_expander_get_type;
@@ -11784,14 +11882,19 @@ alias c_gtk_font_chooser_get_font gtk_font_chooser_get_font;
 alias c_gtk_font_chooser_get_font_desc gtk_font_chooser_get_font_desc;
 alias c_gtk_font_chooser_get_font_face gtk_font_chooser_get_font_face;
 alias c_gtk_font_chooser_get_font_family gtk_font_chooser_get_font_family;
+alias c_gtk_font_chooser_get_font_features gtk_font_chooser_get_font_features;
 alias c_gtk_font_chooser_get_font_map gtk_font_chooser_get_font_map;
 alias c_gtk_font_chooser_get_font_size gtk_font_chooser_get_font_size;
+alias c_gtk_font_chooser_get_language gtk_font_chooser_get_language;
+alias c_gtk_font_chooser_get_level gtk_font_chooser_get_level;
 alias c_gtk_font_chooser_get_preview_text gtk_font_chooser_get_preview_text;
 alias c_gtk_font_chooser_get_show_preview_entry gtk_font_chooser_get_show_preview_entry;
 alias c_gtk_font_chooser_set_filter_func gtk_font_chooser_set_filter_func;
 alias c_gtk_font_chooser_set_font gtk_font_chooser_set_font;
 alias c_gtk_font_chooser_set_font_desc gtk_font_chooser_set_font_desc;
 alias c_gtk_font_chooser_set_font_map gtk_font_chooser_set_font_map;
+alias c_gtk_font_chooser_set_language gtk_font_chooser_set_language;
+alias c_gtk_font_chooser_set_level gtk_font_chooser_set_level;
 alias c_gtk_font_chooser_set_preview_text gtk_font_chooser_set_preview_text;
 alias c_gtk_font_chooser_set_show_preview_entry gtk_font_chooser_set_show_preview_entry;
 
@@ -11940,6 +12043,14 @@ alias c_gtk_gesture_single_get_touch_only gtk_gesture_single_get_touch_only;
 alias c_gtk_gesture_single_set_button gtk_gesture_single_set_button;
 alias c_gtk_gesture_single_set_exclusive gtk_gesture_single_set_exclusive;
 alias c_gtk_gesture_single_set_touch_only gtk_gesture_single_set_touch_only;
+
+// gtk.GestureStylus
+
+alias c_gtk_gesture_stylus_get_type gtk_gesture_stylus_get_type;
+alias c_gtk_gesture_stylus_new gtk_gesture_stylus_new;
+alias c_gtk_gesture_stylus_get_axes gtk_gesture_stylus_get_axes;
+alias c_gtk_gesture_stylus_get_axis gtk_gesture_stylus_get_axis;
+alias c_gtk_gesture_stylus_get_device_tool gtk_gesture_stylus_get_device_tool;
 
 // gtk.GestureSwipe
 

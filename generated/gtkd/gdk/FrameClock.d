@@ -132,10 +132,10 @@ public class FrameClock : ObjectG
 	/**
 	 * Gets the frame timings for the current frame.
 	 *
-	 * Returns: the #GdkFrameTimings for the frame currently
-	 *     being processed, or even no frame is being processed, for the
-	 *     previous frame. Before any frames have been processed, returns
-	 *     %NULL.
+	 * Returns: the #GdkFrameTimings for the
+	 *     frame currently being processed, or even no frame is being
+	 *     processed, for the previous frame. Before any frames have been
+	 *     processed, returns %NULL.
 	 *
 	 * Since: 3.8
 	 */
@@ -148,7 +148,7 @@ public class FrameClock : ObjectG
 			return null;
 		}
 
-		return ObjectG.getDObject!(FrameTimings)(cast(GdkFrameTimings*) p, true);
+		return ObjectG.getDObject!(FrameTimings)(cast(GdkFrameTimings*) p);
 	}
 
 	/**
@@ -235,8 +235,8 @@ public class FrameClock : ObjectG
 	 *     frameCounter = the frame counter value identifying the frame to
 	 *         be received.
 	 *
-	 * Returns: the #GdkFrameTimings object for the specified
-	 *     frame, or %NULL if it is not available. See
+	 * Returns: the #GdkFrameTimings object for
+	 *     the specified frame, or %NULL if it is not available. See
 	 *     gdk_frame_clock_get_history_start().
 	 *
 	 * Since: 3.8
@@ -250,7 +250,7 @@ public class FrameClock : ObjectG
 			return null;
 		}
 
-		return ObjectG.getDObject!(FrameTimings)(cast(GdkFrameTimings*) p, true);
+		return ObjectG.getDObject!(FrameTimings)(cast(GdkFrameTimings*) p);
 	}
 
 	/**

@@ -95,8 +95,8 @@ GtkD wraps Gtk+ 3.22 the versions of the associated libraries are:
 
 Library | Version
 --- | ---
-Gtk+ | 3.22
-Gdk | 3.22
+Gtk+ | 3.24
+Gdk | 3.24
 Glib | 2.60
 GObject | 2.60
 Gio | 2.60

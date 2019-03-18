@@ -643,7 +643,7 @@ public class Window : ObjectG
 	 * Attempt to deiconify (unminimize) @window. On X11 the window manager may
 	 * choose to ignore the request to deiconify. When using GTK+,
 	 * use gtk_window_deiconify() instead of the #GdkWindow variant. Or better yet,
-	 * you probably want to use gtk_window_present(), which raises the window, focuses it,
+	 * you probably want to use gtk_window_present_with_time(), which raises the window, focuses it,
 	 * unminimizes it, and puts it on the current desktop.
 	 */
 	public void deiconify()
@@ -744,7 +744,7 @@ public class Window : ObjectG
 	}
 
 	/**
-	 * Sets keyboard focus to @window. In most cases, gtk_window_present()
+	 * Sets keyboard focus to @window. In most cases, gtk_window_present_with_time()
 	 * should be used on a #GtkWindow, rather than calling this function.
 	 *
 	 * Params:
@@ -848,14 +848,12 @@ public class Window : ObjectG
 	}
 
 	/**
-	 * Gets the pattern used to clear the background on @window. If @window
-	 * does not have its own background and reuses the parent's, %NULL is
-	 * returned and you’ll have to query it yourself.
+	 * Gets the pattern used to clear the background on @window.
 	 *
 	 * Deprecated: Don't use this function
 	 *
 	 * Returns: The pattern to use for the
-	 *     background or %NULL to use the parent’s background.
+	 *     background or %NULL if there is no background.
 	 *
 	 * Since: 2.22
 	 */
@@ -2055,6 +2053,39 @@ public class Window : ObjectG
 	}
 
 	/**
+	 * Moves @window to @rect, aligning their anchor points.
+	 *
+	 * @rect is relative to the top-left corner of the window that @window is
+	 * transient for. @rect_anchor and @window_anchor determine anchor points on
+	 * @rect and @window to pin together. @rect's anchor point can optionally be
+	 * offset by @rect_anchor_dx and @rect_anchor_dy, which is equivalent to
+	 * offsetting the position of @window.
+	 *
+	 * @anchor_hints determines how @window will be moved if the anchor points cause
+	 * it to move off-screen. For example, %GDK_ANCHOR_FLIP_X will replace
+	 * %GDK_GRAVITY_NORTH_WEST with %GDK_GRAVITY_NORTH_EAST and vice versa if
+	 * @window extends beyond the left or right edges of the monitor.
+	 *
+	 * Connect to the #GdkWindow::moved-to-rect signal to find out how it was
+	 * actually positioned.
+	 *
+	 * Params:
+	 *     rect = the destination #GdkRectangle to align @window with
+	 *     rectAnchor = the point on @rect to align with @window's anchor point
+	 *     windowAnchor = the point on @window to align with @rect's anchor point
+	 *     anchorHints = positioning hints to use when limited on space
+	 *     rectAnchorDx = horizontal offset to shift @window, i.e. @rect's anchor
+	 *         point
+	 *     rectAnchorDy = vertical offset to shift @window, i.e. @rect's anchor point
+	 *
+	 * Since: 3.24
+	 */
+	public void moveToRect(GdkRectangle* rect, GdkGravity rectAnchor, GdkGravity windowAnchor, GdkAnchorHints anchorHints, int rectAnchorDx, int rectAnchorDy)
+	{
+		gdk_window_move_to_rect(gdkWindow, rect, rectAnchor, windowAnchor, anchorHints, rectAnchorDx, rectAnchorDy);
+	}
+
+	/**
 	 * Like gdk_window_get_children(), but does not copy the list of
 	 * children, so the list does not need to be freed.
 	 *
@@ -2240,8 +2271,9 @@ public class Window : ObjectG
 	/**
 	 * Sets the background of @window.
 	 *
-	 * A background of %NULL means that the window will inherit its
-	 * background from its parent window.
+	 * A background of %NULL means that the window won't have any background. On the
+	 * X11 backend it's also possible to inherit the background from the parent
+	 * window using gdk_x11_get_parent_relative_pattern().
 	 *
 	 * The windowing system will normally fill a window with its background
 	 * when the window is obscured then exposed.

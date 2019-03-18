@@ -36,12 +36,11 @@ public  import gtkc.gtktypes;
 
 
 /**
- * The GtkBox widget organizes child widgets into a rectangular area.
- * 
- * The rectangular area of a GtkBox is organized into either a single row
- * or a single column of child widgets depending upon the orientation.
- * Thus, all children of a GtkBox are allocated one dimension in common,
- * which is the height of a row, or the width of a column.
+ * The GtkBox widget arranges child widgets into a single row or column,
+ * depending upon the value of its #GtkOrientable:orientation property. Within
+ * the other dimension, all children are allocated the same size. Of course,
+ * the #GtkWidget:halign and #GtkWidget:valign properties can be used on
+ * the children to influence their allocation.
  * 
  * GtkBox uses a notion of packing. Packing refers
  * to adding widgets with reference to a particular position in a
@@ -76,9 +75,6 @@ public  import gtkc.gtktypes;
  * Use gtk_box_set_child_packing() to reset the expand,
  * fill and padding child properties.
  * Use gtk_box_query_child_packing() to query these fields.
- * 
- * Note that a single-row or single-column #GtkGrid provides exactly
- * the same functionality as #GtkBox.
  * 
  * # CSS nodes
  * 

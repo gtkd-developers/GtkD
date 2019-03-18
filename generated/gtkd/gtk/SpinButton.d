@@ -191,8 +191,8 @@ public class SpinButton : Entry, OrientableIF
 	 * Params:
 	 *     adjustment = the #GtkAdjustment object that this spin
 	 *         button should use, or %NULL
-	 *     climbRate = specifies how much the spin button changes when an arrow
-	 *         is clicked on
+	 *     climbRate = specifies by how much the rate of change in the value will
+	 *         accelerate if you continue to hold down an up/down button or arrow key
 	 *     digits = the number of decimal places to display
 	 *
 	 * Returns: The new spin button as a #GtkWidget

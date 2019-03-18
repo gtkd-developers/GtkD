@@ -717,7 +717,7 @@ public class Menu : MenuShell
 	 * it first with g_intern_static_string().
 	 *
 	 * Params:
-	 *     accelPath = a valid accelerator path
+	 *     accelPath = a valid accelerator path, or %NULL to unset the path
 	 */
 	public void setAccelPath(string accelPath)
 	{
@@ -810,7 +810,8 @@ public class Menu : MenuShell
 	 * text as that menu item’s label.
 	 *
 	 * Params:
-	 *     title = a string containing the title for the menu
+	 *     title = a string containing the title for the menu, or %NULL to
+	 *         inherit the title of the parent menu item, if any
 	 */
 	public void setTitle(string title)
 	{

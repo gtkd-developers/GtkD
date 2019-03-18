@@ -44,53 +44,10 @@ public  import gtkc.gtktypes;
  * Compose file). The syntax of these files is described in the Compose(5)
  * manual page.
  * 
- * ## Unicode characters
- * 
  * GtkIMContextSimple also supports numeric entry of Unicode characters
  * by typing Ctrl-Shift-u, followed by a hexadecimal Unicode codepoint.
  * For example, Ctrl-Shift-u 1 2 3 Enter yields U+0123 LATIN SMALL LETTER
  * G WITH CEDILLA, i.e. ģ.
- * 
- * ## Emoji
- * 
- * GtkIMContextSimple also supports entry of Emoji by their name.
- * This works by first typing Ctrl-Shift-e, followed by an Emoji name.
- * 
- * The following names are supported:
- * - :-) 🙂
- * - 8-) 😍
- * - <3 ❤
- * - kiss 💋
- * - grin 😁
- * - joy 😂
- * - :-* 😚
- * - xD 😆
- * - like 👍
- * - dislike 👎
- * - up 👆
- * - v ✌
- * - ok 👌
- * - B-) 😎
- * - ;-) 😉
- * - ;-P 😜
- * - :-p 😋
- * - 3( 😔
- * - :-( 😞
- * - :] 😏
- * - :'( 😢
- * - :_( 😭
- * - :(( 😩
- * - :o 😨
- * - :| 😐
- * - 3-) 😌
- * - >( 😠
- * - >(( 😡
- * - O:) 😇
- * - ;o 😰
- * - 8| 😳
- * - 8o 😲
- * - :X 😷
- * - }:) 😈
  */
 public class IMContextSimple : IMContext
 {

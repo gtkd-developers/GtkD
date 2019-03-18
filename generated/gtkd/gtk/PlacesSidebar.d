@@ -782,6 +782,10 @@ public class PlacesSidebar : ScrolledWindow
 	 * starred files are implemented by setting the nao:predefined-tag-favorite
 	 * tag in the tracker database.
 	 *
+	 * Params:
+	 *     openFlags = a single value from #GtkPlacesOpenFlags specifying how the
+	 *         starred file should be opened.
+	 *
 	 * Since: 3.22.26
 	 */
 	gulong addOnShowStarredLocation(void delegate(GtkPlacesOpenFlags, PlacesSidebar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)

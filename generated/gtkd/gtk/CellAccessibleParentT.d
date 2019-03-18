@@ -25,6 +25,7 @@
 module gtk.CellAccessibleParentT;
 
 public  import atk.RelationSet;
+public  import glib.PtrArray;
 public  import gtk.CellAccessible;
 public  import gtk.c.functions;
 public  import gtk.c.types;
@@ -74,15 +75,47 @@ public template CellAccessibleParentT(TStruct)
 	}
 
 	/** */
+	public void getCellPosition(CellAccessible cell, out int row, out int column)
+	{
+		gtk_cell_accessible_parent_get_cell_position(getCellAccessibleParentStruct(), (cell is null) ? null : cell.getCellAccessibleStruct(), &row, &column);
+	}
+
+	/** */
 	public int getChildIndex(CellAccessible cell)
 	{
 		return gtk_cell_accessible_parent_get_child_index(getCellAccessibleParentStruct(), (cell is null) ? null : cell.getCellAccessibleStruct());
 	}
 
 	/** */
+	public PtrArray getColumnHeaderCells(CellAccessible cell)
+	{
+		auto p = gtk_cell_accessible_parent_get_column_header_cells(getCellAccessibleParentStruct(), (cell is null) ? null : cell.getCellAccessibleStruct());
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return new PtrArray(cast(GPtrArray*) p, true);
+	}
+
+	/** */
 	public GtkCellRendererState getRendererState(CellAccessible cell)
 	{
 		return gtk_cell_accessible_parent_get_renderer_state(getCellAccessibleParentStruct(), (cell is null) ? null : cell.getCellAccessibleStruct());
+	}
+
+	/** */
+	public PtrArray getRowHeaderCells(CellAccessible cell)
+	{
+		auto p = gtk_cell_accessible_parent_get_row_header_cells(getCellAccessibleParentStruct(), (cell is null) ? null : cell.getCellAccessibleStruct());
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return new PtrArray(cast(GPtrArray*) p, true);
 	}
 
 	/** */

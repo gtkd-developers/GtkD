@@ -65,7 +65,8 @@ private import std.algorithm;
  * “activatable” like #GtkCellRendererToggle,
  * which toggles when it gets activated by a mouse click, or it can be
  * “editable” like #GtkCellRendererText, which
- * allows the user to edit the text using a #GtkEntry.
+ * allows the user to edit the text using a widget implementing the
+ * #GtkCellEditable interface, e.g. #GtkEntry.
  * To make a cell renderer activatable or editable, you have to
  * implement the #GtkCellRendererClass.activate or
  * #GtkCellRendererClass.start_editing virtual functions, respectively.
@@ -455,7 +456,8 @@ public class CellRenderer : ObjectG
 	}
 
 	/**
-	 * Passes an activate event to the cell renderer for possible processing.
+	 * Starts editing the contents of this @cell, through a new #GtkCellEditable
+	 * widget created by the #GtkCellRendererClass.start_editing virtual function.
 	 *
 	 * Params:
 	 *     event = a #GdkEvent
@@ -466,7 +468,8 @@ public class CellRenderer : ObjectG
 	 *     cellArea = cell area as passed to gtk_cell_renderer_render()
 	 *     flags = render flags
 	 *
-	 * Returns: A new #GtkCellEditable, or %NULL
+	 * Returns: A new #GtkCellEditable for editing this
+	 *     @cell, or %NULL if editing is not possible
 	 */
 	public CellEditableIF startEditing(Event event, Widget widget, string path, GdkRectangle* backgroundArea, GdkRectangle* cellArea, GtkCellRendererState flags)
 	{
@@ -518,6 +521,9 @@ public class CellRenderer : ObjectG
 	 * The intended use of this signal is to do special setup
 	 * on @editable, e.g. adding a #GtkEntryCompletion or setting
 	 * up additional columns in a #GtkComboBox.
+	 *
+	 * See gtk_cell_editable_start_editing() for information on the lifecycle of
+	 * the @editable and a way to do setup that doesn’t depend on the @renderer.
 	 *
 	 * Note that GTK+ doesn't guarantee that cell renderers will
 	 * continue to use the same kind of widget for editing in future

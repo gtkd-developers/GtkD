@@ -4192,5 +4192,5 @@ alias GDK_PARENT_RELATIVE = PARENT_RELATIVE;
  * is given in the
  * [GLib Main Loop][glib-The-Main-Event-Loop].
  */
-enum PRIORITY_REDRAW = 20;
+enum PRIORITY_REDRAW = 120;
 alias GDK_PRIORITY_REDRAW = PRIORITY_REDRAW;

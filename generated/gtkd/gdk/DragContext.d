@@ -86,7 +86,7 @@ public class DragContext : ObjectG
 	}
 
 	/**
-	 * Returns the destination windw for the DND operation.
+	 * Returns the destination window for the DND operation.
 	 *
 	 * Returns: a #GdkWindow
 	 *
@@ -146,7 +146,7 @@ public class DragContext : ObjectG
 	}
 
 	/**
-	 * Returns the drag protocol thats used by this context.
+	 * Returns the drag protocol that is used by this context.
 	 *
 	 * Returns: the drag protocol
 	 *

@@ -45,6 +45,12 @@ private import std.algorithm;
 
 
 /**
+ * > GtkUIManager is deprecated since GTK+ 3.10. To construct user interfaces
+ * > from XML definitions, you should use #GtkBuilder, #GMenuModel, et al. To
+ * > work with actions, use #GAction, #GtkActionable et al. These newer classes
+ * > support richer functionality and integration with various desktop shells.
+ * > It should be possible to migrate most/all functionality from GtkUIManager.
+ * 
  * A #GtkUIManager constructs a user interface (menus and toolbars) from
  * one or more UI definitions, which reference actions from one or more
  * action groups.
