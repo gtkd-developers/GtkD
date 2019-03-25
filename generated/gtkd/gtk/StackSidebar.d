@@ -51,6 +51,8 @@ public  import gtkc.gtktypes;
  * When circumstances require it, GtkStackSidebar adds the
  * .needs-attention style class to the widgets representing the stack
  * pages.
+ *
+ * Since: 3.16
  */
 public class StackSidebar : Bin
 {

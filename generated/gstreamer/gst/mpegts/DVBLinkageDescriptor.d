@@ -25,6 +25,9 @@
 module gst.mpegts.DVBLinkageDescriptor;
 
 private import glib.PtrArray;
+private import gobject.ObjectG;
+private import gst.mpegts.DVBLinkageEvent;
+private import gst.mpegts.DVBLinkageMobileHandOver;
 private import gst.mpegts.c.functions;
 public  import gst.mpegts.c.types;
 private import gtkd.Loader;
@@ -83,9 +86,16 @@ public class DVBLinkageDescriptor
 	/**
 	 * Returns: The #GstMpegtsDVBLinkageEvent or %NULL if an error happened
 	 */
-	public GstMpegtsDVBLinkageEvent* getEvent()
+	public DVBLinkageEvent getEvent()
 	{
-		return gst_mpegts_dvb_linkage_descriptor_get_event(gstMpegtsDVBLinkageDescriptor);
+		auto p = gst_mpegts_dvb_linkage_descriptor_get_event(gstMpegtsDVBLinkageDescriptor);
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(DVBLinkageEvent)(cast(GstMpegtsDVBLinkageEvent*) p);
 	}
 
 	/**
@@ -106,8 +116,15 @@ public class DVBLinkageDescriptor
 	/**
 	 * Returns: The #GstMpegtsDVBLinkageMobileHandOver or %NULL if an error happened
 	 */
-	public GstMpegtsDVBLinkageMobileHandOver* getMobileHandOver()
+	public DVBLinkageMobileHandOver getMobileHandOver()
 	{
-		return gst_mpegts_dvb_linkage_descriptor_get_mobile_hand_over(gstMpegtsDVBLinkageDescriptor);
+		auto p = gst_mpegts_dvb_linkage_descriptor_get_mobile_hand_over(gstMpegtsDVBLinkageDescriptor);
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(DVBLinkageMobileHandOver)(cast(GstMpegtsDVBLinkageMobileHandOver*) p);
 	}
 }

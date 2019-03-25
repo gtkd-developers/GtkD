@@ -45,6 +45,8 @@ public  import gtkc.gtktypes;
  * # CSS nodes
  * 
  * GtkToolItemGroup has a single CSS node named toolitemgroup.
+ *
+ * Since: 2.20
  */
 public class ToolItemGroup : Container, ToolShellIF
 {

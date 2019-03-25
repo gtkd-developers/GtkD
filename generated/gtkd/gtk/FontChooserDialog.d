@@ -46,6 +46,8 @@ public  import gtkc.gtktypes;
  * The GtkFontChooserDialog implementation of the #GtkBuildable
  * interface exposes the buttons with the names “select_button”
  * and “cancel_button”.
+ *
+ * Since: 3.2
  */
 public class FontChooserDialog : Dialog, FontChooserIF
 {

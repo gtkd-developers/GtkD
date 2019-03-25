@@ -107,4 +107,4 @@ Cairo | 1.12.2
 LibRsvg | 2.44
 GtksourceView | 3.24
 GStreamer | 1.14
-Vte3 | 0.52
+Vte3 | 0.56

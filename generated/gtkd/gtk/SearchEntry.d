@@ -61,6 +61,8 @@ private import std.algorithm;
  * Often, GtkSearchEntry will be fed events by means of being
  * placed inside a #GtkSearchBar. If that is not the case,
  * you can use gtk_search_entry_handle_event() to pass events.
+ *
+ * Since: 3.6
  */
 public class SearchEntry : Entry
 {

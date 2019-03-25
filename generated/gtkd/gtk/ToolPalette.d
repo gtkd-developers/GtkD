@@ -111,6 +111,8 @@ public  import gtkc.gtktypes;
  * # CSS nodes
  * 
  * GtkToolPalette has a single CSS node named toolpalette.
+ *
+ * Since: 2.20
  */
 public class ToolPalette : Container, OrientableIF, ScrollableIF
 {

@@ -347,8 +347,9 @@ public class Segment
 	 * When 1 is returned, @running_time resulted in a positive position returned
 	 * in @position.
 	 *
-	 * When this function returns -1, the returned @position should be negated
-	 * to get the real negative segment position.
+	 * When this function returns -1, the returned @position was < 0, and the value
+	 * in the position variable should be negated to get the real negative segment
+	 * position.
 	 *
 	 * Params:
 	 *     format = the format of the segment.

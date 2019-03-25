@@ -56,6 +56,8 @@ public  import gtkc.gtktypes;
  * # CSS names
  * 
  * GtkColorChooserWidget has a single CSS node with name colorchooser.
+ *
+ * Since: 3.4
  */
 public class ColorChooserWidget : Box, ColorChooserIF
 {

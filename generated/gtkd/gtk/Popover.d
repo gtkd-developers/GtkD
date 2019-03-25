@@ -99,6 +99,8 @@ private import std.algorithm;
  * or magnifiers in #GtkEntry or #GtkTextView get style classes
  * like .touch-selection or .magnifier to differentiate from
  * plain popovers.
+ *
+ * Since: 3.12
  */
 public class Popover : Bin
 {

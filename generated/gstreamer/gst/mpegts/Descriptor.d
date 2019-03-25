@@ -25,15 +25,26 @@
 module gst.mpegts.Descriptor;
 
 private import glib.ArrayG;
+private import glib.MemorySlice;
 private import glib.PtrArray;
 private import glib.Str;
 private import gobject.ObjectG;
+private import gst.mpegts.CableDeliverySystemDescriptor;
 private import gst.mpegts.ComponentDescriptor;
 private import gst.mpegts.DVBLinkageDescriptor;
+private import gst.mpegts.DVBParentalRatingItem;
+private import gst.mpegts.DVBServiceListItem;
 private import gst.mpegts.DataBroadcastDescriptor;
+private import gst.mpegts.DvbMultilingualBouquetNameItem;
+private import gst.mpegts.DvbMultilingualComponentItem;
+private import gst.mpegts.DvbMultilingualNetworkNameItem;
+private import gst.mpegts.DvbMultilingualServiceNameItem;
 private import gst.mpegts.ExtendedEventDescriptor;
 private import gst.mpegts.ISO639LanguageDescriptor;
+private import gst.mpegts.LogicalChannelDescriptor;
+private import gst.mpegts.SatelliteDeliverySystemDescriptor;
 private import gst.mpegts.T2DeliverySystemDescriptor;
+private import gst.mpegts.TerrestrialDeliverySystemDescriptor;
 private import gst.mpegts.c.functions;
 public  import gst.mpegts.c.types;
 private import gtkd.Loader;
@@ -147,9 +158,15 @@ public class Descriptor
 	 *
 	 * Returns: %TRUE if parsing succeeded, else %FALSE.
 	 */
-	public bool parseCableDeliverySystem(out GstMpegtsCableDeliverySystemDescriptor res)
+	public bool parseCableDeliverySystem(out CableDeliverySystemDescriptor res)
 	{
-		return gst_mpegts_descriptor_parse_cable_delivery_system(gstMpegtsDescriptor, &res) != 0;
+		GstMpegtsCableDeliverySystemDescriptor* outres = sliceNew!GstMpegtsCableDeliverySystemDescriptor();
+
+		auto p = gst_mpegts_descriptor_parse_cable_delivery_system(gstMpegtsDescriptor, outres) != 0;
+
+		res = ObjectG.getDObject!(CableDeliverySystemDescriptor)(outres, true);
+
+		return p;
 	}
 
 	/**
@@ -711,9 +728,15 @@ public class Descriptor
 	 *
 	 * Returns: %TRUE if parsing succeeded, else %FALSE.
 	 */
-	public bool parseLogicalChannel(out GstMpegtsLogicalChannelDescriptor res)
+	public bool parseLogicalChannel(out LogicalChannelDescriptor res)
 	{
-		return gst_mpegts_descriptor_parse_logical_channel(gstMpegtsDescriptor, &res) != 0;
+		GstMpegtsLogicalChannelDescriptor* outres = sliceNew!GstMpegtsLogicalChannelDescriptor();
+
+		auto p = gst_mpegts_descriptor_parse_logical_channel(gstMpegtsDescriptor, outres) != 0;
+
+		res = ObjectG.getDObject!(LogicalChannelDescriptor)(outres, true);
+
+		return p;
 	}
 
 	/**
@@ -724,9 +747,15 @@ public class Descriptor
 	 *
 	 * Returns: %TRUE if parsing succeeded, else %FALSE.
 	 */
-	public bool parseSatelliteDeliverySystem(out GstMpegtsSatelliteDeliverySystemDescriptor res)
+	public bool parseSatelliteDeliverySystem(out SatelliteDeliverySystemDescriptor res)
 	{
-		return gst_mpegts_descriptor_parse_satellite_delivery_system(gstMpegtsDescriptor, &res) != 0;
+		GstMpegtsSatelliteDeliverySystemDescriptor* outres = sliceNew!GstMpegtsSatelliteDeliverySystemDescriptor();
+
+		auto p = gst_mpegts_descriptor_parse_satellite_delivery_system(gstMpegtsDescriptor, outres) != 0;
+
+		res = ObjectG.getDObject!(SatelliteDeliverySystemDescriptor)(outres, true);
+
+		return p;
 	}
 
 	/**
@@ -737,9 +766,15 @@ public class Descriptor
 	 *
 	 * Returns: %TRUE if the parsing happened correctly, else %FALSE.
 	 */
-	public bool parseTerrestrialDeliverySystem(out GstMpegtsTerrestrialDeliverySystemDescriptor res)
+	public bool parseTerrestrialDeliverySystem(out TerrestrialDeliverySystemDescriptor res)
 	{
-		return gst_mpegts_descriptor_parse_terrestrial_delivery_system(gstMpegtsDescriptor, &res) != 0;
+		GstMpegtsTerrestrialDeliverySystemDescriptor* outres = sliceNew!GstMpegtsTerrestrialDeliverySystemDescriptor();
+
+		auto p = gst_mpegts_descriptor_parse_terrestrial_delivery_system(gstMpegtsDescriptor, outres) != 0;
+
+		res = ObjectG.getDObject!(TerrestrialDeliverySystemDescriptor)(outres, true);
+
+		return p;
 	}
 
 	/**

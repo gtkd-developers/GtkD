@@ -40,6 +40,8 @@ public  import gtkc.gtktypes;
 /**
  * The #GtkColorChooserDialog widget is a dialog for choosing
  * a color. It implements the #GtkColorChooser interface.
+ *
+ * Since: 3.4
  */
 public class ColorChooserDialog : Dialog, ColorChooserIF
 {

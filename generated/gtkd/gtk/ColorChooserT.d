@@ -41,6 +41,8 @@ public  import std.algorithm;
  * 
  * In GTK+, the main widgets that implement this interface are
  * #GtkColorChooserWidget, #GtkColorChooserDialog and #GtkColorButton.
+ *
+ * Since: 3.4
  */
 public template ColorChooserT(TStruct)
 {

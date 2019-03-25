@@ -53,6 +53,8 @@ public  import gtkc.gtktypes;
  * # CSS nodes
  * 
  * GtkFontChooserWidget has a single CSS node with name fontchooser.
+ *
+ * Since: 3.2
  */
 public class FontChooserWidget : Box, FontChooserIF
 {

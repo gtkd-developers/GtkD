@@ -1180,9 +1180,6 @@ struct GstMpegtsBATStream
 	GPtrArray* descriptors;
 }
 
-/**
- * Cable Delivery System Descriptor (EN 300 468 v.1.13.1)
- */
 struct GstMpegtsCableDeliverySystemDescriptor
 {
 	/**

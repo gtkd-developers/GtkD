@@ -87,6 +87,11 @@ shared static this()
 
 	Linker.link(gst_mpegts_bat_stream_get_type, "gst_mpegts_bat_stream_get_type", LIBRARY_GSTMPEGTS);
 
+	// gst.mpegts.CableDeliverySystemDescriptor
+
+	Linker.link(gst_mpegts_dvb_cable_delivery_system_descriptor_get_type, "gst_mpegts_dvb_cable_delivery_system_descriptor_get_type", LIBRARY_GSTMPEGTS);
+	Linker.link(gst_mpegts_dvb_cable_delivery_system_descriptor_free, "gst_mpegts_dvb_cable_delivery_system_descriptor_free", LIBRARY_GSTMPEGTS);
+
 	// gst.mpegts.ComponentDescriptor
 
 	Linker.link(gst_mpegts_component_descriptor_get_type, "gst_mpegts_component_descriptor_get_type", LIBRARY_GSTMPEGTS);
@@ -99,6 +104,26 @@ shared static this()
 	Linker.link(gst_mpegts_dvb_linkage_descriptor_get_event, "gst_mpegts_dvb_linkage_descriptor_get_event", LIBRARY_GSTMPEGTS);
 	Linker.link(gst_mpegts_dvb_linkage_descriptor_get_extended_event, "gst_mpegts_dvb_linkage_descriptor_get_extended_event", LIBRARY_GSTMPEGTS);
 	Linker.link(gst_mpegts_dvb_linkage_descriptor_get_mobile_hand_over, "gst_mpegts_dvb_linkage_descriptor_get_mobile_hand_over", LIBRARY_GSTMPEGTS);
+
+	// gst.mpegts.DVBLinkageEvent
+
+	Linker.link(gst_mpegts_dvb_linkage_event_get_type, "gst_mpegts_dvb_linkage_event_get_type", LIBRARY_GSTMPEGTS);
+
+	// gst.mpegts.DVBLinkageExtendedEvent
+
+	Linker.link(gst_mpegts_dvb_linkage_extended_event_get_type, "gst_mpegts_dvb_linkage_extended_event_get_type", LIBRARY_GSTMPEGTS);
+
+	// gst.mpegts.DVBLinkageMobileHandOver
+
+	Linker.link(gst_mpegts_dvb_linkage_mobile_hand_over_get_type, "gst_mpegts_dvb_linkage_mobile_hand_over_get_type", LIBRARY_GSTMPEGTS);
+
+	// gst.mpegts.DVBParentalRatingItem
+
+	Linker.link(gst_mpegts_dvb_parental_rating_item_get_type, "gst_mpegts_dvb_parental_rating_item_get_type", LIBRARY_GSTMPEGTS);
+
+	// gst.mpegts.DVBServiceListItem
+
+	Linker.link(gst_mpegts_dvb_service_list_item_get_type, "gst_mpegts_dvb_service_list_item_get_type", LIBRARY_GSTMPEGTS);
 
 	// gst.mpegts.DataBroadcastDescriptor
 
@@ -154,6 +179,22 @@ shared static this()
 	Linker.link(gst_mpegts_find_descriptor, "gst_mpegts_find_descriptor", LIBRARY_GSTMPEGTS);
 	Linker.link(gst_mpegts_parse_descriptors, "gst_mpegts_parse_descriptors", LIBRARY_GSTMPEGTS);
 
+	// gst.mpegts.DvbMultilingualBouquetNameItem
+
+	Linker.link(gst_mpegts_dvb_multilingual_bouquet_name_item_get_type, "gst_mpegts_dvb_multilingual_bouquet_name_item_get_type", LIBRARY_GSTMPEGTS);
+
+	// gst.mpegts.DvbMultilingualComponentItem
+
+	Linker.link(gst_mpegts_dvb_multilingual_component_item_get_type, "gst_mpegts_dvb_multilingual_component_item_get_type", LIBRARY_GSTMPEGTS);
+
+	// gst.mpegts.DvbMultilingualNetworkNameItem
+
+	Linker.link(gst_mpegts_dvb_multilingual_network_name_item_get_type, "gst_mpegts_dvb_multilingual_network_name_item_get_type", LIBRARY_GSTMPEGTS);
+
+	// gst.mpegts.DvbMultilingualServiceNameItem
+
+	Linker.link(gst_mpegts_dvb_multilingual_service_name_item_get_type, "gst_mpegts_dvb_multilingual_service_name_item_get_type", LIBRARY_GSTMPEGTS);
+
 	// gst.mpegts.EIT
 
 	Linker.link(gst_mpegts_eit_get_type, "gst_mpegts_eit_get_type", LIBRARY_GSTMPEGTS);
@@ -167,10 +208,22 @@ shared static this()
 	Linker.link(gst_mpegts_extended_event_descriptor_get_type, "gst_mpegts_extended_event_descriptor_get_type", LIBRARY_GSTMPEGTS);
 	Linker.link(gst_mpegts_extended_event_descriptor_free, "gst_mpegts_extended_event_descriptor_free", LIBRARY_GSTMPEGTS);
 
+	// gst.mpegts.ExtendedEventItem
+
+	Linker.link(gst_mpegts_extended_event_item_get_type, "gst_mpegts_extended_event_item_get_type", LIBRARY_GSTMPEGTS);
+
 	// gst.mpegts.ISO639LanguageDescriptor
 
 	Linker.link(gst_mpegts_iso_639_language_get_type, "gst_mpegts_iso_639_language_get_type", LIBRARY_GSTMPEGTS);
 	Linker.link(gst_mpegts_iso_639_language_descriptor_free, "gst_mpegts_iso_639_language_descriptor_free", LIBRARY_GSTMPEGTS);
+
+	// gst.mpegts.LogicalChannel
+
+	Linker.link(gst_mpegts_logical_channel_get_type, "gst_mpegts_logical_channel_get_type", LIBRARY_GSTMPEGTS);
+
+	// gst.mpegts.LogicalChannelDescriptor
+
+	Linker.link(gst_mpegts_logical_channel_descriptor_get_type, "gst_mpegts_logical_channel_descriptor_get_type", LIBRARY_GSTMPEGTS);
 
 	// gst.mpegts.NIT
 
@@ -208,6 +261,10 @@ shared static this()
 	Linker.link(gst_mpegts_sdt_service_get_type, "gst_mpegts_sdt_service_get_type", LIBRARY_GSTMPEGTS);
 	Linker.link(gst_mpegts_sdt_service_new, "gst_mpegts_sdt_service_new", LIBRARY_GSTMPEGTS);
 
+	// gst.mpegts.SatelliteDeliverySystemDescriptor
+
+	Linker.link(gst_mpegts_satellite_delivery_system_descriptor_get_type, "gst_mpegts_satellite_delivery_system_descriptor_get_type", LIBRARY_GSTMPEGTS);
+
 	// gst.mpegts.Section
 
 	Linker.link(gst_mpegts_section_get_type, "gst_mpegts_section_get_type", LIBRARY_GSTMPEGTS);
@@ -239,6 +296,14 @@ shared static this()
 	Linker.link(gst_message_new_mpegts_section, "gst_message_new_mpegts_section", LIBRARY_GSTMPEGTS);
 	Linker.link(gst_message_parse_mpegts_section, "gst_message_parse_mpegts_section", LIBRARY_GSTMPEGTS);
 
+	// gst.mpegts.T2DeliverySystemCell
+
+	Linker.link(gst_mpegts_t2_delivery_system_cell_get_type, "gst_mpegts_t2_delivery_system_cell_get_type", LIBRARY_GSTMPEGTS);
+
+	// gst.mpegts.T2DeliverySystemCellExtension
+
+	Linker.link(gst_mpegts_t2_delivery_system_cell_extension_get_type, "gst_mpegts_t2_delivery_system_cell_extension_get_type", LIBRARY_GSTMPEGTS);
+
 	// gst.mpegts.T2DeliverySystemDescriptor
 
 	Linker.link(gst_mpegts_t2_delivery_system_descriptor_get_type, "gst_mpegts_t2_delivery_system_descriptor_get_type", LIBRARY_GSTMPEGTS);
@@ -247,6 +312,10 @@ shared static this()
 	// gst.mpegts.TOT
 
 	Linker.link(gst_mpegts_tot_get_type, "gst_mpegts_tot_get_type", LIBRARY_GSTMPEGTS);
+
+	// gst.mpegts.TerrestrialDeliverySystemDescriptor
+
+	Linker.link(gst_mpegts_terrestrial_delivery_system_descriptor_get_type, "gst_mpegts_terrestrial_delivery_system_descriptor_get_type", LIBRARY_GSTMPEGTS);
 
 	// gst.mpegts.Mpegts
 
@@ -306,6 +375,11 @@ __gshared extern(C)
 
 	GType function() c_gst_mpegts_bat_stream_get_type;
 
+	// gst.mpegts.CableDeliverySystemDescriptor
+
+	GType function() c_gst_mpegts_dvb_cable_delivery_system_descriptor_get_type;
+	void function(GstMpegtsCableDeliverySystemDescriptor* source) c_gst_mpegts_dvb_cable_delivery_system_descriptor_free;
+
 	// gst.mpegts.ComponentDescriptor
 
 	GType function() c_gst_mpegts_component_descriptor_get_type;
@@ -318,6 +392,26 @@ __gshared extern(C)
 	GstMpegtsDVBLinkageEvent* function(GstMpegtsDVBLinkageDescriptor* desc) c_gst_mpegts_dvb_linkage_descriptor_get_event;
 	GPtrArray* function(GstMpegtsDVBLinkageDescriptor* desc) c_gst_mpegts_dvb_linkage_descriptor_get_extended_event;
 	GstMpegtsDVBLinkageMobileHandOver* function(GstMpegtsDVBLinkageDescriptor* desc) c_gst_mpegts_dvb_linkage_descriptor_get_mobile_hand_over;
+
+	// gst.mpegts.DVBLinkageEvent
+
+	GType function() c_gst_mpegts_dvb_linkage_event_get_type;
+
+	// gst.mpegts.DVBLinkageExtendedEvent
+
+	GType function() c_gst_mpegts_dvb_linkage_extended_event_get_type;
+
+	// gst.mpegts.DVBLinkageMobileHandOver
+
+	GType function() c_gst_mpegts_dvb_linkage_mobile_hand_over_get_type;
+
+	// gst.mpegts.DVBParentalRatingItem
+
+	GType function() c_gst_mpegts_dvb_parental_rating_item_get_type;
+
+	// gst.mpegts.DVBServiceListItem
+
+	GType function() c_gst_mpegts_dvb_service_list_item_get_type;
 
 	// gst.mpegts.DataBroadcastDescriptor
 
@@ -373,6 +467,22 @@ __gshared extern(C)
 	GstMpegtsDescriptor* function(GPtrArray* descriptors, ubyte tag) c_gst_mpegts_find_descriptor;
 	GPtrArray* function(ubyte* buffer, size_t bufLen) c_gst_mpegts_parse_descriptors;
 
+	// gst.mpegts.DvbMultilingualBouquetNameItem
+
+	GType function() c_gst_mpegts_dvb_multilingual_bouquet_name_item_get_type;
+
+	// gst.mpegts.DvbMultilingualComponentItem
+
+	GType function() c_gst_mpegts_dvb_multilingual_component_item_get_type;
+
+	// gst.mpegts.DvbMultilingualNetworkNameItem
+
+	GType function() c_gst_mpegts_dvb_multilingual_network_name_item_get_type;
+
+	// gst.mpegts.DvbMultilingualServiceNameItem
+
+	GType function() c_gst_mpegts_dvb_multilingual_service_name_item_get_type;
+
 	// gst.mpegts.EIT
 
 	GType function() c_gst_mpegts_eit_get_type;
@@ -386,10 +496,22 @@ __gshared extern(C)
 	GType function() c_gst_mpegts_extended_event_descriptor_get_type;
 	void function(GstMpegtsExtendedEventDescriptor* source) c_gst_mpegts_extended_event_descriptor_free;
 
+	// gst.mpegts.ExtendedEventItem
+
+	GType function() c_gst_mpegts_extended_event_item_get_type;
+
 	// gst.mpegts.ISO639LanguageDescriptor
 
 	GType function() c_gst_mpegts_iso_639_language_get_type;
 	void function(GstMpegtsISO639LanguageDescriptor* desc) c_gst_mpegts_iso_639_language_descriptor_free;
+
+	// gst.mpegts.LogicalChannel
+
+	GType function() c_gst_mpegts_logical_channel_get_type;
+
+	// gst.mpegts.LogicalChannelDescriptor
+
+	GType function() c_gst_mpegts_logical_channel_descriptor_get_type;
 
 	// gst.mpegts.NIT
 
@@ -427,6 +549,10 @@ __gshared extern(C)
 	GType function() c_gst_mpegts_sdt_service_get_type;
 	GstMpegtsSDTService* function() c_gst_mpegts_sdt_service_new;
 
+	// gst.mpegts.SatelliteDeliverySystemDescriptor
+
+	GType function() c_gst_mpegts_satellite_delivery_system_descriptor_get_type;
+
 	// gst.mpegts.Section
 
 	GType function() c_gst_mpegts_section_get_type;
@@ -458,6 +584,14 @@ __gshared extern(C)
 	GstMessage* function(GstObject* parent, GstMpegtsSection* section) c_gst_message_new_mpegts_section;
 	GstMpegtsSection* function(GstMessage* message) c_gst_message_parse_mpegts_section;
 
+	// gst.mpegts.T2DeliverySystemCell
+
+	GType function() c_gst_mpegts_t2_delivery_system_cell_get_type;
+
+	// gst.mpegts.T2DeliverySystemCellExtension
+
+	GType function() c_gst_mpegts_t2_delivery_system_cell_extension_get_type;
+
 	// gst.mpegts.T2DeliverySystemDescriptor
 
 	GType function() c_gst_mpegts_t2_delivery_system_descriptor_get_type;
@@ -466,6 +600,10 @@ __gshared extern(C)
 	// gst.mpegts.TOT
 
 	GType function() c_gst_mpegts_tot_get_type;
+
+	// gst.mpegts.TerrestrialDeliverySystemDescriptor
+
+	GType function() c_gst_mpegts_terrestrial_delivery_system_descriptor_get_type;
 
 	// gst.mpegts.Mpegts
 
@@ -523,6 +661,11 @@ alias c_gst_mpegts_bat_get_type gst_mpegts_bat_get_type;
 
 alias c_gst_mpegts_bat_stream_get_type gst_mpegts_bat_stream_get_type;
 
+// gst.mpegts.CableDeliverySystemDescriptor
+
+alias c_gst_mpegts_dvb_cable_delivery_system_descriptor_get_type gst_mpegts_dvb_cable_delivery_system_descriptor_get_type;
+alias c_gst_mpegts_dvb_cable_delivery_system_descriptor_free gst_mpegts_dvb_cable_delivery_system_descriptor_free;
+
 // gst.mpegts.ComponentDescriptor
 
 alias c_gst_mpegts_component_descriptor_get_type gst_mpegts_component_descriptor_get_type;
@@ -535,6 +678,26 @@ alias c_gst_mpegts_dvb_linkage_descriptor_free gst_mpegts_dvb_linkage_descriptor
 alias c_gst_mpegts_dvb_linkage_descriptor_get_event gst_mpegts_dvb_linkage_descriptor_get_event;
 alias c_gst_mpegts_dvb_linkage_descriptor_get_extended_event gst_mpegts_dvb_linkage_descriptor_get_extended_event;
 alias c_gst_mpegts_dvb_linkage_descriptor_get_mobile_hand_over gst_mpegts_dvb_linkage_descriptor_get_mobile_hand_over;
+
+// gst.mpegts.DVBLinkageEvent
+
+alias c_gst_mpegts_dvb_linkage_event_get_type gst_mpegts_dvb_linkage_event_get_type;
+
+// gst.mpegts.DVBLinkageExtendedEvent
+
+alias c_gst_mpegts_dvb_linkage_extended_event_get_type gst_mpegts_dvb_linkage_extended_event_get_type;
+
+// gst.mpegts.DVBLinkageMobileHandOver
+
+alias c_gst_mpegts_dvb_linkage_mobile_hand_over_get_type gst_mpegts_dvb_linkage_mobile_hand_over_get_type;
+
+// gst.mpegts.DVBParentalRatingItem
+
+alias c_gst_mpegts_dvb_parental_rating_item_get_type gst_mpegts_dvb_parental_rating_item_get_type;
+
+// gst.mpegts.DVBServiceListItem
+
+alias c_gst_mpegts_dvb_service_list_item_get_type gst_mpegts_dvb_service_list_item_get_type;
 
 // gst.mpegts.DataBroadcastDescriptor
 
@@ -590,6 +753,22 @@ alias c_gst_mpegts_descriptor_from_registration gst_mpegts_descriptor_from_regis
 alias c_gst_mpegts_find_descriptor gst_mpegts_find_descriptor;
 alias c_gst_mpegts_parse_descriptors gst_mpegts_parse_descriptors;
 
+// gst.mpegts.DvbMultilingualBouquetNameItem
+
+alias c_gst_mpegts_dvb_multilingual_bouquet_name_item_get_type gst_mpegts_dvb_multilingual_bouquet_name_item_get_type;
+
+// gst.mpegts.DvbMultilingualComponentItem
+
+alias c_gst_mpegts_dvb_multilingual_component_item_get_type gst_mpegts_dvb_multilingual_component_item_get_type;
+
+// gst.mpegts.DvbMultilingualNetworkNameItem
+
+alias c_gst_mpegts_dvb_multilingual_network_name_item_get_type gst_mpegts_dvb_multilingual_network_name_item_get_type;
+
+// gst.mpegts.DvbMultilingualServiceNameItem
+
+alias c_gst_mpegts_dvb_multilingual_service_name_item_get_type gst_mpegts_dvb_multilingual_service_name_item_get_type;
+
 // gst.mpegts.EIT
 
 alias c_gst_mpegts_eit_get_type gst_mpegts_eit_get_type;
@@ -603,10 +782,22 @@ alias c_gst_mpegts_eit_event_get_type gst_mpegts_eit_event_get_type;
 alias c_gst_mpegts_extended_event_descriptor_get_type gst_mpegts_extended_event_descriptor_get_type;
 alias c_gst_mpegts_extended_event_descriptor_free gst_mpegts_extended_event_descriptor_free;
 
+// gst.mpegts.ExtendedEventItem
+
+alias c_gst_mpegts_extended_event_item_get_type gst_mpegts_extended_event_item_get_type;
+
 // gst.mpegts.ISO639LanguageDescriptor
 
 alias c_gst_mpegts_iso_639_language_get_type gst_mpegts_iso_639_language_get_type;
 alias c_gst_mpegts_iso_639_language_descriptor_free gst_mpegts_iso_639_language_descriptor_free;
+
+// gst.mpegts.LogicalChannel
+
+alias c_gst_mpegts_logical_channel_get_type gst_mpegts_logical_channel_get_type;
+
+// gst.mpegts.LogicalChannelDescriptor
+
+alias c_gst_mpegts_logical_channel_descriptor_get_type gst_mpegts_logical_channel_descriptor_get_type;
 
 // gst.mpegts.NIT
 
@@ -644,6 +835,10 @@ alias c_gst_mpegts_sdt_new gst_mpegts_sdt_new;
 alias c_gst_mpegts_sdt_service_get_type gst_mpegts_sdt_service_get_type;
 alias c_gst_mpegts_sdt_service_new gst_mpegts_sdt_service_new;
 
+// gst.mpegts.SatelliteDeliverySystemDescriptor
+
+alias c_gst_mpegts_satellite_delivery_system_descriptor_get_type gst_mpegts_satellite_delivery_system_descriptor_get_type;
+
 // gst.mpegts.Section
 
 alias c_gst_mpegts_section_get_type gst_mpegts_section_get_type;
@@ -675,6 +870,14 @@ alias c_gst_event_parse_mpegts_section gst_event_parse_mpegts_section;
 alias c_gst_message_new_mpegts_section gst_message_new_mpegts_section;
 alias c_gst_message_parse_mpegts_section gst_message_parse_mpegts_section;
 
+// gst.mpegts.T2DeliverySystemCell
+
+alias c_gst_mpegts_t2_delivery_system_cell_get_type gst_mpegts_t2_delivery_system_cell_get_type;
+
+// gst.mpegts.T2DeliverySystemCellExtension
+
+alias c_gst_mpegts_t2_delivery_system_cell_extension_get_type gst_mpegts_t2_delivery_system_cell_extension_get_type;
+
 // gst.mpegts.T2DeliverySystemDescriptor
 
 alias c_gst_mpegts_t2_delivery_system_descriptor_get_type gst_mpegts_t2_delivery_system_descriptor_get_type;
@@ -683,6 +886,10 @@ alias c_gst_mpegts_t2_delivery_system_descriptor_free gst_mpegts_t2_delivery_sys
 // gst.mpegts.TOT
 
 alias c_gst_mpegts_tot_get_type gst_mpegts_tot_get_type;
+
+// gst.mpegts.TerrestrialDeliverySystemDescriptor
+
+alias c_gst_mpegts_terrestrial_delivery_system_descriptor_get_type gst_mpegts_terrestrial_delivery_system_descriptor_get_type;
 
 // gst.mpegts.Mpegts
 
