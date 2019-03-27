@@ -143,54 +143,6 @@ public enum GtkSourceCompressionType
 alias GtkSourceCompressionType CompressionType;
 
 /**
- * GtkSourceDrawSpacesFlags determine what kind of spaces whould be drawn. If none
- * of GTK_SOURCE_DRAW_SPACES_LEADING, GTK_SOURCE_DRAW_SPACES_TEXT or
- * GTK_SOURCE_DRAW_SPACES_TRAILING is specified, whitespaces at any position in
- * the line will be drawn (i.e. it has the same effect as specifying all of them).
- *
- * Deprecated: Use #GtkSourceSpaceTypeFlags and
- * #GtkSourceSpaceLocationFlags instead.
- */
-public enum GtkSourceDrawSpacesFlags
-{
-	/**
-	 * whether the space character should be drawn.
-	 */
-	SPACE = 1,
-	/**
-	 * whether the tab character should be drawn.
-	 */
-	TAB = 2,
-	/**
-	 * whether the line breaks should be drawn. If
-	 * the #GtkSourceBuffer:implicit-trailing-newline property is %TRUE, a line
-	 * break is also drawn at the end of the buffer.
-	 */
-	NEWLINE = 4,
-	/**
-	 * whether the non-breaking whitespaces should be drawn.
-	 */
-	NBSP = 8,
-	/**
-	 * whether leading whitespaces should be drawn.
-	 */
-	LEADING = 16,
-	/**
-	 * whether whitespaces inside text should be drawn.
-	 */
-	TEXT = 32,
-	/**
-	 * whether trailing whitespaces should be drawn.
-	 */
-	TRAILING = 64,
-	/**
-	 * wheter all kind of spaces should be drawn.
-	 */
-	ALL = 127,
-}
-alias GtkSourceDrawSpacesFlags DrawSpacesFlags;
-
-/**
  * An error code used with the %GTK_SOURCE_FILE_LOADER_ERROR domain.
  */
 public enum GtkSourceFileLoaderError
@@ -468,12 +420,7 @@ struct GtkSourceBufferClass
 	extern(C) void function(GtkSourceBuffer* buffer) redo;
 	/** */
 	extern(C) void function(GtkSourceBuffer* buffer, GtkTextIter* iter, GtkSourceBracketMatchType state) bracketMatched;
-	/** */
-	extern(C) void function() GtkSourceReserved1;
-	/** */
-	extern(C) void function() GtkSourceReserved2;
-	/** */
-	extern(C) void function() GtkSourceReserved3;
+	void*[20] padding;
 }
 
 struct GtkSourceBufferPrivate;
@@ -501,6 +448,7 @@ struct GtkSourceCompletionClass
 	extern(C) void function(GtkSourceCompletion* completion, GtkScrollStep step, int num) movePage;
 	/** */
 	extern(C) void function(GtkSourceCompletion* completion) activateProposal;
+	void*[20] padding;
 }
 
 struct GtkSourceCompletionContext
@@ -514,12 +462,7 @@ struct GtkSourceCompletionContextClass
 	GObjectClass parentClass;
 	/** */
 	extern(C) void function(GtkSourceCompletionContext* context) cancelled;
-	/** */
-	extern(C) void function() GtkSourceReserved1;
-	/** */
-	extern(C) void function() GtkSourceReserved2;
-	/** */
-	extern(C) void function() GtkSourceReserved3;
+	void*[10] padding;
 }
 
 struct GtkSourceCompletionContextPrivate;
@@ -533,8 +476,7 @@ struct GtkSourceCompletionInfo
 struct GtkSourceCompletionInfoClass
 {
 	GtkWindowClass parentClass;
-	/** */
-	extern(C) void function(GtkSourceCompletionInfo* info) beforeShow;
+	void*[10] padding;
 }
 
 struct GtkSourceCompletionInfoPrivate;
@@ -548,6 +490,7 @@ struct GtkSourceCompletionItem
 struct GtkSourceCompletionItemClass
 {
 	GObjectClass parentClass;
+	void*[10] padding;
 }
 
 struct GtkSourceCompletionItemPrivate;
@@ -808,6 +751,7 @@ struct GtkSourceGutter
 struct GtkSourceGutterClass
 {
 	GObjectClass parentClass;
+	void*[10] padding;
 }
 
 struct GtkSourceGutterPrivate;
@@ -859,6 +803,7 @@ struct GtkSourceGutterRendererClass
 	extern(C) int function(GtkSourceGutterRenderer* renderer, GtkTextIter* iter, GdkRectangle* area, int x, int y, GtkTooltip* tooltip) queryTooltip;
 	/** */
 	extern(C) void function(GtkSourceGutterRenderer* renderer, GtkTextIter* start, GtkTextIter* end, GtkSourceGutterRendererState state) queryData;
+	void*[20] padding;
 }
 
 struct GtkSourceGutterRendererPixbuf
@@ -870,6 +815,7 @@ struct GtkSourceGutterRendererPixbuf
 struct GtkSourceGutterRendererPixbufClass
 {
 	GtkSourceGutterRendererClass parentClass;
+	void*[10] padding;
 }
 
 struct GtkSourceGutterRendererPixbufPrivate;
@@ -885,6 +831,7 @@ struct GtkSourceGutterRendererText
 struct GtkSourceGutterRendererTextClass
 {
 	GtkSourceGutterRendererClass parentClass;
+	void*[10] padding;
 }
 
 struct GtkSourceGutterRendererTextPrivate;
@@ -898,10 +845,7 @@ struct GtkSourceLanguage
 struct GtkSourceLanguageClass
 {
 	GObjectClass parentClass;
-	/** */
-	extern(C) void function() GtkSourceReserved1;
-	/** */
-	extern(C) void function() GtkSourceReserved2;
+	void*[10] padding;
 }
 
 struct GtkSourceLanguageManager
@@ -913,14 +857,7 @@ struct GtkSourceLanguageManager
 struct GtkSourceLanguageManagerClass
 {
 	GObjectClass parentClass;
-	/** */
-	extern(C) void function() GtkSourceReserved1;
-	/** */
-	extern(C) void function() GtkSourceReserved2;
-	/** */
-	extern(C) void function() GtkSourceReserved3;
-	/** */
-	extern(C) void function() GtkSourceReserved4;
+	void*[10] padding;
 }
 
 struct GtkSourceLanguageManagerPrivate;
@@ -953,6 +890,7 @@ struct GtkSourceMarkAttributes
 struct GtkSourceMarkAttributesClass
 {
 	GObjectClass parentClass;
+	void*[10] padding;
 }
 
 struct GtkSourceMarkAttributesPrivate;
@@ -960,10 +898,7 @@ struct GtkSourceMarkAttributesPrivate;
 struct GtkSourceMarkClass
 {
 	GtkTextMarkClass parentClass;
-	/** */
-	extern(C) void function() GtkSourceReserved1;
-	/** */
-	extern(C) void function() GtkSourceReserved2;
+	void*[10] padding;
 }
 
 struct GtkSourceMarkPrivate;
@@ -977,10 +912,7 @@ struct GtkSourcePrintCompositor
 struct GtkSourcePrintCompositorClass
 {
 	GObjectClass parentClass;
-	/** */
-	extern(C) void function() GtkSourceReserved1;
-	/** */
-	extern(C) void function() GtkSourceReserved2;
+	void*[10] padding;
 }
 
 struct GtkSourcePrintCompositorPrivate;
@@ -993,7 +925,7 @@ struct GtkSourceRegion
 struct GtkSourceRegionClass
 {
 	GObjectClass parentClass;
-	void*[8] padding;
+	void*[10] padding;
 }
 
 struct GtkSourceRegionIter
@@ -1065,6 +997,7 @@ struct GtkSourceStyleSchemeChooserButton
 struct GtkSourceStyleSchemeChooserButtonClass
 {
 	GtkButtonClass parent;
+	void*[10] padding;
 }
 
 struct GtkSourceStyleSchemeChooserInterface
@@ -1090,15 +1023,13 @@ struct GtkSourceStyleSchemeChooserWidget
 struct GtkSourceStyleSchemeChooserWidgetClass
 {
 	GtkBinClass parent;
+	void*[10] padding;
 }
 
 struct GtkSourceStyleSchemeClass
 {
 	GObjectClass baseClass;
-	/** */
-	extern(C) void function() GtkSourceReserved1;
-	/** */
-	extern(C) void function() GtkSourceReserved2;
+	void*[10] padding;
 }
 
 struct GtkSourceStyleSchemeManager
@@ -1110,14 +1041,7 @@ struct GtkSourceStyleSchemeManager
 struct GtkSourceStyleSchemeManagerClass
 {
 	GObjectClass parentClass;
-	/** */
-	extern(C) void function() GtkSourceReserved1;
-	/** */
-	extern(C) void function() GtkSourceReserved2;
-	/** */
-	extern(C) void function() GtkSourceReserved3;
-	/** */
-	extern(C) void function() GtkSourceReserved4;
+	void*[10] padding;
 }
 
 struct GtkSourceStyleSchemeManagerPrivate;
@@ -1186,9 +1110,10 @@ struct GtkSourceViewClass
 	/** */
 	extern(C) void function(GtkSourceView* view) showCompletion;
 	/** */
-	extern(C) void function(GtkSourceView* view, int copy, int step) moveLines;
+	extern(C) void function(GtkSourceView* view, int down) moveLines;
 	/** */
 	extern(C) void function(GtkSourceView* view, int step) moveWords;
+	void*[20] padding;
 }
 
 struct GtkSourceViewPrivate;

@@ -68,40 +68,6 @@ public class SourceCompletionItem : ObjectG, SourceCompletionProposalIF
 	// add the SourceCompletionProposal capabilities
 	mixin SourceCompletionProposalT!(GtkSourceCompletionItem);
 
-	/**
-	 * Create a new GtkSourceCompletionItem with label label, icon icon and
-	 * extra information info. Both icon and info can be NULL in which case
-	 * there will be no icon shown and no extra information available.
-	 * Params:
-	 * label = The item label.
-	 * text = The item text.
-	 * icon = The item icon. [allow-none]
-	 * info = The item extra information. [allow-none]
-	 * markup = If true label will be treated as markup. using gtk_source_completion_item_new_with_markup.
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (string label, string text, Pixbuf icon, string info, bool markup = false)
-	{
-		GtkSourceCompletionItem* p;
-
-		if ( markup )
-		{
-			p = gtk_source_completion_item_new_with_markup(Str.toStringz(label), Str.toStringz(text), (icon is null) ? null : icon.getPixbufStruct(), Str.toStringz(info));
-		}
-		else
-		{
-			p = gtk_source_completion_item_new(Str.toStringz(label), Str.toStringz(text), (icon is null) ? null : icon.getPixbufStruct(), Str.toStringz(info));
-		}
-
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_source_completion_item_new(Str.toStringz(label), Str.toStringz(text), (icon is null) ? null : icon.getPixbufStruct(), Str.toStringz(info))");
-		}
-		this(p, true);
-	}
-
-	/**
-	 */
 
 	/** */
 	public static GType getType()
@@ -110,50 +76,22 @@ public class SourceCompletionItem : ObjectG, SourceCompletionProposalIF
 	}
 
 	/**
-	 * Creates a new #GtkSourceCompletionItem from a stock item. If @label is %NULL,
-	 * the stock label will be used.
-	 *
-	 * Deprecated: Use gtk_source_completion_item_new2() instead.
-	 *
-	 * Params:
-	 *     label = The item label.
-	 *     text = The item text.
-	 *     stock = The stock icon.
-	 *     info = The item extra information.
-	 *
-	 * Returns: a new #GtkSourceCompletionItem.
-	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this(string label, string text, string stock, string info)
-	{
-		auto p = gtk_source_completion_item_new_from_stock(Str.toStringz(label), Str.toStringz(text), Str.toStringz(stock), Str.toStringz(info));
-
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new_from_stock");
-		}
-
-		this(cast(GtkSourceCompletionItem*) p, true);
-	}
-
-	/**
 	 * Creates a new #GtkSourceCompletionItem. The desired properties need to be set
 	 * afterwards.
 	 *
 	 * Returns: a new #GtkSourceCompletionItem.
 	 *
-	 * Since: 3.24
+	 * Since: 4.0
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this()
 	{
-		auto p = gtk_source_completion_item_new2();
+		auto p = gtk_source_completion_item_new();
 
 		if(p is null)
 		{
-			throw new ConstructionException("null returned by new2");
+			throw new ConstructionException("null returned by new");
 		}
 
 		this(cast(GtkSourceCompletionItem*) p, true);

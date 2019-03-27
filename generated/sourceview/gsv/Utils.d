@@ -35,6 +35,34 @@ public struct Utils
 {
 
 	/**
+	 * Free the resources allocated by GtkSourceView. For example it unrefs the
+	 * singleton objects.
+	 *
+	 * It is not mandatory to call this function, it's just to be friendlier to
+	 * memory debugging tools. This function is meant to be called at the end of
+	 * main(). It can be called several times.
+	 *
+	 * Since: 4.0
+	 */
+	public static void finalize()
+	{
+		gtk_source_finalize();
+	}
+
+	/**
+	 * Initializes the GtkSourceView library (e.g. for the internationalization).
+	 *
+	 * This function can be called several times, but is meant to be called at the
+	 * beginning of main(), before any other GtkSourceView function call.
+	 *
+	 * Since: 4.0
+	 */
+	public static void init()
+	{
+		gtk_source_init();
+	}
+
+	/**
 	 * Use this function to escape the following characters: `\n`, `\r`, `\t` and `\`.
 	 *
 	 * For a regular expression search, use g_regex_escape_string() instead.

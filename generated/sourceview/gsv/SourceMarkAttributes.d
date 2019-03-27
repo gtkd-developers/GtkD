@@ -69,14 +69,6 @@ public class SourceMarkAttributes : ObjectG
 		super(cast(GObject*)gtkSourceMarkAttributes, ownedRef);
 	}
 
-	/** */
-	public void setStockId(StockID stockId)
-	{
-		setStockId(cast(string)stockId);
-	}
-
-	/**
-	 */
 
 	/** */
 	public static GType getType()
@@ -173,20 +165,6 @@ public class SourceMarkAttributes : ObjectG
 	}
 
 	/**
-	 * Gets a stock id of an icon used by this attributes. Note that the stock id can
-	 * be %NULL if it wasn't set earlier.
-	 *
-	 * Deprecated: Don't use this function.
-	 *
-	 * Returns: Stock id. Returned string is owned by @attributes and
-	 *     shouldn't be freed.
-	 */
-	public string getStockId()
-	{
-		return Str.toString(gtk_source_mark_attributes_get_stock_id(gtkSourceMarkAttributes));
-	}
-
-	/**
 	 * Queries for a tooltip by emitting
 	 * a #GtkSourceMarkAttributes::query-tooltip-markup signal. The tooltip may contain
 	 * a markup.
@@ -227,9 +205,8 @@ public class SourceMarkAttributes : ObjectG
 	/**
 	 * Renders an icon of given size. The base of the icon is set by the last call
 	 * to one of: gtk_source_mark_attributes_set_pixbuf(),
-	 * gtk_source_mark_attributes_set_gicon(),
-	 * gtk_source_mark_attributes_set_icon_name() or
-	 * gtk_source_mark_attributes_set_stock_id(). @size cannot be lower than 1.
+	 * gtk_source_mark_attributes_set_gicon() or
+	 * gtk_source_mark_attributes_set_icon_name(). @size cannot be lower than 1.
 	 *
 	 * Params:
 	 *     widget = widget of which style settings may be used.
@@ -292,19 +269,6 @@ public class SourceMarkAttributes : ObjectG
 	public void setPixbuf(Pixbuf pixbuf)
 	{
 		gtk_source_mark_attributes_set_pixbuf(gtkSourceMarkAttributes, (pixbuf is null) ? null : pixbuf.getPixbufStruct());
-	}
-
-	/**
-	 * Sets stock id to be used as a base for rendered icon.
-	 *
-	 * Deprecated: Don't use this function.
-	 *
-	 * Params:
-	 *     stockId = a stock id.
-	 */
-	public void setStockId(string stockId)
-	{
-		gtk_source_mark_attributes_set_stock_id(gtkSourceMarkAttributes, Str.toStringz(stockId));
 	}
 
 	/**

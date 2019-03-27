@@ -64,14 +64,6 @@ public class SourceGutterRendererPixbuf : SourceGutterRenderer
 		super(cast(GtkSourceGutterRenderer*)gtkSourceGutterRendererPixbuf, ownedRef);
 	}
 
-	/** */
-	public void setStockId(StockID stockId)
-	{
-		setStockId(cast(string)stockId);
-	}
-
-	/**
-	 */
 
 	/** */
 	public static GType getType()
@@ -138,18 +130,6 @@ public class SourceGutterRendererPixbuf : SourceGutterRenderer
 		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
 	}
 
-	/**
-	 *
-	 *
-	 * Deprecated: Don't use this function.
-	 *
-	 * Returns: the stock id.
-	 */
-	public string getStockId()
-	{
-		return Str.toString(gtk_source_gutter_renderer_pixbuf_get_stock_id(gtkSourceGutterRendererPixbuf));
-	}
-
 	/** */
 	public void setGicon(IconIF icon)
 	{
@@ -166,18 +146,5 @@ public class SourceGutterRendererPixbuf : SourceGutterRenderer
 	public void setPixbuf(Pixbuf pixbuf)
 	{
 		gtk_source_gutter_renderer_pixbuf_set_pixbuf(gtkSourceGutterRendererPixbuf, (pixbuf is null) ? null : pixbuf.getPixbufStruct());
-	}
-
-	/**
-	 *
-	 *
-	 * Deprecated: Don't use this function.
-	 *
-	 * Params:
-	 *     stockId = the stock id
-	 */
-	public void setStockId(string stockId)
-	{
-		gtk_source_gutter_renderer_pixbuf_set_stock_id(gtkSourceGutterRendererPixbuf, Str.toStringz(stockId));
 	}
 }

@@ -26,7 +26,6 @@ module gsv.SourceCompletionInfo;
 
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-private import gobject.Signals;
 private import gsv.c.functions;
 public  import gsv.c.types;
 public  import gsvc.gsvtypes;
@@ -34,9 +33,7 @@ private import gtk.BuildableIF;
 private import gtk.BuildableT;
 private import gtk.TextIter;
 private import gtk.TextView;
-private import gtk.Widget;
 private import gtk.Window;
-private import std.algorithm;
 
 
 /** */
@@ -93,25 +90,6 @@ public class SourceCompletionInfo : Window
 	}
 
 	/**
-	 * Get the current content widget.
-	 *
-	 * Deprecated: Use gtk_bin_get_child() instead.
-	 *
-	 * Returns: The current content widget.
-	 */
-	public Widget getWidget()
-	{
-		auto p = gtk_source_completion_info_get_widget(gtkSourceCompletionInfo);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
-	}
-
-	/**
 	 * Moves the #GtkSourceCompletionInfo to @iter. If @iter is %NULL @info is
 	 * moved to the cursor position. Moving will respect the #GdkGravity setting
 	 * of the info window and will ensure the line at @iter is not occluded by
@@ -124,33 +102,5 @@ public class SourceCompletionInfo : Window
 	public void moveToIter(TextView view, TextIter iter)
 	{
 		gtk_source_completion_info_move_to_iter(gtkSourceCompletionInfo, (view is null) ? null : view.getTextViewStruct(), (iter is null) ? null : iter.getTextIterStruct());
-	}
-
-	/**
-	 * Sets the content widget of the info window. See that the previous widget will
-	 * lose a reference and it can be destroyed, so if you do not want this to
-	 * happen you must use g_object_ref() before calling this method.
-	 *
-	 * Deprecated: Use gtk_container_add() instead. If there is already a child
-	 * widget, remove it with gtk_container_remove().
-	 *
-	 * Params:
-	 *     widget = a #GtkWidget.
-	 */
-	public void setWidget(Widget widget)
-	{
-		gtk_source_completion_info_set_widget(gtkSourceCompletionInfo, (widget is null) ? null : widget.getWidgetStruct());
-	}
-
-	/**
-	 * This signal is emitted before any "show" management. You can connect
-	 * to this signal if you want to change some properties or position
-	 * before the real "show".
-	 *
-	 * Deprecated: This signal should not be used.
-	 */
-	gulong addOnBeforeShow(void delegate(SourceCompletionInfo) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		return Signals.connect(this, "before-show", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

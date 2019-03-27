@@ -21,7 +21,7 @@
 
 # must start with wrap
 wrap: gsv
-file: GtkSource-3.0.gir
+file: GtkSource-4.gir
 
 struct: Buffer
 class: SourceBuffer
@@ -37,41 +37,6 @@ class: SourceCompletionInfo
 
 struct: CompletionItem
 class: SourceCompletionItem
-noCode: new
-noCode: new_with_markup
-code: start
-	/**
-	 * Create a new GtkSourceCompletionItem with label label, icon icon and
-	 * extra information info. Both icon and info can be NULL in which case
-	 * there will be no icon shown and no extra information available.
-	 * Params:
-	 * label = The item label.
-	 * text = The item text.
-	 * icon = The item icon. [allow-none]
-	 * info = The item extra information. [allow-none]
-	 * markup = If true label will be treated as markup. using gtk_source_completion_item_new_with_markup.	
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this (string label, string text, Pixbuf icon, string info, bool markup = false)
-	{
-		GtkSourceCompletionItem* p;
-
-		if ( markup )
-		{
-			p = gtk_source_completion_item_new_with_markup(Str.toStringz(label), Str.toStringz(text), (icon is null) ? null : icon.getPixbufStruct(), Str.toStringz(info));
-		}
-		else
-		{
-			p = gtk_source_completion_item_new(Str.toStringz(label), Str.toStringz(text), (icon is null) ? null : icon.getPixbufStruct(), Str.toStringz(info));
-		}
-
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by gtk_source_completion_item_new(Str.toStringz(label), Str.toStringz(text), (icon is null) ? null : icon.getPixbufStruct(), Str.toStringz(info))");
-		}
-		this(p, true);
-	}
-code: end
 
 struct: CompletionProposal
 interface: SourceCompletionProposal
@@ -102,13 +67,6 @@ class: SourceGutterRenderer
 
 struct: GutterRendererPixbuf
 class: SourceGutterRendererPixbuf
-code: start
-	/** */
-	public void setStockId(StockID stockId)
-	{
-		setStockId(cast(string)stockId);
-	}
-code: end
 
 struct: GutterRendererText
 class: SourceGutterRendererText
@@ -127,13 +85,6 @@ class: SourceMark
 
 struct: MarkAttributes
 class: SourceMarkAttributes
-code: start
-	/** */
-	public void setStockId(StockID stockId)
-	{
-		setStockId(cast(string)stockId);
-	}
-code: end
 
 struct: PrintCompositor
 class: SourcePrintCompositor
@@ -177,5 +128,7 @@ code: end
 
 struct:
 
+move: finalize Utils
+move: init Utils
 move: utils_escape_search_text Utils escape_search_text
 move: utils_unescape_search_text Utils unescape_search_text

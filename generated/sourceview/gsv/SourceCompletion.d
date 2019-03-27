@@ -133,7 +133,7 @@ public class SourceCompletion : ObjectG, BuildableIF
 	 *
 	 * Returns: a new #GtkSourceCompletionContext.
 	 *     The reference being returned is a 'floating' reference,
-	 *     so if you invoke gtk_source_completion_show() with this context
+	 *     so if you invoke gtk_source_completion_start() with this context
 	 *     you don't need to unref it.
 	 */
 	public SourceCompletionContext createContext(TextIter position)
@@ -213,19 +213,6 @@ public class SourceCompletion : ObjectG, BuildableIF
 	}
 
 	/**
-	 * Move the completion window to a specific iter.
-	 *
-	 * Deprecated: Use gtk_source_completion_provider_get_start_iter() instead.
-	 *
-	 * Params:
-	 *     iter = a #GtkTextIter.
-	 */
-	public void moveWindow(TextIter iter)
-	{
-		gtk_source_completion_move_window(gtkSourceCompletion, (iter is null) ? null : iter.getTextIterStruct());
-	}
-
-	/**
 	 * Remove @provider from the completion.
 	 *
 	 * Params:
@@ -268,9 +255,9 @@ public class SourceCompletion : ObjectG, BuildableIF
 	 *
 	 * Returns: %TRUE if it was possible to the show completion window.
 	 */
-	public bool show(ListG providers, SourceCompletionContext context)
+	public bool start(ListG providers, SourceCompletionContext context)
 	{
-		return gtk_source_completion_show(gtkSourceCompletion, (providers is null) ? null : providers.getListGStruct(), (context is null) ? null : context.getSourceCompletionContextStruct()) != 0;
+		return gtk_source_completion_start(gtkSourceCompletion, (providers is null) ? null : providers.getListGStruct(), (context is null) ? null : context.getSourceCompletionContextStruct()) != 0;
 	}
 
 	/**

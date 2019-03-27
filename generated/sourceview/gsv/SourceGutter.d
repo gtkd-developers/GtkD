@@ -24,7 +24,6 @@
 
 module gsv.SourceGutter;
 
-private import gdk.Window;
 private import gobject.ObjectG;
 private import gsv.SourceGutterRenderer;
 private import gsv.SourceView;
@@ -70,16 +69,6 @@ public class SourceGutter : ObjectG
 	}
 
 	/**
-	 *
-	 *
-	 * Deprecated: Use gtk_source_gutter_renderer_get_padding() instead.
-	 */
-	public void getPadding(int* xpad, int* ypad)
-	{
-		gtk_source_gutter_get_padding(gtkSourceGutter, xpad, ypad);
-	}
-
-	/**
 	 * Finds the #GtkSourceGutterRenderer at (x, y).
 	 *
 	 * Params:
@@ -115,29 +104,6 @@ public class SourceGutter : ObjectG
 		}
 
 		return ObjectG.getDObject!(SourceView)(cast(GtkSourceView*) p);
-	}
-
-	/**
-	 * Get the #GdkWindow of the gutter. The window will only be available when the
-	 * gutter has at least one, non-zero width, cell renderer packed.
-	 *
-	 * Deprecated: Use gtk_text_view_get_window() instead.
-	 *
-	 * Returns: the #GdkWindow of the gutter, or %NULL
-	 *     if the gutter has no window.
-	 *
-	 * Since: 2.8
-	 */
-	public Window getWindow()
-	{
-		auto p = gtk_source_gutter_get_window(gtkSourceGutter);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
 	}
 
 	/**
@@ -204,15 +170,5 @@ public class SourceGutter : ObjectG
 	public void reorder(SourceGutterRenderer renderer, int position)
 	{
 		gtk_source_gutter_reorder(gtkSourceGutter, (renderer is null) ? null : renderer.getSourceGutterRendererStruct(), position);
-	}
-
-	/**
-	 *
-	 *
-	 * Deprecated: Use gtk_source_gutter_renderer_set_padding() instead.
-	 */
-	public void setPadding(int xpad, int ypad)
-	{
-		gtk_source_gutter_set_padding(gtkSourceGutter, xpad, ypad);
 	}
 }

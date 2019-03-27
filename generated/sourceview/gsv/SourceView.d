@@ -192,20 +192,6 @@ public class SourceView : TextView
 	}
 
 	/**
-	 * Returns the #GtkSourceDrawSpacesFlags specifying if and how spaces
-	 * should be displayed for this @view.
-	 *
-	 * Deprecated: Use gtk_source_space_drawer_get_types_for_locations()
-	 * instead.
-	 *
-	 * Returns: the #GtkSourceDrawSpacesFlags, 0 if no spaces should be drawn.
-	 */
-	public GtkSourceDrawSpacesFlags getDrawSpaces()
-	{
-		return gtk_source_view_get_draw_spaces(gtkSourceView);
-	}
-
-	/**
 	 * Returns the #GtkSourceGutter object associated with @window_type for @view.
 	 * Only GTK_TEXT_WINDOW_LEFT and GTK_TEXT_WINDOW_RIGHT are supported,
 	 * respectively corresponding to the left and right gutter. The line numbers
@@ -451,25 +437,6 @@ public class SourceView : TextView
 	}
 
 	/**
-	 * Set if and how the spaces should be visualized. Specifying @flags as 0 will
-	 * disable display of spaces.
-	 *
-	 * For a finer-grained method, there is also the GtkSourceTag's
-	 * #GtkSourceTag:draw-spaces property.
-	 *
-	 * Deprecated: Use gtk_source_space_drawer_set_types_for_locations()
-	 * instead.
-	 *
-	 * Params:
-	 *     flags = #GtkSourceDrawSpacesFlags specifing how white spaces should
-	 *         be displayed
-	 */
-	public void setDrawSpaces(GtkSourceDrawSpacesFlags flags)
-	{
-		gtk_source_view_set_draw_spaces(gtkSourceView, flags);
-	}
-
-	/**
 	 * If @highlight is %TRUE the current line will be highlighted.
 	 *
 	 * Params:
@@ -709,22 +676,12 @@ public class SourceView : TextView
 	 * The ::move-lines signal is a keybinding which gets emitted
 	 * when the user initiates moving a line. The default binding key
 	 * is Alt+Up/Down arrow. And moves the currently selected lines,
-	 * or the current line by @count. For the moment, only
-	 * @count of -1 or 1 is valid.
-	 *
-	 * The @copy parameter is deprecated, it has never been used by
-	 * GtkSourceView (the value is always %FALSE) and was buggy.
+	 * or the current line up or down by one line.
 	 *
 	 * Params:
-	 *     copy = %TRUE if the line should be copied, %FALSE if it should be
-	 *         moved. This parameter is deprecated and will be removed in a later
-	 *         version, it should be always %FALSE.
-	 *     count = the number of lines to move over. Only 1 and -1 are
-	 *         supported.
-	 *
-	 * Since: 2.10
+	 *     down = %TRUE to move down, %FALSE to move up.
 	 */
-	gulong addOnMoveLines(void delegate(bool, int, SourceView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnMoveLines(void delegate(bool, SourceView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "move-lines", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
