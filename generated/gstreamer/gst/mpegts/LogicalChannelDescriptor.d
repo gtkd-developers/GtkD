@@ -87,7 +87,7 @@ public final class LogicalChannelDescriptor
 		LogicalChannel[64] arr;
 		for ( int i = 0; i < arr.length; i++ )
 		{
-			arr[i] = ObjectG.getDObject!(LogicalChannel)(gstMpegtsLogicalChannelDescriptor.channels[i], false);
+			arr[i] = ObjectG.getDObject!(LogicalChannel)(sliceDup(&(gstMpegtsLogicalChannelDescriptor.channels[i])), false);
 		}
 
 		return arr;
@@ -96,14 +96,10 @@ public final class LogicalChannelDescriptor
 	/** Ditto */
 	public @property void channels(LogicalChannel[64] value)
 	{
-		GstMpegtsLogicalChannel*[64] arr;
 		for ( int i = 0; i < value.length; i++ )
 		{
-			arr[i] = value[i].getLogicalChannelStruct();
+			gstMpegtsLogicalChannelDescriptor.channels[i] = *(value[i].getLogicalChannelStruct());
 		}
-		arr[value.length] = null;
-
-		gstMpegtsLogicalChannelDescriptor.channels = arr.ptr;
 	}
 
 	/** */
