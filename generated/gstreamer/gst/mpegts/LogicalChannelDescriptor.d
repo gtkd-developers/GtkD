@@ -87,7 +87,7 @@ public final class LogicalChannelDescriptor
 		LogicalChannel[64] arr;
 		for ( int i = 0; i < arr.length; i++ )
 		{
-			arr[i] = ObjectG.getDObject!(LogicalChannel)(sliceDup(&(gstMpegtsLogicalChannelDescriptor.channels[i])), false);
+			arr[i] = ObjectG.getDObject!(LogicalChannel)(gstMpegtsLogicalChannelDescriptor.channels[i], false);
 		}
 
 		return arr;
