@@ -692,6 +692,23 @@ noCode: get_rgba
 noCode: set_use_alpha
 noCode: get_use_alpha
 
+struct: ColorChooser
+interfaceCode: start
+	/**
+	 * Gets the currently-selected color.
+	 *
+	 * Returns: a gdk.RGBA to fill in with the current color.
+	 *
+	 * Since: 3.4
+	 */
+	public final RGBA getRgba()
+	{
+		RGBA color;
+		getRgba(color);
+		return color;
+	}
+interfaceCode: end
+
 struct: ColorSelectionDialog
 import: gtk.ColorSelection
 noCode: get_color_selection

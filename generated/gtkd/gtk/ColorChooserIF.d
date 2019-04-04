@@ -51,6 +51,22 @@ public interface ColorChooserIF{
 	/** the main Gtk struct as a void* */
 	protected void* getStruct();
 
+	/**
+	 * Gets the currently-selected color.
+	 *
+	 * Returns: a gdk.RGBA to fill in with the current color.
+	 *
+	 * Since: 3.4
+	 */
+	public final RGBA getRgba()
+	{
+		RGBA color;
+		getRgba(color);
+		return color;
+	}
+
+	/**
+	 */
 
 	/** */
 	public static GType getType()
