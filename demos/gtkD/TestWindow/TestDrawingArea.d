@@ -417,7 +417,7 @@ class TestDrawingArea : VBox
 
 				context.restore();
 			}
-			delete color;
+			color.destroy();
 		}
 
 		void onOperatorsChanged(ComboBoxText comboBoxText)
