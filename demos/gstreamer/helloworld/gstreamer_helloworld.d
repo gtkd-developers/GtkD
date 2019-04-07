@@ -116,7 +116,7 @@ int main(string[] args)
 
 	writefln("Checking version of GStreamer...");
 
-	GStreamer.versio(major, minor, micro, nano);
+	GStreamer.version_(major, minor, micro, nano);
 
 	writefln("The installed version of GStreamer is %s.%s.%s", major, minor, micro );
 	writefln( "The file is: %s", args[1] );

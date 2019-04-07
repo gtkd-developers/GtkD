@@ -78,7 +78,7 @@ class SpawnWindow : ApplicationWindow
 
 	private bool exec(string[] args)
 	{
-		foreach ( int i, string arg ; args)
+		foreach ( size_t i, string arg ; args)
 		{
 			writefln("[%s] >%s<", i, arg);
 		}
@@ -141,7 +141,7 @@ class SpawnWindow : ApplicationWindow
 	{
 		TextBuffer inBuffer = viewInput.getBuffer();
 		string t;
-		foreach ( int count, string arg; args)
+		foreach ( size_t count, string arg; args)
 		{
 			if ( count > 0 ) t ~= " ";
 			t ~= arg;

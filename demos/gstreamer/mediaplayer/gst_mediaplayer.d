@@ -212,10 +212,10 @@ public:
 		if( source !is null )
 		{
 			fullStop();
-			delete source;
+			source.destroy();
 		}
 		if( videosink !is null )
-			delete videosink;
+			videosink.destroy();
 	
 		// create elements
 
