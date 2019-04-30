@@ -73,6 +73,16 @@ public class QueueArray
 
 
 	/**
+	 * Clears queue @array and frees all memory associated to it.
+	 *
+	 * Since: 1.16
+	 */
+	public void clear()
+	{
+		gst_queue_array_clear(gstQueueArray);
+	}
+
+	/**
 	 * Drops the queue element at position @idx from queue @array.
 	 *
 	 * Params:
@@ -109,11 +119,6 @@ public class QueueArray
 	 * Finds an element in the queue @array, either by comparing every element
 	 * with @func or by looking up @data if no compare function @func is provided,
 	 * and returning the index of the found element.
-	 *
-	 * Note that the index is not 0-based, but an internal index number with a
-	 * random offset. The index can be used in connection with
-	 * gst_queue_array_drop_element(). FIXME: return index 0-based and make
-	 * gst_queue_array_drop_element() take a 0-based index.
 	 *
 	 * Params:
 	 *     func = comparison function, or %NULL to find @data by value
@@ -188,6 +193,30 @@ public class QueueArray
 	public void* peekHeadStruct()
 	{
 		return gst_queue_array_peek_head_struct(gstQueueArray);
+	}
+
+	/**
+	 * Returns the item at @idx in @array, but does not remove it from the queue.
+	 *
+	 * Returns: The item, or %NULL if @idx was out of bounds
+	 *
+	 * Since: 1.16
+	 */
+	public void* peekNth(uint idx)
+	{
+		return gst_queue_array_peek_nth(gstQueueArray, idx);
+	}
+
+	/**
+	 * Returns the item at @idx in @array, but does not remove it from the queue.
+	 *
+	 * Returns: The item, or %NULL if @idx was out of bounds
+	 *
+	 * Since: 1.16
+	 */
+	public void* peekNthStruct(uint idx)
+	{
+		return gst_queue_array_peek_nth_struct(gstQueueArray, idx);
 	}
 
 	/**
@@ -284,6 +313,28 @@ public class QueueArray
 	public void pushTailStruct(void* pStruct)
 	{
 		gst_queue_array_push_tail_struct(gstQueueArray, pStruct);
+	}
+
+	/**
+	 * Sets a function to clear an element of @array.
+	 *
+	 * The @clear_func will be called when an element in the array
+	 * data segment is removed and when the array is freed and data
+	 * segment is deallocated as well. @clear_func will be passed a
+	 * pointer to the element to clear, rather than the element itself.
+	 *
+	 * Note that in contrast with other uses of #GDestroyNotify
+	 * functions, @clear_func is expected to clear the contents of
+	 * the array element it is given, but not free the element itself.
+	 *
+	 * Params:
+	 *     clearFunc = a function to clear an element of @array
+	 *
+	 * Since: 1.16
+	 */
+	public void setClearFunc(GDestroyNotify clearFunc)
+	{
+		gst_queue_array_set_clear_func(gstQueueArray, clearFunc);
 	}
 
 	/**

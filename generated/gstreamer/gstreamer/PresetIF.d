@@ -53,7 +53,7 @@ public  import gstreamerc.gstreamertypes;
  * 2) application and 3) user order. Whenever an earlier entry is newer, the
  * later entries will be updated. Since 1.8 you can also provide extra paths
  * where to find presets through the GST_PRESET_PATH environment variable.
- * Presets found in those paths will be concidered as "app presets".
+ * Presets found in those paths will be considered as "app presets".
  */
 public interface PresetIF{
 	/** Get the main Gtk struct */

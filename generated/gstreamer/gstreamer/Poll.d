@@ -44,7 +44,7 @@ private import gtkd.Loader;
  * New file descriptors are added to the set using gst_poll_add_fd(), and
  * removed using gst_poll_remove_fd(). Controlling which file descriptors
  * should be waited for to become readable and/or writable are done using
- * gst_poll_fd_ctl_read() and gst_poll_fd_ctl_write().
+ * gst_poll_fd_ctl_read(), gst_poll_fd_ctl_write() and gst_poll_fd_ctl_pri().
  * 
  * Use gst_poll_wait() to wait for the file descriptors to actually become
  * readable and/or writable, or to timeout if no file descriptor is available
@@ -135,6 +135,25 @@ public class Poll
 
 	/**
 	 * Control whether the descriptor @fd in @set will be monitored for
+	 * exceptional conditions (POLLPRI).
+	 *
+	 * Not implemented on Windows (will just return %FALSE there).
+	 *
+	 * Params:
+	 *     fd = a file descriptor.
+	 *     active = a new status.
+	 *
+	 * Returns: %TRUE if the descriptor was successfully updated.
+	 *
+	 * Since: 1.16
+	 */
+	public bool fdCtlPri(PollFD fd, bool active)
+	{
+		return gst_poll_fd_ctl_pri(gstPoll, (fd is null) ? null : fd.getPollFDStruct(), active) != 0;
+	}
+
+	/**
+	 * Control whether the descriptor @fd in @set will be monitored for
 	 * readability.
 	 *
 	 * Params:
@@ -187,6 +206,23 @@ public class Poll
 	public bool fdHasError(PollFD fd)
 	{
 		return gst_poll_fd_has_error(gstPoll, (fd is null) ? null : fd.getPollFDStruct()) != 0;
+	}
+
+	/**
+	 * Check if @fd in @set has an exceptional condition (POLLPRI).
+	 *
+	 * Not implemented on Windows (will just return %FALSE there).
+	 *
+	 * Params:
+	 *     fd = a file descriptor.
+	 *
+	 * Returns: %TRUE if the descriptor has an exceptional condition.
+	 *
+	 * Since: 1.16
+	 */
+	public bool fdHasPri(PollFD fd)
+	{
+		return gst_poll_fd_has_pri(gstPoll, (fd is null) ? null : fd.getPollFDStruct()) != 0;
 	}
 
 	/**

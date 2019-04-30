@@ -31,7 +31,9 @@ public  import gst.mpegts.c.types;
 private import gtkd.Loader;
 
 
-/** */
+/**
+ * A string segment
+ */
 public final class AtscStringSegment
 {
 	/** the main Gtk struct */
@@ -68,7 +70,9 @@ public final class AtscStringSegment
 	}
 
 
-	/** */
+	/**
+	 * The compression type
+	 */
 	public @property ubyte compressionType()
 	{
 		return gstMpegtsAtscStringSegment.compressionType;
@@ -80,7 +84,9 @@ public final class AtscStringSegment
 		gstMpegtsAtscStringSegment.compressionType = value;
 	}
 
-	/** */
+	/**
+	 * The mode
+	 */
 	public @property ubyte mode()
 	{
 		return gstMpegtsAtscStringSegment.mode;
@@ -93,7 +99,9 @@ public final class AtscStringSegment
 	}
 
 
-	/** */
+	/**
+	 * The compressed data
+	 */
 	public @property ubyte[] compressedData()
 	{
 		return gstMpegtsAtscStringSegment.compressedData[0..gstMpegtsAtscStringSegment.compressedDataSize];

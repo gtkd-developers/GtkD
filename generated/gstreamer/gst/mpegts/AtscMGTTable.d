@@ -70,7 +70,9 @@ public final class AtscMGTTable
 	}
 
 
-	/** */
+	/**
+	 * #GstMpegtsAtscMGTTableType
+	 */
 	public @property ushort tableType()
 	{
 		return gstMpegtsAtscMGTTable.tableType;
@@ -82,7 +84,9 @@ public final class AtscMGTTable
 		gstMpegtsAtscMGTTable.tableType = value;
 	}
 
-	/** */
+	/**
+	 * The packet ID
+	 */
 	public @property ushort pid()
 	{
 		return gstMpegtsAtscMGTTable.pid;
@@ -94,7 +98,9 @@ public final class AtscMGTTable
 		gstMpegtsAtscMGTTable.pid = value;
 	}
 
-	/** */
+	/**
+	 * The version number
+	 */
 	public @property ubyte versionNumber()
 	{
 		return gstMpegtsAtscMGTTable.versionNumber;

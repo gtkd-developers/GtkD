@@ -69,7 +69,9 @@ public final class AtscMultString
 	}
 
 
-	/** */
+	/**
+	 * The ISO639 language code
+	 */
 	public @property char[4] iso639Langcode()
 	{
 		return gstMpegtsAtscMultString.iso639Langcode;

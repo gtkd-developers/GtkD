@@ -364,9 +364,9 @@ public class Bus : ObjectGst
 	 *
 	 * Since: 1.14
 	 */
-	public void getPollfd(GPollFD* fd)
+	public void getPollfd(out GPollFD fd)
 	{
-		gst_bus_get_pollfd(gstBus, fd);
+		gst_bus_get_pollfd(gstBus, &fd);
 	}
 
 	/**

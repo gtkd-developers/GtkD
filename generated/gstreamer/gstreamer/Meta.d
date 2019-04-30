@@ -53,8 +53,97 @@ private import gtkd.Loader;
  * See #GstBuffer for how the metadata can be added, retrieved and removed from
  * buffers.
  */
-public struct Meta
+public final class Meta
 {
+	/** the main Gtk struct */
+	protected GstMeta* gstMeta;
+	protected bool ownedRef;
+
+	/** Get the main Gtk struct */
+	public GstMeta* getMetaStruct(bool transferOwnership = false)
+	{
+		if (transferOwnership)
+			ownedRef = false;
+		return gstMeta;
+	}
+
+	/** the main Gtk struct as a void* */
+	protected void* getStruct()
+	{
+		return cast(void*)gstMeta;
+	}
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GstMeta* gstMeta, bool ownedRef = false)
+	{
+		this.gstMeta = gstMeta;
+		this.ownedRef = ownedRef;
+	}
+
+	~this ()
+	{
+		if ( Linker.isLoaded(LIBRARY_GSTREAMER) && ownedRef )
+			sliceFree(gstMeta);
+	}
+
+
+	/**
+	 * extra flags for the metadata
+	 */
+	public @property GstMetaFlags flags()
+	{
+		return gstMeta.flags;
+	}
+
+	/** Ditto */
+	public @property void flags(GstMetaFlags value)
+	{
+		gstMeta.flags = value;
+	}
+
+	/**
+	 * pointer to the #GstMetaInfo
+	 */
+	public @property GstMetaInfo* info()
+	{
+		return gstMeta.info;
+	}
+
+	/** Ditto */
+	public @property void info(GstMetaInfo* value)
+	{
+		gstMeta.info = value;
+	}
+
+	/**
+	 * Meta sequence number compare function. Can be used as #GCompareFunc
+	 * or a #GCompareDataFunc.
+	 *
+	 * Params:
+	 *     meta2 = a #GstMeta
+	 *
+	 * Returns: a negative number if @meta1 comes before @meta2, 0 if both metas
+	 *     have an equal sequence number, or a positive integer if @meta1 comes
+	 *     after @meta2.
+	 *
+	 * Since: 1.16
+	 */
+	public int compareSeqnum(Meta meta2)
+	{
+		return gst_meta_compare_seqnum(gstMeta, (meta2 is null) ? null : meta2.getMetaStruct());
+	}
+
+	/**
+	 * Gets seqnum for this meta.
+	 *
+	 * Since: 1.16
+	 */
+	public ulong getSeqnum()
+	{
+		return gst_meta_get_seqnum(gstMeta);
+	}
 
 	/**
 	 *

@@ -52,6 +52,8 @@ private import gtkd.Loader;
  * types or the requirement of having a specific #GstMeta on the buffer. Features
  * are given as a string of the format "memory:GstMemoryTypeName" or
  * "meta:GstMetaAPIName".
+ *
+ * Since: 1.2
  */
 public class CapsFeatures
 {

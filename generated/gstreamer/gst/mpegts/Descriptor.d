@@ -31,6 +31,7 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gst.mpegts.CableDeliverySystemDescriptor;
 private import gst.mpegts.ComponentDescriptor;
+private import gst.mpegts.Content;
 private import gst.mpegts.DVBLinkageDescriptor;
 private import gst.mpegts.DVBParentalRatingItem;
 private import gst.mpegts.DVBServiceListItem;

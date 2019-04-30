@@ -36,7 +36,7 @@ public  import gstreamerc.gstreamertypes;
 
 
 /**
- * These functions allow querying informations about registered typefind
+ * These functions allow querying information about registered typefind
  * functions. How to create and register these functions is described in
  * the section <link linkend="gstreamer-Writing-typefind-functions">
  * "Writing typefind functions"</link>.

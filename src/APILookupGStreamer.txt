@@ -24,6 +24,49 @@
 wrap: gstreamer
 file: Gst-1.0.gir
 
+noEnum: DebugGraphDetails
+addEnums: start
+	/**
+	* Available details for pipeline graphs produced by GST_DEBUG_BIN_TO_DOT_FILE()
+	* and GST_DEBUG_BIN_TO_DOT_FILE_WITH_TS().
+	*/
+	public enum GstDebugGraphDetails : long
+	{
+		/**
+		* show caps-name on edges
+		*/
+		MEDIA_TYPE = 1,
+		/**
+		* show caps-details on edges
+		*/
+		CAPS_DETAILS = 2,
+		/**
+		* show modified parameters on
+		* elements
+		*/
+		NON_DEFAULT_PARAMS = 4,
+		/**
+		* show element states
+		*/
+		STATES = 8,
+		/**
+		* show full element parameter values even
+		* if they are very long
+		*/
+		FULL_PARAMS = 16,
+		/**
+		* show all the typical details that one might want
+		*/
+		ALL = 15,
+		/**
+		* show all details regardless of how large or
+		* verbose they make the resulting output
+		*/
+		VERBOSE = 4294967295,
+	}
+	alias GstDebugGraphDetails DebugGraphDetails;
+addEnums: stop
+
 struct: Bin
 code: start
 	/** */

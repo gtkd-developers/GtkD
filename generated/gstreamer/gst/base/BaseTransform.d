@@ -381,8 +381,8 @@ public class BaseTransform : Element
 	/**
 	 * Updates the srcpad caps and send the caps downstream. This function
 	 * can be used by subclasses when they have already negotiated their caps
-	 * but found a change in them (or computed new informations). This way,
-	 * they can notify downstream about that change without loosing any
+	 * but found a change in them (or computed new information). This way,
+	 * they can notify downstream about that change without losing any
 	 * buffer.
 	 *
 	 * Params:

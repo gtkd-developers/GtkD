@@ -70,7 +70,9 @@ public final class AtscEITEvent
 	}
 
 
-	/** */
+	/**
+	 * The event id
+	 */
 	public @property ushort eventId()
 	{
 		return gstMpegtsAtscEITEvent.eventId;
@@ -82,7 +84,9 @@ public final class AtscEITEvent
 		gstMpegtsAtscEITEvent.eventId = value;
 	}
 
-	/** */
+	/**
+	 * The start time
+	 */
 	public @property uint startTime()
 	{
 		return gstMpegtsAtscEITEvent.startTime;
@@ -94,7 +98,9 @@ public final class AtscEITEvent
 		gstMpegtsAtscEITEvent.startTime = value;
 	}
 
-	/** */
+	/**
+	 * The etm location
+	 */
 	public @property ubyte etmLocation()
 	{
 		return gstMpegtsAtscEITEvent.etmLocation;
@@ -106,7 +112,9 @@ public final class AtscEITEvent
 		gstMpegtsAtscEITEvent.etmLocation = value;
 	}
 
-	/** */
+	/**
+	 * The length in seconds
+	 */
 	public @property uint lengthInSeconds()
 	{
 		return gstMpegtsAtscEITEvent.lengthInSeconds;

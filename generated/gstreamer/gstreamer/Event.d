@@ -1167,6 +1167,17 @@ public class Event
 	}
 
 	/**
+	 * Retrieve the trickmode interval that may have been set on a
+	 * seek event with gst_event_set_seek_trickmode_interval().
+	 *
+	 * Since: 1.16
+	 */
+	public void parseSeekTrickmodeInterval(out GstClockTime interval)
+	{
+		gst_event_parse_seek_trickmode_interval(gstEvent, &interval);
+	}
+
+	/**
 	 * Parses a segment @event and stores the result in the given @segment location.
 	 * @segment remains valid only until the @event is freed. Don't modify the segment
 	 * and make a copy if you want to modify it or store it for later use.
@@ -1253,7 +1264,7 @@ public class Event
 	 * Parse a stream-start @event and extract the #GstStream from it.
 	 *
 	 * Params:
-	 *     stream = adress of variable to store the stream
+	 *     stream = address of variable to store the stream
 	 *
 	 * Since: 1.10
 	 */
@@ -1405,6 +1416,18 @@ public class Event
 	public void setRunningTimeOffset(long offset)
 	{
 		gst_event_set_running_time_offset(gstEvent, offset);
+	}
+
+	/**
+	 * Sets a trickmode interval on a (writable) seek event. Elements
+	 * that support TRICKMODE_KEY_UNITS seeks SHOULD use this as the minimal
+	 * interval between each frame they may output.
+	 *
+	 * Since: 1.16
+	 */
+	public void setSeekTrickmodeInterval(GstClockTime interval)
+	{
+		gst_event_set_seek_trickmode_interval(gstEvent, interval);
 	}
 
 	/**

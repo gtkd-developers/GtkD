@@ -97,6 +97,10 @@ shared static this()
 	Linker.link(gst_mpegts_component_descriptor_get_type, "gst_mpegts_component_descriptor_get_type", LIBRARY_GSTMPEGTS);
 	Linker.link(gst_mpegts_dvb_component_descriptor_free, "gst_mpegts_dvb_component_descriptor_free", LIBRARY_GSTMPEGTS);
 
+	// gst.mpegts.Content
+
+	Linker.link(gst_mpegts_content_get_type, "gst_mpegts_content_get_type", LIBRARY_GSTMPEGTS);
+
 	// gst.mpegts.DVBLinkageDescriptor
 
 	Linker.link(gst_mpegts_dvb_linkage_descriptor_get_type, "gst_mpegts_dvb_linkage_descriptor_get_type", LIBRARY_GSTMPEGTS);
@@ -385,6 +389,10 @@ __gshared extern(C)
 	GType function() c_gst_mpegts_component_descriptor_get_type;
 	void function(GstMpegtsComponentDescriptor* source) c_gst_mpegts_dvb_component_descriptor_free;
 
+	// gst.mpegts.Content
+
+	GType function() c_gst_mpegts_content_get_type;
+
 	// gst.mpegts.DVBLinkageDescriptor
 
 	GType function() c_gst_mpegts_dvb_linkage_descriptor_get_type;
@@ -670,6 +678,10 @@ alias c_gst_mpegts_dvb_cable_delivery_system_descriptor_free gst_mpegts_dvb_cabl
 
 alias c_gst_mpegts_component_descriptor_get_type gst_mpegts_component_descriptor_get_type;
 alias c_gst_mpegts_dvb_component_descriptor_free gst_mpegts_dvb_component_descriptor_free;
+
+// gst.mpegts.Content
+
+alias c_gst_mpegts_content_get_type gst_mpegts_content_get_type;
 
 // gst.mpegts.DVBLinkageDescriptor
 

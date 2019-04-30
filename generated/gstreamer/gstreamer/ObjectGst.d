@@ -233,7 +233,7 @@ public class ObjectGst : ObjectG
 
 	/**
 	 * A default error function that uses g_printerr() to display the error message
-	 * and the optional debug sting..
+	 * and the optional debug string..
 	 *
 	 * The default handler will simply print the error string using g_print.
 	 *
@@ -271,7 +271,7 @@ public class ObjectGst : ObjectG
 	/**
 	 * Obtain the control-rate for this @object. Audio processing #GstElement
 	 * objects will use this rate to sub-divide their processing loop and call
-	 * gst_object_sync_values() inbetween. The length of the processing segment
+	 * gst_object_sync_values() in between. The length of the processing segment
 	 * should be up to @control-rate nanoseconds.
 	 *
 	 * If the @object is not under property control, this will return
@@ -556,7 +556,7 @@ public class ObjectGst : ObjectG
 	/**
 	 * Change the control-rate for this @object. Audio processing #GstElement
 	 * objects will use this rate to sub-divide their processing loop and call
-	 * gst_object_sync_values() inbetween. The length of the processing segment
+	 * gst_object_sync_values() in between. The length of the processing segment
 	 * should be up to @control-rate nanoseconds.
 	 *
 	 * The control-rate should not change if the element is in %GST_STATE_PAUSED or

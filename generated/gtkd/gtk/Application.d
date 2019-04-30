@@ -726,6 +726,20 @@ public class Application : GioApplication
 	}
 
 	/**
+	 * Emitted when the session manager is about to end the session, only
+	 * if #GtkApplication::register-session is %TRUE. Applications can
+	 * connect to this signal and call gtk_application_inhibit() with
+	 * %GTK_APPLICATION_INHIBIT_LOGOUT to delay the end of the session
+	 * until state has been saved.
+	 *
+	 * Since: 3.24.8
+	 */
+	gulong addOnQueryEnd(void delegate(Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		return Signals.connect(this, "query-end", dlg, connectFlags ^ ConnectFlags.SWAPPED);
+	}
+
+	/**
 	 * Emitted when a #GtkWindow is added to @application through
 	 * gtk_application_add_window().
 	 *

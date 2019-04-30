@@ -33,6 +33,8 @@ public  import gstreamerc.gstreamertypes;
 /**
  * Tracing modules will create instances of this class to announce the data they
  * will log and create a log formatter.
+ *
+ * Since: 1.8
  */
 public class TracerRecord : ObjectGst
 {

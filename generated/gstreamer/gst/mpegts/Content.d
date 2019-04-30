@@ -22,111 +22,90 @@
 // implement new conversion functionalities on the wrap.utils pakage
 
 
-module gst.mpegts.AtscETT;
+module gst.mpegts.Content;
 
 private import glib.MemorySlice;
-private import glib.PtrArray;
 private import gst.mpegts.c.functions;
 public  import gst.mpegts.c.types;
 private import gtkd.Loader;
 
 
-/**
- * Extended Text Table (ATSC)
- */
-public final class AtscETT
+/** */
+public final class Content
 {
 	/** the main Gtk struct */
-	protected GstMpegtsAtscETT* gstMpegtsAtscETT;
+	protected GstMpegtsContent* gstMpegtsContent;
 	protected bool ownedRef;
 
 	/** Get the main Gtk struct */
-	public GstMpegtsAtscETT* getAtscETTStruct(bool transferOwnership = false)
+	public GstMpegtsContent* getContentStruct(bool transferOwnership = false)
 	{
 		if (transferOwnership)
 			ownedRef = false;
-		return gstMpegtsAtscETT;
+		return gstMpegtsContent;
 	}
 
 	/** the main Gtk struct as a void* */
 	protected void* getStruct()
 	{
-		return cast(void*)gstMpegtsAtscETT;
+		return cast(void*)gstMpegtsContent;
 	}
 
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GstMpegtsAtscETT* gstMpegtsAtscETT, bool ownedRef = false)
+	public this (GstMpegtsContent* gstMpegtsContent, bool ownedRef = false)
 	{
-		this.gstMpegtsAtscETT = gstMpegtsAtscETT;
+		this.gstMpegtsContent = gstMpegtsContent;
 		this.ownedRef = ownedRef;
 	}
 
 	~this ()
 	{
 		if ( Linker.isLoaded(LIBRARY_GSTMPEGTS) && ownedRef )
-			sliceFree(gstMpegtsAtscETT);
+			sliceFree(gstMpegtsContent);
 	}
 
 
 	/** */
-	public @property ushort ettTableIdExtension()
+	public @property GstMpegtsContentNibbleHi contentNibble1()
 	{
-		return gstMpegtsAtscETT.ettTableIdExtension;
+		return gstMpegtsContent.contentNibble1;
 	}
 
 	/** Ditto */
-	public @property void ettTableIdExtension(ushort value)
+	public @property void contentNibble1(GstMpegtsContentNibbleHi value)
 	{
-		gstMpegtsAtscETT.ettTableIdExtension = value;
+		gstMpegtsContent.contentNibble1 = value;
 	}
 
-	/**
-	 * The protocol version
-	 */
-	public @property ushort protocolVersion()
+	/** */
+	public @property ubyte contentNibble2()
 	{
-		return gstMpegtsAtscETT.protocolVersion;
-	}
-
-	/** Ditto */
-	public @property void protocolVersion(ushort value)
-	{
-		gstMpegtsAtscETT.protocolVersion = value;
-	}
-
-	/**
-	 * The etm id
-	 */
-	public @property uint etmId()
-	{
-		return gstMpegtsAtscETT.etmId;
+		return gstMpegtsContent.contentNibble2;
 	}
 
 	/** Ditto */
-	public @property void etmId(uint value)
+	public @property void contentNibble2(ubyte value)
 	{
-		gstMpegtsAtscETT.etmId = value;
+		gstMpegtsContent.contentNibble2 = value;
 	}
 
-	/**
-	 * List of texts
-	 */
-	public @property PtrArray messages()
+	/** */
+	public @property ubyte userByte()
 	{
-		return new PtrArray(gstMpegtsAtscETT.messages, false);
+		return gstMpegtsContent.userByte;
 	}
 
 	/** Ditto */
-	public @property void messages(PtrArray value)
+	public @property void userByte(ubyte value)
 	{
-		gstMpegtsAtscETT.messages = value.getPtrArrayStruct();
+		gstMpegtsContent.userByte = value;
 	}
 
 	/** */
 	public static GType getType()
 	{
-		return gst_mpegts_atsc_ett_get_type();
+		return gst_mpegts_content_get_type();
 	}
 }

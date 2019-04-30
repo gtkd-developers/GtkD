@@ -477,7 +477,7 @@ public class Segment
 	 * negative running-time.
 	 *
 	 * This function is typically used by elements that need to synchronize buffers
-	 * against the clock or eachother.
+	 * against the clock or each other.
 	 *
 	 * @position can be any value and the result of this function for values outside
 	 * of the segment is extrapolated.
@@ -534,7 +534,7 @@ public class Segment
 	 * negative stream-time.
 	 *
 	 * This function is typically used by elements that need to synchronize buffers
-	 * against the clock or eachother.
+	 * against the clock or each other.
 	 *
 	 * @position can be any value and the result of this function for values outside
 	 * of the segment is extrapolated.

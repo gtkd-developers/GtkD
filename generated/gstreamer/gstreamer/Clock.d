@@ -160,6 +160,31 @@ public class Clock : ObjectGst
 	}
 
 	/**
+	 * This function returns the underlying clock.
+	 *
+	 * Params:
+	 *     id = a #GstClockID
+	 *
+	 * Returns: a #GstClock or %NULL when the
+	 *     underlying clock has been freed.  Unref after usage.
+	 *
+	 *     MT safe.
+	 *
+	 * Since: 1.16
+	 */
+	public static Clock idGetClock(GstClockID id)
+	{
+		auto p = gst_clock_id_get_clock(id);
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Clock)(cast(GstClock*) p, true);
+	}
+
+	/**
 	 * Get the time of the clock ID
 	 *
 	 * Params:
@@ -217,6 +242,27 @@ public class Clock : ObjectGst
 	public static void idUnschedule(GstClockID id)
 	{
 		gst_clock_id_unschedule(id);
+	}
+
+	/**
+	 * This function returns whether @id uses @clock as the underlying clock.
+	 * @clock can be NULL, in which case the return value indicates whether
+	 * the underlying clock has been freed.  If this is the case, the @id is
+	 * no longer usable and should be freed.
+	 *
+	 * Params:
+	 *     id = a #GstClockID to check
+	 *     clock = a #GstClock to compare against
+	 *
+	 * Returns: whether the clock @id uses the same underlying #GstClock @clock.
+	 *
+	 *     MT safe.
+	 *
+	 * Since: 1.16
+	 */
+	public static bool idUsesClock(GstClockID id, Clock clock)
+	{
+		return gst_clock_id_uses_clock(id, (clock is null) ? null : clock.getClockStruct()) != 0;
 	}
 
 	/**

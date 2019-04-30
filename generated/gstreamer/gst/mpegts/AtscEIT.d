@@ -70,7 +70,9 @@ public final class AtscEIT
 	}
 
 
-	/** */
+	/**
+	 * The source id
+	 */
 	public @property ushort sourceId()
 	{
 		return gstMpegtsAtscEIT.sourceId;
@@ -82,7 +84,9 @@ public final class AtscEIT
 		gstMpegtsAtscEIT.sourceId = value;
 	}
 
-	/** */
+	/**
+	 * The protocol version
+	 */
 	public @property ubyte protocolVersion()
 	{
 		return gstMpegtsAtscEIT.protocolVersion;

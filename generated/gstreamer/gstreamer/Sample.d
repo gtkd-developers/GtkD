@@ -203,7 +203,20 @@ public class Sample
 	}
 
 	/**
-	 * Set the buffer list associated with @sample
+	 * Set the buffer associated with @sample. @sample must be writable.
+	 *
+	 * Params:
+	 *     buffer = A #GstBuffer
+	 *
+	 * Since: 1.16
+	 */
+	public void setBuffer(Buffer buffer)
+	{
+		gst_sample_set_buffer(gstSample, (buffer is null) ? null : buffer.getBufferStruct());
+	}
+
+	/**
+	 * Set the buffer list associated with @sample. @sample must be writable.
 	 *
 	 * Params:
 	 *     bufferList = a #GstBufferList
@@ -213,5 +226,45 @@ public class Sample
 	public void setBufferList(BufferList bufferList)
 	{
 		gst_sample_set_buffer_list(gstSample, (bufferList is null) ? null : bufferList.getBufferListStruct());
+	}
+
+	/**
+	 * Set the caps associated with @sample. @sample must be writable.
+	 *
+	 * Params:
+	 *     caps = A #GstCaps
+	 *
+	 * Since: 1.16
+	 */
+	public void setCaps(Caps caps)
+	{
+		gst_sample_set_caps(gstSample, (caps is null) ? null : caps.getCapsStruct());
+	}
+
+	/**
+	 * Set the info structure associated with @sample. @sample must be writable,
+	 * and @info must not have a parent set already.
+	 *
+	 * Params:
+	 *     info = A #GstStructure
+	 *
+	 * Since: 1.16
+	 */
+	public bool setInfo(Structure info)
+	{
+		return gst_sample_set_info(gstSample, (info is null) ? null : info.getStructureStruct(true)) != 0;
+	}
+
+	/**
+	 * Set the segment associated with @sample. @sample must be writable.
+	 *
+	 * Params:
+	 *     segment = A #GstSegment
+	 *
+	 * Since: 1.16
+	 */
+	public void setSegment(Segment segment)
+	{
+		gst_sample_set_segment(gstSample, (segment is null) ? null : segment.getSegmentStruct());
 	}
 }

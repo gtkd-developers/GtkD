@@ -333,11 +333,19 @@ noExternal: true
 struct: X11DragContextClass
 noExternal: true
 
+struct: X11GLContext
+noCode: true
+noExternal: true
+
 struct: X11Keymap
 noCode: true
 noExternal: true
 
 struct: X11KeymapClass
+noExternal: true
+
+struct: X11Monitor
+noCode: true
 noExternal: true
 
 struct: X11Screen

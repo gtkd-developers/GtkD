@@ -24,13 +24,14 @@
 
 module gstreamer.Buffer;
 
+private import glib.Bytes;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gstreamer.AllocationParams;
 private import gstreamer.Allocator;
 private import gstreamer.Caps;
 private import gstreamer.Memory;
-private import gstreamer.ParentBufferMeta;
+private import gstreamer.Meta;
 private import gstreamer.ProtectionMeta;
 private import gstreamer.Structure;
 private import gstreamer.c.functions;
@@ -245,6 +246,33 @@ public class Buffer
 	}
 
 	/**
+	 * Creates a new #GstBuffer that wraps the given @bytes. The data inside
+	 * @bytes cannot be %NULL and the resulting buffer will be marked as read only.
+	 *
+	 * MT safe.
+	 *
+	 * Params:
+	 *     bytes = a #GBytes to wrap
+	 *
+	 * Returns: a new #GstBuffer wrapping @bytes
+	 *
+	 * Since: 1.16
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(Bytes bytes)
+	{
+		auto p = gst_buffer_new_wrapped_bytes((bytes is null) ? null : bytes.getBytesStruct());
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_wrapped_bytes");
+		}
+
+		this(cast(GstBuffer*) p);
+	}
+
+	/**
 	 * Allocate a new buffer that wraps the given memory. @data must point to
 	 * @maxsize of memory, the wrapped buffer will have the region from @offset and
 	 * @size visible.
@@ -287,9 +315,16 @@ public class Buffer
 	 *
 	 * Returns: the metadata for the api in @info on @buffer.
 	 */
-	public GstMeta* addMeta(GstMetaInfo* info, void* params)
+	public Meta addMeta(GstMetaInfo* info, void* params)
 	{
-		return gst_buffer_add_meta(gstBuffer, info, params);
+		auto p = gst_buffer_add_meta(gstBuffer, info, params);
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Meta)(cast(GstMeta*) p);
 	}
 
 	/**
@@ -303,16 +338,9 @@ public class Buffer
 	 *
 	 * Since: 1.6
 	 */
-	public ParentBufferMeta addParentBufferMeta(Buffer ref_)
+	public GstParentBufferMeta* addParentBufferMeta(Buffer ref_)
 	{
-		auto p = gst_buffer_add_parent_buffer_meta(gstBuffer, (ref_ is null) ? null : ref_.getBufferStruct());
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return ObjectG.getDObject!(ParentBufferMeta)(cast(GstParentBufferMeta*) p);
+		return gst_buffer_add_parent_buffer_meta(gstBuffer, (ref_ is null) ? null : ref_.getBufferStruct());
 	}
 
 	/**
@@ -683,9 +711,16 @@ public class Buffer
 	 * Returns: the metadata for @api on
 	 *     @buffer.
 	 */
-	public GstMeta* getMeta(GType api)
+	public Meta getMeta(GType api)
 	{
-		return gst_buffer_get_meta(gstBuffer, api);
+		auto p = gst_buffer_get_meta(gstBuffer, api);
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Meta)(cast(GstMeta*) p);
 	}
 
 	/**
@@ -845,9 +880,16 @@ public class Buffer
 	 * Returns: The next #GstMeta or %NULL
 	 *     when there are no more items.
 	 */
-	public GstMeta* iterateMeta(out void* state)
+	public Meta iterateMeta(out void* state)
 	{
-		return gst_buffer_iterate_meta(gstBuffer, &state);
+		auto p = gst_buffer_iterate_meta(gstBuffer, &state);
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Meta)(cast(GstMeta*) p);
 	}
 
 	/**
@@ -866,9 +908,16 @@ public class Buffer
 	 *
 	 * Since: 1.12
 	 */
-	public GstMeta* iterateMetaFiltered(out void* state, GType metaApiType)
+	public Meta iterateMetaFiltered(out void* state, GType metaApiType)
 	{
-		return gst_buffer_iterate_meta_filtered(gstBuffer, &state, metaApiType);
+		auto p = gst_buffer_iterate_meta_filtered(gstBuffer, &state, metaApiType);
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Meta)(cast(GstMeta*) p);
 	}
 
 	/**
@@ -1046,9 +1095,9 @@ public class Buffer
 	 * Returns: %TRUE if the metadata existed and was removed, %FALSE if no such
 	 *     metadata was on @buffer.
 	 */
-	public bool removeMeta(GstMeta* meta)
+	public bool removeMeta(Meta meta)
 	{
-		return gst_buffer_remove_meta(gstBuffer, meta) != 0;
+		return gst_buffer_remove_meta(gstBuffer, (meta is null) ? null : meta.getMetaStruct()) != 0;
 	}
 
 	/**

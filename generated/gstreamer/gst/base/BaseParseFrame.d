@@ -112,7 +112,11 @@ public class BaseParseFrame
 		this(cast(GstBaseParseFrame*) p);
 	}
 
-	/** */
+	/**
+	 * Copies a #GstBaseParseFrame.
+	 *
+	 * Returns: A copy of @frame
+	 */
 	public BaseParseFrame copy()
 	{
 		auto p = gst_base_parse_frame_copy(gstBaseParseFrame);
@@ -125,7 +129,9 @@ public class BaseParseFrame
 		return ObjectG.getDObject!(BaseParseFrame)(cast(GstBaseParseFrame*) p, true);
 	}
 
-	/** */
+	/**
+	 * Frees the provided @frame.
+	 */
 	public void free()
 	{
 		gst_base_parse_frame_free(gstBaseParseFrame);

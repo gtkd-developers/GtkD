@@ -30,6 +30,11 @@ move: type_find_helper_for_data Base
 move: type_find_helper_for_extension Base
 move: type_find_helper_get_range Base
 array: type_find_helper_for_data data size
+version 1.16: start
+	move: type_find_helper_for_buffer_with_extension Base
+	move: type_find_helper_for_data_with_extension Base
+	move: type_find_helper_get_range_full Base
+version: end
 
 struct: BaseParse
 out: convert_default dest_value

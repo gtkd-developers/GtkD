@@ -41,7 +41,7 @@ private import std.algorithm;
 
 /**
  * A #GstDeviceProvider subclass is provided by a plugin that handles devices
- * if there is a way to programatically list connected devices. It can also
+ * if there is a way to programmatically list connected devices. It can also
  * optionally provide updates to the list of connected devices.
  * 
  * Each #GstDeviceProvider subclass is a singleton, a plugin should
@@ -130,6 +130,24 @@ public class DeviceProvider : ObjectGst
 	public void deviceAdd(Device device)
 	{
 		gst_device_provider_device_add(gstDeviceProvider, (device is null) ? null : device.getDeviceStruct());
+	}
+
+	/**
+	 * This function is used when @changed_device was modified into its new form
+	 * @device. This will post a `DEVICE_CHANGED` message on the bus to let
+	 * the application know that the device was modified. #GstDevice is immutable
+	 * for MT. safety purposes so this is an "atomic" way of letting the application
+	 * know when a device was modified.
+	 *
+	 * Params:
+	 *     device = the new version of @changed_device
+	 *     changedDevice = the old version of the device that has been udpated
+	 *
+	 * Since: 1.16
+	 */
+	public void deviceChanged(Device device, Device changedDevice)
+	{
+		gst_device_provider_device_changed(gstDeviceProvider, (device is null) ? null : device.getDeviceStruct(), (changedDevice is null) ? null : changedDevice.getDeviceStruct());
 	}
 
 	/**

@@ -803,6 +803,34 @@ public class Message
 	}
 
 	/**
+	 * Creates a new device-changed message. The device-changed message is produced
+	 * by #GstDeviceProvider or a #GstDeviceMonitor. They announce that a device
+	 * properties has changed and @device represent the new modified version of @changed_device.
+	 *
+	 * Params:
+	 *     src = The #GstObject that created the message
+	 *     device = The newly created device representing @replaced_device
+	 *         with its new configuration.
+	 *
+	 * Returns: a newly allocated #GstMessage
+	 *
+	 * Since: 1.16
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(ObjectGst src, Device device, Device changedDevice)
+	{
+		auto p = gst_message_new_device_changed((src is null) ? null : src.getObjectGstStruct(), (device is null) ? null : device.getDeviceStruct(), (changedDevice is null) ? null : changedDevice.getDeviceStruct());
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_device_changed");
+		}
+
+		this(cast(GstMessage*) p);
+	}
+
+	/**
 	 * This message is posted when an element has a new local #GstContext.
 	 *
 	 * Params:
@@ -1494,6 +1522,31 @@ public class Message
 		gst_message_parse_device_added(gstMessage, &outdevice);
 
 		device = ObjectG.getDObject!(Device)(outdevice);
+	}
+
+	/**
+	 * Parses a device-changed message. The device-changed message is produced by
+	 * #GstDeviceProvider or a #GstDeviceMonitor. It announces the
+	 * disappearance of monitored devices. * It announce that a device properties has
+	 * changed and @device represents the new modified version of @changed_device.
+	 *
+	 * Params:
+	 *     device = A location where to store a
+	 *         pointer to the updated version of the #GstDevice, or %NULL
+	 *     changedDevice = A location where to store a
+	 *         pointer to the old version of the #GstDevice, or %NULL
+	 *
+	 * Since: 1.16
+	 */
+	public void parseDeviceChanged(out Device device, out Device changedDevice)
+	{
+		GstDevice* outdevice = null;
+		GstDevice* outchangedDevice = null;
+
+		gst_message_parse_device_changed(gstMessage, &outdevice, &outchangedDevice);
+
+		device = ObjectG.getDObject!(Device)(outdevice);
+		changedDevice = ObjectG.getDObject!(Device)(outchangedDevice);
 	}
 
 	/**

@@ -80,6 +80,7 @@ shared static this()
 	Linker.link(gst_aggregator_get_latency, "gst_aggregator_get_latency", LIBRARY_GSTBASE);
 	Linker.link(gst_aggregator_set_latency, "gst_aggregator_set_latency", LIBRARY_GSTBASE);
 	Linker.link(gst_aggregator_set_src_caps, "gst_aggregator_set_src_caps", LIBRARY_GSTBASE);
+	Linker.link(gst_aggregator_simple_get_next_time, "gst_aggregator_simple_get_next_time", LIBRARY_GSTBASE);
 
 	// gst.base.AggregatorPad
 
@@ -129,6 +130,7 @@ shared static this()
 	Linker.link(gst_base_sink_get_latency, "gst_base_sink_get_latency", LIBRARY_GSTBASE);
 	Linker.link(gst_base_sink_get_max_bitrate, "gst_base_sink_get_max_bitrate", LIBRARY_GSTBASE);
 	Linker.link(gst_base_sink_get_max_lateness, "gst_base_sink_get_max_lateness", LIBRARY_GSTBASE);
+	Linker.link(gst_base_sink_get_processing_deadline, "gst_base_sink_get_processing_deadline", LIBRARY_GSTBASE);
 	Linker.link(gst_base_sink_get_render_delay, "gst_base_sink_get_render_delay", LIBRARY_GSTBASE);
 	Linker.link(gst_base_sink_get_sync, "gst_base_sink_get_sync", LIBRARY_GSTBASE);
 	Linker.link(gst_base_sink_get_throttle_time, "gst_base_sink_get_throttle_time", LIBRARY_GSTBASE);
@@ -143,6 +145,7 @@ shared static this()
 	Linker.link(gst_base_sink_set_last_sample_enabled, "gst_base_sink_set_last_sample_enabled", LIBRARY_GSTBASE);
 	Linker.link(gst_base_sink_set_max_bitrate, "gst_base_sink_set_max_bitrate", LIBRARY_GSTBASE);
 	Linker.link(gst_base_sink_set_max_lateness, "gst_base_sink_set_max_lateness", LIBRARY_GSTBASE);
+	Linker.link(gst_base_sink_set_processing_deadline, "gst_base_sink_set_processing_deadline", LIBRARY_GSTBASE);
 	Linker.link(gst_base_sink_set_qos_enabled, "gst_base_sink_set_qos_enabled", LIBRARY_GSTBASE);
 	Linker.link(gst_base_sink_set_render_delay, "gst_base_sink_set_render_delay", LIBRARY_GSTBASE);
 	Linker.link(gst_base_sink_set_sync, "gst_base_sink_set_sync", LIBRARY_GSTBASE);
@@ -213,6 +216,31 @@ shared static this()
 	Linker.link(gst_bit_reader_skip, "gst_bit_reader_skip", LIBRARY_GSTBASE);
 	Linker.link(gst_bit_reader_skip_to_byte, "gst_bit_reader_skip_to_byte", LIBRARY_GSTBASE);
 	Linker.link(gst_bit_reader_new, "gst_bit_reader_new", LIBRARY_GSTBASE);
+
+	// gst.base.BitWriter
+
+	Linker.link(gst_bit_writer_align_bytes, "gst_bit_writer_align_bytes", LIBRARY_GSTBASE);
+	Linker.link(gst_bit_writer_free, "gst_bit_writer_free", LIBRARY_GSTBASE);
+	Linker.link(gst_bit_writer_free_and_get_buffer, "gst_bit_writer_free_and_get_buffer", LIBRARY_GSTBASE);
+	Linker.link(gst_bit_writer_free_and_get_data, "gst_bit_writer_free_and_get_data", LIBRARY_GSTBASE);
+	Linker.link(gst_bit_writer_get_data, "gst_bit_writer_get_data", LIBRARY_GSTBASE);
+	Linker.link(gst_bit_writer_get_remaining, "gst_bit_writer_get_remaining", LIBRARY_GSTBASE);
+	Linker.link(gst_bit_writer_get_size, "gst_bit_writer_get_size", LIBRARY_GSTBASE);
+	Linker.link(gst_bit_writer_init, "gst_bit_writer_init", LIBRARY_GSTBASE);
+	Linker.link(gst_bit_writer_init_with_data, "gst_bit_writer_init_with_data", LIBRARY_GSTBASE);
+	Linker.link(gst_bit_writer_init_with_size, "gst_bit_writer_init_with_size", LIBRARY_GSTBASE);
+	Linker.link(gst_bit_writer_put_bits_uint16, "gst_bit_writer_put_bits_uint16", LIBRARY_GSTBASE);
+	Linker.link(gst_bit_writer_put_bits_uint32, "gst_bit_writer_put_bits_uint32", LIBRARY_GSTBASE);
+	Linker.link(gst_bit_writer_put_bits_uint64, "gst_bit_writer_put_bits_uint64", LIBRARY_GSTBASE);
+	Linker.link(gst_bit_writer_put_bits_uint8, "gst_bit_writer_put_bits_uint8", LIBRARY_GSTBASE);
+	Linker.link(gst_bit_writer_put_bytes, "gst_bit_writer_put_bytes", LIBRARY_GSTBASE);
+	Linker.link(gst_bit_writer_reset, "gst_bit_writer_reset", LIBRARY_GSTBASE);
+	Linker.link(gst_bit_writer_reset_and_get_buffer, "gst_bit_writer_reset_and_get_buffer", LIBRARY_GSTBASE);
+	Linker.link(gst_bit_writer_reset_and_get_data, "gst_bit_writer_reset_and_get_data", LIBRARY_GSTBASE);
+	Linker.link(gst_bit_writer_set_pos, "gst_bit_writer_set_pos", LIBRARY_GSTBASE);
+	Linker.link(gst_bit_writer_new, "gst_bit_writer_new", LIBRARY_GSTBASE);
+	Linker.link(gst_bit_writer_new_with_data, "gst_bit_writer_new_with_data", LIBRARY_GSTBASE);
+	Linker.link(gst_bit_writer_new_with_size, "gst_bit_writer_new_with_size", LIBRARY_GSTBASE);
 
 	// gst.base.ByteReader
 
@@ -393,6 +421,7 @@ shared static this()
 
 	// gst.base.QueueArray
 
+	Linker.link(gst_queue_array_clear, "gst_queue_array_clear", LIBRARY_GSTBASE);
 	Linker.link(gst_queue_array_drop_element, "gst_queue_array_drop_element", LIBRARY_GSTBASE);
 	Linker.link(gst_queue_array_drop_struct, "gst_queue_array_drop_struct", LIBRARY_GSTBASE);
 	Linker.link(gst_queue_array_find, "gst_queue_array_find", LIBRARY_GSTBASE);
@@ -401,6 +430,8 @@ shared static this()
 	Linker.link(gst_queue_array_is_empty, "gst_queue_array_is_empty", LIBRARY_GSTBASE);
 	Linker.link(gst_queue_array_peek_head, "gst_queue_array_peek_head", LIBRARY_GSTBASE);
 	Linker.link(gst_queue_array_peek_head_struct, "gst_queue_array_peek_head_struct", LIBRARY_GSTBASE);
+	Linker.link(gst_queue_array_peek_nth, "gst_queue_array_peek_nth", LIBRARY_GSTBASE);
+	Linker.link(gst_queue_array_peek_nth_struct, "gst_queue_array_peek_nth_struct", LIBRARY_GSTBASE);
 	Linker.link(gst_queue_array_peek_tail, "gst_queue_array_peek_tail", LIBRARY_GSTBASE);
 	Linker.link(gst_queue_array_peek_tail_struct, "gst_queue_array_peek_tail_struct", LIBRARY_GSTBASE);
 	Linker.link(gst_queue_array_pop_head, "gst_queue_array_pop_head", LIBRARY_GSTBASE);
@@ -409,6 +440,7 @@ shared static this()
 	Linker.link(gst_queue_array_pop_tail_struct, "gst_queue_array_pop_tail_struct", LIBRARY_GSTBASE);
 	Linker.link(gst_queue_array_push_tail, "gst_queue_array_push_tail", LIBRARY_GSTBASE);
 	Linker.link(gst_queue_array_push_tail_struct, "gst_queue_array_push_tail_struct", LIBRARY_GSTBASE);
+	Linker.link(gst_queue_array_set_clear_func, "gst_queue_array_set_clear_func", LIBRARY_GSTBASE);
 	Linker.link(gst_queue_array_new, "gst_queue_array_new", LIBRARY_GSTBASE);
 	Linker.link(gst_queue_array_new_for_struct, "gst_queue_array_new_for_struct", LIBRARY_GSTBASE);
 
@@ -419,6 +451,9 @@ shared static this()
 	Linker.link(gst_type_find_helper_for_data, "gst_type_find_helper_for_data", LIBRARY_GSTBASE);
 	Linker.link(gst_type_find_helper_for_extension, "gst_type_find_helper_for_extension", LIBRARY_GSTBASE);
 	Linker.link(gst_type_find_helper_get_range, "gst_type_find_helper_get_range", LIBRARY_GSTBASE);
+	Linker.link(gst_type_find_helper_for_buffer_with_extension, "gst_type_find_helper_for_buffer_with_extension", LIBRARY_GSTBASE);
+	Linker.link(gst_type_find_helper_for_data_with_extension, "gst_type_find_helper_for_data_with_extension", LIBRARY_GSTBASE);
+	Linker.link(gst_type_find_helper_get_range_full, "gst_type_find_helper_get_range_full", LIBRARY_GSTBASE);
 }
 
 __gshared extern(C)
@@ -467,6 +502,7 @@ __gshared extern(C)
 	GstClockTime function(GstAggregator* self) c_gst_aggregator_get_latency;
 	void function(GstAggregator* self, GstClockTime minLatency, GstClockTime maxLatency) c_gst_aggregator_set_latency;
 	void function(GstAggregator* self, GstCaps* caps) c_gst_aggregator_set_src_caps;
+	GstClockTime function(GstAggregator* self) c_gst_aggregator_simple_get_next_time;
 
 	// gst.base.AggregatorPad
 
@@ -516,6 +552,7 @@ __gshared extern(C)
 	GstClockTime function(GstBaseSink* sink) c_gst_base_sink_get_latency;
 	ulong function(GstBaseSink* sink) c_gst_base_sink_get_max_bitrate;
 	long function(GstBaseSink* sink) c_gst_base_sink_get_max_lateness;
+	GstClockTime function(GstBaseSink* sink) c_gst_base_sink_get_processing_deadline;
 	GstClockTime function(GstBaseSink* sink) c_gst_base_sink_get_render_delay;
 	int function(GstBaseSink* sink) c_gst_base_sink_get_sync;
 	ulong function(GstBaseSink* sink) c_gst_base_sink_get_throttle_time;
@@ -530,6 +567,7 @@ __gshared extern(C)
 	void function(GstBaseSink* sink, int enabled) c_gst_base_sink_set_last_sample_enabled;
 	void function(GstBaseSink* sink, ulong maxBitrate) c_gst_base_sink_set_max_bitrate;
 	void function(GstBaseSink* sink, long maxLateness) c_gst_base_sink_set_max_lateness;
+	void function(GstBaseSink* sink, GstClockTime processingDeadline) c_gst_base_sink_set_processing_deadline;
 	void function(GstBaseSink* sink, int enabled) c_gst_base_sink_set_qos_enabled;
 	void function(GstBaseSink* sink, GstClockTime delay) c_gst_base_sink_set_render_delay;
 	void function(GstBaseSink* sink, int sync) c_gst_base_sink_set_sync;
@@ -600,6 +638,31 @@ __gshared extern(C)
 	int function(GstBitReader* reader, uint nbits) c_gst_bit_reader_skip;
 	int function(GstBitReader* reader) c_gst_bit_reader_skip_to_byte;
 	GstBitReader* function(ubyte* data, uint size) c_gst_bit_reader_new;
+
+	// gst.base.BitWriter
+
+	int function(GstBitWriter* bitwriter, ubyte trailingBit) c_gst_bit_writer_align_bytes;
+	void function(GstBitWriter* bitwriter) c_gst_bit_writer_free;
+	GstBuffer* function(GstBitWriter* bitwriter) c_gst_bit_writer_free_and_get_buffer;
+	ubyte* function(GstBitWriter* bitwriter) c_gst_bit_writer_free_and_get_data;
+	ubyte* function(GstBitWriter* bitwriter) c_gst_bit_writer_get_data;
+	uint function(GstBitWriter* bitwriter) c_gst_bit_writer_get_remaining;
+	uint function(GstBitWriter* bitwriter) c_gst_bit_writer_get_size;
+	void function(GstBitWriter* bitwriter) c_gst_bit_writer_init;
+	void function(GstBitWriter* bitwriter, ubyte* data, uint size, int initialized) c_gst_bit_writer_init_with_data;
+	void function(GstBitWriter* bitwriter, uint size, int fixed) c_gst_bit_writer_init_with_size;
+	int function(GstBitWriter* bitwriter, ushort value, uint nbits) c_gst_bit_writer_put_bits_uint16;
+	int function(GstBitWriter* bitwriter, uint value, uint nbits) c_gst_bit_writer_put_bits_uint32;
+	int function(GstBitWriter* bitwriter, ulong value, uint nbits) c_gst_bit_writer_put_bits_uint64;
+	int function(GstBitWriter* bitwriter, ubyte value, uint nbits) c_gst_bit_writer_put_bits_uint8;
+	int function(GstBitWriter* bitwriter, ubyte* data, uint nbytes) c_gst_bit_writer_put_bytes;
+	void function(GstBitWriter* bitwriter) c_gst_bit_writer_reset;
+	GstBuffer* function(GstBitWriter* bitwriter) c_gst_bit_writer_reset_and_get_buffer;
+	ubyte* function(GstBitWriter* bitwriter) c_gst_bit_writer_reset_and_get_data;
+	int function(GstBitWriter* bitwriter, uint pos) c_gst_bit_writer_set_pos;
+	GstBitWriter* function() c_gst_bit_writer_new;
+	GstBitWriter* function(ubyte* data, uint size, int initialized) c_gst_bit_writer_new_with_data;
+	GstBitWriter* function(uint size, int fixed) c_gst_bit_writer_new_with_size;
 
 	// gst.base.ByteReader
 
@@ -780,6 +843,7 @@ __gshared extern(C)
 
 	// gst.base.QueueArray
 
+	void function(GstQueueArray* array) c_gst_queue_array_clear;
 	void* function(GstQueueArray* array, uint idx) c_gst_queue_array_drop_element;
 	int function(GstQueueArray* array, uint idx, void* pStruct) c_gst_queue_array_drop_struct;
 	uint function(GstQueueArray* array, GCompareFunc func, void* data) c_gst_queue_array_find;
@@ -788,6 +852,8 @@ __gshared extern(C)
 	int function(GstQueueArray* array) c_gst_queue_array_is_empty;
 	void* function(GstQueueArray* array) c_gst_queue_array_peek_head;
 	void* function(GstQueueArray* array) c_gst_queue_array_peek_head_struct;
+	void* function(GstQueueArray* array, uint idx) c_gst_queue_array_peek_nth;
+	void* function(GstQueueArray* array, uint idx) c_gst_queue_array_peek_nth_struct;
 	void* function(GstQueueArray* array) c_gst_queue_array_peek_tail;
 	void* function(GstQueueArray* array) c_gst_queue_array_peek_tail_struct;
 	void* function(GstQueueArray* array) c_gst_queue_array_pop_head;
@@ -796,6 +862,7 @@ __gshared extern(C)
 	void* function(GstQueueArray* array) c_gst_queue_array_pop_tail_struct;
 	void function(GstQueueArray* array, void* data) c_gst_queue_array_push_tail;
 	void function(GstQueueArray* array, void* pStruct) c_gst_queue_array_push_tail_struct;
+	void function(GstQueueArray* array, GDestroyNotify clearFunc) c_gst_queue_array_set_clear_func;
 	GstQueueArray* function(uint initialSize) c_gst_queue_array_new;
 	GstQueueArray* function(size_t structSize, uint initialSize) c_gst_queue_array_new_for_struct;
 
@@ -806,6 +873,9 @@ __gshared extern(C)
 	GstCaps* function(GstObject* obj, ubyte* data, size_t size, GstTypeFindProbability* prob) c_gst_type_find_helper_for_data;
 	GstCaps* function(GstObject* obj, const(char)* extension) c_gst_type_find_helper_for_extension;
 	GstCaps* function(GstObject* obj, GstObject* parent, GstTypeFindHelperGetRangeFunction func, ulong size, const(char)* extension, GstTypeFindProbability* prob) c_gst_type_find_helper_get_range;
+	GstCaps* function(GstObject* obj, GstBuffer* buf, const(char)* extension, GstTypeFindProbability* prob) c_gst_type_find_helper_for_buffer_with_extension;
+	GstCaps* function(GstObject* obj, ubyte* data, size_t size, const(char)* extension, GstTypeFindProbability* prob) c_gst_type_find_helper_for_data_with_extension;
+	GstFlowReturn function(GstObject* obj, GstObject* parent, GstTypeFindHelperGetRangeFunction func, ulong size, const(char)* extension, GstCaps** caps, GstTypeFindProbability* prob) c_gst_type_find_helper_get_range_full;
 }
 
 
@@ -852,6 +922,7 @@ alias c_gst_aggregator_get_buffer_pool gst_aggregator_get_buffer_pool;
 alias c_gst_aggregator_get_latency gst_aggregator_get_latency;
 alias c_gst_aggregator_set_latency gst_aggregator_set_latency;
 alias c_gst_aggregator_set_src_caps gst_aggregator_set_src_caps;
+alias c_gst_aggregator_simple_get_next_time gst_aggregator_simple_get_next_time;
 
 // gst.base.AggregatorPad
 
@@ -901,6 +972,7 @@ alias c_gst_base_sink_get_last_sample gst_base_sink_get_last_sample;
 alias c_gst_base_sink_get_latency gst_base_sink_get_latency;
 alias c_gst_base_sink_get_max_bitrate gst_base_sink_get_max_bitrate;
 alias c_gst_base_sink_get_max_lateness gst_base_sink_get_max_lateness;
+alias c_gst_base_sink_get_processing_deadline gst_base_sink_get_processing_deadline;
 alias c_gst_base_sink_get_render_delay gst_base_sink_get_render_delay;
 alias c_gst_base_sink_get_sync gst_base_sink_get_sync;
 alias c_gst_base_sink_get_throttle_time gst_base_sink_get_throttle_time;
@@ -915,6 +987,7 @@ alias c_gst_base_sink_set_drop_out_of_segment gst_base_sink_set_drop_out_of_segm
 alias c_gst_base_sink_set_last_sample_enabled gst_base_sink_set_last_sample_enabled;
 alias c_gst_base_sink_set_max_bitrate gst_base_sink_set_max_bitrate;
 alias c_gst_base_sink_set_max_lateness gst_base_sink_set_max_lateness;
+alias c_gst_base_sink_set_processing_deadline gst_base_sink_set_processing_deadline;
 alias c_gst_base_sink_set_qos_enabled gst_base_sink_set_qos_enabled;
 alias c_gst_base_sink_set_render_delay gst_base_sink_set_render_delay;
 alias c_gst_base_sink_set_sync gst_base_sink_set_sync;
@@ -985,6 +1058,31 @@ alias c_gst_bit_reader_set_pos gst_bit_reader_set_pos;
 alias c_gst_bit_reader_skip gst_bit_reader_skip;
 alias c_gst_bit_reader_skip_to_byte gst_bit_reader_skip_to_byte;
 alias c_gst_bit_reader_new gst_bit_reader_new;
+
+// gst.base.BitWriter
+
+alias c_gst_bit_writer_align_bytes gst_bit_writer_align_bytes;
+alias c_gst_bit_writer_free gst_bit_writer_free;
+alias c_gst_bit_writer_free_and_get_buffer gst_bit_writer_free_and_get_buffer;
+alias c_gst_bit_writer_free_and_get_data gst_bit_writer_free_and_get_data;
+alias c_gst_bit_writer_get_data gst_bit_writer_get_data;
+alias c_gst_bit_writer_get_remaining gst_bit_writer_get_remaining;
+alias c_gst_bit_writer_get_size gst_bit_writer_get_size;
+alias c_gst_bit_writer_init gst_bit_writer_init;
+alias c_gst_bit_writer_init_with_data gst_bit_writer_init_with_data;
+alias c_gst_bit_writer_init_with_size gst_bit_writer_init_with_size;
+alias c_gst_bit_writer_put_bits_uint16 gst_bit_writer_put_bits_uint16;
+alias c_gst_bit_writer_put_bits_uint32 gst_bit_writer_put_bits_uint32;
+alias c_gst_bit_writer_put_bits_uint64 gst_bit_writer_put_bits_uint64;
+alias c_gst_bit_writer_put_bits_uint8 gst_bit_writer_put_bits_uint8;
+alias c_gst_bit_writer_put_bytes gst_bit_writer_put_bytes;
+alias c_gst_bit_writer_reset gst_bit_writer_reset;
+alias c_gst_bit_writer_reset_and_get_buffer gst_bit_writer_reset_and_get_buffer;
+alias c_gst_bit_writer_reset_and_get_data gst_bit_writer_reset_and_get_data;
+alias c_gst_bit_writer_set_pos gst_bit_writer_set_pos;
+alias c_gst_bit_writer_new gst_bit_writer_new;
+alias c_gst_bit_writer_new_with_data gst_bit_writer_new_with_data;
+alias c_gst_bit_writer_new_with_size gst_bit_writer_new_with_size;
 
 // gst.base.ByteReader
 
@@ -1165,6 +1263,7 @@ alias c_gst_push_src_get_type gst_push_src_get_type;
 
 // gst.base.QueueArray
 
+alias c_gst_queue_array_clear gst_queue_array_clear;
 alias c_gst_queue_array_drop_element gst_queue_array_drop_element;
 alias c_gst_queue_array_drop_struct gst_queue_array_drop_struct;
 alias c_gst_queue_array_find gst_queue_array_find;
@@ -1173,6 +1272,8 @@ alias c_gst_queue_array_get_length gst_queue_array_get_length;
 alias c_gst_queue_array_is_empty gst_queue_array_is_empty;
 alias c_gst_queue_array_peek_head gst_queue_array_peek_head;
 alias c_gst_queue_array_peek_head_struct gst_queue_array_peek_head_struct;
+alias c_gst_queue_array_peek_nth gst_queue_array_peek_nth;
+alias c_gst_queue_array_peek_nth_struct gst_queue_array_peek_nth_struct;
 alias c_gst_queue_array_peek_tail gst_queue_array_peek_tail;
 alias c_gst_queue_array_peek_tail_struct gst_queue_array_peek_tail_struct;
 alias c_gst_queue_array_pop_head gst_queue_array_pop_head;
@@ -1181,6 +1282,7 @@ alias c_gst_queue_array_pop_tail gst_queue_array_pop_tail;
 alias c_gst_queue_array_pop_tail_struct gst_queue_array_pop_tail_struct;
 alias c_gst_queue_array_push_tail gst_queue_array_push_tail;
 alias c_gst_queue_array_push_tail_struct gst_queue_array_push_tail_struct;
+alias c_gst_queue_array_set_clear_func gst_queue_array_set_clear_func;
 alias c_gst_queue_array_new gst_queue_array_new;
 alias c_gst_queue_array_new_for_struct gst_queue_array_new_for_struct;
 
@@ -1191,3 +1293,6 @@ alias c_gst_type_find_helper_for_buffer gst_type_find_helper_for_buffer;
 alias c_gst_type_find_helper_for_data gst_type_find_helper_for_data;
 alias c_gst_type_find_helper_for_extension gst_type_find_helper_for_extension;
 alias c_gst_type_find_helper_get_range gst_type_find_helper_get_range;
+alias c_gst_type_find_helper_for_buffer_with_extension gst_type_find_helper_for_buffer_with_extension;
+alias c_gst_type_find_helper_for_data_with_extension gst_type_find_helper_for_data_with_extension;
+alias c_gst_type_find_helper_get_range_full gst_type_find_helper_get_range_full;

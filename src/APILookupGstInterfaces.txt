@@ -53,8 +53,41 @@ struct: VideoAffineTransformationMeta
 noCode: true
 noExternal: true
 
+struct: VideoAggregator
+noCode: true
+noExternal: true
+
+struct: VideoAggregatorClass
+noExternal: true
+
+struct: VideoAggregatorPrivate
+noExternal: true
+
+struct: VideoAggregatorConvertPad
+noCode: true
+noExternal: true
+
+struct: VideoAggregatorConvertPadClass
+noExternal: true
+
+struct: VideoAggregatorConvertPadPrivate
+noExternal: true
+
+struct: VideoAggregatorPad
+noCode: true
+noExternal: true
+
+struct: VideoAggregatorPadClass
+noExternal: true
+
+struct: VideoAggregatorPadPrivate
+noExternal: true
+
 struct: VideoAlignment
 noCode: true
+noExternal: true
+
+struct: VideoAncillary
 noExternal: true
 
 struct: VideoBufferPool
@@ -65,6 +98,10 @@ struct: VideoBufferPoolClass
 noExternal: true
 
 struct: VideoBufferPoolPrivate
+noExternal: true
+
+struct: VideoCaptionMeta
+noCode: true
 noExternal: true
 
 struct: VideoChromaResample
@@ -223,6 +260,14 @@ struct: VideoTimeCodeMeta
 noCode: true
 noExternal: true
 
+struct: VideoVBIEncoder
+noCode: true
+noExternal: true
+
+struct: VideoVBIParser
+noCode: true
+noExternal: true
+
 version 1.12: start
 	struct: VideoTimeCodeInterval
 	noCode: true
@@ -273,6 +318,13 @@ version 1.12: start
 	noEnum: VideoFieldOrder
 	noEnum: VideoTimeCodeInterval
 version 1.12: end
+
+version 1.16: start
+	noEnum: VideoAncillaryDID
+	noEnum: VideoAncillaryDID16
+	noEnum: VideoCaptionType
+	noEnum: VideoVBIParserResult
+version 1.16: end
 
 noCallback: VideoAffineTransformationGetMatrix
 noCallback: VideoConvertSampleCallback

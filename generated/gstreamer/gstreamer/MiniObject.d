@@ -46,9 +46,10 @@ private import gtkd.Loader;
  * A copy can be made with gst_mini_object_copy().
  * 
  * gst_mini_object_is_writable() will return %TRUE when the refcount of the
- * object is exactly 1, meaning the current caller has the only reference to the
- * object. gst_mini_object_make_writable() will return a writable version of the
- * object, which might be a new copy when the refcount was not 1.
+ * object is exactly 1 and there is no parent or a single parent exists and is
+ * writable itself, meaning the current caller has the only reference to the
+ * object. gst_mini_object_make_writable() will return a writable version of
+ * the object, which might be a new copy when the refcount was not 1.
  * 
  * Opaque data can be associated with a #GstMiniObject with
  * gst_mini_object_set_qdata() and gst_mini_object_get_qdata(). The data is
@@ -93,6 +94,26 @@ public class MiniObject
 			gst_mini_object_unref(gstMiniObject);
 	}
 
+
+	/**
+	 * This adds @parent as a parent for @object. Having one ore more parents affects the
+	 * writability of @object: if a @parent is not writable, @object is also not
+	 * writable, regardless of its refcount. @object is only writable if all
+	 * the parents are writable and its own refcount is exactly 1.
+	 *
+	 * Note: This function does not take ownership of @parent and also does not
+	 * take an additional reference. It is the responsibility of the caller to
+	 * remove the parent again at a later time.
+	 *
+	 * Params:
+	 *     parent = a parent #GstMiniObject
+	 *
+	 * Since: 1.16
+	 */
+	public void addParent(MiniObject parent)
+	{
+		gst_mini_object_add_parent(gstMiniObject, (parent is null) ? null : parent.getMiniObjectStruct());
+	}
 
 	/**
 	 * Creates a copy of the mini-object.
@@ -222,6 +243,20 @@ public class MiniObject
 		}
 
 		return ObjectG.getDObject!(MiniObject)(cast(GstMiniObject*) p, true);
+	}
+
+	/**
+	 * This removes @parent as a parent for @object. See
+	 * gst_mini_object_add_parent().
+	 *
+	 * Params:
+	 *     parent = a parent #GstMiniObject
+	 *
+	 * Since: 1.16
+	 */
+	public void removeParent(MiniObject parent)
+	{
+		gst_mini_object_remove_parent(gstMiniObject, (parent is null) ? null : parent.getMiniObjectStruct());
 	}
 
 	/**

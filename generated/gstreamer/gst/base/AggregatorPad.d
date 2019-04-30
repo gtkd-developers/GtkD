@@ -25,16 +25,20 @@
 module gst.base.AggregatorPad;
 
 private import gobject.ObjectG;
+private import gobject.Signals;
 private import gst.base.c.functions;
 public  import gst.base.c.types;
 private import gstreamer.Buffer;
 private import gstreamer.Pad;
+private import std.algorithm;
 
 
 /**
  * Pads managed by a #GstAggregor subclass.
  * 
  * This class used to live in gst-plugins-bad and was moved to core.
+ *
+ * Since: 1.14
  */
 public class AggregatorPad : Pad
 {
@@ -82,6 +86,10 @@ public class AggregatorPad : Pad
 	}
 
 	/**
+	 * This checks if a pad has a buffer available that will be returned by
+	 * a call to gst_aggregator_pad_peek_buffer() or
+	 * gst_aggregator_pad_pop_buffer().
+	 *
 	 * Returns: %TRUE if the pad has a buffer available as the next thing.
 	 *
 	 * Since: 1.14.1
@@ -132,5 +140,11 @@ public class AggregatorPad : Pad
 		}
 
 		return ObjectG.getDObject!(Buffer)(cast(GstBuffer*) p, true);
+	}
+
+	/** */
+	gulong addOnBufferConsumed(void delegate(Buffer, AggregatorPad) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		return Signals.connect(this, "buffer-consumed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 }

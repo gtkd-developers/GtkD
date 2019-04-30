@@ -185,7 +185,7 @@ public struct Base
 	 *     func = A generic #GstTypeFindHelperGetRangeFunction that will
 	 *         be used to access data at random offsets when doing the typefinding
 	 *     size = The length in bytes
-	 *     extension = extension of the media
+	 *     extension = extension of the media, or %NULL
 	 *     prob = location to store the probability of the found
 	 *         caps, or %NULL
 	 *
@@ -202,5 +202,132 @@ public struct Base
 		}
 
 		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+	}
+
+	/**
+	 * Tries to find what type of data is contained in the given #GstBuffer, the
+	 * assumption being that the buffer represents the beginning of the stream or
+	 * file.
+	 *
+	 * All available typefinders will be called on the data in order of rank. If
+	 * a typefinding function returns a probability of %GST_TYPE_FIND_MAXIMUM,
+	 * typefinding is stopped immediately and the found caps will be returned
+	 * right away. Otherwise, all available typefind functions will the tried,
+	 * and the caps with the highest probability will be returned, or %NULL if
+	 * the content of the buffer could not be identified.
+	 *
+	 * When @extension is not %NULL, this function will first try the typefind
+	 * functions for the given extension, which might speed up the typefinding
+	 * in many cases.
+	 *
+	 * Free-function: gst_caps_unref
+	 *
+	 * Params:
+	 *     obj = object doing the typefinding, or %NULL (used for logging)
+	 *     buf = a #GstBuffer with data to typefind
+	 *     extension = extension of the media, or %NULL
+	 *     prob = location to store the probability of the found
+	 *         caps, or %NULL
+	 *
+	 * Returns: the #GstCaps corresponding to the data,
+	 *     or %NULL if no type could be found. The caller should free the caps
+	 *     returned with gst_caps_unref().
+	 *
+	 * Since: 1.16
+	 */
+	public static Caps typeFindHelperForBufferWithExtension(ObjectGst obj, Buffer buf, string extension, out GstTypeFindProbability prob)
+	{
+		auto p = gst_type_find_helper_for_buffer_with_extension((obj is null) ? null : obj.getObjectGstStruct(), (buf is null) ? null : buf.getBufferStruct(), Str.toStringz(extension), &prob);
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+	}
+
+	/**
+	 * Tries to find what type of data is contained in the given @data, the
+	 * assumption being that the data represents the beginning of the stream or
+	 * file.
+	 *
+	 * All available typefinders will be called on the data in order of rank. If
+	 * a typefinding function returns a probability of %GST_TYPE_FIND_MAXIMUM,
+	 * typefinding is stopped immediately and the found caps will be returned
+	 * right away. Otherwise, all available typefind functions will the tried,
+	 * and the caps with the highest probability will be returned, or %NULL if
+	 * the content of @data could not be identified.
+	 *
+	 * When @extension is not %NULL, this function will first try the typefind
+	 * functions for the given extension, which might speed up the typefinding
+	 * in many cases.
+	 *
+	 * Free-function: gst_caps_unref
+	 *
+	 * Params:
+	 *     obj = object doing the typefinding, or %NULL (used for logging)
+	 *     data = * a pointer with data to typefind
+	 *     extension = extension of the media, or %NULL
+	 *     prob = location to store the probability of the found
+	 *         caps, or %NULL
+	 *
+	 * Returns: the #GstCaps corresponding to the data,
+	 *     or %NULL if no type could be found. The caller should free the caps
+	 *     returned with gst_caps_unref().
+	 *
+	 * Since: 1.16
+	 */
+	public static Caps typeFindHelperForDataWithExtension(ObjectGst obj, ubyte[] data, string extension, out GstTypeFindProbability prob)
+	{
+		auto p = gst_type_find_helper_for_data_with_extension((obj is null) ? null : obj.getObjectGstStruct(), data.ptr, cast(size_t)data.length, Str.toStringz(extension), &prob);
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+	}
+
+	/**
+	 * Utility function to do pull-based typefinding. Unlike gst_type_find_helper()
+	 * however, this function will use the specified function @func to obtain the
+	 * data needed by the typefind functions, rather than operating on a given
+	 * source pad. This is useful mostly for elements like tag demuxers which
+	 * strip off data at the beginning and/or end of a file and want to typefind
+	 * the stripped data stream before adding their own source pad (the specified
+	 * callback can then call the upstream peer pad with offsets adjusted for the
+	 * tag size, for example).
+	 *
+	 * When @extension is not %NULL, this function will first try the typefind
+	 * functions for the given extension, which might speed up the typefinding
+	 * in many cases.
+	 *
+	 * Params:
+	 *     obj = A #GstObject that will be passed as first argument to @func
+	 *     parent = the parent of @obj or %NULL
+	 *     func = A generic #GstTypeFindHelperGetRangeFunction that will
+	 *         be used to access data at random offsets when doing the typefinding
+	 *     size = The length in bytes
+	 *     extension = extension of the media, or %NULL
+	 *     caps = returned caps
+	 *     prob = location to store the probability of the found
+	 *         caps, or %NULL
+	 *
+	 * Returns: the last %GstFlowReturn from pulling a buffer or %GST_FLOW_OK if
+	 *     typefinding was successful.
+	 *
+	 * Since: 1.14.3
+	 */
+	public static GstFlowReturn typeFindHelperGetRangeFull(ObjectGst obj, ObjectGst parent, GstTypeFindHelperGetRangeFunction func, ulong size, string extension, out Caps caps, out GstTypeFindProbability prob)
+	{
+		GstCaps* outcaps = null;
+
+		auto p = gst_type_find_helper_get_range_full((obj is null) ? null : obj.getObjectGstStruct(), (parent is null) ? null : parent.getObjectGstStruct(), func, size, Str.toStringz(extension), &outcaps, &prob);
+
+		caps = ObjectG.getDObject!(Caps)(outcaps);
+
+		return p;
 	}
 }

@@ -380,7 +380,7 @@ public class DateTime
 
 	/**
 	 * Returns the day of the month of this #GstDateTime.
-	 * Call gst_date_time_has_day before, to avoid warnings.
+	 * Call gst_date_time_has_day() before, to avoid warnings.
 	 *
 	 * Returns: The day of this #GstDateTime
 	 */
@@ -392,7 +392,7 @@ public class DateTime
 	/**
 	 * Retrieves the hour of the day represented by @datetime in the gregorian
 	 * calendar. The return is in the range of 0 to 23.
-	 * Call gst_date_time_has_haur before, to avoid warnings.
+	 * Call gst_date_time_has_time() before, to avoid warnings.
 	 *
 	 * Returns: the hour of the day
 	 */
@@ -415,7 +415,7 @@ public class DateTime
 	/**
 	 * Retrieves the minute of the hour represented by @datetime in the gregorian
 	 * calendar.
-	 * Call gst_date_time_has_minute before, to avoid warnings.
+	 * Call gst_date_time_has_time() before, to avoid warnings.
 	 *
 	 * Returns: the minute of the hour
 	 */
@@ -426,7 +426,7 @@ public class DateTime
 
 	/**
 	 * Returns the month of this #GstDateTime. January is 1, February is 2, etc..
-	 * Call gst_date_time_has_month before, to avoid warnings.
+	 * Call gst_date_time_has_month() before, to avoid warnings.
 	 *
 	 * Returns: The month of this #GstDateTime
 	 */
@@ -438,7 +438,7 @@ public class DateTime
 	/**
 	 * Retrieves the second of the minute represented by @datetime in the gregorian
 	 * calendar.
-	 * Call gst_date_time_has_second before, to avoid warnings.
+	 * Call gst_date_time_has_time() before, to avoid warnings.
 	 *
 	 * Returns: the second represented by @datetime
 	 */
@@ -462,7 +462,7 @@ public class DateTime
 
 	/**
 	 * Returns the year of this #GstDateTime
-	 * Call gst_date_time_has_year before, to avoid warnings.
+	 * Call gst_date_time_has_year() before, to avoid warnings.
 	 *
 	 * Returns: The year of this #GstDateTime
 	 */

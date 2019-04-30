@@ -70,7 +70,9 @@ public final class AtscMGT
 	}
 
 
-	/** */
+	/**
+	 * The protocol version
+	 */
 	public @property ubyte protocolVersion()
 	{
 		return gstMpegtsAtscMGT.protocolVersion;
@@ -82,7 +84,9 @@ public final class AtscMGT
 		gstMpegtsAtscMGT.protocolVersion = value;
 	}
 
-	/** */
+	/**
+	 * The numbers of subtables
+	 */
 	public @property ushort tablesDefined()
 	{
 		return gstMpegtsAtscMGT.tablesDefined;

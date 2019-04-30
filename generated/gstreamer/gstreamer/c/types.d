@@ -44,6 +44,45 @@ public alias ulong GstClockTime;
 public alias long GstClockTimeDiff;
 
 public alias ulong GstElementFactoryListType;
+/**
+ * Available details for pipeline graphs produced by GST_DEBUG_BIN_TO_DOT_FILE()
+ * and GST_DEBUG_BIN_TO_DOT_FILE_WITH_TS().
+ */
+public enum GstDebugGraphDetails : long
+{
+	/**
+	 * show caps-name on edges
+	 */
+	MEDIA_TYPE = 1,
+	/**
+	 * show caps-details on edges
+	 */
+	CAPS_DETAILS = 2,
+	/**
+	 * show modified parameters on
+	 * elements
+	 */
+	NON_DEFAULT_PARAMS = 4,
+	/**
+	 * show element states
+	 */
+	STATES = 8,
+	/**
+	 * show full element parameter values even
+	 * if they are very long
+	 */
+	FULL_PARAMS = 16,
+	/**
+	 * show all the typical details that one might want
+	 */
+	ALL = 15,
+	/**
+	 * show all details regardless of how large or
+	 * verbose they make the resulting output
+	 */
+	VERBOSE = 4294967295,
+}
+alias GstDebugGraphDetails DebugGraphDetails;
 
 /**
  * Flags for allocators.
@@ -643,46 +682,6 @@ public enum GstDebugColorMode
 	UNIX = 2,
 }
 alias GstDebugColorMode DebugColorMode;
-
-/**
- * Available details for pipeline graphs produced by GST_DEBUG_BIN_TO_DOT_FILE()
- * and GST_DEBUG_BIN_TO_DOT_FILE_WITH_TS().
- */
-public enum GstDebugGraphDetails
-{
-	/**
-	 * show caps-name on edges
-	 */
-	MEDIA_TYPE = 1,
-	/**
-	 * show caps-details on edges
-	 */
-	CAPS_DETAILS = 2,
-	/**
-	 * show modified parameters on
-	 * elements
-	 */
-	NON_DEFAULT_PARAMS = 4,
-	/**
-	 * show element states
-	 */
-	STATES = 8,
-	/**
-	 * show full element parameter values even
-	 * if they are very long
-	 */
-	FULL_PARAMS = 16,
-	/**
-	 * show all the typical details that one might want
-	 */
-	ALL = 15,
-	/**
-	 * show all details regardless of how large or
-	 * verbose they make the resulting output
-	 */
-	VERBOSE = -1,
-}
-alias GstDebugGraphDetails DebugGraphDetails;
 
 /**
  * The level defines the importance of a debugging message. The more important a
@@ -1472,6 +1471,11 @@ public enum GstMessageType : uint
 	 * response is received with a non-HTTP URL inside. (Since 1.10)
 	 */
 	REDIRECT = 2147483654,
+	/**
+	 * Message indicating a #GstDevice was changed
+	 * a #GstDeviceProvider (Since 1.16)
+	 */
+	DEVICE_CHANGED = 2147483654,
 	/**
 	 * mask for all of the above messages.
 	 */
@@ -2264,6 +2268,10 @@ public enum GstQueryType
 	 * downstream or upstream (since 1.2)
 	 */
 	CONTEXT = 48643,
+	/**
+	 * the bitrate query (since 1.16)
+	 */
+	BITRATE = 51202,
 }
 alias GstQueryType QueryType;
 
@@ -3259,7 +3267,7 @@ public enum GstTracerValueFlags
 alias GstTracerValueFlags TracerValueFlags;
 
 /**
- * Tracing record will contain fields that contain a meassured value or extra
+ * Tracing record will contain fields that contain a measured value or extra
  * meta-data. One such meta data are values that tell where a measurement was
  * taken. This enumerating declares to which scope such a meta data field
  * relates to. If it is e.g. %GST_TRACER_VALUE_SCOPE_PAD, then each of the log
@@ -3957,7 +3965,7 @@ struct GstDebugMessage;
 struct GstDevice
 {
 	/**
-	 * The parent #GstObject strucuture.
+	 * The parent #GstObject structure.
 	 */
 	GstObject parent;
 	GstDevicePrivate* priv;
@@ -3972,7 +3980,7 @@ struct GstDevice
 struct GstDeviceClass
 {
 	/**
-	 * The parent #GstObjectClass strucuture.
+	 * The parent #GstObjectClass structure.
 	 */
 	GstObjectClass parentClass;
 	/**
@@ -4532,27 +4540,6 @@ struct GstMessage
 	GCond cond;
 }
 
-/**
- * The #GstMeta structure should be included as the first member of a #GstBuffer
- * metadata structure. The structure defines the API of the metadata and should
- * be accessible to all elements using the metadata.
- *
- * A metadata API is registered with gst_meta_api_type_register() which takes a
- * name for the metadata API and some tags associated with the metadata.
- * With gst_meta_api_type_has_tag() one can check if a certain metadata API
- * contains a given tag.
- *
- * Multiple implementations of a metadata API can be registered.
- * To implement a metadata API, gst_meta_register() should be used. This
- * function takes all parameters needed to create, free and transform metadata
- * along with the size of the metadata. The function returns a #GstMetaInfo
- * structure that contains the information for the implementation of the API.
- *
- * A specific implementation can be retrieved by name with gst_meta_get_info().
- *
- * See #GstBuffer for how the metadata can be added, retrieved and removed from
- * buffers.
- */
 struct GstMeta
 {
 	/**
@@ -4646,8 +4633,8 @@ struct GstMiniObject
 	 * the free function
 	 */
 	GstMiniObjectFreeFunction free;
-	uint nQdata;
-	void* qdata;
+	uint privUint;
+	void* privPointer;
 }
 
 struct GstObject
@@ -4843,8 +4830,7 @@ struct GstParamArray;
 struct GstParamFraction;
 
 /**
- * A GParamSpec derived structure that contains the meta data for fractional
- * properties.
+ * A GParamSpec derived structure for arrays of values.
  */
 struct GstParamSpecArray
 {
@@ -4852,6 +4838,9 @@ struct GstParamSpecArray
 	 * super class
 	 */
 	GParamSpec parentInstance;
+	/**
+	 * the #GParamSpec of the type of values in the array
+	 */
 	GParamSpec* elementSpec;
 }
 
@@ -6329,6 +6318,9 @@ public alias extern(C) int function(GstPad* pad, GstEvent** event, void* userDat
 /**
  * Function signature to handle a unlinking the pad prom its peer.
  *
+ * The pad's lock is already held when the unlink function is called, so most
+ * pad functions cannot be called from within the callback.
+ *
  * Params:
  *     pad = the #GstPad that is linked.
  *     parent = the parent of @pad. If the #GST_PAD_FLAG_NEED_PARENT
@@ -6595,6 +6587,14 @@ alias GST_ELEMENT_FACTORY_KLASS_ENCRYPTOR = ELEMENT_FACTORY_KLASS_ENCRYPTOR;
 
 enum ELEMENT_FACTORY_KLASS_FORMATTER = "Formatter";
 alias GST_ELEMENT_FACTORY_KLASS_FORMATTER = ELEMENT_FACTORY_KLASS_FORMATTER;
+
+/**
+ * Elements interacting with hardware devices should specify this classifier in
+ * their metadata. You may need to put the element in "READY" state to test if
+ * the hardware is present in the system.
+ */
+enum ELEMENT_FACTORY_KLASS_HARDWARE = "Hardware";
+alias GST_ELEMENT_FACTORY_KLASS_HARDWARE = ELEMENT_FACTORY_KLASS_HARDWARE;
 
 enum ELEMENT_FACTORY_KLASS_MEDIA_AUDIO = "Audio";
 alias GST_ELEMENT_FACTORY_KLASS_MEDIA_AUDIO = ELEMENT_FACTORY_KLASS_MEDIA_AUDIO;
@@ -6899,6 +6899,21 @@ alias GST_PARAM_USER_SHIFT = PARAM_USER_SHIFT;
  */
 enum PROTECTION_SYSTEM_ID_CAPS_FIELD = "protection-system";
 alias GST_PROTECTION_SYSTEM_ID_CAPS_FIELD = PROTECTION_SYSTEM_ID_CAPS_FIELD;
+
+/**
+ * The protection system value of the unspecified UUID.
+ * In some cases the system protection ID is not present in the contents or in their
+ * metadata, as encrypted WebM.
+ * This define is used to set the value of the "system_id" field in GstProtectionEvent,
+ * with this value, the application will use an external information to choose which
+ * protection system to use.
+ *
+ * Example: The matroskademux uses this value in the case of encrypted WebM,
+ * the application will choose the appropriate protection system based on the information
+ * received through EME API.
+ */
+enum PROTECTION_UNSPECIFIED_SYSTEM_ID = "unspecified-system-id";
+alias GST_PROTECTION_UNSPECIFIED_SYSTEM_ID = PROTECTION_UNSPECIFIED_SYSTEM_ID;
 
 /**
  * printf format type used to debug GStreamer types. You can use this in
@@ -7638,13 +7653,13 @@ alias GST_VERSION_MAJOR = VERSION_MAJOR;
 /**
  * The micro version of GStreamer at compile time:
  */
-enum VERSION_MICRO = 4;
+enum VERSION_MICRO = 0;
 alias GST_VERSION_MICRO = VERSION_MICRO;
 
 /**
  * The minor version of GStreamer at compile time:
  */
-enum VERSION_MINOR = 14;
+enum VERSION_MINOR = 16;
 alias GST_VERSION_MINOR = VERSION_MINOR;
 
 /**

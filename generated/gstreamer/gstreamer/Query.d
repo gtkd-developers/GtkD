@@ -320,6 +320,29 @@ public class Query
 	}
 
 	/**
+	 * Constructs a new query object for querying the bitrate.
+	 *
+	 * Free-function: gst_query_unref()
+	 *
+	 * Returns: a new #GstQuery
+	 *
+	 * Since: 1.16
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this()
+	{
+		auto p = gst_query_new_bitrate();
+
+		if(p is null)
+		{
+			throw new ConstructionException("null returned by new_bitrate");
+		}
+
+		this(cast(GstQuery*) p);
+	}
+
+	/**
 	 * Constructs a new query object for querying the buffering status of
 	 * a stream.
 	 *
@@ -711,6 +734,19 @@ public class Query
 
 		caps = ObjectG.getDObject!(Caps)(outcaps);
 		needPool = (outneedPool == 1);
+	}
+
+	/**
+	 * Get the results of a bitrate query. See also gst_query_set_bitrate().
+	 *
+	 * Params:
+	 *     nominalBitrate = The resulting bitrate in bits per second
+	 *
+	 * Since: 1.16
+	 */
+	public void parseBitrate(out uint nominalBitrate)
+	{
+		gst_query_parse_bitrate(gstQuery, &nominalBitrate);
 	}
 
 	/**
@@ -1172,6 +1208,21 @@ public class Query
 	public void setAcceptCapsResult(bool result)
 	{
 		gst_query_set_accept_caps_result(gstQuery, result);
+	}
+
+	/**
+	 * Set the results of a bitrate query.  The nominal bitrate is the average
+	 * bitrate expected over the length of the stream as advertised in file
+	 * headers (or similar).
+	 *
+	 * Params:
+	 *     nominalBitrate = the nominal bitrate in bits per second
+	 *
+	 * Since: 1.16
+	 */
+	public void setBitrate(uint nominalBitrate)
+	{
+		gst_query_set_bitrate(gstQuery, nominalBitrate);
 	}
 
 	/**

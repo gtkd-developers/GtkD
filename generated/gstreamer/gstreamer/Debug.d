@@ -59,6 +59,7 @@ public struct Debug
 	 *
 	 * Params:
 	 *     bin = the top-level pipeline that should be analyzed
+	 *     details = type of #GstDebugGraphDetails to use
 	 *
 	 * Returns: a string containing the pipeline in graphviz
 	 *     dot format.
@@ -81,6 +82,7 @@ public struct Debug
 	 *
 	 * Params:
 	 *     bin = the top-level pipeline that should be analyzed
+	 *     details = type of #GstDebugGraphDetails to use
 	 *     fileName = output base filename (e.g. "myplayer")
 	 */
 	public static void binToDotFile(Bin bin, GstDebugGraphDetails details, string fileName)
@@ -94,6 +96,7 @@ public struct Debug
 	 *
 	 * Params:
 	 *     bin = the top-level pipeline that should be analyzed
+	 *     details = type of #GstDebugGraphDetails to use
 	 *     fileName = output base filename (e.g. "myplayer")
 	 */
 	public static void binToDotFileWithTs(Bin bin, GstDebugGraphDetails details, string fileName)
@@ -259,7 +262,7 @@ public struct Debug
 	}
 
 	/**
-	 * If libunwind or glibc backtrace are present
+	 * If libunwind, glibc backtrace or DbgHelp are present
 	 * a stack trace is printed.
 	 */
 	public static void printStackTrace()

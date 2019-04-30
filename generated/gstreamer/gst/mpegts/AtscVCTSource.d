@@ -71,7 +71,9 @@ public final class AtscVCTSource
 	}
 
 
-	/** */
+	/**
+	 * The short name of a source
+	 */
 	public @property string shortName()
 	{
 		return Str.toString(gstMpegtsAtscVCTSource.shortName);
@@ -83,7 +85,9 @@ public final class AtscVCTSource
 		gstMpegtsAtscVCTSource.shortName = Str.toStringz(value);
 	}
 
-	/** */
+	/**
+	 * The major channel number
+	 */
 	public @property ushort majorChannelNumber()
 	{
 		return gstMpegtsAtscVCTSource.majorChannelNumber;
@@ -95,7 +99,9 @@ public final class AtscVCTSource
 		gstMpegtsAtscVCTSource.majorChannelNumber = value;
 	}
 
-	/** */
+	/**
+	 * The minor channel number
+	 */
 	public @property ushort minorChannelNumber()
 	{
 		return gstMpegtsAtscVCTSource.minorChannelNumber;
@@ -107,7 +113,9 @@ public final class AtscVCTSource
 		gstMpegtsAtscVCTSource.minorChannelNumber = value;
 	}
 
-	/** */
+	/**
+	 * The modulation mode
+	 */
 	public @property ubyte modulationMode()
 	{
 		return gstMpegtsAtscVCTSource.modulationMode;
@@ -119,7 +127,9 @@ public final class AtscVCTSource
 		gstMpegtsAtscVCTSource.modulationMode = value;
 	}
 
-	/** */
+	/**
+	 * The carrier frequency
+	 */
 	public @property uint carrierFrequency()
 	{
 		return gstMpegtsAtscVCTSource.carrierFrequency;
@@ -131,7 +141,9 @@ public final class AtscVCTSource
 		gstMpegtsAtscVCTSource.carrierFrequency = value;
 	}
 
-	/** */
+	/**
+	 * The transport stream ID
+	 */
 	public @property ushort channelTSID()
 	{
 		return gstMpegtsAtscVCTSource.channelTSID;
@@ -143,7 +155,9 @@ public final class AtscVCTSource
 		gstMpegtsAtscVCTSource.channelTSID = value;
 	}
 
-	/** */
+	/**
+	 * The program number (see #GstMpegtsPatProgram)
+	 */
 	public @property ushort programNumber()
 	{
 		return gstMpegtsAtscVCTSource.programNumber;
@@ -155,7 +169,9 @@ public final class AtscVCTSource
 		gstMpegtsAtscVCTSource.programNumber = value;
 	}
 
-	/** */
+	/**
+	 * The ETM location
+	 */
 	public @property ubyte ETMLocation()
 	{
 		return gstMpegtsAtscVCTSource.ETMLocation;
@@ -167,7 +183,9 @@ public final class AtscVCTSource
 		gstMpegtsAtscVCTSource.ETMLocation = value;
 	}
 
-	/** */
+	/**
+	 * is access controlled
+	 */
 	public @property bool accessControlled()
 	{
 		return gstMpegtsAtscVCTSource.accessControlled != 0;
@@ -179,7 +197,9 @@ public final class AtscVCTSource
 		gstMpegtsAtscVCTSource.accessControlled = value;
 	}
 
-	/** */
+	/**
+	 * is hidden
+	 */
 	public @property bool hidden()
 	{
 		return gstMpegtsAtscVCTSource.hidden != 0;
@@ -191,7 +211,9 @@ public final class AtscVCTSource
 		gstMpegtsAtscVCTSource.hidden = value;
 	}
 
-	/** */
+	/**
+	 * is path select, CVCT only
+	 */
 	public @property bool pathSelect()
 	{
 		return gstMpegtsAtscVCTSource.pathSelect != 0;
@@ -203,7 +225,9 @@ public final class AtscVCTSource
 		gstMpegtsAtscVCTSource.pathSelect = value;
 	}
 
-	/** */
+	/**
+	 * is out of band, CVCT only
+	 */
 	public @property bool outOfBand()
 	{
 		return gstMpegtsAtscVCTSource.outOfBand != 0;
@@ -215,7 +239,9 @@ public final class AtscVCTSource
 		gstMpegtsAtscVCTSource.outOfBand = value;
 	}
 
-	/** */
+	/**
+	 * is hide guide
+	 */
 	public @property bool hideGuide()
 	{
 		return gstMpegtsAtscVCTSource.hideGuide != 0;
@@ -227,7 +253,9 @@ public final class AtscVCTSource
 		gstMpegtsAtscVCTSource.hideGuide = value;
 	}
 
-	/** */
+	/**
+	 * The service type
+	 */
 	public @property ubyte serviceType()
 	{
 		return gstMpegtsAtscVCTSource.serviceType;
@@ -239,7 +267,9 @@ public final class AtscVCTSource
 		gstMpegtsAtscVCTSource.serviceType = value;
 	}
 
-	/** */
+	/**
+	 * The source id
+	 */
 	public @property ushort sourceId()
 	{
 		return gstMpegtsAtscVCTSource.sourceId;
@@ -252,7 +282,7 @@ public final class AtscVCTSource
 	}
 
 	/**
-	 * descriptors
+	 * an array of #GstMpegtsDescriptor
 	 */
 	public @property PtrArray descriptors()
 	{

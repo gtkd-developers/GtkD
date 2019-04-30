@@ -330,6 +330,12 @@ public class BaseSrc : Element
 	 * that can't return an authoritative size and only know that they're EOS
 	 * when trying to read more should set this to %FALSE.
 	 *
+	 * When @src operates in %GST_FORMAT_TIME, #GstBaseSrc will send an EOS
+	 * when a buffer outside of the currently configured segment is pushed if
+	 * @automatic_eos is %TRUE. Since 1.16, if @automatic_eos is %FALSE an
+	 * EOS will be pushed only when the #GstBaseSrc.create implementation
+	 * returns %GST_FLOW_EOS.
+	 *
 	 * Params:
 	 *     automaticEos = automatic eos
 	 *

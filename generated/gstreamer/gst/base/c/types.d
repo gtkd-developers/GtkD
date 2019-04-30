@@ -569,6 +569,22 @@ struct GstBitReader
 	void*[4] GstReserved;
 }
 
+struct GstBitWriter
+{
+	/**
+	 * Allocated @data for bit writer to write
+	 */
+	ubyte* data;
+	/**
+	 * Size of written @data in bits
+	 */
+	uint bitSize;
+	uint bitCapacity;
+	bool autoGrow;
+	bool owned;
+	void*[4] GstReserved;
+}
+
 struct GstByteReader
 {
 	/**

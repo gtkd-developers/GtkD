@@ -179,8 +179,7 @@ public class Pad : ObjectGst
 	 *     name = the name of the new pad.
 	 *     direction = the #GstPadDirection of the pad.
 	 *
-	 * Returns: a new #GstPad, or %NULL in
-	 *     case of an error.
+	 * Returns: a new #GstPad.
 	 *
 	 *     MT safe.
 	 *
@@ -208,8 +207,7 @@ public class Pad : ObjectGst
 	 *     templ = the #GstStaticPadTemplate to use
 	 *     name = the name of the pad
 	 *
-	 * Returns: a new #GstPad, or %NULL in
-	 *     case of an error.
+	 * Returns: a new #GstPad.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -235,8 +233,7 @@ public class Pad : ObjectGst
 	 *     templ = the pad template to use
 	 *     name = the name of the pad
 	 *
-	 * Returns: a new #GstPad, or %NULL in
-	 *     case of an error.
+	 * Returns: a new #GstPad.
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
@@ -1680,6 +1677,10 @@ public class Pad : ObjectGst
 	/**
 	 * Sets the given unlink function for the pad. It will be called
 	 * when the pad is unlinked.
+	 *
+	 * Note that the pad's lock is already held when the unlink
+	 * function is called, so most pad functions cannot be called
+	 * from within the callback.
 	 *
 	 * Params:
 	 *     unlink = the #GstPadUnlinkFunction to set.

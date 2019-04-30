@@ -311,9 +311,8 @@ public class Element : ObjectGst
 	 * Adds a pad (link point) to @element. @pad's parent will be set to @element;
 	 * see gst_object_set_parent() for refcounting information.
 	 *
-	 * Pads are not automatically activated so elements should perform the needed
-	 * steps to activate the pad in case this pad is added in the PAUSED or PLAYING
-	 * state. See gst_pad_set_active() for more information about activating pads.
+	 * Pads are automatically activated when added in the PAUSED or PLAYING
+	 * state.
 	 *
 	 * The pad and the element should be unlocked when calling this function.
 	 *
@@ -690,7 +689,7 @@ public class Element : ObjectGst
 	 * Retrieves the factory that was used to create this element.
 	 *
 	 * Returns: the #GstElementFactory used for creating this
-	 *     element. no refcounting is needed.
+	 *     element or %NULL if element has not been registered (static element). no refcounting is needed.
 	 */
 	public ElementFactory getFactory()
 	{
@@ -1507,6 +1506,10 @@ public class Element : ObjectGst
 	/**
 	 * Locks the state of an element, so state changes of the parent don't affect
 	 * this element anymore.
+	 *
+	 * Note that this is racy if the state lock of the parent bin is not taken.
+	 * The parent bin might've just checked the flag in another thread and as the
+	 * next step proceed to change the child element's state.
 	 *
 	 * MT safe.
 	 *

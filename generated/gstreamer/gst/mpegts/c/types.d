@@ -1016,7 +1016,13 @@ alias GstMpegtsTerrestrialTransmissionMode TerrestrialTransmissionMode;
  */
 struct GstMpegtsAtscEIT
 {
+	/**
+	 * The source id
+	 */
 	ushort sourceId;
+	/**
+	 * The protocol version
+	 */
 	ubyte protocolVersion;
 	/**
 	 * Events
@@ -1029,9 +1035,21 @@ struct GstMpegtsAtscEIT
  */
 struct GstMpegtsAtscEITEvent
 {
+	/**
+	 * The event id
+	 */
 	ushort eventId;
+	/**
+	 * The start time
+	 */
 	uint startTime;
+	/**
+	 * The etm location
+	 */
 	ubyte etmLocation;
+	/**
+	 * The length in seconds
+	 */
 	uint lengthInSeconds;
 	/**
 	 * the titles
@@ -1049,7 +1067,13 @@ struct GstMpegtsAtscEITEvent
 struct GstMpegtsAtscETT
 {
 	ushort ettTableIdExtension;
+	/**
+	 * The protocol version
+	 */
 	ushort protocolVersion;
+	/**
+	 * The etm id
+	 */
 	uint etmId;
 	/**
 	 * List of texts
@@ -1062,7 +1086,13 @@ struct GstMpegtsAtscETT
  */
 struct GstMpegtsAtscMGT
 {
+	/**
+	 * The protocol version
+	 */
 	ubyte protocolVersion;
+	/**
+	 * The numbers of subtables
+	 */
 	ushort tablesDefined;
 	/**
 	 * the tables
@@ -1079,8 +1109,17 @@ struct GstMpegtsAtscMGT
  */
 struct GstMpegtsAtscMGTTable
 {
+	/**
+	 * #GstMpegtsAtscMGTTableType
+	 */
 	ushort tableType;
+	/**
+	 * The packet ID
+	 */
 	ushort pid;
+	/**
+	 * The version number
+	 */
 	ubyte versionNumber;
 	uint numberBytes;
 	/**
@@ -1091,30 +1130,63 @@ struct GstMpegtsAtscMGTTable
 
 struct GstMpegtsAtscMultString
 {
+	/**
+	 * The ISO639 language code
+	 */
 	char[4] iso639Langcode;
 	GPtrArray* segments;
 }
 
 struct GstMpegtsAtscSTT
 {
+	/**
+	 * The protocol version
+	 */
 	ubyte protocolVersion;
+	/**
+	 * The system time
+	 */
 	uint systemTime;
+	/**
+	 * The GPS to UTC offset
+	 */
 	ubyte gpsUtcOffset;
 	bool dsStatus;
+	/**
+	 * The day of month
+	 */
 	ubyte dsDayofmonth;
+	/**
+	 * The hour
+	 */
 	ubyte dsHour;
 	/**
 	 * descriptors
 	 */
 	GPtrArray* descriptors;
+	/**
+	 * The UTC date and time
+	 */
 	GstDateTime* utcDatetime;
 }
 
 struct GstMpegtsAtscStringSegment
 {
+	/**
+	 * The compression type
+	 */
 	ubyte compressionType;
+	/**
+	 * The mode
+	 */
 	ubyte mode;
+	/**
+	 * The size of compressed data
+	 */
 	ubyte compressedDataSize;
+	/**
+	 * The compressed data
+	 */
 	ubyte* compressedData;
 	char* cachedString;
 }
@@ -1126,7 +1198,13 @@ struct GstMpegtsAtscStringSegment
  */
 struct GstMpegtsAtscVCT
 {
+	/**
+	 * The transport stream
+	 */
 	ushort transportStreamId;
+	/**
+	 * The protocol version
+	 */
 	ubyte protocolVersion;
 	/**
 	 * sources
@@ -1143,23 +1221,68 @@ struct GstMpegtsAtscVCT
  */
 struct GstMpegtsAtscVCTSource
 {
+	/**
+	 * The short name of a source
+	 */
 	char* shortName;
+	/**
+	 * The major channel number
+	 */
 	ushort majorChannelNumber;
+	/**
+	 * The minor channel number
+	 */
 	ushort minorChannelNumber;
+	/**
+	 * The modulation mode
+	 */
 	ubyte modulationMode;
+	/**
+	 * The carrier frequency
+	 */
 	uint carrierFrequency;
+	/**
+	 * The transport stream ID
+	 */
 	ushort channelTSID;
+	/**
+	 * The program number (see #GstMpegtsPatProgram)
+	 */
 	ushort programNumber;
+	/**
+	 * The ETM location
+	 */
 	ubyte ETMLocation;
+	/**
+	 * is access controlled
+	 */
 	bool accessControlled;
+	/**
+	 * is hidden
+	 */
 	bool hidden;
+	/**
+	 * is path select, CVCT only
+	 */
 	bool pathSelect;
+	/**
+	 * is out of band, CVCT only
+	 */
 	bool outOfBand;
+	/**
+	 * is hide guide
+	 */
 	bool hideGuide;
+	/**
+	 * The service type
+	 */
 	ubyte serviceType;
+	/**
+	 * The source id
+	 */
 	ushort sourceId;
 	/**
-	 * descriptors
+	 * an array of #GstMpegtsDescriptor
 	 */
 	GPtrArray* descriptors;
 }

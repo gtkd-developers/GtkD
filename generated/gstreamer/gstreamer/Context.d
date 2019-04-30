@@ -62,6 +62,8 @@ public  import gstreamerc.gstreamertypes;
  * %GST_STATE_NULL, non-persistent ones will be removed.
  * Also, a non-persistent context won't override a previous persistent
  * context set to an element.
+ *
+ * Since: 1.2
  */
 public class Context
 {

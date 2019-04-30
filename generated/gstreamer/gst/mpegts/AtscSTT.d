@@ -72,7 +72,9 @@ public final class AtscSTT
 	}
 
 
-	/** */
+	/**
+	 * The protocol version
+	 */
 	public @property ubyte protocolVersion()
 	{
 		return gstMpegtsAtscSTT.protocolVersion;
@@ -84,7 +86,9 @@ public final class AtscSTT
 		gstMpegtsAtscSTT.protocolVersion = value;
 	}
 
-	/** */
+	/**
+	 * The system time
+	 */
 	public @property uint systemTime()
 	{
 		return gstMpegtsAtscSTT.systemTime;
@@ -96,7 +100,9 @@ public final class AtscSTT
 		gstMpegtsAtscSTT.systemTime = value;
 	}
 
-	/** */
+	/**
+	 * The GPS to UTC offset
+	 */
 	public @property ubyte gpsUtcOffset()
 	{
 		return gstMpegtsAtscSTT.gpsUtcOffset;
@@ -120,7 +126,9 @@ public final class AtscSTT
 		gstMpegtsAtscSTT.dsStatus = value;
 	}
 
-	/** */
+	/**
+	 * The day of month
+	 */
 	public @property ubyte dsDayofmonth()
 	{
 		return gstMpegtsAtscSTT.dsDayofmonth;
@@ -132,7 +140,9 @@ public final class AtscSTT
 		gstMpegtsAtscSTT.dsDayofmonth = value;
 	}
 
-	/** */
+	/**
+	 * The hour
+	 */
 	public @property ubyte dsHour()
 	{
 		return gstMpegtsAtscSTT.dsHour;
@@ -158,7 +168,9 @@ public final class AtscSTT
 		gstMpegtsAtscSTT.descriptors = value.getPtrArrayStruct();
 	}
 
-	/** */
+	/**
+	 * The UTC date and time
+	 */
 	public @property DateTime utcDatetime()
 	{
 		return ObjectG.getDObject!(DateTime)(gstMpegtsAtscSTT.utcDatetime, false);

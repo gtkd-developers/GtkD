@@ -72,7 +72,9 @@ public final class AtscVCT
 	}
 
 
-	/** */
+	/**
+	 * The transport stream
+	 */
 	public @property ushort transportStreamId()
 	{
 		return gstMpegtsAtscVCT.transportStreamId;
@@ -84,7 +86,9 @@ public final class AtscVCT
 		gstMpegtsAtscVCT.transportStreamId = value;
 	}
 
-	/** */
+	/**
+	 * The protocol version
+	 */
 	public @property ubyte protocolVersion()
 	{
 		return gstMpegtsAtscVCT.protocolVersion;

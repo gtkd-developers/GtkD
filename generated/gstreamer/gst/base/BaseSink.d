@@ -286,6 +286,20 @@ public class BaseSink : Element
 	}
 
 	/**
+	 * Get the processing deadline of @sink. see
+	 * gst_base_sink_set_processing_deadline() for more information about
+	 * the processing deadline.
+	 *
+	 * Returns: the processing deadline
+	 *
+	 * Since: 1.16
+	 */
+	public GstClockTime getProcessingDeadline()
+	{
+		return gst_base_sink_get_processing_deadline(gstBaseSink);
+	}
+
+	/**
 	 * Get the render delay of @sink. see gst_base_sink_set_render_delay() for more
 	 * information about the render delay.
 	 *
@@ -471,6 +485,23 @@ public class BaseSink : Element
 	public void setMaxLateness(long maxLateness)
 	{
 		gst_base_sink_set_max_lateness(gstBaseSink, maxLateness);
+	}
+
+	/**
+	 * Maximum amount of time (in nanoseconds) that the pipeline can take
+	 * for processing the buffer. This is added to the latency of live
+	 * pipelines.
+	 *
+	 * This function is usually called by subclasses.
+	 *
+	 * Params:
+	 *     processingDeadline = the new processing deadline in nanoseconds.
+	 *
+	 * Since: 1.16
+	 */
+	public void setProcessingDeadline(GstClockTime processingDeadline)
+	{
+		gst_base_sink_set_processing_deadline(gstBaseSink, processingDeadline);
 	}
 
 	/**

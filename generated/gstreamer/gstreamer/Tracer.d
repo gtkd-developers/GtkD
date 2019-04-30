@@ -35,6 +35,8 @@ public  import gstreamerc.gstreamertypes;
  * gst_tracer_register(). Modules can attach to various hook-types - see
  * gst_tracing_register_hook(). When invoked they receive hook specific
  * contextual data, which they must not modify.
+ *
+ * Since: 1.8
  */
 public class Tracer : ObjectGst
 {

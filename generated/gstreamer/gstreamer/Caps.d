@@ -254,6 +254,30 @@ public class Caps
 	}
 
 	/**
+	 * Creates a new #GstCaps as a copy of the old @caps. The new caps will have a
+	 * refcount of 1, owned by the caller. The structures are copied as well.
+	 *
+	 * Note that this function is the semantic equivalent of a gst_caps_ref()
+	 * followed by a gst_caps_make_writable(). If you only want to hold on to a
+	 * reference to the data, you should use gst_caps_ref().
+	 *
+	 * When you are finished with the caps, call gst_caps_unref() on it.
+	 *
+	 * Returns: the new #GstCaps
+	 */
+	public Caps copy()
+	{
+		auto p = gst_caps_copy(gstCaps);
+
+		if(p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Caps)(cast(GstCaps*) p, true);
+	}
+
+	/**
 	 * Creates a new #GstCaps and appends a copy of the nth structure
 	 * contained in @caps.
 	 *
@@ -723,6 +747,19 @@ public class Caps
 	public void setFeatures(uint index, CapsFeatures features)
 	{
 		gst_caps_set_features(gstCaps, index, (features is null) ? null : features.getCapsFeaturesStruct(true));
+	}
+
+	/**
+	 * Sets the #GstCapsFeatures @features for all the structures of @caps.
+	 *
+	 * Params:
+	 *     features = the #GstCapsFeatures to set
+	 *
+	 * Since: 1.16
+	 */
+	public void setFeaturesSimple(CapsFeatures features)
+	{
+		gst_caps_set_features_simple(gstCaps, (features is null) ? null : features.getCapsFeaturesStruct(true));
 	}
 
 	/**

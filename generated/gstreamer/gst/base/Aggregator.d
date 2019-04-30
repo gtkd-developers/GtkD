@@ -77,6 +77,8 @@ private import gstreamer.Element;
  * See gst_element_class_add_static_pad_template_with_gtype().
  * 
  * This class used to live in gst-plugins-bad and was moved to core.
+ *
+ * Since: 1.14
  */
 public class Aggregator : Element
 {
@@ -202,5 +204,22 @@ public class Aggregator : Element
 	public void setSrcCaps(Caps caps)
 	{
 		gst_aggregator_set_src_caps(gstAggregator, (caps is null) ? null : caps.getCapsStruct());
+	}
+
+	/**
+	 * This is a simple #GstAggregator::get_next_time implementation that
+	 * just looks at the #GstSegment on the srcpad of the aggregator and bases
+	 * the next time on the running time there.
+	 *
+	 * This is the desired behaviour in most cases where you have a live source
+	 * and you have a dead line based aggregator subclass.
+	 *
+	 * Returns: The running time based on the position
+	 *
+	 * Since: 1.16
+	 */
+	public GstClockTime simpleGetNextTime()
+	{
+		return gst_aggregator_simple_get_next_time(gstAggregator);
 	}
 }

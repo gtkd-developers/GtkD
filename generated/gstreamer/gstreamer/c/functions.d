@@ -97,6 +97,7 @@ shared static this()
 	Linker.link(gst_buffer_new, "gst_buffer_new", LIBRARY_GSTREAMER);
 	Linker.link(gst_buffer_new_allocate, "gst_buffer_new_allocate", LIBRARY_GSTREAMER);
 	Linker.link(gst_buffer_new_wrapped, "gst_buffer_new_wrapped", LIBRARY_GSTREAMER);
+	Linker.link(gst_buffer_new_wrapped_bytes, "gst_buffer_new_wrapped_bytes", LIBRARY_GSTREAMER);
 	Linker.link(gst_buffer_new_wrapped_full, "gst_buffer_new_wrapped_full", LIBRARY_GSTREAMER);
 	Linker.link(gst_buffer_add_meta, "gst_buffer_add_meta", LIBRARY_GSTREAMER);
 	Linker.link(gst_buffer_add_parent_buffer_meta, "gst_buffer_add_parent_buffer_meta", LIBRARY_GSTREAMER);
@@ -228,6 +229,7 @@ shared static this()
 	Linker.link(gst_caps_append_structure, "gst_caps_append_structure", LIBRARY_GSTREAMER);
 	Linker.link(gst_caps_append_structure_full, "gst_caps_append_structure_full", LIBRARY_GSTREAMER);
 	Linker.link(gst_caps_can_intersect, "gst_caps_can_intersect", LIBRARY_GSTREAMER);
+	Linker.link(gst_caps_copy, "gst_caps_copy", LIBRARY_GSTREAMER);
 	Linker.link(gst_caps_copy_nth, "gst_caps_copy_nth", LIBRARY_GSTREAMER);
 	Linker.link(gst_caps_filter_and_map_in_place, "gst_caps_filter_and_map_in_place", LIBRARY_GSTREAMER);
 	Linker.link(gst_caps_fixate, "gst_caps_fixate", LIBRARY_GSTREAMER);
@@ -254,6 +256,7 @@ shared static this()
 	Linker.link(gst_caps_normalize, "gst_caps_normalize", LIBRARY_GSTREAMER);
 	Linker.link(gst_caps_remove_structure, "gst_caps_remove_structure", LIBRARY_GSTREAMER);
 	Linker.link(gst_caps_set_features, "gst_caps_set_features", LIBRARY_GSTREAMER);
+	Linker.link(gst_caps_set_features_simple, "gst_caps_set_features_simple", LIBRARY_GSTREAMER);
 	Linker.link(gst_caps_set_simple, "gst_caps_set_simple", LIBRARY_GSTREAMER);
 	Linker.link(gst_caps_set_simple_valist, "gst_caps_set_simple_valist", LIBRARY_GSTREAMER);
 	Linker.link(gst_caps_set_value, "gst_caps_set_value", LIBRARY_GSTREAMER);
@@ -310,10 +313,12 @@ shared static this()
 
 	Linker.link(gst_clock_get_type, "gst_clock_get_type", LIBRARY_GSTREAMER);
 	Linker.link(gst_clock_id_compare_func, "gst_clock_id_compare_func", LIBRARY_GSTREAMER);
+	Linker.link(gst_clock_id_get_clock, "gst_clock_id_get_clock", LIBRARY_GSTREAMER);
 	Linker.link(gst_clock_id_get_time, "gst_clock_id_get_time", LIBRARY_GSTREAMER);
 	Linker.link(gst_clock_id_ref, "gst_clock_id_ref", LIBRARY_GSTREAMER);
 	Linker.link(gst_clock_id_unref, "gst_clock_id_unref", LIBRARY_GSTREAMER);
 	Linker.link(gst_clock_id_unschedule, "gst_clock_id_unschedule", LIBRARY_GSTREAMER);
+	Linker.link(gst_clock_id_uses_clock, "gst_clock_id_uses_clock", LIBRARY_GSTREAMER);
 	Linker.link(gst_clock_id_wait, "gst_clock_id_wait", LIBRARY_GSTREAMER);
 	Linker.link(gst_clock_id_wait_async, "gst_clock_id_wait_async", LIBRARY_GSTREAMER);
 	Linker.link(gst_clock_add_observation, "gst_clock_add_observation", LIBRARY_GSTREAMER);
@@ -444,6 +449,7 @@ shared static this()
 	Linker.link(gst_device_provider_register, "gst_device_provider_register", LIBRARY_GSTREAMER);
 	Linker.link(gst_device_provider_can_monitor, "gst_device_provider_can_monitor", LIBRARY_GSTREAMER);
 	Linker.link(gst_device_provider_device_add, "gst_device_provider_device_add", LIBRARY_GSTREAMER);
+	Linker.link(gst_device_provider_device_changed, "gst_device_provider_device_changed", LIBRARY_GSTREAMER);
 	Linker.link(gst_device_provider_device_remove, "gst_device_provider_device_remove", LIBRARY_GSTREAMER);
 	Linker.link(gst_device_provider_get_bus, "gst_device_provider_get_bus", LIBRARY_GSTREAMER);
 	Linker.link(gst_device_provider_get_devices, "gst_device_provider_get_devices", LIBRARY_GSTREAMER);
@@ -634,6 +640,7 @@ shared static this()
 	Linker.link(gst_event_parse_protection, "gst_event_parse_protection", LIBRARY_GSTREAMER);
 	Linker.link(gst_event_parse_qos, "gst_event_parse_qos", LIBRARY_GSTREAMER);
 	Linker.link(gst_event_parse_seek, "gst_event_parse_seek", LIBRARY_GSTREAMER);
+	Linker.link(gst_event_parse_seek_trickmode_interval, "gst_event_parse_seek_trickmode_interval", LIBRARY_GSTREAMER);
 	Linker.link(gst_event_parse_segment, "gst_event_parse_segment", LIBRARY_GSTREAMER);
 	Linker.link(gst_event_parse_segment_done, "gst_event_parse_segment_done", LIBRARY_GSTREAMER);
 	Linker.link(gst_event_parse_select_streams, "gst_event_parse_select_streams", LIBRARY_GSTREAMER);
@@ -649,6 +656,7 @@ shared static this()
 	Linker.link(gst_event_parse_toc_select, "gst_event_parse_toc_select", LIBRARY_GSTREAMER);
 	Linker.link(gst_event_set_group_id, "gst_event_set_group_id", LIBRARY_GSTREAMER);
 	Linker.link(gst_event_set_running_time_offset, "gst_event_set_running_time_offset", LIBRARY_GSTREAMER);
+	Linker.link(gst_event_set_seek_trickmode_interval, "gst_event_set_seek_trickmode_interval", LIBRARY_GSTREAMER);
 	Linker.link(gst_event_set_seqnum, "gst_event_set_seqnum", LIBRARY_GSTREAMER);
 	Linker.link(gst_event_set_stream, "gst_event_set_stream", LIBRARY_GSTREAMER);
 	Linker.link(gst_event_set_stream_flags, "gst_event_set_stream_flags", LIBRARY_GSTREAMER);
@@ -733,6 +741,7 @@ shared static this()
 	Linker.link(gst_message_new_clock_provide, "gst_message_new_clock_provide", LIBRARY_GSTREAMER);
 	Linker.link(gst_message_new_custom, "gst_message_new_custom", LIBRARY_GSTREAMER);
 	Linker.link(gst_message_new_device_added, "gst_message_new_device_added", LIBRARY_GSTREAMER);
+	Linker.link(gst_message_new_device_changed, "gst_message_new_device_changed", LIBRARY_GSTREAMER);
 	Linker.link(gst_message_new_device_removed, "gst_message_new_device_removed", LIBRARY_GSTREAMER);
 	Linker.link(gst_message_new_duration_changed, "gst_message_new_duration_changed", LIBRARY_GSTREAMER);
 	Linker.link(gst_message_new_element, "gst_message_new_element", LIBRARY_GSTREAMER);
@@ -779,6 +788,7 @@ shared static this()
 	Linker.link(gst_message_parse_clock_provide, "gst_message_parse_clock_provide", LIBRARY_GSTREAMER);
 	Linker.link(gst_message_parse_context_type, "gst_message_parse_context_type", LIBRARY_GSTREAMER);
 	Linker.link(gst_message_parse_device_added, "gst_message_parse_device_added", LIBRARY_GSTREAMER);
+	Linker.link(gst_message_parse_device_changed, "gst_message_parse_device_changed", LIBRARY_GSTREAMER);
 	Linker.link(gst_message_parse_device_removed, "gst_message_parse_device_removed", LIBRARY_GSTREAMER);
 	Linker.link(gst_message_parse_error, "gst_message_parse_error", LIBRARY_GSTREAMER);
 	Linker.link(gst_message_parse_error_details, "gst_message_parse_error_details", LIBRARY_GSTREAMER);
@@ -823,6 +833,8 @@ shared static this()
 
 	// gstreamer.Meta
 
+	Linker.link(gst_meta_compare_seqnum, "gst_meta_compare_seqnum", LIBRARY_GSTREAMER);
+	Linker.link(gst_meta_get_seqnum, "gst_meta_get_seqnum", LIBRARY_GSTREAMER);
 	Linker.link(gst_meta_api_type_get_tags, "gst_meta_api_type_get_tags", LIBRARY_GSTREAMER);
 	Linker.link(gst_meta_api_type_has_tag, "gst_meta_api_type_has_tag", LIBRARY_GSTREAMER);
 	Linker.link(gst_meta_api_type_register, "gst_meta_api_type_register", LIBRARY_GSTREAMER);
@@ -831,6 +843,7 @@ shared static this()
 
 	// gstreamer.MiniObject
 
+	Linker.link(gst_mini_object_add_parent, "gst_mini_object_add_parent", LIBRARY_GSTREAMER);
 	Linker.link(gst_mini_object_copy, "gst_mini_object_copy", LIBRARY_GSTREAMER);
 	Linker.link(gst_mini_object_get_qdata, "gst_mini_object_get_qdata", LIBRARY_GSTREAMER);
 	Linker.link(gst_mini_object_init, "gst_mini_object_init", LIBRARY_GSTREAMER);
@@ -838,6 +851,7 @@ shared static this()
 	Linker.link(gst_mini_object_lock, "gst_mini_object_lock", LIBRARY_GSTREAMER);
 	Linker.link(gst_mini_object_make_writable, "gst_mini_object_make_writable", LIBRARY_GSTREAMER);
 	Linker.link(gst_mini_object_ref, "gst_mini_object_ref", LIBRARY_GSTREAMER);
+	Linker.link(gst_mini_object_remove_parent, "gst_mini_object_remove_parent", LIBRARY_GSTREAMER);
 	Linker.link(gst_mini_object_set_qdata, "gst_mini_object_set_qdata", LIBRARY_GSTREAMER);
 	Linker.link(gst_mini_object_steal_qdata, "gst_mini_object_steal_qdata", LIBRARY_GSTREAMER);
 	Linker.link(gst_mini_object_unlock, "gst_mini_object_unlock", LIBRARY_GSTREAMER);
@@ -1075,10 +1089,12 @@ shared static this()
 	Linker.link(gst_poll_add_fd, "gst_poll_add_fd", LIBRARY_GSTREAMER);
 	Linker.link(gst_poll_fd_can_read, "gst_poll_fd_can_read", LIBRARY_GSTREAMER);
 	Linker.link(gst_poll_fd_can_write, "gst_poll_fd_can_write", LIBRARY_GSTREAMER);
+	Linker.link(gst_poll_fd_ctl_pri, "gst_poll_fd_ctl_pri", LIBRARY_GSTREAMER);
 	Linker.link(gst_poll_fd_ctl_read, "gst_poll_fd_ctl_read", LIBRARY_GSTREAMER);
 	Linker.link(gst_poll_fd_ctl_write, "gst_poll_fd_ctl_write", LIBRARY_GSTREAMER);
 	Linker.link(gst_poll_fd_has_closed, "gst_poll_fd_has_closed", LIBRARY_GSTREAMER);
 	Linker.link(gst_poll_fd_has_error, "gst_poll_fd_has_error", LIBRARY_GSTREAMER);
+	Linker.link(gst_poll_fd_has_pri, "gst_poll_fd_has_pri", LIBRARY_GSTREAMER);
 	Linker.link(gst_poll_fd_ignored, "gst_poll_fd_ignored", LIBRARY_GSTREAMER);
 	Linker.link(gst_poll_free, "gst_poll_free", LIBRARY_GSTREAMER);
 	Linker.link(gst_poll_get_read_gpollfd, "gst_poll_get_read_gpollfd", LIBRARY_GSTREAMER);
@@ -1142,6 +1158,7 @@ shared static this()
 	Linker.link(gst_query_get_type, "gst_query_get_type", LIBRARY_GSTREAMER);
 	Linker.link(gst_query_new_accept_caps, "gst_query_new_accept_caps", LIBRARY_GSTREAMER);
 	Linker.link(gst_query_new_allocation, "gst_query_new_allocation", LIBRARY_GSTREAMER);
+	Linker.link(gst_query_new_bitrate, "gst_query_new_bitrate", LIBRARY_GSTREAMER);
 	Linker.link(gst_query_new_buffering, "gst_query_new_buffering", LIBRARY_GSTREAMER);
 	Linker.link(gst_query_new_caps, "gst_query_new_caps", LIBRARY_GSTREAMER);
 	Linker.link(gst_query_new_context, "gst_query_new_context", LIBRARY_GSTREAMER);
@@ -1173,6 +1190,7 @@ shared static this()
 	Linker.link(gst_query_parse_accept_caps, "gst_query_parse_accept_caps", LIBRARY_GSTREAMER);
 	Linker.link(gst_query_parse_accept_caps_result, "gst_query_parse_accept_caps_result", LIBRARY_GSTREAMER);
 	Linker.link(gst_query_parse_allocation, "gst_query_parse_allocation", LIBRARY_GSTREAMER);
+	Linker.link(gst_query_parse_bitrate, "gst_query_parse_bitrate", LIBRARY_GSTREAMER);
 	Linker.link(gst_query_parse_buffering_percent, "gst_query_parse_buffering_percent", LIBRARY_GSTREAMER);
 	Linker.link(gst_query_parse_buffering_range, "gst_query_parse_buffering_range", LIBRARY_GSTREAMER);
 	Linker.link(gst_query_parse_buffering_stats, "gst_query_parse_buffering_stats", LIBRARY_GSTREAMER);
@@ -1201,6 +1219,7 @@ shared static this()
 	Linker.link(gst_query_remove_nth_allocation_param, "gst_query_remove_nth_allocation_param", LIBRARY_GSTREAMER);
 	Linker.link(gst_query_remove_nth_allocation_pool, "gst_query_remove_nth_allocation_pool", LIBRARY_GSTREAMER);
 	Linker.link(gst_query_set_accept_caps_result, "gst_query_set_accept_caps_result", LIBRARY_GSTREAMER);
+	Linker.link(gst_query_set_bitrate, "gst_query_set_bitrate", LIBRARY_GSTREAMER);
 	Linker.link(gst_query_set_buffering_percent, "gst_query_set_buffering_percent", LIBRARY_GSTREAMER);
 	Linker.link(gst_query_set_buffering_range, "gst_query_set_buffering_range", LIBRARY_GSTREAMER);
 	Linker.link(gst_query_set_buffering_stats, "gst_query_set_buffering_stats", LIBRARY_GSTREAMER);
@@ -1261,7 +1280,11 @@ shared static this()
 	Linker.link(gst_sample_get_caps, "gst_sample_get_caps", LIBRARY_GSTREAMER);
 	Linker.link(gst_sample_get_info, "gst_sample_get_info", LIBRARY_GSTREAMER);
 	Linker.link(gst_sample_get_segment, "gst_sample_get_segment", LIBRARY_GSTREAMER);
+	Linker.link(gst_sample_set_buffer, "gst_sample_set_buffer", LIBRARY_GSTREAMER);
 	Linker.link(gst_sample_set_buffer_list, "gst_sample_set_buffer_list", LIBRARY_GSTREAMER);
+	Linker.link(gst_sample_set_caps, "gst_sample_set_caps", LIBRARY_GSTREAMER);
+	Linker.link(gst_sample_set_info, "gst_sample_set_info", LIBRARY_GSTREAMER);
+	Linker.link(gst_sample_set_segment, "gst_sample_set_segment", LIBRARY_GSTREAMER);
 
 	// gstreamer.Segment
 
@@ -1865,6 +1888,7 @@ __gshared extern(C)
 	GstBuffer* function() c_gst_buffer_new;
 	GstBuffer* function(GstAllocator* allocator, size_t size, GstAllocationParams* params) c_gst_buffer_new_allocate;
 	GstBuffer* function(void* data, size_t size) c_gst_buffer_new_wrapped;
+	GstBuffer* function(GBytes* bytes) c_gst_buffer_new_wrapped_bytes;
 	GstBuffer* function(GstMemoryFlags flags, void* data, size_t maxsize, size_t offset, size_t size, void* userData, GDestroyNotify notify) c_gst_buffer_new_wrapped_full;
 	GstMeta* function(GstBuffer* buffer, GstMetaInfo* info, void* params) c_gst_buffer_add_meta;
 	GstParentBufferMeta* function(GstBuffer* buffer, GstBuffer* ref_) c_gst_buffer_add_parent_buffer_meta;
@@ -1996,6 +2020,7 @@ __gshared extern(C)
 	void function(GstCaps* caps, GstStructure* structure) c_gst_caps_append_structure;
 	void function(GstCaps* caps, GstStructure* structure, GstCapsFeatures* features) c_gst_caps_append_structure_full;
 	int function(GstCaps* caps1, GstCaps* caps2) c_gst_caps_can_intersect;
+	GstCaps* function(GstCaps* caps) c_gst_caps_copy;
 	GstCaps* function(GstCaps* caps, uint nth) c_gst_caps_copy_nth;
 	void function(GstCaps* caps, GstCapsFilterMapFunc func, void* userData) c_gst_caps_filter_and_map_in_place;
 	GstCaps* function(GstCaps* caps) c_gst_caps_fixate;
@@ -2022,6 +2047,7 @@ __gshared extern(C)
 	GstCaps* function(GstCaps* caps) c_gst_caps_normalize;
 	void function(GstCaps* caps, uint idx) c_gst_caps_remove_structure;
 	void function(GstCaps* caps, uint index, GstCapsFeatures* features) c_gst_caps_set_features;
+	void function(GstCaps* caps, GstCapsFeatures* features) c_gst_caps_set_features_simple;
 	void function(GstCaps* caps, const(char)* field, ... ) c_gst_caps_set_simple;
 	void function(GstCaps* caps, const(char)* field, void* varargs) c_gst_caps_set_simple_valist;
 	void function(GstCaps* caps, const(char)* field, GValue* value) c_gst_caps_set_value;
@@ -2078,10 +2104,12 @@ __gshared extern(C)
 
 	GType function() c_gst_clock_get_type;
 	int function(void* id1, void* id2) c_gst_clock_id_compare_func;
+	GstClock* function(GstClockID id) c_gst_clock_id_get_clock;
 	GstClockTime function(GstClockID id) c_gst_clock_id_get_time;
 	GstClockID function(GstClockID id) c_gst_clock_id_ref;
 	void function(GstClockID id) c_gst_clock_id_unref;
 	void function(GstClockID id) c_gst_clock_id_unschedule;
+	int function(GstClockID id, GstClock* clock) c_gst_clock_id_uses_clock;
 	GstClockReturn function(GstClockID id, GstClockTimeDiff* jitter) c_gst_clock_id_wait;
 	GstClockReturn function(GstClockID id, GstClockCallback func, void* userData, GDestroyNotify destroyData) c_gst_clock_id_wait_async;
 	int function(GstClock* clock, GstClockTime slave, GstClockTime master, double* rSquared) c_gst_clock_add_observation;
@@ -2212,6 +2240,7 @@ __gshared extern(C)
 	int function(GstPlugin* plugin, const(char)* name, uint rank, GType type) c_gst_device_provider_register;
 	int function(GstDeviceProvider* provider) c_gst_device_provider_can_monitor;
 	void function(GstDeviceProvider* provider, GstDevice* device) c_gst_device_provider_device_add;
+	void function(GstDeviceProvider* provider, GstDevice* device, GstDevice* changedDevice) c_gst_device_provider_device_changed;
 	void function(GstDeviceProvider* provider, GstDevice* device) c_gst_device_provider_device_remove;
 	GstBus* function(GstDeviceProvider* provider) c_gst_device_provider_get_bus;
 	GList* function(GstDeviceProvider* provider) c_gst_device_provider_get_devices;
@@ -2402,6 +2431,7 @@ __gshared extern(C)
 	void function(GstEvent* event, char** systemId, GstBuffer** data, char** origin) c_gst_event_parse_protection;
 	void function(GstEvent* event, GstQOSType* type, double* proportion, GstClockTimeDiff* diff, GstClockTime* timestamp) c_gst_event_parse_qos;
 	void function(GstEvent* event, double* rate, GstFormat* format, GstSeekFlags* flags, GstSeekType* startType, long* start, GstSeekType* stopType, long* stop) c_gst_event_parse_seek;
+	void function(GstEvent* event, GstClockTime* interval) c_gst_event_parse_seek_trickmode_interval;
 	void function(GstEvent* event, GstSegment** segment) c_gst_event_parse_segment;
 	void function(GstEvent* event, GstFormat* format, long* position) c_gst_event_parse_segment_done;
 	void function(GstEvent* event, GList** streams) c_gst_event_parse_select_streams;
@@ -2417,6 +2447,7 @@ __gshared extern(C)
 	void function(GstEvent* event, char** uid) c_gst_event_parse_toc_select;
 	void function(GstEvent* event, uint groupId) c_gst_event_set_group_id;
 	void function(GstEvent* event, long offset) c_gst_event_set_running_time_offset;
+	void function(GstEvent* event, GstClockTime interval) c_gst_event_set_seek_trickmode_interval;
 	void function(GstEvent* event, uint seqnum) c_gst_event_set_seqnum;
 	void function(GstEvent* event, GstStream* stream) c_gst_event_set_stream;
 	void function(GstEvent* event, GstStreamFlags flags) c_gst_event_set_stream_flags;
@@ -2501,6 +2532,7 @@ __gshared extern(C)
 	GstMessage* function(GstObject* src, GstClock* clock, int ready) c_gst_message_new_clock_provide;
 	GstMessage* function(GstMessageType type, GstObject* src, GstStructure* structure) c_gst_message_new_custom;
 	GstMessage* function(GstObject* src, GstDevice* device) c_gst_message_new_device_added;
+	GstMessage* function(GstObject* src, GstDevice* device, GstDevice* changedDevice) c_gst_message_new_device_changed;
 	GstMessage* function(GstObject* src, GstDevice* device) c_gst_message_new_device_removed;
 	GstMessage* function(GstObject* src) c_gst_message_new_duration_changed;
 	GstMessage* function(GstObject* src, GstStructure* structure) c_gst_message_new_element;
@@ -2547,6 +2579,7 @@ __gshared extern(C)
 	void function(GstMessage* message, GstClock** clock, int* ready) c_gst_message_parse_clock_provide;
 	int function(GstMessage* message, char** contextType) c_gst_message_parse_context_type;
 	void function(GstMessage* message, GstDevice** device) c_gst_message_parse_device_added;
+	void function(GstMessage* message, GstDevice** device, GstDevice** changedDevice) c_gst_message_parse_device_changed;
 	void function(GstMessage* message, GstDevice** device) c_gst_message_parse_device_removed;
 	void function(GstMessage* message, GError** gerror, char** debug_) c_gst_message_parse_error;
 	void function(GstMessage* message, GstStructure** structure) c_gst_message_parse_error_details;
@@ -2591,6 +2624,8 @@ __gshared extern(C)
 
 	// gstreamer.Meta
 
+	int function(GstMeta* meta1, GstMeta* meta2) c_gst_meta_compare_seqnum;
+	ulong function(GstMeta* meta) c_gst_meta_get_seqnum;
 	char** function(GType api) c_gst_meta_api_type_get_tags;
 	int function(GType api, GQuark tag) c_gst_meta_api_type_has_tag;
 	GType function(const(char)* api, char** tags) c_gst_meta_api_type_register;
@@ -2599,6 +2634,7 @@ __gshared extern(C)
 
 	// gstreamer.MiniObject
 
+	void function(GstMiniObject* object, GstMiniObject* parent) c_gst_mini_object_add_parent;
 	GstMiniObject* function(GstMiniObject* miniObject) c_gst_mini_object_copy;
 	void* function(GstMiniObject* object, GQuark quark) c_gst_mini_object_get_qdata;
 	void function(GstMiniObject* miniObject, uint flags, GType type, GstMiniObjectCopyFunction copyFunc, GstMiniObjectDisposeFunction disposeFunc, GstMiniObjectFreeFunction freeFunc) c_gst_mini_object_init;
@@ -2606,6 +2642,7 @@ __gshared extern(C)
 	int function(GstMiniObject* object, GstLockFlags flags) c_gst_mini_object_lock;
 	GstMiniObject* function(GstMiniObject* miniObject) c_gst_mini_object_make_writable;
 	GstMiniObject* function(GstMiniObject* miniObject) c_gst_mini_object_ref;
+	void function(GstMiniObject* object, GstMiniObject* parent) c_gst_mini_object_remove_parent;
 	void function(GstMiniObject* object, GQuark quark, void* data, GDestroyNotify destroy) c_gst_mini_object_set_qdata;
 	void* function(GstMiniObject* object, GQuark quark) c_gst_mini_object_steal_qdata;
 	void function(GstMiniObject* object, GstLockFlags flags) c_gst_mini_object_unlock;
@@ -2843,10 +2880,12 @@ __gshared extern(C)
 	int function(GstPoll* set, GstPollFD* fd) c_gst_poll_add_fd;
 	int function(GstPoll* set, GstPollFD* fd) c_gst_poll_fd_can_read;
 	int function(GstPoll* set, GstPollFD* fd) c_gst_poll_fd_can_write;
+	int function(GstPoll* set, GstPollFD* fd, int active) c_gst_poll_fd_ctl_pri;
 	int function(GstPoll* set, GstPollFD* fd, int active) c_gst_poll_fd_ctl_read;
 	int function(GstPoll* set, GstPollFD* fd, int active) c_gst_poll_fd_ctl_write;
 	int function(GstPoll* set, GstPollFD* fd) c_gst_poll_fd_has_closed;
 	int function(GstPoll* set, GstPollFD* fd) c_gst_poll_fd_has_error;
+	int function(GstPoll* set, GstPollFD* fd) c_gst_poll_fd_has_pri;
 	void function(GstPoll* set, GstPollFD* fd) c_gst_poll_fd_ignored;
 	void function(GstPoll* set) c_gst_poll_free;
 	void function(GstPoll* set, GPollFD* fd) c_gst_poll_get_read_gpollfd;
@@ -2910,6 +2949,7 @@ __gshared extern(C)
 	GType function() c_gst_query_get_type;
 	GstQuery* function(GstCaps* caps) c_gst_query_new_accept_caps;
 	GstQuery* function(GstCaps* caps, int needPool) c_gst_query_new_allocation;
+	GstQuery* function() c_gst_query_new_bitrate;
 	GstQuery* function(GstFormat format) c_gst_query_new_buffering;
 	GstQuery* function(GstCaps* filter) c_gst_query_new_caps;
 	GstQuery* function(const(char)* contextType) c_gst_query_new_context;
@@ -2941,6 +2981,7 @@ __gshared extern(C)
 	void function(GstQuery* query, GstCaps** caps) c_gst_query_parse_accept_caps;
 	void function(GstQuery* query, int* result) c_gst_query_parse_accept_caps_result;
 	void function(GstQuery* query, GstCaps** caps, int* needPool) c_gst_query_parse_allocation;
+	void function(GstQuery* query, uint* nominalBitrate) c_gst_query_parse_bitrate;
 	void function(GstQuery* query, int* busy, int* percent) c_gst_query_parse_buffering_percent;
 	void function(GstQuery* query, GstFormat* format, long* start, long* stop, long* estimatedTotal) c_gst_query_parse_buffering_range;
 	void function(GstQuery* query, GstBufferingMode* mode, int* avgIn, int* avgOut, long* bufferingLeft) c_gst_query_parse_buffering_stats;
@@ -2969,6 +3010,7 @@ __gshared extern(C)
 	void function(GstQuery* query, uint index) c_gst_query_remove_nth_allocation_param;
 	void function(GstQuery* query, uint index) c_gst_query_remove_nth_allocation_pool;
 	void function(GstQuery* query, int result) c_gst_query_set_accept_caps_result;
+	void function(GstQuery* query, uint nominalBitrate) c_gst_query_set_bitrate;
 	void function(GstQuery* query, int busy, int percent) c_gst_query_set_buffering_percent;
 	void function(GstQuery* query, GstFormat format, long start, long stop, long estimatedTotal) c_gst_query_set_buffering_range;
 	void function(GstQuery* query, GstBufferingMode mode, int avgIn, int avgOut, long bufferingLeft) c_gst_query_set_buffering_stats;
@@ -3029,7 +3071,11 @@ __gshared extern(C)
 	GstCaps* function(GstSample* sample) c_gst_sample_get_caps;
 	GstStructure* function(GstSample* sample) c_gst_sample_get_info;
 	GstSegment* function(GstSample* sample) c_gst_sample_get_segment;
+	void function(GstSample* sample, GstBuffer* buffer) c_gst_sample_set_buffer;
 	void function(GstSample* sample, GstBufferList* bufferList) c_gst_sample_set_buffer_list;
+	void function(GstSample* sample, GstCaps* caps) c_gst_sample_set_caps;
+	int function(GstSample* sample, GstStructure* info) c_gst_sample_set_info;
+	void function(GstSample* sample, GstSegment* segment) c_gst_sample_set_segment;
 
 	// gstreamer.Segment
 
@@ -3631,6 +3677,7 @@ alias c_gst_buffer_get_type gst_buffer_get_type;
 alias c_gst_buffer_new gst_buffer_new;
 alias c_gst_buffer_new_allocate gst_buffer_new_allocate;
 alias c_gst_buffer_new_wrapped gst_buffer_new_wrapped;
+alias c_gst_buffer_new_wrapped_bytes gst_buffer_new_wrapped_bytes;
 alias c_gst_buffer_new_wrapped_full gst_buffer_new_wrapped_full;
 alias c_gst_buffer_add_meta gst_buffer_add_meta;
 alias c_gst_buffer_add_parent_buffer_meta gst_buffer_add_parent_buffer_meta;
@@ -3762,6 +3809,7 @@ alias c_gst_caps_append gst_caps_append;
 alias c_gst_caps_append_structure gst_caps_append_structure;
 alias c_gst_caps_append_structure_full gst_caps_append_structure_full;
 alias c_gst_caps_can_intersect gst_caps_can_intersect;
+alias c_gst_caps_copy gst_caps_copy;
 alias c_gst_caps_copy_nth gst_caps_copy_nth;
 alias c_gst_caps_filter_and_map_in_place gst_caps_filter_and_map_in_place;
 alias c_gst_caps_fixate gst_caps_fixate;
@@ -3788,6 +3836,7 @@ alias c_gst_caps_merge_structure_full gst_caps_merge_structure_full;
 alias c_gst_caps_normalize gst_caps_normalize;
 alias c_gst_caps_remove_structure gst_caps_remove_structure;
 alias c_gst_caps_set_features gst_caps_set_features;
+alias c_gst_caps_set_features_simple gst_caps_set_features_simple;
 alias c_gst_caps_set_simple gst_caps_set_simple;
 alias c_gst_caps_set_simple_valist gst_caps_set_simple_valist;
 alias c_gst_caps_set_value gst_caps_set_value;
@@ -3844,10 +3893,12 @@ alias c_gst_child_proxy_set_valist gst_child_proxy_set_valist;
 
 alias c_gst_clock_get_type gst_clock_get_type;
 alias c_gst_clock_id_compare_func gst_clock_id_compare_func;
+alias c_gst_clock_id_get_clock gst_clock_id_get_clock;
 alias c_gst_clock_id_get_time gst_clock_id_get_time;
 alias c_gst_clock_id_ref gst_clock_id_ref;
 alias c_gst_clock_id_unref gst_clock_id_unref;
 alias c_gst_clock_id_unschedule gst_clock_id_unschedule;
+alias c_gst_clock_id_uses_clock gst_clock_id_uses_clock;
 alias c_gst_clock_id_wait gst_clock_id_wait;
 alias c_gst_clock_id_wait_async gst_clock_id_wait_async;
 alias c_gst_clock_add_observation gst_clock_add_observation;
@@ -3978,6 +4029,7 @@ alias c_gst_device_provider_get_type gst_device_provider_get_type;
 alias c_gst_device_provider_register gst_device_provider_register;
 alias c_gst_device_provider_can_monitor gst_device_provider_can_monitor;
 alias c_gst_device_provider_device_add gst_device_provider_device_add;
+alias c_gst_device_provider_device_changed gst_device_provider_device_changed;
 alias c_gst_device_provider_device_remove gst_device_provider_device_remove;
 alias c_gst_device_provider_get_bus gst_device_provider_get_bus;
 alias c_gst_device_provider_get_devices gst_device_provider_get_devices;
@@ -4168,6 +4220,7 @@ alias c_gst_event_parse_latency gst_event_parse_latency;
 alias c_gst_event_parse_protection gst_event_parse_protection;
 alias c_gst_event_parse_qos gst_event_parse_qos;
 alias c_gst_event_parse_seek gst_event_parse_seek;
+alias c_gst_event_parse_seek_trickmode_interval gst_event_parse_seek_trickmode_interval;
 alias c_gst_event_parse_segment gst_event_parse_segment;
 alias c_gst_event_parse_segment_done gst_event_parse_segment_done;
 alias c_gst_event_parse_select_streams gst_event_parse_select_streams;
@@ -4183,6 +4236,7 @@ alias c_gst_event_parse_toc gst_event_parse_toc;
 alias c_gst_event_parse_toc_select gst_event_parse_toc_select;
 alias c_gst_event_set_group_id gst_event_set_group_id;
 alias c_gst_event_set_running_time_offset gst_event_set_running_time_offset;
+alias c_gst_event_set_seek_trickmode_interval gst_event_set_seek_trickmode_interval;
 alias c_gst_event_set_seqnum gst_event_set_seqnum;
 alias c_gst_event_set_stream gst_event_set_stream;
 alias c_gst_event_set_stream_flags gst_event_set_stream_flags;
@@ -4267,6 +4321,7 @@ alias c_gst_message_new_clock_lost gst_message_new_clock_lost;
 alias c_gst_message_new_clock_provide gst_message_new_clock_provide;
 alias c_gst_message_new_custom gst_message_new_custom;
 alias c_gst_message_new_device_added gst_message_new_device_added;
+alias c_gst_message_new_device_changed gst_message_new_device_changed;
 alias c_gst_message_new_device_removed gst_message_new_device_removed;
 alias c_gst_message_new_duration_changed gst_message_new_duration_changed;
 alias c_gst_message_new_element gst_message_new_element;
@@ -4313,6 +4368,7 @@ alias c_gst_message_parse_clock_lost gst_message_parse_clock_lost;
 alias c_gst_message_parse_clock_provide gst_message_parse_clock_provide;
 alias c_gst_message_parse_context_type gst_message_parse_context_type;
 alias c_gst_message_parse_device_added gst_message_parse_device_added;
+alias c_gst_message_parse_device_changed gst_message_parse_device_changed;
 alias c_gst_message_parse_device_removed gst_message_parse_device_removed;
 alias c_gst_message_parse_error gst_message_parse_error;
 alias c_gst_message_parse_error_details gst_message_parse_error_details;
@@ -4357,6 +4413,8 @@ alias c_gst_message_type_to_quark gst_message_type_to_quark;
 
 // gstreamer.Meta
 
+alias c_gst_meta_compare_seqnum gst_meta_compare_seqnum;
+alias c_gst_meta_get_seqnum gst_meta_get_seqnum;
 alias c_gst_meta_api_type_get_tags gst_meta_api_type_get_tags;
 alias c_gst_meta_api_type_has_tag gst_meta_api_type_has_tag;
 alias c_gst_meta_api_type_register gst_meta_api_type_register;
@@ -4365,6 +4423,7 @@ alias c_gst_meta_register gst_meta_register;
 
 // gstreamer.MiniObject
 
+alias c_gst_mini_object_add_parent gst_mini_object_add_parent;
 alias c_gst_mini_object_copy gst_mini_object_copy;
 alias c_gst_mini_object_get_qdata gst_mini_object_get_qdata;
 alias c_gst_mini_object_init gst_mini_object_init;
@@ -4372,6 +4431,7 @@ alias c_gst_mini_object_is_writable gst_mini_object_is_writable;
 alias c_gst_mini_object_lock gst_mini_object_lock;
 alias c_gst_mini_object_make_writable gst_mini_object_make_writable;
 alias c_gst_mini_object_ref gst_mini_object_ref;
+alias c_gst_mini_object_remove_parent gst_mini_object_remove_parent;
 alias c_gst_mini_object_set_qdata gst_mini_object_set_qdata;
 alias c_gst_mini_object_steal_qdata gst_mini_object_steal_qdata;
 alias c_gst_mini_object_unlock gst_mini_object_unlock;
@@ -4609,10 +4669,12 @@ alias c_gst_plugin_feature_set_rank gst_plugin_feature_set_rank;
 alias c_gst_poll_add_fd gst_poll_add_fd;
 alias c_gst_poll_fd_can_read gst_poll_fd_can_read;
 alias c_gst_poll_fd_can_write gst_poll_fd_can_write;
+alias c_gst_poll_fd_ctl_pri gst_poll_fd_ctl_pri;
 alias c_gst_poll_fd_ctl_read gst_poll_fd_ctl_read;
 alias c_gst_poll_fd_ctl_write gst_poll_fd_ctl_write;
 alias c_gst_poll_fd_has_closed gst_poll_fd_has_closed;
 alias c_gst_poll_fd_has_error gst_poll_fd_has_error;
+alias c_gst_poll_fd_has_pri gst_poll_fd_has_pri;
 alias c_gst_poll_fd_ignored gst_poll_fd_ignored;
 alias c_gst_poll_free gst_poll_free;
 alias c_gst_poll_get_read_gpollfd gst_poll_get_read_gpollfd;
@@ -4676,6 +4738,7 @@ alias c_gst_proxy_pad_get_internal gst_proxy_pad_get_internal;
 alias c_gst_query_get_type gst_query_get_type;
 alias c_gst_query_new_accept_caps gst_query_new_accept_caps;
 alias c_gst_query_new_allocation gst_query_new_allocation;
+alias c_gst_query_new_bitrate gst_query_new_bitrate;
 alias c_gst_query_new_buffering gst_query_new_buffering;
 alias c_gst_query_new_caps gst_query_new_caps;
 alias c_gst_query_new_context gst_query_new_context;
@@ -4707,6 +4770,7 @@ alias c_gst_query_has_scheduling_mode_with_flags gst_query_has_scheduling_mode_w
 alias c_gst_query_parse_accept_caps gst_query_parse_accept_caps;
 alias c_gst_query_parse_accept_caps_result gst_query_parse_accept_caps_result;
 alias c_gst_query_parse_allocation gst_query_parse_allocation;
+alias c_gst_query_parse_bitrate gst_query_parse_bitrate;
 alias c_gst_query_parse_buffering_percent gst_query_parse_buffering_percent;
 alias c_gst_query_parse_buffering_range gst_query_parse_buffering_range;
 alias c_gst_query_parse_buffering_stats gst_query_parse_buffering_stats;
@@ -4735,6 +4799,7 @@ alias c_gst_query_remove_nth_allocation_meta gst_query_remove_nth_allocation_met
 alias c_gst_query_remove_nth_allocation_param gst_query_remove_nth_allocation_param;
 alias c_gst_query_remove_nth_allocation_pool gst_query_remove_nth_allocation_pool;
 alias c_gst_query_set_accept_caps_result gst_query_set_accept_caps_result;
+alias c_gst_query_set_bitrate gst_query_set_bitrate;
 alias c_gst_query_set_buffering_percent gst_query_set_buffering_percent;
 alias c_gst_query_set_buffering_range gst_query_set_buffering_range;
 alias c_gst_query_set_buffering_stats gst_query_set_buffering_stats;
@@ -4795,7 +4860,11 @@ alias c_gst_sample_get_buffer_list gst_sample_get_buffer_list;
 alias c_gst_sample_get_caps gst_sample_get_caps;
 alias c_gst_sample_get_info gst_sample_get_info;
 alias c_gst_sample_get_segment gst_sample_get_segment;
+alias c_gst_sample_set_buffer gst_sample_set_buffer;
 alias c_gst_sample_set_buffer_list gst_sample_set_buffer_list;
+alias c_gst_sample_set_caps gst_sample_set_caps;
+alias c_gst_sample_set_info gst_sample_set_info;
+alias c_gst_sample_set_segment gst_sample_set_segment;
 
 // gstreamer.Segment
 

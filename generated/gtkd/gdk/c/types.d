@@ -4059,6 +4059,10 @@ struct GdkWindowClass
 
 struct GdkWindowRedirect;
 
+struct GdkX11GLContextClass;
+
+struct GdkX11MonitorClass;
+
 struct GdkX11Window;
 
 struct GdkX11WindowClass;
@@ -4177,8 +4181,17 @@ alias GDK_EVENT_PROPAGATE = EVENT_PROPAGATE;
 enum EVENT_STOP = true;
 alias GDK_EVENT_STOP = EVENT_STOP;
 
+enum MAJOR_VERSION = 3;
+alias GDK_MAJOR_VERSION = MAJOR_VERSION;
+
 enum MAX_TIMECOORD_AXES = 128;
 alias GDK_MAX_TIMECOORD_AXES = MAX_TIMECOORD_AXES;
+
+enum MICRO_VERSION = 8;
+alias GDK_MICRO_VERSION = MICRO_VERSION;
+
+enum MINOR_VERSION = 24;
+alias GDK_MINOR_VERSION = MINOR_VERSION;
 
 /**
  * A special value, indicating that the background
