@@ -325,7 +325,7 @@ ifeq ("$(OS)","Darwin")
     install-shared: install-shared-gtkd
 else
     install: install-gtkd install-gtkdsv install-gstreamer install-vte install-peas
-    install-headers: install-headers-gtkd install-headers-gtkdsv install-shared-gstreamer install-shared-vte install-shared-peas
+    install-headers: install-headers-gtkd install-headers-gtkdsv install-headers-gstreamer install-headers-vte install-headers-peas
     install-shared: install-shared-gtkd install-shared-gtkdsv install-shared-gstreamer install-shared-vte install-shared-peas
 endif
 
