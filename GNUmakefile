@@ -5,7 +5,6 @@ PKG_CONFIG?=pkg-config
 OS=$(shell uname || uname -s)
 ARCH=$(shell uname -m || arch)
 
-datadir?=$(prefix)/share
 ifeq (, $(shell which dpkg-architecture 2>/dev/null))
 	libdir?=lib/
 else
@@ -369,33 +368,33 @@ install-shared-peas: $(SONAME_PEASD) install-shared-gtkd
 
 install-headers-gtkd: gtkd-$(MAJOR).pc
 	install -d $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR)
-	install -d $(DESTDIR)$(datadir)/pkgconfig
+	install -d $(DESTDIR)$(libdir)/pkgconfig
 	(cd generated/gtkd;   echo $(SOURCES_GTKD)   | sed -e s,generated/gtkd/,,g   | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xvf -)
-	install -m 644 gtkd-$(MAJOR).pc $(DESTDIR)$(datadir)/pkgconfig
+	install -m 644 gtkd-$(MAJOR).pc $(DESTDIR)$(libdir)/pkgconfig
 
 install-headers-gtkdgl: gtkdgl-$(MAJOR).pc install-headers-gtkd
 	(cd generated/gtkdgl; echo $(SOURCES_GTKDGL) | sed -e s,generated/gtkdgl/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xvf -)
-	install -m 644 gtkdgl-$(MAJOR).pc $(DESTDIR)$(datadir)/pkgconfig
+	install -m 644 gtkdgl-$(MAJOR).pc $(DESTDIR)$(libdir)/pkgconfig
 
 install-headers-gtkdsv: gtkdsv-$(MAJOR).pc install-headers-gtkd
 	(cd generated/sourceview; echo $(SOURCES_GTKDSV) | sed -e s,generated/sourceview/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xvf -)
-	install -m 644 gtkdsv-$(MAJOR).pc $(DESTDIR)$(datadir)/pkgconfig
+	install -m 644 gtkdsv-$(MAJOR).pc $(DESTDIR)$(libdir)/pkgconfig
 
 install-headers-gstreamer: gstreamerd-$(MAJOR).pc install-headers-gtkd
 	(cd generated/gstreamer; echo $(SOURCES_GSTREAMERD) | sed -e s,generated/gstreamer/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xvf -)
-	install -m 644 gstreamerd-$(MAJOR).pc $(DESTDIR)$(datadir)/pkgconfig
+	install -m 644 gstreamerd-$(MAJOR).pc $(DESTDIR)$(libdir)/pkgconfig
 
 install-headers-vte: vted-$(MAJOR).pc install-headers-gtkd
 	(cd generated/vte; echo $(SOURCES_VTED) | sed -e s,generated/vte/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xvf -)
-	install -m 644 vted-$(MAJOR).pc $(DESTDIR)$(datadir)/pkgconfig
+	install -m 644 vted-$(MAJOR).pc $(DESTDIR)$(libdir)/pkgconfig
 
 install-headers-peas: peasd-$(MAJOR).pc install-headers-gtkd
 	(cd generated/peas; echo $(SOURCES_PEASD) | sed -e s,generated/peas/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xvf -)
-	install -m 644 peasd-$(MAJOR).pc $(DESTDIR)$(datadir)/pkgconfig
+	install -m 644 peasd-$(MAJOR).pc $(DESTDIR)$(libdir)/pkgconfig
 
 uninstall: uninstall-gtkdgl uninstall-gtkdsv uninstall-gstreamer uninstall-vte uninstall-peas
 	$(foreach dir,$(shell ls generated/gtkd)  , rm -rf $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR)/$(dir))
-	rm -f $(DESTDIR)$(datadir)/pkgconfig/gtkd-$(MAJOR).pc
+	rm -f $(DESTDIR)$(libdir)/pkgconfig/gtkd-$(MAJOR).pc
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_GTKD)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKD)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKD).$(SO_VERSION)
@@ -403,7 +402,7 @@ uninstall: uninstall-gtkdgl uninstall-gtkdsv uninstall-gstreamer uninstall-vte u
 
 uninstall-gtkdgl:
 	$(foreach dir,$(shell ls generated/gtkdgl), rm -rf $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR)/$(dir))
-	rm -f $(DESTDIR)$(datadir)/pkgconfig/gtkdgl-$(MAJOR).pc
+	rm -f $(DESTDIR)$(libdir)/pkgconfig/gtkdgl-$(MAJOR).pc
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_GTKDGL)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDGL)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDGL).$(SO_VERSION)
@@ -411,7 +410,7 @@ uninstall-gtkdgl:
 
 uninstall-gtkdsv:
 	$(foreach dir,$(shell ls generated/sourceview), rm -rf $(DESTDIR)$(prefix)/include/d/$(dir))
-	rm -f $(DESTDIR)$(datadir)/pkgconfig/gtkdsv-$(MAJOR).pc
+	rm -f $(DESTDIR)$(libdir)/pkgconfig/gtkdsv-$(MAJOR).pc
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_GTKDSV)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDSV)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GTKDSV).$(SO_VERSION)
@@ -419,7 +418,7 @@ uninstall-gtkdsv:
 
 uninstall-gstreamer:
 	$(foreach dir,$(shell ls generated/gstreamer), rm -rf $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR)/$(dir))
-	rm -f $(DESTDIR)$(datadir)/pkgconfig/gstreamerd-$(MAJOR).pc
+	rm -f $(DESTDIR)$(libdir)/pkgconfig/gstreamerd-$(MAJOR).pc
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_GSTREAMERD)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GSTREAMERD)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_GSTREAMERD).$(SO_VERSION)
@@ -427,7 +426,7 @@ uninstall-gstreamer:
 
 uninstall-vte:
 	$(foreach dir,$(shell ls generated/vte), rm -rf $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR)/$(dir))
-	rm -f $(DESTDIR)$(datadir)/pkgconfig/vted-$(MAJOR).pc
+	rm -f $(DESTDIR)$(libdir)/pkgconfig/vted-$(MAJOR).pc
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_VTED)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_VTED)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_VTED).$(SO_VERSION)
@@ -435,7 +434,7 @@ uninstall-vte:
 
 uninstall-peas:
 	$(foreach dir,$(shell ls generated/peas), rm -rf $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR)/$(dir))
-	rm -f $(DESTDIR)$(datadir)/pkgconfig/peasd-$(MAJOR).pc
+	rm -f $(DESTDIR)$(libdir)/pkgconfig/peasd-$(MAJOR).pc
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(LIBNAME_PEASD)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_PEASD)
 	rm -f $(DESTDIR)$(prefix)/$(libdir)/$(SONAME_PEASD).$(SO_VERSION)
