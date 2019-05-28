@@ -1,0 +1,1310 @@
+/* a few things you can change to pick a basic color scheme */
+
+/*
+	FIXME: have some automatic magic for choosing light vs dark and picking an accent color.
+
+	Ideally, we'll get to the point where you can just say:
+		project name
+		project logo
+		project links
+
+		light/dark scheme
+		project color
+
+	and it will adapt the rest to a good-enough state automatically.
+*/
+
+#page-header,
+#suggestion-box {
+	background-color: rgb(49, 57, 176);
+	background-color: rgb(49, 110, 47);
+	background-color: rgb(176, 57, 49);
+}
+
+#page-header,
+#suggestion-box,
+#page-footer,
+#page-nav {
+	border-color: rgb(209, 209, 209);
+}
+
+#page-nav {
+	background-color: rgb(248, 248, 248);
+}
+
+a:link {
+	color: #145E9D;
+	text-decoration: none;
+}
+
+/* done with basic colors */
+
+body {
+	font: normal normal normal 13px/1.3em Helvetica, Arial, sans-serif;
+	color: #515151;
+}
+
+.big-o {
+	white-space: nowrap;
+}
+
+.member-list .dt,
+.overload-option,
+pre {
+	box-sizing: border-box;
+	overflow: auto;
+	max-width: 800px; /* The script sets the real one */
+	max-width: calc(80vw - 16em - 4em);
+}
+
+
+#page-header {
+	background-color: #1C1C1C;
+	margin-bottom: 6px;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	color: white;
+	height: 65px;
+	margin: -8px;
+	padding: 0.5em 0.5em;
+	margin-bottom: 0.0em;
+	overflow: hidden;
+}
+
+#page-header span {
+	vertical-align: top;
+}
+
+#page-header #logotype {
+	float: left;
+}
+
+#page-header #search {
+	float: right;
+	margin-top: 32px;
+	margin-right: 5px;
+}
+
+#page-header nav {
+	display: inline-block;
+	margin-left: 2em;
+	vertical-align: top;
+}
+
+#page-header nav a {
+	display: inline-block;
+	color: white;
+	font-weight: bold;
+	margin-right: 2em;
+}
+
+#page-body {
+	clear: both;
+	width: 100%;
+	margin: 0px auto;
+	min-height: calc(100vh - 5em - 65px);
+	display: flex;
+	box-sizing: border-box;
+}
+
+#page-body #page-nav {
+	flex: 0 0 18em;
+	width: 18em;
+	min-width: 18em;
+	max-width: 18em;
+	order: 1;
+	padding: 0.25em;
+	padding-top: 0.5em;
+	min-height: 800px;
+	min-height: calc(100vh - 5em - 65px);
+
+	overflow: hidden;
+
+	border-right-style: solid;
+	border-right-width: 1px;
+	box-sizing: border-box;
+}
+
+#page-body #page-content {
+	flex: 1 1 auto;
+	order: 2;
+	padding: 0.25em;
+	padding-left: 2em;
+	box-sizing: border-box;
+	max-width: 960px;
+}
+
+@media all and (max-width: 800px) {
+	#page-body { 
+		display: block;
+		min-height: 0px;
+	}
+
+	#page-body #page-nav {
+		display: block;
+		width: auto;
+		max-width: 800px;
+		border-top-style: solid;
+		border-top-width: 1px;
+		border-right: none;
+		min-height: 0px;
+	}
+
+	#page-body #page-content {
+		padding-left: 0.25em;
+	}
+
+	.member-list .dt,
+	.overload-option,
+	pre {
+		box-sizing: border-box;
+		overflow: auto;
+		max-width: 800px; /* The script sets the real one */
+		max-width: calc(100vw - 2em);
+	}
+
+}
+
+#page-footer {
+	margin-top: 0em;
+	padding-top: 2em;
+	color: #999;
+	font-size: 80%;
+	text-align: center;
+	border-top-style: solid;
+	border-top-width: 1px;
+}
+
+a:link {
+	text-decoration: none;
+}
+
+a:link:hover {
+	text-decoration: underline !important; /* important so it overrides even id level things on non-hover */
+}
+
+/*
+pre.d_code  { background-color: #fdf6e3; color: #002b36; padding: 0.25em; border: solid 1px #ccc; }
+.d_code .kwrd { color: #b58900; font-weight: bold;  }
+.d_code .com  { color: #666; font-style: italic; }
+.d_code .num  { color: #dc322f; font-weight: normal;  }
+.d_code .str  { color: #2aa198; font-style: italic; }
+.d_code .op   { color: #586e75; font-weight: bold;  }
+.d_code .type { color: #268bd2; font-weight: bold;  }
+.d_code .cons { color: #859900; font-weight: bold;  }
+
+.highlighted .kwrd { color: #b58900; font-weight: bold;  }
+.highlighted .com  { color: #666; font-style: italic; } /* #93a1a1; * /
+.highlighted .num  { color: #dc322f; font-weight: normal;  }
+.highlighted .str  { color: #2aa198; font-style: italic; }
+.highlighted .op   { color: #586e75; font-weight: bold;  }
+.highlighted .type { color: #268bd2; font-weight: bold;  }
+.highlighted .cons { color: #859900; font-weight: bold;  }
+*/
+
+/* .member-list p, */
+#table-of-contents,
+.enum-members,
+.documentation-comment .tip,
+.documentation-comment .note,
+.documentation-comment .warning,
+.documentation-comment .pitfall,
+.documentation-comment li,
+.documentation-comment p {
+	/* white-space: pre-line; */
+	max-width: 70ch;
+	font-size: 15px;
+	line-height: 1.5;
+}
+
+/*
+.parameter-item::after {
+	content: ',';
+}
+
+.parameter-item:last-child::after {
+	content: '';
+}
+*/
+
+.aggregate-declaration {
+    margin: 1em;
+}
+
+.aggregate-member {
+	padding-left: 2em;
+}
+
+/*
+.aggregate-member::after {
+	content: ";";
+}
+*/
+
+.aggregate-member > a {
+	color: inherit;
+}
+
+.template-constraint-expression,
+.parameter-item {
+	padding-left: 2em;
+}
+
+
+/*
+ol.overloads {
+	margin-bottom: -1px;
+	white-space: nowrap;
+}
+
+ol.overloads::before {
+	content: "Overloads: ";
+}
+
+ol.overloads li {
+	display: inline-block;
+	border: solid 1px #ccc;
+	list-style-position: inside;
+	text-align: center;
+	width: 5em;
+}
+
+ol.overloads li.overload-option {
+	background-color: #eee;
+}
+
+ol.overloads li a {
+	display: block;
+}
+
+ol.overloads li.active-overload-option {
+	border-bottom: solid 1px white;
+}
+
+ol.overloads + .aggregate-prototype,
+ol.overloads + .function-prototype {
+	margin-top: 0px;
+}
+*/
+
+.aggregate-prototype #help-link,
+.function-prototype #help-link {
+	border-radius: 100%;
+	position: absolute;
+	top: -0.5em;
+	right: -0.5em;
+	display: block;
+	border: solid 1px #ccc;
+	background-color: white;
+	width: 1em;
+	height: 1em;
+	text-align: center;
+	font-size: 125%;
+	padding-bottom: 3px;
+}
+
+.aggregate-prototype #help-link:hover,
+.function-prototype #help-link:hover {
+	text-decoration: none;
+	background-color: #ccc;
+}
+
+.declaration-prototype,
+.aggregate-prototype,
+.function-prototype {
+	border: solid 1px #ccc;
+	padding: 2em;
+	margin: 1em;
+	font-family: monospace;
+	position: relative;
+}
+
+.declaration-prototype {
+	padding: 3em 2em;
+}
+
+.parameters-list:empty {
+	display: none;
+}
+
+/*
+.parameters-list .parameters-list {
+	display: inline;
+}
+*/
+
+.toplevel.parameters-list {
+	display: table;
+}
+
+.toplevel.parameters-list > .parameter-item {
+	display: table-row;
+}
+
+.toplevel.parameters-list > .parameter-item > *:first-child {
+	padding-left: 2em !important;
+}
+
+.toplevel.parameters-list > .parameter-item + .comma {
+	display: none;
+}
+
+.toplevel.parameters-list > .parameter-item > *:last-child::after {
+	content: ",";
+}
+.toplevel.parameters-list > .parameter-item:last-child > *:last-child::after {
+	content: "";
+}
+
+.parameter-attribute {
+	padding-left: 1em;
+}
+
+.toplevel.parameters-list > .parameter-item .parameter-type-holder,
+.toplevel.parameters-list > .parameter-item .parameter-name,
+.toplevel.parameters-list > .parameter-item .parameter-default-value {
+	display: table-cell;
+	padding: 0px 0.25em;
+}
+
+.toplevel.parameters-list > .parameter-item:hover {
+	background-color: #f8f8f8;
+}
+
+/*
+.toplevel.parameters-list > .parameter-item > .parameter-type-holder {
+	text-align: right;
+}
+
+.toplevel.parameters-list > .parameter-item > .parameter-type-holder > .parameter-type {
+	text-align: left;
+	display: inline-block;
+}
+*/
+
+.function-name {
+	font-size: 125%;
+}
+
+.type-constructor,
+.builtin-type {
+	text-decoration: none;
+	color: green !important;
+	font-weight: bold;
+}
+
+.lang-feature,
+.storage-class {
+	text-decoration: none;
+	color: #888800 !important;
+	font-weight: bold;
+}
+
+[data-ident].active {
+	outline: solid 1px red;
+}
+
+table.enum-members {
+	border-collapse: collapse;
+	border: solid 1px #ccc;
+}
+
+.enum-members th,
+.enum-members td {
+	border: solid 1px #ccc;
+	margin: 0px;
+	padding: 0.25em;
+}
+
+.enum-members th {
+	text-align: left;
+	color: #888;
+}
+
+.enum-members td {
+	vertical-align: top;
+}
+
+.enum-members td p:first-child {
+	margin-top: 0px;
+}
+
+.enum-members .enum-member-name {
+	font-weight: bold;
+	color: inherit;
+}
+
+.enum-members .enum-member-value {
+	display: block;
+	color: #666;
+}
+
+.enum-members .enum-disabled {
+	font-style: italic;
+}
+
+.enum-members .enum-deprecated {
+	margin-bottom: 1em;
+}
+
+.enum-members .enum-deprecated > span.deprecated-label {
+	color: red;
+}
+
+.enum-members .enum-attributes {
+	margin-top: 1em;
+}
+
+*:target {
+	background: #ffffbb;
+}
+
+.breadcrumbs {
+	margin: 1em;
+}
+
+.breadcrumbs a::before {
+	content: ' \00bb\a0';
+}
+
+.parameter-name {
+	font-weight: bold;
+}
+
+.symbol-reference,
+.return-type,
+.parameter-type {
+	font-family: monospace;
+}
+
+.phobos-booktable {
+	border-collapse: collapse;
+}
+
+.phobos-booktable tt.D {
+	font-weight: bold;
+	background-color: transparent;
+}
+
+.phobos-booktable caption {
+	text-align: left;
+}
+
+.phobos-booktable tr {
+	border-bottom: solid 1px #ccc;
+}
+
+.phobos-booktable tr:hover {
+	background-color: #fafafa;
+}
+
+.phobos-booktable {
+	border-top: solid 2px black;
+	border-bottom: solid 2px black;
+}
+
+.phobos-booktable tr:first-child:has(th) {
+	border-bottom: solid 1px black;
+}
+
+.phobos-booktable th {
+	text-align: left;
+}
+
+.phobos-booktable td:first-child {
+	padding-right: 1em;
+}
+
+.current.breadcrumb {
+	color: inherit;
+	text-decoration: none;
+}
+
+.andand-right {
+	display: inline;
+}
+
+.oror-right {
+	display: inline;
+}
+
+.parenthetical-expression > .parenthetical-expression-contents > .andand-left,
+.parenthetical-expression > .parenthetical-expression-contents > .oror-left {
+	display: inline;
+}
+
+/*
+.parenthetical-expression > .parenthetical-expression-contents > .oror-left:first-child {
+	display: block;
+}
+*/
+
+
+.template-constraint-expression .parenthetical-expression {
+	display: block;
+	margin-left: 1em;
+}
+
+.oror-left > .andand-left,
+.oror-left > .andand-right {
+	display: inline;
+}
+
+.aggregate-members:empty::after {
+	content: "This aggregate has no documented members available.";
+}
+
+h1 .entity-name {
+	font-family: monospace;
+}
+
+.other-section h3 {
+	font-size: 1em;
+	margin-bottom: 0.25em;
+}
+
+.other-section h3 + p {
+	margin-top: 0.25em;
+}
+
+.function-prototype .in-contract,
+.function-prototype .out-contract {
+	display: none;
+	white-space: pre;
+}
+
+.note {
+	margin: 1em;
+	padding: 0.5em;
+	background-color: #f0f0ff;
+	border: solid 1px #ccc;
+	clear: both;
+}
+
+/*
+.note::before {
+	color: #000066;
+	font-weight: bold;
+	content: "Note: ";
+}
+*/
+
+.warning {
+	margin: 1em;
+	padding: 0.5em;
+	background-color: #fffff0;
+	border: solid 1px #ccc;
+	clear: both;
+}
+
+.pitfall {
+	margin: 1em;
+	padding: 0.5em;
+	background-color: #fff0f0;
+	border: solid 1px #ccc;
+	clear: both;
+}
+
+.tip {
+	margin: 1em;
+	padding: 0.5em;
+	background-color: #f0fff0;
+	border: solid 1px #ccc;
+	clear: both;
+}
+
+.sidebar {
+	float: right;
+	margin: 1em;
+	margin-top: 2px;
+	padding: 0.25em;
+	background: #f3f3f3;
+	border: solid 1px #ccc;
+	width: 20%;
+	min-width: 30ch;
+	clear: right;
+}
+
+h2 {
+	clear: both;
+}
+
+.sidebar > *:first-child {
+	margin-top: 0px;
+}
+
+/* I want to clear floats. This leaves a gap about the size of a blank line
+   too, but that doesn't bother me (actually, I kinda like a small gap at the
+   bottom. */
+#page-content::after {
+	clear: both;
+	content: '\a0';
+	display: block;
+}
+
+tt.D,
+.inline-code {
+	color: black;
+	font-weight: 500;
+	background-color: #f2f2f2;
+	padding: 0px 0.125em;
+}
+
+#page-nav .type-separator {
+	text-transform: capitalize;
+	display: block;
+	border-bottom: solid 1px #ccc;
+	margin-top: 1em;
+}
+
+#page-nav a {
+	display: block;
+}
+
+#page-nav a.parent {
+	font-weight: bold;
+	font-size: 125%;
+}
+
+#page-nav a.parent + a.parent::before {
+	content: ".";
+}
+
+#page-nav a.current {
+	font-weight: bold;
+	color: inherit;
+}
+
+pre[data-language=console],
+pre.console {
+	background-color: #333;
+	color: #ddd;
+	padding: 0.5em;
+	border: solid 1px #ccc;
+}
+
+#more-link {
+	display: block;
+	font-weight: bold;
+	font-size: 125%;
+	color: blue;
+}
+
+.member-list dd + dt {
+	border-top: solid 1px #ccc;
+	padding-top: 0.5em;
+	margin-top: 0.5em;
+}
+
+.member-list dt a {
+	font-size: 110%;
+	font-weight: bold;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.member-list dt .simplified-prototype {
+	font-family: monospace;
+	font-size: 80%;
+	color: #333;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	text-overflow: '[...]'; /* only Firefox supports this but i like it */
+	overflow: hidden;
+	border: solid 1px white;
+}
+
+.member-list dt .simplified-prototype:hover {
+	background-color: white;
+	position: relative;
+	z-index: 5;
+	width: 800px;
+	width: calc(100vw - 16em);
+	border: solid 1px #eee;
+	box-shadow: 1px 1px 1px #ccc;
+}
+
+@media screen and (min-width: 640px) {
+	.member-list dt {
+		float: left;
+		clear: left;
+		width: 20em;
+		box-sizing: border-box;
+		padding-right: 1em;
+	}
+
+	.member-list dd,
+	.member-list dd + dt {
+		border-top: solid 1px #ccc;
+		padding-top: 0.5em;
+		margin-top: 0em;
+	}
+
+	.member-list dd p:first-child {
+		margin-top: 0px;
+	}
+
+	.member-list dd:first-of-type {
+		border-top: none;
+		padding-top: 0px;
+	}
+
+	.member-list dd {
+		margin: 0px;
+		margin-left: 20em;
+	}
+
+	.member-list dd::after {
+		content: '\a0';
+		height: 0.5em;
+		clear: both;
+		display: block;
+	}
+}
+
+.member-list.articles dt,
+.member-list.articles dd,
+.member-list.constructors dt,
+.member-list.constructors dd {
+	float: none;
+	clear: none;
+	margin: 1em;
+	width: auto;
+	border: none;
+}
+
+.member-list.articles dd,
+.member-list.constructors dd {
+	padding-left: 2em;
+}
+
+.member-list dt a {
+	display: block;
+}
+
+#suggestion-box {
+	display: inline-block;
+	color: white;
+	font-weight: bold;
+	border: solid 2px black;
+	border-radius: 8px 8px 0px 0px;
+	position: fixed;
+	left: 1em;
+	bottom: 0em;
+	padding: 0.25em 0.5em;
+}
+
+.synopsis {
+	margin: 2em 0px;
+}
+
+/* If it was successfully looked up in an xref, no need to highlight anymore */
+a.xref:link span[data-ident].active {
+	border: none;
+}
+
+#table-of-contents {
+	border: solid 1px #ccc;
+	margin: 1em;
+	padding: 1em;
+	padding-left: 0em; /* the list inside can handle this */
+}
+
+.parent-prototype {
+	font-size: 90%;
+	padding-bottom: 1em;
+}
+
+.parent-prototype::after {
+	content: " {";
+}
+
+.parent-prototype + div {
+	padding-left: 1em;
+}
+
+.parent-prototype + div::after {
+	content: "}";
+	display: block;
+	font-size: 90%;
+	padding-top: 1em;
+	margin-left: -1.33em; /* 1/(3/4) */
+}
+
+.search-result::after {
+	content: '(Search Score: ' attr(data-score) ')';
+	font-size: 80%;
+}
+
+table.std_math {
+	min-width: 25%;
+	border: solid 1px black;
+	border-collapse: collapse;
+	margin: 2em;
+}
+
+table.std_math td, table.std_math th {
+	border: solid 1px #ccc;
+	text-align: left;
+	padding: 0.25em;
+}
+
+table.std_math.special-values th {
+	border-bottom: solid 2px #000;
+}
+
+table.std_math.special-values caption {
+	text-align: left;
+	font-weight: 700;
+}
+
+.nan {
+	font-family: monospace;
+	color: red;
+}
+
+.overload-option,
+.overload-signature {
+	font-family: monospace;
+}
+
+.block-code,
+.d_code,
+.annotated-prototype {
+	font-size: 14px;
+}
+
+.annotated-prototype .overloads {
+	display: block;
+	padding: 0px;
+}
+
+.annotated-prototype .overloads li {
+	display: block;
+	width: auto;
+	margin: 0em 1em;
+	padding: 0em 0.5em;
+	text-align: left;
+	overflow: hidden;
+}
+
+.annotated-prototype .overloads li.active-overload-option {
+	border: ridge 2px #ccc;
+}
+
+.annotated-prototype .overloads li.active-overload-option .overload-signature {
+	white-space: nowrap;
+	border-bottom: dotted 1px #999;
+	display: block;
+}
+
+.annotated-prototype .overloads li.overload-option {
+	border: solid 1px #ccc;
+	background-color: #eee;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.annotated-prototype .overloads li.ditto-option::before,
+.annotated-prototype .overloads li.active-overload-option .overload-signature::before,
+.annotated-prototype .overloads li.overload-option::before {
+	display: inline-block;
+	width: 6em;
+	width: 9ch;
+	font-size: 12px;
+	vertical-align: baseline;
+}
+
+.annotated-prototype .overloads li.overload-option::before {
+	content: "Overload: ";
+}
+
+.annotated-prototype .overloads li.active-overload-option .overload-signature::before {
+	content: "Viewing: ";
+}
+
+.annotated-prototype .overloads li.ditto-option::before {
+	content: "Related: ";
+}
+
+.annotated-prototype li .declaration-prototype,
+.annotated-prototype li .aggregate-prototype,
+.annotated-prototype li .function-prototype {
+	border: none;
+	padding: 0px;
+}
+
+.annotated-prototype li .declaration-prototype {
+	padding: 2em 0px;
+}
+
+#page-nav ul {
+	margin: 0px;
+	padding: 0px;
+}
+
+.parameter-name > a[href^="#"],
+a.parameter-name[href^="#"] {
+	color: inherit;
+}
+
+
+
+/* adrdox special syntax styles */
+
+.small-table {
+	border-collapse: collapse;
+	min-width: 10em;
+}
+
+.small-table td,
+.small-table th {
+	border: solid 1px #ccc;
+	padding: 0.25em;
+}
+
+.small-table thead th {
+	border-bottom: solid 2px #999;
+}
+
+.small-table tbody th,
+.small-table.two-axes thead th:first-child {
+	border-right: solid 2px #999;
+}
+
+.small-table.two-axes td,
+.small-table.two-axes th {
+	text-align: center;
+	vertical-align: middle;
+}
+
+.adrdox-sample {
+	display: table;
+	width: 100%;
+}
+
+.adrdox-sample > div {
+	display: table-row;
+}
+
+.adrdox-sample > div > * {
+	display: table-cell;
+	width: 50%;
+	vertical-align: top;
+	border-bottom: dashed 1px #ccc;
+	padding: 0.25em;
+	padding-bottom: 0.5em;
+}
+
+.adrdox-sample > div > pre {
+	border-right: dashed 1px #ccc;
+}
+
+.adrdox-sample > div > pre::before,
+.adrdox-sample > div > div::before {
+	display: block;
+	font-style: italic;
+	border-bottom: dashed 1px #ccc;
+	margin-bottom: 0.5em;
+	font-family: sans-serif;
+	font-size: 1rem;
+	padding: 0px;
+}
+
+.adrdox-sample > div > pre::before {
+	content: 'Doc source:';
+}
+.adrdox-sample > div > div::before {
+	content: 'Rendered:';
+}
+
+blockquote {
+	margin: 1em;
+	padding: 1em;
+	border-left: 0.5em solid #ccc;
+	color: #333;
+}
+
+pre.d_code,
+.block-code:not([data-language=""]):not([data-language="pre"]) {
+	background-color: #fcfcfc;
+	padding: 0.25em;
+	border: solid 1px #ccc;
+	position: relative;
+}
+
+.block-code:not([data-language=""]):not([data-language="pre"])::before {
+	content: attr(data-language);
+	display: block;
+	text-transform: capitalize;
+	font-size: 80%;
+	padding: 0px 2px;
+	border: solid 1px #999;
+	border-top: none;
+	border-radius: 0px 0px 0.25em 0.25em;
+	background-color: #f0f0f0;
+	float: right;
+	margin: 0px;
+	margin-top: -0.25em;
+	margin-top: calc(-0.25em - 1px);
+}
+
+.kwrd,
+.highlighted-keyword {
+	color: #859900;
+	font-weight: bold;
+}
+.type,
+.highlighted-type {
+	color: green;
+	font-weight: bold;
+}
+.num,
+.highlighted-number {
+	color: #dc322f;
+}
+.str,
+.highlighted-string {
+	color: red;
+}
+.com,
+.highlighted-comment {
+	color: blue;
+}
+.highlighted-preprocessor-directive {
+	color: #cd00cd;
+}
+.highlighted-identifier,
+.highlighted-tag {
+	color: #008888
+}
+.highlighted-tag-name {
+	color: #859900;
+}
+.highlighted-entity {
+	color: #cd00cd;
+	text-decoration: none;
+	cursor: help;
+}
+.highlighted-named-constant,
+.highlighted-attribute-name {
+	color: green;
+}
+.highlighted-attribute-value {
+	color: red;
+}
+.highlighted-python-indent {
+	background: linear-gradient(to right, #eee, transparent 3px) no-repeat;
+}
+.highlighted-python-indent:hover {
+	background: linear-gradient(to right, #ccc, transparent 3px) no-repeat;
+}
+
+/*
+.with-line-wrappers {
+	counter-reset: line_numbers;
+}
+
+.with-line-wrappers span.br {
+	counter-increment: line_numbers;
+}
+
+.with-line-wrappers span.br::before {
+	content: counter(line_numbers);
+*/
+.with-line-wrappers .br {
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+
+	width: 3em;
+	width: 4ch;
+	display: inline-block;
+	color: #999;
+	border-right: solid 2px #ccc;
+	padding: 0px;
+	margin: 0px;
+	margin-right: 3px;
+	padding-right: 3px;
+	font-style: normal;
+	font-weight: normal;
+	background-color: transparent;
+	text-align: right;
+	white-space: pre;
+}
+
+.hide-line-numbers .with-line-wrappers .br {
+	display: none;
+}
+.with-line-wrappers .br:target {
+	background: #ffffbb;
+}
+
+.thousand-lines.with-line-wrappers .br {
+	width: 4em;
+	width: 5ch;
+}
+.ten-thousand-lines.with-line-wrappers .br {
+	width: 5em;
+	width: 6ch;
+}
+
+#source-navigation {
+	position: fixed;
+	width: 15.5em;
+}
+
+#source-navigation .list-holder {
+	width: 100%;
+	overflow: auto;
+	max-height: 80vh;
+}
+
+#source-navigation .list-holder ul {
+	padding-left: 1em;
+}
+
+/* hide nested decls as it is too much... */
+#source-navigation .list-holder ul > li > ul {
+	display: none;
+}
+
+/* ...but show top-level decls under the module cuz no reason not to */
+#source-navigation .list-holder > ul > li > ul {
+	display: block;
+}
+
+#source-navigation li {
+	white-space: nowrap;
+}
+
+#source-navigation a {
+	display: inline;
+}
+
+.postcondition {
+	color: blue;
+	font-family: monospace;
+	font-size: small;
+}
+.postcondition::before {
+	content: "Post: ";
+	font-style: italic;
+	color: black;
+}
+
+.user-table {
+	border-top: solid 2px black;
+	border-collapse: collapse;
+}
+
+.user-table tr:nth-of-type(1) th {
+	border-bottom: solid 1px black;
+	text-align: left;
+}
+
+.user-table td {
+	border-bottom: solid 1px #ccc;
+	vertical-align: top;
+	padding: 4px;
+}
+.user-table th {
+	padding: 4px;
+}
+
+.user-table.two-axes tr + tr th:first-child {
+	border-bottom: solid 1px #ccc;
+}
+
+.user-table.two-axes th:first-child {
+	border-right: solid 1px black;
+	text-align: right;
+}
+
+.allocator-table td:first-child tt {
+	background-color: transparent;
+	white-space: nowrap;
+	font-weight: bold;
+}
+
+.header-anchor {
+	color: inherit !important;
+}
+
+#members + h3,
+.member-list + h3,
+h3.member-list-header {
+	border-bottom: solid 1px #333;
+	text-transform: capitalize;
+}
+
+#members + h4,
+.member-list + h4,
+h4.member-list-header {
+	font-weight: normal;
+	text-transform: capitalize;
+	text-decoration: underline;
+}
+
+
+tr.leading-row th {
+	border-bottom: solid 2px black;
+}
+
+.lambda-expression * {
+	display: inline !important;
+	padding: 0px !important;
+	margin: 0px !important;
+}
+
+.footnote-ref a {}
+.footnote-ref abbr {
+	font-variant: none;
+	text-decoration: none;
+	cursor: help;
+}
+
+.side-by-side {
+	table-layout: fixed;
+	border: none;
+	width: 100%;
+}
+
+.side-by-side > tbody > tr > td {
+	vertical-align: top;
+}
+
+/*
+tt.D {
+	font-weight: bold;
+	background: transparent;
+	color: inherit;
+}
+*/
+
+tt.D.highlighted *:not(a) {
+	font-weight: inherit;
+	color: inherit;
+}
+tt.D.highlighted a {
+	color: #500000;
+}
+
+.date-posted {
+	font-size: 90%;
+	font-style: italic;
+}
+
+.token-string-literal {
+	font-style: italic;
+}
+.token-string-literal:hover {
+	background-color: rgba(255, 0, 0, 0.05);
+}
+
+.specially-highlighted {
+	background-color: yellow;
+	background-color: rgba(255, 255, 0, 0.5);
+}

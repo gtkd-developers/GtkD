@@ -73,6 +73,8 @@ ifndef GIRTOD
     endif
 endif
 
+ADRDOX?=doc2
+
 #######################################################################
 
 GTKD_VERSION=3.9.0
@@ -151,6 +153,14 @@ generate-compiletime: $(GIRTOD)
 
 $(GIRTOD):
 	$(if $(findstring "./wrap/girtod","$(GIRTOD)"),$(MAKE) -C wrap)
+
+#######################################################################
+
+.PHONY: docs
+docs:
+	$(ADRDOX) --genSearchIndex --skeleton=docs/adrdox/skeleton.html --directory=docs/api/ --special-preprocessor=gtk generated/
+	cp -f docs/adrdox/style.css docs/api/
+	cp -f docs/adrdox/Logo.png docs/api/
 
 #######################################################################
 
