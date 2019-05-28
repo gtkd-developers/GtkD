@@ -75,7 +75,7 @@ endif
 
 #######################################################################
 
-GTKD_VERSION=3.8.5
+GTKD_VERSION=3.9.0
 SO_VERSION=0
 
 MAJOR =  $(word 1,$(subst ., ,$(GTKD_VERSION)))

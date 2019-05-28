@@ -1,6 +1,10 @@
 GtkD ChangeLog
 ==============
 
+Release: 3.9.0
+--------------
+-Update the libraries to the latest versions.
+
 Release: 3.8.5
 --------------
 -Set the correct version number.
