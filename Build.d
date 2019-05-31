@@ -21,17 +21,34 @@ version(DigitalMars)
 	string DC = "dmd";
 	string OUTPUT = "-of";
 
-	version(Win32) version = DMD32;
+	version(CRuntime_DigitalMars)
+		string PLATFORM = "-m32";
+	else version(X86)
+		string PLATFORM = "-m32mscoff";
+	else version(X86_64)
+		string PLATFORM = "-m64";
+
+	version(CRuntime_DigitalMars) version = DMD32;
 }
 else version(LDC)
 {
 	string DC = "ldc2";
 	string OUTPUT = "-od=objects -oq -of";
+
+	version(X86)
+		string PLATFORM = "-m32";
+	else version(X86_64)
+		string PLATFORM = "-m64";
 }
 else version(GNU)
 {
 	string DC = "gdc";
 	string OUTPUT = "-o ";
+
+	version(X86)
+		string PLATFORM = "-m32";
+	else version(X86_64)
+		string PLATFORM = "-m64";
 }
 else
 {
@@ -125,7 +142,7 @@ void build(string dir, string lib)
 	}
 	else
 	{
-		std.file.write("build.rf", format("-m64 -c -lib %s %s -Igenerated/gtkd %s%s.lib %s", dcflags, ldflags, OUTPUT ,lib, dFiles(dir)));
+		std.file.write("build.rf", format("%s -c -lib %s %s -Igenerated/gtkd %s%s.lib %s", PLATFORM, dcflags, ldflags, OUTPUT ,lib, dFiles(dir)));
 		auto pid = spawnProcess([DC, "@build.rf"]);
 
 		if ( wait(pid) != 0 )
