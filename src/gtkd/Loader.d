@@ -19,6 +19,7 @@
 
 module gtkd.Loader;
 
+import std.algorithm : canFind;
 import std.stdio;
 import std.string;
 
@@ -115,11 +116,21 @@ public struct Linker
 	 */
 	public static void loadLibrary(string library)
 	{
-		void* handle = pLoadLibrary(library);
+		void* handle;
 
-		//TODO: A more general way to try more than one version.
-		if ( handle is null && library == importLibs[LIBRARY.GSV] )
-			handle = pLoadLibrary(importLibs[LIBRARY.GSV1]);
+		if ( library.canFind(';') )
+		{
+			foreach ( lib; library.split(';') )
+			{
+				handle = pLoadLibrary(lib);
+				if ( handle )
+					break;
+			}
+		}
+		else
+		{
+			handle = pLoadLibrary(library);
+		}
 
 		if ( handle is null )
 			throw new Exception("Library load failed ("~ library ~"): "~ getErrorMessage());
