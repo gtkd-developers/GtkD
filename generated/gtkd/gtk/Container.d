@@ -273,7 +273,7 @@ public class Container : Widget
 		Signals.connect(this, "remove", cast(GCallback)&gtkd_container_remove, null);
 	}
 
-	Widget[] children;
+	private Widget[] children;
 
 	static extern(C) void gtkd_container_add(GtkContainer* c, GtkWidget* w)
 	{
@@ -287,12 +287,18 @@ public class Container : Widget
 	static extern(C) void gtkd_container_remove(GtkContainer* c, GtkWidget* w)
 	{
 		import gobject.c.functions : g_object_get_data;
+		import std.array : empty;
 
 		if ( auto container = cast(Container)g_object_get_data(cast(GObject*)c, "GObject") )
-			if ( auto widget = cast(Widget)g_object_get_data(cast(GObject*)w, "GObject") )
 		{
-			import std.algorithm : remove;
-			container.children.remove!(a => a is widget)();
+			if ( container.children.empty )
+				return;
+
+			if ( auto widget = cast(Widget)g_object_get_data(cast(GObject*)w, "GObject") )
+			{
+				import std.algorithm : remove;
+				container.children.remove!(a => a is widget)();
+			}
 		}
 	}
 
