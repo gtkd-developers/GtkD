@@ -30,7 +30,7 @@ import gobject.c.types;
 import gtkd.Loader;
 
 version (Windows)
-	static immutable LIBRARY_GLIB = ["libglib-2.0-0.dll", "libgmodule-2.0-0.dll", "libgobject-2.0-0.dll"];
+	static immutable LIBRARY_GLIB = ["libglib-2.0-0.dll;g-2.0-0.dll;g-2.dll", "libgmodule-2.0-0.dll;gmodule-2.0-0.dll;gmodule-2.dll", "libgobject-2.0-0.dll;gobject-2.0-0.dll;gobject-2.dll"];
 else version (OSX)
 	static immutable LIBRARY_GLIB = ["libglib-2.0.0.dylib", "libgmodule-2.0.0.dylib", "libgobject-2.0.0.dylib"];
 else

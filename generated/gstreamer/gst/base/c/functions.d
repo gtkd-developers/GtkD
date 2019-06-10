@@ -29,7 +29,7 @@ import gst.base.c.types;
 import gtkd.Loader;
 
 version (Windows)
-	static immutable LIBRARY_GSTBASE = ["libgstbase-1.0-0.dll"];
+	static immutable LIBRARY_GSTBASE = ["libgstbase-1.0-0.dll;gstbase-1.0-0.dll;gstbase-1.dll"];
 else version (OSX)
 	static immutable LIBRARY_GSTBASE = ["libgstbase-1.0.0.dylib"];
 else

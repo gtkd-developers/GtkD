@@ -11596,6 +11596,74 @@ struct GtkWindowGroupPrivate;
 
 struct GtkWindowPrivate;
 
+/**
+ * Abstract interface type for the D-Bus interface <link linkend="gdbus-interface-org-Gtk-MountOperationHandler.top_of_page">org.Gtk.MountOperationHandler</link>.
+ */
+struct _GtkMountOperationHandler;
+
+/**
+ * Virtual table for the D-Bus interface <link linkend="gdbus-interface-org-Gtk-MountOperationHandler.top_of_page">org.Gtk.MountOperationHandler</link>.
+ */
+struct _GtkMountOperationHandlerIface
+{
+	/**
+	 * The parent interface.
+	 */
+	GTypeInterface parentIface;
+	/** */
+	extern(C) int function(_GtkMountOperationHandler* object, GDBusMethodInvocation* invocation, const(char)* argId, const(char)* argMessage, const(char)* argIconName, const(char)* argDefaultUser, const(char)* argDefaultDomain, uint argFlags) handleAskPassword;
+	/** */
+	extern(C) int function(_GtkMountOperationHandler* object, GDBusMethodInvocation* invocation, const(char)* argId, const(char)* argMessage, const(char)* argIconName, const(char)* argChoices) handleAskQuestion;
+	/** */
+	extern(C) int function(_GtkMountOperationHandler* object, GDBusMethodInvocation* invocation) handleClose;
+	/** */
+	extern(C) int function(_GtkMountOperationHandler* object, GDBusMethodInvocation* invocation, const(char)* argId, const(char)* argMessage, const(char)* argIconName, GVariant* argApplicationPids, const(char)* argChoices) handleShowProcesses;
+}
+
+/**
+ * The #_GtkMountOperationHandlerProxy structure contains only private data and should only be accessed using the provided API.
+ */
+struct _GtkMountOperationHandlerProxy
+{
+	GDBusProxy parentInstance;
+	_GtkMountOperationHandlerProxyPrivate* priv;
+}
+
+/**
+ * Class structure for #_GtkMountOperationHandlerProxy.
+ */
+struct _GtkMountOperationHandlerProxyClass
+{
+	/**
+	 * The parent class.
+	 */
+	GDBusProxyClass parentClass;
+}
+
+struct _GtkMountOperationHandlerProxyPrivate;
+
+/**
+ * The #_GtkMountOperationHandlerSkeleton structure contains only private data and should only be accessed using the provided API.
+ */
+struct _GtkMountOperationHandlerSkeleton
+{
+	GDBusInterfaceSkeleton parentInstance;
+	_GtkMountOperationHandlerSkeletonPrivate* priv;
+}
+
+/**
+ * Class structure for #_GtkMountOperationHandlerSkeleton.
+ */
+struct _GtkMountOperationHandlerSkeletonClass
+{
+	/**
+	 * The parent class.
+	 */
+	GDBusInterfaceSkeletonClass parentClass;
+}
+
+struct _GtkMountOperationHandlerSkeletonPrivate;
+
 /** */
 public alias extern(C) int function(GtkAccelGroup* accelGroup, GObject* acceleratable, uint keyval, GdkModifierType modifier) GtkAccelGroupActivate;
 

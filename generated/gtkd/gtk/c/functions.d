@@ -29,11 +29,11 @@ import gtk.c.types;
 import gtkd.Loader;
 
 version (Windows)
-	static immutable LIBRARY_GTK = ["libgdk-3-0.dll", "libgtk-3-0.dll"];
+	static immutable LIBRARY_GTK = ["libgtk-3-0.dll;gtk-3-3.0.dll;gtk-3.dll"];
 else version (OSX)
-	static immutable LIBRARY_GTK = ["libgdk-3.0.dylib", "libgtk-3.0.dylib"];
+	static immutable LIBRARY_GTK = ["libgtk-3.0.dylib"];
 else
-	static immutable LIBRARY_GTK = ["libgdk-3.so.0", "libgtk-3.so.0"];
+	static immutable LIBRARY_GTK = ["libgtk-3.so.0"];
 
 shared static this()
 {

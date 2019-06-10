@@ -28,7 +28,7 @@ private import std.stdio;
 private import cairo.c.types;
 
 version (Windows)
-	static immutable LIBRARY_CAIRO = ["libcairo-2.dll"];
+	static immutable LIBRARY_CAIRO = ["libcairo-2.dll;cairo.dll"];
 else version (OSX)
 	static immutable LIBRARY_CAIRO = ["libcairo.dylib"];
 else

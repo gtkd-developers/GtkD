@@ -29,7 +29,7 @@ import gstinterfaces.c.types;
 import gtkd.Loader;
 
 version (Windows)
-	static immutable LIBRARY_GSTINTERFACES = ["libgstvideo-1.0-0.dll"];
+	static immutable LIBRARY_GSTINTERFACES = ["libgstvideo-1.0-0.dll;gstvideo-1.0-0.dll;gstvideo-1.dll"];
 else version (OSX)
 	static immutable LIBRARY_GSTINTERFACES = ["libgstvideo-1.0.0.dylib"];
 else

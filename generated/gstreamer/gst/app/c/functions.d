@@ -29,7 +29,7 @@ import gst.app.c.types;
 import gtkd.Loader;
 
 version (Windows)
-	static immutable LIBRARY_GSTAPP = ["libgstapp-1.0-0.dll"];
+	static immutable LIBRARY_GSTAPP = ["libgstapp-1.0-0.dll;gstapp-1.0-0.dll;gstapp-1.dll"];
 else version (OSX)
 	static immutable LIBRARY_GSTAPP = ["libgstapp-1.0.0.dylib"];
 else

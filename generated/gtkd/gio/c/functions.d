@@ -29,7 +29,7 @@ import gio.c.types;
 import gtkd.Loader;
 
 version (Windows)
-	static immutable LIBRARY_GIO = ["libgio-2.0-0.dll"];
+	static immutable LIBRARY_GIO = ["libgio-2.0-0.dll;gio-2.0-0.dll;gio-2.dll"];
 else version (OSX)
 	static immutable LIBRARY_GIO = ["libgio-2.0.0.dylib"];
 else

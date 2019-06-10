@@ -29,7 +29,7 @@ import gsv.c.types;
 import gtkd.Loader;
 
 version (Windows)
-	static immutable LIBRARY_GSV = ["libgtksourceview-4-0.dll"];
+	static immutable LIBRARY_GSV = ["libgtksourceview-4-0.dll;gtksourceview-4-4.0.dll;gtksourceview-4.dll"];
 else version (OSX)
 	static immutable LIBRARY_GSV = ["libgtksourceview-4.0.dylib"];
 else

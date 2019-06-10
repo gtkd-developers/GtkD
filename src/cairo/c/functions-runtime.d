@@ -29,7 +29,7 @@ private import cairo.c.types;
 private import gtkd.Loader;
 
 version (Windows)
-	static immutable LIBRARY_CAIRO = ["libcairo-2.dll"];
+	static immutable LIBRARY_CAIRO = ["libcairo-2.dll;cairo.dll"];
 else version (OSX)
 	static immutable LIBRARY_CAIRO = ["libcairo.dylib"];
 else

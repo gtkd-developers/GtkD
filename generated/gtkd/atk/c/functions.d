@@ -29,7 +29,7 @@ import atk.c.types;
 import gtkd.Loader;
 
 version (Windows)
-	static immutable LIBRARY_ATK = ["libatk-1.0-0.dll"];
+	static immutable LIBRARY_ATK = ["libatk-1.0-0.dll;atk-1.0-0.dll;atk-1.dll"];
 else version (OSX)
 	static immutable LIBRARY_ATK = ["libatk-1.0.0.dylib"];
 else

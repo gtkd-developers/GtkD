@@ -30,7 +30,7 @@ import cairo.c.types;
 import gtkd.Loader;
 
 version (Windows)
-	static immutable LIBRARY_GDK = ["libgdk-3-0.dll"];
+	static immutable LIBRARY_GDK = ["libgdk-3-0.dll;gdk-3-3.0.dll;gdk-3.dll"];
 else version (OSX)
 	static immutable LIBRARY_GDK = ["libgdk-3.0.dylib"];
 else

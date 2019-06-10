@@ -29,7 +29,7 @@ import vte.c.types;
 import gtkd.Loader;
 
 version (Windows)
-	static immutable LIBRARY_VTE = ["libvte-2.91-0.dll"];
+	static immutable LIBRARY_VTE = ["libvte-2.91-0.dll;vte-2.91-0.dll;vte-2.dll"];
 else version (OSX)
 	static immutable LIBRARY_VTE = ["libvte-2.91.0.dylib"];
 else

@@ -346,15 +346,18 @@ version(Windows)
 		import std.process;
 		import std.file;
 
-		foreach (path; splitter(environment.get("PATH"), ';'))
+		foreach ( lib; ["libgtk-3-0.dll", "gtk-3-3.0.dll", "gtk-3.dll"] )
 		{
-			string dllPath = buildNormalizedPath(path, "libgtk-3-0.dll");
+			foreach (path; splitter(environment.get("PATH"), ';'))
+			{
+				string dllPath = buildNormalizedPath(path, lib);
 
-			if ( !exists(dllPath) )
-				continue;
+				if ( !exists(dllPath) )
+					continue;
 
-			if ( checkArchitecture(dllPath) )
-				return path;
+				if ( checkArchitecture(dllPath) )
+					return path;
+			}
 		}
 
 		return null;

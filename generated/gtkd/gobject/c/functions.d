@@ -29,7 +29,7 @@ import gobject.c.types;
 import gtkd.Loader;
 
 version (Windows)
-	static immutable LIBRARY_GOBJECT = ["libgobject-2.0-0.dll"];
+	static immutable LIBRARY_GOBJECT = ["libgobject-2.0-0.dll;gobject-2.0-0.dll;gobject-2.dll"];
 else version (OSX)
 	static immutable LIBRARY_GOBJECT = ["libgobject-2.0.0.dylib"];
 else

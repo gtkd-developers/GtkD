@@ -63,15 +63,15 @@ public template CellAccessibleParentT(TStruct)
 	}
 
 	/** */
-	public void getCellArea(CellAccessible cell, GdkRectangle* cellRect)
+	public void getCellArea(CellAccessible cell, out GdkRectangle cellRect)
 	{
-		gtk_cell_accessible_parent_get_cell_area(getCellAccessibleParentStruct(), (cell is null) ? null : cell.getCellAccessibleStruct(), cellRect);
+		gtk_cell_accessible_parent_get_cell_area(getCellAccessibleParentStruct(), (cell is null) ? null : cell.getCellAccessibleStruct(), &cellRect);
 	}
 
 	/** */
-	public void getCellExtents(CellAccessible cell, int* x, int* y, int* width, int* height, AtkCoordType coordType)
+	public void getCellExtents(CellAccessible cell, out int x, out int y, out int width, out int height, AtkCoordType coordType)
 	{
-		gtk_cell_accessible_parent_get_cell_extents(getCellAccessibleParentStruct(), (cell is null) ? null : cell.getCellAccessibleStruct(), x, y, width, height, coordType);
+		gtk_cell_accessible_parent_get_cell_extents(getCellAccessibleParentStruct(), (cell is null) ? null : cell.getCellAccessibleStruct(), &x, &y, &width, &height, coordType);
 	}
 
 	/** */

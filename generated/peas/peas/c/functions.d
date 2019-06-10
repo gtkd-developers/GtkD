@@ -29,7 +29,7 @@ import peas.c.types;
 import gtkd.Loader;
 
 version (Windows)
-	static immutable LIBRARY_PEAS = ["libpeas-1.0-0.dll", "gtk-1.0-0.dll"];
+	static immutable LIBRARY_PEAS = ["libpeas-1.0-0.dll;peas-1.0-0.dll;peas-1.dll", "gtk-1.0-0.dll;gtk-1.0-0.dll;gtk-1.dll"];
 else version (OSX)
 	static immutable LIBRARY_PEAS = ["libpeas-1.0.0.dylib", "gtk-1.0.0.dylib"];
 else

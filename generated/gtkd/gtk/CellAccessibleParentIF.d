@@ -57,10 +57,10 @@ public interface CellAccessibleParentIF{
 	public void expandCollapse(CellAccessible cell);
 
 	/** */
-	public void getCellArea(CellAccessible cell, GdkRectangle* cellRect);
+	public void getCellArea(CellAccessible cell, out GdkRectangle cellRect);
 
 	/** */
-	public void getCellExtents(CellAccessible cell, int* x, int* y, int* width, int* height, AtkCoordType coordType);
+	public void getCellExtents(CellAccessible cell, out int x, out int y, out int width, out int height, AtkCoordType coordType);
 
 	/** */
 	public void getCellPosition(CellAccessible cell, out int row, out int column);

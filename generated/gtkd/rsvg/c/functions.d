@@ -29,7 +29,7 @@ import rsvg.c.types;
 import gtkd.Loader;
 
 version (Windows)
-	static immutable LIBRARY_RSVG = ["librsvg-2-2.dll"];
+	static immutable LIBRARY_RSVG = ["librsvg-2-2.dll;rsvg-2-2.2.dll;rsvg-2.dll"];
 else version (OSX)
 	static immutable LIBRARY_RSVG = ["librsvg-2.2.dylib"];
 else

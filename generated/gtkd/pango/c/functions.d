@@ -30,7 +30,7 @@ import cairo.c.types;
 import gtkd.Loader;
 
 version (Windows)
-	static immutable LIBRARY_PANGO = ["libpango-1.0-0.dll", "libpangocairo-1.0-0.dll"];
+	static immutable LIBRARY_PANGO = ["libpango-1.0-0.dll;pango-1.0-0.dll;pango-1.dll", "libpangocairo-1.0-0.dll;pangocairo-1.0-0.dll;pangocairo-1.dll"];
 else version (OSX)
 	static immutable LIBRARY_PANGO = ["libpango-1.0.0.dylib", "libpangocairo-1.0.0.dylib"];
 else
