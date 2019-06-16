@@ -1050,6 +1050,16 @@ code: start
 		Signals.connect(this, "remove", cast(GCallback)&gtkd_container_remove, null);
 	}
 
+	~this()
+	{
+		children = null; //Is this needed?
+
+		import gobject.c.functions;
+		import glib.c.functions;
+		g_signal_handlers_disconnect_matched(gtkContainer, GSignalMatchType.FUNC, 0, g_quark_from_string("add"), null, &gtkd_container_add, null);
+		g_signal_handlers_disconnect_matched(gtkContainer, GSignalMatchType.FUNC, 0, g_quark_from_string("remove"), null, &gtkd_container_remove, null);
+	}
+
 	private Widget[] children;
 
 	static extern(C) void gtkd_container_add(GtkContainer* c, GtkWidget* w)
