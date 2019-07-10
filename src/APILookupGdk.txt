@@ -23,7 +23,7 @@
 # must start with wrap
 wrap: gdk
 file: Gdk-3.0.gir
-version Linux: file: GdkX11-3.0.gir
+version Posix: file: GdkX11-3.0.gir
 
 addStructs: start
 
@@ -362,7 +362,7 @@ noExternal: true
 struct: X11VisualClass
 noExternal: true
 
-version Linux: start
+version Posix: start
 	struct: X11Window
 	namespace: X11
 	namespace:

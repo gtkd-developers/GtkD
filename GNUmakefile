@@ -290,6 +290,7 @@ gtkd-$(MAJOR).pc:
 	echo Version: $(GTKD_VERSION) >> $@
 	echo Libs: $(LINKERFLAG)-L$(prefix)/$(libdir)/ $(LINKERFLAG)-lgtkd-$(MAJOR) $(LINKERFLAG)-ldl >> $@
 	echo Cflags: -I$(prefix)/include/d/gtkd-$(MAJOR)/ >> $@
+	echo Requires.private: gtk+-3.0, gdk-3.0, atk, pango, cairo, cairo-gobject, pangocairo, librsvg-2.0, gio-2.0, glib-2.0, gobject-2.0, gmodule-2.0 >> $@
 
 gtkdgl-$(MAJOR).pc:
 	echo Name: GtkDGL > $@
@@ -297,6 +298,7 @@ gtkdgl-$(MAJOR).pc:
 	echo Version: $(GTKD_VERSION) >> $@
 	echo Libs: $(LINKERFLAG)-lgtkdgl-$(MAJOR) >> $@
 	echo Requires: gtkd-$(MAJOR) >> $@
+	echo Requires.private: gtkglext-1.0 >> $@
 
 gtkdsv-$(MAJOR).pc:
 	echo Name: GtkD SourceView > $@
@@ -304,6 +306,7 @@ gtkdsv-$(MAJOR).pc:
 	echo Version: $(GTKD_VERSION) >> $@
 	echo Libs: $(LINKERFLAG)-lgtkdsv-$(MAJOR) >> $@
 	echo Requires: gtkd-$(MAJOR) >> $@
+	echo Requires.private: gtksourceview-3.0 >> $@
 
 gstreamerd-$(MAJOR).pc:
 	echo Name: GstreamerD > $@
@@ -311,6 +314,7 @@ gstreamerd-$(MAJOR).pc:
 	echo Version: $(GTKD_VERSION) >> $@
 	echo Libs: $(LINKERFLAG)-lgstreamerd-$(MAJOR) >> $@
 	echo Requires: gtkd-$(MAJOR) >> $@
+	echo Requires.private: gstreamer-1.0, gstreamer-base-1.0 >> $@
 
 vted-$(MAJOR).pc:
 	echo Name: VteD > $@
@@ -318,6 +322,7 @@ vted-$(MAJOR).pc:
 	echo Version: $(GTKD_VERSION) >> $@
 	echo Libs: $(LINKERFLAG)-lvted-$(MAJOR) >> $@
 	echo Requires: gtkd-$(MAJOR) >> $@
+	echo Requires.private: vte-2.91 >> $@
 
 peasd-$(MAJOR).pc:
 	echo Name: PeasD > $@
@@ -325,6 +330,7 @@ peasd-$(MAJOR).pc:
 	echo Version: $(GTKD_VERSION) >> $@
 	echo Libs: $(LINKERFLAG)-lpeasd-$(MAJOR) >> $@
 	echo Requires: gtkd-$(MAJOR) >> $@
+	echo Requires.private: libpeas-1.0, libpeas-gtk-1.0 >> $@
 
 #######################################################################
 
