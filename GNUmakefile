@@ -290,47 +290,42 @@ gtkd-$(MAJOR).pc:
 	echo Version: $(GTKD_VERSION) >> $@
 	echo Libs: $(LINKERFLAG)-L$(prefix)/$(libdir)/ $(LINKERFLAG)-lgtkd-$(MAJOR) $(LINKERFLAG)-ldl >> $@
 	echo Cflags: -I$(prefix)/include/d/gtkd-$(MAJOR)/ >> $@
-	echo Requires.private: gtk+-3.0, gdk-3.0, atk, pango, cairo, cairo-gobject, pangocairo, librsvg-2.0, gio-2.0, glib-2.0, gobject-2.0, gmodule-2.0 >> $@
+	echo Requires: gtk+-3.0, gdk-3.0, atk, pango, cairo, cairo-gobject, pangocairo, librsvg-2.0, gio-2.0, glib-2.0, gobject-2.0 >> $@
 
 gtkdgl-$(MAJOR).pc:
 	echo Name: GtkDGL > $@
 	echo Description: OpenGL capabilities for GtkD. >> $@
 	echo Version: $(GTKD_VERSION) >> $@
 	echo Libs: $(LINKERFLAG)-lgtkdgl-$(MAJOR) >> $@
-	echo Requires: gtkd-$(MAJOR) >> $@
-	echo Requires.private: gtkglext-1.0 >> $@
+	echo Requires: gtkd-$(MAJOR), gtkglext-1.0 >> $@
 
 gtkdsv-$(MAJOR).pc:
 	echo Name: GtkD SourceView > $@
 	echo Description: A D binding and OO wrapper for GtkSourceView. >> $@
 	echo Version: $(GTKD_VERSION) >> $@
 	echo Libs: $(LINKERFLAG)-lgtkdsv-$(MAJOR) >> $@
-	echo Requires: gtkd-$(MAJOR) >> $@
-	echo Requires.private: gtksourceview-3.0 >> $@
+	echo Requires: gtkd-$(MAJOR), gtksourceview-3.0 >> $@
 
 gstreamerd-$(MAJOR).pc:
 	echo Name: GstreamerD > $@
 	echo Description: A D binding and OO wrapper for Gstreamer. >> $@
 	echo Version: $(GTKD_VERSION) >> $@
 	echo Libs: $(LINKERFLAG)-lgstreamerd-$(MAJOR) >> $@
-	echo Requires: gtkd-$(MAJOR) >> $@
-	echo Requires.private: gstreamer-1.0, gstreamer-base-1.0 >> $@
+	echo Requires: gtkd-$(MAJOR), gstreamer-1.0, gstreamer-base-1.0 >> $@
 
 vted-$(MAJOR).pc:
 	echo Name: VteD > $@
 	echo Description: A D binding and OO wrapper for Vte. >> $@
 	echo Version: $(GTKD_VERSION) >> $@
 	echo Libs: $(LINKERFLAG)-lvted-$(MAJOR) >> $@
-	echo Requires: gtkd-$(MAJOR) >> $@
-	echo Requires.private: vte-2.91 >> $@
+	echo Requires: gtkd-$(MAJOR), vte-2.91 >> $@
 
 peasd-$(MAJOR).pc:
 	echo Name: PeasD > $@
 	echo Description: A D binding and OO wrapper for Peas. >> $@
 	echo Version: $(GTKD_VERSION) >> $@
 	echo Libs: $(LINKERFLAG)-lpeasd-$(MAJOR) >> $@
-	echo Requires: gtkd-$(MAJOR) >> $@
-	echo Requires.private: libpeas-1.0, libpeas-gtk-1.0 >> $@
+	echo Requires: gtkd-$(MAJOR), libpeas-1.0, libpeas-gtk-1.0 >> $@
 
 #######################################################################
 
