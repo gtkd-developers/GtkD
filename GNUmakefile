@@ -32,14 +32,14 @@ shared: shared-libs
 all: libs shared-libs test
 
 ifeq ("$(DC)","gdc")
-    DCFLAGS=-O2
-    LINKERFLAG=-Xlinker 
+    DCFLAGS?=-O2
+    LINKERFLAG?=-Xlinker
     DDOCFLAGS=-fsyntax-only -c -fdoc -fdoc-file=$@
     DDOCINC=-fdoc-inc=
     output=-o $@
 else
-    DCFLAGS=-O
-    LINKERFLAG=-L
+    DCFLAGS?=-O
+    LINKERFLAG?=-L
     DDOCFLAGS=-o- -Df$@
     output=-of$@
 endif
@@ -459,7 +459,7 @@ clean:
 	-rm -f $(LIBNAME_VTED)       $(SONAME_VTED)       vted-$(MAJOR).pc     $(OBJECTS_VTED)       $(PICOBJECTS_VTED)
 	-rm -f $(LIBNAME_PEASD)      $(SONAME_PEASD)      peasd-$(MAJOR).pc    $(OBJECTS_PEASD)      $(PICOBJECTS_PEASD)
 	-rm -f $(BINNAME_DEMO)       $(OBJECTS_DEMO)      $(SONAME_GTKD).$(SO_VERSION)
-	$(MAKE) -C wrap clean
+	-$(MAKE) -C wrap clean
 
 #######################################################################
 
