@@ -121,6 +121,15 @@ public class Value
 	}
 
 	/** */
+	this(CHAR)(CHAR value)
+	if( is(CHAR == char) )
+	{
+		this();
+		init(GType.UCHAR);
+		setUchar(value);
+	}
+
+	/** */
 	this(INT)(INT value)
 	if ( isIntegral!INT )
 	{
@@ -188,7 +197,7 @@ public class Value
 			return getBoolean();
 		else static if ( is(TYPE == byte) )
 			return getSchar();
-		else static if ( is(TYPE == ubyte) )
+		else static if ( is(TYPE == ubyte) || is(TYPE == char) )
 			return getUchar();
 		else static if ( is(TYPE == int) )
 			return getInt();
@@ -995,8 +1004,8 @@ public class Value
 
 	/**
 	 * Sets the contents of a %G_TYPE_BOXED derived #GValue to @v_boxed
-	 * and takes over the ownership of the callers reference to @v_boxed;
-	 * the caller doesn't have to unref it any more.
+	 * and takes over the ownership of the caller’s reference to @v_boxed;
+	 * the caller doesn’t have to unref it any more.
 	 *
 	 * Params:
 	 *     vBoxed = duplicated unowned boxed value to be set
@@ -1010,8 +1019,8 @@ public class Value
 
 	/**
 	 * Sets the contents of a %G_TYPE_OBJECT derived #GValue to @v_object
-	 * and takes over the ownership of the callers reference to @v_object;
-	 * the caller doesn't have to unref it any more (i.e. the reference
+	 * and takes over the ownership of the caller’s reference to @v_object;
+	 * the caller doesn’t have to unref it any more (i.e. the reference
 	 * count of the object is not increased).
 	 *
 	 * If you want the #GValue to hold its own reference to @v_object, use
@@ -1029,8 +1038,8 @@ public class Value
 
 	/**
 	 * Sets the contents of a %G_TYPE_PARAM #GValue to @param and takes
-	 * over the ownership of the callers reference to @param; the caller
-	 * doesn't have to unref it any more.
+	 * over the ownership of the caller’s reference to @param; the caller
+	 * doesn’t have to unref it any more.
 	 *
 	 * Params:
 	 *     param = the #GParamSpec to be set

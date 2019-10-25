@@ -160,7 +160,7 @@ class DClosure : Closure
 			call ~= "g_value_set_boolean(return_value, ret);";
 		else static if ( is(Ret == byte) )
 			call ~= "g_value_set_schar(return_value, ret);";
-		else static if ( is(Ret == ubyte) )
+		else static if ( is(Ret == ubyte) || is(Ret == char) )
 			call ~= "g_value_set_uchar(return_value, ret);";
 		else static if ( is(Ret == int) )
 			call ~= "g_value_set_int(return_value, ret);";
@@ -207,7 +207,7 @@ class DClosure : Closure
 			return "g_value_get_boolean(&param_values["~to!string(index)~"]) != 0";
 		else static if ( is(Param == byte) )
 			return "g_value_get_schar(&param_values["~to!string(index)~"])";
-		else static if ( is(Param == ubyte) )
+		else static if ( is(Param == ubyte) || is(Param == char) )
 			return "g_value_get_uchar(&param_values["~to!string(index)~"])";
 		else static if ( is(Param == int) )
 			return "g_value_get_int(&param_values["~to!string(index)~"])";
