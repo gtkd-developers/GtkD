@@ -256,9 +256,13 @@ public class ObjectG
 			else
 				return getInterfaceInstance!RT(cast(GObject*)obj);
 		}
-		else
+		else static if ( is(typeof(new T(obj, ownedRef))) )
 		{
 			return new T(obj, ownedRef);
+		}
+		else
+		{
+			return new T(obj);
 		}
 	}
 
@@ -494,7 +498,7 @@ public class ObjectG
 	 * Params:
 	 *     gIface = any interface vtable for the
 	 *         interface, or the default vtable for the interface
-	 *     propertyName = name of a property to lookup.
+	 *     propertyName = name of a property to look up.
 	 *
 	 * Returns: the #GParamSpec for the property of the
 	 *     interface with the name @property_name, or %NULL if no
@@ -900,9 +904,16 @@ public class ObjectG
 	}
 
 	/**
-	 * Gets a property of an object. @value must have been initialized to the
-	 * expected type of the property (or a type to which the expected type can be
-	 * transformed) using g_value_init().
+	 * Gets a property of an object.
+	 *
+	 * The @value can be:
+	 *
+	 * - an empty #GValue initialized by %G_VALUE_INIT, which will be
+	 * automatically initialized with the expected type of the property
+	 * (since GLib 2.60)
+	 * - a #GValue initialized with the expected type of the property
+	 * - a #GValue initialized with a type to which the expected type
+	 * of the property can be transformed
 	 *
 	 * In general, a copy is made of the property contents and the caller is
 	 * responsible for freeing the memory by calling g_value_unset().
@@ -1155,6 +1166,9 @@ public class ObjectG
 	 * or may not include using @old_destroy as sometimes replacement
 	 * should not destroy the object in the normal way.
 	 *
+	 * See g_object_set_data() for guidance on using a small, bounded set of values
+	 * for @key.
+	 *
 	 * Params:
 	 *     key = a string, naming the user data pointer
 	 *     oldval = the old value to compare against
@@ -1221,6 +1235,11 @@ public class ObjectG
 	 *
 	 * If the object already had an association with that name,
 	 * the old association will be destroyed.
+	 *
+	 * Internally, the @key is converted to a #GQuark using g_quark_from_string().
+	 * This means a copy of @key is kept permanently (even after @object has been
+	 * finalized) — so it is recommended to only use a small, bounded set of values
+	 * for @key in your program, to avoid the #GQuark storage growing unbounded.
 	 *
 	 * Params:
 	 *     key = name of the key

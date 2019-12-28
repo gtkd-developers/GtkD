@@ -554,9 +554,13 @@ code: start
 			else
 				return getInterfaceInstance!RT(cast(GObject*)obj);
 		}
-		else
+		else static if ( is(typeof(new T(obj, ownedRef))) )
 		{
 			return new T(obj, ownedRef);
+		}
+		else
+		{
+			return new T(obj);
 		}
 	}
 
