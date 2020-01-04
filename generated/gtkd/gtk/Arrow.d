@@ -22,6 +22,7 @@
 // implement new conversion functionalities on the wrap.utils pakage
 
 
+deprecated("Use gtk.Image")
 module gtk.Arrow;
 
 private import glib.ConstructionException;
