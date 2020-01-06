@@ -1,0 +1,172 @@
+/*
+ * This file is part of gtkD.
+ *
+ * gtkD is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 3
+ * of the License, or (at your option) any later version, with
+ * some exceptions, please read the COPYING file.
+ *
+ * gtkD is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with gtkD; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
+ */
+
+// generated automatically - do not change
+// find conversion definition on APILookup.txt
+// implement new conversion functionalities on the wrap.utils pakage
+
+
+module gtk.MenuToolButton;
+
+private import glib.ConstructionException;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Signals;
+private import gtk.ToolButton;
+private import gtk.ToolItem;
+private import gtk.Widget;
+private import gtk.c.functions;
+public  import gtk.c.types;
+private import std.algorithm;
+
+
+/**
+ * A #GtkMenuToolButton is a #GtkToolItem that contains a button and
+ * a small additional button with an arrow. When clicked, the arrow
+ * button pops up a dropdown menu.
+ * 
+ * Use gtk_menu_tool_button_new() to create a new
+ * #GtkMenuToolButton.
+ * 
+ * # GtkMenuToolButton as GtkBuildable
+ * 
+ * The GtkMenuToolButton implementation of the GtkBuildable interface
+ * supports adding a popover by specifying “popover” as the “type” attribute
+ * of a <child> element.
+ * ]|
+ */
+public class MenuToolButton : ToolButton
+{
+	/** the main Gtk struct */
+	protected GtkMenuToolButton* gtkMenuToolButton;
+
+	/** Get the main Gtk struct */
+	public GtkMenuToolButton* getMenuToolButtonStruct(bool transferOwnership = false)
+	{
+		if (transferOwnership)
+			ownedRef = false;
+		return gtkMenuToolButton;
+	}
+
+	/** the main Gtk struct as a void* */
+	protected override void* getStruct()
+	{
+		return cast(void*)gtkMenuToolButton;
+	}
+
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 */
+	public this (GtkMenuToolButton* gtkMenuToolButton, bool ownedRef = false)
+	{
+		this.gtkMenuToolButton = gtkMenuToolButton;
+		super(cast(GtkToolButton*)gtkMenuToolButton, ownedRef);
+	}
+
+
+	/** */
+	public static GType getType()
+	{
+		return gtk_menu_tool_button_get_type();
+	}
+
+	/**
+	 * Creates a new #GtkMenuToolButton using @icon_widget as icon and
+	 * @label as label.
+	 *
+	 * Params:
+	 *     iconWidget = a widget that will be used as icon widget, or %NULL
+	 *     label = a string that will be used as label, or %NULL
+	 *
+	 * Returns: the new #GtkMenuToolButton
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
+	public this(Widget iconWidget, string label)
+	{
+		auto __p = gtk_menu_tool_button_new((iconWidget is null) ? null : iconWidget.getWidgetStruct(), Str.toStringz(label));
+
+		if(__p is null)
+		{
+			throw new ConstructionException("null returned by new");
+		}
+
+		this(cast(GtkMenuToolButton*) __p);
+	}
+
+	/** */
+	public Widget getPopover()
+	{
+		auto __p = gtk_menu_tool_button_get_popover(gtkMenuToolButton);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
+	}
+
+	/**
+	 * Sets the tooltip markup text to be used as tooltip for the arrow button
+	 * which pops up the menu.  See gtk_tool_item_set_tooltip_text() for setting
+	 * a tooltip on the whole #GtkMenuToolButton.
+	 *
+	 * Params:
+	 *     markup = markup text to be used as tooltip text for button’s arrow button
+	 */
+	public void setArrowTooltipMarkup(string markup)
+	{
+		gtk_menu_tool_button_set_arrow_tooltip_markup(gtkMenuToolButton, Str.toStringz(markup));
+	}
+
+	/**
+	 * Sets the tooltip text to be used as tooltip for the arrow button which
+	 * pops up the menu.  See gtk_tool_item_set_tooltip_text() for setting a tooltip
+	 * on the whole #GtkMenuToolButton.
+	 *
+	 * Params:
+	 *     text = text to be used as tooltip text for button’s arrow button
+	 */
+	public void setArrowTooltipText(string text)
+	{
+		gtk_menu_tool_button_set_arrow_tooltip_text(gtkMenuToolButton, Str.toStringz(text));
+	}
+
+	/** */
+	public void setPopover(Widget popover)
+	{
+		gtk_menu_tool_button_set_popover(gtkMenuToolButton, (popover is null) ? null : popover.getWidgetStruct());
+	}
+
+	/**
+	 * The ::show-menu signal is emitted before the menu is shown.
+	 *
+	 * It can be used to populate the menu on demand, using
+	 * gtk_menu_tool_button_set_menu().
+	 *
+	 * Note that even if you populate the menu dynamically in this way,
+	 * you must set an empty menu on the #GtkMenuToolButton beforehand,
+	 * since the arrow is made insensitive if the menu is not set.
+	 */
+	gulong addOnShowMenu(void delegate(MenuToolButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		return Signals.connect(this, "show-menu", dlg, connectFlags ^ ConnectFlags.SWAPPED);
+	}
+}
