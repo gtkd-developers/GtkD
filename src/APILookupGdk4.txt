@@ -1,0 +1,194 @@
+﻿#
+# This file is part of gtkD.
+#
+# gtkD is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 2.1 of the License, or
+# (at your option) any later version.
+#
+# gtkD is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with gtkD; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+#############################################
+### Definitions for wrapping Gtk+ ###########
+#############################################
+
+# must start with wrap
+wrap: gdk
+file: Gdk-4.0.gir
+#version Posix: file: GdkX11-4.0.gir
+
+struct: Cairo
+namespace:
+
+struct: Event
+alias: _get_angle getAngle
+alias: _get_center getCenter
+alias: _get_distance getDistance
+
+struct: Monitor
+class: MonitorG
+
+struct: Pango
+namespace:
+
+struct: Pixbuf
+namespace:
+code: start
+	public  import gdkpixbuf.Pixbuf;
+code: end
+
+struct: Rectangle
+noCode: get_type
+namespace:
+
+struct: RGBA
+override: to_string
+code: start
+	/**
+	 * Creates a new RGBA Color
+	 */
+	this()
+	{
+		GdkRGBA rgba = GdkRGBA(0, 0, 0, 0);
+
+		this(gdk_rgba_copy(&rgba), true);
+	}
+
+	/** ditto */
+	this(double red, double green, double blue, double alpha = 1.0)
+	{
+		GdkRGBA rgba;
+
+		rgba.red = red;
+		rgba.green = green;
+		rgba.blue = blue;
+		rgba.alpha = alpha;
+
+		this(gdk_rgba_copy(&rgba), true);
+	}
+code: end
+
+# We disable this due to gir-to-d's inability to generate proper code if the
+# imported type (cairo.Surface) and the current type (gdk.Surface) have the same name.
+struct: Surface
+noCode: create_similar_surface
+
+struct: X11AppLaunchContext
+noCode: true
+noExternal: true
+
+struct: X11AppLaunchContextClass
+noExternal: true
+
+struct: X11Cursor
+noCode: true
+noExternal: true
+
+struct: X11CursorClass
+noExternal: true
+
+struct: X11DeviceCore
+noCode: true
+noExternal: true
+
+struct: X11DeviceCoreClass
+noExternal: true
+
+struct: X11DeviceManagerCore
+noCode: true
+noExternal: true
+
+struct: X11DeviceManagerCoreClass
+noExternal: true
+
+struct: X11DeviceManagerXI2
+noCode: true
+noExternal: true
+
+struct: X11DeviceManagerXI2Class
+noExternal: true
+
+struct: X11DeviceXI2
+noCode: true
+noExternal: true
+
+struct: X11DeviceXI2Class
+noExternal: true
+
+struct: X11Display
+noCode: true
+noExternal: true
+
+struct: X11DisplayClass
+noExternal: true
+
+struct: X11DisplayManager
+noCode: true
+noExternal: true
+
+struct: X11DisplayManagerClass
+noExternal: true
+
+struct: X11DragContext
+noCode: true
+noExternal: true
+
+struct: X11DragContextClass
+noExternal: true
+
+struct: X11GLContext
+noCode: true
+noExternal: true
+
+struct: X11Keymap
+noCode: true
+noExternal: true
+
+struct: X11KeymapClass
+noExternal: true
+
+struct: X11Monitor
+noCode: true
+noExternal: true
+
+struct: X11Screen
+noCode: true
+noExternal: true
+
+struct: X11ScreenClass
+noExternal: true
+
+struct: X11Visual
+noCode: true
+noExternal: true
+
+struct: X11VisualClass
+noExternal: true
+
+struct:
+
+move: events_get_angle Event _get_angle
+move: events_get_center Event _get_center
+move: events_get_distance Event _get_distance
+move: get_show_events Event
+move: set_show_events Event
+
+move: keyval_convert_case Keymap
+move: keyval_from_name Keymap
+move: keyval_is_lower Keymap
+move: keyval_is_upper Keymap
+move: keyval_name Keymap
+move: keyval_to_lower Keymap
+move: keyval_to_unicode Keymap
+move: keyval_to_upper Keymap
+move: unicode_to_keyval Keymap
+
+#move: pixbuf_get_from_surface Pixbuf get_from_surface
