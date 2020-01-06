@@ -90,6 +90,12 @@ SOURCES_GTKD = $(wildcard generated/gtkd/*/*.d) $(wildcard generated/gtkd/*/c/*.
 OBJECTS_GTKD = $(patsubst %.d,%.o,$(SOURCES_GTKD))
 PICOBJECTS_GTKD = $(patsubst %.o,%.pic.o,$(OBJECTS_GTKD))
 
+LIBNAME_GTKD4 = libgtkd-4.a
+SONAME_GTKD4 = libgtkd-4.$(SO_POSTFIX)
+SOURCES_GTKD4 = $(wildcard generated/gtkd4/*/*.d) $(wildcard generated/gtkd4/*/c/*.d)
+OBJECTS_GTKD4 = $(patsubst %.d,%.o,$(SOURCES_GTKD4))
+PICOBJECTS_GTKD4 = $(patsubst %.o,%.pic.o,$(OBJECTS_GTKD4))
+
 LIBNAME_GTKDGL = libgtkdgl-$(MAJOR).a
 SONAME_GTKDGL = libgtkdgl-$(MAJOR).$(SO_POSTFIX)
 SOURCES_GTKDGL = $(wildcard generated/gtkdgl/*/*.d) $(wildcard generated/gtkdgl/*/c/*.d)
@@ -126,6 +132,7 @@ USE_RUNTIME_LINKER = $(shell grep "Linker" generated/gtkd/atk/c/functions.d)
 
 ifeq ($(USE_RUNTIME_LINKER),)
     SOFLAGS_GTKD = $(shell ${PKG_CONFIG} --libs-only-l --libs-only-L gtk+-3.0 librsvg-2.0 gmodule-2.0 | sed 's/-[lL]/$(LINKERFLAG)&/g')
+    SOFLAGS_GTKD4 = $(shell ${PKG_CONFIG} --libs-only-l --libs-only-L gtk+-4.0 librsvg-2.0 gmodule-2.0 | sed 's/-[lL]/$(LINKERFLAG)&/g')
     SOFLAGS_GTKDGL = $(LINKERFLAG)-L. $(LINKERFLAG)./libgtkd-$(MAJOR).$(SO_POSTFIX) $(shell ${PKG_CONFIG} --libs-only-l --libs-only-L gtkglext-3.0 | sed 's/-[lL]/$(LINKERFLAG)&/g')
     SOFLAGS_GTKDSV = $(LINKERFLAG)-L. $(LINKERFLAG)./libgtkd-$(MAJOR).$(SO_POSTFIX) $(shell ${PKG_CONFIG} --libs-only-l --libs-only-L gtksourceview-3.0 | sed 's/-[lL]/$(LINKERFLAG)&/g')
     SOFLAGS_GSTREAMERD = $(LINKERFLAG)-L. $(LINKERFLAG)./libgtkd-$(MAJOR).$(SO_POSTFIX) $(shell ${PKG_CONFIG} --libs-only-l --libs-only-L gstreamer-base-1.0 | sed 's/-[lL]/$(LINKERFLAG)&/g')
@@ -175,6 +182,7 @@ else
 endif
 
 gtkd:      $(LIBNAME_GTKD)
+gtkd4:     $(LIBNAME_GTKD4)
 gtkdgl:    $(LIBNAME_GTKDGL)
 sv:        $(LIBNAME_GTKDSV)
 gstreamer: $(LIBNAME_GSTREAMERD)
@@ -182,6 +190,7 @@ vte:       $(LIBNAME_VTED)
 peas:      $(LIBNAME_PEASD)
 
 shared-gtkd:      $(SONAME_GTKD)
+shared-gtkd4:     $(SONAME_GTKD4)
 shared-gtkdgl:    $(SONAME_GTKDGL)
 shared-sv:        $(SONAME_GTKDSV)
 shared-gstreamer: $(SONAME_GSTREAMERD)
@@ -192,6 +201,10 @@ shared-peas:      $(SONAME_PEASD)
 
 $(LIBNAME_GTKD): IMPORTS=-Igenerated/gtkd
 $(LIBNAME_GTKD): $(OBJECTS_GTKD)
+	$(make-lib)
+
+$(LIBNAME_GTKD4): IMPORTS=-Igenerated/gtkd4
+$(LIBNAME_GTKD4): $(OBJECTS_GTKD4)
 	$(make-lib)
 
 $(LIBNAME_GTKDGL): IMPORTS=-Igenerated/gtkd -Igenerated/gtkdgl
@@ -219,6 +232,10 @@ $(LIBNAME_PEASD): $(LIBNAME_GTKD) $(OBJECTS_PEASD)
 $(SONAME_GTKD): IMPORTS=-Igenerated/gtkd 
 $(SONAME_GTKD): $(PICOBJECTS_GTKD)
 	$(call make-shared-lib,$(SOFLAGS_GTKD))
+
+$(SONAME_GTKD4): IMPORTS=-Igenerated/gtkd4
+$(SONAME_GTKD4): $(PICOBJECTS_GTKD4)
+	$(call make-shared-lib,$(SOFLAGS_GTKD4))
 
 $(SONAME_GTKDGL): IMPORTS=-Igenerated/gtkd -Igenerated/gtkdgl
 $(SONAME_GTKDGL): $(SONAME_GTKD) $(PICOBJECTS_GTKDGL)
@@ -256,6 +273,7 @@ test: $(BINNAME_DEMO)
 $(BINNAME_DEMO): IMPORTS=-Igenerated/gtkd -Idemos/gtkD/TestWindow
 $(BINNAME_DEMO): $(OBJECTS_DEMO)
 	$(if $(wildcard $(SONAME_GTKD)),,$(if $(wildcard $(LIBNAME_GTKD)),,$(MAKE) $(LIBNAME_GTKD)))
+	$(if $(wildcard $(SONAME_GTKD4)),,$(if $(wildcard $(LIBNAME_GTKD4)),,$(MAKE) $(LIBNAME_GTKD4)))
 	$(if $(wildcard $(SONAME_GTKD)),$(eval LDFLAGS+= $(LINKERFLAG)-rpath=./))
 	$(if $(wildcard $(SONAME_GTKD)),$(if $(findstring "gdc","$(DC)"),$(eval LDFLAGS+=-shared-libphobos)))
 	$(if $(wildcard $(SONAME_GTKD)),$(if $(wildcard $(SONAME_GTKD).$(SO_VERSION)),,$(shell ln -s $(SONAME_GTKD) $(SONAME_GTKD).$(SO_VERSION))))
@@ -274,10 +292,11 @@ $(BINNAME_DEMO): $(OBJECTS_DEMO)
 ifeq ("$(OS)","Darwin")
     pkgconfig: pkgconfig-gtkd
 else
-    pkgconfig: pkgconfig-gtkd pkgconfig-gtkdgl pkgconfig-sv
+    pkgconfig: pkgconfig-gtkd pkgconfig-gtkd4 pkgconfig-gtkdgl pkgconfig-sv
 endif
 
 pkgconfig-gtkd:      gtkd-$(MAJOR).pc
+pkgconfig-gtkd:      gtkd-4.pc
 pkgconfig-gtkdgl:    gtkdgl-$(MAJOR).pc
 pkgconfig-sv:        gtkdsv-$(MAJOR).pc
 pkgconfig-gstreamer: gstreamerd-$(MAJOR).pc
@@ -291,6 +310,15 @@ gtkd-$(MAJOR).pc:
 	echo Libs: $(LINKERFLAG)-L$(prefix)/$(libdir)/ $(LINKERFLAG)-lgtkd-$(MAJOR) $(LINKERFLAG)-ldl >> $@
 	echo Cflags: -I$(prefix)/include/d/gtkd-$(MAJOR)/ >> $@
 	echo Requires: gtk+-3.0, gdk-3.0, atk, pango, cairo, cairo-gobject, pangocairo, librsvg-2.0, gio-2.0, glib-2.0, gobject-2.0 >> $@
+
+gtkd-4.pc:
+	echo Name: GtkD > $@
+	echo Description: A D binding and OO wrapper for GTK+. >> $@
+	echo Version: $(GTKD_VERSION) >> $@
+	echo Libs: $(LINKERFLAG)-L$(prefix)/$(libdir)/ $(LINKERFLAG)-lgtkd-4 $(LINKERFLAG)-ldl >> $@
+	echo Cflags: -I$(prefix)/include/d/gtkd-4/ >> $@
+	echo Requires: gtk+-4.0, atk, pango, cairo, cairo-gobject, pangocairo, librsvg-2.0, gio-2.0, glib-2.0, gobject-2.0 >> $@
+
 
 gtkdgl-$(MAJOR).pc:
 	echo Name: GtkDGL > $@
@@ -334,14 +362,18 @@ ifeq ("$(OS)","Darwin")
     install-headers: install-headers-gtkd
     install-shared: install-shared-gtkd
 else
-    install: install-gtkd install-gtkdsv install-gstreamer install-vte install-peas
-    install-headers: install-headers-gtkd install-headers-gtkdsv install-headers-gstreamer install-headers-vte install-headers-peas
-    install-shared: install-shared-gtkd install-shared-gtkdsv install-shared-gstreamer install-shared-vte install-shared-peas
+    install: install-gtkd install-gtkd4 install-gtkdsv install-gstreamer install-vte install-peas
+    install-headers: install-headers-gtkd install-headers-gtkd4 install-headers-gtkdsv install-headers-gstreamer install-headers-vte install-headers-peas
+    install-shared: install-shared-gtkd install-shared-gtkd4 install-shared-gtkdsv install-shared-gstreamer install-shared-vte install-shared-peas
 endif
 
 install-gtkd: $(LIBNAME_GTKD) install-headers-gtkd
 	install -d $(DESTDIR)$(prefix)/$(libdir)
 	install -m 644 $(LIBNAME_GTKD)   $(DESTDIR)$(prefix)/$(libdir)
+
+install-gtkd4: $(LIBNAME_GTKD4) install-headers-gtkd4
+	install -d $(DESTDIR)$(prefix)/$(libdir)
+	install -m 644 $(LIBNAME_GTKD4)   $(DESTDIR)$(prefix)/$(libdir)
 
 install-gtkdgl: $(LIBNAME_GTKDGL) install-gtkd install-headers-gtkdgl
 	install -m 644 $(LIBNAME_GTKDGL) $(DESTDIR)$(prefix)/$(libdir)
@@ -359,6 +391,10 @@ install-peas: $(LIBNAME_PEASD) install-gtkd install-headers-peas
 	install -m 644 $(LIBNAME_PEASD) $(DESTDIR)$(prefix)/$(libdir)
 
 install-shared-gtkd: $(SONAME_GTKD)
+	install -d $(DESTDIR)$(prefix)/$(libdir)
+	$(install-so)
+
+install-shared-gtkd4: $(SONAME_GTKD4)
 	install -d $(DESTDIR)$(prefix)/$(libdir)
 	$(install-so)
 
@@ -382,6 +418,12 @@ install-headers-gtkd: gtkd-$(MAJOR).pc
 	install -d $(DESTDIR)$(prefix)/$(libdir)/pkgconfig
 	(cd generated/gtkd;   echo $(SOURCES_GTKD)   | sed -e s,generated/gtkd/,,g   | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xvf -)
 	install -m 644 gtkd-$(MAJOR).pc $(DESTDIR)$(prefix)/$(libdir)/pkgconfig
+
+install-headers-gtkd4: gtkd-4.pc
+	install -d $(DESTDIR)$(prefix)/include/d/gtkd-4
+	install -d $(DESTDIR)$(prefix)/$(libdir)/pkgconfig
+	(cd generated/gtkd4;   echo $(SOURCES_GTKD4)   | sed -e s,generated/gtkd4/,,g   | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-4; tar xvf -)
+	install -m 644 gtkd-4.pc $(DESTDIR)$(prefix)/$(libdir)/pkgconfig
 
 install-headers-gtkdgl: gtkdgl-$(MAJOR).pc install-headers-gtkd
 	(cd generated/gtkdgl; echo $(SOURCES_GTKDGL) | sed -e s,generated/gtkdgl/,,g | xargs tar cf -) | (cd $(DESTDIR)$(prefix)/include/d/gtkd-$(MAJOR); tar xvf -)
@@ -453,6 +495,7 @@ uninstall-peas:
 
 clean:
 	-rm -f $(LIBNAME_GTKD)       $(SONAME_GTKD)       gtkd-$(MAJOR).pc     $(OBJECTS_GTKD)       $(PICOBJECTS_GTKD)
+	-rm -f $(LIBNAME_GTKD4)       $(SONAME_GTKD4)       gtkd-4.pc     $(OBJECTS_GTKD4)       $(PICOBJECTS_GTKD4)
 	-rm -f $(LIBNAME_GTKDGL)     $(SONAME_GTKDGL)     gtkdgl-$(MAJOR).pc   $(OBJECTS_GTKDGL)     $(PICOBJECTS_GTKDGL)
 	-rm -f $(LIBNAME_GTKDSV)     $(SONAME_GTKDSV)     gtkdsv-$(MAJOR).pc   $(OBJECTS_GTKDSV)     $(PICOBJECTS_GTKDSV)
 	-rm -f $(LIBNAME_GSTREAMERD) $(SONAME_GSTREAMERD) gstreamerd-$(MAJOR).pc      $(OBJECTS_GSTREAMERD) $(PICOBJECTS_GSTREAMERD)
@@ -464,7 +507,7 @@ clean:
 #######################################################################
 
 define make-lib
-    $(AR) rcs $@ $(subst $(LIBNAME_GTKD),,$^)
+    $(AR) rcs $@ $(subst $(LIBNAME_GTKD4),,$^)
     $(RANLIB) $@
 endef
 
