@@ -28,7 +28,6 @@ private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
 private import gobject.ObjectG;
-public  import gtkc.glibtypes;
 
 
 /**
@@ -162,14 +161,14 @@ public class ListSG
 	 */
 	public static ListSG alloc()
 	{
-		auto p = g_slist_alloc();
+		auto __p = g_slist_alloc();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**
@@ -203,14 +202,14 @@ public class ListSG
 	 */
 	public ListSG append(void* data)
 	{
-		auto p = g_slist_append(gSList, data);
+		auto __p = g_slist_append(gSList, data);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**
@@ -225,14 +224,14 @@ public class ListSG
 	 */
 	public ListSG concat(ListSG list2)
 	{
-		auto p = g_slist_concat(gSList, (list2 is null) ? null : list2.getListSGStruct());
+		auto __p = g_slist_concat(gSList, (list2 is null) ? null : list2.getListSGStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**
@@ -247,14 +246,14 @@ public class ListSG
 	 */
 	public ListSG copy()
 	{
-		auto p = g_slist_copy(gSList);
+		auto __p = g_slist_copy(gSList);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**
@@ -263,11 +262,9 @@ public class ListSG
 	 * In contrast with g_slist_copy(), this function uses @func to make a copy of
 	 * each list element, in addition to copying the list container itself.
 	 *
-	 * @func, as a #GCopyFunc, takes two arguments, the data to be copied
-	 * and a @user_data pointer. On common processor architectures, it's safe to
-	 * pass %NULL as @user_data if the copy function takes only one argument. You
-	 * may get compiler warnings from this though if compiling with GCC’s
-	 * `-Wcast-function-type` warning.
+	 * @func, as a #GCopyFunc, takes two arguments, the data to be copied and a user
+	 * pointer. It's safe to pass #NULL as user_data, if the copy function takes only
+	 * one argument.
 	 *
 	 * For instance, if @list holds a list of GObjects, you can do:
 	 * |[<!-- language="C" -->
@@ -283,20 +280,20 @@ public class ListSG
 	 *     func = a copy function used to copy every element in the list
 	 *     userData = user data passed to the copy function @func, or #NULL
 	 *
-	 * Returns: a full copy of @list, use g_slist_free_full() to free it
+	 * Returns: a full copy of @list, use #g_slist_free_full to free it
 	 *
 	 * Since: 2.34
 	 */
 	public ListSG copyDeep(GCopyFunc func, void* userData)
 	{
-		auto p = g_slist_copy_deep(gSList, func, userData);
+		auto __p = g_slist_copy_deep(gSList, func, userData);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**
@@ -317,14 +314,14 @@ public class ListSG
 	 */
 	public ListSG deleteLink(ListSG link)
 	{
-		auto p = g_slist_delete_link(gSList, (link is null) ? null : link.getListSGStruct());
+		auto __p = g_slist_delete_link(gSList, (link is null) ? null : link.getListSGStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**
@@ -339,14 +336,14 @@ public class ListSG
 	 */
 	public ListSG find(void* data)
 	{
-		auto p = g_slist_find(gSList, data);
+		auto __p = g_slist_find(gSList, data);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**
@@ -366,22 +363,19 @@ public class ListSG
 	 */
 	public ListSG findCustom(void* data, GCompareFunc func)
 	{
-		auto p = g_slist_find_custom(gSList, data, func);
+		auto __p = g_slist_find_custom(gSList, data, func);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	alias foreac = foreach_;
 	/**
 	 * Calls a function for each element of a #GSList.
-	 *
-	 * It is safe for @func to remove the element from @list, but it must
-	 * not modify any part of the list after that element.
 	 *
 	 * Params:
 	 *     func = the function to call with each element's data
@@ -417,9 +411,6 @@ public class ListSG
 	/**
 	 * Convenience method, which frees all the memory used by a #GSList, and
 	 * calls the specified destroy function on every element's data.
-	 *
-	 * @free_func must not modify the list (eg, by removing the freed
-	 * element from it).
 	 *
 	 * Params:
 	 *     freeFunc = the function to be called to free each element's data
@@ -460,14 +451,14 @@ public class ListSG
 	 */
 	public ListSG insert(void* data, int position)
 	{
-		auto p = g_slist_insert(gSList, data, position);
+		auto __p = g_slist_insert(gSList, data, position);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**
@@ -481,14 +472,14 @@ public class ListSG
 	 */
 	public ListSG insertBefore(ListSG sibling, void* data)
 	{
-		auto p = g_slist_insert_before(gSList, (sibling is null) ? null : sibling.getListSGStruct(), data);
+		auto __p = g_slist_insert_before(gSList, (sibling is null) ? null : sibling.getListSGStruct(), data);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**
@@ -505,14 +496,14 @@ public class ListSG
 	 */
 	public ListSG insertSorted(void* data, GCompareFunc func)
 	{
-		auto p = g_slist_insert_sorted(gSList, data, func);
+		auto __p = g_slist_insert_sorted(gSList, data, func);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**
@@ -532,14 +523,14 @@ public class ListSG
 	 */
 	public ListSG insertSortedWithData(void* data, GCompareDataFunc func, void* userData)
 	{
-		auto p = g_slist_insert_sorted_with_data(gSList, data, func, userData);
+		auto __p = g_slist_insert_sorted_with_data(gSList, data, func, userData);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**
@@ -552,14 +543,14 @@ public class ListSG
 	 */
 	public ListSG last()
 	{
-		auto p = g_slist_last(gSList);
+		auto __p = g_slist_last(gSList);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**
@@ -587,14 +578,14 @@ public class ListSG
 	 */
 	public ListSG nth(uint n)
 	{
-		auto p = g_slist_nth(gSList, n);
+		auto __p = g_slist_nth(gSList, n);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**
@@ -646,14 +637,14 @@ public class ListSG
 	 */
 	public ListSG prepend(void* data)
 	{
-		auto p = g_slist_prepend(gSList, data);
+		auto __p = g_slist_prepend(gSList, data);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**
@@ -668,14 +659,14 @@ public class ListSG
 	 */
 	public ListSG remove(void* data)
 	{
-		auto p = g_slist_remove(gSList, data);
+		auto __p = g_slist_remove(gSList, data);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**
@@ -691,14 +682,14 @@ public class ListSG
 	 */
 	public ListSG removeAll(void* data)
 	{
-		auto p = g_slist_remove_all(gSList, data);
+		auto __p = g_slist_remove_all(gSList, data);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**
@@ -720,14 +711,14 @@ public class ListSG
 	 */
 	public ListSG removeLink(ListSG link)
 	{
-		auto p = g_slist_remove_link(gSList, (link is null) ? null : link.getListSGStruct());
+		auto __p = g_slist_remove_link(gSList, (link is null) ? null : link.getListSGStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**
@@ -737,19 +728,18 @@ public class ListSG
 	 */
 	public ListSG reverse()
 	{
-		auto p = g_slist_reverse(gSList);
+		auto __p = g_slist_reverse(gSList);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**
-	 * Sorts a #GSList using the given comparison function. The algorithm
-	 * used is a stable sort.
+	 * Sorts a #GSList using the given comparison function.
 	 *
 	 * Params:
 	 *     compareFunc = the comparison function used to sort the #GSList.
@@ -762,14 +752,14 @@ public class ListSG
 	 */
 	public ListSG sort(GCompareFunc compareFunc)
 	{
-		auto p = g_slist_sort(gSList, compareFunc);
+		auto __p = g_slist_sort(gSList, compareFunc);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**
@@ -783,13 +773,13 @@ public class ListSG
 	 */
 	public ListSG sortWithData(GCompareDataFunc compareFunc, void* userData)
 	{
-		auto p = g_slist_sort_with_data(gSList, compareFunc, userData);
+		auto __p = g_slist_sort_with_data(gSList, compareFunc, userData);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 }

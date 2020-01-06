@@ -29,8 +29,6 @@ public  import gio.c.types;
 private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
-private import gtkd.Loader;
 
 
 /**
@@ -69,7 +67,7 @@ public final class DBusAnnotationInfo
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GIO) && ownedRef )
+		if ( ownedRef )
 			g_dbus_annotation_info_unref(gDBusAnnotationInfo);
 	}
 
@@ -187,14 +185,14 @@ public final class DBusAnnotationInfo
 	 */
 	public DBusAnnotationInfo ref_()
 	{
-		auto p = g_dbus_annotation_info_ref(gDBusAnnotationInfo);
+		auto __p = g_dbus_annotation_info_ref(gDBusAnnotationInfo);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusAnnotationInfo)(cast(GDBusAnnotationInfo*) p, true);
+		return ObjectG.getDObject!(DBusAnnotationInfo)(cast(GDBusAnnotationInfo*) __p, true);
 	}
 
 	/**

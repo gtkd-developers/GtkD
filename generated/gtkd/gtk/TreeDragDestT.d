@@ -28,7 +28,6 @@ public  import gtk.SelectionData;
 public  import gtk.TreePath;
 public  import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /** */

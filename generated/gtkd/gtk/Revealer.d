@@ -30,7 +30,6 @@ private import gtk.Bin;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -95,14 +94,14 @@ public class Revealer : Bin
 	 */
 	public this()
 	{
-		auto p = gtk_revealer_new();
+		auto __p = gtk_revealer_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkRevealer*) p);
+		this(cast(GtkRevealer*) __p);
 	}
 
 	/**

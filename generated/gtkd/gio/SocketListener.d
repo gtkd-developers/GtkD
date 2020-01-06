@@ -36,7 +36,6 @@ private import glib.ErrorG;
 private import glib.GException;
 private import gobject.ObjectG;
 private import gobject.Signals;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -45,16 +44,9 @@ private import std.algorithm;
  * of server sockets and helps you accept sockets from any of the
  * socket, either sync or async.
  * 
- * Add addresses and ports to listen on using g_socket_listener_add_address()
- * and g_socket_listener_add_inet_port(). These will be listened on until
- * g_socket_listener_close() is called. Dropping your final reference to the
- * #GSocketListener will not cause g_socket_listener_close() to be called
- * implicitly, as some references to the #GSocketListener may be held
- * internally.
- * 
  * If you want to implement a network server, also look at #GSocketService
- * and #GThreadedSocketService which are subclasses of #GSocketListener
- * that make this even easier.
+ * and #GThreadedSocketService which are subclass of #GSocketListener
+ * that makes this even easier.
  *
  * Since: 2.22
  */
@@ -106,14 +98,14 @@ public class SocketListener : ObjectG
 	 */
 	public this()
 	{
-		auto p = g_socket_listener_new();
+		auto __p = g_socket_listener_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GSocketListener*) p, true);
+		this(cast(GSocketListener*) __p, true);
 	}
 
 	/**
@@ -144,7 +136,7 @@ public class SocketListener : ObjectG
 		GObject* outsourceObject = null;
 		GError* err = null;
 
-		auto p = g_socket_listener_accept(gSocketListener, &outsourceObject, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_socket_listener_accept(gSocketListener, &outsourceObject, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
@@ -153,12 +145,12 @@ public class SocketListener : ObjectG
 
 		sourceObject = ObjectG.getDObject!(ObjectG)(outsourceObject);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) p, true);
+		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) __p, true);
 	}
 
 	/**
@@ -198,7 +190,7 @@ public class SocketListener : ObjectG
 		GObject* outsourceObject = null;
 		GError* err = null;
 
-		auto p = g_socket_listener_accept_finish(gSocketListener, (result is null) ? null : result.getAsyncResultStruct(), &outsourceObject, &err);
+		auto __p = g_socket_listener_accept_finish(gSocketListener, (result is null) ? null : result.getAsyncResultStruct(), &outsourceObject, &err);
 
 		if (err !is null)
 		{
@@ -207,12 +199,12 @@ public class SocketListener : ObjectG
 
 		sourceObject = ObjectG.getDObject!(ObjectG)(outsourceObject);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) p, true);
+		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) __p, true);
 	}
 
 	/**
@@ -246,7 +238,7 @@ public class SocketListener : ObjectG
 		GObject* outsourceObject = null;
 		GError* err = null;
 
-		auto p = g_socket_listener_accept_socket(gSocketListener, &outsourceObject, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_socket_listener_accept_socket(gSocketListener, &outsourceObject, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
@@ -255,12 +247,12 @@ public class SocketListener : ObjectG
 
 		sourceObject = ObjectG.getDObject!(ObjectG)(outsourceObject);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Socket)(cast(GSocket*) p, true);
+		return ObjectG.getDObject!(Socket)(cast(GSocket*) __p, true);
 	}
 
 	/**
@@ -300,7 +292,7 @@ public class SocketListener : ObjectG
 		GObject* outsourceObject = null;
 		GError* err = null;
 
-		auto p = g_socket_listener_accept_socket_finish(gSocketListener, (result is null) ? null : result.getAsyncResultStruct(), &outsourceObject, &err);
+		auto __p = g_socket_listener_accept_socket_finish(gSocketListener, (result is null) ? null : result.getAsyncResultStruct(), &outsourceObject, &err);
 
 		if (err !is null)
 		{
@@ -309,12 +301,12 @@ public class SocketListener : ObjectG
 
 		sourceObject = ObjectG.getDObject!(ObjectG)(outsourceObject);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Socket)(cast(GSocket*) p, true);
+		return ObjectG.getDObject!(Socket)(cast(GSocket*) __p, true);
 	}
 
 	/**
@@ -338,10 +330,6 @@ public class SocketListener : ObjectG
 	 * requesting a binding to port 0 (ie: "any port").  This address, if
 	 * requested, belongs to the caller and must be freed.
 	 *
-	 * Call g_socket_listener_close() to stop listening on @address; this will not
-	 * be done automatically when you drop your final reference to @listener, as
-	 * references may be held internally.
-	 *
 	 * Params:
 	 *     address = a #GSocketAddress
 	 *     type = a #GSocketType
@@ -360,7 +348,7 @@ public class SocketListener : ObjectG
 		GSocketAddress* outeffectiveAddress = null;
 		GError* err = null;
 
-		auto p = g_socket_listener_add_address(gSocketListener, (address is null) ? null : address.getSocketAddressStruct(), type, protocol, (sourceObject is null) ? null : sourceObject.getObjectGStruct(), &outeffectiveAddress, &err) != 0;
+		auto __p = g_socket_listener_add_address(gSocketListener, (address is null) ? null : address.getSocketAddressStruct(), type, protocol, (sourceObject is null) ? null : sourceObject.getObjectGStruct(), &outeffectiveAddress, &err) != 0;
 
 		if (err !is null)
 		{
@@ -369,7 +357,7 @@ public class SocketListener : ObjectG
 
 		effectiveAddress = ObjectG.getDObject!(SocketAddress)(outeffectiveAddress);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -397,14 +385,14 @@ public class SocketListener : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_socket_listener_add_any_inet_port(gSocketListener, (sourceObject is null) ? null : sourceObject.getObjectGStruct(), &err);
+		auto __p = g_socket_listener_add_any_inet_port(gSocketListener, (sourceObject is null) ? null : sourceObject.getObjectGStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -416,10 +404,6 @@ public class SocketListener : ObjectG
 	 * to accept to identify this particular source, which is
 	 * useful if you're listening on multiple addresses and do
 	 * different things depending on what address is connected to.
-	 *
-	 * Call g_socket_listener_close() to stop listening on @port; this will not
-	 * be done automatically when you drop your final reference to @listener, as
-	 * references may be held internally.
 	 *
 	 * Params:
 	 *     port = an IP port number (non-zero)
@@ -435,14 +419,14 @@ public class SocketListener : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_socket_listener_add_inet_port(gSocketListener, port, (sourceObject is null) ? null : sourceObject.getObjectGStruct(), &err) != 0;
+		auto __p = g_socket_listener_add_inet_port(gSocketListener, port, (sourceObject is null) ? null : sourceObject.getObjectGStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -474,14 +458,14 @@ public class SocketListener : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_socket_listener_add_socket(gSocketListener, (socket is null) ? null : socket.getSocketStruct(), (sourceObject is null) ? null : sourceObject.getObjectGStruct(), &err) != 0;
+		auto __p = g_socket_listener_add_socket(gSocketListener, (socket is null) ? null : socket.getSocketStruct(), (sourceObject is null) ? null : sourceObject.getObjectGStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**

@@ -26,8 +26,6 @@ module glib.TestLogMsg;
 
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
-private import gtkd.Loader;
 
 
 /** */
@@ -62,7 +60,7 @@ public class TestLogMsg
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_test_log_msg_free(gTestLogMsg);
 	}
 

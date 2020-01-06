@@ -34,7 +34,6 @@ private import gtk.Widget;
 private import gtk.Window;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -46,8 +45,6 @@ public  import gtkc.gtktypes;
  * The GtkFontChooserDialog implementation of the #GtkBuildable
  * interface exposes the buttons with the names “select_button”
  * and “cancel_button”.
- *
- * Since: 3.2
  */
 public class FontChooserDialog : Dialog, FontChooserIF
 {
@@ -102,13 +99,13 @@ public class FontChooserDialog : Dialog, FontChooserIF
 	 */
 	public this(string title, Window parent)
 	{
-		auto p = gtk_font_chooser_dialog_new(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct());
+		auto __p = gtk_font_chooser_dialog_new(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkFontChooserDialog*) p);
+		this(cast(GtkFontChooserDialog*) __p);
 	}
 }

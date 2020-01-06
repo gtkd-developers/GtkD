@@ -31,7 +31,6 @@ public  import gdk.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.gdktypes;
 
 
 /** */

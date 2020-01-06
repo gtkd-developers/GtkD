@@ -26,7 +26,6 @@ module gio.FileDescriptorBasedIF;
 
 private import gio.c.functions;
 public  import gio.c.types;
-public  import gtkc.giotypes;
 
 
 /**
@@ -36,8 +35,6 @@ public  import gtkc.giotypes;
  * Note that `<gio/gfiledescriptorbased.h>` belongs to the UNIX-specific
  * GIO interfaces, thus you have to use the `gio-unix-2.0.pc` pkg-config
  * file when using it.
- *
- * Since: 2.24
  */
 public interface FileDescriptorBasedIF{
 	/** Get the main Gtk struct */

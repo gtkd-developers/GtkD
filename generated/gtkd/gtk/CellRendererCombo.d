@@ -33,7 +33,6 @@ private import gtk.CellRendererText;
 private import gtk.TreeIter;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -103,14 +102,14 @@ public class CellRendererCombo : CellRendererText
 	 */
 	public this()
 	{
-		auto p = gtk_cell_renderer_combo_new();
+		auto __p = gtk_cell_renderer_combo_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkCellRendererCombo*) p);
+		this(cast(GtkCellRendererCombo*) __p);
 	}
 
 	/**

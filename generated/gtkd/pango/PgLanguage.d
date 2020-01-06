@@ -26,7 +26,6 @@ module pango.PgLanguage;
 
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.pangotypes;
 private import pango.c.functions;
 public  import pango.c.types;
 
@@ -122,6 +121,10 @@ public class PgLanguage
 	 * The pango_language_includes_script() function uses this function
 	 * internally.
 	 *
+	 * Note: while the return value is declared as PangoScript, the
+	 * returned values are from the GUnicodeScript enumeration, which
+	 * may have more values. Callers need to handle unknown values.
+	 *
 	 * Returns: An array of
 	 *     #PangoScript values, with the number of entries in the array stored
 	 *     in @num_scripts, or %NULL if Pango does not have any information
@@ -135,9 +138,9 @@ public class PgLanguage
 	{
 		int numScripts;
 
-		auto p = pango_language_get_scripts(pangoLanguage, &numScripts);
+		auto __p = pango_language_get_scripts(pangoLanguage, &numScripts);
 
-		return p[0 .. numScripts];
+		return __p[0 .. numScripts];
 	}
 
 	/**
@@ -223,14 +226,14 @@ public class PgLanguage
 	 */
 	public static PgLanguage fromString(string language)
 	{
-		auto p = pango_language_from_string(Str.toStringz(language));
+		auto __p = pango_language_from_string(Str.toStringz(language));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgLanguage)(cast(PangoLanguage*) p);
+		return ObjectG.getDObject!(PgLanguage)(cast(PangoLanguage*) __p);
 	}
 
 	/**
@@ -268,13 +271,13 @@ public class PgLanguage
 	 */
 	public static PgLanguage getDefault()
 	{
-		auto p = pango_language_get_default();
+		auto __p = pango_language_get_default();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgLanguage)(cast(PangoLanguage*) p);
+		return ObjectG.getDObject!(PgLanguage)(cast(PangoLanguage*) __p);
 	}
 }

@@ -31,8 +31,6 @@ private import gobject.ObjectG;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
-private import gtkd.Loader;
 
 
 /**
@@ -115,7 +113,7 @@ public class WidgetPath
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GTK) && ownedRef )
+		if ( ownedRef )
 			gtk_widget_path_unref(gtkWidgetPath);
 	}
 
@@ -137,14 +135,14 @@ public class WidgetPath
 	 */
 	public this()
 	{
-		auto p = gtk_widget_path_new();
+		auto __p = gtk_widget_path_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkWidgetPath*) p);
+		this(cast(GtkWidgetPath*) __p);
 	}
 
 	/**
@@ -214,14 +212,14 @@ public class WidgetPath
 	 */
 	public WidgetPath copy()
 	{
-		auto p = gtk_widget_path_copy(gtkWidgetPath);
+		auto __p = gtk_widget_path_copy(gtkWidgetPath);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(WidgetPath)(cast(GtkWidgetPath*) p, true);
+		return ObjectG.getDObject!(WidgetPath)(cast(GtkWidgetPath*) __p, true);
 	}
 
 	/**
@@ -423,14 +421,14 @@ public class WidgetPath
 	 */
 	public WidgetPath iterGetSiblings(int pos)
 	{
-		auto p = gtk_widget_path_iter_get_siblings(gtkWidgetPath, pos);
+		auto __p = gtk_widget_path_iter_get_siblings(gtkWidgetPath, pos);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(WidgetPath)(cast(GtkWidgetPath*) p);
+		return ObjectG.getDObject!(WidgetPath)(cast(GtkWidgetPath*) __p);
 	}
 
 	/**
@@ -574,14 +572,14 @@ public class WidgetPath
 	 */
 	public ListSG iterListClasses(int pos)
 	{
-		auto p = gtk_widget_path_iter_list_classes(gtkWidgetPath, pos);
+		auto __p = gtk_widget_path_iter_list_classes(gtkWidgetPath, pos);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**
@@ -602,14 +600,14 @@ public class WidgetPath
 	 */
 	public ListSG iterListRegions(int pos)
 	{
-		auto p = gtk_widget_path_iter_list_regions(gtkWidgetPath, pos);
+		auto __p = gtk_widget_path_iter_list_regions(gtkWidgetPath, pos);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**
@@ -758,14 +756,14 @@ public class WidgetPath
 	 */
 	public WidgetPath ref_()
 	{
-		auto p = gtk_widget_path_ref(gtkWidgetPath);
+		auto __p = gtk_widget_path_ref(gtkWidgetPath);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(WidgetPath)(cast(GtkWidgetPath*) p, true);
+		return ObjectG.getDObject!(WidgetPath)(cast(GtkWidgetPath*) __p, true);
 	}
 
 	/**

@@ -70,7 +70,6 @@ private import gtk.WidgetPath;
 private import gtk.Window;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import pango.PgContext;
 private import pango.PgFontDescription;
 private import pango.PgFontMap;
@@ -850,14 +849,14 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public static Style getDefaultStyle()
 		{
-			auto p = gtk_widget_get_default_style();
+			auto __p = gtk_widget_get_default_style();
 
-			if(p is null)
+			if(__p is null)
 			{
 				return null;
 			}
 
-			return ObjectG.getDObject!(Style)(cast(GtkStyle*) p);
+			return ObjectG.getDObject!(Style)(cast(GtkStyle*) __p);
 		}
 
 		/**
@@ -1146,14 +1145,14 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public PgContext createPangoContext()
 		{
-			auto p = gtk_widget_create_pango_context(gtkWidget);
+			auto __p = gtk_widget_create_pango_context(gtkWidget);
 
-			if(p is null)
+			if(__p is null)
 			{
 				return null;
 			}
 
-			return ObjectG.getDObject!(PgContext)(cast(PangoContext*) p, true);
+			return ObjectG.getDObject!(PgContext)(cast(PangoContext*) __p, true);
 		}
 
 		/**
@@ -1173,14 +1172,14 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public PgLayout createPangoLayout(string text)
 		{
-			auto p = gtk_widget_create_pango_layout(gtkWidget, Str.toStringz(text));
+			auto __p = gtk_widget_create_pango_layout(gtkWidget, Str.toStringz(text));
 
-			if(p is null)
+			if(__p is null)
 			{
 				return null;
 			}
 
-			return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) p, true);
+			return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) __p, true);
 		}
 
 		/**
@@ -1280,14 +1279,14 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public DragContext dragBegin(TargetList targets, GdkDragAction actions, int button, Event event)
 		{
-			auto p = gtk_drag_begin(gtkWidget, (targets is null) ? null : targets.getTargetListStruct(), actions, button, (event is null) ? null : event.getEventStruct());
+			auto __p = gtk_drag_begin(gtkWidget, (targets is null) ? null : targets.getTargetListStruct(), actions, button, (event is null) ? null : event.getEventStruct());
 
-			if(p is null)
+			if(__p is null)
 			{
 				return null;
 			}
 
-			return ObjectG.getDObject!(DragContext)(cast(GdkDragContext*) p);
+			return ObjectG.getDObject!(DragContext)(cast(GdkDragContext*) __p);
 		}
 
 		/**
@@ -1337,14 +1336,14 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public DragContext dragBeginWithCoordinates(TargetList targets, GdkDragAction actions, int button, Event event, int x, int y)
 		{
-			auto p = gtk_drag_begin_with_coordinates(gtkWidget, (targets is null) ? null : targets.getTargetListStruct(), actions, button, (event is null) ? null : event.getEventStruct(), x, y);
+			auto __p = gtk_drag_begin_with_coordinates(gtkWidget, (targets is null) ? null : targets.getTargetListStruct(), actions, button, (event is null) ? null : event.getEventStruct(), x, y);
 
-			if(p is null)
+			if(__p is null)
 			{
 				return null;
 			}
 
-			return ObjectG.getDObject!(DragContext)(cast(GdkDragContext*) p);
+			return ObjectG.getDObject!(DragContext)(cast(GdkDragContext*) __p);
 		}
 
 		/**
@@ -1437,14 +1436,14 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public TargetList dragDestGetTargetList()
 		{
-			auto p = gtk_drag_dest_get_target_list(gtkWidget);
+			auto __p = gtk_drag_dest_get_target_list(gtkWidget);
 
-			if(p is null)
+			if(__p is null)
 			{
 				return null;
 			}
 
-			return ObjectG.getDObject!(TargetList)(cast(GtkTargetList*) p);
+			return ObjectG.getDObject!(TargetList)(cast(GtkTargetList*) __p);
 		}
 
 		/**
@@ -1662,14 +1661,14 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public TargetList dragSourceGetTargetList()
 		{
-			auto p = gtk_drag_source_get_target_list(gtkWidget);
+			auto __p = gtk_drag_source_get_target_list(gtkWidget);
 
-			if(p is null)
+			if(__p is null)
 			{
 				return null;
 			}
 
-			return ObjectG.getDObject!(TargetList)(cast(GtkTargetList*) p);
+			return ObjectG.getDObject!(TargetList)(cast(GtkTargetList*) __p);
 		}
 
 		/**
@@ -1890,14 +1889,14 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public ObjectAtk getAccessible()
 		{
-			auto p = gtk_widget_get_accessible(gtkWidget);
+			auto __p = gtk_widget_get_accessible(gtkWidget);
 
-			if(p is null)
+			if(__p is null)
 			{
 				return null;
 			}
 
-			return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
+			return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) __p);
 		}
 
 		/**
@@ -1916,14 +1915,14 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public ActionGroupIF getActionGroup(string prefix)
 		{
-			auto p = gtk_widget_get_action_group(gtkWidget, Str.toStringz(prefix));
+			auto __p = gtk_widget_get_action_group(gtkWidget, Str.toStringz(prefix));
 
-			if(p is null)
+			if(__p is null)
 			{
 				return null;
 			}
 
-			return ObjectG.getDObject!(ActionGroupIF)(cast(GActionGroup*) p);
+			return ObjectG.getDObject!(ActionGroupIF)(cast(GActionGroup*) __p);
 		}
 
 		/**
@@ -2033,14 +2032,14 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public Widget getAncestor(GType widgetType)
 		{
-			auto p = gtk_widget_get_ancestor(gtkWidget, widgetType);
+			auto __p = gtk_widget_get_ancestor(gtkWidget, widgetType);
 
-			if(p is null)
+			if(__p is null)
 			{
 				return null;
 			}
 
-			return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+			return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 		}
 
 		/**
@@ -2174,14 +2173,14 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public Clipboard getClipboard(GdkAtom selection)
 		{
-			auto p = gtk_widget_get_clipboard(gtkWidget, selection);
+			auto __p = gtk_widget_get_clipboard(gtkWidget, selection);
 
-			if(p is null)
+			if(__p is null)
 			{
 				return null;
 			}
 
-			return ObjectG.getDObject!(Clipboard)(cast(GtkClipboard*) p);
+			return ObjectG.getDObject!(Clipboard)(cast(GtkClipboard*) __p);
 		}
 
 		/**
@@ -2259,14 +2258,14 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public Display getDisplay()
 		{
-			auto p = gtk_widget_get_display(gtkWidget);
+			auto __p = gtk_widget_get_display(gtkWidget);
 
-			if(p is null)
+			if(__p is null)
 			{
 				return null;
 			}
 
-			return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
+			return ObjectG.getDObject!(Display)(cast(GdkDisplay*) __p);
 		}
 
 		/**
@@ -2322,14 +2321,14 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public PgFontMap getFontMap()
 		{
-			auto p = gtk_widget_get_font_map(gtkWidget);
+			auto __p = gtk_widget_get_font_map(gtkWidget);
 
-			if(p is null)
+			if(__p is null)
 			{
 				return null;
 			}
 
-			return ObjectG.getDObject!(PgFontMap)(cast(PangoFontMap*) p);
+			return ObjectG.getDObject!(PgFontMap)(cast(PangoFontMap*) __p);
 		}
 
 		/**
@@ -2342,14 +2341,14 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public FontOption getFontOptions()
 		{
-			auto p = gtk_widget_get_font_options(gtkWidget);
+			auto __p = gtk_widget_get_font_options(gtkWidget);
 
-			if(p is null)
+			if(__p is null)
 			{
 				return null;
 			}
 
-			return new FontOption(cast(cairo_font_options_t*) p);
+			return new FontOption(cast(cairo_font_options_t*) __p);
 		}
 
 		/**
@@ -2382,14 +2381,14 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public FrameClock getFrameClock()
 		{
-			auto p = gtk_widget_get_frame_clock(gtkWidget);
+			auto __p = gtk_widget_get_frame_clock(gtkWidget);
 
-			if(p is null)
+			if(__p is null)
 			{
 				return null;
 			}
 
-			return ObjectG.getDObject!(FrameClock)(cast(GdkFrameClock*) p);
+			return ObjectG.getDObject!(FrameClock)(cast(GdkFrameClock*) __p);
 		}
 
 		/**
@@ -2604,14 +2603,14 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public RcStyle getModifierStyle()
 		{
-			auto p = gtk_widget_get_modifier_style(gtkWidget);
+			auto __p = gtk_widget_get_modifier_style(gtkWidget);
 
-			if(p is null)
+			if(__p is null)
 			{
 				return null;
 			}
 
-			return ObjectG.getDObject!(RcStyle)(cast(GtkRcStyle*) p);
+			return ObjectG.getDObject!(RcStyle)(cast(GtkRcStyle*) __p);
 		}
 
 		/**
@@ -2666,14 +2665,14 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public PgContext getPangoContext()
 		{
-			auto p = gtk_widget_get_pango_context(gtkWidget);
+			auto __p = gtk_widget_get_pango_context(gtkWidget);
 
-			if(p is null)
+			if(__p is null)
 			{
 				return null;
 			}
 
-			return ObjectG.getDObject!(PgContext)(cast(PangoContext*) p);
+			return ObjectG.getDObject!(PgContext)(cast(PangoContext*) __p);
 		}
 
 		/**
@@ -2683,14 +2682,14 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public Widget getParent()
 		{
-			auto p = gtk_widget_get_parent(gtkWidget);
+			auto __p = gtk_widget_get_parent(gtkWidget);
 
-			if(p is null)
+			if(__p is null)
 			{
 				return null;
 			}
 
-			return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+			return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 		}
 
 		/**
@@ -2701,14 +2700,14 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public GdkWin getParentWindow()
 		{
-			auto p = gtk_widget_get_parent_window(gtkWidget);
+			auto __p = gtk_widget_get_parent_window(gtkWidget);
 
-			if(p is null)
+			if(__p is null)
 			{
 				return null;
 			}
 
-			return ObjectG.getDObject!(GdkWin)(cast(GdkWindow*) p);
+			return ObjectG.getDObject!(GdkWin)(cast(GdkWindow*) __p);
 		}
 
 		/**
@@ -2720,14 +2719,14 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public WidgetPath getPath()
 		{
-			auto p = gtk_widget_get_path(gtkWidget);
+			auto __p = gtk_widget_get_path(gtkWidget);
 
-			if(p is null)
+			if(__p is null)
 			{
 				return null;
 			}
 
-			return ObjectG.getDObject!(WidgetPath)(cast(GtkWidgetPath*) p);
+			return ObjectG.getDObject!(WidgetPath)(cast(GtkWidgetPath*) __p);
 		}
 
 		/**
@@ -2988,14 +2987,14 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public GdkWin getRootWindow()
 		{
-			auto p = gtk_widget_get_root_window(gtkWidget);
+			auto __p = gtk_widget_get_root_window(gtkWidget);
 
-			if(p is null)
+			if(__p is null)
 			{
 				return null;
 			}
 
-			return ObjectG.getDObject!(GdkWin)(cast(GdkWindow*) p);
+			return ObjectG.getDObject!(GdkWin)(cast(GdkWindow*) __p);
 		}
 
 		/**
@@ -3030,14 +3029,14 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public Screen getScreen()
 		{
-			auto p = gtk_widget_get_screen(gtkWidget);
+			auto __p = gtk_widget_get_screen(gtkWidget);
 
-			if(p is null)
+			if(__p is null)
 			{
 				return null;
 			}
 
-			return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
+			return ObjectG.getDObject!(Screen)(cast(GdkScreen*) __p);
 		}
 
 		/**
@@ -3067,14 +3066,14 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public Settings getSettings()
 		{
-			auto p = gtk_widget_get_settings(gtkWidget);
+			auto __p = gtk_widget_get_settings(gtkWidget);
 
-			if(p is null)
+			if(__p is null)
 			{
 				return null;
 			}
 
-			return ObjectG.getDObject!(Settings)(cast(GtkSettings*) p);
+			return ObjectG.getDObject!(Settings)(cast(GtkSettings*) __p);
 		}
 
 		/**
@@ -3123,14 +3122,14 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public Style getStyle()
 		{
-			auto p = gtk_widget_get_style(gtkWidget);
+			auto __p = gtk_widget_get_style(gtkWidget);
 
-			if(p is null)
+			if(__p is null)
 			{
 				return null;
 			}
 
-			return ObjectG.getDObject!(Style)(cast(GtkStyle*) p);
+			return ObjectG.getDObject!(Style)(cast(GtkStyle*) __p);
 		}
 
 		/**
@@ -3142,14 +3141,14 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public StyleContext getStyleContext()
 		{
-			auto p = gtk_widget_get_style_context(gtkWidget);
+			auto __p = gtk_widget_get_style_context(gtkWidget);
 
-			if(p is null)
+			if(__p is null)
 			{
 				return null;
 			}
 
-			return ObjectG.getDObject!(StyleContext)(cast(GtkStyleContext*) p);
+			return ObjectG.getDObject!(StyleContext)(cast(GtkStyleContext*) __p);
 		}
 
 		/**
@@ -3182,14 +3181,14 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public ObjectG getTemplateChild(GType widgetType, string name)
 		{
-			auto p = gtk_widget_get_template_child(gtkWidget, widgetType, Str.toStringz(name));
+			auto __p = gtk_widget_get_template_child(gtkWidget, widgetType, Str.toStringz(name));
 
-			if(p is null)
+			if(__p is null)
 			{
 				return null;
 			}
 
-			return ObjectG.getDObject!(ObjectG)(cast(GObject*) p);
+			return ObjectG.getDObject!(ObjectG)(cast(GObject*) __p);
 		}
 
 		/**
@@ -3235,14 +3234,14 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public Window getTooltipWindow()
 		{
-			auto p = gtk_widget_get_tooltip_window(gtkWidget);
+			auto __p = gtk_widget_get_tooltip_window(gtkWidget);
 
-			if(p is null)
+			if(__p is null)
 			{
 				return null;
 			}
 
-			return ObjectG.getDObject!(Window)(cast(GtkWindow*) p);
+			return ObjectG.getDObject!(Window)(cast(GtkWindow*) __p);
 		}
 
 		/**
@@ -3283,14 +3282,14 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public Widget getToplevel()
 		{
-			auto p = gtk_widget_get_toplevel(gtkWidget);
+			auto __p = gtk_widget_get_toplevel(gtkWidget);
 
-			if(p is null)
+			if(__p is null)
 			{
 				return null;
 			}
 
-			return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+			return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 		}
 
 		/**
@@ -3374,14 +3373,14 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public Visual getVisual()
 		{
-			auto p = gtk_widget_get_visual(gtkWidget);
+			auto __p = gtk_widget_get_visual(gtkWidget);
 
-			if(p is null)
+			if(__p is null)
 			{
 				return null;
 			}
 
-			return ObjectG.getDObject!(Visual)(cast(GdkVisual*) p);
+			return ObjectG.getDObject!(Visual)(cast(GdkVisual*) __p);
 		}
 
 		/**
@@ -3393,14 +3392,14 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public GdkWin getWindow()
 		{
-			auto p = gtk_widget_get_window(gtkWidget);
+			auto __p = gtk_widget_get_window(gtkWidget);
 
-			if(p is null)
+			if(__p is null)
 			{
 				return null;
 			}
 
-			return ObjectG.getDObject!(GdkWin)(cast(GdkWindow*) p);
+			return ObjectG.getDObject!(GdkWin)(cast(GdkWindow*) __p);
 		}
 
 		/**
@@ -3835,14 +3834,14 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public ListG listAccelClosures()
 		{
-			auto p = gtk_widget_list_accel_closures(gtkWidget);
+			auto __p = gtk_widget_list_accel_closures(gtkWidget);
 
-			if(p is null)
+			if(__p is null)
 			{
 				return null;
 			}
 
-			return new ListG(cast(GList*) p);
+			return new ListG(cast(GList*) __p);
 		}
 
 		/**
@@ -3878,14 +3877,14 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public ListG listMnemonicLabels()
 		{
-			auto p = gtk_widget_list_mnemonic_labels(gtkWidget);
+			auto __p = gtk_widget_list_mnemonic_labels(gtkWidget);
 
-			if(p is null)
+			if(__p is null)
 			{
 				return null;
 			}
 
-			return new ListG(cast(GList*) p);
+			return new ListG(cast(GList*) __p);
 		}
 
 		/**
@@ -4413,14 +4412,14 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public Region regionIntersect(Region region)
 		{
-			auto p = gtk_widget_region_intersect(gtkWidget, (region is null) ? null : region.getRegionStruct());
+			auto __p = gtk_widget_region_intersect(gtkWidget, (region is null) ? null : region.getRegionStruct());
 
-			if(p is null)
+			if(__p is null)
 			{
 				return null;
 			}
 
-			return new Region(cast(cairo_region_t*) p);
+			return new Region(cast(cairo_region_t*) __p);
 		}
 
 		/**
@@ -4517,14 +4516,14 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public Pixbuf renderIcon(string stockId, GtkIconSize size, string detail)
 		{
-			auto p = gtk_widget_render_icon(gtkWidget, Str.toStringz(stockId), size, Str.toStringz(detail));
+			auto __p = gtk_widget_render_icon(gtkWidget, Str.toStringz(stockId), size, Str.toStringz(detail));
 
-			if(p is null)
+			if(__p is null)
 			{
 				return null;
 			}
 
-			return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
+			return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) __p, true);
 		}
 
 		/**
@@ -4553,14 +4552,14 @@ public class Widget : ObjectG, ImplementorIF, BuildableIF
 		 */
 		public Pixbuf renderIconPixbuf(string stockId, GtkIconSize size)
 		{
-			auto p = gtk_widget_render_icon_pixbuf(gtkWidget, Str.toStringz(stockId), size);
+			auto __p = gtk_widget_render_icon_pixbuf(gtkWidget, Str.toStringz(stockId), size);
 
-			if(p is null)
+			if(__p is null)
 			{
 				return null;
 			}
 
-			return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
+			return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) __p, true);
 		}
 
 		/**

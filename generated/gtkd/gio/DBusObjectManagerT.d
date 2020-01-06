@@ -32,7 +32,6 @@ public  import glib.ListG;
 public  import glib.Str;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
-public  import gtkc.giotypes;
 public  import std.algorithm;
 
 
@@ -71,14 +70,14 @@ public template DBusObjectManagerT(TStruct)
 	 */
 	public DBusInterfaceIF getInterface(string objectPath, string interfaceName)
 	{
-		auto p = g_dbus_object_manager_get_interface(getDBusObjectManagerStruct(), Str.toStringz(objectPath), Str.toStringz(interfaceName));
+		auto __p = g_dbus_object_manager_get_interface(getDBusObjectManagerStruct(), Str.toStringz(objectPath), Str.toStringz(interfaceName));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusInterfaceIF)(cast(GDBusInterface*) p, true);
+		return ObjectG.getDObject!(DBusInterfaceIF)(cast(GDBusInterface*) __p, true);
 	}
 
 	/**
@@ -94,14 +93,14 @@ public template DBusObjectManagerT(TStruct)
 	 */
 	public DBusObjectIF getObject(string objectPath)
 	{
-		auto p = g_dbus_object_manager_get_object(getDBusObjectManagerStruct(), Str.toStringz(objectPath));
+		auto __p = g_dbus_object_manager_get_object(getDBusObjectManagerStruct(), Str.toStringz(objectPath));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusObjectIF)(cast(GDBusObject*) p, true);
+		return ObjectG.getDObject!(DBusObjectIF)(cast(GDBusObject*) __p, true);
 	}
 
 	/**
@@ -128,14 +127,14 @@ public template DBusObjectManagerT(TStruct)
 	 */
 	public ListG getObjects()
 	{
-		auto p = g_dbus_object_manager_get_objects(getDBusObjectManagerStruct());
+		auto __p = g_dbus_object_manager_get_objects(getDBusObjectManagerStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**

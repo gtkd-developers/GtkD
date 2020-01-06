@@ -31,7 +31,6 @@ private import gobject.Signals;
 private import gtk.CellRenderer;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -91,14 +90,14 @@ public class CellRendererToggle : CellRenderer
 	 */
 	public this()
 	{
-		auto p = gtk_cell_renderer_toggle_new();
+		auto __p = gtk_cell_renderer_toggle_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkCellRendererToggle*) p);
+		this(cast(GtkCellRendererToggle*) __p);
 	}
 
 	/**

@@ -32,7 +32,6 @@ private import gtk.GestureDrag;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -102,14 +101,14 @@ public class GesturePan : GestureDrag
 	 */
 	public this(Widget widget, GtkOrientation orientation)
 	{
-		auto p = gtk_gesture_pan_new((widget is null) ? null : widget.getWidgetStruct(), orientation);
+		auto __p = gtk_gesture_pan_new((widget is null) ? null : widget.getWidgetStruct(), orientation);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkGesturePan*) p, true);
+		this(cast(GtkGesturePan*) __p, true);
 	}
 
 	/**

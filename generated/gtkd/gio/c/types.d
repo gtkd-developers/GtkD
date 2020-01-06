@@ -115,17 +115,6 @@ public enum GApplicationFlags
 	 * Since: 2.48
 	 */
 	CAN_OVERRIDE_APP_ID = 64,
-	/**
-	 * Allow another instance to take over
-	 * the bus name. Since: 2.60
-	 */
-	ALLOW_REPLACEMENT = 128,
-	/**
-	 * Take over from another instance. This flag is
-	 * usually set by passing `--gapplication-replace` on the commandline.
-	 * Since: 2.60
-	 */
-	REPLACE = 256,
 }
 alias GApplicationFlags ApplicationFlags;
 
@@ -156,10 +145,6 @@ public enum GAskPasswordFlags
 	 * operation supports anonymous users.
 	 */
 	ANONYMOUS_SUPPORTED = 16,
-	/**
-	 * operation takes TCRYPT parameters (Since: 2.58)
-	 */
-	TCRYPT = 32,
 }
 alias GAskPasswordFlags AskPasswordFlags;
 
@@ -183,11 +168,6 @@ public enum GBusNameOwnerFlags
 	 * specified #G_BUS_NAME_OWNER_FLAGS_ALLOW_REPLACEMENT, then take the name from the other connection.
 	 */
 	REPLACE = 2,
-	/**
-	 * If another message bus connection owns the name, immediately
-	 * return an error from g_bus_own_name() rather than entering the waiting queue for that name. (Since 2.54)
-	 */
-	DO_NOT_QUEUE = 4,
 }
 alias GBusNameOwnerFlags BusNameOwnerFlags;
 
@@ -1423,9 +1403,6 @@ alias GFilesystemPreviewType FilesystemPreviewType;
  * ]|
  * but should instead treat all unrecognized error codes the same as
  * #G_IO_ERROR_FAILED.
- *
- * See also #GPollableReturn for a cheaper way of returning
- * %G_IO_ERROR_WOULD_BLOCK to callers without allocating a #GError.
  */
 public enum GIOErrorEnum
 {
@@ -1851,36 +1828,6 @@ public enum GPasswordSave
 alias GPasswordSave PasswordSave;
 
 /**
- * Return value for various IO operations that signal errors via the
- * return value and not necessarily via a #GError.
- *
- * This enum exists to be able to return errors to callers without having to
- * allocate a #GError. Allocating #GErrors can be quite expensive for
- * regularly happening errors like %G_IO_ERROR_WOULD_BLOCK.
- *
- * In case of %G_POLLABLE_RETURN_FAILED a #GError should be set for the
- * operation to give details about the error that happened.
- *
- * Since: 2.60
- */
-public enum GPollableReturn
-{
-	/**
-	 * Generic error condition for when an operation fails.
-	 */
-	FAILED = 0,
-	/**
-	 * The operation was successfully finished.
-	 */
-	OK = 1,
-	/**
-	 * The operation would block.
-	 */
-	WOULD_BLOCK = -27,
-}
-alias GPollableReturn PollableReturn;
-
-/**
  * An error code used with %G_RESOLVER_ERROR in a #GError returned
  * from a #GResolver routine.
  *
@@ -1904,28 +1851,6 @@ public enum GResolverError
 	INTERNAL = 2,
 }
 alias GResolverError ResolverError;
-
-/**
- * Flags to modify lookup behavior.
- *
- * Since: 2.60
- */
-public enum GResolverNameLookupFlags
-{
-	/**
-	 * default behavior (same as g_resolver_lookup_by_name())
-	 */
-	DEFAULT = 0,
-	/**
-	 * only resolve ipv4 addresses
-	 */
-	IPV4_ONLY = 1,
-	/**
-	 * only resolve ipv6 addresses
-	 */
-	IPV6_ONLY = 2,
-}
-alias GResolverNameLookupFlags ResolverNameLookupFlags;
 
 /**
  * The type of record that g_resolver_lookup_records() or
@@ -2286,7 +2211,7 @@ alias GSocketType SocketType;
 /**
  * Flags to define the behaviour of a #GSubprocess.
  *
- * Note that the default for stdin is to redirect from `/dev/null`.  For
+ * Note that the default for stdin is to redirect from /dev/null.  For
  * stdout and stderr the default are for them to inherit the
  * corresponding descriptor from the calling process.
  *
@@ -2321,7 +2246,7 @@ public enum GSubprocessFlags
 	STDOUT_PIPE = 4,
 	/**
 	 * silence the stdout of the spawned
-	 * process (ie: redirect to `/dev/null`).
+	 * process (ie: redirect to /dev/null).
 	 */
 	STDOUT_SILENCE = 8,
 	/**
@@ -2332,7 +2257,7 @@ public enum GSubprocessFlags
 	STDERR_PIPE = 16,
 	/**
 	 * silence the stderr of the spawned
-	 * process (ie: redirect to `/dev/null`).
+	 * process (ie: redirect to /dev/null).
 	 */
 	STDERR_SILENCE = 32,
 	/**
@@ -2457,7 +2382,7 @@ public enum GTlsCertificateRequestFlags
 alias GTlsCertificateRequestFlags TlsCertificateRequestFlags;
 
 /**
- * Flags for g_tls_database_lookup_certificate_for_handle(),
+ * Flags for g_tls_database_lookup_certificate_handle(),
  * g_tls_database_lookup_certificate_issuer(),
  * and g_tls_database_lookup_certificates_issued_by().
  *
@@ -2508,8 +2433,7 @@ public enum GTlsError
 	 */
 	MISC = 1,
 	/**
-	 * The certificate presented could not
-	 * be parsed or failed validation.
+	 * A certificate could not be parsed
 	 */
 	BAD_CERTIFICATE = 2,
 	/**
@@ -2534,12 +2458,6 @@ public enum GTlsError
 	 * g_tls_connection_set_require_close_notify().
 	 */
 	EOF = 6,
-	/**
-	 * The TLS handshake failed
-	 * because the client sent the fallback SCSV, indicating a protocol
-	 * downgrade attack. Since: 2.60
-	 */
-	INAPPROPRIATE_FALLBACK = 7,
 }
 alias GTlsError TlsError;
 
@@ -2600,10 +2518,6 @@ alias GTlsPasswordFlags TlsPasswordFlags;
 /**
  * When to allow rehandshaking. See
  * g_tls_connection_set_rehandshake_mode().
- *
- * Deprecated: Changing the rehandshake mode is no longer
- * required for compatibility. Also, rehandshaking has been removed
- * from the TLS protocol in TLS 1.3.
  *
  * Since: 2.28
  */
@@ -2967,12 +2881,12 @@ struct GAppInfoIface
 	 * Params:
 	 *     appinfo = a #GAppInfo
 	 *     files = a #GList of #GFile objects
-	 *     context = a #GAppLaunchContext or %NULL
+	 *     launchContext = a #GAppLaunchContext or %NULL
 	 * Returns: %TRUE on successful launch, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
-	extern(C) int function(GAppInfo* appinfo, GList* files, GAppLaunchContext* context, GError** err) launch;
+	extern(C) int function(GAppInfo* appinfo, GList* files, GAppLaunchContext* launchContext, GError** err) launch;
 	/**
 	 *
 	 * Params:
@@ -2992,12 +2906,12 @@ struct GAppInfoIface
 	 * Params:
 	 *     appinfo = a #GAppInfo
 	 *     uris = a #GList containing URIs to launch.
-	 *     context = a #GAppLaunchContext or %NULL
+	 *     launchContext = a #GAppLaunchContext or %NULL
 	 * Returns: %TRUE on successful launch, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
-	extern(C) int function(GAppInfo* appinfo, GList* uris, GAppLaunchContext* context, GError** err) launchUris;
+	extern(C) int function(GAppInfo* appinfo, GList* uris, GAppLaunchContext* launchContext, GError** err) launchUris;
 	/**
 	 *
 	 * Params:
@@ -3095,18 +3009,6 @@ struct GAppInfoIface
 	 * Returns: a list of content types.
 	 */
 	extern(C) char** function(GAppInfo* appinfo) getSupportedTypes;
-	/** */
-	extern(C) void function(GAppInfo* appinfo, GList* uris, GAppLaunchContext* context, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) launchUrisAsync;
-	/**
-	 *
-	 * Params:
-	 *     appinfo = a #GAppInfo
-	 *     result = a #GAsyncResult
-	 * Returns: %TRUE on successful launch, %FALSE otherwise.
-	 *
-	 * Throws: GException on failure.
-	 */
-	extern(C) int function(GAppInfo* appinfo, GAsyncResult* result, GError** err) launchUrisFinish;
 }
 
 struct GAppInfoMonitor;
@@ -3204,9 +3106,7 @@ struct GApplicationClass
 	extern(C) void function(GApplication* application, GDBusConnection* connection, const(char)* objectPath) dbusUnregister;
 	/** */
 	extern(C) int function(GApplication* application, GVariantDict* options) handleLocalOptions;
-	/** */
-	extern(C) int function(GApplication* application) nameLost;
-	void*[7] padding;
+	void*[8] padding;
 }
 
 struct GApplicationCommandLine
@@ -3293,8 +3193,8 @@ struct GAsyncResultIface
 	 *
 	 * Params:
 	 *     res = a #GAsyncResult
-	 * Returns: a new reference to the source
-	 *     object for the @res, or %NULL if there is none.
+	 * Returns: a new reference to the source object for the @res,
+	 *     or %NULL if there is none.
 	 */
 	extern(C) GObject* function(GAsyncResult* res) getSourceObject;
 	/**
@@ -3336,7 +3236,7 @@ struct GBufferedInputStreamClass
 	 * Params:
 	 *     stream = a #GBufferedInputStream
 	 *     result = a #GAsyncResult
-	 * Returns: a #gssize of the read stream, or `-1` on an error.
+	 * Returns: a #gssize of the read stream, or %-1 on an error.
 	 *
 	 * Throws: GException on failure.
 	 */
@@ -4357,7 +4257,7 @@ struct GDriveIface
 	 *     drive = a #GDrive
 	 *     kind = the kind of identifier to return
 	 * Returns: a newly allocated string containing the
-	 *     requested identifier, or %NULL if the #GDrive
+	 *     requested identfier, or %NULL if the #GDrive
 	 *     doesn't have this kind of identifier.
 	 */
 	extern(C) char* function(GDrive* drive, const(char)* kind) getIdentifier;
@@ -4540,15 +4440,6 @@ struct GDtlsConnectionInterface
 	 * Throws: GException on failure.
 	 */
 	extern(C) int function(GDtlsConnection* conn, GAsyncResult* result, GError** err) shutdownFinish;
-	/** */
-	extern(C) void function(GDtlsConnection* conn, char** protocols) setAdvertisedProtocols;
-	/**
-	 *
-	 * Params:
-	 *     conn = a #GDtlsConnection
-	 * Returns: the negotiated protocol, or %NULL
-	 */
-	extern(C) const(char)* function(GDtlsConnection* conn) getNegotiatedProtocol;
 }
 
 struct GDtlsServerConnection;
@@ -6206,13 +6097,7 @@ struct GListModelInterface
 	 * Returns: the number of items in @list.
 	 */
 	extern(C) uint function(GListModel* list) getNItems;
-	/**
-	 *
-	 * Params:
-	 *     list = a #GListModel
-	 *     position = the position of the item to fetch
-	 * Returns: the object at @position.
-	 */
+	/** */
 	extern(C) void* function(GListModel* list, uint position) getItem;
 }
 
@@ -6473,8 +6358,7 @@ struct GMountIface
 	 *
 	 * Params:
 	 *     mount = a #GMount.
-	 * Returns: the UUID for @mount or %NULL if no UUID
-	 *     can be computed.
+	 * Returns: the UUID for @mount or %NULL if no UUID can be computed.
 	 *     The returned string should be freed with g_free()
 	 *     when no longer needed.
 	 */
@@ -6483,8 +6367,7 @@ struct GMountIface
 	 *
 	 * Params:
 	 *     mount = a #GMount.
-	 * Returns: a #GVolume or %NULL if @mount is not
-	 *     associated with a volume.
+	 * Returns: a #GVolume or %NULL if @mount is not associated with a volume.
 	 *     The returned object should be unreffed with
 	 *     g_object_unref() when no longer needed.
 	 */
@@ -6493,8 +6376,7 @@ struct GMountIface
 	 *
 	 * Params:
 	 *     mount = a #GMount.
-	 * Returns: a #GDrive or %NULL if @mount is not
-	 *     associated with a volume or a drive.
+	 * Returns: a #GDrive or %NULL if @mount is not associated with a volume or a drive.
 	 *     The returned object should be unreffed with
 	 *     g_object_unref() when no longer needed.
 	 */
@@ -6640,13 +6522,13 @@ struct GMountOperationClass
 	/** */
 	extern(C) void function(GMountOperation* op, const(char)* message, const(char)* defaultUser, const(char)* defaultDomain, GAskPasswordFlags flags) askPassword;
 	/** */
-	extern(C) void function(GMountOperation* op, const(char)* message, char** choices) askQuestion;
+	extern(C) void function(GMountOperation* op, const(char)* message, const(char)* choices) askQuestion;
 	/** */
 	extern(C) void function(GMountOperation* op, GMountOperationResult result) reply;
 	/** */
 	extern(C) void function(GMountOperation* op) aborted;
 	/** */
-	extern(C) void function(GMountOperation* op, const(char)* message, GArray* processes, char** choices) showProcesses;
+	extern(C) void function(GMountOperation* op, const(char)* message, GArray* processes, const(char)* choices) showProcesses;
 	/** */
 	extern(C) void function(GMountOperation* op, const(char)* message, long timeLeft, long bytesLeft) showUnmountProgress;
 	/** */
@@ -6715,7 +6597,7 @@ struct GNetworkMonitorInterface
 	 */
 	GTypeInterface gIface;
 	/** */
-	extern(C) void function(GNetworkMonitor* monitor, int networkAvailable) networkChanged;
+	extern(C) void function(GNetworkMonitor* monitor, int available) networkChanged;
 	/**
 	 *
 	 * Params:
@@ -6897,33 +6779,12 @@ struct GOutputStreamClass
 	 * Throws: GException on failure.
 	 */
 	extern(C) int function(GOutputStream* stream, GAsyncResult* result, GError** err) closeFinish;
-	/**
-	 *
-	 * Params:
-	 *     stream = a #GOutputStream.
-	 *     vectors = the buffer containing the #GOutputVectors to write.
-	 *     nVectors = the number of vectors to write
-	 *     bytesWritten = location to store the number of bytes that were
-	 *         written to the stream
-	 *     cancellable = optional cancellable object
-	 * Returns: %TRUE on success, %FALSE if there was an error
-	 *
-	 * Throws: GException on failure.
-	 */
-	extern(C) int function(GOutputStream* stream, GOutputVector* vectors, size_t nVectors, size_t* bytesWritten, GCancellable* cancellable, GError** err) writevFn;
 	/** */
-	extern(C) void function(GOutputStream* stream, GOutputVector* vectors, size_t nVectors, int ioPriority, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) writevAsync;
-	/**
-	 *
-	 * Params:
-	 *     stream = a #GOutputStream.
-	 *     result = a #GAsyncResult.
-	 *     bytesWritten = location to store the number of bytes that were written to the stream
-	 * Returns: %TRUE on success, %FALSE if there was an error
-	 *
-	 * Throws: GException on failure.
-	 */
-	extern(C) int function(GOutputStream* stream, GAsyncResult* result, size_t* bytesWritten, GError** err) writevFinish;
+	extern(C) void function() GReserved1;
+	/** */
+	extern(C) void function() GReserved2;
+	/** */
+	extern(C) void function() GReserved3;
 	/** */
 	extern(C) void function() GReserved4;
 	/** */
@@ -7138,22 +6999,6 @@ struct GPollableOutputStreamInterface
 	 * Throws: GException on failure.
 	 */
 	extern(C) ptrdiff_t function(GPollableOutputStream* stream, void* buffer, size_t count, GError** err) writeNonblocking;
-	/**
-	 *
-	 * Params:
-	 *     stream = a #GPollableOutputStream
-	 *     vectors = the buffer containing the #GOutputVectors to write.
-	 *     nVectors = the number of vectors to write
-	 *     bytesWritten = location to store the number of bytes that were
-	 *         written to the stream
-	 * Returns: %@G_POLLABLE_RETURN_OK on success, %G_POLLABLE_RETURN_WOULD_BLOCK
-	 *     if the stream is not currently writable (and @error is *not* set), or
-	 *     %G_POLLABLE_RETURN_FAILED if there was an error in which case @error will
-	 *     be set.
-	 *
-	 * Throws: GException on failure.
-	 */
-	extern(C) GPollableReturn function(GPollableOutputStream* stream, GOutputVector* vectors, size_t nVectors, size_t* bytesWritten, GError** err) writevNonblocking;
 }
 
 struct GPropertyAction;
@@ -7182,9 +7027,6 @@ struct GProxyAddressEnumerator
 	GProxyAddressEnumeratorPrivate* priv;
 }
 
-/**
- * Class structure for #GProxyAddressEnumerator.
- */
 struct GProxyAddressEnumeratorClass
 {
 	GSocketAddressEnumeratorClass parentClass;
@@ -7428,34 +7270,11 @@ struct GResolverClass
 	 */
 	extern(C) GList* function(GResolver* resolver, GAsyncResult* result, GError** err) lookupRecordsFinish;
 	/** */
-	extern(C) void function(GResolver* resolver, const(char)* hostname, GResolverNameLookupFlags flags, GCancellable* cancellable, GAsyncReadyCallback callback, void* userData) lookupByNameWithFlagsAsync;
-	/**
-	 *
-	 * Params:
-	 *     resolver = a #GResolver
-	 *     result = the result passed to your #GAsyncReadyCallback
-	 * Returns: a #GList
-	 *     of #GInetAddress, or %NULL on error. See g_resolver_lookup_by_name()
-	 *     for more details.
-	 *
-	 * Throws: GException on failure.
-	 */
-	extern(C) GList* function(GResolver* resolver, GAsyncResult* result, GError** err) lookupByNameWithFlagsFinish;
-	/**
-	 *
-	 * Params:
-	 *     resolver = a #GResolver
-	 *     hostname = the hostname to look up
-	 *     flags = extra #GResolverNameLookupFlags for the lookup
-	 *     cancellable = a #GCancellable, or %NULL
-	 * Returns: a non-empty #GList
-	 *     of #GInetAddress, or %NULL on error. You
-	 *     must unref each of the addresses and free the list when you are
-	 *     done with it. (You can use g_resolver_free_addresses() to do this.)
-	 *
-	 * Throws: GException on failure.
-	 */
-	extern(C) GList* function(GResolver* resolver, const(char)* hostname, GResolverNameLookupFlags flags, GCancellable* cancellable, GError** err) lookupByNameWithFlags;
+	extern(C) void function() GReserved4;
+	/** */
+	extern(C) void function() GReserved5;
+	/** */
+	extern(C) void function() GReserved6;
 }
 
 struct GResolverPrivate;
@@ -7512,7 +7331,7 @@ struct GSeekableIface
 	 *
 	 * Params:
 	 *     seekable = a #GSeekable.
-	 *     offset = new length for @seekable, in bytes.
+	 *     offset = a #goffset.
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 * Returns: %TRUE if successful. If an error
 	 *     has occurred, this function will return %FALSE and set @error
@@ -7684,9 +7503,6 @@ struct GSocketAddressEnumerator
 	GObject parentInstance;
 }
 
-/**
- * Class structure for #GSocketAddressEnumerator.
- */
 struct GSocketAddressEnumeratorClass
 {
 	GObjectClass parentClass;
@@ -7887,7 +7703,7 @@ struct GSocketListenerClass
 	/** */
 	extern(C) void function(GSocketListener* listener) changed;
 	/** */
-	extern(C) void function(GSocketListener* listener, GSocketListenerEvent event, GSocket* socket) event;
+	extern(C) void function(GSocketListener* listener, GSocketListenerEvent* event, GSocket* socket) event;
 	/** */
 	extern(C) void function() GReserved2;
 	/** */
@@ -8675,8 +8491,7 @@ struct GVolumeIface
 	 *
 	 * Params:
 	 *     volume = a #GVolume
-	 * Returns: the UUID for @volume or %NULL if no UUID
-	 *     can be computed.
+	 * Returns: the UUID for @volume or %NULL if no UUID can be computed.
 	 *     The returned string should be freed with g_free()
 	 *     when no longer needed.
 	 */
@@ -8743,7 +8558,7 @@ struct GVolumeIface
 	 *     volume = a #GVolume
 	 *     kind = the kind of identifier to return
 	 * Returns: a newly allocated string containing the
-	 *     requested identifier, or %NULL if the #GVolume
+	 *     requested identfier, or %NULL if the #GVolume
 	 *     doesn't have this kind of identifier
 	 */
 	extern(C) char* function(GVolume* volume, const(char)* kind) getIdentifier;
@@ -8906,13 +8721,7 @@ struct GZlibDecompressorClass
 
 /**
  * Type definition for a function that will be called back when an asynchronous
- * operation within GIO has been completed. #GAsyncReadyCallback
- * callbacks from #GTask are guaranteed to be invoked in a later
- * iteration of the
- * [thread-default main context][g-main-context-push-thread-default]
- * where the #GTask was created. All other users of
- * #GAsyncReadyCallback must likewise call it asynchronously in a
- * later iteration of the main context.
+ * operation within GIO has been completed.
  *
  * Params:
  *     sourceObject = the object the asynchronous operation was started with.
@@ -8974,7 +8783,7 @@ public alias extern(C) void function(GDBusConnection* connection, const(char)* n
 /**
  * Invoked when the name being watched is known not to have to have a owner.
  *
- * This is also invoked when the #GDBusConnection on which the watch was
+ * This is also invoked when the #GDBusConection on which the watch was
  * established has been closed.  In that case, @connection will be
  * %NULL.
  *
@@ -9071,7 +8880,7 @@ public alias extern(C) int function(GDBusConnection* connection, const(char)* se
  * gboolean         incoming,
  * gpointer         user_data)
  * {
- * // inspect @message
+ * /<!-- -->* inspect @message *<!-- -->/
  * return message;
  * }
  * ]|
@@ -9104,10 +8913,10 @@ public alias extern(C) int function(GDBusConnection* connection, const(char)* se
  *
  * error = NULL;
  * copy = g_dbus_message_copy (message, &error);
- * // handle @error being set
+ * /<!-- -->* handle @error being is set *<!-- -->/
  * g_object_unref (message);
  *
- * // modify @copy
+ * /<!-- -->* modify @copy *<!-- -->/
  *
  * return copy;
  * }
@@ -9523,12 +9332,6 @@ enum DESKTOP_APP_INFO_LOOKUP_EXTENSION_POINT_NAME = "gio-desktop-app-info-lookup
 alias G_DESKTOP_APP_INFO_LOOKUP_EXTENSION_POINT_NAME = DESKTOP_APP_INFO_LOOKUP_EXTENSION_POINT_NAME;
 
 /**
- * The string used to obtain a Unix device path with g_drive_get_identifier().
- */
-enum DRIVE_IDENTIFIER_KIND_UNIX_DEVICE = "unix-device";
-alias G_DRIVE_IDENTIFIER_KIND_UNIX_DEVICE = DRIVE_IDENTIFIER_KIND_UNIX_DEVICE;
-
-/**
  * A key in the "access" namespace for checking deletion privileges.
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
  * This attribute will be %TRUE if the user is able to delete the file.
@@ -9587,17 +9390,6 @@ enum FILE_ATTRIBUTE_DOS_IS_ARCHIVE = "dos::is-archive";
 alias G_FILE_ATTRIBUTE_DOS_IS_ARCHIVE = FILE_ATTRIBUTE_DOS_IS_ARCHIVE;
 
 /**
- * A key in the "dos" namespace for checking if the file is a NTFS mount point
- * (a volume mount or a junction point).
- * This attribute is %TRUE if file is a reparse point of type
- * [IO_REPARSE_TAG_MOUNT_POINT](https://msdn.microsoft.com/en-us/library/dd541667.aspx).
- * This attribute is only available for DOS file systems.
- * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
- */
-enum FILE_ATTRIBUTE_DOS_IS_MOUNTPOINT = "dos::is-mountpoint";
-alias G_FILE_ATTRIBUTE_DOS_IS_MOUNTPOINT = FILE_ATTRIBUTE_DOS_IS_MOUNTPOINT;
-
-/**
  * A key in the "dos" namespace for checking if the file's backup flag
  * is set. This attribute is %TRUE if the backup flag is set. This attribute
  * is only available for DOS file systems. Corresponding #GFileAttributeType
@@ -9605,16 +9397,6 @@ alias G_FILE_ATTRIBUTE_DOS_IS_MOUNTPOINT = FILE_ATTRIBUTE_DOS_IS_MOUNTPOINT;
  */
 enum FILE_ATTRIBUTE_DOS_IS_SYSTEM = "dos::is-system";
 alias G_FILE_ATTRIBUTE_DOS_IS_SYSTEM = FILE_ATTRIBUTE_DOS_IS_SYSTEM;
-
-/**
- * A key in the "dos" namespace for getting the file NTFS reparse tag.
- * This value is 0 for files that are not reparse points.
- * See the [Reparse Tags](https://msdn.microsoft.com/en-us/library/dd541667.aspx)
- * page for possible reparse tag values. Corresponding #GFileAttributeType
- * is %G_FILE_ATTRIBUTE_TYPE_UINT32.
- */
-enum FILE_ATTRIBUTE_DOS_REPARSE_POINT_TAG = "dos::reparse-point-tag";
-alias G_FILE_ATTRIBUTE_DOS_REPARSE_POINT_TAG = FILE_ATTRIBUTE_DOS_REPARSE_POINT_TAG;
 
 /**
  * A key in the "etag" namespace for getting the value of the file's
@@ -10203,8 +9985,7 @@ alias G_FILE_ATTRIBUTE_UNIX_INODE = FILE_ATTRIBUTE_UNIX_INODE;
 /**
  * A key in the "unix" namespace for checking if the file represents a
  * UNIX mount point. This attribute is %TRUE if the file is a UNIX mount
- * point. Since 2.58, `/` is considered to be a mount point.
- * This attribute is only available for UNIX file systems.
+ * point. This attribute is only available for UNIX file systems.
  * Corresponding #GFileAttributeType is %G_FILE_ATTRIBUTE_TYPE_BOOLEAN.
  */
 enum FILE_ATTRIBUTE_UNIX_IS_MOUNTPOINT = "unix::is-mountpoint";
@@ -10369,8 +10150,8 @@ alias G_VFS_EXTENSION_POINT_NAME = VFS_EXTENSION_POINT_NAME;
 /**
  * The string used to obtain the volume class with g_volume_get_identifier().
  *
- * Known volume classes include `device`, `network`, and `loop`. Other
- * classes may be added in the future.
+ * Known volume classes include `device` and `network`. Other classes may
+ * be added in the future.
  *
  * This is intended to be used by applications to classify #GVolume
  * instances into different sections - for example a file manager or
@@ -10382,8 +10163,6 @@ alias G_VOLUME_IDENTIFIER_KIND_CLASS = VOLUME_IDENTIFIER_KIND_CLASS;
 
 /**
  * The string used to obtain a Hal UDI with g_volume_get_identifier().
- *
- * Deprecated: Do not use, HAL is deprecated.
  */
 enum VOLUME_IDENTIFIER_KIND_HAL_UDI = "hal-udi";
 alias G_VOLUME_IDENTIFIER_KIND_HAL_UDI = VOLUME_IDENTIFIER_KIND_HAL_UDI;

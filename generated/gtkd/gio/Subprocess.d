@@ -38,7 +38,6 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -158,19 +157,19 @@ public class Subprocess : ObjectG, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_subprocess_newv(Str.toStringzArray(argv), flags, &err);
+		auto __p = g_subprocess_newv(Str.toStringzArray(argv), flags, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by newv");
 		}
 
-		this(cast(GSubprocess*) p, true);
+		this(cast(GSubprocess*) __p, true);
 	}
 
 	/**
@@ -234,7 +233,7 @@ public class Subprocess : ObjectG, InitableIF
 		GBytes* outstderrBuf = null;
 		GError* err = null;
 
-		auto p = g_subprocess_communicate(gSubprocess, (stdinBuf is null) ? null : stdinBuf.getBytesStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &outstdoutBuf, &outstderrBuf, &err) != 0;
+		auto __p = g_subprocess_communicate(gSubprocess, (stdinBuf is null) ? null : stdinBuf.getBytesStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &outstdoutBuf, &outstderrBuf, &err) != 0;
 
 		if (err !is null)
 		{
@@ -244,7 +243,7 @@ public class Subprocess : ObjectG, InitableIF
 		stdoutBuf = new Bytes(outstdoutBuf);
 		stderrBuf = new Bytes(outstderrBuf);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -278,7 +277,7 @@ public class Subprocess : ObjectG, InitableIF
 		GBytes* outstderrBuf = null;
 		GError* err = null;
 
-		auto p = g_subprocess_communicate_finish(gSubprocess, (result is null) ? null : result.getAsyncResultStruct(), &outstdoutBuf, &outstderrBuf, &err) != 0;
+		auto __p = g_subprocess_communicate_finish(gSubprocess, (result is null) ? null : result.getAsyncResultStruct(), &outstdoutBuf, &outstderrBuf, &err) != 0;
 
 		if (err !is null)
 		{
@@ -288,15 +287,12 @@ public class Subprocess : ObjectG, InitableIF
 		stdoutBuf = new Bytes(outstdoutBuf);
 		stderrBuf = new Bytes(outstderrBuf);
 
-		return p;
+		return __p;
 	}
 
 	/**
 	 * Like g_subprocess_communicate(), but validates the output of the
 	 * process as UTF-8, and returns it as a regular NUL terminated string.
-	 *
-	 * On error, @stdout_buf and @stderr_buf will be set to undefined values and
-	 * should not be used.
 	 *
 	 * Params:
 	 *     stdinBuf = data to send to the stdin of the subprocess, or %NULL
@@ -312,7 +308,7 @@ public class Subprocess : ObjectG, InitableIF
 		char* outstderrBuf = null;
 		GError* err = null;
 
-		auto p = g_subprocess_communicate_utf8(gSubprocess, Str.toStringz(stdinBuf), (cancellable is null) ? null : cancellable.getCancellableStruct(), &outstdoutBuf, &outstderrBuf, &err) != 0;
+		auto __p = g_subprocess_communicate_utf8(gSubprocess, Str.toStringz(stdinBuf), (cancellable is null) ? null : cancellable.getCancellableStruct(), &outstdoutBuf, &outstderrBuf, &err) != 0;
 
 		if (err !is null)
 		{
@@ -322,7 +318,7 @@ public class Subprocess : ObjectG, InitableIF
 		stdoutBuf = Str.toString(outstdoutBuf);
 		stderrBuf = Str.toString(outstderrBuf);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -356,7 +352,7 @@ public class Subprocess : ObjectG, InitableIF
 		char* outstderrBuf = null;
 		GError* err = null;
 
-		auto p = g_subprocess_communicate_utf8_finish(gSubprocess, (result is null) ? null : result.getAsyncResultStruct(), &outstdoutBuf, &outstderrBuf, &err) != 0;
+		auto __p = g_subprocess_communicate_utf8_finish(gSubprocess, (result is null) ? null : result.getAsyncResultStruct(), &outstdoutBuf, &outstderrBuf, &err) != 0;
 
 		if (err !is null)
 		{
@@ -366,7 +362,7 @@ public class Subprocess : ObjectG, InitableIF
 		stdoutBuf = Str.toString(outstdoutBuf);
 		stderrBuf = Str.toString(outstderrBuf);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -483,14 +479,14 @@ public class Subprocess : ObjectG, InitableIF
 	 */
 	public InputStream getStderrPipe()
 	{
-		auto p = g_subprocess_get_stderr_pipe(gSubprocess);
+		auto __p = g_subprocess_get_stderr_pipe(gSubprocess);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) p);
+		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) __p);
 	}
 
 	/**
@@ -506,14 +502,14 @@ public class Subprocess : ObjectG, InitableIF
 	 */
 	public OutputStream getStdinPipe()
 	{
-		auto p = g_subprocess_get_stdin_pipe(gSubprocess);
+		auto __p = g_subprocess_get_stdin_pipe(gSubprocess);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(OutputStream)(cast(GOutputStream*) p);
+		return ObjectG.getDObject!(OutputStream)(cast(GOutputStream*) __p);
 	}
 
 	/**
@@ -529,14 +525,14 @@ public class Subprocess : ObjectG, InitableIF
 	 */
 	public InputStream getStdoutPipe()
 	{
-		auto p = g_subprocess_get_stdout_pipe(gSubprocess);
+		auto __p = g_subprocess_get_stdout_pipe(gSubprocess);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) p);
+		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) __p);
 	}
 
 	/**
@@ -619,14 +615,14 @@ public class Subprocess : ObjectG, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_subprocess_wait(gSubprocess, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_subprocess_wait(gSubprocess, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -663,14 +659,14 @@ public class Subprocess : ObjectG, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_subprocess_wait_check(gSubprocess, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_subprocess_wait_check(gSubprocess, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -707,14 +703,14 @@ public class Subprocess : ObjectG, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_subprocess_wait_check_finish(gSubprocess, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_subprocess_wait_check_finish(gSubprocess, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -734,13 +730,13 @@ public class Subprocess : ObjectG, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_subprocess_wait_finish(gSubprocess, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_subprocess_wait_finish(gSubprocess, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 }

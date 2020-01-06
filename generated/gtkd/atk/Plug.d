@@ -32,7 +32,6 @@ public  import atk.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.atktypes;
 
 
 /**
@@ -79,14 +78,14 @@ public class Plug : ObjectAtk, ComponentIF
 	/** */
 	public this()
 	{
-		auto p = atk_plug_new();
+		auto __p = atk_plug_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(AtkPlug*) p, true);
+		this(cast(AtkPlug*) __p, true);
 	}
 
 	/**

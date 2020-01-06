@@ -53,7 +53,6 @@ private import atk.c.functions;
 public  import atk.c.types;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-public  import gtkc.atktypes;
 
 
 /**
@@ -162,13 +161,13 @@ public class NoOpObject : ObjectAtk, ActionIF, ComponentIF, DocumentIF, Editable
 	 */
 	public this(ObjectG obj)
 	{
-		auto p = atk_no_op_object_new((obj is null) ? null : obj.getObjectGStruct());
+		auto __p = atk_no_op_object_new((obj is null) ? null : obj.getObjectGStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(AtkNoOpObject*) p, true);
+		this(cast(AtkNoOpObject*) __p, true);
 	}
 }

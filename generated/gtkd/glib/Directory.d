@@ -29,7 +29,6 @@ private import glib.GException;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
 
 
 /**
@@ -167,18 +166,18 @@ public class Directory
 	{
 		GError* err = null;
 
-		auto p = g_dir_open(Str.toStringz(path), flags, &err);
+		auto __p = g_dir_open(Str.toStringz(path), flags, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Directory(cast(GDir*) p);
+		return new Directory(cast(GDir*) __p);
 	}
 }

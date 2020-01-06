@@ -28,7 +28,6 @@ private import glib.ConstructionException;
 private import glib.ListG;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.pangotypes;
 private import pango.PgAttributeIterator;
 private import pango.PgAttributeList;
 private import pango.PgFont;
@@ -105,14 +104,14 @@ public class PgContext : ObjectG
 	 */
 	public this()
 	{
-		auto p = pango_context_new();
+		auto __p = pango_context_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(PangoContext*) p, true);
+		this(cast(PangoContext*) __p, true);
 	}
 
 	/**
@@ -163,14 +162,14 @@ public class PgContext : ObjectG
 	 */
 	public PgFontDescription getFontDescription()
 	{
-		auto p = pango_context_get_font_description(pangoContext);
+		auto __p = pango_context_get_font_description(pangoContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) p);
+		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) __p);
 	}
 
 	/**
@@ -183,14 +182,14 @@ public class PgContext : ObjectG
 	 */
 	public PgFontMap getFontMap()
 	{
-		auto p = pango_context_get_font_map(pangoContext);
+		auto __p = pango_context_get_font_map(pangoContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgFontMap)(cast(PangoFontMap*) p);
+		return ObjectG.getDObject!(PgFontMap)(cast(PangoFontMap*) __p);
 	}
 
 	/**
@@ -228,14 +227,14 @@ public class PgContext : ObjectG
 	 */
 	public PgLanguage getLanguage()
 	{
-		auto p = pango_context_get_language(pangoContext);
+		auto __p = pango_context_get_language(pangoContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgLanguage)(cast(PangoLanguage*) p, true);
+		return ObjectG.getDObject!(PgLanguage)(cast(PangoLanguage*) __p, true);
 	}
 
 	/**
@@ -250,14 +249,14 @@ public class PgContext : ObjectG
 	 */
 	public PgMatrix getMatrix()
 	{
-		auto p = pango_context_get_matrix(pangoContext);
+		auto __p = pango_context_get_matrix(pangoContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgMatrix)(cast(PangoMatrix*) p);
+		return ObjectG.getDObject!(PgMatrix)(cast(PangoMatrix*) __p);
 	}
 
 	/**
@@ -288,14 +287,25 @@ public class PgContext : ObjectG
 	 */
 	public PgFontMetrics getMetrics(PgFontDescription desc, PgLanguage language)
 	{
-		auto p = pango_context_get_metrics(pangoContext, (desc is null) ? null : desc.getPgFontDescriptionStruct(), (language is null) ? null : language.getPgLanguageStruct());
+		auto __p = pango_context_get_metrics(pangoContext, (desc is null) ? null : desc.getPgFontDescriptionStruct(), (language is null) ? null : language.getPgLanguageStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgFontMetrics)(cast(PangoFontMetrics*) p, true);
+		return ObjectG.getDObject!(PgFontMetrics)(cast(PangoFontMetrics*) __p, true);
+	}
+
+	/**
+	 * Returns whether font rendering with this context should
+	 * round glyph positions and widths.
+	 *
+	 * Since: 1.44
+	 */
+	public bool getRoundGlyphPositions()
+	{
+		return pango_context_get_round_glyph_positions(pangoContext) != 0;
 	}
 
 	/**
@@ -353,14 +363,14 @@ public class PgContext : ObjectG
 	 */
 	public PgFont loadFont(PgFontDescription desc)
 	{
-		auto p = pango_context_load_font(pangoContext, (desc is null) ? null : desc.getPgFontDescriptionStruct());
+		auto __p = pango_context_load_font(pangoContext, (desc is null) ? null : desc.getPgFontDescriptionStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgFont)(cast(PangoFont*) p, true);
+		return ObjectG.getDObject!(PgFont)(cast(PangoFont*) __p, true);
 	}
 
 	/**
@@ -376,14 +386,14 @@ public class PgContext : ObjectG
 	 */
 	public PgFontset loadFontset(PgFontDescription desc, PgLanguage language)
 	{
-		auto p = pango_context_load_fontset(pangoContext, (desc is null) ? null : desc.getPgFontDescriptionStruct(), (language is null) ? null : language.getPgLanguageStruct());
+		auto __p = pango_context_load_fontset(pangoContext, (desc is null) ? null : desc.getPgFontDescriptionStruct(), (language is null) ? null : language.getPgLanguageStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgFontset)(cast(PangoFontset*) p, true);
+		return ObjectG.getDObject!(PgFontset)(cast(PangoFontset*) __p, true);
 	}
 
 	/**
@@ -493,6 +503,27 @@ public class PgContext : ObjectG
 	}
 
 	/**
+	 * Sets whether font rendering with this context should
+	 * round glyph positions and widths to integral positions,
+	 * in device units.
+	 *
+	 * This is useful when the renderer can't handle subpixel
+	 * positioning of glyphs.
+	 *
+	 * The default value is to round glyph positions, to remain
+	 * compatible with previous Pango behavior.
+	 *
+	 * Params:
+	 *     roundPositions = whether to round glyph positions
+	 *
+	 * Since: 1.44
+	 */
+	public void setRoundGlyphPositions(bool roundPositions)
+	{
+		pango_context_set_round_glyph_positions(pangoContext, roundPositions);
+	}
+
+	/**
 	 * Determines the normative bidirectional character type of a
 	 * character, as specified in the Unicode Character Database.
 	 *
@@ -514,11 +545,13 @@ public class PgContext : ObjectG
 
 	/**
 	 * Determines possible line, word, and character breaks
-	 * for a string of Unicode text with a single analysis.  For most
-	 * purposes you may want to use pango_get_log_attrs().
+	 * for a string of Unicode text with a single analysis.
+	 * For most purposes you may want to use pango_get_log_attrs().
+	 *
+	 * Deprecated: Use pango_default_break() and pango_tailor_break()
 	 *
 	 * Params:
-	 *     text = the text to process
+	 *     text = the text to process. Must be valid UTF-8
 	 *     length = length of @text in bytes (may be -1 if @text is nul-terminated)
 	 *     analysis = #PangoAnalysis structure from pango_itemize()
 	 *     attrs = an array to store character
@@ -530,16 +563,14 @@ public class PgContext : ObjectG
 	}
 
 	/**
-	 * This is the default break algorithm, used if no language
-	 * engine overrides it. Normally you should use pango_break()
-	 * instead. Unlike pango_break(),
-	 * @analysis can be %NULL, but only do that if you know what
-	 * you're doing. If you need an analysis to pass to pango_break(),
-	 * you need to pango_itemize().  In most cases however you should
-	 * simply use pango_get_log_attrs().
+	 * This is the default break algorithm. It applies Unicode
+	 * rules without language-specific tailoring, therefore
+	 * the @analyis argument is unused and can be %NULL.
+	 *
+	 * See pango_tailor_break() for language-specific breaks.
 	 *
 	 * Params:
-	 *     text = text to break
+	 *     text = text to break. Must be valid UTF-8
 	 *     length = length of text in bytes (may be -1 if @text is nul-terminated)
 	 *     analysis = a #PangoAnalysis for the @text
 	 *     attrs = logical attributes to fill in
@@ -555,7 +586,7 @@ public class PgContext : ObjectG
 	 * direction, according to the Unicode bidirectional algorithm.
 	 *
 	 * Params:
-	 *     text = the text to process
+	 *     text = the text to process. Must be valid UTF-8
 	 *     length = length of @text in bytes (may be -1 if @text is nul-terminated)
 	 *
 	 * Returns: The direction corresponding to the first strong character.
@@ -603,7 +634,7 @@ public class PgContext : ObjectG
 	 * the word is a word).
 	 *
 	 * Params:
-	 *     text = text to process
+	 *     text = text to process. Must be valid UTF-8
 	 *     length = length in bytes of @text
 	 *     level = embedding level, or -1 if unknown
 	 *     language = language tag
@@ -650,7 +681,7 @@ public class PgContext : ObjectG
 	 * Params:
 	 *     context = a structure holding information that affects
 	 *         the itemization process.
-	 *     text = the text to itemize.
+	 *     text = the text to itemize. Must be valid UTF-8
 	 *     startIndex = first byte in @text to process
 	 *     length = the number of bytes (not characters) to process
 	 *         after @start_index.
@@ -665,14 +696,14 @@ public class PgContext : ObjectG
 	 */
 	public static ListG itemize(PgContext context, string text, int startIndex, int length, PgAttributeList attrs, PgAttributeIterator cachedIter)
 	{
-		auto p = pango_itemize((context is null) ? null : context.getPgContextStruct(), Str.toStringz(text), startIndex, length, (attrs is null) ? null : attrs.getPgAttributeListStruct(), (cachedIter is null) ? null : cachedIter.getPgAttributeIteratorStruct());
+		auto __p = pango_itemize((context is null) ? null : context.getPgContextStruct(), Str.toStringz(text), startIndex, length, (attrs is null) ? null : attrs.getPgAttributeListStruct(), (cachedIter is null) ? null : cachedIter.getPgAttributeIteratorStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -700,14 +731,14 @@ public class PgContext : ObjectG
 	 */
 	public static ListG itemizeWithBaseDir(PgContext context, PangoDirection baseDir, string text, int startIndex, int length, PgAttributeList attrs, PgAttributeIterator cachedIter)
 	{
-		auto p = pango_itemize_with_base_dir((context is null) ? null : context.getPgContextStruct(), baseDir, Str.toStringz(text), startIndex, length, (attrs is null) ? null : attrs.getPgAttributeListStruct(), (cachedIter is null) ? null : cachedIter.getPgAttributeIteratorStruct());
+		auto __p = pango_itemize_with_base_dir((context is null) ? null : context.getPgContextStruct(), baseDir, Str.toStringz(text), startIndex, length, (attrs is null) ? null : attrs.getPgAttributeListStruct(), (cachedIter is null) ? null : cachedIter.getPgAttributeIteratorStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -727,14 +758,14 @@ public class PgContext : ObjectG
 	 */
 	public static ListG reorderItems(ListG logicalItems)
 	{
-		auto p = pango_reorder_items((logicalItems is null) ? null : logicalItems.getListGStruct());
+		auto __p = pango_reorder_items((logicalItems is null) ? null : logicalItems.getListGStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**

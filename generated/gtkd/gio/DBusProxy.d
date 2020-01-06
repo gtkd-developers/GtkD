@@ -44,7 +44,6 @@ private import glib.Str;
 private import glib.Variant;
 private import gobject.ObjectG;
 private import gobject.Signals;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -54,13 +53,14 @@ private import std.algorithm;
  * both well-known and unique names.
  * 
  * By default, #GDBusProxy will cache all properties (and listen to
- * changes) of the remote object, and proxy all signals that get
+ * changes) of the remote object, and proxy all signals that gets
  * emitted. This behaviour can be changed by passing suitable
  * #GDBusProxyFlags when the proxy is created. If the proxy is for a
  * well-known name, the property cache is flushed when the name owner
  * vanishes and reloaded when a name owner appears.
  * 
- * The unique name owner of the proxy's name is tracked and can be read from
+ * If a #GDBusProxy is used for a well-known name, the owner of the
+ * name is tracked and can be read from
  * #GDBusProxy:g-name-owner. Connect to the #GObject::notify signal to
  * get notified of changes. Additionally, only signals and property
  * changes emitted from the current name owner are considered and
@@ -189,8 +189,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 *     interfaceName = A D-Bus interface name.
 	 *     cancellable = A #GCancellable or %NULL.
 	 *
-	 * Returns: A #GDBusProxy or %NULL if error is set.
-	 *     Free with g_object_unref().
+	 * Returns: A #GDBusProxy or %NULL if error is set. Free with g_object_unref().
 	 *
 	 * Since: 2.26
 	 *
@@ -201,19 +200,19 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_dbus_proxy_new_for_bus_sync(busType, flags, (info is null) ? null : info.getDBusInterfaceInfoStruct(), Str.toStringz(name), Str.toStringz(objectPath), Str.toStringz(interfaceName), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_dbus_proxy_new_for_bus_sync(busType, flags, (info is null) ? null : info.getDBusInterfaceInfoStruct(), Str.toStringz(name), Str.toStringz(objectPath), Str.toStringz(interfaceName), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_for_bus_sync");
 		}
 
-		this(cast(GDBusProxy*) p, true);
+		this(cast(GDBusProxy*) __p, true);
 	}
 
 	/**
@@ -225,10 +224,6 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 * If the %G_DBUS_PROXY_FLAGS_DO_NOT_CONNECT_SIGNALS flag is not set, also sets up
 	 * match rules for signals. Connect to the #GDBusProxy::g-signal signal
 	 * to handle signals from the remote object.
-	 *
-	 * If both %G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES and
-	 * %G_DBUS_PROXY_FLAGS_DO_NOT_CONNECT_SIGNALS are set, this constructor is
-	 * guaranteed to return immediately without blocking.
 	 *
 	 * If @name is a well-known name and the
 	 * %G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START and %G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START_AT_CONSTRUCTION
@@ -249,8 +244,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 *     interfaceName = A D-Bus interface name.
 	 *     cancellable = A #GCancellable or %NULL.
 	 *
-	 * Returns: A #GDBusProxy or %NULL if error is set.
-	 *     Free with g_object_unref().
+	 * Returns: A #GDBusProxy or %NULL if error is set. Free with g_object_unref().
 	 *
 	 * Since: 2.26
 	 *
@@ -261,19 +255,19 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_dbus_proxy_new_sync((connection is null) ? null : connection.getDBusConnectionStruct(), flags, (info is null) ? null : info.getDBusInterfaceInfoStruct(), Str.toStringz(name), Str.toStringz(objectPath), Str.toStringz(interfaceName), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_dbus_proxy_new_sync((connection is null) ? null : connection.getDBusConnectionStruct(), flags, (info is null) ? null : info.getDBusInterfaceInfoStruct(), Str.toStringz(name), Str.toStringz(objectPath), Str.toStringz(interfaceName), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_sync");
 		}
 
-		this(cast(GDBusProxy*) p, true);
+		this(cast(GDBusProxy*) __p, true);
 	}
 
 	/**
@@ -287,10 +281,6 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 * If the %G_DBUS_PROXY_FLAGS_DO_NOT_CONNECT_SIGNALS flag is not set, also sets up
 	 * match rules for signals. Connect to the #GDBusProxy::g-signal signal
 	 * to handle signals from the remote object.
-	 *
-	 * If both %G_DBUS_PROXY_FLAGS_DO_NOT_LOAD_PROPERTIES and
-	 * %G_DBUS_PROXY_FLAGS_DO_NOT_CONNECT_SIGNALS are set, this constructor is
-	 * guaranteed to complete immediately without blocking.
 	 *
 	 * If @name is a well-known name and the
 	 * %G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START and %G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START_AT_CONSTRUCTION
@@ -318,7 +308,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 *
 	 * Since: 2.26
 	 */
-	public static void newProxy(DBusConnection connection, GDBusProxyFlags flags, DBusInterfaceInfo info, string name, string objectPath, string interfaceName, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	public static void new_(DBusConnection connection, GDBusProxyFlags flags, DBusInterfaceInfo info, string name, string objectPath, string interfaceName, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
 		g_dbus_proxy_new((connection is null) ? null : connection.getDBusConnectionStruct(), flags, (info is null) ? null : info.getDBusInterfaceInfoStruct(), Str.toStringz(name), Str.toStringz(objectPath), Str.toStringz(interfaceName), (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
 	}
@@ -425,19 +415,19 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_dbus_proxy_call_finish(gDBusProxy, (res is null) ? null : res.getAsyncResultStruct(), &err);
+		auto __p = g_dbus_proxy_call_finish(gDBusProxy, (res is null) ? null : res.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -496,19 +486,19 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_dbus_proxy_call_sync(gDBusProxy, Str.toStringz(methodName), (parameters is null) ? null : parameters.getVariantStruct(), flags, timeoutMsec, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_dbus_proxy_call_sync(gDBusProxy, Str.toStringz(methodName), (parameters is null) ? null : parameters.getVariantStruct(), flags, timeoutMsec, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -554,7 +544,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 		GUnixFDList* outoutFdList = null;
 		GError* err = null;
 
-		auto p = g_dbus_proxy_call_with_unix_fd_list_finish(gDBusProxy, &outoutFdList, (res is null) ? null : res.getAsyncResultStruct(), &err);
+		auto __p = g_dbus_proxy_call_with_unix_fd_list_finish(gDBusProxy, &outoutFdList, (res is null) ? null : res.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
@@ -563,12 +553,12 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 
 		outFdList = ObjectG.getDObject!(UnixFDList)(outoutFdList);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -599,7 +589,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 		GUnixFDList* outoutFdList = null;
 		GError* err = null;
 
-		auto p = g_dbus_proxy_call_with_unix_fd_list_sync(gDBusProxy, Str.toStringz(methodName), (parameters is null) ? null : parameters.getVariantStruct(), flags, timeoutMsec, (fdList is null) ? null : fdList.getUnixFDListStruct(), &outoutFdList, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_dbus_proxy_call_with_unix_fd_list_sync(gDBusProxy, Str.toStringz(methodName), (parameters is null) ? null : parameters.getVariantStruct(), flags, timeoutMsec, (fdList is null) ? null : fdList.getUnixFDListStruct(), &outoutFdList, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
@@ -608,12 +598,12 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 
 		outFdList = ObjectG.getDObject!(UnixFDList)(outoutFdList);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -627,29 +617,28 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 * Params:
 	 *     propertyName = Property name.
 	 *
-	 * Returns: A reference to the #GVariant instance
-	 *     that holds the value for @property_name or %NULL if the value is not in
-	 *     the cache. The returned reference must be freed with g_variant_unref().
+	 * Returns: A reference to the #GVariant instance that holds the value
+	 *     for @property_name or %NULL if the value is not in the cache. The
+	 *     returned reference must be freed with g_variant_unref().
 	 *
 	 * Since: 2.26
 	 */
 	public Variant getCachedProperty(string propertyName)
 	{
-		auto p = g_dbus_proxy_get_cached_property(gDBusProxy, Str.toStringz(propertyName));
+		auto __p = g_dbus_proxy_get_cached_property(gDBusProxy, Str.toStringz(propertyName));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
 	 * Gets the names of all cached properties on @proxy.
 	 *
-	 * Returns: A
-	 *     %NULL-terminated array of strings or %NULL if
+	 * Returns: A %NULL-terminated array of strings or %NULL if
 	 *     @proxy has no cached properties. Free the returned array with
 	 *     g_strfreev().
 	 *
@@ -672,14 +661,14 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 */
 	public DBusConnection getConnection()
 	{
-		auto p = g_dbus_proxy_get_connection(gDBusProxy);
+		auto __p = g_dbus_proxy_get_connection(gDBusProxy);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusConnection)(cast(GDBusConnection*) p);
+		return ObjectG.getDObject!(DBusConnection)(cast(GDBusConnection*) __p);
 	}
 
 	/**
@@ -715,21 +704,21 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 * that @proxy conforms to. See the #GDBusProxy:g-interface-info
 	 * property for more details.
 	 *
-	 * Returns: A #GDBusInterfaceInfo or %NULL.
-	 *     Do not unref the returned object, it is owned by @proxy.
+	 * Returns: A #GDBusInterfaceInfo or %NULL. Do not unref the returned
+	 *     object, it is owned by @proxy.
 	 *
 	 * Since: 2.26
 	 */
 	public DBusInterfaceInfo getInterfaceInfo()
 	{
-		auto p = g_dbus_proxy_get_interface_info(gDBusProxy);
+		auto __p = g_dbus_proxy_get_interface_info(gDBusProxy);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusInterfaceInfo)(cast(GDBusInterfaceInfo*) p);
+		return ObjectG.getDObject!(DBusInterfaceInfo)(cast(GDBusInterfaceInfo*) __p, true);
 	}
 
 	/**
@@ -762,8 +751,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 * #GObject::notify signal to track changes to the
 	 * #GDBusProxy:g-name-owner property.
 	 *
-	 * Returns: The name owner or %NULL if no name
-	 *     owner exists. Free with g_free().
+	 * Returns: The name owner or %NULL if no name owner exists. Free with g_free().
 	 *
 	 * Since: 2.26
 	 */
@@ -856,8 +844,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 * details.
 	 *
 	 * Params:
-	 *     info = Minimum interface this proxy conforms to
-	 *         or %NULL to unset.
+	 *     info = Minimum interface this proxy conforms to or %NULL to unset.
 	 *
 	 * Since: 2.26
 	 */
@@ -881,7 +868,7 @@ public class DBusProxy : ObjectG, AsyncInitableIF, DBusInterfaceIF, InitableIF
 	 * `org.freedesktop.DBus.Properties` interface.
 	 *
 	 * Params:
-	 *     changedProperties = A #GVariant containing the properties that changed (type: `a{sv}`)
+	 *     changedProperties = A #GVariant containing the properties that changed
 	 *     invalidatedProperties = A %NULL terminated array of properties that was invalidated
 	 *
 	 * Since: 2.26

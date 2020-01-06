@@ -29,7 +29,6 @@ public  import gio.c.types;
 private import glib.Str;
 private import glib.Variant;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -119,12 +118,12 @@ public class MenuAttributeIter : ObjectG
 		char* outoutName = null;
 		GVariant* outvalue = null;
 
-		auto p = g_menu_attribute_iter_get_next(gMenuAttributeIter, &outoutName, &outvalue) != 0;
+		auto __p = g_menu_attribute_iter_get_next(gMenuAttributeIter, &outoutName, &outvalue) != 0;
 
 		outName = Str.toString(outoutName);
 		value = new Variant(outvalue);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -138,14 +137,14 @@ public class MenuAttributeIter : ObjectG
 	 */
 	public Variant getValue()
 	{
-		auto p = g_menu_attribute_iter_get_value(gMenuAttributeIter);
+		auto __p = g_menu_attribute_iter_get_value(gMenuAttributeIter);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**

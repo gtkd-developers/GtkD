@@ -31,7 +31,6 @@ public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -43,8 +42,6 @@ public  import gtkc.giotypes;
  * can be used as the base class for another proxy resolver
  * implementation, or it can be created and used manually, such as
  * with g_socket_client_set_proxy_resolver().
- *
- * Since: 2.36
  */
 public class SimpleProxyResolver : ObjectG, ProxyResolverIF
 {
@@ -104,14 +101,14 @@ public class SimpleProxyResolver : ObjectG, ProxyResolverIF
 	 */
 	public this(string defaultProxy, string[] ignoreHosts)
 	{
-		auto p = g_simple_proxy_resolver_new(Str.toStringz(defaultProxy), Str.toStringzArray(ignoreHosts));
+		auto __p = g_simple_proxy_resolver_new(Str.toStringz(defaultProxy), Str.toStringzArray(ignoreHosts));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GSimpleProxyResolver*) p, true);
+		this(cast(GSimpleProxyResolver*) __p, true);
 	}
 
 	/**

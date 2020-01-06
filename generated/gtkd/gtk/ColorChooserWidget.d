@@ -32,7 +32,6 @@ private import gtk.ColorChooserT;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -56,8 +55,6 @@ public  import gtkc.gtktypes;
  * # CSS names
  * 
  * GtkColorChooserWidget has a single CSS node with name colorchooser.
- *
- * Since: 3.4
  */
 public class ColorChooserWidget : Box, ColorChooserIF
 {
@@ -108,13 +105,13 @@ public class ColorChooserWidget : Box, ColorChooserIF
 	 */
 	public this()
 	{
-		auto p = gtk_color_chooser_widget_new();
+		auto __p = gtk_color_chooser_widget_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkColorChooserWidget*) p);
+		this(cast(GtkColorChooserWidget*) __p);
 	}
 }

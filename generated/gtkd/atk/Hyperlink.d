@@ -32,7 +32,6 @@ public  import atk.c.types;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-public  import gtkc.atktypes;
 private import std.algorithm;
 
 
@@ -118,14 +117,14 @@ public class Hyperlink : ObjectG, ActionIF
 	 */
 	public ObjectAtk getObject(int i)
 	{
-		auto p = atk_hyperlink_get_object(atkHyperlink, i);
+		auto __p = atk_hyperlink_get_object(atkHyperlink, i);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
+		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) __p);
 	}
 
 	/**

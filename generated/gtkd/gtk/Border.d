@@ -29,8 +29,6 @@ private import glib.MemorySlice;
 private import gobject.ObjectG;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
-private import gtkd.Loader;
 
 
 /**
@@ -68,7 +66,7 @@ public final class Border
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GTK) && ownedRef )
+		if ( ownedRef )
 			gtk_border_free(gtkBorder);
 	}
 
@@ -147,14 +145,14 @@ public final class Border
 	 */
 	public this()
 	{
-		auto p = gtk_border_new();
+		auto __p = gtk_border_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkBorder*) p);
+		this(cast(GtkBorder*) __p);
 	}
 
 	/**
@@ -164,14 +162,14 @@ public final class Border
 	 */
 	public Border copy()
 	{
-		auto p = gtk_border_copy(gtkBorder);
+		auto __p = gtk_border_copy(gtkBorder);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Border)(cast(GtkBorder*) p, true);
+		return ObjectG.getDObject!(Border)(cast(GtkBorder*) __p, true);
 	}
 
 	/**

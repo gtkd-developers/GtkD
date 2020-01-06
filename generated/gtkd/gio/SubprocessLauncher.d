@@ -32,7 +32,6 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -98,14 +97,14 @@ public class SubprocessLauncher : ObjectG
 	 */
 	public this(GSubprocessFlags flags)
 	{
-		auto p = g_subprocess_launcher_new(flags);
+		auto __p = g_subprocess_launcher_new(flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GSubprocessLauncher*) p, true);
+		this(cast(GSubprocessLauncher*) __p, true);
 	}
 
 	/**
@@ -118,8 +117,7 @@ public class SubprocessLauncher : ObjectG
 	 * Params:
 	 *     variable = the environment variable to get
 	 *
-	 * Returns: the value of the environment variable,
-	 *     %NULL if unset
+	 * Returns: the value of the environment variable, %NULL if unset
 	 *
 	 * Since: 2.40
 	 */
@@ -183,12 +181,8 @@ public class SubprocessLauncher : ObjectG
 	 * As an alternative, you can use g_subprocess_launcher_setenv(),
 	 * g_subprocess_launcher_unsetenv(), etc.
 	 *
-	 * Pass an empty array to set an empty environment. Pass %NULL to inherit the
-	 * parent process’ environment. As of GLib 2.54, the parent process’ environment
-	 * will be copied when g_subprocess_launcher_set_environ() is called.
-	 * Previously, it was copied when the subprocess was executed. This means the
-	 * copied environment may now be modified (using g_subprocess_launcher_setenv(),
-	 * etc.) before launching the subprocess.
+	 * Pass %NULL to inherit the parent  process' environment. Pass an
+	 * empty array to set an empty environment.
 	 *
 	 * On UNIX, all strings in this array can be arbitrary byte strings.
 	 * On Windows, they should be in UTF-8.
@@ -304,8 +298,7 @@ public class SubprocessLauncher : ObjectG
 	 * On Windows, they should be in UTF-8.
 	 *
 	 * Params:
-	 *     variable = the environment variable to set,
-	 *         must not contain '='
+	 *     variable = the environment variable to set, must not contain '='
 	 *     value = the new value for the variable
 	 *     overwrite = whether to change the variable if it already exists
 	 *
@@ -332,19 +325,19 @@ public class SubprocessLauncher : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_subprocess_launcher_spawnv(gSubprocessLauncher, Str.toStringzArray(argv), &err);
+		auto __p = g_subprocess_launcher_spawnv(gSubprocessLauncher, Str.toStringzArray(argv), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Subprocess)(cast(GSubprocess*) p, true);
+		return ObjectG.getDObject!(Subprocess)(cast(GSubprocess*) __p, true);
 	}
 
 	/**
@@ -465,8 +458,7 @@ public class SubprocessLauncher : ObjectG
 	 * containing '='. On Windows, it should be in UTF-8.
 	 *
 	 * Params:
-	 *     variable = the environment variable to unset,
-	 *         must not contain '='
+	 *     variable = the environment variable to unset, must not contain '='
 	 *
 	 * Since: 2.40
 	 */

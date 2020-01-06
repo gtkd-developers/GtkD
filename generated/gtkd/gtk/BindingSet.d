@@ -31,8 +31,6 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
-private import gtkd.Loader;
 
 
 /**
@@ -74,7 +72,7 @@ public final class BindingSet
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GTK) && ownedRef )
+		if ( ownedRef )
 			sliceFree(gtkBindingSet);
 	}
 
@@ -236,14 +234,14 @@ public final class BindingSet
 	 */
 	public static BindingSet byClass(void* objectClass)
 	{
-		auto p = gtk_binding_set_by_class(objectClass);
+		auto __p = gtk_binding_set_by_class(objectClass);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(BindingSet)(cast(GtkBindingSet*) p);
+		return ObjectG.getDObject!(BindingSet)(cast(GtkBindingSet*) __p);
 	}
 
 	/**
@@ -259,14 +257,14 @@ public final class BindingSet
 	 */
 	public static BindingSet find(string setName)
 	{
-		auto p = gtk_binding_set_find(Str.toStringz(setName));
+		auto __p = gtk_binding_set_find(Str.toStringz(setName));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(BindingSet)(cast(GtkBindingSet*) p);
+		return ObjectG.getDObject!(BindingSet)(cast(GtkBindingSet*) __p);
 	}
 
 	/**
@@ -282,14 +280,14 @@ public final class BindingSet
 	 */
 	public this(string setName)
 	{
-		auto p = gtk_binding_set_new(Str.toStringz(setName));
+		auto __p = gtk_binding_set_new(Str.toStringz(setName));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkBindingSet*) p);
+		this(cast(GtkBindingSet*) __p);
 	}
 
 	/**

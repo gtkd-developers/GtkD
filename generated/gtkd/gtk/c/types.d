@@ -6870,6 +6870,18 @@ struct GtkHeaderBar
 	GtkContainer container;
 }
 
+struct GtkHeaderBarAccessible
+{
+	GtkContainerAccessible parent;
+}
+
+struct GtkHeaderBarAccessibleClass
+{
+	GtkContainerAccessibleClass parentClass;
+}
+
+struct GtkHeaderBarAccessiblePrivate;
+
 struct GtkHeaderBarClass
 {
 	GtkContainerClass parentClass;
@@ -11596,74 +11608,6 @@ struct GtkWindowGroupPrivate;
 
 struct GtkWindowPrivate;
 
-/**
- * Abstract interface type for the D-Bus interface <link linkend="gdbus-interface-org-Gtk-MountOperationHandler.top_of_page">org.Gtk.MountOperationHandler</link>.
- */
-struct _GtkMountOperationHandler;
-
-/**
- * Virtual table for the D-Bus interface <link linkend="gdbus-interface-org-Gtk-MountOperationHandler.top_of_page">org.Gtk.MountOperationHandler</link>.
- */
-struct _GtkMountOperationHandlerIface
-{
-	/**
-	 * The parent interface.
-	 */
-	GTypeInterface parentIface;
-	/** */
-	extern(C) int function(_GtkMountOperationHandler* object, GDBusMethodInvocation* invocation, const(char)* argId, const(char)* argMessage, const(char)* argIconName, const(char)* argDefaultUser, const(char)* argDefaultDomain, uint argFlags) handleAskPassword;
-	/** */
-	extern(C) int function(_GtkMountOperationHandler* object, GDBusMethodInvocation* invocation, const(char)* argId, const(char)* argMessage, const(char)* argIconName, const(char)* argChoices) handleAskQuestion;
-	/** */
-	extern(C) int function(_GtkMountOperationHandler* object, GDBusMethodInvocation* invocation) handleClose;
-	/** */
-	extern(C) int function(_GtkMountOperationHandler* object, GDBusMethodInvocation* invocation, const(char)* argId, const(char)* argMessage, const(char)* argIconName, GVariant* argApplicationPids, const(char)* argChoices) handleShowProcesses;
-}
-
-/**
- * The #_GtkMountOperationHandlerProxy structure contains only private data and should only be accessed using the provided API.
- */
-struct _GtkMountOperationHandlerProxy
-{
-	GDBusProxy parentInstance;
-	_GtkMountOperationHandlerProxyPrivate* priv;
-}
-
-/**
- * Class structure for #_GtkMountOperationHandlerProxy.
- */
-struct _GtkMountOperationHandlerProxyClass
-{
-	/**
-	 * The parent class.
-	 */
-	GDBusProxyClass parentClass;
-}
-
-struct _GtkMountOperationHandlerProxyPrivate;
-
-/**
- * The #_GtkMountOperationHandlerSkeleton structure contains only private data and should only be accessed using the provided API.
- */
-struct _GtkMountOperationHandlerSkeleton
-{
-	GDBusInterfaceSkeleton parentInstance;
-	_GtkMountOperationHandlerSkeletonPrivate* priv;
-}
-
-/**
- * Class structure for #_GtkMountOperationHandlerSkeleton.
- */
-struct _GtkMountOperationHandlerSkeletonClass
-{
-	/**
-	 * The parent class.
-	 */
-	GDBusInterfaceSkeletonClass parentClass;
-}
-
-struct _GtkMountOperationHandlerSkeletonPrivate;
-
 /** */
 public alias extern(C) int function(GtkAccelGroup* accelGroup, GObject* acceleratable, uint keyval, GdkModifierType modifier) GtkAccelGroupActivate;
 
@@ -11858,7 +11802,7 @@ public alias extern(C) void function(GtkClipboard* clipboard, GtkSelectionData* 
  *
  * Since: 2.10
  */
-public alias extern(C) void function(GtkClipboard* clipboard, GdkAtom format, const(char)* text, size_t length, void* data) GtkClipboardRichTextReceivedFunc;
+public alias extern(C) void function(GtkClipboard* clipboard, GdkAtom format, ubyte* text, size_t length, void* data) GtkClipboardRichTextReceivedFunc;
 
 /**
  * A function to be called when the results of gtk_clipboard_request_targets()
@@ -12474,7 +12418,7 @@ public alias extern(C) void function(GtkTreeView* treeView, GtkWidget* searchDia
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum BINARY_AGE = 2408;
+enum BINARY_AGE = 2412;
 alias GTK_BINARY_AGE = BINARY_AGE;
 
 /**
@@ -12489,7 +12433,7 @@ alias GTK_INPUT_ERROR = INPUT_ERROR;
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum INTERFACE_AGE = 4;
+enum INTERFACE_AGE = 8;
 alias GTK_INTERFACE_AGE = INTERFACE_AGE;
 
 /**
@@ -12529,7 +12473,7 @@ alias GTK_MAX_COMPOSE_LEN = MAX_COMPOSE_LEN;
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum MICRO_VERSION = 8;
+enum MICRO_VERSION = 12;
 alias GTK_MICRO_VERSION = MICRO_VERSION;
 
 /**

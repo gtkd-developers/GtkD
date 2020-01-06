@@ -29,7 +29,6 @@ public  import gio.c.types;
 private import glib.ErrorG;
 private import glib.GException;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -39,16 +38,13 @@ public  import gtkc.giotypes;
  * which are chained together by a #GAsyncReadyCallback. To begin
  * an asynchronous operation, provide a #GAsyncReadyCallback to the
  * asynchronous function. This callback will be triggered when the
- * operation has completed, and must be run in a later iteration of
- * the [thread-default main context][g-main-context-push-thread-default]
- * from where the operation was initiated. It will be passed a
- * #GAsyncResult instance filled with the details of the operation's
- * success or failure, the object the asynchronous function was
- * started for and any error codes returned. The asynchronous callback
- * function is then expected to call the corresponding "_finish()"
- * function, passing the object the function was called for, the
- * #GAsyncResult instance, and (optionally) an @error to grab any
- * error conditions that may have occurred.
+ * operation has completed, and will be passed a #GAsyncResult instance
+ * filled with the details of the operation's success or failure, the
+ * object the asynchronous function was started for and any error codes
+ * returned. The asynchronous callback function is then expected to call
+ * the corresponding "_finish()" function, passing the object the
+ * function was called for, the #GAsyncResult instance, and (optionally)
+ * an @error to grab any error conditions that may have occurred.
  * 
  * The "_finish()" function for an operation takes the generic result
  * (of type #GAsyncResult) and returns the specific result that the
@@ -135,8 +131,8 @@ public interface AsyncResultIF{
 	/**
 	 * Gets the source object from a #GAsyncResult.
 	 *
-	 * Returns: a new reference to the source
-	 *     object for the @res, or %NULL if there is none.
+	 * Returns: a new reference to the source object for the @res,
+	 *     or %NULL if there is none.
 	 */
 	public ObjectG getSourceObject();
 

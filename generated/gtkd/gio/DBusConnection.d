@@ -49,7 +49,6 @@ private import glib.VariantType;
 private import gobject.Closure;
 private import gobject.ObjectG;
 private import gobject.Signals;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -97,7 +96,7 @@ private import std.algorithm;
  * ## An example for file descriptor passing # {#gdbus-unix-fd-client}
  * 
  * Here is an example for passing UNIX file descriptors:
- * [gdbus-unix-fd-client.c](https://git.gnome.org/browse/glib/tree/gio/tests/gdbus-example-unix-fd-client.c)
+ * [gdbus-unix-fd-client.c](https://git.gnome.org/browse/glib/tree/gio/tests/gdbus-unix-fd-client.c)
  * 
  * ## An example for exporting a GObject # {#gdbus-export}
  * 
@@ -224,19 +223,19 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_dbus_connection_new_for_address_sync(Str.toStringz(address), flags, (observer is null) ? null : observer.getDBusAuthObserverStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_dbus_connection_new_for_address_sync(Str.toStringz(address), flags, (observer is null) ? null : observer.getDBusAuthObserverStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_for_address_sync");
 		}
 
-		this(cast(GDBusConnection*) p, true);
+		this(cast(GDBusConnection*) __p, true);
 	}
 
 	/**
@@ -274,19 +273,19 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_dbus_connection_new_sync((stream is null) ? null : stream.getIOStreamStruct(), Str.toStringz(guid), flags, (observer is null) ? null : observer.getDBusAuthObserverStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_dbus_connection_new_sync((stream is null) ? null : stream.getIOStreamStruct(), Str.toStringz(guid), flags, (observer is null) ? null : observer.getDBusAuthObserverStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_sync");
 		}
 
-		this(cast(GDBusConnection*) p, true);
+		this(cast(GDBusConnection*) __p, true);
 	}
 
 	/**
@@ -322,7 +321,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 *
 	 * Since: 2.26
 	 */
-	public static void newConnection(IOStream stream, string guid, GDBusConnectionFlags flags, DBusAuthObserver observer, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	public static void new_(IOStream stream, string guid, GDBusConnectionFlags flags, DBusAuthObserver observer, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
 		g_dbus_connection_new((stream is null) ? null : stream.getIOStreamStruct(), Str.toStringz(guid), flags, (observer is null) ? null : observer.getDBusAuthObserverStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
 	}
@@ -384,7 +383,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 * dispatched anywhere else - not even the standard dispatch machinery
 	 * (that API such as g_dbus_connection_signal_subscribe() and
 	 * g_dbus_connection_send_message_with_reply() relies on) will see the
-	 * message. Similarly, if a filter consumes an outgoing message, the
+	 * message. Similary, if a filter consumes an outgoing message, the
 	 * message will not be sent to the other peer.
 	 *
 	 * If @user_data_free_func is non-%NULL, it will be called (in the
@@ -423,9 +422,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 *
 	 * If @reply_type is non-%NULL then the reply will be checked for having this type and an
 	 * error will be raised if it does not match.  Said another way, if you give a @reply_type
-	 * then any non-%NULL return value will be of this type. Unless it’s
-	 * %G_VARIANT_TYPE_UNIT, the @reply_type will be a tuple containing one or more
-	 * values.
+	 * then any non-%NULL return value will be of this type.
 	 *
 	 * If the @parameters #GVariant is floating, it is consumed. This allows
 	 * convenient 'inline' use of g_variant_new(), e.g.:
@@ -465,8 +462,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 *     methodName = the name of the method to invoke
 	 *     parameters = a #GVariant tuple with parameters for the method
 	 *         or %NULL if not passing parameters
-	 *     replyType = the expected type of the reply (which will be a
-	 *         tuple), or %NULL
+	 *     replyType = the expected type of the reply, or %NULL
 	 *     flags = flags from the #GDBusCallFlags enumeration
 	 *     timeoutMsec = the timeout in milliseconds, -1 to use the default
 	 *         timeout or %G_MAXINT for no timeout
@@ -500,19 +496,19 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_dbus_connection_call_finish(gDBusConnection, (res is null) ? null : res.getAsyncResultStruct(), &err);
+		auto __p = g_dbus_connection_call_finish(gDBusConnection, (res is null) ? null : res.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -578,19 +574,19 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_dbus_connection_call_sync(gDBusConnection, Str.toStringz(busName), Str.toStringz(objectPath), Str.toStringz(interfaceName), Str.toStringz(methodName), (parameters is null) ? null : parameters.getVariantStruct(), (replyType is null) ? null : replyType.getVariantTypeStruct(), flags, timeoutMsec, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_dbus_connection_call_sync(gDBusConnection, Str.toStringz(busName), Str.toStringz(objectPath), Str.toStringz(interfaceName), Str.toStringz(methodName), (parameters is null) ? null : parameters.getVariantStruct(), (replyType is null) ? null : replyType.getVariantTypeStruct(), flags, timeoutMsec, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -644,7 +640,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 		GUnixFDList* outoutFdList = null;
 		GError* err = null;
 
-		auto p = g_dbus_connection_call_with_unix_fd_list_finish(gDBusConnection, &outoutFdList, (res is null) ? null : res.getAsyncResultStruct(), &err);
+		auto __p = g_dbus_connection_call_with_unix_fd_list_finish(gDBusConnection, &outoutFdList, (res is null) ? null : res.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
@@ -653,12 +649,12 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 
 		outFdList = ObjectG.getDObject!(UnixFDList)(outoutFdList);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -694,7 +690,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 		GUnixFDList* outoutFdList = null;
 		GError* err = null;
 
-		auto p = g_dbus_connection_call_with_unix_fd_list_sync(gDBusConnection, Str.toStringz(busName), Str.toStringz(objectPath), Str.toStringz(interfaceName), Str.toStringz(methodName), (parameters is null) ? null : parameters.getVariantStruct(), (replyType is null) ? null : replyType.getVariantTypeStruct(), flags, timeoutMsec, (fdList is null) ? null : fdList.getUnixFDListStruct(), &outoutFdList, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_dbus_connection_call_with_unix_fd_list_sync(gDBusConnection, Str.toStringz(busName), Str.toStringz(objectPath), Str.toStringz(interfaceName), Str.toStringz(methodName), (parameters is null) ? null : parameters.getVariantStruct(), (replyType is null) ? null : replyType.getVariantTypeStruct(), flags, timeoutMsec, (fdList is null) ? null : fdList.getUnixFDListStruct(), &outoutFdList, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
@@ -703,12 +699,12 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 
 		outFdList = ObjectG.getDObject!(UnixFDList)(outoutFdList);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -767,18 +763,18 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_dbus_connection_close_finish(gDBusConnection, (res is null) ? null : res.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_dbus_connection_close_finish(gDBusConnection, (res is null) ? null : res.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
-	 * Synchronously closes @connection. The calling thread is blocked
+	 * Synchronously closees @connection. The calling thread is blocked
 	 * until this is done. See g_dbus_connection_close() for the
 	 * asynchronous version of this method and more details about what it
 	 * does.
@@ -796,14 +792,14 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_dbus_connection_close_sync(gDBusConnection, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_dbus_connection_close_sync(gDBusConnection, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -811,9 +807,7 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 *
 	 * If the parameters GVariant is floating, it is consumed.
 	 *
-	 * This can only fail if @parameters is not compatible with the D-Bus protocol
-	 * (%G_IO_ERROR_INVALID_ARGUMENT), or if @connection has been closed
-	 * (%G_IO_ERROR_CLOSED).
+	 * This can only fail if @parameters is not compatible with the D-Bus protocol.
 	 *
 	 * Params:
 	 *     destinationBusName = the unique bus name for the destination
@@ -834,14 +828,14 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_dbus_connection_emit_signal(gDBusConnection, Str.toStringz(destinationBusName), Str.toStringz(objectPath), Str.toStringz(interfaceName), Str.toStringz(signalName), (parameters is null) ? null : parameters.getVariantStruct(), &err) != 0;
+		auto __p = g_dbus_connection_emit_signal(gDBusConnection, Str.toStringz(destinationBusName), Str.toStringz(objectPath), Str.toStringz(interfaceName), Str.toStringz(signalName), (parameters is null) ? null : parameters.getVariantStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -881,14 +875,14 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_dbus_connection_export_action_group(gDBusConnection, Str.toStringz(objectPath), (actionGroup is null) ? null : actionGroup.getActionGroupStruct(), &err);
+		auto __p = g_dbus_connection_export_action_group(gDBusConnection, Str.toStringz(objectPath), (actionGroup is null) ? null : actionGroup.getActionGroupStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -919,14 +913,14 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_dbus_connection_export_menu_model(gDBusConnection, Str.toStringz(objectPath), (menu is null) ? null : menu.getMenuModelStruct(), &err);
+		auto __p = g_dbus_connection_export_menu_model(gDBusConnection, Str.toStringz(objectPath), (menu is null) ? null : menu.getMenuModelStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -975,14 +969,14 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_dbus_connection_flush_finish(gDBusConnection, (res is null) ? null : res.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_dbus_connection_flush_finish(gDBusConnection, (res is null) ? null : res.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1004,14 +998,14 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_dbus_connection_flush_sync(gDBusConnection, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_dbus_connection_flush_sync(gDBusConnection, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1039,18 +1033,6 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	public bool getExitOnClose()
 	{
 		return g_dbus_connection_get_exit_on_close(gDBusConnection) != 0;
-	}
-
-	/**
-	 * Gets the flags used to construct this connection
-	 *
-	 * Returns: zero or more flags from the #GDBusConnectionFlags enumeration
-	 *
-	 * Since: 2.60
-	 */
-	public GDBusConnectionFlags getFlags()
-	{
-		return g_dbus_connection_get_flags(gDBusConnection);
 	}
 
 	/**
@@ -1102,14 +1084,14 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 */
 	public Credentials getPeerCredentials()
 	{
-		auto p = g_dbus_connection_get_peer_credentials(gDBusConnection);
+		auto __p = g_dbus_connection_get_peer_credentials(gDBusConnection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Credentials)(cast(GCredentials*) p);
+		return ObjectG.getDObject!(Credentials)(cast(GCredentials*) __p);
 	}
 
 	/**
@@ -1125,14 +1107,14 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 */
 	public IOStream getStream()
 	{
-		auto p = g_dbus_connection_get_stream(gDBusConnection);
+		auto __p = g_dbus_connection_get_stream(gDBusConnection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IOStream)(cast(GIOStream*) p);
+		return ObjectG.getDObject!(IOStream)(cast(GIOStream*) __p);
 	}
 
 	/**
@@ -1221,14 +1203,14 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_dbus_connection_register_object(gDBusConnection, Str.toStringz(objectPath), (interfaceInfo is null) ? null : interfaceInfo.getDBusInterfaceInfoStruct(), vtable, userData, userDataFreeFunc, &err);
+		auto __p = g_dbus_connection_register_object(gDBusConnection, Str.toStringz(objectPath), (interfaceInfo is null) ? null : interfaceInfo.getDBusInterfaceInfoStruct(), vtable, userData, userDataFreeFunc, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1253,14 +1235,14 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_dbus_connection_register_object_with_closures(gDBusConnection, Str.toStringz(objectPath), (interfaceInfo is null) ? null : interfaceInfo.getDBusInterfaceInfoStruct(), (methodCallClosure is null) ? null : methodCallClosure.getClosureStruct(), (getPropertyClosure is null) ? null : getPropertyClosure.getClosureStruct(), (setPropertyClosure is null) ? null : setPropertyClosure.getClosureStruct(), &err);
+		auto __p = g_dbus_connection_register_object_with_closures(gDBusConnection, Str.toStringz(objectPath), (interfaceInfo is null) ? null : interfaceInfo.getDBusInterfaceInfoStruct(), (methodCallClosure is null) ? null : methodCallClosure.getClosureStruct(), (getPropertyClosure is null) ? null : getPropertyClosure.getClosureStruct(), (setPropertyClosure is null) ? null : setPropertyClosure.getClosureStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1318,14 +1300,14 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_dbus_connection_register_subtree(gDBusConnection, Str.toStringz(objectPath), vtable, flags, userData, userDataFreeFunc, &err);
+		auto __p = g_dbus_connection_register_subtree(gDBusConnection, Str.toStringz(objectPath), vtable, flags, userData, userDataFreeFunc, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1386,14 +1368,14 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_dbus_connection_send_message(gDBusConnection, (message is null) ? null : message.getDBusMessageStruct(), flags, &outSerial, &err) != 0;
+		auto __p = g_dbus_connection_send_message(gDBusConnection, (message is null) ? null : message.getDBusMessageStruct(), flags, &outSerial, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1470,19 +1452,19 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_dbus_connection_send_message_with_reply_finish(gDBusConnection, (res is null) ? null : res.getAsyncResultStruct(), &err);
+		auto __p = g_dbus_connection_send_message_with_reply_finish(gDBusConnection, (res is null) ? null : res.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusMessage)(cast(GDBusMessage*) p, true);
+		return ObjectG.getDObject!(DBusMessage)(cast(GDBusMessage*) __p, true);
 	}
 
 	/**
@@ -1535,19 +1517,19 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_dbus_connection_send_message_with_reply_sync(gDBusConnection, (message is null) ? null : message.getDBusMessageStruct(), flags, timeoutMsec, &outSerial, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_dbus_connection_send_message_with_reply_sync(gDBusConnection, (message is null) ? null : message.getDBusMessageStruct(), flags, timeoutMsec, &outSerial, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusMessage)(cast(GDBusMessage*) p, true);
+		return ObjectG.getDObject!(DBusMessage)(cast(GDBusMessage*) __p, true);
 	}
 
 	/**
@@ -1600,11 +1582,6 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	 * needed. (It is not guaranteed to be called synchronously when the
 	 * signal is unsubscribed from, and may be called after @connection
 	 * has been destroyed.)
-	 *
-	 * The returned subscription identifier is an opaque value which is guaranteed
-	 * to never be zero.
-	 *
-	 * This function can never fail.
 	 *
 	 * Params:
 	 *     sender = sender name to match on (unique or well-known name)
@@ -1807,19 +1784,19 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_bus_get_finish((res is null) ? null : res.getAsyncResultStruct(), &err);
+		auto __p = g_bus_get_finish((res is null) ? null : res.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusConnection)(cast(GDBusConnection*) p, true);
+		return ObjectG.getDObject!(DBusConnection)(cast(GDBusConnection*) __p, true);
 	}
 
 	/**
@@ -1855,18 +1832,18 @@ public class DBusConnection : ObjectG, AsyncInitableIF, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_bus_get_sync(busType, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_bus_get_sync(busType, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusConnection)(cast(GDBusConnection*) p, true);
+		return ObjectG.getDObject!(DBusConnection)(cast(GDBusConnection*) __p, true);
 	}
 }

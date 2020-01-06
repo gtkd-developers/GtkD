@@ -31,7 +31,6 @@ private import glib.ConstructionException;
 private import glib.PtrArray;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.atktypes;
 
 
 /**
@@ -97,14 +96,14 @@ public class Relation : ObjectG
 			targetsArray[i] = targets[i].getObjectAtkStruct();
 		}
 
-		auto p = atk_relation_new(targetsArray.ptr, cast(int)targets.length, relationship);
+		auto __p = atk_relation_new(targetsArray.ptr, cast(int)targets.length, relationship);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(AtkRelation*) p, true);
+		this(cast(AtkRelation*) __p, true);
 	}
 
 	/**
@@ -138,14 +137,14 @@ public class Relation : ObjectG
 	 */
 	public PtrArray getTarget()
 	{
-		auto p = atk_relation_get_target(atkRelation);
+		auto __p = atk_relation_get_target(atkRelation);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new PtrArray(cast(GPtrArray*) p);
+		return new PtrArray(cast(GPtrArray*) __p);
 	}
 
 	/**

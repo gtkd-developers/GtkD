@@ -29,7 +29,6 @@ private import atk.c.functions;
 public  import atk.c.types;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-public  import gtkc.atktypes;
 
 
 /**
@@ -82,13 +81,13 @@ public class NoOpObjectFactory : ObjectFactory
 	 */
 	public this()
 	{
-		auto p = atk_no_op_object_factory_new();
+		auto __p = atk_no_op_object_factory_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(AtkNoOpObjectFactory*) p, true);
+		this(cast(AtkNoOpObjectFactory*) __p, true);
 	}
 }

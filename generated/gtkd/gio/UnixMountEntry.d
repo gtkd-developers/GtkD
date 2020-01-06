@@ -30,7 +30,6 @@ public  import gio.c.types;
 private import glib.ListG;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -103,14 +102,14 @@ public class UnixMountEntry
 	 */
 	public static UnixMountEntry at(string mountPath, out ulong timeRead)
 	{
-		auto p = g_unix_mount_at(Str.toStringz(mountPath), &timeRead);
+		auto __p = g_unix_mount_at(Str.toStringz(mountPath), &timeRead);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(UnixMountEntry)(cast(GUnixMountEntry*) p, true);
+		return ObjectG.getDObject!(UnixMountEntry)(cast(GUnixMountEntry*) __p, true);
 	}
 
 	/**
@@ -182,14 +181,14 @@ public class UnixMountEntry
 	 */
 	public IconIF guessIcon()
 	{
-		auto p = g_unix_mount_guess_icon(gUnixMountEntry);
+		auto __p = g_unix_mount_guess_icon(gUnixMountEntry);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p, true);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) __p, true);
 	}
 
 	/**
@@ -226,14 +225,14 @@ public class UnixMountEntry
 	 */
 	public IconIF guessSymbolicIcon()
 	{
-		auto p = g_unix_mount_guess_symbolic_icon(gUnixMountEntry);
+		auto __p = g_unix_mount_guess_symbolic_icon(gUnixMountEntry);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p, true);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) __p, true);
 	}
 
 	/**
@@ -247,12 +246,7 @@ public class UnixMountEntry
 	}
 
 	/**
-	 * Checks if a Unix mount is a system mount. This is the Boolean OR of
-	 * g_unix_is_system_fs_type(), g_unix_is_system_device_path() and
-	 * g_unix_is_mount_path_system_internal() on @mount_entry’s properties.
-	 *
-	 * The definition of what a ‘system’ mount entry is may change over time as new
-	 * file system types and device paths are ignored.
+	 * Checks if a unix mount is a system path.
 	 *
 	 * Returns: %TRUE if the unix mount is for a system path.
 	 */
@@ -287,14 +281,14 @@ public class UnixMountEntry
 	 */
 	public static ListG mountPointsGet(out ulong timeRead)
 	{
-		auto p = g_unix_mount_points_get(&timeRead);
+		auto __p = g_unix_mount_points_get(&timeRead);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -323,14 +317,14 @@ public class UnixMountEntry
 	 */
 	public static ListG mountsGet(out ulong timeRead)
 	{
-		auto p = g_unix_mounts_get(&timeRead);
+		auto __p = g_unix_mounts_get(&timeRead);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -342,14 +336,14 @@ public class UnixMountEntry
 	 */
 	public UnixMountEntry copy()
 	{
-		auto p = g_unix_mount_copy(gUnixMountEntry);
+		auto __p = g_unix_mount_copy(gUnixMountEntry);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(UnixMountEntry)(cast(GUnixMountEntry*) p, true);
+		return ObjectG.getDObject!(UnixMountEntry)(cast(GUnixMountEntry*) __p, true);
 	}
 
 	/**
@@ -367,47 +361,13 @@ public class UnixMountEntry
 	 */
 	public static UnixMountEntry mountFor(string filePath, out ulong timeRead)
 	{
-		auto p = g_unix_mount_for(Str.toStringz(filePath), &timeRead);
+		auto __p = g_unix_mount_for(Str.toStringz(filePath), &timeRead);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(UnixMountEntry)(cast(GUnixMountEntry*) p, true);
-	}
-
-	/**
-	 * Gets a comma-separated list of mount options for the unix mount. For example,
-	 * `rw,relatime,seclabel,data=ordered`.
-	 *
-	 * This is similar to g_unix_mount_point_get_options(), but it takes
-	 * a #GUnixMountEntry as an argument.
-	 *
-	 * Returns: a string containing the options, or %NULL if not
-	 *     available.
-	 *
-	 * Since: 2.58
-	 */
-	public string getOptions()
-	{
-		return Str.toString(g_unix_mount_get_options(gUnixMountEntry));
-	}
-
-	/**
-	 * Gets the root of the mount within the filesystem. This is useful e.g. for
-	 * mounts created by bind operation, or btrfs subvolumes.
-	 *
-	 * For example, the root path is equal to "/" for mount created by
-	 * "mount /dev/sda1 /mnt/foo" and "/bar" for
-	 * "mount --bind /mnt/foo/bar /mnt/bar".
-	 *
-	 * Returns: a string containing the root, or %NULL if not supported.
-	 *
-	 * Since: 2.60
-	 */
-	public string getRootPath()
-	{
-		return Str.toString(g_unix_mount_get_root_path(gUnixMountEntry));
+		return ObjectG.getDObject!(UnixMountEntry)(cast(GUnixMountEntry*) __p, true);
 	}
 }

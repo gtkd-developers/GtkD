@@ -28,8 +28,6 @@ private import glib.ConstructionException;
 private import glib.TestLogMsg;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
-private import gtkd.Loader;
 
 
 /** */
@@ -64,7 +62,7 @@ public class TestLogBuffer
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_test_log_buffer_free(gTestLogBuffer);
 	}
 
@@ -83,14 +81,14 @@ public class TestLogBuffer
 	 */
 	public TestLogMsg pop()
 	{
-		auto p = g_test_log_buffer_pop(gTestLogBuffer);
+		auto __p = g_test_log_buffer_pop(gTestLogBuffer);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new TestLogMsg(cast(GTestLogMsg*) p);
+		return new TestLogMsg(cast(GTestLogMsg*) __p);
 	}
 
 	/**
@@ -108,13 +106,13 @@ public class TestLogBuffer
 	 */
 	public this()
 	{
-		auto p = g_test_log_buffer_new();
+		auto __p = g_test_log_buffer_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GTestLogBuffer*) p);
+		this(cast(GTestLogBuffer*) __p);
 	}
 }

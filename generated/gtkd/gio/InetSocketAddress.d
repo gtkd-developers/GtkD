@@ -31,7 +31,6 @@ public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -88,14 +87,14 @@ public class InetSocketAddress : SocketAddress
 	 */
 	public this(InetAddress address, ushort port)
 	{
-		auto p = g_inet_socket_address_new((address is null) ? null : address.getInetAddressStruct(), port);
+		auto __p = g_inet_socket_address_new((address is null) ? null : address.getInetAddressStruct(), port);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GInetSocketAddress*) p, true);
+		this(cast(GInetSocketAddress*) __p, true);
 	}
 
 	/**
@@ -117,14 +116,14 @@ public class InetSocketAddress : SocketAddress
 	 */
 	public this(string address, uint port)
 	{
-		auto p = g_inet_socket_address_new_from_string(Str.toStringz(address), port);
+		auto __p = g_inet_socket_address_new_from_string(Str.toStringz(address), port);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_string");
 		}
 
-		this(cast(GInetSocketAddress*) p, true);
+		this(cast(GInetSocketAddress*) __p, true);
 	}
 
 	/**
@@ -137,14 +136,14 @@ public class InetSocketAddress : SocketAddress
 	 */
 	public InetAddress getAddress()
 	{
-		auto p = g_inet_socket_address_get_address(gInetSocketAddress);
+		auto __p = g_inet_socket_address_get_address(gInetSocketAddress);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(InetAddress)(cast(GInetAddress*) p);
+		return ObjectG.getDObject!(InetAddress)(cast(GInetAddress*) __p);
 	}
 
 	/**

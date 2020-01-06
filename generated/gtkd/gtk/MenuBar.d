@@ -33,7 +33,6 @@ private import gtk.MenuShell;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -108,14 +107,14 @@ public class MenuBar : MenuShell
 	 */
 	public this()
 	{
-		auto p = gtk_menu_bar_new();
+		auto __p = gtk_menu_bar_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkMenuBar*) p);
+		this(cast(GtkMenuBar*) __p);
 	}
 
 	/**
@@ -138,14 +137,14 @@ public class MenuBar : MenuShell
 	 */
 	public this(MenuModel model)
 	{
-		auto p = gtk_menu_bar_new_from_model((model is null) ? null : model.getMenuModelStruct());
+		auto __p = gtk_menu_bar_new_from_model((model is null) ? null : model.getMenuModelStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_model");
 		}
 
-		this(cast(GtkMenuBar*) p);
+		this(cast(GtkMenuBar*) __p);
 	}
 
 	/**

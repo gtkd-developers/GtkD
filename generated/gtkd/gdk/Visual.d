@@ -29,7 +29,6 @@ private import gdk.c.functions;
 public  import gdk.c.types;
 private import glib.ListG;
 private import gobject.ObjectG;
-public  import gtkc.gdktypes;
 
 
 /**
@@ -82,14 +81,14 @@ public class Visual : ObjectG
 	 */
 	public static Visual getBest()
 	{
-		auto p = gdk_visual_get_best();
+		auto __p = gdk_visual_get_best();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Visual)(cast(GdkVisual*) p);
+		return ObjectG.getDObject!(Visual)(cast(GdkVisual*) __p);
 	}
 
 	/**
@@ -136,14 +135,14 @@ public class Visual : ObjectG
 	 */
 	public static Visual getBestWithBoth(int depth, GdkVisualType visualType)
 	{
-		auto p = gdk_visual_get_best_with_both(depth, visualType);
+		auto __p = gdk_visual_get_best_with_both(depth, visualType);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Visual)(cast(GdkVisual*) p);
+		return ObjectG.getDObject!(Visual)(cast(GdkVisual*) __p);
 	}
 
 	/**
@@ -162,14 +161,14 @@ public class Visual : ObjectG
 	 */
 	public static Visual getBestWithDepth(int depth)
 	{
-		auto p = gdk_visual_get_best_with_depth(depth);
+		auto __p = gdk_visual_get_best_with_depth(depth);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Visual)(cast(GdkVisual*) p);
+		return ObjectG.getDObject!(Visual)(cast(GdkVisual*) __p);
 	}
 
 	/**
@@ -188,14 +187,14 @@ public class Visual : ObjectG
 	 */
 	public static Visual getBestWithType(GdkVisualType visualType)
 	{
-		auto p = gdk_visual_get_best_with_type(visualType);
+		auto __p = gdk_visual_get_best_with_type(visualType);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Visual)(cast(GdkVisual*) p);
+		return ObjectG.getDObject!(Visual)(cast(GdkVisual*) __p);
 	}
 
 	/**
@@ -209,14 +208,14 @@ public class Visual : ObjectG
 	 */
 	public static Visual getSystem()
 	{
-		auto p = gdk_visual_get_system();
+		auto __p = gdk_visual_get_system();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Visual)(cast(GdkVisual*) p);
+		return ObjectG.getDObject!(Visual)(cast(GdkVisual*) __p);
 	}
 
 	/**
@@ -349,14 +348,14 @@ public class Visual : ObjectG
 	 */
 	public Screen getScreen()
 	{
-		auto p = gdk_visual_get_screen(gdkVisual);
+		auto __p = gdk_visual_get_screen(gdkVisual);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
+		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) __p);
 	}
 
 	/**
@@ -386,14 +385,14 @@ public class Visual : ObjectG
 	 */
 	public static ListG listVisuals()
 	{
-		auto p = gdk_list_visuals();
+		auto __p = gdk_list_visuals();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**

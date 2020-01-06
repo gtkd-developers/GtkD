@@ -30,7 +30,6 @@ public  import gobject.Value;
 public  import gtk.Builder;
 public  import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -90,14 +89,14 @@ public template BuildableT(TStruct)
 	 */
 	public ObjectG constructChild(Builder builder, string name)
 	{
-		auto p = gtk_buildable_construct_child(getBuildableStruct(), (builder is null) ? null : builder.getBuilderStruct(), Str.toStringz(name));
+		auto __p = gtk_buildable_construct_child(getBuildableStruct(), (builder is null) ? null : builder.getBuilderStruct(), Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p, true);
+		return ObjectG.getDObject!(ObjectG)(cast(GObject*) __p, true);
 	}
 
 	/**
@@ -168,14 +167,14 @@ public template BuildableT(TStruct)
 	 */
 	public ObjectG getInternalChild(Builder builder, string childname)
 	{
-		auto p = gtk_buildable_get_internal_child(getBuildableStruct(), (builder is null) ? null : builder.getBuilderStruct(), Str.toStringz(childname));
+		auto __p = gtk_buildable_get_internal_child(getBuildableStruct(), (builder is null) ? null : builder.getBuilderStruct(), Str.toStringz(childname));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p);
+		return ObjectG.getDObject!(ObjectG)(cast(GObject*) __p);
 	}
 
 	/**

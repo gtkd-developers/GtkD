@@ -26,7 +26,6 @@ module gobject.TypePluginIF;
 
 private import gobject.c.functions;
 public  import gobject.c.types;
-public  import gtkc.gobjecttypes;
 
 
 /**

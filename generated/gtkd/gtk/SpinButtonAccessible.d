@@ -29,7 +29,6 @@ private import atk.ValueT;
 private import gtk.EntryAccessible;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /** */

@@ -28,7 +28,6 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
 
 
 /**
@@ -75,31 +74,27 @@ public class ArrayG
 	 */
 	public ArrayG appendVals(void* data, uint len)
 	{
-		auto p = g_array_append_vals(gArray, data, len);
+		auto __p = g_array_append_vals(gArray, data, len);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ArrayG(cast(GArray*) p);
+		return new ArrayG(cast(GArray*) __p);
 	}
 
 	/**
 	 * Frees the memory allocated for the #GArray. If @free_segment is
-	 * %TRUE it frees the memory block holding the elements as well. Pass
+	 * %TRUE it frees the memory block holding the elements as well and
+	 * also each element if @array has a @element_free_func set. Pass
 	 * %FALSE if you want to free the #GArray wrapper but preserve the
-	 * underlying array for use elsewhere. If the reference count of
-	 * @array is greater than one, the #GArray wrapper is preserved but
-	 * the size of  @array will be set to zero.
+	 * underlying array for use elsewhere. If the reference count of @array
+	 * is greater than one, the #GArray wrapper is preserved but the size
+	 * of @array will be set to zero.
 	 *
-	 * If array contents point to dynamically-allocated memory, they should
-	 * be freed separately if @free_seg is %TRUE and no @clear_func
-	 * function has been set for @array.
-	 *
-	 * This function is not thread-safe. If using a #GArray from multiple
-	 * threads, use only the atomic g_array_ref() and g_array_unref()
-	 * functions.
+	 * If array elements contain dynamically-allocated memory, they should
+	 * be freed separately.
 	 *
 	 * Params:
 	 *     freeSegment = if %TRUE the actual element data is freed as well
@@ -130,14 +125,6 @@ public class ArrayG
 	/**
 	 * Inserts @len elements into a #GArray at the given index.
 	 *
-	 * If @index_ is greater than the array’s current length, the array is expanded.
-	 * The elements between the old end of the array and the newly inserted elements
-	 * will be initialised to zero if the array was configured to clear elements;
-	 * otherwise their values will be undefined.
-	 *
-	 * @data may be %NULL if (and only if) @len is zero. If @len is zero, this
-	 * function is a no-op.
-	 *
 	 * Params:
 	 *     index = the index to place the elements at
 	 *     data = a pointer to the elements to insert
@@ -147,14 +134,14 @@ public class ArrayG
 	 */
 	public ArrayG insertVals(uint index, void* data, uint len)
 	{
-		auto p = g_array_insert_vals(gArray, index, data, len);
+		auto __p = g_array_insert_vals(gArray, index, data, len);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ArrayG(cast(GArray*) p);
+		return new ArrayG(cast(GArray*) __p);
 	}
 
 	/**
@@ -173,21 +160,18 @@ public class ArrayG
 	 */
 	public this(bool zeroTerminated, bool clear, uint elementSize)
 	{
-		auto p = g_array_new(zeroTerminated, clear, elementSize);
+		auto __p = g_array_new(zeroTerminated, clear, elementSize);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GArray*) p);
+		this(cast(GArray*) __p);
 	}
 
 	/**
 	 * Adds @len elements onto the start of the array.
-	 *
-	 * @data may be %NULL if (and only if) @len is zero. If @len is zero, this
-	 * function is a no-op.
 	 *
 	 * This operation is slower than g_array_append_vals() since the
 	 * existing elements in the array have to be moved to make space for
@@ -195,26 +179,26 @@ public class ArrayG
 	 *
 	 * Params:
 	 *     data = a pointer to the elements to prepend to the start of the array
-	 *     len = the number of elements to prepend, which may be zero
+	 *     len = the number of elements to prepend
 	 *
 	 * Returns: the #GArray
 	 */
 	public ArrayG prependVals(void* data, uint len)
 	{
-		auto p = g_array_prepend_vals(gArray, data, len);
+		auto __p = g_array_prepend_vals(gArray, data, len);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ArrayG(cast(GArray*) p);
+		return new ArrayG(cast(GArray*) __p);
 	}
 
 	alias doref = ref_;
 	/**
 	 * Atomically increments the reference count of @array by one.
-	 * This function is thread-safe and may be called from any thread.
+	 * This function is MT-safe and may be called from any thread.
 	 *
 	 * Returns: The passed in #GArray
 	 *
@@ -222,14 +206,14 @@ public class ArrayG
 	 */
 	public ArrayG ref_()
 	{
-		auto p = g_array_ref(gArray);
+		auto __p = g_array_ref(gArray);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ArrayG(cast(GArray*) p);
+		return new ArrayG(cast(GArray*) __p);
 	}
 
 	/**
@@ -243,14 +227,14 @@ public class ArrayG
 	 */
 	public ArrayG removeIndex(uint index)
 	{
-		auto p = g_array_remove_index(gArray, index);
+		auto __p = g_array_remove_index(gArray, index);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ArrayG(cast(GArray*) p);
+		return new ArrayG(cast(GArray*) __p);
 	}
 
 	/**
@@ -266,14 +250,14 @@ public class ArrayG
 	 */
 	public ArrayG removeIndexFast(uint index)
 	{
-		auto p = g_array_remove_index_fast(gArray, index);
+		auto __p = g_array_remove_index_fast(gArray, index);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ArrayG(cast(GArray*) p);
+		return new ArrayG(cast(GArray*) __p);
 	}
 
 	/**
@@ -290,14 +274,14 @@ public class ArrayG
 	 */
 	public ArrayG removeRange(uint index, uint length)
 	{
-		auto p = g_array_remove_range(gArray, index, length);
+		auto __p = g_array_remove_range(gArray, index, length);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ArrayG(cast(GArray*) p);
+		return new ArrayG(cast(GArray*) __p);
 	}
 
 	/**
@@ -305,8 +289,7 @@ public class ArrayG
 	 *
 	 * The @clear_func will be called when an element in the array
 	 * data segment is removed and when the array is freed and data
-	 * segment is deallocated as well. @clear_func will be passed a
-	 * pointer to the element to clear, rather than the element itself.
+	 * segment is deallocated as well.
 	 *
 	 * Note that in contrast with other uses of #GDestroyNotify
 	 * functions, @clear_func is expected to clear the contents of
@@ -333,14 +316,14 @@ public class ArrayG
 	 */
 	public ArrayG setSize(uint length)
 	{
-		auto p = g_array_set_size(gArray, length);
+		auto __p = g_array_set_size(gArray, length);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ArrayG(cast(GArray*) p);
+		return new ArrayG(cast(GArray*) __p);
 	}
 
 	/**
@@ -361,14 +344,14 @@ public class ArrayG
 	 */
 	public static ArrayG sizedNew(bool zeroTerminated, bool clear, uint elementSize, uint reservedSize)
 	{
-		auto p = g_array_sized_new(zeroTerminated, clear, elementSize, reservedSize);
+		auto __p = g_array_sized_new(zeroTerminated, clear, elementSize, reservedSize);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ArrayG(cast(GArray*) p);
+		return new ArrayG(cast(GArray*) __p);
 	}
 
 	/**
@@ -409,7 +392,7 @@ public class ArrayG
 	/**
 	 * Atomically decrements the reference count of @array by one. If the
 	 * reference count drops to 0, all memory allocated by the array is
-	 * released. This function is thread-safe and may be called from any
+	 * released. This function is MT-safe and may be called from any
 	 * thread.
 	 *
 	 * Since: 2.22

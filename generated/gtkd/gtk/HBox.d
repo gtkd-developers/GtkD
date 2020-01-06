@@ -30,7 +30,6 @@ private import gtk.Box;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -105,13 +104,13 @@ public class HBox : Box
 	 */
 	public this(bool homogeneous, int spacing)
 	{
-		auto p = gtk_hbox_new(homogeneous, spacing);
+		auto __p = gtk_hbox_new(homogeneous, spacing);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkHBox*) p);
+		this(cast(GtkHBox*) __p);
 	}
 }

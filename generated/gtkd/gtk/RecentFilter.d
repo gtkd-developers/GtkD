@@ -31,7 +31,6 @@ private import gtk.BuildableIF;
 private import gtk.BuildableT;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -140,14 +139,14 @@ public class RecentFilter : ObjectG, BuildableIF
 	 */
 	public this()
 	{
-		auto p = gtk_recent_filter_new();
+		auto __p = gtk_recent_filter_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkRecentFilter*) p);
+		this(cast(GtkRecentFilter*) __p);
 	}
 
 	/**

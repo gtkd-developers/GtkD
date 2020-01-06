@@ -31,7 +31,6 @@ private import gtk.Gesture;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -91,14 +90,14 @@ public class GestureZoom : Gesture
 	 */
 	public this(Widget widget)
 	{
-		auto p = gtk_gesture_zoom_new((widget is null) ? null : widget.getWidgetStruct());
+		auto __p = gtk_gesture_zoom_new((widget is null) ? null : widget.getWidgetStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkGestureZoom*) p, true);
+		this(cast(GtkGestureZoom*) __p, true);
 	}
 
 	/**

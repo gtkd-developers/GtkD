@@ -32,7 +32,6 @@ private import gtk.Widget;
 private import gtk.Window;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -101,14 +100,14 @@ public class OffscreenWindow : Window
 	 */
 	public this()
 	{
-		auto p = gtk_offscreen_window_new();
+		auto __p = gtk_offscreen_window_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkOffscreenWindow*) p);
+		this(cast(GtkOffscreenWindow*) __p);
 	}
 
 	/**
@@ -123,14 +122,14 @@ public class OffscreenWindow : Window
 	 */
 	public Pixbuf getPixbuf()
 	{
-		auto p = gtk_offscreen_window_get_pixbuf(gtkOffscreenWindow);
+		auto __p = gtk_offscreen_window_get_pixbuf(gtkOffscreenWindow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) __p, true);
 	}
 
 	/**
@@ -145,13 +144,13 @@ public class OffscreenWindow : Window
 	 */
 	public Surface getSurface()
 	{
-		auto p = gtk_offscreen_window_get_surface(gtkOffscreenWindow);
+		auto __p = gtk_offscreen_window_get_surface(gtkOffscreenWindow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Surface(cast(cairo_surface_t*) p);
+		return new Surface(cast(cairo_surface_t*) __p);
 	}
 }

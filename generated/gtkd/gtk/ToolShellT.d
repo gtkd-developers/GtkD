@@ -28,7 +28,6 @@ public  import gobject.ObjectG;
 public  import gtk.SizeGroup;
 public  import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -139,14 +138,14 @@ public template ToolShellT(TStruct)
 	 */
 	public SizeGroup getTextSizeGroup()
 	{
-		auto p = gtk_tool_shell_get_text_size_group(getToolShellStruct());
+		auto __p = gtk_tool_shell_get_text_size_group(getToolShellStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SizeGroup)(cast(GtkSizeGroup*) p);
+		return ObjectG.getDObject!(SizeGroup)(cast(GtkSizeGroup*) __p);
 	}
 
 	/**

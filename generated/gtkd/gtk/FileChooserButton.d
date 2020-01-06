@@ -35,7 +35,6 @@ private import gtk.FileChooserT;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -69,6 +68,11 @@ private import std.algorithm;
  * > gtk_file_chooser_button_set_width_chars(), or pack the button in
  * > such a way that other interface elements give space to the
  * > widget.
+ * 
+ * # CSS nodes
+ * 
+ * GtkFileChooserButton has a CSS node with name “filechooserbutton”, containing
+ * a subnode for the internal button with name “button” and style class “.file”.
  */
 public class FileChooserButton : Box, FileChooserIF
 {
@@ -123,14 +127,14 @@ public class FileChooserButton : Box, FileChooserIF
 	 */
 	public this(string title, GtkFileChooserAction action)
 	{
-		auto p = gtk_file_chooser_button_new(Str.toStringz(title), action);
+		auto __p = gtk_file_chooser_button_new(Str.toStringz(title), action);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkFileChooserButton*) p);
+		this(cast(GtkFileChooserButton*) __p);
 	}
 
 	/**
@@ -156,14 +160,14 @@ public class FileChooserButton : Box, FileChooserIF
 	 */
 	public this(Dialog dialog)
 	{
-		auto p = gtk_file_chooser_button_new_with_dialog((dialog is null) ? null : cast(GtkWidget*)dialog.getDialogStruct());
+		auto __p = gtk_file_chooser_button_new_with_dialog((dialog is null) ? null : cast(GtkWidget*)dialog.getDialogStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_dialog");
 		}
 
-		this(cast(GtkFileChooserButton*) p);
+		this(cast(GtkFileChooserButton*) __p);
 	}
 
 	/**

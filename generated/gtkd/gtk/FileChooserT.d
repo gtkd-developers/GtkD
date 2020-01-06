@@ -35,7 +35,6 @@ public  import gtk.FileFilter;
 public  import gtk.Widget;
 public  import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 public  import std.algorithm;
 
 
@@ -236,14 +235,14 @@ public template FileChooserT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = gtk_file_chooser_add_shortcut_folder(getFileChooserStruct(), Str.toStringz(folder), &err) != 0;
+		auto __p = gtk_file_chooser_add_shortcut_folder(getFileChooserStruct(), Str.toStringz(folder), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -266,14 +265,14 @@ public template FileChooserT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = gtk_file_chooser_add_shortcut_folder_uri(getFileChooserStruct(), Str.toStringz(uri), &err) != 0;
+		auto __p = gtk_file_chooser_add_shortcut_folder_uri(getFileChooserStruct(), Str.toStringz(uri), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -356,14 +355,14 @@ public template FileChooserT(TStruct)
 	 */
 	public FileIF getCurrentFolderFile()
 	{
-		auto p = gtk_file_chooser_get_current_folder_file(getFileChooserStruct());
+		auto __p = gtk_file_chooser_get_current_folder_file(getFileChooserStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) __p, true);
 	}
 
 	/**
@@ -443,14 +442,14 @@ public template FileChooserT(TStruct)
 	 */
 	public Widget getExtraWidget()
 	{
-		auto p = gtk_file_chooser_get_extra_widget(getFileChooserStruct());
+		auto __p = gtk_file_chooser_get_extra_widget(getFileChooserStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -468,14 +467,14 @@ public template FileChooserT(TStruct)
 	 */
 	public FileIF getFile()
 	{
-		auto p = gtk_file_chooser_get_file(getFileChooserStruct());
+		auto __p = gtk_file_chooser_get_file(getFileChooserStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) __p, true);
 	}
 
 	/**
@@ -516,14 +515,14 @@ public template FileChooserT(TStruct)
 	 */
 	public ListSG getFilenames()
 	{
-		auto p = gtk_file_chooser_get_filenames(getFileChooserStruct());
+		auto __p = gtk_file_chooser_get_filenames(getFileChooserStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p, true);
+		return new ListSG(cast(GSList*) __p, true);
 	}
 
 	/**
@@ -539,14 +538,14 @@ public template FileChooserT(TStruct)
 	 */
 	public ListSG getFiles()
 	{
-		auto p = gtk_file_chooser_get_files(getFileChooserStruct());
+		auto __p = gtk_file_chooser_get_files(getFileChooserStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p, true);
+		return new ListSG(cast(GSList*) __p, true);
 	}
 
 	/**
@@ -558,14 +557,14 @@ public template FileChooserT(TStruct)
 	 */
 	public FileFilter getFilter()
 	{
-		auto p = gtk_file_chooser_get_filter(getFileChooserStruct());
+		auto __p = gtk_file_chooser_get_filter(getFileChooserStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileFilter)(cast(GtkFileFilter*) p);
+		return ObjectG.getDObject!(FileFilter)(cast(GtkFileFilter*) __p);
 	}
 
 	/**
@@ -592,14 +591,14 @@ public template FileChooserT(TStruct)
 	 */
 	public FileIF getPreviewFile()
 	{
-		auto p = gtk_file_chooser_get_preview_file(getFileChooserStruct());
+		auto __p = gtk_file_chooser_get_preview_file(getFileChooserStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) __p, true);
 	}
 
 	/**
@@ -647,14 +646,14 @@ public template FileChooserT(TStruct)
 	 */
 	public Widget getPreviewWidget()
 	{
-		auto p = gtk_file_chooser_get_preview_widget(getFileChooserStruct());
+		auto __p = gtk_file_chooser_get_preview_widget(getFileChooserStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -732,14 +731,14 @@ public template FileChooserT(TStruct)
 	 */
 	public ListSG getUris()
 	{
-		auto p = gtk_file_chooser_get_uris(getFileChooserStruct());
+		auto __p = gtk_file_chooser_get_uris(getFileChooserStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p, true);
+		return new ListSG(cast(GSList*) __p, true);
 	}
 
 	/**
@@ -767,14 +766,14 @@ public template FileChooserT(TStruct)
 	 */
 	public ListSG listFilters()
 	{
-		auto p = gtk_file_chooser_list_filters(getFileChooserStruct());
+		auto __p = gtk_file_chooser_list_filters(getFileChooserStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**
@@ -789,14 +788,14 @@ public template FileChooserT(TStruct)
 	 */
 	public ListSG listShortcutFolderUris()
 	{
-		auto p = gtk_file_chooser_list_shortcut_folder_uris(getFileChooserStruct());
+		auto __p = gtk_file_chooser_list_shortcut_folder_uris(getFileChooserStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p, true);
+		return new ListSG(cast(GSList*) __p, true);
 	}
 
 	/**
@@ -812,14 +811,14 @@ public template FileChooserT(TStruct)
 	 */
 	public ListSG listShortcutFolders()
 	{
-		auto p = gtk_file_chooser_list_shortcut_folders(getFileChooserStruct());
+		auto __p = gtk_file_chooser_list_shortcut_folders(getFileChooserStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p, true);
+		return new ListSG(cast(GSList*) __p, true);
 	}
 
 	/**
@@ -867,14 +866,14 @@ public template FileChooserT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = gtk_file_chooser_remove_shortcut_folder(getFileChooserStruct(), Str.toStringz(folder), &err) != 0;
+		auto __p = gtk_file_chooser_remove_shortcut_folder(getFileChooserStruct(), Str.toStringz(folder), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -896,14 +895,14 @@ public template FileChooserT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = gtk_file_chooser_remove_shortcut_folder_uri(getFileChooserStruct(), Str.toStringz(uri), &err) != 0;
+		auto __p = gtk_file_chooser_remove_shortcut_folder_uri(getFileChooserStruct(), Str.toStringz(uri), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -933,14 +932,14 @@ public template FileChooserT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = gtk_file_chooser_select_file(getFileChooserStruct(), (file is null) ? null : file.getFileStruct(), &err) != 0;
+		auto __p = gtk_file_chooser_select_file(getFileChooserStruct(), (file is null) ? null : file.getFileStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1066,14 +1065,14 @@ public template FileChooserT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = gtk_file_chooser_set_current_folder_file(getFileChooserStruct(), (file is null) ? null : file.getFileStruct(), &err) != 0;
+		auto __p = gtk_file_chooser_set_current_folder_file(getFileChooserStruct(), (file is null) ? null : file.getFileStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1204,14 +1203,14 @@ public template FileChooserT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = gtk_file_chooser_set_file(getFileChooserStruct(), (file is null) ? null : file.getFileStruct(), &err) != 0;
+		auto __p = gtk_file_chooser_set_file(getFileChooserStruct(), (file is null) ? null : file.getFileStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**

@@ -29,7 +29,6 @@ private import glib.PtrArray;
 private import gtk.CellAccessible;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /** */

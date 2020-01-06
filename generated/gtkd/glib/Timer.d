@@ -27,7 +27,6 @@ module glib.Timer;
 private import glib.ConstructionException;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
 
 
 /**
@@ -144,13 +143,13 @@ public class Timer
 	 */
 	public this()
 	{
-		auto p = g_timer_new();
+		auto __p = g_timer_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GTimer*) p);
+		this(cast(GTimer*) __p);
 	}
 }

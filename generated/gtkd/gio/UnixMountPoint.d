@@ -29,8 +29,6 @@ private import gio.c.functions;
 public  import gio.c.types;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
-private import gtkd.Loader;
 
 
 /**
@@ -68,7 +66,7 @@ public class UnixMountPoint
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GIO) && ownedRef )
+		if ( ownedRef )
 			g_unix_mount_point_free(gUnixMountPoint);
 	}
 
@@ -102,14 +100,14 @@ public class UnixMountPoint
 	 */
 	public UnixMountPoint copy()
 	{
-		auto p = g_unix_mount_point_copy(gUnixMountPoint);
+		auto __p = g_unix_mount_point_copy(gUnixMountPoint);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(UnixMountPoint)(cast(GUnixMountPoint*) p, true);
+		return ObjectG.getDObject!(UnixMountPoint)(cast(GUnixMountPoint*) __p, true);
 	}
 
 	/**
@@ -180,14 +178,14 @@ public class UnixMountPoint
 	 */
 	public IconIF guessIcon()
 	{
-		auto p = g_unix_mount_point_guess_icon(gUnixMountPoint);
+		auto __p = g_unix_mount_point_guess_icon(gUnixMountPoint);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p, true);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) __p, true);
 	}
 
 	/**
@@ -214,14 +212,14 @@ public class UnixMountPoint
 	 */
 	public IconIF guessSymbolicIcon()
 	{
-		auto p = g_unix_mount_point_guess_symbolic_icon(gUnixMountPoint);
+		auto __p = g_unix_mount_point_guess_symbolic_icon(gUnixMountPoint);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p, true);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) __p, true);
 	}
 
 	/**

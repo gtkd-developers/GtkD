@@ -29,7 +29,6 @@ private import glib.GException;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
 
 
 /** */
@@ -40,7 +39,7 @@ public struct CharacterSet
 	 * Converts a string from one character set to another.
 	 *
 	 * Note that you should use g_iconv() for streaming conversions.
-	 * Despite the fact that @bytes_read can return information about partial
+	 * Despite the fact that @byes_read can return information about partial
 	 * characters, the g_convert_... functions are not generally suitable
 	 * for streaming. If the underlying converter maintains internal state,
 	 * then this won't be preserved across successive calls to g_convert(),
@@ -53,30 +52,35 @@ public struct CharacterSet
 	 * well) on many platforms.  Consider using g_str_to_ascii() instead.
 	 *
 	 * Params:
-	 *     str = the string to convert.
+	 *     str = the string to convert
+	 *     len = the length of the string in bytes, or -1 if the string is
+	 *         nul-terminated (Note that some encodings may allow nul
+	 *         bytes to occur inside strings. In that case, using -1
+	 *         for the @len parameter is unsafe)
 	 *     toCodeset = name of character set into which to convert @str
 	 *     fromCodeset = character set of @str.
-	 *     bytesRead = location to store the number of bytes in
-	 *         the input string that were successfully converted, or %NULL.
+	 *     bytesRead = location to store the number of bytes in the
+	 *         input string that were successfully converted, or %NULL.
 	 *         Even if the conversion was successful, this may be
 	 *         less than @len if there were partial characters
 	 *         at the end of the input. If the error
 	 *         #G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the value
-	 *         stored will be the byte offset after the last valid
+	 *         stored will the byte offset after the last valid
 	 *         input sequence.
+	 *     bytesWritten = the number of bytes stored in the output buffer (not
+	 *         including the terminating nul).
 	 *
-	 * Returns: If the conversion was successful, a newly allocated buffer
-	 *     containing the converted string, which must be freed with g_free().
-	 *     Otherwise %NULL and @error will be set.
+	 * Returns: If the conversion was successful, a newly allocated
+	 *     nul-terminated string, which must be freed with
+	 *     g_free(). Otherwise %NULL and @error will be set.
 	 *
 	 * Throws: GException on failure.
 	 */
-	public static string convert(string str, string toCodeset, string fromCodeset, out size_t bytesRead)
+	public static string convert(string str, ptrdiff_t len, string toCodeset, string fromCodeset, out size_t bytesRead, out size_t bytesWritten)
 	{
-		size_t bytesWritten;
 		GError* err = null;
 
-		auto retStr = g_convert(Str.toStringz(str), cast(ptrdiff_t)str.length, Str.toStringz(toCodeset), Str.toStringz(fromCodeset), &bytesRead, &bytesWritten, &err);
+		auto retStr = g_convert(Str.toStringz(str), len, Str.toStringz(toCodeset), Str.toStringz(fromCodeset), &bytesRead, &bytesWritten, &err);
 
 		if (err !is null)
 		{
@@ -84,7 +88,7 @@ public struct CharacterSet
 		}
 
 		scope(exit) Str.freeString(retStr);
-		return Str.toString(retStr, bytesWritten);
+		return Str.toString(retStr);
 	}
 
 	/** */
@@ -103,7 +107,7 @@ public struct CharacterSet
 	 * in which case GLib will simply return that approximate conversion.
 	 *
 	 * Note that you should use g_iconv() for streaming conversions.
-	 * Despite the fact that @bytes_read can return information about partial
+	 * Despite the fact that @byes_read can return information about partial
 	 * characters, the g_convert_... functions are not generally suitable
 	 * for streaming. If the underlying converter maintains internal state,
 	 * then this won't be preserved across successive calls to g_convert(),
@@ -113,32 +117,37 @@ public struct CharacterSet
 	 * could combine with the base character.)
 	 *
 	 * Params:
-	 *     str = the string to convert.
+	 *     str = the string to convert
+	 *     len = the length of the string in bytes, or -1 if the string is
+	 *         nul-terminated (Note that some encodings may allow nul
+	 *         bytes to occur inside strings. In that case, using -1
+	 *         for the @len parameter is unsafe)
 	 *     toCodeset = name of character set into which to convert @str
 	 *     fromCodeset = character set of @str.
-	 *     fallback = UTF-8 string to use in place of characters not
+	 *     fallback = UTF-8 string to use in place of character not
 	 *         present in the target encoding. (The string must be
 	 *         representable in the target encoding).
 	 *         If %NULL, characters not in the target encoding will
 	 *         be represented as Unicode escapes \uxxxx or \Uxxxxyyyy.
-	 *     bytesRead = location to store the number of bytes in
-	 *         the input string that were successfully converted, or %NULL.
+	 *     bytesRead = location to store the number of bytes in the
+	 *         input string that were successfully converted, or %NULL.
 	 *         Even if the conversion was successful, this may be
 	 *         less than @len if there were partial characters
 	 *         at the end of the input.
+	 *     bytesWritten = the number of bytes stored in the output buffer (not
+	 *         including the terminating nul).
 	 *
-	 * Returns: If the conversion was successful, a newly allocated buffer
-	 *     containing the converted string, which must be freed with g_free().
-	 *     Otherwise %NULL and @error will be set.
+	 * Returns: If the conversion was successful, a newly allocated
+	 *     nul-terminated string, which must be freed with
+	 *     g_free(). Otherwise %NULL and @error will be set.
 	 *
 	 * Throws: GException on failure.
 	 */
-	public static string convertWithFallback(string str, string toCodeset, string fromCodeset, string fallback, out size_t bytesRead)
+	public static string convertWithFallback(string str, ptrdiff_t len, string toCodeset, string fromCodeset, string fallback, size_t* bytesRead, size_t* bytesWritten)
 	{
-		size_t bytesWritten;
 		GError* err = null;
 
-		auto retStr = g_convert_with_fallback(Str.toStringz(str), cast(ptrdiff_t)str.length, Str.toStringz(toCodeset), Str.toStringz(fromCodeset), Str.toStringz(fallback), &bytesRead, &bytesWritten, &err);
+		auto retStr = g_convert_with_fallback(Str.toStringz(str), len, Str.toStringz(toCodeset), Str.toStringz(fromCodeset), Str.toStringz(fallback), bytesRead, bytesWritten, &err);
 
 		if (err !is null)
 		{
@@ -146,14 +155,14 @@ public struct CharacterSet
 		}
 
 		scope(exit) Str.freeString(retStr);
-		return Str.toString(retStr, bytesWritten);
+		return Str.toString(retStr);
 	}
 
 	/**
 	 * Converts a string from one character set to another.
 	 *
 	 * Note that you should use g_iconv() for streaming conversions.
-	 * Despite the fact that @bytes_read can return information about partial
+	 * Despite the fact that @byes_read can return information about partial
 	 * characters, the g_convert_... functions are not generally suitable
 	 * for streaming. If the underlying converter maintains internal state,
 	 * then this won't be preserved across successive calls to g_convert(),
@@ -162,38 +171,35 @@ public struct CharacterSet
 	 * character until it knows that the next character is not a mark that
 	 * could combine with the base character.)
 	 *
-	 * Characters which are valid in the input character set, but which have no
-	 * representation in the output character set will result in a
-	 * %G_CONVERT_ERROR_ILLEGAL_SEQUENCE error. This is in contrast to the iconv()
-	 * specification, which leaves this behaviour implementation defined. Note that
-	 * this is the same error code as is returned for an invalid byte sequence in
-	 * the input character set. To get defined behaviour for conversion of
-	 * unrepresentable characters, use g_convert_with_fallback().
-	 *
 	 * Params:
-	 *     str = the string to convert.
+	 *     str = the string to convert
+	 *     len = the length of the string in bytes, or -1 if the string is
+	 *         nul-terminated (Note that some encodings may allow nul
+	 *         bytes to occur inside strings. In that case, using -1
+	 *         for the @len parameter is unsafe)
 	 *     converter = conversion descriptor from g_iconv_open()
-	 *     bytesRead = location to store the number of bytes in
-	 *         the input string that were successfully converted, or %NULL.
+	 *     bytesRead = location to store the number of bytes in the
+	 *         input string that were successfully converted, or %NULL.
 	 *         Even if the conversion was successful, this may be
 	 *         less than @len if there were partial characters
 	 *         at the end of the input. If the error
 	 *         #G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the value
-	 *         stored will be the byte offset after the last valid
+	 *         stored will the byte offset after the last valid
 	 *         input sequence.
+	 *     bytesWritten = the number of bytes stored in the output buffer (not
+	 *         including the terminating nul).
 	 *
-	 * Returns: If the conversion was successful, a newly allocated buffer
-	 *     containing the converted string, which must be freed with
+	 * Returns: If the conversion was successful, a newly allocated
+	 *     nul-terminated string, which must be freed with
 	 *     g_free(). Otherwise %NULL and @error will be set.
 	 *
 	 * Throws: GException on failure.
 	 */
-	public static string convertWithIconv(string str, GIConv converter, out size_t bytesRead)
+	public static string convertWithIconv(string str, ptrdiff_t len, GIConv converter, size_t* bytesRead, size_t* bytesWritten)
 	{
-		size_t bytesWritten;
 		GError* err = null;
 
-		auto retStr = g_convert_with_iconv(Str.toStringz(str), cast(ptrdiff_t)str.length, converter, &bytesRead, &bytesWritten, &err);
+		auto retStr = g_convert_with_iconv(Str.toStringz(str), len, converter, bytesRead, bytesWritten, &err);
 
 		if (err !is null)
 		{
@@ -201,7 +207,7 @@ public struct CharacterSet
 		}
 
 		scope(exit) Str.freeString(retStr);
-		return Str.toString(retStr, bytesWritten);
+		return Str.toString(retStr);
 	}
 
 	/**
@@ -279,12 +285,6 @@ public struct CharacterSet
 	 * on other platforms, this function indirectly depends on the
 	 * [current locale][setlocale].
 	 *
-	 * The input string shall not contain nul characters even if the @len
-	 * argument is positive. A nul character found inside the string will result
-	 * in error %G_CONVERT_ERROR_ILLEGAL_SEQUENCE. If the filename encoding is
-	 * not UTF-8 and the conversion output contains a nul character, the error
-	 * %G_CONVERT_ERROR_EMBEDDED_NUL is set and the function returns %NULL.
-	 *
 	 * Params:
 	 *     utf8string = a UTF-8 encoded string.
 	 *     len = the length of the string, or -1 if the string is
@@ -294,18 +294,17 @@ public struct CharacterSet
 	 *         Even if the conversion was successful, this may be
 	 *         less than @len if there were partial characters
 	 *         at the end of the input. If the error
-	 *         %G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the value
-	 *         stored will be the byte offset after the last valid
+	 *         #G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the value
+	 *         stored will the byte offset after the last valid
 	 *         input sequence.
-	 *     bytesWritten = the number of bytes stored in
-	 *         the output buffer (not including the terminating nul).
 	 *
 	 * Returns: The converted string, or %NULL on an error.
 	 *
 	 * Throws: GException on failure.
 	 */
-	public static string filenameFromUtf8(string utf8string, ptrdiff_t len, out size_t bytesRead, out size_t bytesWritten)
+	public static string filenameFromUtf8(string utf8string, ptrdiff_t len, out size_t bytesRead)
 	{
+		size_t bytesWritten;
 		GError* err = null;
 
 		auto retStr = g_filename_from_utf8(Str.toStringz(utf8string), len, &bytesRead, &bytesWritten, &err);
@@ -316,7 +315,7 @@ public struct CharacterSet
 		}
 
 		scope(exit) Str.freeString(retStr);
-		return Str.toString(retStr);
+		return Str.toString(retStr, bytesWritten);
 	}
 
 	/**
@@ -324,14 +323,6 @@ public struct CharacterSet
 	 * filenames into a UTF-8 string. Note that on Windows GLib uses UTF-8
 	 * for filenames; on other platforms, this function indirectly depends on
 	 * the [current locale][setlocale].
-	 *
-	 * The input string shall not contain nul characters even if the @len
-	 * argument is positive. A nul character found inside the string will result
-	 * in error %G_CONVERT_ERROR_ILLEGAL_SEQUENCE.
-	 * If the source encoding is not UTF-8 and the conversion output contains a
-	 * nul character, the error %G_CONVERT_ERROR_EMBEDDED_NUL is set and the
-	 * function returns %NULL. Use g_convert() to produce output that
-	 * may contain embedded nul characters.
 	 *
 	 * Params:
 	 *     opsysstring = a string in the encoding for filenames
@@ -344,8 +335,8 @@ public struct CharacterSet
 	 *         Even if the conversion was successful, this may be
 	 *         less than @len if there were partial characters
 	 *         at the end of the input. If the error
-	 *         %G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the value
-	 *         stored will be the byte offset after the last valid
+	 *         #G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the value
+	 *         stored will the byte offset after the last valid
 	 *         input sequence.
 	 *     bytesWritten = the number of bytes stored in the output
 	 *         buffer (not including the terminating nul).
@@ -381,10 +372,6 @@ public struct CharacterSet
 	 * handle file names. It might be different from the character set
 	 * used by the C library's current locale.
 	 *
-	 * On Linux, the character set is found by consulting nl_langinfo() if
-	 * available. If not, the environment variables `LC_ALL`, `LC_CTYPE`, `LANG`
-	 * and `CHARSET` are queried in order.
-	 *
 	 * The return value is %TRUE if the locale's encoding is UTF-8, in that
 	 * case you can perhaps avoid calling g_convert().
 	 *
@@ -401,11 +388,11 @@ public struct CharacterSet
 	{
 		char* outcharset = null;
 
-		auto p = g_get_charset(&outcharset) != 0;
+		auto __p = g_get_charset(&outcharset) != 0;
 
 		charset = Str.toString(outcharset);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -449,21 +436,15 @@ public struct CharacterSet
 	 * on a system might be in any random encoding or just gibberish.
 	 *
 	 * Params:
-	 *     filenameCharsets = return location for the %NULL-terminated list of encoding names
+	 *     charsets = return location for the %NULL-terminated list of encoding names
 	 *
 	 * Returns: %TRUE if the filename encoding is UTF-8.
 	 *
 	 * Since: 2.6
 	 */
-	public static bool getFilenameCharsets(out string[] filenameCharsets)
+	public static bool getFilenameCharsets(string[][] charsets)
 	{
-		char** outfilenameCharsets = null;
-
-		auto p = g_get_filename_charsets(&outfilenameCharsets) != 0;
-
-		filenameCharsets = Str.toStringArray(outfilenameCharsets);
-
-		return p;
+		return g_get_filename_charsets(Str.toStringzArray(charsets)) != 0;
 	}
 
 	/**
@@ -472,82 +453,33 @@ public struct CharacterSet
 	 * system) in the [current locale][setlocale]. On Windows this means
 	 * the system codepage.
 	 *
-	 * The input string shall not contain nul characters even if the @len
-	 * argument is positive. A nul character found inside the string will result
-	 * in error %G_CONVERT_ERROR_ILLEGAL_SEQUENCE. Use g_convert() to convert
-	 * input that may contain embedded nul characters.
-	 *
 	 * Params:
 	 *     utf8string = a UTF-8 encoded string
 	 *     len = the length of the string, or -1 if the string is
-	 *         nul-terminated.
+	 *         nul-terminated (Note that some encodings may allow nul
+	 *         bytes to occur inside strings. In that case, using -1
+	 *         for the @len parameter is unsafe)
 	 *     bytesRead = location to store the number of bytes in the
 	 *         input string that were successfully converted, or %NULL.
 	 *         Even if the conversion was successful, this may be
 	 *         less than @len if there were partial characters
 	 *         at the end of the input. If the error
-	 *         %G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the value
-	 *         stored will be the byte offset after the last valid
+	 *         #G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the value
+	 *         stored will the byte offset after the last valid
 	 *         input sequence.
+	 *     bytesWritten = the number of bytes stored in the output
+	 *         buffer (not including the terminating nul).
 	 *
 	 * Returns: A newly-allocated buffer containing the converted string,
 	 *     or %NULL on an error, and error will be set.
 	 *
 	 * Throws: GException on failure.
 	 */
-	public static string localeFromUtf8(string utf8string, ptrdiff_t len, out size_t bytesRead)
+	public static string localeFromUtf8(string utf8string, ptrdiff_t len, out size_t bytesRead, out size_t bytesWritten)
 	{
-		size_t bytesWritten;
 		GError* err = null;
 
 		auto retStr = g_locale_from_utf8(Str.toStringz(utf8string), len, &bytesRead, &bytesWritten, &err);
-
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-
-		scope(exit) Str.freeString(retStr);
-		return Str.toString(retStr, bytesWritten);
-	}
-
-	/**
-	 * Converts a string which is in the encoding used for strings by
-	 * the C runtime (usually the same as that used by the operating
-	 * system) in the [current locale][setlocale] into a UTF-8 string.
-	 *
-	 * If the source encoding is not UTF-8 and the conversion output contains a
-	 * nul character, the error %G_CONVERT_ERROR_EMBEDDED_NUL is set and the
-	 * function returns %NULL.
-	 * If the source encoding is UTF-8, an embedded nul character is treated with
-	 * the %G_CONVERT_ERROR_ILLEGAL_SEQUENCE error for backward compatibility with
-	 * earlier versions of this library. Use g_convert() to produce output that
-	 * may contain embedded nul characters.
-	 *
-	 * Params:
-	 *     opsysstring = a string in the
-	 *         encoding of the current locale. On Windows
-	 *         this means the system codepage.
-	 *     bytesRead = location to store the number of bytes in the
-	 *         input string that were successfully converted, or %NULL.
-	 *         Even if the conversion was successful, this may be
-	 *         less than @len if there were partial characters
-	 *         at the end of the input. If the error
-	 *         %G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the value
-	 *         stored will be the byte offset after the last valid
-	 *         input sequence.
-	 *     bytesWritten = the number of bytes stored in the output
-	 *         buffer (not including the terminating nul).
-	 *
-	 * Returns: The converted string, or %NULL on an error.
-	 *
-	 * Throws: GException on failure.
-	 */
-	public static string localeToUtf8(string opsysstring, out size_t bytesRead, out size_t bytesWritten)
-	{
-		GError* err = null;
-
-		auto retStr = g_locale_to_utf8(Str.toStringz(opsysstring), cast(ptrdiff_t)opsysstring.length, &bytesRead, &bytesWritten, &err);
 
 		if (err !is null)
 		{
@@ -559,28 +491,45 @@ public struct CharacterSet
 	}
 
 	/**
-	 * Computes a list of applicable locale names with a locale category name,
-	 * which can be used to construct the fallback locale-dependent filenames
-	 * or search paths. The returned list is sorted from most desirable to
-	 * least desirable and always contains the default locale "C".
-	 *
-	 * This function consults the environment variables `LANGUAGE`, `LC_ALL`,
-	 * @category_name, and `LANG` to find the list of locales specified by the
-	 * user.
-	 *
-	 * g_get_language_names() returns g_get_language_names_with_category("LC_MESSAGES").
+	 * Converts a string which is in the encoding used for strings by
+	 * the C runtime (usually the same as that used by the operating
+	 * system) in the [current locale][setlocale] into a UTF-8 string.
 	 *
 	 * Params:
-	 *     categoryName = a locale category name
+	 *     opsysstring = a string in the encoding of the current locale. On Windows
+	 *         this means the system codepage.
+	 *     len = the length of the string, or -1 if the string is
+	 *         nul-terminated (Note that some encodings may allow nul
+	 *         bytes to occur inside strings. In that case, using -1
+	 *         for the @len parameter is unsafe)
+	 *     bytesRead = location to store the number of bytes in the
+	 *         input string that were successfully converted, or %NULL.
+	 *         Even if the conversion was successful, this may be
+	 *         less than @len if there were partial characters
+	 *         at the end of the input. If the error
+	 *         #G_CONVERT_ERROR_ILLEGAL_SEQUENCE occurs, the value
+	 *         stored will the byte offset after the last valid
+	 *         input sequence.
+	 *     bytesWritten = the number of bytes stored in the output
+	 *         buffer (not including the terminating nul).
 	 *
-	 * Returns: a %NULL-terminated array of strings owned by
-	 *     the thread g_get_language_names_with_category was called from.
-	 *     It must not be modified or freed. It must be copied if planned to be used in another thread.
+	 * Returns: A newly-allocated buffer containing the converted string,
+	 *     or %NULL on an error, and error will be set.
 	 *
-	 * Since: 2.58
+	 * Throws: GException on failure.
 	 */
-	public static string[] getLanguageNamesWithCategory(string categoryName)
+	public static string localeToUtf8(string opsysstring, ptrdiff_t len, out size_t bytesRead, out size_t bytesWritten)
 	{
-		return Str.toStringArray(g_get_language_names_with_category(Str.toStringz(categoryName)));
+		GError* err = null;
+
+		auto retStr = g_locale_to_utf8(Str.toStringz(opsysstring), len, &bytesRead, &bytesWritten, &err);
+
+		if (err !is null)
+		{
+			throw new GException( new ErrorG(err) );
+		}
+
+		scope(exit) Str.freeString(retStr);
+		return Str.toString(retStr);
 	}
 }

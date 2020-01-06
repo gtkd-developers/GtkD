@@ -30,7 +30,6 @@ public  import gio.c.types;
 public  import glib.ErrorG;
 public  import glib.GException;
 public  import glib.Source;
-public  import gtkc.giotypes;
 
 
 /**
@@ -169,14 +168,14 @@ public template DatagramBasedT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_datagram_based_condition_wait(getDatagramBasedStruct(), condition, timeout, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_datagram_based_condition_wait(getDatagramBasedStruct(), condition, timeout, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -205,14 +204,14 @@ public template DatagramBasedT(TStruct)
 	 */
 	public Source createSource(GIOCondition condition, Cancellable cancellable)
 	{
-		auto p = g_datagram_based_create_source(getDatagramBasedStruct(), condition, (cancellable is null) ? null : cancellable.getCancellableStruct());
+		auto __p = g_datagram_based_create_source(getDatagramBasedStruct(), condition, (cancellable is null) ? null : cancellable.getCancellableStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Source(cast(GSource*) p, true);
+		return new Source(cast(GSource*) __p, true);
 	}
 
 	/**
@@ -288,14 +287,14 @@ public template DatagramBasedT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_datagram_based_receive_messages(getDatagramBasedStruct(), messages.ptr, cast(uint)messages.length, flags, timeout, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_datagram_based_receive_messages(getDatagramBasedStruct(), messages.ptr, cast(uint)messages.length, flags, timeout, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -361,13 +360,13 @@ public template DatagramBasedT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_datagram_based_send_messages(getDatagramBasedStruct(), messages.ptr, cast(uint)messages.length, flags, timeout, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_datagram_based_send_messages(getDatagramBasedStruct(), messages.ptr, cast(uint)messages.length, flags, timeout, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 }

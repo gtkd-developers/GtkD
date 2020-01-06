@@ -33,8 +33,6 @@ private import gtk.StyleProperties;
 private import gtk.SymbolicColor;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
-private import gtkd.Loader;
 
 
 /**
@@ -86,7 +84,7 @@ public class Gradient
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GTK) && ownedRef )
+		if ( ownedRef )
 			gtk_gradient_unref(gtkGradient);
 	}
 
@@ -117,14 +115,14 @@ public class Gradient
 	 */
 	public this(double x0, double y0, double x1, double y1)
 	{
-		auto p = gtk_gradient_new_linear(x0, y0, x1, y1);
+		auto __p = gtk_gradient_new_linear(x0, y0, x1, y1);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_linear");
 		}
 
-		this(cast(GtkGradient*) p);
+		this(cast(GtkGradient*) __p);
 	}
 
 	/**
@@ -150,14 +148,14 @@ public class Gradient
 	 */
 	public this(double x0, double y0, double radius0, double x1, double y1, double radius1)
 	{
-		auto p = gtk_gradient_new_radial(x0, y0, radius0, x1, y1, radius1);
+		auto __p = gtk_gradient_new_radial(x0, y0, radius0, x1, y1, radius1);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_radial");
 		}
 
-		this(cast(GtkGradient*) p);
+		this(cast(GtkGradient*) __p);
 	}
 
 	/**
@@ -188,14 +186,14 @@ public class Gradient
 	 */
 	public Gradient ref_()
 	{
-		auto p = gtk_gradient_ref(gtkGradient);
+		auto __p = gtk_gradient_ref(gtkGradient);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Gradient)(cast(GtkGradient*) p, true);
+		return ObjectG.getDObject!(Gradient)(cast(GtkGradient*) __p, true);
 	}
 
 	/**
@@ -219,24 +217,24 @@ public class Gradient
 	{
 		cairo_pattern_t* outresolvedGradient = null;
 
-		auto p = gtk_gradient_resolve(gtkGradient, (props is null) ? null : props.getStylePropertiesStruct(), &outresolvedGradient) != 0;
+		auto __p = gtk_gradient_resolve(gtkGradient, (props is null) ? null : props.getStylePropertiesStruct(), &outresolvedGradient) != 0;
 
 		resolvedGradient = new Pattern(outresolvedGradient);
 
-		return p;
+		return __p;
 	}
 
 	/** */
 	public Pattern resolveForContext(StyleContext context)
 	{
-		auto p = gtk_gradient_resolve_for_context(gtkGradient, (context is null) ? null : context.getStyleContextStruct());
+		auto __p = gtk_gradient_resolve_for_context(gtkGradient, (context is null) ? null : context.getStyleContextStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Pattern(cast(cairo_pattern_t*) p);
+		return new Pattern(cast(cairo_pattern_t*) __p);
 	}
 
 	/**

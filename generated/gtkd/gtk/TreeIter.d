@@ -32,7 +32,6 @@ private import gtk.TreeModelIF;
 private import gtk.TreePath;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.variant;
 
 

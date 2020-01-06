@@ -34,7 +34,6 @@ private import glib.Str;
 private import glib.Variant;
 private import gobject.ObjectG;
 private import gobject.Signals;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -63,7 +62,7 @@ private import std.algorithm;
  * that describes the keys in your settings and their types and default
  * values, as well as some other information.
  * 
- * Normally, a schema has a fixed path that determines where the settings
+ * Normally, a schema has as fixed path that determines where the settings
  * are stored in the conceptual global tree of settings. However, schemas
  * can also be '[relocatable][gsettings-relocatable]', i.e. not equipped with
  * a fixed path. This is
@@ -158,11 +157,6 @@ private import std.algorithm;
  * 
  * <key name="box" type="(ii)">
  * <default>(20,30)</default>
- * </key>
- * 
- * <key name="empty-string" type="s">
- * <default>""</default>
- * <summary>Empty strings have to be provided in GVariant form</summary>
  * </key>
  * 
  * </schema>
@@ -382,14 +376,14 @@ public class Settings : ObjectG
 	 */
 	public this(string schemaId)
 	{
-		auto p = g_settings_new(Str.toStringz(schemaId));
+		auto __p = g_settings_new(Str.toStringz(schemaId));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GSettings*) p, true);
+		this(cast(GSettings*) __p, true);
 	}
 
 	/**
@@ -430,14 +424,14 @@ public class Settings : ObjectG
 	 */
 	public this(SettingsSchema schema, SettingsBackend backend, string path)
 	{
-		auto p = g_settings_new_full((schema is null) ? null : schema.getSettingsSchemaStruct(), (backend is null) ? null : backend.getSettingsBackendStruct(), Str.toStringz(path));
+		auto __p = g_settings_new_full((schema is null) ? null : schema.getSettingsSchemaStruct(), (backend is null) ? null : backend.getSettingsBackendStruct(), Str.toStringz(path));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_full");
 		}
 
-		this(cast(GSettings*) p, true);
+		this(cast(GSettings*) __p, true);
 	}
 
 	/**
@@ -462,14 +456,14 @@ public class Settings : ObjectG
 	 */
 	public this(string schemaId, SettingsBackend backend)
 	{
-		auto p = g_settings_new_with_backend(Str.toStringz(schemaId), (backend is null) ? null : backend.getSettingsBackendStruct());
+		auto __p = g_settings_new_with_backend(Str.toStringz(schemaId), (backend is null) ? null : backend.getSettingsBackendStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_backend");
 		}
 
-		this(cast(GSettings*) p, true);
+		this(cast(GSettings*) __p, true);
 	}
 
 	/**
@@ -492,14 +486,14 @@ public class Settings : ObjectG
 	 */
 	public this(string schemaId, SettingsBackend backend, string path)
 	{
-		auto p = g_settings_new_with_backend_and_path(Str.toStringz(schemaId), (backend is null) ? null : backend.getSettingsBackendStruct(), Str.toStringz(path));
+		auto __p = g_settings_new_with_backend_and_path(Str.toStringz(schemaId), (backend is null) ? null : backend.getSettingsBackendStruct(), Str.toStringz(path));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_backend_and_path");
 		}
 
-		this(cast(GSettings*) p, true);
+		this(cast(GSettings*) __p, true);
 	}
 
 	/**
@@ -529,18 +523,18 @@ public class Settings : ObjectG
 	 */
 	public this(string schemaId, string path)
 	{
-		auto p = g_settings_new_with_path(Str.toStringz(schemaId), Str.toStringz(path));
+		auto __p = g_settings_new_with_path(Str.toStringz(schemaId), Str.toStringz(path));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_path");
 		}
 
-		this(cast(GSettings*) p, true);
+		this(cast(GSettings*) __p, true);
 	}
 
 	/**
-	 * Deprecated.
+	 * <!-- -->
 	 *
 	 * Deprecated: Use g_settings_schema_source_list_schemas() instead
 	 *
@@ -556,7 +550,7 @@ public class Settings : ObjectG
 	}
 
 	/**
-	 * Deprecated.
+	 * <!-- -->
 	 *
 	 * Deprecated: Use g_settings_schema_source_list_schemas() instead.
 	 * If you used g_settings_list_schemas() to check for the presence of
@@ -575,7 +569,8 @@ public class Settings : ObjectG
 	}
 
 	/**
-	 * Ensures that all pending operations are complete for the default backend.
+	 * Ensures that all pending operations for the given are complete for
+	 * the default backend.
 	 *
 	 * Writes made to a #GSettings are handled asynchronously.  For this
 	 * reason, it is very unlikely that the changes have it to disk by the
@@ -637,7 +632,7 @@ public class Settings : ObjectG
 	 * a boolean property by that name). See g_settings_bind_writable()
 	 * for more details about writable bindings.
 	 *
-	 * Note that the lifecycle of the binding is tied to @object,
+	 * Note that the lifecycle of the binding is tied to the object,
 	 * and that you can have only one binding per object property.
 	 * If you bind the same property twice on the same object, the second
 	 * binding overrides the first one.
@@ -662,7 +657,7 @@ public class Settings : ObjectG
 	 * The binding uses the provided mapping functions to map between
 	 * settings and property values.
 	 *
-	 * Note that the lifecycle of the binding is tied to @object,
+	 * Note that the lifecycle of the binding is tied to the object,
 	 * and that you can have only one binding per object property.
 	 * If you bind the same property twice on the same object, the second
 	 * binding overrides the first one.
@@ -700,7 +695,7 @@ public class Settings : ObjectG
 	 * value as it passes from the setting to the object, i.e. @property
 	 * will be set to %TRUE if the key is not writable.
 	 *
-	 * Note that the lifecycle of the binding is tied to @object,
+	 * Note that the lifecycle of the binding is tied to the object,
 	 * and that you can have only one binding per object property.
 	 * If you bind the same property twice on the same object, the second
 	 * binding overrides the first one.
@@ -743,14 +738,14 @@ public class Settings : ObjectG
 	 */
 	public ActionIF createAction(string key)
 	{
-		auto p = g_settings_create_action(gSettings, Str.toStringz(key));
+		auto __p = g_settings_create_action(gSettings, Str.toStringz(key));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ActionIF)(cast(GAction*) p, true);
+		return ObjectG.getDObject!(ActionIF)(cast(GAction*) __p, true);
 	}
 
 	/**
@@ -802,14 +797,14 @@ public class Settings : ObjectG
 	 */
 	public Settings getChild(string name)
 	{
-		auto p = g_settings_get_child(gSettings, Str.toStringz(name));
+		auto __p = g_settings_get_child(gSettings, Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Settings)(cast(GSettings*) p, true);
+		return ObjectG.getDObject!(Settings)(cast(GSettings*) __p, true);
 	}
 
 	/**
@@ -844,14 +839,14 @@ public class Settings : ObjectG
 	 */
 	public Variant getDefaultValue(string key)
 	{
-		auto p = g_settings_get_default_value(gSettings, Str.toStringz(key));
+		auto __p = g_settings_get_default_value(gSettings, Str.toStringz(key));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -1033,14 +1028,14 @@ public class Settings : ObjectG
 	 */
 	public Variant getRange(string key)
 	{
-		auto p = g_settings_get_range(gSettings, Str.toStringz(key));
+		auto __p = g_settings_get_range(gSettings, Str.toStringz(key));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -1160,14 +1155,14 @@ public class Settings : ObjectG
 	 */
 	public Variant getUserValue(string key)
 	{
-		auto p = g_settings_get_user_value(gSettings, Str.toStringz(key));
+		auto __p = g_settings_get_user_value(gSettings, Str.toStringz(key));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -1185,14 +1180,14 @@ public class Settings : ObjectG
 	 */
 	public Variant getValue(string key)
 	{
-		auto p = g_settings_get_value(gSettings, Str.toStringz(key));
+		auto __p = g_settings_get_value(gSettings, Str.toStringz(key));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -1216,9 +1211,17 @@ public class Settings : ObjectG
 	 * The list is exactly the list of strings for which it is not an error
 	 * to call g_settings_get_child().
 	 *
-	 * There is little reason to call this function from "normal" code, since
-	 * you should already know what children are in your schema. This function
-	 * may still be useful there for introspection reasons, however.
+	 * For GSettings objects that are lists, this value can change at any
+	 * time and you should connect to the "children-changed" signal to watch
+	 * for those changes.  Note that there is a race condition here: you may
+	 * request a child after listing it only for it to have been destroyed
+	 * in the meantime.  For this reason, g_settings_get_child() may return
+	 * %NULL even for a child that was listed by this function.
+	 *
+	 * For GSettings objects that are not lists, you should probably not be
+	 * calling this function from "normal" code (since you should already
+	 * know what children are in your schema).  This function may still be
+	 * useful there for introspection reasons, however.
 	 *
 	 * You should free the return value with g_strfreev() when you are done
 	 * with it.

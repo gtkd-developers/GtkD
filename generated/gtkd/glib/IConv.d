@@ -27,7 +27,6 @@ module glib.IConv;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
 
 
 /**
@@ -43,13 +42,6 @@ public  import gtkc.glibtypes;
  * GLib provides g_convert() and g_locale_to_utf8() which are likely
  * more convenient than the raw iconv wrappers.
  *
- * Note that the behaviour of iconv() for characters which are valid in the
- * input character set, but which have no representation in the output character
- * set, is implementation defined. This function may return success (with a
- * positive number of non-reversible conversions as replacement characters were
- * used), or it may return -1 and set an error such as %EILSEQ, in such a
- * situation.
- *
  * Params:
  *     inbuf = bytes to convert
  *     outbuf = converted output bytes
@@ -63,12 +55,12 @@ public size_t iconv(GIConv converter, ref string inbuf, ref string outbuf)
 	char* outoutbuf = Str.toStringz(outbuf);
 	size_t outbytesLeft;
 
-	auto p = g_iconv(converter, &outinbuf, &inbytesLeft, &outoutbuf, &outbytesLeft);
+	auto __p = g_iconv(converter, &outinbuf, &inbytesLeft, &outoutbuf, &outbytesLeft);
 
 	inbuf = Str.toString(outinbuf, inbytesLeft);
 	outbuf = Str.toString(outoutbuf, outbytesLeft);
 
-	return p;
+	return __p;
 }
 
 /**

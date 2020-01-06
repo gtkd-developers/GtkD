@@ -35,7 +35,6 @@ private import gtk.StyleProviderT;
 private import gtk.SymbolicColor;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -105,14 +104,14 @@ public class StyleProperties : ObjectG, StyleProviderIF
 	 */
 	public this()
 	{
-		auto p = gtk_style_properties_new();
+		auto __p = gtk_style_properties_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkStyleProperties*) p, true);
+		this(cast(GtkStyleProperties*) __p, true);
 	}
 
 	/**
@@ -136,11 +135,11 @@ public class StyleProperties : ObjectG, StyleProviderIF
 	{
 		GParamSpec* outpspec = null;
 
-		auto p = gtk_style_properties_lookup_property(Str.toStringz(propertyName), &parseFunc, &outpspec) != 0;
+		auto __p = gtk_style_properties_lookup_property(Str.toStringz(propertyName), &parseFunc, &outpspec) != 0;
 
 		pspec = ObjectG.getDObject!(ParamSpec)(outpspec);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -191,11 +190,11 @@ public class StyleProperties : ObjectG, StyleProviderIF
 	{
 		GValue* outvalue = sliceNew!GValue();
 
-		auto p = gtk_style_properties_get_property(gtkStyleProperties, Str.toStringz(property), state, outvalue) != 0;
+		auto __p = gtk_style_properties_get_property(gtkStyleProperties, Str.toStringz(property), state, outvalue) != 0;
 
 		value = ObjectG.getDObject!(Value)(outvalue, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -229,14 +228,14 @@ public class StyleProperties : ObjectG, StyleProviderIF
 	 */
 	public SymbolicColor lookupColor(string name)
 	{
-		auto p = gtk_style_properties_lookup_color(gtkStyleProperties, Str.toStringz(name));
+		auto __p = gtk_style_properties_lookup_color(gtkStyleProperties, Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SymbolicColor)(cast(GtkSymbolicColor*) p);
+		return ObjectG.getDObject!(SymbolicColor)(cast(GtkSymbolicColor*) __p);
 	}
 
 	/**

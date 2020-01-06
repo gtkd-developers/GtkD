@@ -33,7 +33,6 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.ListG;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**

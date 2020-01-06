@@ -29,7 +29,6 @@ private import gio.c.functions;
 public  import gio.c.types;
 private import glib.ErrorG;
 private import glib.GException;
-public  import gtkc.giotypes;
 
 
 /**
@@ -40,7 +39,7 @@ public  import gtkc.giotypes;
  * fixed-size.
  * 
  * #GSeekable on fixed-sized streams is approximately the same as POSIX
- * lseek() on a block device (for example: attempting to seek past the
+ * lseek() on a block device (for example: attmepting to seek past the
  * end of the device is an error).  Fixed streams typically cannot be
  * truncated.
  * 
@@ -70,8 +69,7 @@ public interface SeekableIF{
 	public bool canSeek();
 
 	/**
-	 * Tests if the length of the stream can be adjusted with
-	 * g_seekable_truncate().
+	 * Tests if the stream can be truncated.
 	 *
 	 * Returns: %TRUE if the stream can be truncated, %FALSE otherwise.
 	 */
@@ -114,9 +112,7 @@ public interface SeekableIF{
 	public long tell();
 
 	/**
-	 * Sets the length of the stream to @offset. If the stream was previously
-	 * larger than @offset, the extra data is discarded. If the stream was
-	 * previouly shorter than @offset, it is extended with NUL ('\0') bytes.
+	 * Truncates a stream with a given #offset.
 	 *
 	 * If @cancellable is not %NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
@@ -125,7 +121,7 @@ public interface SeekableIF{
 	 * partial result will be returned, without an error.
 	 *
 	 * Params:
-	 *     offset = new length for @seekable, in bytes.
+	 *     offset = a #goffset.
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
 	 * Returns: %TRUE if successful. If an error

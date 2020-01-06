@@ -29,7 +29,6 @@ private import glib.GException;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
 
 
 /** */
@@ -107,14 +106,14 @@ public struct FileUtils
 	{
 		GError* err = null;
 
-		auto p = g_close(fd, &err) != 0;
+		auto __p = g_close(fd, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -170,7 +169,7 @@ public struct FileUtils
 		size_t length;
 		GError* err = null;
 
-		auto p = g_file_get_contents(Str.toStringz(filename), &outcontents, &length, &err) != 0;
+		auto __p = g_file_get_contents(Str.toStringz(filename), &outcontents, &length, &err) != 0;
 
 		if (err !is null)
 		{
@@ -179,7 +178,7 @@ public struct FileUtils
 
 		contents = Str.toString(outcontents, length);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -218,7 +217,7 @@ public struct FileUtils
 		char* outnameUsed = null;
 		GError* err = null;
 
-		auto p = g_file_open_tmp(Str.toStringz(tmpl), &outnameUsed, &err);
+		auto __p = g_file_open_tmp(Str.toStringz(tmpl), &outnameUsed, &err);
 
 		if (err !is null)
 		{
@@ -227,7 +226,7 @@ public struct FileUtils
 
 		nameUsed = Str.toString(outnameUsed);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -272,17 +271,6 @@ public struct FileUtils
 	 * lists, metadata etc. may be lost. If @filename is a symbolic link,
 	 * the link itself will be replaced, not the linked file.
 	 *
-	 * - On UNIX, if @filename already exists and is non-empty, and if the system
-	 * supports it (via a journalling filesystem or equivalent), the fsync()
-	 * call (or equivalent) will be used to ensure atomic replacement: @filename
-	 * will contain either its old contents or @contents, even in the face of
-	 * system power loss, the disk being unsafely removed, etc.
-	 *
-	 * - On UNIX, if @filename does not already exist or is empty, there is a
-	 * possibility that system power loss etc. after calling this function will
-	 * leave @filename empty or full of NUL bytes, depending on the underlying
-	 * filesystem.
-	 *
 	 * - On Windows renaming a file will not remove an existing file with the
 	 * new name, so on Windows there is a race condition between the existing
 	 * file being removed and the temporary file being renamed.
@@ -313,14 +301,14 @@ public struct FileUtils
 	{
 		GError* err = null;
 
-		auto p = g_file_set_contents(Str.toStringz(filename), Str.toStringz(contents), cast(ptrdiff_t)contents.length, &err) != 0;
+		auto __p = g_file_set_contents(Str.toStringz(filename), Str.toStringz(contents), cast(ptrdiff_t)contents.length, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**

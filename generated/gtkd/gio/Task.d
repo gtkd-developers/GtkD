@@ -36,7 +36,6 @@ private import glib.MainContext;
 private import glib.Source;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -53,13 +52,11 @@ public  import gtkc.giotypes;
  * Eventually, you will call a method such as
  * g_task_return_pointer() or g_task_return_error(), which will
  * save the value you give it and then invoke the task's callback
- * function in the
- * [thread-default main context][g-main-context-push-thread-default]
- * where it was created (waiting until the next iteration of the main
- * loop first, if necessary). The caller will pass the #GTask back to
- * the operation's finish function (as a #GAsyncResult), and you can
- * use g_task_propagate_pointer() or the like to extract the
- * return value.
+ * function (waiting until the next iteration of the main
+ * loop first, if necessary). The caller will pass the #GTask back
+ * to the operation's finish function (as a #GAsyncResult), and
+ * you can use g_task_propagate_pointer() or the like to extract
+ * the return value.
  * 
  * Here is an example for using GTask as a GAsyncResult:
  * |[<!-- language="C" -->
@@ -298,10 +295,9 @@ public  import gtkc.giotypes;
  * ## Asynchronous operations from synchronous ones
  * 
  * You can use g_task_run_in_thread() to turn a synchronous
- * operation into an asynchronous one, by running it in a thread.
- * When it completes, the result will be dispatched to the
- * [thread-default main context][g-main-context-push-thread-default]
- * where the #GTask was created.
+ * operation into an asynchronous one, by running it in a thread
+ * which will then dispatch the result back to the caller's
+ * #GMainContext when it completes.
  * 
  * Running a task in a thread:
  * |[<!-- language="C" -->
@@ -513,7 +509,7 @@ public  import gtkc.giotypes;
  * whether the task's callback can be invoked directly, or
  * if it needs to be sent to another #GMainContext, or delayed
  * until the next iteration of the current #GMainContext.)
- * - The "finish" functions for #GTask based operations are generally
+ * - The "finish" functions for #GTask-based operations are generally
  * much simpler than #GSimpleAsyncResult ones, normally consisting
  * of only a single call to g_task_propagate_pointer() or the like.
  * Since g_task_propagate_pointer() "steals" the return value from
@@ -607,14 +603,14 @@ public class Task : ObjectG, AsyncResultIF
 	 */
 	public this(ObjectG sourceObject, Cancellable cancellable, GAsyncReadyCallback callback, void* callbackData)
 	{
-		auto p = g_task_new((sourceObject is null) ? null : sourceObject.getObjectGStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, callbackData);
+		auto __p = g_task_new((sourceObject is null) ? null : sourceObject.getObjectGStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, callbackData);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GTask*) p, true);
+		this(cast(GTask*) __p, true);
 	}
 
 	/**
@@ -668,9 +664,6 @@ public class Task : ObjectG, AsyncResultIF
 	 * #GMainContext with @task's [priority][io-priority], and sets @source's
 	 * callback to @callback, with @task as the callback's `user_data`.
 	 *
-	 * It will set the @source’s name to the task’s name (as set with
-	 * g_task_set_name()), if one has been set.
-	 *
 	 * This takes a reference on @task until @source is destroyed.
 	 *
 	 * Params:
@@ -693,14 +686,14 @@ public class Task : ObjectG, AsyncResultIF
 	 */
 	public Cancellable getCancellable()
 	{
-		auto p = g_task_get_cancellable(gTask);
+		auto __p = g_task_get_cancellable(gTask);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Cancellable)(cast(GCancellable*) p);
+		return ObjectG.getDObject!(Cancellable)(cast(GCancellable*) __p);
 	}
 
 	/**
@@ -743,26 +736,14 @@ public class Task : ObjectG, AsyncResultIF
 	 */
 	public MainContext getContext()
 	{
-		auto p = g_task_get_context(gTask);
+		auto __p = g_task_get_context(gTask);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new MainContext(cast(GMainContext*) p);
-	}
-
-	/**
-	 * Gets @task’s name. See g_task_set_name().
-	 *
-	 * Returns: @task’s name, or %NULL
-	 *
-	 * Since: 2.60
-	 */
-	public string getName()
-	{
-		return Str.toString(g_task_get_name(gTask));
+		return new MainContext(cast(GMainContext*) __p);
 	}
 
 	/**
@@ -798,14 +779,14 @@ public class Task : ObjectG, AsyncResultIF
 	 */
 	public ObjectG getSourceObject()
 	{
-		auto p = g_task_get_source_object(gTask);
+		auto __p = g_task_get_source_object(gTask);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p);
+		return ObjectG.getDObject!(ObjectG)(cast(GObject*) __p);
 	}
 
 	/**
@@ -863,14 +844,14 @@ public class Task : ObjectG, AsyncResultIF
 	{
 		GError* err = null;
 
-		auto p = g_task_propagate_boolean(gTask, &err) != 0;
+		auto __p = g_task_propagate_boolean(gTask, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -892,14 +873,14 @@ public class Task : ObjectG, AsyncResultIF
 	{
 		GError* err = null;
 
-		auto p = g_task_propagate_int(gTask, &err);
+		auto __p = g_task_propagate_int(gTask, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -922,14 +903,14 @@ public class Task : ObjectG, AsyncResultIF
 	{
 		GError* err = null;
 
-		auto p = g_task_propagate_pointer(gTask, &err);
+		auto __p = g_task_propagate_pointer(gTask, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1109,27 +1090,6 @@ public class Task : ObjectG, AsyncResultIF
 	public void setCheckCancellable(bool checkCancellable)
 	{
 		g_task_set_check_cancellable(gTask, checkCancellable);
-	}
-
-	/**
-	 * Sets @task’s name, used in debugging and profiling. The name defaults to
-	 * %NULL.
-	 *
-	 * The task name should describe in a human readable way what the task does.
-	 * For example, ‘Open file’ or ‘Connect to network host’. It is used to set the
-	 * name of the #GSource used for idle completion of the task.
-	 *
-	 * This function may only be called before the @task is first used in a thread
-	 * other than the one it was constructed in.
-	 *
-	 * Params:
-	 *     name = a human readable name for the task, or %NULL to unset it
-	 *
-	 * Since: 2.60
-	 */
-	public void setName(string name)
-	{
-		g_task_set_name(gTask, Str.toStringz(name));
 	}
 
 	/**

@@ -32,7 +32,6 @@ private import gtk.Button;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -107,14 +106,14 @@ public class LinkButton : Button
 	 */
 	public this(string uri)
 	{
-		auto p = gtk_link_button_new(Str.toStringz(uri));
+		auto __p = gtk_link_button_new(Str.toStringz(uri));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkLinkButton*) p);
+		this(cast(GtkLinkButton*) __p);
 	}
 
 	/**
@@ -132,14 +131,14 @@ public class LinkButton : Button
 	 */
 	public this(string uri, string label)
 	{
-		auto p = gtk_link_button_new_with_label(Str.toStringz(uri), Str.toStringz(label));
+		auto __p = gtk_link_button_new_with_label(Str.toStringz(uri), Str.toStringz(label));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_label");
 		}
 
-		this(cast(GtkLinkButton*) p);
+		this(cast(GtkLinkButton*) __p);
 	}
 
 	/**

@@ -38,7 +38,6 @@ public  import glib.GException;
 public  import glib.Str;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
-public  import gtkc.giotypes;
 public  import std.algorithm;
 
 
@@ -59,10 +58,10 @@ public  import std.algorithm;
  * for credentials.
  * 
  * The callback will be fired when the operation has resolved (either
- * with success or failure), and a #GAsyncResult instance will be
+ * with success or failure), and a #GAsyncReady structure will be
  * passed to the callback.  That callback should then call
  * g_volume_mount_finish() with the #GVolume instance and the
- * #GAsyncResult data to see if the operation was completed
+ * #GAsyncReady data to see if the operation was completed
  * successfully.  If an @error is present when g_volume_mount_finish()
  * is called, then it will be filled with any error information.
  * 
@@ -75,7 +74,7 @@ public  import std.algorithm;
  * different kinds of identifiers, such as Hal UDIs, filesystem labels,
  * traditional Unix devices (e.g. `/dev/sda2`), UUIDs. GIO uses predefined
  * strings as names for the different kinds of identifiers:
- * #G_VOLUME_IDENTIFIER_KIND_UUID, #G_VOLUME_IDENTIFIER_KIND_LABEL, etc.
+ * #G_VOLUME_IDENTIFIER_KIND_HAL_UDI, #G_VOLUME_IDENTIFIER_KIND_LABEL, etc.
  * Use g_volume_get_identifier() to obtain an identifier for a volume.
  * 
  * 
@@ -151,14 +150,14 @@ public template VolumeT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_volume_eject_finish(getVolumeStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_volume_eject_finish(getVolumeStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -198,14 +197,14 @@ public template VolumeT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_volume_eject_with_operation_finish(getVolumeStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_volume_eject_with_operation_finish(getVolumeStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -258,14 +257,14 @@ public template VolumeT(TStruct)
 	 */
 	public FileIF getActivationRoot()
 	{
-		auto p = g_volume_get_activation_root(getVolumeStruct());
+		auto __p = g_volume_get_activation_root(getVolumeStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) __p, true);
 	}
 
 	/**
@@ -277,14 +276,14 @@ public template VolumeT(TStruct)
 	 */
 	public DriveIF getDrive()
 	{
-		auto p = g_volume_get_drive(getVolumeStruct());
+		auto __p = g_volume_get_drive(getVolumeStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DriveIF)(cast(GDrive*) p, true);
+		return ObjectG.getDObject!(DriveIF)(cast(GDrive*) __p, true);
 	}
 
 	/**
@@ -296,14 +295,14 @@ public template VolumeT(TStruct)
 	 */
 	public IconIF getIcon()
 	{
-		auto p = g_volume_get_icon(getVolumeStruct());
+		auto __p = g_volume_get_icon(getVolumeStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p, true);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) __p, true);
 	}
 
 	/**
@@ -315,7 +314,7 @@ public template VolumeT(TStruct)
 	 *     kind = the kind of identifier to return
 	 *
 	 * Returns: a newly allocated string containing the
-	 *     requested identifier, or %NULL if the #GVolume
+	 *     requested identfier, or %NULL if the #GVolume
 	 *     doesn't have this kind of identifier
 	 */
 	public string getIdentifier(string kind)
@@ -335,14 +334,14 @@ public template VolumeT(TStruct)
 	 */
 	public MountIF getMount()
 	{
-		auto p = g_volume_get_mount(getVolumeStruct());
+		auto __p = g_volume_get_mount(getVolumeStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(MountIF)(cast(GMount*) p, true);
+		return ObjectG.getDObject!(MountIF)(cast(GMount*) __p, true);
 	}
 
 	/**
@@ -382,14 +381,14 @@ public template VolumeT(TStruct)
 	 */
 	public IconIF getSymbolicIcon()
 	{
-		auto p = g_volume_get_symbolic_icon(getVolumeStruct());
+		auto __p = g_volume_get_symbolic_icon(getVolumeStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p, true);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) __p, true);
 	}
 
 	/**
@@ -398,8 +397,7 @@ public template VolumeT(TStruct)
 	 * considered an opaque string. Returns %NULL if there is no UUID
 	 * available.
 	 *
-	 * Returns: the UUID for @volume or %NULL if no UUID
-	 *     can be computed.
+	 * Returns: the UUID for @volume or %NULL if no UUID can be computed.
 	 *     The returned string should be freed with g_free()
 	 *     when no longer needed.
 	 */
@@ -448,14 +446,14 @@ public template VolumeT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_volume_mount_finish(getVolumeStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_volume_mount_finish(getVolumeStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**

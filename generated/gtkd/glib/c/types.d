@@ -137,22 +137,6 @@ public alias int GPid;
 public alias uint GQuark;
 
 /**
- * Opaque type. See g_rec_mutex_locker_new() for details.
- */
-public alias void GRecMutexLocker;
-
-/**
- * A typedef for a reference-counted string. A pointer to a #GRefString can be
- * treated like a standard `char*` array by all code, but can additionally have
- * `g_ref_string_*()` methods called on it. `g_ref_string_*()` methods cannot be
- * called on `char*` arrays not allocated using g_ref_string_new().
- *
- * If using #GRefString with autocleanups, g_autoptr() must be used rather than
- * g_autofree(), so that the reference counting metadata is also freed.
- */
-public alias char GRefString;
-
-/**
  * A typedef alias for gchar**. This is mostly useful when used together with
  * g_auto().
  */
@@ -298,9 +282,7 @@ public enum GConvertError
 	 */
 	NO_CONVERSION = 0,
 	/**
-	 * Invalid byte sequence in conversion input;
-	 * or the character sequence could not be represented in the target
-	 * character set.
+	 * Invalid byte sequence in conversion input.
 	 */
 	ILLEGAL_SEQUENCE = 1,
 	/**
@@ -323,12 +305,6 @@ public enum GConvertError
 	 * No memory available. Since: 2.40
 	 */
 	NO_MEMORY = 6,
-	/**
-	 * An embedded NUL character is present in
-	 * conversion output where a NUL-terminated string is expected.
-	 * Since: 2.56
-	 */
-	EMBEDDED_NUL = 7,
 }
 alias GConvertError ConvertError;
 
@@ -709,11 +685,6 @@ public enum GFormatSizeFlags
 	 * Network and storage sizes should be reported in the normal SI units.
 	 */
 	IEC_UNITS = 2,
-	/**
-	 * set the size as a quantity in bits, rather than
-	 * bytes, and return units in bits. For example, ‘Mb’ rather than ‘MB’.
-	 */
-	BITS = 4,
 }
 alias GFormatSizeFlags FormatSizeFlags;
 
@@ -1234,24 +1205,6 @@ public enum GNormalizeMode
 alias GNormalizeMode NormalizeMode;
 
 /**
- * Error codes returned by functions converting a string to a number.
- *
- * Since: 2.54
- */
-public enum GNumberParserError
-{
-	/**
-	 * String was not a valid number.
-	 */
-	INVALID = 0,
-	/**
-	 * String was a number, but out of bounds.
-	 */
-	OUT_OF_BOUNDS = 1,
-}
-alias GNumberParserError NumberParserError;
-
-/**
  * The possible statuses of a one-time initialization function
  * controlled by a #GOnce struct.
  *
@@ -1433,7 +1386,7 @@ public enum GRegexCompileFlags
 	 */
 	MULTILINE = 2,
 	/**
-	 * A dot metacharacter (".") in the pattern matches all
+	 * A dot metacharater (".") in the pattern matches all
 	 * characters, including newlines. Without it, newlines are excluded.
 	 * This option can be changed within a pattern by a ("?s") option setting.
 	 */
@@ -1452,7 +1405,7 @@ public enum GRegexCompileFlags
 	 * it is constrained to match only at the first matching point in the
 	 * string that is being searched. This effect can also be achieved by
 	 * appropriate constructs in the pattern itself such as the "^"
-	 * metacharacter.
+	 * metacharater.
 	 */
 	ANCHORED = 16,
 	/**
@@ -1831,7 +1784,7 @@ public enum GRegexMatchFlags
 	 * it is constrained to match only at the first matching point in the
 	 * string that is being searched. This effect can also be achieved by
 	 * appropriate constructs in the pattern itself such as the "^"
-	 * metacharacter.
+	 * metacharater.
 	 */
 	ANCHORED = 16,
 	/**
@@ -2185,15 +2138,6 @@ public enum GTestLogType
 }
 alias GTestLogType TestLogType;
 
-public enum GTestResult
-{
-	SUCCESS = 0,
-	SKIPPED = 1,
-	FAILURE = 2,
-	INCOMPLETE = 3,
-}
-alias GTestResult TestResult;
-
 /**
  * Flags to pass to g_test_trap_subprocess() to control input and output.
  *
@@ -2231,7 +2175,7 @@ alias GTestSubprocessFlags TestSubprocessFlags;
  *
  * Deprecated: #GTestTrapFlags is used only with g_test_trap_fork(),
  * which is deprecated. g_test_trap_subprocess() uses
- * #GTestSubprocessFlags.
+ * #GTestTrapSubprocessFlags.
  */
 public enum GTestTrapFlags
 {
@@ -3232,50 +3176,6 @@ public enum GUnicodeScript
 	 * Tangut. Since: 2.50
 	 */
 	TANGUT = 137,
-	/**
-	 * Masaram Gondi. Since: 2.54
-	 */
-	MASARAM_GONDI = 138,
-	/**
-	 * Nushu. Since: 2.54
-	 */
-	NUSHU = 139,
-	/**
-	 * Soyombo. Since: 2.54
-	 */
-	SOYOMBO = 140,
-	/**
-	 * Zanabazar Square. Since: 2.54
-	 */
-	ZANABAZAR_SQUARE = 141,
-	/**
-	 * Dogra. Since: 2.58
-	 */
-	DOGRA = 142,
-	/**
-	 * Gunjala Gondi. Since: 2.58
-	 */
-	GUNJALA_GONDI = 143,
-	/**
-	 * Hanifi Rohingya. Since: 2.58
-	 */
-	HANIFI_ROHINGYA = 144,
-	/**
-	 * Makasar. Since: 2.58
-	 */
-	MAKASAR = 145,
-	/**
-	 * Medefaidrin. Since: 2.58
-	 */
-	MEDEFAIDRIN = 146,
-	/**
-	 * Old Sogdian. Since: 2.58
-	 */
-	OLD_SOGDIAN = 147,
-	/**
-	 * Sogdian. Since: 2.58
-	 */
-	SOGDIAN = 148,
 }
 alias GUnicodeScript UnicodeScript;
 
@@ -4536,7 +4436,7 @@ struct GTestLogMsg
 	uint nStrings;
 	char** strings;
 	uint nNums;
-	real nums;
+	long* nums;
 }
 
 struct GTestSuite;
@@ -4708,19 +4608,6 @@ struct GModule;
 public alias extern(C) void function(GPid pid, int status, void* userData) GChildWatchFunc;
 
 /**
- * Specifies the type of function passed to g_clear_handle_id().
- * The implementation is expected to free the resource identified
- * by @handle_id; for instance, if @handle_id is a #GSource ID,
- * g_source_remove() can be used.
- *
- * Params:
- *     handleId = the handle ID to clear
- *
- * Since: 2.56
- */
-public alias extern(C) void function(uint handleId) GClearHandleFunc;
-
-/**
  * Specifies the type of a comparison function used to compare two
  * values.  The function should return a negative integer if the first
  * value comes before the second, 0 if they are equal, or a positive
@@ -4795,8 +4682,7 @@ public alias extern(C) void function(void* data) GDestroyNotify;
  *
  * Params:
  *     data = the data to duplicate
- *     userData = user data that was specified in
- *         g_datalist_id_dup_data()
+ *     userData = user data that was specified in g_datalist_id_dup_data()
  *
  * Returns: a duplicate of data
  */
@@ -4876,7 +4762,7 @@ public alias extern(C) int function(void* key, void* value, void* userData) GHRF
  * g_direct_hash() is also the appropriate hash function for keys
  * of the form `GINT_TO_POINTER (n)` (or similar macros).
  *
- * A good hash functions should produce
+ * <!-- FIXME: Need more here. --> A good hash functions should produce
  * hash values that are evenly distributed over a fairly large range.
  * The modulus is taken with the hash table size (a prime number) to
  * find the 'bucket' to place each key into. The function should also
@@ -5024,13 +4910,6 @@ public alias extern(C) void function(const(char)* logDomain, GLogLevelFlags logL
  * @log_level is guaranteed to be included in @fields as the `PRIORITY` field,
  * but is provided separately for convenience of deciding whether or where to
  * output the log entry.
- *
- * Writer functions should return %G_LOG_WRITER_HANDLED if they handled the log
- * message successfully or if they deliberately ignored it. If there was an
- * error handling the message (for example, if the writer function is meant to
- * send messages to a remote logging server and there is a network error), it
- * should return %G_LOG_WRITER_UNHANDLED. This allows writer functions to be
- * chained and fall back to simpler handlers in case of failure.
  *
  * Params:
  *     logLevel = log level of the message
@@ -5196,10 +5075,6 @@ public alias extern(C) void function() GSourceDummyMarshal;
 /**
  * Specifies the type of function passed to g_timeout_add(),
  * g_timeout_add_full(), g_idle_add(), and g_idle_add_full().
- *
- * When calling g_source_set_callback(), you may need to cast a function of a
- * different type to this type. Use G_SOURCE_FUNC() to avoid warnings about
- * incompatible function types.
  *
  * Params:
  *     userData = data passed to the function, set when the source was
@@ -5874,29 +5749,18 @@ enum LITTLE_ENDIAN = 1234;
 alias G_LITTLE_ENDIAN = LITTLE_ENDIAN;
 
 /**
- * Defines the log domain. See [Log Domains](#log-domains).
+ * Defines the log domain.
  *
- * Libraries should define this so that any messages
+ * For applications, this is typically left as the default %NULL
+ * (or "") domain. Libraries should define this so that any messages
  * which they log can be differentiated from messages from other
  * libraries and application code. But be careful not to define
  * it in any public header files.
  *
- * Log domains must be unique, and it is recommended that they are the
- * application or library name, optionally followed by a hyphen and a sub-domain
- * name. For example, `bloatpad` or `bloatpad-io`.
- *
- * If undefined, it defaults to the default %NULL (or `""`) log domain; this is
- * not advisable, as it cannot be filtered against using the `G_MESSAGES_DEBUG`
- * environment variable.
- *
- * For example, GTK+ uses this in its `Makefile.am`:
+ * For example, GTK+ uses this in its Makefile.am:
  * |[
  * AM_CPPFLAGS = -DG_LOG_DOMAIN=\"Gtk\"
  * ]|
- *
- * Applications can choose to leave it as the default %NULL (or `""`)
- * domain. However, defining the domain offers the same advantages as
- * above.
  */
 enum LOG_DOMAIN = 0;
 alias G_LOG_DOMAIN = LOG_DOMAIN;
@@ -5907,7 +5771,7 @@ alias G_LOG_DOMAIN = LOG_DOMAIN;
  * This is not used if structured logging is enabled; see
  * [Using Structured Logging][using-structured-logging].
  */
-enum LOG_FATAL_MASK = 5;
+enum LOG_FATAL_MASK = 0;
 alias G_LOG_FATAL_MASK = LOG_FATAL_MASK;
 
 /**
@@ -5982,7 +5846,7 @@ alias G_MAXUINT8 = MAXUINT8;
  * application compile time, rather than from the library
  * linked against at application run time.
  */
-enum MICRO_VERSION = 0;
+enum MICRO_VERSION = 1;
 alias GLIB_MICRO_VERSION = MICRO_VERSION;
 
 /**
@@ -6016,7 +5880,7 @@ alias G_MININT8 = MININT8;
  * application compile time, rather than from the library
  * linked against at application run time.
  */
-enum MINOR_VERSION = 60;
+enum MINOR_VERSION = 53;
 alias GLIB_MINOR_VERSION = MINOR_VERSION;
 
 enum MODULE_SUFFIX = "so";
@@ -6153,33 +6017,6 @@ alias GLIB_SYSDEF_MSG_OOB = SYSDEF_MSG_OOB;
 
 enum SYSDEF_MSG_PEEK = 2;
 alias GLIB_SYSDEF_MSG_PEEK = SYSDEF_MSG_PEEK;
-
-/**
- * Creates a unique temporary directory for each unit test and uses
- * g_set_user_dirs() to set XDG directories to point into subdirectories of it
- * for the duration of the unit test. The directory tree is cleaned up after the
- * test finishes successfully. Note that this doesn’t take effect until
- * g_test_run() is called, so calls to (for example) g_get_user_home_dir() will
- * return the system-wide value when made in a test program’s main() function.
- *
- * The following functions will return subdirectories of the temporary directory
- * when this option is used. The specific subdirectory paths in use are not
- * guaranteed to be stable API — always use a getter function to retrieve them.
- *
- * - g_get_home_dir()
- * - g_get_user_cache_dir()
- * - g_get_system_config_dirs()
- * - g_get_user_config_dir()
- * - g_get_system_data_dirs()
- * - g_get_user_data_dir()
- * - g_get_user_runtime_dir()
- *
- * The subdirectories may not be created by the test harness; as with normal
- * calls to functions like g_get_user_cache_dir(), the caller must be prepared
- * to create the directory if it doesn’t exist.
- */
-enum TEST_OPTION_ISOLATE_DIRS = "isolate_dirs";
-alias G_TEST_OPTION_ISOLATE_DIRS = TEST_OPTION_ISOLATE_DIRS;
 
 /**
  * Evaluates to a time span of one day.

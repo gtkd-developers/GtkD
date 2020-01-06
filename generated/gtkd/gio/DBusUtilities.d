@@ -37,7 +37,6 @@ private import glib.Variant;
 private import glib.VariantType;
 private import gobject.ObjectG;
 private import gobject.Value;
-public  import gtkc.giotypes;
 
 
 /** */
@@ -48,10 +47,10 @@ public struct DBusUtilities
 	 * Escape @string so it can appear in a D-Bus address as the value
 	 * part of a key-value pair.
 	 *
-	 * For instance, if @string is `/run/bus-for-:0`,
-	 * this function would return `/run/bus-for-%3A0`,
+	 * For instance, if @string is "/run/bus-for-:0",
+	 * this function would return "/run/bus-for-%3A0",
 	 * which could be used in a D-Bus address like
-	 * `unix:nonce-tcp:host=127.0.0.1,port=42,noncefile=/run/bus-for-%3A0`.
+	 * "unix:nonce-tcp:host=127.0.0.1,port=42,noncefile=/run/bus-for-%3A0".
 	 *
 	 * Params:
 	 *     string_ = an unescaped string to be included in a D-Bus address
@@ -148,7 +147,7 @@ public struct DBusUtilities
 		char* outoutGuid = null;
 		GError* err = null;
 
-		auto p = g_dbus_address_get_stream_finish((res is null) ? null : res.getAsyncResultStruct(), &outoutGuid, &err);
+		auto __p = g_dbus_address_get_stream_finish((res is null) ? null : res.getAsyncResultStruct(), &outoutGuid, &err);
 
 		if (err !is null)
 		{
@@ -157,12 +156,12 @@ public struct DBusUtilities
 
 		outGuid = Str.toString(outoutGuid);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IOStream)(cast(GIOStream*) p, true);
+		return ObjectG.getDObject!(IOStream)(cast(GIOStream*) __p, true);
 	}
 
 	/**
@@ -190,7 +189,7 @@ public struct DBusUtilities
 		char* outoutGuid = null;
 		GError* err = null;
 
-		auto p = g_dbus_address_get_stream_sync(Str.toStringz(address), &outoutGuid, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_dbus_address_get_stream_sync(Str.toStringz(address), &outoutGuid, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
@@ -199,12 +198,12 @@ public struct DBusUtilities
 
 		outGuid = Str.toString(outoutGuid);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IOStream)(cast(GIOStream*) p, true);
+		return ObjectG.getDObject!(IOStream)(cast(GIOStream*) __p, true);
 	}
 
 	/**
@@ -268,25 +267,21 @@ public struct DBusUtilities
 	 */
 	public static Variant gvalueToGvariant(Value gvalue, VariantType type)
 	{
-		auto p = g_dbus_gvalue_to_gvariant((gvalue is null) ? null : gvalue.getValueStruct(), (type is null) ? null : type.getVariantTypeStruct());
+		auto __p = g_dbus_gvalue_to_gvariant((gvalue is null) ? null : gvalue.getValueStruct(), (type is null) ? null : type.getVariantTypeStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
 	 * Converts a #GVariant to a #GValue. If @value is floating, it is consumed.
 	 *
 	 * The rules specified in the g_dbus_gvalue_to_gvariant() function are
-	 * used - this function is essentially its reverse form. So, a #GVariant
-	 * containing any basic or string array type will be converted to a #GValue
-	 * containing a basic value or string array. Any other #GVariant (handle,
-	 * variant, tuple, dict entry) will be converted to a #GValue containing that
-	 * #GVariant.
+	 * used - this function is essentially its reverse form.
 	 *
 	 * The conversion never fails - a valid #GValue is always returned in
 	 * @out_gvalue.
@@ -409,14 +404,14 @@ public struct DBusUtilities
 	{
 		GError* err = null;
 
-		auto p = g_dbus_is_supported_address(Str.toStringz(string_), &err) != 0;
+		auto __p = g_dbus_is_supported_address(Str.toStringz(string_), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**

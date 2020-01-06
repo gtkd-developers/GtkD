@@ -31,7 +31,6 @@ private import gtk.Bin;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -136,14 +135,14 @@ public class Frame : Bin
 	 */
 	public this(string label)
 	{
-		auto p = gtk_frame_new(Str.toStringz(label));
+		auto __p = gtk_frame_new(Str.toStringz(label));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkFrame*) p);
+		this(cast(GtkFrame*) __p);
 	}
 
 	/**
@@ -186,14 +185,14 @@ public class Frame : Bin
 	 */
 	public Widget getLabelWidget()
 	{
-		auto p = gtk_frame_get_label_widget(gtkFrame);
+		auto __p = gtk_frame_get_label_widget(gtkFrame);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**

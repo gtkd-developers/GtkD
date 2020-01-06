@@ -31,7 +31,6 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -115,14 +114,14 @@ public class Credentials : ObjectG
 	 */
 	public this()
 	{
-		auto p = g_credentials_new();
+		auto __p = g_credentials_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GCredentials*) p, true);
+		this(cast(GCredentials*) __p, true);
 	}
 
 	/**
@@ -166,14 +165,14 @@ public class Credentials : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_credentials_get_unix_pid(gCredentials, &err);
+		auto __p = g_credentials_get_unix_pid(gCredentials, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -194,14 +193,14 @@ public class Credentials : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_credentials_get_unix_user(gCredentials, &err);
+		auto __p = g_credentials_get_unix_user(gCredentials, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -224,14 +223,14 @@ public class Credentials : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_credentials_is_same_user(gCredentials, (otherCredentials is null) ? null : otherCredentials.getCredentialsStruct(), &err) != 0;
+		auto __p = g_credentials_is_same_user(gCredentials, (otherCredentials is null) ? null : otherCredentials.getCredentialsStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -275,14 +274,14 @@ public class Credentials : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_credentials_set_unix_user(gCredentials, uid, &err) != 0;
+		auto __p = g_credentials_set_unix_user(gCredentials, uid, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**

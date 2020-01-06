@@ -36,7 +36,6 @@ private import gtk.Menu;
 private import gtk.Tooltip;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -181,14 +180,14 @@ public class StatusIcon : ObjectG
 	 */
 	public this()
 	{
-		auto p = gtk_status_icon_new();
+		auto __p = gtk_status_icon_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkStatusIcon*) p, true);
+		this(cast(GtkStatusIcon*) __p, true);
 	}
 
 	/**
@@ -209,14 +208,14 @@ public class StatusIcon : ObjectG
 	 */
 	public this(IconIF icon)
 	{
-		auto p = gtk_status_icon_new_from_gicon((icon is null) ? null : icon.getIconStruct());
+		auto __p = gtk_status_icon_new_from_gicon((icon is null) ? null : icon.getIconStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_gicon");
 		}
 
-		this(cast(GtkStatusIcon*) p, true);
+		this(cast(GtkStatusIcon*) __p, true);
 	}
 
 	/**
@@ -239,14 +238,14 @@ public class StatusIcon : ObjectG
 	 */
 	public this(Pixbuf pixbuf)
 	{
-		auto p = gtk_status_icon_new_from_pixbuf((pixbuf is null) ? null : pixbuf.getPixbufStruct());
+		auto __p = gtk_status_icon_new_from_pixbuf((pixbuf is null) ? null : pixbuf.getPixbufStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_pixbuf");
 		}
 
-		this(cast(GtkStatusIcon*) p, true);
+		this(cast(GtkStatusIcon*) __p, true);
 	}
 
 	/**
@@ -315,11 +314,11 @@ public class StatusIcon : ObjectG
 	{
 		GdkScreen* outscreen = null;
 
-		auto p = gtk_status_icon_get_geometry(gtkStatusIcon, &outscreen, &area, &orientation) != 0;
+		auto __p = gtk_status_icon_get_geometry(gtkStatusIcon, &outscreen, &area, &orientation) != 0;
 
 		screen = ObjectG.getDObject!(Screen)(outscreen);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -341,14 +340,14 @@ public class StatusIcon : ObjectG
 	 */
 	public IconIF getGicon()
 	{
-		auto p = gtk_status_icon_get_gicon(gtkStatusIcon);
+		auto __p = gtk_status_icon_get_gicon(gtkStatusIcon);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) __p);
 	}
 
 	/**
@@ -406,14 +405,14 @@ public class StatusIcon : ObjectG
 	 */
 	public Pixbuf getPixbuf()
 	{
-		auto p = gtk_status_icon_get_pixbuf(gtkStatusIcon);
+		auto __p = gtk_status_icon_get_pixbuf(gtkStatusIcon);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) __p);
 	}
 
 	/**
@@ -429,14 +428,14 @@ public class StatusIcon : ObjectG
 	 */
 	public Screen getScreen()
 	{
-		auto p = gtk_status_icon_get_screen(gtkStatusIcon);
+		auto __p = gtk_status_icon_get_screen(gtkStatusIcon);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
+		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) __p);
 	}
 
 	/**

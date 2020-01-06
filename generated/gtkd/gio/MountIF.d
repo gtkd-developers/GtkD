@@ -38,7 +38,6 @@ private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -57,9 +56,9 @@ private import std.algorithm;
  * g_mount_unmount_with_operation() with (at least) the #GMount instance and a
  * #GAsyncReadyCallback.  The callback will be fired when the
  * operation has resolved (either with success or failure), and a
- * #GAsyncResult structure will be passed to the callback.  That
+ * #GAsyncReady structure will be passed to the callback.  That
  * callback should then call g_mount_unmount_with_operation_finish() with the #GMount
- * and the #GAsyncResult data to see if the operation was completed
+ * and the #GAsyncReady data to see if the operation was completed
  * successfully.  If an @error is present when g_mount_unmount_with_operation_finish()
  * is called, then it will be filled with any error information.
  */
@@ -78,14 +77,14 @@ public interface MountIF{
 	}
 
 	/**
-	 * Checks if @mount can be ejected.
+	 * Checks if @mount can be eject.
 	 *
 	 * Returns: %TRUE if the @mount can be ejected.
 	 */
 	public bool canEject();
 
 	/**
-	 * Checks if @mount can be unmounted.
+	 * Checks if @mount can be mounted.
 	 *
 	 * Returns: %TRUE if the @mount can be unmounted.
 	 */
@@ -170,8 +169,7 @@ public interface MountIF{
 	 * This is a convenience method for getting the #GVolume and then
 	 * using that object to get the #GDrive.
 	 *
-	 * Returns: a #GDrive or %NULL if @mount is not
-	 *     associated with a volume or a drive.
+	 * Returns: a #GDrive or %NULL if @mount is not associated with a volume or a drive.
 	 *     The returned object should be unreffed with
 	 *     g_object_unref() when no longer needed.
 	 */
@@ -230,8 +228,7 @@ public interface MountIF{
 	 * considered an opaque string. Returns %NULL if there is no UUID
 	 * available.
 	 *
-	 * Returns: the UUID for @mount or %NULL if no UUID
-	 *     can be computed.
+	 * Returns: the UUID for @mount or %NULL if no UUID can be computed.
 	 *     The returned string should be freed with g_free()
 	 *     when no longer needed.
 	 */
@@ -240,8 +237,7 @@ public interface MountIF{
 	/**
 	 * Gets the volume for the @mount.
 	 *
-	 * Returns: a #GVolume or %NULL if @mount is not
-	 *     associated with a volume.
+	 * Returns: a #GVolume or %NULL if @mount is not associated with a volume.
 	 *     The returned object should be unreffed with
 	 *     g_object_unref() when no longer needed.
 	 */
@@ -468,11 +464,8 @@ public interface MountIF{
 	gulong addOnChanged(void delegate(MountIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 
 	/**
-	 * This signal may be emitted when the #GMount is about to be
+	 * This signal is emitted when the #GMount is about to be
 	 * unmounted.
-	 *
-	 * This signal depends on the backend and is only emitted if
-	 * GIO was used to unmount.
 	 *
 	 * Since: 2.22
 	 */

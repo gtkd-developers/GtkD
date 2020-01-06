@@ -30,7 +30,6 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -41,8 +40,6 @@ private import std.algorithm;
  * 
  * In GTK+, the main widgets that implement this interface are
  * #GtkColorChooserWidget, #GtkColorChooserDialog and #GtkColorButton.
- *
- * Since: 3.4
  */
 public interface ColorChooserIF{
 	/** Get the main Gtk struct */

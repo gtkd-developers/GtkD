@@ -31,7 +31,6 @@ private import gtk.Container;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -97,14 +96,14 @@ public class HeaderBar : Container
 	 */
 	public this()
 	{
-		auto p = gtk_header_bar_new();
+		auto __p = gtk_header_bar_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkHeaderBar*) p);
+		this(cast(GtkHeaderBar*) __p);
 	}
 
 	/**
@@ -118,14 +117,14 @@ public class HeaderBar : Container
 	 */
 	public Widget getCustomTitle()
 	{
-		auto p = gtk_header_bar_get_custom_title(gtkHeaderBar);
+		auto __p = gtk_header_bar_get_custom_title(gtkHeaderBar);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**

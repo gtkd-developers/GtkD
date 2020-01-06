@@ -33,10 +33,8 @@ public  import gio.c.functions;
 public  import gio.c.types;
 public  import glib.ErrorG;
 public  import glib.GException;
-public  import glib.Str;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
-public  import gtkc.giotypes;
 public  import std.algorithm;
 
 
@@ -108,14 +106,14 @@ public template DtlsConnectionT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_dtls_connection_close(getDtlsConnectionStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_dtls_connection_close(getDtlsConnectionStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -153,14 +151,14 @@ public template DtlsConnectionT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_dtls_connection_close_finish(getDtlsConnectionStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_dtls_connection_close_finish(getDtlsConnectionStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -191,14 +189,14 @@ public template DtlsConnectionT(TStruct)
 	 */
 	public TlsCertificate getCertificate()
 	{
-		auto p = g_dtls_connection_get_certificate(getDtlsConnectionStruct());
+		auto __p = g_dtls_connection_get_certificate(getDtlsConnectionStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TlsCertificate)(cast(GTlsCertificate*) p);
+		return ObjectG.getDObject!(TlsCertificate)(cast(GTlsCertificate*) __p);
 	}
 
 	/**
@@ -211,14 +209,14 @@ public template DtlsConnectionT(TStruct)
 	 */
 	public TlsDatabase getDatabase()
 	{
-		auto p = g_dtls_connection_get_database(getDtlsConnectionStruct());
+		auto __p = g_dtls_connection_get_database(getDtlsConnectionStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TlsDatabase)(cast(GTlsDatabase*) p);
+		return ObjectG.getDObject!(TlsDatabase)(cast(GTlsDatabase*) __p);
 	}
 
 	/**
@@ -232,32 +230,14 @@ public template DtlsConnectionT(TStruct)
 	 */
 	public TlsInteraction getInteraction()
 	{
-		auto p = g_dtls_connection_get_interaction(getDtlsConnectionStruct());
+		auto __p = g_dtls_connection_get_interaction(getDtlsConnectionStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TlsInteraction)(cast(GTlsInteraction*) p);
-	}
-
-	/**
-	 * Gets the name of the application-layer protocol negotiated during
-	 * the handshake.
-	 *
-	 * If the peer did not use the ALPN extension, or did not advertise a
-	 * protocol that matched one of @conn's protocols, or the TLS backend
-	 * does not support ALPN, then this will be %NULL. See
-	 * g_dtls_connection_set_advertised_protocols().
-	 *
-	 * Returns: the negotiated protocol, or %NULL
-	 *
-	 * Since: 2.60
-	 */
-	public string getNegotiatedProtocol()
-	{
-		return Str.toString(g_dtls_connection_get_negotiated_protocol(getDtlsConnectionStruct()));
+		return ObjectG.getDObject!(TlsInteraction)(cast(GTlsInteraction*) __p);
 	}
 
 	/**
@@ -271,14 +251,14 @@ public template DtlsConnectionT(TStruct)
 	 */
 	public TlsCertificate getPeerCertificate()
 	{
-		auto p = g_dtls_connection_get_peer_certificate(getDtlsConnectionStruct());
+		auto __p = g_dtls_connection_get_peer_certificate(getDtlsConnectionStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TlsCertificate)(cast(GTlsCertificate*) p);
+		return ObjectG.getDObject!(TlsCertificate)(cast(GTlsCertificate*) __p);
 	}
 
 	/**
@@ -340,15 +320,8 @@ public template DtlsConnectionT(TStruct)
 	 * Likewise, on the server side, although a handshake is necessary at
 	 * the beginning of the communication, you do not need to call this
 	 * function explicitly unless you want clearer error reporting.
-	 *
-	 * If TLS 1.2 or older is in use, you may call
-	 * g_dtls_connection_handshake() after the initial handshake to
-	 * rehandshake; however, this usage is deprecated because rehandshaking
-	 * is no longer part of the TLS protocol in TLS 1.3. Accordingly, the
-	 * behavior of calling this function after the initial handshake is now
-	 * undefined, except it is guaranteed to be reasonable and
-	 * nondestructive so as to preserve compatibility with code written for
-	 * older versions of GLib.
+	 * However, you may call g_dtls_connection_handshake() later on to
+	 * renegotiate parameters (encryption methods, etc) with the client.
 	 *
 	 * #GDtlsConnection::accept_certificate may be emitted during the
 	 * handshake.
@@ -366,14 +339,14 @@ public template DtlsConnectionT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_dtls_connection_handshake(getDtlsConnectionStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_dtls_connection_handshake(getDtlsConnectionStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -411,37 +384,14 @@ public template DtlsConnectionT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_dtls_connection_handshake_finish(getDtlsConnectionStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_dtls_connection_handshake_finish(getDtlsConnectionStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
-	}
-
-	/**
-	 * Sets the list of application-layer protocols to advertise that the
-	 * caller is willing to speak on this connection. The
-	 * Application-Layer Protocol Negotiation (ALPN) extension will be
-	 * used to negotiate a compatible protocol with the peer; use
-	 * g_dtls_connection_get_negotiated_protocol() to find the negotiated
-	 * protocol after the handshake.  Specifying %NULL for the the value
-	 * of @protocols will disable ALPN negotiation.
-	 *
-	 * See [IANA TLS ALPN Protocol IDs](https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids)
-	 * for a list of registered protocol IDs.
-	 *
-	 * Params:
-	 *     protocols = a %NULL-terminated
-	 *         array of ALPN protocol names (eg, "http/1.1", "h2"), or %NULL
-	 *
-	 * Since: 2.60
-	 */
-	public void setAdvertisedProtocols(string[] protocols)
-	{
-		g_dtls_connection_set_advertised_protocols(getDtlsConnectionStruct(), Str.toStringzArray(protocols));
+		return __p;
 	}
 
 	/**
@@ -477,7 +427,7 @@ public template DtlsConnectionT(TStruct)
 	/**
 	 * Sets the certificate database that is used to verify peer certificates.
 	 * This is set to the default database by default. See
-	 * g_tls_backend_get_default_database(). If set to %NULL, then
+	 * g_dtls_backend_get_default_database(). If set to %NULL, then
 	 * peer certificate validation will always set the
 	 * %G_TLS_CERTIFICATE_UNKNOWN_CA error (meaning
 	 * #GDtlsConnection::accept-certificate will always be emitted on
@@ -533,10 +483,6 @@ public template DtlsConnectionT(TStruct)
 	 * leaves the server open to certain attacks. However, this mode is
 	 * necessary if you need to allow renegotiation with older client
 	 * software.
-	 *
-	 * Deprecated: Changing the rehandshake mode is no longer
-	 * required for compatibility. Also, rehandshaking has been removed
-	 * from the TLS protocol in TLS 1.3.
 	 *
 	 * Params:
 	 *     mode = the rehandshaking mode
@@ -618,14 +564,14 @@ public template DtlsConnectionT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_dtls_connection_shutdown(getDtlsConnectionStruct(), shutdownRead, shutdownWrite, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_dtls_connection_shutdown(getDtlsConnectionStruct(), shutdownRead, shutdownWrite, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -665,14 +611,14 @@ public template DtlsConnectionT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_dtls_connection_shutdown_finish(getDtlsConnectionStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_dtls_connection_shutdown_finish(getDtlsConnectionStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -701,8 +647,8 @@ public template DtlsConnectionT(TStruct)
 	 * let the user decide whether or not to accept the certificate, you
 	 * would have to return %FALSE from the signal handler on the first
 	 * attempt, and then after the connection attempt returns a
-	 * %G_TLS_ERROR_BAD_CERTIFICATE, you can interact with the user, and
-	 * if the user decides to accept the certificate, remember that fact,
+	 * %G_TLS_ERROR_HANDSHAKE, you can interact with the user, and if
+	 * the user decides to accept the certificate, remember that fact,
 	 * create a new connection, and return %TRUE from the signal handler
 	 * the next time.
 	 *

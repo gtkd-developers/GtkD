@@ -32,24 +32,11 @@ public  import gio.c.types;
 private import glib.ErrorG;
 private import glib.GException;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
- * #GSocketAddressEnumerator is an enumerator type for #GSocketAddress
- * instances. It is returned by enumeration functions such as
- * g_socket_connectable_enumerate(), which returns a #GSocketAddressEnumerator
- * to list all the #GSocketAddresses which could be used to connect to that
- * #GSocketConnectable.
- * 
- * Enumeration is typically a blocking operation, so the asynchronous methods
- * g_socket_address_enumerator_next_async() and
- * g_socket_address_enumerator_next_finish() should be used where possible.
- * 
- * Each #GSocketAddressEnumerator can only be enumerated once. Once
- * g_socket_address_enumerator_next() has returned %NULL (and no error), further
- * enumeration with that #GSocketAddressEnumerator is not possible, and it can
- * be unreffed.
+ * Enumerator type for objects that contain or generate
+ * #GSocketAddress<!-- -->es.
  */
 public class SocketAddressEnumerator : ObjectG
 {
@@ -114,27 +101,25 @@ public class SocketAddressEnumerator : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_socket_address_enumerator_next(gSocketAddressEnumerator, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_socket_address_enumerator_next(gSocketAddressEnumerator, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SocketAddress)(cast(GSocketAddress*) p, true);
+		return ObjectG.getDObject!(SocketAddress)(cast(GSocketAddress*) __p, true);
 	}
 
 	/**
 	 * Asynchronously retrieves the next #GSocketAddress from @enumerator
 	 * and then calls @callback, which must call
 	 * g_socket_address_enumerator_next_finish() to get the result.
-	 *
-	 * It is an error to call this multiple times before the previous callback has finished.
 	 *
 	 * Params:
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
@@ -166,18 +151,18 @@ public class SocketAddressEnumerator : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_socket_address_enumerator_next_finish(gSocketAddressEnumerator, (result is null) ? null : result.getAsyncResultStruct(), &err);
+		auto __p = g_socket_address_enumerator_next_finish(gSocketAddressEnumerator, (result is null) ? null : result.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SocketAddress)(cast(GSocketAddress*) p, true);
+		return ObjectG.getDObject!(SocketAddress)(cast(GSocketAddress*) __p, true);
 	}
 }

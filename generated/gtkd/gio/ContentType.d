@@ -31,7 +31,6 @@ public  import gio.c.types;
 private import glib.ListG;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /** */
@@ -138,14 +137,14 @@ public struct ContentType
 	 */
 	public static IconIF getIcon(string type)
 	{
-		auto p = g_content_type_get_icon(Str.toStringz(type));
+		auto __p = g_content_type_get_icon(Str.toStringz(type));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p, true);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) __p, true);
 	}
 
 	/**
@@ -154,8 +153,8 @@ public struct ContentType
 	 * Params:
 	 *     type = a content type string
 	 *
-	 * Returns: the registered mime type for the
-	 *     given @type, or %NULL if unknown; free with g_free().
+	 * Returns: the registered mime type for the given @type,
+	 *     or %NULL if unknown.
 	 */
 	public static string getMimeType(string type)
 	{
@@ -178,14 +177,14 @@ public struct ContentType
 	 */
 	public static IconIF getSymbolicIcon(string type)
 	{
-		auto p = g_content_type_get_symbolic_icon(Str.toStringz(type));
+		auto __p = g_content_type_get_symbolic_icon(Str.toStringz(type));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p, true);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) __p, true);
 	}
 
 	/**
@@ -279,21 +278,21 @@ public struct ContentType
 	/**
 	 * Gets a list of strings containing all the registered content types
 	 * known to the system. The list and its data should be freed using
-	 * `g_list_free_full (list, g_free)`.
+	 * g_list_free_full (list, g_free).
 	 *
 	 * Returns: list of the registered
 	 *     content types
 	 */
 	public static ListG contentTypesGetRegistered()
 	{
-		auto p = g_content_types_get_registered();
+		auto __p = g_content_types_get_registered();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -312,57 +311,5 @@ public struct ContentType
 	public static bool isMimeType(string type, string mimeType)
 	{
 		return g_content_type_is_mime_type(Str.toStringz(type), Str.toStringz(mimeType)) != 0;
-	}
-
-	/**
-	 * Get the list of directories which MIME data is loaded from. See
-	 * g_content_type_set_mime_dirs() for details.
-	 *
-	 * Returns: %NULL-terminated list of
-	 *     directories to load MIME data from, including any `mime/` subdirectory,
-	 *     and with the first directory to try listed first
-	 *
-	 * Since: 2.60
-	 */
-	public static string[] getMimeDirs()
-	{
-		return Str.toStringArray(g_content_type_get_mime_dirs());
-	}
-
-	/**
-	 * Set the list of directories used by GIO to load the MIME database.
-	 * If @dirs is %NULL, the directories used are the default:
-	 *
-	 * - the `mime` subdirectory of the directory in `$XDG_DATA_HOME`
-	 * - the `mime` subdirectory of every directory in `$XDG_DATA_DIRS`
-	 *
-	 * This function is intended to be used when writing tests that depend on
-	 * information stored in the MIME database, in order to control the data.
-	 *
-	 * Typically, in case your tests use %G_TEST_OPTION_ISOLATE_DIRS, but they
-	 * depend on the system’s MIME database, you should call this function
-	 * with @dirs set to %NULL before calling g_test_init(), for instance:
-	 *
-	 * |[<!-- language="C" -->
-	 * // Load MIME data from the system
-	 * g_content_type_set_mime_dirs (NULL);
-	 * // Isolate the environment
-	 * g_test_init (&argc, &argv, G_TEST_OPTION_ISOLATE_DIRS, NULL);
-	 *
-	 * …
-	 *
-	 * return g_test_run ();
-	 * ]|
-	 *
-	 * Params:
-	 *     dirs = %NULL-terminated list of
-	 *         directories to load MIME data from, including any `mime/` subdirectory,
-	 *         and with the first directory to try listed first
-	 *
-	 * Since: 2.60
-	 */
-	public static void setMimeDirs(string[] dirs)
-	{
-		g_content_type_set_mime_dirs(Str.toStringzArray(dirs));
 	}
 }

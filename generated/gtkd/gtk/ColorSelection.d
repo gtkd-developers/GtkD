@@ -35,7 +35,6 @@ private import gtk.Box;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -84,14 +83,14 @@ public class ColorSelection : Box
 	 */
 	public this()
 	{
-		auto p = gtk_color_selection_new();
+		auto __p = gtk_color_selection_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkColorSelection*) p);
+		this(cast(GtkColorSelection*) __p);
 	}
 
 	/**
@@ -110,7 +109,7 @@ public class ColorSelection : Box
 		GdkColor* outcolors = null;
 		int nColors;
 
-		auto p = gtk_color_selection_palette_from_string(Str.toStringz(str), &outcolors, &nColors) != 0;
+		auto __p = gtk_color_selection_palette_from_string(Str.toStringz(str), &outcolors, &nColors) != 0;
 
 		colors = new Color[nColors];
 		for(size_t i = 0; i < nColors; i++)
@@ -118,7 +117,7 @@ public class ColorSelection : Box
 			colors[i] = ObjectG.getDObject!(Color)(cast(GdkColor*) &outcolors[i]);
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**

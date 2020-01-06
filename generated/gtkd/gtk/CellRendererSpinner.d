@@ -29,7 +29,6 @@ private import gobject.ObjectG;
 private import gtk.CellRenderer;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -91,13 +90,13 @@ public class CellRendererSpinner : CellRenderer
 	 */
 	public this()
 	{
-		auto p = gtk_cell_renderer_spinner_new();
+		auto __p = gtk_cell_renderer_spinner_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkCellRendererSpinner*) p);
+		this(cast(GtkCellRendererSpinner*) __p);
 	}
 }

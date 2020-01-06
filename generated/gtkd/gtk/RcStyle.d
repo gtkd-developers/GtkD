@@ -35,7 +35,6 @@ private import gtk.Style;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -95,14 +94,14 @@ public class RcStyle : ObjectG
 	 */
 	public this()
 	{
-		auto p = gtk_rc_style_new();
+		auto __p = gtk_rc_style_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkRcStyle*) p, true);
+		this(cast(GtkRcStyle*) __p, true);
 	}
 
 	/**
@@ -116,14 +115,14 @@ public class RcStyle : ObjectG
 	 */
 	public RcStyle copy()
 	{
-		auto p = gtk_rc_style_copy(gtkRcStyle);
+		auto __p = gtk_rc_style_copy(gtkRcStyle);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(RcStyle)(cast(GtkRcStyle*) p, true);
+		return ObjectG.getDObject!(RcStyle)(cast(GtkRcStyle*) __p, true);
 	}
 
 	/**
@@ -273,14 +272,14 @@ public class RcStyle : ObjectG
 	 */
 	public static Style getStyle(Widget widget)
 	{
-		auto p = gtk_rc_get_style((widget is null) ? null : widget.getWidgetStruct());
+		auto __p = gtk_rc_get_style((widget is null) ? null : widget.getWidgetStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Style)(cast(GtkStyle*) p);
+		return ObjectG.getDObject!(Style)(cast(GtkStyle*) __p);
 	}
 
 	/**
@@ -319,14 +318,14 @@ public class RcStyle : ObjectG
 	 */
 	public static Style getStyleByPath(Settings settings, string widgetPath, string classPath, GType type)
 	{
-		auto p = gtk_rc_get_style_by_paths((settings is null) ? null : settings.getSettingsStruct(), Str.toStringz(widgetPath), Str.toStringz(classPath), type);
+		auto __p = gtk_rc_get_style_by_paths((settings is null) ? null : settings.getSettingsStruct(), Str.toStringz(widgetPath), Str.toStringz(classPath), type);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Style)(cast(GtkStyle*) p);
+		return ObjectG.getDObject!(Style)(cast(GtkStyle*) __p);
 	}
 
 	/**
@@ -381,11 +380,11 @@ public class RcStyle : ObjectG
 	{
 		GdkColor* outcolor = sliceNew!GdkColor();
 
-		auto p = gtk_rc_parse_color((scanner is null) ? null : scanner.getScannerGStruct(), outcolor);
+		auto __p = gtk_rc_parse_color((scanner is null) ? null : scanner.getScannerGStruct(), outcolor);
 
 		color = ObjectG.getDObject!(Color)(outcolor, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -410,11 +409,11 @@ public class RcStyle : ObjectG
 	{
 		GdkColor* outcolor = sliceNew!GdkColor();
 
-		auto p = gtk_rc_parse_color_full((scanner is null) ? null : scanner.getScannerGStruct(), (style is null) ? null : style.getRcStyleStruct(), outcolor);
+		auto __p = gtk_rc_parse_color_full((scanner is null) ? null : scanner.getScannerGStruct(), (style is null) ? null : style.getRcStyleStruct(), outcolor);
 
 		color = ObjectG.getDObject!(Color)(outcolor, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -531,14 +530,14 @@ public class RcStyle : ObjectG
 	 */
 	public static ScannerG scannerNew()
 	{
-		auto p = gtk_rc_scanner_new();
+		auto __p = gtk_rc_scanner_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ScannerG(cast(GScanner*) p);
+		return new ScannerG(cast(GScanner*) __p);
 	}
 
 	/**

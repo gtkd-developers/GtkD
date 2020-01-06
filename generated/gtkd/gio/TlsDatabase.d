@@ -37,16 +37,12 @@ private import glib.GException;
 private import glib.ListG;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
  * #GTlsDatabase is used to lookup certificates and other information
  * from a certificate or key store. It is an abstract base class which
  * TLS library specific subtypes override.
- * 
- * A #GTlsDatabase may be accessed from multiple threads by the TLS backend.
- * All implementations are required to be fully thread-safe.
  * 
  * Most common client applications will not directly interact with
  * #GTlsDatabase. It is used internally by #GTlsConnection.
@@ -145,19 +141,19 @@ public class TlsDatabase : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_tls_database_lookup_certificate_for_handle(gTlsDatabase, Str.toStringz(handle), (interaction is null) ? null : interaction.getTlsInteractionStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_tls_database_lookup_certificate_for_handle(gTlsDatabase, Str.toStringz(handle), (interaction is null) ? null : interaction.getTlsInteractionStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TlsCertificate)(cast(GTlsCertificate*) p, true);
+		return ObjectG.getDObject!(TlsCertificate)(cast(GTlsCertificate*) __p, true);
 	}
 
 	/**
@@ -181,7 +177,7 @@ public class TlsDatabase : ObjectG
 
 	/**
 	 * Finish an asynchronous lookup of a certificate by its handle. See
-	 * g_tls_database_lookup_certificate_by_handle() for more information.
+	 * g_tls_database_lookup_certificate_handle() for more information.
 	 *
 	 * If the handle is no longer valid, or does not point to a certificate in
 	 * this database, then %NULL will be returned.
@@ -200,25 +196,25 @@ public class TlsDatabase : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_tls_database_lookup_certificate_for_handle_finish(gTlsDatabase, (result is null) ? null : result.getAsyncResultStruct(), &err);
+		auto __p = g_tls_database_lookup_certificate_for_handle_finish(gTlsDatabase, (result is null) ? null : result.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TlsCertificate)(cast(GTlsCertificate*) p, true);
+		return ObjectG.getDObject!(TlsCertificate)(cast(GTlsCertificate*) __p, true);
 	}
 
 	/**
 	 * Lookup the issuer of @certificate in the database.
 	 *
-	 * The #GTlsCertificate:issuer property
+	 * The %issuer property
 	 * of @certificate is not modified, and the two certificates are not hooked
 	 * into a chain.
 	 *
@@ -242,19 +238,19 @@ public class TlsDatabase : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_tls_database_lookup_certificate_issuer(gTlsDatabase, (certificate is null) ? null : certificate.getTlsCertificateStruct(), (interaction is null) ? null : interaction.getTlsInteractionStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_tls_database_lookup_certificate_issuer(gTlsDatabase, (certificate is null) ? null : certificate.getTlsCertificateStruct(), (interaction is null) ? null : interaction.getTlsInteractionStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TlsCertificate)(cast(GTlsCertificate*) p, true);
+		return ObjectG.getDObject!(TlsCertificate)(cast(GTlsCertificate*) __p, true);
 	}
 
 	/**
@@ -294,19 +290,19 @@ public class TlsDatabase : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_tls_database_lookup_certificate_issuer_finish(gTlsDatabase, (result is null) ? null : result.getAsyncResultStruct(), &err);
+		auto __p = g_tls_database_lookup_certificate_issuer_finish(gTlsDatabase, (result is null) ? null : result.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TlsCertificate)(cast(GTlsCertificate*) p, true);
+		return ObjectG.getDObject!(TlsCertificate)(cast(GTlsCertificate*) __p, true);
 	}
 
 	/**
@@ -332,19 +328,19 @@ public class TlsDatabase : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_tls_database_lookup_certificates_issued_by(gTlsDatabase, (issuerRawDn is null) ? null : issuerRawDn.getByteArrayStruct(), (interaction is null) ? null : interaction.getTlsInteractionStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_tls_database_lookup_certificates_issued_by(gTlsDatabase, (issuerRawDn is null) ? null : issuerRawDn.getByteArrayStruct(), (interaction is null) ? null : interaction.getTlsInteractionStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -388,19 +384,19 @@ public class TlsDatabase : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_tls_database_lookup_certificates_issued_by_finish(gTlsDatabase, (result is null) ? null : result.getAsyncResultStruct(), &err);
+		auto __p = g_tls_database_lookup_certificates_issued_by_finish(gTlsDatabase, (result is null) ? null : result.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -408,7 +404,7 @@ public class TlsDatabase : ObjectG
 	 * adding any missing certificates to the chain.
 	 *
 	 * @chain is a chain of #GTlsCertificate objects each pointing to the next
-	 * certificate in the chain by its #GTlsCertificate:issuer property. The chain may initially
+	 * certificate in the chain by its %issuer property. The chain may initially
 	 * consist of one or more certificates. After the verification process is
 	 * complete, @chain may be modified by adding missing certificates, or removing
 	 * extra certificates. If a certificate anchor was found, then it is added to
@@ -457,14 +453,14 @@ public class TlsDatabase : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_tls_database_verify_chain(gTlsDatabase, (chain is null) ? null : chain.getTlsCertificateStruct(), Str.toStringz(purpose), (identity is null) ? null : identity.getSocketConnectableStruct(), (interaction is null) ? null : interaction.getTlsInteractionStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_tls_database_verify_chain(gTlsDatabase, (chain is null) ? null : chain.getTlsCertificateStruct(), Str.toStringz(purpose), (identity is null) ? null : identity.getSocketConnectableStruct(), (interaction is null) ? null : interaction.getTlsInteractionStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -516,13 +512,13 @@ public class TlsDatabase : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_tls_database_verify_chain_finish(gTlsDatabase, (result is null) ? null : result.getAsyncResultStruct(), &err);
+		auto __p = g_tls_database_verify_chain_finish(gTlsDatabase, (result is null) ? null : result.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 }

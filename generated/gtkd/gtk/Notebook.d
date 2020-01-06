@@ -33,7 +33,6 @@ private import gtk.Label;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -179,14 +178,14 @@ public class Notebook : Container
 	 */
 	public this()
 	{
-		auto p = gtk_notebook_new();
+		auto __p = gtk_notebook_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkNotebook*) p);
+		this(cast(GtkNotebook*) __p);
 	}
 
 	/**
@@ -259,14 +258,14 @@ public class Notebook : Container
 	 */
 	public Widget getActionWidget(GtkPackType packType)
 	{
-		auto p = gtk_notebook_get_action_widget(gtkNotebook, packType);
+		auto __p = gtk_notebook_get_action_widget(gtkNotebook, packType);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -305,14 +304,14 @@ public class Notebook : Container
 	 */
 	public Widget getMenuLabel(Widget child)
 	{
-		auto p = gtk_notebook_get_menu_label(gtkNotebook, (child is null) ? null : child.getWidgetStruct());
+		auto __p = gtk_notebook_get_menu_label(gtkNotebook, (child is null) ? null : child.getWidgetStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -356,14 +355,14 @@ public class Notebook : Container
 	 */
 	public Widget getNthPage(int pageNum)
 	{
-		auto p = gtk_notebook_get_nth_page(gtkNotebook, pageNum);
+		auto __p = gtk_notebook_get_nth_page(gtkNotebook, pageNum);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -440,14 +439,14 @@ public class Notebook : Container
 	 */
 	public Widget getTabLabel(Widget child)
 	{
-		auto p = gtk_notebook_get_tab_label(gtkNotebook, (child is null) ? null : child.getWidgetStruct());
+		auto __p = gtk_notebook_get_tab_label(gtkNotebook, (child is null) ? null : child.getWidgetStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**

@@ -33,7 +33,6 @@ private import gio.c.functions;
 public  import gio.c.types;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -94,14 +93,14 @@ public class FileIcon : ObjectG, IconIF, LoadableIconIF
 	 */
 	public this(FileIF file)
 	{
-		auto p = g_file_icon_new((file is null) ? null : file.getFileStruct());
+		auto __p = g_file_icon_new((file is null) ? null : file.getFileStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GFileIcon*) p, true);
+		this(cast(GFileIcon*) __p, true);
 	}
 
 	/**
@@ -111,13 +110,13 @@ public class FileIcon : ObjectG, IconIF, LoadableIconIF
 	 */
 	public FileIF getFile()
 	{
-		auto p = g_file_icon_get_file(gFileIcon);
+		auto __p = g_file_icon_get_file(gFileIcon);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileIF)(cast(GFile*) p);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) __p);
 	}
 }

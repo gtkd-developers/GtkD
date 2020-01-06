@@ -30,7 +30,6 @@ private import gobject.Signals;
 private import gtk.Window;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -141,14 +140,14 @@ public class NativeDialog : ObjectG
 	 */
 	public Window getTransientFor()
 	{
-		auto p = gtk_native_dialog_get_transient_for(gtkNativeDialog);
+		auto __p = gtk_native_dialog_get_transient_for(gtkNativeDialog);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GtkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GtkWindow*) __p);
 	}
 
 	/**

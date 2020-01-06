@@ -29,7 +29,6 @@ private import glib.ListG;
 private import gobject.ObjectG;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -84,14 +83,14 @@ public class TextChildAnchor : ObjectG
 	 */
 	public this()
 	{
-		auto p = gtk_text_child_anchor_new();
+		auto __p = gtk_text_child_anchor_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkTextChildAnchor*) p, true);
+		this(cast(GtkTextChildAnchor*) __p, true);
 	}
 
 	/**
@@ -117,13 +116,13 @@ public class TextChildAnchor : ObjectG
 	 */
 	public ListG getWidgets()
 	{
-		auto p = gtk_text_child_anchor_get_widgets(gtkTextChildAnchor);
+		auto __p = gtk_text_child_anchor_get_widgets(gtkTextChildAnchor);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 }

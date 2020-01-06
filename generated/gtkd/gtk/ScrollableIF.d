@@ -30,7 +30,6 @@ private import gtk.Adjustment;
 private import gtk.Border;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**

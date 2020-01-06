@@ -29,8 +29,6 @@ private import gobject.ObjectG;
 private import gobject.Value;
 private import gobject.c.functions;
 public  import gobject.c.types;
-public  import gtkc.gobjecttypes;
-private import gtkd.Loader;
 
 
 /**
@@ -76,7 +74,7 @@ public class ParamSpec
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GOBJECT) && ownedRef )
+		if ( ownedRef )
 			g_param_spec_unref(gParamSpec);
 	}
 
@@ -111,14 +109,14 @@ public class ParamSpec
 	 */
 	public static ParamSpec internal(GType paramType, string name, string nick, string blurb, GParamFlags flags)
 	{
-		auto p = g_param_spec_internal(paramType, Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), flags);
+		auto __p = g_param_spec_internal(paramType, Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p);
 	}
 
 	/**
@@ -134,7 +132,7 @@ public class ParamSpec
 	/**
 	 * Gets the default value of @pspec as a pointer to a #GValue.
 	 *
-	 * The #GValue will remain valid for the life of @pspec.
+	 * The #GValue will remain value for the life of @pspec.
 	 *
 	 * Returns: a pointer to a #GValue which must not be modified
 	 *
@@ -142,14 +140,14 @@ public class ParamSpec
 	 */
 	public Value getDefaultValue()
 	{
-		auto p = g_param_spec_get_default_value(gParamSpec);
+		auto __p = g_param_spec_get_default_value(gParamSpec);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Value)(cast(GValue*) p);
+		return ObjectG.getDObject!(Value)(cast(GValue*) __p);
 	}
 
 	/**
@@ -216,14 +214,14 @@ public class ParamSpec
 	 */
 	public ParamSpec getRedirectTarget()
 	{
-		auto p = g_param_spec_get_redirect_target(gParamSpec);
+		auto __p = g_param_spec_get_redirect_target(gParamSpec);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p);
 	}
 
 	alias doref = ref_;
@@ -234,14 +232,14 @@ public class ParamSpec
 	 */
 	public ParamSpec ref_()
 	{
-		auto p = g_param_spec_ref(gParamSpec);
+		auto __p = g_param_spec_ref(gParamSpec);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p);
 	}
 
 	/**
@@ -253,14 +251,14 @@ public class ParamSpec
 	 */
 	public ParamSpec refSink()
 	{
-		auto p = g_param_spec_ref_sink(gParamSpec);
+		auto __p = g_param_spec_ref_sink(gParamSpec);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p);
 	}
 
 	/**

@@ -34,7 +34,6 @@ private import gobject.ObjectG;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /** */
@@ -93,14 +92,14 @@ public struct DragAndDrop
 	 */
 	public static Widget dragGetSourceWidget(DragContext context)
 	{
-		auto p = gtk_drag_get_source_widget((context is null) ? null : context.getDragContextStruct());
+		auto __p = gtk_drag_get_source_widget((context is null) ? null : context.getDragContextStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**

@@ -32,7 +32,6 @@ private import gobject.Signals;
 private import gtk.ToggleAction;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -123,14 +122,14 @@ public class RadioAction : ToggleAction
 	 */
 	public this(string name, string label, string tooltip, string stockId, int value)
 	{
-		auto p = gtk_radio_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId), value);
+		auto __p = gtk_radio_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId), value);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkRadioAction*) p, true);
+		this(cast(GtkRadioAction*) __p, true);
 	}
 
 	/**
@@ -171,14 +170,14 @@ public class RadioAction : ToggleAction
 	 */
 	public ListSG getGroup()
 	{
-		auto p = gtk_radio_action_get_group(gtkRadioAction);
+		auto __p = gtk_radio_action_get_group(gtkRadioAction);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**

@@ -35,7 +35,6 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -76,14 +75,14 @@ public interface ProxyIF{
 	 */
 	public static ProxyIF getDefaultForProtocol(string protocol)
 	{
-		auto p = g_proxy_get_default_for_protocol(Str.toStringz(protocol));
+		auto __p = g_proxy_get_default_for_protocol(Str.toStringz(protocol));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ProxyIF)(cast(GProxy*) p, true);
+		return ObjectG.getDObject!(ProxyIF)(cast(GProxy*) __p, true);
 	}
 
 	/**

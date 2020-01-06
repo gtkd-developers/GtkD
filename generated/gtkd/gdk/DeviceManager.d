@@ -31,7 +31,6 @@ public  import gdk.c.types;
 private import glib.ListG;
 private import gobject.ObjectG;
 private import gobject.Signals;
-public  import gtkc.gdktypes;
 private import std.algorithm;
 
 
@@ -203,14 +202,14 @@ public class DeviceManager : ObjectG
 	 */
 	public Device getClientPointer()
 	{
-		auto p = gdk_device_manager_get_client_pointer(gdkDeviceManager);
+		auto __p = gdk_device_manager_get_client_pointer(gdkDeviceManager);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Device)(cast(GdkDevice*) p);
+		return ObjectG.getDObject!(Device)(cast(GdkDevice*) __p);
 	}
 
 	/**
@@ -224,14 +223,14 @@ public class DeviceManager : ObjectG
 	 */
 	public Display getDisplay()
 	{
-		auto p = gdk_device_manager_get_display(gdkDeviceManager);
+		auto __p = gdk_device_manager_get_display(gdkDeviceManager);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
+		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) __p);
 	}
 
 	/**
@@ -253,14 +252,14 @@ public class DeviceManager : ObjectG
 	 */
 	public ListG listDevices(GdkDeviceType type)
 	{
-		auto p = gdk_device_manager_list_devices(gdkDeviceManager, type);
+		auto __p = gdk_device_manager_list_devices(gdkDeviceManager, type);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**

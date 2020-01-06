@@ -31,7 +31,6 @@ private import glib.GException;
 private import glib.Str;
 private import glib.Variant;
 private import glib.VariantType;
-public  import gtkc.giotypes;
 
 
 /**
@@ -143,7 +142,7 @@ public interface ActionIF{
 		GVariant* outtargetValue = null;
 		GError* err = null;
 
-		auto p = g_action_parse_detailed_name(Str.toStringz(detailedName), &outactionName, &outtargetValue, &err) != 0;
+		auto __p = g_action_parse_detailed_name(Str.toStringz(detailedName), &outactionName, &outtargetValue, &err) != 0;
 
 		if (err !is null)
 		{
@@ -153,7 +152,7 @@ public interface ActionIF{
 		actionName = Str.toString(outactionName);
 		targetValue = new Variant(outtargetValue);
 
-		return p;
+		return __p;
 	}
 
 	/**

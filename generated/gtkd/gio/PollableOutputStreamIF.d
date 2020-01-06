@@ -30,7 +30,6 @@ public  import gio.c.types;
 private import glib.ErrorG;
 private import glib.GException;
 private import glib.Source;
-public  import gtkc.giotypes;
 
 
 /**
@@ -121,10 +120,6 @@ public interface PollableOutputStreamIF{
 	 * may happen if you call this method after a source triggers due
 	 * to having been cancelled.
 	 *
-	 * Also note that if %G_IO_ERROR_WOULD_BLOCK is returned some underlying
-	 * transports like D/TLS require that you re-send the same @buffer and
-	 * @count in the next write call.
-	 *
 	 * Params:
 	 *     buffer = a buffer to write
 	 *         data from
@@ -136,39 +131,4 @@ public interface PollableOutputStreamIF{
 	 * Throws: GException on failure.
 	 */
 	public ptrdiff_t writeNonblocking(ubyte[] buffer, Cancellable cancellable);
-
-	/**
-	 * Attempts to write the bytes contained in the @n_vectors @vectors to @stream,
-	 * as with g_output_stream_writev(). If @stream is not currently writable,
-	 * this will immediately return %@G_POLLABLE_RETURN_WOULD_BLOCK, and you can
-	 * use g_pollable_output_stream_create_source() to create a #GSource
-	 * that will be triggered when @stream is writable. @error will *not* be
-	 * set in that case.
-	 *
-	 * Note that since this method never blocks, you cannot actually
-	 * use @cancellable to cancel it. However, it will return an error
-	 * if @cancellable has already been cancelled when you call, which
-	 * may happen if you call this method after a source triggers due
-	 * to having been cancelled.
-	 *
-	 * Also note that if %G_POLLABLE_RETURN_WOULD_BLOCK is returned some underlying
-	 * transports like D/TLS require that you re-send the same @vectors and
-	 * @n_vectors in the next write call.
-	 *
-	 * Params:
-	 *     vectors = the buffer containing the #GOutputVectors to write.
-	 *     bytesWritten = location to store the number of bytes that were
-	 *         written to the stream
-	 *     cancellable = a #GCancellable, or %NULL
-	 *
-	 * Returns: %@G_POLLABLE_RETURN_OK on success, %G_POLLABLE_RETURN_WOULD_BLOCK
-	 *     if the stream is not currently writable (and @error is *not* set), or
-	 *     %G_POLLABLE_RETURN_FAILED if there was an error in which case @error will
-	 *     be set.
-	 *
-	 * Since: 2.60
-	 *
-	 * Throws: GException on failure.
-	 */
-	public GPollableReturn writevNonblocking(GOutputVector[] vectors, out size_t bytesWritten, Cancellable cancellable);
 }

@@ -34,7 +34,6 @@ private import gtk.ToolShellT;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -45,8 +44,6 @@ public  import gtkc.gtktypes;
  * # CSS nodes
  * 
  * GtkToolItemGroup has a single CSS node named toolitemgroup.
- *
- * Since: 2.20
  */
 public class ToolItemGroup : Container, ToolShellIF
 {
@@ -114,14 +111,14 @@ public class ToolItemGroup : Container, ToolShellIF
 	 */
 	public this(string label)
 	{
-		auto p = gtk_tool_item_group_new(Str.toStringz(label));
+		auto __p = gtk_tool_item_group_new(Str.toStringz(label));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkToolItemGroup*) p);
+		this(cast(GtkToolItemGroup*) __p);
 	}
 
 	/**
@@ -149,14 +146,14 @@ public class ToolItemGroup : Container, ToolShellIF
 	 */
 	public ToolItem getDropItem(int x, int y)
 	{
-		auto p = gtk_tool_item_group_get_drop_item(gtkToolItemGroup, x, y);
+		auto __p = gtk_tool_item_group_get_drop_item(gtkToolItemGroup, x, y);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ToolItem)(cast(GtkToolItem*) p);
+		return ObjectG.getDObject!(ToolItem)(cast(GtkToolItem*) __p);
 	}
 
 	/**
@@ -222,14 +219,14 @@ public class ToolItemGroup : Container, ToolShellIF
 	 */
 	public Widget getLabelWidget()
 	{
-		auto p = gtk_tool_item_group_get_label_widget(gtkToolItemGroup);
+		auto __p = gtk_tool_item_group_get_label_widget(gtkToolItemGroup);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -256,14 +253,14 @@ public class ToolItemGroup : Container, ToolShellIF
 	 */
 	public ToolItem getNthItem(uint index)
 	{
-		auto p = gtk_tool_item_group_get_nth_item(gtkToolItemGroup, index);
+		auto __p = gtk_tool_item_group_get_nth_item(gtkToolItemGroup, index);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ToolItem)(cast(GtkToolItem*) p);
+		return ObjectG.getDObject!(ToolItem)(cast(GtkToolItem*) __p);
 	}
 
 	/**

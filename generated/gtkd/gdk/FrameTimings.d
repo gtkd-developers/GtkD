@@ -27,8 +27,6 @@ module gdk.FrameTimings;
 private import gdk.c.functions;
 public  import gdk.c.types;
 private import gobject.ObjectG;
-public  import gtkc.gdktypes;
-private import gtkd.Loader;
 
 
 /**
@@ -70,7 +68,7 @@ public class FrameTimings
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GDK) && ownedRef )
+		if ( ownedRef )
 			gdk_frame_timings_unref(gdkFrameTimings);
 	}
 
@@ -191,14 +189,14 @@ public class FrameTimings
 	 */
 	public FrameTimings ref_()
 	{
-		auto p = gdk_frame_timings_ref(gdkFrameTimings);
+		auto __p = gdk_frame_timings_ref(gdkFrameTimings);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FrameTimings)(cast(GdkFrameTimings*) p, true);
+		return ObjectG.getDObject!(FrameTimings)(cast(GdkFrameTimings*) __p, true);
 	}
 
 	/**

@@ -36,7 +36,6 @@ private import glib.ListG;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -208,15 +207,13 @@ public interface DriveIF{
 	public IconIF getIcon();
 
 	/**
-	 * Gets the identifier of the given kind for @drive. The only
-	 * identifier currently available is
-	 * #G_DRIVE_IDENTIFIER_KIND_UNIX_DEVICE.
+	 * Gets the identifier of the given kind for @drive.
 	 *
 	 * Params:
 	 *     kind = the kind of identifier to return
 	 *
 	 * Returns: a newly allocated string containing the
-	 *     requested identifier, or %NULL if the #GDrive
+	 *     requested identfier, or %NULL if the #GDrive
 	 *     doesn't have this kind of identifier.
 	 */
 	public string getIdentifier(string kind);

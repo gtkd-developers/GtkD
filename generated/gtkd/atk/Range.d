@@ -29,8 +29,6 @@ public  import atk.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.atktypes;
-private import gtkd.Loader;
 
 
 /**
@@ -71,7 +69,7 @@ public class Range
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_ATK) && ownedRef )
+		if ( ownedRef )
 			atk_range_free(atkRange);
 	}
 
@@ -98,14 +96,14 @@ public class Range
 	 */
 	public this(double lowerLimit, double upperLimit, string description)
 	{
-		auto p = atk_range_new(lowerLimit, upperLimit, Str.toStringz(description));
+		auto __p = atk_range_new(lowerLimit, upperLimit, Str.toStringz(description));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(AtkRange*) p);
+		this(cast(AtkRange*) __p);
 	}
 
 	/**
@@ -117,14 +115,14 @@ public class Range
 	 */
 	public Range copy()
 	{
-		auto p = atk_range_copy(atkRange);
+		auto __p = atk_range_copy(atkRange);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Range)(cast(AtkRange*) p, true);
+		return ObjectG.getDObject!(Range)(cast(AtkRange*) __p, true);
 	}
 
 	/**

@@ -33,7 +33,6 @@ private import gtk.Bin;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -99,8 +98,6 @@ private import std.algorithm;
  * or magnifiers in #GtkEntry or #GtkTextView get style classes
  * like .touch-selection or .magnifier to differentiate from
  * plain popovers.
- *
- * Since: 3.12
  */
 public class Popover : Bin
 {
@@ -151,14 +148,14 @@ public class Popover : Bin
 	 */
 	public this(Widget relativeTo)
 	{
-		auto p = gtk_popover_new((relativeTo is null) ? null : relativeTo.getWidgetStruct());
+		auto __p = gtk_popover_new((relativeTo is null) ? null : relativeTo.getWidgetStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkPopover*) p);
+		this(cast(GtkPopover*) __p);
 	}
 
 	/**
@@ -185,14 +182,14 @@ public class Popover : Bin
 	 */
 	public this(Widget relativeTo, MenuModel model)
 	{
-		auto p = gtk_popover_new_from_model((relativeTo is null) ? null : relativeTo.getWidgetStruct(), (model is null) ? null : model.getMenuModelStruct());
+		auto __p = gtk_popover_new_from_model((relativeTo is null) ? null : relativeTo.getWidgetStruct(), (model is null) ? null : model.getMenuModelStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_model");
 		}
 
-		this(cast(GtkPopover*) p);
+		this(cast(GtkPopover*) __p);
 	}
 
 	/**
@@ -257,14 +254,14 @@ public class Popover : Bin
 	 */
 	public Widget getDefaultWidget()
 	{
-		auto p = gtk_popover_get_default_widget(gtkPopover);
+		auto __p = gtk_popover_get_default_widget(gtkPopover);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -315,14 +312,14 @@ public class Popover : Bin
 	 */
 	public Widget getRelativeTo()
 	{
-		auto p = gtk_popover_get_relative_to(gtkPopover);
+		auto __p = gtk_popover_get_relative_to(gtkPopover);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**

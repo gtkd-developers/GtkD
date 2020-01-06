@@ -39,7 +39,6 @@ private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -107,14 +106,14 @@ public class SocketClient : ObjectG
 	 */
 	public this()
 	{
-		auto p = g_socket_client_new();
+		auto __p = g_socket_client_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GSocketClient*) p, true);
+		this(cast(GSocketClient*) __p, true);
 	}
 
 	/**
@@ -180,19 +179,19 @@ public class SocketClient : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_socket_client_connect(gSocketClient, (connectable is null) ? null : connectable.getSocketConnectableStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_socket_client_connect(gSocketClient, (connectable is null) ? null : connectable.getSocketConnectableStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) p, true);
+		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) __p, true);
 	}
 
 	/**
@@ -231,19 +230,19 @@ public class SocketClient : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_socket_client_connect_finish(gSocketClient, (result is null) ? null : result.getAsyncResultStruct(), &err);
+		auto __p = g_socket_client_connect_finish(gSocketClient, (result is null) ? null : result.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) p, true);
+		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) __p, true);
 	}
 
 	/**
@@ -293,19 +292,19 @@ public class SocketClient : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_socket_client_connect_to_host(gSocketClient, Str.toStringz(hostAndPort), defaultPort, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_socket_client_connect_to_host(gSocketClient, Str.toStringz(hostAndPort), defaultPort, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) p, true);
+		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) __p, true);
 	}
 
 	/**
@@ -345,19 +344,19 @@ public class SocketClient : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_socket_client_connect_to_host_finish(gSocketClient, (result is null) ? null : result.getAsyncResultStruct(), &err);
+		auto __p = g_socket_client_connect_to_host_finish(gSocketClient, (result is null) ? null : result.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) p, true);
+		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) __p, true);
 	}
 
 	/**
@@ -389,19 +388,19 @@ public class SocketClient : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_socket_client_connect_to_service(gSocketClient, Str.toStringz(domain), Str.toStringz(service), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_socket_client_connect_to_service(gSocketClient, Str.toStringz(domain), Str.toStringz(service), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) p, true);
+		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) __p, true);
 	}
 
 	/**
@@ -438,19 +437,19 @@ public class SocketClient : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_socket_client_connect_to_service_finish(gSocketClient, (result is null) ? null : result.getAsyncResultStruct(), &err);
+		auto __p = g_socket_client_connect_to_service_finish(gSocketClient, (result is null) ? null : result.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) p, true);
+		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) __p, true);
 	}
 
 	/**
@@ -491,19 +490,19 @@ public class SocketClient : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_socket_client_connect_to_uri(gSocketClient, Str.toStringz(uri), defaultPort, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_socket_client_connect_to_uri(gSocketClient, Str.toStringz(uri), defaultPort, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) p, true);
+		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) __p, true);
 	}
 
 	/**
@@ -543,19 +542,19 @@ public class SocketClient : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_socket_client_connect_to_uri_finish(gSocketClient, (result is null) ? null : result.getAsyncResultStruct(), &err);
+		auto __p = g_socket_client_connect_to_uri_finish(gSocketClient, (result is null) ? null : result.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) p, true);
+		return ObjectG.getDObject!(SocketConnection)(cast(GSocketConnection*) __p, true);
 	}
 
 	/**
@@ -595,14 +594,14 @@ public class SocketClient : ObjectG
 	 */
 	public SocketAddress getLocalAddress()
 	{
-		auto p = g_socket_client_get_local_address(gSocketClient);
+		auto __p = g_socket_client_get_local_address(gSocketClient);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SocketAddress)(cast(GSocketAddress*) p);
+		return ObjectG.getDObject!(SocketAddress)(cast(GSocketAddress*) __p);
 	}
 
 	/**
@@ -631,14 +630,14 @@ public class SocketClient : ObjectG
 	 */
 	public ProxyResolverIF getProxyResolver()
 	{
-		auto p = g_socket_client_get_proxy_resolver(gSocketClient);
+		auto __p = g_socket_client_get_proxy_resolver(gSocketClient);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ProxyResolverIF)(cast(GProxyResolver*) p);
+		return ObjectG.getDObject!(ProxyResolverIF)(cast(GProxyResolver*) __p);
 	}
 
 	/**

@@ -27,7 +27,6 @@ module glib.Child;
 private import glib.Source;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
 
 
 /** */
@@ -48,8 +47,6 @@ public struct Child
 	 * g_spawn_close_pid() in the callback function for the source.
 	 *
 	 * GLib supports only a single callback per process id.
-	 * On POSIX platforms, the same restrictions mentioned for
-	 * g_child_watch_source_new() apply to this function.
 	 *
 	 * This internally creates a main loop source using
 	 * g_child_watch_source_new() and attaches it to the main loop context
@@ -90,8 +87,6 @@ public struct Child
 	 * in the callback function for the source.
 	 *
 	 * GLib supports only a single callback per process id.
-	 * On POSIX platforms, the same restrictions mentioned for
-	 * g_child_watch_source_new() apply to this function.
 	 *
 	 * This internally creates a main loop source using
 	 * g_child_watch_source_new() and attaches it to the main loop context
@@ -131,24 +126,14 @@ public struct Child
 	 * source is still active. Typically, you will want to call
 	 * g_spawn_close_pid() in the callback function for the source.
 	 *
-	 * On POSIX platforms, the following restrictions apply to this API
-	 * due to limitations in POSIX process interfaces:
+	 * Note further that using g_child_watch_source_new() is not
+	 * compatible with calling `waitpid` with a nonpositive first
+	 * argument in the application. Calling waitpid() for individual
+	 * pids will still work fine.
 	 *
-	 * * @pid must be a child of this process
-	 * * @pid must be positive
-	 * * the application must not call `waitpid` with a non-positive
-	 * first argument, for instance in another thread
-	 * * the application must not wait for @pid to exit by any other
-	 * mechanism, including `waitpid(pid, ...)` or a second child-watch
-	 * source for the same @pid
-	 * * the application must not ignore SIGCHILD
-	 *
-	 * If any of those conditions are not met, this and related APIs will
-	 * not work correctly. This can often be diagnosed via a GLib warning
-	 * stating that `ECHILD` was received by `waitpid`.
-	 *
-	 * Calling `waitpid` for specific processes other than @pid remains a
-	 * valid thing to do.
+	 * Similarly, on POSIX platforms, the @pid passed to this function must
+	 * be greater than 0 (i.e. this function must wait for a specific child,
+	 * and cannot wait for one of many children by using a nonpositive argument).
 	 *
 	 * Params:
 	 *     pid = process to watch. On POSIX the positive pid of a child process. On
@@ -160,13 +145,13 @@ public struct Child
 	 */
 	public static Source childWatchSourceNew(GPid pid)
 	{
-		auto p = g_child_watch_source_new(pid);
+		auto __p = g_child_watch_source_new(pid);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Source(cast(GSource*) p, true);
+		return new Source(cast(GSource*) __p, true);
 	}
 }

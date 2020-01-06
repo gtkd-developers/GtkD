@@ -40,7 +40,6 @@ private import gtk.MenuItem;
 private import gtk.ToolItem;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -269,14 +268,14 @@ public class Action : ObjectG, BuildableIF
 	 */
 	public this(string name, string label, string tooltip, string stockId)
 	{
-		auto p = gtk_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId));
+		auto __p = gtk_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkAction*) p, true);
+		this(cast(GtkAction*) __p, true);
 	}
 
 	/**
@@ -360,14 +359,14 @@ public class Action : ObjectG, BuildableIF
 	 */
 	public Closure getAccelClosure()
 	{
-		auto p = gtk_action_get_accel_closure(gtkAction);
+		auto __p = gtk_action_get_accel_closure(gtkAction);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Closure)(cast(GClosure*) p);
+		return ObjectG.getDObject!(Closure)(cast(GClosure*) __p);
 	}
 
 	/**
@@ -416,14 +415,14 @@ public class Action : ObjectG, BuildableIF
 	 */
 	public IconIF getGicon()
 	{
-		auto p = gtk_action_get_gicon(gtkAction);
+		auto __p = gtk_action_get_gicon(gtkAction);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) __p);
 	}
 
 	/**
@@ -499,14 +498,14 @@ public class Action : ObjectG, BuildableIF
 	 */
 	public ListSG getProxies()
 	{
-		auto p = gtk_action_get_proxies(gtkAction);
+		auto __p = gtk_action_get_proxies(gtkAction);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**

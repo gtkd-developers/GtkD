@@ -27,7 +27,6 @@ module glib.Timeout;
 private import glib.Source;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
 
 
 /** */
@@ -247,7 +246,7 @@ public class Timeout
 	 * context. You can do these steps manually if you need greater control or to
 	 * use a custom main context.
 	 *
-	 * The interval given is in terms of monotonic time, not wall clock time.
+	 * The interval given in terms of monotonic time, not wall clock time.
 	 * See g_get_monotonic_time().
 	 *
 	 * Params:
@@ -373,14 +372,14 @@ public class Timeout
 	 */
 	public static Source sourceNew(uint interval)
 	{
-		auto p = g_timeout_source_new(interval);
+		auto __p = g_timeout_source_new(interval);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Source(cast(GSource*) p, true);
+		return new Source(cast(GSource*) __p, true);
 	}
 
 	/**
@@ -393,7 +392,7 @@ public class Timeout
 	 * The scheduling granularity/accuracy of this timeout source will be
 	 * in seconds.
 	 *
-	 * The interval given is in terms of monotonic time, not wall clock time.
+	 * The interval given in terms of monotonic time, not wall clock time.
 	 * See g_get_monotonic_time().
 	 *
 	 * Params:
@@ -405,13 +404,13 @@ public class Timeout
 	 */
 	public static Source sourceNewSeconds(uint interval)
 	{
-		auto p = g_timeout_source_new_seconds(interval);
+		auto __p = g_timeout_source_new_seconds(interval);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Source(cast(GSource*) p, true);
+		return new Source(cast(GSource*) __p, true);
 	}
 }

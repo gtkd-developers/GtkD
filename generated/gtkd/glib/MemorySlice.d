@@ -26,7 +26,6 @@ module glib.MemorySlice;
 
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
 
 
 /** */
@@ -64,7 +63,7 @@ public void sliceFree(T)(T* memBlock)
 
 /**
  * Allocates a block of memory from the slice allocator.
- * The block address handed out can be expected to be aligned
+ * The block adress handed out can be expected to be aligned
  * to at least 1 * sizeof (void*),
  * though in general slices are 2 * sizeof (void*) bytes aligned,
  * if a malloc() fallback implementation is used instead,

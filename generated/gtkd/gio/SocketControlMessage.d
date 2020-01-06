@@ -27,7 +27,6 @@ module gio.SocketControlMessage;
 private import gio.c.functions;
 public  import gio.c.types;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -51,8 +50,6 @@ public  import gtkc.giotypes;
  * this class and implement the deserialize method. Also, make sure your
  * class is registered with the GType typesystem before calling
  * g_socket_receive_message() to read such a message.
- *
- * Since: 2.22
  */
 public class SocketControlMessage : ObjectG
 {
@@ -109,14 +106,14 @@ public class SocketControlMessage : ObjectG
 	 */
 	public static SocketControlMessage deserialize(int level, int type, ubyte[] data)
 	{
-		auto p = g_socket_control_message_deserialize(level, type, cast(size_t)data.length, data.ptr);
+		auto __p = g_socket_control_message_deserialize(level, type, cast(size_t)data.length, data.ptr);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SocketControlMessage)(cast(GSocketControlMessage*) p, true);
+		return ObjectG.getDObject!(SocketControlMessage)(cast(GSocketControlMessage*) __p, true);
 	}
 
 	/**

@@ -32,7 +32,6 @@ private import gobject.TypeInstance;
 private import gobject.Value;
 private import gobject.c.functions;
 public  import gobject.c.types;
-public  import gtkc.gobjecttypes;
 private import std.traits;
 
 
@@ -567,9 +566,9 @@ public struct Signals
 	{
 		uint nIds;
 
-		auto p = g_signal_list_ids(itype, &nIds);
+		auto __p = g_signal_list_ids(itype, &nIds);
 
-		return p[0 .. nIds];
+		return __p[0 .. nIds];
 	}
 
 	/**
@@ -827,17 +826,17 @@ public struct Signals
 	 *     structOffset = the offset of the member function of @itype's class
 	 *         structure which is to be invoked by the new closure
 	 *
-	 * Returns: a floating reference to a new #GCClosure
+	 * Returns: a new #GCClosure
 	 */
 	public static Closure typeCclosureNew(GType itype, uint structOffset)
 	{
-		auto p = g_signal_type_cclosure_new(itype, structOffset);
+		auto __p = g_signal_type_cclosure_new(itype, structOffset);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Closure)(cast(GClosure*) p);
+		return ObjectG.getDObject!(Closure)(cast(GClosure*) __p, true);
 	}
 }

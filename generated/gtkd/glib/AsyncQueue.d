@@ -28,8 +28,6 @@ private import glib.ConstructionException;
 private import glib.TimeVal;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
-private import gtkd.Loader;
 
 
 /**
@@ -68,7 +66,7 @@ public class AsyncQueue
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_async_queue_unref(gAsyncQueue);
 	}
 
@@ -269,14 +267,14 @@ public class AsyncQueue
 	 */
 	public AsyncQueue ref_()
 	{
-		auto p = g_async_queue_ref(gAsyncQueue);
+		auto __p = g_async_queue_ref(gAsyncQueue);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new AsyncQueue(cast(GAsyncQueue*) p);
+		return new AsyncQueue(cast(GAsyncQueue*) __p);
 	}
 
 	/**
@@ -537,14 +535,14 @@ public class AsyncQueue
 	 */
 	public this()
 	{
-		auto p = g_async_queue_new();
+		auto __p = g_async_queue_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GAsyncQueue*) p);
+		this(cast(GAsyncQueue*) __p);
 	}
 
 	/**
@@ -563,13 +561,13 @@ public class AsyncQueue
 	 */
 	public this(GDestroyNotify itemFreeFunc)
 	{
-		auto p = g_async_queue_new_full(itemFreeFunc);
+		auto __p = g_async_queue_new_full(itemFreeFunc);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_full");
 		}
 
-		this(cast(GAsyncQueue*) p);
+		this(cast(GAsyncQueue*) __p);
 	}
 }

@@ -30,7 +30,6 @@ private import gobject.ObjectG;
 private import gobject.ParamSpec;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /** */
@@ -133,14 +132,14 @@ public class WidgetClass
 	 */
 	public ParamSpec findStyleProperty(string propertyName)
 	{
-		auto p = gtk_widget_class_find_style_property(gtkWidgetClass, Str.toStringz(propertyName));
+		auto __p = gtk_widget_class_find_style_property(gtkWidgetClass, Str.toStringz(propertyName));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p);
 	}
 
 	/**
@@ -193,9 +192,9 @@ public class WidgetClass
 	{
 		uint nProperties;
 
-		auto p = gtk_widget_class_list_style_properties(gtkWidgetClass, &nProperties);
+		auto __p = gtk_widget_class_list_style_properties(gtkWidgetClass, &nProperties);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
@@ -203,7 +202,7 @@ public class WidgetClass
 		ParamSpec[] arr = new ParamSpec[nProperties];
 		for(int i = 0; i < nProperties; i++)
 		{
-			arr[i] = ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p[i]);
+			arr[i] = ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p[i]);
 		}
 
 		return arr;

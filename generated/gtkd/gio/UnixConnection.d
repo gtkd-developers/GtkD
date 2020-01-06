@@ -33,7 +33,6 @@ public  import gio.c.types;
 private import glib.ErrorG;
 private import glib.GException;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -46,8 +45,6 @@ public  import gtkc.giotypes;
  * Note that `<gio/gunixconnection.h>` belongs to the UNIX-specific
  * GIO interfaces, thus you have to use the `gio-unix-2.0.pc`
  * pkg-config file when using it.
- *
- * Since: 2.22
  */
 public class UnixConnection : SocketConnection
 {
@@ -110,19 +107,19 @@ public class UnixConnection : SocketConnection
 	{
 		GError* err = null;
 
-		auto p = g_unix_connection_receive_credentials(gUnixConnection, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_unix_connection_receive_credentials(gUnixConnection, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Credentials)(cast(GCredentials*) p, true);
+		return ObjectG.getDObject!(Credentials)(cast(GCredentials*) __p, true);
 	}
 
 	/**
@@ -164,19 +161,19 @@ public class UnixConnection : SocketConnection
 	{
 		GError* err = null;
 
-		auto p = g_unix_connection_receive_credentials_finish(gUnixConnection, (result is null) ? null : result.getAsyncResultStruct(), &err);
+		auto __p = g_unix_connection_receive_credentials_finish(gUnixConnection, (result is null) ? null : result.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Credentials)(cast(GCredentials*) p, true);
+		return ObjectG.getDObject!(Credentials)(cast(GCredentials*) __p, true);
 	}
 
 	/**
@@ -201,14 +198,14 @@ public class UnixConnection : SocketConnection
 	{
 		GError* err = null;
 
-		auto p = g_unix_connection_receive_fd(gUnixConnection, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_unix_connection_receive_fd(gUnixConnection, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -237,14 +234,14 @@ public class UnixConnection : SocketConnection
 	{
 		GError* err = null;
 
-		auto p = g_unix_connection_send_credentials(gUnixConnection, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_unix_connection_send_credentials(gUnixConnection, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -285,14 +282,14 @@ public class UnixConnection : SocketConnection
 	{
 		GError* err = null;
 
-		auto p = g_unix_connection_send_credentials_finish(gUnixConnection, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_unix_connection_send_credentials_finish(gUnixConnection, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -318,13 +315,13 @@ public class UnixConnection : SocketConnection
 	{
 		GError* err = null;
 
-		auto p = g_unix_connection_send_fd(gUnixConnection, fd, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_unix_connection_send_fd(gUnixConnection, fd, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 }

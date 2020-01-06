@@ -34,7 +34,6 @@ private import glib.Str;
 private import glib.Variant;
 private import gobject.ObjectG;
 private import gobject.Signals;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -88,14 +87,14 @@ public class AppLaunchContext : ObjectG
 	 */
 	public this()
 	{
-		auto p = g_app_launch_context_new();
+		auto __p = g_app_launch_context_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GAppLaunchContext*) p, true);
+		this(cast(GAppLaunchContext*) __p, true);
 	}
 
 	/**
@@ -123,7 +122,8 @@ public class AppLaunchContext : ObjectG
 	 * This is a %NULL-terminated array of strings, where each string has
 	 * the form `KEY=VALUE`.
 	 *
-	 * Returns: the child's environment
+	 * Returns: the
+	 *     child's environment
 	 *
 	 * Since: 2.32
 	 */

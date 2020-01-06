@@ -31,7 +31,6 @@ private import gtk.Gesture;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -90,14 +89,14 @@ public class GestureRotate : Gesture
 	 */
 	public this(Widget widget)
 	{
-		auto p = gtk_gesture_rotate_new((widget is null) ? null : widget.getWidgetStruct());
+		auto __p = gtk_gesture_rotate_new((widget is null) ? null : widget.getWidgetStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkGestureRotate*) p, true);
+		this(cast(GtkGestureRotate*) __p, true);
 	}
 
 	/**

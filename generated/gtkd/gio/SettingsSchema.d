@@ -29,8 +29,6 @@ private import gio.c.functions;
 public  import gio.c.types;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
-private import gtkd.Loader;
 
 
 /**
@@ -68,7 +66,7 @@ private import gtkd.Loader;
  * ...
  * 
  * plugin->schema_source =
- * g_settings_schema_source_new_from_directory (dir,
+ * g_settings_new_schema_source_from_directory (dir,
  * g_settings_schema_source_get_default (), FALSE, NULL);
  * 
  * ...
@@ -158,7 +156,7 @@ public class SettingsSchema
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GIO) && ownedRef )
+		if ( ownedRef )
 			g_settings_schema_unref(gSettingsSchema);
 	}
 
@@ -194,14 +192,14 @@ public class SettingsSchema
 	 */
 	public SettingsSchemaKey getKey(string name)
 	{
-		auto p = g_settings_schema_get_key(gSettingsSchema, Str.toStringz(name));
+		auto __p = g_settings_schema_get_key(gSettingsSchema, Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SettingsSchemaKey)(cast(GSettingsSchemaKey*) p, true);
+		return ObjectG.getDObject!(SettingsSchemaKey)(cast(GSettingsSchemaKey*) __p, true);
 	}
 
 	/**
@@ -287,14 +285,14 @@ public class SettingsSchema
 	 */
 	public SettingsSchema ref_()
 	{
-		auto p = g_settings_schema_ref(gSettingsSchema);
+		auto __p = g_settings_schema_ref(gSettingsSchema);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SettingsSchema)(cast(GSettingsSchema*) p, true);
+		return ObjectG.getDObject!(SettingsSchema)(cast(GSettingsSchema*) __p, true);
 	}
 
 	/**

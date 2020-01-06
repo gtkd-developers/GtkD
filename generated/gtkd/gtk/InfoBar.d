@@ -35,7 +35,6 @@ private import gtk.VButtonBox;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -244,14 +243,14 @@ public class InfoBar : Box
 	 */
 	public this()
 	{
-		auto p = gtk_info_bar_new();
+		auto __p = gtk_info_bar_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkInfoBar*) p);
+		this(cast(GtkInfoBar*) __p);
 	}
 
 	/**
@@ -289,14 +288,14 @@ public class InfoBar : Box
 	 */
 	public Button addButton(string buttonText, int responseId)
 	{
-		auto p = gtk_info_bar_add_button(gtkInfoBar, Str.toStringz(buttonText), responseId);
+		auto __p = gtk_info_bar_add_button(gtkInfoBar, Str.toStringz(buttonText), responseId);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Button)(cast(GtkButton*) p);
+		return ObjectG.getDObject!(Button)(cast(GtkButton*) __p);
 	}
 
 	/**

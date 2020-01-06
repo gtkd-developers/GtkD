@@ -30,7 +30,6 @@ private import gio.c.functions;
 public  import gio.c.types;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -93,14 +92,14 @@ public class Emblem : ObjectG, IconIF
 	 */
 	public this(IconIF icon)
 	{
-		auto p = g_emblem_new((icon is null) ? null : icon.getIconStruct());
+		auto __p = g_emblem_new((icon is null) ? null : icon.getIconStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GEmblem*) p, true);
+		this(cast(GEmblem*) __p, true);
 	}
 
 	/**
@@ -118,14 +117,14 @@ public class Emblem : ObjectG, IconIF
 	 */
 	public this(IconIF icon, GEmblemOrigin origin)
 	{
-		auto p = g_emblem_new_with_origin((icon is null) ? null : icon.getIconStruct(), origin);
+		auto __p = g_emblem_new_with_origin((icon is null) ? null : icon.getIconStruct(), origin);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_origin");
 		}
 
-		this(cast(GEmblem*) p, true);
+		this(cast(GEmblem*) __p, true);
 	}
 
 	/**
@@ -138,14 +137,14 @@ public class Emblem : ObjectG, IconIF
 	 */
 	public IconIF getIcon()
 	{
-		auto p = g_emblem_get_icon(gEmblem);
+		auto __p = g_emblem_get_icon(gEmblem);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) __p);
 	}
 
 	/**

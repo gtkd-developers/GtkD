@@ -33,7 +33,6 @@ private import gtk.Widget;
 private import gtk.Window;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -251,14 +250,14 @@ public class MessageDialog : Dialog
 	 */
 	public Widget getImage()
 	{
-		auto p = gtk_message_dialog_get_image(gtkMessageDialog);
+		auto __p = gtk_message_dialog_get_image(gtkMessageDialog);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**

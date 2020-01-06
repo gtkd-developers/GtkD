@@ -29,7 +29,6 @@ public  import gio.c.functions;
 public  import gio.c.types;
 public  import glib.Str;
 public  import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -111,14 +110,14 @@ public template SocketConnectableT(TStruct)
 	 */
 	public SocketAddressEnumerator enumerate()
 	{
-		auto p = g_socket_connectable_enumerate(getSocketConnectableStruct());
+		auto __p = g_socket_connectable_enumerate(getSocketConnectableStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SocketAddressEnumerator)(cast(GSocketAddressEnumerator*) p, true);
+		return ObjectG.getDObject!(SocketAddressEnumerator)(cast(GSocketAddressEnumerator*) __p, true);
 	}
 
 	/**
@@ -136,14 +135,14 @@ public template SocketConnectableT(TStruct)
 	 */
 	public SocketAddressEnumerator proxyEnumerate()
 	{
-		auto p = g_socket_connectable_proxy_enumerate(getSocketConnectableStruct());
+		auto __p = g_socket_connectable_proxy_enumerate(getSocketConnectableStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SocketAddressEnumerator)(cast(GSocketAddressEnumerator*) p, true);
+		return ObjectG.getDObject!(SocketAddressEnumerator)(cast(GSocketAddressEnumerator*) __p, true);
 	}
 
 	/**

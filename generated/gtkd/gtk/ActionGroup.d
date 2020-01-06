@@ -36,7 +36,6 @@ private import gtk.BuildableT;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -145,14 +144,14 @@ public class ActionGroup : ObjectG, BuildableIF
 	 */
 	public this(string name)
 	{
-		auto p = gtk_action_group_new(Str.toStringz(name));
+		auto __p = gtk_action_group_new(Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkActionGroup*) p, true);
+		this(cast(GtkActionGroup*) __p, true);
 	}
 
 	/**
@@ -313,14 +312,14 @@ public class ActionGroup : ObjectG, BuildableIF
 	 */
 	public AccelGroup getAccelGroup()
 	{
-		auto p = gtk_action_group_get_accel_group(gtkActionGroup);
+		auto __p = gtk_action_group_get_accel_group(gtkActionGroup);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(AccelGroup)(cast(GtkAccelGroup*) p);
+		return ObjectG.getDObject!(AccelGroup)(cast(GtkAccelGroup*) __p);
 	}
 
 	/**
@@ -335,14 +334,14 @@ public class ActionGroup : ObjectG, BuildableIF
 	 */
 	public Action getAction(string actionName)
 	{
-		auto p = gtk_action_group_get_action(gtkActionGroup, Str.toStringz(actionName));
+		auto __p = gtk_action_group_get_action(gtkActionGroup, Str.toStringz(actionName));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Action)(cast(GtkAction*) p);
+		return ObjectG.getDObject!(Action)(cast(GtkAction*) __p);
 	}
 
 	/**
@@ -396,14 +395,14 @@ public class ActionGroup : ObjectG, BuildableIF
 	 */
 	public ListG listActions()
 	{
-		auto p = gtk_action_group_list_actions(gtkActionGroup);
+		auto __p = gtk_action_group_list_actions(gtkActionGroup);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**

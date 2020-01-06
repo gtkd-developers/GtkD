@@ -29,14 +29,14 @@ private import gobject.ObjectG;
 private import gobject.ParamSpec;
 private import gobject.c.functions;
 public  import gobject.c.types;
-public  import gtkc.gobjecttypes;
 
 
 /**
  * The class structure for the GObject type.
  * 
- * |[<!-- language="C" -->
- * // Example of implementing a singleton using a constructor.
+ * <example>
+ * <title>Implementing singletons using a constructor</title>
+ * <programlisting>
  * static MySingleton *the_singleton = NULL;
  * 
  * static GObject*
@@ -58,7 +58,7 @@ public  import gtkc.gobjecttypes;
  * 
  * return object;
  * }
- * ]|
+ * </programlisting></example>
  */
 public class ObjectClass
 {
@@ -101,14 +101,14 @@ public class ObjectClass
 	 */
 	public ParamSpec findProperty(string propertyName)
 	{
-		auto p = g_object_class_find_property(gObjectClass, Str.toStringz(propertyName));
+		auto __p = g_object_class_find_property(gObjectClass, Str.toStringz(propertyName));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p);
 	}
 
 	/**
@@ -222,9 +222,9 @@ public class ObjectClass
 	{
 		uint nProperties;
 
-		auto p = g_object_class_list_properties(gObjectClass, &nProperties);
+		auto __p = g_object_class_list_properties(gObjectClass, &nProperties);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
@@ -232,7 +232,7 @@ public class ObjectClass
 		ParamSpec[] arr = new ParamSpec[nProperties];
 		for(int i = 0; i < nProperties; i++)
 		{
-			arr[i] = ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p[i]);
+			arr[i] = ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p[i]);
 		}
 
 		return arr;

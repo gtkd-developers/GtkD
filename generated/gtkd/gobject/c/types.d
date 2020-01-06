@@ -1134,10 +1134,33 @@ struct GSignalQuery
 	GType* paramTypes;
 }
 
+/**
+ * A union holding one collected value.
+ */
 struct GTypeCValue
 {
 	union
 	{
+		/**
+		 * the field for holding integer values
+		 */
+		int vInt;
+		/**
+		 * the field for holding long integer values
+		 */
+		glong vLong;
+		/**
+		 * the field for holding 64 bit integer values
+		 */
+		long vInt64;
+		/**
+		 * the field for holding floating point values
+		 */
+		double vDouble;
+		/**
+		 * the field for holding pointers
+		 */
+		void* vPointer;
 	}
 }
 
@@ -1865,8 +1888,6 @@ public alias extern(C) void function(GClosure* closure, GValue* returnValue, voi
  * The type of value transformation functions which can be registered with
  * g_value_register_transform_func().
  *
- * @dest_value will be initialized to the correct destination type.
- *
  * Params:
  *     srcValue = Source value.
  *     destValue = Target value.
@@ -1896,7 +1917,7 @@ alias G_PARAM_MASK = PARAM_MASK;
  *
  * Since 2.13.0
  */
-enum PARAM_STATIC_STRINGS = 224;
+enum PARAM_STATIC_STRINGS = 0;
 alias G_PARAM_STATIC_STRINGS = PARAM_STATIC_STRINGS;
 
 /**
@@ -1969,6 +1990,13 @@ alias G_TYPE_RESERVED_GLIB_LAST = TYPE_RESERVED_GLIB_LAST;
  */
 enum TYPE_RESERVED_USER_FIRST = 49;
 alias G_TYPE_RESERVED_USER_FIRST = TYPE_RESERVED_USER_FIRST;
+
+/**
+ * The maximal number of #GTypeCValues which can be collected for a
+ * single #GValue.
+ */
+enum VALUE_COLLECT_FORMAT_MAX_LENGTH = 8;
+alias G_VALUE_COLLECT_FORMAT_MAX_LENGTH = VALUE_COLLECT_FORMAT_MAX_LENGTH;
 
 /**
  * If passed to G_VALUE_COLLECT(), allocated data won't be copied

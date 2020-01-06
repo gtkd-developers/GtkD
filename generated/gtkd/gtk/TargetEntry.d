@@ -30,8 +30,6 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
-private import gtkd.Loader;
 
 
 /**
@@ -70,7 +68,7 @@ public final class TargetEntry
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GTK) && ownedRef )
+		if ( ownedRef )
 			gtk_target_entry_free(gtkTargetEntry);
 	}
 
@@ -141,14 +139,14 @@ public final class TargetEntry
 	 */
 	public this(string target, uint flags, uint info)
 	{
-		auto p = gtk_target_entry_new(Str.toStringz(target), flags, info);
+		auto __p = gtk_target_entry_new(Str.toStringz(target), flags, info);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkTargetEntry*) p);
+		this(cast(GtkTargetEntry*) __p);
 	}
 
 	/**
@@ -159,14 +157,14 @@ public final class TargetEntry
 	 */
 	public TargetEntry copy()
 	{
-		auto p = gtk_target_entry_copy(gtkTargetEntry);
+		auto __p = gtk_target_entry_copy(gtkTargetEntry);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TargetEntry)(cast(GtkTargetEntry*) p, true);
+		return ObjectG.getDObject!(TargetEntry)(cast(GtkTargetEntry*) __p, true);
 	}
 
 	/**

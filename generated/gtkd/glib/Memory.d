@@ -26,7 +26,6 @@ module glib.Memory;
 
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
 
 
 /** */
@@ -43,11 +42,7 @@ public struct Memory
 	 * pointer is set to %NULL.
 	 *
 	 * A macro is also included that allows this function to be used without
-	 * pointer casts. This will mask any warnings about incompatible function types
-	 * or calling conventions, so you must ensure that your @destroy function is
-	 * compatible with being called as `GDestroyNotify` using the standard calling
-	 * convention for the platform that GLib was compiled for; otherwise the program
-	 * will experience undefined behaviour.
+	 * pointer casts.
 	 *
 	 * Params:
 	 *     pp = a pointer to a variable, struct member etc. holding a
@@ -172,8 +167,7 @@ public struct Memory
 	 * in GLib and GIO, because those use the GLib allocators before main is
 	 * reached. Therefore this function is now deprecated and is just a stub.
 	 *
-	 * Deprecated: This function now does nothing. Use other memory
-	 * profiling tools instead
+	 * Deprecated: Use other memory profiling tools instead
 	 *
 	 * Params:
 	 *     vtable = table of memory allocation routines.

@@ -37,7 +37,6 @@ public  import glib.GException;
 public  import glib.ListG;
 public  import glib.Str;
 public  import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -116,14 +115,14 @@ public template AppInfoT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_app_info_add_supports_type(getAppInfoStruct(), Str.toStringz(contentType), &err) != 0;
+		auto __p = g_app_info_add_supports_type(getAppInfoStruct(), Str.toStringz(contentType), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -174,22 +173,22 @@ public template AppInfoT(TStruct)
 	 */
 	public AppInfoIF dup()
 	{
-		auto p = g_app_info_dup(getAppInfoStruct());
+		auto __p = g_app_info_dup(getAppInfoStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) p, true);
+		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) __p, true);
 	}
 
 	/**
 	 * Checks if two #GAppInfos are equal.
 	 *
-	 * Note that the check <emphasis>may not</emphasis> compare each individual
-	 * field, and only does an identity check. In case detecting changes in the
-	 * contents is needed, program code must additionally compare relevant fields.
+	 * Note that the check <em>may not</em> compare each individual field, and
+	 * only does an identity check. In case detecting changes in the contents
+	 * is needed, program code must additionally compare relevant fields.
 	 *
 	 * Params:
 	 *     appinfo2 = the second #GAppInfo.
@@ -259,14 +258,14 @@ public template AppInfoT(TStruct)
 	 */
 	public IconIF getIcon()
 	{
-		auto p = g_app_info_get_icon(getAppInfoStruct());
+		auto __p = g_app_info_get_icon(getAppInfoStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) __p);
 	}
 
 	/**
@@ -314,7 +313,7 @@ public template AppInfoT(TStruct)
 
 	/**
 	 * Launches the application. Passes @files to the launched application
-	 * as arguments, using the optional @context to get information
+	 * as arguments, using the optional @launch_context to get information
 	 * about the details of the launcher (like what screen it is on).
 	 * On error, @error will be set accordingly.
 	 *
@@ -339,33 +338,33 @@ public template AppInfoT(TStruct)
 	 * process. This can be used to ignore `GIO_LAUNCHED_DESKTOP_FILE`,
 	 * should it be inherited by further processes. The `DISPLAY` and
 	 * `DESKTOP_STARTUP_ID` environment variables are also set, based
-	 * on information provided in @context.
+	 * on information provided in @launch_context.
 	 *
 	 * Params:
 	 *     files = a #GList of #GFile objects
-	 *     context = a #GAppLaunchContext or %NULL
+	 *     launchContext = a #GAppLaunchContext or %NULL
 	 *
 	 * Returns: %TRUE on successful launch, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
-	public bool launch(ListG files, AppLaunchContext context)
+	public bool launch(ListG files, AppLaunchContext launchContext)
 	{
 		GError* err = null;
 
-		auto p = g_app_info_launch(getAppInfoStruct(), (files is null) ? null : files.getListGStruct(), (context is null) ? null : context.getAppLaunchContextStruct(), &err) != 0;
+		auto __p = g_app_info_launch(getAppInfoStruct(), (files is null) ? null : files.getListGStruct(), (launchContext is null) ? null : launchContext.getAppLaunchContextStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
 	 * Launches the application. This passes the @uris to the launched application
-	 * as arguments, using the optional @context to get information
+	 * as arguments, using the optional @launch_context to get information
 	 * about the details of the launcher (like what screen it is on).
 	 * On error, @error will be set accordingly.
 	 *
@@ -377,72 +376,24 @@ public template AppInfoT(TStruct)
 	 *
 	 * Params:
 	 *     uris = a #GList containing URIs to launch.
-	 *     context = a #GAppLaunchContext or %NULL
+	 *     launchContext = a #GAppLaunchContext or %NULL
 	 *
 	 * Returns: %TRUE on successful launch, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
-	public bool launchUris(ListG uris, AppLaunchContext context)
+	public bool launchUris(ListG uris, AppLaunchContext launchContext)
 	{
 		GError* err = null;
 
-		auto p = g_app_info_launch_uris(getAppInfoStruct(), (uris is null) ? null : uris.getListGStruct(), (context is null) ? null : context.getAppLaunchContextStruct(), &err) != 0;
+		auto __p = g_app_info_launch_uris(getAppInfoStruct(), (uris is null) ? null : uris.getListGStruct(), (launchContext is null) ? null : launchContext.getAppLaunchContextStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
-	}
-
-	/**
-	 * Async version of g_app_info_launch_uris().
-	 *
-	 * The @callback is invoked immediately after the application launch, but it
-	 * waits for activation in case of D-Bus–activated applications and also provides
-	 * extended error information for sandboxed applications, see notes for
-	 * g_app_info_launch_default_for_uri_async().
-	 *
-	 * Params:
-	 *     uris = a #GList containing URIs to launch.
-	 *     context = a #GAppLaunchContext or %NULL
-	 *     cancellable = a #GCancellable
-	 *     callback = a #GAsyncReadyCallback to call when the request is done
-	 *     userData = data to pass to @callback
-	 *
-	 * Since: 2.60
-	 */
-	public void launchUrisAsync(ListG uris, AppLaunchContext context, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
-	{
-		g_app_info_launch_uris_async(getAppInfoStruct(), (uris is null) ? null : uris.getListGStruct(), (context is null) ? null : context.getAppLaunchContextStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
-	}
-
-	/**
-	 * Finishes a g_app_info_launch_uris_async() operation.
-	 *
-	 * Params:
-	 *     result = a #GAsyncResult
-	 *
-	 * Returns: %TRUE on successful launch, %FALSE otherwise.
-	 *
-	 * Since: 2.60
-	 *
-	 * Throws: GException on failure.
-	 */
-	public bool launchUrisFinish(AsyncResultIF result)
-	{
-		GError* err = null;
-
-		auto p = g_app_info_launch_uris_finish(getAppInfoStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
-
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-
-		return p;
+		return __p;
 	}
 
 	/**
@@ -459,14 +410,14 @@ public template AppInfoT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_app_info_remove_supports_type(getAppInfoStruct(), Str.toStringz(contentType), &err) != 0;
+		auto __p = g_app_info_remove_supports_type(getAppInfoStruct(), Str.toStringz(contentType), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -484,14 +435,14 @@ public template AppInfoT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_app_info_set_as_default_for_extension(getAppInfoStruct(), Str.toStringz(extension), &err) != 0;
+		auto __p = g_app_info_set_as_default_for_extension(getAppInfoStruct(), Str.toStringz(extension), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -508,14 +459,14 @@ public template AppInfoT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_app_info_set_as_default_for_type(getAppInfoStruct(), Str.toStringz(contentType), &err) != 0;
+		auto __p = g_app_info_set_as_default_for_type(getAppInfoStruct(), Str.toStringz(contentType), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -535,14 +486,14 @@ public template AppInfoT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_app_info_set_as_last_used_for_type(getAppInfoStruct(), Str.toStringz(contentType), &err) != 0;
+		auto __p = g_app_info_set_as_last_used_for_type(getAppInfoStruct(), Str.toStringz(contentType), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**

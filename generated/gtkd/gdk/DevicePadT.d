@@ -26,7 +26,6 @@ module gdk.DevicePadT;
 
 public  import gdk.c.functions;
 public  import gdk.c.types;
-public  import gtkc.gdktypes;
 
 
 /**

@@ -36,7 +36,6 @@ public  import glib.ListG;
 public  import glib.Str;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
-public  import gtkc.giotypes;
 public  import std.algorithm;
 
 
@@ -173,14 +172,14 @@ public template DriveT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_drive_eject_finish(getDriveStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_drive_eject_finish(getDriveStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -220,14 +219,14 @@ public template DriveT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_drive_eject_with_operation_finish(getDriveStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_drive_eject_with_operation_finish(getDriveStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -255,26 +254,24 @@ public template DriveT(TStruct)
 	 */
 	public IconIF getIcon()
 	{
-		auto p = g_drive_get_icon(getDriveStruct());
+		auto __p = g_drive_get_icon(getDriveStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p, true);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) __p, true);
 	}
 
 	/**
-	 * Gets the identifier of the given kind for @drive. The only
-	 * identifier currently available is
-	 * #G_DRIVE_IDENTIFIER_KIND_UNIX_DEVICE.
+	 * Gets the identifier of the given kind for @drive.
 	 *
 	 * Params:
 	 *     kind = the kind of identifier to return
 	 *
 	 * Returns: a newly allocated string containing the
-	 *     requested identifier, or %NULL if the #GDrive
+	 *     requested identfier, or %NULL if the #GDrive
 	 *     doesn't have this kind of identifier.
 	 */
 	public string getIdentifier(string kind)
@@ -333,14 +330,14 @@ public template DriveT(TStruct)
 	 */
 	public IconIF getSymbolicIcon()
 	{
-		auto p = g_drive_get_symbolic_icon(getDriveStruct());
+		auto __p = g_drive_get_symbolic_icon(getDriveStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p, true);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) __p, true);
 	}
 
 	/**
@@ -353,14 +350,14 @@ public template DriveT(TStruct)
 	 */
 	public ListG getVolumes()
 	{
-		auto p = g_drive_get_volumes(getDriveStruct());
+		auto __p = g_drive_get_volumes(getDriveStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -451,14 +448,14 @@ public template DriveT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_drive_poll_for_media_finish(getDriveStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_drive_poll_for_media_finish(getDriveStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -500,14 +497,14 @@ public template DriveT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_drive_start_finish(getDriveStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_drive_start_finish(getDriveStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -549,14 +546,14 @@ public template DriveT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_drive_stop_finish(getDriveStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_drive_stop_finish(getDriveStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**

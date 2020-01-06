@@ -31,7 +31,6 @@ private import gio.c.functions;
 public  import gio.c.types;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -89,14 +88,14 @@ public class ZlibDecompressor : ObjectG, ConverterIF
 	 */
 	public this(GZlibCompressorFormat format)
 	{
-		auto p = g_zlib_decompressor_new(format);
+		auto __p = g_zlib_decompressor_new(format);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GZlibDecompressor*) p, true);
+		this(cast(GZlibDecompressor*) __p, true);
 	}
 
 	/**
@@ -112,13 +111,13 @@ public class ZlibDecompressor : ObjectG, ConverterIF
 	 */
 	public FileInfo getFileInfo()
 	{
-		auto p = g_zlib_decompressor_get_file_info(gZlibDecompressor);
+		auto __p = g_zlib_decompressor_get_file_info(gZlibDecompressor);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileInfo)(cast(GFileInfo*) p);
+		return ObjectG.getDObject!(FileInfo)(cast(GFileInfo*) __p);
 	}
 }

@@ -30,8 +30,6 @@ private import gobject.ObjectG;
 private import gobject.Value;
 private import gobject.c.functions;
 public  import gobject.c.types;
-public  import gtkc.gobjecttypes;
-private import gtkd.Loader;
 
 
 /**
@@ -46,11 +44,9 @@ private import gtkd.Loader;
  * to a function and maybe a data argument, and the marshaller
  * converts between #GValue and native C types. The GObject
  * library provides the #GCClosure type for this purpose. Bindings for
- * other languages need marshallers which convert between #GValues
- * and suitable representations in the runtime of the language in
- * order to use functions written in that language as callbacks. Use
- * g_closure_set_marshal() to set the marshaller on such a custom
- * closure implementation.
+ * other languages need marshallers which convert between #GValue<!--
+ * -->s and suitable representations in the runtime of the language in
+ * order to use functions written in that languages as callbacks.
  * 
  * Within GObject, closures play an important role in the
  * implementation of signals. When a signal is registered, the
@@ -110,7 +106,7 @@ public class Closure
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GOBJECT) && ownedRef )
+		if ( ownedRef )
 			g_closure_unref(gClosure);
 	}
 
@@ -139,14 +135,14 @@ public class Closure
 	 */
 	public this(uint sizeofClosure, ObjectG object)
 	{
-		auto p = g_closure_new_object(sizeofClosure, (object is null) ? null : object.getObjectGStruct());
+		auto __p = g_closure_new_object(sizeofClosure, (object is null) ? null : object.getObjectGStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_object");
 		}
 
-		this(cast(GClosure*) p);
+		this(cast(GClosure*) __p);
 	}
 
 	/**
@@ -192,20 +188,20 @@ public class Closure
 	 *         `sizeof (GClosure)`
 	 *     data = data to store in the @data field of the newly allocated #GClosure
 	 *
-	 * Returns: a floating reference to a new #GClosure
+	 * Returns: a newly allocated #GClosure
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
 	public this(uint sizeofClosure, void* data)
 	{
-		auto p = g_closure_new_simple(sizeofClosure, data);
+		auto __p = g_closure_new_simple(sizeofClosure, data);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_simple");
 		}
 
-		this(cast(GClosure*) p);
+		this(cast(GClosure*) __p);
 	}
 
 	/**
@@ -311,14 +307,14 @@ public class Closure
 	 */
 	public Closure ref_()
 	{
-		auto p = g_closure_ref(gClosure);
+		auto __p = g_closure_ref(gClosure);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Closure)(cast(GClosure*) p);
+		return ObjectG.getDObject!(Closure)(cast(GClosure*) __p);
 	}
 
 	/**

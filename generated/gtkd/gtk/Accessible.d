@@ -29,7 +29,6 @@ private import gobject.ObjectG;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -103,14 +102,14 @@ public class Accessible : ObjectAtk
 	 */
 	public Widget getWidget()
 	{
-		auto p = gtk_accessible_get_widget(gtkAccessible);
+		auto __p = gtk_accessible_get_widget(gtkAccessible);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**

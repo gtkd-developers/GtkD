@@ -25,7 +25,6 @@
 module pango.PgScript;
 
 private import gobject.ObjectG;
-public  import gtkc.pangotypes;
 private import pango.PgLanguage;
 private import pango.c.functions;
 public  import pango.c.types;
@@ -36,13 +35,17 @@ public struct PgScript
 {
 
 	/**
-	 * Looks up the #PangoScript for a particular character (as defined by
+	 * Looks up the script for a particular character (as defined by
 	 * Unicode Standard Annex \#24). No check is made for @ch being a
 	 * valid Unicode character; if you pass in invalid character, the
 	 * result is undefined.
 	 *
-	 * As of Pango 1.18, this function simply returns the return value of
-	 * g_unichar_get_script().
+	 * Note that while the return type of this function is declared
+	 * as PangoScript, as of Pango 1.18, this function simply returns
+	 * the return value of g_unichar_get_script(). Callers must be
+	 * prepared to handle unknown values.
+	 *
+	 * Deprecated: Use g_unichar_get_script()
 	 *
 	 * Params:
 	 *     ch = a Unicode character
@@ -98,13 +101,13 @@ public struct PgScript
 	 */
 	public static PgLanguage scriptGetSampleLanguage(PangoScript script)
 	{
-		auto p = pango_script_get_sample_language(script);
+		auto __p = pango_script_get_sample_language(script);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgLanguage)(cast(PangoLanguage*) p, true);
+		return ObjectG.getDObject!(PgLanguage)(cast(PangoLanguage*) __p, true);
 	}
 }

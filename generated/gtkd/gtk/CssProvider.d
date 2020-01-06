@@ -36,7 +36,6 @@ private import gtk.StyleProviderIF;
 private import gtk.StyleProviderT;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -112,14 +111,14 @@ public class CssProvider : ObjectG, StyleProviderIF
 	 */
 	public this()
 	{
-		auto p = gtk_css_provider_new();
+		auto __p = gtk_css_provider_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkCssProvider*) p, true);
+		this(cast(GtkCssProvider*) __p, true);
 	}
 
 	/**
@@ -133,14 +132,14 @@ public class CssProvider : ObjectG, StyleProviderIF
 	 */
 	public static CssProvider getDefault()
 	{
-		auto p = gtk_css_provider_get_default();
+		auto __p = gtk_css_provider_get_default();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(CssProvider)(cast(GtkCssProvider*) p);
+		return ObjectG.getDObject!(CssProvider)(cast(GtkCssProvider*) __p);
 	}
 
 	/**
@@ -156,14 +155,14 @@ public class CssProvider : ObjectG, StyleProviderIF
 	 */
 	public static CssProvider getNamed(string name, string variant)
 	{
-		auto p = gtk_css_provider_get_named(Str.toStringz(name), Str.toStringz(variant));
+		auto __p = gtk_css_provider_get_named(Str.toStringz(name), Str.toStringz(variant));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(CssProvider)(cast(GtkCssProvider*) p);
+		return ObjectG.getDObject!(CssProvider)(cast(GtkCssProvider*) __p);
 	}
 
 	/**
@@ -184,14 +183,14 @@ public class CssProvider : ObjectG, StyleProviderIF
 	{
 		GError* err = null;
 
-		auto p = gtk_css_provider_load_from_data(gtkCssProvider, Str.toStringz(data), cast(ptrdiff_t)data.length, &err) != 0;
+		auto __p = gtk_css_provider_load_from_data(gtkCssProvider, Str.toStringz(data), cast(ptrdiff_t)data.length, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -212,14 +211,14 @@ public class CssProvider : ObjectG, StyleProviderIF
 	{
 		GError* err = null;
 
-		auto p = gtk_css_provider_load_from_file(gtkCssProvider, (file is null) ? null : file.getFileStruct(), &err) != 0;
+		auto __p = gtk_css_provider_load_from_file(gtkCssProvider, (file is null) ? null : file.getFileStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -240,14 +239,14 @@ public class CssProvider : ObjectG, StyleProviderIF
 	{
 		GError* err = null;
 
-		auto p = gtk_css_provider_load_from_path(gtkCssProvider, Str.toStringz(path), &err) != 0;
+		auto __p = gtk_css_provider_load_from_path(gtkCssProvider, Str.toStringz(path), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**

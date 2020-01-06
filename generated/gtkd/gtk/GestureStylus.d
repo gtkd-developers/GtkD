@@ -33,7 +33,6 @@ private import gtk.GestureSingle;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -90,14 +89,14 @@ public class GestureStylus : GestureSingle
 	 */
 	public this(Widget widget)
 	{
-		auto p = gtk_gesture_stylus_new((widget is null) ? null : widget.getWidgetStruct());
+		auto __p = gtk_gesture_stylus_new((widget is null) ? null : widget.getWidgetStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkGestureStylus*) p, true);
+		this(cast(GtkGestureStylus*) __p, true);
 	}
 
 	/**
@@ -118,11 +117,11 @@ public class GestureStylus : GestureSingle
 	{
 		double* outvalues = null;
 
-		auto p = gtk_gesture_stylus_get_axes(gtkGestureStylus, axes.ptr, &outvalues) != 0;
+		auto __p = gtk_gesture_stylus_get_axes(gtkGestureStylus, axes.ptr, &outvalues) != 0;
 
 		values = outvalues[0 .. getArrayLength(outvalues)];
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -156,14 +155,14 @@ public class GestureStylus : GestureSingle
 	 */
 	public DeviceTool getDeviceTool()
 	{
-		auto p = gtk_gesture_stylus_get_device_tool(gtkGestureStylus);
+		auto __p = gtk_gesture_stylus_get_device_tool(gtkGestureStylus);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DeviceTool)(cast(GdkDeviceTool*) p);
+		return ObjectG.getDObject!(DeviceTool)(cast(GdkDeviceTool*) __p);
 	}
 
 	/** */

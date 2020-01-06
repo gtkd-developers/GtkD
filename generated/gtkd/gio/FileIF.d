@@ -45,7 +45,6 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -62,7 +61,6 @@ public  import gtkc.giotypes;
  * - g_file_new_for_commandline_arg() for a command line argument.
  * - g_file_new_tmp() to create a temporary file from a template.
  * - g_file_parse_name() from a UTF-8 string gotten from g_file_get_parse_name().
- * - g_file_new_build_filename() to create a file from path elements.
  * 
  * One way to think of a #GFile is as an abstraction of a pathname. For
  * normal files the system pathname is what is stored internally, but as
@@ -158,14 +156,14 @@ public interface FileIF{
 	 */
 	public static FileIF parseName(string parseName)
 	{
-		auto p = g_file_parse_name(Str.toStringz(parseName));
+		auto __p = g_file_parse_name(Str.toStringz(parseName));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) __p, true);
 	}
 
 	/**
@@ -245,10 +243,6 @@ public interface FileIF{
 	 * If the flag #G_FILE_COPY_NOFOLLOW_SYMLINKS is specified then symlinks
 	 * will be copied as symlinks, otherwise the target of the
 	 * @source symlink will be copied.
-	 *
-	 * If the flag #G_FILE_COPY_ALL_METADATA is specified then all the metadata
-	 * that is possible to copy is copied, not just the default subset (which,
-	 * for instance, does not include the owner, see #GFileInfo).
 	 *
 	 * If @cancellable is not %NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
@@ -557,11 +551,6 @@ public interface FileIF{
 	 * Duplicates a #GFile handle. This operation does not duplicate
 	 * the actual file or directory represented by the #GFile; see
 	 * g_file_copy() if attempting to copy a file.
-	 *
-	 * g_file_dup() is useful when a second handle is needed to the same underlying
-	 * file, for use in a separate thread (#GFile is not thread-safe). For use
-	 * within the same thread, use g_object_ref() to increment the existing object’s
-	 * reference count.
 	 *
 	 * This call does no blocking I/O.
 	 *
@@ -1017,7 +1006,7 @@ public interface FileIF{
 	/**
 	 * Checks to see if a file is native to the platform.
 	 *
-	 * A native file is one expressed in the platform-native filename format,
+	 * A native file s one expressed in the platform-native filename format,
 	 * e.g. "C:\Windows" or "/usr/bin/". This does not mean the file is local,
 	 * as it might be on a locally mounted remote filesystem.
 	 *
@@ -1030,78 +1019,6 @@ public interface FileIF{
 	 * Returns: %TRUE if @file is native
 	 */
 	public bool isNative();
-
-	/**
-	 * Loads the contents of @file and returns it as #GBytes.
-	 *
-	 * If @file is a resource:// based URI, the resulting bytes will reference the
-	 * embedded resource instead of a copy. Otherwise, this is equivalent to calling
-	 * g_file_load_contents() and g_bytes_new_take().
-	 *
-	 * For resources, @etag_out will be set to %NULL.
-	 *
-	 * The data contained in the resulting #GBytes is always zero-terminated, but
-	 * this is not included in the #GBytes length. The resulting #GBytes should be
-	 * freed with g_bytes_unref() when no longer in use.
-	 *
-	 * Params:
-	 *     cancellable = a #GCancellable or %NULL
-	 *     etagOut = a location to place the current
-	 *         entity tag for the file, or %NULL if the entity tag is not needed
-	 *
-	 * Returns: a #GBytes or %NULL and @error is set
-	 *
-	 * Since: 2.56
-	 *
-	 * Throws: GException on failure.
-	 */
-	public Bytes loadBytes(Cancellable cancellable, out string etagOut);
-
-	/**
-	 * Asynchronously loads the contents of @file as #GBytes.
-	 *
-	 * If @file is a resource:// based URI, the resulting bytes will reference the
-	 * embedded resource instead of a copy. Otherwise, this is equivalent to calling
-	 * g_file_load_contents_async() and g_bytes_new_take().
-	 *
-	 * @callback should call g_file_load_bytes_finish() to get the result of this
-	 * asynchronous operation.
-	 *
-	 * See g_file_load_bytes() for more information.
-	 *
-	 * Params:
-	 *     cancellable = a #GCancellable or %NULL
-	 *     callback = a #GAsyncReadyCallback to call when the
-	 *         request is satisfied
-	 *     userData = the data to pass to callback function
-	 *
-	 * Since: 2.56
-	 */
-	public void loadBytesAsync(Cancellable cancellable, GAsyncReadyCallback callback, void* userData);
-
-	/**
-	 * Completes an asynchronous request to g_file_load_bytes_async().
-	 *
-	 * For resources, @etag_out will be set to %NULL.
-	 *
-	 * The data contained in the resulting #GBytes is always zero-terminated, but
-	 * this is not included in the #GBytes length. The resulting #GBytes should be
-	 * freed with g_bytes_unref() when no longer in use.
-	 *
-	 * See g_file_load_bytes() for more information.
-	 *
-	 * Params:
-	 *     result = a #GAsyncResult provided to the callback
-	 *     etagOut = a location to place the current
-	 *         entity tag for the file, or %NULL if the entity tag is not needed
-	 *
-	 * Returns: a #GBytes or %NULL and @error is set
-	 *
-	 * Since: 2.56
-	 *
-	 * Throws: GException on failure.
-	 */
-	public Bytes loadBytesFinish(AsyncResultIF result, out string etagOut);
 
 	/**
 	 * Loads the content of the file into memory. The data is always
@@ -1183,11 +1100,9 @@ public interface FileIF{
 	 *
 	 * Params:
 	 *     cancellable = optional #GCancellable object, %NULL to ignore
-	 *     readMoreCallback = a
-	 *         #GFileReadMoreCallback to receive partial data
+	 *     readMoreCallback = a #GFileReadMoreCallback to receive partial data
 	 *         and to specify whether further data should be read
-	 *     callback = a #GAsyncReadyCallback to call
-	 *         when the request is satisfied
+	 *     callback = a #GAsyncReadyCallback to call when the request is satisfied
 	 *     userData = the data to pass to the callback functions
 	 */
 	public void loadPartialContentsAsync(Cancellable cancellable, GFileReadMoreCallback readMoreCallback, GAsyncReadyCallback callback, void* userData);
@@ -1675,22 +1590,6 @@ public interface FileIF{
 	public FileIOStream openReadwriteFinish(AsyncResultIF res);
 
 	/**
-	 * Exactly like g_file_get_path(), but caches the result via
-	 * g_object_set_qdata_full().  This is useful for example in C
-	 * applications which mix `g_file_*` APIs with native ones.  It
-	 * also avoids an extra duplicated string when possible, so will be
-	 * generally more efficient.
-	 *
-	 * This call does no blocking I/O.
-	 *
-	 * Returns: string containing the #GFile's path,
-	 *     or %NULL if no such path exists. The returned string is owned by @file.
-	 *
-	 * Since: 2.56
-	 */
-	public string peekPath();
-
-	/**
 	 * Polls a file of type #G_FILE_TYPE_MOUNTABLE.
 	 *
 	 * If @cancellable is not %NULL, then the operation can be cancelled by
@@ -1749,38 +1648,10 @@ public interface FileIF{
 	public AppInfoIF queryDefaultHandler(Cancellable cancellable);
 
 	/**
-	 * Async version of g_file_query_default_handler().
-	 *
-	 * Params:
-	 *     cancellable = optional #GCancellable object, %NULL to ignore
-	 *     callback = a #GAsyncReadyCallback to call when the request is done
-	 *     userData = data to pass to @callback
-	 *
-	 * Since: 2.60
-	 */
-	public void queryDefaultHandlerAsync(int ioPriority, Cancellable cancellable, GAsyncReadyCallback callback, void* userData);
-
-	/**
-	 * Finishes a g_file_query_default_handler_async() operation.
-	 *
-	 * Params:
-	 *     result = a #GAsyncResult
-	 *
-	 * Returns: a #GAppInfo if the handle was found,
-	 *     %NULL if there were errors.
-	 *     When you are done with it, release it with g_object_unref()
-	 *
-	 * Since: 2.60
-	 *
-	 * Throws: GException on failure.
-	 */
-	public AppInfoIF queryDefaultHandlerFinish(AsyncResultIF result);
-
-	/**
 	 * Utility function to check if a particular file exists. This is
 	 * implemented using g_file_query_info() and as such does blocking I/O.
 	 *
-	 * Note that in many cases it is [racy to first check for file existence](https://en.wikipedia.org/wiki/Time_of_check_to_time_of_use)
+	 * Note that in many cases it is racy to first check for file existence
 	 * and then execute something based on the outcome of that, because the
 	 * file might have been created or removed in between the operations. The
 	 * general approach to handling that is to not check, but just do the
@@ -2386,7 +2257,7 @@ public interface FileIF{
 	/**
 	 * Sets an attribute in the file with attribute name @attribute to @value.
 	 *
-	 * Some attributes can be unset by setting @type to
+	 * Some attributes can be unset by setting @attribute to
 	 * %G_FILE_ATTRIBUTE_TYPE_INVALID and @value_p to %NULL.
 	 *
 	 * If @cancellable is not %NULL, then the operation can be cancelled by

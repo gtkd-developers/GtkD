@@ -33,7 +33,6 @@ public  import glib.GException;
 public  import glib.Str;
 public  import glib.Variant;
 public  import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -103,14 +102,14 @@ public template IconT(TStruct)
 	 */
 	public Variant serialize()
 	{
-		auto p = g_icon_serialize(getIconStruct());
+		auto __p = g_icon_serialize(getIconStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -128,8 +127,8 @@ public template IconT(TStruct)
 	 * native, the returned string is the result of g_file_get_uri()
 	 * (such as `sftp://path/to/my%20icon.png`).
 	 *
-	 * - If @icon is a #GThemedIcon with exactly one name and no fallbacks,
-	 * the encoding is simply the name (such as `network-server`).
+	 * - If @icon is a #GThemedIcon with exactly one name, the encoding is
+	 * simply the name (such as `network-server`).
 	 *
 	 * Returns: An allocated NUL-terminated UTF8 string or
 	 *     %NULL if @icon can't be serialized. Use g_free() to free.

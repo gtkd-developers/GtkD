@@ -34,7 +34,6 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -99,14 +98,14 @@ public class DBusObjectSkeleton : ObjectG, DBusObjectIF
 	 */
 	public this(string objectPath)
 	{
-		auto p = g_dbus_object_skeleton_new(Str.toStringz(objectPath));
+		auto __p = g_dbus_object_skeleton_new(Str.toStringz(objectPath));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GDBusObjectSkeleton*) p, true);
+		this(cast(GDBusObjectSkeleton*) __p, true);
 	}
 
 	/**

@@ -37,7 +37,6 @@ private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -131,19 +130,19 @@ public class DBusServer : ObjectG, InitableIF
 	{
 		GError* err = null;
 
-		auto p = g_dbus_server_new_sync(Str.toStringz(address), flags, Str.toStringz(guid), (observer is null) ? null : observer.getDBusAuthObserverStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_dbus_server_new_sync(Str.toStringz(address), flags, Str.toStringz(guid), (observer is null) ? null : observer.getDBusAuthObserverStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_sync");
 		}
 
-		this(cast(GDBusServer*) p, true);
+		this(cast(GDBusServer*) __p, true);
 	}
 
 	/**

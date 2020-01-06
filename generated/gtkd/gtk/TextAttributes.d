@@ -28,8 +28,6 @@ private import glib.ConstructionException;
 private import gobject.ObjectG;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
-private import gtkd.Loader;
 
 
 /**
@@ -69,7 +67,7 @@ public class TextAttributes
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GTK) && ownedRef )
+		if ( ownedRef )
 			gtk_text_attributes_unref(gtkTextAttributes);
 	}
 
@@ -91,14 +89,14 @@ public class TextAttributes
 	 */
 	public this()
 	{
-		auto p = gtk_text_attributes_new();
+		auto __p = gtk_text_attributes_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkTextAttributes*) p);
+		this(cast(GtkTextAttributes*) __p);
 	}
 
 	/**
@@ -109,14 +107,14 @@ public class TextAttributes
 	 */
 	public TextAttributes copy()
 	{
-		auto p = gtk_text_attributes_copy(gtkTextAttributes);
+		auto __p = gtk_text_attributes_copy(gtkTextAttributes);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TextAttributes)(cast(GtkTextAttributes*) p, true);
+		return ObjectG.getDObject!(TextAttributes)(cast(GtkTextAttributes*) __p, true);
 	}
 
 	/**
@@ -139,14 +137,14 @@ public class TextAttributes
 	 */
 	public TextAttributes ref_()
 	{
-		auto p = gtk_text_attributes_ref(gtkTextAttributes);
+		auto __p = gtk_text_attributes_ref(gtkTextAttributes);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TextAttributes)(cast(GtkTextAttributes*) p, true);
+		return ObjectG.getDObject!(TextAttributes)(cast(GtkTextAttributes*) __p, true);
 	}
 
 	/**

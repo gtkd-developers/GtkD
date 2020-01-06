@@ -33,7 +33,6 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.ListG;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -100,14 +99,11 @@ public interface TlsClientConnectionIF{
 	public SocketConnectableIF getServerIdentity();
 
 	/**
-	 * Gets whether @conn will force the lowest-supported TLS protocol
-	 * version rather than attempt to negotiate the highest mutually-
-	 * supported version of TLS; see g_tls_client_connection_set_use_ssl3().
+	 * Gets whether @conn will use SSL 3.0 rather than the
+	 * highest-supported version of TLS; see
+	 * g_tls_client_connection_set_use_ssl3().
 	 *
-	 * Deprecated: SSL 3.0 is insecure, and this function does not
-	 * actually indicate whether it is enabled.
-	 *
-	 * Returns: whether @conn will use the lowest-supported TLS protocol version
+	 * Returns: whether @conn will use SSL 3.0
 	 *
 	 * Since: 2.28
 	 */
@@ -136,25 +132,14 @@ public interface TlsClientConnectionIF{
 	public void setServerIdentity(SocketConnectableIF identity);
 
 	/**
-	 * Since 2.42.1, if @use_ssl3 is %TRUE, this forces @conn to use the
-	 * lowest-supported TLS protocol version rather than trying to properly
-	 * negotiate the highest mutually-supported protocol version with the
-	 * peer. Be aware that SSL 3.0 is generally disabled by the
-	 * #GTlsBackend, so the lowest-supported protocol version is probably
-	 * not SSL 3.0.
-	 *
-	 * Since 2.58, this may additionally cause an RFC 7507 fallback SCSV to
-	 * be sent to the server, causing modern TLS servers to immediately
-	 * terminate the connection. You should generally only use this function
-	 * if you need to connect to broken servers that exhibit TLS protocol
-	 * version intolerance, and when an initial attempt to connect to a
-	 * server normally has already failed.
-	 *
-	 * Deprecated: SSL 3.0 is insecure, and this function does not
-	 * generally enable or disable it, despite its name.
+	 * If @use_ssl3 is %TRUE, this forces @conn to use SSL 3.0 rather than
+	 * trying to properly negotiate the right version of TLS or SSL to use.
+	 * This can be used when talking to servers that do not implement the
+	 * fallbacks correctly and which will therefore fail to handshake with
+	 * a "modern" TLS handshake attempt.
 	 *
 	 * Params:
-	 *     useSsl3 = whether to use the lowest-supported protocol version
+	 *     useSsl3 = whether to use SSL 3.0
 	 *
 	 * Since: 2.28
 	 */

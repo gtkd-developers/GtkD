@@ -30,7 +30,6 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -46,8 +45,6 @@ private import std.algorithm;
  * text to be stored in an alternate location, such as non-pageable memory,
  * useful in the case of important passwords. Or a derived class could
  * integrate with an application’s concept of undo/redo.
- *
- * Since: 2.18
  */
 public class EntryBuffer : ObjectG
 {
@@ -101,14 +98,14 @@ public class EntryBuffer : ObjectG
 	 */
 	public this(string initialChars, int nInitialChars)
 	{
-		auto p = gtk_entry_buffer_new(Str.toStringz(initialChars), nInitialChars);
+		auto __p = gtk_entry_buffer_new(Str.toStringz(initialChars), nInitialChars);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkEntryBuffer*) p, true);
+		this(cast(GtkEntryBuffer*) __p, true);
 	}
 
 	/**

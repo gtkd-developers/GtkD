@@ -33,7 +33,6 @@ private import gio.c.functions;
 public  import gio.c.types;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -94,14 +93,14 @@ public class ConverterOutputStream : FilterOutputStream, PollableOutputStreamIF
 	 */
 	public this(OutputStream baseStream, ConverterIF converter)
 	{
-		auto p = g_converter_output_stream_new((baseStream is null) ? null : baseStream.getOutputStreamStruct(), (converter is null) ? null : converter.getConverterStruct());
+		auto __p = g_converter_output_stream_new((baseStream is null) ? null : baseStream.getOutputStreamStruct(), (converter is null) ? null : converter.getConverterStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GConverterOutputStream*) p, true);
+		this(cast(GConverterOutputStream*) __p, true);
 	}
 
 	/**
@@ -113,13 +112,13 @@ public class ConverterOutputStream : FilterOutputStream, PollableOutputStreamIF
 	 */
 	public ConverterIF getConverter()
 	{
-		auto p = g_converter_output_stream_get_converter(gConverterOutputStream);
+		auto __p = g_converter_output_stream_get_converter(gConverterOutputStream);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ConverterIF)(cast(GConverter*) p);
+		return ObjectG.getDObject!(ConverterIF)(cast(GConverter*) __p);
 	}
 }

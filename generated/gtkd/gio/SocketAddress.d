@@ -32,7 +32,6 @@ private import glib.ConstructionException;
 private import glib.ErrorG;
 private import glib.GException;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -95,14 +94,14 @@ public class SocketAddress : ObjectG, SocketConnectableIF
 	 */
 	public this(void* native, size_t len)
 	{
-		auto p = g_socket_address_new_from_native(native, len);
+		auto __p = g_socket_address_new_from_native(native, len);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_native");
 		}
 
-		this(cast(GSocketAddress*) p, true);
+		this(cast(GSocketAddress*) __p, true);
 	}
 
 	/**
@@ -156,13 +155,13 @@ public class SocketAddress : ObjectG, SocketConnectableIF
 	{
 		GError* err = null;
 
-		auto p = g_socket_address_to_native(gSocketAddress, dest, destlen, &err) != 0;
+		auto __p = g_socket_address_to_native(gSocketAddress, dest, destlen, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 }

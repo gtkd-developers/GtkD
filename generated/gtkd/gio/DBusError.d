@@ -28,7 +28,6 @@ private import gio.c.functions;
 public  import gio.c.types;
 private import glib.ErrorG;
 private import glib.Str;
-public  import gtkc.giotypes;
 
 
 /** */
@@ -142,14 +141,14 @@ public struct DBusError
 	 */
 	public static ErrorG newForDbusError(string dbusErrorName, string dbusErrorMessage)
 	{
-		auto p = g_dbus_error_new_for_dbus_error(Str.toStringz(dbusErrorName), Str.toStringz(dbusErrorMessage));
+		auto __p = g_dbus_error_new_for_dbus_error(Str.toStringz(dbusErrorName), Str.toStringz(dbusErrorMessage));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ErrorG(cast(GError*) p, true);
+		return new ErrorG(cast(GError*) __p, true);
 	}
 
 	/** */
@@ -187,12 +186,13 @@ public struct DBusError
 	 *     errorDomainQuarkName = The error domain name.
 	 *     quarkVolatile = A pointer where to store the #GQuark.
 	 *     entries = A pointer to @num_entries #GDBusErrorEntry struct items.
+	 *     numEntries = Number of items to register.
 	 *
 	 * Since: 2.26
 	 */
-	public static void registerErrorDomain(string errorDomainQuarkName, size_t* quarkVolatile, GDBusErrorEntry[] entries)
+	public static void registerErrorDomain(string errorDomainQuarkName, size_t* quarkVolatile, GDBusErrorEntry* entries, uint numEntries)
 	{
-		g_dbus_error_register_error_domain(Str.toStringz(errorDomainQuarkName), quarkVolatile, entries.ptr, cast(uint)entries.length);
+		g_dbus_error_register_error_domain(Str.toStringz(errorDomainQuarkName), quarkVolatile, entries, numEntries);
 	}
 
 	/**

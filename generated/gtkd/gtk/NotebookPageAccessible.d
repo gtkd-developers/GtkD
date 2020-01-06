@@ -33,7 +33,6 @@ private import gtk.NotebookAccessible;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /** */
@@ -78,14 +77,14 @@ public class NotebookPageAccessible : ObjectAtk, ComponentIF
 	/** */
 	public this(NotebookAccessible notebook, Widget child)
 	{
-		auto p = gtk_notebook_page_accessible_new((notebook is null) ? null : notebook.getNotebookAccessibleStruct(), (child is null) ? null : child.getWidgetStruct());
+		auto __p = gtk_notebook_page_accessible_new((notebook is null) ? null : notebook.getNotebookAccessibleStruct(), (child is null) ? null : child.getWidgetStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkNotebookPageAccessible*) p, true);
+		this(cast(GtkNotebookPageAccessible*) __p, true);
 	}
 
 	/** */

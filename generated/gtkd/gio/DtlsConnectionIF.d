@@ -33,10 +33,8 @@ private import gio.c.functions;
 public  import gio.c.types;
 private import glib.ErrorG;
 private import glib.GException;
-private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -186,21 +184,6 @@ public interface DtlsConnectionIF{
 	public TlsInteraction getInteraction();
 
 	/**
-	 * Gets the name of the application-layer protocol negotiated during
-	 * the handshake.
-	 *
-	 * If the peer did not use the ALPN extension, or did not advertise a
-	 * protocol that matched one of @conn's protocols, or the TLS backend
-	 * does not support ALPN, then this will be %NULL. See
-	 * g_dtls_connection_set_advertised_protocols().
-	 *
-	 * Returns: the negotiated protocol, or %NULL
-	 *
-	 * Since: 2.60
-	 */
-	public string getNegotiatedProtocol();
-
-	/**
 	 * Gets @conn's peer's certificate after the handshake has completed.
 	 * (It is not set during the emission of
 	 * #GDtlsConnection::accept-certificate.)
@@ -261,15 +244,8 @@ public interface DtlsConnectionIF{
 	 * Likewise, on the server side, although a handshake is necessary at
 	 * the beginning of the communication, you do not need to call this
 	 * function explicitly unless you want clearer error reporting.
-	 *
-	 * If TLS 1.2 or older is in use, you may call
-	 * g_dtls_connection_handshake() after the initial handshake to
-	 * rehandshake; however, this usage is deprecated because rehandshaking
-	 * is no longer part of the TLS protocol in TLS 1.3. Accordingly, the
-	 * behavior of calling this function after the initial handshake is now
-	 * undefined, except it is guaranteed to be reasonable and
-	 * nondestructive so as to preserve compatibility with code written for
-	 * older versions of GLib.
+	 * However, you may call g_dtls_connection_handshake() later on to
+	 * renegotiate parameters (encryption methods, etc) with the client.
 	 *
 	 * #GDtlsConnection::accept_certificate may be emitted during the
 	 * handshake.
@@ -316,26 +292,6 @@ public interface DtlsConnectionIF{
 	public bool handshakeFinish(AsyncResultIF result);
 
 	/**
-	 * Sets the list of application-layer protocols to advertise that the
-	 * caller is willing to speak on this connection. The
-	 * Application-Layer Protocol Negotiation (ALPN) extension will be
-	 * used to negotiate a compatible protocol with the peer; use
-	 * g_dtls_connection_get_negotiated_protocol() to find the negotiated
-	 * protocol after the handshake.  Specifying %NULL for the the value
-	 * of @protocols will disable ALPN negotiation.
-	 *
-	 * See [IANA TLS ALPN Protocol IDs](https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids)
-	 * for a list of registered protocol IDs.
-	 *
-	 * Params:
-	 *     protocols = a %NULL-terminated
-	 *         array of ALPN protocol names (eg, "http/1.1", "h2"), or %NULL
-	 *
-	 * Since: 2.60
-	 */
-	public void setAdvertisedProtocols(string[] protocols);
-
-	/**
 	 * This sets the certificate that @conn will present to its peer
 	 * during the TLS handshake. For a #GDtlsServerConnection, it is
 	 * mandatory to set this, and that will normally be done at construct
@@ -365,7 +321,7 @@ public interface DtlsConnectionIF{
 	/**
 	 * Sets the certificate database that is used to verify peer certificates.
 	 * This is set to the default database by default. See
-	 * g_tls_backend_get_default_database(). If set to %NULL, then
+	 * g_dtls_backend_get_default_database(). If set to %NULL, then
 	 * peer certificate validation will always set the
 	 * %G_TLS_CERTIFICATE_UNKNOWN_CA error (meaning
 	 * #GDtlsConnection::accept-certificate will always be emitted on
@@ -415,10 +371,6 @@ public interface DtlsConnectionIF{
 	 * leaves the server open to certain attacks. However, this mode is
 	 * necessary if you need to allow renegotiation with older client
 	 * software.
-	 *
-	 * Deprecated: Changing the rehandshake mode is no longer
-	 * required for compatibility. Also, rehandshaking has been removed
-	 * from the TLS protocol in TLS 1.3.
 	 *
 	 * Params:
 	 *     mode = the rehandshaking mode
@@ -550,8 +502,8 @@ public interface DtlsConnectionIF{
 	 * let the user decide whether or not to accept the certificate, you
 	 * would have to return %FALSE from the signal handler on the first
 	 * attempt, and then after the connection attempt returns a
-	 * %G_TLS_ERROR_BAD_CERTIFICATE, you can interact with the user, and
-	 * if the user decides to accept the certificate, remember that fact,
+	 * %G_TLS_ERROR_HANDSHAKE, you can interact with the user, and if
+	 * the user decides to accept the certificate, remember that fact,
 	 * create a new connection, and return %TRUE from the signal handler
 	 * the next time.
 	 *

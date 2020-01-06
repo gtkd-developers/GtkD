@@ -33,8 +33,6 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
-private import gtkd.Loader;
 
 
 /**
@@ -77,7 +75,7 @@ public class RecentInfo
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GTK) && ownedRef )
+		if ( ownedRef )
 			gtk_recent_info_unref(gtkRecentInfo);
 	}
 
@@ -106,19 +104,19 @@ public class RecentInfo
 	{
 		GError* err = null;
 
-		auto p = gtk_recent_info_create_app_info(gtkRecentInfo, Str.toStringz(appName), &err);
+		auto __p = gtk_recent_info_create_app_info(gtkRecentInfo, Str.toStringz(appName), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) p, true);
+		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) __p, true);
 	}
 
 	/**
@@ -189,11 +187,11 @@ public class RecentInfo
 	{
 		char* outappExec = null;
 
-		auto p = gtk_recent_info_get_application_info(gtkRecentInfo, Str.toStringz(appName), &outappExec, &count, &time) != 0;
+		auto __p = gtk_recent_info_get_application_info(gtkRecentInfo, Str.toStringz(appName), &outappExec, &count, &time) != 0;
 
 		appExec = Str.toString(outappExec);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -251,14 +249,14 @@ public class RecentInfo
 	 */
 	public IconIF getGicon()
 	{
-		auto p = gtk_recent_info_get_gicon(gtkRecentInfo);
+		auto __p = gtk_recent_info_get_gicon(gtkRecentInfo);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p, true);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) __p, true);
 	}
 
 	/**
@@ -294,14 +292,14 @@ public class RecentInfo
 	 */
 	public Pixbuf getIcon(int size)
 	{
-		auto p = gtk_recent_info_get_icon(gtkRecentInfo, size);
+		auto __p = gtk_recent_info_get_icon(gtkRecentInfo, size);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) __p, true);
 	}
 
 	/**
@@ -498,14 +496,14 @@ public class RecentInfo
 	 */
 	public RecentInfo ref_()
 	{
-		auto p = gtk_recent_info_ref(gtkRecentInfo);
+		auto __p = gtk_recent_info_ref(gtkRecentInfo);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(RecentInfo)(cast(GtkRecentInfo*) p, true);
+		return ObjectG.getDObject!(RecentInfo)(cast(GtkRecentInfo*) __p, true);
 	}
 
 	/**

@@ -34,7 +34,6 @@ private import gtk.TreePath;
 private import gtk.TreeView;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -203,12 +202,12 @@ public class TreeSelection : ObjectG
 		GtkTreeModel* outmodel = null;
 		GtkTreeIter* outiter = sliceNew!GtkTreeIter();
 
-		auto p = gtk_tree_selection_get_selected(gtkTreeSelection, &outmodel, outiter) != 0;
+		auto __p = gtk_tree_selection_get_selected(gtkTreeSelection, &outmodel, outiter) != 0;
 
 		model = ObjectG.getDObject!(TreeModelIF)(outmodel);
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -218,14 +217,14 @@ public class TreeSelection : ObjectG
 	 */
 	public TreeView getTreeView()
 	{
-		auto p = gtk_tree_selection_get_tree_view(gtkTreeSelection);
+		auto __p = gtk_tree_selection_get_tree_view(gtkTreeSelection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TreeView)(cast(GtkTreeView*) p);
+		return ObjectG.getDObject!(TreeView)(cast(GtkTreeView*) __p);
 	}
 
 	/**

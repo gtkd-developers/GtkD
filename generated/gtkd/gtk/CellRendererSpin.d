@@ -30,7 +30,6 @@ private import gtk.CellRenderer;
 private import gtk.CellRendererText;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -94,13 +93,13 @@ public class CellRendererSpin : CellRendererText
 	 */
 	public this()
 	{
-		auto p = gtk_cell_renderer_spin_new();
+		auto __p = gtk_cell_renderer_spin_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkCellRendererSpin*) p);
+		this(cast(GtkCellRendererSpin*) __p);
 	}
 }

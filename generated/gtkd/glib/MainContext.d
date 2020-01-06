@@ -30,8 +30,6 @@ private import glib.Mutex;
 private import glib.Source;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
-private import gtkd.Loader;
 
 
 /**
@@ -69,7 +67,7 @@ public class MainContext
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_main_context_unref(gMainContext);
 	}
 
@@ -83,14 +81,14 @@ public class MainContext
 	 */
 	public this()
 	{
-		auto p = g_main_context_new();
+		auto __p = g_main_context_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GMainContext*) p);
+		this(cast(GMainContext*) __p);
 	}
 
 	/**
@@ -172,14 +170,14 @@ public class MainContext
 	 */
 	public Source findSourceByFuncsUserData(GSourceFuncs* funcs, void* userData)
 	{
-		auto p = g_main_context_find_source_by_funcs_user_data(gMainContext, funcs, userData);
+		auto __p = g_main_context_find_source_by_funcs_user_data(gMainContext, funcs, userData);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Source(cast(GSource*) p);
+		return new Source(cast(GSource*) __p);
 	}
 
 	/**
@@ -203,14 +201,14 @@ public class MainContext
 	 */
 	public Source findSourceById(uint sourceId)
 	{
-		auto p = g_main_context_find_source_by_id(gMainContext, sourceId);
+		auto __p = g_main_context_find_source_by_id(gMainContext, sourceId);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Source(cast(GSource*) p);
+		return new Source(cast(GSource*) __p);
 	}
 
 	/**
@@ -225,14 +223,14 @@ public class MainContext
 	 */
 	public Source findSourceByUserData(void* userData)
 	{
-		auto p = g_main_context_find_source_by_user_data(gMainContext, userData);
+		auto __p = g_main_context_find_source_by_user_data(gMainContext, userData);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Source(cast(GSource*) p);
+		return new Source(cast(GSource*) __p);
 	}
 
 	/**
@@ -284,7 +282,7 @@ public class MainContext
 	 * invocation of @function.
 	 *
 	 * This function is the same as g_main_context_invoke() except that it
-	 * lets you specify the priority in case @function ends up being
+	 * lets you specify the priority incase @function ends up being
 	 * scheduled as an idle and also lets you give a #GDestroyNotify for @data.
 	 *
 	 * @notify should not assume that it is called from any particular
@@ -458,14 +456,14 @@ public class MainContext
 	 */
 	public MainContext ref_()
 	{
-		auto p = g_main_context_ref(gMainContext);
+		auto __p = g_main_context_ref(gMainContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new MainContext(cast(GMainContext*) p, true);
+		return new MainContext(cast(GMainContext*) __p, true);
 	}
 
 	/**
@@ -524,8 +522,6 @@ public class MainContext
 	 * that owner releases ownership or until @cond is signaled, then
 	 * try again (once) to become the owner.
 	 *
-	 * Deprecated: Use g_main_context_is_owner() and separate locking instead.
-	 *
 	 * Params:
 	 *     cond = a condition variable
 	 *     mutex = a mutex, currently held
@@ -583,14 +579,14 @@ public class MainContext
 	 */
 	public static MainContext default_()
 	{
-		auto p = g_main_context_default();
+		auto __p = g_main_context_default();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new MainContext(cast(GMainContext*) p);
+		return new MainContext(cast(GMainContext*) __p);
 	}
 
 	/**
@@ -613,14 +609,14 @@ public class MainContext
 	 */
 	public static MainContext getThreadDefault()
 	{
-		auto p = g_main_context_get_thread_default();
+		auto __p = g_main_context_get_thread_default();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new MainContext(cast(GMainContext*) p);
+		return new MainContext(cast(GMainContext*) __p);
 	}
 
 	/**
@@ -638,13 +634,13 @@ public class MainContext
 	 */
 	public static MainContext refThreadDefault()
 	{
-		auto p = g_main_context_ref_thread_default();
+		auto __p = g_main_context_ref_thread_default();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new MainContext(cast(GMainContext*) p, true);
+		return new MainContext(cast(GMainContext*) __p, true);
 	}
 }

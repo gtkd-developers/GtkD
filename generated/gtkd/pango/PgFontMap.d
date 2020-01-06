@@ -26,7 +26,6 @@ module pango.PgFontMap;
 
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.pangotypes;
 private import pango.PgContext;
 private import pango.PgFont;
 private import pango.PgFontDescription;
@@ -118,14 +117,36 @@ public class PgFontMap : ObjectG
 	 */
 	public PgContext createContext()
 	{
-		auto p = pango_font_map_create_context(pangoFontMap);
+		auto __p = pango_font_map_create_context(pangoFontMap);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgContext)(cast(PangoContext*) p, true);
+		return ObjectG.getDObject!(PgContext)(cast(PangoContext*) __p, true);
+	}
+
+	/**
+	 * Gets a font family by name.
+	 *
+	 * Params:
+	 *     name = a family name
+	 *
+	 * Returns: the #PangoFontFamily
+	 *
+	 * Since: 1.46
+	 */
+	public PgFontFamily getFamily(string name)
+	{
+		auto __p = pango_font_map_get_family(pangoFontMap, Str.toStringz(name));
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(PgFontFamily)(cast(PangoFontFamily*) __p);
 	}
 
 	/**
@@ -148,22 +169,6 @@ public class PgFontMap : ObjectG
 	public uint getSerial()
 	{
 		return pango_font_map_get_serial(pangoFontMap);
-	}
-
-	/**
-	 * Returns the render ID for shape engines for this fontmap.
-	 * See the <structfield>render_type</structfield> field of
-	 * #PangoEngineInfo.
-	 *
-	 * Returns: the ID string for shape engines for
-	 *     this fontmap. Owned by Pango, should not be modified
-	 *     or freed.
-	 *
-	 * Since: 1.4
-	 */
-	public string getShapeEngineType()
-	{
-		return Str.toString(pango_font_map_get_shape_engine_type(pangoFontMap));
 	}
 
 	/**
@@ -199,14 +204,14 @@ public class PgFontMap : ObjectG
 	 */
 	public PgFont loadFont(PgContext context, PgFontDescription desc)
 	{
-		auto p = pango_font_map_load_font(pangoFontMap, (context is null) ? null : context.getPgContextStruct(), (desc is null) ? null : desc.getPgFontDescriptionStruct());
+		auto __p = pango_font_map_load_font(pangoFontMap, (context is null) ? null : context.getPgContextStruct(), (desc is null) ? null : desc.getPgFontDescriptionStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgFont)(cast(PangoFont*) p, true);
+		return ObjectG.getDObject!(PgFont)(cast(PangoFont*) __p, true);
 	}
 
 	/**
@@ -223,13 +228,13 @@ public class PgFontMap : ObjectG
 	 */
 	public PgFontset loadFontset(PgContext context, PgFontDescription desc, PgLanguage language)
 	{
-		auto p = pango_font_map_load_fontset(pangoFontMap, (context is null) ? null : context.getPgContextStruct(), (desc is null) ? null : desc.getPgFontDescriptionStruct(), (language is null) ? null : language.getPgLanguageStruct());
+		auto __p = pango_font_map_load_fontset(pangoFontMap, (context is null) ? null : context.getPgContextStruct(), (desc is null) ? null : desc.getPgFontDescriptionStruct(), (language is null) ? null : language.getPgLanguageStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgFontset)(cast(PangoFontset*) p, true);
+		return ObjectG.getDObject!(PgFontset)(cast(PangoFontset*) __p, true);
 	}
 }

@@ -34,17 +34,13 @@ private import glib.ErrorG;
 private import glib.GException;
 private import gobject.ObjectG;
 private import gobject.Signals;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
 /**
  * #GNetworkMonitor provides an easy-to-use cross-platform API
- * for monitoring network connectivity. On Linux, the available
- * implementations are based on the kernel's netlink interface and
- * on NetworkManager.
- * 
- * There is also an implementation for use inside Flatpak sandboxes.
+ * for monitoring network connectivity. On Linux, the implementation
+ * is based on the kernel's netlink interface.
  *
  * Since: 2.32
  */
@@ -71,14 +67,14 @@ public interface NetworkMonitorIF{
 	 */
 	public static NetworkMonitorIF getDefault()
 	{
-		auto p = g_network_monitor_get_default();
+		auto __p = g_network_monitor_get_default();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(NetworkMonitorIF)(cast(GNetworkMonitor*) p);
+		return ObjectG.getDObject!(NetworkMonitorIF)(cast(GNetworkMonitor*) __p);
 	}
 
 	/**
@@ -195,10 +191,14 @@ public interface NetworkMonitorIF{
 	public bool getNetworkMetered();
 
 	/**
-	 * Emitted when the network configuration changes.
+	 * Emitted when the network configuration changes. If @available is
+	 * %TRUE, then some hosts may be reachable that were not reachable
+	 * before, while others that were reachable before may no longer be
+	 * reachable. If @available is %FALSE, then no remote hosts are
+	 * reachable.
 	 *
 	 * Params:
-	 *     networkAvailable = the current value of #GNetworkMonitor:network-available
+	 *     available = the current value of #GNetworkMonitor:network-available
 	 *
 	 * Since: 2.32
 	 */

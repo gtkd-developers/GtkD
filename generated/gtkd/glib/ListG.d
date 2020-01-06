@@ -28,7 +28,6 @@ private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
 private import gobject.ObjectG;
-public  import gtkc.glibtypes;
 
 
 /**
@@ -175,14 +174,14 @@ public class ListG
 	 */
 	public static ListG alloc()
 	{
-		auto p = g_list_alloc();
+		auto __p = g_list_alloc();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -216,14 +215,14 @@ public class ListG
 	 */
 	public ListG append(void* data)
 	{
-		auto p = g_list_append(gList, data);
+		auto __p = g_list_append(gList, data);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -246,14 +245,14 @@ public class ListG
 	 */
 	public ListG concat(ListG list2)
 	{
-		auto p = g_list_concat(gList, (list2 is null) ? null : list2.getListGStruct());
+		auto __p = g_list_concat(gList, (list2 is null) ? null : list2.getListGStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -268,14 +267,14 @@ public class ListG
 	 */
 	public ListG copy()
 	{
-		auto p = g_list_copy(gList);
+		auto __p = g_list_copy(gList);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -286,10 +285,8 @@ public class ListG
 	 * container itself.
 	 *
 	 * @func, as a #GCopyFunc, takes two arguments, the data to be copied
-	 * and a @user_data pointer. On common processor architectures, it's safe to
-	 * pass %NULL as @user_data if the copy function takes only one argument. You
-	 * may get compiler warnings from this though if compiling with GCC’s
-	 * `-Wcast-function-type` warning.
+	 * and a @user_data pointer. It's safe to pass %NULL as user_data,
+	 * if the copy function takes only one argument.
 	 *
 	 * For instance, if @list holds a list of GObjects, you can do:
 	 * |[<!-- language="C" -->
@@ -312,14 +309,14 @@ public class ListG
 	 */
 	public ListG copyDeep(GCopyFunc func, void* userData)
 	{
-		auto p = g_list_copy_deep(gList, func, userData);
+		auto __p = g_list_copy_deep(gList, func, userData);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -334,14 +331,14 @@ public class ListG
 	 */
 	public ListG deleteLink(ListG link)
 	{
-		auto p = g_list_delete_link(gList, (link is null) ? null : link.getListGStruct());
+		auto __p = g_list_delete_link(gList, (link is null) ? null : link.getListGStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -354,14 +351,14 @@ public class ListG
 	 */
 	public ListG find(void* data)
 	{
-		auto p = g_list_find(gList, data);
+		auto __p = g_list_find(gList, data);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -381,14 +378,14 @@ public class ListG
 	 */
 	public ListG findCustom(void* data, GCompareFunc func)
 	{
-		auto p = g_list_find_custom(gList, data, func);
+		auto __p = g_list_find_custom(gList, data, func);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -399,22 +396,19 @@ public class ListG
 	 */
 	public ListG first()
 	{
-		auto p = g_list_first(gList);
+		auto __p = g_list_first(gList);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	alias foreac = foreach_;
 	/**
 	 * Calls a function for each element of a #GList.
-	 *
-	 * It is safe for @func to remove the element from @list, but it must
-	 * not modify any part of the list after that element.
 	 *
 	 * Params:
 	 *     func = the function to call with each element's data
@@ -452,9 +446,6 @@ public class ListG
 	/**
 	 * Convenience method, which frees all the memory used by a #GList,
 	 * and calls @free_func on every element's data.
-	 *
-	 * @free_func must not modify the list (eg, by removing the freed
-	 * element from it).
 	 *
 	 * Params:
 	 *     freeFunc = the function to be called to free each element's data
@@ -494,14 +485,14 @@ public class ListG
 	 */
 	public ListG insert(void* data, int position)
 	{
-		auto p = g_list_insert(gList, data, position);
+		auto __p = g_list_insert(gList, data, position);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -516,14 +507,14 @@ public class ListG
 	 */
 	public ListG insertBefore(ListG sibling, void* data)
 	{
-		auto p = g_list_insert_before(gList, (sibling is null) ? null : sibling.getListGStruct(), data);
+		auto __p = g_list_insert_before(gList, (sibling is null) ? null : sibling.getListGStruct(), data);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -545,14 +536,14 @@ public class ListG
 	 */
 	public ListG insertSorted(void* data, GCompareFunc func)
 	{
-		auto p = g_list_insert_sorted(gList, data, func);
+		auto __p = g_list_insert_sorted(gList, data, func);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -577,14 +568,14 @@ public class ListG
 	 */
 	public ListG insertSortedWithData(void* data, GCompareDataFunc func, void* userData)
 	{
-		auto p = g_list_insert_sorted_with_data(gList, data, func, userData);
+		auto __p = g_list_insert_sorted_with_data(gList, data, func, userData);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -595,14 +586,14 @@ public class ListG
 	 */
 	public ListG last()
 	{
-		auto p = g_list_last(gList);
+		auto __p = g_list_last(gList);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -635,14 +626,14 @@ public class ListG
 	 */
 	public ListG nth(uint n)
 	{
-		auto p = g_list_nth(gList, n);
+		auto __p = g_list_nth(gList, n);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -674,14 +665,14 @@ public class ListG
 	 */
 	public ListG nthPrev(uint n)
 	{
-		auto p = g_list_nth_prev(gList, n);
+		auto __p = g_list_nth_prev(gList, n);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -724,14 +715,14 @@ public class ListG
 	 */
 	public ListG prepend(void* data)
 	{
-		auto p = g_list_prepend(gList, data);
+		auto __p = g_list_prepend(gList, data);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -746,14 +737,14 @@ public class ListG
 	 */
 	public ListG remove(void* data)
 	{
-		auto p = g_list_remove(gList, data);
+		auto __p = g_list_remove(gList, data);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -769,14 +760,14 @@ public class ListG
 	 */
 	public ListG removeAll(void* data)
 	{
-		auto p = g_list_remove_all(gList, data);
+		auto __p = g_list_remove_all(gList, data);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -800,14 +791,14 @@ public class ListG
 	 */
 	public ListG removeLink(ListG llink)
 	{
-		auto p = g_list_remove_link(gList, (llink is null) ? null : llink.getListGStruct());
+		auto __p = g_list_remove_link(gList, (llink is null) ? null : llink.getListGStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -818,14 +809,14 @@ public class ListG
 	 */
 	public ListG reverse()
 	{
-		auto p = g_list_reverse(gList);
+		auto __p = g_list_reverse(gList);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -843,14 +834,14 @@ public class ListG
 	 */
 	public ListG sort(GCompareFunc compareFunc)
 	{
-		auto p = g_list_sort(gList, compareFunc);
+		auto __p = g_list_sort(gList, compareFunc);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -865,13 +856,13 @@ public class ListG
 	 */
 	public ListG sortWithData(GCompareDataFunc compareFunc, void* userData)
 	{
-		auto p = g_list_sort_with_data(gList, compareFunc, userData);
+		auto __p = g_list_sort_with_data(gList, compareFunc, userData);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 }

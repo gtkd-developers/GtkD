@@ -31,7 +31,6 @@ private import gobject.Signals;
 private import gtk.CellRenderer;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -93,14 +92,14 @@ public class CellRendererText : CellRenderer
 	 */
 	public this()
 	{
-		auto p = gtk_cell_renderer_text_new();
+		auto __p = gtk_cell_renderer_text_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkCellRendererText*) p);
+		this(cast(GtkCellRendererText*) __p);
 	}
 
 	/**

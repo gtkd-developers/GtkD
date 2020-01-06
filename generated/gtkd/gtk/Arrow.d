@@ -30,7 +30,6 @@ private import gtk.Misc;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -105,14 +104,14 @@ public class Arrow : Misc
 	 */
 	public this(GtkArrowType arrowType, GtkShadowType shadowType)
 	{
-		auto p = gtk_arrow_new(arrowType, shadowType);
+		auto __p = gtk_arrow_new(arrowType, shadowType);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkArrow*) p);
+		this(cast(GtkArrow*) __p);
 	}
 
 	/**

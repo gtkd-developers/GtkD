@@ -29,7 +29,6 @@ private import gio.TlsDatabase;
 private import gio.c.functions;
 public  import gio.c.types;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -60,14 +59,14 @@ public interface TlsBackendIF{
 	 */
 	public static TlsBackendIF getDefault()
 	{
-		auto p = g_tls_backend_get_default();
+		auto __p = g_tls_backend_get_default();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TlsBackendIF)(cast(GTlsBackend*) p);
+		return ObjectG.getDObject!(TlsBackendIF)(cast(GTlsBackend*) __p);
 	}
 
 	/**
@@ -104,7 +103,7 @@ public interface TlsBackendIF{
 	 * Gets the #GType of @backend’s #GDtlsClientConnection implementation.
 	 *
 	 * Returns: the #GType of @backend’s #GDtlsClientConnection
-	 *     implementation, or %G_TYPE_INVALID if this backend doesn’t support DTLS.
+	 *     implementation.
 	 *
 	 * Since: 2.48
 	 */
@@ -114,7 +113,7 @@ public interface TlsBackendIF{
 	 * Gets the #GType of @backend’s #GDtlsServerConnection implementation.
 	 *
 	 * Returns: the #GType of @backend’s #GDtlsServerConnection
-	 *     implementation, or %G_TYPE_INVALID if this backend doesn’t support DTLS.
+	 *     implementation.
 	 *
 	 * Since: 2.48
 	 */
@@ -138,23 +137,6 @@ public interface TlsBackendIF{
 	 * Since: 2.28
 	 */
 	public GType getServerConnectionType();
-
-	/**
-	 * Set the default #GTlsDatabase used to verify TLS connections
-	 *
-	 * Any subsequent call to g_tls_backend_get_default_database() will return
-	 * the database set in this call.  Existing databases and connections are not
-	 * modified.
-	 *
-	 * Setting a %NULL default database will reset to using the system default
-	 * database as if g_tls_backend_set_default_database() had never been called.
-	 *
-	 * Params:
-	 *     database = the #GTlsDatabase
-	 *
-	 * Since: 2.60
-	 */
-	public void setDefaultDatabase(TlsDatabase database);
 
 	/**
 	 * Checks if DTLS is supported. DTLS support may not be available even if TLS

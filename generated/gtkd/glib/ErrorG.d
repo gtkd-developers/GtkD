@@ -28,8 +28,6 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
-private import gtkd.Loader;
 
 
 /**
@@ -67,7 +65,7 @@ public class ErrorG
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_error_free(gError);
 	}
 
@@ -89,14 +87,14 @@ public class ErrorG
 	 */
 	public this(GQuark domain, int code, string message)
 	{
-		auto p = g_error_new_literal(domain, code, Str.toStringz(message));
+		auto __p = g_error_new_literal(domain, code, Str.toStringz(message));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_literal");
 		}
 
-		this(cast(GError*) p);
+		this(cast(GError*) __p);
 	}
 
 	/**
@@ -117,14 +115,14 @@ public class ErrorG
 	 */
 	public this(GQuark domain, int code, string format, void* args)
 	{
-		auto p = g_error_new_valist(domain, code, Str.toStringz(format), args);
+		auto __p = g_error_new_valist(domain, code, Str.toStringz(format), args);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_valist");
 		}
 
-		this(cast(GError*) p);
+		this(cast(GError*) __p);
 	}
 
 	/**
@@ -134,14 +132,14 @@ public class ErrorG
 	 */
 	public ErrorG copy()
 	{
-		auto p = g_error_copy(gError);
+		auto __p = g_error_copy(gError);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ErrorG(cast(GError*) p, true);
+		return new ErrorG(cast(GError*) __p, true);
 	}
 
 	/**

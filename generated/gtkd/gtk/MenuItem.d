@@ -38,7 +38,6 @@ private import gtk.Menu;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -230,14 +229,14 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 	 */
 	public this()
 	{
-		auto p = gtk_menu_item_new();
+		auto __p = gtk_menu_item_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkMenuItem*) p);
+		this(cast(GtkMenuItem*) __p);
 	}
 
 	/**
@@ -321,14 +320,14 @@ public class MenuItem : Bin, ActionableIF, ActivatableIF
 	 */
 	public Widget getSubmenu()
 	{
-		auto p = gtk_menu_item_get_submenu(gtkMenuItem);
+		auto __p = gtk_menu_item_get_submenu(gtkMenuItem);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**

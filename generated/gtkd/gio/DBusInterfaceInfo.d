@@ -34,8 +34,6 @@ private import glib.MemorySlice;
 private import glib.Str;
 private import glib.StringG;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
-private import gtkd.Loader;
 
 
 /**
@@ -74,7 +72,7 @@ public final class DBusInterfaceInfo
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GIO) && ownedRef )
+		if ( ownedRef )
 			g_dbus_interface_info_unref(gDBusInterfaceInfo);
 	}
 
@@ -266,9 +264,13 @@ public final class DBusInterfaceInfo
 	 *
 	 * Since: 2.26
 	 */
-	public void generateXml(uint indent, StringG stringBuilder)
+	public void generateXml(uint indent, out StringG stringBuilder)
 	{
-		g_dbus_interface_info_generate_xml(gDBusInterfaceInfo, indent, (stringBuilder is null) ? null : stringBuilder.getStringGStruct());
+		GString* outstringBuilder = sliceNew!GString();
+
+		g_dbus_interface_info_generate_xml(gDBusInterfaceInfo, indent, outstringBuilder);
+
+		stringBuilder = new StringG(outstringBuilder, true);
 	}
 
 	/**
@@ -286,14 +288,14 @@ public final class DBusInterfaceInfo
 	 */
 	public DBusMethodInfo lookupMethod(string name)
 	{
-		auto p = g_dbus_interface_info_lookup_method(gDBusInterfaceInfo, Str.toStringz(name));
+		auto __p = g_dbus_interface_info_lookup_method(gDBusInterfaceInfo, Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusMethodInfo)(cast(GDBusMethodInfo*) p);
+		return ObjectG.getDObject!(DBusMethodInfo)(cast(GDBusMethodInfo*) __p);
 	}
 
 	/**
@@ -311,14 +313,14 @@ public final class DBusInterfaceInfo
 	 */
 	public DBusPropertyInfo lookupProperty(string name)
 	{
-		auto p = g_dbus_interface_info_lookup_property(gDBusInterfaceInfo, Str.toStringz(name));
+		auto __p = g_dbus_interface_info_lookup_property(gDBusInterfaceInfo, Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusPropertyInfo)(cast(GDBusPropertyInfo*) p);
+		return ObjectG.getDObject!(DBusPropertyInfo)(cast(GDBusPropertyInfo*) __p);
 	}
 
 	/**
@@ -336,14 +338,14 @@ public final class DBusInterfaceInfo
 	 */
 	public DBusSignalInfo lookupSignal(string name)
 	{
-		auto p = g_dbus_interface_info_lookup_signal(gDBusInterfaceInfo, Str.toStringz(name));
+		auto __p = g_dbus_interface_info_lookup_signal(gDBusInterfaceInfo, Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusSignalInfo)(cast(GDBusSignalInfo*) p);
+		return ObjectG.getDObject!(DBusSignalInfo)(cast(GDBusSignalInfo*) __p);
 	}
 
 	alias doref = ref_;
@@ -357,14 +359,14 @@ public final class DBusInterfaceInfo
 	 */
 	public DBusInterfaceInfo ref_()
 	{
-		auto p = g_dbus_interface_info_ref(gDBusInterfaceInfo);
+		auto __p = g_dbus_interface_info_ref(gDBusInterfaceInfo);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusInterfaceInfo)(cast(GDBusInterfaceInfo*) p, true);
+		return ObjectG.getDObject!(DBusInterfaceInfo)(cast(GDBusInterfaceInfo*) __p, true);
 	}
 
 	/**

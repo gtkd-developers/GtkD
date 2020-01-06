@@ -28,7 +28,6 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
 
 
 /**
@@ -344,13 +343,13 @@ public class ScannerG
 	 */
 	public this(GScannerConfig* configTempl)
 	{
-		auto p = g_scanner_new(configTempl);
+		auto __p = g_scanner_new(configTempl);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GScanner*) p);
+		this(cast(GScanner*) __p);
 	}
 }

@@ -29,7 +29,6 @@ private import glib.GException;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
 
 
 /** */
@@ -55,7 +54,8 @@ public struct ShellUtils
 	 *
 	 * Params:
 	 *     commandLine = command line to parse
-	 *     argvp = return location for array of args
+	 *     argvp = return
+	 *         location for array of args
 	 *
 	 * Returns: %TRUE on success, %FALSE if error set
 	 *
@@ -67,7 +67,7 @@ public struct ShellUtils
 		char** outargvp = null;
 		GError* err = null;
 
-		auto p = g_shell_parse_argv(Str.toStringz(commandLine), &argcp, &outargvp, &err) != 0;
+		auto __p = g_shell_parse_argv(Str.toStringz(commandLine), &argcp, &outargvp, &err) != 0;
 
 		if (err !is null)
 		{
@@ -76,7 +76,7 @@ public struct ShellUtils
 
 		argvp = Str.toStringArray(outargvp, argcp);
 
-		return p;
+		return __p;
 	}
 
 	/**

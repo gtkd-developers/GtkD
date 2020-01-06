@@ -37,7 +37,6 @@ private import glib.GException;
 private import glib.ListG;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -126,19 +125,19 @@ public interface AppInfoIF{
 	{
 		GError* err = null;
 
-		auto p = g_app_info_create_from_commandline(Str.toStringz(commandline), Str.toStringz(applicationName), flags, &err);
+		auto __p = g_app_info_create_from_commandline(Str.toStringz(commandline), Str.toStringz(applicationName), flags, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) p, true);
+		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) __p, true);
 	}
 
 	/**
@@ -155,14 +154,14 @@ public interface AppInfoIF{
 	 */
 	public static ListG getAll()
 	{
-		auto p = g_app_info_get_all();
+		auto __p = g_app_info_get_all();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -179,14 +178,14 @@ public interface AppInfoIF{
 	 */
 	public static ListG getAllForType(string contentType)
 	{
-		auto p = g_app_info_get_all_for_type(Str.toStringz(contentType));
+		auto __p = g_app_info_get_all_for_type(Str.toStringz(contentType));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -202,14 +201,14 @@ public interface AppInfoIF{
 	 */
 	public static AppInfoIF getDefaultForType(string contentType, bool mustSupportUris)
 	{
-		auto p = g_app_info_get_default_for_type(Str.toStringz(contentType), mustSupportUris);
+		auto __p = g_app_info_get_default_for_type(Str.toStringz(contentType), mustSupportUris);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) p, true);
+		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) __p, true);
 	}
 
 	/**
@@ -225,14 +224,14 @@ public interface AppInfoIF{
 	 */
 	public static AppInfoIF getDefaultForUriScheme(string uriScheme)
 	{
-		auto p = g_app_info_get_default_for_uri_scheme(Str.toStringz(uriScheme));
+		auto __p = g_app_info_get_default_for_uri_scheme(Str.toStringz(uriScheme));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) p, true);
+		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) __p, true);
 	}
 
 	/**
@@ -250,14 +249,14 @@ public interface AppInfoIF{
 	 */
 	public static ListG getFallbackForType(string contentType)
 	{
-		auto p = g_app_info_get_fallback_for_type(Str.toStringz(contentType));
+		auto __p = g_app_info_get_fallback_for_type(Str.toStringz(contentType));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -278,14 +277,14 @@ public interface AppInfoIF{
 	 */
 	public static ListG getRecommendedForType(string contentType)
 	{
-		auto p = g_app_info_get_recommended_for_type(Str.toStringz(contentType));
+		auto __p = g_app_info_get_recommended_for_type(Str.toStringz(contentType));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -294,30 +293,26 @@ public interface AppInfoIF{
 	 * is done on the uri to detect the type of the file if
 	 * required.
 	 *
-	 * The D-Bus–activated applications don't have to be started if your application
-	 * terminates too soon after this function. To prevent this, use
-	 * g_app_info_launch_default_for_uri() instead.
-	 *
 	 * Params:
 	 *     uri = the uri to show
-	 *     context = an optional #GAppLaunchContext
+	 *     launchContext = an optional #GAppLaunchContext
 	 *
 	 * Returns: %TRUE on success, %FALSE on error.
 	 *
 	 * Throws: GException on failure.
 	 */
-	public static bool launchDefaultForUri(string uri, AppLaunchContext context)
+	public static bool launchDefaultForUri(string uri, AppLaunchContext launchContext)
 	{
 		GError* err = null;
 
-		auto p = g_app_info_launch_default_for_uri(Str.toStringz(uri), (context is null) ? null : context.getAppLaunchContextStruct(), &err) != 0;
+		auto __p = g_app_info_launch_default_for_uri(Str.toStringz(uri), (launchContext is null) ? null : launchContext.getAppLaunchContextStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -328,22 +323,16 @@ public interface AppInfoIF{
 	 * sandboxed and the portal may present an application chooser
 	 * dialog to the user.
 	 *
-	 * This is also useful if you want to be sure that the D-Bus–activated
-	 * applications are really started before termination and if you are interested
-	 * in receiving error information from their activation.
-	 *
 	 * Params:
 	 *     uri = the uri to show
-	 *     context = an optional #GAppLaunchContext
-	 *     cancellable = a #GCancellable
-	 *     callback = a #GAsyncReadyCallback to call when the request is done
+	 *     callback = a #GASyncReadyCallback to call when the request is done
 	 *     userData = data to pass to @callback
 	 *
 	 * Since: 2.50
 	 */
-	public static void launchDefaultForUriAsync(string uri, AppLaunchContext context, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
+	public static void launchDefaultForUriAsync(string uri, AppLaunchContext launchContext, Cancellable cancellable, GAsyncReadyCallback callback, void* userData)
 	{
-		g_app_info_launch_default_for_uri_async(Str.toStringz(uri), (context is null) ? null : context.getAppLaunchContextStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
+		g_app_info_launch_default_for_uri_async(Str.toStringz(uri), (launchContext is null) ? null : launchContext.getAppLaunchContextStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), callback, userData);
 	}
 
 	/**
@@ -362,14 +351,14 @@ public interface AppInfoIF{
 	{
 		GError* err = null;
 
-		auto p = g_app_info_launch_default_for_uri_finish((result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_app_info_launch_default_for_uri_finish((result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -444,9 +433,9 @@ public interface AppInfoIF{
 	/**
 	 * Checks if two #GAppInfos are equal.
 	 *
-	 * Note that the check <emphasis>may not</emphasis> compare each individual
-	 * field, and only does an identity check. In case detecting changes in the
-	 * contents is needed, program code must additionally compare relevant fields.
+	 * Note that the check <em>may not</em> compare each individual field, and
+	 * only does an identity check. In case detecting changes in the contents
+	 * is needed, program code must additionally compare relevant fields.
 	 *
 	 * Params:
 	 *     appinfo2 = the second #GAppInfo.
@@ -537,7 +526,7 @@ public interface AppInfoIF{
 
 	/**
 	 * Launches the application. Passes @files to the launched application
-	 * as arguments, using the optional @context to get information
+	 * as arguments, using the optional @launch_context to get information
 	 * about the details of the launcher (like what screen it is on).
 	 * On error, @error will be set accordingly.
 	 *
@@ -562,21 +551,21 @@ public interface AppInfoIF{
 	 * process. This can be used to ignore `GIO_LAUNCHED_DESKTOP_FILE`,
 	 * should it be inherited by further processes. The `DISPLAY` and
 	 * `DESKTOP_STARTUP_ID` environment variables are also set, based
-	 * on information provided in @context.
+	 * on information provided in @launch_context.
 	 *
 	 * Params:
 	 *     files = a #GList of #GFile objects
-	 *     context = a #GAppLaunchContext or %NULL
+	 *     launchContext = a #GAppLaunchContext or %NULL
 	 *
 	 * Returns: %TRUE on successful launch, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
-	public bool launch(ListG files, AppLaunchContext context);
+	public bool launch(ListG files, AppLaunchContext launchContext);
 
 	/**
 	 * Launches the application. This passes the @uris to the launched application
-	 * as arguments, using the optional @context to get information
+	 * as arguments, using the optional @launch_context to get information
 	 * about the details of the launcher (like what screen it is on).
 	 * On error, @error will be set accordingly.
 	 *
@@ -588,46 +577,13 @@ public interface AppInfoIF{
 	 *
 	 * Params:
 	 *     uris = a #GList containing URIs to launch.
-	 *     context = a #GAppLaunchContext or %NULL
+	 *     launchContext = a #GAppLaunchContext or %NULL
 	 *
 	 * Returns: %TRUE on successful launch, %FALSE otherwise.
 	 *
 	 * Throws: GException on failure.
 	 */
-	public bool launchUris(ListG uris, AppLaunchContext context);
-
-	/**
-	 * Async version of g_app_info_launch_uris().
-	 *
-	 * The @callback is invoked immediately after the application launch, but it
-	 * waits for activation in case of D-Bus–activated applications and also provides
-	 * extended error information for sandboxed applications, see notes for
-	 * g_app_info_launch_default_for_uri_async().
-	 *
-	 * Params:
-	 *     uris = a #GList containing URIs to launch.
-	 *     context = a #GAppLaunchContext or %NULL
-	 *     cancellable = a #GCancellable
-	 *     callback = a #GAsyncReadyCallback to call when the request is done
-	 *     userData = data to pass to @callback
-	 *
-	 * Since: 2.60
-	 */
-	public void launchUrisAsync(ListG uris, AppLaunchContext context, Cancellable cancellable, GAsyncReadyCallback callback, void* userData);
-
-	/**
-	 * Finishes a g_app_info_launch_uris_async() operation.
-	 *
-	 * Params:
-	 *     result = a #GAsyncResult
-	 *
-	 * Returns: %TRUE on successful launch, %FALSE otherwise.
-	 *
-	 * Since: 2.60
-	 *
-	 * Throws: GException on failure.
-	 */
-	public bool launchUrisFinish(AsyncResultIF result);
+	public bool launchUris(ListG uris, AppLaunchContext launchContext);
 
 	/**
 	 * Removes a supported type from an application, if possible.

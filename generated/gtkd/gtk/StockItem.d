@@ -30,8 +30,6 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
-private import gtkd.Loader;
 
 
 /** */
@@ -66,7 +64,7 @@ public final class StockItem
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GTK) && ownedRef )
+		if ( ownedRef )
 			gtk_stock_item_free(gtkStockItem);
 	}
 
@@ -148,14 +146,14 @@ public final class StockItem
 	 */
 	public StockItem copy()
 	{
-		auto p = gtk_stock_item_copy(gtkStockItem);
+		auto __p = gtk_stock_item_copy(gtkStockItem);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(StockItem)(cast(GtkStockItem*) p);
+		return ObjectG.getDObject!(StockItem)(cast(GtkStockItem*) __p);
 	}
 
 	/**
@@ -218,14 +216,14 @@ public final class StockItem
 	 */
 	public static ListSG stockListIds()
 	{
-		auto p = gtk_stock_list_ids();
+		auto __p = gtk_stock_list_ids();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p, true);
+		return new ListSG(cast(GSList*) __p, true);
 	}
 
 	/**
@@ -242,11 +240,11 @@ public final class StockItem
 	{
 		GtkStockItem* outitem = sliceNew!GtkStockItem();
 
-		auto p = gtk_stock_lookup(Str.toStringz(stockId), outitem) != 0;
+		auto __p = gtk_stock_lookup(Str.toStringz(stockId), outitem) != 0;
 
 		item = ObjectG.getDObject!(StockItem)(outitem, true);
 
-		return p;
+		return __p;
 	}
 
 	/**

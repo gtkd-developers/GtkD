@@ -32,7 +32,6 @@ private import gtk.MenuItem;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -202,14 +201,14 @@ public class ImageMenuItem : MenuItem
 	 */
 	public this()
 	{
-		auto p = gtk_image_menu_item_new();
+		auto __p = gtk_image_menu_item_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkImageMenuItem*) p);
+		this(cast(GtkImageMenuItem*) __p);
 	}
 
 	/**
@@ -233,14 +232,14 @@ public class ImageMenuItem : MenuItem
 	 */
 	public Widget getImage()
 	{
-		auto p = gtk_image_menu_item_get_image(gtkImageMenuItem);
+		auto __p = gtk_image_menu_item_get_image(gtkImageMenuItem);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**

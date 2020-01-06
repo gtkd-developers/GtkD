@@ -34,7 +34,6 @@ private import gtk.FontChooserT;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -96,14 +95,14 @@ public class FontButton : Button, FontChooserIF
 	 */
 	public this()
 	{
-		auto p = gtk_font_button_new();
+		auto __p = gtk_font_button_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkFontButton*) p);
+		this(cast(GtkFontButton*) __p);
 	}
 
 	/**
@@ -120,14 +119,14 @@ public class FontButton : Button, FontChooserIF
 	 */
 	public this(string fontname)
 	{
-		auto p = gtk_font_button_new_with_font(Str.toStringz(fontname));
+		auto __p = gtk_font_button_new_with_font(Str.toStringz(fontname));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_font");
 		}
 
-		this(cast(GtkFontButton*) p);
+		this(cast(GtkFontButton*) __p);
 	}
 
 	/**

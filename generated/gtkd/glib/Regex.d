@@ -31,8 +31,6 @@ private import glib.MatchInfo;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
-private import gtkd.Loader;
 
 
 /**
@@ -135,7 +133,7 @@ public class Regex
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_regex_unref(gRegex);
 	}
 
@@ -161,19 +159,19 @@ public class Regex
 	{
 		GError* err = null;
 
-		auto p = g_regex_new(Str.toStringz(pattern), compileOptions, matchOptions, &err);
+		auto __p = g_regex_new(Str.toStringz(pattern), compileOptions, matchOptions, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GRegex*) p);
+		this(cast(GRegex*) __p);
 	}
 
 	/**
@@ -286,12 +284,10 @@ public class Regex
 	}
 
 	/**
-	 * Scans for a match in @string for the pattern in @regex.
+	 * Scans for a match in string for the pattern in @regex.
 	 * The @match_options are combined with the match options specified
 	 * when the @regex structure was created, letting you have more
 	 * flexibility in reusing #GRegex structures.
-	 *
-	 * Unless %G_REGEX_RAW is specified in the options, @string must be valid UTF-8.
 	 *
 	 * A #GMatchInfo structure, used to get information on the match,
 	 * is stored in @match_info if not %NULL. Note that if @match_info
@@ -341,11 +337,11 @@ public class Regex
 	{
 		GMatchInfo* outmatchInfo = null;
 
-		auto p = g_regex_match(gRegex, Str.toStringz(string_), matchOptions, &outmatchInfo) != 0;
+		auto __p = g_regex_match(gRegex, Str.toStringz(string_), matchOptions, &outmatchInfo) != 0;
 
 		matchInfo = new MatchInfo(outmatchInfo);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -378,16 +374,16 @@ public class Regex
 	{
 		GMatchInfo* outmatchInfo = null;
 
-		auto p = g_regex_match_all(gRegex, Str.toStringz(string_), matchOptions, &outmatchInfo) != 0;
+		auto __p = g_regex_match_all(gRegex, Str.toStringz(string_), matchOptions, &outmatchInfo) != 0;
 
 		matchInfo = new MatchInfo(outmatchInfo);
 
-		return p;
+		return __p;
 	}
 
 	/**
 	 * Using the standard algorithm for regular expression matching only
-	 * the longest match in the @string is retrieved, it is not possible
+	 * the longest match in the string is retrieved, it is not possible
 	 * to obtain all the available matches. For instance matching
 	 * "<a> <b> <c>" against the pattern "<.*>"
 	 * you get "<a> <b> <c>".
@@ -412,8 +408,6 @@ public class Regex
 	 * Setting @start_position differs from just passing over a shortened
 	 * string and setting #G_REGEX_MATCH_NOTBOL in the case of a pattern
 	 * that begins with any kind of lookbehind assertion, such as "\b".
-	 *
-	 * Unless %G_REGEX_RAW is specified in the options, @string must be valid UTF-8.
 	 *
 	 * A #GMatchInfo structure, used to get information on the match, is
 	 * stored in @match_info if not %NULL. Note that if @match_info is
@@ -443,7 +437,7 @@ public class Regex
 		GMatchInfo* outmatchInfo = null;
 		GError* err = null;
 
-		auto p = g_regex_match_all_full(gRegex, Str.toStringz(string_), cast(ptrdiff_t)string_.length, startPosition, matchOptions, &outmatchInfo, &err) != 0;
+		auto __p = g_regex_match_all_full(gRegex, Str.toStringz(string_), cast(ptrdiff_t)string_.length, startPosition, matchOptions, &outmatchInfo, &err) != 0;
 
 		if (err !is null)
 		{
@@ -452,11 +446,11 @@ public class Regex
 
 		matchInfo = new MatchInfo(outmatchInfo);
 
-		return p;
+		return __p;
 	}
 
 	/**
-	 * Scans for a match in @string for the pattern in @regex.
+	 * Scans for a match in string for the pattern in @regex.
 	 * The @match_options are combined with the match options specified
 	 * when the @regex structure was created, letting you have more
 	 * flexibility in reusing #GRegex structures.
@@ -464,8 +458,6 @@ public class Regex
 	 * Setting @start_position differs from just passing over a shortened
 	 * string and setting #G_REGEX_MATCH_NOTBOL in the case of a pattern
 	 * that begins with any kind of lookbehind assertion, such as "\b".
-	 *
-	 * Unless %G_REGEX_RAW is specified in the options, @string must be valid UTF-8.
 	 *
 	 * A #GMatchInfo structure, used to get information on the match, is
 	 * stored in @match_info if not %NULL. Note that if @match_info is
@@ -526,7 +518,7 @@ public class Regex
 		GMatchInfo* outmatchInfo = null;
 		GError* err = null;
 
-		auto p = g_regex_match_full(gRegex, Str.toStringz(string_), cast(ptrdiff_t)string_.length, startPosition, matchOptions, &outmatchInfo, &err) != 0;
+		auto __p = g_regex_match_full(gRegex, Str.toStringz(string_), cast(ptrdiff_t)string_.length, startPosition, matchOptions, &outmatchInfo, &err) != 0;
 
 		if (err !is null)
 		{
@@ -535,7 +527,7 @@ public class Regex
 
 		matchInfo = new MatchInfo(outmatchInfo);
 
-		return p;
+		return __p;
 	}
 
 	alias doref = ref_;
@@ -548,14 +540,14 @@ public class Regex
 	 */
 	public Regex ref_()
 	{
-		auto p = g_regex_ref(gRegex);
+		auto __p = g_regex_ref(gRegex);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Regex(cast(GRegex*) p, true);
+		return new Regex(cast(GRegex*) __p, true);
 	}
 
 	/**
@@ -566,7 +558,7 @@ public class Regex
 	 * to the captured subexpression with the given name. '\0' refers
 	 * to the complete match, but '\0' followed by a number is the octal
 	 * representation of a character. To include a literal '\' in the
-	 * replacement, write '\\\\'.
+	 * replacement, write '\\'.
 	 *
 	 * There are also escapes that changes the case of the following text:
 	 *
@@ -851,7 +843,7 @@ public class Regex
 		int outhasReferences;
 		GError* err = null;
 
-		auto p = g_regex_check_replacement(Str.toStringz(replacement), &outhasReferences, &err) != 0;
+		auto __p = g_regex_check_replacement(Str.toStringz(replacement), &outhasReferences, &err) != 0;
 
 		if (err !is null)
 		{
@@ -860,7 +852,7 @@ public class Regex
 
 		hasReferences = (outhasReferences == 1);
 
-		return p;
+		return __p;
 	}
 
 	/** */

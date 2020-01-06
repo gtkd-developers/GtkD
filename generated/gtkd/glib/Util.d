@@ -27,7 +27,6 @@ module glib.Util;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
 
 
 /** */
@@ -190,7 +189,8 @@ public struct Util
 	 * provided list @envp.
 	 *
 	 * Params:
-	 *     envp = an environment list (eg, as returned from g_get_environ()), or %NULL
+	 *     envp = an environment
+	 *         list (eg, as returned from g_get_environ()), or %NULL
 	 *         for an empty environment list
 	 *     variable = the environment variable to get
 	 *
@@ -211,15 +211,16 @@ public struct Util
 	 * @envp to @value.
 	 *
 	 * Params:
-	 *     envp = an environment list that can be freed using g_strfreev() (e.g., as
+	 *     envp = an
+	 *         environment list that can be freed using g_strfreev() (e.g., as
 	 *         returned from g_get_environ()), or %NULL for an empty
 	 *         environment list
-	 *     variable = the environment variable to set, must not
-	 *         contain '='
+	 *     variable = the environment variable to set, must not contain '='
 	 *     value = the value for to set the variable to
 	 *     overwrite = whether to change the variable if it already exists
 	 *
-	 * Returns: the updated environment list. Free it using g_strfreev().
+	 * Returns: the
+	 *     updated environment list. Free it using g_strfreev().
 	 *
 	 * Since: 2.32
 	 */
@@ -236,12 +237,13 @@ public struct Util
 	 * environment @envp.
 	 *
 	 * Params:
-	 *     envp = an environment list that can be freed using g_strfreev() (e.g., as
-	 *         returned from g_get_environ()), or %NULL for an empty environment list
-	 *     variable = the environment variable to remove, must not
-	 *         contain '='
+	 *     envp = an environment
+	 *         list that can be freed using g_strfreev() (e.g., as returned from g_get_environ()),
+	 *         or %NULL for an empty environment list
+	 *     variable = the environment variable to remove, must not contain '='
 	 *
-	 * Returns: the updated environment list. Free it using g_strfreev().
+	 * Returns: the
+	 *     updated environment list. Free it using g_strfreev().
 	 *
 	 * Since: 2.32
 	 */
@@ -290,9 +292,7 @@ public struct Util
 	 * Formats a size (for example the size of a file) into a human readable
 	 * string.  Sizes are rounded to the nearest size prefix (kB, MB, GB)
 	 * and are displayed rounded to the nearest tenth. E.g. the file size
-	 * 3292528 bytes will be converted into the string "3.2 MB". The returned string
-	 * is UTF-8, and may use a non-breaking space to separate the number and units,
-	 * to ensure they aren’t separated when line wrapped.
+	 * 3292528 bytes will be converted into the string "3.2 MB".
 	 *
 	 * The prefix units base is 1000 (i.e. 1 kB is 1000 bytes).
 	 *
@@ -400,7 +400,8 @@ public struct Util
 	 * The return value is freshly allocated and it should be freed with
 	 * g_strfreev() when it is no longer needed.
 	 *
-	 * Returns: the list of environment variables
+	 * Returns: the list of
+	 *     environment variables
 	 *
 	 * Since: 2.28
 	 */
@@ -477,8 +478,6 @@ public struct Util
 	 * name can be determined, a default fixed string "localhost" is
 	 * returned.
 	 *
-	 * The encoding of the returned string is UTF-8.
-	 *
 	 * Returns: the host name of the machine.
 	 *
 	 * Since: 2.8
@@ -492,11 +491,9 @@ public struct Util
 	 * Gets the name of the program. This name should not be localized,
 	 * in contrast to g_get_application_name().
 	 *
-	 * If you are using #GApplication the program name is set in
-	 * g_application_run(). In case of GDK or GTK+ it is set in
-	 * gdk_init(), which is called by gtk_init() and the
-	 * #GtkApplication::startup handler. The program name is found by
-	 * taking the last component of @argv[0].
+	 * If you are using GDK or GTK+ the program name is set in gdk_init(),
+	 * which is called by gtk_init(). The program name is found by taking
+	 * the last component of @argv[0].
 	 *
 	 * Returns: the name of the program. The returned string belongs
 	 *     to GLib and must not be modified or freed.
@@ -529,15 +526,12 @@ public struct Util
 	 * [XDG Base Directory Specification](http://www.freedesktop.org/Standards/basedir-spec).
 	 * In this case the list of directories retrieved will be `XDG_CONFIG_DIRS`.
 	 *
-	 * On Windows it follows XDG Base Directory Specification if `XDG_CONFIG_DIRS` is defined.
-	 * If `XDG_CONFIG_DIRS` is undefined, the directory that contains application
-	 * data for all users is used instead. A typical path is
-	 * `C:\Documents and Settings\All Users\Application Data`.
-	 * This folder is used for application data
-	 * that is not user specific. For example, an application can store
-	 * a spell-check dictionary, a database of clip art, or a log file in the
-	 * CSIDL_COMMON_APPDATA folder. This information will not roam and is available
-	 * to anyone using the computer.
+	 * On Windows is the directory that contains application data for all users.
+	 * A typical path is C:\Documents and Settings\All Users\Application Data.
+	 * This folder is used for application data that is not user specific.
+	 * For example, an application can store a spell-check dictionary, a database
+	 * of clip art, or a log file in the CSIDL_COMMON_APPDATA folder.
+	 * This information will not roam and is available to anyone using the computer.
 	 *
 	 * Returns: a %NULL-terminated array of strings owned by GLib that must not be
 	 *     modified or freed.
@@ -556,11 +550,9 @@ public struct Util
 	 * On UNIX platforms this is determined using the mechanisms described
 	 * in the
 	 * [XDG Base Directory Specification](http://www.freedesktop.org/Standards/basedir-spec)
-	 * In this case the list of directories retrieved will be `XDG_DATA_DIRS`.
+	 * In this case the list of directories retrieved will be XDG_DATA_DIRS.
 	 *
-	 * On Windows it follows XDG Base Directory Specification if `XDG_DATA_DIRS` is defined.
-	 * If `XDG_DATA_DIRS` is undefined,
-	 * the first elements in the list are the Application Data
+	 * On Windows the first elements in the list are the Application Data
 	 * and Documents folders for All Users. (These can be determined only
 	 * on Windows 2000 or later and are not present in the list on other
 	 * Windows versions.) See documentation for CSIDL_COMMON_APPDATA and
@@ -622,13 +614,12 @@ public struct Util
 	 * On UNIX platforms this is determined using the mechanisms described
 	 * in the
 	 * [XDG Base Directory Specification](http://www.freedesktop.org/Standards/basedir-spec).
-	 * In this case the directory retrieved will be `XDG_CACHE_HOME`.
+	 * In this case the directory retrieved will be XDG_CACHE_HOME.
 	 *
-	 * On Windows it follows XDG Base Directory Specification if `XDG_CACHE_HOME` is defined.
-	 * If `XDG_CACHE_HOME` is undefined, the directory that serves as a common
-	 * repository for temporary Internet files is used instead. A typical path is
-	 * `C:\Documents and Settings\username\Local Settings\Temporary Internet Files`.
-	 * See the [documentation for `CSIDL_INTERNET_CACHE`](https://msdn.microsoft.com/en-us/library/windows/desktop/bb762494%28v=vs.85%29.aspx#csidl_internet_cache).
+	 * On Windows is the directory that serves as a common repository for
+	 * temporary Internet files. A typical path is
+	 * C:\Documents and Settings\username\Local Settings\Temporary Internet Files.
+	 * See documentation for CSIDL_INTERNET_CACHE.
 	 *
 	 * Returns: a string owned by GLib that must not be modified
 	 *     or freed.
@@ -649,12 +640,10 @@ public struct Util
 	 * [XDG Base Directory Specification](http://www.freedesktop.org/Standards/basedir-spec).
 	 * In this case the directory retrieved will be `XDG_CONFIG_HOME`.
 	 *
-	 * On Windows it follows XDG Base Directory Specification if `XDG_CONFIG_HOME` is defined.
-	 * If `XDG_CONFIG_HOME` is undefined, the folder to use for local (as opposed
-	 * to roaming) application data is used instead. See the
-	 * [documentation for `CSIDL_LOCAL_APPDATA`](https://msdn.microsoft.com/en-us/library/windows/desktop/bb762494%28v=vs.85%29.aspx#csidl_local_appdata).
-	 * Note that in this case on Windows it will be  the same
-	 * as what g_get_user_data_dir() returns.
+	 * On Windows this is the folder to use for local (as opposed to
+	 * roaming) application data. See documentation for
+	 * CSIDL_LOCAL_APPDATA. Note that on Windows it thus is the same as
+	 * what g_get_user_data_dir() returns.
 	 *
 	 * Returns: a string owned by GLib that must not be modified
 	 *     or freed.
@@ -675,12 +664,10 @@ public struct Util
 	 * [XDG Base Directory Specification](http://www.freedesktop.org/Standards/basedir-spec).
 	 * In this case the directory retrieved will be `XDG_DATA_HOME`.
 	 *
-	 * On Windows it follows XDG Base Directory Specification if `XDG_DATA_HOME`
-	 * is defined. If `XDG_DATA_HOME` is undefined, the folder to use for local (as
-	 * opposed to roaming) application data is used instead. See the
-	 * [documentation for `CSIDL_LOCAL_APPDATA`](https://msdn.microsoft.com/en-us/library/windows/desktop/bb762494%28v=vs.85%29.aspx#csidl_local_appdata).
-	 * Note that in this case on Windows it will be the same
-	 * as what g_get_user_config_dir() returns.
+	 * On Windows this is the folder to use for local (as opposed to
+	 * roaming) application data. See documentation for
+	 * CSIDL_LOCAL_APPDATA. Note that on Windows it thus is the same as
+	 * what g_get_user_config_dir() returns.
 	 *
 	 * Returns: a string owned by GLib that must not be modified
 	 *     or freed.
@@ -709,13 +696,18 @@ public struct Util
 	 * Returns a directory that is unique to the current user on the local
 	 * system.
 	 *
-	 * This is determined using the mechanisms described
+	 * On UNIX platforms this is determined using the mechanisms described
 	 * in the
 	 * [XDG Base Directory Specification](http://www.freedesktop.org/Standards/basedir-spec).
 	 * This is the directory
 	 * specified in the `XDG_RUNTIME_DIR` environment variable.
 	 * In the case that this variable is not set, we return the value of
 	 * g_get_user_cache_dir(), after verifying that it exists.
+	 *
+	 * On Windows this is the folder to use for local (as opposed to
+	 * roaming) application data. See documentation for
+	 * CSIDL_LOCAL_APPDATA.  Note that on Windows it thus is the same as
+	 * what g_get_user_config_dir() returns.
 	 *
 	 * Returns: a string owned by GLib that must not be
 	 *     modified or freed.
@@ -785,8 +777,8 @@ public struct Util
 	 * use cases for environment variables in GLib-using programs you want
 	 * the UTF-8 encoding that this function and g_getenv() provide.
 	 *
-	 * Returns: a %NULL-terminated list of strings which must be freed with
-	 *     g_strfreev().
+	 * Returns: a %NULL-terminated
+	 *     list of strings which must be freed with g_strfreev().
 	 *
 	 * Since: 2.8
 	 */
@@ -859,9 +851,7 @@ public struct Util
 	}
 
 	/**
-	 * Gets the directory components of a file name. For example, the directory
-	 * component of `/usr/bin/test` is `/usr/bin`. The directory component of `/`
-	 * is `/`.
+	 * Gets the directory components of a file name.
 	 *
 	 * If the file name has no directory components "." is returned.
 	 * The returned string should be freed when no longer needed.
@@ -891,7 +881,7 @@ public struct Util
 	 * an absolute file name one that either begins with a directory
 	 * separator such as "\Users\tml" or begins with the root on a drive,
 	 * for example "C:\Windows". The first case also includes UNC paths
-	 * such as "\\\\myserver\docs\foo". In all cases, either slashes or
+	 * such as "\\myserver\docs\foo". In all cases, either slashes or
 	 * backslashes are accepted.
 	 *
 	 * Note that a file name relative to the current drive root does not
@@ -954,7 +944,7 @@ public struct Util
 	 * that the latest on-disk version is used. Call this only
 	 * if you just changed the data on disk yourself.
 	 *
-	 * Due to thread safety issues this may cause leaking of strings
+	 * Due to threadsafety issues this may cause leaking of strings
 	 * that were previously returned from g_get_user_special_dir()
 	 * that can't be freed. We ensure to only leak the data for
 	 * the directories that actually changed value though.
@@ -993,12 +983,6 @@ public struct Util
 	 * Sets the name of the program. This name should not be localized,
 	 * in contrast to g_set_application_name().
 	 *
-	 * If you are using #GApplication the program name is set in
-	 * g_application_run(). In case of GDK or GTK+ it is set in
-	 * gdk_init(), which is called by gtk_init() and the
-	 * #GtkApplication::startup handler. The program name is found by
-	 * taking the last component of @argv[0].
-	 *
 	 * Note that for thread-safety reasons this function can only be called once.
 	 *
 	 * Params:
@@ -1031,8 +1015,7 @@ public struct Util
 	 * array directly to execvpe(), g_spawn_async(), or the like.
 	 *
 	 * Params:
-	 *     variable = the environment variable to set, must not
-	 *         contain '='.
+	 *     variable = the environment variable to set, must not contain '='.
 	 *     value = the value for to set the variable to.
 	 *     overwrite = whether to change the variable if it already exists.
 	 *
@@ -1084,47 +1067,12 @@ public struct Util
 	 * array directly to execvpe(), g_spawn_async(), or the like.
 	 *
 	 * Params:
-	 *     variable = the environment variable to remove, must
-	 *         not contain '='
+	 *     variable = the environment variable to remove, must not contain '='
 	 *
 	 * Since: 2.4
 	 */
 	public static void unsetenv(string variable)
 	{
 		g_unsetenv(Str.toStringz(variable));
-	}
-
-	/**
-	 * Gets the canonical file name from @filename. All triple slashes are turned into
-	 * single slashes, and all `..` and `.`s resolved against @relative_to.
-	 *
-	 * Symlinks are not followed, and the returned path is guaranteed to be absolute.
-	 *
-	 * If @filename is an absolute path, @relative_to is ignored. Otherwise,
-	 * @relative_to will be prepended to @filename to make it absolute. @relative_to
-	 * must be an absolute path, or %NULL. If @relative_to is %NULL, it'll fallback
-	 * to g_get_current_dir().
-	 *
-	 * This function never fails, and will canonicalize file paths even if they don't
-	 * exist.
-	 *
-	 * No file system I/O is done.
-	 *
-	 * Params:
-	 *     filename = the name of the file
-	 *     relativeTo = the relative directory, or %NULL
-	 *         to use the current working directory
-	 *
-	 * Returns: a newly allocated string with the
-	 *     canonical file path
-	 *
-	 * Since: 2.58
-	 */
-	public static string canonicalizeFilename(string filename, string relativeTo)
-	{
-		auto retStr = g_canonicalize_filename(Str.toStringz(filename), Str.toStringz(relativeTo));
-
-		scope(exit) Str.freeString(retStr);
-		return Str.toString(retStr);
 	}
 }

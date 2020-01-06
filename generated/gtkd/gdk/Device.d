@@ -36,7 +36,6 @@ private import glib.ListG;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-public  import gtkc.gdktypes;
 private import std.algorithm;
 
 
@@ -117,12 +116,12 @@ public class Device : ObjectG
 		GdkWindow* outgrabWindow = null;
 		int outownerEvents;
 
-		auto p = gdk_device_grab_info_libgtk_only((display is null) ? null : display.getDisplayStruct(), (device is null) ? null : device.getDeviceStruct(), &outgrabWindow, &outownerEvents) != 0;
+		auto __p = gdk_device_grab_info_libgtk_only((display is null) ? null : display.getDisplayStruct(), (device is null) ? null : device.getDeviceStruct(), &outgrabWindow, &outownerEvents) != 0;
 
 		grabWindow = ObjectG.getDObject!(Window)(outgrabWindow);
 		ownerEvents = (outownerEvents == 1);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -143,14 +142,14 @@ public class Device : ObjectG
 	 */
 	public Device getAssociatedDevice()
 	{
-		auto p = gdk_device_get_associated_device(gdkDevice);
+		auto __p = gdk_device_get_associated_device(gdkDevice);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Device)(cast(GdkDevice*) p);
+		return ObjectG.getDObject!(Device)(cast(GdkDevice*) __p);
 	}
 
 	/**
@@ -235,14 +234,14 @@ public class Device : ObjectG
 	 */
 	public Display getDisplay()
 	{
-		auto p = gdk_device_get_display(gdkDevice);
+		auto __p = gdk_device_get_display(gdkDevice);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
+		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) __p);
 	}
 
 	/**
@@ -285,11 +284,11 @@ public class Device : ObjectG
 		GdkTimeCoord** outevents = null;
 		int nEvents;
 
-		auto p = gdk_device_get_history(gdkDevice, (window is null) ? null : window.getWindowStruct(), start, stop, &outevents, &nEvents) != 0;
+		auto __p = gdk_device_get_history(gdkDevice, (window is null) ? null : window.getWindowStruct(), start, stop, &outevents, &nEvents) != 0;
 
 		events = outevents[0 .. nEvents];
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -323,14 +322,14 @@ public class Device : ObjectG
 	 */
 	public Window getLastEventWindow()
 	{
-		auto p = gdk_device_get_last_event_window(gdkDevice);
+		auto __p = gdk_device_get_last_event_window(gdkDevice);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) __p);
 	}
 
 	/**
@@ -451,14 +450,14 @@ public class Device : ObjectG
 	 */
 	public Seat getSeat()
 	{
-		auto p = gdk_device_get_seat(gdkDevice);
+		auto __p = gdk_device_get_seat(gdkDevice);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Seat)(cast(GdkSeat*) p);
+		return ObjectG.getDObject!(Seat)(cast(GdkSeat*) __p);
 	}
 
 	/**
@@ -548,14 +547,14 @@ public class Device : ObjectG
 	 */
 	public Window getWindowAtPosition(out int winX, out int winY)
 	{
-		auto p = gdk_device_get_window_at_position(gdkDevice, &winX, &winY);
+		auto __p = gdk_device_get_window_at_position(gdkDevice, &winX, &winY);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) __p);
 	}
 
 	/**
@@ -580,14 +579,14 @@ public class Device : ObjectG
 	 */
 	public Window getWindowAtPositionDouble(out double winX, out double winY)
 	{
-		auto p = gdk_device_get_window_at_position_double(gdkDevice, &winX, &winY);
+		auto __p = gdk_device_get_window_at_position_double(gdkDevice, &winX, &winY);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) __p);
 	}
 
 	/**
@@ -653,14 +652,14 @@ public class Device : ObjectG
 	 */
 	public ListG listAxes()
 	{
-		auto p = gdk_device_list_axes(gdkDevice);
+		auto __p = gdk_device_list_axes(gdkDevice);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -674,14 +673,14 @@ public class Device : ObjectG
 	 */
 	public ListG listSlaveDevices()
 	{
-		auto p = gdk_device_list_slave_devices(gdkDevice);
+		auto __p = gdk_device_list_slave_devices(gdkDevice);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**

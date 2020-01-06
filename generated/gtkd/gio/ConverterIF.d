@@ -28,7 +28,6 @@ private import gio.c.functions;
 public  import gio.c.types;
 private import glib.ErrorG;
 private import glib.GException;
-public  import gtkc.giotypes;
 
 
 /**

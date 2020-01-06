@@ -34,17 +34,13 @@ public  import glib.ErrorG;
 public  import glib.GException;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
-public  import gtkc.giotypes;
 public  import std.algorithm;
 
 
 /**
  * #GNetworkMonitor provides an easy-to-use cross-platform API
- * for monitoring network connectivity. On Linux, the available
- * implementations are based on the kernel's netlink interface and
- * on NetworkManager.
- * 
- * There is also an implementation for use inside Flatpak sandboxes.
+ * for monitoring network connectivity. On Linux, the implementation
+ * is based on the kernel's netlink interface.
  *
  * Since: 2.32
  */
@@ -92,14 +88,14 @@ public template NetworkMonitorT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_network_monitor_can_reach(getNetworkMonitorStruct(), (connectable is null) ? null : connectable.getSocketConnectableStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_network_monitor_can_reach(getNetworkMonitorStruct(), (connectable is null) ? null : connectable.getSocketConnectableStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -140,14 +136,14 @@ public template NetworkMonitorT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_network_monitor_can_reach_finish(getNetworkMonitorStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_network_monitor_can_reach_finish(getNetworkMonitorStruct(), (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -209,10 +205,14 @@ public template NetworkMonitorT(TStruct)
 	}
 
 	/**
-	 * Emitted when the network configuration changes.
+	 * Emitted when the network configuration changes. If @available is
+	 * %TRUE, then some hosts may be reachable that were not reachable
+	 * before, while others that were reachable before may no longer be
+	 * reachable. If @available is %FALSE, then no remote hosts are
+	 * reachable.
 	 *
 	 * Params:
-	 *     networkAvailable = the current value of #GNetworkMonitor:network-available
+	 *     available = the current value of #GNetworkMonitor:network-available
 	 *
 	 * Since: 2.32
 	 */

@@ -33,7 +33,6 @@ private import gobject.TypePluginIF;
 private import gobject.Value;
 private import gobject.c.functions;
 public  import gobject.c.types;
-public  import gtkc.gobjecttypes;
 
 
 /** */
@@ -162,14 +161,14 @@ public struct Type
 	/** */
 	public static TypeClass checkClassCast(TypeClass gClass, GType isAType)
 	{
-		auto p = g_type_check_class_cast((gClass is null) ? null : gClass.getTypeClassStruct(), isAType);
+		auto __p = g_type_check_class_cast((gClass is null) ? null : gClass.getTypeClassStruct(), isAType);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TypeClass)(cast(GTypeClass*) p);
+		return ObjectG.getDObject!(TypeClass)(cast(GTypeClass*) __p);
 	}
 
 	/** */
@@ -195,14 +194,14 @@ public struct Type
 	/** */
 	public static TypeInstance checkInstanceCast(TypeInstance instance_, GType ifaceType)
 	{
-		auto p = g_type_check_instance_cast((instance_ is null) ? null : instance_.getTypeInstanceStruct(), ifaceType);
+		auto __p = g_type_check_instance_cast((instance_ is null) ? null : instance_.getTypeInstanceStruct(), ifaceType);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TypeInstance)(cast(GTypeInstance*) p);
+		return ObjectG.getDObject!(TypeInstance)(cast(GTypeInstance*) __p);
 	}
 
 	/** */
@@ -249,9 +248,9 @@ public struct Type
 	{
 		uint nChildren;
 
-		auto p = g_type_children(type, &nChildren);
+		auto __p = g_type_children(type, &nChildren);
 
-		return p[0 .. nChildren];
+		return __p[0 .. nChildren];
 	}
 
 	/**
@@ -280,14 +279,14 @@ public struct Type
 	 */
 	public static TypeInstance createInstance(GType type)
 	{
-		auto p = g_type_create_instance(type);
+		auto __p = g_type_create_instance(type);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TypeInstance)(cast(GTypeInstance*) p);
+		return ObjectG.getDObject!(TypeInstance)(cast(GTypeInstance*) __p);
 	}
 
 	/**
@@ -305,14 +304,14 @@ public struct Type
 	 */
 	public static TypeInterface defaultInterfacePeek(GType gType)
 	{
-		auto p = g_type_default_interface_peek(gType);
+		auto __p = g_type_default_interface_peek(gType);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TypeInterface)(cast(GTypeInterface*) p);
+		return ObjectG.getDObject!(TypeInterface)(cast(GTypeInterface*) __p);
 	}
 
 	/**
@@ -338,14 +337,14 @@ public struct Type
 	 */
 	public static TypeInterface defaultInterfaceRef(GType gType)
 	{
-		auto p = g_type_default_interface_ref(gType);
+		auto __p = g_type_default_interface_ref(gType);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TypeInterface)(cast(GTypeInterface*) p);
+		return ObjectG.getDObject!(TypeInterface)(cast(GTypeInterface*) __p);
 	}
 
 	/**
@@ -474,14 +473,14 @@ public struct Type
 	 */
 	public static TypePluginIF getPlugin(GType type)
 	{
-		auto p = g_type_get_plugin(type);
+		auto __p = g_type_get_plugin(type);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TypePluginIF)(cast(GTypePlugin*) p);
+		return ObjectG.getDObject!(TypePluginIF)(cast(GTypePlugin*) __p);
 	}
 
 	/**
@@ -564,9 +563,9 @@ public struct Type
 	{
 		uint nInterfaces;
 
-		auto p = g_type_interfaces(type, &nInterfaces);
+		auto __p = g_type_interfaces(type, &nInterfaces);
 
-		return p[0 .. nInterfaces];
+		return __p[0 .. nInterfaces];
 	}
 
 	/**

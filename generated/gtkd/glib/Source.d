@@ -30,8 +30,6 @@ private import glib.Str;
 private import glib.TimeVal;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
-private import gtkd.Loader;
 
 
 /**
@@ -69,7 +67,7 @@ public class Source
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_source_unref(gSource);
 	}
 
@@ -95,14 +93,14 @@ public class Source
 	 */
 	public this(GSourceFuncs* sourceFuncs, uint structSize)
 	{
-		auto p = g_source_new(sourceFuncs, structSize);
+		auto __p = g_source_new(sourceFuncs, structSize);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GSource*) p);
+		this(cast(GSource*) __p);
 	}
 
 	/**
@@ -238,14 +236,14 @@ public class Source
 	 */
 	public MainContext getContext()
 	{
-		auto p = g_source_get_context(gSource);
+		auto __p = g_source_get_context(gSource);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new MainContext(cast(GMainContext*) p);
+		return new MainContext(cast(GMainContext*) __p);
 	}
 
 	/**
@@ -267,11 +265,6 @@ public class Source
 	 * is a positive integer which is unique within a particular main loop
 	 * context. The reverse
 	 * mapping from ID to source is done by g_main_context_find_source_by_id().
-	 *
-	 * You can only call this function while the source is associated to a
-	 * #GMainContext instance; calling this function before g_source_attach()
-	 * or after g_source_destroy() yields undefined behavior. The ID returned
-	 * is unique within the #GMainContext instance passed to g_source_attach().
 	 *
 	 * Returns: the ID (greater than 0) for the source
 	 */
@@ -468,14 +461,14 @@ public class Source
 	 */
 	public Source ref_()
 	{
-		auto p = g_source_ref(gSource);
+		auto __p = g_source_ref(gSource);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Source(cast(GSource*) p, true);
+		return new Source(cast(GSource*) __p, true);
 	}
 
 	/**
@@ -538,18 +531,13 @@ public class Source
 	 *
 	 * The exact type of @func depends on the type of source; ie. you
 	 * should not count on @func being called with @data as its first
-	 * parameter. Cast @func with G_SOURCE_FUNC() to avoid warnings about
-	 * incompatible function types.
+	 * parameter.
 	 *
 	 * See [memory management of sources][mainloop-memory-management] for details
 	 * on how to handle memory management of @data.
 	 *
 	 * Typically, you won't use this function. Instead use functions specific
-	 * to the type of source you are using, such as g_idle_add() or g_timeout_add().
-	 *
-	 * It is safe to call this function multiple times on a source which has already
-	 * been attached to a context. The changes will take effect for the next time
-	 * the source is dispatched after this call returns.
+	 * to the type of source you are using.
 	 *
 	 * Params:
 	 *     func = a callback function
@@ -568,10 +556,6 @@ public class Source
 	 * an initial reference count on @callback_data, and thus
 	 * @callback_funcs->unref will eventually be called once more
 	 * than @callback_funcs->ref.
-	 *
-	 * It is safe to call this function multiple times on a source which has already
-	 * been attached to a context. The changes will take effect for the next time
-	 * the source is dispatched after this call returns.
 	 *
 	 * Params:
 	 *     callbackData = pointer to callback data "object"
@@ -672,7 +656,7 @@ public class Source
 	 * Note that if you have a pair of sources where the ready time of one
 	 * suggests that it will be delivered first but the priority for the
 	 * other suggests that it would be delivered first, and the ready time
-	 * for both sources is reached during the same main context iteration,
+	 * for both sources is reached during the same main context iteration
 	 * then the order of dispatch is undefined.
 	 *
 	 * It is a no-op to call this function on a #GSource which has already been
@@ -703,14 +687,16 @@ public class Source
 	}
 
 	/**
-	 * Removes the source with the given ID from the default main context. You must
-	 * use g_source_destroy() for sources added to a non-default main context.
+	 * Removes the source with the given id from the default main context.
 	 *
-	 * The ID of a #GSource is given by g_source_get_id(), or will be
+	 * The id of a #GSource is given by g_source_get_id(), or will be
 	 * returned by the functions g_source_attach(), g_idle_add(),
 	 * g_idle_add_full(), g_timeout_add(), g_timeout_add_full(),
 	 * g_child_watch_add(), g_child_watch_add_full(), g_io_add_watch(), and
 	 * g_io_add_watch_full().
+	 *
+	 * See also g_source_destroy(). You must use g_source_destroy() for sources
+	 * added to a non-default main context.
 	 *
 	 * It is a programmer error to attempt to remove a non-existent source.
 	 *

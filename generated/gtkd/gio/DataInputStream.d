@@ -35,7 +35,6 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -89,14 +88,14 @@ public class DataInputStream : BufferedInputStream
 	 */
 	public this(InputStream baseStream)
 	{
-		auto p = g_data_input_stream_new((baseStream is null) ? null : baseStream.getInputStreamStruct());
+		auto __p = g_data_input_stream_new((baseStream is null) ? null : baseStream.getInputStreamStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GDataInputStream*) p, true);
+		this(cast(GDataInputStream*) __p, true);
 	}
 
 	/**
@@ -128,7 +127,7 @@ public class DataInputStream : BufferedInputStream
 	 * Params:
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Returns: a signed 16-bit/2-byte value read from @stream or `0` if
+	 * Returns: a signed 16-bit/2-byte value read from @stream or %0 if
 	 *     an error occurred.
 	 *
 	 * Throws: GException on failure.
@@ -137,14 +136,14 @@ public class DataInputStream : BufferedInputStream
 	{
 		GError* err = null;
 
-		auto p = g_data_input_stream_read_int16(gDataInputStream, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_data_input_stream_read_int16(gDataInputStream, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -160,7 +159,7 @@ public class DataInputStream : BufferedInputStream
 	 * Params:
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Returns: a signed 32-bit/4-byte value read from the @stream or `0` if
+	 * Returns: a signed 32-bit/4-byte value read from the @stream or %0 if
 	 *     an error occurred.
 	 *
 	 * Throws: GException on failure.
@@ -169,14 +168,14 @@ public class DataInputStream : BufferedInputStream
 	{
 		GError* err = null;
 
-		auto p = g_data_input_stream_read_int32(gDataInputStream, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_data_input_stream_read_int32(gDataInputStream, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -192,7 +191,7 @@ public class DataInputStream : BufferedInputStream
 	 * Params:
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Returns: a signed 64-bit/8-byte value read from @stream or `0` if
+	 * Returns: a signed 64-bit/8-byte value read from @stream or %0 if
 	 *     an error occurred.
 	 *
 	 * Throws: GException on failure.
@@ -201,14 +200,14 @@ public class DataInputStream : BufferedInputStream
 	{
 		GError* err = null;
 
-		auto p = g_data_input_stream_read_int64(gDataInputStream, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_data_input_stream_read_int64(gDataInputStream, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -384,7 +383,7 @@ public class DataInputStream : BufferedInputStream
 	 * Params:
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Returns: an unsigned 16-bit/2-byte value read from the @stream or `0` if
+	 * Returns: an unsigned 16-bit/2-byte value read from the @stream or %0 if
 	 *     an error occurred.
 	 *
 	 * Throws: GException on failure.
@@ -393,14 +392,14 @@ public class DataInputStream : BufferedInputStream
 	{
 		GError* err = null;
 
-		auto p = g_data_input_stream_read_uint16(gDataInputStream, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_data_input_stream_read_uint16(gDataInputStream, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -416,7 +415,7 @@ public class DataInputStream : BufferedInputStream
 	 * Params:
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Returns: an unsigned 32-bit/4-byte value read from the @stream or `0` if
+	 * Returns: an unsigned 32-bit/4-byte value read from the @stream or %0 if
 	 *     an error occurred.
 	 *
 	 * Throws: GException on failure.
@@ -425,14 +424,14 @@ public class DataInputStream : BufferedInputStream
 	{
 		GError* err = null;
 
-		auto p = g_data_input_stream_read_uint32(gDataInputStream, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_data_input_stream_read_uint32(gDataInputStream, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -448,7 +447,7 @@ public class DataInputStream : BufferedInputStream
 	 * Params:
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
-	 * Returns: an unsigned 64-bit/8-byte read from @stream or `0` if
+	 * Returns: an unsigned 64-bit/8-byte read from @stream or %0 if
 	 *     an error occurred.
 	 *
 	 * Throws: GException on failure.
@@ -457,14 +456,14 @@ public class DataInputStream : BufferedInputStream
 	{
 		GError* err = null;
 
-		auto p = g_data_input_stream_read_uint64(gDataInputStream, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_data_input_stream_read_uint64(gDataInputStream, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -479,9 +478,6 @@ public class DataInputStream : BufferedInputStream
 	 * functions will be marked as deprecated in a future release.  Use
 	 * g_data_input_stream_read_upto() instead, but note that that function
 	 * does not consume the stop character.
-	 *
-	 * Deprecated: Use g_data_input_stream_read_upto() instead, which has more
-	 * consistent behaviour regarding the stop character.
 	 *
 	 * Params:
 	 *     stopChars = characters to terminate the read.
@@ -527,9 +523,6 @@ public class DataInputStream : BufferedInputStream
 	 * will be marked as deprecated in a future release.  Use
 	 * g_data_input_stream_read_upto_async() instead.
 	 *
-	 * Deprecated: Use g_data_input_stream_read_upto_async() instead, which
-	 * has more consistent behaviour regarding the stop character.
-	 *
 	 * Params:
 	 *     stopChars = characters to terminate the read.
 	 *     ioPriority = the [I/O priority][io-priority] of the request
@@ -547,9 +540,6 @@ public class DataInputStream : BufferedInputStream
 	/**
 	 * Finish an asynchronous call started by
 	 * g_data_input_stream_read_until_async().
-	 *
-	 * Deprecated: Use g_data_input_stream_read_upto_finish() instead, which
-	 * has more consistent behaviour regarding the stop character.
 	 *
 	 * Params:
 	 *     result = the #GAsyncResult that was provided to the callback.
@@ -590,8 +580,6 @@ public class DataInputStream : BufferedInputStream
 	 *
 	 * Note that @stop_chars may contain '\0' if @stop_chars_len is
 	 * specified.
-	 *
-	 * The returned string will always be nul-terminated on success.
 	 *
 	 * Params:
 	 *     stopChars = characters to terminate the read
@@ -663,8 +651,6 @@ public class DataInputStream : BufferedInputStream
 	 * Note that this function does not consume the stop character. You
 	 * have to use g_data_input_stream_read_byte() to get it before calling
 	 * g_data_input_stream_read_upto_async() again.
-	 *
-	 * The returned string will always be nul-terminated on success.
 	 *
 	 * Params:
 	 *     result = the #GAsyncResult that was provided to the callback

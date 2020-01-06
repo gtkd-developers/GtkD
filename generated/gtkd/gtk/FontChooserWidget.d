@@ -32,7 +32,6 @@ private import gtk.FontChooserT;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -53,8 +52,6 @@ public  import gtkc.gtktypes;
  * # CSS nodes
  * 
  * GtkFontChooserWidget has a single CSS node with name fontchooser.
- *
- * Since: 3.2
  */
 public class FontChooserWidget : Box, FontChooserIF
 {
@@ -105,13 +102,13 @@ public class FontChooserWidget : Box, FontChooserIF
 	 */
 	public this()
 	{
-		auto p = gtk_font_chooser_widget_new();
+		auto __p = gtk_font_chooser_widget_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkFontChooserWidget*) p);
+		this(cast(GtkFontChooserWidget*) __p);
 	}
 }

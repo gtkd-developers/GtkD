@@ -28,8 +28,6 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
-private import gtkd.Loader;
 
 
 /**
@@ -67,7 +65,7 @@ public class Pattern
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_pattern_spec_free(gPatternSpec);
 	}
 
@@ -107,14 +105,14 @@ public class Pattern
 	 */
 	public this(string pattern)
 	{
-		auto p = g_pattern_spec_new(Str.toStringz(pattern));
+		auto __p = g_pattern_spec_new(Str.toStringz(pattern));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GPatternSpec*) p);
+		this(cast(GPatternSpec*) __p);
 	}
 
 	/**

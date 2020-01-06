@@ -28,8 +28,6 @@ private import glib.MemorySlice;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
-private import gtkd.Loader;
 
 
 /**
@@ -39,9 +37,7 @@ private import gtkd.Loader;
  * 
  * GLib is attempting to unify around the use of 64bit integers to
  * represent microsecond-precision time. As such, this type will be
- * removed from a future version of GLib. A consequence of using `glong` for
- * `tv_sec` is that on 32-bit systems `GTimeVal` is subject to the year 2038
- * problem.
+ * removed from a future version of GLib.
  */
 public final class TimeVal
 {
@@ -74,7 +70,7 @@ public final class TimeVal
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			sliceFree(gTimeVal);
 	}
 
@@ -141,16 +137,7 @@ public final class TimeVal
 	 * Use g_date_time_format() or g_strdup_printf() if a different
 	 * variation of ISO 8601 format is required.
 	 *
-	 * If @time_ represents a date which is too large to fit into a `struct tm`,
-	 * %NULL will be returned. This is platform dependent. Note also that since
-	 * `GTimeVal` stores the number of seconds as a `glong`, on 32-bit systems it
-	 * is subject to the year 2038 problem.
-	 *
-	 * The return value of g_time_val_to_iso8601() has been nullable since GLib
-	 * 2.54; before then, GLib would crash under the same conditions.
-	 *
-	 * Returns: a newly allocated string containing an ISO 8601 date,
-	 *     or %NULL if @time_ was too large
+	 * Returns: a newly allocated string containing an ISO 8601 date
 	 *
 	 * Since: 2.12
 	 */
@@ -171,8 +158,6 @@ public final class TimeVal
 	 * zone indicator. (In the absence of any time zone indication, the
 	 * timestamp is assumed to be in local time.)
 	 *
-	 * Any leading or trailing space in @iso_date is ignored.
-	 *
 	 * Params:
 	 *     isoDate = an ISO 8601 encoded date string
 	 *     time = a #GTimeVal
@@ -185,11 +170,11 @@ public final class TimeVal
 	{
 		GTimeVal* outtime = sliceNew!GTimeVal();
 
-		auto p = g_time_val_from_iso8601(Str.toStringz(isoDate), outtime) != 0;
+		auto __p = g_time_val_from_iso8601(Str.toStringz(isoDate), outtime) != 0;
 
 		time = new TimeVal(outtime, true);
 
-		return p;
+		return __p;
 	}
 
 	/**

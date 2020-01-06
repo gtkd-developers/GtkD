@@ -31,7 +31,6 @@ public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -104,7 +103,6 @@ public class DBusMenuModel : MenuModel
 	 * Params:
 	 *     connection = a #GDBusConnection
 	 *     busName = the bus name which exports the menu model
-	 *         or %NULL if @connection is not a message bus connection
 	 *     objectPath = the object path at which the menu model is exported
 	 *
 	 * Returns: a #GDBusMenuModel object. Free with
@@ -114,13 +112,13 @@ public class DBusMenuModel : MenuModel
 	 */
 	public static DBusMenuModel get(DBusConnection connection, string busName, string objectPath)
 	{
-		auto p = g_dbus_menu_model_get((connection is null) ? null : connection.getDBusConnectionStruct(), Str.toStringz(busName), Str.toStringz(objectPath));
+		auto __p = g_dbus_menu_model_get((connection is null) ? null : connection.getDBusConnectionStruct(), Str.toStringz(busName), Str.toStringz(objectPath));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusMenuModel)(cast(GDBusMenuModel*) p, true);
+		return ObjectG.getDObject!(DBusMenuModel)(cast(GDBusMenuModel*) __p, true);
 	}
 }

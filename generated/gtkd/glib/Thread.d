@@ -30,8 +30,6 @@ private import glib.GException;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
-private import gtkd.Loader;
 
 
 /**
@@ -80,7 +78,7 @@ public class Thread
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_thread_unref(gThread);
 	}
 
@@ -108,19 +106,19 @@ public class Thread
 	{
 		GError* err = null;
 
-		auto p = g_thread_try_new(Str.toStringz(name), func, data, &err);
+		auto __p = g_thread_try_new(Str.toStringz(name), func, data, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by try_new");
 		}
 
-		this(cast(GThread*) p);
+		this(cast(GThread*) __p);
 	}
 
 	/**
@@ -158,14 +156,14 @@ public class Thread
 	 */
 	public Thread ref_()
 	{
-		auto p = g_thread_ref(gThread);
+		auto __p = g_thread_ref(gThread);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Thread(cast(GThread*) p, true);
+		return new Thread(cast(GThread*) __p, true);
 	}
 
 	/**
@@ -227,14 +225,14 @@ public class Thread
 	 */
 	public static Thread self()
 	{
-		auto p = g_thread_self();
+		auto __p = g_thread_self();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Thread(cast(GThread*) p, true);
+		return new Thread(cast(GThread*) __p, true);
 	}
 
 	/**

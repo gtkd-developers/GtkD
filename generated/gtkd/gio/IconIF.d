@@ -33,7 +33,6 @@ private import glib.GException;
 private import glib.Str;
 private import glib.Variant;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -92,14 +91,14 @@ public interface IconIF{
 	 */
 	public static IconIF deserialize(Variant value)
 	{
-		auto p = g_icon_deserialize((value is null) ? null : value.getVariantStruct());
+		auto __p = g_icon_deserialize((value is null) ? null : value.getVariantStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p, true);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) __p, true);
 	}
 
 	/**
@@ -154,8 +153,8 @@ public interface IconIF{
 	 * native, the returned string is the result of g_file_get_uri()
 	 * (such as `sftp://path/to/my%20icon.png`).
 	 *
-	 * - If @icon is a #GThemedIcon with exactly one name and no fallbacks,
-	 * the encoding is simply the name (such as `network-server`).
+	 * - If @icon is a #GThemedIcon with exactly one name, the encoding is
+	 * simply the name (such as `network-server`).
 	 *
 	 * Returns: An allocated NUL-terminated UTF8 string or
 	 *     %NULL if @icon can't be serialized. Use g_free() to free.

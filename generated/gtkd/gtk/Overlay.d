@@ -31,7 +31,6 @@ private import gtk.Bin;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -48,6 +47,9 @@ private import std.algorithm;
  * 
  * More complicated placement of overlays is possible by connecting
  * to the #GtkOverlay::get-child-position signal.
+ * 
+ * An overlay’s minimum and natural sizes are those of its main child. The sizes
+ * of overlay children are not considered when measuring these preferred sizes.
  * 
  * # GtkOverlay as GtkBuildable
  * 
@@ -107,14 +109,14 @@ public class Overlay : Bin
 	 */
 	public this()
 	{
-		auto p = gtk_overlay_new();
+		auto __p = gtk_overlay_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkOverlay*) p);
+		this(cast(GtkOverlay*) __p);
 	}
 
 	/**
@@ -155,7 +157,7 @@ public class Overlay : Bin
 	/**
 	 * Moves @child to a new @index in the list of @overlay children.
 	 * The list contains overlays in the order that these were
-	 * added to @overlay.
+	 * added to @overlay by default. See also #GtkOverlay:index.
 	 *
 	 * A widget’s index in the @overlay children list determines which order
 	 * the children are drawn if they overlap. The first child is drawn at
@@ -163,15 +165,15 @@ public class Overlay : Bin
 	 *
 	 * Params:
 	 *     child = the overlaid #GtkWidget to move
-	 *     position = the new index for @child in the list of overlay children
+	 *     index = the new index for @child in the list of overlay children
 	 *         of @overlay, starting from 0. If negative, indicates the end of
 	 *         the list
 	 *
 	 * Since: 3.18
 	 */
-	public void reorderOverlay(Widget child, int position)
+	public void reorderOverlay(Widget child, int index)
 	{
-		gtk_overlay_reorder_overlay(gtkOverlay, (child is null) ? null : child.getWidgetStruct(), position);
+		gtk_overlay_reorder_overlay(gtkOverlay, (child is null) ? null : child.getWidgetStruct(), index);
 	}
 
 	/**

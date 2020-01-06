@@ -31,7 +31,6 @@ private import gtk.CellAccessible;
 private import gtk.CellRenderer;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /** */
@@ -73,13 +72,13 @@ public class RendererCellAccessible : CellAccessible
 	/** */
 	public this(CellRenderer renderer)
 	{
-		auto p = gtk_renderer_cell_accessible_new((renderer is null) ? null : renderer.getCellRendererStruct());
+		auto __p = gtk_renderer_cell_accessible_new((renderer is null) ? null : renderer.getCellRendererStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkRendererCellAccessible*) p, true);
+		this(cast(GtkRendererCellAccessible*) __p, true);
 	}
 }

@@ -33,7 +33,6 @@ private import gtk.Bin;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -87,14 +86,14 @@ public class ListBoxRow : Bin, ActionableIF
 	 */
 	public this()
 	{
-		auto p = gtk_list_box_row_new();
+		auto __p = gtk_list_box_row_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkListBoxRow*) p);
+		this(cast(GtkListBoxRow*) __p);
 	}
 
 	/**
@@ -146,14 +145,14 @@ public class ListBoxRow : Bin, ActionableIF
 	 */
 	public Widget getHeader()
 	{
-		auto p = gtk_list_box_row_get_header(gtkListBoxRow);
+		auto __p = gtk_list_box_row_get_header(gtkListBoxRow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**

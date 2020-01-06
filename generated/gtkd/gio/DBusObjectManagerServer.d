@@ -33,7 +33,6 @@ public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -120,14 +119,14 @@ public class DBusObjectManagerServer : ObjectG, DBusObjectManagerIF
 	 */
 	public this(string objectPath)
 	{
-		auto p = g_dbus_object_manager_server_new(Str.toStringz(objectPath));
+		auto __p = g_dbus_object_manager_server_new(Str.toStringz(objectPath));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GDBusObjectManagerServer*) p, true);
+		this(cast(GDBusObjectManagerServer*) __p, true);
 	}
 
 	alias expor = export_;
@@ -180,14 +179,14 @@ public class DBusObjectManagerServer : ObjectG, DBusObjectManagerIF
 	 */
 	public DBusConnection getConnection()
 	{
-		auto p = g_dbus_object_manager_server_get_connection(gDBusObjectManagerServer);
+		auto __p = g_dbus_object_manager_server_get_connection(gDBusObjectManagerServer);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusConnection)(cast(GDBusConnection*) p, true);
+		return ObjectG.getDObject!(DBusConnection)(cast(GDBusConnection*) __p, true);
 	}
 
 	/**

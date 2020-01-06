@@ -47,7 +47,6 @@ private import gtk.TreeViewColumn;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -251,14 +250,14 @@ public class TreeView : Container, ScrollableIF
 	 */
 	public this()
 	{
-		auto p = gtk_tree_view_new();
+		auto __p = gtk_tree_view_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkTreeView*) p);
+		this(cast(GtkTreeView*) __p);
 	}
 
 	/**
@@ -273,14 +272,14 @@ public class TreeView : Container, ScrollableIF
 	 */
 	public this(TreeModelIF model)
 	{
-		auto p = gtk_tree_view_new_with_model((model is null) ? null : model.getTreeModelStruct());
+		auto __p = gtk_tree_view_new_with_model((model is null) ? null : model.getTreeModelStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_model");
 		}
 
-		this(cast(GtkTreeView*) p);
+		this(cast(GtkTreeView*) __p);
 	}
 
 	/**
@@ -441,14 +440,14 @@ public class TreeView : Container, ScrollableIF
 	 */
 	public Surface createRowDragIcon(TreePath path)
 	{
-		auto p = gtk_tree_view_create_row_drag_icon(gtkTreeView, (path is null) ? null : path.getTreePathStruct());
+		auto __p = gtk_tree_view_create_row_drag_icon(gtkTreeView, (path is null) ? null : path.getTreePathStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Surface(cast(cairo_surface_t*) p);
+		return new Surface(cast(cairo_surface_t*) __p);
 	}
 
 	/**
@@ -572,14 +571,14 @@ public class TreeView : Container, ScrollableIF
 	 */
 	public Window getBinWindow()
 	{
-		auto p = gtk_tree_view_get_bin_window(gtkTreeView);
+		auto __p = gtk_tree_view_get_bin_window(gtkTreeView);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) __p);
 	}
 
 	/**
@@ -614,14 +613,14 @@ public class TreeView : Container, ScrollableIF
 	 */
 	public TreeViewColumn getColumn(int n)
 	{
-		auto p = gtk_tree_view_get_column(gtkTreeView, n);
+		auto __p = gtk_tree_view_get_column(gtkTreeView, n);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TreeViewColumn)(cast(GtkTreeViewColumn*) p);
+		return ObjectG.getDObject!(TreeViewColumn)(cast(GtkTreeViewColumn*) __p);
 	}
 
 	/**
@@ -632,14 +631,14 @@ public class TreeView : Container, ScrollableIF
 	 */
 	public ListG getColumns()
 	{
-		auto p = gtk_tree_view_get_columns(gtkTreeView);
+		auto __p = gtk_tree_view_get_columns(gtkTreeView);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -688,11 +687,11 @@ public class TreeView : Container, ScrollableIF
 	{
 		GtkTreePath* outpath = null;
 
-		auto p = gtk_tree_view_get_dest_row_at_pos(gtkTreeView, dragX, dragY, &outpath, &pos) != 0;
+		auto __p = gtk_tree_view_get_dest_row_at_pos(gtkTreeView, dragX, dragY, &outpath, &pos) != 0;
 
 		path = ObjectG.getDObject!(TreePath)(outpath);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -743,14 +742,14 @@ public class TreeView : Container, ScrollableIF
 	 */
 	public TreeViewColumn getExpanderColumn()
 	{
-		auto p = gtk_tree_view_get_expander_column(gtkTreeView);
+		auto __p = gtk_tree_view_get_expander_column(gtkTreeView);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TreeViewColumn)(cast(GtkTreeViewColumn*) p);
+		return ObjectG.getDObject!(TreeViewColumn)(cast(GtkTreeViewColumn*) __p);
 	}
 
 	/**
@@ -847,14 +846,14 @@ public class TreeView : Container, ScrollableIF
 	 */
 	public TreeModelIF getModel()
 	{
-		auto p = gtk_tree_view_get_model(gtkTreeView);
+		auto __p = gtk_tree_view_get_model(gtkTreeView);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TreeModelIF)(cast(GtkTreeModel*) p);
+		return ObjectG.getDObject!(TreeModelIF)(cast(GtkTreeModel*) __p);
 	}
 
 	/**
@@ -907,12 +906,12 @@ public class TreeView : Container, ScrollableIF
 		GtkTreePath* outpath = null;
 		GtkTreeViewColumn* outcolumn = null;
 
-		auto p = gtk_tree_view_get_path_at_pos(gtkTreeView, x, y, &outpath, &outcolumn, &cellX, &cellY) != 0;
+		auto __p = gtk_tree_view_get_path_at_pos(gtkTreeView, x, y, &outpath, &outcolumn, &cellX, &cellY) != 0;
 
 		path = ObjectG.getDObject!(TreePath)(outpath);
 		column = ObjectG.getDObject!(TreeViewColumn)(outcolumn);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -983,14 +982,14 @@ public class TreeView : Container, ScrollableIF
 	 */
 	public Entry getSearchEntry()
 	{
-		auto p = gtk_tree_view_get_search_entry(gtkTreeView);
+		auto __p = gtk_tree_view_get_search_entry(gtkTreeView);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Entry)(cast(GtkEntry*) p);
+		return ObjectG.getDObject!(Entry)(cast(GtkEntry*) __p);
 	}
 
 	/**
@@ -1022,14 +1021,14 @@ public class TreeView : Container, ScrollableIF
 	 */
 	public TreeSelection getSelection()
 	{
-		auto p = gtk_tree_view_get_selection(gtkTreeView);
+		auto __p = gtk_tree_view_get_selection(gtkTreeView);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TreeSelection)(cast(GtkTreeSelection*) p);
+		return ObjectG.getDObject!(TreeSelection)(cast(GtkTreeSelection*) __p);
 	}
 
 	/**
@@ -1091,13 +1090,13 @@ public class TreeView : Container, ScrollableIF
 		GtkTreePath* outpath = null;
 		GtkTreeIter* outiter = sliceNew!GtkTreeIter();
 
-		auto p = gtk_tree_view_get_tooltip_context(gtkTreeView, &x, &y, keyboardTip, &outmodel, &outpath, outiter) != 0;
+		auto __p = gtk_tree_view_get_tooltip_context(gtkTreeView, &x, &y, keyboardTip, &outmodel, &outpath, outiter) != 0;
 
 		model = ObjectG.getDObject!(TreeModelIF)(outmodel);
 		path = ObjectG.getDObject!(TreePath)(outpath);
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1120,12 +1119,12 @@ public class TreeView : Container, ScrollableIF
 		GtkTreePath* outstartPath = null;
 		GtkTreePath* outendPath = null;
 
-		auto p = gtk_tree_view_get_visible_range(gtkTreeView, &outstartPath, &outendPath) != 0;
+		auto __p = gtk_tree_view_get_visible_range(gtkTreeView, &outstartPath, &outendPath) != 0;
 
 		startPath = ObjectG.getDObject!(TreePath)(outstartPath);
 		endPath = ObjectG.getDObject!(TreePath)(outendPath);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1224,12 +1223,12 @@ public class TreeView : Container, ScrollableIF
 		GtkTreePath* outpath = null;
 		GtkTreeViewColumn* outcolumn = null;
 
-		auto p = gtk_tree_view_is_blank_at_pos(gtkTreeView, x, y, &outpath, &outcolumn, &cellX, &cellY) != 0;
+		auto __p = gtk_tree_view_is_blank_at_pos(gtkTreeView, x, y, &outpath, &outcolumn, &cellX, &cellY) != 0;
 
 		path = ObjectG.getDObject!(TreePath)(outpath);
 		column = ObjectG.getDObject!(TreeViewColumn)(outcolumn);
 
-		return p;
+		return __p;
 	}
 
 	/**

@@ -27,8 +27,6 @@ module pango.PgFontDescription;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.pangotypes;
-private import gtkd.Loader;
 private import pango.c.functions;
 public  import pango.c.types;
 
@@ -70,7 +68,7 @@ public class PgFontDescription
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
+		if ( ownedRef )
 			pango_font_description_free(pangoFontDescription);
 	}
 
@@ -106,14 +104,14 @@ public class PgFontDescription
 	 */
 	public this()
 	{
-		auto p = pango_font_description_new();
+		auto __p = pango_font_description_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(PangoFontDescription*) p);
+		this(cast(PangoFontDescription*) __p);
 	}
 
 	/**
@@ -150,14 +148,14 @@ public class PgFontDescription
 	 */
 	public PgFontDescription copy()
 	{
-		auto p = pango_font_description_copy(pangoFontDescription);
+		auto __p = pango_font_description_copy(pangoFontDescription);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) p, true);
+		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) __p, true);
 	}
 
 	/**
@@ -173,14 +171,14 @@ public class PgFontDescription
 	 */
 	public PgFontDescription copyStatic()
 	{
-		auto p = pango_font_description_copy_static(pangoFontDescription);
+		auto __p = pango_font_description_copy_static(pangoFontDescription);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) p, true);
+		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) __p, true);
 	}
 
 	/**
@@ -537,11 +535,14 @@ public class PgFontDescription
 	 * Pango does not currently have a way to find supported axes of
 	 * a font. Both harfbuzz or freetype have API for this.
 	 *
+	 * Params:
+	 *     variations = a string representing the variations
+	 *
 	 * Since: 1.42
 	 */
-	public void setVariations(string settings)
+	public void setVariations(string variations)
 	{
-		pango_font_description_set_variations(pangoFontDescription, Str.toStringz(settings));
+		pango_font_description_set_variations(pangoFontDescription, Str.toStringz(variations));
 	}
 
 	/**
@@ -552,11 +553,14 @@ public class PgFontDescription
 	 * @variations is a static string such as a C string literal, or
 	 * if @desc is only needed temporarily.
 	 *
+	 * Params:
+	 *     variations = a string representing the variations
+	 *
 	 * Since: 1.42
 	 */
-	public void setVariationsStatic(string settings)
+	public void setVariationsStatic(string variations)
 	{
-		pango_font_description_set_variations_static(pangoFontDescription, Str.toStringz(settings));
+		pango_font_description_set_variations_static(pangoFontDescription, Str.toStringz(variations));
 	}
 
 	/**
@@ -620,17 +624,47 @@ public class PgFontDescription
 
 	/**
 	 * Creates a new font description from a string representation in the
-	 * form "[FAMILY-LIST] [STYLE-OPTIONS] [SIZE]", where FAMILY-LIST is a
-	 * comma separated list of families optionally terminated by a comma,
-	 * STYLE_OPTIONS is a whitespace separated list of words where each word
-	 * describes one of style, variant, weight, stretch, or gravity, and SIZE
-	 * is a decimal number (size in points) or optionally followed by the
-	 * unit modifier "px" for absolute size. Any one of the options may
-	 * be absent.  If FAMILY-LIST is absent, then the family_name field of
-	 * the resulting font description will be initialized to %NULL.  If
-	 * STYLE-OPTIONS is missing, then all style options will be set to the
-	 * default values. If SIZE is missing, the size in the resulting font
-	 * description will be set to 0.
+	 * form
+	 *
+	 * "\[FAMILY-LIST] \[STYLE-OPTIONS] \[SIZE] \[VARIATIONS]",
+	 *
+	 * where FAMILY-LIST is a comma-separated list of families optionally
+	 * terminated by a comma, STYLE_OPTIONS is a whitespace-separated list
+	 * of words where each word describes one of style, variant, weight,
+	 * stretch, or gravity, and SIZE is a decimal number (size in points)
+	 * or optionally followed by the unit modifier "px" for absolute size.
+	 * VARIATIONS is a comma-separated list of font variation
+	 * specifications of the form "\@axis=value" (the = sign is optional).
+	 *
+	 * The following words are understood as styles:
+	 * "Normal", "Roman", "Oblique", "Italic".
+	 *
+	 * The following words are understood as variants:
+	 * "Small-Caps".
+	 *
+	 * The following words are understood as weights:
+	 * "Thin", "Ultra-Light", "Extra-Light", "Light", "Semi-Light",
+	 * "Demi-Light", "Book", "Regular", "Medium", "Semi-Bold", "Demi-Bold",
+	 * "Bold", "Ultra-Bold", "Extra-Bold", "Heavy", "Black", "Ultra-Black",
+	 * "Extra-Black".
+	 *
+	 * The following words are understood as stretch values:
+	 * "Ultra-Condensed", "Extra-Condensed", "Condensed", "Semi-Condensed",
+	 * "Semi-Expanded", "Expanded", "Extra-Expanded", "Ultra-Expanded".
+	 *
+	 * The following words are understood as gravity values:
+	 * "Not-Rotated", "South", "Upside-Down", "North", "Rotated-Left",
+	 * "East", "Rotated-Right", "West".
+	 *
+	 * Any one of the options may be absent. If FAMILY-LIST is absent, then
+	 * the family_name field of the resulting font description will be
+	 * initialized to %NULL. If STYLE-OPTIONS is missing, then all style
+	 * options will be set to the default values. If SIZE is missing, the
+	 * size in the resulting font description will be set to 0.
+	 *
+	 * A typical example:
+	 *
+	 * "Cantarell Italic Light 15 \@wght=200"
 	 *
 	 * Params:
 	 *     str = string representation of a font description.
@@ -639,13 +673,13 @@ public class PgFontDescription
 	 */
 	public static PgFontDescription fromString(string str)
 	{
-		auto p = pango_font_description_from_string(Str.toStringz(str));
+		auto __p = pango_font_description_from_string(Str.toStringz(str));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) p, true);
+		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) __p, true);
 	}
 }

@@ -33,7 +33,6 @@ private import gtk.CheckButton;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -264,14 +263,14 @@ public class RadioButton : CheckButton
 	 */
 	public this(ListSG group)
 	{
-		auto p = gtk_radio_button_new((group is null) ? null : group.getListSGStruct());
+		auto __p = gtk_radio_button_new((group is null) ? null : group.getListSGStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkRadioButton*) p);
+		this(cast(GtkRadioButton*) __p);
 	}
 
 	/**
@@ -288,14 +287,14 @@ public class RadioButton : CheckButton
 	 */
 	public this(RadioButton radioGroupMember)
 	{
-		auto p = gtk_radio_button_new_from_widget((radioGroupMember is null) ? null : radioGroupMember.getRadioButtonStruct());
+		auto __p = gtk_radio_button_new_from_widget((radioGroupMember is null) ? null : radioGroupMember.getRadioButtonStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_widget");
 		}
 
-		this(cast(GtkRadioButton*) p);
+		this(cast(GtkRadioButton*) __p);
 	}
 
 	/**
@@ -308,14 +307,14 @@ public class RadioButton : CheckButton
 	 */
 	public ListSG getGroup()
 	{
-		auto p = gtk_radio_button_get_group(gtkRadioButton);
+		auto __p = gtk_radio_button_get_group(gtkRadioButton);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**

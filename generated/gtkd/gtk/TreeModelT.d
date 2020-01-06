@@ -33,7 +33,6 @@ public  import gtk.TreeIter;
 public  import gtk.TreePath;
 public  import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 public  import std.algorithm;
 
 
@@ -359,11 +358,11 @@ public template TreeModelT(TStruct)
 	{
 		GtkTreeIter* outiter = sliceNew!GtkTreeIter();
 
-		auto p = gtk_tree_model_get_iter_first(getTreeModelStruct(), outiter) != 0;
+		auto __p = gtk_tree_model_get_iter_first(getTreeModelStruct(), outiter) != 0;
 
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -380,11 +379,11 @@ public template TreeModelT(TStruct)
 	{
 		GtkTreeIter* outiter = sliceNew!GtkTreeIter();
 
-		auto p = gtk_tree_model_get_iter_from_string(getTreeModelStruct(), outiter, Str.toStringz(pathString)) != 0;
+		auto __p = gtk_tree_model_get_iter_from_string(getTreeModelStruct(), outiter, Str.toStringz(pathString)) != 0;
 
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -409,14 +408,14 @@ public template TreeModelT(TStruct)
 	 */
 	public TreePath getPath(TreeIter iter)
 	{
-		auto p = gtk_tree_model_get_path(getTreeModelStruct(), (iter is null) ? null : iter.getTreeIterStruct());
+		auto __p = gtk_tree_model_get_path(getTreeModelStruct(), (iter is null) ? null : iter.getTreeIterStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) p, true);
+		return ObjectG.getDObject!(TreePath)(cast(GtkTreePath*) __p, true);
 	}
 
 	/**
@@ -475,11 +474,11 @@ public template TreeModelT(TStruct)
 	{
 		GtkTreeIter* outiter = sliceNew!GtkTreeIter();
 
-		auto p = gtk_tree_model_iter_children(getTreeModelStruct(), outiter, (parent is null) ? null : parent.getTreeIterStruct()) != 0;
+		auto __p = gtk_tree_model_iter_children(getTreeModelStruct(), outiter, (parent is null) ? null : parent.getTreeIterStruct()) != 0;
 
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -547,11 +546,11 @@ public template TreeModelT(TStruct)
 	{
 		GtkTreeIter* outiter = sliceNew!GtkTreeIter();
 
-		auto p = gtk_tree_model_iter_nth_child(getTreeModelStruct(), outiter, (parent is null) ? null : parent.getTreeIterStruct(), n) != 0;
+		auto __p = gtk_tree_model_iter_nth_child(getTreeModelStruct(), outiter, (parent is null) ? null : parent.getTreeIterStruct(), n) != 0;
 
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -575,11 +574,11 @@ public template TreeModelT(TStruct)
 	{
 		GtkTreeIter* outiter = sliceNew!GtkTreeIter();
 
-		auto p = gtk_tree_model_iter_parent(getTreeModelStruct(), outiter, (child is null) ? null : child.getTreeIterStruct()) != 0;
+		auto __p = gtk_tree_model_iter_parent(getTreeModelStruct(), outiter, (child is null) ? null : child.getTreeIterStruct()) != 0;
 
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 
-		return p;
+		return __p;
 	}
 
 	/**

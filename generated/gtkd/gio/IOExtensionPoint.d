@@ -30,7 +30,6 @@ public  import gio.c.types;
 private import glib.ListG;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -78,14 +77,14 @@ public class IOExtensionPoint
 	 */
 	public IOExtension getExtensionByName(string name)
 	{
-		auto p = g_io_extension_point_get_extension_by_name(gIOExtensionPoint, Str.toStringz(name));
+		auto __p = g_io_extension_point_get_extension_by_name(gIOExtensionPoint, Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IOExtension)(cast(GIOExtension*) p);
+		return ObjectG.getDObject!(IOExtension)(cast(GIOExtension*) __p);
 	}
 
 	/**
@@ -98,14 +97,14 @@ public class IOExtensionPoint
 	 */
 	public ListG getExtensions()
 	{
-		auto p = g_io_extension_point_get_extensions(gIOExtensionPoint);
+		auto __p = g_io_extension_point_get_extensions(gIOExtensionPoint);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -148,14 +147,14 @@ public class IOExtensionPoint
 	 */
 	public static IOExtension implement(string extensionPointName, GType type, string extensionName, int priority)
 	{
-		auto p = g_io_extension_point_implement(Str.toStringz(extensionPointName), type, Str.toStringz(extensionName), priority);
+		auto __p = g_io_extension_point_implement(Str.toStringz(extensionPointName), type, Str.toStringz(extensionName), priority);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IOExtension)(cast(GIOExtension*) p);
+		return ObjectG.getDObject!(IOExtension)(cast(GIOExtension*) __p);
 	}
 
 	/**
@@ -169,14 +168,14 @@ public class IOExtensionPoint
 	 */
 	public static IOExtensionPoint lookup(string name)
 	{
-		auto p = g_io_extension_point_lookup(Str.toStringz(name));
+		auto __p = g_io_extension_point_lookup(Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IOExtensionPoint)(cast(GIOExtensionPoint*) p);
+		return ObjectG.getDObject!(IOExtensionPoint)(cast(GIOExtensionPoint*) __p);
 	}
 
 	/**
@@ -190,13 +189,13 @@ public class IOExtensionPoint
 	 */
 	public static IOExtensionPoint register(string name)
 	{
-		auto p = g_io_extension_point_register(Str.toStringz(name));
+		auto __p = g_io_extension_point_register(Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IOExtensionPoint)(cast(GIOExtensionPoint*) p);
+		return ObjectG.getDObject!(IOExtensionPoint)(cast(GIOExtensionPoint*) __p);
 	}
 }

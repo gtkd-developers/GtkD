@@ -27,8 +27,6 @@ module pango.PgColor;
 private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.pangotypes;
-private import gtkd.Loader;
 private import pango.c.functions;
 public  import pango.c.types;
 
@@ -68,7 +66,7 @@ public final class PgColor
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
+		if ( ownedRef )
 			pango_color_free(pangoColor);
 	}
 
@@ -133,14 +131,14 @@ public final class PgColor
 	 */
 	public PgColor copy()
 	{
-		auto p = pango_color_copy(pangoColor);
+		auto __p = pango_color_copy(pangoColor);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgColor)(cast(PangoColor*) p, true);
+		return ObjectG.getDObject!(PgColor)(cast(PangoColor*) __p, true);
 	}
 
 	/**

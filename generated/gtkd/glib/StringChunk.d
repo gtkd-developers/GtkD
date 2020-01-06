@@ -28,8 +28,6 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
-private import gtkd.Loader;
 
 
 /**
@@ -67,7 +65,7 @@ public class StringChunk
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_string_chunk_free(gStringChunk);
 	}
 
@@ -194,13 +192,13 @@ public class StringChunk
 	 */
 	public this(size_t size)
 	{
-		auto p = g_string_chunk_new(size);
+		auto __p = g_string_chunk_new(size);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GStringChunk*) p);
+		this(cast(GStringChunk*) __p);
 	}
 }

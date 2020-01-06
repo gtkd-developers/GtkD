@@ -28,7 +28,6 @@ public  import gio.c.functions;
 public  import gio.c.types;
 public  import glib.Str;
 public  import glib.Variant;
-public  import gtkc.giotypes;
 
 
 /**
@@ -53,8 +52,6 @@ public  import gtkc.giotypes;
  * `_full` variants of the calls if available.  This
  * provides a mechanism by which to receive platform data for action
  * invocations that arrive by way of D-Bus.
- *
- * Since: 2.32
  */
 public template RemoteActionGroupT(TStruct)
 {

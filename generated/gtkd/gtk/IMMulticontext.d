@@ -31,7 +31,6 @@ private import gtk.IMContext;
 private import gtk.MenuShell;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /** */
@@ -79,14 +78,14 @@ public class IMMulticontext : IMContext
 	 */
 	public this()
 	{
-		auto p = gtk_im_multicontext_new();
+		auto __p = gtk_im_multicontext_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkIMMulticontext*) p, true);
+		this(cast(GtkIMMulticontext*) __p, true);
 	}
 
 	/**

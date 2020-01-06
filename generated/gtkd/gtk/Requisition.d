@@ -29,8 +29,6 @@ private import glib.MemorySlice;
 private import gobject.ObjectG;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
-private import gtkd.Loader;
 
 
 /**
@@ -69,7 +67,7 @@ public final class Requisition
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GTK) && ownedRef )
+		if ( ownedRef )
 			gtk_requisition_free(gtkRequisition);
 	}
 
@@ -120,14 +118,14 @@ public final class Requisition
 	 */
 	public this()
 	{
-		auto p = gtk_requisition_new();
+		auto __p = gtk_requisition_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkRequisition*) p);
+		this(cast(GtkRequisition*) __p);
 	}
 
 	/**
@@ -137,14 +135,14 @@ public final class Requisition
 	 */
 	public Requisition copy()
 	{
-		auto p = gtk_requisition_copy(gtkRequisition);
+		auto __p = gtk_requisition_copy(gtkRequisition);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Requisition)(cast(GtkRequisition*) p, true);
+		return ObjectG.getDObject!(Requisition)(cast(GtkRequisition*) __p, true);
 	}
 
 	/**

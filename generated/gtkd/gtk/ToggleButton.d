@@ -32,7 +32,6 @@ private import gtk.Button;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -176,14 +175,14 @@ public class ToggleButton : Button
 	 */
 	public this()
 	{
-		auto p = gtk_toggle_button_new();
+		auto __p = gtk_toggle_button_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkToggleButton*) p);
+		this(cast(GtkToggleButton*) __p);
 	}
 
 	/**

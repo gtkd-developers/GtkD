@@ -29,7 +29,6 @@ private import gobject.ObjectG;
 private import gtk.ToolItem;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -93,14 +92,14 @@ public class SeparatorToolItem : ToolItem
 	 */
 	public this()
 	{
-		auto p = gtk_separator_tool_item_new();
+		auto __p = gtk_separator_tool_item_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSeparatorToolItem*) p);
+		this(cast(GtkSeparatorToolItem*) __p);
 	}
 
 	/**

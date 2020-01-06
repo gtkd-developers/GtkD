@@ -26,7 +26,6 @@ module pango.PgAttributeLanguage;
 
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-public  import gtkc.pangotypes;
 private import pango.PgAttribute;
 private import pango.PgLanguage;
 private import pango.c.functions;
@@ -79,13 +78,13 @@ public class PgAttributeLanguage : PgAttribute
 	 */
 	public this(PgLanguage language)
 	{
-		auto p = pango_attr_language_new((language is null) ? null : language.getPgLanguageStruct());
+		auto __p = pango_attr_language_new((language is null) ? null : language.getPgLanguageStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(PangoAttrLanguage*) p);
+		this(cast(PangoAttrLanguage*) __p);
 	}
 }

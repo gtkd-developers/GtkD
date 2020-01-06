@@ -40,7 +40,6 @@ private import gtk.TreeIter;
 private import gtk.TreeModelIF;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -283,11 +282,11 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 	{
 		GtkTreeIter* outiter = sliceNew!GtkTreeIter();
 
-		auto p = gtk_combo_box_get_active_iter(gtkComboBox, outiter) != 0;
+		auto __p = gtk_combo_box_get_active_iter(gtkComboBox, outiter) != 0;
 
 		iter = ObjectG.getDObject!(TreeIter)(outiter, true);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -393,14 +392,14 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 	 */
 	public TreeModelIF getModel()
 	{
-		auto p = gtk_combo_box_get_model(gtkComboBox);
+		auto __p = gtk_combo_box_get_model(gtkComboBox);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TreeModelIF)(cast(GtkTreeModel*) p);
+		return ObjectG.getDObject!(TreeModelIF)(cast(GtkTreeModel*) __p);
 	}
 
 	/**
@@ -416,14 +415,14 @@ public class ComboBox : Bin, CellEditableIF, CellLayoutIF
 	 */
 	public ObjectAtk getPopupAccessible()
 	{
-		auto p = gtk_combo_box_get_popup_accessible(gtkComboBox);
+		auto __p = gtk_combo_box_get_popup_accessible(gtkComboBox);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
+		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) __p);
 	}
 
 	/**

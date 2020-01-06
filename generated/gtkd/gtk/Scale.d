@@ -33,7 +33,6 @@ private import gtk.Range;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import pango.PgLayout;
 private import std.algorithm;
 
@@ -163,14 +162,14 @@ public class Scale : Range
 	 */
 	public this(GtkOrientation orientation, Adjustment adjustment)
 	{
-		auto p = gtk_scale_new(orientation, (adjustment is null) ? null : adjustment.getAdjustmentStruct());
+		auto __p = gtk_scale_new(orientation, (adjustment is null) ? null : adjustment.getAdjustmentStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkScale*) p);
+		this(cast(GtkScale*) __p);
 	}
 
 	/**
@@ -198,14 +197,14 @@ public class Scale : Range
 	 */
 	public this(GtkOrientation orientation, double min, double max, double step)
 	{
-		auto p = gtk_scale_new_with_range(orientation, min, max, step);
+		auto __p = gtk_scale_new_with_range(orientation, min, max, step);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_range");
 		}
 
-		this(cast(GtkScale*) p);
+		this(cast(GtkScale*) __p);
 	}
 
 	/**
@@ -290,14 +289,14 @@ public class Scale : Range
 	 */
 	public PgLayout getLayout()
 	{
-		auto p = gtk_scale_get_layout(gtkScale);
+		auto __p = gtk_scale_get_layout(gtkScale);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) p);
+		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) __p);
 	}
 
 	/**

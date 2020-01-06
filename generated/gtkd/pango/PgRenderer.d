@@ -26,7 +26,6 @@ module pango.PgRenderer;
 
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.pangotypes;
 private import pango.PgColor;
 private import pango.PgFont;
 private import pango.PgGlyphItem;
@@ -298,20 +297,20 @@ public class PgRenderer : ObjectG
 	 */
 	public PgColor getColor(PangoRenderPart part)
 	{
-		auto p = pango_renderer_get_color(pangoRenderer, part);
+		auto __p = pango_renderer_get_color(pangoRenderer, part);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgColor)(cast(PangoColor*) p);
+		return ObjectG.getDObject!(PgColor)(cast(PangoColor*) __p);
 	}
 
 	/**
 	 * Gets the layout currently being rendered using @renderer.
 	 * Calling this function only makes sense from inside a subclass's
-	 * methods, like in its draw_shape<!---->() for example.
+	 * methods, like in its draw_shape vfunc, for example.
 	 *
 	 * The returned layout should not be modified while still being
 	 * rendered.
@@ -323,20 +322,20 @@ public class PgRenderer : ObjectG
 	 */
 	public PgLayout getLayout()
 	{
-		auto p = pango_renderer_get_layout(pangoRenderer);
+		auto __p = pango_renderer_get_layout(pangoRenderer);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) p);
+		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) __p);
 	}
 
 	/**
 	 * Gets the layout line currently being rendered using @renderer.
 	 * Calling this function only makes sense from inside a subclass's
-	 * methods, like in its draw_shape<!---->() for example.
+	 * methods, like in its draw_shape vfunc, for example.
 	 *
 	 * The returned layout line should not be modified while still being
 	 * rendered.
@@ -348,14 +347,14 @@ public class PgRenderer : ObjectG
 	 */
 	public PgLayoutLine getLayoutLine()
 	{
-		auto p = pango_renderer_get_layout_line(pangoRenderer);
+		auto __p = pango_renderer_get_layout_line(pangoRenderer);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgLayoutLine)(cast(PangoLayoutLine*) p);
+		return ObjectG.getDObject!(PgLayoutLine)(cast(PangoLayoutLine*) __p);
 	}
 
 	/**
@@ -370,14 +369,14 @@ public class PgRenderer : ObjectG
 	 */
 	public PgMatrix getMatrix()
 	{
-		auto p = pango_renderer_get_matrix(pangoRenderer);
+		auto __p = pango_renderer_get_matrix(pangoRenderer);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgMatrix)(cast(PangoMatrix*) p);
+		return ObjectG.getDObject!(PgMatrix)(cast(PangoMatrix*) __p);
 	}
 
 	/**

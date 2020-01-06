@@ -33,7 +33,6 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -41,7 +40,7 @@ public  import gtkc.giotypes;
  * then attempt to connect to that host, handling the possibility of
  * multiple IP addresses and multiple address families.
  * 
- * See #GSocketConnectable for an example of using the connectable
+ * See #GSocketConnectable for and example of using the connectable
  * interface.
  */
 public class NetworkAddress : ObjectG, SocketConnectableIF
@@ -104,14 +103,14 @@ public class NetworkAddress : ObjectG, SocketConnectableIF
 	 */
 	public this(string hostname, ushort port)
 	{
-		auto p = g_network_address_new(Str.toStringz(hostname), port);
+		auto __p = g_network_address_new(Str.toStringz(hostname), port);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GNetworkAddress*) p, true);
+		this(cast(GNetworkAddress*) __p, true);
 	}
 
 	/**
@@ -139,14 +138,14 @@ public class NetworkAddress : ObjectG, SocketConnectableIF
 	 */
 	public this(ushort port)
 	{
-		auto p = g_network_address_new_loopback(port);
+		auto __p = g_network_address_new_loopback(port);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_loopback");
 		}
 
-		this(cast(GNetworkAddress*) p, true);
+		this(cast(GNetworkAddress*) __p, true);
 	}
 
 	/**
@@ -164,7 +163,7 @@ public class NetworkAddress : ObjectG, SocketConnectableIF
 	 * used as the port number to connect to.
 	 *
 	 * In general, @host_and_port is expected to be provided by the user
-	 * (allowing them to give the hostname, and a port override if necessary)
+	 * (allowing them to give the hostname, and a port overide if necessary)
 	 * and @default_port is expected to be provided by the application.
 	 *
 	 * (The port component of @host_and_port can also be specified as a
@@ -187,19 +186,19 @@ public class NetworkAddress : ObjectG, SocketConnectableIF
 	{
 		GError* err = null;
 
-		auto p = g_network_address_parse(Str.toStringz(hostAndPort), defaultPort, &err);
+		auto __p = g_network_address_parse(Str.toStringz(hostAndPort), defaultPort, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(NetworkAddress)(cast(GNetworkAddress*) p, true);
+		return ObjectG.getDObject!(NetworkAddress)(cast(GNetworkAddress*) __p, true);
 	}
 
 	/**
@@ -225,19 +224,19 @@ public class NetworkAddress : ObjectG, SocketConnectableIF
 	{
 		GError* err = null;
 
-		auto p = g_network_address_parse_uri(Str.toStringz(uri), defaultPort, &err);
+		auto __p = g_network_address_parse_uri(Str.toStringz(uri), defaultPort, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(NetworkAddress)(cast(GNetworkAddress*) p, true);
+		return ObjectG.getDObject!(NetworkAddress)(cast(GNetworkAddress*) __p, true);
 	}
 
 	/**

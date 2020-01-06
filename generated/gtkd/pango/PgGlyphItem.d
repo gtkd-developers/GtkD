@@ -28,8 +28,6 @@ private import glib.ListSG;
 private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.pangotypes;
-private import gtkd.Loader;
 private import pango.PgAttributeList;
 private import pango.PgGlyphString;
 private import pango.PgItem;
@@ -75,7 +73,7 @@ public final class PgGlyphItem
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
+		if ( ownedRef )
 			pango_glyph_item_free(pangoGlyphItem);
 	}
 
@@ -145,14 +143,14 @@ public final class PgGlyphItem
 	 */
 	public ListSG applyAttrs(string text, PgAttributeList list)
 	{
-		auto p = pango_glyph_item_apply_attrs(pangoGlyphItem, Str.toStringz(text), (list is null) ? null : list.getPgAttributeListStruct());
+		auto __p = pango_glyph_item_apply_attrs(pangoGlyphItem, Str.toStringz(text), (list is null) ? null : list.getPgAttributeListStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p, true);
+		return new ListSG(cast(GSList*) __p, true);
 	}
 
 	/**
@@ -166,14 +164,14 @@ public final class PgGlyphItem
 	 */
 	public PgGlyphItem copy()
 	{
-		auto p = pango_glyph_item_copy(pangoGlyphItem);
+		auto __p = pango_glyph_item_copy(pangoGlyphItem);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgGlyphItem)(cast(PangoGlyphItem*) p, true);
+		return ObjectG.getDObject!(PgGlyphItem)(cast(PangoGlyphItem*) __p, true);
 	}
 
 	/**
@@ -257,13 +255,13 @@ public final class PgGlyphItem
 	 */
 	public PgGlyphItem split(string text, int splitIndex)
 	{
-		auto p = pango_glyph_item_split(pangoGlyphItem, Str.toStringz(text), splitIndex);
+		auto __p = pango_glyph_item_split(pangoGlyphItem, Str.toStringz(text), splitIndex);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgGlyphItem)(cast(PangoGlyphItem*) p, true);
+		return ObjectG.getDObject!(PgGlyphItem)(cast(PangoGlyphItem*) __p, true);
 	}
 }

@@ -36,7 +36,6 @@ private import gtk.Widget;
 private import gtk.Window;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -301,14 +300,14 @@ public class Dialog : Window
 	 */
 	public this()
 	{
-		auto p = gtk_dialog_new();
+		auto __p = gtk_dialog_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkDialog*) p);
+		this(cast(GtkDialog*) __p);
 	}
 
 	/**
@@ -343,14 +342,14 @@ public class Dialog : Window
 	 */
 	public Widget addButton(string buttonText, int responseId)
 	{
-		auto p = gtk_dialog_add_button(gtkDialog, Str.toStringz(buttonText), responseId);
+		auto __p = gtk_dialog_add_button(gtkDialog, Str.toStringz(buttonText), responseId);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -364,14 +363,14 @@ public class Dialog : Window
 	 */
 	public Widget getHeaderBar()
 	{
-		auto p = gtk_dialog_get_header_bar(gtkDialog);
+		auto __p = gtk_dialog_get_header_bar(gtkDialog);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -405,14 +404,14 @@ public class Dialog : Window
 	 */
 	public Widget getWidgetForResponse(int responseId)
 	{
-		auto p = gtk_dialog_get_widget_for_response(gtkDialog, responseId);
+		auto __p = gtk_dialog_get_widget_for_response(gtkDialog, responseId);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**

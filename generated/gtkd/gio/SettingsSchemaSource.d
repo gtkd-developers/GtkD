@@ -32,8 +32,6 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
-private import gtkd.Loader;
 
 
 /**
@@ -72,7 +70,7 @@ public class SettingsSchemaSource
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GIO) && ownedRef )
+		if ( ownedRef )
 			g_settings_schema_source_unref(gSettingsSchemaSource);
 	}
 
@@ -98,9 +96,6 @@ public class SettingsSchemaSource
 	 * in crashes or inconsistent behaviour in the case of a corrupted file.
 	 * Generally, you should set @trusted to %TRUE for files installed by the
 	 * system and to %FALSE for files in the home directory.
-	 *
-	 * In either case, an empty file or some types of corruption in the file will
-	 * result in %G_FILE_ERROR_INVAL being returned.
 	 *
 	 * If @parent is non-%NULL then there are two effects.
 	 *
@@ -130,19 +125,19 @@ public class SettingsSchemaSource
 	{
 		GError* err = null;
 
-		auto p = g_settings_schema_source_new_from_directory(Str.toStringz(directory), (parent is null) ? null : parent.getSettingsSchemaSourceStruct(), trusted, &err);
+		auto __p = g_settings_schema_source_new_from_directory(Str.toStringz(directory), (parent is null) ? null : parent.getSettingsSchemaSourceStruct(), trusted, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_directory");
 		}
 
-		this(cast(GSettingsSchemaSource*) p);
+		this(cast(GSettingsSchemaSource*) __p);
 	}
 
 	/**
@@ -201,14 +196,14 @@ public class SettingsSchemaSource
 	 */
 	public SettingsSchema lookup(string schemaId, bool recursive)
 	{
-		auto p = g_settings_schema_source_lookup(gSettingsSchemaSource, Str.toStringz(schemaId), recursive);
+		auto __p = g_settings_schema_source_lookup(gSettingsSchemaSource, Str.toStringz(schemaId), recursive);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SettingsSchema)(cast(GSettingsSchema*) p, true);
+		return ObjectG.getDObject!(SettingsSchema)(cast(GSettingsSchema*) __p, true);
 	}
 
 	alias doref = ref_;
@@ -221,14 +216,14 @@ public class SettingsSchemaSource
 	 */
 	public SettingsSchemaSource ref_()
 	{
-		auto p = g_settings_schema_source_ref(gSettingsSchemaSource);
+		auto __p = g_settings_schema_source_ref(gSettingsSchemaSource);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SettingsSchemaSource)(cast(GSettingsSchemaSource*) p, true);
+		return ObjectG.getDObject!(SettingsSchemaSource)(cast(GSettingsSchemaSource*) __p, true);
 	}
 
 	/**
@@ -262,13 +257,13 @@ public class SettingsSchemaSource
 	 */
 	public static SettingsSchemaSource getDefault()
 	{
-		auto p = g_settings_schema_source_get_default();
+		auto __p = g_settings_schema_source_get_default();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SettingsSchemaSource)(cast(GSettingsSchemaSource*) p);
+		return ObjectG.getDObject!(SettingsSchemaSource)(cast(GSettingsSchemaSource*) __p);
 	}
 }

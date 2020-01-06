@@ -29,7 +29,6 @@ private import gobject.ObjectG;
 private import gobject.ParamSpec;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -77,14 +76,14 @@ public class ContainerClass
 	 */
 	public ParamSpec findChildProperty(string propertyName)
 	{
-		auto p = gtk_container_class_find_child_property(cast(GObjectClass*)gtkContainerClass, Str.toStringz(propertyName));
+		auto __p = gtk_container_class_find_child_property(cast(GObjectClass*)gtkContainerClass, Str.toStringz(propertyName));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p);
 	}
 
 	/**
@@ -146,9 +145,9 @@ public class ContainerClass
 	{
 		uint nProperties;
 
-		auto p = gtk_container_class_list_child_properties(cast(GObjectClass*)gtkContainerClass, &nProperties);
+		auto __p = gtk_container_class_list_child_properties(cast(GObjectClass*)gtkContainerClass, &nProperties);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
@@ -156,7 +155,7 @@ public class ContainerClass
 		ParamSpec[] arr = new ParamSpec[nProperties];
 		for(int i = 0; i < nProperties; i++)
 		{
-			arr[i] = ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p[i]);
+			arr[i] = ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p[i]);
 		}
 
 		return arr;

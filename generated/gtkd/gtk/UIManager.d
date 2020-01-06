@@ -40,7 +40,6 @@ private import gtk.BuildableT;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -320,14 +319,14 @@ public class UIManager : ObjectG, BuildableIF
 	 */
 	public this()
 	{
-		auto p = gtk_ui_manager_new();
+		auto __p = gtk_ui_manager_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkUIManager*) p, true);
+		this(cast(GtkUIManager*) __p, true);
 	}
 
 	/**
@@ -376,14 +375,14 @@ public class UIManager : ObjectG, BuildableIF
 	{
 		GError* err = null;
 
-		auto p = gtk_ui_manager_add_ui_from_file(gtkUIManager, Str.toStringz(filename), &err);
+		auto __p = gtk_ui_manager_add_ui_from_file(gtkUIManager, Str.toStringz(filename), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -405,14 +404,14 @@ public class UIManager : ObjectG, BuildableIF
 	{
 		GError* err = null;
 
-		auto p = gtk_ui_manager_add_ui_from_resource(gtkUIManager, Str.toStringz(resourcePath), &err);
+		auto __p = gtk_ui_manager_add_ui_from_resource(gtkUIManager, Str.toStringz(resourcePath), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -436,14 +435,14 @@ public class UIManager : ObjectG, BuildableIF
 	{
 		GError* err = null;
 
-		auto p = gtk_ui_manager_add_ui_from_string(gtkUIManager, Str.toStringz(buffer), length, &err);
+		auto __p = gtk_ui_manager_add_ui_from_string(gtkUIManager, Str.toStringz(buffer), length, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -479,14 +478,14 @@ public class UIManager : ObjectG, BuildableIF
 	 */
 	public AccelGroup getAccelGroup()
 	{
-		auto p = gtk_ui_manager_get_accel_group(gtkUIManager);
+		auto __p = gtk_ui_manager_get_accel_group(gtkUIManager);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(AccelGroup)(cast(GtkAccelGroup*) p);
+		return ObjectG.getDObject!(AccelGroup)(cast(GtkAccelGroup*) __p);
 	}
 
 	/**
@@ -503,14 +502,14 @@ public class UIManager : ObjectG, BuildableIF
 	 */
 	public Action getAction(string path)
 	{
-		auto p = gtk_ui_manager_get_action(gtkUIManager, Str.toStringz(path));
+		auto __p = gtk_ui_manager_get_action(gtkUIManager, Str.toStringz(path));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Action)(cast(GtkAction*) p);
+		return ObjectG.getDObject!(Action)(cast(GtkAction*) __p);
 	}
 
 	/**
@@ -524,14 +523,14 @@ public class UIManager : ObjectG, BuildableIF
 	 */
 	public ListG getActionGroups()
 	{
-		auto p = gtk_ui_manager_get_action_groups(gtkUIManager);
+		auto __p = gtk_ui_manager_get_action_groups(gtkUIManager);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -565,14 +564,14 @@ public class UIManager : ObjectG, BuildableIF
 	 */
 	public ListSG getToplevels(GtkUIManagerItemType types)
 	{
-		auto p = gtk_ui_manager_get_toplevels(gtkUIManager, types);
+		auto __p = gtk_ui_manager_get_toplevels(gtkUIManager, types);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**
@@ -617,14 +616,14 @@ public class UIManager : ObjectG, BuildableIF
 	 */
 	public Widget getWidget(string path)
 	{
-		auto p = gtk_ui_manager_get_widget(gtkUIManager, Str.toStringz(path));
+		auto __p = gtk_ui_manager_get_widget(gtkUIManager, Str.toStringz(path));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**

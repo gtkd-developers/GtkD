@@ -35,8 +35,6 @@ private import glib.MemorySlice;
 private import glib.Str;
 private import glib.StringG;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
-private import gtkd.Loader;
 
 
 /**
@@ -75,7 +73,7 @@ public final class DBusNodeInfo
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GIO) && ownedRef )
+		if ( ownedRef )
 			g_dbus_node_info_unref(gDBusNodeInfo);
 	}
 
@@ -220,19 +218,19 @@ public final class DBusNodeInfo
 	{
 		GError* err = null;
 
-		auto p = g_dbus_node_info_new_for_xml(Str.toStringz(xmlData), &err);
+		auto __p = g_dbus_node_info_new_for_xml(Str.toStringz(xmlData), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_for_xml");
 		}
 
-		this(cast(GDBusNodeInfo*) p);
+		this(cast(GDBusNodeInfo*) __p);
 	}
 
 	/**
@@ -247,9 +245,13 @@ public final class DBusNodeInfo
 	 *
 	 * Since: 2.26
 	 */
-	public void generateXml(uint indent, StringG stringBuilder)
+	public void generateXml(uint indent, out StringG stringBuilder)
 	{
-		g_dbus_node_info_generate_xml(gDBusNodeInfo, indent, (stringBuilder is null) ? null : stringBuilder.getStringGStruct());
+		GString* outstringBuilder = sliceNew!GString();
+
+		g_dbus_node_info_generate_xml(gDBusNodeInfo, indent, outstringBuilder);
+
+		stringBuilder = new StringG(outstringBuilder, true);
 	}
 
 	/**
@@ -266,14 +268,14 @@ public final class DBusNodeInfo
 	 */
 	public DBusInterfaceInfo lookupInterface(string name)
 	{
-		auto p = g_dbus_node_info_lookup_interface(gDBusNodeInfo, Str.toStringz(name));
+		auto __p = g_dbus_node_info_lookup_interface(gDBusNodeInfo, Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusInterfaceInfo)(cast(GDBusInterfaceInfo*) p);
+		return ObjectG.getDObject!(DBusInterfaceInfo)(cast(GDBusInterfaceInfo*) __p);
 	}
 
 	alias doref = ref_;
@@ -287,14 +289,14 @@ public final class DBusNodeInfo
 	 */
 	public DBusNodeInfo ref_()
 	{
-		auto p = g_dbus_node_info_ref(gDBusNodeInfo);
+		auto __p = g_dbus_node_info_ref(gDBusNodeInfo);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusNodeInfo)(cast(GDBusNodeInfo*) p, true);
+		return ObjectG.getDObject!(DBusNodeInfo)(cast(GDBusNodeInfo*) __p, true);
 	}
 
 	/**

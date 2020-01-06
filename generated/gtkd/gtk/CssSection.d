@@ -28,8 +28,6 @@ private import gio.FileIF;
 private import gobject.ObjectG;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
-private import gtkd.Loader;
 
 
 /**
@@ -70,7 +68,7 @@ public class CssSection
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GTK) && ownedRef )
+		if ( ownedRef )
 			gtk_css_section_unref(gtkCssSection);
 	}
 
@@ -132,14 +130,14 @@ public class CssSection
 	 */
 	public FileIF getFile()
 	{
-		auto p = gtk_css_section_get_file(gtkCssSection);
+		auto __p = gtk_css_section_get_file(gtkCssSection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileIF)(cast(GFile*) p);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) __p);
 	}
 
 	/**
@@ -157,14 +155,14 @@ public class CssSection
 	 */
 	public CssSection getParent()
 	{
-		auto p = gtk_css_section_get_parent(gtkCssSection);
+		auto __p = gtk_css_section_get_parent(gtkCssSection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(CssSection)(cast(GtkCssSection*) p);
+		return ObjectG.getDObject!(CssSection)(cast(GtkCssSection*) __p);
 	}
 
 	/**
@@ -216,14 +214,14 @@ public class CssSection
 	 */
 	public CssSection ref_()
 	{
-		auto p = gtk_css_section_ref(gtkCssSection);
+		auto __p = gtk_css_section_ref(gtkCssSection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(CssSection)(cast(GtkCssSection*) p, true);
+		return ObjectG.getDObject!(CssSection)(cast(GtkCssSection*) __p, true);
 	}
 
 	/**

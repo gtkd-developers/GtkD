@@ -29,7 +29,6 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -94,14 +93,14 @@ public class Adjustment : ObjectG
 	 */
 	public this(double value, double lower, double upper, double stepIncrement, double pageIncrement, double pageSize)
 	{
-		auto p = gtk_adjustment_new(value, lower, upper, stepIncrement, pageIncrement, pageSize);
+		auto __p = gtk_adjustment_new(value, lower, upper, stepIncrement, pageIncrement, pageSize);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkAdjustment*) p);
+		this(cast(GtkAdjustment*) __p);
 	}
 
 	/**

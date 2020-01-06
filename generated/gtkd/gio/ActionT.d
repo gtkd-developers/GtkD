@@ -31,7 +31,6 @@ public  import glib.GException;
 public  import glib.Str;
 public  import glib.Variant;
 public  import glib.VariantType;
-public  import gtkc.giotypes;
 
 
 /**
@@ -160,14 +159,14 @@ public template ActionT(TStruct)
 	 */
 	public VariantType getParameterType()
 	{
-		auto p = g_action_get_parameter_type(getActionStruct());
+		auto __p = g_action_get_parameter_type(getActionStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new VariantType(cast(GVariantType*) p);
+		return new VariantType(cast(GVariantType*) __p);
 	}
 
 	/**
@@ -186,14 +185,14 @@ public template ActionT(TStruct)
 	 */
 	public Variant getState()
 	{
-		auto p = g_action_get_state(getActionStruct());
+		auto __p = g_action_get_state(getActionStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -222,14 +221,14 @@ public template ActionT(TStruct)
 	 */
 	public Variant getStateHint()
 	{
-		auto p = g_action_get_state_hint(getActionStruct());
+		auto __p = g_action_get_state_hint(getActionStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -252,13 +251,13 @@ public template ActionT(TStruct)
 	 */
 	public VariantType getStateType()
 	{
-		auto p = g_action_get_state_type(getActionStruct());
+		auto __p = g_action_get_state_type(getActionStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new VariantType(cast(GVariantType*) p);
+		return new VariantType(cast(GVariantType*) __p);
 	}
 }

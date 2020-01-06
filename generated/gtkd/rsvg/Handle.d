@@ -90,14 +90,14 @@ public class Handle : ObjectG
 	 */
 	public this()
 	{
-		auto p = rsvg_handle_new();
+		auto __p = rsvg_handle_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(RsvgHandle*) p, true);
+		this(cast(RsvgHandle*) __p, true);
 	}
 
 	/**
@@ -117,19 +117,19 @@ public class Handle : ObjectG
 	{
 		GError* err = null;
 
-		auto p = rsvg_handle_new_from_data(data.ptr, cast(size_t)data.length, &err);
+		auto __p = rsvg_handle_new_from_data(data.ptr, cast(size_t)data.length, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_data");
 		}
 
-		this(cast(RsvgHandle*) p, true);
+		this(cast(RsvgHandle*) __p, true);
 	}
 
 	/**
@@ -149,19 +149,19 @@ public class Handle : ObjectG
 	{
 		GError* err = null;
 
-		auto p = rsvg_handle_new_from_file(Str.toStringz(fileName), &err);
+		auto __p = rsvg_handle_new_from_file(Str.toStringz(fileName), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_file");
 		}
 
-		this(cast(RsvgHandle*) p, true);
+		this(cast(RsvgHandle*) __p, true);
 	}
 
 	/**
@@ -188,19 +188,19 @@ public class Handle : ObjectG
 	{
 		GError* err = null;
 
-		auto p = rsvg_handle_new_from_gfile_sync((file is null) ? null : file.getFileStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = rsvg_handle_new_from_gfile_sync((file is null) ? null : file.getFileStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_gfile_sync");
 		}
 
-		this(cast(RsvgHandle*) p, true);
+		this(cast(RsvgHandle*) __p, true);
 	}
 
 	/**
@@ -228,19 +228,19 @@ public class Handle : ObjectG
 	{
 		GError* err = null;
 
-		auto p = rsvg_handle_new_from_stream_sync((inputStream is null) ? null : inputStream.getInputStreamStruct(), (baseFile is null) ? null : baseFile.getFileStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = rsvg_handle_new_from_stream_sync((inputStream is null) ? null : inputStream.getInputStreamStruct(), (baseFile is null) ? null : baseFile.getFileStruct(), flags, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_stream_sync");
 		}
 
-		this(cast(RsvgHandle*) p, true);
+		this(cast(RsvgHandle*) __p, true);
 	}
 
 	/**
@@ -257,14 +257,14 @@ public class Handle : ObjectG
 	 */
 	public this(RsvgHandleFlags flags)
 	{
-		auto p = rsvg_handle_new_with_flags(flags);
+		auto __p = rsvg_handle_new_with_flags(flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_flags");
 		}
 
-		this(cast(RsvgHandle*) p, true);
+		this(cast(RsvgHandle*) __p, true);
 	}
 
 	/**
@@ -280,14 +280,14 @@ public class Handle : ObjectG
 	{
 		GError* err = null;
 
-		auto p = rsvg_handle_close(rsvgHandle, &err) != 0;
+		auto __p = rsvg_handle_close(rsvgHandle, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -342,47 +342,41 @@ public class Handle : ObjectG
 	 */
 	public Pixbuf getPixbuf()
 	{
-		auto p = rsvg_handle_get_pixbuf(rsvgHandle);
+		auto __p = rsvg_handle_get_pixbuf(rsvgHandle);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) __p, true);
 	}
 
 	/**
-	 * Creates a #GdkPixbuf the same size as the entire SVG loaded into @handle, but
-	 * only renders the sub-element that has the specified @id (and all its
-	 * sub-sub-elements recursively).  If @id is #NULL, this function renders the
-	 * whole SVG.
-	 *
-	 * If you need to render an image which is only big enough to fit a particular
-	 * sub-element of the SVG, consider using rsvg_handle_render_cairo_sub(), upon a
-	 * surface that is just the size returned by rsvg_handle_get_dimensions_sub().
-	 * You will need to offset the rendering by the amount returned in
-	 * rsvg_handle_get_position_sub().
+	 * Returns the pixbuf loaded by @handle.  The pixbuf returned will be reffed, so
+	 * the caller of this function must assume that ref.  If insufficient data has
+	 * been read to create the pixbuf, or an error occurred in loading, then %NULL
+	 * will be returned.  Note that the pixbuf may not be complete until
+	 * @rsvg_handle_close has been called.
 	 *
 	 * Params:
 	 *     id = An element's id within the SVG, starting with "##", for
 	 *         example, "##layer1"; or %NULL to use the whole SVG.
 	 *
-	 * Returns: a pixbuf, or %NULL if an error occurs
-	 *     during rendering.
+	 * Returns: the pixbuf loaded by @handle, or %NULL.
 	 *
 	 * Since: 2.14
 	 */
 	public Pixbuf getPixbufSub(string id)
 	{
-		auto p = rsvg_handle_get_pixbuf_sub(rsvgHandle, Str.toStringz(id));
+		auto __p = rsvg_handle_get_pixbuf_sub(rsvgHandle, Str.toStringz(id));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) __p, true);
 	}
 
 	/**
@@ -445,26 +439,23 @@ public class Handle : ObjectG
 	{
 		GError* err = null;
 
-		auto p = rsvg_handle_read_stream_sync(rsvgHandle, (stream is null) ? null : stream.getInputStreamStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = rsvg_handle_read_stream_sync(rsvgHandle, (stream is null) ? null : stream.getInputStreamStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
-	 * Draws a loaded SVG handle to a Cairo context.  Drawing will occur with
-	 * respect to the @cr's current transformation:  for example, if the @cr has a
-	 * rotated current transformation matrix, the whole SVG will be rotated in the
-	 * rendered version.
+	 * Draws a SVG to a Cairo surface
 	 *
 	 * Params:
 	 *     cr = A Cairo renderer
 	 *
-	 * Returns: %TRUE if drawing succeeded; %FALSE otherwise.
+	 * Returns: %TRUE if drawing succeeded.
 	 *
 	 * Since: 2.14
 	 */
@@ -474,10 +465,7 @@ public class Handle : ObjectG
 	}
 
 	/**
-	 * Draws a subset of a loaded SVG handle to a Cairo context.  Drawing will occur with
-	 * respect to the @cr's current transformation:  for example, if the @cr has a
-	 * rotated current transformation matrix, the whole SVG will be rotated in the
-	 * rendered version.
+	 * Draws a subset of a SVG to a Cairo surface
 	 *
 	 * Params:
 	 *     cr = A Cairo renderer
@@ -485,7 +473,7 @@ public class Handle : ObjectG
 	 *         the whole SVG. For example, if you have a layer called "layer1"
 	 *         that you wish to render, pass "##layer1" as the id.
 	 *
-	 * Returns: %TRUE if drawing succeeded; %FALSE otherwise.
+	 * Returns: %TRUE if drawing succeeded.
 	 *
 	 * Since: 2.14
 	 */
@@ -572,14 +560,14 @@ public class Handle : ObjectG
 	{
 		GError* err = null;
 
-		auto p = rsvg_handle_write(rsvgHandle, buf.ptr, cast(size_t)buf.length, &err) != 0;
+		auto __p = rsvg_handle_write(rsvgHandle, buf.ptr, cast(size_t)buf.length, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -594,13 +582,9 @@ public class Handle : ObjectG
 	}
 
 	/**
-	 * Do not use this function.  Create an #RsvgHandle and call
-	 * rsvg_handle_set_dpi() on it instead.
-	 *
-	 * Deprecated: This function used to set a global default DPI.  However,
-	 * it only worked if it was called before any #RsvgHandle objects had been
-	 * created; it would not work after that.  To avoid global mutable state, please
-	 * use rsvg_handle_set_dpi() instead.
+	 * Sets the DPI for the all future outgoing pixbufs. Common values are
+	 * 75, 90, and 300 DPI. Passing a number <= 0 to @dpi will
+	 * reset the DPI to whatever the default value happens to be.
 	 *
 	 * Params:
 	 *     dpi = Dots Per Inch (aka Pixels Per Inch)
@@ -613,13 +597,9 @@ public class Handle : ObjectG
 	}
 
 	/**
-	 * Do not use this function.  Create an #RsvgHandle and call
-	 * rsvg_handle_set_dpi_x_y() on it instead.
-	 *
-	 * Deprecated: This function used to set a global default DPI.  However,
-	 * it only worked if it was called before any #RsvgHandle objects had been
-	 * created; it would not work after that.  To avoid global mutable state, please
-	 * use rsvg_handle_set_dpi() instead.
+	 * Sets the DPI for the all future outgoing pixbufs. Common values are
+	 * 75, 90, and 300 DPI. Passing a number <= 0 to @dpi will
+	 * reset the DPI to whatever the default value happens to be.
 	 *
 	 * Params:
 	 *     dpiX = Dots Per Inch (aka Pixels Per Inch)

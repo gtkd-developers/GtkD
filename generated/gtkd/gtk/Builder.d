@@ -40,7 +40,6 @@ private import gtk.Application;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import gtkd.paths;
 private import std.string;
 
@@ -160,8 +159,8 @@ private import std.string;
  * property value using the attributes
  * "bind-source" to specify the source object of the binding,
  * "bind-property" to specify the source property and optionally
- * "bind-flags" to specify the binding flags
- * Internally builder implement this using GBinding objects.
+ * "bind-flags" to specify the binding flags.
+ * Internally builder implements this using GBinding objects.
  * For more information see g_object_bind_property()
  * 
  * Signal handlers are set up with the <signal> element. The “name”
@@ -180,7 +179,7 @@ private import std.string;
  * been constructed by GTK+ as part of a composite widget, to set
  * properties on them or to add further children (e.g. the @vbox of
  * a #GtkDialog). This can be achieved by setting the “internal-child”
- * propery of the <child> element to a true value. Note that GtkBuilder
+ * property of the <child> element to a true value. Note that GtkBuilder
  * still requires an <object> element for the internal child, even if it
  * has already been constructed.
  * 
@@ -388,14 +387,14 @@ public static GType getType()
  */
 public this(string filename)
 {
-	auto p = gtk_builder_new_from_file(Str.toStringz(filename));
+	auto __p = gtk_builder_new_from_file(Str.toStringz(filename));
 
-	if(p is null)
+	if(__p is null)
 	{
 		throw new ConstructionException("null returned by new_from_file");
 	}
 
-	this(cast(GtkBuilder*) p, true);
+	this(cast(GtkBuilder*) __p, true);
 }
 
 /**
@@ -447,14 +446,14 @@ public uint addFromFile(string filename)
 {
 	GError* err = null;
 
-	auto p = gtk_builder_add_from_file(gtkBuilder, Str.toStringz(filename), &err);
+	auto __p = gtk_builder_add_from_file(gtkBuilder, Str.toStringz(filename), &err);
 
 	if (err !is null)
 	{
 		throw new GException( new ErrorG(err) );
 	}
 
-	return p;
+	return __p;
 }
 
 /**
@@ -484,14 +483,14 @@ public uint addFromResource(string resourcePath)
 {
 	GError* err = null;
 
-	auto p = gtk_builder_add_from_resource(gtkBuilder, Str.toStringz(resourcePath), &err);
+	auto __p = gtk_builder_add_from_resource(gtkBuilder, Str.toStringz(resourcePath), &err);
 
 	if (err !is null)
 	{
 		throw new GException( new ErrorG(err) );
 	}
 
-	return p;
+	return __p;
 }
 
 /**
@@ -521,14 +520,14 @@ public uint addFromString(string buffer)
 {
 	GError* err = null;
 
-	auto p = gtk_builder_add_from_string(gtkBuilder, Str.toStringz(buffer), cast(size_t)buffer.length, &err);
+	auto __p = gtk_builder_add_from_string(gtkBuilder, Str.toStringz(buffer), cast(size_t)buffer.length, &err);
 
 	if (err !is null)
 	{
 		throw new GException( new ErrorG(err) );
 	}
 
-	return p;
+	return __p;
 }
 
 /**
@@ -558,14 +557,14 @@ public uint addObjectsFromFile(string filename, string[] objectIds)
 {
 	GError* err = null;
 
-	auto p = gtk_builder_add_objects_from_file(gtkBuilder, Str.toStringz(filename), Str.toStringzArray(objectIds), &err);
+	auto __p = gtk_builder_add_objects_from_file(gtkBuilder, Str.toStringz(filename), Str.toStringzArray(objectIds), &err);
 
 	if (err !is null)
 	{
 		throw new GException( new ErrorG(err) );
 	}
 
-	return p;
+	return __p;
 }
 
 /**
@@ -595,14 +594,14 @@ public uint addObjectsFromResource(string resourcePath, string[] objectIds)
 {
 	GError* err = null;
 
-	auto p = gtk_builder_add_objects_from_resource(gtkBuilder, Str.toStringz(resourcePath), Str.toStringzArray(objectIds), &err);
+	auto __p = gtk_builder_add_objects_from_resource(gtkBuilder, Str.toStringz(resourcePath), Str.toStringzArray(objectIds), &err);
 
 	if (err !is null)
 	{
 		throw new GException( new ErrorG(err) );
 	}
 
-	return p;
+	return __p;
 }
 
 /**
@@ -632,14 +631,14 @@ public uint addObjectsFromString(string buffer, size_t length, string[] objectId
 {
 	GError* err = null;
 
-	auto p = gtk_builder_add_objects_from_string(gtkBuilder, Str.toStringz(buffer), length, Str.toStringzArray(objectIds), &err);
+	auto __p = gtk_builder_add_objects_from_string(gtkBuilder, Str.toStringz(buffer), length, Str.toStringzArray(objectIds), &err);
 
 	if (err !is null)
 	{
 		throw new GException( new ErrorG(err) );
 	}
 
-	return p;
+	return __p;
 }
 
 /**
@@ -727,14 +726,14 @@ public uint extendWithTemplate(Widget widget, GType templateType, string buffer,
 {
 	GError* err = null;
 
-	auto p = gtk_builder_extend_with_template(gtkBuilder, (widget is null) ? null : widget.getWidgetStruct(), templateType, Str.toStringz(buffer), length, &err);
+	auto __p = gtk_builder_extend_with_template(gtkBuilder, (widget is null) ? null : widget.getWidgetStruct(), templateType, Str.toStringz(buffer), length, &err);
 
 	if (err !is null)
 	{
 		throw new GException( new ErrorG(err) );
 	}
 
-	return p;
+	return __p;
 }
 
 /**
@@ -754,14 +753,14 @@ public uint extendWithTemplate(Widget widget, GType templateType, string buffer,
  */
 public Application getApplication()
 {
-	auto p = gtk_builder_get_application(gtkBuilder);
+	auto __p = gtk_builder_get_application(gtkBuilder);
 
-	if(p is null)
+	if(__p is null)
 	{
 		return null;
 	}
 
-	return ObjectG.getDObject!(Application)(cast(GtkApplication*) p);
+	return ObjectG.getDObject!(Application)(cast(GtkApplication*) __p);
 }
 
 /**
@@ -778,14 +777,14 @@ public Application getApplication()
  */
 public ObjectG getObject(string name)
 {
-	auto p = gtk_builder_get_object(gtkBuilder, Str.toStringz(name));
+	auto __p = gtk_builder_get_object(gtkBuilder, Str.toStringz(name));
 
-	if(p is null)
+	if(__p is null)
 	{
 		return null;
 	}
 
-	return ObjectG.getDObject!(ObjectG)(cast(GObject*) p);
+	return ObjectG.getDObject!(ObjectG)(cast(GObject*) __p);
 }
 
 /**
@@ -898,7 +897,7 @@ public bool valueFromString(ParamSpec pspec, string string_, out Value value)
 	GValue* outvalue = sliceNew!GValue();
 	GError* err = null;
 
-	auto p = gtk_builder_value_from_string(gtkBuilder, (pspec is null) ? null : pspec.getParamSpecStruct(), Str.toStringz(string_), outvalue, &err) != 0;
+	auto __p = gtk_builder_value_from_string(gtkBuilder, (pspec is null) ? null : pspec.getParamSpecStruct(), Str.toStringz(string_), outvalue, &err) != 0;
 
 	if (err !is null)
 	{
@@ -907,7 +906,7 @@ public bool valueFromString(ParamSpec pspec, string string_, out Value value)
 
 	value = ObjectG.getDObject!(Value)(outvalue, true);
 
-	return p;
+	return __p;
 }
 
 /**
@@ -935,7 +934,7 @@ public bool valueFromStringType(GType type, string string_, out Value value)
 	GValue* outvalue = sliceNew!GValue();
 	GError* err = null;
 
-	auto p = gtk_builder_value_from_string_type(gtkBuilder, type, Str.toStringz(string_), outvalue, &err) != 0;
+	auto __p = gtk_builder_value_from_string_type(gtkBuilder, type, Str.toStringz(string_), outvalue, &err) != 0;
 
 	if (err !is null)
 	{
@@ -944,6 +943,6 @@ public bool valueFromStringType(GType type, string string_, out Value value)
 
 	value = ObjectG.getDObject!(Value)(outvalue, true);
 
-	return p;
+	return __p;
 }
 }

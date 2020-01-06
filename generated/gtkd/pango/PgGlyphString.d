@@ -27,8 +27,6 @@ module pango.PgGlyphString;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.pangotypes;
-private import gtkd.Loader;
 private import pango.PgFont;
 private import pango.c.functions;
 public  import pango.c.types;
@@ -71,7 +69,7 @@ public class PgGlyphString
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
+		if ( ownedRef )
 			pango_glyph_string_free(pangoGlyphString);
 	}
 
@@ -92,14 +90,14 @@ public class PgGlyphString
 	 */
 	public this()
 	{
-		auto p = pango_glyph_string_new();
+		auto __p = pango_glyph_string_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(PangoGlyphString*) p);
+		this(cast(PangoGlyphString*) __p);
 	}
 
 	/**
@@ -111,20 +109,24 @@ public class PgGlyphString
 	 */
 	public PgGlyphString copy()
 	{
-		auto p = pango_glyph_string_copy(pangoGlyphString);
+		auto __p = pango_glyph_string_copy(pangoGlyphString);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgGlyphString)(cast(PangoGlyphString*) p, true);
+		return ObjectG.getDObject!(PgGlyphString)(cast(PangoGlyphString*) __p, true);
 	}
 
 	/**
 	 * Compute the logical and ink extents of a glyph string. See the documentation
 	 * for pango_font_get_glyph_extents() for details about the interpretation
 	 * of the rectangles.
+	 *
+	 * Examples of logical (red) and ink (green) rects:
+	 *
+	 * ![](rects1.png) ![](rects2.png)
 	 *
 	 * Params:
 	 *     font = a #PangoFont

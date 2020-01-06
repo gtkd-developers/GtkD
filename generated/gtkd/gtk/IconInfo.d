@@ -40,7 +40,6 @@ private import gtk.Style;
 private import gtk.StyleContext;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -97,14 +96,14 @@ public class IconInfo : ObjectG
 	 */
 	public this(IconTheme iconTheme, Pixbuf pixbuf)
 	{
-		auto p = gtk_icon_info_new_for_pixbuf((iconTheme is null) ? null : iconTheme.getIconThemeStruct(), (pixbuf is null) ? null : pixbuf.getPixbufStruct());
+		auto __p = gtk_icon_info_new_for_pixbuf((iconTheme is null) ? null : iconTheme.getIconThemeStruct(), (pixbuf is null) ? null : pixbuf.getPixbufStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_for_pixbuf");
 		}
 
-		this(cast(GtkIconInfo*) p, true);
+		this(cast(GtkIconInfo*) __p, true);
 	}
 
 	/**
@@ -118,14 +117,14 @@ public class IconInfo : ObjectG
 	 */
 	public IconInfo copy()
 	{
-		auto p = gtk_icon_info_copy(gtkIconInfo);
+		auto __p = gtk_icon_info_copy(gtkIconInfo);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconInfo)(cast(GtkIconInfo*) p, true);
+		return ObjectG.getDObject!(IconInfo)(cast(GtkIconInfo*) __p, true);
 	}
 
 	/**
@@ -158,11 +157,11 @@ public class IconInfo : ObjectG
 		GdkPoint* outpoints = null;
 		int nPoints;
 
-		auto p = gtk_icon_info_get_attach_points(gtkIconInfo, &outpoints, &nPoints) != 0;
+		auto __p = gtk_icon_info_get_attach_points(gtkIconInfo, &outpoints, &nPoints) != 0;
 
 		points = outpoints[0 .. nPoints];
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -221,14 +220,14 @@ public class IconInfo : ObjectG
 	 */
 	public Pixbuf getBuiltinPixbuf()
 	{
-		auto p = gtk_icon_info_get_builtin_pixbuf(gtkIconInfo);
+		auto __p = gtk_icon_info_get_builtin_pixbuf(gtkIconInfo);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) __p);
 	}
 
 	/**
@@ -322,19 +321,19 @@ public class IconInfo : ObjectG
 	{
 		GError* err = null;
 
-		auto p = gtk_icon_info_load_icon(gtkIconInfo, &err);
+		auto __p = gtk_icon_info_load_icon(gtkIconInfo, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) __p, true);
 	}
 
 	/**
@@ -376,19 +375,19 @@ public class IconInfo : ObjectG
 	{
 		GError* err = null;
 
-		auto p = gtk_icon_info_load_icon_finish(gtkIconInfo, (res is null) ? null : res.getAsyncResultStruct(), &err);
+		auto __p = gtk_icon_info_load_icon_finish(gtkIconInfo, (res is null) ? null : res.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) __p, true);
 	}
 
 	/**
@@ -420,19 +419,19 @@ public class IconInfo : ObjectG
 	{
 		GError* err = null;
 
-		auto p = gtk_icon_info_load_surface(gtkIconInfo, (forWindow is null) ? null : forWindow.getWindowStruct(), &err);
+		auto __p = gtk_icon_info_load_surface(gtkIconInfo, (forWindow is null) ? null : forWindow.getWindowStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Surface(cast(cairo_surface_t*) p);
+		return new Surface(cast(cairo_surface_t*) __p);
 	}
 
 	/**
@@ -476,7 +475,7 @@ public class IconInfo : ObjectG
 		int outwasSymbolic;
 		GError* err = null;
 
-		auto p = gtk_icon_info_load_symbolic(gtkIconInfo, (fg is null) ? null : fg.getRGBAStruct(), (successColor is null) ? null : successColor.getRGBAStruct(), (warningColor is null) ? null : warningColor.getRGBAStruct(), (errorColor is null) ? null : errorColor.getRGBAStruct(), &outwasSymbolic, &err);
+		auto __p = gtk_icon_info_load_symbolic(gtkIconInfo, (fg is null) ? null : fg.getRGBAStruct(), (successColor is null) ? null : successColor.getRGBAStruct(), (warningColor is null) ? null : warningColor.getRGBAStruct(), (errorColor is null) ? null : errorColor.getRGBAStruct(), &outwasSymbolic, &err);
 
 		if (err !is null)
 		{
@@ -485,12 +484,12 @@ public class IconInfo : ObjectG
 
 		wasSymbolic = (outwasSymbolic == 1);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) __p, true);
 	}
 
 	/**
@@ -544,7 +543,7 @@ public class IconInfo : ObjectG
 		int outwasSymbolic;
 		GError* err = null;
 
-		auto p = gtk_icon_info_load_symbolic_finish(gtkIconInfo, (res is null) ? null : res.getAsyncResultStruct(), &outwasSymbolic, &err);
+		auto __p = gtk_icon_info_load_symbolic_finish(gtkIconInfo, (res is null) ? null : res.getAsyncResultStruct(), &outwasSymbolic, &err);
 
 		if (err !is null)
 		{
@@ -553,12 +552,12 @@ public class IconInfo : ObjectG
 
 		wasSymbolic = (outwasSymbolic == 1);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) __p, true);
 	}
 
 	/**
@@ -590,7 +589,7 @@ public class IconInfo : ObjectG
 		int outwasSymbolic;
 		GError* err = null;
 
-		auto p = gtk_icon_info_load_symbolic_for_context(gtkIconInfo, (context is null) ? null : context.getStyleContextStruct(), &outwasSymbolic, &err);
+		auto __p = gtk_icon_info_load_symbolic_for_context(gtkIconInfo, (context is null) ? null : context.getStyleContextStruct(), &outwasSymbolic, &err);
 
 		if (err !is null)
 		{
@@ -599,12 +598,12 @@ public class IconInfo : ObjectG
 
 		wasSymbolic = (outwasSymbolic == 1);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) __p, true);
 	}
 
 	/**
@@ -652,7 +651,7 @@ public class IconInfo : ObjectG
 		int outwasSymbolic;
 		GError* err = null;
 
-		auto p = gtk_icon_info_load_symbolic_for_context_finish(gtkIconInfo, (res is null) ? null : res.getAsyncResultStruct(), &outwasSymbolic, &err);
+		auto __p = gtk_icon_info_load_symbolic_for_context_finish(gtkIconInfo, (res is null) ? null : res.getAsyncResultStruct(), &outwasSymbolic, &err);
 
 		if (err !is null)
 		{
@@ -661,12 +660,12 @@ public class IconInfo : ObjectG
 
 		wasSymbolic = (outwasSymbolic == 1);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) __p, true);
 	}
 
 	/**
@@ -698,7 +697,7 @@ public class IconInfo : ObjectG
 		int outwasSymbolic;
 		GError* err = null;
 
-		auto p = gtk_icon_info_load_symbolic_for_style(gtkIconInfo, (style is null) ? null : style.getStyleStruct(), state, &outwasSymbolic, &err);
+		auto __p = gtk_icon_info_load_symbolic_for_style(gtkIconInfo, (style is null) ? null : style.getStyleStruct(), state, &outwasSymbolic, &err);
 
 		if (err !is null)
 		{
@@ -707,12 +706,12 @@ public class IconInfo : ObjectG
 
 		wasSymbolic = (outwasSymbolic == 1);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) __p, true);
 	}
 
 	/**

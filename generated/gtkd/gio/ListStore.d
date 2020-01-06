@@ -30,7 +30,6 @@ private import gio.c.functions;
 public  import gio.c.types;
 private import glib.ConstructionException;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -93,14 +92,14 @@ public class ListStore : ObjectG, ListModelIF
 	 */
 	public this(GType itemType)
 	{
-		auto p = g_list_store_new(itemType);
+		auto __p = g_list_store_new(itemType);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GListStore*) p, true);
+		this(cast(GListStore*) __p, true);
 	}
 
 	/**

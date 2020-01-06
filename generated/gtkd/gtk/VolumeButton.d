@@ -30,7 +30,6 @@ private import gtk.ScaleButton;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -86,13 +85,13 @@ public class VolumeButton : ScaleButton
 	 */
 	public this()
 	{
-		auto p = gtk_volume_button_new();
+		auto __p = gtk_volume_button_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkVolumeButton*) p);
+		this(cast(GtkVolumeButton*) __p);
 	}
 }

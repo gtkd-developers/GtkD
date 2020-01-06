@@ -31,7 +31,6 @@ private import glib.ListSG;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-public  import gtkc.gdktypes;
 private import std.algorithm;
 
 
@@ -128,14 +127,14 @@ public class DisplayManager : ObjectG
 	 */
 	public static DisplayManager get()
 	{
-		auto p = gdk_display_manager_get();
+		auto __p = gdk_display_manager_get();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DisplayManager)(cast(GdkDisplayManager*) p);
+		return ObjectG.getDObject!(DisplayManager)(cast(GdkDisplayManager*) __p);
 	}
 
 	/**
@@ -148,14 +147,14 @@ public class DisplayManager : ObjectG
 	 */
 	public Display getDefaultDisplay()
 	{
-		auto p = gdk_display_manager_get_default_display(gdkDisplayManager);
+		auto __p = gdk_display_manager_get_default_display(gdkDisplayManager);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
+		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) __p);
 	}
 
 	/**
@@ -169,14 +168,14 @@ public class DisplayManager : ObjectG
 	 */
 	public ListSG listDisplays()
 	{
-		auto p = gdk_display_manager_list_displays(gdkDisplayManager);
+		auto __p = gdk_display_manager_list_displays(gdkDisplayManager);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**
@@ -192,14 +191,14 @@ public class DisplayManager : ObjectG
 	 */
 	public Display openDisplay(string name)
 	{
-		auto p = gdk_display_manager_open_display(gdkDisplayManager, Str.toStringz(name));
+		auto __p = gdk_display_manager_open_display(gdkDisplayManager, Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
+		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) __p);
 	}
 
 	/**

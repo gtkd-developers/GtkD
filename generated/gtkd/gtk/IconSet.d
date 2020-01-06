@@ -36,8 +36,6 @@ private import gtk.StyleContext;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
-private import gtkd.Loader;
 
 
 /** */
@@ -72,7 +70,7 @@ public class IconSet
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GTK) && ownedRef )
+		if ( ownedRef )
 			gtk_icon_set_unref(gtkIconSet);
 	}
 
@@ -102,14 +100,14 @@ public class IconSet
 	 */
 	public this()
 	{
-		auto p = gtk_icon_set_new();
+		auto __p = gtk_icon_set_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkIconSet*) p);
+		this(cast(GtkIconSet*) __p);
 	}
 
 	/**
@@ -130,14 +128,14 @@ public class IconSet
 	 */
 	public this(Pixbuf pixbuf)
 	{
-		auto p = gtk_icon_set_new_from_pixbuf((pixbuf is null) ? null : pixbuf.getPixbufStruct());
+		auto __p = gtk_icon_set_new_from_pixbuf((pixbuf is null) ? null : pixbuf.getPixbufStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_pixbuf");
 		}
 
-		this(cast(GtkIconSet*) p);
+		this(cast(GtkIconSet*) __p);
 	}
 
 	/**
@@ -186,14 +184,14 @@ public class IconSet
 	 */
 	public IconSet copy()
 	{
-		auto p = gtk_icon_set_copy(gtkIconSet);
+		auto __p = gtk_icon_set_copy(gtkIconSet);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconSet)(cast(GtkIconSet*) p, true);
+		return ObjectG.getDObject!(IconSet)(cast(GtkIconSet*) __p, true);
 	}
 
 	/**
@@ -226,14 +224,14 @@ public class IconSet
 	 */
 	public IconSet ref_()
 	{
-		auto p = gtk_icon_set_ref(gtkIconSet);
+		auto __p = gtk_icon_set_ref(gtkIconSet);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconSet)(cast(GtkIconSet*) p, true);
+		return ObjectG.getDObject!(IconSet)(cast(GtkIconSet*) __p, true);
 	}
 
 	/**
@@ -263,14 +261,14 @@ public class IconSet
 	 */
 	public Pixbuf renderIcon(Style style, GtkTextDirection direction, GtkStateType state, GtkIconSize size, Widget widget, string detail)
 	{
-		auto p = gtk_icon_set_render_icon(gtkIconSet, (style is null) ? null : style.getStyleStruct(), direction, state, size, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail));
+		auto __p = gtk_icon_set_render_icon(gtkIconSet, (style is null) ? null : style.getStyleStruct(), direction, state, size, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) __p, true);
 	}
 
 	/**
@@ -294,14 +292,14 @@ public class IconSet
 	 */
 	public Pixbuf renderIconPixbuf(StyleContext context, GtkIconSize size)
 	{
-		auto p = gtk_icon_set_render_icon_pixbuf(gtkIconSet, (context is null) ? null : context.getStyleContextStruct(), size);
+		auto __p = gtk_icon_set_render_icon_pixbuf(gtkIconSet, (context is null) ? null : context.getStyleContextStruct(), size);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) __p, true);
 	}
 
 	/**
@@ -327,14 +325,14 @@ public class IconSet
 	 */
 	public Surface renderIconSurface(StyleContext context, GtkIconSize size, int scale, Window forWindow)
 	{
-		auto p = gtk_icon_set_render_icon_surface(gtkIconSet, (context is null) ? null : context.getStyleContextStruct(), size, scale, (forWindow is null) ? null : forWindow.getWindowStruct());
+		auto __p = gtk_icon_set_render_icon_surface(gtkIconSet, (context is null) ? null : context.getStyleContextStruct(), size, scale, (forWindow is null) ? null : forWindow.getWindowStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Surface(cast(cairo_surface_t*) p);
+		return new Surface(cast(cairo_surface_t*) __p);
 	}
 
 	/**

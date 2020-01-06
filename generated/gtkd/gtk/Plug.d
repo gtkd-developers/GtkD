@@ -33,7 +33,6 @@ private import gtk.Widget;
 private import gtk.Window;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -106,14 +105,14 @@ public class Plug : Window
 	 */
 	public this(ulong socketId)
 	{
-		auto p = gtk_plug_new(socketId);
+		auto __p = gtk_plug_new(socketId);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkPlug*) p);
+		this(cast(GtkPlug*) __p);
 	}
 
 	/**
@@ -131,14 +130,14 @@ public class Plug : Window
 	 */
 	public this(Display display, ulong socketId)
 	{
-		auto p = gtk_plug_new_for_display((display is null) ? null : display.getDisplayStruct(), socketId);
+		auto __p = gtk_plug_new_for_display((display is null) ? null : display.getDisplayStruct(), socketId);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_for_display");
 		}
 
-		this(cast(GtkPlug*) p);
+		this(cast(GtkPlug*) __p);
 	}
 
 	/**
@@ -203,14 +202,14 @@ public class Plug : Window
 	 */
 	public GdkWin getSocketWindow()
 	{
-		auto p = gtk_plug_get_socket_window(gtkPlug);
+		auto __p = gtk_plug_get_socket_window(gtkPlug);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(GdkWin)(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(GdkWin)(cast(GdkWindow*) __p);
 	}
 
 	/**

@@ -35,8 +35,6 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Value;
-public  import gtkc.gdktypes;
-private import gtkd.Loader;
 
 
 /**
@@ -102,7 +100,7 @@ public class Event
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GDK) && ownedRef )
+		if ( ownedRef )
 			gdk_event_free(gdkEvent);
 	}
 
@@ -260,14 +258,14 @@ public class Event
 	 */
 	public this(GdkEventType type)
 	{
-		auto p = gdk_event_new(type);
+		auto __p = gdk_event_new(type);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GdkEvent*) p);
+		this(cast(GdkEvent*) __p);
 	}
 
 	/**
@@ -336,14 +334,14 @@ public class Event
 	 */
 	public Event copy()
 	{
-		auto p = gdk_event_copy(gdkEvent);
+		auto __p = gdk_event_copy(gdkEvent);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Event)(cast(GdkEvent*) p, true);
+		return ObjectG.getDObject!(Event)(cast(GdkEvent*) __p, true);
 	}
 
 	/**
@@ -427,14 +425,14 @@ public class Event
 	 */
 	public Device getDevice()
 	{
-		auto p = gdk_event_get_device(gdkEvent);
+		auto __p = gdk_event_get_device(gdkEvent);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Device)(cast(GdkDevice*) p);
+		return ObjectG.getDObject!(Device)(cast(GdkDevice*) __p);
 	}
 
 	/**
@@ -453,14 +451,14 @@ public class Event
 	 */
 	public DeviceTool getDeviceTool()
 	{
-		auto p = gdk_event_get_device_tool(gdkEvent);
+		auto __p = gdk_event_get_device_tool(gdkEvent);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DeviceTool)(cast(GdkDeviceTool*) p);
+		return ObjectG.getDObject!(DeviceTool)(cast(GdkDeviceTool*) __p);
 	}
 
 	/**
@@ -580,14 +578,14 @@ public class Event
 	 */
 	public Screen getScreen()
 	{
-		auto p = gdk_event_get_screen(gdkEvent);
+		auto __p = gdk_event_get_screen(gdkEvent);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
+		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) __p);
 	}
 
 	/**
@@ -630,14 +628,14 @@ public class Event
 	 */
 	public Seat getSeat()
 	{
-		auto p = gdk_event_get_seat(gdkEvent);
+		auto __p = gdk_event_get_seat(gdkEvent);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Seat)(cast(GdkSeat*) p);
+		return ObjectG.getDObject!(Seat)(cast(GdkSeat*) __p);
 	}
 
 	/**
@@ -657,14 +655,14 @@ public class Event
 	 */
 	public Device getSourceDevice()
 	{
-		auto p = gdk_event_get_source_device(gdkEvent);
+		auto __p = gdk_event_get_source_device(gdkEvent);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Device)(cast(GdkDevice*) p);
+		return ObjectG.getDObject!(Device)(cast(GdkDevice*) __p);
 	}
 
 	/**
@@ -703,14 +701,14 @@ public class Event
 	 */
 	public Window getWindow()
 	{
-		auto p = gdk_event_get_window(gdkEvent);
+		auto __p = gdk_event_get_window(gdkEvent);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) __p);
 	}
 
 	/**
@@ -831,14 +829,14 @@ public class Event
 	 */
 	public static Event get()
 	{
-		auto p = gdk_event_get();
+		auto __p = gdk_event_get();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Event)(cast(GdkEvent*) p, true);
+		return ObjectG.getDObject!(Event)(cast(GdkEvent*) __p, true);
 	}
 
 	/**
@@ -870,14 +868,14 @@ public class Event
 	 */
 	public static Event peek()
 	{
-		auto p = gdk_event_peek();
+		auto __p = gdk_event_peek();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Event)(cast(GdkEvent*) p, true);
+		return ObjectG.getDObject!(Event)(cast(GdkEvent*) __p, true);
 	}
 
 	/**

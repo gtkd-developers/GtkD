@@ -27,7 +27,6 @@ module glib.Module;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
 
 
 /**
@@ -177,14 +176,14 @@ public class Module
 	 */
 	public static Module open(string fileName, GModuleFlags flags)
 	{
-		auto p = g_module_open(Str.toStringz(fileName), flags);
+		auto __p = g_module_open(Str.toStringz(fileName), flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Module(cast(GModule*) p);
+		return new Module(cast(GModule*) __p);
 	}
 
 	/**

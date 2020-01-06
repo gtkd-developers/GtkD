@@ -29,7 +29,6 @@ public  import gio.c.functions;
 public  import gio.c.types;
 public  import glib.Str;
 public  import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -42,8 +41,6 @@ public  import gtkc.giotypes;
  * prefixed names (e.g. by prepending "app." or "win.").
  * This is the motivation for the 'Map' part of the interface
  * name.
- *
- * Since: 2.32
  */
 public template ActionMapT(TStruct)
 {
@@ -139,14 +136,14 @@ public template ActionMapT(TStruct)
 	 */
 	public ActionIF lookupAction(string actionName)
 	{
-		auto p = g_action_map_lookup_action(getActionMapStruct(), Str.toStringz(actionName));
+		auto __p = g_action_map_lookup_action(getActionMapStruct(), Str.toStringz(actionName));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ActionIF)(cast(GAction*) p);
+		return ObjectG.getDObject!(ActionIF)(cast(GAction*) __p);
 	}
 
 	/**

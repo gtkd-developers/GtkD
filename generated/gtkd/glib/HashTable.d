@@ -28,7 +28,6 @@ private import glib.ConstructionException;
 private import glib.ListG;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
 
 
 /**
@@ -74,10 +73,6 @@ public class HashTable
 	 * When a hash table only ever contains keys that have themselves as the
 	 * corresponding value it is able to be stored more efficiently.  See
 	 * the discussion in the section description.
-	 *
-	 * Starting from GLib 2.40, this function returns a boolean value to
-	 * indicate whether the newly added value was already in the hash table
-	 * or not.
 	 *
 	 * Params:
 	 *     key = a key to insert
@@ -228,14 +223,14 @@ public class HashTable
 	 */
 	public ListG getKeys()
 	{
-		auto p = g_hash_table_get_keys(gHashTable);
+		auto __p = g_hash_table_get_keys(gHashTable);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -266,9 +261,9 @@ public class HashTable
 	{
 		uint length;
 
-		auto p = g_hash_table_get_keys_as_array(gHashTable, &length);
+		auto __p = g_hash_table_get_keys_as_array(gHashTable, &length);
 
-		return p[0 .. length];
+		return __p[0 .. length];
 	}
 
 	/**
@@ -288,14 +283,14 @@ public class HashTable
 	 */
 	public ListG getValues()
 	{
-		auto p = g_hash_table_get_values(gHashTable);
+		auto __p = g_hash_table_get_values(gHashTable);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -307,10 +302,6 @@ public class HashTable
 	 * value is freed using that function. If you supplied a
 	 * @key_destroy_func when creating the #GHashTable, the passed
 	 * key is freed using that function.
-	 *
-	 * Starting from GLib 2.40, this function returns a boolean value to
-	 * indicate whether the newly added value was already in the hash table
-	 * or not.
 	 *
 	 * Params:
 	 *     key = a key to insert
@@ -390,14 +381,14 @@ public class HashTable
 	 */
 	public this(GHashFunc hashFunc, GEqualFunc keyEqualFunc)
 	{
-		auto p = g_hash_table_new(hashFunc, keyEqualFunc);
+		auto __p = g_hash_table_new(hashFunc, keyEqualFunc);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GHashTable*) p);
+		this(cast(GHashTable*) __p);
 	}
 
 	/**
@@ -429,14 +420,14 @@ public class HashTable
 	 */
 	public this(GHashFunc hashFunc, GEqualFunc keyEqualFunc, GDestroyNotify keyDestroyFunc, GDestroyNotify valueDestroyFunc)
 	{
-		auto p = g_hash_table_new_full(hashFunc, keyEqualFunc, keyDestroyFunc, valueDestroyFunc);
+		auto __p = g_hash_table_new_full(hashFunc, keyEqualFunc, keyDestroyFunc, valueDestroyFunc);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_full");
 		}
 
-		this(cast(GHashTable*) p);
+		this(cast(GHashTable*) __p);
 	}
 
 	alias doref = ref_;
@@ -450,14 +441,14 @@ public class HashTable
 	 */
 	public HashTable ref_()
 	{
-		auto p = g_hash_table_ref(gHashTable);
+		auto __p = g_hash_table_ref(gHashTable);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new HashTable(cast(GHashTable*) p);
+		return new HashTable(cast(GHashTable*) __p);
 	}
 
 	/**
@@ -501,10 +492,6 @@ public class HashTable
 	 * the #GHashTable, the old value is freed using that function.
 	 * If you supplied a @key_destroy_func when creating the
 	 * #GHashTable, the old key is freed using that function.
-	 *
-	 * Starting from GLib 2.40, this function returns a boolean value to
-	 * indicate whether the newly added value was already in the hash table
-	 * or not.
 	 *
 	 * Params:
 	 *     key = a key to insert
@@ -550,34 +537,6 @@ public class HashTable
 	public void stealAll()
 	{
 		g_hash_table_steal_all(gHashTable);
-	}
-
-	/**
-	 * Looks up a key in the #GHashTable, stealing the original key and the
-	 * associated value and returning %TRUE if the key was found. If the key was
-	 * not found, %FALSE is returned.
-	 *
-	 * If found, the stolen key and value are removed from the hash table without
-	 * calling the key and value destroy functions, and ownership is transferred to
-	 * the caller of this method; as with g_hash_table_steal().
-	 *
-	 * You can pass %NULL for @lookup_key, provided the hash and equal functions
-	 * of @hash_table are %NULL-safe.
-	 *
-	 * Params:
-	 *     lookupKey = the key to look up
-	 *     stolenKey = return location for the
-	 *         original key
-	 *     stolenValue = return location
-	 *         for the value associated with the key
-	 *
-	 * Returns: %TRUE if the key was found in the #GHashTable
-	 *
-	 * Since: 2.58
-	 */
-	public bool stealExtended(void* lookupKey, out void* stolenKey, out void* stolenValue)
-	{
-		return g_hash_table_steal_extended(gHashTable, lookupKey, &stolenKey, &stolenValue) != 0;
 	}
 
 	/**
@@ -756,9 +715,9 @@ public class HashTable
 	 * @key_equal_func parameter, when using non-%NULL strings as keys in a
 	 * #GHashTable.
 	 *
-	 * This function is typically used for hash table comparisons, but can be used
-	 * for general purpose comparisons of non-%NULL strings. For a %NULL-safe string
-	 * comparison function, see g_strcmp0().
+	 * Note that this function is primarily meant as a hash table comparison
+	 * function. For a general-purpose, %NULL-safe string comparison function,
+	 * see g_strcmp0().
 	 *
 	 * Params:
 	 *     v1 = a key

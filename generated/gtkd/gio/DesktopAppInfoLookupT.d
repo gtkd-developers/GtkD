@@ -29,7 +29,6 @@ public  import gio.c.functions;
 public  import gio.c.types;
 public  import glib.Str;
 public  import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -66,13 +65,13 @@ public template DesktopAppInfoLookupT(TStruct)
 	 */
 	public AppInfoIF getDefaultForUriScheme(string uriScheme)
 	{
-		auto p = g_desktop_app_info_lookup_get_default_for_uri_scheme(getDesktopAppInfoLookupStruct(), Str.toStringz(uriScheme));
+		auto __p = g_desktop_app_info_lookup_get_default_for_uri_scheme(getDesktopAppInfoLookupStruct(), Str.toStringz(uriScheme));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) p, true);
+		return ObjectG.getDObject!(AppInfoIF)(cast(GAppInfo*) __p, true);
 	}
 }

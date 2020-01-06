@@ -32,7 +32,6 @@ private import gtk.Entry;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -59,8 +58,6 @@ public  import gtkc.gtktypes;
  * ## Creating a search bar
  * 
  * [A simple example](https://gitlab.gnome.org/GNOME/gtk/blob/gtk-3-24/examples/search-bar.c)
- *
- * Since: 3.10
  */
 public class SearchBar : Bin
 {
@@ -110,14 +107,14 @@ public class SearchBar : Bin
 	 */
 	public this()
 	{
-		auto p = gtk_search_bar_new();
+		auto __p = gtk_search_bar_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSearchBar*) p);
+		this(cast(GtkSearchBar*) __p);
 	}
 
 	/**

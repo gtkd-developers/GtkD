@@ -37,7 +37,6 @@ private import gtk.OrientableT;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -135,14 +134,14 @@ public class FlowBox : Container, OrientableIF
 	 */
 	public this()
 	{
-		auto p = gtk_flow_box_new();
+		auto __p = gtk_flow_box_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkFlowBox*) p);
+		this(cast(GtkFlowBox*) __p);
 	}
 
 	/**
@@ -203,14 +202,14 @@ public class FlowBox : Container, OrientableIF
 	 */
 	public FlowBoxChild getChildAtIndex(int idx)
 	{
-		auto p = gtk_flow_box_get_child_at_index(gtkFlowBox, idx);
+		auto __p = gtk_flow_box_get_child_at_index(gtkFlowBox, idx);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FlowBoxChild)(cast(GtkFlowBoxChild*) p);
+		return ObjectG.getDObject!(FlowBoxChild)(cast(GtkFlowBoxChild*) __p);
 	}
 
 	/**
@@ -228,14 +227,14 @@ public class FlowBox : Container, OrientableIF
 	 */
 	public FlowBoxChild getChildAtPos(int x, int y)
 	{
-		auto p = gtk_flow_box_get_child_at_pos(gtkFlowBox, x, y);
+		auto __p = gtk_flow_box_get_child_at_pos(gtkFlowBox, x, y);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FlowBoxChild)(cast(GtkFlowBoxChild*) p);
+		return ObjectG.getDObject!(FlowBoxChild)(cast(GtkFlowBoxChild*) __p);
 	}
 
 	/**
@@ -309,14 +308,14 @@ public class FlowBox : Container, OrientableIF
 	 */
 	public ListG getSelectedChildren()
 	{
-		auto p = gtk_flow_box_get_selected_children(gtkFlowBox);
+		auto __p = gtk_flow_box_get_selected_children(gtkFlowBox);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**

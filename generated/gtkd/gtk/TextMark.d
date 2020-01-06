@@ -30,7 +30,6 @@ private import gobject.ObjectG;
 private import gtk.TextBuffer;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -122,14 +121,14 @@ public class TextMark : ObjectG
 	 */
 	public this(string name, bool leftGravity)
 	{
-		auto p = gtk_text_mark_new(Str.toStringz(name), leftGravity);
+		auto __p = gtk_text_mark_new(Str.toStringz(name), leftGravity);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkTextMark*) p, true);
+		this(cast(GtkTextMark*) __p, true);
 	}
 
 	/**
@@ -140,14 +139,14 @@ public class TextMark : ObjectG
 	 */
 	public TextBuffer getBuffer()
 	{
-		auto p = gtk_text_mark_get_buffer(gtkTextMark);
+		auto __p = gtk_text_mark_get_buffer(gtkTextMark);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TextBuffer)(cast(GtkTextBuffer*) p);
+		return ObjectG.getDObject!(TextBuffer)(cast(GtkTextBuffer*) __p);
 	}
 
 	/**

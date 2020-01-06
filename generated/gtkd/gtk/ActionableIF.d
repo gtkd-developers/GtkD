@@ -28,7 +28,6 @@ private import glib.Str;
 private import glib.Variant;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -44,8 +43,6 @@ public  import gtkc.gtktypes;
  * the “win.” or “app.” prefix that are associated with the #GtkApplicationWindow
  * or #GtkApplication, but other action groups that are added with
  * gtk_widget_insert_action_group() will be consulted as well.
- *
- * Since: 3.4
  */
 public interface ActionableIF{
 	/** Get the main Gtk struct */

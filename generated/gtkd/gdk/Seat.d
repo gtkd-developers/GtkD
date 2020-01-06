@@ -35,7 +35,6 @@ public  import gdk.c.types;
 private import glib.ListG;
 private import gobject.ObjectG;
 private import gobject.Signals;
-public  import gtkc.gdktypes;
 private import std.algorithm;
 
 
@@ -98,14 +97,14 @@ public class Seat : ObjectG
 	 */
 	public Display getDisplay()
 	{
-		auto p = gdk_seat_get_display(gdkSeat);
+		auto __p = gdk_seat_get_display(gdkSeat);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) p);
+		return ObjectG.getDObject!(Display)(cast(GdkDisplay*) __p);
 	}
 
 	/**
@@ -118,14 +117,14 @@ public class Seat : ObjectG
 	 */
 	public Device getKeyboard()
 	{
-		auto p = gdk_seat_get_keyboard(gdkSeat);
+		auto __p = gdk_seat_get_keyboard(gdkSeat);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Device)(cast(GdkDevice*) p);
+		return ObjectG.getDObject!(Device)(cast(GdkDevice*) __p);
 	}
 
 	/**
@@ -138,14 +137,14 @@ public class Seat : ObjectG
 	 */
 	public Device getPointer()
 	{
-		auto p = gdk_seat_get_pointer(gdkSeat);
+		auto __p = gdk_seat_get_pointer(gdkSeat);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Device)(cast(GdkDevice*) p);
+		return ObjectG.getDObject!(Device)(cast(GdkDevice*) __p);
 	}
 
 	/**
@@ -162,14 +161,14 @@ public class Seat : ObjectG
 	 */
 	public ListG getSlaves(GdkSeatCapabilities capabilities)
 	{
-		auto p = gdk_seat_get_slaves(gdkSeat, capabilities);
+		auto __p = gdk_seat_get_slaves(gdkSeat, capabilities);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**

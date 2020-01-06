@@ -33,7 +33,6 @@ private import gtk.BuildableT;
 private import gtk.TextTag;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -106,14 +105,14 @@ public class TextTagTable : ObjectG, BuildableIF
 	 */
 	public this()
 	{
-		auto p = gtk_text_tag_table_new();
+		auto __p = gtk_text_tag_table_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkTextTagTable*) p, true);
+		this(cast(GtkTextTagTable*) __p, true);
 	}
 
 	/**
@@ -169,14 +168,14 @@ public class TextTagTable : ObjectG, BuildableIF
 	 */
 	public TextTag lookup(string name)
 	{
-		auto p = gtk_text_tag_table_lookup(gtkTextTagTable, Str.toStringz(name));
+		auto __p = gtk_text_tag_table_lookup(gtkTextTagTable, Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TextTag)(cast(GtkTextTag*) p);
+		return ObjectG.getDObject!(TextTag)(cast(GtkTextTag*) __p);
 	}
 
 	/**

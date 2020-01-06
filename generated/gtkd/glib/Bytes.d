@@ -28,8 +28,6 @@ private import glib.ByteArray;
 private import glib.ConstructionException;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
-private import gtkd.Loader;
 
 
 /**
@@ -91,7 +89,7 @@ public class Bytes
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_bytes_unref(gBytes);
 	}
 
@@ -112,14 +110,14 @@ public class Bytes
 	 */
 	public this(ubyte[] data)
 	{
-		auto p = g_bytes_new(data.ptr, cast(size_t)data.length);
+		auto __p = g_bytes_new(data.ptr, cast(size_t)data.length);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GBytes*) p);
+		this(cast(GBytes*) __p);
 	}
 
 	/**
@@ -146,33 +144,26 @@ public class Bytes
 	 */
 	public this(ubyte[] data, GDestroyNotify freeFunc, void* userData)
 	{
-		auto p = g_bytes_new_with_free_func(data.ptr, cast(size_t)data.length, freeFunc, userData);
+		auto __p = g_bytes_new_with_free_func(data.ptr, cast(size_t)data.length, freeFunc, userData);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_free_func");
 		}
 
-		this(cast(GBytes*) p);
+		this(cast(GBytes*) __p);
 	}
 
 	/**
 	 * Compares the two #GBytes values.
 	 *
-	 * This function can be used to sort GBytes instances in lexicographical order.
-	 *
-	 * If @bytes1 and @bytes2 have different length but the shorter one is a
-	 * prefix of the longer one then the shorter one is considered to be less than
-	 * the longer one. Otherwise the first byte where both differ is used for
-	 * comparison. If @bytes1 has a smaller value at that position it is
-	 * considered less, otherwise greater than @bytes2.
+	 * This function can be used to sort GBytes instances in lexographical order.
 	 *
 	 * Params:
 	 *     bytes2 = a pointer to a #GBytes to compare with @bytes1
 	 *
-	 * Returns: a negative value if @bytes1 is less than @bytes2, a positive value
-	 *     if @bytes1 is greater than @bytes2, and zero if @bytes1 is equal to
-	 *     @bytes2
+	 * Returns: a negative value if bytes2 is lesser, a positive value if bytes2 is
+	 *     greater, and zero if bytes2 is equal to bytes1
 	 *
 	 * Since: 2.32
 	 */
@@ -217,9 +208,9 @@ public class Bytes
 	{
 		size_t size;
 
-		auto p = g_bytes_get_data(gBytes, &size);
+		auto __p = g_bytes_get_data(gBytes, &size);
 
-		return cast(ubyte[])p[0 .. size];
+		return cast(ubyte[])__p[0 .. size];
 	}
 
 	/**
@@ -258,12 +249,6 @@ public class Bytes
 	 * A reference to @bytes will be held by the newly created #GBytes until
 	 * the byte data is no longer needed.
 	 *
-	 * Since 2.56, if @offset is 0 and @length matches the size of @bytes, then
-	 * @bytes will be returned with the reference count incremented by 1. If @bytes
-	 * is a slice of another #GBytes, then the resulting #GBytes will reference
-	 * the same #GBytes instead of @bytes. This allows consumers to simplify the
-	 * usage of #GBytes when asynchronously writing to streams.
-	 *
 	 * Params:
 	 *     offset = offset which subsection starts at
 	 *     length = length of subsection
@@ -274,14 +259,14 @@ public class Bytes
 	 */
 	public Bytes newFromBytes(size_t offset, size_t length)
 	{
-		auto p = g_bytes_new_from_bytes(gBytes, offset, length);
+		auto __p = g_bytes_new_from_bytes(gBytes, offset, length);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Bytes(cast(GBytes*) p, true);
+		return new Bytes(cast(GBytes*) __p, true);
 	}
 
 	alias doref = ref_;
@@ -294,19 +279,19 @@ public class Bytes
 	 */
 	public Bytes ref_()
 	{
-		auto p = g_bytes_ref(gBytes);
+		auto __p = g_bytes_ref(gBytes);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Bytes(cast(GBytes*) p, true);
+		return new Bytes(cast(GBytes*) __p, true);
 	}
 
 	/**
 	 * Releases a reference on @bytes.  This may result in the bytes being
-	 * freed. If @bytes is %NULL, it will return immediately.
+	 * freed.
 	 *
 	 * Since: 2.32
 	 */
@@ -330,14 +315,14 @@ public class Bytes
 	 */
 	public ByteArray unrefToArray()
 	{
-		auto p = g_bytes_unref_to_array(gBytes);
+		auto __p = g_bytes_unref_to_array(gBytes);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ByteArray(cast(GByteArray*) p, true);
+		return new ByteArray(cast(GByteArray*) __p, true);
 	}
 
 	/**
@@ -358,8 +343,8 @@ public class Bytes
 	{
 		size_t size;
 
-		auto p = g_bytes_unref_to_data(gBytes, &size);
+		auto __p = g_bytes_unref_to_data(gBytes, &size);
 
-		return cast(ubyte[])p[0 .. size];
+		return cast(ubyte[])__p[0 .. size];
 	}
 }

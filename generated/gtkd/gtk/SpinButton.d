@@ -34,7 +34,6 @@ private import gtk.OrientableT;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -201,14 +200,14 @@ public class SpinButton : Entry, OrientableIF
 	 */
 	public this(Adjustment adjustment, double climbRate, uint digits)
 	{
-		auto p = gtk_spin_button_new((adjustment is null) ? null : adjustment.getAdjustmentStruct(), climbRate, digits);
+		auto __p = gtk_spin_button_new((adjustment is null) ? null : adjustment.getAdjustmentStruct(), climbRate, digits);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSpinButton*) p);
+		this(cast(GtkSpinButton*) __p);
 	}
 
 	/**
@@ -233,14 +232,14 @@ public class SpinButton : Entry, OrientableIF
 	 */
 	public this(double min, double max, double step)
 	{
-		auto p = gtk_spin_button_new_with_range(min, max, step);
+		auto __p = gtk_spin_button_new_with_range(min, max, step);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_range");
 		}
 
-		this(cast(GtkSpinButton*) p);
+		this(cast(GtkSpinButton*) __p);
 	}
 
 	/**
@@ -265,14 +264,14 @@ public class SpinButton : Entry, OrientableIF
 	 */
 	public Adjustment getAdjustment()
 	{
-		auto p = gtk_spin_button_get_adjustment(gtkSpinButton);
+		auto __p = gtk_spin_button_get_adjustment(gtkSpinButton);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) __p);
 	}
 
 	/**

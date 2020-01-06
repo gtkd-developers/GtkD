@@ -32,7 +32,6 @@ private import gtk.Entry;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -61,8 +60,6 @@ private import std.algorithm;
  * Often, GtkSearchEntry will be fed events by means of being
  * placed inside a #GtkSearchBar. If that is not the case,
  * you can use gtk_search_entry_handle_event() to pass events.
- *
- * Since: 3.6
  */
 public class SearchEntry : Entry
 {
@@ -111,14 +108,14 @@ public class SearchEntry : Entry
 	 */
 	public this()
 	{
-		auto p = gtk_search_entry_new();
+		auto __p = gtk_search_entry_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSearchEntry*) p);
+		this(cast(GtkSearchEntry*) __p);
 	}
 
 	/**

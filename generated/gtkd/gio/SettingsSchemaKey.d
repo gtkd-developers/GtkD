@@ -30,8 +30,6 @@ private import glib.Str;
 private import glib.Variant;
 private import glib.VariantType;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
-private import gtkd.Loader;
 
 
 /**
@@ -69,7 +67,7 @@ public class SettingsSchemaKey
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GIO) && ownedRef )
+		if ( ownedRef )
 			g_settings_schema_key_unref(gSettingsSchemaKey);
 	}
 
@@ -92,14 +90,14 @@ public class SettingsSchemaKey
 	 */
 	public Variant getDefaultValue()
 	{
-		auto p = g_settings_schema_key_get_default_value(gSettingsSchemaKey);
+		auto __p = g_settings_schema_key_get_default_value(gSettingsSchemaKey);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -183,14 +181,14 @@ public class SettingsSchemaKey
 	 */
 	public Variant getRange()
 	{
-		auto p = g_settings_schema_key_get_range(gSettingsSchemaKey);
+		auto __p = g_settings_schema_key_get_range(gSettingsSchemaKey);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -226,14 +224,14 @@ public class SettingsSchemaKey
 	 */
 	public VariantType getValueType()
 	{
-		auto p = g_settings_schema_key_get_value_type(gSettingsSchemaKey);
+		auto __p = g_settings_schema_key_get_value_type(gSettingsSchemaKey);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new VariantType(cast(GVariantType*) p);
+		return new VariantType(cast(GVariantType*) __p);
 	}
 
 	/**
@@ -265,14 +263,14 @@ public class SettingsSchemaKey
 	 */
 	public SettingsSchemaKey ref_()
 	{
-		auto p = g_settings_schema_key_ref(gSettingsSchemaKey);
+		auto __p = g_settings_schema_key_ref(gSettingsSchemaKey);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SettingsSchemaKey)(cast(GSettingsSchemaKey*) p, true);
+		return ObjectG.getDObject!(SettingsSchemaKey)(cast(GSettingsSchemaKey*) __p, true);
 	}
 
 	/**

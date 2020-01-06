@@ -34,7 +34,6 @@ public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -116,8 +115,7 @@ public class DBusActionGroup : ObjectG, ActionGroupIF, RemoteActionGroupIF
 	 *
 	 * Params:
 	 *     connection = A #GDBusConnection
-	 *     busName = the bus name which exports the action
-	 *         group or %NULL if @connection is not a message bus connection
+	 *     busName = the bus name which exports the action group
 	 *     objectPath = the object path at which the action group is exported
 	 *
 	 * Returns: a #GDBusActionGroup
@@ -126,13 +124,13 @@ public class DBusActionGroup : ObjectG, ActionGroupIF, RemoteActionGroupIF
 	 */
 	public static DBusActionGroup get(DBusConnection connection, string busName, string objectPath)
 	{
-		auto p = g_dbus_action_group_get((connection is null) ? null : connection.getDBusConnectionStruct(), Str.toStringz(busName), Str.toStringz(objectPath));
+		auto __p = g_dbus_action_group_get((connection is null) ? null : connection.getDBusConnectionStruct(), Str.toStringz(busName), Str.toStringz(objectPath));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusActionGroup)(cast(GDBusActionGroup*) p, true);
+		return ObjectG.getDObject!(DBusActionGroup)(cast(GDBusActionGroup*) __p, true);
 	}
 }

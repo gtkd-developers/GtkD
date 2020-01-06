@@ -35,7 +35,6 @@ private import gtk.ComboBox;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -116,14 +115,14 @@ public class AppChooserButton : ComboBox, AppChooserIF
 	 */
 	public this(string contentType)
 	{
-		auto p = gtk_app_chooser_button_new(Str.toStringz(contentType));
+		auto __p = gtk_app_chooser_button_new(Str.toStringz(contentType));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkAppChooserButton*) p);
+		this(cast(GtkAppChooserButton*) __p);
 	}
 
 	/**

@@ -30,8 +30,6 @@ private import glib.Str;
 private import glib.TimeVal;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
-private import gtkd.Loader;
 
 
 /**
@@ -78,7 +76,7 @@ public final class Date
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_date_free(gDate);
 	}
 
@@ -181,14 +179,14 @@ public final class Date
 	 */
 	public this()
 	{
-		auto p = g_date_new();
+		auto __p = g_date_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GDate*) p);
+		this(cast(GDate*) __p);
 	}
 
 	/**
@@ -207,14 +205,14 @@ public final class Date
 	 */
 	public this(GDateDay day, GDateMonth month, GDateYear year)
 	{
-		auto p = g_date_new_dmy(day, month, year);
+		auto __p = g_date_new_dmy(day, month, year);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_dmy");
 		}
 
-		this(cast(GDate*) p);
+		this(cast(GDate*) __p);
 	}
 
 	/**
@@ -231,14 +229,14 @@ public final class Date
 	 */
 	public this(uint julianDay)
 	{
-		auto p = g_date_new_julian(julianDay);
+		auto __p = g_date_new_julian(julianDay);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_julian");
 		}
 
-		this(cast(GDate*) p);
+		this(cast(GDate*) __p);
 	}
 
 	/**
@@ -326,27 +324,6 @@ public final class Date
 	public int compare(Date rhs)
 	{
 		return g_date_compare(gDate, (rhs is null) ? null : rhs.getDateStruct());
-	}
-
-	/**
-	 * Copies a GDate to a newly-allocated GDate. If the input was invalid
-	 * (as determined by g_date_valid()), the invalid state will be copied
-	 * as is into the new object.
-	 *
-	 * Returns: a newly-allocated #GDate initialized from @date
-	 *
-	 * Since: 2.56
-	 */
-	public Date copy()
-	{
-		auto p = g_date_copy(gDate);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return new Date(cast(GDate*) p, true);
 	}
 
 	/**
@@ -601,10 +578,7 @@ public final class Date
 	 *
 	 * To set the value of a date to the current day, you could write:
 	 * |[<!-- language="C" -->
-	 * time_t now = time (NULL);
-	 * if (now == (time_t) -1)
-	 * // handle the error
-	 * g_date_set_time_t (date, now);
+	 * g_date_set_time_t (date, time (NULL));
 	 * ]|
 	 *
 	 * Params:
@@ -612,7 +586,7 @@ public final class Date
 	 *
 	 * Since: 2.10
 	 */
-	public void setTimeT(uint timet)
+	public void set_time_t(uint timet)
 	{
 		g_date_set_time_t(gDate, timet);
 	}

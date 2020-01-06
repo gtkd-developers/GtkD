@@ -29,7 +29,6 @@ public  import atk.c.functions;
 public  import atk.c.types;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
-public  import gtkc.atktypes;
 public  import std.algorithm;
 
 
@@ -66,14 +65,14 @@ public template HypertextT(TStruct)
 	 */
 	public Hyperlink getLink(int linkIndex)
 	{
-		auto p = atk_hypertext_get_link(getHypertextStruct(), linkIndex);
+		auto __p = atk_hypertext_get_link(getHypertextStruct(), linkIndex);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Hyperlink)(cast(AtkHyperlink*) p);
+		return ObjectG.getDObject!(Hyperlink)(cast(AtkHyperlink*) __p);
 	}
 
 	/**

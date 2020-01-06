@@ -30,8 +30,6 @@ private import glib.Variant;
 private import glib.VariantType;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
-private import gtkd.Loader;
 
 
 /**
@@ -74,7 +72,7 @@ public class VariantBuilder
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_variant_builder_unref(gVariantBuilder);
 	}
 
@@ -101,14 +99,14 @@ public class VariantBuilder
 	 */
 	public this(VariantType type)
 	{
-		auto p = g_variant_builder_new((type is null) ? null : type.getVariantTypeStruct());
+		auto __p = g_variant_builder_new((type is null) ? null : type.getVariantTypeStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GVariantBuilder*) p);
+		this(cast(GVariantBuilder*) __p);
 	}
 
 	/**
@@ -141,7 +139,7 @@ public class VariantBuilder
 	 * #GVariantBuilder if you want to abort building the value part-way
 	 * through.  This function need not be called if you call
 	 * g_variant_builder_end() and it also doesn't need to be called on
-	 * builders allocated with g_variant_builder_new() (see
+	 * builders allocated with g_variant_builder_new (see
 	 * g_variant_builder_unref() for that).
 	 *
 	 * This function leaves the #GVariantBuilder structure set to all-zeros.
@@ -196,14 +194,14 @@ public class VariantBuilder
 	 */
 	public Variant end()
 	{
-		auto p = g_variant_builder_end(gVariantBuilder);
+		auto __p = g_variant_builder_end(gVariantBuilder);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) __p);
 	}
 
 	/**
@@ -308,14 +306,14 @@ public class VariantBuilder
 	 */
 	public VariantBuilder ref_()
 	{
-		auto p = g_variant_builder_ref(gVariantBuilder);
+		auto __p = g_variant_builder_ref(gVariantBuilder);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new VariantBuilder(cast(GVariantBuilder*) p, true);
+		return new VariantBuilder(cast(GVariantBuilder*) __p, true);
 	}
 
 	/**

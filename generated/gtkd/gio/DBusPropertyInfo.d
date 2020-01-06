@@ -30,8 +30,6 @@ public  import gio.c.types;
 private import glib.MemorySlice;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
-private import gtkd.Loader;
 
 
 /**
@@ -70,7 +68,7 @@ public final class DBusPropertyInfo
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GIO) && ownedRef )
+		if ( ownedRef )
 			g_dbus_property_info_unref(gDBusPropertyInfo);
 	}
 
@@ -175,14 +173,14 @@ public final class DBusPropertyInfo
 	 */
 	public DBusPropertyInfo ref_()
 	{
-		auto p = g_dbus_property_info_ref(gDBusPropertyInfo);
+		auto __p = g_dbus_property_info_ref(gDBusPropertyInfo);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusPropertyInfo)(cast(GDBusPropertyInfo*) p, true);
+		return ObjectG.getDObject!(DBusPropertyInfo)(cast(GDBusPropertyInfo*) __p, true);
 	}
 
 	/**

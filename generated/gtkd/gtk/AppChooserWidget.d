@@ -36,7 +36,6 @@ private import gtk.Menu;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -116,14 +115,14 @@ public class AppChooserWidget : Box, AppChooserIF
 	 */
 	public this(string contentType)
 	{
-		auto p = gtk_app_chooser_widget_new(Str.toStringz(contentType));
+		auto __p = gtk_app_chooser_widget_new(Str.toStringz(contentType));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkAppChooserWidget*) p);
+		this(cast(GtkAppChooserWidget*) __p);
 	}
 
 	/**

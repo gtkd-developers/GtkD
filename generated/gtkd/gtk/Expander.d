@@ -32,7 +32,6 @@ private import gtk.Bin;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -252,14 +251,14 @@ public class Expander : Bin
 	 */
 	public Widget getLabelWidget()
 	{
-		auto p = gtk_expander_get_label_widget(gtkExpander);
+		auto __p = gtk_expander_get_label_widget(gtkExpander);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**

@@ -29,7 +29,6 @@ public  import gio.TlsDatabase;
 public  import gio.c.functions;
 public  import gio.c.types;
 public  import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -84,21 +83,21 @@ public template TlsBackendT(TStruct)
 	 */
 	public TlsDatabase getDefaultDatabase()
 	{
-		auto p = g_tls_backend_get_default_database(getTlsBackendStruct());
+		auto __p = g_tls_backend_get_default_database(getTlsBackendStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TlsDatabase)(cast(GTlsDatabase*) p, true);
+		return ObjectG.getDObject!(TlsDatabase)(cast(GTlsDatabase*) __p, true);
 	}
 
 	/**
 	 * Gets the #GType of @backend’s #GDtlsClientConnection implementation.
 	 *
 	 * Returns: the #GType of @backend’s #GDtlsClientConnection
-	 *     implementation, or %G_TYPE_INVALID if this backend doesn’t support DTLS.
+	 *     implementation.
 	 *
 	 * Since: 2.48
 	 */
@@ -111,7 +110,7 @@ public template TlsBackendT(TStruct)
 	 * Gets the #GType of @backend’s #GDtlsServerConnection implementation.
 	 *
 	 * Returns: the #GType of @backend’s #GDtlsServerConnection
-	 *     implementation, or %G_TYPE_INVALID if this backend doesn’t support DTLS.
+	 *     implementation.
 	 *
 	 * Since: 2.48
 	 */
@@ -143,26 +142,6 @@ public template TlsBackendT(TStruct)
 	public GType getServerConnectionType()
 	{
 		return g_tls_backend_get_server_connection_type(getTlsBackendStruct());
-	}
-
-	/**
-	 * Set the default #GTlsDatabase used to verify TLS connections
-	 *
-	 * Any subsequent call to g_tls_backend_get_default_database() will return
-	 * the database set in this call.  Existing databases and connections are not
-	 * modified.
-	 *
-	 * Setting a %NULL default database will reset to using the system default
-	 * database as if g_tls_backend_set_default_database() had never been called.
-	 *
-	 * Params:
-	 *     database = the #GTlsDatabase
-	 *
-	 * Since: 2.60
-	 */
-	public void setDefaultDatabase(TlsDatabase database)
-	{
-		g_tls_backend_set_default_database(getTlsBackendStruct(), (database is null) ? null : database.getTlsDatabaseStruct());
 	}
 
 	/**

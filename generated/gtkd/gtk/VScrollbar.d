@@ -31,7 +31,6 @@ private import gtk.Scrollbar;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -93,13 +92,13 @@ public class VScrollbar : Scrollbar
 	 */
 	public this(Adjustment adjustment)
 	{
-		auto p = gtk_vscrollbar_new((adjustment is null) ? null : adjustment.getAdjustmentStruct());
+		auto __p = gtk_vscrollbar_new((adjustment is null) ? null : adjustment.getAdjustmentStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkVScrollbar*) p);
+		this(cast(GtkVScrollbar*) __p);
 	}
 }

@@ -28,8 +28,6 @@ private import glib.ConstructionException;
 private import glib.SequenceIter;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
-private import gtkd.Loader;
 
 
 /**
@@ -67,7 +65,7 @@ public class Sequence
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_sequence_free(gSequence);
 	}
 
@@ -84,20 +82,20 @@ public class Sequence
 	 */
 	public SequenceIter append(void* data)
 	{
-		auto p = g_sequence_append(gSequence, data);
+		auto __p = g_sequence_append(gSequence, data);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new SequenceIter(cast(GSequenceIter*) p);
+		return new SequenceIter(cast(GSequenceIter*) __p);
 	}
 
 	alias foreac = foreach_;
 	/**
 	 * Calls @func for each item in the sequence passing @user_data
-	 * to the function. @func must not modify the sequence itself.
+	 * to the function.
 	 *
 	 * Params:
 	 *     func = the function to call for each item in @seq
@@ -132,14 +130,14 @@ public class Sequence
 	 */
 	public SequenceIter getBeginIter()
 	{
-		auto p = g_sequence_get_begin_iter(gSequence);
+		auto __p = g_sequence_get_begin_iter(gSequence);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new SequenceIter(cast(GSequenceIter*) p);
+		return new SequenceIter(cast(GSequenceIter*) __p);
 	}
 
 	/**
@@ -151,14 +149,14 @@ public class Sequence
 	 */
 	public SequenceIter getEndIter()
 	{
-		auto p = g_sequence_get_end_iter(gSequence);
+		auto __p = g_sequence_get_end_iter(gSequence);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new SequenceIter(cast(GSequenceIter*) p);
+		return new SequenceIter(cast(GSequenceIter*) __p);
 	}
 
 	/**
@@ -174,14 +172,14 @@ public class Sequence
 	 */
 	public SequenceIter getIterAtPos(int pos)
 	{
-		auto p = g_sequence_get_iter_at_pos(gSequence, pos);
+		auto __p = g_sequence_get_iter_at_pos(gSequence, pos);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new SequenceIter(cast(GSequenceIter*) p);
+		return new SequenceIter(cast(GSequenceIter*) __p);
 	}
 
 	/**
@@ -199,18 +197,14 @@ public class Sequence
 	}
 
 	/**
-	 * Inserts @data into @seq using @cmp_func to determine the new
+	 * Inserts @data into @sequence using @func to determine the new
 	 * position. The sequence must already be sorted according to @cmp_func;
 	 * otherwise the new position of @data is undefined.
 	 *
-	 * @cmp_func is called with two items of the @seq, and @cmp_data.
+	 * @cmp_func is called with two items of the @seq and @user_data.
 	 * It should return 0 if the items are equal, a negative value
 	 * if the first item comes before the second, and a positive value
-	 * if the second item comes before the first.
-	 *
-	 * Note that when adding a large amount of data to a #GSequence,
-	 * it is more efficient to do unsorted insertions and then call
-	 * g_sequence_sort() or g_sequence_sort_iter().
+	 * if the second  item comes before the first.
 	 *
 	 * Params:
 	 *     data = the data to insert
@@ -223,14 +217,14 @@ public class Sequence
 	 */
 	public SequenceIter insertSorted(void* data, GCompareDataFunc cmpFunc, void* cmpData)
 	{
-		auto p = g_sequence_insert_sorted(gSequence, data, cmpFunc, cmpData);
+		auto __p = g_sequence_insert_sorted(gSequence, data, cmpFunc, cmpData);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new SequenceIter(cast(GSequenceIter*) p);
+		return new SequenceIter(cast(GSequenceIter*) __p);
 	}
 
 	/**
@@ -243,14 +237,15 @@ public class Sequence
 	 * value if the first iterator comes before the second, and a
 	 * positive value if the second iterator comes before the first.
 	 *
-	 * Note that when adding a large amount of data to a #GSequence,
-	 * it is more efficient to do unsorted insertions and then call
-	 * g_sequence_sort() or g_sequence_sort_iter().
+	 * It is called with two iterators pointing into @seq. It should
+	 * return 0 if the iterators are equal, a negative value if the
+	 * first iterator comes before the second, and a positive value
+	 * if the second iterator comes before the first.
 	 *
 	 * Params:
 	 *     data = data for the new item
 	 *     iterCmp = the function used to compare iterators in the sequence
-	 *     cmpData = user data passed to @iter_cmp
+	 *     cmpData = user data passed to @cmp_func
 	 *
 	 * Returns: a #GSequenceIter pointing to the new item
 	 *
@@ -258,14 +253,14 @@ public class Sequence
 	 */
 	public SequenceIter insertSortedIter(void* data, GSequenceIterCompareFunc iterCmp, void* cmpData)
 	{
-		auto p = g_sequence_insert_sorted_iter(gSequence, data, iterCmp, cmpData);
+		auto __p = g_sequence_insert_sorted_iter(gSequence, data, iterCmp, cmpData);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new SequenceIter(cast(GSequenceIter*) p);
+		return new SequenceIter(cast(GSequenceIter*) __p);
 	}
 
 	/**
@@ -291,13 +286,16 @@ public class Sequence
 	 * returned. In that case, you can use g_sequence_iter_next() and
 	 * g_sequence_iter_prev() to get others.
 	 *
-	 * @cmp_func is called with two items of the @seq, and @cmp_data.
+	 * @cmp_func is called with two items of the @seq and @user_data.
 	 * It should return 0 if the items are equal, a negative value if
 	 * the first item comes before the second, and a positive value if
 	 * the second item comes before the first.
 	 *
 	 * This function will fail if the data contained in the sequence is
-	 * unsorted.
+	 * unsorted.  Use g_sequence_insert_sorted() or
+	 * g_sequence_insert_sorted_iter() to add data to your sequence or, if
+	 * you want to add a large amount of data, call g_sequence_sort() after
+	 * doing unsorted insertions.
 	 *
 	 * Params:
 	 *     data = data to lookup
@@ -312,14 +310,14 @@ public class Sequence
 	 */
 	public SequenceIter lookup(void* data, GCompareDataFunc cmpFunc, void* cmpData)
 	{
-		auto p = g_sequence_lookup(gSequence, data, cmpFunc, cmpData);
+		auto __p = g_sequence_lookup(gSequence, data, cmpFunc, cmpData);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new SequenceIter(cast(GSequenceIter*) p);
+		return new SequenceIter(cast(GSequenceIter*) __p);
 	}
 
 	/**
@@ -332,7 +330,10 @@ public class Sequence
 	 * value if the second iterator comes before the first.
 	 *
 	 * This function will fail if the data contained in the sequence is
-	 * unsorted.
+	 * unsorted.  Use g_sequence_insert_sorted() or
+	 * g_sequence_insert_sorted_iter() to add data to your sequence or, if
+	 * you want to add a large amount of data, call g_sequence_sort() after
+	 * doing unsorted insertions.
 	 *
 	 * Params:
 	 *     data = data to lookup
@@ -340,21 +341,21 @@ public class Sequence
 	 *     cmpData = user data passed to @iter_cmp
 	 *
 	 * Returns: an #GSequenceIter pointing to the position of
-	 *     the first item found equal to @data according to @iter_cmp
+	 *     the first item found equal to @data according to @cmp_func
 	 *     and @cmp_data, or %NULL if no such item exists
 	 *
 	 * Since: 2.28
 	 */
 	public SequenceIter lookupIter(void* data, GSequenceIterCompareFunc iterCmp, void* cmpData)
 	{
-		auto p = g_sequence_lookup_iter(gSequence, data, iterCmp, cmpData);
+		auto __p = g_sequence_lookup_iter(gSequence, data, iterCmp, cmpData);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new SequenceIter(cast(GSequenceIter*) p);
+		return new SequenceIter(cast(GSequenceIter*) __p);
 	}
 
 	/**
@@ -369,21 +370,21 @@ public class Sequence
 	 */
 	public SequenceIter prepend(void* data)
 	{
-		auto p = g_sequence_prepend(gSequence, data);
+		auto __p = g_sequence_prepend(gSequence, data);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new SequenceIter(cast(GSequenceIter*) p);
+		return new SequenceIter(cast(GSequenceIter*) __p);
 	}
 
 	/**
 	 * Returns an iterator pointing to the position where @data would
 	 * be inserted according to @cmp_func and @cmp_data.
 	 *
-	 * @cmp_func is called with two items of the @seq, and @cmp_data.
+	 * @cmp_func is called with two items of the @seq and @user_data.
 	 * It should return 0 if the items are equal, a negative value if
 	 * the first item comes before the second, and a positive value if
 	 * the second item comes before the first.
@@ -392,7 +393,10 @@ public class Sequence
 	 * consider using g_sequence_lookup().
 	 *
 	 * This function will fail if the data contained in the sequence is
-	 * unsorted.
+	 * unsorted.  Use g_sequence_insert_sorted() or
+	 * g_sequence_insert_sorted_iter() to add data to your sequence or, if
+	 * you want to add a large amount of data, call g_sequence_sort() after
+	 * doing unsorted insertions.
 	 *
 	 * Params:
 	 *     data = data for the new item
@@ -406,14 +410,14 @@ public class Sequence
 	 */
 	public SequenceIter search(void* data, GCompareDataFunc cmpFunc, void* cmpData)
 	{
-		auto p = g_sequence_search(gSequence, data, cmpFunc, cmpData);
+		auto __p = g_sequence_search(gSequence, data, cmpFunc, cmpData);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new SequenceIter(cast(GSequenceIter*) p);
+		return new SequenceIter(cast(GSequenceIter*) __p);
 	}
 
 	/**
@@ -429,7 +433,10 @@ public class Sequence
 	 * consider using g_sequence_lookup_iter().
 	 *
 	 * This function will fail if the data contained in the sequence is
-	 * unsorted.
+	 * unsorted.  Use g_sequence_insert_sorted() or
+	 * g_sequence_insert_sorted_iter() to add data to your sequence or, if
+	 * you want to add a large amount of data, call g_sequence_sort() after
+	 * doing unsorted insertions.
 	 *
 	 * Params:
 	 *     data = data for the new item
@@ -444,14 +451,14 @@ public class Sequence
 	 */
 	public SequenceIter searchIter(void* data, GSequenceIterCompareFunc iterCmp, void* cmpData)
 	{
-		auto p = g_sequence_search_iter(gSequence, data, iterCmp, cmpData);
+		auto __p = g_sequence_search_iter(gSequence, data, iterCmp, cmpData);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new SequenceIter(cast(GSequenceIter*) p);
+		return new SequenceIter(cast(GSequenceIter*) __p);
 	}
 
 	/**
@@ -475,7 +482,7 @@ public class Sequence
 
 	/**
 	 * Like g_sequence_sort(), but uses a #GSequenceIterCompareFunc instead
-	 * of a #GCompareDataFunc as the compare function
+	 * of a GCompareDataFunc as the compare function
 	 *
 	 * @cmp_func is called with two iterators pointing into @seq. It should
 	 * return 0 if the iterators are equal, a negative value if the first
@@ -495,8 +502,7 @@ public class Sequence
 
 	/**
 	 * Calls @func for each item in the range (@begin, @end) passing
-	 * @user_data to the function. @func must not modify the sequence
-	 * itself.
+	 * @user_data to the function.
 	 *
 	 * Params:
 	 *     begin = a #GSequenceIter
@@ -539,14 +545,14 @@ public class Sequence
 	 */
 	public static SequenceIter insertBefore(SequenceIter iter, void* data)
 	{
-		auto p = g_sequence_insert_before((iter is null) ? null : iter.getSequenceIterStruct(), data);
+		auto __p = g_sequence_insert_before((iter is null) ? null : iter.getSequenceIterStruct(), data);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new SequenceIter(cast(GSequenceIter*) p);
+		return new SequenceIter(cast(GSequenceIter*) __p);
 	}
 
 	/**
@@ -568,13 +574,13 @@ public class Sequence
 	}
 
 	/**
-	 * Inserts the (@begin, @end) range at the destination pointed to by @dest.
+	 * Inserts the (@begin, @end) range at the destination pointed to by ptr.
 	 * The @begin and @end iters must point into the same sequence. It is
 	 * allowed for @dest to point to a different sequence than the one pointed
 	 * into by @begin and @end.
 	 *
-	 * If @dest is %NULL, the range indicated by @begin and @end is
-	 * removed from the sequence. If @dest points to a place within
+	 * If @dest is NULL, the range indicated by @begin and @end is
+	 * removed from the sequence. If @dest iter points to a place within
 	 * the (@begin, @end) range, the range does not move.
 	 *
 	 * Params:
@@ -605,14 +611,14 @@ public class Sequence
 	 */
 	public this(GDestroyNotify dataDestroy)
 	{
-		auto p = g_sequence_new(dataDestroy);
+		auto __p = g_sequence_new(dataDestroy);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GSequence*) p);
+		this(cast(GSequence*) __p);
 	}
 
 	/**
@@ -634,14 +640,14 @@ public class Sequence
 	 */
 	public static SequenceIter rangeGetMidpoint(SequenceIter begin, SequenceIter end)
 	{
-		auto p = g_sequence_range_get_midpoint((begin is null) ? null : begin.getSequenceIterStruct(), (end is null) ? null : end.getSequenceIterStruct());
+		auto __p = g_sequence_range_get_midpoint((begin is null) ? null : begin.getSequenceIterStruct(), (end is null) ? null : end.getSequenceIterStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new SequenceIter(cast(GSequenceIter*) p);
+		return new SequenceIter(cast(GSequenceIter*) __p);
 	}
 
 	/**
@@ -695,13 +701,12 @@ public class Sequence
 	}
 
 	/**
-	 * Moves the data pointed to by @iter to a new position as indicated by
-	 * @cmp_func. This
+	 * Moves the data pointed to a new position as indicated by @cmp_func. This
 	 * function should be called for items in a sequence already sorted according
 	 * to @cmp_func whenever some aspect of an item changes so that @cmp_func
 	 * may return different values for that item.
 	 *
-	 * @cmp_func is called with two items of the @seq, and @cmp_data.
+	 * @cmp_func is called with two items of the @seq and @user_data.
 	 * It should return 0 if the items are equal, a negative value if
 	 * the first item comes before the second, and a positive value if
 	 * the second item comes before the first.
@@ -723,8 +728,7 @@ public class Sequence
 	 * a #GSequenceIterCompareFunc instead of a #GCompareDataFunc as
 	 * the compare function.
 	 *
-	 * @iter_cmp is called with two iterators pointing into the #GSequence that
-	 * @iter points into. It should
+	 * @iter_cmp is called with two iterators pointing into @seq. It should
 	 * return 0 if the iterators are equal, a negative value if the first
 	 * iterator comes before the second, and a positive value if the second
 	 * iterator comes before the first.

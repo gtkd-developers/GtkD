@@ -30,8 +30,6 @@ private import gtk.TargetEntry;
 private import gtk.TextBuffer;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
-private import gtkd.Loader;
 
 
 /**
@@ -70,7 +68,7 @@ public class TargetList
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GTK) && ownedRef )
+		if ( ownedRef )
 			gtk_target_list_unref(gtkTargetList);
 	}
 
@@ -100,14 +98,14 @@ public class TargetList
 			targetsArray[i] = *(targets[i].getTargetEntryStruct());
 		}
 
-		auto p = gtk_target_list_new(targetsArray.ptr, cast(uint)targets.length);
+		auto __p = gtk_target_list_new(targetsArray.ptr, cast(uint)targets.length);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkTargetList*) p);
+		this(cast(GtkTargetList*) __p);
 	}
 
 	/**
@@ -226,14 +224,14 @@ public class TargetList
 	 */
 	public TargetList ref_()
 	{
-		auto p = gtk_target_list_ref(gtkTargetList);
+		auto __p = gtk_target_list_ref(gtkTargetList);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(TargetList)(cast(GtkTargetList*) p, true);
+		return ObjectG.getDObject!(TargetList)(cast(GtkTargetList*) __p, true);
 	}
 
 	/**
@@ -293,9 +291,9 @@ public class TargetList
 	{
 		int nTargets;
 
-		auto p = gtk_target_table_new_from_list((list is null) ? null : list.getTargetListStruct(), &nTargets);
+		auto __p = gtk_target_table_new_from_list((list is null) ? null : list.getTargetListStruct(), &nTargets);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
@@ -303,7 +301,7 @@ public class TargetList
 		TargetEntry[] arr = new TargetEntry[nTargets];
 		for(int i = 0; i < nTargets; i++)
 		{
-			arr[i] = ObjectG.getDObject!(TargetEntry)(cast(GtkTargetEntry*) &p[i]);
+			arr[i] = ObjectG.getDObject!(TargetEntry)(cast(GtkTargetEntry*) &__p[i]);
 		}
 
 		return arr;

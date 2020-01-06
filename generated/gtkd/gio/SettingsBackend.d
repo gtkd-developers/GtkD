@@ -30,7 +30,6 @@ private import glib.BBTree;
 private import glib.Str;
 private import glib.Variant;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -48,12 +47,12 @@ public  import gtkc.giotypes;
  * implementations must carefully adhere to the expectations of
  * callers that are documented on each of the interface methods.
  * 
- * Some of the #GSettingsBackend functions accept or return a #GTree.
+ * Some of the GSettingsBackend functions accept or return a #GTree.
  * These trees always have strings as keys and #GVariant as values.
  * g_settings_backend_create_tree() is a convenience function to create
  * suitable trees.
  * 
- * The #GSettingsBackend API is exported to allow third-party
+ * The GSettingsBackend API is exported to allow third-party
  * implementations, but does not carry the same stability guarantees
  * as the public GIO API. For this reason, you have to define the
  * C preprocessor symbol %G_SETTINGS_ENABLE_BACKEND before including
@@ -143,14 +142,14 @@ public class SettingsBackend : ObjectG
 	 */
 	public static SettingsBackend getDefault()
 	{
-		auto p = g_settings_backend_get_default();
+		auto __p = g_settings_backend_get_default();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SettingsBackend)(cast(GSettingsBackend*) p, true);
+		return ObjectG.getDObject!(SettingsBackend)(cast(GSettingsBackend*) __p, true);
 	}
 
 	/**
@@ -352,11 +351,6 @@ public class SettingsBackend : ObjectG
 	 * characters in your path names or '=' in your key names you may be in
 	 * trouble.
 	 *
-	 * The backend reads default values from a keyfile called `defaults` in
-	 * the directory specified by the #GKeyfileSettingsBackend:defaults-dir property,
-	 * and a list of locked keys from a text file with the name `locks` in
-	 * the same location.
-	 *
 	 * Params:
 	 *     filename = the filename of the keyfile
 	 *     rootPath = the path under which all settings keys appear
@@ -367,14 +361,14 @@ public class SettingsBackend : ObjectG
 	 */
 	public static SettingsBackend keyfileSettingsBackendNew(string filename, string rootPath, string rootGroup)
 	{
-		auto p = g_keyfile_settings_backend_new(Str.toStringz(filename), Str.toStringz(rootPath), Str.toStringz(rootGroup));
+		auto __p = g_keyfile_settings_backend_new(Str.toStringz(filename), Str.toStringz(rootPath), Str.toStringz(rootGroup));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SettingsBackend)(cast(GSettingsBackend*) p, true);
+		return ObjectG.getDObject!(SettingsBackend)(cast(GSettingsBackend*) __p, true);
 	}
 
 	/**
@@ -390,14 +384,14 @@ public class SettingsBackend : ObjectG
 	 */
 	public static SettingsBackend memorySettingsBackendNew()
 	{
-		auto p = g_memory_settings_backend_new();
+		auto __p = g_memory_settings_backend_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SettingsBackend)(cast(GSettingsBackend*) p, true);
+		return ObjectG.getDObject!(SettingsBackend)(cast(GSettingsBackend*) __p, true);
 	}
 
 	/**
@@ -412,13 +406,13 @@ public class SettingsBackend : ObjectG
 	 */
 	public static SettingsBackend nullSettingsBackendNew()
 	{
-		auto p = g_null_settings_backend_new();
+		auto __p = g_null_settings_backend_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SettingsBackend)(cast(GSettingsBackend*) p, true);
+		return ObjectG.getDObject!(SettingsBackend)(cast(GSettingsBackend*) __p, true);
 	}
 }

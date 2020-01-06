@@ -29,8 +29,6 @@ private import glib.MainContext;
 private import glib.Source;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
-private import gtkd.Loader;
 
 
 /**
@@ -68,7 +66,7 @@ public class MainLoop
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_main_loop_unref(gMainLoop);
 	}
 
@@ -88,14 +86,14 @@ public class MainLoop
 	 */
 	public this(MainContext context, bool isRunning)
 	{
-		auto p = g_main_loop_new((context is null) ? null : context.getMainContextStruct(), isRunning);
+		auto __p = g_main_loop_new((context is null) ? null : context.getMainContextStruct(), isRunning);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GMainLoop*) p);
+		this(cast(GMainLoop*) __p);
 	}
 
 	/**
@@ -105,14 +103,14 @@ public class MainLoop
 	 */
 	public MainContext getContext()
 	{
-		auto p = g_main_loop_get_context(gMainLoop);
+		auto __p = g_main_loop_get_context(gMainLoop);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new MainContext(cast(GMainContext*) p);
+		return new MainContext(cast(GMainContext*) __p);
 	}
 
 	/**
@@ -145,14 +143,14 @@ public class MainLoop
 	 */
 	public MainLoop ref_()
 	{
-		auto p = g_main_loop_ref(gMainLoop);
+		auto __p = g_main_loop_ref(gMainLoop);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new MainLoop(cast(GMainLoop*) p, true);
+		return new MainLoop(cast(GMainLoop*) __p, true);
 	}
 
 	/**
@@ -184,14 +182,14 @@ public class MainLoop
 	 */
 	public static Source mainCurrentSource()
 	{
-		auto p = g_main_current_source();
+		auto __p = g_main_current_source();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Source(cast(GSource*) p);
+		return new Source(cast(GSource*) __p);
 	}
 
 	/**
@@ -312,9 +310,9 @@ public class MainLoop
 	 * don't want to run the full main loop.
 	 *
 	 * Each element of @fds is a #GPollFD describing a single file
-	 * descriptor to poll. The @fd field indicates the file descriptor,
-	 * and the @events field indicates the events to poll for. On return,
-	 * the @revents fields will be filled with the events that actually
+	 * descriptor to poll. The %fd field indicates the file descriptor,
+	 * and the %events field indicates the events to poll for. On return,
+	 * the %revents fields will be filled with the events that actually
 	 * occurred.
 	 *
 	 * On POSIX systems, the file descriptors in @fds can be any sort of
@@ -328,7 +326,7 @@ public class MainLoop
 	 *     nfds = the number of file descriptors in @fds
 	 *     timeout = amount of time to wait, in milliseconds, or -1 to wait forever
 	 *
-	 * Returns: the number of entries in @fds whose @revents fields
+	 * Returns: the number of entries in @fds whose %revents fields
 	 *     were filled in, or 0 if the operation timed out, or -1 on error or
 	 *     if the call was interrupted.
 	 *

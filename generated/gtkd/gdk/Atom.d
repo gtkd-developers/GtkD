@@ -29,7 +29,6 @@ private import gdk.Window;
 private import gdk.c.functions;
 public  import gdk.c.types;
 private import glib.Str;
-public  import gtkc.gdktypes;
 
 
 /**
@@ -175,11 +174,11 @@ public bool propertyGet(Window window, GdkAtom property, GdkAtom type, gulong of
 	int actualLength;
 	char* outdata = null;
 
-	auto p = gdk_property_get((window is null) ? null : window.getWindowStruct(), property, type, offset, length, pdelete, &actualPropertyType, &actualFormat, &actualLength, &outdata) != 0;
+	auto __p = gdk_property_get((window is null) ? null : window.getWindowStruct(), property, type, offset, length, pdelete, &actualPropertyType, &actualFormat, &actualLength, &outdata) != 0;
 
 	data = outdata[0 .. actualLength];
 
-	return p;
+	return __p;
 }
 
 /**
@@ -203,11 +202,11 @@ public int textPropertyToUtf8ListForDisplay(Display display, GdkAtom encoding, i
 {
 	char** outlist = null;
 
-	auto p = gdk_text_property_to_utf8_list_for_display((display is null) ? null : display.getDisplayStruct(), encoding, format, text.ptr, cast(int)text.length, &outlist);
+	auto __p = gdk_text_property_to_utf8_list_for_display((display is null) ? null : display.getDisplayStruct(), encoding, format, text.ptr, cast(int)text.length, &outlist);
 
 	list = Str.toStringArray(outlist);
 
-	return p;
+	return __p;
 }
 
 /**

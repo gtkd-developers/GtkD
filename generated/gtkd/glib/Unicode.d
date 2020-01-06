@@ -29,7 +29,6 @@ private import glib.GException;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
 
 
 /** */
@@ -61,14 +60,14 @@ public struct Unicode
 	{
 		GError* err = null;
 
-		auto p = g_ucs4_to_utf16(str, len, &itemsRead, &itemsWritten, &err);
+		auto __p = g_ucs4_to_utf16(str, len, &itemsRead, &itemsWritten, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -804,14 +803,14 @@ public struct Unicode
 	{
 		GError* err = null;
 
-		auto p = g_utf16_to_ucs4(str, len, &itemsRead, &itemsWritten, &err);
+		auto __p = g_utf16_to_ucs4(str, len, &itemsRead, &itemsWritten, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -973,18 +972,12 @@ public struct Unicode
 	 * is made to see if the character found is actually valid other than
 	 * it starts with an appropriate byte.
 	 *
-	 * If @end is %NULL, the return value will never be %NULL: if the end of the
-	 * string is reached, a pointer to the terminating nul byte is returned. If
-	 * @end is non-%NULL, the return value will be %NULL if the end of the string
-	 * is reached.
-	 *
 	 * Params:
 	 *     p = a pointer to a position within a UTF-8 encoded string
 	 *     end = a pointer to the byte following the end of the string,
 	 *         or %NULL to indicate that the string is nul-terminated
 	 *
-	 * Returns: a pointer to the found character or %NULL if @end is
-	 *     set and is reached
+	 * Returns: a pointer to the found character or %NULL
 	 */
 	public static string utf8FindNextChar(string p, string end)
 	{
@@ -1040,10 +1033,6 @@ public struct Unicode
 	 * This function checks for incomplete characters, for invalid characters
 	 * such as characters that are out of the range of Unicode, and for
 	 * overlong encodings of valid characters.
-	 *
-	 * Note that g_utf8_get_char_validated() returns (gunichar)-2 if
-	 * @max_len is positive and any of the bytes in the first UTF-8 character
-	 * sequence are nul.
 	 *
 	 * Params:
 	 *     p = a pointer to Unicode character encoded as UTF-8
@@ -1241,9 +1230,6 @@ public struct Unicode
 	 * must be valid UTF-8 encoded text. (Use g_utf8_validate() on all
 	 * text before trying to use UTF-8 utility functions with it.)
 	 *
-	 * Note you must ensure @dest is at least 4 * @n to fit the
-	 * largest possible UTF-8 characters
-	 *
 	 * Params:
 	 *     dest = buffer to fill with characters from @src
 	 *     src = UTF-8 encoded string
@@ -1386,14 +1372,14 @@ public struct Unicode
 	{
 		GError* err = null;
 
-		auto p = g_utf8_to_ucs4(Str.toStringz(str), len, &itemsRead, &itemsWritten, &err);
+		auto __p = g_utf8_to_ucs4(Str.toStringz(str), len, &itemsRead, &itemsWritten, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1444,14 +1430,14 @@ public struct Unicode
 	{
 		GError* err = null;
 
-		auto p = g_utf8_to_utf16(Str.toStringz(str), len, &itemsRead, &itemsWritten, &err);
+		auto __p = g_utf8_to_utf16(Str.toStringz(str), len, &itemsRead, &itemsWritten, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1481,11 +1467,11 @@ public struct Unicode
 	{
 		char* outend = null;
 
-		auto p = g_utf8_validate(Str.toStringz(str), cast(ptrdiff_t)str.length, &outend) != 0;
+		auto __p = g_utf8_validate(Str.toStringz(str), cast(ptrdiff_t)str.length, &outend) != 0;
 
 		end = Str.toString(outend);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1514,30 +1500,5 @@ public struct Unicode
 
 		scope(exit) Str.freeString(retStr);
 		return Str.toString(retStr);
-	}
-
-	/**
-	 * Validates UTF-8 encoded text.
-	 *
-	 * As with g_utf8_validate(), but @max_len must be set, and hence this function
-	 * will always return %FALSE if any of the bytes of @str are nul.
-	 *
-	 * Params:
-	 *     str = a pointer to character data
-	 *     end = return location for end of valid data
-	 *
-	 * Returns: %TRUE if the text was valid UTF-8
-	 *
-	 * Since: 2.60
-	 */
-	public static bool utf8ValidateLen(string str, out string end)
-	{
-		char* outend = null;
-
-		auto p = g_utf8_validate_len(Str.toStringz(str), cast(size_t)str.length, &outend) != 0;
-
-		end = Str.toString(outend);
-
-		return p;
 	}
 }

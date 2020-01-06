@@ -33,7 +33,6 @@ private import gtk.Misc;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import pango.PgAttributeList;
 private import pango.PgLayout;
 private import std.algorithm;
@@ -323,14 +322,14 @@ public class Label : Misc
 	 */
 	public PgAttributeList getAttributes()
 	{
-		auto p = gtk_label_get_attributes(gtkLabel);
+		auto __p = gtk_label_get_attributes(gtkLabel);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgAttributeList)(cast(PangoAttrList*) p);
+		return ObjectG.getDObject!(PgAttributeList)(cast(PangoAttrList*) __p);
 	}
 
 	/**
@@ -399,14 +398,14 @@ public class Label : Misc
 	 */
 	public PgLayout getLayout()
 	{
-		auto p = gtk_label_get_layout(gtkLabel);
+		auto __p = gtk_label_get_layout(gtkLabel);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) p);
+		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) __p);
 	}
 
 	/**
@@ -499,14 +498,14 @@ public class Label : Misc
 	 */
 	public Widget getMnemonicWidget()
 	{
-		auto p = gtk_label_get_mnemonic_widget(gtkLabel);
+		auto __p = gtk_label_get_mnemonic_widget(gtkLabel);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**

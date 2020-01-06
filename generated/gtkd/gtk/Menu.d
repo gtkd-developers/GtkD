@@ -41,7 +41,6 @@ private import gtk.MenuShell;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -208,14 +207,14 @@ public class Menu : MenuShell
 	 */
 	public this()
 	{
-		auto p = gtk_menu_new();
+		auto __p = gtk_menu_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkMenu*) p);
+		this(cast(GtkMenu*) __p);
 	}
 
 	/**
@@ -241,14 +240,14 @@ public class Menu : MenuShell
 	 */
 	public this(MenuModel model)
 	{
-		auto p = gtk_menu_new_from_model((model is null) ? null : model.getMenuModelStruct());
+		auto __p = gtk_menu_new_from_model((model is null) ? null : model.getMenuModelStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_model");
 		}
 
-		this(cast(GtkMenu*) p);
+		this(cast(GtkMenu*) __p);
 	}
 
 	/**
@@ -265,14 +264,14 @@ public class Menu : MenuShell
 	 */
 	public static ListG getForAttachWidget(Widget widget)
 	{
-		auto p = gtk_menu_get_for_attach_widget((widget is null) ? null : widget.getWidgetStruct());
+		auto __p = gtk_menu_get_for_attach_widget((widget is null) ? null : widget.getWidgetStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -336,14 +335,14 @@ public class Menu : MenuShell
 	 */
 	public AccelGroup getAccelGroup()
 	{
-		auto p = gtk_menu_get_accel_group(gtkMenu);
+		auto __p = gtk_menu_get_accel_group(gtkMenu);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(AccelGroup)(cast(GtkAccelGroup*) p);
+		return ObjectG.getDObject!(AccelGroup)(cast(GtkAccelGroup*) __p);
 	}
 
 	/**
@@ -368,14 +367,14 @@ public class Menu : MenuShell
 	 */
 	public Widget getActive()
 	{
-		auto p = gtk_menu_get_active(gtkMenu);
+		auto __p = gtk_menu_get_active(gtkMenu);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -385,14 +384,14 @@ public class Menu : MenuShell
 	 */
 	public Widget getAttachWidget()
 	{
-		auto p = gtk_menu_get_attach_widget(gtkMenu);
+		auto __p = gtk_menu_get_attach_widget(gtkMenu);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**

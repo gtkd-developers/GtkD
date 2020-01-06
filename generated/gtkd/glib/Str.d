@@ -26,13 +26,10 @@ module glib.Str;
 
 private import core.stdc.stdio;
 private import core.stdc.string;
-private import glib.ErrorG;
-private import glib.GException;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
 public  import gobject.c.types;
-public  import gtkc.glibtypes;
 
 
 /** */
@@ -370,11 +367,11 @@ public struct Str
 	{
 		char* outendptr = null;
 
-		auto p = g_ascii_strtod(Str.toStringz(nptr), &outendptr);
+		auto __p = g_ascii_strtod(Str.toStringz(nptr), &outendptr);
 
 		endptr = Str.toString(outendptr);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -410,11 +407,11 @@ public struct Str
 	{
 		char* outendptr = null;
 
-		auto p = g_ascii_strtoll(Str.toStringz(nptr), &outendptr, base);
+		auto __p = g_ascii_strtoll(Str.toStringz(nptr), &outendptr, base);
 
 		endptr = Str.toString(outendptr);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -423,11 +420,6 @@ public struct Str
 	 * does in the C locale. It does this without actually
 	 * changing the current locale, since that would not be
 	 * thread-safe.
-	 *
-	 * Note that input with a leading minus sign (`-`) is accepted, and will return
-	 * the negation of the parsed number, unless that would overflow a #guint64.
-	 * Critically, this means you cannot assume that a short fixed length input will
-	 * never result in a low return value, as the input could have a leading `-`.
 	 *
 	 * This function is typically used when reading configuration
 	 * files or other non-user input that should be locale independent.
@@ -455,11 +447,11 @@ public struct Str
 	{
 		char* outendptr = null;
 
-		auto p = g_ascii_strtoull(Str.toStringz(nptr), &outendptr, base);
+		auto __p = g_ascii_strtoull(Str.toStringz(nptr), &outendptr, base);
 
 		endptr = Str.toString(outendptr);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -644,11 +636,11 @@ public struct Str
 	 * call g_str_tokenize_and_fold() on the search term and
 	 * perform lookups into that index.
 	 *
-	 * As some examples, searching for ‘fred’ would match the potential hit
-	 * ‘Smith, Fred’ and also ‘Frédéric’.  Searching for ‘Fréd’ would match
-	 * ‘Frédéric’ but not ‘Frederic’ (due to the one-directional nature of
-	 * accent matching).  Searching ‘fo’ would match ‘Foo’ and ‘Bar Foo
-	 * Baz’, but not ‘SFO’ (because no word has ‘fo’ as a prefix).
+	 * As some examples, searching for "fred" would match the potential hit
+	 * "Smith, Fred" and also "Frédéric".  Searching for "Fréd" would match
+	 * "Frédéric" but not "Frederic" (due to the one-directional nature of
+	 * accent matching).  Searching "fo" would match "Foo" and "Bar Foo
+	 * Baz", but not "SFO" (because no word as "fo" as a prefix).
 	 *
 	 * Params:
 	 *     searchTerm = the search term from the user
@@ -676,12 +668,12 @@ public struct Str
 	 * If the source language of @str is known, it can used to improve the
 	 * accuracy of the translation by passing it as @from_locale.  It should
 	 * be a valid POSIX locale string (of the form
-	 * `language[_territory][.codeset][@modifier]`).
+	 * "language[_territory][.codeset][@modifier]").
 	 *
 	 * If @from_locale is %NULL then the current locale is used.
 	 *
 	 * If you want to do translation for no specific locale, and you want it
-	 * to be done independently of the currently locale, specify `"C"` for
+	 * to be done independently of the currently locale, specify "C" for
 	 * @from_locale.
 	 *
 	 * Params:
@@ -981,17 +973,7 @@ public struct Str
 	 *
 	 * Note that the string may be translated according to the current locale.
 	 *
-	 * The value of %errno will not be changed by this function. However, it may
-	 * be changed by intermediate function calls, so you should save its value
-	 * as soon as the call returns:
-	 * |[
-	 * int saved_errno;
-	 *
-	 * ret = read (blah);
-	 * saved_errno = errno;
-	 *
-	 * g_strerror (saved_errno);
-	 * ]|
+	 * The value of %errno will not be changed by this function.
 	 *
 	 * Params:
 	 *     errnum = the system error number. See the standard C %errno
@@ -1401,11 +1383,11 @@ public struct Str
 	{
 		char* outendptr = null;
 
-		auto p = g_strtod(Str.toStringz(nptr), &outendptr);
+		auto __p = g_strtod(Str.toStringz(nptr), &outendptr);
 
 		endptr = Str.toString(outendptr);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1436,7 +1418,7 @@ public struct Str
 
 	/**
 	 * Returns the length of the given %NULL-terminated
-	 * string array @str_array. @str_array must not be %NULL.
+	 * string array @str_array.
 	 *
 	 * Params:
 	 *     strArray = a %NULL-terminated array of strings
@@ -1473,8 +1455,6 @@ public struct Str
 	 * string to hold the output, instead of putting the output in a buffer
 	 * you allocate in advance.
 	 *
-	 * `glib/gprintf.h` must be explicitly included in order to use this function.
-	 *
 	 * Params:
 	 *     string_ = the return location for the newly-allocated string.
 	 *     format = a standard printf() format string, but notice
@@ -1493,8 +1473,6 @@ public struct Str
 	/**
 	 * An implementation of the standard vprintf() function which supports
 	 * positional parameters, as specified in the Single Unix Specification.
-	 *
-	 * `glib/gprintf.h` must be explicitly included in order to use this function.
 	 *
 	 * Params:
 	 *     format = a standard printf() format string, but notice
@@ -1549,8 +1527,6 @@ public struct Str
 	 * An implementation of the standard vsprintf() function which supports
 	 * positional parameters, as specified in the Single Unix Specification.
 	 *
-	 * `glib/gprintf.h` must be explicitly included in order to use this function.
-	 *
 	 * Params:
 	 *     string_ = the buffer to hold the output.
 	 *     format = a standard printf() format string, but notice
@@ -1570,8 +1546,6 @@ public struct Str
 	 * An implementation of the standard fprintf() function which supports
 	 * positional parameters, as specified in the Single Unix Specification.
 	 *
-	 * `glib/gprintf.h` must be explicitly included in order to use this function.
-	 *
 	 * Params:
 	 *     file = the stream to write to.
 	 *     format = a standard printf() format string, but notice
@@ -1585,127 +1559,5 @@ public struct Str
 	public static int vfprintf(FILE* file, string format, void* args)
 	{
 		return g_vfprintf(file, Str.toStringz(format), args);
-	}
-
-	/**
-	 * A convenience function for converting a string to a signed number.
-	 *
-	 * This function assumes that @str contains only a number of the given
-	 * @base that is within inclusive bounds limited by @min and @max. If
-	 * this is true, then the converted number is stored in @out_num. An
-	 * empty string is not a valid input. A string with leading or
-	 * trailing whitespace is also an invalid input.
-	 *
-	 * @base can be between 2 and 36 inclusive. Hexadecimal numbers must
-	 * not be prefixed with "0x" or "0X". Such a problem does not exist
-	 * for octal numbers, since they were usually prefixed with a zero
-	 * which does not change the value of the parsed number.
-	 *
-	 * Parsing failures result in an error with the %G_NUMBER_PARSER_ERROR
-	 * domain. If the input is invalid, the error code will be
-	 * %G_NUMBER_PARSER_ERROR_INVALID. If the parsed number is out of
-	 * bounds - %G_NUMBER_PARSER_ERROR_OUT_OF_BOUNDS.
-	 *
-	 * See g_ascii_strtoll() if you have more complex needs such as
-	 * parsing a string which starts with a number, but then has other
-	 * characters.
-	 *
-	 * Params:
-	 *     str = a string
-	 *     base = base of a parsed number
-	 *     min = a lower bound (inclusive)
-	 *     max = an upper bound (inclusive)
-	 *     outNum = a return location for a number
-	 *
-	 * Returns: %TRUE if @str was a number, otherwise %FALSE.
-	 *
-	 * Since: 2.54
-	 *
-	 * Throws: GException on failure.
-	 */
-	public static bool asciiStringToSigned(string str, uint base, long min, long max, out long outNum)
-	{
-		GError* err = null;
-
-		auto p = g_ascii_string_to_signed(Str.toStringz(str), base, min, max, &outNum, &err) != 0;
-
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-
-		return p;
-	}
-
-	/**
-	 * A convenience function for converting a string to an unsigned number.
-	 *
-	 * This function assumes that @str contains only a number of the given
-	 * @base that is within inclusive bounds limited by @min and @max. If
-	 * this is true, then the converted number is stored in @out_num. An
-	 * empty string is not a valid input. A string with leading or
-	 * trailing whitespace is also an invalid input. A string with a leading sign
-	 * (`-` or `+`) is not a valid input for the unsigned parser.
-	 *
-	 * @base can be between 2 and 36 inclusive. Hexadecimal numbers must
-	 * not be prefixed with "0x" or "0X". Such a problem does not exist
-	 * for octal numbers, since they were usually prefixed with a zero
-	 * which does not change the value of the parsed number.
-	 *
-	 * Parsing failures result in an error with the %G_NUMBER_PARSER_ERROR
-	 * domain. If the input is invalid, the error code will be
-	 * %G_NUMBER_PARSER_ERROR_INVALID. If the parsed number is out of
-	 * bounds - %G_NUMBER_PARSER_ERROR_OUT_OF_BOUNDS.
-	 *
-	 * See g_ascii_strtoull() if you have more complex needs such as
-	 * parsing a string which starts with a number, but then has other
-	 * characters.
-	 *
-	 * Params:
-	 *     str = a string
-	 *     base = base of a parsed number
-	 *     min = a lower bound (inclusive)
-	 *     max = an upper bound (inclusive)
-	 *     outNum = a return location for a number
-	 *
-	 * Returns: %TRUE if @str was a number, otherwise %FALSE.
-	 *
-	 * Since: 2.54
-	 *
-	 * Throws: GException on failure.
-	 */
-	public static bool asciiStringToUnsigned(string str, uint base, ulong min, ulong max, out ulong outNum)
-	{
-		GError* err = null;
-
-		auto p = g_ascii_string_to_unsigned(Str.toStringz(str), base, min, max, &outNum, &err) != 0;
-
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-
-		return p;
-	}
-
-	/**
-	 * Checks if @strv1 and @strv2 contain exactly the same elements in exactly the
-	 * same order. Elements are compared using g_str_equal(). To match independently
-	 * of order, sort the arrays first (using g_qsort_with_data() or similar).
-	 *
-	 * Two empty arrays are considered equal. Neither @strv1 not @strv2 may be
-	 * %NULL.
-	 *
-	 * Params:
-	 *     strv1 = a %NULL-terminated array of strings
-	 *     strv2 = another %NULL-terminated array of strings
-	 *
-	 * Returns: %TRUE if @strv1 and @strv2 are equal
-	 *
-	 * Since: 2.60
-	 */
-	public static bool strvEqual(string strv1, string strv2)
-	{
-		return g_strv_equal(Str.toStringz(strv1), Str.toStringz(strv2)) != 0;
 	}
 }

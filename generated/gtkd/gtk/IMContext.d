@@ -30,7 +30,6 @@ private import gobject.ObjectG;
 private import gobject.Signals;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import pango.PgAttributeList;
 private import std.algorithm;
 
@@ -260,11 +259,11 @@ public class IMContext : ObjectG
 	{
 		char* outtext = null;
 
-		auto p = gtk_im_context_get_surrounding(gtkIMContext, &outtext, &cursorIndex) != 0;
+		auto __p = gtk_im_context_get_surrounding(gtkIMContext, &outtext, &cursorIndex) != 0;
 
 		text = Str.toString(outtext);
 
-		return p;
+		return __p;
 	}
 
 	/**

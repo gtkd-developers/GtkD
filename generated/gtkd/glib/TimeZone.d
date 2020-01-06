@@ -28,8 +28,6 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
-private import gtkd.Loader;
 
 
 /**
@@ -69,7 +67,7 @@ public class TimeZone
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_time_zone_unref(gTimeZone);
 	}
 
@@ -150,42 +148,14 @@ public class TimeZone
 	 */
 	public this(string identifier)
 	{
-		auto p = g_time_zone_new(Str.toStringz(identifier));
+		auto __p = g_time_zone_new(Str.toStringz(identifier));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GTimeZone*) p);
-	}
-
-	/**
-	 * Creates a #GTimeZone corresponding to the given constant offset from UTC,
-	 * in seconds.
-	 *
-	 * This is equivalent to calling g_time_zone_new() with a string in the form
-	 * `[+|-]hh[:mm[:ss]]`.
-	 *
-	 * Params:
-	 *     seconds = offset to UTC, in seconds
-	 *
-	 * Returns: a timezone at the given offset from UTC
-	 *
-	 * Since: 2.58
-	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this(int seconds)
-	{
-		auto p = g_time_zone_new_offset(seconds);
-
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new_offset");
-		}
-
-		this(cast(GTimeZone*) p);
+		this(cast(GTimeZone*) __p);
 	}
 
 	/**
@@ -273,25 +243,6 @@ public class TimeZone
 	}
 
 	/**
-	 * Get the identifier of this #GTimeZone, as passed to g_time_zone_new().
-	 * If the identifier passed at construction time was not recognised, `UTC` will
-	 * be returned. If it was %NULL, the identifier of the local timezone at
-	 * construction time will be returned.
-	 *
-	 * The identifier will be returned in the same format as provided at
-	 * construction time: if provided as a time offset, that will be returned by
-	 * this function.
-	 *
-	 * Returns: identifier for this timezone
-	 *
-	 * Since: 2.58
-	 */
-	public string getIdentifier()
-	{
-		return Str.toString(g_time_zone_get_identifier(gTimeZone));
-	}
-
-	/**
 	 * Determines the offset to UTC in effect during a particular @interval
 	 * of time in the time zone @tz.
 	 *
@@ -338,14 +289,14 @@ public class TimeZone
 	 */
 	public TimeZone ref_()
 	{
-		auto p = g_time_zone_ref(gTimeZone);
+		auto __p = g_time_zone_ref(gTimeZone);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new TimeZone(cast(GTimeZone*) p, true);
+		return new TimeZone(cast(GTimeZone*) __p, true);
 	}
 
 	/**

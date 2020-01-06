@@ -26,7 +26,6 @@ module pango.PgFontFamily;
 
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.pangotypes;
 private import pango.PgFontFace;
 private import pango.c.functions;
 public  import pango.c.types;
@@ -70,6 +69,31 @@ public class PgFontFamily : ObjectG
 	public static GType getType()
 	{
 		return pango_font_family_get_type();
+	}
+
+	/**
+	 * Gets the #PangoFontFace of @family with the given name.
+	 *
+	 * Params:
+	 *     name = the name of a face. If the name is %NULL,
+	 *         the family's default face (fontconfig calls it "Regular")
+	 *         will be returned.
+	 *
+	 * Returns: the #PangoFontFace,
+	 *     or %NULL if no face with the given name exists.
+	 *
+	 * Since: 1.46
+	 */
+	public PgFontFace getFace(string name)
+	{
+		auto __p = pango_font_family_get_face(pangoFontFamily, Str.toStringz(name));
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(PgFontFace)(cast(PangoFontFace*) __p);
 	}
 
 	/**

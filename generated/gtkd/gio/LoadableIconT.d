@@ -33,7 +33,6 @@ public  import glib.ErrorG;
 public  import glib.GException;
 public  import glib.Str;
 public  import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -71,7 +70,7 @@ public template LoadableIconT(TStruct)
 		char* outtype = null;
 		GError* err = null;
 
-		auto p = g_loadable_icon_load(getLoadableIconStruct(), size, &outtype, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+		auto __p = g_loadable_icon_load(getLoadableIconStruct(), size, &outtype, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 		if (err !is null)
 		{
@@ -80,12 +79,12 @@ public template LoadableIconT(TStruct)
 
 		type = Str.toString(outtype);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) p, true);
+		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) __p, true);
 	}
 
 	/**
@@ -122,7 +121,7 @@ public template LoadableIconT(TStruct)
 		char* outtype = null;
 		GError* err = null;
 
-		auto p = g_loadable_icon_load_finish(getLoadableIconStruct(), (res is null) ? null : res.getAsyncResultStruct(), &outtype, &err);
+		auto __p = g_loadable_icon_load_finish(getLoadableIconStruct(), (res is null) ? null : res.getAsyncResultStruct(), &outtype, &err);
 
 		if (err !is null)
 		{
@@ -131,11 +130,11 @@ public template LoadableIconT(TStruct)
 
 		type = Str.toString(outtype);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) p, true);
+		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) __p, true);
 	}
 }

@@ -24,7 +24,6 @@
 
 module pango.PgVertical;
 
-public  import gtkc.pangotypes;
 private import pango.PgMatrix;
 private import pango.c.functions;
 public  import pango.c.types;

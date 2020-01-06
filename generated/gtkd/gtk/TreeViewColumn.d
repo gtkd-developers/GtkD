@@ -41,7 +41,6 @@ private import gtk.TreeView;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -165,14 +164,14 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	 */
 	public this()
 	{
-		auto p = gtk_tree_view_column_new();
+		auto __p = gtk_tree_view_column_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkTreeViewColumn*) p);
+		this(cast(GtkTreeViewColumn*) __p);
 	}
 
 	/**
@@ -189,14 +188,14 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	 */
 	public this(CellArea area)
 	{
-		auto p = gtk_tree_view_column_new_with_area((area is null) ? null : area.getCellAreaStruct());
+		auto __p = gtk_tree_view_column_new_with_area((area is null) ? null : area.getCellAreaStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_area");
 		}
 
-		this(cast(GtkTreeViewColumn*) p);
+		this(cast(GtkTreeViewColumn*) __p);
 	}
 
 	/**
@@ -456,14 +455,14 @@ public class TreeViewColumn : ObjectG, BuildableIF, CellLayoutIF
 	 */
 	public Widget getWidget()
 	{
-		auto p = gtk_tree_view_column_get_widget(gtkTreeViewColumn);
+		auto __p = gtk_tree_view_column_get_widget(gtkTreeViewColumn);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**

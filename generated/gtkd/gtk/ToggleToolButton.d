@@ -32,7 +32,6 @@ private import gtk.ToolButton;
 private import gtk.ToolItem;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -103,14 +102,14 @@ public class ToggleToolButton : ToolButton
 	 */
 	public this()
 	{
-		auto p = gtk_toggle_tool_button_new();
+		auto __p = gtk_toggle_tool_button_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkToggleToolButton*) p);
+		this(cast(GtkToggleToolButton*) __p);
 	}
 
 	/**
@@ -133,14 +132,14 @@ public class ToggleToolButton : ToolButton
 	 */
 	public this(string stockId)
 	{
-		auto p = gtk_toggle_tool_button_new_from_stock(Str.toStringz(stockId));
+		auto __p = gtk_toggle_tool_button_new_from_stock(Str.toStringz(stockId));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_stock");
 		}
 
-		this(cast(GtkToggleToolButton*) p);
+		this(cast(GtkToggleToolButton*) __p);
 	}
 
 	/**

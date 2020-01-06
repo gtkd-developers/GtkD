@@ -16,7 +16,7 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110, USA
  */
- 
+
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
@@ -30,11 +30,11 @@
  * realStrct=
  * ctorStrct=
  * clss    = Surface
- * interf  = 
+ * interf  =
  * class Code: Yes
  * interface Code: No
  * template for:
- * extend  = 
+ * extend  =
  * implements:
  * prefixes:
  * 	- cairo_surface_
@@ -47,7 +47,6 @@
  * 	- glib.Str
  * 	- cairo.Device
  * 	- cairo.FontOption
- * 	- gdk.Window
  * 	- gtkc.gdk
  * structWrap:
  * 	- cairo_device_t* -> Device
@@ -68,10 +67,6 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import cairo.Device;
 private import cairo.FontOption;
-private import gdk.Window;
-private import gdk.c.functions;
-
-
 
 /**
  * cairo_surface_t is the abstract type representing all different drawing
@@ -95,24 +90,24 @@ private import gdk.c.functions;
  */
 public class Surface
 {
-	
+
 	/** the main Gtk struct */
 	protected cairo_surface_t* cairo_surface;
-	
-	
+
+
 	/** Get the main Gtk struct */
 	public cairo_surface_t* getSurfaceStruct()
 	{
 		return cairo_surface;
 	}
-	
-	
+
+
 	/** the main Gtk struct as a void* */
 	protected void* getStruct()
 	{
 		return cast(void*)cairo_surface;
 	}
-	
+
 	/**
 	 * Sets our main struct and passes it to the parent class
 	 */
@@ -120,12 +115,7 @@ public class Surface
 	{
 		this.cairo_surface = cairo_surface;
 	}
-	
-	this(Window window, cairo_content_t content, int width,int height)
-	{
-		this(gdk_window_create_similar_surface(window.getWindowStruct(), content, width, height));
-	}
-	
+
 	/**
 	 * Return mime data previously attached to surface using the
 	 * specified mime type. If no data has been attached with the given
@@ -140,15 +130,15 @@ public class Surface
 		// void cairo_surface_get_mime_data (cairo_surface_t *surface,  const char *mime_type,  unsigned char **data,  unsigned long *length);
 		uchar* outdata = null;
 		ulong length;
-		
+
 		cairo_surface_get_mime_data(cairo_surface, Str.toStringz(mimeType), &outdata, &length);
-		
+
 		data = outdata[0 .. cast(size_t)length];
 	}
-	
+
 	/**
 	 */
-	
+
 	/**
 	 * Create a new surface that is as compatible as possible with an
 	 * existing surface. For example the new surface will have the same
@@ -171,15 +161,15 @@ public class Surface
 	{
 		// cairo_surface_t * cairo_surface_create_similar (cairo_surface_t *other,  cairo_content_t content,  int width,  int height);
 		auto p = cairo_surface_create_similar(cairo_surface, content, width, height);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Surface(cast(cairo_surface_t*) p);
 	}
-	
+
 	/**
 	 * Create a new image surface that is as compatible as possible for uploading
 	 * to and the use in conjunction with an existing surface. However, this surface
@@ -198,15 +188,15 @@ public class Surface
 	{
 		// cairo_surface_t * cairo_surface_create_similar_image (cairo_surface_t *other,  cairo_format_t format,  int width,  int height);
 		auto p = cairo_surface_create_similar_image(cairo_surface, format, width, height);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Surface(cast(cairo_surface_t*) p);
 	}
-	
+
 	/**
 	 * Create a new surface that is a rectangle within the target surface.
 	 * All operations drawn to this surface are then clipped and translated
@@ -232,15 +222,15 @@ public class Surface
 	{
 		// cairo_surface_t * cairo_surface_create_for_rectangle (cairo_surface_t *target,  double x,  double y,  double width,  double height);
 		auto p = cairo_surface_create_for_rectangle(cairo_surface, x, y, width, height);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Surface(cast(cairo_surface_t*) p);
 	}
-	
+
 	/**
 	 * Increases the reference count on surface by one. This prevents
 	 * surface from being destroyed until a matching call to
@@ -254,15 +244,15 @@ public class Surface
 	{
 		// cairo_surface_t * cairo_surface_reference (cairo_surface_t *surface);
 		auto p = cairo_surface_reference(cairo_surface);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Surface(cast(cairo_surface_t*) p);
 	}
-	
+
 	/**
 	 * Decreases the reference count on surface by one. If the result is
 	 * zero, then surface and all associated resources are freed. See
@@ -274,7 +264,7 @@ public class Surface
 		// void cairo_surface_destroy (cairo_surface_t *surface);
 		cairo_surface_destroy(cairo_surface);
 	}
-	
+
 	/**
 	 * Checks whether an error has previously occurred for this
 	 * surface.
@@ -286,7 +276,7 @@ public class Surface
 		// cairo_status_t cairo_surface_status (cairo_surface_t *surface);
 		return cairo_surface_status(cairo_surface);
 	}
-	
+
 	/**
 	 * This function finishes the surface and drops all references to
 	 * external resources. For example, for the Xlib backend it means
@@ -308,7 +298,7 @@ public class Surface
 		// void cairo_surface_finish (cairo_surface_t *surface);
 		cairo_surface_finish(cairo_surface);
 	}
-	
+
 	/**
 	 * Do any pending drawing for the surface and also restore any
 	 * temporary modifications cairo has made to the surface's
@@ -323,7 +313,7 @@ public class Surface
 		// void cairo_surface_flush (cairo_surface_t *surface);
 		cairo_surface_flush(cairo_surface);
 	}
-	
+
 	/**
 	 * This function returns the device for a surface.
 	 * See cairo_device_t.
@@ -334,15 +324,15 @@ public class Surface
 	{
 		// cairo_device_t * cairo_surface_get_device (cairo_surface_t *surface);
 		auto p = cairo_surface_get_device(cairo_surface);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Device(cast(cairo_device_t*) p);
 	}
-	
+
 	/**
 	 * Retrieves the default font rendering options for the surface.
 	 * This allows display surfaces to report the correct subpixel order
@@ -359,7 +349,7 @@ public class Surface
 		// void cairo_surface_get_font_options (cairo_surface_t *surface,  cairo_font_options_t *options);
 		cairo_surface_get_font_options(cairo_surface, (options is null) ? null : options.getFontOptionStruct());
 	}
-	
+
 	/**
 	 * This function returns the content type of surface which indicates
 	 * whether the surface contains color and/or alpha information. See
@@ -372,7 +362,7 @@ public class Surface
 		// cairo_content_t cairo_surface_get_content (cairo_surface_t *surface);
 		return cairo_surface_get_content(cairo_surface);
 	}
-	
+
 	/**
 	 * Tells cairo that drawing has been done to surface using means other
 	 * than cairo, and that cairo should reread any cached areas. Note
@@ -384,7 +374,7 @@ public class Surface
 		// void cairo_surface_mark_dirty (cairo_surface_t *surface);
 		cairo_surface_mark_dirty(cairo_surface);
 	}
-	
+
 	/**
 	 * Like cairo_surface_mark_dirty(), but drawing has been done only to
 	 * the specified rectangle, so that cairo can retain cached contents
@@ -404,7 +394,7 @@ public class Surface
 		// void cairo_surface_mark_dirty_rectangle (cairo_surface_t *surface,  int x,  int y,  int width,  int height);
 		cairo_surface_mark_dirty_rectangle(cairo_surface, x, y, width, height);
 	}
-	
+
 	/**
 	 * Sets an offset that is added to the device coordinates determined
 	 * by the CTM when drawing to surface. One use case for this function
@@ -426,7 +416,7 @@ public class Surface
 		// void cairo_surface_set_device_offset (cairo_surface_t *surface,  double x_offset,  double y_offset);
 		cairo_surface_set_device_offset(cairo_surface, xOffset, yOffset);
 	}
-	
+
 	/**
 	 * This function returns the previous device offset set by
 	 * cairo_surface_set_device_offset().
@@ -440,7 +430,7 @@ public class Surface
 		// void cairo_surface_get_device_offset (cairo_surface_t *surface,  double *x_offset,  double *y_offset);
 		cairo_surface_get_device_offset(cairo_surface, &xOffset, &yOffset);
 	}
-	
+
 	/**
 	 * Set the horizontal and vertical resolution for image fallbacks.
 	 * When certain operations aren't supported natively by a backend,
@@ -471,7 +461,7 @@ public class Surface
 		// void cairo_surface_set_fallback_resolution  (cairo_surface_t *surface,  double x_pixels_per_inch,  double y_pixels_per_inch);
 		cairo_surface_set_fallback_resolution(cairo_surface, xPixelsPerInch, yPixelsPerInch);
 	}
-	
+
 	/**
 	 * This function returns the previous fallback resolution set by
 	 * cairo_surface_set_fallback_resolution(), or default fallback
@@ -486,7 +476,7 @@ public class Surface
 		// void cairo_surface_get_fallback_resolution  (cairo_surface_t *surface,  double *x_pixels_per_inch,  double *y_pixels_per_inch);
 		cairo_surface_get_fallback_resolution(cairo_surface, &xPixelsPerInch, &yPixelsPerInch);
 	}
-	
+
 	/**
 	 * This function returns the type of the backend used to create
 	 * a surface. See cairo_surface_type_t for available types.
@@ -500,7 +490,7 @@ public class Surface
 		// cairo_surface_type_t cairo_surface_get_type (cairo_surface_t *surface);
 		return cairo_surface_get_type(cairo_surface);
 	}
-	
+
 	/**
 	 * Returns the current reference count of surface.
 	 * Since 1.4
@@ -511,7 +501,7 @@ public class Surface
 		// unsigned int cairo_surface_get_reference_count (cairo_surface_t *surface);
 		return cairo_surface_get_reference_count(cairo_surface);
 	}
-	
+
 	/**
 	 * Attach user data to surface. To remove user data from a surface,
 	 * call this function with the key that was used to set it and NULL
@@ -530,7 +520,7 @@ public class Surface
 		// cairo_status_t cairo_surface_set_user_data (cairo_surface_t *surface,  const cairo_user_data_key_t *key,  void *user_data,  cairo_destroy_func_t destroy);
 		return cairo_surface_set_user_data(cairo_surface, key, userData, destroy);
 	}
-	
+
 	/**
 	 * Return user data previously attached to surface using the specified
 	 * key. If no user data has been attached with the given key this
@@ -546,7 +536,7 @@ public class Surface
 		// void * cairo_surface_get_user_data (cairo_surface_t *surface,  const cairo_user_data_key_t *key);
 		return cairo_surface_get_user_data(cairo_surface, key);
 	}
-	
+
 	/**
 	 * Emits the current page for backends that support multiple pages,
 	 * but doesn't clear it, so that the contents of the current page will
@@ -561,7 +551,7 @@ public class Surface
 		// void cairo_surface_copy_page (cairo_surface_t *surface);
 		cairo_surface_copy_page(cairo_surface);
 	}
-	
+
 	/**
 	 * Emits and clears the current page for backends that support multiple
 	 * pages. Use cairo_surface_copy_page() if you don't want to clear the page.
@@ -574,7 +564,7 @@ public class Surface
 		// void cairo_surface_show_page (cairo_surface_t *surface);
 		cairo_surface_show_page(cairo_surface);
 	}
-	
+
 	/**
 	 * Returns whether the surface supports
 	 * sophisticated cairo_show_text_glyphs() operations. That is,
@@ -594,7 +584,7 @@ public class Surface
 		// cairo_bool_t cairo_surface_has_show_text_glyphs (cairo_surface_t *surface);
 		return cairo_surface_has_show_text_glyphs(cairo_surface);
 	}
-	
+
 	/**
 	 * Attach an image in the format mime_type to surface. To remove
 	 * the data from a surface, call this function with same mime type
@@ -625,7 +615,7 @@ public class Surface
 		// cairo_status_t cairo_surface_set_mime_data (cairo_surface_t *surface,  const char *mime_type,  const unsigned char *data,  unsigned long  length,  cairo_destroy_func_t destroy,  void *closure);
 		return cairo_surface_set_mime_data(cairo_surface, Str.toStringz(mimeType), data.ptr, cast(int) data.length, destroy, closure);
 	}
-	
+
 	/**
 	 * Return whether surface supports mime_type.
 	 * Since 1.12
@@ -638,7 +628,7 @@ public class Surface
 		// cairo_bool_t cairo_surface_supports_mime_type (cairo_surface_t *surface,  const char *mime_type);
 		return cairo_surface_supports_mime_type(cairo_surface, Str.toStringz(mimeType));
 	}
-	
+
 	/**
 	 * Returns an image surface that is the most efficient mechanism for
 	 * modifying the backing store of the target surface. The region retrieved
@@ -656,15 +646,15 @@ public class Surface
 	{
 		// cairo_surface_t * cairo_surface_map_to_image (cairo_surface_t *surface,  const cairo_rectangle_int_t *extents);
 		auto p = cairo_surface_map_to_image(cairo_surface, &extents);
-		
+
 		if(p is null)
 		{
 			return null;
 		}
-		
+
 		return new Surface(cast(cairo_surface_t*) p);
 	}
-	
+
 	/**
 	 * Unmaps the image surface as returned from #cairo_surface_map_to_image().
 	 * The content of the image will be uploaded to the target surface.

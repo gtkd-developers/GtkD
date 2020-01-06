@@ -33,7 +33,6 @@ private import gtk.RecentManager;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -97,14 +96,14 @@ public class RecentChooserWidget : Box, RecentChooserIF
 	 */
 	public this()
 	{
-		auto p = gtk_recent_chooser_widget_new();
+		auto __p = gtk_recent_chooser_widget_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkRecentChooserWidget*) p);
+		this(cast(GtkRecentChooserWidget*) __p);
 	}
 
 	/**
@@ -124,13 +123,13 @@ public class RecentChooserWidget : Box, RecentChooserIF
 	 */
 	public this(RecentManager manager)
 	{
-		auto p = gtk_recent_chooser_widget_new_for_manager((manager is null) ? null : manager.getRecentManagerStruct());
+		auto __p = gtk_recent_chooser_widget_new_for_manager((manager is null) ? null : manager.getRecentManagerStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_for_manager");
 		}
 
-		this(cast(GtkRecentChooserWidget*) p);
+		this(cast(GtkRecentChooserWidget*) __p);
 	}
 }

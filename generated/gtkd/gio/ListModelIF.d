@@ -28,7 +28,6 @@ private import gio.c.functions;
 public  import gio.c.types;
 private import gobject.ObjectG;
 private import gobject.Signals;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -109,7 +108,7 @@ public interface ListModelIF{
 	 *
 	 * Since: 2.44
 	 */
-	public void* getItem(uint position);
+	public ObjectG getItem(uint position);
 
 	/**
 	 * Gets the type of the items in @list. All items returned from

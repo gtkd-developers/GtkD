@@ -33,7 +33,6 @@ private import gtk.VButtonBox;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /** */
@@ -137,14 +136,14 @@ public class ButtonBox : Box
 	 */
 	public this(GtkOrientation orientation)
 	{
-		auto p = gtk_button_box_new(orientation);
+		auto __p = gtk_button_box_new(orientation);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkButtonBox*) p);
+		this(cast(GtkButtonBox*) __p);
 	}
 
 	/**

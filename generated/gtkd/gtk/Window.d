@@ -40,7 +40,6 @@ private import gtk.Widget;
 private import gtk.WindowGroup;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -52,7 +51,7 @@ private import std.algorithm;
  * 
  * # GtkWindow as GtkBuildable
  * 
- * The GtkWindow implementation of the GtkBuildable interface supports a
+ * The GtkWindow implementation of the #GtkBuildable interface supports a
  * custom <accel-groups> element, which supports any number of <group>
  * elements representing the #GtkAccelGroup objects you want to add to
  * your window (synonymous with gtk_window_add_accel_group().
@@ -74,7 +73,7 @@ private import std.algorithm;
  * <object class="GtkAccelGroup" id="accelgroup1"/>
  * ]|
  * 
- * The GtkWindow implementation of the GtkBuildable interface supports
+ * The GtkWindow implementation of the #GtkBuildable interface supports
  * setting a child as the titlebar by specifying “titlebar” as the “type”
  * attribute of a <child> element.
  * 
@@ -190,14 +189,14 @@ public class Window : Bin
 	 */
 	public this(GtkWindowType type)
 	{
-		auto p = gtk_window_new(type);
+		auto __p = gtk_window_new(type);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkWindow*) p);
+		this(cast(GtkWindow*) __p);
 	}
 
 	/**
@@ -210,14 +209,14 @@ public class Window : Bin
 	 */
 	public static ListG getDefaultIconList()
 	{
-		auto p = gtk_window_get_default_icon_list();
+		auto __p = gtk_window_get_default_icon_list();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -248,14 +247,14 @@ public class Window : Bin
 	 */
 	public static ListG listToplevels()
 	{
-		auto p = gtk_window_list_toplevels();
+		auto __p = gtk_window_list_toplevels();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -311,14 +310,14 @@ public class Window : Bin
 	{
 		GError* err = null;
 
-		auto p = gtk_window_set_default_icon_from_file(Str.toStringz(filename), &err) != 0;
+		auto __p = gtk_window_set_default_icon_from_file(Str.toStringz(filename), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -559,14 +558,14 @@ public class Window : Bin
 	 */
 	public Application getApplication()
 	{
-		auto p = gtk_window_get_application(gtkWindow);
+		auto __p = gtk_window_get_application(gtkWindow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Application)(cast(GtkApplication*) p);
+		return ObjectG.getDObject!(Application)(cast(GtkApplication*) __p);
 	}
 
 	/**
@@ -580,14 +579,14 @@ public class Window : Bin
 	 */
 	public Widget getAttachedTo()
 	{
-		auto p = gtk_window_get_attached_to(gtkWindow);
+		auto __p = gtk_window_get_attached_to(gtkWindow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -627,14 +626,14 @@ public class Window : Bin
 	 */
 	public Widget getDefaultWidget()
 	{
-		auto p = gtk_window_get_default_widget(gtkWindow);
+		auto __p = gtk_window_get_default_widget(gtkWindow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -673,14 +672,14 @@ public class Window : Bin
 	 */
 	public Widget getFocus()
 	{
-		auto p = gtk_window_get_focus(gtkWindow);
+		auto __p = gtk_window_get_focus(gtkWindow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -730,14 +729,14 @@ public class Window : Bin
 	 */
 	public WindowGroup getGroup()
 	{
-		auto p = gtk_window_get_group(gtkWindow);
+		auto __p = gtk_window_get_group(gtkWindow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(WindowGroup)(cast(GtkWindowGroup*) p);
+		return ObjectG.getDObject!(WindowGroup)(cast(GtkWindowGroup*) __p);
 	}
 
 	/**
@@ -777,14 +776,14 @@ public class Window : Bin
 	 */
 	public Pixbuf getIcon()
 	{
-		auto p = gtk_window_get_icon(gtkWindow);
+		auto __p = gtk_window_get_icon(gtkWindow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) __p);
 	}
 
 	/**
@@ -796,14 +795,14 @@ public class Window : Bin
 	 */
 	public ListG getIconList()
 	{
-		auto p = gtk_window_get_icon_list(gtkWindow);
+		auto __p = gtk_window_get_icon_list(gtkWindow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -970,14 +969,14 @@ public class Window : Bin
 	 */
 	public override Screen getScreen()
 	{
-		auto p = gtk_window_get_screen(gtkWindow);
+		auto __p = gtk_window_get_screen(gtkWindow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
+		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) __p);
 	}
 
 	/**
@@ -1109,14 +1108,14 @@ public class Window : Bin
 	 */
 	public Widget getTitlebar()
 	{
-		auto p = gtk_window_get_titlebar(gtkWindow);
+		auto __p = gtk_window_get_titlebar(gtkWindow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -1128,14 +1127,14 @@ public class Window : Bin
 	 */
 	public Window getTransientFor()
 	{
-		auto p = gtk_window_get_transient_for(gtkWindow);
+		auto __p = gtk_window_get_transient_for(gtkWindow);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GtkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GtkWindow*) __p);
 	}
 
 	/**
@@ -1980,14 +1979,14 @@ public class Window : Bin
 	{
 		GError* err = null;
 
-		auto p = gtk_window_set_icon_from_file(gtkWindow, Str.toStringz(filename), &err) != 0;
+		auto __p = gtk_window_set_icon_from_file(gtkWindow, Str.toStringz(filename), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -2564,13 +2563,13 @@ public class Window : Bin
 	{
 		GError* err = null;
 
-		auto p = gtk_show_uri_on_window((parent is null) ? null : parent.getWindowStruct(), Str.toStringz(uri), timestamp, &err) != 0;
+		auto __p = gtk_show_uri_on_window((parent is null) ? null : parent.getWindowStruct(), Str.toStringz(uri), timestamp, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 }

@@ -29,8 +29,6 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
-private import gtkd.Loader;
 
 
 /**
@@ -71,7 +69,7 @@ public class Checksum
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_checksum_free(gChecksum);
 	}
 
@@ -128,14 +126,14 @@ public class Checksum
 	 */
 	public this(GChecksumType checksumType)
 	{
-		auto p = g_checksum_new(checksumType);
+		auto __p = g_checksum_new(checksumType);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GChecksum*) p);
+		this(cast(GChecksum*) __p);
 	}
 
 	/**
@@ -150,14 +148,14 @@ public class Checksum
 	 */
 	public Checksum copy()
 	{
-		auto p = g_checksum_copy(gChecksum);
+		auto __p = g_checksum_copy(gChecksum);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Checksum(cast(GChecksum*) p, true);
+		return new Checksum(cast(GChecksum*) __p, true);
 	}
 
 	/**

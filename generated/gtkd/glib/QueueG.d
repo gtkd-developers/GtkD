@@ -28,8 +28,6 @@ private import glib.ConstructionException;
 private import glib.ListG;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
-private import gtkd.Loader;
 
 
 /**
@@ -67,7 +65,7 @@ public class QueueG
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_queue_free(gQueue);
 	}
 
@@ -84,20 +82,6 @@ public class QueueG
 	}
 
 	/**
-	 * Convenience method, which frees all the memory used by a #GQueue,
-	 * and calls the provided @free_func on each item in the #GQueue.
-	 *
-	 * Params:
-	 *     freeFunc = the function to be called to free memory allocated
-	 *
-	 * Since: 2.60
-	 */
-	public void clearFull(GDestroyNotify freeFunc)
-	{
-		g_queue_clear_full(gQueue, freeFunc);
-	}
-
-	/**
 	 * Copies a @queue. Note that is a shallow copy. If the elements in the
 	 * queue consist of pointers to data, the pointers are copied, but the
 	 * actual data is not.
@@ -108,14 +92,14 @@ public class QueueG
 	 */
 	public QueueG copy()
 	{
-		auto p = g_queue_copy(gQueue);
+		auto __p = g_queue_copy(gQueue);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new QueueG(cast(GQueue*) p);
+		return new QueueG(cast(GQueue*) __p);
 	}
 
 	/**
@@ -145,14 +129,14 @@ public class QueueG
 	 */
 	public ListG find(void* data)
 	{
-		auto p = g_queue_find(gQueue, data);
+		auto __p = g_queue_find(gQueue, data);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -173,23 +157,20 @@ public class QueueG
 	 */
 	public ListG findCustom(void* data, GCompareFunc func)
 	{
-		auto p = g_queue_find_custom(gQueue, data, func);
+		auto __p = g_queue_find_custom(gQueue, data, func);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	alias foreac = foreach_;
 	/**
 	 * Calls @func for each element in the queue passing @user_data to the
 	 * function.
-	 *
-	 * It is safe for @func to remove the element from @queue, but it must
-	 * not modify any part of the queue after that element.
 	 *
 	 * Params:
 	 *     func = the function to call for each element's data
@@ -219,9 +200,6 @@ public class QueueG
 	/**
 	 * Convenience method, which frees all the memory used by a #GQueue,
 	 * and calls the specified destroy function on every element's data.
-	 *
-	 * @free_func should not modify the queue (eg, by removing the freed
-	 * element from it).
 	 *
 	 * Params:
 	 *     freeFunc = the function to be called to free each element's data
@@ -375,14 +353,14 @@ public class QueueG
 	 */
 	public ListG peekHeadLink()
 	{
-		auto p = g_queue_peek_head_link(gQueue);
+		auto __p = g_queue_peek_head_link(gQueue);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -414,14 +392,14 @@ public class QueueG
 	 */
 	public ListG peekNthLink(uint n)
 	{
-		auto p = g_queue_peek_nth_link(gQueue, n);
+		auto __p = g_queue_peek_nth_link(gQueue, n);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -444,14 +422,14 @@ public class QueueG
 	 */
 	public ListG peekTailLink()
 	{
-		auto p = g_queue_peek_tail_link(gQueue);
+		auto __p = g_queue_peek_tail_link(gQueue);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -473,14 +451,14 @@ public class QueueG
 	 */
 	public ListG popHeadLink()
 	{
-		auto p = g_queue_pop_head_link(gQueue);
+		auto __p = g_queue_pop_head_link(gQueue);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -510,14 +488,14 @@ public class QueueG
 	 */
 	public ListG popNthLink(uint n)
 	{
-		auto p = g_queue_pop_nth_link(gQueue, n);
+		auto __p = g_queue_pop_nth_link(gQueue, n);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -539,14 +517,14 @@ public class QueueG
 	 */
 	public ListG popTailLink()
 	{
-		auto p = g_queue_pop_tail_link(gQueue);
+		auto __p = g_queue_pop_tail_link(gQueue);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -707,13 +685,13 @@ public class QueueG
 	 */
 	public this()
 	{
-		auto p = g_queue_new();
+		auto __p = g_queue_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GQueue*) p);
+		this(cast(GQueue*) __p);
 	}
 }

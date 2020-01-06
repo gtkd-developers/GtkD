@@ -32,7 +32,6 @@ private import gtk.IMContext;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -80,14 +79,14 @@ public class EventControllerKey : EventController
 	/** */
 	public this(Widget widget)
 	{
-		auto p = gtk_event_controller_key_new((widget is null) ? null : widget.getWidgetStruct());
+		auto __p = gtk_event_controller_key_new((widget is null) ? null : widget.getWidgetStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkEventControllerKey*) p, true);
+		this(cast(GtkEventControllerKey*) __p, true);
 	}
 
 	/** */
@@ -111,14 +110,14 @@ public class EventControllerKey : EventController
 	 */
 	public IMContext getImContext()
 	{
-		auto p = gtk_event_controller_key_get_im_context(gtkEventControllerKey);
+		auto __p = gtk_event_controller_key_get_im_context(gtkEventControllerKey);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IMContext)(cast(GtkIMContext*) p);
+		return ObjectG.getDObject!(IMContext)(cast(GtkIMContext*) __p);
 	}
 
 	/** */

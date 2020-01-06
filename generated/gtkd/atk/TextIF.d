@@ -30,7 +30,6 @@ public  import atk.c.types;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-public  import gtkc.atktypes;
 private import std.algorithm;
 
 
@@ -95,10 +94,10 @@ public interface TextIF{
 	 * Adds a selection bounded by the specified offsets.
 	 *
 	 * Params:
-	 *     startOffset = the starting character offset of the selected region
+	 *     startOffset = the start position of the selected region
 	 *     endOffset = the offset of the first character after the selected region.
 	 *
-	 * Returns: %TRUE if successful, %FALSE otherwise
+	 * Returns: %TRUE if success, %FALSE otherwise
 	 */
 	public bool addSelection(int startOffset, int endOffset);
 
@@ -119,11 +118,9 @@ public interface TextIF{
 	public TextRange[] getBoundedRanges(AtkTextRectangle* rect, AtkCoordType coordType, AtkTextClipType xClipType, AtkTextClipType yClipType);
 
 	/**
-	 * Gets the offset of the position of the caret (cursor).
+	 * Gets the offset position of the caret (cursor).
 	 *
-	 * Returns: the character offset of the position of the caret or 0  if
-	 *     the caret is not located inside the element or in the case of
-	 *     any other failure.
+	 * Returns: the offset position of the caret (cursor).
 	 */
 	public int getCaretOffset();
 
@@ -131,16 +128,16 @@ public interface TextIF{
 	 * Gets the specified text.
 	 *
 	 * Params:
-	 *     offset = a character offset within @text
+	 *     offset = position
 	 *
-	 * Returns: the character at @offset or 0 in the case of failure.
+	 * Returns: the character at @offset.
 	 */
 	public dchar getCharacterAtOffset(int offset);
 
 	/**
 	 * Gets the character count.
 	 *
-	 * Returns: the number of characters or -1 in case of failure.
+	 * Returns: the number of characters.
 	 */
 	public int getCharacterCount();
 
@@ -150,8 +147,8 @@ public interface TextIF{
 	 *
 	 * Params:
 	 *     offset = The offset of the text character for which bounding information is required.
-	 *     x = Pointer for the x coordinate of the bounding box
-	 *     y = Pointer for the y coordinate of the bounding box
+	 *     x = Pointer for the x cordinate of the bounding box
+	 *     y = Pointer for the y cordinate of the bounding box
 	 *     width = Pointer for the width of the bounding box
 	 *     height = Pointer for the height of the bounding box
 	 *     coords = specify whether coordinates are relative to the screen or widget window
@@ -164,8 +161,8 @@ public interface TextIF{
 	 * attributes that can be returned. Note that other attributes may also be
 	 * returned.
 	 *
-	 * Returns: an #AtkAttributeSet which contains the default values
-	 *     of attributes.  at @offset. this #atkattributeset should be freed by
+	 * Returns: an #AtkAttributeSet which contains the default
+	 *     values of attributes.  at @offset. this #atkattributeset should be freed by
 	 *     a call to atk_attribute_set_free().
 	 */
 	public AtkAttributeSet* getDefaultAttributes();
@@ -173,7 +170,8 @@ public interface TextIF{
 	/**
 	 * Gets the number of selected regions.
 	 *
-	 * Returns: The number of selected regions, or -1 in the case of failure.
+	 * Returns: The number of selected regions, or -1 if a failure
+	 *     occurred.
 	 */
 	public int getNSelections();
 
@@ -188,8 +186,8 @@ public interface TextIF{
 	 *     coords = specify whether coordinates are relative to the screen or
 	 *         widget window
 	 *
-	 * Returns: the offset to the character which is located at  the specified
-	 *     @x and @y coordinates of -1 in case of failure.
+	 * Returns: the offset to the character which is located at
+	 *     the specified @x and @y coordinates.
 	 */
 	public int getOffsetAtPoint(int x, int y, AtkCoordType coords);
 
@@ -218,14 +216,14 @@ public interface TextIF{
 	 * returned.
 	 *
 	 * Params:
-	 *     offset = the character offset at which to get the attributes, -1 means the offset of
+	 *     offset = the offset at which to get the attributes, -1 means the offset of
 	 *         the character to be inserted at the caret location.
 	 *     startOffset = the address to put the start offset of the range
 	 *     endOffset = the address to put the end offset of the range
 	 *
 	 * Returns: an #AtkAttributeSet which contains the attributes
-	 *     explicitly set at @offset. This #AtkAttributeSet should be freed by
-	 *     a call to atk_attribute_set_free().
+	 *     explicitly set at @offset. This #AtkAttributeSet should be freed by a call
+	 *     to atk_attribute_set_free().
 	 */
 	public AtkAttributeSet* getRunAttributes(int offset, out int startOffset, out int endOffset);
 
@@ -238,9 +236,9 @@ public interface TextIF{
 	 *         start of the text.  The selected region closest to the beginning
 	 *         of the text region is assigned the number 0, etc.  Note that adding,
 	 *         moving or deleting a selected region can change the numbering.
-	 *     startOffset = passes back the starting character offset of the selected region
-	 *     endOffset = passes back the ending character offset (offset immediately past)
-	 *         of the selected region
+	 *     startOffset = passes back the start position of the selected region
+	 *     endOffset = passes back the end position of (e.g. offset immediately past)
+	 *         the selected region
 	 *
 	 * Returns: a newly allocated string containing the selected text. Use g_free()
 	 *     to free the returned string.
@@ -282,15 +280,15 @@ public interface TextIF{
 	 * Params:
 	 *     offset = position
 	 *     granularity = An #AtkTextGranularity
-	 *     startOffset = the starting character offset of the returned string, or -1
-	 *         in the case of error (e.g. invalid offset, not implemented)
+	 *     startOffset = the start offset of the returned string, or -1
+	 *         if an error has occurred (e.g. invalid offset, not implemented)
 	 *     endOffset = the offset of the first character after the returned string,
-	 *         or -1 in the case of error (e.g. invalid offset, not implemented)
+	 *         or -1 if an error has occurred (e.g. invalid offset, not implemented)
 	 *
-	 * Returns: a newly allocated string containing the text at
-	 *     the @offset bounded by the specified @granularity. Use g_free()
-	 *     to free the returned string.  Returns %NULL if the offset is invalid
-	 *     or no implementation is available.
+	 * Returns: a newly allocated string containing the text
+	 *     at the @offset bounded by the specified @granularity. Use
+	 *     g_free() to free the returned string.  Returns %NULL if the
+	 *     offset is invalid or no implementation is available.
 	 *
 	 * Since: 2.10
 	 */
@@ -300,12 +298,11 @@ public interface TextIF{
 	 * Gets the specified text.
 	 *
 	 * Params:
-	 *     startOffset = a starting character offset within @text
-	 *     endOffset = an ending character offset within @text, or -1 for the end of the string.
+	 *     startOffset = start position
+	 *     endOffset = end position, or -1 for the end of the string.
 	 *
 	 * Returns: a newly allocated string containing the text from @start_offset up
-	 *     to, but not including @end_offset. Use g_free() to free the returned
-	 *     string.
+	 *     to, but not including @end_offset. Use g_free() to free the returned string.
 	 */
 	public string getText(int startOffset, int endOffset);
 
@@ -317,13 +314,12 @@ public interface TextIF{
 	 * Params:
 	 *     offset = position
 	 *     boundaryType = An #AtkTextBoundary
-	 *     startOffset = the starting character offset of the returned string
+	 *     startOffset = the start offset of the returned string
 	 *     endOffset = the offset of the first character after the
 	 *         returned substring
 	 *
 	 * Returns: a newly allocated string containing the text after @offset bounded
-	 *     by the specified @boundary_type. Use g_free() to free the returned
-	 *     string.
+	 *     by the specified @boundary_type. Use g_free() to free the returned string.
 	 */
 	public string getTextAfterOffset(int offset, AtkTextBoundary boundaryType, out int startOffset, out int endOffset);
 
@@ -359,13 +355,12 @@ public interface TextIF{
 	 * Params:
 	 *     offset = position
 	 *     boundaryType = An #AtkTextBoundary
-	 *     startOffset = the starting character offset of the returned string
+	 *     startOffset = the start offset of the returned string
 	 *     endOffset = the offset of the first character after the
 	 *         returned substring
 	 *
-	 * Returns: a newly allocated string containing the text at @offset bounded
-	 *     by the specified @boundary_type. Use g_free() to free the returned
-	 *     string.
+	 * Returns: a newly allocated string containing the text at @offset bounded by
+	 *     the specified @boundary_type. Use g_free() to free the returned string.
 	 */
 	public string getTextAtOffset(int offset, AtkTextBoundary boundaryType, out int startOffset, out int endOffset);
 
@@ -377,13 +372,12 @@ public interface TextIF{
 	 * Params:
 	 *     offset = position
 	 *     boundaryType = An #AtkTextBoundary
-	 *     startOffset = the starting character offset of the returned string
+	 *     startOffset = the start offset of the returned string
 	 *     endOffset = the offset of the first character after the
 	 *         returned substring
 	 *
 	 * Returns: a newly allocated string containing the text before @offset bounded
-	 *     by the specified @boundary_type. Use g_free() to free the returned
-	 *     string.
+	 *     by the specified @boundary_type. Use g_free() to free the returned string.
 	 */
 	public string getTextBeforeOffset(int offset, AtkTextBoundary boundaryType, out int startOffset, out int endOffset);
 
@@ -397,53 +391,17 @@ public interface TextIF{
 	 *         of the text region is assigned the number 0, etc.  Note that adding,
 	 *         moving or deleting a selected region can change the numbering.
 	 *
-	 * Returns: %TRUE if successful, %FALSE otherwise
+	 * Returns: %TRUE if success, %FALSE otherwise
 	 */
 	public bool removeSelection(int selectionNum);
-
-	/**
-	 * Makes @text visible on the screen by scrolling all necessary parents.
-	 *
-	 * Contrary to atk_text_set_position, this does not actually move
-	 * @text in its parent, this only makes the parents scroll so that the
-	 * object shows up on the screen, given its current position within the parents.
-	 *
-	 * Params:
-	 *     startOffset = start position
-	 *     endOffset = end position, or -1 for the end of the string.
-	 *     type = specify where the object should be made visible.
-	 *
-	 * Returns: whether scrolling was successful.
-	 *
-	 * Since: 2.32
-	 */
-	public bool scrollSubstringTo(int startOffset, int endOffset, AtkScrollType type);
-
-	/**
-	 * Makes an object visible on the screen at a given position by scrolling all
-	 * necessary parents.
-	 *
-	 * Params:
-	 *     startOffset = start position
-	 *     endOffset = end position, or -1 for the end of the string.
-	 *     coords = specify whether coordinates are relative to the screen or to the
-	 *         parent object.
-	 *     x = x-position where to scroll to
-	 *     y = y-position where to scroll to
-	 *
-	 * Returns: whether scrolling was successful.
-	 *
-	 * Since: 2.32
-	 */
-	public bool scrollSubstringToPoint(int startOffset, int endOffset, AtkCoordType coords, int x, int y);
 
 	/**
 	 * Sets the caret (cursor) position to the specified @offset.
 	 *
 	 * Params:
-	 *     offset = the character offset of the new caret position
+	 *     offset = position
 	 *
-	 * Returns: %TRUE if successful, %FALSE otherwise.
+	 * Returns: %TRUE if success, %FALSE otherwise.
 	 */
 	public bool setCaretOffset(int offset);
 
@@ -456,11 +414,11 @@ public interface TextIF{
 	 *         start of the text.  The selected region closest to the beginning
 	 *         of the text region is assigned the number 0, etc.  Note that adding,
 	 *         moving or deleting a selected region can change the numbering.
-	 *     startOffset = the new starting character offset of the selection
+	 *     startOffset = the new start position of the selection
 	 *     endOffset = the new end position of (e.g. offset immediately past)
 	 *         the selection
 	 *
-	 * Returns: %TRUE if successful, %FALSE otherwise
+	 * Returns: %TRUE if success, %FALSE otherwise
 	 */
 	public bool setSelection(int selectionNum, int startOffset, int endOffset);
 
@@ -548,8 +506,8 @@ public interface TextIF{
 	 *     name = a string which is the (non-localized) name of an ATK text attribute.
 	 *
 	 * Returns: the #AtkTextAttribute enumerated type corresponding to the specified
-	 *     name, or #ATK_TEXT_ATTRIBUTE_INVALID if no matching text attribute
-	 *     is found.
+	 *     name,
+	 *     or #ATK_TEXT_ATTRIBUTE_INVALID if no matching text attribute is found.
 	 */
 	public static AtkTextAttribute attributeForName(string name)
 	{

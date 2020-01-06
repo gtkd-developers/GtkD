@@ -43,7 +43,6 @@ private import glib.Str;
 private import glib.VariantDict;
 private import gobject.ObjectG;
 private import gobject.Signals;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -86,11 +85,10 @@ private import std.algorithm;
  * instance and g_application_run() promptly returns. See the code
  * examples below.
  * 
- * If used, the expected form of an application identifier is the same as
- * that of of a
- * [D-Bus well-known bus name](https://dbus.freedesktop.org/doc/dbus-specification.html#message-protocol-names-bus).
- * Examples include: `com.example.MyApp`, `org.example.internal_apps.Calculator`,
- * `org._7_zip.Archiver`.
+ * If used, the expected form of an application identifier is very close
+ * to that of of a
+ * [D-Bus bus name](http://dbus.freedesktop.org/doc/dbus-specification.html#message-protocol-names-interface).
+ * Examples include: "com.example.MyApp", "org.example.internal-apps.Calculator".
  * For details on valid application identifiers, see g_application_id_is_valid().
  * 
  * On Linux, the application identifier is claimed as a well-known bus name
@@ -265,14 +263,14 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 */
 	public this(string applicationId, GApplicationFlags flags)
 	{
-		auto p = g_application_new(Str.toStringz(applicationId), flags);
+		auto __p = g_application_new(Str.toStringz(applicationId), flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GApplication*) p, true);
+		this(cast(GApplication*) __p, true);
 	}
 
 	/**
@@ -290,14 +288,14 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 */
 	public static Application getDefault()
 	{
-		auto p = g_application_get_default();
+		auto __p = g_application_get_default();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Application)(cast(GApplication*) p);
+		return ObjectG.getDObject!(Application)(cast(GApplication*) __p);
 	}
 
 	/**
@@ -306,46 +304,22 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 * A valid ID is required for calls to g_application_new() and
 	 * g_application_set_application_id().
 	 *
-	 * Application identifiers follow the same format as
-	 * [D-Bus well-known bus names](https://dbus.freedesktop.org/doc/dbus-specification.html#message-protocol-names-bus).
 	 * For convenience, the restrictions on application identifiers are
 	 * reproduced here:
 	 *
-	 * - Application identifiers are composed of 1 or more elements separated by a
-	 * period (`.`) character. All elements must contain at least one character.
+	 * - Application identifiers must contain only the ASCII characters
+	 * "[A-Z][a-z][0-9]_-." and must not begin with a digit.
 	 *
-	 * - Each element must only contain the ASCII characters `[A-Z][a-z][0-9]_-`,
-	 * with `-` discouraged in new application identifiers. Each element must not
-	 * begin with a digit.
+	 * - Application identifiers must contain at least one '.' (period)
+	 * character (and thus at least three elements).
 	 *
-	 * - Application identifiers must contain at least one `.` (period) character
-	 * (and thus at least two elements).
+	 * - Application identifiers must not begin or end with a '.' (period)
+	 * character.
 	 *
-	 * - Application identifiers must not begin with a `.` (period) character.
+	 * - Application identifiers must not contain consecutive '.' (period)
+	 * characters.
 	 *
 	 * - Application identifiers must not exceed 255 characters.
-	 *
-	 * Note that the hyphen (`-`) character is allowed in application identifiers,
-	 * but is problematic or not allowed in various specifications and APIs that
-	 * refer to D-Bus, such as
-	 * [Flatpak application IDs](http://docs.flatpak.org/en/latest/introduction.html#identifiers),
-	 * the
-	 * [`DBusActivatable` interface in the Desktop Entry Specification](https://specifications.freedesktop.org/desktop-entry-spec/desktop-entry-spec-latest.html#dbus),
-	 * and the convention that an application's "main" interface and object path
-	 * resemble its application identifier and bus name. To avoid situations that
-	 * require special-case handling, it is recommended that new application
-	 * identifiers consistently replace hyphens with underscores.
-	 *
-	 * Like D-Bus interface names, application identifiers should start with the
-	 * reversed DNS domain name of the author of the interface (in lower-case), and
-	 * it is conventional for the rest of the application identifier to consist of
-	 * words run together, with initial capital letters.
-	 *
-	 * As with D-Bus interface names, if the author's DNS domain name contains
-	 * hyphen/minus characters they should be replaced by underscores, and if it
-	 * contains leading digits they should be escaped by prepending an underscore.
-	 * For example, if the owner of 7-zip.org used an application identifier for an
-	 * archiving application, it might be named `org._7_zip.Archiver`.
 	 *
 	 * Params:
 	 *     applicationId = a potential application identifier
@@ -559,14 +533,14 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 */
 	public DBusConnection getDbusConnection()
 	{
-		auto p = g_application_get_dbus_connection(gApplication);
+		auto __p = g_application_get_dbus_connection(gApplication);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusConnection)(cast(GDBusConnection*) p);
+		return ObjectG.getDObject!(DBusConnection)(cast(GDBusConnection*) __p);
 	}
 
 	/**
@@ -759,10 +733,6 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	 * calling only the 'shutdown' function before doing so.
 	 *
 	 * The hold count is ignored.
-	 * Take care if your code has called g_application_hold() on the application and
-	 * is therefore still expecting it to exist.
-	 * (Note that you may have called g_application_hold() indirectly, for example
-	 * through gtk_application_add_window().)
 	 *
 	 * The result of calling g_application_run() again after it returns is
 	 * unspecified.
@@ -819,14 +789,14 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	{
 		GError* err = null;
 
-		auto p = g_application_register(gApplication, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_application_register(gApplication, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1063,57 +1033,6 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	}
 
 	/**
-	 * Adds a description to the @application option context.
-	 *
-	 * See g_option_context_set_description() for more information.
-	 *
-	 * Params:
-	 *     description = a string to be shown in `--help` output
-	 *         after the list of options, or %NULL
-	 *
-	 * Since: 2.56
-	 */
-	public void setOptionContextDescription(string description)
-	{
-		g_application_set_option_context_description(gApplication, Str.toStringz(description));
-	}
-
-	/**
-	 * Sets the parameter string to be used by the commandline handling of @application.
-	 *
-	 * This function registers the argument to be passed to g_option_context_new()
-	 * when the internal #GOptionContext of @application is created.
-	 *
-	 * See g_option_context_new() for more information about @parameter_string.
-	 *
-	 * Params:
-	 *     parameterString = a string which is displayed
-	 *         in the first line of `--help` output, after the usage summary `programname [OPTION...]`.
-	 *
-	 * Since: 2.56
-	 */
-	public void setOptionContextParameterString(string parameterString)
-	{
-		g_application_set_option_context_parameter_string(gApplication, Str.toStringz(parameterString));
-	}
-
-	/**
-	 * Adds a summary to the @application option context.
-	 *
-	 * See g_option_context_set_summary() for more information.
-	 *
-	 * Params:
-	 *     summary = a string to be shown in `--help` output
-	 *         before the list of options, or %NULL
-	 *
-	 * Since: 2.56
-	 */
-	public void setOptionContextSummary(string summary)
-	{
-		g_application_set_option_context_summary(gApplication, Str.toStringz(summary));
-	}
-
-	/**
 	 * Sets (or unsets) the base resource path of @application.
 	 *
 	 * The path is used to automatically load various [application
@@ -1297,22 +1216,6 @@ public class Application : ObjectG, ActionGroupIF, ActionMapIF
 	gulong addOnHandleLocalOptions(int delegate(VariantDict, Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "handle-local-options", dlg, connectFlags ^ ConnectFlags.SWAPPED);
-	}
-
-	/**
-	 * The ::name-lost signal is emitted only on the registered primary instance
-	 * when a new instance has taken over. This can only happen if the application
-	 * is using the %G_APPLICATION_ALLOW_REPLACEMENT flag.
-	 *
-	 * The default handler for this signal calls g_application_quit().
-	 *
-	 * Returns: %TRUE if the signal has been handled
-	 *
-	 * Since: 2.60
-	 */
-	gulong addOnNameLost(bool delegate(Application) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		return Signals.connect(this, "name-lost", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
 
 	/**

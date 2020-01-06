@@ -31,7 +31,6 @@ private import gobject.Signals;
 private import gtk.Action;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -117,14 +116,14 @@ public class ToggleAction : Action
 	 */
 	public this(string name, string label, string tooltip, string stockId)
 	{
-		auto p = gtk_toggle_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId));
+		auto __p = gtk_toggle_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkToggleAction*) p, true);
+		this(cast(GtkToggleAction*) __p, true);
 	}
 
 	/**

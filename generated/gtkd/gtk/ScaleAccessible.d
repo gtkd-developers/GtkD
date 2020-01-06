@@ -27,7 +27,6 @@ module gtk.ScaleAccessible;
 private import gtk.RangeAccessible;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /** */

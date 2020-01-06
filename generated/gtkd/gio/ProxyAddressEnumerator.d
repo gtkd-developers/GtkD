@@ -27,19 +27,12 @@ module gio.ProxyAddressEnumerator;
 private import gio.SocketAddressEnumerator;
 private import gio.c.functions;
 public  import gio.c.types;
-public  import gtkc.giotypes;
 
 
 /**
- * #GProxyAddressEnumerator is a wrapper around #GSocketAddressEnumerator which
- * takes the #GSocketAddress instances returned by the #GSocketAddressEnumerator
- * and wraps them in #GProxyAddress instances, using the given
- * #GProxyAddressEnumerator:proxy-resolver.
- * 
- * This enumerator will be returned (for example, by
- * g_socket_connectable_enumerate()) as appropriate when a proxy is configured;
- * there should be no need to manually wrap a #GSocketAddressEnumerator instance
- * with one.
+ * A subclass of #GSocketAddressEnumerator that takes another address
+ * enumerator and wraps its results in #GProxyAddress<!-- -->es as
+ * directed by the default #GProxyResolver.
  */
 public class ProxyAddressEnumerator : SocketAddressEnumerator
 {

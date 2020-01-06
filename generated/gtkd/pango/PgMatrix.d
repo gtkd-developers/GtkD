@@ -26,8 +26,6 @@ module pango.PgMatrix;
 
 private import glib.MemorySlice;
 private import gobject.ObjectG;
-public  import gtkc.pangotypes;
-private import gtkd.Loader;
 private import pango.c.functions;
 public  import pango.c.types;
 
@@ -75,7 +73,7 @@ public final class PgMatrix
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
+		if ( ownedRef )
 			pango_matrix_free(pangoMatrix);
 	}
 
@@ -196,14 +194,14 @@ public final class PgMatrix
 	 */
 	public PgMatrix copy()
 	{
-		auto p = pango_matrix_copy(pangoMatrix);
+		auto __p = pango_matrix_copy(pangoMatrix);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgMatrix)(cast(PangoMatrix*) p, true);
+		return ObjectG.getDObject!(PgMatrix)(cast(PangoMatrix*) __p, true);
 	}
 
 	/**

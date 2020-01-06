@@ -32,7 +32,6 @@ private import gobject.Signals;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -185,14 +184,14 @@ public class GLArea : Widget
 	 */
 	public this()
 	{
-		auto p = gtk_gl_area_new();
+		auto __p = gtk_gl_area_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkGLArea*) p);
+		this(cast(GtkGLArea*) __p);
 	}
 
 	/**
@@ -232,14 +231,14 @@ public class GLArea : Widget
 	 */
 	public GLContext getContext()
 	{
-		auto p = gtk_gl_area_get_context(gtkGLArea);
+		auto __p = gtk_gl_area_get_context(gtkGLArea);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(GLContext)(cast(GdkGLContext*) p);
+		return ObjectG.getDObject!(GLContext)(cast(GdkGLContext*) __p);
 	}
 
 	/**
@@ -251,14 +250,14 @@ public class GLArea : Widget
 	 */
 	public ErrorG getError()
 	{
-		auto p = gtk_gl_area_get_error(gtkGLArea);
+		auto __p = gtk_gl_area_get_error(gtkGLArea);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ErrorG(cast(GError*) p);
+		return new ErrorG(cast(GError*) __p);
 	}
 
 	/**

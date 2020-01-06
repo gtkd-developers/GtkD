@@ -32,7 +32,6 @@ private import gtk.GestureSingle;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -98,14 +97,14 @@ public class GestureMultiPress : GestureSingle
 	 */
 	public this(Widget widget)
 	{
-		auto p = gtk_gesture_multi_press_new((widget is null) ? null : widget.getWidgetStruct());
+		auto __p = gtk_gesture_multi_press_new((widget is null) ? null : widget.getWidgetStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkGestureMultiPress*) p, true);
+		this(cast(GtkGestureMultiPress*) __p, true);
 	}
 
 	/**

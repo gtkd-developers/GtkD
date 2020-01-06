@@ -31,7 +31,6 @@ public  import atk.c.types;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-public  import gtkc.atktypes;
 private import std.algorithm;
 
 
@@ -241,14 +240,14 @@ public class ObjectAtk : ObjectG
 	 */
 	public ObjectAtk getParent()
 	{
-		auto p = atk_object_get_parent(atkObject);
+		auto __p = atk_object_get_parent(atkObject);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
+		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) __p);
 	}
 
 	/**
@@ -304,14 +303,14 @@ public class ObjectAtk : ObjectG
 	 */
 	public ObjectAtk peekParent()
 	{
-		auto p = atk_object_peek_parent(atkObject);
+		auto __p = atk_object_peek_parent(atkObject);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
+		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) __p);
 	}
 
 	/**
@@ -327,14 +326,14 @@ public class ObjectAtk : ObjectG
 	 */
 	public ObjectAtk refAccessibleChild(int i)
 	{
-		auto p = atk_object_ref_accessible_child(atkObject, i);
+		auto __p = atk_object_ref_accessible_child(atkObject, i);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p, true);
+		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) __p, true);
 	}
 
 	/**
@@ -345,14 +344,14 @@ public class ObjectAtk : ObjectG
 	 */
 	public RelationSet refRelationSet()
 	{
-		auto p = atk_object_ref_relation_set(atkObject);
+		auto __p = atk_object_ref_relation_set(atkObject);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(RelationSet)(cast(AtkRelationSet*) p, true);
+		return ObjectG.getDObject!(RelationSet)(cast(AtkRelationSet*) __p, true);
 	}
 
 	/**
@@ -364,14 +363,14 @@ public class ObjectAtk : ObjectG
 	 */
 	public StateSet refStateSet()
 	{
-		auto p = atk_object_ref_state_set(atkObject);
+		auto __p = atk_object_ref_state_set(atkObject);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(StateSet)(cast(AtkStateSet*) p, true);
+		return ObjectG.getDObject!(StateSet)(cast(AtkStateSet*) __p, true);
 	}
 
 	/**
@@ -462,7 +461,7 @@ public class ObjectAtk : ObjectG
 	 * Params:
 	 *     arg1 = the newly focused object.
 	 */
-	gulong addOnActiveDescendantChanged(void delegate(ObjectAtk, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnActiveDescendantChanged(void delegate(void*, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "active-descendant-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
@@ -481,7 +480,7 @@ public class ObjectAtk : ObjectG
 	 *         available for the implementor. In that case this pointer can be
 	 *         NULL.
 	 */
-	gulong addOnChildrenChanged(void delegate(uint, ObjectAtk, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gulong addOnChildrenChanged(void delegate(uint, void*, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		return Signals.connect(this, "children-changed", dlg, connectFlags ^ ConnectFlags.SWAPPED);
 	}
@@ -517,8 +516,8 @@ public class ObjectAtk : ObjectG
 	 * notify doesn't support emission hooks.
 	 *
 	 * Params:
-	 *     arg1 = an #AtkPropertyValues containing the new
-	 *         value of the property which changed.
+	 *     arg1 = an #AtkPropertyValues containing the new value of the
+	 *         property which changed.
 	 */
 	gulong addOnPropertyChange(void delegate(void*, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{

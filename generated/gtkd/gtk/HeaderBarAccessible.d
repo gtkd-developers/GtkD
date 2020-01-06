@@ -22,56 +22,46 @@
 // implement new conversion functionalities on the wrap.utils pakage
 
 
-module gtk.MenuItemAccessible;
+module gtk.HeaderBarAccessible;
 
-private import atk.ActionIF;
-private import atk.ActionT;
-private import atk.SelectionIF;
-private import atk.SelectionT;
 private import gtk.ContainerAccessible;
 private import gtk.c.functions;
 public  import gtk.c.types;
 
 
 /** */
-public class MenuItemAccessible : ContainerAccessible, ActionIF, SelectionIF
+public class HeaderBarAccessible : ContainerAccessible
 {
 	/** the main Gtk struct */
-	protected GtkMenuItemAccessible* gtkMenuItemAccessible;
+	protected GtkHeaderBarAccessible* gtkHeaderBarAccessible;
 
 	/** Get the main Gtk struct */
-	public GtkMenuItemAccessible* getMenuItemAccessibleStruct(bool transferOwnership = false)
+	public GtkHeaderBarAccessible* getHeaderBarAccessibleStruct(bool transferOwnership = false)
 	{
 		if (transferOwnership)
 			ownedRef = false;
-		return gtkMenuItemAccessible;
+		return gtkHeaderBarAccessible;
 	}
 
 	/** the main Gtk struct as a void* */
 	protected override void* getStruct()
 	{
-		return cast(void*)gtkMenuItemAccessible;
+		return cast(void*)gtkHeaderBarAccessible;
 	}
 
 	/**
 	 * Sets our main struct and passes it to the parent class.
 	 */
-	public this (GtkMenuItemAccessible* gtkMenuItemAccessible, bool ownedRef = false)
+	public this (GtkHeaderBarAccessible* gtkHeaderBarAccessible, bool ownedRef = false)
 	{
-		this.gtkMenuItemAccessible = gtkMenuItemAccessible;
-		super(cast(GtkContainerAccessible*)gtkMenuItemAccessible, ownedRef);
+		this.gtkHeaderBarAccessible = gtkHeaderBarAccessible;
+		super(cast(GtkContainerAccessible*)gtkHeaderBarAccessible, ownedRef);
 	}
-
-	// add the Action capabilities
-	mixin ActionT!(GtkMenuItemAccessible);
-
-	// add the Selection capabilities
-	mixin SelectionT!(GtkMenuItemAccessible);
 
 
 	/** */
 	public static GType getType()
 	{
-		return gtk_menu_item_accessible_get_type();
+		return gtk_header_bar_accessible_get_type();
 	}
 }

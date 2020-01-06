@@ -28,7 +28,6 @@ public  import gio.c.functions;
 public  import gio.c.types;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
-public  import gtkc.giotypes;
 public  import std.algorithm;
 
 
@@ -106,9 +105,16 @@ public template ListModelT(TStruct)
 	 *
 	 * Since: 2.44
 	 */
-	public void* getItem(uint position)
+	public ObjectG getItem(uint position)
 	{
-		return g_list_model_get_item(getListModelStruct(), position);
+		auto __p = g_list_model_get_item(getListModelStruct(), position);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(ObjectG)(cast(GObject*) __p, true);
 	}
 
 	/**
@@ -160,14 +166,14 @@ public template ListModelT(TStruct)
 	 */
 	public ObjectG getObject(uint position)
 	{
-		auto p = g_list_model_get_object(getListModelStruct(), position);
+		auto __p = g_list_model_get_object(getListModelStruct(), position);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p, true);
+		return ObjectG.getDObject!(ObjectG)(cast(GObject*) __p, true);
 	}
 
 	/**

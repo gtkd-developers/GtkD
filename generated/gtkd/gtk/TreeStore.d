@@ -43,7 +43,6 @@ private import gtk.TreeSortableIF;
 private import gtk.TreeSortableT;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -262,14 +261,14 @@ public class TreeStore : ObjectG, BuildableIF, TreeDragDestIF, TreeDragSourceIF,
 	 */
 	public this(GType[] types)
 	{
-		auto p = gtk_tree_store_newv(cast(int)types.length, types.ptr);
+		auto __p = gtk_tree_store_newv(cast(int)types.length, types.ptr);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by newv");
 		}
 
-		this(cast(GtkTreeStore*) p, true);
+		this(cast(GtkTreeStore*) __p, true);
 	}
 
 	/**

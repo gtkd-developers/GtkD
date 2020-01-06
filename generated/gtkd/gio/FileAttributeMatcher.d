@@ -29,8 +29,6 @@ public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
-private import gtkd.Loader;
 
 
 /**
@@ -67,7 +65,7 @@ public class FileAttributeMatcher
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GIO) && ownedRef )
+		if ( ownedRef )
 			g_file_attribute_matcher_unref(gFileAttributeMatcher);
 	}
 
@@ -108,14 +106,14 @@ public class FileAttributeMatcher
 	 */
 	public this(string attributes)
 	{
-		auto p = g_file_attribute_matcher_new(Str.toStringz(attributes));
+		auto __p = g_file_attribute_matcher_new(Str.toStringz(attributes));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GFileAttributeMatcher*) p);
+		this(cast(GFileAttributeMatcher*) __p);
 	}
 
 	/**
@@ -185,14 +183,14 @@ public class FileAttributeMatcher
 	 */
 	public FileAttributeMatcher ref_()
 	{
-		auto p = g_file_attribute_matcher_ref(gFileAttributeMatcher);
+		auto __p = g_file_attribute_matcher_ref(gFileAttributeMatcher);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileAttributeMatcher)(cast(GFileAttributeMatcher*) p, true);
+		return ObjectG.getDObject!(FileAttributeMatcher)(cast(GFileAttributeMatcher*) __p, true);
 	}
 
 	/**
@@ -213,14 +211,14 @@ public class FileAttributeMatcher
 	 */
 	public FileAttributeMatcher subtract(FileAttributeMatcher subtract)
 	{
-		auto p = g_file_attribute_matcher_subtract(gFileAttributeMatcher, (subtract is null) ? null : subtract.getFileAttributeMatcherStruct());
+		auto __p = g_file_attribute_matcher_subtract(gFileAttributeMatcher, (subtract is null) ? null : subtract.getFileAttributeMatcherStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileAttributeMatcher)(cast(GFileAttributeMatcher*) p, true);
+		return ObjectG.getDObject!(FileAttributeMatcher)(cast(GFileAttributeMatcher*) __p, true);
 	}
 
 	/**

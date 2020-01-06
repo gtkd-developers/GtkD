@@ -33,8 +33,6 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
-private import gtkd.Loader;
 
 
 /**
@@ -73,13 +71,6 @@ private import gtkd.Loader;
  * set to the full path to the gdk-pixbuf-pixdata executable; otherwise the resource compiler will
  * abort.
  * 
- * Resource files will be exported in the GResource namespace using the
- * combination of the given `prefix` and the filename from the `file` element.
- * The `alias` attribute can be used to alter the filename to expose them at a
- * different location in the resource namespace. Typically, this is used to
- * include files from a different source directory without exposing the source
- * directory in the resource namespace, as in the example below.
- * 
  * Resource bundles are created by the [glib-compile-resources][glib-compile-resources] program
  * which takes an XML file that describes the bundle, and a set of files that the XML references. These
  * are combined into a binary resource bundle.
@@ -92,7 +83,6 @@ private import gtkd.Loader;
  * <file>data/splashscreen.png</file>
  * <file compressed="true">dialog.ui</file>
  * <file preprocess="xml-stripblanks">menumarkup.xml</file>
- * <file alias="example.css">data/example.css</file>
  * </gresource>
  * </gresources>
  * ]|
@@ -102,7 +92,6 @@ private import gtkd.Loader;
  * /org/gtk/Example/data/splashscreen.png
  * /org/gtk/Example/dialog.ui
  * /org/gtk/Example/menumarkup.xml
- * /org/gtk/Example/example.css
  * ]|
  * 
  * Note that all resources in the process share the same namespace, so use Java-style
@@ -123,25 +112,23 @@ private import gtkd.Loader;
  * to the data. You can also use URIs like "resource:///org/gtk/Example/data/splashscreen.png" with #GFile to access
  * the resource data.
  * 
- * Some higher-level APIs, such as #GtkApplication, will automatically load
- * resources from certain well-known paths in the resource namespace as a
- * convenience. See the documentation for those APIs for details.
- * 
  * There are two forms of the generated source, the default version uses the compiler support for constructor
  * and destructor functions (where available) to automatically create and register the #GResource on startup
- * or library load time. If you pass `--manual-register`, two functions to register/unregister the resource are created
- * instead. This requires an explicit initialization call in your application/library, but it works on all platforms,
- * even on the minor ones where constructors are not supported. (Constructor support is available for at least Win32, Mac OS and Linux.)
+ * or library load time. If you pass --manual-register two functions to register/unregister the resource is instead
+ * created. This requires an explicit initialization call in your application/library, but it works on all platforms,
+ * even on the minor ones where this is not available. (Constructor support is available for at least Win32, Mac OS and Linux.)
  * 
  * Note that resource data can point directly into the data segment of e.g. a library, so if you are unloading libraries
  * during runtime you need to be very careful with keeping around pointers to data from a resource, as this goes away
  * when the library is unloaded. However, in practice this is not generally a problem, since most resource accesses
- * are for your own resources, and resource data is often used once, during parsing, and then released.
+ * is for your own resources, and resource data is often used once, during parsing, and then released.
  * 
  * When debugging a program or testing a change to an installed version, it is often useful to be able to
  * replace resources in the program or library, without recompiling, for debugging or quick hacking and testing
- * purposes. Since GLib 2.50, it is possible to use the `G_RESOURCE_OVERLAYS` environment variable to selectively overlay
- * resources with replacements from the filesystem.  It is a %G_SEARCHPATH_SEPARATOR-separated list of substitutions to perform
+ * purposes.
+ * 
+ * Since GLib 2.50, it is possible to use the `G_RESOURCE_OVERLAYS` environment variable to selectively overlay
+ * resources with replacements from the filesystem.  It is a colon-separated list of substitutions to perform
  * during resource lookups.
  * 
  * A substitution has the form
@@ -197,7 +184,7 @@ public class Resource
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GIO) && ownedRef )
+		if ( ownedRef )
 			g_resource_unref(gResource);
 	}
 
@@ -216,12 +203,6 @@ public class Resource
 	 * If you want to use this resource in the global resource namespace you need
 	 * to register it with g_resources_register().
 	 *
-	 * Note: @data must be backed by memory that is at least pointer aligned.
-	 * Otherwise this function will internally create a copy of the memory since
-	 * GLib 2.56, or in older versions fail and exit the process.
-	 *
-	 * If @data is empty or corrupt, %G_RESOURCE_ERROR_INTERNAL will be returned.
-	 *
 	 * Params:
 	 *     data = A #GBytes
 	 *
@@ -236,19 +217,19 @@ public class Resource
 	{
 		GError* err = null;
 
-		auto p = g_resource_new_from_data((data is null) ? null : data.getBytesStruct(), &err);
+		auto __p = g_resource_new_from_data((data is null) ? null : data.getBytesStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_data");
 		}
 
-		this(cast(GResource*) p);
+		this(cast(GResource*) __p);
 	}
 
 	/**
@@ -338,14 +319,14 @@ public class Resource
 	{
 		GError* err = null;
 
-		auto p = g_resource_get_info(gResource, Str.toStringz(path), lookupFlags, &size, &flags, &err) != 0;
+		auto __p = g_resource_get_info(gResource, Str.toStringz(path), lookupFlags, &size, &flags, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -379,19 +360,19 @@ public class Resource
 	{
 		GError* err = null;
 
-		auto p = g_resource_lookup_data(gResource, Str.toStringz(path), lookupFlags, &err);
+		auto __p = g_resource_lookup_data(gResource, Str.toStringz(path), lookupFlags, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Bytes(cast(GBytes*) p, true);
+		return new Bytes(cast(GBytes*) __p, true);
 	}
 
 	/**
@@ -415,19 +396,19 @@ public class Resource
 	{
 		GError* err = null;
 
-		auto p = g_resource_open_stream(gResource, Str.toStringz(path), lookupFlags, &err);
+		auto __p = g_resource_open_stream(gResource, Str.toStringz(path), lookupFlags, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) p, true);
+		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) __p, true);
 	}
 
 	alias doref = ref_;
@@ -441,14 +422,14 @@ public class Resource
 	 */
 	public Resource ref_()
 	{
-		auto p = g_resource_ref(gResource);
+		auto __p = g_resource_ref(gResource);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Resource)(cast(GResource*) p, true);
+		return ObjectG.getDObject!(Resource)(cast(GResource*) __p, true);
 	}
 
 	/**
@@ -471,11 +452,6 @@ public class Resource
 	 * If you want to use this resource in the global resource namespace you need
 	 * to register it with g_resources_register().
 	 *
-	 * If @filename is empty or the data in it is corrupt,
-	 * %G_RESOURCE_ERROR_INTERNAL will be returned. If @filename doesn’t exist, or
-	 * there is an error in reading it, an error from g_mapped_file_new() will be
-	 * returned.
-	 *
 	 * Params:
 	 *     filename = the path of a filename to load, in the GLib filename encoding
 	 *
@@ -489,19 +465,19 @@ public class Resource
 	{
 		GError* err = null;
 
-		auto p = g_resource_load(Str.toStringz(filename), &err);
+		auto __p = g_resource_load(Str.toStringz(filename), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Resource)(cast(GResource*) p, true);
+		return ObjectG.getDObject!(Resource)(cast(GResource*) __p, true);
 	}
 
 	/**
@@ -548,8 +524,8 @@ public class Resource
 	 *     lookupFlags = A #GResourceLookupFlags
 	 *     size = a location to place the length of the contents of the file,
 	 *         or %NULL if the length is not needed
-	 *     flags = a location to place the #GResourceFlags about the file,
-	 *         or %NULL if the flags are not needed
+	 *     flags = a location to place the flags about the file,
+	 *         or %NULL if the length is not needed
 	 *
 	 * Returns: %TRUE if the file was found. %FALSE if there were errors
 	 *
@@ -561,14 +537,14 @@ public class Resource
 	{
 		GError* err = null;
 
-		auto p = g_resources_get_info(Str.toStringz(path), lookupFlags, &size, &flags, &err) != 0;
+		auto __p = g_resources_get_info(Str.toStringz(path), lookupFlags, &size, &flags, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -602,19 +578,19 @@ public class Resource
 	{
 		GError* err = null;
 
-		auto p = g_resources_lookup_data(Str.toStringz(path), lookupFlags, &err);
+		auto __p = g_resources_lookup_data(Str.toStringz(path), lookupFlags, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Bytes(cast(GBytes*) p, true);
+		return new Bytes(cast(GBytes*) __p, true);
 	}
 
 	/**
@@ -639,18 +615,18 @@ public class Resource
 	{
 		GError* err = null;
 
-		auto p = g_resources_open_stream(Str.toStringz(path), lookupFlags, &err);
+		auto __p = g_resources_open_stream(Str.toStringz(path), lookupFlags, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) p, true);
+		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) __p, true);
 	}
 }

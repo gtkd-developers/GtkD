@@ -27,7 +27,6 @@ module atk.Misc;
 private import atk.c.functions;
 public  import atk.c.types;
 private import gobject.ObjectG;
-public  import gtkc.atktypes;
 
 
 /**
@@ -80,14 +79,14 @@ public class Misc : ObjectG
 	 */
 	public static Misc getInstance()
 	{
-		auto p = atk_misc_get_instance();
+		auto __p = atk_misc_get_instance();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Misc)(cast(AtkMisc*) p);
+		return ObjectG.getDObject!(Misc)(cast(AtkMisc*) __p);
 	}
 
 	/**

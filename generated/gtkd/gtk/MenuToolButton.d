@@ -34,7 +34,6 @@ private import gtk.ToolItem;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -146,14 +145,14 @@ public class MenuToolButton : ToolButton
 	 */
 	public this(Widget iconWidget, string label)
 	{
-		auto p = gtk_menu_tool_button_new((iconWidget is null) ? null : iconWidget.getWidgetStruct(), Str.toStringz(label));
+		auto __p = gtk_menu_tool_button_new((iconWidget is null) ? null : iconWidget.getWidgetStruct(), Str.toStringz(label));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkMenuToolButton*) p);
+		this(cast(GtkMenuToolButton*) __p);
 	}
 
 	/**
@@ -174,14 +173,14 @@ public class MenuToolButton : ToolButton
 	 */
 	public this(string stockId)
 	{
-		auto p = gtk_menu_tool_button_new_from_stock(Str.toStringz(stockId));
+		auto __p = gtk_menu_tool_button_new_from_stock(Str.toStringz(stockId));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_stock");
 		}
 
-		this(cast(GtkMenuToolButton*) p);
+		this(cast(GtkMenuToolButton*) __p);
 	}
 
 	/**

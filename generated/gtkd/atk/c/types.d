@@ -54,11 +54,6 @@ public enum AtkCoordType
 	 * top-level window
 	 */
 	WINDOW = 1,
-	/**
-	 * specifies xy coordinates relative to the widget's
-	 * immediate parent. Since: 2.30
-	 */
-	PARENT = 2,
 }
 alias AtkCoordType CoordType;
 
@@ -832,52 +827,6 @@ public enum AtkRole
 alias AtkRole Role;
 
 /**
- * Specifies where an object should be placed on the screen when using scroll_to.
- *
- * Since: 2.30
- */
-public enum AtkScrollType
-{
-	/**
-	 * Scroll the object vertically and horizontally to the top
-	 * left corner of the window.
-	 */
-	TOP_LEFT = 0,
-	/**
-	 * Scroll the object vertically and horizontally to the
-	 * bottom right corner of the window.
-	 */
-	BOTTOM_RIGHT = 1,
-	/**
-	 * Scroll the object vertically to the top edge of the
-	 * window.
-	 */
-	TOP_EDGE = 2,
-	/**
-	 * Scroll the object vertically to the bottom edge of
-	 * the window.
-	 */
-	BOTTOM_EDGE = 3,
-	/**
-	 * Scroll the object vertically and horizontally to the
-	 * left edge of the window.
-	 */
-	LEFT_EDGE = 4,
-	/**
-	 * Scroll the object vertically and horizontally to the
-	 * right edge of the window.
-	 */
-	RIGHT_EDGE = 5,
-	/**
-	 * Scroll the object vertically and horizontally so that
-	 * as much as possible of the object becomes visible. The exact placement is
-	 * determined by the application.
-	 */
-	ANYWHERE = 6,
-}
-alias AtkScrollType ScrollType;
-
-/**
  * The possible types of states of an object
  */
 public enum AtkStateType
@@ -1516,7 +1465,7 @@ struct AtkComponentIface
 	 *     x = x coordinate
 	 *     y = y coordinate
 	 *     coordType = specifies whether the coordinates are relative to the screen
-	 *         or to the component's top level window
+	 *         or to the components top level window
 	 * Returns: %TRUE or %FALSE whether or not the position was set or not
 	 */
 	extern(C) int function(AtkComponent* component, int x, int y, AtkCoordType coordType) setPosition;
@@ -1554,25 +1503,6 @@ struct AtkComponentIface
 	 * Returns: An alpha value from 0 to 1.0, inclusive.
 	 */
 	extern(C) double function(AtkComponent* component) getAlpha;
-	/**
-	 *
-	 * Params:
-	 *     component = an #AtkComponent
-	 *     type = specify where the object should be made visible.
-	 * Returns: whether scrolling was successful.
-	 */
-	extern(C) int function(AtkComponent* component, AtkScrollType type) scrollTo;
-	/**
-	 *
-	 * Params:
-	 *     component = an #AtkComponent
-	 *     coords = specify whether coordinates are relative to the screen or to the
-	 *         parent object.
-	 *     x = x-position where to scroll to
-	 *     y = y-position where to scroll to
-	 * Returns: whether scrolling was successful.
-	 */
-	extern(C) int function(AtkComponent* component, AtkCoordType coords, int x, int y) scrollToPoint;
 }
 
 struct AtkDocument;
@@ -1594,46 +1524,13 @@ struct AtkDocumentIface
 	 * Returns: a %gpointer that points to an instance of the DOM.
 	 */
 	extern(C) void* function(AtkDocument* document) getDocument;
-	/**
-	 *
-	 * Params:
-	 *     document = a #GObject instance that implements AtkDocumentIface
-	 * Returns: a UTF-8 string indicating the POSIX-style LC_MESSAGES
-	 *     locale of the document content as a whole, or NULL if
-	 *     the document content does not specify a locale.
-	 */
+	/** */
 	extern(C) const(char)* function(AtkDocument* document) getDocumentLocale;
-	/**
-	 *
-	 * Params:
-	 *     document = a #GObject instance that implements AtkDocumentIface
-	 * Returns: An AtkAttributeSet containing the explicitly
-	 *     set name-value-pair attributes associated with this document
-	 *     as a whole.
-	 */
+	/** */
 	extern(C) AtkAttributeSet* function(AtkDocument* document) getDocumentAttributes;
-	/**
-	 *
-	 * Params:
-	 *     document = a #GObject instance that implements AtkDocumentIface
-	 *     attributeName = a character string representing the name of the attribute
-	 *         whose value is being queried.
-	 * Returns: a string value associated with the named
-	 *     attribute for this document, or NULL if a value for
-	 *     #attribute_name has not been specified for this document.
-	 */
+	/** */
 	extern(C) const(char)* function(AtkDocument* document, const(char)* attributeName) getDocumentAttributeValue;
-	/**
-	 *
-	 * Params:
-	 *     document = a #GObject instance that implements AtkDocumentIface
-	 *     attributeName = a character string representing the name of the attribute
-	 *         whose value is being set.
-	 *     attributeValue = a string value to be associated with #attribute_name.
-	 * Returns: TRUE if #value is successfully associated with #attribute_name
-	 *     for this document, FALSE otherwise (e.g. if the document does not
-	 *     allow the attribute to be modified).
-	 */
+	/** */
 	extern(C) int function(AtkDocument* document, const(char)* attributeName, const(char)* attributeValue) setDocumentAttribute;
 	/**
 	 *
@@ -2642,11 +2539,10 @@ struct AtkTextIface
 	 *
 	 * Params:
 	 *     text = an #AtkText
-	 *     startOffset = a starting character offset within @text
-	 *     endOffset = an ending character offset within @text, or -1 for the end of the string.
+	 *     startOffset = start position
+	 *     endOffset = end position, or -1 for the end of the string.
 	 * Returns: a newly allocated string containing the text from @start_offset up
-	 *     to, but not including @end_offset. Use g_free() to free the returned
-	 *     string.
+	 *     to, but not including @end_offset. Use g_free() to free the returned string.
 	 */
 	extern(C) char* function(AtkText* text, int startOffset, int endOffset) getText;
 	/**
@@ -2655,12 +2551,11 @@ struct AtkTextIface
 	 *     text = an #AtkText
 	 *     offset = position
 	 *     boundaryType = An #AtkTextBoundary
-	 *     startOffset = the starting character offset of the returned string
+	 *     startOffset = the start offset of the returned string
 	 *     endOffset = the offset of the first character after the
 	 *         returned substring
 	 * Returns: a newly allocated string containing the text after @offset bounded
-	 *     by the specified @boundary_type. Use g_free() to free the returned
-	 *     string.
+	 *     by the specified @boundary_type. Use g_free() to free the returned string.
 	 */
 	extern(C) char* function(AtkText* text, int offset, AtkTextBoundary boundaryType, int* startOffset, int* endOffset) getTextAfterOffset;
 	/**
@@ -2669,20 +2564,19 @@ struct AtkTextIface
 	 *     text = an #AtkText
 	 *     offset = position
 	 *     boundaryType = An #AtkTextBoundary
-	 *     startOffset = the starting character offset of the returned string
+	 *     startOffset = the start offset of the returned string
 	 *     endOffset = the offset of the first character after the
 	 *         returned substring
-	 * Returns: a newly allocated string containing the text at @offset bounded
-	 *     by the specified @boundary_type. Use g_free() to free the returned
-	 *     string.
+	 * Returns: a newly allocated string containing the text at @offset bounded by
+	 *     the specified @boundary_type. Use g_free() to free the returned string.
 	 */
 	extern(C) char* function(AtkText* text, int offset, AtkTextBoundary boundaryType, int* startOffset, int* endOffset) getTextAtOffset;
 	/**
 	 *
 	 * Params:
 	 *     text = an #AtkText
-	 *     offset = a character offset within @text
-	 * Returns: the character at @offset or 0 in the case of failure.
+	 *     offset = position
+	 * Returns: the character at @offset.
 	 */
 	extern(C) dchar function(AtkText* text, int offset) getCharacterAtOffset;
 	/**
@@ -2691,42 +2585,39 @@ struct AtkTextIface
 	 *     text = an #AtkText
 	 *     offset = position
 	 *     boundaryType = An #AtkTextBoundary
-	 *     startOffset = the starting character offset of the returned string
+	 *     startOffset = the start offset of the returned string
 	 *     endOffset = the offset of the first character after the
 	 *         returned substring
 	 * Returns: a newly allocated string containing the text before @offset bounded
-	 *     by the specified @boundary_type. Use g_free() to free the returned
-	 *     string.
+	 *     by the specified @boundary_type. Use g_free() to free the returned string.
 	 */
 	extern(C) char* function(AtkText* text, int offset, AtkTextBoundary boundaryType, int* startOffset, int* endOffset) getTextBeforeOffset;
 	/**
 	 *
 	 * Params:
 	 *     text = an #AtkText
-	 * Returns: the character offset of the position of the caret or 0  if
-	 *     the caret is not located inside the element or in the case of
-	 *     any other failure.
+	 * Returns: the offset position of the caret (cursor).
 	 */
 	extern(C) int function(AtkText* text) getCaretOffset;
 	/**
 	 *
 	 * Params:
 	 *     text = an #AtkText
-	 *     offset = the character offset at which to get the attributes, -1 means the offset of
+	 *     offset = the offset at which to get the attributes, -1 means the offset of
 	 *         the character to be inserted at the caret location.
 	 *     startOffset = the address to put the start offset of the range
 	 *     endOffset = the address to put the end offset of the range
 	 * Returns: an #AtkAttributeSet which contains the attributes
-	 *     explicitly set at @offset. This #AtkAttributeSet should be freed by
-	 *     a call to atk_attribute_set_free().
+	 *     explicitly set at @offset. This #AtkAttributeSet should be freed by a call
+	 *     to atk_attribute_set_free().
 	 */
 	extern(C) AtkAttributeSet* function(AtkText* text, int offset, int* startOffset, int* endOffset) getRunAttributes;
 	/**
 	 *
 	 * Params:
 	 *     text = an #AtkText
-	 * Returns: an #AtkAttributeSet which contains the default values
-	 *     of attributes.  at @offset. this #atkattributeset should be freed by
+	 * Returns: an #AtkAttributeSet which contains the default
+	 *     values of attributes.  at @offset. this #atkattributeset should be freed by
 	 *     a call to atk_attribute_set_free().
 	 */
 	extern(C) AtkAttributeSet* function(AtkText* text) getDefaultAttributes;
@@ -2736,7 +2627,7 @@ struct AtkTextIface
 	 *
 	 * Params:
 	 *     text = an #AtkText
-	 * Returns: the number of characters or -1 in case of failure.
+	 * Returns: the number of characters.
 	 */
 	extern(C) int function(AtkText* text) getCharacterCount;
 	/**
@@ -2747,15 +2638,16 @@ struct AtkTextIface
 	 *     y = screen y-position of character
 	 *     coords = specify whether coordinates are relative to the screen or
 	 *         widget window
-	 * Returns: the offset to the character which is located at  the specified
-	 *     @x and @y coordinates of -1 in case of failure.
+	 * Returns: the offset to the character which is located at
+	 *     the specified @x and @y coordinates.
 	 */
 	extern(C) int function(AtkText* text, int x, int y, AtkCoordType coords) getOffsetAtPoint;
 	/**
 	 *
 	 * Params:
 	 *     text = an #AtkText
-	 * Returns: The number of selected regions, or -1 in the case of failure.
+	 * Returns: The number of selected regions, or -1 if a failure
+	 *     occurred.
 	 */
 	extern(C) int function(AtkText* text) getNSelections;
 	/**
@@ -2767,9 +2659,9 @@ struct AtkTextIface
 	 *         start of the text.  The selected region closest to the beginning
 	 *         of the text region is assigned the number 0, etc.  Note that adding,
 	 *         moving or deleting a selected region can change the numbering.
-	 *     startOffset = passes back the starting character offset of the selected region
-	 *     endOffset = passes back the ending character offset (offset immediately past)
-	 *         of the selected region
+	 *     startOffset = passes back the start position of the selected region
+	 *     endOffset = passes back the end position of (e.g. offset immediately past)
+	 *         the selected region
 	 * Returns: a newly allocated string containing the selected text. Use g_free()
 	 *     to free the returned string.
 	 */
@@ -2778,9 +2670,9 @@ struct AtkTextIface
 	 *
 	 * Params:
 	 *     text = an #AtkText
-	 *     startOffset = the starting character offset of the selected region
+	 *     startOffset = the start position of the selected region
 	 *     endOffset = the offset of the first character after the selected region.
-	 * Returns: %TRUE if successful, %FALSE otherwise
+	 * Returns: %TRUE if success, %FALSE otherwise
 	 */
 	extern(C) int function(AtkText* text, int startOffset, int endOffset) addSelection;
 	/**
@@ -2792,7 +2684,7 @@ struct AtkTextIface
 	 *         start of the text.  The selected region closest to the beginning
 	 *         of the text region is assigned the number 0, etc.  Note that adding,
 	 *         moving or deleting a selected region can change the numbering.
-	 * Returns: %TRUE if successful, %FALSE otherwise
+	 * Returns: %TRUE if success, %FALSE otherwise
 	 */
 	extern(C) int function(AtkText* text, int selectionNum) removeSelection;
 	/**
@@ -2804,18 +2696,18 @@ struct AtkTextIface
 	 *         start of the text.  The selected region closest to the beginning
 	 *         of the text region is assigned the number 0, etc.  Note that adding,
 	 *         moving or deleting a selected region can change the numbering.
-	 *     startOffset = the new starting character offset of the selection
+	 *     startOffset = the new start position of the selection
 	 *     endOffset = the new end position of (e.g. offset immediately past)
 	 *         the selection
-	 * Returns: %TRUE if successful, %FALSE otherwise
+	 * Returns: %TRUE if success, %FALSE otherwise
 	 */
 	extern(C) int function(AtkText* text, int selectionNum, int startOffset, int endOffset) setSelection;
 	/**
 	 *
 	 * Params:
 	 *     text = an #AtkText
-	 *     offset = the character offset of the new caret position
-	 * Returns: %TRUE if successful, %FALSE otherwise.
+	 *     offset = position
+	 * Returns: %TRUE if success, %FALSE otherwise.
 	 */
 	extern(C) int function(AtkText* text, int offset) setCaretOffset;
 	/** */
@@ -2828,17 +2720,7 @@ struct AtkTextIface
 	extern(C) void function(AtkText* text) textAttributesChanged;
 	/** */
 	extern(C) void function(AtkText* text, int startOffset, int endOffset, AtkCoordType coordType, AtkTextRectangle* rect) getRangeExtents;
-	/**
-	 *
-	 * Params:
-	 *     text = an #AtkText
-	 *     rect = An AtkTextRectangle giving the dimensions of the bounding box.
-	 *     coordType = Specify whether coordinates are relative to the screen or widget window.
-	 *     xClipType = Specify the horizontal clip type.
-	 *     yClipType = Specify the vertical clip type.
-	 * Returns: Array of AtkTextRange. The last
-	 *     element of the array returned by this function will be NULL.
-	 */
+	/** */
 	extern(C) AtkTextRange** function(AtkText* text, AtkTextRectangle* rect, AtkCoordType coordType, AtkTextClipType xClipType, AtkTextClipType yClipType) getBoundedRanges;
 	/**
 	 *
@@ -2846,39 +2728,16 @@ struct AtkTextIface
 	 *     text = an #AtkText
 	 *     offset = position
 	 *     granularity = An #AtkTextGranularity
-	 *     startOffset = the starting character offset of the returned string, or -1
-	 *         in the case of error (e.g. invalid offset, not implemented)
+	 *     startOffset = the start offset of the returned string, or -1
+	 *         if an error has occurred (e.g. invalid offset, not implemented)
 	 *     endOffset = the offset of the first character after the returned string,
-	 *         or -1 in the case of error (e.g. invalid offset, not implemented)
-	 * Returns: a newly allocated string containing the text at
-	 *     the @offset bounded by the specified @granularity. Use g_free()
-	 *     to free the returned string.  Returns %NULL if the offset is invalid
-	 *     or no implementation is available.
+	 *         or -1 if an error has occurred (e.g. invalid offset, not implemented)
+	 * Returns: a newly allocated string containing the text
+	 *     at the @offset bounded by the specified @granularity. Use
+	 *     g_free() to free the returned string.  Returns %NULL if the
+	 *     offset is invalid or no implementation is available.
 	 */
 	extern(C) char* function(AtkText* text, int offset, AtkTextGranularity granularity, int* startOffset, int* endOffset) getStringAtOffset;
-	/**
-	 *
-	 * Params:
-	 *     text = an #AtkText
-	 *     startOffset = start position
-	 *     endOffset = end position, or -1 for the end of the string.
-	 *     type = specify where the object should be made visible.
-	 * Returns: whether scrolling was successful.
-	 */
-	extern(C) int function(AtkText* text, int startOffset, int endOffset, AtkScrollType type) scrollSubstringTo;
-	/**
-	 *
-	 * Params:
-	 *     text = an #AtkText
-	 *     startOffset = start position
-	 *     endOffset = end position, or -1 for the end of the string.
-	 *     coords = specify whether coordinates are relative to the screen or to the
-	 *         parent object.
-	 *     x = x-position where to scroll to
-	 *     y = y-position where to scroll to
-	 * Returns: whether scrolling was successful.
-	 */
-	extern(C) int function(AtkText* text, int startOffset, int endOffset, AtkCoordType coords, int x, int y) scrollSubstringToPoint;
 }
 
 /**
@@ -3104,7 +2963,7 @@ public alias extern(C) void function(AtkObject* obj, AtkPropertyValues* vals) At
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum BINARY_AGE = 23210;
+enum BINARY_AGE = 22811;
 alias ATK_BINARY_AGE = BINARY_AGE;
 
 /**
@@ -3128,7 +2987,7 @@ alias ATK_MAJOR_VERSION = MAJOR_VERSION;
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum MICRO_VERSION = 0;
+enum MICRO_VERSION = 1;
 alias ATK_MICRO_VERSION = MICRO_VERSION;
 
 /**
@@ -3136,7 +2995,7 @@ alias ATK_MICRO_VERSION = MICRO_VERSION;
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum MINOR_VERSION = 32;
+enum MINOR_VERSION = 28;
 alias ATK_MINOR_VERSION = MINOR_VERSION;
 
 /**

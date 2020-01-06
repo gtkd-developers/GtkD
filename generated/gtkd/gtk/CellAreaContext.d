@@ -28,7 +28,6 @@ private import gobject.ObjectG;
 private import gtk.CellArea;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -139,14 +138,14 @@ public class CellAreaContext : ObjectG
 	 */
 	public CellArea getArea()
 	{
-		auto p = gtk_cell_area_context_get_area(gtkCellAreaContext);
+		auto __p = gtk_cell_area_context_get_area(gtkCellAreaContext);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(CellArea)(cast(GtkCellArea*) p);
+		return ObjectG.getDObject!(CellArea)(cast(GtkCellArea*) __p);
 	}
 
 	/**

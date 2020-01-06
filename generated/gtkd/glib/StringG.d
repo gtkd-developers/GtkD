@@ -28,7 +28,6 @@ private import glib.Bytes;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
 
 
 /**
@@ -75,14 +74,14 @@ public class StringG
 	 */
 	public StringG append(string val)
 	{
-		auto p = g_string_append(gString, Str.toStringz(val));
+		auto __p = g_string_append(gString, Str.toStringz(val));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) __p);
 	}
 
 	/**
@@ -96,43 +95,41 @@ public class StringG
 	 */
 	public StringG appendC(char c)
 	{
-		auto p = g_string_append_c(gString, c);
+		auto __p = g_string_append_c(gString, c);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) __p);
 	}
 
 	/**
-	 * Appends @len bytes of @val to @string.
+	 * Appends @len bytes of @val to @string. Because @len is
+	 * provided, @val may contain embedded nuls and need not
+	 * be nul-terminated.
 	 *
-	 * If @len is positive, @val may contain embedded nuls and need
-	 * not be nul-terminated. It is the caller's responsibility to
-	 * ensure that @val has at least @len addressable bytes.
-	 *
-	 * If @len is negative, @val must be nul-terminated and @len
-	 * is considered to request the entire string length. This
-	 * makes g_string_append_len() equivalent to g_string_append().
+	 * Since this function does not stop at nul bytes, it is
+	 * the caller's responsibility to ensure that @val has at
+	 * least @len addressable bytes.
 	 *
 	 * Params:
 	 *     val = bytes to append
-	 *     len = number of bytes of @val to use, or -1 for all of @val
+	 *     len = number of bytes of @val to use
 	 *
 	 * Returns: @string
 	 */
 	public StringG appendLen(string val, ptrdiff_t len)
 	{
-		auto p = g_string_append_len(gString, Str.toStringz(val), len);
+		auto __p = g_string_append_len(gString, Str.toStringz(val), len);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) __p);
 	}
 
 	/**
@@ -146,14 +143,14 @@ public class StringG
 	 */
 	public StringG appendUnichar(dchar wc)
 	{
-		auto p = g_string_append_unichar(gString, wc);
+		auto __p = g_string_append_unichar(gString, wc);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) __p);
 	}
 
 	/**
@@ -172,14 +169,14 @@ public class StringG
 	 */
 	public StringG appendUriEscaped(string unescaped, string reservedCharsAllowed, bool allowUtf8)
 	{
-		auto p = g_string_append_uri_escaped(gString, Str.toStringz(unescaped), Str.toStringz(reservedCharsAllowed), allowUtf8);
+		auto __p = g_string_append_uri_escaped(gString, Str.toStringz(unescaped), Str.toStringz(reservedCharsAllowed), allowUtf8);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) __p);
 	}
 
 	/**
@@ -208,14 +205,14 @@ public class StringG
 	 */
 	public StringG asciiDown()
 	{
-		auto p = g_string_ascii_down(gString);
+		auto __p = g_string_ascii_down(gString);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) __p);
 	}
 
 	/**
@@ -227,14 +224,14 @@ public class StringG
 	 */
 	public StringG asciiUp()
 	{
-		auto p = g_string_ascii_up(gString);
+		auto __p = g_string_ascii_up(gString);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) __p);
 	}
 
 	/**
@@ -250,14 +247,14 @@ public class StringG
 	 */
 	public StringG assign(string rval)
 	{
-		auto p = g_string_assign(gString, Str.toStringz(rval));
+		auto __p = g_string_assign(gString, Str.toStringz(rval));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) __p);
 	}
 
 	/**
@@ -271,14 +268,14 @@ public class StringG
 	 */
 	public StringG down()
 	{
-		auto p = g_string_down(gString);
+		auto __p = g_string_down(gString);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) __p);
 	}
 
 	/**
@@ -309,14 +306,14 @@ public class StringG
 	 */
 	public StringG erase(ptrdiff_t pos, ptrdiff_t len)
 	{
-		auto p = g_string_erase(gString, pos, len);
+		auto __p = g_string_erase(gString, pos, len);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) __p);
 	}
 
 	/**
@@ -355,14 +352,14 @@ public class StringG
 	 */
 	public Bytes freeToBytes()
 	{
-		auto p = g_string_free_to_bytes(gString);
+		auto __p = g_string_free_to_bytes(gString);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Bytes(cast(GBytes*) p, true);
+		return new Bytes(cast(GBytes*) __p, true);
 	}
 
 	/**
@@ -387,14 +384,14 @@ public class StringG
 	 */
 	public StringG insert(ptrdiff_t pos, string val)
 	{
-		auto p = g_string_insert(gString, pos, Str.toStringz(val));
+		auto __p = g_string_insert(gString, pos, Str.toStringz(val));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) __p);
 	}
 
 	/**
@@ -408,46 +405,44 @@ public class StringG
 	 */
 	public StringG insertC(ptrdiff_t pos, char c)
 	{
-		auto p = g_string_insert_c(gString, pos, c);
+		auto __p = g_string_insert_c(gString, pos, c);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) __p);
 	}
 
 	/**
 	 * Inserts @len bytes of @val into @string at @pos.
+	 * Because @len is provided, @val may contain embedded
+	 * nuls and need not be nul-terminated. If @pos is -1,
+	 * bytes are inserted at the end of the string.
 	 *
-	 * If @len is positive, @val may contain embedded nuls and need
-	 * not be nul-terminated. It is the caller's responsibility to
-	 * ensure that @val has at least @len addressable bytes.
-	 *
-	 * If @len is negative, @val must be nul-terminated and @len
-	 * is considered to request the entire string length.
-	 *
-	 * If @pos is -1, bytes are inserted at the end of the string.
+	 * Since this function does not stop at nul bytes, it is
+	 * the caller's responsibility to ensure that @val has at
+	 * least @len addressable bytes.
 	 *
 	 * Params:
 	 *     pos = position in @string where insertion should
 	 *         happen, or -1 for at the end
 	 *     val = bytes to insert
-	 *     len = number of bytes of @val to insert, or -1 for all of @val
+	 *     len = number of bytes of @val to insert
 	 *
 	 * Returns: @string
 	 */
 	public StringG insertLen(ptrdiff_t pos, string val, ptrdiff_t len)
 	{
-		auto p = g_string_insert_len(gString, pos, Str.toStringz(val), len);
+		auto __p = g_string_insert_len(gString, pos, Str.toStringz(val), len);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) __p);
 	}
 
 	/**
@@ -463,14 +458,14 @@ public class StringG
 	 */
 	public StringG insertUnichar(ptrdiff_t pos, dchar wc)
 	{
-		auto p = g_string_insert_unichar(gString, pos, wc);
+		auto __p = g_string_insert_unichar(gString, pos, wc);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) __p);
 	}
 
 	/**
@@ -486,14 +481,14 @@ public class StringG
 	 */
 	public StringG overwrite(size_t pos, string val)
 	{
-		auto p = g_string_overwrite(gString, pos, Str.toStringz(val));
+		auto __p = g_string_overwrite(gString, pos, Str.toStringz(val));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) __p);
 	}
 
 	/**
@@ -511,14 +506,14 @@ public class StringG
 	 */
 	public StringG overwriteLen(size_t pos, string val, ptrdiff_t len)
 	{
-		auto p = g_string_overwrite_len(gString, pos, Str.toStringz(val), len);
+		auto __p = g_string_overwrite_len(gString, pos, Str.toStringz(val), len);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) __p);
 	}
 
 	/**
@@ -532,14 +527,14 @@ public class StringG
 	 */
 	public StringG prepend(string val)
 	{
-		auto p = g_string_prepend(gString, Str.toStringz(val));
+		auto __p = g_string_prepend(gString, Str.toStringz(val));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) __p);
 	}
 
 	/**
@@ -553,43 +548,41 @@ public class StringG
 	 */
 	public StringG prependC(char c)
 	{
-		auto p = g_string_prepend_c(gString, c);
+		auto __p = g_string_prepend_c(gString, c);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) __p);
 	}
 
 	/**
 	 * Prepends @len bytes of @val to @string.
+	 * Because @len is provided, @val may contain
+	 * embedded nuls and need not be nul-terminated.
 	 *
-	 * If @len is positive, @val may contain embedded nuls and need
-	 * not be nul-terminated. It is the caller's responsibility to
-	 * ensure that @val has at least @len addressable bytes.
-	 *
-	 * If @len is negative, @val must be nul-terminated and @len
-	 * is considered to request the entire string length. This
-	 * makes g_string_prepend_len() equivalent to g_string_prepend().
+	 * Since this function does not stop at nul bytes,
+	 * it is the caller's responsibility to ensure that
+	 * @val has at least @len addressable bytes.
 	 *
 	 * Params:
 	 *     val = bytes to prepend
-	 *     len = number of bytes in @val to prepend, or -1 for all of @val
+	 *     len = number of bytes in @val to prepend
 	 *
 	 * Returns: @string
 	 */
 	public StringG prependLen(string val, ptrdiff_t len)
 	{
-		auto p = g_string_prepend_len(gString, Str.toStringz(val), len);
+		auto __p = g_string_prepend_len(gString, Str.toStringz(val), len);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) __p);
 	}
 
 	/**
@@ -603,14 +596,14 @@ public class StringG
 	 */
 	public StringG prependUnichar(dchar wc)
 	{
-		auto p = g_string_prepend_unichar(gString, wc);
+		auto __p = g_string_prepend_unichar(gString, wc);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) __p);
 	}
 
 	/**
@@ -627,14 +620,14 @@ public class StringG
 	 */
 	public StringG setSize(size_t len)
 	{
-		auto p = g_string_set_size(gString, len);
+		auto __p = g_string_set_size(gString, len);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) __p);
 	}
 
 	/**
@@ -647,14 +640,14 @@ public class StringG
 	 */
 	public StringG truncate(size_t len)
 	{
-		auto p = g_string_truncate(gString, len);
+		auto __p = g_string_truncate(gString, len);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) __p);
 	}
 
 	/**
@@ -668,14 +661,14 @@ public class StringG
 	 */
 	public StringG up()
 	{
-		auto p = g_string_up(gString);
+		auto __p = g_string_up(gString);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new StringG(cast(GString*) p);
+		return new StringG(cast(GString*) __p);
 	}
 
 	/**
@@ -705,14 +698,14 @@ public class StringG
 	 */
 	public static StringG stringNew(string init)
 	{
-		auto p = g_string_new(Str.toStringz(init));
+		auto __p = g_string_new(Str.toStringz(init));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new StringG(cast(GString*) p, true);
+		return new StringG(cast(GString*) __p, true);
 	}
 
 	/**
@@ -732,14 +725,14 @@ public class StringG
 	 */
 	public static StringG stringNewLen(string init, ptrdiff_t len)
 	{
-		auto p = g_string_new_len(Str.toStringz(init), len);
+		auto __p = g_string_new_len(Str.toStringz(init), len);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new StringG(cast(GString*) p, true);
+		return new StringG(cast(GString*) __p, true);
 	}
 
 	/**
@@ -756,13 +749,13 @@ public class StringG
 	 */
 	public static StringG stringSizedNew(size_t dflSize)
 	{
-		auto p = g_string_sized_new(dflSize);
+		auto __p = g_string_sized_new(dflSize);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new StringG(cast(GString*) p, true);
+		return new StringG(cast(GString*) __p, true);
 	}
 }

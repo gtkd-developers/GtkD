@@ -34,8 +34,6 @@ private import glib.VariantIter;
 private import glib.VariantType;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
-private import gtkd.Loader;
 
 
 /**
@@ -57,10 +55,10 @@ private import gtkd.Loader;
  * can use:
  * 
  * |[<!-- language="C" -->
- * GVariant *v = g_variant_new ("u", 40);
+ * GVariant *v = g_variant_new ('u', 40);
  * ]|
  * 
- * The string "u" in the first argument tells #GVariant that the data passed to
+ * The string 'u' in the first argument tells #GVariant that the data passed to
  * the constructor (40) is going to be an unsigned integer.
  * 
  * More advanced examples of #GVariant in use can be found in documentation for
@@ -272,7 +270,7 @@ private import gtkd.Loader;
  * 
  * To put the entire example together, for our dictionary mapping
  * strings to variants (with two entries, as given above), we are
- * using 91 bytes of memory for type information, 29 bytes of memory
+ * using 91 bytes of memory for type information, 29 byes of memory
  * for the serialised data, 16 bytes for buffer management and 24
  * bytes for the #GVariant instance, or a total of 160 bytes, plus
  * malloc overhead.  If we were to use g_variant_get_child_value() to
@@ -315,7 +313,7 @@ public class Variant
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_variant_unref(gVariant);
 	}
 
@@ -461,14 +459,14 @@ public class Variant
 			childrenArray[i] = children[i].getVariantStruct();
 		}
 
-		auto p = g_variant_new_array((childType is null) ? null : childType.getVariantTypeStruct(), childrenArray.ptr, cast(size_t)children.length);
+		auto __p = g_variant_new_array((childType is null) ? null : childType.getVariantTypeStruct(), childrenArray.ptr, cast(size_t)children.length);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_array");
 		}
 
-		this(cast(GVariant*) p);
+		this(cast(GVariant*) __p);
 	}
 
 	/**
@@ -485,14 +483,14 @@ public class Variant
 	 */
 	public this(bool value)
 	{
-		auto p = g_variant_new_boolean(value);
+		auto __p = g_variant_new_boolean(value);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_boolean");
 		}
 
-		this(cast(GVariant*) p);
+		this(cast(GVariant*) __p);
 	}
 
 	/**
@@ -507,16 +505,16 @@ public class Variant
 	 *
 	 * Throws: ConstructionException GTK+ fails to create the object.
 	 */
-	public this(ubyte value)
+	public this(char value)
 	{
-		auto p = g_variant_new_byte(value);
+		auto __p = g_variant_new_byte(value);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_byte");
 		}
 
-		this(cast(GVariant*) p);
+		this(cast(GVariant*) __p);
 	}
 
 	/**
@@ -538,14 +536,14 @@ public class Variant
 	 */
 	public this(Variant key, Variant value)
 	{
-		auto p = g_variant_new_dict_entry((key is null) ? null : key.getVariantStruct(), (value is null) ? null : value.getVariantStruct());
+		auto __p = g_variant_new_dict_entry((key is null) ? null : key.getVariantStruct(), (value is null) ? null : value.getVariantStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_dict_entry");
 		}
 
-		this(cast(GVariant*) p);
+		this(cast(GVariant*) __p);
 	}
 
 	/**
@@ -562,21 +560,21 @@ public class Variant
 	 */
 	public this(double value)
 	{
-		auto p = g_variant_new_double(value);
+		auto __p = g_variant_new_double(value);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_double");
 		}
 
-		this(cast(GVariant*) p);
+		this(cast(GVariant*) __p);
 	}
 
 	/**
-	 * Constructs a new array #GVariant instance, where the elements are
-	 * of @element_type type.
+	 * Provides access to the serialised data for an array of fixed-sized
+	 * items.
 	 *
-	 * @elements must be an array with fixed-sized elements.  Numeric types are
+	 * @value must be an array with fixed-sized elements.  Numeric types are
 	 * fixed-size as are tuples containing only other fixed-sized types.
 	 *
 	 * @element_size must be the size of a single element in the array.
@@ -585,7 +583,8 @@ public class Variant
 	 * of a double-check that the form of the serialised data matches the caller's
 	 * expectation.
 	 *
-	 * @n_elements must be the length of the @elements array.
+	 * @n_elements, which must be non-%NULL is set equal to the number of
+	 * items in the array.
 	 *
 	 * Params:
 	 *     elementType = the #GVariantType of each element
@@ -601,14 +600,14 @@ public class Variant
 	 */
 	public this(VariantType elementType, void* elements, size_t nElements, size_t elementSize)
 	{
-		auto p = g_variant_new_fixed_array((elementType is null) ? null : elementType.getVariantTypeStruct(), elements, nElements, elementSize);
+		auto __p = g_variant_new_fixed_array((elementType is null) ? null : elementType.getVariantTypeStruct(), elements, nElements, elementSize);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_fixed_array");
 		}
 
-		this(cast(GVariant*) p);
+		this(cast(GVariant*) __p);
 	}
 
 	/**
@@ -617,10 +616,6 @@ public class Variant
 	 * called from various functions in gvariant.c.
 	 *
 	 * A reference is taken on @bytes.
-	 *
-	 * The data in @bytes must be aligned appropriately for the @type being loaded.
-	 * Otherwise this function will internally create a copy of the memory (since
-	 * GLib 2.60) or (in older versions) fail and exit the process.
 	 *
 	 * Params:
 	 *     type = a #GVariantType
@@ -635,14 +630,14 @@ public class Variant
 	 */
 	public this(VariantType type, Bytes bytes, bool trusted)
 	{
-		auto p = g_variant_new_from_bytes((type is null) ? null : type.getVariantTypeStruct(), (bytes is null) ? null : bytes.getBytesStruct(), trusted);
+		auto __p = g_variant_new_from_bytes((type is null) ? null : type.getVariantTypeStruct(), (bytes is null) ? null : bytes.getBytesStruct(), trusted);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_bytes");
 		}
 
-		this(cast(GVariant*) p);
+		this(cast(GVariant*) __p);
 	}
 
 	/**
@@ -671,11 +666,6 @@ public class Variant
 	 * needed.  The exact time of this call is unspecified and might even be
 	 * before this function returns.
 	 *
-	 * Note: @data must be backed by memory that is aligned appropriately for the
-	 * @type being loaded. Otherwise this function will internally create a copy of
-	 * the memory (since GLib 2.60) or (in older versions) fail and exit the
-	 * process.
-	 *
 	 * Params:
 	 *     type = a definite #GVariantType
 	 *     data = the serialised data
@@ -691,14 +681,14 @@ public class Variant
 	 */
 	public this(VariantType type, ubyte[] data, bool trusted, GDestroyNotify notify, void* userData)
 	{
-		auto p = g_variant_new_from_data((type is null) ? null : type.getVariantTypeStruct(), data.ptr, cast(size_t)data.length, trusted, notify, userData);
+		auto __p = g_variant_new_from_data((type is null) ? null : type.getVariantTypeStruct(), data.ptr, cast(size_t)data.length, trusted, notify, userData);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_data");
 		}
 
-		this(cast(GVariant*) p);
+		this(cast(GVariant*) __p);
 	}
 
 	/**
@@ -715,14 +705,14 @@ public class Variant
 	 */
 	public this(short value)
 	{
-		auto p = g_variant_new_int16(value);
+		auto __p = g_variant_new_int16(value);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_int16");
 		}
 
-		this(cast(GVariant*) p);
+		this(cast(GVariant*) __p);
 	}
 
 	/**
@@ -739,14 +729,14 @@ public class Variant
 	 */
 	public this(int value)
 	{
-		auto p = g_variant_new_int32(value);
+		auto __p = g_variant_new_int32(value);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_int32");
 		}
 
-		this(cast(GVariant*) p);
+		this(cast(GVariant*) __p);
 	}
 
 	/**
@@ -763,14 +753,14 @@ public class Variant
 	 */
 	public this(long value)
 	{
-		auto p = g_variant_new_int64(value);
+		auto __p = g_variant_new_int64(value);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_int64");
 		}
 
-		this(cast(GVariant*) p);
+		this(cast(GVariant*) __p);
 	}
 
 	/**
@@ -797,14 +787,14 @@ public class Variant
 	 */
 	public this(VariantType childType, Variant child)
 	{
-		auto p = g_variant_new_maybe((childType is null) ? null : childType.getVariantTypeStruct(), (child is null) ? null : child.getVariantStruct());
+		auto __p = g_variant_new_maybe((childType is null) ? null : childType.getVariantTypeStruct(), (child is null) ? null : child.getVariantStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_maybe");
 		}
 
-		this(cast(GVariant*) p);
+		this(cast(GVariant*) __p);
 	}
 
 	/**
@@ -840,14 +830,14 @@ public class Variant
 	 */
 	public this(string format, void** app)
 	{
-		auto p = g_variant_new_parsed_va(Str.toStringz(format), app);
+		auto __p = g_variant_new_parsed_va(Str.toStringz(format), app);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_parsed_va");
 		}
 
-		this(cast(GVariant*) p);
+		this(cast(GVariant*) __p);
 	}
 
 	/**
@@ -868,14 +858,14 @@ public class Variant
 	 */
 	public this(string string_)
 	{
-		auto p = g_variant_new_string(Str.toStringz(string_));
+		auto __p = g_variant_new_string(Str.toStringz(string_));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_string");
 		}
 
-		this(cast(GVariant*) p);
+		this(cast(GVariant*) __p);
 	}
 
 	/**
@@ -895,14 +885,14 @@ public class Variant
 	 */
 	public this(string[] strv)
 	{
-		auto p = g_variant_new_strv(Str.toStringzArray(strv), cast(ptrdiff_t)strv.length);
+		auto __p = g_variant_new_strv(Str.toStringzArray(strv), cast(ptrdiff_t)strv.length);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_strv");
 		}
 
-		this(cast(GVariant*) p);
+		this(cast(GVariant*) __p);
 	}
 
 	/**
@@ -932,14 +922,14 @@ public class Variant
 			childrenArray[i] = children[i].getVariantStruct();
 		}
 
-		auto p = g_variant_new_tuple(childrenArray.ptr, cast(size_t)children.length);
+		auto __p = g_variant_new_tuple(childrenArray.ptr, cast(size_t)children.length);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_tuple");
 		}
 
-		this(cast(GVariant*) p);
+		this(cast(GVariant*) __p);
 	}
 
 	/**
@@ -956,14 +946,14 @@ public class Variant
 	 */
 	public this(ushort value)
 	{
-		auto p = g_variant_new_uint16(value);
+		auto __p = g_variant_new_uint16(value);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_uint16");
 		}
 
-		this(cast(GVariant*) p);
+		this(cast(GVariant*) __p);
 	}
 
 	/**
@@ -980,14 +970,14 @@ public class Variant
 	 */
 	public this(uint value)
 	{
-		auto p = g_variant_new_uint32(value);
+		auto __p = g_variant_new_uint32(value);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_uint32");
 		}
 
-		this(cast(GVariant*) p);
+		this(cast(GVariant*) __p);
 	}
 
 	/**
@@ -1004,14 +994,14 @@ public class Variant
 	 */
 	public this(ulong value)
 	{
-		auto p = g_variant_new_uint64(value);
+		auto __p = g_variant_new_uint64(value);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_uint64");
 		}
 
-		this(cast(GVariant*) p);
+		this(cast(GVariant*) __p);
 	}
 
 	/**
@@ -1033,7 +1023,7 @@ public class Variant
 	 *
 	 * Note that the arguments in @app must be of the correct width for their
 	 * types specified in @format_string when collected into the #va_list.
-	 * See the [GVariant varargs documentation][gvariant-varargs].
+	 * See the [GVariant varargs documentation][gvariant-varargs.
 	 *
 	 * These two generalisations allow mixing of multiple calls to
 	 * g_variant_new_va() and g_variant_get_va() within a single actual
@@ -1066,14 +1056,14 @@ public class Variant
 	 */
 	public this(string formatString, string[] endptr, void** app)
 	{
-		auto p = g_variant_new_va(Str.toStringz(formatString), Str.toStringzArray(endptr), app);
+		auto __p = g_variant_new_va(Str.toStringz(formatString), Str.toStringzArray(endptr), app);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_va");
 		}
 
-		this(cast(GVariant*) p);
+		this(cast(GVariant*) __p);
 	}
 
 	/**
@@ -1094,14 +1084,14 @@ public class Variant
 	 */
 	public this(Variant value)
 	{
-		auto p = g_variant_new_variant((value is null) ? null : value.getVariantStruct());
+		auto __p = g_variant_new_variant((value is null) ? null : value.getVariantStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_variant");
 		}
 
-		this(cast(GVariant*) p);
+		this(cast(GVariant*) __p);
 	}
 
 	/**
@@ -1123,14 +1113,14 @@ public class Variant
 	 */
 	public Variant byteswap()
 	{
-		auto p = g_variant_byteswap(gVariant);
+		auto __p = g_variant_byteswap(gVariant);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -1369,11 +1359,11 @@ public class Variant
 	 * It is an error to call this function with a @value of any type
 	 * other than %G_VARIANT_TYPE_BYTE.
 	 *
-	 * Returns: a #guint8
+	 * Returns: a #guchar
 	 *
 	 * Since: 2.24
 	 */
-	public ubyte getByte()
+	public char getByte()
 	{
 		return g_variant_get_byte(gVariant);
 	}
@@ -1442,11 +1432,6 @@ public class Variant
 	 * The returned value is never floating.  You should free it with
 	 * g_variant_unref() when you're done with it.
 	 *
-	 * There may be implementation specific restrictions on deeply nested values,
-	 * which would result in the unit tuple being returned as the child value,
-	 * instead of further nested children. #GVariant is guaranteed to handle
-	 * nesting up to at least 64 levels.
-	 *
 	 * This function is O(1).
 	 *
 	 * Params:
@@ -1458,14 +1443,14 @@ public class Variant
 	 */
 	public Variant getChildValue(size_t index)
 	{
-		auto p = g_variant_get_child_value(gVariant, index);
+		auto __p = g_variant_get_child_value(gVariant, index);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -1516,14 +1501,14 @@ public class Variant
 	 */
 	public Bytes getDataAsBytes()
 	{
-		auto p = g_variant_get_data_as_bytes(gVariant);
+		auto __p = g_variant_get_data_as_bytes(gVariant);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Bytes(cast(GBytes*) p, true);
+		return new Bytes(cast(GBytes*) __p, true);
 	}
 
 	/**
@@ -1557,7 +1542,7 @@ public class Variant
 	 * the appropriate type:
 	 * - %G_VARIANT_TYPE_INT16 (etc.): #gint16 (etc.)
 	 * - %G_VARIANT_TYPE_BOOLEAN: #guchar (not #gboolean!)
-	 * - %G_VARIANT_TYPE_BYTE: #guint8
+	 * - %G_VARIANT_TYPE_BYTE: #guchar
 	 * - %G_VARIANT_TYPE_HANDLE: #guint32
 	 * - %G_VARIANT_TYPE_DOUBLE: #gdouble
 	 *
@@ -1581,9 +1566,9 @@ public class Variant
 	{
 		size_t nElements;
 
-		auto p = g_variant_get_fixed_array(gVariant, &nElements, elementSize);
+		auto __p = g_variant_get_fixed_array(gVariant, &nElements, elementSize);
 
-		return p[0 .. nElements];
+		return __p[0 .. nElements];
 	}
 
 	/**
@@ -1660,14 +1645,14 @@ public class Variant
 	 */
 	public Variant getMaybe()
 	{
-		auto p = g_variant_get_maybe(gVariant);
+		auto __p = g_variant_get_maybe(gVariant);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -1688,27 +1673,20 @@ public class Variant
 	 * data from untrusted sources and you want to ensure your serialised
 	 * output is definitely in normal form.
 	 *
-	 * If @value is already in normal form, a new reference will be returned
-	 * (which will be floating if @value is floating). If it is not in normal form,
-	 * the newly created #GVariant will be returned with a single non-floating
-	 * reference. Typically, g_variant_take_ref() should be called on the return
-	 * value from this function to guarantee ownership of a single non-floating
-	 * reference to it.
-	 *
 	 * Returns: a trusted #GVariant
 	 *
 	 * Since: 2.24
 	 */
 	public Variant getNormalForm()
 	{
-		auto p = g_variant_get_normal_form(gVariant);
+		auto __p = g_variant_get_normal_form(gVariant);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -1820,14 +1798,14 @@ public class Variant
 	 */
 	public VariantType getType()
 	{
-		auto p = g_variant_get_type(gVariant);
+		auto __p = g_variant_get_type(gVariant);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new VariantType(cast(GVariantType*) p);
+		return new VariantType(cast(GVariantType*) __p);
 	}
 
 	/**
@@ -1938,14 +1916,14 @@ public class Variant
 	 */
 	public Variant getVariant()
 	{
-		auto p = g_variant_get_variant(gVariant);
+		auto __p = g_variant_get_variant(gVariant);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -2012,9 +1990,6 @@ public class Variant
 	 * being trusted.  If the value was already marked as being trusted then
 	 * this function will immediately return %TRUE.
 	 *
-	 * There may be implementation specific restrictions on deeply nested values.
-	 * GVariant is guaranteed to handle nesting up to at least 64 levels.
-	 *
 	 * Returns: %TRUE if @value is in normal form
 	 *
 	 * Since: 2.24
@@ -2055,14 +2030,14 @@ public class Variant
 	 */
 	public VariantIter iterNew()
 	{
-		auto p = g_variant_iter_new(gVariant);
+		auto __p = g_variant_iter_new(gVariant);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new VariantIter(cast(GVariantIter*) p, true);
+		return new VariantIter(cast(GVariantIter*) __p, true);
 	}
 
 	/**
@@ -2076,7 +2051,7 @@ public class Variant
 	 * string specifies what type of value is expected to be inside of the
 	 * variant. If the value inside the variant has a different type then
 	 * %NULL is returned. In the event that @dictionary has a value type other
-	 * than v then @expected_type must directly match the value type and it is
+	 * than v then @expected_type must directly match the key type and it is
 	 * used to unpack the value directly or an error occurs.
 	 *
 	 * In either case, if @key is not found in @dictionary, %NULL is returned.
@@ -2098,14 +2073,14 @@ public class Variant
 	 */
 	public Variant lookupValue(string key, VariantType expectedType)
 	{
-		auto p = g_variant_lookup_value(gVariant, Str.toStringz(key), (expectedType is null) ? null : expectedType.getVariantTypeStruct());
+		auto __p = g_variant_lookup_value(gVariant, Str.toStringz(key), (expectedType is null) ? null : expectedType.getVariantTypeStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -2171,14 +2146,14 @@ public class Variant
 	 */
 	public StringG printString(StringG string_, bool typeAnnotate)
 	{
-		auto p = g_variant_print_string(gVariant, (string_ is null) ? null : string_.getStringGStruct(), typeAnnotate);
+		auto __p = g_variant_print_string(gVariant, (string_ is null) ? null : string_.getStringGStruct(), typeAnnotate);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new StringG(cast(GString*) p, true);
+		return new StringG(cast(GString*) __p, true);
 	}
 
 	alias doref = ref_;
@@ -2191,14 +2166,14 @@ public class Variant
 	 */
 	public Variant ref_()
 	{
-		auto p = g_variant_ref(gVariant);
+		auto __p = g_variant_ref(gVariant);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -2231,14 +2206,14 @@ public class Variant
 	 */
 	public Variant refSink()
 	{
-		auto p = g_variant_ref_sink(gVariant);
+		auto __p = g_variant_ref_sink(gVariant);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -2303,14 +2278,14 @@ public class Variant
 	 */
 	public Variant takeRef()
 	{
-		auto p = g_variant_take_ref(gVariant);
+		auto __p = g_variant_take_ref(gVariant);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -2329,10 +2304,10 @@ public class Variant
 	 * should ensure that a string is a valid D-Bus object path before
 	 * passing it to g_variant_new_object_path().
 	 *
-	 * A valid object path starts with `/` followed by zero or more
-	 * sequences of characters separated by `/` characters.  Each sequence
-	 * must contain only the characters `[A-Z][a-z][0-9]_`.  No sequence
-	 * (including the one following the final `/` character) may be empty.
+	 * A valid object path starts with '/' followed by zero or more
+	 * sequences of characters separated by '/' characters.  Each sequence
+	 * must contain only the characters "[A-Z][a-z][0-9]_".  No sequence
+	 * (including the one following the final '/' character) may be empty.
 	 *
 	 * Params:
 	 *     string_ = a normal C nul-terminated string
@@ -2413,19 +2388,19 @@ public class Variant
 	{
 		GError* err = null;
 
-		auto p = g_variant_parse((type is null) ? null : type.getVariantTypeStruct(), Str.toStringz(text), Str.toStringz(limit), Str.toStringzArray(endptr), &err);
+		auto __p = g_variant_parse((type is null) ? null : type.getVariantTypeStruct(), Str.toStringz(text), Str.toStringz(limit), Str.toStringzArray(endptr), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**

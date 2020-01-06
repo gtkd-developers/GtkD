@@ -30,8 +30,6 @@ private import glib.TimeVal;
 private import glib.TimeZone;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
-private import gtkd.Loader;
 
 
 /**
@@ -71,7 +69,7 @@ public class DateTime
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_date_time_unref(gDateTime);
 	}
 
@@ -249,74 +247,14 @@ public class DateTime
 	 */
 	public this(TimeZone tz, int year, int month, int day, int hour, int minute, double seconds)
 	{
-		auto p = g_date_time_new((tz is null) ? null : tz.getTimeZoneStruct(), year, month, day, hour, minute, seconds);
+		auto __p = g_date_time_new((tz is null) ? null : tz.getTimeZoneStruct(), year, month, day, hour, minute, seconds);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GDateTime*) p);
-	}
-
-	/**
-	 * Creates a #GDateTime corresponding to the given
-	 * [ISO 8601 formatted string](https://en.wikipedia.org/wiki/ISO_8601)
-	 * @text. ISO 8601 strings of the form <date><sep><time><tz> are supported.
-	 *
-	 * <sep> is the separator and can be either 'T', 't' or ' '.
-	 *
-	 * <date> is in the form:
-	 *
-	 * - `YYYY-MM-DD` - Year/month/day, e.g. 2016-08-24.
-	 * - `YYYYMMDD` - Same as above without dividers.
-	 * - `YYYY-DDD` - Ordinal day where DDD is from 001 to 366, e.g. 2016-237.
-	 * - `YYYYDDD` - Same as above without dividers.
-	 * - `YYYY-Www-D` - Week day where ww is from 01 to 52 and D from 1-7,
-	 * e.g. 2016-W34-3.
-	 * - `YYYYWwwD` - Same as above without dividers.
-	 *
-	 * <time> is in the form:
-	 *
-	 * - `hh:mm:ss(.sss)` - Hours, minutes, seconds (subseconds), e.g. 22:10:42.123.
-	 * - `hhmmss(.sss)` - Same as above without dividers.
-	 *
-	 * <tz> is an optional timezone suffix of the form:
-	 *
-	 * - `Z` - UTC.
-	 * - `+hh:mm` or `-hh:mm` - Offset from UTC in hours and minutes, e.g. +12:00.
-	 * - `+hh` or `-hh` - Offset from UTC in hours, e.g. +12.
-	 *
-	 * If the timezone is not provided in @text it must be provided in @default_tz
-	 * (this field is otherwise ignored).
-	 *
-	 * This call can fail (returning %NULL) if @text is not a valid ISO 8601
-	 * formatted string.
-	 *
-	 * You should release the return value by calling g_date_time_unref()
-	 * when you are done with it.
-	 *
-	 * Params:
-	 *     text = an ISO 8601 formatted time string.
-	 *     defaultTz = a #GTimeZone to use if the text doesn't contain a
-	 *         timezone, or %NULL.
-	 *
-	 * Returns: a new #GDateTime, or %NULL
-	 *
-	 * Since: 2.56
-	 *
-	 * Throws: ConstructionException GTK+ fails to create the object.
-	 */
-	public this(string text, TimeZone defaultTz)
-	{
-		auto p = g_date_time_new_from_iso8601(Str.toStringz(text), (defaultTz is null) ? null : defaultTz.getTimeZoneStruct());
-
-		if(p is null)
-		{
-			throw new ConstructionException("null returned by new_from_iso8601");
-		}
-
-		this(cast(GDateTime*) p);
+		this(cast(GDateTime*) __p);
 	}
 
 	/**
@@ -342,14 +280,14 @@ public class DateTime
 	 */
 	public this(TimeZone tz)
 	{
-		auto p = g_date_time_new_now((tz is null) ? null : tz.getTimeZoneStruct());
+		auto __p = g_date_time_new_now((tz is null) ? null : tz.getTimeZoneStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_now");
 		}
 
-		this(cast(GDateTime*) p);
+		this(cast(GDateTime*) __p);
 	}
 
 	/**
@@ -365,14 +303,14 @@ public class DateTime
 	 */
 	public DateTime add(GTimeSpan timespan)
 	{
-		auto p = g_date_time_add(gDateTime, timespan);
+		auto __p = g_date_time_add(gDateTime, timespan);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new DateTime(cast(GDateTime*) p, true);
+		return new DateTime(cast(GDateTime*) __p, true);
 	}
 
 	/**
@@ -389,14 +327,14 @@ public class DateTime
 	 */
 	public DateTime addDays(int days)
 	{
-		auto p = g_date_time_add_days(gDateTime, days);
+		auto __p = g_date_time_add_days(gDateTime, days);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new DateTime(cast(GDateTime*) p, true);
+		return new DateTime(cast(GDateTime*) __p, true);
 	}
 
 	/**
@@ -418,14 +356,14 @@ public class DateTime
 	 */
 	public DateTime addFull(int years, int months, int days, int hours, int minutes, double seconds)
 	{
-		auto p = g_date_time_add_full(gDateTime, years, months, days, hours, minutes, seconds);
+		auto __p = g_date_time_add_full(gDateTime, years, months, days, hours, minutes, seconds);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new DateTime(cast(GDateTime*) p, true);
+		return new DateTime(cast(GDateTime*) __p, true);
 	}
 
 	/**
@@ -442,14 +380,14 @@ public class DateTime
 	 */
 	public DateTime addHours(int hours)
 	{
-		auto p = g_date_time_add_hours(gDateTime, hours);
+		auto __p = g_date_time_add_hours(gDateTime, hours);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new DateTime(cast(GDateTime*) p, true);
+		return new DateTime(cast(GDateTime*) __p, true);
 	}
 
 	/**
@@ -466,24 +404,19 @@ public class DateTime
 	 */
 	public DateTime addMinutes(int minutes)
 	{
-		auto p = g_date_time_add_minutes(gDateTime, minutes);
+		auto __p = g_date_time_add_minutes(gDateTime, minutes);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new DateTime(cast(GDateTime*) p, true);
+		return new DateTime(cast(GDateTime*) __p, true);
 	}
 
 	/**
 	 * Creates a copy of @datetime and adds the specified number of months to the
 	 * copy. Add negative values to subtract months.
-	 *
-	 * The day of the month of the resulting #GDateTime is clamped to the number
-	 * of days in the updated calendar month. For example, if adding 1 month to
-	 * 31st January 2018, the result would be 28th February 2018. In 2020 (a leap
-	 * year), the result would be 29th February.
 	 *
 	 * Params:
 	 *     months = the number of months
@@ -495,14 +428,14 @@ public class DateTime
 	 */
 	public DateTime addMonths(int months)
 	{
-		auto p = g_date_time_add_months(gDateTime, months);
+		auto __p = g_date_time_add_months(gDateTime, months);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new DateTime(cast(GDateTime*) p, true);
+		return new DateTime(cast(GDateTime*) __p, true);
 	}
 
 	/**
@@ -519,14 +452,14 @@ public class DateTime
 	 */
 	public DateTime addSeconds(double seconds)
 	{
-		auto p = g_date_time_add_seconds(gDateTime, seconds);
+		auto __p = g_date_time_add_seconds(gDateTime, seconds);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new DateTime(cast(GDateTime*) p, true);
+		return new DateTime(cast(GDateTime*) __p, true);
 	}
 
 	/**
@@ -543,22 +476,19 @@ public class DateTime
 	 */
 	public DateTime addWeeks(int weeks)
 	{
-		auto p = g_date_time_add_weeks(gDateTime, weeks);
+		auto __p = g_date_time_add_weeks(gDateTime, weeks);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new DateTime(cast(GDateTime*) p, true);
+		return new DateTime(cast(GDateTime*) __p, true);
 	}
 
 	/**
 	 * Creates a copy of @datetime and adds the specified number of years to the
 	 * copy. Add negative values to subtract years.
-	 *
-	 * As with g_date_time_add_months(), if the resulting date would be 29th
-	 * February on a non-leap year, the day will be clamped to 28th February.
 	 *
 	 * Params:
 	 *     years = the number of years
@@ -570,14 +500,14 @@ public class DateTime
 	 */
 	public DateTime addYears(int years)
 	{
-		auto p = g_date_time_add_years(gDateTime, years);
+		auto __p = g_date_time_add_years(gDateTime, years);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new DateTime(cast(GDateTime*) p, true);
+		return new DateTime(cast(GDateTime*) __p, true);
 	}
 
 	/**
@@ -686,21 +616,12 @@ public class DateTime
 	 * - 0: Pad a numeric result with zeros. This overrides the default padding
 	 * for the specifier.
 	 *
-	 * Additionally, when O is used with B, b, or h, it produces the alternative
-	 * form of a month name. The alternative form should be used when the month
-	 * name is used without a day number (e.g., standalone). It is required in
-	 * some languages (Baltic, Slavic, Greek, and more) due to their grammatical
-	 * rules. For other languages there is no difference. \%OB is a GNU and BSD
-	 * strftime() extension expected to be added to the future POSIX specification,
-	 * \%Ob and \%Oh are GNU strftime() extensions. Since: 2.56
-	 *
 	 * Params:
 	 *     format = a valid UTF-8 string, containing the format for the
 	 *         #GDateTime
 	 *
 	 * Returns: a newly allocated string formatted to the requested format
-	 *     or %NULL in the case that there was an error (such as a format specifier
-	 *     not being supported in the current locale). The string
+	 *     or %NULL in the case that there was an error. The string
 	 *     should be freed with g_free().
 	 *
 	 * Since: 2.26
@@ -824,25 +745,6 @@ public class DateTime
 	public double getSeconds()
 	{
 		return g_date_time_get_seconds(gDateTime);
-	}
-
-	/**
-	 * Get the time zone for this @datetime.
-	 *
-	 * Returns: the time zone
-	 *
-	 * Since: 2.58
-	 */
-	public TimeZone getTimezone()
-	{
-		auto p = g_date_time_get_timezone(gDateTime);
-
-		if(p is null)
-		{
-			return null;
-		}
-
-		return new TimeZone(cast(GTimeZone*) p);
 	}
 
 	/**
@@ -1002,14 +904,14 @@ public class DateTime
 	 */
 	public DateTime ref_()
 	{
-		auto p = g_date_time_ref(gDateTime);
+		auto __p = g_date_time_ref(gDateTime);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new DateTime(cast(GDateTime*) p, true);
+		return new DateTime(cast(GDateTime*) __p, true);
 	}
 
 	/**
@@ -1025,14 +927,14 @@ public class DateTime
 	 */
 	public DateTime toLocal()
 	{
-		auto p = g_date_time_to_local(gDateTime);
+		auto __p = g_date_time_to_local(gDateTime);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new DateTime(cast(GDateTime*) p, true);
+		return new DateTime(cast(GDateTime*) __p, true);
 	}
 
 	/**
@@ -1082,14 +984,14 @@ public class DateTime
 	 */
 	public DateTime toTimezone(TimeZone tz)
 	{
-		auto p = g_date_time_to_timezone(gDateTime, (tz is null) ? null : tz.getTimeZoneStruct());
+		auto __p = g_date_time_to_timezone(gDateTime, (tz is null) ? null : tz.getTimeZoneStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new DateTime(cast(GDateTime*) p, true);
+		return new DateTime(cast(GDateTime*) __p, true);
 	}
 
 	/**
@@ -1121,14 +1023,14 @@ public class DateTime
 	 */
 	public DateTime toUtc()
 	{
-		auto p = g_date_time_to_utc(gDateTime);
+		auto __p = g_date_time_to_utc(gDateTime);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new DateTime(cast(GDateTime*) p, true);
+		return new DateTime(cast(GDateTime*) __p, true);
 	}
 
 	/**

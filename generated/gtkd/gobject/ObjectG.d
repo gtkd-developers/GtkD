@@ -38,8 +38,6 @@ private import gobject.TypeInterface;
 private import gobject.Value;
 private import gobject.c.functions;
 public  import gobject.c.types;
-public  import gtkc.gobjecttypes;
-private import gtkd.Loader;
 private import std.traits;
 
 
@@ -404,14 +402,14 @@ public class ObjectG
 	 */
 	public this(GType objectType, string firstPropertyName, void* varArgs)
 	{
-		auto p = g_object_new_valist(objectType, Str.toStringz(firstPropertyName), varArgs);
+		auto __p = g_object_new_valist(objectType, Str.toStringz(firstPropertyName), varArgs);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_valist");
 		}
 
-		this(cast(GObject*) p, true);
+		this(cast(GObject*) __p, true);
 	}
 
 	/**
@@ -442,14 +440,14 @@ public class ObjectG
 			valuesArray[i] = *(values[i].getValueStruct());
 		}
 
-		auto p = g_object_new_with_properties(objectType, cast(uint)values.length, Str.toStringzArray(names), valuesArray.ptr);
+		auto __p = g_object_new_with_properties(objectType, cast(uint)values.length, Str.toStringzArray(names), valuesArray.ptr);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_properties");
 		}
 
-		this(cast(GObject*) p, true);
+		this(cast(GObject*) __p, true);
 	}
 
 	/**
@@ -472,14 +470,14 @@ public class ObjectG
 	 */
 	public this(GType objectType, GParameter[] parameters)
 	{
-		auto p = g_object_newv(objectType, cast(uint)parameters.length, parameters.ptr);
+		auto __p = g_object_newv(objectType, cast(uint)parameters.length, parameters.ptr);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by newv");
 		}
 
-		this(cast(GObject*) p, true);
+		this(cast(GObject*) __p, true);
 	}
 
 	/** */
@@ -498,7 +496,7 @@ public class ObjectG
 	 * Params:
 	 *     gIface = any interface vtable for the
 	 *         interface, or the default vtable for the interface
-	 *     propertyName = name of a property to look up.
+	 *     propertyName = name of a property to lookup.
 	 *
 	 * Returns: the #GParamSpec for the property of the
 	 *     interface with the name @property_name, or %NULL if no
@@ -508,14 +506,14 @@ public class ObjectG
 	 */
 	public static ParamSpec interfaceFindProperty(TypeInterface gIface, string propertyName)
 	{
-		auto p = g_object_interface_find_property((gIface is null) ? null : gIface.getTypeInterfaceStruct(), Str.toStringz(propertyName));
+		auto __p = g_object_interface_find_property((gIface is null) ? null : gIface.getTypeInterfaceStruct(), Str.toStringz(propertyName));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p);
 	}
 
 	/**
@@ -533,8 +531,6 @@ public class ObjectG
 	 * vtable initialization function (the @class_init member of
 	 * #GTypeInfo.) It must not be called after after @class_init has
 	 * been called for any object types implementing this interface.
-	 *
-	 * If @pspec is a floating reference, it will be consumed.
 	 *
 	 * Params:
 	 *     gIface = any interface vtable for the
@@ -571,9 +567,9 @@ public class ObjectG
 	{
 		uint nPropertiesP;
 
-		auto p = g_object_interface_list_properties((gIface is null) ? null : gIface.getTypeInterfaceStruct(), &nPropertiesP);
+		auto __p = g_object_interface_list_properties((gIface is null) ? null : gIface.getTypeInterfaceStruct(), &nPropertiesP);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
@@ -581,7 +577,7 @@ public class ObjectG
 		ParamSpec[] arr = new ParamSpec[nPropertiesP];
 		for(int i = 0; i < nPropertiesP; i++)
 		{
-			arr[i] = ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p[i]);
+			arr[i] = ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p[i]);
 		}
 
 		return arr;
@@ -688,14 +684,14 @@ public class ObjectG
 	 */
 	public Binding bindProperty(string sourceProperty, ObjectG target, string targetProperty, GBindingFlags flags)
 	{
-		auto p = g_object_bind_property(gObject, Str.toStringz(sourceProperty), (target is null) ? null : target.getObjectGStruct(), Str.toStringz(targetProperty), flags);
+		auto __p = g_object_bind_property(gObject, Str.toStringz(sourceProperty), (target is null) ? null : target.getObjectGStruct(), Str.toStringz(targetProperty), flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Binding)(cast(GBinding*) p);
+		return ObjectG.getDObject!(Binding)(cast(GBinding*) __p);
 	}
 
 	/**
@@ -711,11 +707,9 @@ public class ObjectG
 	 * of bidirectional bindings, otherwise it will be ignored
 	 *
 	 * The binding will automatically be removed when either the @source or the
-	 * @target instances are finalized. This will release the reference that is
-	 * being held on the #GBinding instance; if you want to hold on to the
-	 * #GBinding instance, you will need to hold a reference to it.
-	 *
-	 * To remove the binding, call g_binding_unbind().
+	 * @target instances are finalized. To remove the binding without affecting the
+	 * @source and the @target you can just call g_object_unref() on the returned
+	 * #GBinding instance.
 	 *
 	 * A #GObject can have multiple bindings.
 	 *
@@ -736,8 +730,8 @@ public class ObjectG
 	 *         from the @target to the @source, or %NULL to use the default
 	 *     userData = custom data to be passed to the transformation functions,
 	 *         or %NULL
-	 *     notify = a function to call when disposing the binding, to free
-	 *         resources used by the transformation functions, or %NULL if not required
+	 *     notify = function to be called when disposing the binding, to free the
+	 *         resources used by the transformation functions
 	 *
 	 * Returns: the #GBinding instance representing the
 	 *     binding between the two #GObject instances. The binding is released
@@ -747,14 +741,14 @@ public class ObjectG
 	 */
 	public Binding bindPropertyFull(string sourceProperty, ObjectG target, string targetProperty, GBindingFlags flags, GBindingTransformFunc transformTo, GBindingTransformFunc transformFrom, void* userData, GDestroyNotify notify)
 	{
-		auto p = g_object_bind_property_full(gObject, Str.toStringz(sourceProperty), (target is null) ? null : target.getObjectGStruct(), Str.toStringz(targetProperty), flags, transformTo, transformFrom, userData, notify);
+		auto __p = g_object_bind_property_full(gObject, Str.toStringz(sourceProperty), (target is null) ? null : target.getObjectGStruct(), Str.toStringz(targetProperty), flags, transformTo, transformFrom, userData, notify);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Binding)(cast(GBinding*) p);
+		return ObjectG.getDObject!(Binding)(cast(GBinding*) __p);
 	}
 
 	/**
@@ -784,14 +778,14 @@ public class ObjectG
 	 */
 	public Binding bindPropertyWithClosures(string sourceProperty, ObjectG target, string targetProperty, GBindingFlags flags, Closure transformTo, Closure transformFrom)
 	{
-		auto p = g_object_bind_property_with_closures(gObject, Str.toStringz(sourceProperty), (target is null) ? null : target.getObjectGStruct(), Str.toStringz(targetProperty), flags, (transformTo is null) ? null : transformTo.getClosureStruct(), (transformFrom is null) ? null : transformFrom.getClosureStruct());
+		auto __p = g_object_bind_property_with_closures(gObject, Str.toStringz(sourceProperty), (target is null) ? null : target.getObjectGStruct(), Str.toStringz(targetProperty), flags, (transformTo is null) ? null : transformTo.getClosureStruct(), (transformFrom is null) ? null : transformFrom.getClosureStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Binding)(cast(GBinding*) p);
+		return ObjectG.getDObject!(Binding)(cast(GBinding*) __p);
 	}
 
 	/**
@@ -895,8 +889,7 @@ public class ObjectG
 	 * Params:
 	 *     key = name of the key for that association
 	 *
-	 * Returns: the data if found,
-	 *     or %NULL if no such data exists.
+	 * Returns: the data if found, or %NULL if no such data exists.
 	 */
 	public void* getData(string key)
 	{
@@ -904,16 +897,9 @@ public class ObjectG
 	}
 
 	/**
-	 * Gets a property of an object.
-	 *
-	 * The @value can be:
-	 *
-	 * - an empty #GValue initialized by %G_VALUE_INIT, which will be
-	 * automatically initialized with the expected type of the property
-	 * (since GLib 2.60)
-	 * - a #GValue initialized with the expected type of the property
-	 * - a #GValue initialized with a type to which the expected type
-	 * of the property can be transformed
+	 * Gets a property of an object. @value must have been initialized to the
+	 * expected type of the property (or a type to which the expected type can be
+	 * transformed) using g_value_init().
 	 *
 	 * In general, a copy is made of the property contents and the caller is
 	 * responsible for freeing the memory by calling g_value_unset().
@@ -1072,23 +1058,18 @@ public class ObjectG
 	/**
 	 * Increases the reference count of @object.
 	 *
-	 * Since GLib 2.56, if `GLIB_VERSION_MAX_ALLOWED` is 2.56 or greater, the type
-	 * of @object will be propagated to the return type (using the GCC typeof()
-	 * extension), so any casting the caller needs to do on the return type must be
-	 * explicit.
-	 *
 	 * Returns: the same @object
 	 */
 	public ObjectG ref_()
 	{
-		auto p = g_object_ref(gObject);
+		auto __p = g_object_ref(gObject);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p);
+		return ObjectG.getDObject!(ObjectG)(cast(GObject*) __p);
 	}
 
 	/**
@@ -1101,23 +1082,20 @@ public class ObjectG
 	 * count unchanged.  If the object is not floating, then this call
 	 * adds a new normal reference increasing the reference count by one.
 	 *
-	 * Since GLib 2.56, the type of @object will be propagated to the return type
-	 * under the same conditions as for g_object_ref().
-	 *
 	 * Returns: @object
 	 *
 	 * Since: 2.10
 	 */
 	public ObjectG refSink()
 	{
-		auto p = g_object_ref_sink(gObject);
+		auto __p = g_object_ref_sink(gObject);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p);
+		return ObjectG.getDObject!(ObjectG)(cast(GObject*) __p);
 	}
 
 	/**
@@ -1162,12 +1140,9 @@ public class ObjectG
 	 * If the previous value was replaced then ownership of the
 	 * old value (@oldval) is passed to the caller, including
 	 * the registered destroy notify for it (passed out in @old_destroy).
-	 * It’s up to the caller to free this as needed, which may
+	 * Its up to the caller to free this as he wishes, which may
 	 * or may not include using @old_destroy as sometimes replacement
 	 * should not destroy the object in the normal way.
-	 *
-	 * See g_object_set_data() for guidance on using a small, bounded set of values
-	 * for @key.
 	 *
 	 * Params:
 	 *     key = a string, naming the user data pointer
@@ -1181,9 +1156,9 @@ public class ObjectG
 	 *
 	 * Since: 2.34
 	 */
-	public bool replaceData(string key, void* oldval, void* newval, GDestroyNotify destroy, out GDestroyNotify oldDestroy)
+	public bool replaceData(string key, void* oldval, void* newval, GDestroyNotify destroy, GDestroyNotify* oldDestroy)
 	{
-		return g_object_replace_data(gObject, Str.toStringz(key), oldval, newval, destroy, &oldDestroy) != 0;
+		return g_object_replace_data(gObject, Str.toStringz(key), oldval, newval, destroy, oldDestroy) != 0;
 	}
 
 	/**
@@ -1197,7 +1172,7 @@ public class ObjectG
 	 * If the previous value was replaced then ownership of the
 	 * old value (@oldval) is passed to the caller, including
 	 * the registered destroy notify for it (passed out in @old_destroy).
-	 * It’s up to the caller to free this as needed, which may
+	 * Its up to the caller to free this as he wishes, which may
 	 * or may not include using @old_destroy as sometimes replacement
 	 * should not destroy the object in the normal way.
 	 *
@@ -1213,9 +1188,9 @@ public class ObjectG
 	 *
 	 * Since: 2.34
 	 */
-	public bool replaceQdata(GQuark quark, void* oldval, void* newval, GDestroyNotify destroy, out GDestroyNotify oldDestroy)
+	public bool replaceQdata(GQuark quark, void* oldval, void* newval, GDestroyNotify destroy, GDestroyNotify* oldDestroy)
 	{
-		return g_object_replace_qdata(gObject, quark, oldval, newval, destroy, &oldDestroy) != 0;
+		return g_object_replace_qdata(gObject, quark, oldval, newval, destroy, oldDestroy) != 0;
 	}
 
 	/**
@@ -1235,11 +1210,6 @@ public class ObjectG
 	 *
 	 * If the object already had an association with that name,
 	 * the old association will be destroyed.
-	 *
-	 * Internally, the @key is converted to a #GQuark using g_quark_from_string().
-	 * This means a copy of @key is kept permanently (even after @object has been
-	 * finalized) — so it is recommended to only use a small, bounded set of values
-	 * for @key in your program, to avoid the #GQuark storage growing unbounded.
 	 *
 	 * Params:
 	 *     key = name of the key
@@ -1359,8 +1329,7 @@ public class ObjectG
 	 * Params:
 	 *     key = name of the key
 	 *
-	 * Returns: the data if found, or %NULL
-	 *     if no such data exists.
+	 * Returns: the data if found, or %NULL if no such data exists.
 	 */
 	public void* stealData(string key)
 	{
@@ -1456,7 +1425,7 @@ public class ObjectG
 	 * use this @object as closure data.
 	 *
 	 * Params:
-	 *     closure = #GClosure to watch
+	 *     closure = GClosure to watch
 	 */
 	public void watchClosure(Closure closure)
 	{

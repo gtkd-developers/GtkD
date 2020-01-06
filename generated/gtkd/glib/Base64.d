@@ -27,7 +27,6 @@ module glib.Base64;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
 
 
 /** */
@@ -81,11 +80,11 @@ public struct Base64
 	{
 		size_t outLen = cast(size_t)text.length;
 
-		auto p = g_base64_decode_inplace(text.ptr, &outLen);
+		auto __p = g_base64_decode_inplace(text.ptr, &outLen);
 
 		text = text[0..outLen];
 
-		return p[0 .. outLen];
+		return __p[0 .. outLen];
 	}
 
 	/**
@@ -106,9 +105,9 @@ public struct Base64
 	{
 		size_t outLen;
 
-		auto p = g_base64_decode(Str.toStringz(text), &outLen);
+		auto __p = g_base64_decode(Str.toStringz(text), &outLen);
 
-		return cast(char[])p[0 .. outLen];
+		return cast(char[])__p[0 .. outLen];
 	}
 
 	/**

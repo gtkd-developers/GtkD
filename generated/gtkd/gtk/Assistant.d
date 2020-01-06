@@ -33,7 +33,6 @@ private import gtk.Widget;
 private import gtk.Window;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -113,14 +112,14 @@ public class Assistant : Window
 	 */
 	public this()
 	{
-		auto p = gtk_assistant_new();
+		auto __p = gtk_assistant_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkAssistant*) p);
+		this(cast(GtkAssistant*) __p);
 	}
 
 	/**
@@ -209,14 +208,14 @@ public class Assistant : Window
 	 */
 	public Widget getNthPage(int pageNum)
 	{
-		auto p = gtk_assistant_get_nth_page(gtkAssistant, pageNum);
+		auto __p = gtk_assistant_get_nth_page(gtkAssistant, pageNum);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -265,14 +264,14 @@ public class Assistant : Window
 	 */
 	public Pixbuf getPageHeaderImage(Widget page)
 	{
-		auto p = gtk_assistant_get_page_header_image(gtkAssistant, (page is null) ? null : page.getWidgetStruct());
+		auto __p = gtk_assistant_get_page_header_image(gtkAssistant, (page is null) ? null : page.getWidgetStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) __p);
 	}
 
 	/**
@@ -291,14 +290,14 @@ public class Assistant : Window
 	 */
 	public Pixbuf getPageSideImage(Widget page)
 	{
-		auto p = gtk_assistant_get_page_side_image(gtkAssistant, (page is null) ? null : page.getWidgetStruct());
+		auto __p = gtk_assistant_get_page_side_image(gtkAssistant, (page is null) ? null : page.getWidgetStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p);
+		return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) __p);
 	}
 
 	/**

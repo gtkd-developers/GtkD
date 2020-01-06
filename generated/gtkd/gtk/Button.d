@@ -38,7 +38,6 @@ private import gtk.Image;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -225,14 +224,14 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	 */
 	public this()
 	{
-		auto p = gtk_button_new();
+		auto __p = gtk_button_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkButton*) p);
+		this(cast(GtkButton*) __p);
 	}
 
 	/**
@@ -257,14 +256,14 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	 */
 	public this(string iconName, GtkIconSize size)
 	{
-		auto p = gtk_button_new_from_icon_name(Str.toStringz(iconName), size);
+		auto __p = gtk_button_new_from_icon_name(Str.toStringz(iconName), size);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_icon_name");
 		}
 
-		this(cast(GtkButton*) p);
+		this(cast(GtkButton*) __p);
 	}
 
 	/**
@@ -325,14 +324,14 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	 */
 	public Window getEventWindow()
 	{
-		auto p = gtk_button_get_event_window(gtkButton);
+		auto __p = gtk_button_get_event_window(gtkButton);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Window)(cast(GdkWindow*) p);
+		return ObjectG.getDObject!(Window)(cast(GdkWindow*) __p);
 	}
 
 	/**
@@ -363,14 +362,14 @@ public class Button : Bin, ActionableIF, ActivatableIF
 	 */
 	public Widget getImage()
 	{
-		auto p = gtk_button_get_image(gtkButton);
+		auto __p = gtk_button_get_image(gtkButton);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**

@@ -29,7 +29,6 @@ public  import gio.c.functions;
 public  import gio.c.types;
 public  import glib.ErrorG;
 public  import glib.GException;
-public  import gtkc.giotypes;
 
 
 /**
@@ -40,7 +39,7 @@ public  import gtkc.giotypes;
  * fixed-size.
  * 
  * #GSeekable on fixed-sized streams is approximately the same as POSIX
- * lseek() on a block device (for example: attempting to seek past the
+ * lseek() on a block device (for example: attmepting to seek past the
  * end of the device is an error).  Fixed streams typically cannot be
  * truncated.
  * 
@@ -70,8 +69,7 @@ public template SeekableT(TStruct)
 	}
 
 	/**
-	 * Tests if the length of the stream can be adjusted with
-	 * g_seekable_truncate().
+	 * Tests if the stream can be truncated.
 	 *
 	 * Returns: %TRUE if the stream can be truncated, %FALSE otherwise.
 	 */
@@ -111,14 +109,14 @@ public template SeekableT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_seekable_seek(getSeekableStruct(), offset, type, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_seekable_seek(getSeekableStruct(), offset, type, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -132,9 +130,7 @@ public template SeekableT(TStruct)
 	}
 
 	/**
-	 * Sets the length of the stream to @offset. If the stream was previously
-	 * larger than @offset, the extra data is discarded. If the stream was
-	 * previouly shorter than @offset, it is extended with NUL ('\0') bytes.
+	 * Truncates a stream with a given #offset.
 	 *
 	 * If @cancellable is not %NULL, then the operation can be cancelled by
 	 * triggering the cancellable object from another thread. If the operation
@@ -143,7 +139,7 @@ public template SeekableT(TStruct)
 	 * partial result will be returned, without an error.
 	 *
 	 * Params:
-	 *     offset = new length for @seekable, in bytes.
+	 *     offset = a #goffset.
 	 *     cancellable = optional #GCancellable object, %NULL to ignore.
 	 *
 	 * Returns: %TRUE if successful. If an error
@@ -156,13 +152,13 @@ public template SeekableT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_seekable_truncate(getSeekableStruct(), offset, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_seekable_truncate(getSeekableStruct(), offset, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 }

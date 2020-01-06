@@ -28,7 +28,6 @@ public  import gobject.ObjectG;
 public  import gtk.Action;
 public  import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -314,14 +313,14 @@ public template ActivatableT(TStruct)
 	 */
 	public Action getRelatedAction()
 	{
-		auto p = gtk_activatable_get_related_action(getActivatableStruct());
+		auto __p = gtk_activatable_get_related_action(getActivatableStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Action)(cast(GtkAction*) p);
+		return ObjectG.getDObject!(Action)(cast(GtkAction*) __p);
 	}
 
 	/**

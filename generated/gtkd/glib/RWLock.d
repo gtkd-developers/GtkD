@@ -26,7 +26,6 @@ module glib.RWLock;
 
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
 
 
 /**
@@ -40,10 +39,6 @@ public  import gtkc.glibtypes;
  * lock via g_rw_lock_writer_lock()), multiple threads can gain
  * simultaneous read-only access (by holding the 'reader' lock via
  * g_rw_lock_reader_lock()).
- * 
- * It is unspecified whether readers or writers have priority in acquiring the
- * lock when a reader already holds the lock and a writer is queued to acquire
- * it.
  * 
  * Here is an example for an array with access functions:
  * |[<!-- language="C" -->
@@ -181,8 +176,7 @@ public class RWLock
 	 * thread will block. Read locks can be taken recursively.
 	 *
 	 * It is implementation-defined how many threads are allowed to
-	 * hold read locks on the same lock simultaneously. If the limit is hit,
-	 * or if a deadlock is detected, a critical warning will be emitted.
+	 * hold read locks on the same lock simultaneously.
 	 *
 	 * Since: 2.32
 	 */

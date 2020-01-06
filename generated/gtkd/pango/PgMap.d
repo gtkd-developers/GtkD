@@ -26,7 +26,6 @@ module pango.PgMap;
 
 private import glib.ListSG;
 private import gobject.ObjectG;
-public  import gtkc.pangotypes;
 private import pango.PgEngine;
 private import pango.PgLanguage;
 private import pango.c.functions;
@@ -74,14 +73,14 @@ public class PgMap
 	 */
 	public PgEngine getEngine(PangoScript script)
 	{
-		auto p = pango_map_get_engine(pangoMap, script);
+		auto __p = pango_map_get_engine(pangoMap, script);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgEngine)(cast(PangoEngine*) p);
+		return ObjectG.getDObject!(PgEngine)(cast(PangoEngine*) __p);
 	}
 
 	/**
@@ -91,8 +90,8 @@ public class PgMap
 	 *     script = a #PangoScript
 	 *     exactEngines = location to store list of engines that exactly
 	 *         handle this script.
-	 *     fallbackEngines = location to store list of engines that approximately
-	 *         handle this script.
+	 *     fallbackEngines = location to store list of engines that
+	 *         approximately handle this script.
 	 *
 	 * Since: 1.4
 	 */
@@ -119,14 +118,14 @@ public class PgMap
 	 */
 	public static PgMap findMap(PgLanguage language, uint engineTypeId, uint renderTypeId)
 	{
-		auto p = pango_find_map((language is null) ? null : language.getPgLanguageStruct(), engineTypeId, renderTypeId);
+		auto __p = pango_find_map((language is null) ? null : language.getPgLanguageStruct(), engineTypeId, renderTypeId);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgMap)(cast(PangoMap*) p);
+		return ObjectG.getDObject!(PgMap)(cast(PangoMap*) __p);
 	}
 
 	/**

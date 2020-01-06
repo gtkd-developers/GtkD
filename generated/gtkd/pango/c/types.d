@@ -29,6 +29,8 @@ public import glib.c.types;
 public import gobject.c.types;
 
 alias void* FTLibrary;
+alias hb_feature_t = void;
+alias hb_font_t = void;
 
 /**
  * A #PangoGlyph represents a single glyph in the output form of a string.
@@ -189,6 +191,26 @@ public enum PangoAttrType
 	 * background alpha (#PangoAttrInt). Since 1.38
 	 */
 	BACKGROUND_ALPHA = 25,
+	/**
+	 * whether breaks are allowed (#PangoAttrInt). Since 1.44
+	 */
+	ALLOW_BREAKS = 26,
+	/**
+	 * how to render invisible characters (#PangoAttrInt). Since 1.44
+	 */
+	SHOW = 27,
+	/**
+	 * whether to insert hyphens at intra-word line breaks (#PangoAttrInt). Since 1.44
+	 */
+	INSERT_HYPHENS = 28,
+	/**
+	 * whether the text has an overline (#PangoAttrInt). Sincd 1.46
+	 */
+	OVERLINE = 29,
+	/**
+	 * overline color (#PangoAttrColor). Since 1.46
+	 */
+	OVERLINE_COLOR = 30,
 }
 
 /**
@@ -283,6 +305,9 @@ public enum PangoBidiType
 /**
  * Used to indicate how well a font can represent a particular Unicode
  * character point for a particular script.
+ *
+ * Since 1.44, only %PANGO_COVERAGE_NONE and %PANGO_COVERAGE_EXACT
+ * will be returned.
  */
 public enum PangoCoverageLevel
 {
@@ -500,6 +525,26 @@ public enum PangoGravityHint
 }
 
 /**
+ * The #PangoOverline enumeration is used to specify
+ * whether text should be overlined, and if so, the type
+ * of line.
+ *
+ * Since: 1.46
+ */
+public enum PangoOverline
+{
+	/**
+	 * no overline should be drawn
+	 */
+	NONE = 0,
+	/**
+	 * Draw a single line above the ink
+	 * extents of the text being underlined.
+	 */
+	SINGLE = 1,
+}
+
+/**
  * #PangoRenderPart defines different items to render for such
  * purposes as setting colors.
  *
@@ -523,17 +568,23 @@ public enum PangoRenderPart
 	 * strikethrough lines
 	 */
 	STRIKETHROUGH = 3,
+	/**
+	 * overlines
+	 */
+	OVERLINE = 4,
 }
 
 /**
  * The #PangoScript enumeration identifies different writing
  * systems. The values correspond to the names as defined in the
- * Unicode standard.
- * Note that new types may be added in the future. Applications should be ready
- * to handle unknown values.  This enumeration is interchangeable with
- * #GUnicodeScript.  See <ulink
+ * Unicode standard. See <ulink
  * url="http://www.unicode.org/reports/tr24/">Unicode Standard Annex
  * #24: Script names</ulink>.
+ *
+ * Note that this enumeration is deprecated and will not be updated
+ * to include values in newer versions of the Unicode standard.
+ * Applications should use the GUnicodeScript enumeration instead,
+ * whose values are interchangeable with PangoScript.
  */
 public enum PangoScript
 {
@@ -1013,6 +1064,50 @@ public enum PangoScript
 }
 
 /**
+ * Flags influencing the shaping process.
+ * These can be passed to pango_shape_with_flags().
+ */
+public enum PangoShapeFlags
+{
+	/**
+	 * Default value.
+	 */
+	NONE = 0,
+	/**
+	 * Round glyph positions
+	 * and widths to whole device units. This option should
+	 * be set if the target renderer can't do subpixel
+	 * positioning of glyphs.
+	 */
+	ROUND_POSITIONS = 1,
+}
+
+/**
+ * These flags affect how Pango treats characters that are normally
+ * not visible in the output.
+ */
+public enum PangoShowFlags
+{
+	/**
+	 * No special treatment for invisible characters
+	 */
+	NONE = 0,
+	/**
+	 * Render spaces, tabs and newlines visibly
+	 */
+	SPACES = 1,
+	/**
+	 * Render line breaks visibly
+	 */
+	LINE_BREAKS = 2,
+	/**
+	 * Render default-ignorable Unicode
+	 * characters visibly
+	 */
+	IGNORABLES = 4,
+}
+
+/**
  * An enumeration specifying the width of the font relative to other designs
  * within a family.
  */
@@ -1106,22 +1201,40 @@ public enum PangoUnderline
 	 */
 	DOUBLE = 2,
 	/**
-	 * a single underline should be drawn at a position
-	 * beneath the ink extents of the text being
+	 * a single underline should be drawn at a
+	 * position beneath the ink extents of the text being
 	 * underlined. This should be used only for underlining
-	 * single characters, such as for keyboard
-	 * accelerators. %PANGO_UNDERLINE_SINGLE should
-	 * be used for extended portions of text.
+	 * single characters, such as for keyboard accelerators.
+	 * %PANGO_UNDERLINE_SINGLE should be used for extended
+	 * portions of text.
 	 */
 	LOW = 3,
 	/**
 	 * a wavy underline should be drawn below.
-	 * This underline is typically used to indicate
-	 * an error such as a possilble mispelling; in some
-	 * cases a contrasting color may automatically
-	 * be used. This type of underlining is available since Pango 1.4.
+	 * This underline is typically used to indicate an error such
+	 * as a possible mispelling; in some cases a contrasting color
+	 * may automatically be used. This type of underlining is
+	 * available since Pango 1.4.
 	 */
 	ERROR = 4,
+	/**
+	 * Like @PANGO_UNDERLINE_SINGLE, but
+	 * drawn continuously across multiple runs. This type
+	 * of underlining is available since Pango 1.46.
+	 */
+	SINGLE_LINE = 5,
+	/**
+	 * Like @PANGO_UNDERLINE_DOUBLE, but
+	 * drawn continuously across multiple runs. This type
+	 * of underlining is available since Pango 1.46.
+	 */
+	DOUBLE_LINE = 6,
+	/**
+	 * Like @PANGO_UNDERLINE_ERROR, but
+	 * drawn continuously across multiple runs. This type
+	 * of underlining is available since Pango 1.46.
+	 */
+	ERROR_LINE = 7,
 }
 
 /**
@@ -1232,11 +1345,11 @@ struct PangoCairoFont;
 struct PangoAnalysis
 {
 	/**
-	 * the engine for doing rendering-system-dependent processing.
+	 * unused
 	 */
 	PangoEngineShape* shapeEngine;
 	/**
-	 * the engine for doing rendering-system-independent processing.
+	 * unused
 	 */
 	PangoEngineLang* langEngine;
 	/**
@@ -1252,7 +1365,7 @@ struct PangoAnalysis
 	 */
 	ubyte gravity;
 	/**
-	 * boolean flags for this segment (currently only one) (Since: 1.16).
+	 * boolean flags for this segment (Since: 1.16).
 	 */
 	ubyte flags;
 	/**
@@ -1622,15 +1735,6 @@ struct PangoFontClass
 	 *     object.
 	 */
 	extern(C) PangoCoverage* function(PangoFont* font, PangoLanguage* language) getCoverage;
-	/**
-	 *
-	 * Params:
-	 *     font = a #PangoFont
-	 *     language = the language tag
-	 *     ch = a Unicode character.
-	 * Returns: the best matching shaper.
-	 */
-	extern(C) PangoEngineShape* function(PangoFont* font, PangoLanguage* language, uint ch) findShaper;
 	/** */
 	extern(C) void function(PangoFont* font, PangoGlyph glyph, PangoRectangle* inkRect, PangoRectangle* logicalRect) getGlyphExtents;
 	/**
@@ -1654,9 +1758,9 @@ struct PangoFontClass
 	/** */
 	extern(C) PangoFontDescription* function(PangoFont* font) describeAbsolute;
 	/** */
-	extern(C) void function() PangoReserved1;
+	extern(C) void function(PangoFont* font, hb_feature_t* features, uint len, uint* numFeatures) getFeatures;
 	/** */
-	extern(C) void function() PangoReserved2;
+	extern(C) hb_font_t* function(PangoFont* font) createHbFont;
 }
 
 struct PangoFontDescription;
@@ -1695,6 +1799,13 @@ struct PangoFontFaceClass
 	 * Returns: whether @face is synthesized.
 	 */
 	extern(C) int function(PangoFontFace* face) isSynthesized;
+	/**
+	 *
+	 * Params:
+	 *     face = a #PangoFontFace
+	 * Returns: the #PangoFontFamily
+	 */
+	extern(C) PangoFontFamily* function(PangoFontFace* face) getFamily;
 	/** */
 	extern(C) void function() PangoReserved3;
 	/** */
@@ -1733,10 +1844,19 @@ struct PangoFontFamilyClass
 	 * Returns: %TRUE if the family is variable
 	 */
 	extern(C) int function(PangoFontFamily* family) isVariable;
+	/**
+	 *
+	 * Params:
+	 *     family = a #PangoFontFamily
+	 *     name = the name of a face. If the name is %NULL,
+	 *         the family's default face (fontconfig calls it "Regular")
+	 *         will be returned.
+	 * Returns: the #PangoFontFace,
+	 *     or %NULL if no face with the given name exists.
+	 */
+	extern(C) PangoFontFace* function(PangoFontFamily* family, const(char)* name) getFace;
 	/** */
 	extern(C) void function() PangoReserved2;
-	/** */
-	extern(C) void function() PangoReserved3;
 }
 
 struct PangoFontMap
@@ -1791,10 +1911,16 @@ struct PangoFontMapClass
 	extern(C) uint function(PangoFontMap* fontmap) getSerial;
 	/** */
 	extern(C) void function(PangoFontMap* fontmap) changed;
+	/**
+	 *
+	 * Params:
+	 *     fontmap = a #PangoFontMap
+	 *     name = a family name
+	 * Returns: the #PangoFontFamily
+	 */
+	extern(C) PangoFontFamily* function(PangoFontMap* fontmap, const(char)* name) getFamily;
 	/** */
-	extern(C) void function() PangoReserved1;
-	/** */
-	extern(C) void function() PangoReserved2;
+	extern(C) PangoFontFace* function(PangoFontMap* fontmap, PangoFont* font) getFace;
 }
 
 struct PangoFontMetrics
@@ -1802,6 +1928,7 @@ struct PangoFontMetrics
 	uint refCount;
 	int ascent;
 	int descent;
+	int height;
 	int approximateCharWidth;
 	int approximateDigitWidth;
 	int underlinePosition;
@@ -2116,6 +2243,7 @@ struct PangoRenderer
 {
 	GObject parentInstance;
 	PangoUnderline underline;
+	PangoOverline overline;
 	bool strikethrough;
 	int activeCount;
 	/**
@@ -2129,6 +2257,21 @@ struct PangoRenderer
 
 /**
  * Class structure for #PangoRenderer.
+ *
+ * The following vfuncs take user space coordinates in Pango units
+ * and have default implementations:
+ * - draw_glyphs
+ * - draw_rectangle
+ * - draw_error_underline
+ * - draw_shape
+ * - draw_glyph_item
+ *
+ * The default draw_shape implementation draws nothing.
+ *
+ * The following vfuncs take device space coordinates as doubles
+ * and must be implemented:
+ * - draw_trapezoid
+ * - draw_glyph
  *
  * Since: 1.8
  */
@@ -2248,6 +2391,13 @@ alias PANGO_ANALYSIS_FLAG_CENTERED_BASELINE = ANALYSIS_FLAG_CENTERED_BASELINE;
  */
 enum ANALYSIS_FLAG_IS_ELLIPSIS = 2;
 alias PANGO_ANALYSIS_FLAG_IS_ELLIPSIS = ANALYSIS_FLAG_IS_ELLIPSIS;
+
+/**
+ * This flag tells Pango to add a hyphen at the end of the
+ * run during shaping.
+ */
+enum ANALYSIS_FLAG_NEED_HYPHEN = 4;
+alias PANGO_ANALYSIS_FLAG_NEED_HYPHEN = ANALYSIS_FLAG_NEED_HYPHEN;
 
 /**
  * This value can be used to set the start_index member of a #PangoAttribute

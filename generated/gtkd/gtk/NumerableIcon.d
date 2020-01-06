@@ -33,7 +33,6 @@ private import gobject.ObjectG;
 private import gtk.StyleContext;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -98,14 +97,14 @@ public class NumerableIcon : EmblemedIcon
 	 */
 	public this(IconIF baseIcon)
 	{
-		auto p = gtk_numerable_icon_new((baseIcon is null) ? null : baseIcon.getIconStruct());
+		auto __p = gtk_numerable_icon_new((baseIcon is null) ? null : baseIcon.getIconStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkNumerableIcon*) p, true);
+		this(cast(GtkNumerableIcon*) __p, true);
 	}
 
 	/**
@@ -125,14 +124,14 @@ public class NumerableIcon : EmblemedIcon
 	 */
 	public this(IconIF baseIcon, StyleContext context)
 	{
-		auto p = gtk_numerable_icon_new_with_style_context((baseIcon is null) ? null : baseIcon.getIconStruct(), (context is null) ? null : context.getStyleContextStruct());
+		auto __p = gtk_numerable_icon_new_with_style_context((baseIcon is null) ? null : baseIcon.getIconStruct(), (context is null) ? null : context.getStyleContextStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_style_context");
 		}
 
-		this(cast(GtkNumerableIcon*) p, true);
+		this(cast(GtkNumerableIcon*) __p, true);
 	}
 
 	/**
@@ -146,14 +145,14 @@ public class NumerableIcon : EmblemedIcon
 	 */
 	public IconIF getBackgroundGicon()
 	{
-		auto p = gtk_numerable_icon_get_background_gicon(gtkNumerableIcon);
+		auto __p = gtk_numerable_icon_get_background_gicon(gtkNumerableIcon);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) __p);
 	}
 
 	/**
@@ -205,14 +204,14 @@ public class NumerableIcon : EmblemedIcon
 	 */
 	public StyleContext getStyleContext()
 	{
-		auto p = gtk_numerable_icon_get_style_context(gtkNumerableIcon);
+		auto __p = gtk_numerable_icon_get_style_context(gtkNumerableIcon);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(StyleContext)(cast(GtkStyleContext*) p);
+		return ObjectG.getDObject!(StyleContext)(cast(GtkStyleContext*) __p);
 	}
 
 	/**

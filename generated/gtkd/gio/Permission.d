@@ -31,7 +31,6 @@ public  import gio.c.types;
 private import glib.ErrorG;
 private import glib.GException;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -116,14 +115,14 @@ public class Permission : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_permission_acquire(gPermission, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_permission_acquire(gPermission, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -164,14 +163,14 @@ public class Permission : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_permission_acquire_finish(gPermission, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_permission_acquire_finish(gPermission, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -265,14 +264,14 @@ public class Permission : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_permission_release(gPermission, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_permission_release(gPermission, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -313,13 +312,13 @@ public class Permission : ObjectG
 	{
 		GError* err = null;
 
-		auto p = g_permission_release_finish(gPermission, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_permission_release_finish(gPermission, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 }

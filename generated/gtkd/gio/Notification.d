@@ -31,7 +31,6 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import glib.Variant;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -113,14 +112,14 @@ public class Notification : ObjectG
 	 */
 	public this(string title)
 	{
-		auto p = g_notification_new(Str.toStringz(title));
+		auto __p = g_notification_new(Str.toStringz(title));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GNotification*) p, true);
+		this(cast(GNotification*) __p, true);
 	}
 
 	/**
@@ -261,9 +260,6 @@ public class Notification : ObjectG
 
 	/**
 	 * Deprecated in favor of g_notification_set_priority().
-	 *
-	 * Deprecated: Since 2.42, this has been deprecated in favour of
-	 * g_notification_set_priority().
 	 *
 	 * Params:
 	 *     urgent = %TRUE if @notification is urgent

@@ -27,7 +27,6 @@ module glib.PtrArray;
 private import glib.ConstructionException;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
 
 
 /**
@@ -96,61 +95,9 @@ public class PtrArray
 		g_ptr_array_add(gPtrArray, data);
 	}
 
-	/**
-	 * Checks whether @needle exists in @haystack. If the element is found, %TRUE is
-	 * returned and the element’s index is returned in @index_ (if non-%NULL).
-	 * Otherwise, %FALSE is returned and @index_ is undefined. If @needle exists
-	 * multiple times in @haystack, the index of the first instance is returned.
-	 *
-	 * This does pointer comparisons only. If you want to use more complex equality
-	 * checks, such as string comparisons, use g_ptr_array_find_with_equal_func().
-	 *
-	 * Params:
-	 *     needle = pointer to look for
-	 *     index = return location for the index of
-	 *         the element, if found
-	 *
-	 * Returns: %TRUE if @needle is one of the elements of @haystack
-	 *
-	 * Since: 2.54
-	 */
-	public bool find(void* needle, out uint index)
-	{
-		return g_ptr_array_find(gPtrArray, needle, &index) != 0;
-	}
-
-	/**
-	 * Checks whether @needle exists in @haystack, using the given @equal_func.
-	 * If the element is found, %TRUE is returned and the element’s index is
-	 * returned in @index_ (if non-%NULL). Otherwise, %FALSE is returned and @index_
-	 * is undefined. If @needle exists multiple times in @haystack, the index of
-	 * the first instance is returned.
-	 *
-	 * @equal_func is called with the element from the array as its first parameter,
-	 * and @needle as its second parameter. If @equal_func is %NULL, pointer
-	 * equality is used.
-	 *
-	 * Params:
-	 *     needle = pointer to look for
-	 *     equalFunc = the function to call for each element, which should
-	 *         return %TRUE when the desired element is found; or %NULL to use pointer
-	 *         equality
-	 *     index = return location for the index of
-	 *         the element, if found
-	 *
-	 * Returns: %TRUE if @needle is one of the elements of @haystack
-	 *
-	 * Since: 2.54
-	 */
-	public bool findWithEqualFunc(void* needle, GEqualFunc equalFunc, out uint index)
-	{
-		return g_ptr_array_find_with_equal_func(gPtrArray, needle, equalFunc, &index) != 0;
-	}
-
 	alias foreac = foreach_;
 	/**
-	 * Calls a function for each element of a #GPtrArray. @func must not
-	 * add elements to or remove elements from the array.
+	 * Calls a function for each element of a #GPtrArray.
 	 *
 	 * Params:
 	 *     func = the function to call for each array element
@@ -174,10 +121,6 @@ public class PtrArray
 	 * If array contents point to dynamically-allocated memory, they should
 	 * be freed separately if @free_seg is %TRUE and no #GDestroyNotify
 	 * function has been set for @array.
-	 *
-	 * This function is not thread-safe. If using a #GPtrArray from multiple
-	 * threads, use only the atomic g_ptr_array_ref() and g_ptr_array_unref()
-	 * functions.
 	 *
 	 * Params:
 	 *     freeSeg = if %TRUE the actual pointer array is freed as well
@@ -214,14 +157,14 @@ public class PtrArray
 	 */
 	public this()
 	{
-		auto p = g_ptr_array_new();
+		auto __p = g_ptr_array_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GPtrArray*) p);
+		this(cast(GPtrArray*) __p);
 	}
 
 	/**
@@ -246,14 +189,14 @@ public class PtrArray
 	 */
 	public this(uint reservedSize, GDestroyNotify elementFreeFunc)
 	{
-		auto p = g_ptr_array_new_full(reservedSize, elementFreeFunc);
+		auto __p = g_ptr_array_new_full(reservedSize, elementFreeFunc);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_full");
 		}
 
-		this(cast(GPtrArray*) p);
+		this(cast(GPtrArray*) __p);
 	}
 
 	/**
@@ -274,14 +217,14 @@ public class PtrArray
 	 */
 	public this(GDestroyNotify elementFreeFunc)
 	{
-		auto p = g_ptr_array_new_with_free_func(elementFreeFunc);
+		auto __p = g_ptr_array_new_with_free_func(elementFreeFunc);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_free_func");
 		}
 
-		this(cast(GPtrArray*) p);
+		this(cast(GPtrArray*) __p);
 	}
 
 	alias doref = ref_;
@@ -295,14 +238,14 @@ public class PtrArray
 	 */
 	public PtrArray ref_()
 	{
-		auto p = g_ptr_array_ref(gPtrArray);
+		auto __p = g_ptr_array_ref(gPtrArray);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new PtrArray(cast(GPtrArray*) p);
+		return new PtrArray(cast(GPtrArray*) __p);
 	}
 
 	/**
@@ -349,8 +292,7 @@ public class PtrArray
 	 * Removes the pointer at the given index from the pointer array.
 	 * The following elements are moved down one place. If @array has
 	 * a non-%NULL #GDestroyNotify function it is called for the removed
-	 * element. If so, the return value from this function will potentially point
-	 * to freed memory (depending on the #GDestroyNotify implementation).
+	 * element.
 	 *
 	 * Params:
 	 *     index = the index of the pointer to remove
@@ -367,9 +309,7 @@ public class PtrArray
 	 * The last element in the array is used to fill in the space, so
 	 * this function does not preserve the order of the array. But it
 	 * is faster than g_ptr_array_remove_index(). If @array has a non-%NULL
-	 * #GDestroyNotify function it is called for the removed element. If so, the
-	 * return value from this function will potentially point to freed memory
-	 * (depending on the #GDestroyNotify implementation).
+	 * #GDestroyNotify function it is called for the removed element.
 	 *
 	 * Params:
 	 *     index = the index of the pointer to remove
@@ -397,14 +337,14 @@ public class PtrArray
 	 */
 	public PtrArray removeRange(uint index, uint length)
 	{
-		auto p = g_ptr_array_remove_range(gPtrArray, index, length);
+		auto __p = g_ptr_array_remove_range(gPtrArray, index, length);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new PtrArray(cast(GPtrArray*) p);
+		return new PtrArray(cast(GPtrArray*) __p);
 	}
 
 	/**
@@ -450,14 +390,14 @@ public class PtrArray
 	 */
 	public static PtrArray sizedNew(uint reservedSize)
 	{
-		auto p = g_ptr_array_sized_new(reservedSize);
+		auto __p = g_ptr_array_sized_new(reservedSize);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new PtrArray(cast(GPtrArray*) p);
+		return new PtrArray(cast(GPtrArray*) __p);
 	}
 
 	/**
@@ -500,48 +440,10 @@ public class PtrArray
 	}
 
 	/**
-	 * Removes the pointer at the given index from the pointer array.
-	 * The following elements are moved down one place. The #GDestroyNotify for
-	 * @array is *not* called on the removed element; ownership is transferred to
-	 * the caller of this function.
-	 *
-	 * Params:
-	 *     index = the index of the pointer to steal
-	 *
-	 * Returns: the pointer which was removed
-	 *
-	 * Since: 2.58
-	 */
-	public void* stealIndex(uint index)
-	{
-		return g_ptr_array_steal_index(gPtrArray, index);
-	}
-
-	/**
-	 * Removes the pointer at the given index from the pointer array.
-	 * The last element in the array is used to fill in the space, so
-	 * this function does not preserve the order of the array. But it
-	 * is faster than g_ptr_array_steal_index(). The #GDestroyNotify for @array is
-	 * *not* called on the removed element; ownership is transferred to the caller
-	 * of this function.
-	 *
-	 * Params:
-	 *     index = the index of the pointer to steal
-	 *
-	 * Returns: the pointer which was removed
-	 *
-	 * Since: 2.58
-	 */
-	public void* stealIndexFast(uint index)
-	{
-		return g_ptr_array_steal_index_fast(gPtrArray, index);
-	}
-
-	/**
 	 * Atomically decrements the reference count of @array by one. If the
 	 * reference count drops to 0, the effect is the same as calling
 	 * g_ptr_array_free() with @free_segment set to %TRUE. This function
-	 * is thread-safe and may be called from any thread.
+	 * is MT-safe and may be called from any thread.
 	 *
 	 * Since: 2.22
 	 */

@@ -30,7 +30,6 @@ private import gdk.c.functions;
 public  import gdk.c.types;
 private import gdkpixbuf.Pixbuf;
 private import gobject.ObjectG;
-public  import gtkc.gdktypes;
 
 
 /** */
@@ -60,14 +59,14 @@ public  import gdkpixbuf.Pixbuf;
  */
 public Pixbuf getFromSurface(Surface surface, int srcX, int srcY, int width, int height)
 {
-	auto p = gdk_pixbuf_get_from_surface((surface is null) ? null : surface.getSurfaceStruct(), srcX, srcY, width, height);
+	auto __p = gdk_pixbuf_get_from_surface((surface is null) ? null : surface.getSurfaceStruct(), srcX, srcY, width, height);
 
-	if(p is null)
+	if(__p is null)
 	{
 		return null;
 	}
 
-	return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
+	return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) __p, true);
 }
 
 /**
@@ -110,12 +109,12 @@ public Pixbuf getFromSurface(Surface surface, int srcX, int srcY, int width, int
  */
 public Pixbuf getFromWindow(Window window, int srcX, int srcY, int width, int height)
 {
-	auto p = gdk_pixbuf_get_from_window((window is null) ? null : window.getWindowStruct(), srcX, srcY, width, height);
+	auto __p = gdk_pixbuf_get_from_window((window is null) ? null : window.getWindowStruct(), srcX, srcY, width, height);
 
-	if(p is null)
+	if(__p is null)
 	{
 		return null;
 	}
 
-	return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) p, true);
+	return ObjectG.getDObject!(Pixbuf)(cast(GdkPixbuf*) __p, true);
 }

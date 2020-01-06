@@ -32,7 +32,6 @@ private import gobject.Signals;
 private import gtk.TextIter;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -101,14 +100,14 @@ public class TextTag : ObjectG
 	 */
 	public this(string name)
 	{
-		auto p = gtk_text_tag_new(Str.toStringz(name));
+		auto __p = gtk_text_tag_new(Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkTextTag*) p, true);
+		this(cast(GtkTextTag*) __p, true);
 	}
 
 	/**

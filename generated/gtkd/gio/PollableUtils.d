@@ -33,7 +33,6 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.Source;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /** */
@@ -54,14 +53,14 @@ public  import gtkc.giotypes;
  */
 public Source pollableSourceNew(ObjectG pollableStream)
 {
-	auto p = g_pollable_source_new((pollableStream is null) ? null : pollableStream.getObjectGStruct());
+	auto __p = g_pollable_source_new((pollableStream is null) ? null : pollableStream.getObjectGStruct());
 
-	if(p is null)
+	if(__p is null)
 	{
 		return null;
 	}
 
-	return new Source(cast(GSource*) p, true);
+	return new Source(cast(GSource*) __p, true);
 }
 
 /**
@@ -82,14 +81,14 @@ public Source pollableSourceNew(ObjectG pollableStream)
  */
 public Source pollableSourceNewFull(ObjectG pollableStream, Source childSource, Cancellable cancellable)
 {
-	auto p = g_pollable_source_new_full((pollableStream is null) ? null : pollableStream.getObjectGStruct(), (childSource is null) ? null : childSource.getSourceStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct());
+	auto __p = g_pollable_source_new_full((pollableStream is null) ? null : pollableStream.getObjectGStruct(), (childSource is null) ? null : childSource.getSourceStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct());
 
-	if(p is null)
+	if(__p is null)
 	{
 		return null;
 	}
 
-	return new Source(cast(GSource*) p, true);
+	return new Source(cast(GSource*) __p, true);
 }
 
 /**
@@ -120,14 +119,14 @@ public ptrdiff_t pollableStreamRead(InputStream stream, ubyte[] buffer, bool blo
 {
 	GError* err = null;
 
-	auto p = g_pollable_stream_read((stream is null) ? null : stream.getInputStreamStruct(), buffer.ptr, cast(size_t)buffer.length, blocking, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+	auto __p = g_pollable_stream_read((stream is null) ? null : stream.getInputStreamStruct(), buffer.ptr, cast(size_t)buffer.length, blocking, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 	if (err !is null)
 	{
 		throw new GException( new ErrorG(err) );
 	}
 
-	return p;
+	return __p;
 }
 
 /**
@@ -159,14 +158,14 @@ public ptrdiff_t pollableStreamWrite(OutputStream stream, ubyte[] buffer, bool b
 {
 	GError* err = null;
 
-	auto p = g_pollable_stream_write((stream is null) ? null : stream.getOutputStreamStruct(), buffer.ptr, cast(size_t)buffer.length, blocking, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
+	auto __p = g_pollable_stream_write((stream is null) ? null : stream.getOutputStreamStruct(), buffer.ptr, cast(size_t)buffer.length, blocking, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err);
 
 	if (err !is null)
 	{
 		throw new GException( new ErrorG(err) );
 	}
 
-	return p;
+	return __p;
 }
 
 /**
@@ -208,12 +207,12 @@ public bool pollableStreamWriteAll(OutputStream stream, ubyte[] buffer, bool blo
 {
 	GError* err = null;
 
-	auto p = g_pollable_stream_write_all((stream is null) ? null : stream.getOutputStreamStruct(), buffer.ptr, cast(size_t)buffer.length, blocking, &bytesWritten, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+	auto __p = g_pollable_stream_write_all((stream is null) ? null : stream.getOutputStreamStruct(), buffer.ptr, cast(size_t)buffer.length, blocking, &bytesWritten, (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 	if (err !is null)
 	{
 		throw new GException( new ErrorG(err) );
 	}
 
-	return p;
+	return __p;
 }

@@ -25,10 +25,10 @@
 module pango.PgFont;
 
 private import gobject.ObjectG;
-public  import gtkc.pangotypes;
 private import pango.PgCoverage;
 private import pango.PgEngineShape;
 private import pango.PgFontDescription;
+private import pango.PgFontFace;
 private import pango.PgFontMap;
 private import pango.PgFontMetrics;
 private import pango.PgLanguage;
@@ -112,14 +112,14 @@ public class PgFont : ObjectG
 	 */
 	public PgFontDescription describe()
 	{
-		auto p = pango_font_describe(pangoFont);
+		auto __p = pango_font_describe(pangoFont);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) p, true);
+		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) __p, true);
 	}
 
 	/**
@@ -133,19 +133,21 @@ public class PgFont : ObjectG
 	 */
 	public PgFontDescription describeWithAbsoluteSize()
 	{
-		auto p = pango_font_describe_with_absolute_size(pangoFont);
+		auto __p = pango_font_describe_with_absolute_size(pangoFont);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) p, true);
+		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) __p, true);
 	}
 
 	/**
 	 * Finds the best matching shaper for a font for a particular
 	 * language tag and character point.
+	 *
+	 * Deprecated: Shape engines are no longer used
 	 *
 	 * Params:
 	 *     language = the language tag
@@ -155,14 +157,14 @@ public class PgFont : ObjectG
 	 */
 	public PgEngineShape findShaper(PgLanguage language, uint ch)
 	{
-		auto p = pango_font_find_shaper(pangoFont, (language is null) ? null : language.getPgLanguageStruct(), ch);
+		auto __p = pango_font_find_shaper(pangoFont, (language is null) ? null : language.getPgLanguageStruct(), ch);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgEngineShape)(cast(PangoEngineShape*) p);
+		return ObjectG.getDObject!(PgEngineShape)(cast(PangoEngineShape*) __p);
 	}
 
 	/**
@@ -176,14 +178,33 @@ public class PgFont : ObjectG
 	 */
 	public PgCoverage getCoverage(PgLanguage language)
 	{
-		auto p = pango_font_get_coverage(pangoFont, (language is null) ? null : language.getPgLanguageStruct());
+		auto __p = pango_font_get_coverage(pangoFont, (language is null) ? null : language.getPgLanguageStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgCoverage)(cast(PangoCoverage*) p, true);
+		return ObjectG.getDObject!(PgCoverage)(cast(PangoCoverage*) __p, true);
+	}
+
+	/**
+	 * Gets the #PangoFontFace to which @font belongs.
+	 *
+	 * Returns: the #PangoFontFace
+	 *
+	 * Since: 1.46
+	 */
+	public PgFontFace getFace()
+	{
+		auto __p = pango_font_get_face(pangoFont);
+
+		if(__p is null)
+		{
+			return null;
+		}
+
+		return ObjectG.getDObject!(PgFontFace)(cast(PangoFontFace*) __p);
 	}
 
 	/**
@@ -204,14 +225,14 @@ public class PgFont : ObjectG
 	 */
 	public PgFontMap getFontMap()
 	{
-		auto p = pango_font_get_font_map(pangoFont);
+		auto __p = pango_font_get_font_map(pangoFont);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgFontMap)(cast(PangoFontMap*) p);
+		return ObjectG.getDObject!(PgFontMap)(cast(PangoFontMap*) __p);
 	}
 
 	/**
@@ -256,13 +277,28 @@ public class PgFont : ObjectG
 	 */
 	public PgFontMetrics getMetrics(PgLanguage language)
 	{
-		auto p = pango_font_get_metrics(pangoFont, (language is null) ? null : language.getPgLanguageStruct());
+		auto __p = pango_font_get_metrics(pangoFont, (language is null) ? null : language.getPgLanguageStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgFontMetrics)(cast(PangoFontMetrics*) p, true);
+		return ObjectG.getDObject!(PgFontMetrics)(cast(PangoFontMetrics*) __p, true);
+	}
+
+	/**
+	 * Returns whether the font provides a glyph for this character.
+	 *
+	 * Returns %TRUE if @font can render @wc
+	 *
+	 * Params:
+	 *     wc = a Unicode character
+	 *
+	 * Since: 1.44
+	 */
+	public bool hasChar(dchar wc)
+	{
+		return pango_font_has_char(pangoFont, wc) != 0;
 	}
 }

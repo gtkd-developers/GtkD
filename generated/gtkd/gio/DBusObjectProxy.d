@@ -32,7 +32,6 @@ public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -97,14 +96,14 @@ public class DBusObjectProxy : ObjectG, DBusObjectIF
 	 */
 	public this(DBusConnection connection, string objectPath)
 	{
-		auto p = g_dbus_object_proxy_new((connection is null) ? null : connection.getDBusConnectionStruct(), Str.toStringz(objectPath));
+		auto __p = g_dbus_object_proxy_new((connection is null) ? null : connection.getDBusConnectionStruct(), Str.toStringz(objectPath));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GDBusObjectProxy*) p, true);
+		this(cast(GDBusObjectProxy*) __p, true);
 	}
 
 	/**
@@ -117,13 +116,13 @@ public class DBusObjectProxy : ObjectG, DBusObjectIF
 	 */
 	public DBusConnection getConnection()
 	{
-		auto p = g_dbus_object_proxy_get_connection(gDBusObjectProxy);
+		auto __p = g_dbus_object_proxy_get_connection(gDBusObjectProxy);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(DBusConnection)(cast(GDBusConnection*) p);
+		return ObjectG.getDObject!(DBusConnection)(cast(GDBusConnection*) __p);
 	}
 }

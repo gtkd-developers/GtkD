@@ -32,7 +32,6 @@ public  import glib.ErrorG;
 public  import glib.GException;
 public  import glib.Str;
 public  import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -128,13 +127,13 @@ public template InitableT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_initable_init(getInitableStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_initable_init(getInitableStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 }

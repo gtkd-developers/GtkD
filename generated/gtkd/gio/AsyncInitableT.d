@@ -32,7 +32,6 @@ public  import glib.ErrorG;
 public  import glib.GException;
 public  import glib.Str;
 public  import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -217,14 +216,14 @@ public template AsyncInitableT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_async_initable_init_finish(getAsyncInitableStruct(), (res is null) ? null : res.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_async_initable_init_finish(getAsyncInitableStruct(), (res is null) ? null : res.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -245,18 +244,18 @@ public template AsyncInitableT(TStruct)
 	{
 		GError* err = null;
 
-		auto p = g_async_initable_new_finish(getAsyncInitableStruct(), (res is null) ? null : res.getAsyncResultStruct(), &err);
+		auto __p = g_async_initable_new_finish(getAsyncInitableStruct(), (res is null) ? null : res.getAsyncResultStruct(), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p, true);
+		return ObjectG.getDObject!(ObjectG)(cast(GObject*) __p, true);
 	}
 }

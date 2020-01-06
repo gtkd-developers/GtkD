@@ -32,7 +32,6 @@ private import glib.Str;
 private import glib.Variant;
 private import glib.VariantDict;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -243,14 +242,14 @@ public class ApplicationCommandLine : ObjectG
 	 */
 	public FileIF createFileForArg(string arg)
 	{
-		auto p = g_application_command_line_create_file_for_arg(gApplicationCommandLine, Str.toStringz(arg));
+		auto __p = g_application_command_line_create_file_for_arg(gApplicationCommandLine, Str.toStringz(arg));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileIF)(cast(GFile*) p, true);
+		return ObjectG.getDObject!(FileIF)(cast(GFile*) __p, true);
 	}
 
 	/**
@@ -266,7 +265,8 @@ public class ApplicationCommandLine : ObjectG
 	 * The return value is %NULL-terminated and should be freed using
 	 * g_strfreev().
 	 *
-	 * Returns: the string array containing the arguments (the argv)
+	 * Returns: the string array
+	 *     containing the arguments (the argv)
 	 *
 	 * Since: 2.28
 	 */
@@ -316,7 +316,8 @@ public class ApplicationCommandLine : ObjectG
 	 * See g_application_command_line_getenv() if you are only interested
 	 * in the value of a single environment variable.
 	 *
-	 * Returns: the environment strings, or %NULL if they were not sent
+	 * Returns: the environment
+	 *     strings, or %NULL if they were not sent
 	 *
 	 * Since: 2.28
 	 */
@@ -367,14 +368,14 @@ public class ApplicationCommandLine : ObjectG
 	 */
 	public VariantDict getOptionsDict()
 	{
-		auto p = g_application_command_line_get_options_dict(gApplicationCommandLine);
+		auto __p = g_application_command_line_get_options_dict(gApplicationCommandLine);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new VariantDict(cast(GVariantDict*) p);
+		return new VariantDict(cast(GVariantDict*) __p);
 	}
 
 	/**
@@ -393,14 +394,14 @@ public class ApplicationCommandLine : ObjectG
 	 */
 	public Variant getPlatformData()
 	{
-		auto p = g_application_command_line_get_platform_data(gApplicationCommandLine);
+		auto __p = g_application_command_line_get_platform_data(gApplicationCommandLine);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -421,14 +422,14 @@ public class ApplicationCommandLine : ObjectG
 	 */
 	public InputStream getStdin()
 	{
-		auto p = g_application_command_line_get_stdin(gApplicationCommandLine);
+		auto __p = g_application_command_line_get_stdin(gApplicationCommandLine);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) p, true);
+		return ObjectG.getDObject!(InputStream)(cast(GInputStream*) __p, true);
 	}
 
 	/**

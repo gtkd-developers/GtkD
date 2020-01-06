@@ -30,8 +30,6 @@ private import glib.Regex;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
-private import gtkd.Loader;
 
 
 /**
@@ -69,7 +67,7 @@ public class MatchInfo
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_match_info_unref(gMatchInfo);
 	}
 
@@ -309,14 +307,14 @@ public class MatchInfo
 	 */
 	public Regex getRegex()
 	{
-		auto p = g_match_info_get_regex(gMatchInfo);
+		auto __p = g_match_info_get_regex(gMatchInfo);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Regex(cast(GRegex*) p, true);
+		return new Regex(cast(GRegex*) __p, true);
 	}
 
 	/**
@@ -408,14 +406,14 @@ public class MatchInfo
 	{
 		GError* err = null;
 
-		auto p = g_match_info_next(gMatchInfo, &err) != 0;
+		auto __p = g_match_info_next(gMatchInfo, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	alias doref = ref_;
@@ -428,14 +426,14 @@ public class MatchInfo
 	 */
 	public MatchInfo ref_()
 	{
-		auto p = g_match_info_ref(gMatchInfo);
+		auto __p = g_match_info_ref(gMatchInfo);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new MatchInfo(cast(GMatchInfo*) p, true);
+		return new MatchInfo(cast(GMatchInfo*) __p, true);
 	}
 
 	/**

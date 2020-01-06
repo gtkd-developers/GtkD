@@ -28,7 +28,6 @@ private import atk.ObjectFactory;
 private import atk.c.functions;
 public  import atk.c.types;
 private import gobject.ObjectG;
-public  import gtkc.atktypes;
 
 
 /**
@@ -86,14 +85,14 @@ public class Registry : ObjectG
 	 */
 	public ObjectFactory getFactory(GType type)
 	{
-		auto p = atk_registry_get_factory(atkRegistry, type);
+		auto __p = atk_registry_get_factory(atkRegistry, type);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectFactory)(cast(AtkObjectFactory*) p);
+		return ObjectG.getDObject!(ObjectFactory)(cast(AtkObjectFactory*) __p);
 	}
 
 	/**
@@ -141,13 +140,13 @@ public class Registry : ObjectG
 	 */
 	public static Registry getDefaultRegistry()
 	{
-		auto p = atk_get_default_registry();
+		auto __p = atk_get_default_registry();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Registry)(cast(AtkRegistry*) p, true);
+		return ObjectG.getDObject!(Registry)(cast(AtkRegistry*) __p, true);
 	}
 }

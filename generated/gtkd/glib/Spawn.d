@@ -32,7 +32,6 @@ private import glib.GException;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
 private import std.string;
 private import std.traits;
 
@@ -347,18 +346,17 @@ public class Spawn
 	 * You should call g_spawn_close_pid() on the returned child process
 	 * reference when you don't need it any more.
 	 *
-	 * If you are writing a GTK+ application, and the program you are spawning is a
-	 * graphical application too, then to ensure that the spawned program opens its
-	 * windows on the right screen, you may want to use #GdkAppLaunchContext,
-	 * #GAppLaunchContext, or set the %DISPLAY environment variable.
+	 * If you are writing a GTK+ application, and the program you are
+	 * spawning is a graphical application, too, then you may want to
+	 * use gdk_spawn_on_screen() instead to ensure that the spawned program
+	 * opens its windows on the right screen.
 	 *
 	 * Note that the returned @child_pid on Windows is a handle to the child
 	 * process and not its identifier. Process handles and process identifiers
 	 * are different concepts on Windows.
 	 *
 	 * Params:
-	 *     workingDirectory = child's current working
-	 *         directory, or %NULL to inherit parent's
+	 *     workingDirectory = child's current working directory, or %NULL to inherit parent's
 	 *     argv = child's argument vector
 	 *     envp = child's environment, or %NULL to inherit parent's
 	 *     flags = flags from #GSpawnFlags
@@ -374,14 +372,14 @@ public class Spawn
 	{
 		GError* err = null;
 
-		auto p = g_spawn_async(Str.toStringz(workingDirectory), Str.toStringzArray(argv), Str.toStringzArray(envp), flags, childSetup, userData, &childPid, &err) != 0;
+		auto __p = g_spawn_async(Str.toStringz(workingDirectory), Str.toStringzArray(argv), Str.toStringzArray(envp), flags, childSetup, userData, &childPid, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -436,14 +434,14 @@ public class Spawn
 	{
 		GError* err = null;
 
-		auto p = g_spawn_check_exit_status(exitStatus, &err) != 0;
+		auto __p = g_spawn_check_exit_status(exitStatus, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -482,14 +480,14 @@ public class Spawn
 	{
 		GError* err = null;
 
-		auto p = g_spawn_command_line_async(Str.toStringz(commandLine), &err) != 0;
+		auto __p = g_spawn_command_line_async(Str.toStringz(commandLine), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -532,7 +530,7 @@ public class Spawn
 		char* outstandardError = null;
 		GError* err = null;
 
-		auto p = g_spawn_command_line_sync(Str.toStringz(commandLine), &outstandardOutput, &outstandardError, &exitStatus, &err) != 0;
+		auto __p = g_spawn_command_line_sync(Str.toStringz(commandLine), &outstandardOutput, &outstandardError, &exitStatus, &err) != 0;
 
 		if (err !is null)
 		{
@@ -542,7 +540,7 @@ public class Spawn
 		standardOutput = Str.toString(outstandardOutput);
 		standardError = Str.toString(outstandardError);
 
-		return p;
+		return __p;
 	}
 
 	/** */
@@ -568,8 +566,7 @@ public class Spawn
 	 * the child is stored there; see the documentation of
 	 * g_spawn_check_exit_status() for how to use and interpret this.
 	 * Note that it is invalid to pass %G_SPAWN_DO_NOT_REAP_CHILD in
-	 * @flags, and on POSIX platforms, the same restrictions as for
-	 * g_child_watch_source_new() apply.
+	 * @flags.
 	 *
 	 * If an error occurs, no data is returned in @standard_output,
 	 * @standard_error, or @exit_status.
@@ -579,8 +576,7 @@ public class Spawn
 	 * how these functions work on Windows.
 	 *
 	 * Params:
-	 *     workingDirectory = child's current working
-	 *         directory, or %NULL to inherit parent's
+	 *     workingDirectory = child's current working directory, or %NULL to inherit parent's
 	 *     argv = child's argument vector
 	 *     envp = child's environment, or %NULL to inherit parent's
 	 *     flags = flags from #GSpawnFlags
@@ -600,7 +596,7 @@ public class Spawn
 		char* outstandardError = null;
 		GError* err = null;
 
-		auto p = g_spawn_sync(Str.toStringz(workingDirectory), Str.toStringzArray(argv), Str.toStringzArray(envp), flags, childSetup, userData, &outstandardOutput, &outstandardError, &exitStatus, &err) != 0;
+		auto __p = g_spawn_sync(Str.toStringz(workingDirectory), Str.toStringzArray(argv), Str.toStringzArray(envp), flags, childSetup, userData, &outstandardOutput, &outstandardError, &exitStatus, &err) != 0;
 
 		if (err !is null)
 		{
@@ -610,58 +606,6 @@ public class Spawn
 		standardOutput = Str.toString(outstandardOutput);
 		standardError = Str.toString(outstandardError);
 
-		return p;
-	}
-
-	/**
-	 * Identical to g_spawn_async_with_pipes() but instead of
-	 * creating pipes for the stdin/stdout/stderr, you can pass existing
-	 * file descriptors into this function through the @stdin_fd,
-	 * @stdout_fd and @stderr_fd parameters. The following @flags
-	 * also have their behaviour slightly tweaked as a result:
-	 *
-	 * %G_SPAWN_STDOUT_TO_DEV_NULL means that the child's standard output
-	 * will be discarded, instead of going to the same location as the parent's
-	 * standard output. If you use this flag, @standard_output must be -1.
-	 * %G_SPAWN_STDERR_TO_DEV_NULL means that the child's standard error
-	 * will be discarded, instead of going to the same location as the parent's
-	 * standard error. If you use this flag, @standard_error must be -1.
-	 * %G_SPAWN_CHILD_INHERITS_STDIN means that the child will inherit the parent's
-	 * standard input (by default, the child's standard input is attached to
-	 * /dev/null). If you use this flag, @standard_input must be -1.
-	 *
-	 * It is valid to pass the same fd in multiple parameters (e.g. you can pass
-	 * a single fd for both stdout and stderr).
-	 *
-	 * Params:
-	 *     workingDirectory = child's current working directory, or %NULL to inherit parent's, in the GLib file name encoding
-	 *     argv = child's argument vector, in the GLib file name encoding
-	 *     envp = child's environment, or %NULL to inherit parent's, in the GLib file name encoding
-	 *     flags = flags from #GSpawnFlags
-	 *     childSetup = function to run in the child just before exec()
-	 *     userData = user data for @child_setup
-	 *     childPid = return location for child process ID, or %NULL
-	 *     stdinFd = file descriptor to use for child's stdin, or -1
-	 *     stdoutFd = file descriptor to use for child's stdout, or -1
-	 *     stderrFd = file descriptor to use for child's stderr, or -1
-	 *
-	 * Returns: %TRUE on success, %FALSE if an error was set
-	 *
-	 * Since: 2.58
-	 *
-	 * Throws: GException on failure.
-	 */
-	public static bool asyncWithFds(string workingDirectory, string[] argv, string[] envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, out GPid childPid, int stdinFd, int stdoutFd, int stderrFd)
-	{
-		GError* err = null;
-
-		auto p = g_spawn_async_with_fds(Str.toStringz(workingDirectory), Str.toStringzArray(argv), Str.toStringzArray(envp), flags, childSetup, userData, &childPid, stdinFd, stdoutFd, stderrFd, &err) != 0;
-
-		if (err !is null)
-		{
-			throw new GException( new ErrorG(err) );
-		}
-
-		return p;
+		return __p;
 	}
 }

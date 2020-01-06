@@ -33,7 +33,6 @@ private import glib.Str;
 private import glib.Variant;
 private import glib.VariantType;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -99,14 +98,14 @@ public class MenuItem : ObjectG
 	 */
 	public this(string label, string detailedAction)
 	{
-		auto p = g_menu_item_new(Str.toStringz(label), Str.toStringz(detailedAction));
+		auto __p = g_menu_item_new(Str.toStringz(label), Str.toStringz(detailedAction));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GMenuItem*) p, true);
+		this(cast(GMenuItem*) __p, true);
 	}
 
 	/**
@@ -128,14 +127,14 @@ public class MenuItem : ObjectG
 	 */
 	public this(MenuModel model, int itemIndex)
 	{
-		auto p = g_menu_item_new_from_model((model is null) ? null : model.getMenuModelStruct(), itemIndex);
+		auto __p = g_menu_item_new_from_model((model is null) ? null : model.getMenuModelStruct(), itemIndex);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_model");
 		}
 
-		this(cast(GMenuItem*) p, true);
+		this(cast(GMenuItem*) __p, true);
 	}
 
 	/**
@@ -155,14 +154,14 @@ public class MenuItem : ObjectG
 	 */
 	public Variant getAttributeValue(string attribute, VariantType expectedType)
 	{
-		auto p = g_menu_item_get_attribute_value(gMenuItem, Str.toStringz(attribute), (expectedType is null) ? null : expectedType.getVariantTypeStruct());
+		auto __p = g_menu_item_get_attribute_value(gMenuItem, Str.toStringz(attribute), (expectedType is null) ? null : expectedType.getVariantTypeStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -177,14 +176,14 @@ public class MenuItem : ObjectG
 	 */
 	public MenuModel getLink(string link)
 	{
-		auto p = g_menu_item_get_link(gMenuItem, Str.toStringz(link));
+		auto __p = g_menu_item_get_link(gMenuItem, Str.toStringz(link));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(MenuModel)(cast(GMenuModel*) p, true);
+		return ObjectG.getDObject!(MenuModel)(cast(GMenuModel*) __p, true);
 	}
 
 	/**

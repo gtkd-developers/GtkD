@@ -26,7 +26,6 @@ module gio.ErrorGIO;
 
 private import gio.c.functions;
 public  import gio.c.types;
-public  import gtkc.giotypes;
 
 
 /** */
@@ -38,9 +37,6 @@ public struct ErrorGIO
 	 * value %G_IO_ERROR_FAILED is returned for error codes not currently
 	 * handled (but note that future GLib releases may return a more
 	 * specific value instead).
-	 *
-	 * As %errno is global and may be modified by intermediate function
-	 * calls, you should save its value as soon as the call which sets it
 	 *
 	 * Params:
 	 *     errNo = Error number as defined in errno.h.

@@ -27,8 +27,6 @@ module glib.RandG;
 private import glib.ConstructionException;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
-private import gtkd.Loader;
 
 
 /**
@@ -66,7 +64,7 @@ public class RandG
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_rand_free(gRand);
 	}
 
@@ -82,14 +80,14 @@ public class RandG
 	 */
 	public RandG copy()
 	{
-		auto p = g_rand_copy(gRand);
+		auto __p = g_rand_copy(gRand);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new RandG(cast(GRand*) p);
+		return new RandG(cast(GRand*) __p);
 	}
 
 	/**
@@ -195,14 +193,14 @@ public class RandG
 	 */
 	public this()
 	{
-		auto p = g_rand_new();
+		auto __p = g_rand_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GRand*) p);
+		this(cast(GRand*) __p);
 	}
 
 	/**
@@ -217,14 +215,14 @@ public class RandG
 	 */
 	public this(uint seed)
 	{
-		auto p = g_rand_new_with_seed(seed);
+		auto __p = g_rand_new_with_seed(seed);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_seed");
 		}
 
-		this(cast(GRand*) p);
+		this(cast(GRand*) __p);
 	}
 
 	/**
@@ -241,14 +239,14 @@ public class RandG
 	 */
 	public this(uint[] seed)
 	{
-		auto p = g_rand_new_with_seed_array(seed.ptr, cast(uint)seed.length);
+		auto __p = g_rand_new_with_seed_array(seed.ptr, cast(uint)seed.length);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_seed_array");
 		}
 
-		this(cast(GRand*) p);
+		this(cast(GRand*) __p);
 	}
 
 	/**

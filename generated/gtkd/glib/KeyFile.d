@@ -31,8 +31,6 @@ private import glib.GException;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
-private import gtkd.Loader;
 
 
 /**
@@ -70,7 +68,7 @@ public class KeyFile
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_key_file_unref(gKeyFile);
 	}
 
@@ -89,14 +87,14 @@ public class KeyFile
 	 */
 	public this()
 	{
-		auto p = g_key_file_new();
+		auto __p = g_key_file_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GKeyFile*) p);
+		this(cast(GKeyFile*) __p);
 	}
 
 	/**
@@ -136,14 +134,14 @@ public class KeyFile
 	{
 		GError* err = null;
 
-		auto p = g_key_file_get_boolean(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err) != 0;
+		auto __p = g_key_file_get_boolean(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -172,7 +170,7 @@ public class KeyFile
 		size_t length;
 		GError* err = null;
 
-		auto p = g_key_file_get_boolean_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &length, &err);
+		auto __p = g_key_file_get_boolean_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &length, &err);
 
 		if (err !is null)
 		{
@@ -182,7 +180,7 @@ public class KeyFile
 		bool[] r = new bool[length];
 		for(size_t i = 0; i < length; i++)
 		{
-			r[i] = p[i] != 0;
+			r[i] = __p[i] != 0;
 		}
 		return r;
 	}
@@ -193,9 +191,7 @@ public class KeyFile
 	 * @group_name. If both @key and @group_name are %NULL, then
 	 * @comment will be read from above the first group in the file.
 	 *
-	 * Note that the returned string does not include the '#' comment markers,
-	 * but does include any whitespace after them (on each line). It includes
-	 * the line breaks between lines, but does not include the final line break.
+	 * Note that the returned string includes the '#' comment markers.
 	 *
 	 * Params:
 	 *     groupName = a group name, or %NULL
@@ -246,14 +242,14 @@ public class KeyFile
 	{
 		GError* err = null;
 
-		auto p = g_key_file_get_double(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err);
+		auto __p = g_key_file_get_double(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -282,14 +278,14 @@ public class KeyFile
 		size_t length;
 		GError* err = null;
 
-		auto p = g_key_file_get_double_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &length, &err);
+		auto __p = g_key_file_get_double_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &length, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p[0 .. length];
+		return __p[0 .. length];
 	}
 
 	/**
@@ -333,14 +329,14 @@ public class KeyFile
 	{
 		GError* err = null;
 
-		auto p = g_key_file_get_int64(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err);
+		auto __p = g_key_file_get_int64(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -368,14 +364,14 @@ public class KeyFile
 	{
 		GError* err = null;
 
-		auto p = g_key_file_get_integer(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err);
+		auto __p = g_key_file_get_integer(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -405,14 +401,14 @@ public class KeyFile
 		size_t length;
 		GError* err = null;
 
-		auto p = g_key_file_get_integer_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &length, &err);
+		auto __p = g_key_file_get_integer_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &length, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p[0 .. length];
+		return __p[0 .. length];
 	}
 
 	/**
@@ -449,42 +445,9 @@ public class KeyFile
 	}
 
 	/**
-	 * Returns the actual locale which the result of
-	 * g_key_file_get_locale_string() or g_key_file_get_locale_string_list()
-	 * came from.
-	 *
-	 * If calling g_key_file_get_locale_string() or
-	 * g_key_file_get_locale_string_list() with exactly the same @key_file,
-	 * @group_name, @key and @locale, the result of those functions will
-	 * have originally been tagged with the locale that is the result of
-	 * this function.
-	 *
-	 * Params:
-	 *     groupName = a group name
-	 *     key = a key
-	 *     locale = a locale identifier or %NULL
-	 *
-	 * Returns: the locale from the file, or %NULL if the key was not
-	 *     found or the entry in the file was was untranslated
-	 *
-	 * Since: 2.56
-	 */
-	public string getLocaleForKey(string groupName, string key, string locale)
-	{
-		auto retStr = g_key_file_get_locale_for_key(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(locale));
-
-		scope(exit) Str.freeString(retStr);
-		return Str.toString(retStr);
-	}
-
-	/**
 	 * Returns the value associated with @key under @group_name
 	 * translated in the given @locale if available.  If @locale is
 	 * %NULL then the current locale is assumed.
-	 *
-	 * If @locale is to be non-%NULL, or if the current locale will change over
-	 * the lifetime of the #GKeyFile, it must be loaded with
-	 * %G_KEY_FILE_KEEP_TRANSLATIONS in order to load strings for all locales.
 	 *
 	 * If @key cannot be found then %NULL is returned and @error is set
 	 * to #G_KEY_FILE_ERROR_KEY_NOT_FOUND. If the value associated
@@ -522,10 +485,6 @@ public class KeyFile
 	 * Returns the values associated with @key under @group_name
 	 * translated in the given @locale if available.  If @locale is
 	 * %NULL then the current locale is assumed.
-	 *
-	 * If @locale is to be non-%NULL, or if the current locale will change over
-	 * the lifetime of the #GKeyFile, it must be loaded with
-	 * %G_KEY_FILE_KEEP_TRANSLATIONS in order to load strings for all locales.
 	 *
 	 * If @key cannot be found then %NULL is returned and @error is set
 	 * to #G_KEY_FILE_ERROR_KEY_NOT_FOUND. If the values associated
@@ -669,14 +628,14 @@ public class KeyFile
 	{
 		GError* err = null;
 
-		auto p = g_key_file_get_uint64(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err);
+		auto __p = g_key_file_get_uint64(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -756,14 +715,14 @@ public class KeyFile
 	{
 		GError* err = null;
 
-		auto p = g_key_file_has_key(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err) != 0;
+		auto __p = g_key_file_has_key(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -784,14 +743,14 @@ public class KeyFile
 	{
 		GError* err = null;
 
-		auto p = g_key_file_load_from_bytes(gKeyFile, (bytes is null) ? null : bytes.getBytesStruct(), flags, &err) != 0;
+		auto __p = g_key_file_load_from_bytes(gKeyFile, (bytes is null) ? null : bytes.getBytesStruct(), flags, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -813,14 +772,14 @@ public class KeyFile
 	{
 		GError* err = null;
 
-		auto p = g_key_file_load_from_data(gKeyFile, Str.toStringz(data), length, flags, &err) != 0;
+		auto __p = g_key_file_load_from_data(gKeyFile, Str.toStringz(data), length, flags, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -847,7 +806,7 @@ public class KeyFile
 		char* outfullPath = null;
 		GError* err = null;
 
-		auto p = g_key_file_load_from_data_dirs(gKeyFile, Str.toStringz(file), &outfullPath, flags, &err) != 0;
+		auto __p = g_key_file_load_from_data_dirs(gKeyFile, Str.toStringz(file), &outfullPath, flags, &err) != 0;
 
 		if (err !is null)
 		{
@@ -856,7 +815,7 @@ public class KeyFile
 
 		fullPath = Str.toString(outfullPath);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -888,7 +847,7 @@ public class KeyFile
 		char* outfullPath = null;
 		GError* err = null;
 
-		auto p = g_key_file_load_from_dirs(gKeyFile, Str.toStringz(file), Str.toStringzArray(searchDirs), &outfullPath, flags, &err) != 0;
+		auto __p = g_key_file_load_from_dirs(gKeyFile, Str.toStringz(file), Str.toStringzArray(searchDirs), &outfullPath, flags, &err) != 0;
 
 		if (err !is null)
 		{
@@ -897,7 +856,7 @@ public class KeyFile
 
 		fullPath = Str.toString(outfullPath);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -924,14 +883,14 @@ public class KeyFile
 	{
 		GError* err = null;
 
-		auto p = g_key_file_load_from_file(gKeyFile, Str.toStringz(file), flags, &err) != 0;
+		auto __p = g_key_file_load_from_file(gKeyFile, Str.toStringz(file), flags, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	alias doref = ref_;
@@ -944,14 +903,14 @@ public class KeyFile
 	 */
 	public KeyFile ref_()
 	{
-		auto p = g_key_file_ref(gKeyFile);
+		auto __p = g_key_file_ref(gKeyFile);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new KeyFile(cast(GKeyFile*) p, true);
+		return new KeyFile(cast(GKeyFile*) __p, true);
 	}
 
 	/**
@@ -974,14 +933,14 @@ public class KeyFile
 	{
 		GError* err = null;
 
-		auto p = g_key_file_remove_comment(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err) != 0;
+		auto __p = g_key_file_remove_comment(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1001,14 +960,14 @@ public class KeyFile
 	{
 		GError* err = null;
 
-		auto p = g_key_file_remove_group(gKeyFile, Str.toStringz(groupName), &err) != 0;
+		auto __p = g_key_file_remove_group(gKeyFile, Str.toStringz(groupName), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1028,14 +987,14 @@ public class KeyFile
 	{
 		GError* err = null;
 
-		auto p = g_key_file_remove_key(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err) != 0;
+		auto __p = g_key_file_remove_key(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1058,14 +1017,14 @@ public class KeyFile
 	{
 		GError* err = null;
 
-		auto p = g_key_file_save_to_file(gKeyFile, Str.toStringz(filename), &err) != 0;
+		auto __p = g_key_file_save_to_file(gKeyFile, Str.toStringz(filename), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -1132,14 +1091,14 @@ public class KeyFile
 	{
 		GError* err = null;
 
-		auto p = g_key_file_set_comment(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(comment), &err) != 0;
+		auto __p = g_key_file_set_comment(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(comment), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**

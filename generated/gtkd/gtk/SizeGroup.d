@@ -32,7 +32,6 @@ private import gtk.BuildableT;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -152,14 +151,14 @@ public class SizeGroup : ObjectG, BuildableIF
 	 */
 	public this(GtkSizeGroupMode mode)
 	{
-		auto p = gtk_size_group_new(mode);
+		auto __p = gtk_size_group_new(mode);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkSizeGroup*) p, true);
+		this(cast(GtkSizeGroup*) __p, true);
 	}
 
 	/**
@@ -219,14 +218,14 @@ public class SizeGroup : ObjectG, BuildableIF
 	 */
 	public ListSG getWidgets()
 	{
-		auto p = gtk_size_group_get_widgets(gtkSizeGroup);
+		auto __p = gtk_size_group_get_widgets(gtkSizeGroup);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p);
+		return new ListSG(cast(GSList*) __p);
 	}
 
 	/**

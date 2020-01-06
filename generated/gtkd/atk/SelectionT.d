@@ -29,7 +29,6 @@ public  import atk.c.functions;
 public  import atk.c.types;
 public  import gobject.ObjectG;
 public  import gobject.Signals;
-public  import gtkc.atktypes;
 public  import std.algorithm;
 
 
@@ -132,14 +131,14 @@ public template SelectionT(TStruct)
 	 */
 	public ObjectAtk refSelection(int i)
 	{
-		auto p = atk_selection_ref_selection(getSelectionStruct(), i);
+		auto __p = atk_selection_ref_selection(getSelectionStruct(), i);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p, true);
+		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) __p, true);
 	}
 
 	/**

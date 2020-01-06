@@ -34,7 +34,6 @@ private import glib.MemorySlice;
 private import glib.Str;
 private import glib.TimeVal;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -107,14 +106,14 @@ public class FileInfo : ObjectG
 	 */
 	public this()
 	{
-		auto p = g_file_info_new();
+		auto __p = g_file_info_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GFileInfo*) p, true);
+		this(cast(GFileInfo*) __p, true);
 	}
 
 	/**
@@ -144,14 +143,14 @@ public class FileInfo : ObjectG
 	 */
 	public FileInfo dup()
 	{
-		auto p = g_file_info_dup(gFileInfo);
+		auto __p = g_file_info_dup(gFileInfo);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(FileInfo)(cast(GFileInfo*) p, true);
+		return ObjectG.getDObject!(FileInfo)(cast(GFileInfo*) __p, true);
 	}
 
 	/**
@@ -262,14 +261,14 @@ public class FileInfo : ObjectG
 	 */
 	public ObjectG getAttributeObject(string attribute)
 	{
-		auto p = g_file_info_get_attribute_object(gFileInfo, Str.toStringz(attribute));
+		auto __p = g_file_info_get_attribute_object(gFileInfo, Str.toStringz(attribute));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p);
+		return ObjectG.getDObject!(ObjectG)(cast(GObject*) __p);
 	}
 
 	/**
@@ -383,14 +382,14 @@ public class FileInfo : ObjectG
 	 */
 	public DateTime getDeletionDate()
 	{
-		auto p = g_file_info_get_deletion_date(gFileInfo);
+		auto __p = g_file_info_get_deletion_date(gFileInfo);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new DateTime(cast(GDateTime*) p, true);
+		return new DateTime(cast(GDateTime*) __p, true);
 	}
 
 	/**
@@ -442,14 +441,14 @@ public class FileInfo : ObjectG
 	 */
 	public IconIF getIcon()
 	{
-		auto p = g_file_info_get_icon(gFileInfo);
+		auto __p = g_file_info_get_icon(gFileInfo);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) __p);
 	}
 
 	/**
@@ -538,14 +537,14 @@ public class FileInfo : ObjectG
 	 */
 	public IconIF getSymbolicIcon()
 	{
-		auto p = g_file_info_get_symbolic_icon(gFileInfo);
+		auto __p = g_file_info_get_symbolic_icon(gFileInfo);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(IconIF)(cast(GIcon*) p);
+		return ObjectG.getDObject!(IconIF)(cast(GIcon*) __p);
 	}
 
 	/**
@@ -621,7 +620,7 @@ public class FileInfo : ObjectG
 
 	/**
 	 * Sets the @attribute to contain the given value, if possible. To unset the
-	 * attribute, use %G_FILE_ATTRIBUTE_TYPE_INVALID for @type.
+	 * attribute, use %G_ATTRIBUTE_TYPE_INVALID for @type.
 	 *
 	 * Params:
 	 *     attribute = a file attribute key.
@@ -751,8 +750,7 @@ public class FileInfo : ObjectG
 	 *
 	 * Params:
 	 *     attribute = a file attribute key
-	 *     attrValue = a %NULL
-	 *         terminated array of UTF-8 strings.
+	 *     attrValue = a %NULL terminated array of UTF-8 strings.
 	 */
 	public void setAttributeStringv(string attribute, string[] attrValue)
 	{

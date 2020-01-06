@@ -35,7 +35,6 @@ private import gtk.Border;
 private import gtk.WidgetPath;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import pango.PgFontDescription;
 
 
@@ -97,14 +96,14 @@ public class ThemingEngine : ObjectG
 	 */
 	public static ThemingEngine load(string name)
 	{
-		auto p = gtk_theming_engine_load(Str.toStringz(name));
+		auto __p = gtk_theming_engine_load(Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ThemingEngine)(cast(GtkThemingEngine*) p);
+		return ObjectG.getDObject!(ThemingEngine)(cast(GtkThemingEngine*) __p);
 	}
 
 	/**
@@ -254,14 +253,14 @@ public class ThemingEngine : ObjectG
 	 */
 	public PgFontDescription getFont(GtkStateFlags state)
 	{
-		auto p = gtk_theming_engine_get_font(gtkThemingEngine, state);
+		auto __p = gtk_theming_engine_get_font(gtkThemingEngine, state);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) p);
+		return ObjectG.getDObject!(PgFontDescription)(cast(PangoFontDescription*) __p);
 	}
 
 	/**
@@ -321,14 +320,14 @@ public class ThemingEngine : ObjectG
 	 */
 	public WidgetPath getPath()
 	{
-		auto p = gtk_theming_engine_get_path(gtkThemingEngine);
+		auto __p = gtk_theming_engine_get_path(gtkThemingEngine);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(WidgetPath)(cast(GtkWidgetPath*) p);
+		return ObjectG.getDObject!(WidgetPath)(cast(GtkWidgetPath*) __p);
 	}
 
 	/**
@@ -360,14 +359,14 @@ public class ThemingEngine : ObjectG
 	 */
 	public Screen getScreen()
 	{
-		auto p = gtk_theming_engine_get_screen(gtkThemingEngine);
+		auto __p = gtk_theming_engine_get_screen(gtkThemingEngine);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) p);
+		return ObjectG.getDObject!(Screen)(cast(GdkScreen*) __p);
 	}
 
 	/**
@@ -479,11 +478,11 @@ public class ThemingEngine : ObjectG
 	{
 		GdkRGBA* outcolor = sliceNew!GdkRGBA();
 
-		auto p = gtk_theming_engine_lookup_color(gtkThemingEngine, Str.toStringz(colorName), outcolor) != 0;
+		auto __p = gtk_theming_engine_lookup_color(gtkThemingEngine, Str.toStringz(colorName), outcolor) != 0;
 
 		color = ObjectG.getDObject!(RGBA)(outcolor, true);
 
-		return p;
+		return __p;
 	}
 
 	/**

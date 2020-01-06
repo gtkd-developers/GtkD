@@ -31,7 +31,6 @@ private import gtk.Scale;
 private import gtk.Widget;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -92,14 +91,14 @@ public class VScale : Scale
 	 */
 	public this(Adjustment adjustment)
 	{
-		auto p = gtk_vscale_new((adjustment is null) ? null : adjustment.getAdjustmentStruct());
+		auto __p = gtk_vscale_new((adjustment is null) ? null : adjustment.getAdjustmentStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkVScale*) p);
+		this(cast(GtkVScale*) __p);
 	}
 
 	/**
@@ -125,13 +124,13 @@ public class VScale : Scale
 	 */
 	public this(double min, double max, double step)
 	{
-		auto p = gtk_vscale_new_with_range(min, max, step);
+		auto __p = gtk_vscale_new_with_range(min, max, step);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_range");
 		}
 
-		this(cast(GtkVScale*) p);
+		this(cast(GtkVScale*) __p);
 	}
 }

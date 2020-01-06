@@ -34,7 +34,6 @@ public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -95,14 +94,14 @@ public class SimpleActionGroup : ObjectG, ActionGroupIF, ActionMapIF
 	 */
 	public this()
 	{
-		auto p = g_simple_action_group_new();
+		auto __p = g_simple_action_group_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GSimpleActionGroup*) p, true);
+		this(cast(GSimpleActionGroup*) __p, true);
 	}
 
 	/**
@@ -159,14 +158,14 @@ public class SimpleActionGroup : ObjectG, ActionGroupIF, ActionMapIF
 	 */
 	public ActionIF lookup(string actionName)
 	{
-		auto p = g_simple_action_group_lookup(gSimpleActionGroup, Str.toStringz(actionName));
+		auto __p = g_simple_action_group_lookup(gSimpleActionGroup, Str.toStringz(actionName));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ActionIF)(cast(GAction*) p);
+		return ObjectG.getDObject!(ActionIF)(cast(GAction*) __p);
 	}
 
 	/**

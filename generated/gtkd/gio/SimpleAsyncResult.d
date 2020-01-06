@@ -34,7 +34,6 @@ private import glib.ErrorG;
 private import glib.GException;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -86,10 +85,9 @@ public  import gtkc.giotypes;
  * from the point where it is called. g_simple_async_result_complete_in_idle()
  * will finish it from an idle handler in the
  * [thread-default main context][g-main-context-push-thread-default]
- * where the #GSimpleAsyncResult was created.
- * g_simple_async_result_run_in_thread() will run the job in a
- * separate thread and then use
- * g_simple_async_result_complete_in_idle() to deliver the result.
+ * . g_simple_async_result_run_in_thread() will run the
+ * job in a separate thread and then deliver the result to the
+ * thread-default main context.
  * 
  * To set the results of an asynchronous function,
  * g_simple_async_result_set_op_res_gpointer(),
@@ -268,14 +266,14 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 */
 	public this(ObjectG sourceObject, GAsyncReadyCallback callback, void* userData, void* sourceTag)
 	{
-		auto p = g_simple_async_result_new((sourceObject is null) ? null : sourceObject.getObjectGStruct(), callback, userData, sourceTag);
+		auto __p = g_simple_async_result_new((sourceObject is null) ? null : sourceObject.getObjectGStruct(), callback, userData, sourceTag);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GSimpleAsyncResult*) p, true);
+		this(cast(GSimpleAsyncResult*) __p, true);
 	}
 
 	/**
@@ -295,14 +293,14 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	 */
 	public this(ObjectG sourceObject, GAsyncReadyCallback callback, void* userData, ErrorG error)
 	{
-		auto p = g_simple_async_result_new_from_error((sourceObject is null) ? null : sourceObject.getObjectGStruct(), callback, userData, (error is null) ? null : error.getErrorGStruct());
+		auto __p = g_simple_async_result_new_from_error((sourceObject is null) ? null : sourceObject.getObjectGStruct(), callback, userData, (error is null) ? null : error.getErrorGStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_error");
 		}
 
-		this(cast(GSimpleAsyncResult*) p, true);
+		this(cast(GSimpleAsyncResult*) __p, true);
 	}
 
 	/**
@@ -434,14 +432,14 @@ public class SimpleAsyncResult : ObjectG, AsyncResultIF
 	{
 		GError* err = null;
 
-		auto p = g_simple_async_result_propagate_error(gSimpleAsyncResult, &err) != 0;
+		auto __p = g_simple_async_result_propagate_error(gSimpleAsyncResult, &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**

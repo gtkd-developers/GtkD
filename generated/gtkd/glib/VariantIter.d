@@ -28,8 +28,6 @@ private import glib.Str;
 private import glib.Variant;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
-private import gtkd.Loader;
 
 
 /**
@@ -67,7 +65,7 @@ public class VariantIter
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_variant_iter_free(gVariantIter);
 	}
 
@@ -90,14 +88,14 @@ public class VariantIter
 	 */
 	public VariantIter copy()
 	{
-		auto p = g_variant_iter_copy(gVariantIter);
+		auto __p = g_variant_iter_copy(gVariantIter);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new VariantIter(cast(GVariantIter*) p, true);
+		return new VariantIter(cast(GVariantIter*) __p, true);
 	}
 
 	/**
@@ -184,13 +182,13 @@ public class VariantIter
 	 */
 	public Variant nextValue()
 	{
-		auto p = g_variant_iter_next_value(gVariantIter);
+		auto __p = g_variant_iter_next_value(gVariantIter);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 }

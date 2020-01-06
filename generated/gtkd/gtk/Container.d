@@ -36,7 +36,6 @@ private import gtk.Widget;
 private import gtk.WidgetPath;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 private import std.algorithm;
 
 
@@ -538,14 +537,14 @@ public class Container : Widget
 	 */
 	public ListG getChildren()
 	{
-		auto p = gtk_container_get_children(gtkContainer);
+		auto __p = gtk_container_get_children(gtkContainer);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p);
+		return new ListG(cast(GList*) __p);
 	}
 
 	/**
@@ -573,11 +572,11 @@ public class Container : Widget
 	{
 		GList* outfocusableWidgets = null;
 
-		auto p = gtk_container_get_focus_chain(gtkContainer, &outfocusableWidgets) != 0;
+		auto __p = gtk_container_get_focus_chain(gtkContainer, &outfocusableWidgets) != 0;
 
 		focusableWidgets = new ListG(outfocusableWidgets);
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -593,14 +592,14 @@ public class Container : Widget
 	 */
 	public Widget getFocusChild()
 	{
-		auto p = gtk_container_get_focus_child(gtkContainer);
+		auto __p = gtk_container_get_focus_child(gtkContainer);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) p);
+		return ObjectG.getDObject!(Widget)(cast(GtkWidget*) __p);
 	}
 
 	/**
@@ -612,14 +611,14 @@ public class Container : Widget
 	 */
 	public Adjustment getFocusHadjustment()
 	{
-		auto p = gtk_container_get_focus_hadjustment(gtkContainer);
+		auto __p = gtk_container_get_focus_hadjustment(gtkContainer);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) __p);
 	}
 
 	/**
@@ -631,14 +630,14 @@ public class Container : Widget
 	 */
 	public Adjustment getFocusVadjustment()
 	{
-		auto p = gtk_container_get_focus_vadjustment(gtkContainer);
+		auto __p = gtk_container_get_focus_vadjustment(gtkContainer);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) p);
+		return ObjectG.getDObject!(Adjustment)(cast(GtkAdjustment*) __p);
 	}
 
 	/**
@@ -652,14 +651,14 @@ public class Container : Widget
 	 */
 	public WidgetPath getPathForChild(Widget child)
 	{
-		auto p = gtk_container_get_path_for_child(gtkContainer, (child is null) ? null : child.getWidgetStruct());
+		auto __p = gtk_container_get_path_for_child(gtkContainer, (child is null) ? null : child.getWidgetStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(WidgetPath)(cast(GtkWidgetPath*) p, true);
+		return ObjectG.getDObject!(WidgetPath)(cast(GtkWidgetPath*) __p, true);
 	}
 
 	/**

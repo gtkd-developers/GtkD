@@ -31,7 +31,6 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -51,12 +50,6 @@ private import std.algorithm;
  * #GtkMountOperation. If no user interaction is desired (for example
  * when automounting filesystems at login time), usually %NULL can be
  * passed, see each method taking a #GMountOperation for details.
- * 
- * The term ‘TCRYPT’ is used to mean ‘compatible with TrueCrypt and VeraCrypt’.
- * [TrueCrypt](https://en.wikipedia.org/wiki/TrueCrypt) is a discontinued system for
- * encrypting file containers, partitions or whole disks, typically used with Windows.
- * [VeraCrypt](https://www.veracrypt.fr/) is a maintained fork of TrueCrypt with various
- * improvements and auditing fixes.
  */
 public class MountOperation : ObjectG
 {
@@ -102,14 +95,14 @@ public class MountOperation : ObjectG
 	 */
 	public this()
 	{
-		auto p = g_mount_operation_new();
+		auto __p = g_mount_operation_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GMountOperation*) p, true);
+		this(cast(GMountOperation*) __p, true);
 	}
 
 	/**
@@ -145,32 +138,6 @@ public class MountOperation : ObjectG
 	}
 
 	/**
-	 * Check to see whether the mount operation is being used
-	 * for a TCRYPT hidden volume.
-	 *
-	 * Returns: %TRUE if mount operation is for hidden volume.
-	 *
-	 * Since: 2.58
-	 */
-	public bool getIsTcryptHiddenVolume()
-	{
-		return g_mount_operation_get_is_tcrypt_hidden_volume(gMountOperation) != 0;
-	}
-
-	/**
-	 * Check to see whether the mount operation is being used
-	 * for a TCRYPT system volume.
-	 *
-	 * Returns: %TRUE if mount operation is for system volume.
-	 *
-	 * Since: 2.58
-	 */
-	public bool getIsTcryptSystemVolume()
-	{
-		return g_mount_operation_get_is_tcrypt_system_volume(gMountOperation) != 0;
-	}
-
-	/**
 	 * Gets a password from the mount operation.
 	 *
 	 * Returns: a string containing the password within @op.
@@ -188,18 +155,6 @@ public class MountOperation : ObjectG
 	public GPasswordSave getPasswordSave()
 	{
 		return g_mount_operation_get_password_save(gMountOperation);
-	}
-
-	/**
-	 * Gets a PIM from the mount operation.
-	 *
-	 * Returns: The VeraCrypt PIM within @op.
-	 *
-	 * Since: 2.58
-	 */
-	public uint getPim()
-	{
-		return g_mount_operation_get_pim(gMountOperation);
 	}
 
 	/**
@@ -257,32 +212,6 @@ public class MountOperation : ObjectG
 	}
 
 	/**
-	 * Sets the mount operation to use a hidden volume if @hidden_volume is %TRUE.
-	 *
-	 * Params:
-	 *     hiddenVolume = boolean value.
-	 *
-	 * Since: 2.58
-	 */
-	public void setIsTcryptHiddenVolume(bool hiddenVolume)
-	{
-		g_mount_operation_set_is_tcrypt_hidden_volume(gMountOperation, hiddenVolume);
-	}
-
-	/**
-	 * Sets the mount operation to use a system volume if @system_volume is %TRUE.
-	 *
-	 * Params:
-	 *     systemVolume = boolean value.
-	 *
-	 * Since: 2.58
-	 */
-	public void setIsTcryptSystemVolume(bool systemVolume)
-	{
-		g_mount_operation_set_is_tcrypt_system_volume(gMountOperation, systemVolume);
-	}
-
-	/**
 	 * Sets the mount operation's password to @password.
 	 *
 	 * Params:
@@ -302,19 +231,6 @@ public class MountOperation : ObjectG
 	public void setPasswordSave(GPasswordSave save)
 	{
 		g_mount_operation_set_password_save(gMountOperation, save);
-	}
-
-	/**
-	 * Sets the mount operation's PIM to @pim.
-	 *
-	 * Params:
-	 *     pim = an unsigned integer.
-	 *
-	 * Since: 2.58
-	 */
-	public void setPim(uint pim)
-	{
-		g_mount_operation_set_pim(gMountOperation, pim);
 	}
 
 	/**

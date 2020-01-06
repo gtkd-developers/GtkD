@@ -33,7 +33,6 @@ private import gtk.NativeDialog;
 private import gtk.Window;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -250,14 +249,14 @@ public class FileChooserNative : NativeDialog, FileChooserIF
 	 */
 	public this(string title, Window parent, GtkFileChooserAction action, string acceptLabel, string cancelLabel)
 	{
-		auto p = gtk_file_chooser_native_new(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), action, Str.toStringz(acceptLabel), Str.toStringz(cancelLabel));
+		auto __p = gtk_file_chooser_native_new(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), action, Str.toStringz(acceptLabel), Str.toStringz(cancelLabel));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkFileChooserNative*) p, true);
+		this(cast(GtkFileChooserNative*) __p, true);
 	}
 
 	/**

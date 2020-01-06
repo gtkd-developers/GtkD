@@ -30,7 +30,6 @@ public  import gio.c.types;
 private import glib.ConstructionException;
 private import glib.Str;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -101,14 +100,14 @@ public class UnixSocketAddress : SocketAddress
 	 */
 	public this(string path)
 	{
-		auto p = g_unix_socket_address_new(Str.toStringz(path));
+		auto __p = g_unix_socket_address_new(Str.toStringz(path));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GUnixSocketAddress*) p, true);
+		this(cast(GUnixSocketAddress*) __p, true);
 	}
 
 	/**
@@ -156,14 +155,14 @@ public class UnixSocketAddress : SocketAddress
 	 */
 	public this(string path, GUnixSocketAddressType type)
 	{
-		auto p = g_unix_socket_address_new_with_type(Str.toStringz(path), cast(int)path.length, type);
+		auto __p = g_unix_socket_address_new_with_type(Str.toStringz(path), cast(int)path.length, type);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_with_type");
 		}
 
-		this(cast(GUnixSocketAddress*) p, true);
+		this(cast(GUnixSocketAddress*) __p, true);
 	}
 
 	/**

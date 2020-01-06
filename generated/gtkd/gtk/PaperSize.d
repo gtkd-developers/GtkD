@@ -34,8 +34,6 @@ private import glib.Variant;
 private import gobject.ObjectG;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
-private import gtkd.Loader;
 
 
 /**
@@ -82,7 +80,7 @@ public class PaperSize
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GTK) && ownedRef )
+		if ( ownedRef )
 			gtk_paper_size_free(gtkPaperSize);
 	}
 
@@ -113,14 +111,14 @@ public class PaperSize
 	 */
 	public this(string name)
 	{
-		auto p = gtk_paper_size_new(Str.toStringz(name));
+		auto __p = gtk_paper_size_new(Str.toStringz(name));
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkPaperSize*) p);
+		this(cast(GtkPaperSize*) __p);
 	}
 
 	/**
@@ -143,14 +141,14 @@ public class PaperSize
 	 */
 	public this(string name, string displayName, double width, double height, GtkUnit unit)
 	{
-		auto p = gtk_paper_size_new_custom(Str.toStringz(name), Str.toStringz(displayName), width, height, unit);
+		auto __p = gtk_paper_size_new_custom(Str.toStringz(name), Str.toStringz(displayName), width, height, unit);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_custom");
 		}
 
-		this(cast(GtkPaperSize*) p);
+		this(cast(GtkPaperSize*) __p);
 	}
 
 	/**
@@ -168,14 +166,14 @@ public class PaperSize
 	 */
 	public this(Variant variant)
 	{
-		auto p = gtk_paper_size_new_from_gvariant((variant is null) ? null : variant.getVariantStruct());
+		auto __p = gtk_paper_size_new_from_gvariant((variant is null) ? null : variant.getVariantStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_gvariant");
 		}
 
-		this(cast(GtkPaperSize*) p);
+		this(cast(GtkPaperSize*) __p);
 	}
 
 	/**
@@ -200,14 +198,14 @@ public class PaperSize
 	 */
 	public this(string ippName, double width, double height)
 	{
-		auto p = gtk_paper_size_new_from_ipp(Str.toStringz(ippName), width, height);
+		auto __p = gtk_paper_size_new_from_ipp(Str.toStringz(ippName), width, height);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_ipp");
 		}
 
-		this(cast(GtkPaperSize*) p);
+		this(cast(GtkPaperSize*) __p);
 	}
 
 	/**
@@ -231,19 +229,19 @@ public class PaperSize
 	{
 		GError* err = null;
 
-		auto p = gtk_paper_size_new_from_key_file((keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName), &err);
+		auto __p = gtk_paper_size_new_from_key_file((keyFile is null) ? null : keyFile.getKeyFileStruct(), Str.toStringz(groupName), &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_key_file");
 		}
 
-		this(cast(GtkPaperSize*) p);
+		this(cast(GtkPaperSize*) __p);
 	}
 
 	/**
@@ -269,14 +267,14 @@ public class PaperSize
 	 */
 	public this(string ppdName, string ppdDisplayName, double width, double height)
 	{
-		auto p = gtk_paper_size_new_from_ppd(Str.toStringz(ppdName), Str.toStringz(ppdDisplayName), width, height);
+		auto __p = gtk_paper_size_new_from_ppd(Str.toStringz(ppdName), Str.toStringz(ppdDisplayName), width, height);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_ppd");
 		}
 
-		this(cast(GtkPaperSize*) p);
+		this(cast(GtkPaperSize*) __p);
 	}
 
 	/**
@@ -288,14 +286,14 @@ public class PaperSize
 	 */
 	public PaperSize copy()
 	{
-		auto p = gtk_paper_size_copy(gtkPaperSize);
+		auto __p = gtk_paper_size_copy(gtkPaperSize);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PaperSize)(cast(GtkPaperSize*) p, true);
+		return ObjectG.getDObject!(PaperSize)(cast(GtkPaperSize*) __p, true);
 	}
 
 	/**
@@ -498,14 +496,14 @@ public class PaperSize
 	 */
 	public Variant toGvariant()
 	{
-		auto p = gtk_paper_size_to_gvariant(gtkPaperSize);
+		auto __p = gtk_paper_size_to_gvariant(gtkPaperSize);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) __p);
 	}
 
 	/**
@@ -550,13 +548,13 @@ public class PaperSize
 	 */
 	public static ListG getPaperSizes(bool includeCustom)
 	{
-		auto p = gtk_paper_size_get_paper_sizes(includeCustom);
+		auto __p = gtk_paper_size_get_paper_sizes(includeCustom);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 }

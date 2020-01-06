@@ -33,7 +33,6 @@ private import gobject.Type;
 private import gobject.TypeInstance;
 private import gobject.c.functions;
 public  import gobject.c.types;
-public  import gtkc.gobjecttypes;
 private import std.traits;
 
 
@@ -277,14 +276,14 @@ public class Value
 	 */
 	public ObjectG dupObject()
 	{
-		auto p = g_value_dup_object(gValue);
+		auto __p = g_value_dup_object(gValue);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p, true);
+		return ObjectG.getDObject!(ObjectG)(cast(GObject*) __p, true);
 	}
 
 	/**
@@ -296,14 +295,14 @@ public class Value
 	 */
 	public ParamSpec dupParam()
 	{
-		auto p = g_value_dup_param(gValue);
+		auto __p = g_value_dup_param(gValue);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p);
 	}
 
 	/**
@@ -320,24 +319,23 @@ public class Value
 	}
 
 	/**
-	 * Get the contents of a variant #GValue, increasing its refcount. The returned
-	 * #GVariant is never floating.
+	 * Get the contents of a variant #GValue, increasing its refcount.
 	 *
-	 * Returns: variant contents of @value (may be %NULL);
-	 *     should be unreffed using g_variant_unref() when no longer needed
+	 * Returns: variant contents of @value, should be unrefed using
+	 *     g_variant_unref() when no longer needed
 	 *
 	 * Since: 2.26
 	 */
 	public Variant dupVariant()
 	{
-		auto p = g_value_dup_variant(gValue);
+		auto __p = g_value_dup_variant(gValue);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p, true);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -475,14 +473,14 @@ public class Value
 	 */
 	public ObjectG getObject()
 	{
-		auto p = g_value_get_object(gValue);
+		auto __p = g_value_get_object(gValue);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p);
+		return ObjectG.getDObject!(ObjectG)(cast(GObject*) __p);
 	}
 
 	/**
@@ -492,14 +490,14 @@ public class Value
 	 */
 	public ParamSpec getParam()
 	{
-		auto p = g_value_get_param(gValue);
+		auto __p = g_value_get_param(gValue);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p);
 	}
 
 	/**
@@ -577,20 +575,20 @@ public class Value
 	/**
 	 * Get the contents of a variant #GValue.
 	 *
-	 * Returns: variant contents of @value (may be %NULL)
+	 * Returns: variant contents of @value
 	 *
 	 * Since: 2.26
 	 */
 	public Variant getVariant()
 	{
-		auto p = g_value_get_variant(gValue);
+		auto __p = g_value_get_variant(gValue);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Variant(cast(GVariant*) p);
+		return new Variant(cast(GVariant*) __p, true);
 	}
 
 	/**
@@ -603,14 +601,14 @@ public class Value
 	 */
 	public Value init(GType gType)
 	{
-		auto p = g_value_init(gValue, gType);
+		auto __p = g_value_init(gValue, gType);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Value)(cast(GValue*) p);
+		return ObjectG.getDObject!(Value)(cast(GValue*) __p);
 	}
 
 	/**
@@ -652,14 +650,14 @@ public class Value
 	 */
 	public Value reset()
 	{
-		auto p = g_value_reset(gValue);
+		auto __p = g_value_reset(gValue);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Value)(cast(GValue*) p, true);
+		return ObjectG.getDObject!(Value)(cast(GValue*) __p, true);
 	}
 
 	/**
@@ -1004,8 +1002,8 @@ public class Value
 
 	/**
 	 * Sets the contents of a %G_TYPE_BOXED derived #GValue to @v_boxed
-	 * and takes over the ownership of the caller’s reference to @v_boxed;
-	 * the caller doesn’t have to unref it any more.
+	 * and takes over the ownership of the callers reference to @v_boxed;
+	 * the caller doesn't have to unref it any more.
 	 *
 	 * Params:
 	 *     vBoxed = duplicated unowned boxed value to be set
@@ -1019,8 +1017,8 @@ public class Value
 
 	/**
 	 * Sets the contents of a %G_TYPE_OBJECT derived #GValue to @v_object
-	 * and takes over the ownership of the caller’s reference to @v_object;
-	 * the caller doesn’t have to unref it any more (i.e. the reference
+	 * and takes over the ownership of the callers reference to @v_object;
+	 * the caller doesn't have to unref it any more (i.e. the reference
 	 * count of the object is not increased).
 	 *
 	 * If you want the #GValue to hold its own reference to @v_object, use
@@ -1038,8 +1036,8 @@ public class Value
 
 	/**
 	 * Sets the contents of a %G_TYPE_PARAM #GValue to @param and takes
-	 * over the ownership of the caller’s reference to @param; the caller
-	 * doesn’t have to unref it any more.
+	 * over the ownership of the callers reference to @param; the caller
+	 * doesn't have to unref it any more.
 	 *
 	 * Params:
 	 *     param = the #GParamSpec to be set
@@ -1187,14 +1185,14 @@ public class Value
 	 */
 	public static ParamSpec paramSpecBoolean(string name, string nick, string blurb, bool defaultValue, GParamFlags flags)
 	{
-		auto p = g_param_spec_boolean(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), defaultValue, flags);
+		auto __p = g_param_spec_boolean(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), defaultValue, flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p, true);
 	}
 
 	/**
@@ -1214,14 +1212,14 @@ public class Value
 	 */
 	public static ParamSpec paramSpecBoxed(string name, string nick, string blurb, GType boxedType, GParamFlags flags)
 	{
-		auto p = g_param_spec_boxed(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), boxedType, flags);
+		auto __p = g_param_spec_boxed(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), boxedType, flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p, true);
 	}
 
 	/**
@@ -1240,14 +1238,14 @@ public class Value
 	 */
 	public static ParamSpec paramSpecChar(string name, string nick, string blurb, byte minimum, byte maximum, byte defaultValue, GParamFlags flags)
 	{
-		auto p = g_param_spec_char(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
+		auto __p = g_param_spec_char(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p, true);
 	}
 
 	/**
@@ -1269,14 +1267,14 @@ public class Value
 	 */
 	public static ParamSpec paramSpecDouble(string name, string nick, string blurb, double minimum, double maximum, double defaultValue, GParamFlags flags)
 	{
-		auto p = g_param_spec_double(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
+		auto __p = g_param_spec_double(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p, true);
 	}
 
 	/**
@@ -1297,14 +1295,14 @@ public class Value
 	 */
 	public static ParamSpec paramSpecEnum(string name, string nick, string blurb, GType enumType, int defaultValue, GParamFlags flags)
 	{
-		auto p = g_param_spec_enum(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), enumType, defaultValue, flags);
+		auto __p = g_param_spec_enum(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), enumType, defaultValue, flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p, true);
 	}
 
 	/**
@@ -1325,14 +1323,14 @@ public class Value
 	 */
 	public static ParamSpec paramSpecFlags(string name, string nick, string blurb, GType flagsType, uint defaultValue, GParamFlags flags)
 	{
-		auto p = g_param_spec_flags(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), flagsType, defaultValue, flags);
+		auto __p = g_param_spec_flags(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), flagsType, defaultValue, flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p, true);
 	}
 
 	/**
@@ -1353,14 +1351,14 @@ public class Value
 	 */
 	public static ParamSpec paramSpecFloat(string name, string nick, string blurb, float minimum, float maximum, float defaultValue, GParamFlags flags)
 	{
-		auto p = g_param_spec_float(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
+		auto __p = g_param_spec_float(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p, true);
 	}
 
 	/**
@@ -1383,14 +1381,14 @@ public class Value
 	 */
 	public static ParamSpec paramSpecGtype(string name, string nick, string blurb, GType isAType, GParamFlags flags)
 	{
-		auto p = g_param_spec_gtype(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), isAType, flags);
+		auto __p = g_param_spec_gtype(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), isAType, flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p, true);
 	}
 
 	/**
@@ -1411,14 +1409,14 @@ public class Value
 	 */
 	public static ParamSpec paramSpecInt(string name, string nick, string blurb, int minimum, int maximum, int defaultValue, GParamFlags flags)
 	{
-		auto p = g_param_spec_int(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
+		auto __p = g_param_spec_int(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p, true);
 	}
 
 	/**
@@ -1439,14 +1437,14 @@ public class Value
 	 */
 	public static ParamSpec paramSpecInt64(string name, string nick, string blurb, long minimum, long maximum, long defaultValue, GParamFlags flags)
 	{
-		auto p = g_param_spec_int64(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
+		auto __p = g_param_spec_int64(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p, true);
 	}
 
 	/**
@@ -1467,14 +1465,14 @@ public class Value
 	 */
 	public static ParamSpec paramSpecLong(string name, string nick, string blurb, glong minimum, glong maximum, glong defaultValue, GParamFlags flags)
 	{
-		auto p = g_param_spec_long(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
+		auto __p = g_param_spec_long(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p, true);
 	}
 
 	/**
@@ -1494,14 +1492,14 @@ public class Value
 	 */
 	public static ParamSpec paramSpecObject(string name, string nick, string blurb, GType objectType, GParamFlags flags)
 	{
-		auto p = g_param_spec_object(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), objectType, flags);
+		auto __p = g_param_spec_object(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), objectType, flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p, true);
 	}
 
 	/**
@@ -1519,14 +1517,14 @@ public class Value
 	 */
 	public static ParamSpec paramSpecOverride(string name, ParamSpec overridden)
 	{
-		auto p = g_param_spec_override(Str.toStringz(name), (overridden is null) ? null : overridden.getParamSpecStruct());
+		auto __p = g_param_spec_override(Str.toStringz(name), (overridden is null) ? null : overridden.getParamSpecStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p);
 	}
 
 	/**
@@ -1546,14 +1544,14 @@ public class Value
 	 */
 	public static ParamSpec paramSpecParam(string name, string nick, string blurb, GType paramType, GParamFlags flags)
 	{
-		auto p = g_param_spec_param(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), paramType, flags);
+		auto __p = g_param_spec_param(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), paramType, flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p, true);
 	}
 
 	/**
@@ -1573,14 +1571,14 @@ public class Value
 	 */
 	public static ParamSpec paramSpecPointer(string name, string nick, string blurb, GParamFlags flags)
 	{
-		auto p = g_param_spec_pointer(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), flags);
+		auto __p = g_param_spec_pointer(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p, true);
 	}
 
 	/**
@@ -1599,14 +1597,14 @@ public class Value
 	 */
 	public static ParamSpec paramSpecString(string name, string nick, string blurb, string defaultValue, GParamFlags flags)
 	{
-		auto p = g_param_spec_string(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), Str.toStringz(defaultValue), flags);
+		auto __p = g_param_spec_string(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), Str.toStringz(defaultValue), flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p, true);
 	}
 
 	/**
@@ -1625,14 +1623,14 @@ public class Value
 	 */
 	public static ParamSpec paramSpecUchar(string name, string nick, string blurb, ubyte minimum, ubyte maximum, ubyte defaultValue, GParamFlags flags)
 	{
-		auto p = g_param_spec_uchar(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
+		auto __p = g_param_spec_uchar(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p, true);
 	}
 
 	/**
@@ -1653,14 +1651,14 @@ public class Value
 	 */
 	public static ParamSpec paramSpecUint(string name, string nick, string blurb, uint minimum, uint maximum, uint defaultValue, GParamFlags flags)
 	{
-		auto p = g_param_spec_uint(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
+		auto __p = g_param_spec_uint(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p, true);
 	}
 
 	/**
@@ -1682,14 +1680,14 @@ public class Value
 	 */
 	public static ParamSpec paramSpecUint64(string name, string nick, string blurb, ulong minimum, ulong maximum, ulong defaultValue, GParamFlags flags)
 	{
-		auto p = g_param_spec_uint64(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
+		auto __p = g_param_spec_uint64(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p, true);
 	}
 
 	/**
@@ -1711,14 +1709,14 @@ public class Value
 	 */
 	public static ParamSpec paramSpecUlong(string name, string nick, string blurb, gulong minimum, gulong maximum, gulong defaultValue, GParamFlags flags)
 	{
-		auto p = g_param_spec_ulong(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
+		auto __p = g_param_spec_ulong(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p, true);
 	}
 
 	/**
@@ -1739,14 +1737,14 @@ public class Value
 	 */
 	public static ParamSpec paramSpecUnichar(string name, string nick, string blurb, dchar defaultValue, GParamFlags flags)
 	{
-		auto p = g_param_spec_unichar(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), defaultValue, flags);
+		auto __p = g_param_spec_unichar(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), defaultValue, flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p, true);
 	}
 
 	/**
@@ -1769,14 +1767,14 @@ public class Value
 	 */
 	public static ParamSpec paramSpecValueArray(string name, string nick, string blurb, ParamSpec elementSpec, GParamFlags flags)
 	{
-		auto p = g_param_spec_value_array(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), (elementSpec is null) ? null : elementSpec.getParamSpecStruct(), flags);
+		auto __p = g_param_spec_value_array(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), (elementSpec is null) ? null : elementSpec.getParamSpecStruct(), flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p);
 	}
 
 	/**
@@ -1802,14 +1800,14 @@ public class Value
 	 */
 	public static ParamSpec paramSpecVariant(string name, string nick, string blurb, VariantType type, Variant defaultValue, GParamFlags flags)
 	{
-		auto p = g_param_spec_variant(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), (type is null) ? null : type.getVariantTypeStruct(), (defaultValue is null) ? null : defaultValue.getVariantStruct(true), flags);
+		auto __p = g_param_spec_variant(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), (type is null) ? null : type.getVariantTypeStruct(), (defaultValue is null) ? null : defaultValue.getVariantStruct(true), flags);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) p, true);
+		return ObjectG.getDObject!(ParamSpec)(cast(GParamSpec*) __p, true);
 	}
 
 	/**

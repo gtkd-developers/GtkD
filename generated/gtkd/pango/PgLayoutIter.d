@@ -25,8 +25,6 @@
 module pango.PgLayoutIter;
 
 private import gobject.ObjectG;
-public  import gtkc.pangotypes;
-private import gtkd.Loader;
 private import pango.PgLayout;
 private import pango.PgLayoutLine;
 private import pango.c.functions;
@@ -71,7 +69,7 @@ public class PgLayoutIter
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_PANGO) && ownedRef )
+		if ( ownedRef )
 			pango_layout_iter_free(pangoLayoutIter);
 	}
 
@@ -103,14 +101,14 @@ public class PgLayoutIter
 	 */
 	public PgLayoutIter copy()
 	{
-		auto p = pango_layout_iter_copy(pangoLayoutIter);
+		auto __p = pango_layout_iter_copy(pangoLayoutIter);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgLayoutIter)(cast(PangoLayoutIter*) p, true);
+		return ObjectG.getDObject!(PgLayoutIter)(cast(PangoLayoutIter*) __p, true);
 	}
 
 	/**
@@ -183,14 +181,14 @@ public class PgLayoutIter
 	 */
 	public PgLayout getLayout()
 	{
-		auto p = pango_layout_iter_get_layout(pangoLayoutIter);
+		auto __p = pango_layout_iter_get_layout(pangoLayoutIter);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) p);
+		return ObjectG.getDObject!(PgLayout)(cast(PangoLayout*) __p);
 	}
 
 	/**
@@ -219,14 +217,14 @@ public class PgLayoutIter
 	 */
 	public PgLayoutLine getLine()
 	{
-		auto p = pango_layout_iter_get_line(pangoLayoutIter);
+		auto __p = pango_layout_iter_get_line(pangoLayoutIter);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgLayoutLine)(cast(PangoLayoutLine*) p);
+		return ObjectG.getDObject!(PgLayoutLine)(cast(PangoLayoutLine*) __p);
 	}
 
 	/**
@@ -260,14 +258,14 @@ public class PgLayoutIter
 	 */
 	public PgLayoutLine getLineReadonly()
 	{
-		auto p = pango_layout_iter_get_line_readonly(pangoLayoutIter);
+		auto __p = pango_layout_iter_get_line_readonly(pangoLayoutIter);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(PgLayoutLine)(cast(PangoLayoutLine*) p);
+		return ObjectG.getDObject!(PgLayoutLine)(cast(PangoLayoutLine*) __p);
 	}
 
 	/**
@@ -278,6 +276,10 @@ public class PgLayoutIter
 	 * pango_layout_set_spacing() has been called to set layout spacing.
 	 * The Y positions are in layout coordinates (origin at top left of the
 	 * entire layout).
+	 *
+	 * Note: Since 1.44, Pango uses line heights for placing lines,
+	 * and there may be gaps between the ranges returned by this
+	 * function.
 	 *
 	 * Params:
 	 *     y0 = start of line, or %NULL

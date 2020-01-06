@@ -28,8 +28,6 @@ private import glib.ConstructionException;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
-private import gtkd.Loader;
 
 
 /**
@@ -72,7 +70,7 @@ public class OptionGroup
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_option_group_unref(gOptionGroup);
 	}
 
@@ -102,14 +100,14 @@ public class OptionGroup
 	 */
 	public this(string name, string description, string helpDescription, void* userData, GDestroyNotify destroy)
 	{
-		auto p = g_option_group_new(Str.toStringz(name), Str.toStringz(description), Str.toStringz(helpDescription), userData, destroy);
+		auto __p = g_option_group_new(Str.toStringz(name), Str.toStringz(description), Str.toStringz(helpDescription), userData, destroy);
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GOptionGroup*) p);
+		this(cast(GOptionGroup*) __p);
 	}
 
 	/**
@@ -143,20 +141,20 @@ public class OptionGroup
 	/**
 	 * Increments the reference count of @group by one.
 	 *
-	 * Returns: a #GOptionGroup
+	 * Returns: a #GoptionGroup
 	 *
 	 * Since: 2.44
 	 */
 	public OptionGroup ref_()
 	{
-		auto p = g_option_group_ref(gOptionGroup);
+		auto __p = g_option_group_ref(gOptionGroup);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new OptionGroup(cast(GOptionGroup*) p, true);
+		return new OptionGroup(cast(GOptionGroup*) __p, true);
 	}
 
 	/**

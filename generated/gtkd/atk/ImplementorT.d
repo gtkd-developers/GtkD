@@ -28,7 +28,6 @@ public  import atk.ObjectAtk;
 public  import atk.c.functions;
 public  import atk.c.types;
 public  import gobject.ObjectG;
-public  import gtkc.atktypes;
 
 
 /** */
@@ -52,13 +51,13 @@ public template ImplementorT(TStruct)
 	 */
 	public ObjectAtk refAccessible()
 	{
-		auto p = atk_implementor_ref_accessible(getImplementorStruct());
+		auto __p = atk_implementor_ref_accessible(getImplementorStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p, true);
+		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) __p, true);
 	}
 }

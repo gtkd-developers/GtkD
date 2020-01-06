@@ -30,7 +30,6 @@ private import gobject.ObjectG;
 private import gtk.IMContext;
 private import gtk.c.functions;
 public  import gtk.c.types;
-public  import gtkc.gtktypes;
 
 
 /**
@@ -93,14 +92,14 @@ public class IMContextSimple : IMContext
 	 */
 	public this()
 	{
-		auto p = gtk_im_context_simple_new();
+		auto __p = gtk_im_context_simple_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GtkIMContextSimple*) p, true);
+		this(cast(GtkIMContextSimple*) __p, true);
 	}
 
 	/** */

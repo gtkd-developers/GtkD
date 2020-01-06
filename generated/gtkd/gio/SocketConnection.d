@@ -34,7 +34,6 @@ public  import gio.c.types;
 private import glib.ErrorG;
 private import glib.GException;
 private import gobject.ObjectG;
-public  import gtkc.giotypes;
 
 
 /**
@@ -148,14 +147,14 @@ public class SocketConnection : IOStream
 	{
 		GError* err = null;
 
-		auto p = g_socket_connection_connect(gSocketConnection, (address is null) ? null : address.getSocketAddressStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
+		auto __p = g_socket_connection_connect(gSocketConnection, (address is null) ? null : address.getSocketAddressStruct(), (cancellable is null) ? null : cancellable.getCancellableStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -195,14 +194,14 @@ public class SocketConnection : IOStream
 	{
 		GError* err = null;
 
-		auto p = g_socket_connection_connect_finish(gSocketConnection, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
+		auto __p = g_socket_connection_connect_finish(gSocketConnection, (result is null) ? null : result.getAsyncResultStruct(), &err) != 0;
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		return p;
+		return __p;
 	}
 
 	/**
@@ -219,19 +218,19 @@ public class SocketConnection : IOStream
 	{
 		GError* err = null;
 
-		auto p = g_socket_connection_get_local_address(gSocketConnection, &err);
+		auto __p = g_socket_connection_get_local_address(gSocketConnection, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SocketAddress)(cast(GSocketAddress*) p, true);
+		return ObjectG.getDObject!(SocketAddress)(cast(GSocketAddress*) __p, true);
 	}
 
 	/**
@@ -255,19 +254,19 @@ public class SocketConnection : IOStream
 	{
 		GError* err = null;
 
-		auto p = g_socket_connection_get_remote_address(gSocketConnection, &err);
+		auto __p = g_socket_connection_get_remote_address(gSocketConnection, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(SocketAddress)(cast(GSocketAddress*) p, true);
+		return ObjectG.getDObject!(SocketAddress)(cast(GSocketAddress*) __p, true);
 	}
 
 	/**
@@ -281,14 +280,14 @@ public class SocketConnection : IOStream
 	 */
 	public Socket getSocket()
 	{
-		auto p = g_socket_connection_get_socket(gSocketConnection);
+		auto __p = g_socket_connection_get_socket(gSocketConnection);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Socket)(cast(GSocket*) p);
+		return ObjectG.getDObject!(Socket)(cast(GSocket*) __p);
 	}
 
 	/**

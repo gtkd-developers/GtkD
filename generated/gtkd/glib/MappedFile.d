@@ -31,8 +31,6 @@ private import glib.GException;
 private import glib.Str;
 private import glib.c.functions;
 public  import glib.c.types;
-public  import gtkc.glibtypes;
-private import gtkd.Loader;
 
 
 /**
@@ -71,7 +69,7 @@ public class MappedFile
 
 	~this ()
 	{
-		if ( Linker.isLoaded(LIBRARY_GLIB) && ownedRef )
+		if ( ownedRef )
 			g_mapped_file_unref(gMappedFile);
 	}
 
@@ -111,19 +109,19 @@ public class MappedFile
 	{
 		GError* err = null;
 
-		auto p = g_mapped_file_new(Str.toStringz(filename), writable, &err);
+		auto __p = g_mapped_file_new(Str.toStringz(filename), writable, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(GMappedFile*) p);
+		this(cast(GMappedFile*) __p);
 	}
 
 	/**
@@ -155,19 +153,19 @@ public class MappedFile
 	{
 		GError* err = null;
 
-		auto p = g_mapped_file_new_from_fd(fd, writable, &err);
+		auto __p = g_mapped_file_new_from_fd(fd, writable, &err);
 
 		if (err !is null)
 		{
 			throw new GException( new ErrorG(err) );
 		}
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new_from_fd");
 		}
 
-		this(cast(GMappedFile*) p);
+		this(cast(GMappedFile*) __p);
 	}
 
 	/**
@@ -196,14 +194,14 @@ public class MappedFile
 	 */
 	public Bytes getBytes()
 	{
-		auto p = g_mapped_file_get_bytes(gMappedFile);
+		auto __p = g_mapped_file_get_bytes(gMappedFile);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Bytes(cast(GBytes*) p, true);
+		return new Bytes(cast(GBytes*) __p, true);
 	}
 
 	/**
@@ -249,14 +247,14 @@ public class MappedFile
 	 */
 	public MappedFile ref_()
 	{
-		auto p = g_mapped_file_ref(gMappedFile);
+		auto __p = g_mapped_file_ref(gMappedFile);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new MappedFile(cast(GMappedFile*) p, true);
+		return new MappedFile(cast(GMappedFile*) __p, true);
 	}
 
 	/**

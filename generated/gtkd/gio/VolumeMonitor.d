@@ -34,7 +34,6 @@ private import glib.ListG;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Signals;
-public  import gtkc.giotypes;
 private import std.algorithm;
 
 
@@ -47,9 +46,6 @@ private import std.algorithm;
  * [thread-default-context aware][g-main-context-push-thread-default],
  * and so should not be used other than from the main thread, with no
  * thread-default-context active.
- * 
- * In order to receive updates about volumes and mounts monitored through GVFS,
- * a main loop must be running.
  */
 public class VolumeMonitor : ObjectG
 {
@@ -118,7 +114,7 @@ public class VolumeMonitor : ObjectG
 	 * also listen for the "removed" signal on the returned object
 	 * and give up its reference when handling that signal
 	 *
-	 * Similarly, if implementing g_volume_monitor_adopt_orphan_mount(),
+	 * Similary, if implementing g_volume_monitor_adopt_orphan_mount(),
 	 * the implementor must take a reference to @mount and return it in
 	 * its g_volume_get_mount() implemented. Also, the implementor must
 	 * listen for the "unmounted" signal on @mount and give up its
@@ -150,14 +146,14 @@ public class VolumeMonitor : ObjectG
 	 */
 	public static VolumeIF adoptOrphanMount(MountIF mount)
 	{
-		auto p = g_volume_monitor_adopt_orphan_mount((mount is null) ? null : mount.getMountStruct());
+		auto __p = g_volume_monitor_adopt_orphan_mount((mount is null) ? null : mount.getMountStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(VolumeIF)(cast(GVolume*) p, true);
+		return ObjectG.getDObject!(VolumeIF)(cast(GVolume*) __p, true);
 	}
 
 	/**
@@ -170,14 +166,14 @@ public class VolumeMonitor : ObjectG
 	 */
 	public ListG getConnectedDrives()
 	{
-		auto p = g_volume_monitor_get_connected_drives(gVolumeMonitor);
+		auto __p = g_volume_monitor_get_connected_drives(gVolumeMonitor);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -191,14 +187,14 @@ public class VolumeMonitor : ObjectG
 	 */
 	public MountIF getMountForUuid(string uuid)
 	{
-		auto p = g_volume_monitor_get_mount_for_uuid(gVolumeMonitor, Str.toStringz(uuid));
+		auto __p = g_volume_monitor_get_mount_for_uuid(gVolumeMonitor, Str.toStringz(uuid));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(MountIF)(cast(GMount*) p, true);
+		return ObjectG.getDObject!(MountIF)(cast(GMount*) __p, true);
 	}
 
 	/**
@@ -211,14 +207,14 @@ public class VolumeMonitor : ObjectG
 	 */
 	public ListG getMounts()
 	{
-		auto p = g_volume_monitor_get_mounts(gVolumeMonitor);
+		auto __p = g_volume_monitor_get_mounts(gVolumeMonitor);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -232,14 +228,14 @@ public class VolumeMonitor : ObjectG
 	 */
 	public VolumeIF getVolumeForUuid(string uuid)
 	{
-		auto p = g_volume_monitor_get_volume_for_uuid(gVolumeMonitor, Str.toStringz(uuid));
+		auto __p = g_volume_monitor_get_volume_for_uuid(gVolumeMonitor, Str.toStringz(uuid));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(VolumeIF)(cast(GVolume*) p, true);
+		return ObjectG.getDObject!(VolumeIF)(cast(GVolume*) __p, true);
 	}
 
 	/**
@@ -252,14 +248,14 @@ public class VolumeMonitor : ObjectG
 	 */
 	public ListG getVolumes()
 	{
-		auto p = g_volume_monitor_get_volumes(gVolumeMonitor);
+		auto __p = g_volume_monitor_get_volumes(gVolumeMonitor);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListG(cast(GList*) p, true);
+		return new ListG(cast(GList*) __p, true);
 	}
 
 	/**
@@ -344,10 +340,7 @@ public class VolumeMonitor : ObjectG
 	}
 
 	/**
-	 * May be emitted when a mount is about to be removed.
-	 *
-	 * This signal depends on the backend and is only emitted if
-	 * GIO was used to unmount.
+	 * Emitted when a mount is about to be removed.
 	 *
 	 * Params:
 	 *     mount = a #GMount that is being unmounted.
