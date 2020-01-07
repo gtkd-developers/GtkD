@@ -24,10 +24,12 @@
 
 module glib.Timeout;
 
+private import core.time;
 private import glib.Source;
 private import glib.c.functions;
 public  import glib.c.types;
 public  import gtkc.glibtypes;
+private import std.conv;
 
 
 /** */
@@ -61,6 +63,11 @@ public class Timeout
 		timeoutID = g_timeout_add_full(GPriority.DEFAULT, interval, cast(GSourceFunc)&timeoutCallback, cast(void*)this, cast(GDestroyNotify)&destroyTimeoutNotify);
 	}
 
+	this(Duration interval, bool delegate() dlg, bool fireNow=false)
+	{
+		super(interval.total!"msecs".to!uint, dlg, fireNow);
+	}
+
 	/**
 	 * Creates a new timeout cycle.
 	 * Params:
@@ -76,6 +83,11 @@ public class Timeout
 
 		timeoutListeners ~= dlg;
 		timeoutID = g_timeout_add_full(priority, interval, cast(GSourceFunc)&timeoutCallback, cast(void*)this, cast(GDestroyNotify)&destroyTimeoutNotify);
+	}
+
+	this(Duration interval, bool delegate() dlg, GPriority priority, bool fireNow=false)
+	{
+		super(interval.total!"msecs".to!uint, dlg, priority, fireNow);
 	}
 
 	/**
@@ -94,6 +106,11 @@ public class Timeout
 		timeoutID = g_timeout_add_seconds_full(GPriority.DEFAULT, seconds, cast(GSourceFunc)&timeoutCallback, cast(void*)this, cast(GDestroyNotify)&destroyTimeoutNotify);
 	}
 
+	this(bool delegate() dlg, Duration seconds, bool fireNow=false)
+	{
+		super(dlg, seconds.total!"seconds".to!uint, fireNow);
+	}
+
 	/**
 	 * Creates a new timeout cycle.
 	 * Params:
@@ -109,6 +126,11 @@ public class Timeout
 
 		timeoutListeners ~= dlg;
 		timeoutID = g_timeout_add_seconds_full(priority, seconds, cast(GSourceFunc)&timeoutCallback, cast(void*)this, cast(GDestroyNotify)&destroyTimeoutNotify);
+	}
+
+	this(bool delegate() dlg, Duration seconds, GPriority priority, bool fireNow=false)
+	{
+		super(dlg, seconds.total!"seconds".to!uint, priority, fireNow);
 	}
 
 	/** Removes the timeout from gtk */
@@ -247,7 +269,7 @@ public class Timeout
 	 * context. You can do these steps manually if you need greater control or to
 	 * use a custom main context.
 	 *
-	 * The interval given is in terms of monotonic time, not wall clock time.
+	 * The interval given in terms of monotonic time, not wall clock time.
 	 * See g_get_monotonic_time().
 	 *
 	 * Params:
@@ -373,14 +395,14 @@ public class Timeout
 	 */
 	public static Source sourceNew(uint interval)
 	{
-		auto p = g_timeout_source_new(interval);
+		auto __p = g_timeout_source_new(interval);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Source(cast(GSource*) p, true);
+		return new Source(cast(GSource*) __p, true);
 	}
 
 	/**
@@ -393,7 +415,7 @@ public class Timeout
 	 * The scheduling granularity/accuracy of this timeout source will be
 	 * in seconds.
 	 *
-	 * The interval given is in terms of monotonic time, not wall clock time.
+	 * The interval given in terms of monotonic time, not wall clock time.
 	 * See g_get_monotonic_time().
 	 *
 	 * Params:
@@ -405,13 +427,13 @@ public class Timeout
 	 */
 	public static Source sourceNewSeconds(uint interval)
 	{
-		auto p = g_timeout_source_new_seconds(interval);
+		auto __p = g_timeout_source_new_seconds(interval);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new Source(cast(GSource*) p, true);
+		return new Source(cast(GSource*) __p, true);
 	}
 }
