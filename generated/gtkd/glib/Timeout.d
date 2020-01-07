@@ -65,7 +65,7 @@ public class Timeout
 
 	this(Duration interval, bool delegate() dlg, bool fireNow=false)
 	{
-		super(interval.total!"msecs".to!uint, dlg, fireNow);
+		this(interval.total!"msecs".to!uint, dlg, fireNow);
 	}
 
 	/**
@@ -87,7 +87,7 @@ public class Timeout
 
 	this(Duration interval, bool delegate() dlg, GPriority priority, bool fireNow=false)
 	{
-		super(interval.total!"msecs".to!uint, dlg, priority, fireNow);
+		this(interval.total!"msecs".to!uint, dlg, priority, fireNow);
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class Timeout
 
 	this(bool delegate() dlg, Duration seconds, bool fireNow=false)
 	{
-		super(dlg, seconds.total!"seconds".to!uint, fireNow);
+		this(dlg, seconds.total!"seconds".to!uint, fireNow);
 	}
 
 	/**
@@ -130,7 +130,7 @@ public class Timeout
 
 	this(bool delegate() dlg, Duration seconds, GPriority priority, bool fireNow=false)
 	{
-		super(dlg, seconds.total!"seconds".to!uint, priority, fireNow);
+		this(dlg, seconds.total!"seconds".to!uint, priority, fireNow);
 	}
 
 	/** Removes the timeout from gtk */
@@ -269,7 +269,7 @@ public class Timeout
 	 * context. You can do these steps manually if you need greater control or to
 	 * use a custom main context.
 	 *
-	 * The interval given in terms of monotonic time, not wall clock time.
+	 * The interval given is in terms of monotonic time, not wall clock time.
 	 * See g_get_monotonic_time().
 	 *
 	 * Params:
@@ -415,7 +415,7 @@ public class Timeout
 	 * The scheduling granularity/accuracy of this timeout source will be
 	 * in seconds.
 	 *
-	 * The interval given in terms of monotonic time, not wall clock time.
+	 * The interval given is in terms of monotonic time, not wall clock time.
 	 * See g_get_monotonic_time().
 	 *
 	 * Params:

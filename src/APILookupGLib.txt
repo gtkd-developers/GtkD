@@ -1338,7 +1338,7 @@ code: start
 
 	this(Duration interval, bool delegate() dlg, bool fireNow=false)
 	{
-		super(interval.total!"msecs".to!uint, dlg, fireNow);
+		this(interval.total!"msecs".to!uint, dlg, fireNow);
 	}
 
 	/**
@@ -1360,7 +1360,7 @@ code: start
 
 	this(Duration interval, bool delegate() dlg, GPriority priority, bool fireNow=false)
 	{
-		super(interval.total!"msecs".to!uint, dlg, priority, fireNow);
+		this(interval.total!"msecs".to!uint, dlg, priority, fireNow);
 	}
 
 	/**
@@ -1381,7 +1381,7 @@ code: start
 
 	this(bool delegate() dlg, Duration seconds, bool fireNow=false)
 	{
-		super(dlg, seconds.total!"seconds".to!uint, fireNow);
+		this(dlg, seconds.total!"seconds".to!uint, fireNow);
 	}
 
 	/**
@@ -1403,7 +1403,7 @@ code: start
 
 	this(bool delegate() dlg, Duration seconds, GPriority priority, bool fireNow=false)
 	{
-		super(dlg, seconds.total!"seconds".to!uint, priority, fireNow);
+		this(dlg, seconds.total!"seconds".to!uint, priority, fireNow);
 	}
 
 	/** Removes the timeout from gtk */
