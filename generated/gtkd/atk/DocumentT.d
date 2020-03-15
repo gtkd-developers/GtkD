@@ -53,13 +53,15 @@ public template DocumentT(TStruct)
 
 
 	/**
+	 * Retrieves the value of the given @attribute_name inside @document.
 	 *
 	 * Params:
 	 *     attributeName = a character string representing the name of the attribute
 	 *         whose value is being queried.
+	 *
 	 * Returns: a string value associated with the named
-	 *     attribute for this document, or NULL if a value for
-	 *     #attribute_name has not been specified for this document.
+	 *     attribute for this document, or %NULL if a value for
+	 *     @attribute_name has not been specified for this document.
 	 *
 	 * Since: 1.12
 	 */
@@ -84,8 +86,10 @@ public template DocumentT(TStruct)
 	}
 
 	/**
-	 * Returns: current page number inside @document. -1 if not
-	 *     implemented, not know by the implementor or irrelevant.
+	 * Retrieves the current page number inside @document.
+	 *
+	 * Returns: the current page number inside @document, or -1 if
+	 *     not implemented, not know by the implementor, or irrelevant.
 	 *
 	 * Since: 2.12
 	 */
@@ -142,8 +146,10 @@ public template DocumentT(TStruct)
 	}
 
 	/**
-	 * Returns: total page count of @document. -1 if not implemented, not
-	 *     know by the implementor or irrelevant.
+	 * Retrieves the total number of pages inside @document.
+	 *
+	 * Returns: total page count of @document, or -1 if not implemented,
+	 *     not know by the implementor or irrelevant.
 	 *
 	 * Since: 2.12
 	 */
@@ -153,14 +159,16 @@ public template DocumentT(TStruct)
 	}
 
 	/**
+	 * Sets the value for the given @attribute_name inside @document.
 	 *
 	 * Params:
 	 *     attributeName = a character string representing the name of the attribute
 	 *         whose value is being set.
-	 *     attributeValue = a string value to be associated with #attribute_name.
-	 * Returns: TRUE if #value is successfully associated with #attribute_name
-	 *     for this document, FALSE otherwise (e.g. if the document does not
-	 *     allow the attribute to be modified).
+	 *     attributeValue = a string value to be associated with @attribute_name.
+	 *
+	 * Returns: %TRUE if @attribute_value is successfully associated
+	 *     with @attribute_name for this @document, and %FALSE if if the
+	 *     document does not allow the attribute to be modified
 	 *
 	 * Since: 1.12
 	 */

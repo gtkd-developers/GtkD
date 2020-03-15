@@ -60,14 +60,14 @@ public template TableCellT(TStruct)
 	 */
 	public PtrArray getColumnHeaderCells()
 	{
-		auto p = atk_table_cell_get_column_header_cells(getTableCellStruct());
+		auto __p = atk_table_cell_get_column_header_cells(getTableCellStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new PtrArray(cast(GPtrArray*) p, true);
+		return new PtrArray(cast(GPtrArray*) __p, true);
 	}
 
 	/**
@@ -131,14 +131,14 @@ public template TableCellT(TStruct)
 	 */
 	public PtrArray getRowHeaderCells()
 	{
-		auto p = atk_table_cell_get_row_header_cells(getTableCellStruct());
+		auto __p = atk_table_cell_get_row_header_cells(getTableCellStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new PtrArray(cast(GPtrArray*) p, true);
+		return new PtrArray(cast(GPtrArray*) __p, true);
 	}
 
 	/**
@@ -163,13 +163,13 @@ public template TableCellT(TStruct)
 	 */
 	public ObjectAtk getTable()
 	{
-		auto p = atk_table_cell_get_table(getTableCellStruct());
+		auto __p = atk_table_cell_get_table(getTableCellStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p, true);
+		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) __p, true);
 	}
 }

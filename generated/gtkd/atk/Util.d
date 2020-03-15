@@ -174,14 +174,14 @@ public struct Util
 	 */
 	public static ObjectAtk getFocusObject()
 	{
-		auto p = atk_get_focus_object();
+		auto __p = atk_get_focus_object();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
+		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) __p);
 	}
 
 	/**
@@ -192,14 +192,14 @@ public struct Util
 	 */
 	public static ObjectAtk getRoot()
 	{
-		auto p = atk_get_root();
+		auto __p = atk_get_root();
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
+		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) __p);
 	}
 
 	/**
@@ -213,14 +213,13 @@ public struct Util
 	}
 
 	/**
-	 *
+	 * Removes the specified focus tracker from the list of functions
+	 * to be called when any object receives focus.
 	 *
 	 * Deprecated: Focus tracking has been dropped as a feature
 	 * to be implemented by ATK itself. If you need focus tracking on your
-	 * implementation, subscribe to the #AtkObject::state-change "focused" signal.
-	 *
-	 * Removes the specified focus tracker from the list of functions
-	 * to be called when any object receives focus.
+	 * implementation, subscribe to the #AtkObject::state-change "focused"
+	 * signal.
 	 *
 	 * Params:
 	 *     trackerId = the id of the focus tracker to remove

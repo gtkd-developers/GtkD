@@ -107,10 +107,10 @@ public class ObjectAtk : ObjectG
 	}
 
 	/**
+	 * Calls @handler on property changes.
 	 *
-	 *
-	 * Deprecated: Since 2.12. Connect directly to property-change or
-	 * notify signals.
+	 * Deprecated: Connect directly to #AtkObject::property-change or
+	 * the relevant #GObject::notify signal for each desired property.
 	 *
 	 * Params:
 	 *     handler = a function to be called when a property changes its value
@@ -121,6 +121,19 @@ public class ObjectAtk : ObjectG
 	public uint connectPropertyChangeHandler(AtkPropertyChangeHandler* handler)
 	{
 		return atk_object_connect_property_change_handler(atkObject, handler);
+	}
+
+	/**
+	 * Gets the accessible id of the accessible.
+	 *
+	 * Returns: a character string representing the accessible id of the object, or
+	 *     NULL if no such string was set.
+	 *
+	 * Since: 2.34
+	 */
+	public string getAccessibleId()
+	{
+		return Str.toString(atk_object_get_accessible_id(atkObject));
 	}
 
 	/**
@@ -241,14 +254,14 @@ public class ObjectAtk : ObjectG
 	 */
 	public ObjectAtk getParent()
 	{
-		auto p = atk_object_get_parent(atkObject);
+		auto __p = atk_object_get_parent(atkObject);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
+		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) __p);
 	}
 
 	/**
@@ -304,14 +317,14 @@ public class ObjectAtk : ObjectG
 	 */
 	public ObjectAtk peekParent()
 	{
-		auto p = atk_object_peek_parent(atkObject);
+		auto __p = atk_object_peek_parent(atkObject);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
+		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) __p);
 	}
 
 	/**
@@ -327,14 +340,14 @@ public class ObjectAtk : ObjectG
 	 */
 	public ObjectAtk refAccessibleChild(int i)
 	{
-		auto p = atk_object_ref_accessible_child(atkObject, i);
+		auto __p = atk_object_ref_accessible_child(atkObject, i);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p, true);
+		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) __p, true);
 	}
 
 	/**
@@ -345,14 +358,14 @@ public class ObjectAtk : ObjectG
 	 */
 	public RelationSet refRelationSet()
 	{
-		auto p = atk_object_ref_relation_set(atkObject);
+		auto __p = atk_object_ref_relation_set(atkObject);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(RelationSet)(cast(AtkRelationSet*) p, true);
+		return ObjectG.getDObject!(RelationSet)(cast(AtkRelationSet*) __p, true);
 	}
 
 	/**
@@ -364,22 +377,20 @@ public class ObjectAtk : ObjectG
 	 */
 	public StateSet refStateSet()
 	{
-		auto p = atk_object_ref_state_set(atkObject);
+		auto __p = atk_object_ref_state_set(atkObject);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(StateSet)(cast(AtkStateSet*) p, true);
+		return ObjectG.getDObject!(StateSet)(cast(AtkStateSet*) __p, true);
 	}
 
 	/**
-	 *
-	 *
-	 * Deprecated: Since 2.12.
-	 *
 	 * Removes a property change handler.
+	 *
+	 * Deprecated: See atk_object_connect_property_change_handler()
 	 *
 	 * Params:
 	 *     handlerId = a guint which identifies the handler to be removed.
@@ -401,6 +412,23 @@ public class ObjectAtk : ObjectG
 	public bool removeRelationship(AtkRelationType relationship, ObjectAtk target)
 	{
 		return atk_object_remove_relationship(atkObject, relationship, (target is null) ? null : target.getObjectAtkStruct()) != 0;
+	}
+
+	/**
+	 * Sets the accessible ID of the accessible.  This is not meant to be presented
+	 * to the user, but to be an ID which is stable over application development.
+	 * Typically, this is the gtkbuilder ID. Such an ID will be available for
+	 * instance to identify a given well-known accessible object for tailored screen
+	 * reading, or for automatic regression testing.
+	 *
+	 * Params:
+	 *     name = a character string to be set as the accessible id
+	 *
+	 * Since: 2.34
+	 */
+	public void setAccessibleId(string name)
+	{
+		atk_object_set_accessible_id(atkObject, Str.toStringz(name));
 	}
 
 	/**

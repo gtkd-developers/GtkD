@@ -76,17 +76,25 @@ public class Plug : ObjectAtk, ComponentIF
 		return atk_plug_get_type();
 	}
 
-	/** */
+	/**
+	 * Creates a new #AtkPlug instance.
+	 *
+	 * Returns: the newly created #AtkPlug
+	 *
+	 * Since: 1.30
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
 	public this()
 	{
-		auto p = atk_plug_new();
+		auto __p = atk_plug_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(AtkPlug*) p, true);
+		this(cast(AtkPlug*) __p, true);
 	}
 
 	/**

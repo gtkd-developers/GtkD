@@ -87,14 +87,14 @@ public class RelationSet : ObjectG
 	 */
 	public this()
 	{
-		auto p = atk_relation_set_new();
+		auto __p = atk_relation_set_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(AtkRelationSet*) p, true);
+		this(cast(AtkRelationSet*) __p, true);
 	}
 
 	/**
@@ -182,14 +182,14 @@ public class RelationSet : ObjectG
 	 */
 	public Relation getRelation(int i)
 	{
-		auto p = atk_relation_set_get_relation(atkRelationSet, i);
+		auto __p = atk_relation_set_get_relation(atkRelationSet, i);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Relation)(cast(AtkRelation*) p);
+		return ObjectG.getDObject!(Relation)(cast(AtkRelation*) __p);
 	}
 
 	/**
@@ -203,14 +203,14 @@ public class RelationSet : ObjectG
 	 */
 	public Relation getRelationByType(AtkRelationType relationship)
 	{
-		auto p = atk_relation_set_get_relation_by_type(atkRelationSet, relationship);
+		auto __p = atk_relation_set_get_relation_by_type(atkRelationSet, relationship);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Relation)(cast(AtkRelation*) p);
+		return ObjectG.getDObject!(Relation)(cast(AtkRelation*) __p);
 	}
 
 	/**

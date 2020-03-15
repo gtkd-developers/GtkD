@@ -96,17 +96,17 @@ public template TextT(TStruct)
 	 */
 	public TextRange[] getBoundedRanges(AtkTextRectangle* rect, AtkCoordType coordType, AtkTextClipType xClipType, AtkTextClipType yClipType)
 	{
-		auto p = atk_text_get_bounded_ranges(getTextStruct(), rect, coordType, xClipType, yClipType);
+		auto __p = atk_text_get_bounded_ranges(getTextStruct(), rect, coordType, xClipType, yClipType);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		TextRange[] arr = new TextRange[getArrayLength(p)];
-		for(int i = 0; i < getArrayLength(p); i++)
+		TextRange[] arr = new TextRange[getArrayLength(__p)];
+		for(int i = 0; i < getArrayLength(__p); i++)
 		{
-			arr[i] = ObjectG.getDObject!(TextRange)(cast(AtkTextRange*) p[i]);
+			arr[i] = ObjectG.getDObject!(TextRange)(cast(AtkTextRange*) __p[i]);
 		}
 
 		return arr;
@@ -115,7 +115,7 @@ public template TextT(TStruct)
 	/**
 	 * Gets the offset of the position of the caret (cursor).
 	 *
-	 * Returns: the character offset of the position of the caret or 0  if
+	 * Returns: the character offset of the position of the caret or -1 if
 	 *     the caret is not located inside the element or in the case of
 	 *     any other failure.
 	 */
@@ -170,8 +170,8 @@ public template TextT(TStruct)
 	 * attributes that can be returned. Note that other attributes may also be
 	 * returned.
 	 *
-	 * Returns: an #AtkAttributeSet which contains the default values
-	 *     of attributes.  at @offset. this #atkattributeset should be freed by
+	 * Returns: an #AtkAttributeSet which contains the default text
+	 *     attributes for this #AtkText. This #AtkAttributeSet should be freed by
 	 *     a call to atk_attribute_set_free().
 	 */
 	public AtkAttributeSet* getDefaultAttributes()

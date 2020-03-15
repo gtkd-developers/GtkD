@@ -290,14 +290,14 @@ public template ValueT(TStruct)
 	 */
 	public Range getRange()
 	{
-		auto p = atk_value_get_range(getValueStruct());
+		auto __p = atk_value_get_range(getValueStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(Range)(cast(AtkRange*) p, true);
+		return ObjectG.getDObject!(Range)(cast(AtkRange*) __p, true);
 	}
 
 	/**
@@ -312,14 +312,14 @@ public template ValueT(TStruct)
 	 */
 	public ListSG getSubRanges()
 	{
-		auto p = atk_value_get_sub_ranges(getValueStruct());
+		auto __p = atk_value_get_sub_ranges(getValueStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new ListSG(cast(GSList*) p, true);
+		return new ListSG(cast(GSList*) __p, true);
 	}
 
 	/**

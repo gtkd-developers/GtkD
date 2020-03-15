@@ -206,14 +206,14 @@ public template ComponentT(TStruct)
 	 */
 	public ObjectAtk refAccessibleAtPoint(int x, int y, AtkCoordType coordType)
 	{
-		auto p = atk_component_ref_accessible_at_point(getComponentStruct(), x, y, coordType);
+		auto __p = atk_component_ref_accessible_at_point(getComponentStruct(), x, y, coordType);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p, true);
+		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) __p, true);
 	}
 
 	/**

@@ -80,14 +80,14 @@ public class StateSet : ObjectG
 	 */
 	public this()
 	{
-		auto p = atk_state_set_new();
+		auto __p = atk_state_set_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(AtkStateSet*) p, true);
+		this(cast(AtkStateSet*) __p, true);
 	}
 
 	/**
@@ -137,14 +137,14 @@ public class StateSet : ObjectG
 	 */
 	public StateSet andSets(StateSet compareSet)
 	{
-		auto p = atk_state_set_and_sets(atkStateSet, (compareSet is null) ? null : compareSet.getStateSetStruct());
+		auto __p = atk_state_set_and_sets(atkStateSet, (compareSet is null) ? null : compareSet.getStateSetStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(StateSet)(cast(AtkStateSet*) p, true);
+		return ObjectG.getDObject!(StateSet)(cast(AtkStateSet*) __p, true);
 	}
 
 	/**
@@ -203,14 +203,14 @@ public class StateSet : ObjectG
 	 */
 	public StateSet orSets(StateSet compareSet)
 	{
-		auto p = atk_state_set_or_sets(atkStateSet, (compareSet is null) ? null : compareSet.getStateSetStruct());
+		auto __p = atk_state_set_or_sets(atkStateSet, (compareSet is null) ? null : compareSet.getStateSetStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(StateSet)(cast(AtkStateSet*) p, true);
+		return ObjectG.getDObject!(StateSet)(cast(AtkStateSet*) __p, true);
 	}
 
 	/**
@@ -244,13 +244,13 @@ public class StateSet : ObjectG
 	 */
 	public StateSet xorSets(StateSet compareSet)
 	{
-		auto p = atk_state_set_xor_sets(atkStateSet, (compareSet is null) ? null : compareSet.getStateSetStruct());
+		auto __p = atk_state_set_xor_sets(atkStateSet, (compareSet is null) ? null : compareSet.getStateSetStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(StateSet)(cast(AtkStateSet*) p, true);
+		return ObjectG.getDObject!(StateSet)(cast(AtkStateSet*) __p, true);
 	}
 }

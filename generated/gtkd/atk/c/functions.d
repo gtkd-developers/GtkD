@@ -157,6 +157,7 @@ shared static this()
 	Linker.link(atk_object_get_type, "atk_object_get_type", LIBRARY_ATK);
 	Linker.link(atk_object_add_relationship, "atk_object_add_relationship", LIBRARY_ATK);
 	Linker.link(atk_object_connect_property_change_handler, "atk_object_connect_property_change_handler", LIBRARY_ATK);
+	Linker.link(atk_object_get_accessible_id, "atk_object_get_accessible_id", LIBRARY_ATK);
 	Linker.link(atk_object_get_attributes, "atk_object_get_attributes", LIBRARY_ATK);
 	Linker.link(atk_object_get_description, "atk_object_get_description", LIBRARY_ATK);
 	Linker.link(atk_object_get_index_in_parent, "atk_object_get_index_in_parent", LIBRARY_ATK);
@@ -175,6 +176,7 @@ shared static this()
 	Linker.link(atk_object_ref_state_set, "atk_object_ref_state_set", LIBRARY_ATK);
 	Linker.link(atk_object_remove_property_change_handler, "atk_object_remove_property_change_handler", LIBRARY_ATK);
 	Linker.link(atk_object_remove_relationship, "atk_object_remove_relationship", LIBRARY_ATK);
+	Linker.link(atk_object_set_accessible_id, "atk_object_set_accessible_id", LIBRARY_ATK);
 	Linker.link(atk_object_set_description, "atk_object_set_description", LIBRARY_ATK);
 	Linker.link(atk_object_set_name, "atk_object_set_name", LIBRARY_ATK);
 	Linker.link(atk_object_set_parent, "atk_object_set_parent", LIBRARY_ATK);
@@ -538,6 +540,7 @@ __gshared extern(C)
 	GType function() c_atk_object_get_type;
 	int function(AtkObject* object, AtkRelationType relationship, AtkObject* target) c_atk_object_add_relationship;
 	uint function(AtkObject* accessible, AtkPropertyChangeHandler* handler) c_atk_object_connect_property_change_handler;
+	const(char)* function(AtkObject* accessible) c_atk_object_get_accessible_id;
 	AtkAttributeSet* function(AtkObject* accessible) c_atk_object_get_attributes;
 	const(char)* function(AtkObject* accessible) c_atk_object_get_description;
 	int function(AtkObject* accessible) c_atk_object_get_index_in_parent;
@@ -556,6 +559,7 @@ __gshared extern(C)
 	AtkStateSet* function(AtkObject* accessible) c_atk_object_ref_state_set;
 	void function(AtkObject* accessible, uint handlerId) c_atk_object_remove_property_change_handler;
 	int function(AtkObject* object, AtkRelationType relationship, AtkObject* target) c_atk_object_remove_relationship;
+	void function(AtkObject* accessible, const(char)* name) c_atk_object_set_accessible_id;
 	void function(AtkObject* accessible, const(char)* description) c_atk_object_set_description;
 	void function(AtkObject* accessible, const(char)* name) c_atk_object_set_name;
 	void function(AtkObject* accessible, AtkObject* parent) c_atk_object_set_parent;
@@ -917,6 +921,7 @@ alias c_atk_no_op_object_factory_new atk_no_op_object_factory_new;
 alias c_atk_object_get_type atk_object_get_type;
 alias c_atk_object_add_relationship atk_object_add_relationship;
 alias c_atk_object_connect_property_change_handler atk_object_connect_property_change_handler;
+alias c_atk_object_get_accessible_id atk_object_get_accessible_id;
 alias c_atk_object_get_attributes atk_object_get_attributes;
 alias c_atk_object_get_description atk_object_get_description;
 alias c_atk_object_get_index_in_parent atk_object_get_index_in_parent;
@@ -935,6 +940,7 @@ alias c_atk_object_ref_relation_set atk_object_ref_relation_set;
 alias c_atk_object_ref_state_set atk_object_ref_state_set;
 alias c_atk_object_remove_property_change_handler atk_object_remove_property_change_handler;
 alias c_atk_object_remove_relationship atk_object_remove_relationship;
+alias c_atk_object_set_accessible_id atk_object_set_accessible_id;
 alias c_atk_object_set_description atk_object_set_description;
 alias c_atk_object_set_name atk_object_set_name;
 alias c_atk_object_set_parent atk_object_set_parent;

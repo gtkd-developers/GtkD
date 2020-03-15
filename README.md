@@ -101,7 +101,7 @@ Glib | 2.64
 GObject | 2.64
 Gio | 2.64
 Pango | 1.43
-Atk | 2.32
+Atk | 2.34
 Gdk-pixbuf | 2.38
 Cairo | 1.12.2
 LibRsvg | 2.44

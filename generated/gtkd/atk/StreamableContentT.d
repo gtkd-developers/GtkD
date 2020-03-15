@@ -96,14 +96,14 @@ public template StreamableContentT(TStruct)
 	 */
 	public IOChannel getStream(string mimeType)
 	{
-		auto p = atk_streamable_content_get_stream(getStreamableContentStruct(), Str.toStringz(mimeType));
+		auto __p = atk_streamable_content_get_stream(getStreamableContentStruct(), Str.toStringz(mimeType));
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return new IOChannel(cast(GIOChannel*) p, true);
+		return new IOChannel(cast(GIOChannel*) __p, true);
 	}
 
 	/**

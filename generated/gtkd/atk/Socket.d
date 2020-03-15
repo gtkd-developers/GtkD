@@ -97,17 +97,23 @@ public class Socket : ObjectAtk, ComponentIF
 		return atk_socket_get_type();
 	}
 
-	/** */
+	/**
+	 * Creates a new #AtkSocket.
+	 *
+	 * Returns: the newly created #AtkSocket instance
+	 *
+	 * Throws: ConstructionException GTK+ fails to create the object.
+	 */
 	public this()
 	{
-		auto p = atk_socket_new();
+		auto __p = atk_socket_new();
 
-		if(p is null)
+		if(__p is null)
 		{
 			throw new ConstructionException("null returned by new");
 		}
 
-		this(cast(AtkSocket*) p, true);
+		this(cast(AtkSocket*) __p, true);
 	}
 
 	/**

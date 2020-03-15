@@ -121,7 +121,7 @@ public interface TextIF{
 	/**
 	 * Gets the offset of the position of the caret (cursor).
 	 *
-	 * Returns: the character offset of the position of the caret or 0  if
+	 * Returns: the character offset of the position of the caret or -1 if
 	 *     the caret is not located inside the element or in the case of
 	 *     any other failure.
 	 */
@@ -164,8 +164,8 @@ public interface TextIF{
 	 * attributes that can be returned. Note that other attributes may also be
 	 * returned.
 	 *
-	 * Returns: an #AtkAttributeSet which contains the default values
-	 *     of attributes.  at @offset. this #atkattributeset should be freed by
+	 * Returns: an #AtkAttributeSet which contains the default text
+	 *     attributes for this #AtkText. This #AtkAttributeSet should be freed by
 	 *     a call to atk_attribute_set_free().
 	 */
 	public AtkAttributeSet* getDefaultAttributes();

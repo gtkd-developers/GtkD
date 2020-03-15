@@ -67,9 +67,11 @@ public interface ImageIF{
 	public string getImageDescription();
 
 	/**
+	 * Retrieves the locale identifier associated to the #AtkImage.
+	 *
 	 * Returns: a string corresponding to the POSIX
-	 *     LC_MESSAGES locale used by the image description, or %NULL if the
-	 *     image does not specify a locale.
+	 *     `LC_MESSAGES` locale used by the image description, or
+	 *     %NULL if the image does not specify a locale.
 	 *
 	 * Since: 1.12
 	 */

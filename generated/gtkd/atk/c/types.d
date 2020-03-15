@@ -266,9 +266,9 @@ alias AtkRelationType RelationType;
 /**
  * Describes the role of an object
  *
- * These are the built-in enumerated roles that UI components can have in
- * ATK.  Other roles may be added at runtime, so an AtkRole >=
- * ATK_ROLE_LAST_DEFINED is not necessarily an error.
+ * These are the built-in enumerated roles that UI components can have
+ * in ATK.  Other roles may be added at runtime, so an AtkRole >=
+ * %ATK_ROLE_LAST_DEFINED is not necessarily an error.
  */
 public enum AtkRole
 {
@@ -509,7 +509,7 @@ public enum AtkRole
 	 */
 	TEAR_OFF_MENU_ITEM = 58,
 	/**
-	 * An object that represents an accessible terminal.  @Since: ATK-0.6
+	 * An object that represents an accessible terminal.  (Since: 0.6)
 	 */
 	TERMINAL = 59,
 	/**
@@ -539,7 +539,7 @@ public enum AtkRole
 	 */
 	TREE = 64,
 	/**
-	 * An object capable of expanding and collapsing rows as well as showing multiple columns of data.   @Since: ATK-0.7
+	 * An object capable of expanding and collapsing rows as well as showing multiple columns of data.   (Since: 0.7)
 	 */
 	TREE_TABLE = 65,
 	/**
@@ -555,51 +555,51 @@ public enum AtkRole
 	 */
 	WINDOW = 68,
 	/**
-	 * An object that serves as a document header. @Since: ATK-1.1.1
+	 * An object that serves as a document header. (Since: 1.1.1)
 	 */
 	HEADER = 69,
 	/**
-	 * An object that serves as a document footer.  @Since: ATK-1.1.1
+	 * An object that serves as a document footer.  (Since: 1.1.1)
 	 */
 	FOOTER = 70,
 	/**
-	 * An object which is contains a paragraph of text content.   @Since: ATK-1.1.1
+	 * An object which is contains a paragraph of text content.   (Since: 1.1.1)
 	 */
 	PARAGRAPH = 71,
 	/**
-	 * An object which describes margins and tab stops, etc. for text objects which it controls (should have CONTROLLER_FOR relation to such).   @Since: ATK-1.1.1
+	 * An object which describes margins and tab stops, etc. for text objects which it controls (should have CONTROLLER_FOR relation to such).   (Since: 1.1.1)
 	 */
 	RULER = 72,
 	/**
-	 * The object is an application object, which may contain @ATK_ROLE_FRAME objects or other types of accessibles.  The root accessible of any application's ATK hierarchy should have ATK_ROLE_APPLICATION.   @Since: ATK-1.1.4
+	 * The object is an application object, which may contain @ATK_ROLE_FRAME objects or other types of accessibles.  The root accessible of any application's ATK hierarchy should have ATK_ROLE_APPLICATION.   (Since: 1.1.4)
 	 */
 	APPLICATION = 73,
 	/**
-	 * The object is a dialog or list containing items for insertion into an entry widget, for instance a list of words for completion of a text entry.   @Since: ATK-1.3
+	 * The object is a dialog or list containing items for insertion into an entry widget, for instance a list of words for completion of a text entry.   (Since: 1.3)
 	 */
 	AUTOCOMPLETE = 74,
 	/**
-	 * The object is an editable text object in a toolbar.  @Since: ATK-1.5
+	 * The object is an editable text object in a toolbar.  (Since: 1.5)
 	 */
 	EDIT_BAR = 75,
 	/**
-	 * The object is an embedded container within a document or panel.  This role is a grouping "hint" indicating that the contained objects share a context.  @Since: ATK-1.7.2
+	 * The object is an embedded container within a document or panel.  This role is a grouping "hint" indicating that the contained objects share a context.  (Since: 1.7.2)
 	 */
 	EMBEDDED = 76,
 	/**
-	 * The object is a component whose textual content may be entered or modified by the user, provided @ATK_STATE_EDITABLE is present.   @Since: ATK-1.11
+	 * The object is a component whose textual content may be entered or modified by the user, provided @ATK_STATE_EDITABLE is present.   (Since: 1.11)
 	 */
 	ENTRY = 77,
 	/**
-	 * The object is a graphical depiction of quantitative data. It may contain multiple subelements whose attributes and/or description may be queried to obtain both the quantitative data and information about how the data is being presented. The LABELLED_BY relation is particularly important in interpreting objects of this type, as is the accessible-description property.  @Since: ATK-1.11
+	 * The object is a graphical depiction of quantitative data. It may contain multiple subelements whose attributes and/or description may be queried to obtain both the quantitative data and information about how the data is being presented. The LABELLED_BY relation is particularly important in interpreting objects of this type, as is the accessible-description property.  (Since: 1.11)
 	 */
 	CHART = 78,
 	/**
-	 * The object contains descriptive information, usually textual, about another user interface element such as a table, chart, or image.  @Since: ATK-1.11
+	 * The object contains descriptive information, usually textual, about another user interface element such as a table, chart, or image.  (Since: 1.11)
 	 */
 	CAPTION = 79,
 	/**
-	 * The object is a visual frame or container which contains a view of document content. Document frames may occur within another Document instance, in which case the second document may be said to be embedded in the containing instance. HTML frames are often ROLE_DOCUMENT_FRAME. Either this object, or a singleton descendant, should implement the Document interface.  @Since: ATK-1.11
+	 * The object is a visual frame or container which contains a view of document content. Document frames may occur within another Document instance, in which case the second document may be said to be embedded in the containing instance. HTML frames are often ROLE_DOCUMENT_FRAME. Either this object, or a singleton descendant, should implement the Document interface.  (Since: 1.11)
 	 */
 	DOCUMENT_FRAME = 80,
 	/**
@@ -607,22 +607,22 @@ public enum AtkRole
 	 */
 	HEADING = 81,
 	/**
-	 * The object is a containing instance which encapsulates a page of information. @ATK_ROLE_PAGE is used in documents and content which support a paginated navigation model.  @Since: ATK-1.11
+	 * The object is a containing instance which encapsulates a page of information. @ATK_ROLE_PAGE is used in documents and content which support a paginated navigation model.  (Since: 1.11)
 	 */
 	PAGE = 82,
 	/**
-	 * The object is a containing instance of document content which constitutes a particular 'logical' section of the document. The type of content within a section, and the nature of the section division itself, may be obtained by querying the object's attributes. Sections may be nested. @Since: ATK-1.11
+	 * The object is a containing instance of document content which constitutes a particular 'logical' section of the document. The type of content within a section, and the nature of the section division itself, may be obtained by querying the object's attributes. Sections may be nested. (Since: 1.11)
 	 */
 	SECTION = 83,
 	/**
-	 * The object is redundant with another object in the hierarchy, and is exposed for purely technical reasons.  Objects of this role should normally be ignored by clients. @Since: ATK-1.11
+	 * The object is redundant with another object in the hierarchy, and is exposed for purely technical reasons.  Objects of this role should normally be ignored by clients. (Since: 1.11)
 	 */
 	REDUNDANT_OBJECT = 84,
 	/**
 	 * The object is a container for form controls, for instance as part of a
 	 * web form or user-input form within a document.  This role is primarily a tag/convenience for
 	 * clients when navigating complex documents, it is not expected that ordinary GUI containers will
-	 * always have ATK_ROLE_FORM. @Since: ATK-1.12.0
+	 * always have ATK_ROLE_FORM. (Since: 1.12.0)
 	 */
 	FORM = 85,
 	/**
@@ -630,105 +630,104 @@ public enum AtkRole
 	 * hypertext document.  Such objects are distinct from 'inline'
 	 * content which may also use the Hypertext/Hyperlink interfaces
 	 * to indicate the range/location within a text object where
-	 * an inline or embedded object lies.  @Since: ATK-1.12.1
+	 * an inline or embedded object lies.  (Since: 1.12.1)
 	 */
 	LINK = 86,
 	/**
 	 * The object is a window or similar viewport
 	 * which is used to allow composition or input of a 'complex character',
-	 * in other words it is an "input method window." @Since: ATK-1.12.1
+	 * in other words it is an "input method window." (Since: 1.12.1)
 	 */
 	INPUT_METHOD_WINDOW = 87,
 	/**
-	 * A row in a table.  @Since: ATK-2.1.0
+	 * A row in a table.  (Since: 2.1.0)
 	 */
 	TABLE_ROW = 88,
 	/**
-	 * An object that represents an element of a tree.  @Since: ATK-2.1.0
+	 * An object that represents an element of a tree.  (Since: 2.1.0)
 	 */
 	TREE_ITEM = 89,
 	/**
-	 * A document frame which contains a spreadsheet.  @Since: ATK-2.1.0
+	 * A document frame which contains a spreadsheet.  (Since: 2.1.0)
 	 */
 	DOCUMENT_SPREADSHEET = 90,
 	/**
-	 * A document frame which contains a presentation or slide content.  @Since: ATK-2.1.0
+	 * A document frame which contains a presentation or slide content.  (Since: 2.1.0)
 	 */
 	DOCUMENT_PRESENTATION = 91,
 	/**
-	 * A document frame which contains textual content, such as found in a word processing application.  @Since: ATK-2.1.0
+	 * A document frame which contains textual content, such as found in a word processing application.  (Since: 2.1.0)
 	 */
 	DOCUMENT_TEXT = 92,
 	/**
-	 * A document frame which contains HTML or other markup suitable for display in a web browser.  @Since: ATK-2.1.0
+	 * A document frame which contains HTML or other markup suitable for display in a web browser.  (Since: 2.1.0)
 	 */
 	DOCUMENT_WEB = 93,
 	/**
-	 * A document frame which contains email content to be displayed or composed either in plain text or HTML.  @Since: ATK-2.1.0
+	 * A document frame which contains email content to be displayed or composed either in plain text or HTML.  (Since: 2.1.0)
 	 */
 	DOCUMENT_EMAIL = 94,
 	/**
-	 * An object found within a document and designed to present a comment, note, or other annotation. In some cases, this object might not be visible until activated.  @Since: ATK-2.1.0
+	 * An object found within a document and designed to present a comment, note, or other annotation. In some cases, this object might not be visible until activated.  (Since: 2.1.0)
 	 */
 	COMMENT = 95,
 	/**
-	 * A non-collapsible list of choices the user can select from. @Since: ATK-2.1.0
+	 * A non-collapsible list of choices the user can select from. (Since: 2.1.0)
 	 */
 	LIST_BOX = 96,
 	/**
-	 * A group of related widgets. This group typically has a label. @Since: ATK-2.1.0
+	 * A group of related widgets. This group typically has a label. (Since: 2.1.0)
 	 */
 	GROUPING = 97,
 	/**
-	 * An image map object. Usually a graphic with multiple hotspots, where each hotspot can be activated resulting in the loading of another document or section of a document. @Since: ATK-2.1.0
+	 * An image map object. Usually a graphic with multiple hotspots, where each hotspot can be activated resulting in the loading of another document or section of a document. (Since: 2.1.0)
 	 */
 	IMAGE_MAP = 98,
 	/**
-	 * A transitory object designed to present a message to the user, typically at the desktop level rather than inside a particular application.  @Since: ATK-2.1.0
+	 * A transitory object designed to present a message to the user, typically at the desktop level rather than inside a particular application.  (Since: 2.1.0)
 	 */
 	NOTIFICATION = 99,
 	/**
-	 * An object designed to present a message to the user within an existing window. @Since: ATK-2.1.0
+	 * An object designed to present a message to the user within an existing window. (Since: 2.1.0)
 	 */
 	INFO_BAR = 100,
 	/**
-	 * A bar that serves as a level indicator to, for instance, show the strength of a password or the state of a battery.  @Since: ATK-2.7.3
+	 * A bar that serves as a level indicator to, for instance, show the strength of a password or the state of a battery.  (Since: 2.7.3)
 	 */
 	LEVEL_BAR = 101,
 	/**
 	 * A bar that serves as the title of a window or a
-	 * dialog. @Since: ATK-2.12
+	 * dialog. (Since: 2.12)
 	 */
 	TITLE_BAR = 102,
 	/**
 	 * An object which contains a text section
-	 * that is quoted from another source. @Since: ATK-2.12
+	 * that is quoted from another source. (Since: 2.12)
 	 */
 	BLOCK_QUOTE = 103,
 	/**
-	 * An object which represents an audio element. @Since: ATK-2.12
+	 * An object which represents an audio element. (Since: 2.12)
 	 */
 	AUDIO = 104,
 	/**
-	 * An object which represents a video element. @Since: ATK-2.12
+	 * An object which represents a video element. (Since: 2.12)
 	 */
 	VIDEO = 105,
 	/**
-	 * A definition of a term or concept. @Since: ATK-2.12
+	 * A definition of a term or concept. (Since: 2.12)
 	 */
 	DEFINITION = 106,
 	/**
 	 * A section of a page that consists of a
 	 * composition that forms an independent part of a document, page, or
-	 * site. Examples: A blog entry, a news story, a forum post. @Since:
-	 * ATK-2.12
+	 * site. Examples: A blog entry, a news story, a forum post. (Since: 2.12)
 	 */
 	ARTICLE = 107,
 	/**
 	 * A region of a web page intended as a
 	 * navigational landmark. This is designed to allow Assistive
 	 * Technologies to provide quick navigation among key regions within a
-	 * document. @Since: ATK-2.12
+	 * document. (Since: 2.12)
 	 */
 	LANDMARK = 108,
 	/**
@@ -737,7 +736,7 @@ public enum AtkRole
 	 * relationship between the arrival of new items in the log and the
 	 * reading order. The log contains a meaningful sequence and new
 	 * information is added only to the end of the log, not at arbitrary
-	 * points. @Since: ATK-2.12
+	 * points. (Since: 2.12)
 	 */
 	LOG = 109,
 	/**
@@ -745,25 +744,25 @@ public enum AtkRole
 	 * changes frequently. Common usages of marquee include stock tickers
 	 * and ad banners. The primary difference between a marquee and a log
 	 * is that logs usually have a meaningful order or sequence of
-	 * important content changes. @Since: ATK-2.12
+	 * important content changes. (Since: 2.12)
 	 */
 	MARQUEE = 110,
 	/**
 	 * A text widget or container that holds a mathematical
-	 * expression. @Since: ATK-2.12
+	 * expression. (Since: 2.12)
 	 */
 	MATH = 111,
 	/**
 	 * A widget whose purpose is to display a rating,
 	 * such as the number of stars associated with a song in a media
 	 * player. Objects of this role should also implement
-	 * AtkValue. @Since: ATK-2.12
+	 * AtkValue. (Since: 2.12)
 	 */
 	RATING = 112,
 	/**
 	 * An object containing a numerical counter which
 	 * indicates an amount of elapsed time from a start point, or the time
-	 * remaining until an end point. @Since: ATK-2.12
+	 * remaining until an end point. (Since: 2.12)
 	 */
 	TIMER = 113,
 	/**
@@ -772,62 +771,75 @@ public enum AtkRole
 	 * description and consist of one or more names
 	 * (ATK_ROLE_DESCRIPTION_TERM) followed by one or more values
 	 * (ATK_ROLE_DESCRIPTION_VALUE). For each list, there should not be
-	 * more than one group with the same term name. @Since: ATK-2.12
+	 * more than one group with the same term name. (Since: 2.12)
 	 */
 	DESCRIPTION_LIST = 114,
 	/**
 	 * An object that represents a term or phrase
-	 * with a corresponding definition. @Since: ATK-2.12
+	 * with a corresponding definition. (Since: 2.12)
 	 */
 	DESCRIPTION_TERM = 115,
 	/**
 	 * An object that represents the
-	 * description, definition or value of a term. @Since: ATK-2.12
+	 * description, definition or value of a term. (Since: 2.12)
 	 */
 	DESCRIPTION_VALUE = 116,
 	/**
 	 * A generic non-container object whose purpose is to display a
 	 * brief amount of information to the user and whose role is known by the
 	 * implementor but lacks semantic value for the user. Examples in which
-	 * ATK_ROLE_STATIC is appropriate include the message displayed in a message box
-	 * and an image used as an alternative means to display text. ATK_ROLE_STATIC
+	 * %ATK_ROLE_STATIC is appropriate include the message displayed in a message box
+	 * and an image used as an alternative means to display text. %ATK_ROLE_STATIC
 	 * should not be applied to widgets which are traditionally interactive, objects
 	 * which display a significant amount of content, or any object which has an
 	 * accessible relation pointing to another object. Implementors should expose the
 	 * displayed information through the accessible name of the object. If doing so seems
 	 * inappropriate, it may indicate that a different role should be used. For
-	 * labels which describe another widget, see ATK_ROLE_LABEL. For text views, see
-	 * ATK_ROLE_TEXT. For generic containers, see ATK_ROLE_PANEL. For objects whose
-	 * role is not known by the implementor, see ATK_ROLE_UNKNOWN. @Since: ATK-2.16.
+	 * labels which describe another widget, see %ATK_ROLE_LABEL. For text views, see
+	 * %ATK_ROLE_TEXT. For generic containers, see %ATK_ROLE_PANEL. For objects whose
+	 * role is not known by the implementor, see %ATK_ROLE_UNKNOWN. (Since: 2.16)
 	 */
 	STATIC = 117,
 	/**
 	 * An object that represents a mathematical fraction.
+	 * (Since: 2.16)
 	 */
 	MATH_FRACTION = 118,
 	/**
 	 * An object that represents a mathematical expression
-	 * displayed with a radical. @Since: ATK-2.16.
+	 * displayed with a radical. (Since: 2.16)
 	 */
 	MATH_ROOT = 119,
 	/**
 	 * An object that contains text that is displayed as a
-	 * subscript. @Since: ATK-2.16.
+	 * subscript. (Since: 2.16)
 	 */
 	SUBSCRIPT = 120,
 	/**
 	 * An object that contains text that is displayed as a
-	 * superscript. @Since: ATK-2.16.
+	 * superscript. (Since: 2.16)
 	 */
 	SUPERSCRIPT = 121,
 	/**
-	 * An object that contains the text of a footnote. @Since: ATK-2.26.
+	 * An object that contains the text of a footnote. (Since: 2.26)
 	 */
 	FOOTNOTE = 122,
 	/**
+	 * Content previously deleted or proposed to be
+	 * deleted, e.g. in revision history or a content view providing suggestions
+	 * from reviewers. (Since: 2.34)
+	 */
+	CONTENT_DELETION = 123,
+	/**
+	 * Content previously inserted or proposed to be
+	 * inserted, e.g. in revision history or a content view providing suggestions
+	 * from reviewers. (Since: 2.34)
+	 */
+	CONTENT_INSERTION = 124,
+	/**
 	 * not a valid role, used for finding end of the enumeration
 	 */
-	LAST_DEFINED = 123,
+	LAST_DEFINED = 125,
 }
 alias AtkRole Role;
 
@@ -1015,6 +1027,16 @@ public enum AtkStateType
 	VERTICAL = 27,
 	/**
 	 * Indicates this object is visible, e.g. has been explicitly marked for exposure to the user.
+	 * **note**: %ATK_STATE_VISIBLE is no guarantee that the object is actually unobscured on the screen, only
+	 * that it is 'potentially' visible, barring obstruction, being scrolled or clipped out of the
+	 * field of view, or having an ancestor container that has not yet made visible.
+	 * A widget is potentially onscreen if it has both %ATK_STATE_VISIBLE and %ATK_STATE_SHOWING.
+	 * The absence of %ATK_STATE_VISIBLE and %ATK_STATE_SHOWING is semantically equivalent to saying
+	 * that an object is 'hidden'.  See also %ATK_STATE_TRUNCATED, which applies if an object with
+	 * %ATK_STATE_VISIBLE and %ATK_STATE_SHOWING set lies within a viewport which means that its
+	 * contents are clipped, e.g. a truncated spreadsheet cell or
+	 * an image within a scrolling viewport.  Mostly useful for screen-review and magnification
+	 * algorithms.
 	 */
 	VISIBLE = 28,
 	/**
@@ -1072,7 +1094,7 @@ public enum AtkStateType
 	DEFAULT = 36,
 	/**
 	 * Indicates that the object changes its appearance dynamically as an inherent part of its presentation.  This state may come and go if an object is only temporarily animated on the way to a 'final' onscreen presentation.
-	 * @note some applications, notably content viewers, may not be able to detect
+	 * **note**: some applications, notably content viewers, may not be able to detect
 	 * all kinds of animated content.  Therefore the absence of this state should not
 	 * be taken as definitive evidence that the object's visual representation is
 	 * static; this state is advisory.
@@ -1377,6 +1399,13 @@ alias AtkValueType ValueType;
 
 struct AtkAction;
 
+/**
+ * The #AtkAction interface should be supported by any object that can
+ * perform one or more actions. The interface provides the standard
+ * mechanism for an assistive technology to determine what those actions
+ * are as well as tell the object to perform them. Any object that can
+ * be manipulated should support this interface.
+ */
 struct AtkActionIface
 {
 	GTypeInterface parent;
@@ -1445,6 +1474,12 @@ struct AtkActionIface
 
 struct AtkComponent;
 
+/**
+ * The AtkComponent interface should be supported by any object that is
+ * rendered on the screen. The interface provides the standard mechanism
+ * for an assistive technology to determine and set the graphical
+ * representation of an object.
+ */
 struct AtkComponentIface
 {
 	GTypeInterface parent;
@@ -1619,36 +1654,36 @@ struct AtkDocumentIface
 	 *     attributeName = a character string representing the name of the attribute
 	 *         whose value is being queried.
 	 * Returns: a string value associated with the named
-	 *     attribute for this document, or NULL if a value for
-	 *     #attribute_name has not been specified for this document.
+	 *     attribute for this document, or %NULL if a value for
+	 *     @attribute_name has not been specified for this document.
 	 */
 	extern(C) const(char)* function(AtkDocument* document, const(char)* attributeName) getDocumentAttributeValue;
 	/**
 	 *
 	 * Params:
-	 *     document = a #GObject instance that implements AtkDocumentIface
+	 *     document = a #GObject instance that implements #AtkDocumentIface
 	 *     attributeName = a character string representing the name of the attribute
 	 *         whose value is being set.
-	 *     attributeValue = a string value to be associated with #attribute_name.
-	 * Returns: TRUE if #value is successfully associated with #attribute_name
-	 *     for this document, FALSE otherwise (e.g. if the document does not
-	 *     allow the attribute to be modified).
+	 *     attributeValue = a string value to be associated with @attribute_name.
+	 * Returns: %TRUE if @attribute_value is successfully associated
+	 *     with @attribute_name for this @document, and %FALSE if if the
+	 *     document does not allow the attribute to be modified
 	 */
 	extern(C) int function(AtkDocument* document, const(char)* attributeName, const(char)* attributeValue) setDocumentAttribute;
 	/**
 	 *
 	 * Params:
 	 *     document = the #AtkDocument
-	 * Returns: current page number inside @document. -1 if not
-	 *     implemented, not know by the implementor or irrelevant.
+	 * Returns: the current page number inside @document, or -1 if
+	 *     not implemented, not know by the implementor, or irrelevant.
 	 */
 	extern(C) int function(AtkDocument* document) getCurrentPageNumber;
 	/**
 	 *
 	 * Params:
 	 *     document = the #AtkDocument
-	 * Returns: total page count of @document. -1 if not implemented, not
-	 *     know by the implementor or irrelevant.
+	 * Returns: total page count of @document, or -1 if not implemented,
+	 *     not know by the implementor or irrelevant.
 	 */
 	extern(C) int function(AtkDocument* document) getPageCount;
 }
@@ -1841,8 +1876,8 @@ struct AtkImageIface
 	 * Params:
 	 *     image = An #AtkImage
 	 * Returns: a string corresponding to the POSIX
-	 *     LC_MESSAGES locale used by the image description, or %NULL if the
-	 *     image does not specify a locale.
+	 *     `LC_MESSAGES` locale used by the image description, or
+	 *     %NULL if the image does not specify a locale.
 	 */
 	extern(C) const(char)* function(AtkImage* image) getImageLocale;
 }
@@ -2327,6 +2362,11 @@ struct AtkTable;
 
 struct AtkTableCell;
 
+/**
+ * AtkTableCell is an interface for cells inside an #AtkTable.
+ *
+ * Since: 2.12
+ */
 struct AtkTableCellIface
 {
 	GTypeInterface parent;
@@ -2703,7 +2743,7 @@ struct AtkTextIface
 	 *
 	 * Params:
 	 *     text = an #AtkText
-	 * Returns: the character offset of the position of the caret or 0  if
+	 * Returns: the character offset of the position of the caret or -1 if
 	 *     the caret is not located inside the element or in the case of
 	 *     any other failure.
 	 */
@@ -2725,8 +2765,8 @@ struct AtkTextIface
 	 *
 	 * Params:
 	 *     text = an #AtkText
-	 * Returns: an #AtkAttributeSet which contains the default values
-	 *     of attributes.  at @offset. this #atkattributeset should be freed by
+	 * Returns: an #AtkAttributeSet which contains the default text
+	 *     attributes for this #AtkText. This #AtkAttributeSet should be freed by
 	 *     a call to atk_attribute_set_free().
 	 */
 	extern(C) AtkAttributeSet* function(AtkText* text) getDefaultAttributes;
@@ -3104,7 +3144,7 @@ public alias extern(C) void function(AtkObject* obj, AtkPropertyValues* vals) At
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum BINARY_AGE = 23210;
+enum BINARY_AGE = 23411;
 alias ATK_BINARY_AGE = BINARY_AGE;
 
 /**
@@ -3128,7 +3168,7 @@ alias ATK_MAJOR_VERSION = MAJOR_VERSION;
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum MICRO_VERSION = 0;
+enum MICRO_VERSION = 1;
 alias ATK_MICRO_VERSION = MICRO_VERSION;
 
 /**
@@ -3136,7 +3176,7 @@ alias ATK_MICRO_VERSION = MICRO_VERSION;
  * application compile time, rather than from the library linked
  * against at application run time.
  */
-enum MINOR_VERSION = 32;
+enum MINOR_VERSION = 34;
 alias ATK_MINOR_VERSION = MINOR_VERSION;
 
 /**

@@ -111,14 +111,14 @@ public template TableT(TStruct)
 	 */
 	public ObjectAtk getCaption()
 	{
-		auto p = atk_table_get_caption(getTableStruct());
+		auto __p = atk_table_get_caption(getTableStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
+		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) __p);
 	}
 
 	/**
@@ -179,14 +179,14 @@ public template TableT(TStruct)
 	 */
 	public ObjectAtk getColumnHeader(int column)
 	{
-		auto p = atk_table_get_column_header(getTableStruct(), column);
+		auto __p = atk_table_get_column_header(getTableStruct(), column);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
+		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) __p);
 	}
 
 	/**
@@ -289,14 +289,14 @@ public template TableT(TStruct)
 	 */
 	public ObjectAtk getRowHeader(int row)
 	{
-		auto p = atk_table_get_row_header(getTableStruct(), row);
+		auto __p = atk_table_get_row_header(getTableStruct(), row);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
+		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) __p);
 	}
 
 	/**
@@ -337,14 +337,14 @@ public template TableT(TStruct)
 	 */
 	public ObjectAtk getSummary()
 	{
-		auto p = atk_table_get_summary(getTableStruct());
+		auto __p = atk_table_get_summary(getTableStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p, true);
+		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) __p, true);
 	}
 
 	/**
@@ -406,14 +406,14 @@ public template TableT(TStruct)
 	 */
 	public ObjectAtk refAt(int row, int column)
 	{
-		auto p = atk_table_ref_at(getTableStruct(), row, column);
+		auto __p = atk_table_ref_at(getTableStruct(), row, column);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p, true);
+		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) __p, true);
 	}
 
 	/**

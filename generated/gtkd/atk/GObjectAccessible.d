@@ -83,14 +83,14 @@ public class GObjectAccessible : ObjectAtk
 	 */
 	public static ObjectAtk forObject(ObjectG obj)
 	{
-		auto p = atk_gobject_accessible_for_object((obj is null) ? null : obj.getObjectGStruct());
+		auto __p = atk_gobject_accessible_for_object((obj is null) ? null : obj.getObjectGStruct());
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) p);
+		return ObjectG.getDObject!(ObjectAtk)(cast(AtkObject*) __p);
 	}
 
 	/**
@@ -101,13 +101,13 @@ public class GObjectAccessible : ObjectAtk
 	 */
 	public ObjectG getObject()
 	{
-		auto p = atk_gobject_accessible_get_object(atkGObjectAccessible);
+		auto __p = atk_gobject_accessible_get_object(atkGObjectAccessible);
 
-		if(p is null)
+		if(__p is null)
 		{
 			return null;
 		}
 
-		return ObjectG.getDObject!(ObjectG)(cast(GObject*) p);
+		return ObjectG.getDObject!(ObjectG)(cast(GObject*) __p);
 	}
 }
